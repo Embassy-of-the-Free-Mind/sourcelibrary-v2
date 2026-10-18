@@ -7,9 +7,9 @@ canons: []
 n_books: 92
 n_pages: 100
 verdict: "Preregistration only: open OCR engines on the GEX45 (PaddleOCR-VL-1.6 with layout, MinerU 2.5 Pro, Qwen3-VL-8B, Qwen2.5-VL-7B AWQ, GLM-OCR) against gemini-3.1-flash-lite (paid) and Gemini 3.8 Flash (agy) on the 100 Opus reference pages of the Chinese held residue, per failure class. No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-18-zh-residue-bakeoff-6871.md"
 issue: [6871, 5660]
 ---
 PRIOR ART: `2026-10-17-zh-residue-reference-set-6871.md` and `scripts/eval/zh-residue-refs-6871/README.md` (the reference set this scores against, and its scoring rules); `scripts/eval/zh-residue-refs-6871/compare.py` (the Han-string extraction, reused unchanged); job `gpu-bench-6871` on gex45 (the engine installs and serve flags, reused; speed only, no quality); `2026-10-17-local-seam-screener-prereg-6742.md` (the prereg-then-score shape).

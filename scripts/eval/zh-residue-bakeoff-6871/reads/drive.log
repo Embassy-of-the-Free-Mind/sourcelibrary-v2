@@ -1,0 +1,42 @@
+2026-10-18T01:56:43Z [paddle] lock busy after 300 s
+2026-10-18T02:01:43Z [glm] lock busy after 300 s
+2026-10-18T02:05:27Z [mineru] lock taken; GPU 2 MiB
+2026-10-18T02:05:57Z [mineru] up after 30 s
+2026-10-18T02:07:28Z [mineru] M: {"mode":"mineru","model":"m","pages_this_pass":100,"clients":16,"wall_secs":90.8,"pages_per_hour":3963,"errors":0,"hit_cap":0,"out_tok":0,"in_tok":0} peak 14162 MiB
+2026-10-18T02:07:36Z [mineru] released; GPU 2 MiB
+2026-10-18T02:09:23Z [qwen3vl] lock taken; GPU 2 MiB
+2026-10-18T02:10:39Z [qwen3vl] did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T02:10:47Z [qwen3vl] released; GPU 2 MiB
+2026-10-18T02:11:06Z [qwen3vl] lock taken; GPU 2 MiB
+2026-10-18T02:12:16Z [qwen3vl] did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T02:12:24Z [qwen3vl] released; GPU 2 MiB
+2026-10-18T02:12:24Z [qwen25vl] lock taken; GPU 2 MiB
+2026-10-18T02:13:19Z [qwen25vl] up after 55 s
+2026-10-18T02:18:12Z [qwen3vl] lock busy after 300 s
+2026-10-18T02:23:12Z [qwen3vl] lock busy after 300 s
+2026-10-18T02:24:11Z [qwen25vl] Q2: {"mode":"generic","model":"m","pages_this_pass":100,"clients":16,"wall_secs":652.0,"pages_per_hour":552,"errors":0,"hit_cap":19,"out_tok":92142,"in_tok":702991} peak 14968 MiB
+2026-10-18T02:24:19Z [qwen25vl] released; GPU 2 MiB
+2026-10-18T02:28:12Z [qwen3vl] lock busy after 300 s
+2026-10-18T02:29:16Z [paddle] lock taken; GPU 2 MiB
+2026-10-18T02:31:45Z [paddle] P0: {"arm":"zhbake6871-l0","backend":"server","workers":8,"max_side":0,"layout":0,"page_batch":1,"pages":100,"errors":0,"wall_secs":109.2,"load_secs_max":3.3,"wall_secs_after_load":105.9} peak 9448 MiB
+2026-10-18T02:33:12Z [qwen3vl] lock busy after 300 s
+2026-10-18T02:33:21Z [paddle] P1: {"arm":"zhbake6871-l1","backend":"server","workers":8,"max_side":0,"layout":1,"page_batch":1,"pages":100,"errors":0,"wall_secs":95.4,"load_secs_max":5.6,"wall_secs_after_load":89.8} peak 16818 MiB
+2026-10-18T02:33:29Z [paddle] released; GPU 2 MiB
+2026-10-18T02:36:01Z [qwen3vl] lock taken; GPU 2 MiB
+2026-10-18T02:37:21Z [qwen3vl] up after 80 s
+2026-10-18T02:39:29Z [glm] lock busy after 300 s
+2026-10-18T02:44:29Z [glm] lock busy after 300 s
+2026-10-18T02:49:29Z [glm] lock busy after 300 s
+2026-10-18T02:54:29Z [glm] lock busy after 300 s
+2026-10-18T02:55:21Z [qwen3vl] Q3:  peak 15072 MiB
+2026-10-18T02:55:29Z [qwen3vl] released; GPU 2 MiB
+DRIVE-END 2026-10-18T02:56:29Z
+2026-10-18T02:59:25Z [glm] lock taken; GPU 2 MiB
+2026-10-18T02:59:50Z [glm] up after 25 s
+2026-10-18T03:03:54Z [glm] G: {"mode":"glm","model":"m","pages_this_pass":100,"clients":16,"wall_secs":243.7,"pages_per_hour":1477,"errors":0,"hit_cap":6,"out_tok":39021,"in_tok":607652} peak 15506 MiB
+2026-10-18T03:04:02Z [glm] released; GPU 2 MiB
+2026-10-18T03:04:02Z [qwen3vl] lock taken; GPU 2 MiB
+2026-10-18T03:04:47Z [qwen3vl] up after 45 s
+DRIVE-END 2026-10-18T03:05:02Z
+2026-10-18T03:19:09Z [qwen3vl] Q3: {"mode":"generic","model":"m","pages_this_pass":53,"clients":16,"wall_secs":861.9,"pages_per_hour":221,"errors":0,"hit_cap":16,"out_tok":65427,"in_tok":542285} peak 14170 MiB
+2026-10-18T03:19:18Z [qwen3vl] released; GPU 2 MiB

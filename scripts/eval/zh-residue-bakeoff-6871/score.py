@@ -6,9 +6,9 @@ two Opus reads with each other); this scores engine output against the resolved 
 preregistered in scripts/eval/experiments/2026-10-18-zh-residue-bakeoff-prereg-6871.md.
 
   python3 score.py <arms dir> [--noise B1 B1r] > results.json
-<arms dir>/<ARM>.jsonl rows: {page_id, text}. A page missing from an arm's file scores as empty output.
+<arms dir>/<ARM>.jsonl(.gz) rows: {page_id, text}. A page missing from an arm's file scores as empty output.
 """
-import json, os, re, random, sys
+import gzip, json, os, re, random, sys
 from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -112,10 +112,12 @@ def scored(r):
 def main():
     d = sys.argv[1]
     refs = [json.loads(l) for l in open(os.path.join(HERE, '..', 'zh-residue-refs-6871', 'refs.jsonl'))]
-    arms = sorted(f[:-6] for f in os.listdir(d) if f.endswith('.jsonl'))
+    files = {f.split('.jsonl')[0]: f for f in os.listdir(d) if f.endswith(('.jsonl', '.jsonl.gz'))}
+    arms = sorted(files)
     reads = {a: {} for a in arms}
     for a in arms:
-        for l in open(os.path.join(d, a + '.jsonl')):
+        fp = os.path.join(d, files[a])
+        for l in (gzip.open(fp, 'rt') if fp.endswith('.gz') else open(fp)):
             if l.strip():
                 x = json.loads(l); reads[a][x['page_id']] = x.get('text') or ''
     res = {'arms': arms, 'n_scored': {c: sum(1 for r in refs if r['cls'] == c and scored(r)) for c in CLASSES},
@@ -125,7 +127,11 @@ def main():
         for r in refs:
             if scored(r): res['pages'][a][r['page_id']] = dict(page_scores(r, reads[a].get(r['page_id'], '')), cls=r['cls'])
         hs = [(r['page_id'], *hallucinated(r, reads[a].get(r['page_id'], ''))) for r in refs if r['cls'] == 'other']
+        textless = {r['page_id'] for r in refs if r['cls'] == 'other' and r['page_kind'] != 'body' or (r['cls'] == 'other' and r['n_han'] < 20)}
         res['halluc'][a] = {'pages': sum(1 for x in hs if x[2]), 'of': len(hs),
+                            # not preregistered: the 19 textless pages only (the 20th is a 300-character text page, where
+                            # excess characters are misreadings, not invention)
+                            'pages_textless': sum(1 for x in hs if x[2] and x[0] in textless), 'of_textless': len(textless),
                             'detail': [{'page_id': p, 'excess': e} for p, e, f in hs if e]}
     for c in CLASSES:
         res['classes'][c] = {}
@@ -136,6 +142,8 @@ def main():
                 v = [p[k] for p in ps if p.get(k) is not None]
                 if v: m[k] = {'median': median(v), 'ci': boot_ci(v), 'mean': sum(v) / len(v), 'n': len(v)}
             m['chars_ref'] = sum(p['n_ref'] for p in ps); m['chars_hyp'] = sum(p['n_hyp'] for p in ps)
+            # not preregistered: overrun (loop / repeated block) = output > 1.5× the reference + 20 chars; bad = primary > 0.5
+            m['overrun'] = sum(1 for p in ps if p['n_hyp'] > 1.5 * p['n_ref'] + 20); m['bad'] = sum(1 for p in ps if p['primary'] > 0.5)
             res['classes'][c][a] = m
     if '--noise' in sys.argv:
         x, y = sys.argv[sys.argv.index('--noise') + 1: sys.argv.index('--noise') + 3]
