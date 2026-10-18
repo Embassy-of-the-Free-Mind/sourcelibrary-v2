@@ -42,7 +42,7 @@
  *     are visible: true).
  *   - at RELEASE of the gpu-backlog-5660 hold (`--to ocr_complete`, as its release line says): Phase 4 fresh
  *     dispatch, and the hourly chained enrol-auto (AUTO_STATUSES includes ocr_complete), translate every page
- *     written here on getTranslateModelForBook's model, which is FULL FLASH for Chinese (#5695). That spend is
+ *     written here on the translation router's model (translate-core.mjs), which is FULL FLASH for Chinese (#5695). That spend is
  *     paid and is not decided by this writer. The release stays a separate, priced decision; this writer adds no bypass.
  *
  *   node --env-file=.env.production.local scripts/workers/paddle-zh-guarded-lane.mjs \
