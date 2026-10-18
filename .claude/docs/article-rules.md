@@ -12,9 +12,12 @@ How an article under `/articles` looks and what goes into it. Read this before w
 
 ## Pictures
 
-Articles need a lot of pictures. Text-only articles are boring, and the library is full of pages and plates.
+Pictures carry a lot of these articles, but only when they add something. Decide section by section.
 
-- **A picture in most sections, ideally every one.** It isn't a hard rule: a good, relevant page or plate is worth adding, a weak or loosely related one isn't. Long runs of text with nothing to look at are what to avoid. A picture means something the reader can look at that carries information: a page, a plate, a detail of a plate, a diagram, a map, a screenshot of a tool or a result, a chart.
+- **A picture where it adds something, not by quota.** Most sections gain from one: the page being quoted, the plate being described, a diagram that shows what the text explains, a chart of the numbers. Add it when the reader learns something from looking at it that the text alone doesn't give them.
+- **Leave it out when it adds nothing.** A section that argues, explains a method or tells a short step in a story may be better as text. Signs a picture is filler: it is loosely related ("a page from around then"), it repeats the one just above, it is there so the section isn't bare, or the caption has to work hard to explain why it is there. Two or three pictures in a row that make the same point should be one.
+- **Long runs of text are still worth breaking up**, but with the right picture, a short quotation or a subheading, not with any picture.
+- A picture means something the reader can look at that carries information: a page, a plate, a detail of a plate, a diagram, a map, a screenshot of a tool or a result, a chart.
 - **From the library first.** Pages and plates from the books the article quotes, at their true proportions, never cropped to a uniform box. Use `PageFigure` (`src/components/articles/PageFigure.tsx`) with `href` set to the reader page (`/book/<slug>?page=N`) and `source` set to the book.
 - **Outside material only when the licence is clear.** Public domain, CC0, CC BY or CC BY-SA, or written permission. Say who holds it, the licence, and link to it, in the `credit` line of `PageFigure`. Museum open-access images already mirrored under `images.sourcelibrary.org/artwork/` are fine (their credit is in the gallery record). If the licence is unclear, leave the image out. Never hotlink: bring the file in with `scripts/import-*-artworks.mjs` or into `public/articles/<slug>/`.
 - **Screenshots** of Source Library itself (the reader, a search, a chart) are welcome where they show what the article describes.
@@ -68,6 +71,15 @@ Most of this is automatic once the page wraps its metadata in `withArticleMeta`;
 - **`image`**: the card picture; usually the same as the hero.
 - Wrap the page's metadata: `export const metadata: Metadata = withArticleMeta('<slug>', { title, description, ... })` (`src/lib/article-metadata.ts`). It fills in the canonical, feed links, article dates and share image.
 
+## Length
+
+An article should be readable in one sitting. Most of ours run 8 to 12 minutes, and that is the range to aim for.
+
+- **Aim for 8 to 15 minutes** (about 2,000 to 3,500 words). The `readTime` in posts.ts should be honest.
+- **Over about 20 minutes (5,000 words), don't keep writing.** Suggest splitting it: two or more separate articles that each answer one question, or a series with a part number in the title and links between the parts. Propose the split (where it falls, what each part is called) and ask before doing it.
+- **Cut before you split.** Long articles usually repeat themselves: the same point made in the lede, the body and the close; background the reader doesn't need; three examples where one does. Take those out first.
+- Interactive pieces (a timeline, a game, a chart to explore) are measured by the reading, not by the size of the tool.
+
 ## Writing
 
 - British spelling (digitised, catalogue, colour).
@@ -80,12 +92,13 @@ Most of this is automatic once the page wraps its metadata in `withArticleMeta`;
 no em dash), card picture or alt text; an article lacks the `feature` + `headerVariant="dark"` hero or
 the `withArticleMeta` wrapper; `src/generated/article-books.json` or `article-heroes.json` is stale; or
 more article files carry `text-accent-rust` than the ratchet allows (lower the number when you clean
-one). The rest of this file (pictures, quotes with their pages, licences, charts, wording) needs a person.
+one). The rest of this file (which pictures are worth it, length, quotes with their pages, licences, charts, wording) needs a person.
 
 ## Checklist before opening a PR
 
 1. Hero set, `feature` and `headerVariant="dark"` on `ContentHeader`; generators re-run.
-2. Pictures in most sections; every outside image has a clear licence and a credit line.
+2. Every picture earns its place (none added just to fill a section); every outside image has a clear licence and a credit line.
+   Length 8 to 15 minutes; over about 20, a split into separate articles or a series is proposed instead.
 3. Quotes from library books use `SourceQuote` with the page.
 4. No `text-accent-rust` or other red text in the article.
 5. Every book drawn on is linked (or in `books.ts`); no hand-written book list.
