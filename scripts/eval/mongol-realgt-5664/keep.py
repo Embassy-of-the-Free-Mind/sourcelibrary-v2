@@ -7,7 +7,7 @@ text-side question: which of several known Mongolian strings is this column's re
 Decides which proposed (column, known text) pairs from align.py become real ground truth (#5664). A pair is kept only
 if it passes BOTH:
 
-  1. screen (deterministic). Word level: the read has the label's number of words (+-1, or +-20 % for long columns).
+  1. screen (deterministic). Word level: the read has the label's number of words (+-2, or +-25 % for long columns; the reader often adds a stray 1-letter fragment).
      body pairs: the read is closer (edit distance) to its own label than to either neighbouring column's label;
      title pairs: whole-read edit distance <= 0.35 (titles are what the reader already half-knows).
   2. opus (text side, never the image). Opus sees the read and 4 candidate strings (Latin + Unicode), shuffled: the
@@ -37,7 +37,7 @@ def screen(args):
     for p in args.pairs:
         for r in rows(p):
             wl, wr = r['words_label'], r['words_read']
-            words_ok = abs(wl - wr) <= max(1, round(0.2 * wl))
+            words_ok = abs(wl - wr) <= max(2, round(0.25 * wl))  # both counted by align.nwords; the reader adds 1-2 stray fragments
             if r['kind'] == 'body':
                 nb = r.get('ned_neighbours') or []
                 ok = words_ok and all(r['ned'] < x - 0.03 for x in nb) and r['ned'] <= 0.8

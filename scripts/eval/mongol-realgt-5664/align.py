@@ -209,7 +209,7 @@ def body(args):
                 nb = [ned(read, labels[o]) for o in (order[n - 1] if n > 0 else None, order[n + 1] if n + 1 < len(order) else None) if o is not None]
                 rows.append({'id': cols[m], 'kind': 'body', 'source': src_key, 'vol': lf['vol'], 'leaf': lf['leaf'],
                              'label': labels[m], 'latin': latin[m], 'read': read, 'ned': round(own, 3),
-                             'ned_neighbours': [round(x, 3) for x in nb], 'words_label': j - i, 'words_read': nwords(read),
+                             'ned_neighbours': [round(x, 3) for x in nb], 'words_label': nwords(labels[m]), 'words_read': nwords(read),
                              'edition_breaks': has_marks, 'break_agrees': (i in breaks or i == 0) and (j in breaks or j == len(words)) if has_marks else None,
                              'col': m + 1, 'n_cols': len(cols)})
             print(f'{lf["leaf"]} {src_key}: {len(words)} words -> {len(res)}/{len(cols)} columns, mean ned {sum(x[3] for x in res) / max(1, len(res)):.2f}', file=sys.stderr)
@@ -268,7 +268,7 @@ def title(args):
                     d, i, j = bm
                     rows.append({'id': c, 'kind': 'title', 'where': where, 'variant': vname, 'rkts': t['rkts'], 'mng1': t['mng1'],
                                  'vol': t['vol'], 'leaf': leaf, 'label': ' '.join(uw[i:j]), 'latin': ' '.join(lat[i:j]),
-                                 'read': read, 'ned': round(d, 3), 'words_label': j - i, 'words_read': nwords(read),
+                                 'read': read, 'ned': round(d, 3), 'words_label': nwords(' '.join(uw[i:j])), 'words_read': nwords(read),
                                  'title_latin': tt, 'covers_title': (j - i) / len(lat)})
     # one label per column: the lowest edit distance across variants/places
     best = {}
