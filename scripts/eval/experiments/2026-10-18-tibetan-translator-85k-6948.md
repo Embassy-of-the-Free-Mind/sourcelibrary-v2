@@ -134,3 +134,28 @@ reference; and added-fact notes per arm (counted, not checked for truth; #6750's
 
 Budget: $0. agy (Google subscription) and the Claude subscription only, no API key, no paid lane. Nothing is written
 to `pages` or any production store.
+
+### Amendment 1 (2026-10-18 21:40Z, after the arms ran, before any arm's English was read or judged)
+
+These are reference mechanics only. Arms, judges, measures and the bar are unchanged.
+- **Toh 8 has no folio mentions.** 84000's English for Toh 8 (the Prajñāpāramitā in 100,000 lines) carries no
+  folio mentions, so it cannot be cut at them. For such a text, a side's reference is the English of every passage
+  whose aligned Tibetan touches that side. A passage that crosses a side break counts for both sides. The cut is
+  therefore wider than the page, and `reference_note` says so. Texts that do have folio mentions are cut as
+  preregistered. Each reference records which cut it got.
+- **Sides are keyed by (volume, folio), not folio alone.** Toh 8 runs over twelve volumes and Toh 9 over three, and
+  folio numbers restart in each volume. `build-reference.py` keys by folio only, which is right for the
+  single-volume Tengyur texts it was written for.
+- **Empty `texts` lists.** A Derge page inside a long text can carry an empty `texts` list. Such a page takes the
+  last text named before it in the same volume order.
+- **Status `1.a` counts as published.** 84000 marks published works `1` or `1.a`.
+
+Result of the cut: 15 of the 30 CANON pages have a reference.
+- 3 are Derge sides with an exact cut: Toh 381, 440 and 511.
+- 12 are manuscript pages, each located in a three-side Derge window: Toh 8 (×4), 9 (×3), 12, 46, 266, 556 and 1-6.
+- 15 have none: 84000 has not published the text (for example Toh 348, 422, 453, 469 and 833, "In Progress"), or
+  the page was not located (1 page, 'Bum Pha, 54% cover).
+
+The Prajñāpāramitā pages are repetitive. Their best Derge folio wins by a small margin over a far one (e.g. 89 vs 79
+4-gram hits). The located side may therefore be a near-identical passage elsewhere in the sūtra. The judge's
+`reference_fit` can say "wrong"; the report gives the 15 reference pages separately.
