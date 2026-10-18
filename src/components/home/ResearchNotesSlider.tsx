@@ -25,7 +25,6 @@ export default function ResearchNotesSlider({
   return (
     <HorizontalSlider
       ariaLabel="articles"
-      variant="square"
       header={
         <>
           <h2 className="text-3xl md:text-4xl text-primary font-display">{heading}</h2>

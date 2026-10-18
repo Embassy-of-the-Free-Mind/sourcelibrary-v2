@@ -7,9 +7,9 @@ import Link from 'next/link';
 // the Evangelical Churches of the Valleys of Piemont (1658), faint behind the
 // title and drifting slightly slower than the page on scroll.
 
-export const PAPER = '/articles/hero/marbled-curl-piemont.webp';
-export const CREDIT = 'French curl marbled endpaper, Morland, History of the Evangelical Churches of Piemont (1658)';
-export const BOOK = '/book/the-history-of-the-evangelical-churches-of-the-valleys-of-morland';
+const PAPER = '/articles/hero/marbled-curl-piemont.webp';
+const CREDIT = 'French curl marbled endpaper, Morland, History of the Evangelical Churches of Piemont (1658)';
+const BOOK = '/book/the-history-of-the-evangelical-churches-of-the-valleys-of-morland';
 
 // How much slower than the page the paper moves (0 = fixed to the page).
 const PARALLAX = 0.3;

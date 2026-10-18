@@ -6,7 +6,6 @@ import EditorialSpread from '@/components/prototype/EditorialSpread';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
-import MarbledBackdrop from '@/app/articles/MarbledBackdrop';
 import { posts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
@@ -329,7 +328,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <div className="mt-8 flex justify-center">
                 <Link
                   href="/gallery"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+                  className="h-11 inline-flex items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors"
                 >
                   {t.galleryViewAll(counts.illustrationCount)}
                   <span className="text-xs">&rarr;</span>
@@ -361,10 +360,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
-      {/* Articles: the newest, on the /articles marbled paper */}
-      <section className="relative bg-cream py-16 md:py-24 overflow-hidden">
-        <MarbledBackdrop />
-        <div className="relative px-6 md:px-12 max-w-[1500px] mx-auto">
+      {/* Articles: the newest twelve */}
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
           <ResearchNotesSlider
             posts={NEWEST_ARTICLES}
             heading={t.blogHeading}

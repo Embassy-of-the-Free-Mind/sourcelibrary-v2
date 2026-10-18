@@ -79,8 +79,7 @@ export default function ArticleExtras() {
           <div className="border-t border-border-light pt-10" />
           <HorizontalSlider
             ariaLabel="related articles"
-            variant="square"
-            header={
+                  header={
               <>
                 <h2 id="related-articles" className="font-serif text-3xl text-primary">
                   Related articles
