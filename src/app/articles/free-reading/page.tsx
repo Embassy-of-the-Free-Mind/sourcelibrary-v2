@@ -50,7 +50,7 @@ export default function FreeReadingPage() {
             Archive&apos;s reading and ours agree on nineteen words in twenty, the free text is at least
             as reliable as ours. A first measurement of both readings against 122 independently
             proofread pages found that the Archive&apos;s text silently misreads about one printed
-            number in seventy (a preliminary figure, resting on ten paired cases), a 5180 written as
+            number in a hundred (a preliminary figure, resting on eight paired cases), a 5180 written as
             6180, and that a word-agreement score cannot see a one-digit change. If you quote a date or a page reference from Archive text, check the
             image. The measurement is in{' '}
             <Link href="/articles/archive-ocr-against-proofread-pages" className="text-accent-rust hover:underline">

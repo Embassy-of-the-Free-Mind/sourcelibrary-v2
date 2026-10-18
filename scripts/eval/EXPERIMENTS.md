@@ -19224,6 +19224,12 @@ question for the whole line.
 
 ## 2026-09-28 — For which English IA books may the Archive's own OCR replace flash-lite? First English reference pages, both engines scored against them (#5124, scoped; #5180, #5186, #5014)
 
+- **Correction 2026-10-18.** Four counted Archive misreads were the right digits split by a space in the
+  Archive text ("Prop. 1 6", "Prop, 1 1", "Matthew, 1 8", "Tab. 5 0"), which the scorer read as two numbers.
+  They are now `printed: "split"` in `digitcheck.jsonl` and the report was re-run (`--stage=report`): Archive
+  silent misreads 9 of 886 = 1.02% [0.29%, 1.96%] on 6 pages (was 13, 1.47% [0.60%, 2.68%], 9 pages); paired
+  8 vs 0 (was 10 vs 0). Direction unchanged; the article and DECISIONS.md carry the new figures.
+
 - **Question.** Every English OCR number so far was two engines agreeing (eval-design §11: zero English
   reference pages). Against a truth independent of both, how does the Archive's `_djvu.xml` text compare
   with a fresh flash-lite read, per cohort — and how often does either misread a printed NUMBER (#5186)?

@@ -356,9 +356,9 @@ export const posts: BlogPost[] = [
     slug: 'archive-ocr-against-proofread-pages',
     title: 'Checking the Archive\u2019s OCR against proofread pages',
     subtitle:
-      'On 122 English pages with an independent proofread transcription, our own reader is better on the same page in every cohort, and in a first, preliminary count the Internet Archive\u2019s OCR text silently misreads about one printed number in seventy. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
+      'On 122 English pages with an independent proofread transcription, our own reader is better on the same page in every cohort, and in a first, preliminary count the Internet Archive\u2019s OCR text silently misreads about one printed number in a hundred. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
     summary:
-      'On 122 proofread English pages our reader beat the Internet Archive’s OCR, which in a first count misreads about one printed number in seventy.',
+      'On 122 proofread English pages our reader beat the Internet Archive’s OCR, which in a first count misreads about one printed number in a hundred.',
     date: '28 September 2026',
     readTime: '8 min read',
     kind: 'research',

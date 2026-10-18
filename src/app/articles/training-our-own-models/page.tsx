@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import BarChart, { type BarRow } from './BarChart';
 
 // Sources of the figures here: OCR error rates from the #5660 bake-offs (comments of
 // 2026-10-03, PR #5684 and #5750); translation fidelity from the corpus audit
@@ -34,15 +36,34 @@ const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';
 const TH = 'text-left font-medium text-primary py-2 pr-4 border-b border-border-light';
 const TD = 'py-2 pr-4 align-top border-b border-border-light text-secondary';
-const A = 'text-accent-rust hover:underline';
 
 const ISSUE = (n: number) => `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${n}`;
-const SUDA_BOOK = 'https://sourcelibrary.org/book/suidae-lexicon-suidas';
-const SUDA_PAGE = 'https://sourcelibrary.org/book/suidae-lexicon-suidas?page=100';
+const SUDA_BOOK = '/book/suidae-lexicon-suidas';
+const SUDA_PAGE = '/book/suidae-lexicon-suidas?page=100';
+
+// Gemini's character error rate by slice, as stated in the article (#5660:
+// scripts/eval/experiments/2026-10-03-open-engine-print-5660.md and its follow-ups).
+const OCR_ROWS: BarRow[] = [
+  { label: 'German (mostly Fraktur)', v: 0.5, note: '29 pages · usable: yes' },
+  { label: 'Latin, 1700 and later', v: 0.7, note: '39 pages · usable: yes' },
+  { label: 'English, 1700 and later', v: 2.2, note: '106 pages · usable: yes' },
+  { label: 'English, 1600–1699', v: 5.3, note: '59 pages · usable with care', detail: 'Usable with care: the long s (ſ) is often read as f.' },
+  { label: 'Latin, 1500–1699', v: 6.7, note: '36 pages · usable with care', detail: 'Usable with care, for the same reason: the long s.' },
+  { label: 'Greek', v: 14.5, note: '114 pages · usable: no', detail: 'Not usable for training: about one character in seven is wrong.', strong: true },
+];
+
+// The Latin translation test of 4 October (#5793): mean fidelity of 5 on 71 pages, judged against
+// published human translations, with bootstrap 95% intervals, from
+// scripts/eval/experiments/2026-10-04-translation-student-latin-lora-5793.md.
+const STUDENT_ROWS: BarRow[] = [
+  { label: 'Gemini (Flash-Lite)', v: 4.16, lo: 3.94, hi: 4.36, note: 'the bar to match' },
+  { label: 'Our trained model', v: 3.32, lo: 3.17, hi: 3.48, note: 'Qwen3-8B with LoRA, 18,587 Latin pages', detail: 'It lost to Gemini on 54 of the 71 pages.', strong: true },
+  { label: 'The same model untrained', v: 2.75, lo: 2.59, hi: 2.92, note: 'Qwen3-8B as it comes' },
+];
 
 function Issue({ n }: { n: number }) {
   return (
-    <a href={ISSUE(n)} className={A}>
+    <a href={ISSUE(n)}>
       #{n}
     </a>
   );
@@ -103,29 +124,30 @@ export default function TrainingOurOwnModelsPage() {
             We do not have to guess. Over the past month we scored Gemini’s readings against published
             transcriptions of the same pages, one page per book, with the test pages sealed before any
             engine read them (the method is in{' '}
-            <Link href="/articles/how-we-measure-ocr-quality" className={A}>How We Measure OCR Quality</Link>
+            <Link href="/articles/how-we-measure-ocr-quality">How We Measure OCR Quality</Link>
             ). The measure is character error rate: the share of letters that differ from the reference.
           </p>
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full text-sm font-body">
-              <thead>
-                <tr>
-                  <th className={TH}>Printed pages</th>
-                  <th className={TH}>Character error</th>
-                  <th className={TH}>Pages scored</th>
-                  <th className={TH}>Usable for training?</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td className={TD}>German (mostly Fraktur)</td><td className={TD}>0.5%</td><td className={TD}>29</td><td className={TD}>Yes</td></tr>
-                <tr><td className={TD}>Latin, 1700 and later</td><td className={TD}>0.7%</td><td className={TD}>39</td><td className={TD}>Yes</td></tr>
-                <tr><td className={TD}>English, 1700 and later</td><td className={TD}>2.2%</td><td className={TD}>106</td><td className={TD}>Yes</td></tr>
-                <tr><td className={TD}>English, 1600–1699</td><td className={TD}>5.3%</td><td className={TD}>59</td><td className={TD}>With care: the long s (ſ) is often read as f</td></tr>
-                <tr><td className={TD}>Latin, 1500–1699</td><td className={TD}>6.7%</td><td className={TD}>36</td><td className={TD}>With care, for the same reason</td></tr>
-                <tr><td className={TD}>Greek</td><td className={TD}>14.5%</td><td className={TD}>114</td><td className={TD}>No</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <figure className="my-10">
+            <BarChart
+              rows={OCR_ROWS}
+              max={16}
+              ticks={[0, 4, 8, 12, 16]}
+              unit="%"
+              title="Gemini’s character error rate on printed pages, by language and period"
+              hint="Hover, tap or tab to a row for the exact figure and whether the text is usable for training."
+              measure="of characters differ from a published transcription"
+              source={
+                <>
+                  Numbers: Gemini’s readings scored against published transcriptions, one page per book, in the
+                  open-engine comparison of October 2026 (<Issue n={5660} />).
+                </>
+              }
+            />
+            <figcaption className="mt-2 text-sm text-muted leading-relaxed">
+              Character error rate of Gemini’s readings, with the number of pages scored and whether the text is
+              usable as training data. Greek is the slice where copying Gemini would teach its mistakes.
+            </figcaption>
+          </figure>
           <p className={P}>
             Source: the open-engine comparison in <Issue n={5660} />. Most cells hold fewer than fifty
             books, which we treat as directional rather than decisive.
@@ -141,9 +163,19 @@ export default function TrainingOurOwnModelsPage() {
             translated some 31,000 entries. On 150 entries drawn at random, 77 percent of ours were
             faithful to the Greek, 21 percent had minor issues and 2 percent major errors (
             <Issue n={3884} />;{' '}
-            <a href={SUDA_PAGE} className={A}>our scan, p. 88</a> of{' '}
-            <a href={SUDA_BOOK} className={A}>Bekker’s edition</a>).
+            <Link href={SUDA_PAGE}>our scan, p. 88</Link> of{' '}
+            <Link href={SUDA_BOOK}>Bekker’s edition</Link>).
           </p>
+          <PageFigure
+            src="/articles/training-our-own-models/suda-reader.jpg"
+            alt="The Source Library reader open at page 88 of Bekker’s 1854 Suda: the scan on the left, Gemini’s Greek transcription in the middle, and the English translation on the right."
+            href={SUDA_PAGE}
+            source={<>Bekker’s edition of the Suda (1854), p. 88</>}
+            wide
+          >
+            The same page in the reader: the scan, Gemini’s reading of the Greek, and the English made from it.
+            Text like this is what a model of our own would learn from.
+          </PageFigure>
           <p className={P}>
             So the text is good training data on the slices where it measures well, and that is most of
             the Latin, German and English. It cannot teach a model to read what Gemini misreads, and it
@@ -172,6 +204,28 @@ export default function TrainingOurOwnModelsPage() {
               </tbody>
             </table>
           </div>
+          <figure className="my-10">
+            <BarChart
+              rows={STUDENT_ROWS}
+              max={5}
+              ticks={[0, 1, 2, 3, 4, 5]}
+              unit=" of 5"
+              decimals={2}
+              title="Latin to English on 71 pages: faithfulness to published human translations"
+              hint="Hover, tap or tab to a row for the exact score. Bars are the mean score; whiskers the 95% interval."
+              measure="mean fidelity, judged blind"
+              source={
+                <>
+                  Numbers: the test of 4 October 2026 (<Issue n={5793} />), 71 Latin pages from books outside the
+                  training data, each scored by two blind judges; intervals from the experiment write-up in the repository.
+                </>
+              }
+            />
+            <figcaption className="mt-2 text-sm text-muted leading-relaxed">
+              Our first open translation model, beside Gemini and beside the same model before training. Training
+              closed part of the gap; the bar set beforehand was “no worse than Gemini”.
+            </figcaption>
+          </figure>
         </section>
 
         <section className="mb-16">
@@ -182,7 +236,7 @@ export default function TrainingOurOwnModelsPage() {
               in 5,014 books, and about 340,000 of them have not been read yet. Gemini misreads about one
               Greek character in seven on our early printed pages. There is published ground truth for
               Greek print: line transcriptions of the Patrologia Graeca, released on{' '}
-              <a href="https://zenodo.org/records/7296539" className={A}>Zenodo</a>, and a reported
+              <a href="https://zenodo.org/records/7296539">Zenodo</a>, and a reported
               fine-tune of the open Qwen3-VL-8B model at about 1 percent error. We have not yet tested it
               ourselves (<Issue n={4744} />). The same pattern holds for Syriac, Tibetan, Persian and the
               Chinese imperial library, each with a published text to align against.
@@ -253,15 +307,15 @@ export default function TrainingOurOwnModelsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td className={TD}><a href="https://arxiv.org/pdf/2601.06400v1" className={A}>Dharmamitra (MITRA)</a></td><td className={TD}>Open translation models from Sanskrit, Tibetan and Classical Chinese into English, trained on 1.74 million mined parallel sentences</td></tr>
-                <tr><td className={TD}><a href="https://www.bdrc.io/?p=12490" className={A}>Buddhist Digital Resource Center</a></td><td className={TD}>An open Tibetan OCR app, and open Buddhist datasets for AI drawn from over 30 million scanned pages</td></tr>
-                <tr><td className={TD}><a href="https://www.bdrc.io/?p=10237" className={A}>Monlam AI</a></td><td className={TD}>Tibetan OCR, translation and speech models</td></tr>
-                <tr><td className={TD}><a href="https://arxiv.org/pdf/2506.01732" className={A}>Pleias, Common Corpus</a></td><td className={TD}>An open corpus of public-domain text, a model that corrects bad OCR (<a href="https://huggingface.co/PleIAs/OCRonos" className={A}>OCRonos</a>) and one that flags OCR errors word by word (<a href="https://huggingface.co/PleIAs/OCRerrcr" className={A}>OCRerrcr</a>)</td></tr>
-                <tr><td className={TD}><a href="https://allenai.org/blog/olmocr-2" className={A}>Allen Institute, olmOCR</a></td><td className={TD}>An open page-reading model, with its training code</td></tr>
-                <tr><td className={TD}><a href="https://zenodo.org/records/10066219" className={A}>CATMuS</a></td><td className={TD}>Open Kraken models for medieval and early-modern hands</td></tr>
-                <tr><td className={TD}><a href="https://www.maginative.com/article/harvard-releases-massive-public-domain-dataset-for-ai-training/" className={A}>Harvard Institutional Books</a></td><td className={TD}>983,004 public-domain volumes released as an open dataset</td></tr>
-                <tr><td className={TD}><a href="https://transkribus.org/ai-text-recognition" className={A}>Transkribus</a></td><td className={TD}>A paid platform with over 500 handwriting and print models, many trained by its users</td></tr>
-                <tr><td className={TD}><a href="https://en.wikipedia.org/wiki/Dicta_(organization)" className={A}>Dicta</a></td><td className={TD}>Language models for rabbinic Hebrew, trained on the Sefaria and Dicta libraries</td></tr>
+                <tr><td className={TD}><a href="https://arxiv.org/pdf/2601.06400v1">Dharmamitra (MITRA)</a></td><td className={TD}>Open translation models from Sanskrit, Tibetan and Classical Chinese into English, trained on 1.74 million mined parallel sentences</td></tr>
+                <tr><td className={TD}><a href="https://www.bdrc.io/?p=12490">Buddhist Digital Resource Center</a></td><td className={TD}>An open Tibetan OCR app, and open Buddhist datasets for AI drawn from over 30 million scanned pages</td></tr>
+                <tr><td className={TD}><a href="https://www.bdrc.io/?p=10237">Monlam AI</a></td><td className={TD}>Tibetan OCR, translation and speech models</td></tr>
+                <tr><td className={TD}><a href="https://arxiv.org/pdf/2506.01732">Pleias, Common Corpus</a></td><td className={TD}>An open corpus of public-domain text, a model that corrects bad OCR (<a href="https://huggingface.co/PleIAs/OCRonos">OCRonos</a>) and one that flags OCR errors word by word (<a href="https://huggingface.co/PleIAs/OCRerrcr">OCRerrcr</a>)</td></tr>
+                <tr><td className={TD}><a href="https://allenai.org/blog/olmocr-2">Allen Institute, olmOCR</a></td><td className={TD}>An open page-reading model, with its training code</td></tr>
+                <tr><td className={TD}><a href="https://zenodo.org/records/10066219">CATMuS</a></td><td className={TD}>Open Kraken models for medieval and early-modern hands</td></tr>
+                <tr><td className={TD}><a href="https://www.maginative.com/article/harvard-releases-massive-public-domain-dataset-for-ai-training/">Harvard Institutional Books</a></td><td className={TD}>983,004 public-domain volumes released as an open dataset</td></tr>
+                <tr><td className={TD}><a href="https://transkribus.org/ai-text-recognition">Transkribus</a></td><td className={TD}>A paid platform with over 500 handwriting and print models, many trained by its users</td></tr>
+                <tr><td className={TD}><a href="https://en.wikipedia.org/wiki/Dicta_(organization)">Dicta</a></td><td className={TD}>Language models for rabbinic Hebrew, trained on the Sefaria and Dicta libraries</td></tr>
               </tbody>
             </table>
           </div>

@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import DrebbelNetwork from '@/components/blog/DrebbelNetwork';
+import PageFigure from '@/components/articles/PageFigure';
+import SourceQuote from '@/components/articles/SourceQuote';
 import { withArticleMeta } from '@/lib/article-metadata';
 
 // Sources: the research dossier for #5898 (sourcelibrary-ops research/drebbel-blog:
@@ -9,6 +11,11 @@ import { withArticleMeta } from '@/lib/article-metadata';
 // checked against the page's stored translation on 2026-10-06. Claims the dossier could not
 // document are listed in "What we could not confirm", not asserted. Catalogue problems found
 // along the way are #6025.
+//
+// Page images are the library's archived scans, each checked by eye on 2026-10-18. Reader
+// pages (?page=N) are scan numbers; the printed page number is given where it differs.
+// The Tractatus duo we hold is the Geneva printing of 1628 (title page, scan 1), not the
+// Hamburg edition of 1621.
 
 const TITLE = 'The Engraver Who Went Under the Thames';
 const DESCRIPTION =
@@ -23,11 +30,33 @@ export const metadata: Metadata = withArticleMeta('drebbel', {
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';
-const A = 'text-accent-rust hover:underline';
-const Q = 'border-l-2 border-accent-rust/40 pl-5 my-6 font-body text-primary leading-relaxed';
+const Q = 'border-l-2 border-accent-gold/60 pl-5 my-6 font-body text-primary leading-relaxed';
 const CITE = 'block mt-2 text-sm text-muted not-italic';
 
-const TREATISES = '/book/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4';
+const IMG = (bookId: string, page: number) => `https://images.sourcelibrary.org/archived/${bookId}/${page}.jpg`;
+
+const TREATISES = 'drebbel-tractatus-duo-1628-latin-laurembergius';
+const TREATISES_ID = '9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4';
+const TRACTAT = 'ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel';
+const TRACTAT_ID = '6a9058b07f6818cc17cd5a93';
+const ALKMAAR = 'kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel';
+const TYMME = 'a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm';
+const WILKINS = 'mathematicall-magick-wilkins';
+const MERSENNE = 'cogitata-physico-mathematica-mersenne';
+const HUYGENS = 'christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens';
+const BOYLE_AIR = 'the-general-history-of-the-air-boyle-robert';
+const SORBIERE = 'relation-dun-voyage-en-angleterre-ou-sont-touchees-plusieurs-choses-qu';
+
+const TREATISES_SOURCE = (
+  <>
+    Drebbel, <em>Tractatus duo</em> (Geneva, 1628)
+  </>
+);
+const LETTER_SOURCE = (
+  <>
+    Drebbel, letter to James I, in <em>Tractatus duo</em> (Geneva, 1628)
+  </>
+);
 
 function Quote({ children, cite }: { children: React.ReactNode; cite: React.ReactNode }) {
   return (
@@ -61,7 +90,7 @@ export default function DrebbelPage() {
           cite={
             <>
               Isaac Beeckman, <em>Journal</em>, ed. de Waard, vol. 2 (
-              <a href="https://www.dbnl.org/tekst/beec002jour02_01/" className={A}>DBNL</a>). &ldquo;That Drebbel in England has
+              <a href="https://www.dbnl.org/tekst/beec002jour02_01/">DBNL</a>). &ldquo;That Drebbel in England has
               made a boat with which he can travel under and above the water as he likes.&rdquo;
             </>
           }
@@ -72,6 +101,23 @@ export default function DrebbelPage() {
           It is the earliest dated report of the submarine. Beeckman then worked out how such a boat might
           work, with a sealed ballast tank and a tap.
         </p>
+
+        <div className="max-w-sm mx-auto">
+          <PageFigure
+            src={IMG(TRACTAT_ID, 4)}
+            alt="Engraved oval portrait of a bearded man in a fur-trimmed coat, inscribed Cornelis Drebbel Alcmariensis, on an otherwise blank page with a library stamp"
+            href={`/book/${TRACTAT}?page=4`}
+            source={
+              <>
+                <em>Ein kurtzer Tractat von der Natur der Elementen</em> (Leiden, 1608)
+              </>
+            }
+          >
+            &ldquo;Cornelis Drebbel Alcmariensis&rdquo;: the portrait in the German translation of his treatise.
+            The stamp is the Bayerische Staatsbibliothek&rsquo;s, Munich.
+          </PageFigure>
+        </div>
+
         <p className={P}>
           Cornelis Drebbel is remembered for the submarine, a perpetual-motion clock, an early microscope and
           a self-regulating oven that counts as the first thermostat. He wrote very little. Most of what we
@@ -90,9 +136,29 @@ export default function DrebbelPage() {
             Drebbel was born in Alkmaar and trained as an engraver under Hendrick Goltzius in Haarlem. In 1595
             he married Goltzius&rsquo;s younger sister, Sophia. Two years later he engraved a large plan of his
             home town, and we hold it:{' '}
-            <Link href="/book/kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel" className={A}>the 1597 map of Alkmaar</Link>, signed
+            <Link href={`/book/${ALKMAAR}`}>the 1597 map of Alkmaar</Link>, signed
             &ldquo;Cornelius Drebbel sculptor&rdquo;.
           </p>
+          <PageFigure
+            wide
+            src="https://images.sourcelibrary.org/pages/69b525de2f891867c1ae5d21/0001.jpg"
+            alt="Engraved bird’s-eye plan of Alkmaar inside its star-shaped ramparts, with fields and canals around it, a coat of arms held by two lions top left and an ornamental cartouche bottom right"
+            href={`/book/${ALKMAAR}`}
+            source={<>Drebbel, map of Alkmaar (1597)</>}
+            credit="Allard Pierson, University of Amsterdam; free of known copyright restrictions."
+          >
+            The whole sheet: the walled town seen from above, its streets drawn house by house.
+          </PageFigure>
+          <PageFigure
+            src="/articles/drebbel/alkmaar-cartouche.jpg"
+            alt="Detail of the map: a strapwork cartouche framing Latin verses in praise of Alkmaar, with a small tablet below reading Cornelius Drebbel Sculptor"
+            href={`/book/${ALKMAAR}`}
+            source={<>Map of Alkmaar (1597), detail</>}
+            credit="Allard Pierson, University of Amsterdam; free of known copyright restrictions."
+          >
+            The cartouche in the lower right corner, with Latin verses on the town signed I.T., and the
+            engraver&rsquo;s signature on the tablet beneath: &ldquo;Cornelius Drebbel Sculptor&rdquo;.
+          </PageFigure>
           <p className={P}>
             By 1598 he had turned to machines. That year the States General of the Dutch Republic granted him a
             patent for an engine to raise fresh water &ldquo;like a fountain &hellip; to a height of twenty,
@@ -108,35 +174,51 @@ export default function DrebbelPage() {
           <p className={P}>
             The clock that never needed winding made his name. He took it to England around 1605, where James I
             and Prince Henry lodged him at Eltham. In 1612 the clergyman Thomas Tymme published the first picture
-            of it, describing &ldquo;a most strange and wittie invention of another Archimedes &hellip; as it was
+            of it, describing &ldquo;a most strange and wittie inuention of another Archimedes &hellip; as it was
             presented to the Kings most royall hands, by Cornelius Drebble of Alchmar in Holland&rdquo; (
-            <Link href="/book/a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm" className={A}>Tymme, <em>A Dialogue Philosophicall</em></Link>).
+            <Link href={`/book/${TYMME}?page=7`}>Tymme, <em>A Dialogue Philosophicall</em>, To the Reader</Link>).
             Tymme used it as an argument that the earth stands still. Thirty-six years later John Wilkins found
             that absurd.
           </p>
+          <div className="max-w-md mx-auto">
+            <PageFigure
+              src={IMG('6ac3ade2864e04424c043050', 69)}
+              alt="Woodcut of a domed pavilion on four columns sheltering a globe inside a glass ring, held up by a small figure between two sphinxes, with the letters B and C marking the parts"
+              href={`/book/${TYMME}?page=69`}
+              source={
+                <>
+                  Thomas Tymme, <em>A Dialogue Philosophicall</em> (1612)
+                </>
+              }
+            >
+              Tymme&rsquo;s woodcut of the instrument. In his dialogue the globe stands for the earth, the hollow
+              ring C is &ldquo;a ring of Cristall Glasse&rdquo; with water in it that rises and falls twice a day
+              like the tide, and the little globe B is the moon.
+            </PageFigure>
+          </div>
           <p className={P}>
             What drove it? Drebbel&rsquo;s answer, in a letter to King James printed with his treatise, is that
             he found the cause by watching fire:
           </p>
-          <Quote
-            cite={
-              <>
-                Drebbel, letter to James I, in <em>Two Treatises</em> (1621),{' '}
-                <Link href={`${TREATISES}?page=65`} className={A}>page 65</Link>. Source Library translation.
-              </>
-            }
+          <SourceQuote
+            book={TREATISES}
+            page={65}
+            printedPage={66}
+            src={IMG(TREATISES_ID, 65)}
+            pageAlt="Page 66 of Drebbel’s Latin letter to James I, headed Epistola"
+            source={<>{LETTER_SOURCE}, Source Library translation</>}
           >
             Seeking with skillful inquiry that hidden cause which always forced water downward, I finally
             discovered it through the observation of the wonderful nature of fire. &hellip; I understood how the
             earth is carried in the middle of the air, how the water encircles the earth like a ring, and how all
             things seek the center, except for fire.
-          </Quote>
+          </SourceQuote>
           <p className={P}>
             Others guessed at the mechanism. Beeckman heard in 1622 that it was two glass half-rings holding a
             liquid that went up and down with the tide. The Jesuit Gaspar Schott wrote in 1657 that Drebbel
             &ldquo;is said to have enclosed two opposing and highly antipathetic liquids in a glass ring, which
             fought against each other in a perpetual struggle&rdquo; (
-            <Link href="/book/mechanica-hydraulico-pneumatica-schott?page=475" className={A}>Schott, page 475</Link>). The
+            <Link href="/book/mechanica-hydraulico-pneumatica-schott?page=475">Schott, <em>Mechanica hydraulico-pneumatica</em>, p. 377</Link>). The
             likeliest explanation today is that the liquid rose and fell with changes in air temperature and
             pressure: a thermometer and barometer made into a clock.
           </p>
@@ -162,45 +244,81 @@ export default function DrebbelPage() {
           <p className={P}>
             Drebbel&rsquo;s one treatise, on the elements, came out in Dutch in 1604 and in Latin at Hamburg in
             1621, translated by Petrus Lauremberg; Morsius edited its companion treatise on the Fifth Essence.
-            We hold the <Link href={TREATISES} className={A}>Latin edition with an English translation</Link>.
+            We hold the Latin in a <Link href={`/book/${TREATISES}`}>Geneva printing of 1628, with an English translation</Link>,
+            and the <Link href={`/book/${TRACTAT}`}>German translation printed at Leiden in 1608</Link>.
             Its voice is not what one expects from a court engineer. He claims nothing from the authorities:
           </p>
-          <Quote
-            cite={
-              <>
-                <em>Two Treatises</em>, <Link href={`${TREATISES}?page=11`} className={A}>page 11</Link>.
-              </>
-            }
+          <SourceQuote
+            book={TREATISES}
+            page={11}
+            printedPage={12}
+            src={IMG(TREATISES_ID, 11)}
+            pageAlt="Page 12 of the Latin treatise on the elements, beginning “communico, quae ipse a Natura hausi atque accepi”"
+            source={TREATISES_SOURCE}
+            original="… communico, quæ ipse à Naturâ hausi atque accepi."
           >
             I share those things which I myself have drawn and received from Nature.
-          </Quote>
-          <Quote
-            cite={
-              <>
-                Letter to James I, <Link href={`${TREATISES}?page=67`} className={A}>page 67</Link>.
-              </>
-            }
+          </SourceQuote>
+          <SourceQuote
+            book={TREATISES}
+            page={67}
+            printedPage={68}
+            src={IMG(TREATISES_ID, 67)}
+            pageAlt="Page 68 of Drebbel’s letter to James I, ending “Nam (Deum testor) neque veterum scriptis, neque cuiusquam auxilio hic usus sum”"
+            source={LETTER_SOURCE}
           >
             For (I call God to witness) I have used here neither the writings of the ancients nor the help of any
             man&hellip;
-          </Quote>
+          </SourceQuote>
           <p className={P}>And he describes the elements as something he can arrange by hand:</p>
-          <Quote
-            cite={
-              <>
-                Letter to James I, <Link href={`${TREATISES}?page=66`} className={A}>page 66</Link>.
-              </>
-            }
+          <SourceQuote
+            book={TREATISES}
+            page={66}
+            printedPage={67}
+            src={IMG(TREATISES_ID, 66)}
+            pageAlt="Page 67 of Drebbel’s letter to James I, headed Epistola"
+            source={LETTER_SOURCE}
           >
             I can suspend earth in the middle of water, water in the middle of air, and air in the middle of fire
             within a closed glass vessel &hellip; And in this way, I make the high low, the low high, the light
             heavy, and the heavy light.
-          </Quote>
+          </SourceQuote>
           <p className={P}>
             Athanasius Kircher took that glass &ldquo;sphere of elements&rdquo; seriously enough to argue about
             how it could be made (
-            <Link href="/book/magnes-sive-de-arte-magnetica-kircher?page=727" className={A}>Kircher, <em>Magnes</em>, page 727</Link>).
+            <Link href="/book/magnes-sive-de-arte-magnetica-kircher?page=727">Kircher, <em>Magnes</em>, p. 309</Link>).
           </p>
+          <div className="max-w-md mx-auto">
+            <PageFigure
+              src={IMG('69527376ab34727b1f04948a', 727)}
+              alt="Printed Latin page headed Magnetismus elementorum with a diagram of nested circles lettered A to Z over a half circle"
+              href="/book/magnes-sive-de-arte-magnetica-kircher?page=727"
+              source={
+                <>
+                  Athanasius Kircher, <em>Magnes</em> (1641), p. 309
+                </>
+              }
+            >
+              Kircher&rsquo;s page on the sphere of elements &ldquo;a Drebbelio adornata&rdquo;, arranged by
+              Drebbel, with his diagram of the elements in nested spheres.
+            </PageFigure>
+          </div>
+          <div className="max-w-md mx-auto">
+            <PageFigure
+              src={IMG(TRACTAT_ID, 17)}
+              alt="Page of German black-letter text above a woodcut of a glass retort hanging from a branch, its neck dipped into a vat of water, with a fire beneath it"
+              href={`/book/${TRACTAT}?page=17`}
+              source={
+                <>
+                  <em>Ein kurtzer Tractat von der Natur der Elementen</em> (Leiden, 1608)
+                </>
+              }
+            >
+              One of the treatise&rsquo;s experiments, from the German edition: an empty glass retort hung with
+              its mouth in a vat of water and a warm fire laid under its belly, to show how heat and cold move
+              air and water, as in wind and rain.
+            </PageFigure>
+          </div>
         </section>
 
         <section className="mb-14">
@@ -213,7 +331,7 @@ export default function DrebbelPage() {
             cite={
               <>
                 Boyle, <em>New Experiments Physico-Mechanicall</em> (1660) (
-                <a href="https://archive.org/details/bim_early-english-books-1641-1700_new-experiments-physico-_boyle-robert_1660" className={A}>Internet Archive</a>).
+                <a href="https://archive.org/details/bim_early-english-books-1641-1700_new-experiments-physico-_boyle-robert_1660">Internet Archive</a>).
               </>
             }
           >
@@ -227,16 +345,44 @@ export default function DrebbelPage() {
             restored it from &ldquo;a Chymicall liquor&rdquo; carried in the boat. The French traveller Balthasar
             de Monconys heard much the same in London in 1663: Drebbel &ldquo;knew how to extract a subtle spirit
             from the air&rdquo; (
-            <Link href="/book/journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys?page=43" className={A}>Monconys, page 43</Link>).
+            <Link href="/book/journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys?page=43">Monconys, <em>Journal des voyages</em>, p. 33</Link>).
           </p>
           <p className={P}>
-            By 1648 Wilkins could write in{' '}
-            <Link href="/book/mathematicall-magick-wilkins" className={A}><em>Mathematicall Magick</em></Link> that a
-            submarine was &ldquo;beyond all Question, because it hath been already experimented here in England by
-            Cornelius Dreble&rdquo;. In Paris, Marin Mersenne called it &ldquo;well known that a small ship was
-            constructed by Cornelius Drebbel in England, which swam while submerged under the waters&rdquo; (
-            <Link href="/book/cogitata-physico-mathematica-mersenne?page=309" className={A}>Mersenne, page 309</Link>).
+            By 1648 John Wilkins could write in{' '}
+            <Link href={`/book/${WILKINS}`}><em>Mathematicall Magick</em></Link> that a submarine was possible:
           </p>
+          <SourceQuote
+            book={WILKINS}
+            page={206}
+            printedPage={178}
+            src={IMG('69aebe60c0472fef6455a8f3', 206)}
+            pageAlt="Page 178 of Mathematicall Magick, with the start of chapter 5, Concerning the possibility of framing an Ark for submarine Navigations"
+            source={
+              <>
+                John Wilkins, <em>Mathematicall Magick</em> (1648), book 2, chapter 5
+              </>
+            }
+          >
+            &hellip;beyond all question, because it hath been already experimented here in England by Cornelius
+            Dreble&hellip;
+          </SourceQuote>
+          <p className={P}>In Paris, Marin Mersenne had called it</p>
+          <SourceQuote
+            book={MERSENNE}
+            page={309}
+            printedPage={207}
+            src={IMG('69af0dab9f13b61d0a6c6105', 309)}
+            pageAlt="Page 207 of Mersenne’s Cogitata physico-mathematica, with the corollary De nauibus sub aqua natantibus"
+            source={
+              <>
+                Marin Mersenne, <em>Cogitata physico-mathematica</em> (1644), &ldquo;De nauibus sub aqua natantibus&rdquo;
+              </>
+            }
+            original="Notum est nauiculam à Cornelio Drebellio in Anglia constructam, quæ sub aquis depressa natabat"
+          >
+            well known that a small ship was constructed by Cornelius Drebbel in England, which swam while
+            submerged under the waters
+          </SourceQuote>
         </section>
 
         <section className="mb-14">
@@ -252,18 +398,23 @@ export default function DrebbelPage() {
             His son Christiaan, born four years before Drebbel died, later credited him with the compound
             microscope:
           </p>
-          <Quote
-            cite={
+          <SourceQuote
+            book={HUYGENS}
+            page={245}
+            printedPage={221}
+            src={IMG('69b6c2618566c838146599f0', 245)}
+            pageAlt="Page 221 of Christiaan Huygens’s Opuscula postuma, headed Dioptrica, with the section De microscopiis"
+            source={
               <>
-                Christiaan Huygens, <em>Opuscula postuma</em> (1703),{' '}
-                <Link href="/book/christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens?page=245" className={A}>page 245</Link>.
+                Christiaan Huygens, <em>Opuscula postuma</em> (1703), &ldquo;De microscopiis&rdquo;
               </>
             }
+            original="Anno autem 1621 apud Drebelium nostratem conspecta fuisse Microscopia hujusmodi Londini in Britannia, ipsi qui adfuerant sæpe mihi narraverunt, ipsumque primum auctorem eorum tunc habitum."
           >
             As for the year 1621, those who were present have often told me that such microscopes were seen in
             London, England, at the home of our countryman, Drebelius, and that he was then considered the first
             inventor of them.
-          </Quote>
+          </SourceQuote>
           <p className={P}>
             The microscopes travelled fast. In 1622 Drebbel sent Jacob Kuffler, brother of his future
             sons-in-law, to sell them abroad. Kuffler demonstrated one in Paris before Marie de&rsquo; Medici,
@@ -295,6 +446,35 @@ export default function DrebbelPage() {
             Christopher Wren built a furnace &ldquo;like Mr Kuffler&rsquo;s&rdquo;, and a grandson&rsquo;s recipe
             book preserved the oven&rsquo;s design.
           </p>
+          <div className="grid gap-x-8 sm:grid-cols-2 items-start max-w-2xl mx-auto">
+            <PageFigure
+              src={IMG('6ac2798f02c7f994f8506b1e', 68)}
+              alt="Page 56 of Sorbière’s Relation d’un voyage en Angleterre, a narrow page of French text describing a furnace of M. Kuffler"
+              href={`/book/${SORBIERE}?page=68`}
+              source={
+                <>
+                  Samuel Sorbière, <em>Relation d&rsquo;un voyage en Angleterre</em> (1666), p. 56
+                </>
+              }
+            >
+              In his account of England, Samuel Sorbière lists &ldquo;un fourneau de M. Kuffler, gendre de Drebbel&rdquo;, which he
+              had seen at The Hague, that opens and shuts its own registers as it needs more or less heat.
+            </PageFigure>
+            <PageFigure
+              src={IMG('6ac3af023b2f03f7e59cba4e', 101)}
+              alt="Page 81 of Boyle’s General History of the Air, printed English text beginning I shall not digress so far"
+              href={`/book/${BOYLE_AIR}?page=101`}
+              source={
+                <>
+                  Robert Boyle, <em>The General History of the Air</em> (1692), p. 81
+                </>
+              }
+            >
+              A letter Boyle printed in <em>The General History of the Air</em> calls &ldquo;Drebble, that great,
+              singular, learned Mechanick&rdquo; the maker of &ldquo;a Furnace which he could govern to any Degree
+              of Heat&rdquo;.
+            </PageFigure>
+          </div>
           <p className={P}>
             One secret did not survive. Kuffler told Beeckman in 1634 that on his deathbed Drebbel said he could
             make perfect telescopes, with which his children could all become rich, but he died before he wrote
@@ -313,22 +493,12 @@ export default function DrebbelPage() {
           </ul>
         </section>
 
-        <section className="mb-14">
-          <h2 className={H2}>Reading Drebbel in Source Library</h2>
-          <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-6">
-            <li>Drebbel, <Link href={TREATISES} className={A}><em>Two Treatises on the Nature of the Elements and the Fifth Essence</em></Link> (Latin, 1621, with English translation)</li>
-            <li>Drebbel, <Link href="/book/ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel" className={A}><em>Ein kurtzer Tractat von der Natur der Elementen</em></Link> (German, 1608)</li>
-            <li>Drebbel, <Link href="/book/kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel" className={A}>map of Alkmaar</Link> (1597)</li>
-            <li>Tymme, <Link href="/book/a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm" className={A}><em>A Dialogue Philosophicall</em></Link> (1612)</li>
-            <li>Wilkins, <Link href="/book/mathematicall-magick-wilkins" className={A}><em>Mathematicall Magick</em></Link> (1648)</li>
-            <li>Boyle, <Link href="/book/the-general-history-of-the-air-boyle-robert" className={A}><em>The General History of the Air</em></Link> (1692)</li>
-            <li>Monconys, <Link href="/book/journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys" className={A}><em>Journal of the Voyages</em></Link> (1666)</li>
-          </ul>
-          <p className="text-sm text-muted font-body">
-            Translations quoted from Source Library editions are machine translations made with AI, and each page
-            says so.
-          </p>
-        </section>
+        <p className="text-sm text-muted font-body">
+          Translations quoted from Source Library editions are machine translations made with AI, and each page
+          says so. Passages from books printed in English (Tymme, Wilkins, Boyle) are given as printed, with the
+          long s made round. Beeckman&rsquo;s journal and Boyle&rsquo;s <em>New Experiments</em> of 1660 are quoted
+          from outside the library.
+        </p>
       </article>
     </ContentPageLayout>
   );

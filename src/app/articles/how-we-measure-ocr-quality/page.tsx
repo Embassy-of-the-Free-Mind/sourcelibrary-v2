@@ -2,6 +2,20 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import MethodSteps from './MethodSteps';
+import PairedChart from './PairedChart';
+
+// Pictures: every leaf below is a page of the sealed Chinese benchmark draws (registries
+// scripts/eval/benchmark/chinese.json and chinese-ext.json, by-eye classes in
+// scripts/eval/benchmark/script-class/), checked by eye on 2026-10-18. The chart data is in
+// paired-pages.ts, which says which result files it is copied from.
+const IMG = 'https://images.sourcelibrary.org/archived';
+const YUHAI = '/book/vol-64-24?page=118'; // 玉海 vol. 64, Siku Quanshu fair copy, benchmark page chinese-0db3cb-p118
+const WOODBLOCK = '/book/golden-mirror-of-medicine-vol-2-ed?page=109'; // 御纂醫宗金鑑, by-eye class woodblock, chinese-ext-d9f7a0-p109
+const TYPESET = '/book/untitled-27?page=24'; // 冥報記, by-eye class typeset, chinese-ext-1b5581-p24
+const CATASTROPHE = '/book/vol-81-19?page=21'; // 御定淵鑑類函 vol. 81, chinese-ext-0e588a-p21
+const EVAL_TREE = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6a3ceccb4701a906f10db3cb/118.jpg';
 
@@ -64,8 +78,10 @@ export default function HowWeMeasureOcrQualityPage() {
           So the design starts from a rule that is expensive to keep: a page counts as evidence only when we hold an independent reference for it, a published edition of the same text aligned to that leaf. Everything else in this note follows from making that rule affordable at scale.
         </p>
 
+        <MethodSteps />
+
         {/* --- 2. The sample --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="the-sample" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           The sample: one page per book, sealed before anyone looks
         </h2>
 
@@ -82,7 +98,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 3. Look at the leaf --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="look-at-the-leaf" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           Look at the leaf before scoring
         </h2>
 
@@ -90,17 +106,37 @@ export default function HowWeMeasureOcrQualityPage() {
           The catalogue knows the work. It does not know the page. A title dated 1716 can be a modern typeset reprint with reading marks; a &ldquo;Greek&rdquo; book can open to a Latin preface; a &ldquo;Chinese woodblock&rdquo; stratum can turn out to be something else entirely. So every sealed page is classified by eye before any score is computed: the language actually on the leaf, whether it is print or manuscript, and the typeface or hand. Cells are formed from the observed class, never from the draw.
         </p>
 
-        <figure className="my-10">
-          <img
-            src={HERO}
-            alt="A leaf of the Yuhai encyclopaedia in the Siku Quanshu fair copy: regular-script brush writing in ruled columns under the imperial header"
-            className="w-full rounded shadow-md"
-            loading="lazy"
-          />
-          <figcaption className="text-sm text-muted mt-3">
-            A leaf from the <em>Yuhai</em> in the Siku Quanshu fair copy. Brush-written regular script in ruled columns, under the header 欽定四庫全書. To a model reader it looks like print; it is manuscript, and so are most of the Chinese pages we hold.
-          </figcaption>
-        </figure>
+        <div className="not-prose my-10">
+          <div className="grid grid-cols-3 gap-3 items-start [&_figure]:my-0">
+            <PageFigure
+              src={HERO}
+              alt="A leaf of the Yuhai encyclopaedia in the Siku Quanshu fair copy: regular-script brush writing in ruled columns under the imperial header"
+              href={YUHAI}
+              source={<em>Yuhai</em>}
+            >
+              Manuscript.
+            </PageFigure>
+            <PageFigure
+              src={`${IMG}/69e80681fdad300064d9f7a0/109.jpg`}
+              alt="A woodblock-printed page of the Yuzuan Yizong jinjian on yellowed paper, carved characters in ruled columns with smaller double-line commentary"
+              href={WOODBLOCK}
+              source={<em>Yizong jinjian</em>}
+            >
+              Woodblock.
+            </PageFigure>
+            <PageFigure
+              src={`${IMG}/6a3c6cd301fe4f593c1b5581/24.jpg`}
+              alt="A page of the Mingbao ji set in modern movable type, even characters in ruled columns under the chapter heading"
+              href={TYPESET}
+              source={<em>Mingbao ji</em>}
+            >
+              Typeset.
+            </PageFigure>
+          </div>
+          <p className="mt-3 text-sm text-muted leading-relaxed">
+            Three leaves from the sealed Chinese draws, as they were classified by eye. On the left, a leaf from the <Link href={YUHAI}><em>Yuhai</em></Link> in the Siku Quanshu fair copy. Brush-written regular script in ruled columns, under the header 欽定四庫全書. To a model reader it looks like print; it is manuscript, and so are most of the Chinese pages we hold. Beside it, a carved woodblock page and a modern typeset edition.
+          </p>
+        </div>
 
         <p className="text-secondary leading-relaxed mb-6">
           The Chinese cell is the cautionary example. It was drawn to test a specialist engine on woodblock print. Classified page by page, 24 of its 40 leaves were Siku Quanshu fair copies, brush-written regular script under the imperial header, 10 were modern typeset Buddhist editions, and 3 were woodblock. That is not a sampling accident. About 11,980 of our 13,117 Chinese books are Siku Quanshu volumes, and the copies also arrive under plain titles, so a second draw filtered to non-Siku titles still came back half manuscript. The engine verdict everyone had been reading as &ldquo;woodblock&rdquo; was a verdict on brush manuscript, which is also the class that holds nearly every Chinese page we serve.
@@ -111,7 +147,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 4. References --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="references" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           References: a published edition aligned to the page, or no score
         </h2>
 
@@ -128,7 +164,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 5. Arms and controls --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="arms-and-controls" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           Arms and controls
         </h2>
 
@@ -145,7 +181,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 6. Metrics --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="what-we-measure" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           What we measure on each page
         </h2>
 
@@ -169,7 +205,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 7. Grades --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="evidence-grades" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           Evidence grades, and why the line is at fifty
         </h2>
 
@@ -216,7 +252,7 @@ export default function HowWeMeasureOcrQualityPage() {
         </p>
 
         {/* --- 8. Preregistration --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="preregistration" className="text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           Preregistration: the rule is written before the run
         </h2>
 
@@ -252,7 +288,7 @@ export default function HowWeMeasureOcrQualityPage() {
             <tbody>
               <tr className={row}>
                 <td className={td}>Median paired difference in character error rate</td>
-                <td className={tdR}>2.8 points better (interval 1.4 to 3.6)</td>
+                <td className={tdR}>2.8 points better (interval 1.5 to 4.7)</td>
               </tr>
               <tr className={row}>
                 <td className={td}>Pages won / lost / tied</td>
@@ -274,9 +310,30 @@ export default function HowWeMeasureOcrQualityPage() {
           </table>
         </div>
 
+        <div className="my-10">
+          <PairedChart
+            source={
+              <>
+                Per-page character error rates of the 69 referenced Siku manuscript pages, one per book, from the 18 September run: <code className="font-sans">results/benchmark/chinese-2026-09-18.json</code> and <code className="font-sans">chinese-ext-2026-09-18.json</code> in the <a href={EVAL_TREE}>evaluation scripts</a>, the pages pooled in <code className="font-sans">decisions/cost-lane-chinese-2026-09-18.json</code>. Production is gemini-3.1-flash-lite.
+              </>
+            }
+          />
+        </div>
+
         <p className="text-secondary leading-relaxed mb-8">
           Verdict, applied from the preregistered rule: Paddle passes as a cost lane for Siku manuscript and fails as the better reader. The 14 catastrophic pages on the production side are one failure read by eye, vertical columns transcribed as horizontal rows, and that failure is what the cheaper engine does not have. The run cost 35 cents of API calls and 44 minutes of a leased GPU, about 55 cents. The sizing of a lane over the two million pages this class covers is the next, separate decision.
         </p>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src={`${IMG}/6a3cee074701a906f10e588a/21.jpg`}
+            alt="A Siku Quanshu manuscript leaf of the Yuanjian leihan: brush-written columns read from right to left, large headwords with smaller double-line notes"
+            href={CATASTROPHE}
+            source={<em>Yuanjian leihan</em>}
+          >
+            One of the 14. On this leaf the production engine scored 91.8 percent error and PaddleOCR-VL 8.9. Read by eye, production starts at the left-hand column of a leaf written right to left and repeats a line; Paddle reads the columns in order.
+          </PageFigure>
+        </div>
 
         {/* --- 10. Limits --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -293,12 +350,12 @@ export default function HowWeMeasureOcrQualityPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The sealed registries, references, by-eye classes, preregistrations and results are in the public repository on{' '}
-          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval" className="text-accent-rust hover:underline">GitHub</a>, under the evaluation scripts, and each decision is posted with its table on the issue that asked for it. The evidence table itself is regenerated from the committed result files after every run, with the grade printed on every cell.
+          <a href={EVAL_TREE}>GitHub</a>, under the evaluation scripts, and each decision is posted with its table on the issue that asked for it. The evidence table itself is regenerated from the committed result files after every run, with the grade printed on every cell.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
           Source Library is a project of the{' '}
-          <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> (Bibliotheca Philosophica Hermetica) in Amsterdam.
+          <a href="https://embassyofthefreemind.com">Embassy of the Free Mind</a> (Bibliotheca Philosophica Hermetica) in Amsterdam.
         </p>
 
       </article>

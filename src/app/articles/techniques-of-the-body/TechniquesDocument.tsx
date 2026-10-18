@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import TechniquesTimeline from './TechniquesTimeline';
 import './body.css';
 
 // Shared by /blog/techniques-of-the-body and its Spanish twin /es/blog/techniques-of-the-body.
@@ -42,6 +43,35 @@ export const COPY: Record<DocLang, {
 const FONTS =
   'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Serif+Tibetan:wght@400&family=Noto+Serif+Hebrew:wght@400&family=Noto+Serif+Tamil:wght@400&display=swap';
 
+/**
+ * Every picture in the body is a plain <img> in the document HTML; route the ones in
+ * public/articles/ through the image optimiser (AVIF or WebP at the width shown), as
+ * ArticleImage does for the other articles. Widths must be in next.config.ts
+ * images.deviceSizes / imageSizes. The woodcut thumbnails (year and brocades) show at
+ * 150 to 180 px; plates in the grid at about 300 px; wide figures across the column.
+ */
+const OPT_WIDTHS = [400, 640, 828, 1200, 1920];
+const optimised = (src: string, w: number) => `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=75`;
+
+export function optimiseImages(html: string): string {
+  const wideRanges = [...html.matchAll(/<figure class="wide">[\s\S]*?<\/figure>/g)].map(
+    (m) => [m.index!, m.index! + m[0].length] as const,
+  );
+  return html.replace(/<img ([^>]*?)src="(\/articles\/[^"]+)"([^>]*)>/g, (tag, pre: string, src: string, post: string, at: number) => {
+    const attrs = pre + post;
+    const width = Number(/\bwidth="(\d+)"/.exec(attrs)?.[1] || 0);
+    if (width && width <= 180) {
+      // woodcut thumbnail: one size, twice its display width
+      return `<img ${pre}src="${optimised(src, 400)}"${post}>`;
+    }
+    const inWide = wideRanges.some(([a, b]) => at > a && at < b);
+    const sizes = inWide ? '(max-width: 768px) 100vw, 920px' : '(max-width: 520px) 100vw, 320px';
+    const ws = OPT_WIDTHS.filter((w) => !width || w < width * 1.2);
+    const set = (ws.length ? ws : [400]).map((w) => `${optimised(src, w)} ${w}w`).join(', ');
+    return `<img ${pre}src="${optimised(src, 828)}" srcset="${set}" sizes="${sizes}"${post}>`;
+  });
+}
+
 type TocSection = { id: string; label: string; subs: { id: string; label: string }[] };
 
 /** Regions (section.sec + h2) and their practices (div.sub + h3), in document order. */
@@ -58,6 +88,11 @@ export function tableOfContents(html: string): TocSection[] {
 export default function TechniquesDocument({ lang, body }: { lang: DocLang; body: string }) {
   const c = COPY[lang];
   const toc = tableOfContents(body);
+  const html = optimiseImages(body);
+  // split after the legend paragraph; the opening <div class="wrap"> is not needed for layout
+  const legendEnd = html.indexOf('</p>', html.indexOf('<p class="legend">')) + 4;
+  const opening = html.slice(0, legendEnd).replace(/^<div class="wrap">/, '');
+  const rest = html.slice(legendEnd).replace(/<\/div>\s*$/, '');
   const other = lang === 'en'
     ? { href: '/es/blog/techniques-of-the-body', label: 'Español', hrefLang: 'es' }
     : { href: '/articles/techniques-of-the-body', label: 'English', hrefLang: 'en' };
@@ -79,7 +114,7 @@ export default function TechniquesDocument({ lang, body }: { lang: DocLang; body
       </div>
       <div className="bodymap">
         <nav className="toc" aria-label={c.contents}>
-          <h2>{c.contents}</h2>
+          <p className="toc-h">{c.contents}</p>
           <ol>
             {toc.map((s) => (
               <li key={s.id}>
@@ -98,7 +133,12 @@ export default function TechniquesDocument({ lang, body }: { lang: DocLang; body
           </ol>
         </nav>
       </div>
-      <article className="bodymap" lang={lang} dangerouslySetInnerHTML={{ __html: body }} />
+      {/* The timeline goes after the opening paragraphs and the legend, before the first section. */}
+      <div className="bodymap" lang={lang} dangerouslySetInnerHTML={{ __html: opening }} />
+      <div className="bodymap">
+        <TechniquesTimeline lang={lang} />
+      </div>
+      <article className="bodymap" lang={lang} dangerouslySetInnerHTML={{ __html: rest }} />
     </ContentPageLayout>
   );
 }

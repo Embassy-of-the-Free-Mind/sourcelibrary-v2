@@ -178,10 +178,9 @@ export default function MayaReligionPage() {
           The Kaua scribe copied a European eclipse table into Maya and kept the Maya way of saying it: &ldquo;chibil uen&rdquo;, &ldquo;chibil uich kin&rdquo;, the moon bitten, the face of the sun bitten (<Leaf book={KAUA} page={121}>p. 121</Leaf>). The same book sets the twenty day names beside the saints of the Church calendar, and gives the katun prophecies in which <em>kinich Kakmo</em>, the fire macaw, is the omen of 8 Ahau at Chichén Itzá (<Leaf book={KAUA} page={11}>p. 11</Leaf>, <Leaf book={KAUA} page={168}>p. 168</Leaf>). Landa says the Maya told the hour at night &ldquo;por el luzero y las cabrillas&rdquo;, by Venus and the Pleiades (<Leaf book={LANDA} page={325}>p. 202</Leaf>).
         </Para>
 
-        <FigRow>
-          <Fig book={KAUA} page={121} src={`${A}${KAUA}/121.jpg`} alt="Page of the Chilam Balam of Kaua with an eclipse table" caption={<>Chilam Balam of Kaua: the sun and moon &ldquo;bitten&rdquo;.</>} />
+        <div className="max-w-md mx-auto">
           <Fig book={KAUA} page={11} src={`${A}${KAUA}/11.jpg`} alt="Photograph of an opening of the Book of Chilam Balam of Kaua: day names beside saints' names" caption={<>Kaua: the day names beside the saints.</>} />
-        </FigRow>
+        </div>
 
         <H2>Rites</H2>
 
