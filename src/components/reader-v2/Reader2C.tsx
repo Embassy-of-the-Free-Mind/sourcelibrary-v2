@@ -2301,6 +2301,36 @@ function Filmstrip({
   );
 }
 
+/**
+ * Page turns floating on the scan, halfway down its left and right edges —
+ * where the reader before v2 kept them, and where readers look for them. The
+ * bar's chevrons are 15px glyphs in a corner. Positioned against the nearest
+ * positioned parent, which does not scroll, so they hold still over the page.
+ */
+function ScanPageTurns({ onPrev, onNext, prevLabel, nextLabel, leftInset = 0 }: {
+  onPrev?: () => void;
+  onNext?: () => void;
+  prevLabel: string;
+  nextLabel: string;
+  leftInset?: number;
+}) {
+  const cls = 'absolute top-1/2 -translate-y-1/2 z-30 w-10 h-10 flex items-center justify-center backdrop-blur-sm transition-colors bg-black/40 hover:bg-black/60 text-white/90 hover:text-white';
+  return (
+    <>
+      {onPrev && (
+        <button type="button" aria-label={prevLabel} onClick={onPrev} className={cls} style={{ left: leftInset + 8 }}>
+          <ChevronLeft size={22} />
+        </button>
+      )}
+      {onNext && (
+        <button type="button" aria-label={nextLabel} onClick={onNext} className={`${cls} right-2`}>
+          <ChevronRight size={22} />
+        </button>
+      )}
+    </>
+  );
+}
+
 type ReaderState = ReturnType<typeof useReaderV2>;
 
 /**
@@ -3857,6 +3887,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   onNaturalSize={onScanNaturalSize}
                   onEdgePageTurn={onScanEdgeTurn}
                 />
+                <ScanPageTurns
+                  onPrev={prevPage ? r.goPrev : undefined}
+                  onNext={nextPage ? r.goNext : undefined}
+                  prevLabel={t.toolbar.previousPage}
+                  nextLabel={t.toolbar.nextPage}
+                />
                 {witness && (
                   <WitnessCaption
                     witness={witness}
@@ -4018,24 +4054,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
 
-          {/* Page turns at the panes' edges, halfway down. The bar's chevrons
-              are 15px glyphs in a corner, and readers looked for a page turn
-              beside the page, where the reader before v2 kept it. Placed on
-              <main>, which does not scroll, so they hold still while a pane
-              scrolls under them; the left one steps clear of an open drawer. */}
-          {prevPage && (
-            <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
-              className="absolute top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity"
-              style={{ left: (leftPanel ? leftPanelWidth : 0) + 10, background: 'rgba(36,30,22,0.78)', color: '#fdfcf9', boxShadow: '0 2px 10px rgba(30,20,8,0.35)' }}>
-              <ChevronLeft size={24} />
-            </button>
-          )}
-          {nextPage && (
-            <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
-              className="absolute top-1/2 -translate-y-1/2 right-2.5 z-30 w-11 h-11 rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity"
-              style={{ background: 'rgba(36,30,22,0.78)', color: '#fdfcf9', boxShadow: '0 2px 10px rgba(30,20,8,0.35)' }}>
-              <ChevronRight size={24} />
-            </button>
+          {/* With no scan on screen, the page turns sit at the panes' edges
+              instead (see ScanPageTurns); the left one steps clear of an open
+              drawer. <main> does not scroll, so they hold still. */}
+          {!scanPaneShown && (
+            <ScanPageTurns
+              onPrev={prevPage ? r.goPrev : undefined}
+              onNext={nextPage ? r.goNext : undefined}
+              prevLabel={t.toolbar.previousPage}
+              nextLabel={t.toolbar.nextPage}
+              leftInset={leftPanel ? leftPanelWidth : 0}
+            />
           )}
 
           {/* Left slide-out panel (Contents / Search / Settings) */}
@@ -4285,6 +4314,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                   onNaturalSize={onScanNaturalSize}
                   onEdgePageTurn={onScanEdgeTurn}
+                />
+                <ScanPageTurns
+                  onPrev={prevPage ? r.goPrev : undefined}
+                  onNext={nextPage ? r.goNext : undefined}
+                  prevLabel={t.toolbar.previousPage}
+                  nextLabel={t.toolbar.nextPage}
                 />
                 {witness && (
                   <WitnessCaption
