@@ -112,21 +112,20 @@ export function artworkToGalleryItem(a: any) {
 /** Artworks interleaved into the unfiltered default browse: the library's own period. */
 export const DEFAULT_ARTWORK_YEARS = { from: 1400, to: 1800 } as const;
 
-export async function mergedGalleryBrowse(
-  db: any,
-  opts: MergedBrowseOpts,
-): Promise<{ items: any[]; total: number; hasMore: boolean; degraded: boolean }> {
+/**
+ * The two Mongo filters the merged browse reads: plates (gallery_images) and
+ * standalone artworks (books). Exported so a count of "what this browse shows"
+ * (src/lib/gallery-stats.ts) uses the very same filters as the rows.
+ */
+export function mergedBrowseFilters(opts: Pick<MergedBrowseOpts, 'tenantId' | 'source' | 'imageType' | 'minQuality' | 'qualityExplicit' | 'maxPerBook' | 'yearStart' | 'yearEnd'>): {
+  illus: Record<string, unknown>;
+  art: Record<string, unknown>;
+} {
   const {
-    tenantId, source, limit, offset,
-    imageType = null, minQuality = 0.7, maxPerBook = 1000,
-    yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
-    sort = 'quality', seed = 0,
+    tenantId, source, imageType = null, minQuality = 0.7, maxPerBook = 1000,
+    yearStart = null, yearEnd = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
-  // Set when any read fell back to a placeholder. The route answers a degraded
-  // response with no-store, so a shared cache only ever holds a complete one.
-  let degraded = false;
-  const pageIndex = Math.floor(offset / Math.max(1, limit));
   // The natural-aspect masonry shows full pages, so raise the quality floor for
   // the merged browse — blank/low-content plates the old square crop hid now
   // read as empty tiles.
@@ -146,38 +145,18 @@ export async function mergedGalleryBrowse(
     { image_thumb: { $nin: [null, ''] } },
   ] };
 
-  const artPerPage = source === 'artwork' ? limit : Math.max(1, Math.round(limit * 0.25));
-  const illusPerPage = source === 'artwork' ? 0 : limit - artPerPage;
-
-  // ---- illustrations ----
-  let illusDocs: any[] = [];
-  let illusHasMore = false;
-  // Hoisted so the TOTAL below counts the SAME set the items query returns.
-  // See the note at the count site: these used to be two different queries.
-  let illusFilter: Record<string, unknown> | null = null;
-  if (illusPerPage > 0) {
-    const f: Record<string, unknown> = {
-      ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
-      extracted_url: { $ne: null }, image_url: { $ne: null },
-    };
-    if (maxPerBook < 100) f.book_rank = { $lte: maxPerBook };
-    if (imageType) f.type = imageType;
-    if (yearStart !== null || yearEnd !== null) {
-      const y: Record<string, number> = {};
-      if (yearStart !== null) y.$gte = yearStart;
-      if (yearEnd !== null) y.$lte = yearEnd;
-      f.book_year = y;
-    }
-    illusFilter = f;
-    // Order comes from gallery-sort.ts. The default ('quality') round-robins
-    // through books within each quality score: scores are coarse (26k plates
-    // share 0.85), so sorting by book next put 54 plates of one volume in a row.
-    const docs = await findSorted(db.collection('gallery_images'), f, sort, seed, pageIndex * illusPerPage, illusPerPage + 1);
-    illusHasMore = docs.length > illusPerPage;
-    illusDocs = docs.slice(0, illusPerPage);
+  const illus: Record<string, unknown> = {
+    ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
+    extracted_url: { $ne: null }, image_url: { $ne: null },
+  };
+  if (maxPerBook < 100) illus.book_rank = { $lte: maxPerBook };
+  if (imageType) illus.type = imageType;
+  if (yearStart !== null || yearEnd !== null) {
+    const y: Record<string, number> = {};
+    if (yearStart !== null) y.$gte = yearStart;
+    if (yearEnd !== null) y.$lte = yearEnd;
+    illus.book_year = y;
   }
-
-  // ---- artworks (allowDiskUse guards the sort on the 26k-row artwork set) ----
   const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true, ...artHasImage };
   if (imageType) af.resource_type = imageType;
   if (yearStart !== null || yearEnd !== null) {
@@ -193,6 +172,41 @@ export async function mergedGalleryBrowse(
     // facet (source=artwork) and an explicit year range still reach all of them.
     af.year = { $gte: DEFAULT_ARTWORK_YEARS.from, $lte: DEFAULT_ARTWORK_YEARS.to };
   }
+  return { illus, art: af };
+}
+
+export async function mergedGalleryBrowse(
+  db: any,
+  opts: MergedBrowseOpts,
+): Promise<{ items: any[]; total: number; hasMore: boolean; degraded: boolean }> {
+  const { source, limit, offset, visitorId = null, sort = 'quality', seed = 0 } = opts;
+  const filters = mergedBrowseFilters(opts);
+  // Set when any read fell back to a placeholder. The route answers a degraded
+  // response with no-store, so a shared cache only ever holds a complete one.
+  let degraded = false;
+  const pageIndex = Math.floor(offset / Math.max(1, limit));
+  const artPerPage = source === 'artwork' ? limit : Math.max(1, Math.round(limit * 0.25));
+  const illusPerPage = source === 'artwork' ? 0 : limit - artPerPage;
+
+  // ---- illustrations ----
+  let illusDocs: any[] = [];
+  let illusHasMore = false;
+  // Hoisted so the TOTAL below counts the SAME set the items query returns.
+  // See the note at the count site: these used to be two different queries.
+  let illusFilter: Record<string, unknown> | null = null;
+  if (illusPerPage > 0) {
+    const f = filters.illus;
+    illusFilter = f;
+    // Order comes from gallery-sort.ts. The default ('quality') round-robins
+    // through books within each quality score: scores are coarse (26k plates
+    // share 0.85), so sorting by book next put 54 plates of one volume in a row.
+    const docs = await findSorted(db.collection('gallery_images'), f, sort, seed, pageIndex * illusPerPage, illusPerPage + 1);
+    illusHasMore = docs.length > illusPerPage;
+    illusDocs = docs.slice(0, illusPerPage);
+  }
+
+  // ---- artworks (allowDiskUse guards the sort on the 26k-row artwork set) ----
+  const af = filters.art;
   const artProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 };
   const artFind = (skip: number, n: number) => db.collection('books')
     .find(af, { projection: artProjection, allowDiskUse: true })
