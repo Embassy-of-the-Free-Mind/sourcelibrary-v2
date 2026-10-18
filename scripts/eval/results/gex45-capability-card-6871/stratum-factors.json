@@ -1,0 +1,56 @@
+{
+ "glm-ocr/full": {
+  "latin": 0.94,
+  "chinese": 3.25,
+  "table": 0.59,
+  "manuscript": 0.91
+ },
+ "mineru25-pro/full": {
+  "latin": 0.9,
+  "chinese": 1.37,
+  "table": 0.94,
+  "manuscript": 1.29
+ },
+ "olmocr2-fp8/full": {
+  "latin": 0.8,
+  "chinese": 2.09,
+  "table": 0.59,
+  "manuscript": 1.3
+ },
+ "qwen25vl7b-awq/full": {
+  "latin": 1.04,
+  "chinese": 1.61,
+  "table": 0.59,
+  "manuscript": 1.76
+ },
+ "dots-ocr/full": {
+  "latin": 0.99,
+  "chinese": 2.17,
+  "table": 0.58,
+  "manuscript": 1.18
+ },
+ "glm-ocr@b30/beside": {
+  "latin": 0.9,
+  "chinese": 3.71,
+  "table": 0.52,
+  "manuscript": 0.73
+ },
+ "mineru25-pro/beside": {
+  "latin": 0.92,
+  "chinese": 1.16,
+  "table": 0.93,
+  "manuscript": 1.38
+ },
+ "paddle-l0": {
+  "latin": 0.95,
+  "chinese": 3.18,
+  "table": 0.45,
+  "manuscript": 0.94
+ },
+ "paddle-l1": {
+  "latin": 0.91,
+  "chinese": 3.04,
+  "table": 0.76,
+  "manuscript": 1.15
+ }
+}

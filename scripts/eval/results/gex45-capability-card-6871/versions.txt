@@ -1,0 +1,16 @@
+bench venv /root/bench/vl: vllm 0.31.0 torch 2.13.0+cu132 transformers 5.17.0 sentence-transformers 6.1.0 mineru-vl-utils 2.0.7
+paddle: /root/pz (paddleocr 3.7.0, paddlex 3.7.2, paddlepaddle-gpu 3.2.1 cu129; genai server vLLM 0.10.2, torch 2.8.0)
+NVIDIA RTX PRO 4000 Blackwell SFF Edition, 595.91.07, 24467 MiB, 70.00 W
+zai-org/GLM-OCR 2e85a62840ccac27daa451df36c736c4636b8628
+dots-studio/dots.ocr c0111ce6bc07803dbc267932ffef0ae3a51dc951
+opendatalab/MinerU2.5-Pro-2605-1.2B 08aaea840498d49ce16247b6263196cf02814885
+allenai/olmOCR-2-7B-1025-FP8 40bd7202494b8264ee17ada08b401b5aab7a9ce1
+Qwen/Qwen2.5-VL-7B-Instruct-AWQ 536a35794df8831aa814970ee8f89eff577e7718
+Qwen/Qwen3-8B-AWQ 4da05a8edb55c6046cce958586c33b61da07bb79
+Qwen/Qwen3-14B-AWQ 31c69efc29464b6bb0aee1398b5a7b50a99340c3
+BAAI/bge-m3 5617a9f61b028005a4858fdac845db406aefb181
+Qwen/Qwen3-Embedding-0.6B 97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3
+Qwen/Qwen3-Embedding-4B 5cf2132abc99cad020ac570b19d031efec650f2b
+google/siglip2-base-patch16-224 75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2
+google/siglip2-so400m-patch14-384 e8e487298228002f3d8a82e0cd5c8ea9c567f57f
+openai/clip-vit-base-patch32 3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268
