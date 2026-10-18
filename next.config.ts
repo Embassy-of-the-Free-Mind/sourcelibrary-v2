@@ -419,6 +419,13 @@ const nextConfig: NextConfig = {
         { source: `/${name}`, destination: `/${code}`, permanent: false },
         { source: `/${name}/:path*`, destination: `/${code}/:path*`, permanent: false },
       ]),
+      // The atlas's body map already lives here as a blog document (#4922); the maps
+      // index lists it, and this keeps the /explore/maps/<theme> shape for it too.
+      {
+        source: '/explore/maps/body',
+        destination: '/blog/techniques-of-the-body',
+        permanent: true,
+      },
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {

@@ -1,0 +1,16 @@
+{
+ "ritual": {
+  "checked": "2026-10-18",
+  "books": 5299,
+  "readable": 2102,
+  "partial": 947,
+  "hidden": 2200
+ },
+ "consciousness": {
+  "generated": "2026-10-16",
+  "works": 753,
+  "readable": 466,
+  "absent": 103,
+  "editions": 2712
+ }
+}

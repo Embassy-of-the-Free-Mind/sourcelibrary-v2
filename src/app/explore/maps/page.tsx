@@ -1,0 +1,86 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { FEED_TYPES } from '@/lib/feed-links';
+import summary from './summary.json';
+
+// Theme maps moved from the atlas (#4922). Static: the figures come from summary.json,
+// written by scripts/maintenance/import-atlas-maps.mjs alongside the copied artifacts.
+
+const TITLE = 'Maps of the library | Source Library';
+const DESCRIPTION =
+  'What the library holds on a theme, tradition by tradition: what you can read now, what is held but not yet readable, and what is missing.';
+const OG_IMAGE = { url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' };
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: '/explore/maps', types: { ...FEED_TYPES } },
+  openGraph: { title: TITLE, description: DESCRIPTION, url: 'https://sourcelibrary.org/explore/maps', siteName: 'Source Library', type: 'website', images: [OG_IMAGE] },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION, images: [OG_IMAGE.url] },
+};
+
+const fmt = (n: number) => n.toLocaleString('en-US');
+const day = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+type Card = { href: string; lead: string; word: string; blurb: string; figures: string; kind: string };
+
+const CARDS: Card[] = [
+  {
+    href: '/explore/maps/consciousness',
+    lead: 'A Map of', word: 'Consciousness',
+    kind: 'Timeline map',
+    blurb: 'What people across traditions thought the mind is: soul, self, perception, dreams and trance, from the Egyptian ba and the Māṇḍūkya Upaniṣad to Avicenna, Descartes, the Abhidharma and William James. Readable works open with a summary, key terms and passages to start from.',
+    figures: `${fmt(summary.consciousness.readable)} of ${fmt(summary.consciousness.works)} works readable now · ${fmt(summary.consciousness.absent)} not held · checked ${day(summary.consciousness.generated)}`,
+  },
+  {
+    href: '/explore/maps/ritual',
+    lead: 'A Map of', word: 'Ritual',
+    kind: 'Survey',
+    blurb: 'Every primary source on liturgy, sacrifice, initiation, magic, funerary and calendar rite, monastic rule and ceremonial that the library holds, in eight traditions from Egypt to the Americas.',
+    figures: `${fmt(summary.ritual.books)} books · ${fmt(summary.ritual.readable)} readable, ${fmt(summary.ritual.partial)} partly · checked ${day(summary.ritual.checked)}`,
+  },
+  {
+    href: '/blog/techniques-of-the-body',
+    lead: 'Techniques of', word: 'the Body',
+    kind: 'Document',
+    blurb: 'Postures, breathing methods and exercises quoted from the books that prescribe them, in Chinese, Sanskrit, Tibetan, Greek, Latin, Hebrew, Arabic and the European vernaculars, each original beside its translation.',
+    figures: 'Eight regions · 70 plates',
+  },
+];
+
+export default function MapsIndexPage() {
+  return (
+    <ContentPageLayout
+      header={<ContentHeader title="Maps of the library" subtitle={DESCRIPTION} />}
+    >
+      <div className="space-y-6">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          <Link href="/explore" className="hover:underline">Explore</Link> / Maps
+        </p>
+        <div className="grid gap-4">
+          {CARDS.map((c) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className="group block rounded-xl p-6 transition-all hover:shadow-md hover:-translate-y-0.5"
+              style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)' }}
+            >
+              <p className="text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>{c.kind}</p>
+              <h2 className="font-serif text-3xl mb-2" style={{ color: 'var(--text-primary)' }}>
+                {c.lead} <em style={{ color: 'var(--accent-rust)' }}>{c.word}</em>
+              </h2>
+              <p className="leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>{c.blurb}</p>
+              <p className="text-sm font-medium" style={{ color: 'var(--accent-rust)' }}>{c.figures}</p>
+            </Link>
+          ))}
+        </div>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+          Maps of wisdom literature, meditation and dreams are still on the{' '}
+          <a href="https://sourcelibrary-atlas.vercel.app" className="underline">Source Library atlas</a>{' '}
+          and will move here next.
+        </p>
+      </div>
+    </ContentPageLayout>
+  );
+}
