@@ -64,20 +64,22 @@ type View =
 interface Answered { chose: string; correct: boolean; value: unknown }
 
 const lessonById = (id: string) => LESSONS.find((l) => l.id === id)!;
-// The look of /learn/yucatec (#6953): rounded-xl, ink for go, emerald for right, rust for wrong.
-const btn = 'w-full min-h-14 py-4 rounded-xl font-medium transition-transform active:translate-y-px';
-const btnInk = `${btn} bg-[#1a1612] text-white`;
-const btnLight = `${btn} border-2 border-border-light bg-white text-primary`;
+// The look of /learn/yucatec (#6953): lm-r, ink for go, emerald for right, rust for wrong.
+const btn = 'w-full min-h-14 py-4 lm-r text-lg font-bold transition-transform active:translate-y-1 active:shadow-none';
+const btnInk = `${btn} bg-[#1a1612] text-white shadow-[0_4px_0_#000]`;
+const btnLight = `${btn} border-2 border-border-light bg-white text-primary shadow-[0_4px_0_#d6d3d1]`;
+const btnRight = `${btn} bg-emerald-600 text-white shadow-[0_4px_0_#047857]`;
+const btnWrong = `${btn} bg-accent-rust text-white shadow-[0_4px_0_#6f3328]`;
 /** Missed items still in the course (an item dropped from course.ts is never asked again). */
 const dueItems = (s: CourseState) => reviewDue({ ...s, missed: Object.fromEntries(Object.entries(s.missed).filter(([id]) => COURSE_ITEMS.has(id))) });
 
 /**
  * Small motions, all stopped under prefers-reduced-motion. The site squares every
- * `rounded-*` class (globals.css); the lesson nodes, badges and progress bar are
- * round on purpose, so they carry lm-round instead.
+ * `rounded-*` class (globals.css); this course keeps round nodes and rounded tiles
+ * (the brief, #6921), so it uses its own classes, as /learn/yucatec does (yk-r).
  */
 const MOTION = `
-.lm-round { border-radius: 9999px }
+.lm-round { border-radius: 9999px } .lm-r { border-radius: 16px } .lm-r-sm { border-radius: 8px }
 @keyframes lm-shake { 0%,100% { transform: none } 20% { transform: translateX(-6px) } 40% { transform: translateX(6px) } 60% { transform: translateX(-4px) } 80% { transform: translateX(3px) } }
 @keyframes lm-pop { 0%,100% { transform: scale(1) } 45% { transform: scale(1.05) } }
 @keyframes lm-rise { from { transform: translateY(14px); opacity: 0 } to { transform: none; opacity: 1 } }
@@ -121,7 +123,7 @@ export default function MayaCourse() {
     setView(v);
   };
 
-  if (!state) return <div className="max-w-md mx-auto px-5 py-8 animate-pulse"><div className="h-[60vh] bg-stone-200 rounded-xl" /></div>;
+  if (!state) return <div className="max-w-md mx-auto px-5 py-8 animate-pulse"><div className="h-[60vh] bg-stone-200 lm-r" /></div>;
 
   const answer = (lesson: string, item: Item, a: Answered, right: string) => {
     save(recordAnswer(state, lesson, item.id, a.correct, a.chose, right));
@@ -145,7 +147,7 @@ export default function MayaCourse() {
       <Shell>
         <h1 className="font-serif text-3xl text-primary mt-4 mb-1">Learn Maya</h1>
         <p className="text-secondary mb-6">Two courses. Pick one.</p>
-        <button onClick={() => go({ screen: 'intro', index: 0 })} className="w-full flex items-center gap-4 text-left rounded-xl border-2 border-border-light border-b-4 bg-white p-4 mb-3 active:translate-y-px">
+        <button onClick={() => go({ screen: 'intro', index: 0 })} className="w-full flex items-center gap-4 text-left lm-r border-2 border-border-light border-b-4 bg-white p-4 mb-3 active:translate-y-px">
           <span className="w-20 h-20 shrink-0 lm-round bg-[#efe6d6] overflow-hidden flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={DAY_FIG.Cimi!.fig.src} alt="The day sign Cimi, Dresden Codex page 53" className="w-full h-full object-cover" />
@@ -155,7 +157,7 @@ export default function MayaCourse() {
             <span className="block text-secondary mt-1">Numbers, days and syllables, from the Dresden Codex and Landa’s key.</span>
           </span>
         </button>
-        <a href={YUCATEC} className="w-full flex items-center gap-4 rounded-xl border-2 border-border-light border-b-4 bg-white p-4 active:translate-y-px">
+        <a href={YUCATEC} className="w-full flex items-center gap-4 lm-r border-2 border-border-light border-b-4 bg-white p-4 active:translate-y-px">
           <span className="w-20 h-20 shrink-0 lm-round bg-[#efe6d6] flex items-center justify-center font-serif text-3xl text-primary" aria-hidden>Aa</span>
           <span>
             <span className="block font-serif text-2xl text-primary">Learn Yucatec Maya</span>
@@ -257,7 +259,7 @@ function TopBar({ onClose, progress }: { onClose: () => void; progress: number }
   return (
     <div className="flex items-center gap-3 mb-5">
       <button type="button" onClick={onClose} aria-label="Back to the course map" className="w-11 h-11 -ml-2 text-3xl leading-none text-muted">×</button>
-      <div className="flex-1 h-3 lm-round bg-stone-200 overflow-hidden">
+      <div className="flex-1 h-4 lm-round bg-stone-200 overflow-hidden">
         <div className="h-full bg-emerald-600 lm-round transition-all duration-300" style={{ width: `${Math.max(4, Math.round(progress * 100))}%` }} />
       </div>
     </div>
@@ -283,7 +285,7 @@ function IntroScreenView({ index, onClose, onBack, onNext, nextLabel }: { index:
       </div>
       <Sticky>
         <div className="flex gap-2">
-          {onBack && <button onClick={onBack} aria-label="Back" className="w-16 shrink-0 min-h-14 rounded-xl border-2 border-border-light bg-white text-2xl text-primary active:translate-y-px">‹</button>}
+          {onBack && <button onClick={onBack} aria-label="Back" className="w-16 shrink-0 min-h-14 lm-r border-2 border-border-light bg-white text-2xl text-primary active:translate-y-px">‹</button>}
           <button onClick={onNext} className={btnInk}>{nextLabel}</button>
         </div>
       </Sticky>
@@ -311,7 +313,7 @@ function CourseMap({ state, current, onOpen }: { state: CourseState; current: st
           const status = !open ? 'locked' : here ? 'current' : done ? 'done' : 'open';
           return (
             <li key={l.id} className="absolute -translate-x-1/2 flex flex-col items-center w-36" style={{ left: `${xs[i]}%`, top: i * ROW }}>
-              {here && <span className="lm-bob absolute -top-7 left-1/2 -translate-x-1/2 rounded-lg bg-white border-2 border-border-light px-2 py-0.5 text-xs font-medium text-primary whitespace-nowrap">{done ? 'Go over' : 'Start'}</span>}
+              {here && <span className="lm-bob absolute -top-7 left-1/2 -translate-x-1/2 lm-r-sm bg-white border-2 border-border-light px-2 py-0.5 text-xs font-medium text-primary whitespace-nowrap">{done ? 'Go over' : 'Start'}</span>}
               <button
                 type="button"
                 disabled={!open}
@@ -387,7 +389,7 @@ function ExampleView({ example, onNext }: { example: Example; onNext: () => void
       {example.stack && <div className="mb-4"><Stack digits={example.stack.digits} places={example.stack.places} showPlaces /></div>}
       {example.signs && <div className="mb-4"><Signs signs={example.signs} labels /></div>}
       {example.pairs?.map((p) => (
-        <div key={p.caption} className="mb-3 rounded-xl border-2 border-border-light bg-white p-3">
+        <div key={p.caption} className="mb-3 lm-r border-2 border-border-light bg-white p-3">
           <div className="grid grid-cols-2 gap-3 items-end">
             <FigView fig={p.left} small />
             <FigView fig={p.right} small drawing />
@@ -399,7 +401,7 @@ function ExampleView({ example, onNext }: { example: Example; onNext: () => void
         <div className="mb-4">
           <div className="grid grid-cols-3 gap-2">
             {example.syllables.map((k) => (
-              <div key={k} className="rounded-xl border-2 border-border-light bg-white p-2 text-center">
+              <div key={k} className="lm-r border-2 border-border-light bg-white p-2 text-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={SYLLABLES[k].src} alt={SYLLABLES[k].value} className="h-16 w-auto mx-auto" />
                 <span className="font-serif text-lg text-primary">{SYLLABLES[k].value}</span>
@@ -412,9 +414,9 @@ function ExampleView({ example, onNext }: { example: Example; onNext: () => void
       {example.days && (
         <ul className="mb-4 space-y-2">
           {example.days.map((d) => DAY_FIG[d] && (
-            <li key={d} className="flex items-center gap-3 rounded-xl border-2 border-border-light bg-white p-2">
+            <li key={d} className="flex items-center gap-3 lm-r border-2 border-border-light bg-white p-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={DAY_FIG[d]!.fig.src} alt={d} className="h-14 w-14 object-contain rounded-lg bg-[#efe6d6] shrink-0" />
+              <img src={DAY_FIG[d]!.fig.src} alt={d} className="h-14 w-14 object-contain lm-r-sm bg-[#efe6d6] shrink-0" />
               <span><span className="block font-serif text-lg text-primary leading-tight">{d}</span><span className="block text-sm text-secondary">{DAY_FIG[d]!.feature}</span></span>
             </li>
           ))}
@@ -470,7 +472,7 @@ function ItemView({ item, onAnswer, onNext }: { item: Item; onAnswer: (a: Answer
         <div ref={feedback} className={`lm-rise mt-5 -mx-5 px-5 py-4 border-t-4 ${done.correct ? 'bg-emerald-50 border-emerald-600' : 'bg-red-50 border-accent-rust'}`} aria-live="polite">
           {done.correct ? (
             <>
-              <p className="font-serif text-2xl text-emerald-700 mb-1">Right.</p>
+              <Verdict correct />
               <p className="text-primary"><Prose text={item.why} /></p>
               {item.kind === 'tap' && <div className="mt-3"><FigView fig={item.after} /></div>}
             </>
@@ -482,7 +484,7 @@ function ItemView({ item, onAnswer, onNext }: { item: Item; onAnswer: (a: Answer
       )}
       {done && (
         <Sticky>
-          <button onClick={() => onNext(done.correct)} className={`${btn} text-white ${done.correct ? 'bg-emerald-700' : 'bg-accent-rust'}`}>Continue</button>
+          <button onClick={() => onNext(done.correct)} className={done.correct ? btnRight : btnWrong}>Continue</button>
         </Sticky>
       )}
     </section>
@@ -505,8 +507,8 @@ function rightLabel(item: Item): string {
 
 /** An answer button: raised while open; after a tap, green if right, rust (and a shake) if it was the wrong pick. */
 const optionBtn = (picked: boolean, right: boolean, done: boolean) => {
-  const base = 'min-h-14 rounded-xl border-2 text-primary transition-colors';
-  if (!done) return `${base} border-border-light border-b-4 bg-white active:border-b-2 active:translate-y-0.5`;
+  const base = 'min-h-14 lm-r border-2 border-b-4 text-primary transition-all';
+  if (!done) return `${base} border-border-light bg-white active:border-b-2 active:translate-y-0.5`;
   if (right) return `${base} border-emerald-600 bg-emerald-50 text-emerald-900 ${picked ? 'lm-pop' : ''}`;
   if (picked) return `${base} border-accent-rust bg-red-50 lm-shake`;
   return `${base} border-border-light bg-white opacity-50`;
@@ -558,7 +560,7 @@ function Prompt({ item, done, submit }: { item: Item; done: Answered | null; sub
       const fromFig = DAY_FIG[item.from[1]];
       return (
         <>
-          <div className="flex items-center justify-center gap-3 rounded-xl bg-[#efe6d6] p-4">
+          <div className="flex items-center justify-center gap-3 lm-r bg-[#efe6d6] p-4">
             <Numeral value={item.from[0]} size={36} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {fromFig && <img src={fromFig.fig.src} alt={item.from[1]} className="h-16 w-16 object-contain" />}
@@ -631,7 +633,7 @@ function Prompt({ item, done, submit }: { item: Item; done: Answered | null; sub
     case 'tap':
       return (
         <>
-          <div className="relative rounded-xl overflow-hidden bg-[#efe6d6]">
+          <div className="relative lm-r overflow-hidden bg-[#efe6d6]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={item.fig.src} alt={item.fig.alt} className="w-full" />
             {item.zones.map((z, i) => (
@@ -640,7 +642,7 @@ function Prompt({ item, done, submit }: { item: Item; done: Answered | null; sub
                 disabled={isDone}
                 aria-label={`Sign ${i + 1}`}
                 onClick={() => submit(z.label, i === item.answer, i)}
-                className={`absolute top-0 bottom-0 rounded-lg border-4 ${isDone && i === item.answer ? 'border-emerald-600 bg-emerald-500/10' : isDone && done?.value === i ? 'border-accent-rust bg-red-500/10 lm-shake' : 'border-dashed border-stone-400/70'}`}
+                className={`absolute top-0 bottom-0 lm-r-sm border-4 ${isDone && i === item.answer ? 'border-emerald-600 bg-emerald-500/10' : isDone && done?.value === i ? 'border-accent-rust bg-red-500/10 lm-shake' : 'border-dashed border-stone-400/70'}`}
                 style={{ left: `${z.x0 * 100}%`, width: `${(z.x1 - z.x0) * 100}%` }}
               />
             ))}
@@ -654,7 +656,7 @@ function Prompt({ item, done, submit }: { item: Item; done: Answered | null; sub
 
 /** Every wrong answer: what you picked, what it is, and the one feature that tells them apart. */
 function Wrong({ item, answered }: { item: Item; answered: Answered }) {
-  const head = <p className="font-serif text-2xl text-accent-rust mb-2">Not quite.</p>;
+  const head = <Verdict correct={false} />;
   switch (item.kind) {
     case 'count': {
       const chosen = answered.value as number;
@@ -844,6 +846,16 @@ function SignCompare({ chosen, right, lead = 'You picked' }: { chosen: SyllableK
   );
 }
 
+/** The feedback heading, worded and drawn as on /learn/yucatec. */
+function Verdict({ correct }: { correct: boolean }) {
+  return (
+    <p className={`flex items-center gap-2 font-bold text-xl mb-2 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
+      <span aria-hidden className={`inline-flex w-8 h-8 lm-round items-center justify-center text-white text-lg lm-pop ${correct ? 'bg-emerald-600' : 'bg-accent-rust'}`}>{correct ? '✓' : '×'}</span>
+      {correct ? 'Yes.' : 'Not quite.'}
+    </p>
+  );
+}
+
 // ── Lesson complete ──
 
 type Learned = { label: string } & ({ numeral: number } | { src: string; drawing?: boolean });
@@ -880,8 +892,8 @@ function Done({ view, onNext, onMap }: { view: Extract<View, { screen: 'done' }>
       <h2 className="font-serif text-xl text-primary mt-8 mb-3">Glyphs you read today</h2>
       <div className="grid grid-cols-4 gap-2">
         {glyphs.map((g, i) => (
-          <div key={g.label} className="lm-rise rounded-xl border-2 border-border-light bg-white p-1.5 text-center" style={{ animationDelay: `${i * 40}ms` }}>
-            <div className={`h-14 flex items-center justify-center rounded-lg ${'numeral' in g ? 'bg-[#efe6d6]' : g.drawing ? 'bg-white' : 'bg-[#efe6d6]'}`}>
+          <div key={g.label} className="lm-rise lm-r border-2 border-border-light bg-white p-1.5 text-center" style={{ animationDelay: `${i * 40}ms` }}>
+            <div className={`h-14 flex items-center justify-center lm-r-sm ${'numeral' in g ? 'bg-[#efe6d6]' : g.drawing ? 'bg-white' : 'bg-[#efe6d6]'}`}>
               {'numeral' in g ? <Numeral value={g.numeral} size={30} /> : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={g.src} alt={g.label} className="max-h-14 w-auto object-contain" />
@@ -922,7 +934,7 @@ function Done({ view, onNext, onMap }: { view: Extract<View, { screen: 'done' }>
 function FigView({ fig, small, big, tall, drawing }: { fig: Fig; small?: boolean; big?: boolean; tall?: boolean; drawing?: boolean }) {
   return (
     <figure>
-      <div className={`rounded-xl flex items-center justify-center overflow-hidden ${drawing ? 'bg-white' : 'bg-[#efe6d6]'} ${big ? 'min-h-[28vh]' : ''}`}>
+      <div className={`lm-r flex items-center justify-center overflow-hidden ${drawing ? 'bg-white' : 'bg-[#efe6d6]'} ${big ? 'min-h-[28vh]' : ''}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={fig.src} alt={fig.alt} className={`${small ? 'max-h-32' : big ? 'max-h-[38vh]' : tall ? 'max-h-[48vh]' : 'max-h-[50vh]'} w-full object-contain`} />
       </div>
@@ -938,8 +950,8 @@ function Credit({ href, children }: { href: string; children: ReactNode }) {
 function Side({ left, leftLabel, right, rightLabel }: { left: ReactNode; leftLabel: string; right: ReactNode; rightLabel: string }) {
   return (
     <div className="grid grid-cols-2 gap-3">
-      <div><div className="rounded-xl border-2 border-emerald-600 bg-white p-1">{left}</div><p className="text-sm font-medium text-emerald-800 mt-1">{leftLabel}</p></div>
-      <div><div className="rounded-xl border-2 border-accent-rust bg-white p-1">{right}</div><p className="text-sm font-medium text-accent-rust mt-1">{rightLabel}</p></div>
+      <div><div className="lm-r border-2 border-emerald-600 bg-white p-1">{left}</div><p className="text-sm font-medium text-emerald-800 mt-1">{leftLabel}</p></div>
+      <div><div className="lm-r border-2 border-accent-rust bg-white p-1">{right}</div><p className="text-sm font-medium text-accent-rust mt-1">{rightLabel}</p></div>
     </div>
   );
 }
@@ -952,9 +964,9 @@ function SignImg({ k }: { k: SyllableKey }) {
 function Signs({ signs, highlight = null, labels }: { signs: SyllableKey[]; highlight?: number | null; labels?: boolean }) {
   return (
     <div>
-      <div className="flex justify-center gap-2 rounded-xl bg-white border-2 border-border-light p-3">
+      <div className="flex justify-center gap-2 lm-r bg-white border-2 border-border-light p-3">
         {signs.map((k, i) => (
-          <div key={i} className={`rounded-lg p-1 text-center ${highlight === i ? 'ring-4 ring-accent-rust' : ''}`}>
+          <div key={i} className={`lm-r-sm p-1 text-center ${highlight === i ? 'ring-4 ring-accent-rust' : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={SYLLABLES[k].src} alt={labels ? SYLLABLES[k].value : `sign ${i + 1}`} className="h-20 w-auto" />
             {labels && <span className="block font-serif text-lg text-primary">{SYLLABLES[k].value}</span>}
@@ -970,7 +982,7 @@ const PLACE_NAME: Record<number, string> = { 1: 'ones', 20: 'twenties', 360: '36
 
 function Stack({ digits, places, showPlaces }: { digits: number[]; places: number[]; showPlaces?: boolean }) {
   return (
-    <div className="rounded-xl bg-[#efe6d6] p-4 space-y-3">
+    <div className="lm-r bg-[#efe6d6] p-4 space-y-3">
       {digits.map((d, i) => (
         <div key={i} className="flex items-center justify-center gap-4 border-b border-black/10 last:border-0 pb-3 last:pb-0">
           {showPlaces && <span className="w-20 text-sm text-secondary text-right">{PLACE_NAME[places[i]] ?? places[i]}</span>}
@@ -983,7 +995,7 @@ function Stack({ digits, places, showPlaces }: { digits: number[]; places: numbe
 
 function PlaceTable({ digits, places }: { digits: number[]; places: number[] }) {
   return (
-    <table className="w-full text-sm bg-white rounded-xl">
+    <table className="w-full text-sm bg-white lm-r">
       <tbody>
         {digits.map((d, i) => (
           <tr key={i} className="border-b border-border-light">
@@ -1000,7 +1012,7 @@ function PlaceTable({ digits, places }: { digits: number[]; places: number[] }) 
 function DayChip({ day }: { day: Day }) {
   const f = DAY_FIG[day[1]];
   return (
-    <span className="inline-flex items-center gap-1 rounded-xl bg-[#efe6d6] px-2 py-1">
+    <span className="inline-flex items-center gap-1 lm-r bg-[#efe6d6] px-2 py-1">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {f && <img src={f.fig.src} alt="" className="h-10 w-10 object-contain" />}
       <span className="font-serif text-lg">{dayLabel(day)}</span>
