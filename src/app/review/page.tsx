@@ -99,7 +99,8 @@ export default function ReviewLandingPage() {
       <TranslationCheckSummary />
 
       <div className="grid gap-4 mt-8">
-        {QUEUES.map(q => (
+        {/* Queues marked coming-soon stay in QUEUES but are not listed until they open. */}
+        {QUEUES.filter(q => q.status === 'live').map(q => (
           <div
             key={q.slug}
             className={`border rounded-lg p-5 ${
