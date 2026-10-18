@@ -102,7 +102,8 @@ function hitWords(docs: any[]): Map<string, number> {
  */
 function nearWords(t: string, seen: Map<string, number>): string[] {
   if (seen.has(t)) return [t];
-  const close = [...seen].filter(([w]) => near(t, w))
+  // A short word is corrected only by adding letters ("shp" → "ship", never "shi").
+  const close = [...seen].filter(([w]) => near(t, w) && (t.length > 3 || w.length > t.length))
     .map(([w, n]) => ({ w, n, d: editDistance(t, w) }))
     .sort((a, b) => a.d - b.d || b.w.length - a.w.length || b.n - a.n)
     .slice(0, 3)
