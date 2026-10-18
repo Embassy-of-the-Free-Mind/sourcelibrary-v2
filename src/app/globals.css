@@ -1242,3 +1242,7 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 .article-page main:not([data-articles-index]) [class*="hover:text-accent-rust"]:hover {
   color: var(--text-primary);
 }
+
+/* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx). */
+.article-page main.has-lightbox img { cursor: zoom-in; }
+.article-page main.has-lightbox [data-no-lightbox] img { cursor: auto; }

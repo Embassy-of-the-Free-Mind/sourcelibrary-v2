@@ -50,10 +50,9 @@ export default function SourceQuote({
           {source}, <Link href={href}>p. {printedPage ?? page}</Link>
         </figcaption>
       </blockquote>
-      <Link href={href} className="block border border-border-light bg-white p-2" aria-label={`Open p. ${page} in the reader`}>
-
+      <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
         <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
-      </Link>
+      </div>
     </figure>
   );
 }

@@ -122,8 +122,7 @@ export default function MoneyTimeline() {
         </div>
       </div>
       <figcaption className="mt-2 text-sm text-muted leading-relaxed">
-        Dates as given in this article, from the books it quotes and, for Gresham and Petty, the sources it cites.
-        Copernicus&apos;s treatise is placed at 1525 for &ldquo;the 1520s&rdquo;.
+        {'Dates as given in this article, from the books it quotes and, for Gresham and Petty, the sources it cites. Copernicus’s treatise is placed at 1525 for “the 1520s”.'}
       </figcaption>
     </figure>
   );

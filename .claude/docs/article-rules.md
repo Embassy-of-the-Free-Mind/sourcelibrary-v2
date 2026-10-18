@@ -4,7 +4,7 @@ How an article under `/articles` looks and what goes into it. Read this before w
 
 ## The page
 
-- **Hero.** Every article has a hero picture: `<ContentHeader feature headerVariant="dark" image=... imageAlt=...>`. `feature` makes it 65vh tall from tablet width up, with a slight parallax. The hero is also the share image (og:image, twitter:image), so pick it for a link preview too: a strong plate or page from the books the article is about, with a calm area where the title sits. Real works only, never generated pictures (the image rules in the `BlogPost.image` comment in `posts.ts` apply).
+- **Hero.** Every article has a hero picture: `<ContentHeader feature headerVariant="dark" image=... imageAlt=...>`. `feature` makes it 70vh tall from tablet width up, with a slight parallax. The hero is also the share image (og:image, twitter:image), so pick it for a link preview too: a strong plate or page from the books the article is about, with a calm area where the title sits. Real works only, never generated pictures (the image rules in the `BlogPost.image` comment in `posts.ts` apply).
 - **Container.** The article body stays at the standard width (`ContentPageLayout`, default). The overview and the related slider use the wide container; the article does not.
 - **Dark bar.** `headerVariant="dark"`, like the book pages.
 - **No red text.** Don't use `text-accent-rust` (or any red) for text or links. Links in the article body are styled once, in `globals.css` under `.article-page`: body colour with a thin gold underline that darkens on hover. So write a plain `<Link href=...>` and give it no colour class.

@@ -35,7 +35,7 @@ export default function PageFigure({
   const img = <ArticleImage src={src} alt={alt} sizes={wide ? '(max-width: 768px) 100vw, 1060px' : undefined} />;
   return (
     <figure className={`not-prose my-10 ${wide ? 'md:-mx-16' : ''}`}>
-      <div className="border border-border-light bg-white p-2">{href ? <Link href={href}>{img}</Link> : img}</div>
+      <div data-lightbox-href={href}>{img}</div>
       {(children || source || credit) && (
         <figcaption className="mt-2 text-sm text-muted leading-relaxed">
           {children}

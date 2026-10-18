@@ -23,7 +23,7 @@ interface ContentHeaderProps {
   maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
   /** The site header above the hero: 'light' (default) or the solid 'dark' bar the book pages use. */
   headerVariant?: 'light' | 'dark';
-  /** Article hero: 65vh tall from `md` up, picture drifting with a slight parallax. */
+  /** Article hero: 70vh tall from `md` up, picture drifting with a slight parallax. */
   feature?: boolean;
   /** With `feature`: where the back link above the title goes, and its words. */
   backHref?: string;
@@ -31,7 +31,7 @@ interface ContentHeaderProps {
 }
 
 export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false, backHref = '/articles', backLabel = 'All articles' }: ContentHeaderProps) {
-  if (feature) heightClass = 'min-h-[400px] md:min-h-[65vh]';
+  if (feature) heightClass = 'min-h-[400px] md:min-h-[70vh]';
   const headerWidthClass =
     maxWidth === 'full'
       ? ''

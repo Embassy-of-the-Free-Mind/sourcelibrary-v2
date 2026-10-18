@@ -2,6 +2,7 @@ import BlogTableOfContents from '@/components/blog/BlogTableOfContents';
 import BlogShareButton from '@/components/blog/BlogShareButton';
 import NoteFooter from '@/components/blog/NoteFooter';
 import ArticleExtras, { ArticleBooksHere } from './ArticleExtras';
+import ArticleLightbox from './ArticleLightbox';
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
       <ArticleExtras />
       <BlogTableOfContents />
       <BlogShareButton />
+      <ArticleLightbox />
     </>
   );
 }
