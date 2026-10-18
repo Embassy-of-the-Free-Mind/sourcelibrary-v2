@@ -194,7 +194,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const [shown, setShown] = useState(false);
   const [glide, setGlide] = useState(false);
   useEffect(() => {
-    let lastY = window.scrollY, frame = 0, isPinned = false;
+    // Travel in one direction before the bar reacts, so the small jiggles of
+    // reading don't make it flicker; a deliberate flick up still brings it back.
+    const THRESHOLD = 40;
+    let lastY = window.scrollY, frame = 0, isPinned = false, travelUp = 0, travelDown = 0;
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
@@ -212,11 +215,11 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           if (y <= bottom) return;
           // Pin it out of sight first; the slide is enabled on the next frame
           // so it doesn't animate in from its old place.
-          isPinned = true; setPinned(true); setShown(false);
+          isPinned = true; travelUp = 0; travelDown = 0; setPinned(true); setShown(false);
           requestAnimationFrame(() => setGlide(true));
         }
-        if (dy < -4) setShown(true);
-        else if (dy > 4) setShown(false);
+        if (dy < 0) { travelUp -= dy; travelDown = 0; if (travelUp >= THRESHOLD) setShown(true); }
+        else if (dy > 0) { travelDown += dy; travelUp = 0; if (travelDown >= THRESHOLD) setShown(false); }
       });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
