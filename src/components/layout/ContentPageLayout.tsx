@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import SiteHeader from './SiteHeader';
 import ParallaxImage from './ParallaxImage';
-import heroPlaceholders from '@/generated/article-hero-placeholders.json';
+import heroFiles from '@/generated/article-hero-files.json';
 
-const HERO_PLACEHOLDERS = heroPlaceholders as Record<string, string>;
+const HERO_FILES = heroFiles as Record<string, { srcset: { src: string; w: number }[] }>;
 
 /* ── Hero header: site header + dark gradient hero ── */
 
@@ -63,7 +63,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, imag
                 }}
               />
             ) : feature ? (
-              <ParallaxImage src={image} alt={imageAlt || ''} placeholder={HERO_PLACEHOLDERS[image]} />
+              <ParallaxImage src={image} alt={imageAlt || ''} srcset={HERO_FILES[image]?.srcset} />
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
