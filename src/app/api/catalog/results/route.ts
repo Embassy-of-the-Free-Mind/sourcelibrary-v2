@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { parseCatalogFilters, parseCatalogState } from '@/lib/catalog/filters';
-import { browseCatalog } from '@/lib/catalog/query';
+import { browseCatalog, isUpstreamBlock } from '@/lib/catalog/query';
 
 export const maxDuration = 15;
 
@@ -25,6 +25,7 @@ export async function GET(request: Request) {
       headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
     });
   } catch (err) {
+    if (isUpstreamBlock(err)) return NextResponse.json({ books: [], total: 0 });
     console.error('[catalog/results]', (err as Error)?.message);
     return NextResponse.json({ error: 'Failed to load the catalogue' }, { status: 500 });
   }

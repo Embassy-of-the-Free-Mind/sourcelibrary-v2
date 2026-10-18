@@ -17,6 +17,11 @@ import { mergedBrowseFilters } from '@/lib/gallery-merge';
 import { galleryFilter } from '@/lib/gallery-scope';
 import { queryTerms } from '@/lib/search-grounding';
 
+/** A search too broad to count in time; the route answers 422 and the band shows the grid's own total. */
+export class TooBroadError extends Error {
+  constructor() { super('search too broad to count'); }
+}
+
 /** Words that match nearly every description on their own. */
 const SMALL_WORDS = new Set(['a', 'an', 'and', 'the', 'of', 'in', 'on', 'at', 'to', 'for', 'from', 'by', 'with', 'or', 'as', 'is', 'et', 'de', 'la', 'le', 'der', 'die', 'das', 'und', 'von']);
 import {
@@ -128,7 +133,7 @@ async function setFacets(db: Db, sp: URLSearchParams, ctx: GalleryStatsContext, 
     // Only small words ("the", "of the"): every description matches, the count
     // takes ~19 s, and the grid's own lane gives up at 8 s with a short estimate.
     // No numbers rather than numbers that disagree; the band shows the grid's.
-    if (qTerms.terms.every((t) => SMALL_WORDS.has(t))) throw new Error('only small words');
+    if (qTerms.terms.every((t) => SMALL_WORDS.has(t))) throw new TooBroadError();
     const r = await gi.aggregate([
       gallerySearchStage(qTerms.terms, minQuality),
       gallerySearchMatch({ tenantBooks: ctx.tenantBooks, bookId, bookIds, maxPerBook, narrowing }),

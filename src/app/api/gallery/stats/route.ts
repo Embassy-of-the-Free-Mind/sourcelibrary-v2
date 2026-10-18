@@ -3,7 +3,7 @@ import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { resolveSearchScope } from '@/lib/tenant-search-scope';
-import { computeGalleryStats, galleryStatsKey, type GalleryStats } from '@/lib/gallery-stats';
+import { computeGalleryStats, galleryStatsKey, TooBroadError, type GalleryStats } from '@/lib/gallery-stats';
 
 export const maxDuration = 30;
 
@@ -36,6 +36,9 @@ export async function GET(request: NextRequest) {
       headers: { 'Cache-Control': tenantScoped ? 'private, no-store' : 'public, max-age=0, s-maxage=600, stale-while-revalidate=3600' },
     });
   } catch (err) {
+    if (err instanceof TooBroadError) {
+      return NextResponse.json({ error: 'Too broad to count' }, { status: 422, headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600' } });
+    }
     console.error('[gallery/stats]', (err as Error)?.message);
     return NextResponse.json({ error: 'Failed to count the gallery' }, { status: 500 });
   }
