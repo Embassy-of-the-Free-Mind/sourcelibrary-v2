@@ -30,10 +30,10 @@ for (const b of books) {
     { $match: { book_id: b.id } },
     { $project: {
       _id: 0, id: 1, page_number: 1, model: '$ocr.model', pipeline: '$ocr.pipeline', unreadable: '$ocr.unreadable',
-      has_tr: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+      has_tr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
       wr: '$translation_withheld.reason', wmodel: '$translation_withheld.model',
-      olen: { $strLenCP: { $ifNull: ['$ocr.data', ''] } },
-      tsheg: { $size: { $split: [{ $ifNull: ['$ocr.data', ''] }, '་'] } },
+      olen: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
+      tsheg: { $size: { $split: [{ $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, '་'] } },
     } },
   ]).toArray();
   allPages.n += rows.length;
