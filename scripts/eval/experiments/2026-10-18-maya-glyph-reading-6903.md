@@ -6,7 +6,7 @@ scripts: [Maya]
 canons: []
 n_books: 1
 n_pages: 8
-verdict: "Neither model can put glyph readings on the Dresden Codex. Opus with a sign catalogue and 17 published example readings (arm c) leaves 54 of 70 held-out blocks unread and gets 5 exactly right. All 5 repeat readings that appear in its own examples; it reads 0 of the 55 blocks whose reading it was not shown. It invents nothing on 8 illegible controls. Gemini 4 Argon on the same prompt gets 22 of 70 exact and 27 judged correct (9 of 55 unseen blocks exact), but it is confidently wrong on 17 of its 60 attempts: every wrong answer comes at confidence ≥0.75."
+verdict: "Neither model can put glyph readings on the Dresden Codex. Opus with a sign catalogue and 17 published example readings (arm c) leaves 54 of 70 held-out blocks unread and gets 5 exactly right. All 5 repeat readings that appear in its own examples; it reads 0 of the 55 blocks whose reading it was not shown. It invents nothing on 8 illegible controls. Gemini 4 Argon on the same prompt gets 22 of 70 exact and 27 judged correct (9 of 55 unseen blocks exact), but it is confidently wrong on about 20 of its 64 attempts, every wrong answer at confidence ≥0.55."
 status: rejected
 decision: "No model glyph readings on codex pages (#6903). Glyph pages keep describe-or-decline (#5653)."
 superseded_by: null
@@ -52,7 +52,11 @@ PRIOR ART: `dresden-opus-test` (#6559) tests numerals, calendar and deities agai
 | **G Gemini 4 Argon on c** | 60 | 19 / 44 | **22 (31%, CI 22–43)** | **27 \| 26** | **29 \| 29** | 2 \| 1 / 15 | 17 \| 16 | **17 \| 16 (all)** | 0 |
 
 **Findings**
-- **Gemini failed reads.** Two of Gemini's 20 captions (8 blocks) timed out three times at 20 minutes each. They count as failed reads (`outcome: truncated`). Its calls took 5–10 minutes per caption.
+- **Gemini failed reads.** In the scored snapshot, two of Gemini's 20 captions (8 blocks) had timed out at 20 minutes per call; a timeout is a failed read (`outcome: truncated`), and the table counts them that way. Calls took 5–10 minutes per caption.
+  - p.38 (H15) succeeded on its third and last try after the snapshot was judged.
+  - It adds 4 attempts and 0 exact; 3 of the 4 share no transliteration token with the reference, at confidence 0.55–0.9. Deterministic score only; not judged.
+  - Gemini totals with H15: 64 attempted, 22 exact, about 20 wrong.
+  - p.15 (H09) never returned.
 - **Opus reads only what it was shown.**
   - Split by whether a block's reading appears among the 17 example blocks: arm c is exact on 5 of 15 seen readings and **0 of 55** unseen ones.
   - Gemini is exact on 13 of 15 seen and **9 of 55** unseen (judged match 14 | 13 of 55).
@@ -60,7 +64,7 @@ PRIOR ART: `dresden-opus-test` (#6559) tests numerals, calendar and deities agai
 - **Noise floor (C vs C2).** Opus attempts swing from 16 to 10 and exact readings from 5 to 2. Opus's arm-to-arm differences (a ≈ b < c) sit inside that floor, apart from c's in-example matches. Gemini's lead (22 vs 5 exact) is far outside it.
 - **Calibration.**
   - Opus's attempts run at confidence 0.1–0.5, and under forcing (d) 56 of 70 are at 0.1. Its "unread" is honest; it simply cannot read.
-  - Gemini states 0.75–1.0 on every block it attempts. Its wrong readings sit a little lower (median 0.85, against 0.95 for right ones), but no threshold makes it safe.
+  - Gemini states 0.55–1.0 on every block it attempts (0.75–1.0 in the judged 60). Its wrong readings sit a little lower (median 0.85, against 0.95 for right ones), but no threshold makes it safe.
     - At confidence ≥0.95 (34 blocks, Opus judge): 23 match, 5 partial, 6 wrong.
     - At ≥0.98 (9 blocks): 7 match, 1 partial, 1 wrong.
     - The Gemini judge gives the same picture.
