@@ -57,6 +57,7 @@ export default function CookieConsent() {
 
   return (
     <div
+      data-cookie-banner=""
       className="fixed inset-x-0 z-[9999] animate-in slide-in-from-bottom duration-300"
       // A page with its own bottom dock (the phone reader) sets this, so the
       // banner sits above the controls instead of covering them. On a first

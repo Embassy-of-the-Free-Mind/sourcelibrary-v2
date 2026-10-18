@@ -48,12 +48,17 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
     const y = window.scrollY;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // The cookie banner sits above everything and would cover the language
+    // switch and the account buttons; it steps aside while the menu is open
+    // and comes back, still unanswered, when it closes.
+    document.documentElement.dataset.siteMenuOpen = '1';
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
     const onResize = () => setViewport(window.innerHeight * 10000 + window.innerWidth);
     window.addEventListener('resize', onResize);
     return () => {
       document.body.style.overflow = prev;
+      delete document.documentElement.dataset.siteMenuOpen;
       window.scrollTo(0, y);
       document.removeEventListener('keydown', onKey);
       window.removeEventListener('resize', onResize);
@@ -82,11 +87,11 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   }, [open, level, viewport, linksKey, placeRings]);
 
   const stagger = (i: number) => ({
-    transitionDelay: open ? `${220 + i * 75}ms` : '0ms',
+    transitionDelay: open ? `${160 + i * 40}ms` : '0ms',
   });
-  // Soft entrance: a long fade, a short drift and a blur that clears, so the
-  // items settle in rather than snap. Closing is quick and plain.
-  const item = `transition-[opacity,transform,filter] ease-[cubic-bezier(.25,.6,.3,1)] ${open ? 'duration-[1100ms] opacity-100 translate-y-0 blur-0' : 'duration-200 opacity-0 translate-y-2 blur-[3px]'}`;
+  // Gentle entrance: the items fade in close together with only a 4px drift,
+  // so the menu settles rather than jumps. Closing is quick and plain.
+  const item = `transition-[opacity,transform] ease-out ${open ? 'duration-[950ms] opacity-100 translate-y-0' : 'duration-200 opacity-0 translate-y-1'}`;
 
   let i = 0;
   return (
@@ -96,7 +101,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       role="dialog"
       aria-modal="true"
       aria-hidden={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] ${open ? 'duration-500' : 'duration-300'} ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] ${open ? 'duration-[450ms]' : 'duration-300'} ${
         open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}
     >
@@ -120,7 +125,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
               transformOrigin: '12px 12px',
               transform: open ? 'scale(1)' : 'scale(0.2)',
               opacity: open ? 1 : 0,
-              transition: `transform 1.6s cubic-bezier(.25,.6,.3,1) ${open ? 150 + k * 110 : 0}ms, opacity 1s`,
+              transition: `transform 1.5s cubic-bezier(.2,.8,.2,1) ${open ? k * 100 : 0}ms, opacity .8s`,
             }}
           />
         ))}
