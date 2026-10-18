@@ -4,6 +4,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { experiment } from '@/lib/experiments-index';
 import { TENGYUR_QUALITY } from '@/lib/tengyur-quality';
 import data from '@/data/tibetan-expert-page.json';
+import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+import { ENGLISH, NO_ENGLISH, Figure, Swatch, TraditionProgress, type TraditionProgressRow } from '../canon-gap/diagrams';
 
 // A briefing for Tibetologists whose feedback we are asking for: what we hold, how the Tibetan
 // text and the English are made, what has been measured, real pages that went right and wrong,
@@ -42,8 +44,6 @@ const SRC = {
   reocr: `${ISSUE}4523`,
 };
 
-const CONTACT = 'team@sourcelibrary.org';
-const MAILTO = `mailto:${CONTACT}?subject=${encodeURIComponent('Tibetan texts: reviewer feedback')}`;
 
 type Excerpt = { text: string; before: boolean; after: boolean } | null;
 type Example = {
@@ -79,8 +79,27 @@ const CONTENTS = [
   ['reading', 'The Tibetan text'],
   ['english', 'The English'],
   ['unknown', 'What we have not measured'],
-  ['ask', 'What we would ask of you'],
+  ['needed', 'What is needed'],
 ] as const;
+
+// Plain-language meanings for a reader new to the project, to OCR, or to the Tibetan canon.
+const GLOSSARY: [string, ReactNode][] = [
+  ['Transcription (OCR)', 'Turning a photographed page into typed text. OCR, optical character recognition, is the machine version.'],
+  ['E-text', 'A typed text of a work made by people, here the Esukhia digital Derge Kangyur and Tengyur, proofread and in the public domain.'],
+  ['Kangyur / Tengyur', 'The two parts of the Tibetan Buddhist canon: the words attributed to the Buddha, and the Indian treatises and commentaries.'],
+  ['Derge', 'The eighteenth-century woodblock edition of the canon that scholars usually cite. We use its e-text as the answer key.'],
+  ['Kanjur volume (manuscript)', 'A handwritten copy of a Kangyur volume. A Bhutanese temple’s copy is a different witness of the same text, with its own variants.'],
+  ['Pecha, leaf, folio', 'Pecha are loose, long, narrow sheets. One sheet is a leaf or folio; an archive photograph often shows two or more.'],
+  ['dbu can / dbu med', 'The headed, formal Tibetan script and the headless, cursive one. Cursive is harder to read, for people and machines.'],
+  ['Tsheg, shad', 'The dot between Tibetan syllables (་) and the vertical stroke ending a phrase (།).'],
+  ['Syllable identity', 'The share of syllables in our reading that line up with the reference text. 0.95 means about 95 in 100 line up.'],
+  ['Yigdzin', 'An open-source Tibetan OCR model released by the Buddhist Digital Resource Center (BDRC). We run it on our own machines.'],
+  ['Gemini Flash, Claude Opus', 'Large AI models from Google and Anthropic. Gemini writes our English; Claude Opus is used as a reviewer.'],
+  ['AI reviewer', 'An AI model asked to read our page against the image and the Tibetan and list every error it finds. Not a person.'],
+  ['84000', 'A project publishing English translations of the canon by scholars. Where it has translated a passage, we compare our English with theirs.'],
+  ['EAP', 'The British Library’s Endangered Archives Programme, which photographed the Bhutanese collections.'],
+  ['Per 100 pages', 'How many errors of a kind were found for every 100 pages read. A rate above 100 means more than one per page on average.'],
+];
 
 /* ---------- small pieces ---------- */
 
@@ -124,7 +143,7 @@ function H3({ children }: { children: ReactNode }) {
 const KIND_STYLE = {
   works: { label: 'Works', cls: 'bg-emerald-50 text-emerald-800 border-emerald-200' },
   error: { label: 'Error', cls: 'bg-rose-50 text-rose-800 border-rose-200' },
-  judge: { label: 'Your judgement', cls: 'bg-amber-50 text-amber-900 border-amber-200' },
+  judge: { label: 'Open question', cls: 'bg-amber-50 text-amber-900 border-amber-200' },
   withheld: { label: 'Withheld', cls: 'bg-stone-100 text-stone-700 border-stone-300' },
 } as const;
 
@@ -211,6 +230,89 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
+/* ---------- done and remaining ---------- */
+
+type GroupCensus = {
+  books: number;
+  pages: number;
+  tibetan: number;
+  english: number;
+  reader_by_model: Record<string, number>;
+  english_by_model: Record<string, number>;
+  book_pages: TraditionProgressRow['book_pages'];
+};
+
+function progressRow(id: string, name: string, g: GroupCensus, href?: string): TraditionProgressRow {
+  return {
+    id,
+    name,
+    books: g.books,
+    readable_books: g.book_pages.filter((b) => b[5] > 0).length,
+    pages_scanned: g.pages,
+    pages_transcribed: g.tibetan,
+    pages_translated: g.english,
+    canon_page_equivalents: 0,
+    ocr_engines: Object.entries(g.reader_by_model),
+    translation_models: Object.entries(g.english_by_model),
+    book_pages: g.book_pages,
+    href,
+  };
+}
+
+const PROGRESS: TraditionProgressRow[] = [
+  progressRow('bhutan', 'Manuscripts from Bhutan', C.bl as unknown as GroupCensus, '/collections/bhutan'),
+  progressRow('tengyur', 'Derge Tengyur', C.tengyur as unknown as GroupCensus),
+  progressRow('other', 'Other Tibetan volumes', C.other as unknown as GroupCensus),
+];
+
+// How much of the canon anyone has put into English: 84000's published share, page-weighted, from
+// the canon gap map (/research/canon-gap), which reads the 84000 Reading Room catalogue.
+const CANON_ENGLISH = (['derge-kangyur', 'derge-tengyur'] as const).map((id) => {
+  const r = gapMap.rows.find((x) => x.id === id);
+  if (!r || r.english.fraction == null) throw new Error(`canon gap map has no English share for ${id}`);
+  return { id, name: id === 'derge-kangyur' ? 'Kangyur' : 'Tengyur', fraction: r.english.fraction, chars: r.size.base_chars as number };
+});
+const GAP_ASOF = fmtDate(gapMap.generated_at.slice(0, 10));
+
+function CanonEnglishBars({ n }: { n: number }) {
+  const max = Math.max(...CANON_ENGLISH.map((c) => c.chars));
+  return (
+    <Figure
+      n={n}
+      title="How much of the canon has a published English translation"
+      caption={
+        <>
+          Share of each canon, by pages, that 84000 lists as published in English, from the 84000 Reading Room
+          catalogue as read on {GAP_ASOF}. Bar length is the size of the typed Tibetan text, so the two bars compare
+          directly: the Tengyur is about twice the Kangyur. Translations 84000 lists as in progress are not
+          counted. Source: <A href="/research/canon-gap">The Open Canons</A>.
+        </>
+      }
+    >
+      <div className="font-body text-xs text-stone-600 mb-4">
+        <Swatch style={{ backgroundColor: ENGLISH }} label="published English (84000)" />
+        <Swatch style={{ backgroundColor: NO_ENGLISH }} label="no published English" />
+      </div>
+      <div className="space-y-3">
+        {CANON_ENGLISH.map((c) => (
+          <div key={c.id} className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-3 items-center">
+            <div className="font-serif text-lg text-stone-900">{c.name}</div>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex h-5 rounded-r overflow-hidden" style={{ width: `${(c.chars / max) * 100}%` }}>
+                <div style={{ width: `max(${c.fraction * 100}%, 2px)`, backgroundColor: ENGLISH }} />
+                <div className="flex-1" style={{ backgroundColor: NO_ENGLISH }} />
+              </div>
+              <span className="font-body text-sm text-stone-700 whitespace-nowrap tabular-nums">
+                {c.fraction < 0.01 ? (c.fraction * 100).toFixed(1) : Math.round(c.fraction * 100)}%
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Figure>
+  );
+}
+
 /* ---------- tables ---------- */
 
 const BL_COLLECTIONS: [string, number, string, string][] = [
@@ -286,7 +388,7 @@ export default function TibetanBriefingPage() {
       header={
         <ContentHeader
           title="Tibetan and Bhutanese Texts"
-          subtitle="A briefing for reviewers: what we hold, how we read and translate it, what we have measured, pages that went right and wrong, and what we would like you to tell us."
+          subtitle="An introduction for reviewers: what we hold, how we read and translate it, what we have measured, pages that went right and wrong, and what is still needed."
           image={EX['two-leaves'].image}
           imageAlt="Two leaves of the Neyphug Kanjur, a Bhutanese manuscript copy of the canon, photographed together by the British Library's Endangered Archives Programme"
           backHref="/research"
@@ -299,6 +401,41 @@ export default function TibetanBriefingPage() {
           Prepared October 2026. The counts were read from our database on {fmtDate(data.measured)}. Every other
           figure is copied from a dated write-up of a measurement and links to it. About fifteen minutes to read.
         </p>
+
+        <div className="mt-8 rounded-sm border border-stone-200 bg-white px-5 py-5 md:px-6">
+          <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3">In brief</div>
+          <ul className="list-disc pl-5 space-y-2 text-base">
+            <li>
+              {n0(bl.books)} handwritten volumes from Bhutanese temples and {n0(tg.books)} volumes of the Derge Tengyur,
+              each shown as scans, Tibetan text and English, page by page.
+            </li>
+            <li>
+              On manuscript copies of the canon, our machine reading of the Tibetan agrees with the Derge text on
+              about 95 syllables in 100. About 1 page in 20 is missing a line.
+            </li>
+            <li>
+              On the Tengyur, AI reviewers judged three pages in four to need only light edits to the English. The
+              commonest serious error is a reversed statement or a statement given to the wrong speaker.
+            </li>
+            <li>
+              Most of the Bhutanese manuscripts have no printed counterpart, so they cannot be scored against one.
+              Read by AI reviewers, about 1 page in 11 has a serious error, mostly in the English.
+            </li>
+            <li>No one who reads Tibetan has yet checked our pages.</li>
+          </ul>
+        </div>
+
+        <details className="mt-6 rounded-sm border border-stone-200 bg-white px-5 py-4 md:px-6 group">
+          <summary className="cursor-pointer font-serif text-lg text-stone-900">Terms used on this page</summary>
+          <dl className="mt-4 text-base">
+            {GLOSSARY.map(([term, meaning]) => (
+              <div key={term} className="md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-4 py-2 border-t border-stone-100 first:border-t-0">
+                <dt className="font-semibold text-stone-900">{term}</dt>
+                <dd className="text-stone-700">{meaning}</dd>
+              </div>
+            ))}
+          </dl>
+        </details>
 
         <nav aria-label="Contents" className="mt-8 mb-2">
           <div className="font-body text-xs tracking-[0.16em] uppercase text-stone-400 mb-3">Contents</div>
@@ -323,13 +460,16 @@ export default function TibetanBriefingPage() {
           </p>
           <p>
             Both the Tibetan text and the English are made by machine. We have measured them against texts typed and
-            translated by people, and had AI reviewers read thousands of pages against the images. No one who reads
-            Tibetan has yet checked our pages. That is what we are asking for. This page sets out what we know, shows
-            real pages where the work holds up and where it fails, and ends with specific questions.
+            translated by people, and had AI reviewers read hundreds of pages against the images. No one who reads
+            Tibetan has yet checked our pages. This page sets out what we know, shows real pages where the work
+            holds up and where it fails, and ends with what is still needed.
           </p>
           <p>
-            We would rather hear that something is wrong than find out later. A short reply to one question is
-            useful.
+            <strong>How to read the examples.</strong> Each example shows the photographed page (click it to open the
+            page in our reader), a short passage of the Tibetan as we store it, and the same passage of the English
+            readers see. A label says what the example shows: <em>Works</em>, <em>Error</em>, <em>Withheld</em> (taken
+            down from readers), or <em>Open question</em> (a point we cannot settle ourselves). The passages are
+            copied from the live pages; an error quoted here was still on the page on {fmtDate(data.measured)}.
           </p>
         </Section>
 
@@ -364,6 +504,33 @@ export default function TibetanBriefingPage() {
           <p>
             {n0(other.books)} further Tibetan volumes, from BDRC and the Internet Archive, mostly modern prints.
           </p>
+
+          <H3>What has been done, and what remains</H3>
+          <p>
+            Every page we hold has been photographed. Most now carry Tibetan text, and most of those an English
+            draft. The grey squares below are pages with no text yet, mostly the {n0(bl.not_legible)} manuscript
+            pages marked not reliably legible. The orange squares are pages whose Tibetan is ready but not yet
+            translated.
+          </p>
+          <TraditionProgress
+            n={1}
+            rows={PROGRESS}
+            title="Our Tibetan holdings, page by page"
+            caption={
+              <>
+                Each square is 1,000 pages, rounded, with at least one square for any stage that has pages. A page
+                is transcribed when it carries Tibetan text, read by OCR or fitted from the Esukhia e-text, and
+                translated when it has a draft English translation. Each square opens a book whose pages it stands
+                for. &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; are shares of pages, from the engine each page
+                records. Counted from our database on {fmtDate(data.measured)}.
+              </>
+            }
+          />
+          <p>
+            How much English already exists differs sharply between the two parts of the canon. 84000&rsquo;s
+            translators have published over half of the Kangyur, and under one percent of the Tengyur.
+          </p>
+          <CanonEnglishBars n={2} />
         </Section>
 
         <Section id="pipeline" title="How a page is made">
@@ -411,7 +578,8 @@ export default function TibetanBriefingPage() {
             A Bhutanese Kanjur is another witness of the canon, so a true reading of a folio should match the
             corresponding Derge passage closely, and an invented one should not. We score this as syllable identity
             against the Derge Kangyur e-text (OpenPecha). One interior page from each of 100 randomly drawn Kanjur
-            volumes gave a median of <strong>0.947</strong>, with 76 of the 100 pages at 0.9 or above. The figure
+            volumes gave a median of <strong>0.947</strong>: on a typical page, about 95 syllables in 100 line up with
+            Derge. 76 of the 100 pages were at 0.9 or above. The figure
             includes the real differences between the two witnesses, not only reading errors. As controls, the
             e-text itself with 5% of syllables corrupted scores 0.968, and a page compared with the wrong folio
             scores 0.247. <S href={SRC.kangyurOcr} />
@@ -594,67 +762,89 @@ export default function TibetanBriefingPage() {
           </ul>
         </Section>
 
-        <Section id="ask" title="What we would ask of you">
-          <p>Any one of these helps, and each is meant to take under an hour.</p>
+        <Section id="needed" title="What is needed">
+          <p>
+            Some of what would improve these texts is work we can do ourselves, given time. Some of it needs people
+            who read Tibetan, and in places a specialist in one genre.
+          </p>
 
-          <ExampleCard id="pramana" kind="judge" heading="1. Is “under the sway of desire” right here?">
+          <H3>Readers of Tibetan, page by page</H3>
+          <p>
+            Our only measure of most of the English is AI review, and we do not know how far AI reviewers agree
+            with a scholar. A scholar reading a few dozen pages, each as the image, the Tibetan and our English, and
+            marking what is wrong, would tell us how far to trust the AI review of everything else. The first round
+            is planned for the Derge Tengyur: about 30 pages, weighted toward Pramāṇa, verse and the Vinaya, where the
+            AI review found the most problems. The Bhutanese manuscripts, especially the collections with no printed
+            counterpart, need the same. <S href={SRC.scholar} label="the plan, #5800" />
+          </p>
+
+          <H3>Specialist judgement on open points</H3>
+          <p>Two examples of points we cannot settle ourselves:</p>
+
+          <ExampleCard id="pramana" kind="judge" heading="“Under the sway of desire”, or “at will”?">
             <p>
               Pramāṇa, Derge Tengyur vol. 174, in a passage on whether conceptual cognition is an external object.
               Our English renders འདོད་པའི་དབང་གིས as &ldquo;under the sway of desire&rdquo;. An AI reviewer read it
               as &ldquo;at will&rdquo;, as one pleases, and judged that the structure of the surrounding verse is
-              misbuilt. Which reading would you accept, and would you start from this draft?{' '}
+              misbuilt. Which is right, and whether this page is a usable draft, needs a reader of Dharmakīrti.{' '}
               <S href={`${ISSUE}6121`} label="#6121" />
             </p>
           </ExampleCard>
 
-          <ExampleCard id="vinaya" kind="judge" heading="2. Is འགལ་ཚབས་ཅན a sthūlātyaya?">
+          <ExampleCard id="vinaya" kind="judge" heading="Is འགལ་ཚབས་ཅན a sthūlātyaya?">
             <p>
               Vinaya, Derge Tengyur vol. 152. Our English gives འགལ་ཚབས་ཅན as &ldquo;a grave offence
-              (sthūlātyaya)&rdquo;. An AI reviewer questioned the equivalence. The Vinaya has the highest rate of term errors in our sample, and on{' '}
-              {n0(TQ.defects.vinaya_pali_pages)} Vinaya pages ({TQ.defects.vinaya_pali_pct}%) the English uses Pāli
-              names for offence classes. How should these be rendered?
+              (sthūlātyaya)&rdquo;. An AI reviewer questioned the equivalence. The Vinaya has the highest rate of
+              term errors in our sample, and on {n0(TQ.defects.vinaya_pali_pages)} Vinaya pages
+              ({TQ.defects.vinaya_pali_pct}%) the English uses Pāli names for offence classes. A consistent rendering
+              of the offence classes needs a Vinaya specialist.
             </p>
           </ExampleCard>
 
-          <H3>3. Read five pages in your field</H3>
           <p>
-            We send you five pages by email, each as the image, the Tibetan and our English. For each: what would you
-            correct (quote the line)? Is any statement reversed, left out or added? Would you start from this draft:
-            yes, with work, or no? The first round is planned for the Derge Tengyur, weighted toward Pramāṇa, verse
-            and the Vinaya, where the AI review found the most problems. We would gladly add the Bhutanese
-            manuscripts, including the collections with no printed counterpart.{' '}
-            <S href={SRC.scholar} label="the plan, #5800" />
+            The astrological and medical texts among the Bhutanese manuscripts need the same kind of reader: the
+            lunar-mansion example above shows the English getting the technical vocabulary wrong while the reading
+            is sound.
           </p>
 
-          <H3>4. Tell us what matters</H3>
+          <H3>Conventions, decided once</H3>
           <ul className="list-disc pl-6 space-y-2">
             <li>
-              Which errors matter most for how you would use these texts, and are any of ours not errors at all?
+              <strong>Scribal abbreviations</strong> (ཁཾས for ཁམས, ཌ for སོགས): expand them in the transcription,
+              mark them, or keep them as written.
             </li>
             <li>
-              Should scribal abbreviations (ཁཾས, ཌ for སོགས) be expanded in the transcription, marked, or left as
-              written?
+              <strong>Terms</strong>: Sanskrit equivalents with a gloss, or English renderings; and one rendering per
+              term across the corpus.
             </li>
             <li>
-              Terminology: Sanskrit equivalents with a gloss, or English? Names: translated, transliterated, or
-              both?
+              <strong>Names</strong> of people, deities and places: translated, transliterated, or both.
             </li>
             <li>
-              Which of these collections would be most useful to you, and is there anything we serve that we
-              should not?
+              <strong>Which errors matter most</strong> for scholarly use. We count reversed statements, wrong
+              speakers, wrong terms, omissions and additions; the weighting is ours, not a scholar&rsquo;s.
             </li>
           </ul>
 
-          <div className="mt-8 rounded-sm border border-amber-200 bg-amber-50 px-5 py-5">
-            <p className="font-serif text-xl text-stone-900 mb-2">How to reply</p>
-            <p className="text-base">
-              Write to <A href={MAILTO}>{CONTACT}</A>. Answer one question or all of them, in English or Tibetan.
-              Each correction you send is applied as a recorded revision of the page, never as a silent overwrite,
-              and your verdicts are set beside the AI reviewers&rsquo; on the same pages. That tells us how far to
-              trust the AI review of everything else. We name contributors unless you ask us not to, and we will not
-              quote your answers as a measured rate without your permission.
-            </p>
-          </div>
+          <H3>Reference texts</H3>
+          <p>
+            Any open typed edition of a work in the Bhutanese collections lets us score our reading of it, as the
+            Derge text does for the Kanjur volumes. Searching BDRC&rsquo;s open e-text deposit found a match for 28
+            of 133 treasure and biography books. The ritual, astrological and local texts have not been searched
+            yet. <S href={SRC.terma} />
+          </p>
+
+          <H3>Work we can do ourselves</H3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>
+              English for the {n0(blNoEnglish)} manuscript pages whose Tibetan is ready but not yet translated.
+            </li>
+            <li>
+              A better reading of the {n0(bl.not_legible)} manuscript pages marked not reliably legible, and of the
+              lines dropped where two leaves share a photograph.
+            </li>
+            <li>Correcting titles, dates and authors in the catalogue records of the Bhutanese volumes.</li>
+          </ul>
 
           <p className="text-base text-stone-600 mt-8">
             For every canon in the programme, including Sanskrit, Pāli and Chinese, see{' '}
