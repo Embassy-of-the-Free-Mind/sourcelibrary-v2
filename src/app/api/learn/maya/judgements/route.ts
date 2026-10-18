@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ITEMS_COLLECTION, JUDGEMENTS_COLLECTION, validateJudgement } from '@/lib/learn-maya';
+import { COURSE_ITEMS } from '@/app/learn/maya/course';
 
 export const maxDuration = 5;
 
 /**
  * POST /api/learn/maya/judgements (#6921)
  *
- * Body (item):  { item_id, answer, correct, verdict: agree|disagree|unsure, correction?, items_seen? }
+ * Body (item):  { item_id, answer, correct, verdict: agree|disagree|unsure|null, correction?, items_seen? }
+ *   item_id is a learn_maya_items id (v1 bank) or a course item id (src/app/learn/maya/course.ts,
+ *   v2), stored with rung `course:<lesson>`; course answers carry verdict null.
  * Body (check): { kind: 'check', score, total, answers: [{item_id, answer, correct}] }
  *
  * Signed-in only, and the learner is the SESSION's user id, never a client-sent
@@ -47,7 +50,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const item = await db.collection(ITEMS_COLLECTION).findOne({ _id: body.item_id as never }, { projection: { rung: 1, status: 1 } });
+  const course = COURSE_ITEMS.get(body.item_id as string);
+  const item = course
+    ? { rung: `course:${course.lesson}`, status: 'live' }
+    : await db.collection(ITEMS_COLLECTION).findOne({ _id: body.item_id as never }, { projection: { rung: 1, status: 1 } });
   if (!item || item.status === 'retired') return NextResponse.json({ error: 'unknown item' }, { status: 404 });
 
   const correction = typeof body.correction === 'string' && body.correction.trim() ? body.correction.trim() : null;

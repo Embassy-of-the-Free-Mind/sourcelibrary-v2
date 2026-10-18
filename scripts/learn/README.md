@@ -72,3 +72,9 @@ The next rung is `glyph` (add it to `RUNGS` in `src/lib/learn-maya.ts`; the page
 - show the AI's guess as its reading, and keep its measured accuracy off the page; use it to route items to the expert queue (an item from a weak arm goes to the queue on the first learner dispute, or before any);
 - published readings (e.g. Vail & Hernández) are private answer keys only: never shown, quoted or stored in `learn_maya_items`;
 - gold for a glyph item comes from an expert verdict, not from the build.
+
+## The course (v2, #6921)
+
+Since v2 the page is a short course, not a bank of rungs: `src/app/learn/maya/course.ts` holds lessons 0-3 (intro, counting, days, Landa's key: syllables) as data, each a worked example, 6-10 items and an "in the wild" item on a real linked page; 4-6 are listed as coming. Logic (wrong-answer explanations, spaced review) is in `src/lib/learn-maya-course.ts`. A missed item opens the learner's NEXT sitting ("Last time you mixed up ba and ma"); progress lives in `localStorage` (`sl-learn-maya-v2`). Signed-in answers still go to `learn_maya_judgements`, with `item_id` the course item id, `rung` `course:<lesson>` and `verdict` null: the course never asks "is the AI right?" (that is lesson 6).
+
+The course reuses v1 crops by URL. Its own crops (Dresden page 53, Landa pp. 318 and 320) are listed in `maya-course-crops.json` and rendered by `build-maya-course-crops.mjs` (`--check=<dir>` to look at them, `--apply` to upload to `learn-maya/<book_id>/course-*`), which writes `src/app/learn/maya/course-crops.json`. Syllable drawings are Stuart's (`maya_signs`, credit on every use); the Wayeb confusable groups decide which pairs get the "easily confused" note, but Wayeb drawings are not shown.
