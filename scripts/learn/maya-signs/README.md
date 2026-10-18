@@ -12,18 +12,19 @@ the models were missing. `learn_maya_items` (#6926) holds learner items, not ref
 | source | kind | docs | image |
 |---|---|---|---|
 | David Stuart, *Maya Hieroglyph Syllabary* v2 (2013) | syllabogram | 147 drawings + 15 empty cells | R2 `reference/maya/stuart-syllabary-v2/` (public URL) |
-| Kettunen & Helmke, *Introduction to Maya Hieroglyphs*, 20th ed. (Wayeb 2025), App. N | syllabogram | 170 | stored in the doc (`image.data`), no URL |
-| same, "potentially confusing signs" (printed p. 86) | confusable | 39, in `confusable_group`s | in the doc |
-| same, Concise Dictionary of Maya Logograms (pp. 87-96) | logogram | 88, with transliteration, transcription, translation, alternative spellings | in the doc |
+| Kettunen & Helmke, *Introduction to Maya Hieroglyphs*, 20th ed. (Wayeb 2025), App. N | syllabogram | 170 | R2 `reference/maya/wayeb-handbook-2025/` |
+| same, "potentially confusing signs" (printed p. 86) | confusable | 39, in `confusable_group`s | R2 `reference/maya/wayeb-handbook-2025/` |
+| same, Concise Dictionary of Maya Logograms (pp. 87-96) | logogram | 88, with transliteration, transcription, translation, alternative spellings | R2 (same prefix) |
 
 Every doc carries `source_ref` (title, authors, edition, URL, PDF page and box), `rights`, and `checked`
 (every crop was viewed on a labelled contact sheet against its source page).
 
-**Rights.** Stuart gave permission to Derek on 2026-10-18 (exact scope being confirmed), so his
-drawings have public URLs and carry the credit line "Drawing © David Stuart, used with permission".
-The Wayeb handbook is a free download with no licence stated: its drawings stay inside Mongo for
-private research use, and the loader will not upload any image whose `rights.permission` does not
-start with `granted`. Ask the authors before showing them to readers. Neither PDF is in this repo.
+**Rights.** Stuart gave Derek permission on 2026-10-18 for open use ("a basic public resource");
+credit "Drawing © David Stuart, used with permission". The Wayeb handbook is a free download with
+no licence stated; on Stuart's advice (same day) it is treated as an open public teaching resource,
+credited to Kettunen & Helmke on every use; the authors were not asked individually. The loader
+uploads an image to the public bucket only when `rights.permission` starts with `granted`;
+anything else stays inside the Mongo doc (`image.data`). Neither PDF is in this repo.
 
 ## Rebuild
 

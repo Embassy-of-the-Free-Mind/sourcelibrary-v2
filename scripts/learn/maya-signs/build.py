@@ -14,9 +14,9 @@ SRC={
    'style':'mixed periods; drawings credited in the handbook (pp. 151-152)'}}
 RIGHTS={
  'stuart-syllabary-v2':{'holder':'David Stuart','terms':'chart says: for study or teaching, do not publish without permission',
-   'permission':'granted by David Stuart to Derek Lomas, 2026-10-18 (scope being confirmed)','credit':'Drawing © David Stuart, used with permission'},
+   'permission':'granted by David Stuart to Derek Lomas, 2026-10-18: open use, "a basic public resource"','credit':'Drawing © David Stuart, used with permission'},
  'wayeb-handbook-2025':{'holder':'Harri Kettunen, Christophe Helmke / Wayeb; individual drawings per the handbook credits','terms':'free download from wayeb.org; no licence stated',
-   'permission':'not yet asked: private research use only; ask the authors before showing to readers','credit':'Kettunen & Helmke 2025, Wayeb Workshop Handbook'}}
+   'permission':'granted as open access: a free public teaching resource (David Stuart\'s advice to Derek Lomas, 2026-10-18); the authors were not asked individually, so credit them on every use','credit':'Kettunen & Helmke 2025, Wayeb Workshop Handbook'}}
 recs=[]
 def png(im):
     if im.mode in('RGBA','LA','P'):
