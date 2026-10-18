@@ -1259,9 +1259,11 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 }
 
 /* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx);
-   a picture inside a link (an article or book card) follows the link instead. */
+   a picture inside a link (an article or book card) follows the link instead, and
+   a page from a book in the library opens that page in the reader. */
 .article-page main.has-lightbox img { cursor: zoom-in; }
 .article-page main.has-lightbox [data-no-lightbox] img,
+.article-page main.has-lightbox [data-lightbox-href^="/book/"] img,
 .article-page main.has-lightbox a img { cursor: pointer; }
 
 /* Phones: article text one step smaller, captions and notes with it. Body
