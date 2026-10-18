@@ -7,7 +7,7 @@
 # score.py. scripts/gpu/paddle-zh-box.sh `arm` is called unchanged for Paddle, as card.sh does.
 #
 #   nohup drive.sh [arm ...] > drive.out 2>&1 &      arms: paddle glm mineru olmocr (default: all)
-# Env: J (/root/jobs/latin-bakeoff-5924), UTIL (0.6), LOCK_WAIT (300). An arm whose lock wait times out is retried
+# Env: J (/root/jobs/latin-bakeoff-5924), UTIL (0.6), LOCK_WAIT (300), NOLOCK (1 = inside a gpu-queue task). An arm whose lock wait times out is retried
 # after the others. Outputs: $J/out/<ARM>.jsonl (+ .run.json), $J/drive.log.
 set -uo pipefail
 J=${J:-/root/jobs/latin-bakeoff-5924}; VL=/root/bench/vl; UTIL=${UTIL:-0.6}; IMG=$J/in
@@ -88,6 +88,8 @@ ARMS=${*:-paddle glm mineru olmocr}
 for round in $(seq 1 20); do
   left=()
   for ARM in $ARMS; do
+    # NOLOCK=1: run as a gpu-queue task, which already holds /root/gpu.lock (a second flock here would deadlock)
+    if [ "${NOLOCK:-0}" = 1 ]; then log "under the gpu-queue lock; GPU $(gpu_mib) MiB"; run_arm; stop_server; continue; fi
     exec 9>/root/gpu.lock
     if ! flock -w "${LOCK_WAIT:-300}" 9; then log "lock busy after ${LOCK_WAIT:-300} s"; left+=("$ARM"); exec 9>&-; continue; fi
     log "lock taken; GPU $(gpu_mib) MiB"

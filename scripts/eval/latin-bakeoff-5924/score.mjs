@@ -6,7 +6,9 @@
 /**
  * score.mjs — the #5924 GEX45 Latin bake-off scorer (PREREGISTRATION-open-engine-print-5660.md, Amendment 4).
  *
- *   node score.mjs <arms dir> [--out results.json] [--self-test]
+ *   node score.mjs <arms dir> [--out results.json] [--self-test] [--fold-f]
+ * --fold-f is POST HOC (added after the by-eye read showed lite's wins/losses hinge on ſ written as f): view N also
+ * folds f → s on both sides, so ſ-as-f stops counting. Never the preregistered verdict; reported as a sensitivity view.
  * <arms dir>/<ARM>.jsonl(.gz): rows {page_id | uid, text, finish?, raw?}. The last row per page wins. A page with no
  * row, an error row or empty text scores CER 1.0.
  * Views: N (primary: latin-norm@1, then marks dropped, lower case, ſ→s v→u j→i, letters only) and D (diplomatic:
@@ -34,7 +36,8 @@ export function clean(t) {
   s = s.replace(/!\[[^\]]*\]\([^)]*\)/g, '\n').replace(/<[^>\n]{1,200}>/g, '\n');   // image links, HTML tags
   return s.replace(/^\s{0,3}#{1,6}\s+/gm, '').replace(/\*\*|__/g, '');
 }
-const nview = (s) => (s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/ſ/g, 's').replace(/v/g, 'u').replace(/j/g, 'i').match(/\p{L}/gu) || []).join('');
+const FOLD_F = args.includes('--fold-f');
+const nview = (s) => (s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(FOLD_F ? /[ſf]/g : /ſ/g, 's').replace(/v/g, 'u').replace(/j/g, 'i').match(/\p{L}/gu) || []).join('');
 const dview = (s) => (s.normalize('NFC').toLowerCase().match(/[\p{L}\p{M}&⁊]/gu) || []).join('');
 
 /** {N, D} strings of the reference, and of an engine text (plain and reordered). */
@@ -163,7 +166,7 @@ function main() {
     }
     pages.push(row);
   }
-  const res = { prereg: 'PREREGISTRATION-open-engine-print-5660.md Amendment 4', seed: SEED, resamples: B, arms: Object.keys(arms).sort(), cells: {} };
+  const res = { prereg: 'PREREGISTRATION-open-engine-print-5660.md Amendment 4', view_N: FOLD_F ? 'POST HOC: latin-norm@1 + f→s' : 'preregistered', seed: SEED, resamples: B, arms: Object.keys(arms).sort(), cells: {} };
   for (const cent of ['1600s', '1500s', 'all']) {
     const P = pages.filter((p) => cent === 'all' || p.century === cent); const c = { n: P.length, arms: {} };
     const noise = NOISE.every((a) => arms[a]) ? median(P.map((p) => Math.abs(p.arms[NOISE[0]].N - p.arms[NOISE[1]].N))) : null;
