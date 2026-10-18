@@ -1,0 +1,10 @@
+{
+  "_doc": "Hand decisions from the by-eye pass over the contact sheets (2026-10-18). drop: crop is blank or not that block. partial: block is broken or only partly on the drawing; kept, flagged. coord_fixes: <monument>:<printed coord>:p<pdf page> -> corrected coord.",
+  "drop": {
+    "ts-sanctuary-jamb-A1": "broken off: the crop is blank stone outline (reading is Stuart's, from context)"
+  },
+  "partial": ["ts-sanctuary-jamb-A2", "tc-sanctuary-jamb-Ap12", "tc-sanctuary-jamb-Ap9", "tc-sanctuary-jamb-Bp5", "ts-alfardas-B2", "ts-alfardas-A2", "ts-alfardas-pH1", "tc-alfardas-A2", "tc-alfardas-C2", "tc-alfardas-E1", "tc-alfardas-F1"],
+  "coord_fixes": {
+    "ts-main-tablet:G11:p85": {"coord": "H10", "why": "printed twice as G11 (pp. 85-86); reading order G10, H10, G11 and the GI-name gloss put this one at H10"}
+  }
+}
