@@ -183,9 +183,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     ? 'fixed top-0 inset-x-0 z-50'
     : `${isHero ? 'relative z-50' : 'relative z-30'} ${sticky ? 'sticky top-0' : ''}`;
 
-  // Phones: only the rings until the menu opens, then the wordmark slides out
-  // beside them. Wide screens always show it, even when the links collapse.
-  const wordmark = `inline-block overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${menuOpen
+  // Phones: the homepage shows the full logo; every other page shows only the
+  // rings until the menu opens, then the wordmark slides out beside them. Wide
+  // screens always show it, even when the links collapse.
+  const wordmark = `inline-block overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${menuOpen || isHero
     ? 'max-w-[16rem] opacity-100 ml-3'
     : 'max-w-0 opacity-0 ml-0 lg:max-w-[16rem] lg:opacity-100 lg:ml-3'}`;
 
