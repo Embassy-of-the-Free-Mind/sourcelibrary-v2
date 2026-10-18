@@ -621,7 +621,7 @@ const SEARCH_STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'de
  *
  * `authors` adds the author-only ANDs and the alias groups (the display lane).
  */
-function catalogOrFilter(searchText: string, opts: { isPhrase: boolean; fold: boolean; authors: boolean }): string {
+export function catalogOrFilter(searchText: string, opts: { isPhrase: boolean; fold: boolean; authors: boolean }): string {
   const safe = sanitizeFilterValue(searchText);
   const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
   const contentWords = words.filter(w => w.length >= 3 && !SEARCH_STOPWORDS.has(w.toLowerCase()));
