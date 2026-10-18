@@ -1,0 +1,212 @@
+2026-10-17T22:28:36Z [paddle-vl] lock busy after 300 s — not run
+2026-10-17T22:33:36Z [glm-ocr] lock busy after 300 s — not run
+2026-10-17T22:38:36Z [mineru25-pro] lock busy after 300 s — not run
+2026-10-17T22:43:36Z [dots-ocr] lock busy after 300 s — not run
+2026-10-17T22:48:36Z [qwen25vl7b-awq] lock busy after 300 s — not run
+2026-10-17T22:53:36Z [olmocr2-fp8] lock busy after 300 s — not run
+2026-10-17T22:55:12Z [qwen3-8b-awq] lock taken; GPU 2 MiB
+2026-10-17T22:57:52Z [qwen3-8b-awq] full up after 160 s at util 0.85
+2026-10-17T23:00:06Z [qwen3-8b-awq] full: {"mode":"llm","items":400,"ok":400,"errors":0,"clients":32,"max_tokens":512,"wall_secs":130.9,"items_per_hour":11004,"secs_per_item":0.327,"out_tok_per_s":108.5,"mean_out_tok":36,"hit_cap":0} peak 19768 MiB
+2026-10-17T23:00:49Z [qwen3-8b-awq] beside up after 35 s at util 0.38
+2026-10-17T23:03:10Z [qwen3-8b-awq] beside: {"mode":"llm","items":400,"ok":400,"errors":0,"clients":32,"max_tokens":512,"wall_secs":138.7,"items_per_hour":10384,"secs_per_item":0.347,"out_tok_per_s":102.3,"mean_out_tok":35,"hit_cap":0} peak 9522 MiB
+2026-10-17T23:03:18Z [qwen3-8b-awq] exit; GPU 2 MiB
+2026-10-17T23:09:18Z [qwen3-14b-awq] lock busy after 300 s — not run
+2026-10-17T23:14:18Z [bge-m3] lock busy after 300 s — not run
+2026-10-17T23:19:18Z [qwen3-emb-0.6b] lock busy after 300 s — not run
+2026-10-17T23:24:18Z [qwen3-emb-4b] lock busy after 300 s — not run
+2026-10-17T23:29:18Z [siglip2-base] lock busy after 300 s — not run
+2026-10-17T23:34:18Z [siglip2-so400m] lock busy after 300 s — not run
+2026-10-17T23:39:18Z [clip-b32] lock busy after 300 s — not run
+2026-10-17T23:44:18Z [paddle-vl] lock busy after 300 s — not run
+2026-10-17T23:49:18Z [glm-ocr] lock busy after 300 s — not run
+2026-10-17T23:50:45Z [mineru25-pro] lock taken; GPU 2 MiB
+2026-10-17T23:51:00Z [mineru25-pro] full did not start:   Value error, User-specified max_model_len (16384) is greater than the derived max_model_len (max_position_embeddings=8192.0 or model_max_length=None in model's config.json). To allow overriding this maximum, set the env var VLLM_ALLOW_LONG_MAX_MODEL_LEN=1. VLLM_ALLOW_LONG_MAX_MODEL_LEN must be use     For further information visit https://errors.pydantic.dev/2.14/v/value_error 
+2026-10-17T23:51:18Z [mineru25-pro] beside did not start:   Value error, User-specified max_model_len (16384) is greater than the derived max_model_len (max_position_embeddings=8192.0 or model_max_length=None in model's config.json). To allow overriding this maximum, set the env var VLLM_ALLOW_LONG_MAX_MODEL_LEN=1. VLLM_ALLOW_LONG_MAX_MODEL_LEN must be use     For further information visit https://errors.pydantic.dev/2.14/v/value_error 
+2026-10-17T23:51:26Z [mineru25-pro] exit; GPU 2 MiB
+2026-10-17T23:57:26Z [dots-ocr] lock busy after 300 s — not run
+2026-10-18T00:00:15Z [mineru25-pro] lock busy after 300 s — not run
+2026-10-18T00:02:08Z [qwen25vl7b-awq] lock taken; GPU 2 MiB
+2026-10-18T00:04:48Z [qwen25vl7b-awq] full up after 160 s at util 0.85
+2026-10-18T00:05:15Z [mineru25-pro] lock busy after 300 s — not run
+2026-10-18T00:10:15Z [mineru25-pro] lock busy after 300 s — not run
+2026-10-18T00:12:56Z [qwen25vl7b-awq] full: {"mode":"generic","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":422.2,"items_per_hour":853,"secs_per_item":4.222,"out_tok_per_s":266.6,"mean_out_tok":1126,"hit_cap":13} peak 20494 MiB
+2026-10-18T00:13:40Z [qwen25vl7b-awq] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T00:13:48Z [qwen25vl7b-awq] exit; GPU 2 MiB
+2026-10-18T00:13:48Z [mineru25-pro] lock taken; GPU 2 MiB
+2026-10-18T00:13:58Z [mineru25-pro] full did not start:     raise ValueError( ValueError: VllmV1NoRepeatNGramLogitsProcessor is not a subclass of vllm.v1.worker.gpu.sample.logits_processor.LogitsProcessor 
+2026-10-18T00:14:16Z [mineru25-pro] beside did not start:     raise ValueError( ValueError: VllmV1NoRepeatNGramLogitsProcessor is not a subclass of vllm.v1.worker.gpu.sample.logits_processor.LogitsProcessor 
+2026-10-18T00:14:24Z [mineru25-pro] exit; GPU 2 MiB
+2026-10-18T00:14:48Z [olmocr2-fp8] lock taken; GPU 2 MiB
+RUN-ALL-END 2026-10-18T00:15:24Z
+2026-10-18T00:15:58Z [olmocr2-fp8] full up after 70 s at util 0.85
+2026-10-18T00:23:11Z [olmocr2-fp8] full: {"mode":"olmocr","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":329.7,"items_per_hour":1092,"secs_per_item":3.297,"out_tok_per_s":205.4,"mean_out_tok":677,"hit_cap":0} peak 20656 MiB
+2026-10-18T00:23:54Z [olmocr2-fp8] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T00:24:03Z [olmocr2-fp8] exit; GPU 2 MiB
+2026-10-18T00:24:03Z [mineru25-pro] lock taken; GPU 2 MiB
+2026-10-18T00:26:18Z [mineru25-pro] full up after 135 s at util 0.85
+2026-10-18T00:28:36Z [mineru25-pro] full: {"mode":"mineru","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":0,"wall_secs":103.2,"items_per_hour":3488,"secs_per_item":1.032,"out_tok_per_s":null,"mean_out_tok":null,"hit_cap":0} peak 20164 MiB
+2026-10-18T00:29:14Z [mineru25-pro] beside up after 30 s at util 0.38
+2026-10-18T00:30:03Z [qwen3-14b-awq] lock busy after 300 s — not run
+2026-10-18T00:31:05Z [mineru25-pro] beside: {"mode":"mineru","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":0,"wall_secs":105.6,"items_per_hour":3410,"secs_per_item":1.056,"out_tok_per_s":null,"mean_out_tok":null,"hit_cap":0} peak 9026 MiB
+2026-10-18T00:31:13Z [mineru25-pro] exit; GPU 2 MiB
+2026-10-18T00:31:13Z [bge-m3] lock taken; GPU 2 MiB
+2026-10-18T00:31:58Z [bge-m3] {"kind":"text","model":"BAAI/bge-m3","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":32,"max_seq_len":1024,"dim":1024,"median_tokens":893,"share_truncated":0.418,"wall_secs":37.7,"items_per_s":53.1,"items_per_hour":191086,"torch_peak_alloc_mib":1916,"torch_peak_reserved_mib":2308} peak 2652 MiB
+2026-10-18T00:31:59Z [bge-m3] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T00:32:13Z
+2026-10-18T00:32:59Z [qwen3-emb-0.6b] lock taken; GPU 2 MiB
+2026-10-18T00:34:33Z [qwen3-emb-0.6b] {"kind":"text","model":"Qwen/Qwen3-Embedding-0.6B","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":32,"max_seq_len":1024,"dim":1024,"median_tokens":791,"share_truncated":0.368,"wall_secs":85.8,"items_per_s":23.3,"items_per_hour":83886,"torch_peak_alloc_mib":5682,"torch_peak_reserved_mib":6188} peak 6534 MiB
+2026-10-18T00:34:34Z [qwen3-emb-0.6b] exit; GPU 2 MiB
+2026-10-18T00:35:34Z [qwen3-emb-4b] lock taken; GPU 2 MiB
+2026-10-18T00:42:20Z [qwen3-emb-4b] {"kind":"text","model":"Qwen/Qwen3-Embedding-4B","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":32,"max_seq_len":1024,"dim":2560,"median_tokens":791,"share_truncated":0.368,"wall_secs":384.3,"items_per_s":5.2,"items_per_hour":18737,"torch_peak_alloc_mib":15023,"torch_peak_reserved_mib":16836} peak 17182 MiB
+2026-10-18T00:42:20Z [qwen3-emb-4b] exit; GPU 2 MiB
+2026-10-18T00:42:20Z [bge-m3-2k] lock taken; GPU 2 MiB
+2026-10-18T00:43:33Z [bge-m3-2k] {"kind":"text","model":"BAAI/bge-m3","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":32,"max_seq_len":2048,"dim":1024,"median_tokens":893,"share_truncated":0.134,"wall_secs":64.5,"items_per_s":31.0,"items_per_hour":111570,"torch_peak_alloc_mib":2781,"torch_peak_reserved_mib":3270} peak 3614 MiB
+2026-10-18T00:43:33Z [bge-m3-2k] exit; GPU 2 MiB
+2026-10-18T00:43:33Z [siglip2-base] lock taken; GPU 2 MiB
+2026-10-18T00:43:49Z [siglip2-base]  peak 1506 MiB
+2026-10-18T00:43:49Z [siglip2-base] exit; GPU 2 MiB
+2026-10-18T00:44:33Z [qwen3-emb-0.6b-2k] lock taken; GPU 2 MiB
+2026-10-18T00:47:17Z [qwen3-emb-0.6b-2k] {"kind":"text","model":"Qwen/Qwen3-Embedding-0.6B","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":32,"max_seq_len":2048,"dim":1024,"median_tokens":791,"share_truncated":0.102,"wall_secs":153.5,"items_per_s":13.0,"items_per_hour":46919,"torch_peak_alloc_mib":10259,"torch_peak_reserved_mib":11534} peak 11880 MiB
+2026-10-18T00:47:17Z [qwen3-emb-0.6b-2k] exit; GPU 2 MiB
+2026-10-18T00:47:18Z [siglip2-so400m] lock taken; GPU 2 MiB
+2026-10-18T00:48:21Z [siglip2-so400m] {"kind":"image","model":"google/siglip2-so400m-patch14-384","dtype":"bf16","torch":"2.13.0+cu132","items":1000,"batch":64,"input_px":[384,384],"dim":1152,"wall_secs":24.0,"items_per_s":41.7,"items_per_hour":150212,"gpu_only_items_per_s":45.1,"cpu_workers":8,"torch_peak_alloc_mib":3453,"torch_peak_reserved_mib":3812} peak 4164 MiB
+2026-10-18T00:48:21Z [siglip2-so400m] exit; GPU 2 MiB
+2026-10-18T00:48:21Z [siglip2-base] lock taken; GPU 2 MiB
+2026-10-18T00:48:35Z [siglip2-base] {"kind":"image","model":"google/siglip2-base-patch16-224","dtype":"bf16","torch":"2.13.0+cu132","items":1000,"batch":64,"input_px":[224,224],"dim":768,"wall_secs":4.6,"items_per_s":219.4,"items_per_hour":789919,"gpu_only_items_per_s":844.0,"cpu_workers":8,"torch_peak_alloc_mib":1003,"torch_peak_reserved_mib":1080} peak 1432 MiB
+2026-10-18T00:48:35Z [siglip2-base] exit; GPU 2 MiB
+2026-10-18T00:48:36Z [qwen3-emb-4b-2k] lock taken; GPU 2 MiB
+2026-10-18T00:48:57Z [qwen3-emb-4b-2k]  peak 22816 MiB
+2026-10-18T00:48:57Z [qwen3-emb-4b-2k] exit; GPU 2 MiB
+2026-10-18T00:49:21Z [clip-b32] lock taken; GPU 2 MiB
+2026-10-18T00:49:33Z [clip-b32] {"kind":"image","model":"openai/clip-vit-base-patch32","dtype":"bf16","torch":"2.13.0+cu132","items":1000,"batch":64,"input_px":[224,224],"dim":512,"wall_secs":4.9,"items_per_s":204.5,"items_per_hour":736358,"gpu_only_items_per_s":3098.3,"cpu_workers":8,"torch_peak_alloc_mib":421,"torch_peak_reserved_mib":450} peak 802 MiB
+2026-10-18T00:49:33Z [clip-b32] exit; GPU 2 MiB
+2026-10-18T00:49:35Z [qwen25vl7b-awq-tight] lock taken; GPU 2 MiB
+RUN-ALL-END 2026-10-18T00:49:57Z
+2026-10-18T00:50:21Z [qwen25vl7b-awq-tight] full did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T00:50:29Z [qwen25vl7b-awq-tight] exit; GPU 2 MiB
+2026-10-18T00:50:33Z [paddle-vl] lock taken; GPU 2 MiB
+RUN-ALL-END 2026-10-18T00:51:29Z
+2026-10-18T01:00:14Z [qwen3-emb-4b-2k] lock busy after 300 s — not run
+2026-10-18T01:03:38Z [paddle-vl] layout=0:  peak 9448 MiB
+2026-10-18T01:05:14Z [qwen25vl7b-awq-tight] lock busy after 300 s — not run
+2026-10-18T01:05:53Z [paddle-vl] layout=1: {"arm":"gex45bench-l1","backend":"server","workers":8,"max_side":0,"layout":1,"page_batch":1,"pages":100,"errors":0,"wall_secs":135.2,"load_secs_max":21.4,"wall_secs_after_load":113.8} peak 16904 MiB
+2026-10-18T01:06:01Z [paddle-vl] exit; GPU 2 MiB
+2026-10-18T01:06:01Z [olmocr2-fp8-tight] lock taken; GPU 2 MiB
+2026-10-18T01:06:56Z [olmocr2-fp8-tight] full did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T01:07:05Z [olmocr2-fp8-tight] exit; GPU 2 MiB
+2026-10-18T01:07:05Z [glm-ocr] lock taken; GPU 2 MiB
+2026-10-18T01:08:15Z [glm-ocr] full up after 70 s at util 0.85
+2026-10-18T01:12:42Z [glm-ocr] full: {"mode":"glm","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":246.2,"items_per_hour":1462,"secs_per_item":2.462,"out_tok_per_s":478.2,"mean_out_tok":1177,"hit_cap":13} peak 21516 MiB
+2026-10-18T01:13:05Z [qwen3-emb-4b-2k] lock busy after 300 s — not run
+2026-10-18T01:13:16Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T01:13:30Z [glm-ocr] beside up after 40 s at util 0.38
+2026-10-18T01:18:05Z [qwen25vl7b-awq-tight] lock busy after 300 s — not run
+2026-10-18T01:18:16Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T01:18:28Z [glm-ocr] beside: {"mode":"glm","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":278.0,"items_per_hour":1295,"secs_per_item":2.78,"out_tok_per_s":424.0,"mean_out_tok":1179,"hit_cap":13} peak 10710 MiB
+2026-10-18T01:18:36Z [glm-ocr] exit; GPU 2 MiB
+2026-10-18T01:18:36Z [qwen3-emb-4b-2k] lock taken; GPU 2 MiB
+2026-10-18T01:23:16Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T01:24:36Z [dots-ocr] lock busy after 300 s — not run
+2026-10-18T01:28:00Z [qwen3-emb-4b-2k] {"kind":"text","model":"Qwen/Qwen3-Embedding-4B","dtype":"bf16","torch":"2.13.0+cu132","items":2000,"batch":8,"max_seq_len":2048,"dim":2560,"median_tokens":791,"share_truncated":0.102,"wall_secs":538.5,"items_per_s":3.7,"items_per_hour":13370,"torch_peak_alloc_mib":11406,"torch_peak_reserved_mib":12648} peak 12994 MiB
+2026-10-18T01:28:00Z [qwen3-emb-4b-2k] exit; GPU 2 MiB
+2026-10-18T01:28:00Z [paddle-vl] lock taken; GPU 2 MiB
+2026-10-18T01:29:36Z [qwen3-14b-awq] lock busy after 300 s — not run
+2026-10-18T01:30:05Z [glm-ocr] lock busy after 300 s — not run
+2026-10-18T01:30:20Z [paddle-vl] layout=0: {"arm":"gex45bench-l0","backend":"server","workers":8,"max_side":0,"layout":0,"page_batch":1,"pages":100,"errors":0,"wall_secs":100.1,"load_secs_max":3.2,"wall_secs_after_load":96.9} peak 9448 MiB
+2026-10-18T01:30:28Z [paddle-vl] exit; GPU 2 MiB
+2026-10-18T01:30:28Z [qwen25vl7b-awq-tight] lock taken; GPU 2 MiB
+2026-10-18T01:31:03Z [qwen25vl7b-awq-tight] full did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T01:31:11Z [qwen25vl7b-awq-tight] exit; GPU 2 MiB
+2026-10-18T01:31:12Z [dots-ocr] lock taken; GPU 2 MiB
+RUN-ALL-END 2026-10-18T01:31:28Z
+RUN-ALL-END 2026-10-18T01:32:11Z
+2026-10-18T01:32:32Z [dots-ocr] full up after 80 s at util 0.85
+2026-10-18T01:35:05Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T01:37:23Z [qwen25vl7b-awq-tight] lock busy after 300 s — not run
+2026-10-18T01:40:05Z [glm-ocr] lock busy after 300 s — not run
+2026-10-18T01:42:23Z [qwen25vl7b-awq-tight] lock busy after 300 s — not run
+2026-10-18T01:42:23Z [dots-ocr] full: {"mode":"dots","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":8000,"wall_secs":496.5,"items_per_hour":725,"secs_per_item":4.965,"out_tok_per_s":387.8,"mean_out_tok":1926,"hit_cap":11} peak 20136 MiB
+2026-10-18T01:43:16Z [dots-ocr] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T01:43:25Z [dots-ocr] exit; GPU 2 MiB
+2026-10-18T01:43:25Z [qwen3-8b-awq] lock taken; GPU 2 MiB
+2026-10-18T01:43:55Z [qwen3-8b-awq] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T01:44:03Z [qwen3-8b-awq] exit; GPU 2 MiB
+2026-10-18T01:44:03Z [qwen25vl7b-awq-tight] lock taken; GPU 2 MiB
+2026-10-18T01:44:58Z [qwen25vl7b-awq-tight] full up after 55 s at util 0.38
+2026-10-18T01:49:25Z [qwen3-14b-awq] lock busy after 300 s — not run
+2026-10-18T01:50:03Z [glm-ocr] lock busy after 300 s — not run
+2026-10-18T01:52:26Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T01:52:26Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T01:53:11Z [qwen25vl7b-awq-tight] full: {"mode":"generic","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":424.3,"items_per_hour":849,"secs_per_item":4.243,"out_tok_per_s":271.2,"mean_out_tok":1150,"hit_cap":15} peak 10278 MiB
+2026-10-18T01:53:20Z [qwen25vl7b-awq-tight] exit; GPU 2 MiB
+2026-10-18T01:53:20Z [qwen3-14b-awq] lock taken; GPU 2 MiB
+RUN-ALL-END 2026-10-18T01:54:20Z
+2026-10-18T01:54:35Z [qwen3-14b-awq] full up after 75 s at util 0.85
+2026-10-18T01:55:03Z [glm-ocr] lock busy after 300 s — not run
+2026-10-18T01:57:26Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T01:57:26Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T01:58:54Z [qwen3-14b-awq] full: {"mode":"llm","items":400,"ok":400,"errors":0,"clients":32,"max_tokens":512,"wall_secs":255.1,"items_per_hour":5644,"secs_per_item":0.638,"out_tok_per_s":34.0,"mean_out_tok":22,"hit_cap":0} peak 19488 MiB
+2026-10-18T01:59:32Z [qwen3-14b-awq] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T01:59:41Z [qwen3-14b-awq] exit; GPU 2 MiB
+2026-10-18T01:59:41Z [glm-ocr] lock taken; GPU 2 MiB
+2026-10-18T02:00:06Z [glm-ocr] beside up after 25 s at util 0.30
+RUN-ALL-END 2026-10-18T02:00:41Z
+2026-10-18T02:02:26Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:02:26Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:05:18Z [glm-ocr] beside: {"mode":"glm","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":292.1,"items_per_hour":1232,"secs_per_item":2.921,"out_tok_per_s":390.0,"mean_out_tok":1139,"hit_cap":12} peak 8792 MiB
+2026-10-18T02:05:27Z [glm-ocr] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T02:06:27Z
+2026-10-18T02:07:26Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:07:26Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:07:36Z [dots-ocr-tight] lock taken; GPU 2 MiB
+2026-10-18T02:08:21Z [dots-ocr-tight] full up after 45 s at util 0.38
+2026-10-18T02:08:22Z [dots-ocr-tight] full: {"mode":"dots","items":100,"ok":0,"errors":100,"clients":16,"max_tokens":8000,"wall_secs":0.6,"items_per_hour":0,"secs_per_item":0.615,"out_tok_per_s":null,"mean_out_tok":null,"hit_cap":0} peak 8382 MiB
+2026-10-18T02:08:30Z [dots-ocr-tight] exit; GPU 2 MiB
+2026-10-18T02:08:30Z [qwen3-8b-awq] lock taken; GPU 2 MiB
+2026-10-18T02:09:15Z [qwen3-8b-awq] beside did not start:     raise RuntimeError( RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {} 
+2026-10-18T02:09:23Z [qwen3-8b-awq] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T02:09:30Z
+RUN-ALL-END 2026-10-18T02:10:23Z
+2026-10-18T02:18:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:18:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:18:48Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T02:23:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:23:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:23:48Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T02:24:19Z [ll-qwen25vl7b-awq] lock taken; GPU 2 MiB
+2026-10-18T02:25:09Z [ll-qwen25vl7b-awq] full up after 50 s at util 0.85
+2026-10-18T02:28:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:28:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:28:35Z [ll-qwen25vl7b-awq] ll-img: {"mode":"ll-img","items":85,"ok":85,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":198.6,"items_per_hour":1541,"secs_per_item":2.336,"out_tok_per_s":null,"mean_out_tok":null,"hit_cap":0} peak 20160 MiB
+2026-10-18T02:28:48Z [paddle-vl] lock busy after 300 s — not run
+2026-10-18T02:29:08Z [ll-qwen25vl7b-awq] ll-text: {"mode":"ll-text","items":85,"ok":85,"errors":0,"clients":16,"max_tokens":4500,"wall_secs":29.9,"items_per_hour":10249,"secs_per_item":0.351,"out_tok_per_s":null,"mean_out_tok":null,"hit_cap":0} peak 20160 MiB
+2026-10-18T02:29:16Z [ll-qwen25vl7b-awq] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T02:30:16Z
+2026-10-18T02:33:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:33:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:33:29Z [paddle-vl] lock taken; GPU 2 MiB
+2026-10-18T02:35:53Z [paddle-vl] layout=0: {"arm":"gex45bench-l0","backend":"server","workers":8,"max_side":0,"layout":0,"page_batch":1,"pages":100,"errors":0,"wall_secs":103.5,"load_secs_max":3.2,"wall_secs_after_load":100.3} peak 5380 MiB
+2026-10-18T02:36:01Z [paddle-vl] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T02:37:01Z
+2026-10-18T02:38:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:38:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:43:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:43:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:48:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:48:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:53:29Z [qwen3-8b-awq] lock busy after 300 s — not run
+2026-10-18T02:53:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:55:29Z [qwen3-8b-awq] lock taken; GPU 2 MiB
+2026-10-18T02:56:29Z [qwen3-8b-awq] beside up after 60 s at util 0.36
+2026-10-18T02:58:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T02:59:17Z [qwen3-8b-awq] beside: {"mode":"llm","items":400,"ok":399,"errors":1,"clients":32,"max_tokens":512,"wall_secs":164.6,"items_per_hour":8725,"secs_per_item":0.413,"out_tok_per_s":86.1,"mean_out_tok":36,"hit_cap":0} peak 8012 MiB
+2026-10-18T02:59:25Z [qwen3-8b-awq] exit; GPU 2 MiB
+RUN-ALL-END 2026-10-18T03:00:25Z
+2026-10-18T03:03:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T03:08:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T03:13:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T03:18:29Z [dots-ocr-tight] lock busy after 300 s — not run
+2026-10-18T03:19:18Z [dots-ocr-tight] lock taken; GPU 2 MiB
+2026-10-18T03:20:03Z [dots-ocr-tight] full up after 45 s at util 0.38
+2026-10-18T03:27:17Z [dots-ocr-tight] full: {"mode":"dots","items":100,"ok":100,"errors":0,"clients":16,"max_tokens":7500,"wall_secs":360.9,"items_per_hour":998,"secs_per_item":3.609,"out_tok_per_s":455.7,"mean_out_tok":1645,"hit_cap":7} peak 9960 MiB
+2026-10-18T03:27:25Z [dots-ocr-tight] exit; GPU 2 MiB
