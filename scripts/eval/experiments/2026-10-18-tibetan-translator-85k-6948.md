@@ -6,7 +6,7 @@ scripts: [Tibt]
 canons: [derge-kangyur]
 n_books: 60
 n_pages: 60
-verdict: "Preregistered; no arm has been read yet."
+verdict: "Gemini 4 Argon low (agy) clears the bar on 60 Tibetan pages: fidelity 4.31, 0.09 below Opus [−0.27, +0.11], 0 reversal pages of 59; 3.8 Flash is 0.40 below with 2 reversals and fails. The withheld production English scores 1.1 (another text). At 500 agy calls a day, 85K pages take about 173 days."
 status: undecided
 decision: null
 superseded_by: null
@@ -159,3 +159,113 @@ Result of the cut: 15 of the 30 CANON pages have a reference.
 The Prajñāpāramitā pages are repetitive. Their best Derge folio wins by a small margin over a far one (e.g. 89 vs 79
 4-gram hits). The located side may therefore be a near-identical passage elsewhere in the sūtra. The judge's
 `reference_fit` can say "wrong"; the report gives the 15 reference pages separately.
+
+### Result (scored 2026-10-18 22:05Z, `tib-translator-6948/score.py`)
+
+**Verdict: Gemini 4 Argon low through agy (G4L) clears the bar. 3.8 Flash (F38) does not.**
+- G4L scores 4.31 on the 57 pages all three candidates share. Opus (OP), the best arm, scores 4.40, so G4L is
+  0.09 below it (CI [−0.27, +0.11]). G4L has 0 reversal pages of 59 scored.
+- F38 is 0.40 below Opus ([−0.56, −0.22]) and reverses a statement on 2 of 58 pages (3.4%). It fails both halves
+  of the bar.
+- G4L beats F38 by +0.31 [+0.12, +0.49] (26 pages higher, 10 lower). G4L and Opus are not separable: 13 pages
+  higher, 19 lower.
+- G4L clears the bar on the point estimate, as preregistered. The CI's lower bound (−0.27) does not clear −0.20:
+  with n = 60, "within 0.2 of Opus" is not shown with confidence.
+
+**The withheld production English scores 1.08 [1.00, 1.19] on its 47 pages.** It was made from the old Gemini
+OCR. Both judges call it "an unrelated text" or "an unrelated sutra" on page after page: span off on 46 of 47,
+unreadable fill on 42. It is not this page's text, which confirms #4523's withholding. It is not a fallback.
+
+**Judge gate: PASS.**
+- J1 caught 8 of 8 planted reversals, J2 6 of 8. Both tied 4 of 4 duplicates.
+- The two judges' fidelity scores agree within 1 point on every page × arm pair.
+- Judging ran 21:34–21:56Z: 24 parts, no failures, no limit waits, $0.
+
+**n = 60 pages, 60 books, one page per book.**
+- Failed reads: G4L 1 (Gemini's filter block, twice). F38 2 (one timed out at 300 s; one answered "I have
+  prepared the implementation plan … in translation_plan.md", twice). OP 0.
+- Fidelity 1–5 is the mean of both judges. Intervals are by-book bootstrap 95%. "Reversal pages" counts pages where
+  either judge listed a reversal; the both-judges count is in brackets.
+
+| block | n (shared) | G4L | F38 | OP | G4L − F38 | G4L − OP | F38 − OP | reversal pages G4L / F38 / OP |
+|---|---|---|---|---|---|---|---|---|
+| **All** | 57 | 4.31 [4.18, 4.44] | 4.00 [3.86, 4.14] | 4.40 [4.25, 4.54] | +0.31 [+0.12, +0.49] | −0.09 [−0.27, +0.11] | −0.40 [−0.56, −0.22] | 0 / 2 / 1 (0 / 2 / 1) |
+| CANON (Kangyur, Tengyur, Prajñāpāramitā) | 30 | 4.48 [4.32, 4.65] | 4.25 [4.10, 4.40] | 4.55 [4.33, 4.75] | +0.23 [0.00, +0.47] | −0.07 [−0.35, +0.23] | −0.30 [−0.55, −0.03] | 0 / 0 / 1 |
+| OTHER (Bhutanese mss., Thor bu, gter ma, collected works) | 27 | 4.11 [3.93, 4.28] | 3.72 [3.52, 3.93] | 4.22 [4.07, 4.39] | +0.39 [+0.11, +0.67] | −0.11 [−0.35, +0.11] | −0.50 [−0.74, −0.28] | 0 / 2 / 0 |
+| with an 84000 reference | 15 | 4.57 [4.33, 4.80] | 4.27 [4.03, 4.50] | 4.43 [4.07, 4.73] | +0.30 [−0.03, +0.67] | +0.13 [−0.33, +0.67] | −0.17 [−0.53, +0.20] | 0 / 0 / 1 |
+| source only | 42 | 4.21 [4.07, 4.36] | 3.90 [3.74, 4.07] | 4.38 [4.24, 4.54] | +0.31 [+0.10, +0.52] | −0.17 [−0.33, +0.01] | −0.48 [−0.67, −0.29] | 0 / 2 / 0 |
+
+- **Weighted by frame pages** (CANON 17,058, OTHER 69,894): G4L 4.18, F38 3.83, OP 4.29. Reversal pages per 100:
+  G4L 0, F38 6.0, OP 0.7.
+- **Production English, on its 47 pages:** 1.08, against G4L 3.17, F38 2.86 and OP 3.30 on the same pages. These
+  per-arm numbers are lower than in the table above because the judges scored each page beside an unrelated text.
+  Levels are compared only inside one item set.
+- **The bar** (preregistered): best arm = OP. G4L −0.09 and 0 of 59: clears. F38 −0.40 and 2 of 58: fails. OP: 1
+  of 60 (1.7%): clears.
+- **Decision rule:** G4L clears, so the translator for these pages is G4L.
+
+**The reversals, checked against the Tibetan by this job:**
+- **F38, a sādhana (T063):** ས་གསུམ་ཁུར་དུ་དཀའ་བ ("the burden of the three realms, hard to bear") becomes "finds
+  even the burden of the three realms light to bear". Confirmed.
+- **F38, a dying-instruction text (T052):** རིག་པ་འབད་ལ ("awareness, with effort") becomes "reveal awareness
+  vividly without striving". Confirmed.
+- **OP, the Vinaya's Sudhana story (Toh 1-6, T023):** the brahmin reads the dream as the prince's victory and
+  resolves to tell it as something false (ལོག་པ་ཞིག་ཏུ་བསྟན་པར་བྱའོ). Opus has "that is how I will explain it",
+  which loses the lie the plot turns on. Confirmed. G4L scored 5 on this page.
+
+**The three pages where G4L and F38 differ most** (from the judges' reasons; the two F38 cases were checked by this job):
+- **A Rāhula invocation (OTHER; G4L 5, F38 3, OP 4).** F38 reads the scribe's contraction སྤྱན (= ཅན) as "eyes"
+  throughout. G4L resolves it, as it resolves the other abbreviations. Abbreviated manuscript orthography is where
+  the arms separate most.
+- **A Kagyé palace description (OTHER; G4L 5, F38 3).** Again a contracted script (bsdus yig). F38 turns palaces
+  into deities and names a "Dregpa Heruka".
+- **Śatasāhasrikā, feelings born of contact (CANON, 84000 reference; G4L 5, F38 3.5).** G4L keeps both halves of
+  each converse pair, as the reference does. F38 and OP flatten them.
+
+**Beside the rule:**
+- **Omission pages (either judge):** G4L 8, F38 26, OP 11.
+- **Unreadable fill:** a plausible phrase where the source is garbled. G4L 15 pages (8 by both judges), F38 11 (5),
+  OP 0.
+  - Each G4L case is one phrase on a page that still scores 4–5 (e.g. "Upon a corpse-seat", "thirty-two, the people
+    dwelt"). No G4L page is invented whole.
+  - Opus marks such spans `<unclear>`, as prompt v13 asks. G4L mostly does not.
+  - This is G4L's main residual risk on these manuscripts.
+- **Added facts** (editorial notes the page does not state; not checked for truth): G4L 152 entries, F38 19, OP 124.
+  #6750 found the same pattern.
+- **Length:** G4L's English is 1.52× F38's and 1.26× Opus's.
+- **Reference fit, judge × page:** Derge sides exact 4, wider 2. Manuscript windows wider 22, offset 2. No
+  reference 90 (`cant_tell`). No reference was judged "wrong", so the repetitive Prajñāpāramitā locations held up.
+
+**Calls and pace:**
+- **G4L:** 61 agy calls for 60 pages (1.02 per page). Median 23.8 s per page, p90 34.7 s. That is **≈ 492 pages per
+  day at 500 calls**.
+  - The #6948 frame (86,952 pages) takes **≈ 177 days**, and 85K pages about 173.
+  - Without the 7,114 Derge pages the Kangyur hold leaves to 84000 (below), the remaining 79,838 take **≈ 162 days**.
+  - 500 calls at 2 in flight use about 1.6 h of agy time a day. The cap is the binding constraint, not the model.
+- **F38:** 77 calls for 60 pages (1.28 per page: 12 nudges after a denied tool, 3 plan-note re-reads). That is ≈ 390
+  pages a day, or ≈ 218 days for 85K.
+- **OP:** median 38 s per page, one page per call. It is a check, not a lane.
+
+**The Derge pages do not belong in the 85K as it stands.** 7,114 of the 7,331 Derge Kangyur pages in the frame
+carry `left_to_84000: true`. The Kangyur import's hold releases only a draft that skips texts 84000 has published or
+has in progress (#5665). Translating them is a separate decision for Derek. Of the 8 Derge pages drawn here, 3 are
+published by 84000 and 5 are "In Progress".
+
+**Limits:**
+- The judges are AI (Opus), not a reader of Tibetan. Five passages were checked by this job against the source: the
+  three reversals and two of the largest gaps.
+- **Same family.** The judges and one arm are Opus. G4L scoring 0.09 below Opus is the outcome the family check
+  exists to bound. A same-family preference would only widen the gap, so G4L clearing the bar is not flattered by
+  it. Opus's lead over G4L is not established either way.
+- 45 of the 60 pages have no reference. On those the judge reads the Tibetan, and confidence is lower, especially on
+  contracted manuscript script.
+- One read per arm per page. There is no A-vs-A repeat for G4L on Tibetan.
+- Unreadable fill and added facts were counted, not checked for truth.
+
+Files:
+- `scripts/eval/results/tib-translator-6948/{key.json,scores.json}` (numbers and labels only).
+- `scripts/eval/tib-translator-6948/` (frame, sample, requests, agy runner and screen, 84000 cut, packet, judge
+  driver, score).
+- The arm outputs, the judge packets and the 84000 cuts quote CC BY-NC-ND text and the sources, so they stay in
+  `$JOB_SCRATCH` on earthai-live (`/data/scratch/sl/jobs/tib-translator-6948`). Nothing was written to `pages` or any
+  production store.
