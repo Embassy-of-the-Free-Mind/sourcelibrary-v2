@@ -78,8 +78,10 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header renders instantly; the data-heavy grid streams in below. */}
-      <ConditionalSiteHeader variant="light" />
-      <h1 className="sr-only">Image Gallery: Illustrations from Rare Historical Texts</h1>
+      <ConditionalSiteHeader variant="dark" />
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-6 md:pt-11">
+        <h1 className="text-2xl md:text-4xl font-display text-primary">The Gallery</h1>
+      </div>
       <Suspense fallback={<GalleryShell />}>
         <GalleryData searchParams={searchParams} />
       </Suspense>
@@ -113,16 +115,23 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
 }
 
 function GalleryShell() {
+  // The controls' shape (two bars, a numbers line, the tools row) so nothing jumps when they arrive.
   return (
-    <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6">
-      <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
-        <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="h-9 w-24 bg-stone-200/70 rounded-lg animate-pulse" />
+    <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-4 md:pt-[26px] pb-6" aria-hidden>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-7">
+        {[0, 1].map((i) => (
+          <div key={i}>
+            <div className="h-3.5 w-32 bg-stone-200/70 mb-2" />
+            <div className="h-10 sm:h-[52px] bg-white border border-border-light" />
+            <div className="h-3 w-56 bg-stone-200/60 mt-2.5" />
+          </div>
+        ))}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {Array.from({ length: 18 }).map((_, i) => (
-          <div key={i} className="aspect-square bg-stone-200/70 rounded-lg animate-pulse" />
+      <div className="h-4 w-64 bg-stone-200/60 mt-6" />
+      <div className="h-9 w-40 bg-white border border-border-light mt-4" />
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div key={i} className="bg-stone-200/70 animate-pulse" style={{ aspectRatio: i % 3 === 0 ? '3 / 4' : i % 3 === 1 ? '1 / 1' : '4 / 5' }} />
         ))}
       </div>
     </div>

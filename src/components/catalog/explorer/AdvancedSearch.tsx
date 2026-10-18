@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CatalogFilters } from '@/lib/catalog/filters';
 import { writeCatalogFilters } from '@/lib/catalog/filters';
+import ApplyFooter from '@/components/search-kit/ApplyFooter';
 
 export interface Draft extends CatalogFilters {
   topic?: string;
@@ -52,8 +53,6 @@ export default function AdvancedSearch({ applied, languages, categories, collect
   const [firstTr, setFirstTr] = useState(!!applied.firstTranslation);
   // The count for the draft it was asked for; a stale count is never shown.
   const [preview, setPreview] = useState<{ key: string; total: number } | null>(null);
-  const [footSeen, setFootSeen] = useState(true);
-  const footRef = useRef<HTMLDivElement>(null);
   const dragFrom = useRef<number | null>(null);
 
   const draft: Draft = useMemo(() => ({
@@ -99,14 +98,6 @@ export default function AdvancedSearch({ applied, languages, categories, collect
     return () => { clearTimeout(t); ctl.abort(); };
   }, [dirty, draft, draftKey]);
 
-  useEffect(() => {
-    const el = footRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setFootSeen(e.isIntersecting));
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   const maxBucket = Math.max(1, ...printed.map((p) => p.count));
   const ymin = yearOf(y1), ymax = yearOf(y2);
   const bars = printed.map((p, i) => ({
@@ -126,11 +117,6 @@ export default function AdvancedSearch({ applied, languages, categories, collect
   };
 
   const count = dirty && !draft.topic && preview?.key === draftKey ? preview.total : null;
-  const buttonText = count != null ? `Show ${count.toLocaleString('en-GB')} ${count === 1 ? 'result' : 'results'}` : 'Show results';
-  const showBar = dirty && !footSeen;
-  const applyClass = dirty
-    ? 'h-[42px] px-[22px] bg-accent-rust text-white text-sm animate-[catalog-breathe_1.6s_ease-out_infinite] motion-reduce:animate-none'
-    : 'h-[42px] px-[22px] bg-primary text-cream text-sm';
   const clearAll = () => {
     setQ(''); setTopic(''); setAlso(''); setTitle(''); setAuthor(''); setNot(''); setY1(''); setY2('');
     setLangs([]); setCategory(''); setCollection(''); setHasTr(false); setFirstTr(false);
@@ -209,23 +195,7 @@ export default function AdvancedSearch({ applied, languages, categories, collect
         </div>
       </div>
 
-      <div ref={footRef} className="flex justify-between items-center mt-5 gap-3">
-        <button type="button" onClick={clearAll} className="text-[13.5px] text-muted underline underline-offset-[3px]">Clear everything</button>
-        <div className="flex items-center gap-3.5">
-          {dirty && <span className="text-[13.5px] text-accent-rust">Not applied yet</span>}
-          <button type="submit" className={applyClass}>{buttonText}</button>
-        </div>
-      </div>
-
-      <div
-        aria-hidden={!showBar}
-        className={`fixed inset-x-0 bottom-0 z-40 bg-primary text-cream transition-transform duration-200 ${showBar ? 'translate-y-0' : 'translate-y-full'}`}
-      >
-        <div className="max-w-[1500px] mx-auto px-4 md:px-12 h-16 flex items-center justify-between gap-4">
-          <span className="text-sm">You changed the search</span>
-          <button type="submit" tabIndex={showBar ? 0 : -1} className="h-[42px] px-[22px] bg-accent-rust text-white text-sm">{buttonText}</button>
-        </div>
-      </div>
+      <ApplyFooter dirty={dirty} count={count} noun="results" onClear={clearAll} />
     </form>
   );
 }
