@@ -7,7 +7,7 @@ import { computeGalleryStats, galleryStatsKey, type GalleryStats } from '@/lib/g
 
 export const maxDuration = 30;
 
-const NONE: GalleryStats = { total: 0, plates: 0, books: 0, artworks: 0, artworksMixed: null, artworksAll: null, printed: [], yearFirst: null, yearLast: null, kinds: [] };
+const NONE: GalleryStats = { total: 0, plates: 0, books: 0, artworks: 0, printed: [], yearFirst: null, yearLast: null, kinds: [] };
 
 /**
  * GET /api/gallery/stats — the gallery's stats band for the same parameters
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const compute = async () => computeGalleryStats(await getReadDb(), sp, { tenantId: tenantId ?? null, tenantBooks });
     const stats = tenantScoped
       ? await compute()
-      : await unstable_cache(compute, ['gallery-stats-v2', galleryStatsKey(sp)], { revalidate: 3600, tags: ['gallery-stats'] })();
+      : await unstable_cache(compute, ['gallery-stats-v3', galleryStatsKey(sp)], { revalidate: 3600, tags: ['gallery-stats'] })();
     return NextResponse.json(stats, {
       headers: { 'Cache-Control': tenantScoped ? 'private, no-store' : 'public, max-age=0, s-maxage=600, stale-while-revalidate=3600' },
     });

@@ -39,31 +39,23 @@ export default function GalleryStatsBand({ stats, total, galleryTotal, titleArtw
   const books = stats?.books ?? 0;
   const artworks = (stats?.artworks ?? 0) + titleArtworks;
   const artworksOnly = source === 'artwork';
-  // The main gallery mixes in only artworks dated 1400–1800; the Artworks view
-  // shows them all. When the two differ, the band says so rather than letting
-  // 6,943 turn into 15,805 on a click.
-  const mixed = stats?.artworksMixed ?? null;
-  const all = stats?.artworksAll ?? null;
-  const differ = mixed != null && all != null && mixed !== all;
-  const second = artworksOnly ? (differ ? mixed : artworks) : books;
+  // In the Artworks view the second box is the way back: the whole gallery, and Show everything.
+  const second = artworksOnly ? (galleryTotal ?? 0) : books;
   const secondShown = useCountUp(second);
   const imagesText = known ? fmt(imagesShown) : '—';
-  const secondText = stats ? fmt(secondShown) : '—';
+  const secondText = (artworksOnly ? galleryTotal != null : !!stats) ? fmt(secondShown) : '—';
   const imagesLabel = artworksOnly
     ? (images === 1 ? 'standalone artwork' : 'standalone artworks')
     : searched
       ? `${images === 1 ? 'image' : 'images'} found${galleryTotal ? `, of ${fmt(galleryTotal)}` : ''}`
       : 'images in the gallery';
   const secondLabel = artworksOnly
-    ? (differ ? 'dated 1400–\u20601800, the ones mixed into the main gallery' : (artworks === 1 ? 'artwork' : 'artworks'))
+    ? 'images in the whole gallery'
     : (books === 1 ? 'book illustrated' : 'books illustrated');
   const plural = (n: number) => `${fmt(n)} ${n === 1 ? 'artwork' : 'artworks'}`;
   // Switching to artworks only is a browse filter; a search's title artworks are only described.
-  const canSwitch = artworksOnly || (stats?.artworks ?? 0) > 0;
-  const sourceLink = artworksOnly ? 'Show everything' : canSwitch ? (differ ? `All ${plural(all!)}` : `plus ${plural(artworks)}`) : '';
-  const artworksNote = !artworksOnly && differ && artworks > 0
-    ? `plus ${plural(artworks)} from 1400–\u20601800`
-    : !canSwitch && titleArtworks > 0 ? `plus ${plural(artworks)}` : '';
+  const sourceLink = artworksOnly ? 'Show everything' : (stats?.artworks ?? 0) > 0 ? `plus ${plural(artworks)}` : '';
+  const artworksNote = !sourceLink && titleArtworks > 0 ? `plus ${plural(artworks)}` : '';
   const printed = stats?.printed ?? [];
   const firstYear = yearLabel(stats?.yearFirst ?? null);
   const lastYear = yearLabel(stats?.yearLast ?? null);
