@@ -9,7 +9,10 @@
  * like any other. Writes NOTHING to the database.
  *
  *   node --env-file=.env.production.local scripts/batch/twopass-review.mjs --page-ids-file=F --draft=DIR --out=DIR
- *        [--model=opus] [--per-call=5] [--wait]
+ *        [--model=opus] [--per-call=5] [--wait] [--ocr-checked="..."]
+ *
+ * Before any call it runs scripts/lib/ocr-first-gate.mjs over the target pages, as claude-translate.mjs and
+ * cli-translate.mjs do: a run resting mostly on a flash-lite transcription stops until --ocr-checked names the check.
  *
  * A call takes up to --per-call leaves in the file's order whose drafts are done; each leaf goes in with its image
  * (a file in the call's sealed folder, opened with the Read tool, the only tool allowed), its OCR and its draft
@@ -31,6 +34,7 @@ import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { sanitizeTranslationTags, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { splitBlockReply } from './claude-translate.mjs';
 
 const READ_SITE = 'scripts/batch/twopass-review.mjs';
@@ -104,6 +108,10 @@ await client.connect();
 const db = client.db('bookstore');
 const pages = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, display_photo: 1 } }).toArray()).map((p) => [p.id, p]));
 await client.close();
+// Check the transcription before paying for a review on top of it (#6865).
+const gate = ocrFirstGate([...pages.values()], arg('ocr-checked'));
+console.log(gate.message);
+if (!gate.ok) process.exit(2);
 
 const readJson = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; } };
 const draftOf = (id) => {
