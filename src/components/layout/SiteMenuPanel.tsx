@@ -25,6 +25,8 @@ interface Props {
   /** Signed in: label is "Account" and `avatar` carries their picture or initials. */
   account: { href: string; label: string; avatar?: { image?: string | null; initials: string } };
   support: { href: string; label: string; onClick: () => void } | null;
+  /** Close without a fade and without restoring scroll: the reader navigated away. */
+  instant?: boolean;
 }
 
 // Tighten steps, applied one at a time until the open menu fits the screen
@@ -32,7 +34,9 @@ interface Props {
 const LINK_SIZE = ['text-[29px] py-[9px]', 'text-[25px] py-1.5', 'text-[22px] py-1'];
 const CONTROL_H = ['h-12', 'h-11', 'h-11'];
 
-export default function SiteMenuPanel({ id, open, onClose, links, search, languages, account, support }: Props) {
+export default function SiteMenuPanel({ id, open, onClose, links, search, languages, account, support, instant = false }: Props) {
+  const instantRef = useRef(instant);
+  instantRef.current = instant;
   const panelRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLFormElement>(null);
@@ -41,6 +45,12 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   const [viewport, setViewport] = useState(0);
   // A value, not the array: SiteHeader rebuilds `links` on every render.
   const linksKey = links.map((l) => l.label).join('|');
+
+  // Navigating from the menu unmounts it with the next page already showing:
+  // that is not a close, so the reader must not be scrolled back to where they
+  // were on the old page. This cleanup runs before the lock's (declared first).
+  const unmounting = useRef(false);
+  useEffect(() => () => { unmounting.current = true; }, []);
 
   // Lock the page behind the menu, and put the reader back where they were.
   useEffect(() => {
@@ -57,7 +67,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
     return () => {
       document.body.style.overflow = prev;
       delete document.documentElement.dataset.siteMenuOpen;
-      window.scrollTo(0, y);
+      if (!unmounting.current && !instantRef.current) window.scrollTo(0, y);
       document.removeEventListener('keydown', onKey);
     };
   }, [open, onClose]);
@@ -110,7 +120,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       role="dialog"
       aria-modal="true"
       aria-hidden={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] ${open ? 'duration-[450ms]' : 'duration-300'} ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 ${instant && !open ? 'transition-none' : `transition-[opacity,visibility] ${open ? 'duration-[450ms]' : 'duration-300'}`} ${
         open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}
     >
@@ -145,7 +155,9 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
           <Link
             key={l.key}
             href={l.href}
-            onClick={onClose}
+            // Go straight to the page: the menu stays until it arrives, then
+            // vanishes. Only the page you're already on closes it here.
+            onClick={l.active ? onClose : undefined}
             tabIndex={open ? 0 : -1}
             aria-current={l.active ? 'page' : undefined}
             className={`block w-full font-medium leading-none tracking-[-0.02em] active:text-accent-rust ${LINK_SIZE[level]} ${item}`}
@@ -160,7 +172,6 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         ref={searchRef}
         action={search.action}
         role="search"
-        onSubmit={onClose}
         className={`relative z-10 flex items-center gap-2.5 mt-4 mb-3.5 px-3.5 border border-border-medium focus-within:border-primary bg-cream text-muted ${CONTROL_H[level]} ${item}`}
         style={stagger(i++)}
       >
@@ -204,7 +215,6 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       <div className={`relative z-10 flex gap-2.5 ${item}`} style={stagger(i++)}>
         <Link
           href={account.href}
-          onClick={onClose}
           tabIndex={open ? 0 : -1}
           className={`flex-1 flex items-center justify-center gap-2 text-base font-medium bg-accent-rust text-white ${CONTROL_H[level]}`}
         >
@@ -221,7 +231,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         {support && (
           <Link
             href={support.href}
-            onClick={() => { support.onClick(); onClose(); }}
+            onClick={support.onClick}
             tabIndex={open ? 0 : -1}
             className={`flex-1 flex items-center justify-center text-base font-medium bg-dark text-white ${CONTROL_H[level]}`}
           >
