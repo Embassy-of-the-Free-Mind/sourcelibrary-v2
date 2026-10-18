@@ -6,6 +6,8 @@ import EditorialSpread from '@/components/prototype/EditorialSpread';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
+import MarbledBackdrop from '@/app/articles/MarbledBackdrop';
+import { posts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
 import SubjectIndex from '@/components/home/SubjectIndex';
@@ -14,6 +16,11 @@ import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath, readsOriginal } from '@/lib/locale-path';
+
+// The newest twelve articles for the homepage slider (posts.ts is the one list).
+const NEWEST_ARTICLES = [...ARTICLES]
+  .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
+  .slice(0, 12);
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -25,7 +32,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -354,30 +361,15 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
-      {/* Blog Section */}
-      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <div className="flex items-baseline justify-between mb-10">
-            <div>
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
-                {t.blogHeading}
-              </h2>
-              <p className="text-muted mt-2">
-                {t.blogSubtitle}
-              </p>
-            </div>
-            <Link
-              href="/articles"
-              className="text-sm text-accent-rust hover:underline"
-            >
-              {t.blogAllPosts}
-            </Link>
-          </div>
-
+      {/* Articles: the newest, on the /articles marbled paper */}
+      <section className="relative bg-cream py-16 md:py-24 overflow-hidden">
+        <MarbledBackdrop />
+        <div className="relative px-6 md:px-12 max-w-[1500px] mx-auto">
           <ResearchNotesSlider
-            posts={blogPosts}
-            deepDiveLabel={t.tagDeepDive}
-            collectionLabel={t.tagCollection}
+            posts={NEWEST_ARTICLES}
+            heading={t.blogHeading}
+            subtitle={t.blogSubtitle}
+            allLabel={t.blogAllPosts}
           />
         </div>
       </section>

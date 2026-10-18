@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import HorizontalSlider from '@/components/HorizontalSlider';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
@@ -75,16 +76,28 @@ export default function ArticleExtras() {
       )}
       <section className="bg-cream print:hidden" aria-labelledby="related-articles">
         <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pb-20">
-          <div className="border-t border-border-light pt-10 mb-2 flex items-baseline justify-between gap-4">
-            <h2 id="related-articles" className="font-serif text-3xl text-primary">
-              Related articles
-            </h2>
-            <Link href="/articles" className="text-sm text-primary underline decoration-border-light underline-offset-4 hover:decoration-primary">
-              All articles
-            </Link>
-          </div>
-          <p className="text-secondary font-body mb-2">More from the same category first, then the newest articles.</p>
-          <HorizontalSlider ariaLabel="related articles">
+          <div className="border-t border-border-light pt-10" />
+          <HorizontalSlider
+            ariaLabel="related articles"
+            variant="square"
+            header={
+              <>
+                <h2 id="related-articles" className="font-serif text-3xl text-primary">
+                  Related articles
+                </h2>
+                <p className="text-secondary font-body mt-2">More from the same category first, then the newest articles.</p>
+              </>
+            }
+            action={
+              <Link
+                href="/articles"
+                className="h-11 inline-flex items-center gap-2 px-5 border border-primary/25 bg-white text-sm font-medium text-primary hover:bg-primary hover:border-primary hover:text-white transition-colors whitespace-nowrap"
+              >
+                All articles
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            }
+          >
             {relatedTo(post).map((p) => (
               <div key={p.slug} data-card className="snap-start shrink-0 basis-[85%] sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]">
                 <ArticleCard post={p} />
