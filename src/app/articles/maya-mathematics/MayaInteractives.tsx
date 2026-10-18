@@ -244,7 +244,7 @@ export function CycleWheels() {
 
   const tz = tzolkin(k);
   const hb = haab(k);
-  const R1 = 70, R2 = 118;
+  const R1 = 68, R2 = 124;
   const numRot = -(numTurn * 360) / 13;
   const nameRot = -(nameTurn * 360) / 20;
   const sincePair = k % 18980;
@@ -256,7 +256,7 @@ export function CycleWheels() {
     >
       <div className="grid gap-6 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] items-center">
         <svg viewBox="-150 -150 300 300" className="w-full max-w-[300px] mx-auto" role="img" aria-label={`Wheels showing ${tz.number} ${DAY_NAMES[tz.index]}`}>
-          <circle r={R2 + 22} fill="none" stroke="var(--color-border-medium)" />
+          <circle r={R2 + 16} fill="none" stroke="var(--color-border-medium)" />
           <circle r={R1 + 18} fill="none" stroke="var(--color-border-medium)" />
           <circle r={R1 - 18} fill="none" stroke="var(--color-border-light)" />
           <g style={{ transition: 'transform 200ms', transform: `rotate(${nameRot}deg)` }}>
@@ -264,7 +264,7 @@ export function CycleWheels() {
               const a = (i * 360) / 20;
               const on = i === tz.index;
               return (
-                <text key={name} transform={`rotate(${a}) translate(0 ${-R2}) rotate(0)`} textAnchor="middle" dominantBaseline="middle" fontSize={on ? 12 : 10} fontWeight={on ? 700 : 400} fill={on ? INK : 'var(--color-muted)'} fontFamily="var(--font-sans, sans-serif)">
+                <text key={name} transform={`rotate(${a}) translate(0 ${-R2}) rotate(0)`} textAnchor="middle" dominantBaseline="middle" fontSize={on ? 11 : 8.5} fontWeight={on ? 700 : 400} fill={on ? INK : 'var(--color-muted)'} fontFamily="var(--font-sans, sans-serif)">
                   {name}
                 </text>
               );
@@ -281,7 +281,7 @@ export function CycleWheels() {
               );
             })}
           </g>
-          <path d={`M0 ${-R2 - 30} l-6 -10 h12 z`} fill={SHELL} />
+          <path d={`M0 ${-R2 - 18} l-5 -8 h10 z`} fill={SHELL} />
           <text y={6} textAnchor="middle" fontSize={13} fill={INK} fontFamily="var(--font-sans, sans-serif)">{tz.number} {DAY_NAMES[tz.index]}</text>
         </svg>
         <div>
@@ -382,7 +382,7 @@ export function CyclesMeet() {
   return (
     <Card
       title="When do the cycles meet?"
-      caption="Each row marks where one cycle ends, laid out to the day all the chosen cycles end together. The tables count whole days only, so they run slightly off the sky; the last column shows how far by the meeting day, using modern lengths for the year and the synodic periods of Venus and Mars."
+      caption="Each row marks where one cycle ends, laid out to the day all the chosen cycles end together. The tables count whole days only, so they run slightly off the sky; the last column shows how far by the meeting day, using modern lengths for the year and the synodic periods of the planets."
     >
       <div className="flex flex-wrap gap-2 mb-5">
         {CYCLES.map((c) => (
