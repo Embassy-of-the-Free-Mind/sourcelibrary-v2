@@ -383,6 +383,11 @@ body:has([data-reader-v2]) {
   outline: none;
 }
 
+/* The phone menu hides the cookie banner while it is open (SiteMenuPanel). */
+html[data-site-menu-open] [data-cookie-banner] {
+  display: none;
+}
+
 /* Same for the site header's search fields: the desktop field's focus state is
    its underline and the phone menu's is its wrapper border, so the global ring
    would draw a second, rust box inside them. */

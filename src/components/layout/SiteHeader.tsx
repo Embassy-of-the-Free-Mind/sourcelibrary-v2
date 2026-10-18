@@ -41,8 +41,8 @@ function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
     { key: 'library', label: t.library, href: '/catalog', activePrefix: '/catalog' },
     { key: 'gallery', label: t.gallery, href: '/gallery', activePrefix: '/gallery' },
     { key: 'collections', label: t.collections, href: '/collections', activePrefix: '/collections' },
-    // Research notes, renamed Articles. Moves to /articles with #6887, which redirects /blog.
-    { key: 'articles', label: t.articles, href: '/blog', activePrefix: '/blog' },
+    // Research notes, now Articles at /articles (#6887; /blog redirects there).
+    { key: 'articles', label: t.articles, href: '/articles', activePrefix: '/articles' },
     // Points at the /explore hub, not /explore/map: the hub carries the stats
     // and cards for all three visualizations (13 views vs the map's 262 in the
     // 30 days to 2026-08-13 when the nav skipped it).
@@ -183,9 +183,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     ? 'fixed top-0 inset-x-0 z-50'
     : `${isHero ? 'relative z-50' : 'relative z-30'} ${sticky ? 'sticky top-0' : ''}`;
 
-  // Phones: only the rings until the menu opens, then the wordmark slides out
-  // beside them. Wide screens always show it, even when the links collapse.
-  const wordmark = `inline-block overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${menuOpen
+  // Phones: the homepage shows the full logo; every other page shows only the
+  // rings until the menu opens, then the wordmark slides out beside them. Wide
+  // screens always show it, even when the links collapse.
+  const wordmark = `inline-block overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${menuOpen || isHero
     ? 'max-w-[16rem] opacity-100 ml-3'
     : 'max-w-0 opacity-0 ml-0 lg:max-w-[16rem] lg:opacity-100 lg:ml-3'}`;
 
@@ -284,7 +285,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 // and client-side navigation preserves the original external
                 // referrer. trackEvent uses sendBeacon, which survives this navigation.
                 onClick={() => trackEvent('give_nav_click', { source: 'header', url: '/give' })}
-                className="ml-1.5 inline-flex items-center h-[34px] px-[15px] whitespace-nowrap text-[13.5px] font-medium bg-[#f3efe7] text-dark hover:bg-white transition-colors"
+                className="ml-1.5 inline-flex items-center h-[34px] px-[15px] whitespace-nowrap text-[13.5px] font-medium border border-white text-white bg-transparent hover:bg-white/10 transition-colors"
               >
                 {t.support}
               </Link>
