@@ -56,6 +56,10 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Ideas across traditions (#6173): every page is a list of books from the
   // whole library, chosen for spanning traditions. Same reasoning as /works.
   '/ideas',
+  // Works by the century they were written (#6873): every live dated book in
+  // the corpus, grouped by work. Same reasoning as /works. Only this subtree:
+  // the printing-date /timeline is a separate question.
+  '/timeline/written',
   '/blog',
   '/contribute',
   '/support',

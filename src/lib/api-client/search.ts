@@ -159,6 +159,9 @@ export const search = {
     library?: string;
     first_translation?: boolean;
     has_translation?: boolean;
+    /** When the WORK was written, inclusive years, negative = BCE (#6873). */
+    work_from?: number;
+    work_to?: number;
   }): Promise<{ books: any[]; total: number }> => {
     const qs = new URLSearchParams();
     if (params?.language) qs.set('language', params.language);
@@ -171,6 +174,8 @@ export const search = {
     if (params?.library) qs.set('library', params.library);
     if (params?.first_translation) qs.set('first_translation', 'true');
     if (params?.has_translation) qs.set('has_translation', 'true');
+    if (params?.work_from != null) qs.set('work_from', String(params.work_from));
+    if (params?.work_to != null) qs.set('work_to', String(params.work_to));
     const endpoint = params?.search ? '/api/books/library' : '/api/books/browse';
     return await apiClient.get(`${endpoint}?${qs}`);
   },
