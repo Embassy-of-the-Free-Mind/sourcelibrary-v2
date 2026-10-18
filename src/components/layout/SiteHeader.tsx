@@ -285,7 +285,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 // and client-side navigation preserves the original external
                 // referrer. trackEvent uses sendBeacon, which survives this navigation.
                 onClick={() => trackEvent('give_nav_click', { source: 'header', url: '/give' })}
-                className="ml-1.5 inline-flex items-center h-[34px] px-[15px] whitespace-nowrap text-[13.5px] font-medium bg-[#f3efe7] text-dark hover:bg-white transition-colors"
+                className="ml-1.5 inline-flex items-center h-[34px] px-[15px] whitespace-nowrap text-[13.5px] font-medium border border-white text-white bg-transparent hover:bg-white/10 transition-colors"
               >
                 {t.support}
               </Link>
