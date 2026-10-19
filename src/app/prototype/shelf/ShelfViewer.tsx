@@ -20,7 +20,7 @@ interface ApiBook extends ShelfBook {
   thumbnail_blob?: string | null;
 }
 
-const MAX_BOOKS = 200;
+const MAX_BOOKS = 400;
 
 export default function ShelfViewer() {
   const router = useRouter();
@@ -55,8 +55,15 @@ export default function ShelfViewer() {
   useEffect(() => {
     let cancelled = false;
     setBooks(null); setPicked(null); setError(null);
-    fetch(`/api/collections/${encodeURIComponent(slug)}?limit=${MAX_BOOKS}&sort=year_asc`)
-      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+    // The API caps a page at 200, so a bigger hall takes a second request.
+    const page = (offset: number) =>
+      fetch(`/api/collections/${encodeURIComponent(slug)}?limit=200&offset=${offset}&sort=year_asc`)
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))));
+    (async () => {
+      const first = await page(0);
+      const rest = (first.total ?? 0) > 200 && MAX_BOOKS > 200 ? (await page(200)).books ?? [] : [];
+      return { ...first, books: [...(first.books ?? []), ...rest].slice(0, MAX_BOOKS) };
+    })()
       .then(d => {
         if (cancelled) return;
         setTitle(d.collection?.title ?? slug);
@@ -106,10 +113,6 @@ export default function ShelfViewer() {
       const s = sceneRef.current;
       if (!s || (e.target as HTMLElement)?.tagName === 'SELECT') return;
       if (e.key === 'Escape') { s.select(null); setPicked(null); }
-      if (e.key === 'ArrowLeft') s.pan(-0.6, 0);
-      if (e.key === 'ArrowRight') s.pan(0.6, 0);
-      if (e.key === 'ArrowUp') s.pan(0, 0.6);
-      if (e.key === 'ArrowDown') s.pan(0, -0.6);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -132,7 +135,8 @@ export default function ShelfViewer() {
           {books && (
             <p className="text-xs text-stone-300/80">
               {books.length < total ? `The ${books.length} earliest of ${total.toLocaleString()} books` : `${books.length} books`}
-              {' · '}oldest top left · drag to move along the shelf · scroll or pinch to step closer
+              {' · '}oldest at the entrance · <span className="hidden sm:inline">WASD or arrows to walk · drag to look · click the floor to walk there</span>
+              <span className="sm:hidden">drag to look · tap the floor to walk there</span>
             </p>
           )}
         </div>
@@ -150,11 +154,11 @@ export default function ShelfViewer() {
           )}
           <button
             onClick={() => { setPicked(null); go(slug, layout === 'stacked' ? 'upright' : 'stacked'); }}
-            className="rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70"
+            className="whitespace-nowrap rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70"
           >
             {layout === 'stacked' ? 'Stand them up' : 'Lay them flat'}
           </button>
-          <Link href={`/collections/${slug}`} className="rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70">
+          <Link href={`/collections/${slug}`} className="whitespace-nowrap rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70">
             List view
           </Link>
         </div>
