@@ -13,6 +13,7 @@ import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { galleryPageWithBookPipeline } from '@/lib/gallery-page-lookup';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
+import { siteOgImageUrl } from '@/lib/og-locale';
 
 /** True if `books` has a doc for this id (string `id` field or Mongo `_id`). */
 const bookExists = cache(async (bookId: string): Promise<boolean> => {
@@ -250,11 +251,12 @@ export async function generateMetadata({
       type: 'article',
       siteName: 'Source Library',
       locale: 'en_US',
-      // The actual scan, not the generated template card: a 200k-image
+      // The actual plate, not a generated template card: a 200k-image
       // collection was presenting the same card in every link preview and to
-      // every og-reading crawler (#4286). When no image resolves, omit the key
-      // so the file-convention opengraph-image card fills in.
-      ...(plateUrl ? { images: [{ url: plateUrl, alt: `${shortTitle}: ${bookAttribution}` }] } : {}),
+      // every og-reading crawler (#4286). This route deliberately has no
+      // opengraph-image.tsx: a file-convention card attaches at the PAGE level,
+      // where no metadata sets images, so it overrode this layout's plate.
+      images: [{ url: plateUrl || siteOgImageUrl('en'), alt: `${shortTitle}: ${bookAttribution}` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -262,7 +264,7 @@ export async function generateMetadata({
       description,
       // Per the shallow-merge invariant, X reads twitter.images (the root
       // layout's generic logo would win without this).
-      ...(plateUrl ? { images: [plateUrl] } : {}),
+      images: [plateUrl || siteOgImageUrl('en')],
     },
   };
 }
