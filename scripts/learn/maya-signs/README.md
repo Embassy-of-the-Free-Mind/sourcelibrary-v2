@@ -65,5 +65,6 @@ material, extent, `images`) or photograph/drawing (`creator`, `date`, `licence`,
 under `reference/maya/ulb-archive/`). Records are CC BY 4.0, some drawings PDM 1.0; an image goes to the
 public bucket only when its licence is one of those.
 `ulb/build.py <out> <artifact-oai-number>…` then `ulb/load-maya-archive.mjs <out> [--apply]`. Loaded so far:
-Yaxchilan, Lintel 21 (9605478), for the `/inscriptions/yaxchilan-lintel-21` prototype. The whole set's oai_dc
-records (27,319) were harvested on l7a to `/data/scratch/sl/ulb-maya-6980/` and are not loaded.
+Yaxchilan, Lintel 21 (9605478), for a monument-page prototype (#6985) that was unpublished the same day: a
+page of unordered sign lists is not a reading. Any new page waits on a block-ordering eval. The whole set's
+oai_dc records (27,319) are loaded as an index by `ulb/load-oai-records.mjs` (#6988).
