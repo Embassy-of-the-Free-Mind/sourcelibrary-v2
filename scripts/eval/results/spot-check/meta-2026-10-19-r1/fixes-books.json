@@ -1,0 +1,243 @@
+{
+ "run": "meta-round-6056-r1-books",
+ "source": "meta-round-by-eye-v1",
+ "reader": "claude-opus-5-5 (by eye, title page image) after an opus reviewer",
+ "method": "title page / colophon image read by eye, #6056 metadata round 2026-10-19 (seed 2026101901)",
+ "fixes": [
+  {
+   "book_id": "69c842b96c6f3cc53c850d69",
+   "class": "language-wrong",
+   "set": {
+    "language": "Latin",
+    "languages": [
+     "Latin"
+    ]
+   },
+   "evidence": {
+    "page": 4,
+    "quote": "ALPHABETVM ARABICVM CVM Isagoge scribendi legendique Arabicè. AVTORE M. Iacobo Christmanno … M. D. LXXXII.",
+    "note": "Latin text with Arabic specimens; catalogued French",
+    "url": "https://sourcelibrary.org/book/69c842b96c6f3cc53c850d69?page=4"
+   },
+   "expect": {
+    "language": "French",
+    "languages": [
+     "French"
+    ]
+   }
+  },
+  {
+   "book_id": "69b51de0efd8df28f2dac79b",
+   "class": "language-wrong",
+   "set": {
+    "language": "German",
+    "languages": [
+     "German"
+    ],
+    "original_language": "German",
+    "text_role": "original",
+    "text_role_source": "meta-round-6056-by-eye"
+   },
+   "evidence": {
+    "page": 1,
+    "quote": "THEATRI MACHINARUM Dritter Theill / Darinnen vielerley künstliche Mühlwerck … Leipzig In Verlegung Friederich Lanckischens Erben A. 1708.",
+    "note": "German original; catalogued English, modern-translation of a Latin work, so the page showed a false \"historical English translation\" notice",
+    "url": "https://sourcelibrary.org/book/69b51de0efd8df28f2dac79b?page=1"
+   },
+   "expect": {
+    "language": "English",
+    "languages": [
+     "Latin"
+    ],
+    "original_language": "Latin",
+    "text_role": "modern-translation",
+    "text_role_source": "heuristic-v1"
+   }
+  },
+  {
+   "book_id": "69f13412715b735032de724e",
+   "class": "language-wrong+digitisation-year",
+   "set": {
+    "language": "Chinese",
+    "languages": [
+     "Chinese"
+    ]
+   },
+   "unset": [
+    "year"
+   ],
+   "evidence": {
+    "page": 6,
+    "quote": "佛說高王觀世音經",
+    "note": "Qing woodblock print in Chinese; catalogued Latin; year 2018 is the SAT/BSB digitisation year, published says \"Qing, between 1727 and 1795\"",
+    "url": "https://sourcelibrary.org/book/69f13412715b735032de724e?page=6"
+   },
+   "expect": {
+    "language": "Latin",
+    "languages": [
+     "Latin"
+    ],
+    "year": 2018
+   }
+  },
+  {
+   "book_id": "6a08e2c950bd891addfb4f7b",
+   "class": "era-year-misconverted",
+   "set": {
+    "published": "1914",
+    "year": 1914,
+    "source_work_dates_meta.edition": {
+     "year": 1914,
+     "from": 1914,
+     "to": 1914,
+     "display": "1914",
+     "precision": "exact",
+     "basis": "colophon",
+     "evidence": "大正三年三月二十日發行 (Taishō 3 = 1914)"
+    },
+    "source_work_dates.1": {
+     "type": "edition",
+     "date": "1914",
+     "date_display": "1914",
+     "date_precision": "exact",
+     "basis": "colophon",
+     "evidence": "大正三年三月二十日發行 (Taishō 3 = 1914)"
+    }
+   },
+   "evidence": {
+    "page": 6,
+    "quote": "大正三年三月十七日印刷 / 大正三年三月二十日發行 / 有朋堂文庫 西鶴文集 下",
+    "note": "colophon (reader p.6, scan runs back to front); Taishō 3 is 1914, the catalogue had 1913",
+    "url": "https://sourcelibrary.org/book/6a08e2c950bd891addfb4f7b?page=6"
+   },
+   "expect": {
+    "published": "1913",
+    "year": 1913,
+    "source_work_dates_meta.edition": {
+     "year": 1913,
+     "from": 1913,
+     "to": 1913,
+     "display": "1913",
+     "precision": "exact",
+     "basis": "catalogue",
+     "evidence": "",
+     "rule": "published"
+    },
+    "source_work_dates.1": {
+     "type": "edition",
+     "date": "1913",
+     "date_display": "1913",
+     "date_precision": "exact",
+     "basis": "catalogue",
+     "evidence": ""
+    }
+   }
+  },
+  {
+   "book_id": "6a4f03a5e39e71f6b6e3b66a",
+   "class": "date-unknown-shown+holding-library-as-place",
+   "set": {
+    "published": "1648",
+    "year": 1648,
+    "place_published": "Vienna"
+   },
+   "evidence": {
+    "page": 5,
+    "quote": "IN ANTIQVISSIMA ET CELEBERRIMA VNIVERSITATE Viennensi, Anno à Virgineo partu M. DC. XLVIII. … Viennæ Austriæ, Typis Matthæi Cosmerovij",
+    "note": "published was \"Unknown\", place \"Berlin\" (the holding library, SBB)",
+    "url": "https://sourcelibrary.org/book/6a4f03a5e39e71f6b6e3b66a?page=5"
+   },
+   "expect": {
+    "published": "Unknown",
+    "year": null,
+    "place_published": "Berlin"
+   }
+  },
+  {
+   "book_id": "6a492128cc006f976d7f5b30",
+   "class": "date-unknown-shown",
+   "set": {
+    "published": "1668",
+    "year": 1668
+   },
+   "evidence": {
+    "page": 1,
+    "quote": "Leipzig und Halle In den Fickischen Buchladen Anno 1668.",
+    "note": "published was \"Unknown\"",
+    "url": "https://sourcelibrary.org/book/6a492128cc006f976d7f5b30?page=1"
+   },
+   "expect": {
+    "published": "Unknown",
+    "year": null
+   }
+  },
+  {
+   "book_id": "69b51eb4cf111105c42a3669",
+   "class": "original-language-stale",
+   "set": {
+    "original_language": "French"
+   },
+   "evidence": {
+    "page": 3,
+    "quote": "JEAN DE PARIS, OPÉRA COMIQUE EN DEUX ACTES, PAROLES DE M. SAINT-JUST, MUSIQUE DE M. BOIELDIEU … A PARIS, CHEZ VENTE … 1816.",
+    "note": "original French libretto; original_language Latin was left from the pre-#4781 language label",
+    "url": "https://sourcelibrary.org/book/69b51eb4cf111105c42a3669?page=3"
+   },
+   "expect": {
+    "original_language": "Latin"
+   }
+  },
+  {
+   "book_id": "69b51db9768235dc65987073",
+   "class": "original-language-wrong+translator-missing",
+   "set": {
+    "original_language": "Latin",
+    "translator": "Georg Beatus"
+   },
+   "evidence": {
+    "page": 3,
+    "quote": "Alles in einem sondern Tractat erstlich Lateinisch beschrieben Durch Michaelem Maierum … in selbige Sprach versetzt Durch M. Georgium Beatum, Francof.",
+    "note": "German translation of the Latin Verum inventum; text_role left as is (see report: the translation notice says \"English\")",
+    "url": "https://sourcelibrary.org/book/69b51db9768235dc65987073?page=3"
+   },
+   "expect": {
+    "original_language": "German",
+    "translator": null
+   }
+  },
+  {
+   "book_id": "69dbc7dd1040d1d5e2094cd9",
+   "class": "original-language-missing",
+   "set": {
+    "original_language": "Greek"
+   },
+   "evidence": {
+    "page": 5,
+    "quote": "ALEXANDRI APHRODISEI PROBLEMATA: PER GEORGIVM VALLAM PLACENTINVM IN LATINVM TRANSLATA.",
+    "note": "Latin translation of Greek works",
+    "url": "https://sourcelibrary.org/book/69dbc7dd1040d1d5e2094cd9?page=5"
+   },
+   "expect": {
+    "original_language": null
+   }
+  },
+  {
+   "book_id": "69afd3f87e835c55c61b4dbb",
+   "class": "original-language-missing+translator-missing",
+   "set": {
+    "original_language": "Greek",
+    "translator": "Joachim Périon"
+   },
+   "evidence": {
+    "page": 3,
+    "quote": "ARISTOTELIS De Caelo Libri IIII. Ioachimo Perionio interprete: per Nicolaum Grouchium correcti & emendati. PARISIIS … 1560.",
+    "note": "Latin translation of Aristotle by Périon",
+    "url": "https://sourcelibrary.org/book/69afd3f87e835c55c61b4dbb?page=3"
+   },
+   "expect": {
+    "original_language": null,
+    "translator": null
+   }
+  }
+ ]
+}
