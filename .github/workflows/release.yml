@@ -13,7 +13,7 @@ name: Release to production
 #   - 07:00, 13:00, 19:00 UTC (GitHub may drop a scheduled run under load, #5276;
 #     scripts/audit/vercel-prod-watch.mjs pages when production trails main by > 13 h)
 #   - on demand:  gh workflow run release.yml
-#   - on a push to main whose commit message carries [deploy-now] (a hand merge; merges by
+#   - on a push to main whose SUBJECT line (a squash merge: the PR title) carries [deploy-now] (a hand merge; merges by
 #     auto-merge.yml use GITHUB_TOKEN and never trigger push workflows)
 #
 # What it does: skips if `release` already holds main's tip; runs the entities-sweep interlock
@@ -42,8 +42,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # On a push, only a SUBJECT line carrying [deploy-now] releases (a squash merge's subject is the
+  # PR title). Matching the whole message released #7009 itself, whose body merely described the tag.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.subject.outputs.go }}
+    steps:
+      - id: subject
+        env:
+          EVENT: ${{ github.event_name }}
+          MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          SUBJECT="${MESSAGE%%$'\n'*}"
+          if [ "$EVENT" != push ] || [[ "$SUBJECT" == *"[deploy-now]"* ]]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "go=false" >> "$GITHUB_OUTPUT"; fi
+
   release:
-    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[deploy-now]')
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 150  # up to 2 h waiting on the interlock
     steps:
