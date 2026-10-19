@@ -95,11 +95,11 @@
     "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 14
   },
-  "choreia": {
-    "path": "src/app/articles/choreia/page.tsx",
+  "choreia-the-dance-of-the-cosmos": {
+    "path": "src/app/articles/choreia-the-dance-of-the-cosmos/page.tsx",
     "published": "2026-10-18T11:57:33-07:00",
-    "revised": "2026-10-18T11:57:33-07:00",
-    "revisions": 1
+    "revised": "2026-10-19T10:34:30-06:00",
+    "revisions": 6
   },
   "clustering": {
     "path": "src/app/articles/clustering/page.tsx",
@@ -128,8 +128,8 @@
   "cuneiform-ocr": {
     "path": "src/app/articles/cuneiform-ocr/page.tsx",
     "published": "2026-03-06T20:30:14+03:00",
-    "revised": "2026-10-18T18:50:56+02:00",
-    "revisions": 16
+    "revised": "2026-10-18T19:26:22-07:00",
+    "revisions": 17
   },
   "demonology": {
     "path": "src/app/articles/demonology/page.tsx",
@@ -320,8 +320,8 @@
   "maya-mathematics": {
     "path": "src/app/articles/maya-mathematics/page.tsx",
     "published": "2026-10-18T11:55:01-07:00",
-    "revised": "2026-10-18T12:43:56-07:00",
-    "revisions": 2
+    "revised": "2026-10-18T22:10:02-07:00",
+    "revisions": 8
   },
   "maya-ritual-in-the-colonial-dictionaries": {
     "path": "src/app/articles/maya-ritual-in-the-colonial-dictionaries/page.tsx",

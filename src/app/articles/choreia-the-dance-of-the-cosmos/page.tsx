@@ -20,14 +20,14 @@ import SourceQuote from '@/components/articles/SourceQuote';
 // The hero drawing is public domain (Wikimedia Commons, "Raffaello - Bacchantin, zwischen zwei Faunen
 // tanzend"), mirrored in the library's artwork collection.
 
-const TITLE = 'Choreia: Dance in the Greek Sources';
+const TITLE = 'Choreia: The Dance of the Cosmos';
 const DESCRIPTION =
-  'The Greeks saw the planets dancing. Choreia read in the sources: Plato’s Timaeus, Lucian, Plotinus’s cosmos as one dancer, Homer’s dancing-floor, Plato’s chorus, Plutarch’s three parts of a dance, and the disease called chorea.';
+  'The Greeks saw the cosmos as a dance: Plato’s planets moving as a chorus, Lucian’s dance as old as the world, Plotinus’s universe as one dancer, and the human chorus that copied them, read in the original pages.';
 const HERO = 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg';
 const HERO_ALT =
   'Red chalk drawing of a woman dancing in a flowing robe, a cymbal raised in each hand, between a faun blowing a curved horn and a faun playing pan-pipes.';
 
-export const metadata: Metadata = withArticleMeta('choreia', {
+export const metadata: Metadata = withArticleMeta('choreia-the-dance-of-the-cosmos', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -36,7 +36,7 @@ export const metadata: Metadata = withArticleMeta('choreia', {
     description: DESCRIPTION,
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
-  alternates: { canonical: '/articles/choreia' },
+  alternates: { canonical: '/articles/choreia-the-dance-of-the-cosmos' },
 });
 
 // Reader links, written out so scripts/maintenance/generate-article-books.mjs can find the books.
@@ -113,7 +113,7 @@ export default function ChoreiaPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="The planets as a chorus, and the human dance that copied them, read in the books"
+          subtitle="To the Greeks the planets danced, and every human chorus was a small copy of their dance"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -136,8 +136,8 @@ export default function ChoreiaPage() {
           It named the movement of the planets and also a ring of villagers at a festival, and Plato thought these
           were the same activity at different scales: the gods gave people a sense of rhythm so that they could join
           the dance, and a person never trained in a chorus was, in his word, uneducated. This article reads the idea
-          in the books that hold it, starting in the sky and coming down to the dancing-floor. Every passage links to
-          the page it comes from.
+          in the books that hold it: first the dance of the cosmos, then the human dance that copies it. Every passage
+          links to the page it comes from.
         </p>
 
         <h2 className={h2}>The planets dance</h2>
@@ -301,10 +301,11 @@ export default function ChoreiaPage() {
           creation of the world.
         </SourceQuote>
 
-        <h2 className={h2}>The dancing-floor</h2>
+        <h2 className={h2}>The copy on earth</h2>
 
         <p className={p}>
-          On earth, the oldest description of a chorus is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
+          If the stars move as a chorus, every chorus on earth is a small model of the heavens. The oldest description
+          of one is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
           Achilles and covers it with scenes of ordinary life. In the vineyard the harvesters dance as they carry the
           grapes, and at the end of the series he makes a dancing-floor. The Greek line, in the{' '}
           <Link href={book(SLUG.iliad, 542)}>Aldine edition printed in Venice in 1517</Link>, reads{' '}
@@ -328,10 +329,10 @@ export default function ChoreiaPage() {
           Iliad, made of white stone&rdquo;</Link>.
         </p>
 
-        <h2 className={h2}>Dance and song as one art</h2>
+        <h2 className={h2}>Joining the gods&apos; dance</h2>
 
         <p className={p}>
-          Plato gives the fullest account of <em>choreia</em> as a practice, in the second book of the{' '}
+          Plato explains why people dance at all in the second book of the{' '}
           <em>Laws</em>, his last dialogue. An Athenian stranger is talking with a Cretan and a Spartan about how to
           educate citizens. He starts from something anyone can watch: young animals and children cannot keep still.
           What distinguishes people, he says, is that they can feel order in their movement.
@@ -388,7 +389,7 @@ export default function ChoreiaPage() {
           education, and why the <em>Laws</em> spends pages deciding which dances a city should allow.
         </p>
 
-        <h2 className={h2}>Three parts of a dance</h2>
+        <h2 className={h2}>Movement, figure, pointing</h2>
 
         <p className={p}>
           The clearest technical account comes from Plutarch, more than four centuries after Plato. His{' '}
@@ -425,7 +426,9 @@ export default function ChoreiaPage() {
 
         <p className={p}>
           Put in a rehearsal room&apos;s terms, <em>phora</em> is the transition, <em>schēma</em> is the shape you hit
-          on the count, and <em>deixis</em> is a gesture whose meaning is outside your body. Plutarch then compares the
+          on the count, and <em>deixis</em> is a gesture whose meaning is outside your body. The words are the
+          astronomers&apos; too: <em>phora</em> is the motion of a planet, and <em>schēma</em> its configuration with
+          the others at a given moment. Plutarch then compares the
           whole to poetry.
         </p>
 
@@ -463,7 +466,7 @@ export default function ChoreiaPage() {
           and rest, just as harmony consists of tones and intervals.
         </SourceQuote>
 
-        <h2 className={h2}>Chorea as a disease</h2>
+        <h2 className={h2}>Chorea without order</h2>
 
         <p className={p}>
           The Latin spelling, <em>chorea</em>, has a second history. In the late Middle Ages outbreaks of compulsive
@@ -490,8 +493,8 @@ export default function ChoreiaPage() {
           Paracelsus thought the dancing came from imagination, or from what the sufferer had seen and heard. In 1686
           the English physician Thomas Sydenham used the name for a different condition, the jerking movements that
           follow a childhood infection, now called Sydenham&apos;s chorea. Huntington&apos;s chorea was named in 1872. In
-          medicine today, chorea means involuntary, irregular movement, movement with
-          no order and no intention behind it.
+          medicine today, chorea means involuntary, irregular movement, movement with no order and no intention
+          behind it: the word for the ordered dance of the planets, turned into a name for its opposite.
         </p>
 
         <h2 className={h2}>Six words</h2>

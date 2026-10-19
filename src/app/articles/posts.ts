@@ -198,12 +198,12 @@ export const posts: BlogPost[] = [
     imageAlt: 'Joost R. Ritman',
   },
   {
-    slug: 'choreia',
-    title: 'Choreia: Dance in the Greek Sources',
+    slug: 'choreia-the-dance-of-the-cosmos',
+    title: 'Choreia: The Dance of the Cosmos',
     subtitle:
-      'The Greeks saw the planets dancing: Plato’s Timaeus, Lucian’s dance as old as the world, Plotinus’s cosmos as one dancer, then Homer’s dancing-floor, Plato’s chorus and Plutarch’s three parts of a dance.',
+      'To the Greeks the planets danced, and every human chorus was a small copy of their dance: Plato’s Timaeus and Laws, Lucian, Plotinus, Homer and Plutarch, read in the original pages.',
     summary:
-      'The cosmic dance in the Greek sources: Plato’s dancing planets, Lucian, Plotinus, and the human chorus that copied them.',
+      'The Greek idea that the cosmos is a dance: Plato’s planets moving as a chorus, Lucian, Plotinus, and the human chorus that copied them.',
     date: '18 October 2026',
     readTime: '11 min read',
     kind: 'tours',
