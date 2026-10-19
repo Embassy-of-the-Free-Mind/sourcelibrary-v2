@@ -3,7 +3,7 @@ import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } fr
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 import {
-  vectorSearchMode, matchVectorService, hydrateServiceRows, overlapAtK,
+  vectorSearchMode, matchVectorService, hydrateServiceRows, overlapAtK, VECTOR_SEARCH_MAX_BOOK_IDS,
   type VectorMatchFilters, type VectorShadow, type VectorShadowSink,
 } from '@/lib/vector-search';
 
@@ -583,6 +583,8 @@ async function serveFromVectorService(embedding: number[], k: number, f: VectorM
   try {
     const r = await matchVectorService(embedding, k, f, undefined, true);
     if (r.complete === false) return null;
+    // A service that predates book_ids ignores the field and answers globally.
+    if (f.bookIds?.length && r.path !== 'books') return null;
     return await hydrateServiceRows(r.rows);
   } catch (e) {
     console.warn('[semantic-search] vector service failed, using match_semantic:', (e as Error).message);
@@ -912,6 +914,13 @@ export interface SemanticPageResult {
  * Uses match_pages_in_books RPC — scans only pages for the given book_ids
  * (200-500 pages per book, instant without a global index).
  *
+ * In VECTOR_SEARCH_MODE=serve the English store asks the page-vector service
+ * first (#2049): an exact scan of the same books' rows, ~5 ms against the RPC's
+ * 65–750 ms. On 30 real search_within_book calls it returned the RPC's top 10
+ * on 28; the other two differed only in which of two identical vectors took the
+ * 10th slot (scripts/eval/experiments/2026-10-18-within-book-vector-books-2049.md).
+ * Any error, timeout or `complete: false` falls back to the RPC.
+ *
  * Used as step 2 after book discovery — never searches all pages globally.
  */
 export async function semanticPageSearchScoped(
@@ -924,6 +933,13 @@ export async function semanticPageSearchScoped(
 
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
+
+  const served = !usesLangStore(opts?.textLang) && bookIds.length <= VECTOR_SEARCH_MAX_BOOK_IDS && vectorSearchMode() === 'serve'
+    ? await serveFromVectorService(queryEmbedding, limit, {
+      threshold: 0.3, language: null, languages: null, excludeLanguages: null, yearMin: null, yearMax: null, bookIds,
+    })
+    : null;
+  if (served) return served.map(scopedRow);
 
   const rpc = usesLangStore(opts?.textLang) ? 'match_page_texts_in_books' : 'match_pages_in_books';
   const { data, error } = usesLangStore(opts?.textLang)
@@ -945,21 +961,23 @@ export async function semanticPageSearchScoped(
     throw new SemanticSearchError(rpc, error.message);
   }
 
-  return (data || []).map((row: any) => {
-    const { snippet, type } = stripContinuityPrefix(row.translation || '');
-    return {
-      page_id: row.page_id,
-      book_id: row.book_id,
-      page_number: row.page_number,
-      snippet,
-      snippet_type: type,
-      score: Number(row.similarity) || 0,
-      book_title: row.book_title,
-      book_author: row.book_author,
-      book_language: row.book_language,
-      book_year: row.book_year,
-    };
-  });
+  return (data || []).map(scopedRow);
+}
+
+function scopedRow(row: any): SemanticPageResult {
+  const { snippet, type } = stripContinuityPrefix(row.translation || '');
+  return {
+    page_id: row.page_id,
+    book_id: row.book_id,
+    page_number: row.page_number,
+    snippet,
+    snippet_type: type,
+    score: Number(row.similarity) || 0,
+    book_title: row.book_title,
+    book_author: row.book_author,
+    book_language: row.book_language,
+    book_year: row.book_year,
+  };
 }
 
 // ── Lexical page search in a non-English language (#4095) ────────────

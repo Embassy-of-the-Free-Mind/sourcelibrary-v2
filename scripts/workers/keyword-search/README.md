@@ -79,7 +79,11 @@ section and `engine.mjs` change with them.
   - An unquoted query matches pages printing **ANY** of its words: two `text` clauses,
     translation boost 2 and OCR boost 1, summed BM25.
   - A query wrapped in `"…"` is a `phrase` on both fields.
-  - One word of 6+ characters is **fuzzy**: maxEdits 1, prefixLength 4.
+  - An unquoted query in an unspaced script (Han, kana, Tibetan, Thai, Lao, Khmer, Myanmar) is
+    **phrase-first** (#6877): the same two `text` clauses plus a `phrase` on both fields, boosted
+    `PHRASE_FIRST_BOOST` (100) times. Each character or syllable is a token, so ANY alone matched
+    nearly every page.
+  - One word of 6+ characters is **fuzzy**: maxEdits 1, prefixLength 4. Never in an unspaced script.
   - Filter: `page_number > 0`, plus `book_id` (one id, or `$in` an allow-list; an empty allow-list
     matches nothing, #2760).
   - Then `$match page_type ∉ NON_CONTENT_PAGE_TYPES` and `$limit`: 25 pages, `limit` for one book,

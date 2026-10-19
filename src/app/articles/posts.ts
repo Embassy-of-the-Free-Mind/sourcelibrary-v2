@@ -201,9 +201,9 @@ export const posts: BlogPost[] = [
     slug: 'choreia',
     title: 'Choreia: Dance in the Greek Sources',
     subtitle:
-      'The Greek word for choral dance, from Homer’s dancing-floor to the planets: Plato’s Laws and Timaeus, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.',
+      'The Greeks saw the planets dancing: Plato’s Timaeus, Lucian’s dance as old as the world, Plotinus’s cosmos as one dancer, then Homer’s dancing-floor, Plato’s chorus and Plutarch’s three parts of a dance.',
     summary:
-      'Choreia, the Greek choral dance: Homer’s dancing-floor, Plato on rhythm and the dancing planets, Plutarch’s three parts of a dance, Lucian and Plotinus.',
+      'The cosmic dance in the Greek sources: Plato’s dancing planets, Lucian, Plotinus, and the human chorus that copied them.',
     date: '18 October 2026',
     readTime: '11 min read',
     kind: 'tours',
@@ -249,7 +249,7 @@ export const posts: BlogPost[] = [
     summary:
       'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex, Landa and Bowditch, with the Venus table and the 819-day count.',
     date: '18 October 2026',
-    readTime: '13 min read',
+    readTime: '15 min read',
     kind: 'interactive',
     // A Venus page of the Dresden Codex (reader page 27), identified by eye.
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg',

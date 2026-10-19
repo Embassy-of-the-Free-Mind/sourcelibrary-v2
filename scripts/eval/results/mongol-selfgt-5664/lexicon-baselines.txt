@@ -1,0 +1,11 @@
+labels: exact 17/20, shape key 20/20
+   exact: enedkeg 47, kele 116, kelen 125, ber 2042, töbed 48, mongγol 899, neretü 3243, yeke 1014, kölgen 13, sudur 59, burqan 160, nögčigsen 181, tegüs 172, ilaǰu 9, nom 1388, sayin 434, činar 618
+   missing even by shape: 
+mc2: exact 18/20, shape key 20/20
+   exact: enedkeg 120, kele 9932, kelen 4226, ber 32999, töbed 1166, mongγol 9961, qutuγtu(u) 62, neretü 2117, yeke 41316, kölgen 9, sudur 938, burqan 1708, nögčigsen 31, tegüs 2198, ilaǰu 429, nom 6430, sayin 43814, činar 90128
+   missing even by shape: 
+reads-lora.jsonl   meaning        words   217 len>=4   149 | labels: exact 0.13 key 0.26 (shuffled 0.01/0.03) | mc2: exact 0.22 key 0.40 (shuffled 0.04/0.15)
+reads-lora.jsonl   name           words  3589 len>=4  2631 | labels: exact 0.14 key 0.26 (shuffled 0.01/0.05) | mc2: exact 0.23 key 0.40 (shuffled 0.02/0.11)
+reads-lora.jsonl   synth-heldout  words  2690 len>=4  1784 | labels: exact 0.91 key 0.94 (shuffled 0.02/0.07) | mc2: exact 0.89 key 0.94 (shuffled 0.04/0.12)
+reads-base.jsonl   meaning        words   259 len>=4   249 | labels: exact 0.73 key 0.75 (shuffled 0.03/0.14) | mc2: exact 0.75 key 0.82 (shuffled 0.07/0.25)
+reads-base.jsonl   synth-heldout  words   352 len>=4   280 | labels: exact 0.55 key 0.61 (shuffled 0.01/0.10) | mc2: exact 0.56 key 0.75 (shuffled 0.03/0.22)

@@ -148,15 +148,32 @@ export interface PageSearchOptions {
  */
 export const NAME_VARIANT_BOOST = 0.025;
 
+/**
+ * Scripts written without spaces between words, or with a syllable mark instead (Tibetan tsheg).
+ * `lucene.standard` makes every Han/kana character, and every Tibetan syllable, a token of its own, so
+ * an unquoted `text` query of five characters matches any page printing ANY one of them — 司射遂適階
+ * returned pages printing 射, and the page the reader copied it from was never in the top 10 (#6877).
+ */
+export const UNSPACED_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Tibetan}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}]/u;
+
+/**
+ * Boost on the phrase clauses an unquoted unspaced-script query adds (#6877). Large on purpose: the pages
+ * printing the run as typed come first, ranked by their phrase score, and the any-character pages follow
+ * as the fallback (measured 2026-10-18: Han and Tibetan Hit@10 0.00 → see the #6877 experiment file).
+ */
+export const PHRASE_FIRST_BOOST = 100;
+
 export function buildPageSearchStage(query: string, bookIds?: string | string[], opts: PageSearchOptions = {}): Document {
   // Detect quoted phrase: "venus humanitas" → exact phrase match
   const isPhrase = /^".*"$/.test(query.trim());
   const searchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+  const phraseFirst = !isPhrase && UNSPACED_SCRIPT.test(searchQuery);
 
   // Use fuzzy matching for single long words to catch morphological variants
-  // (e.g. "masturbation" matches "masturbator", "extraterrestrial" matches "extraterrestrials")
+  // (e.g. "masturbation" matches "masturbator", "extraterrestrial" matches "extraterrestrials").
+  // Not for an unspaced script: a run of characters is not one long word.
   const words = searchQuery.trim().split(/\s+/);
-  const fuzzy = !isPhrase && words.length === 1 && words[0].length >= 6
+  const fuzzy = !isPhrase && !phraseFirst && words.length === 1 && words[0].length >= 6
     ? { maxEdits: 1, prefixLength: 4 }
     : undefined;
 
@@ -166,6 +183,10 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[],
         { phrase: { query: searchQuery, path: 'ocr.data' } },
       ]
     : [
+        ...(phraseFirst ? [
+          { phrase: { query: searchQuery, path: 'translation.data', score: { boost: { value: 2 * PHRASE_FIRST_BOOST } } } },
+          { phrase: { query: searchQuery, path: 'ocr.data', score: { boost: { value: PHRASE_FIRST_BOOST } } } },
+        ] : []),
         { text: { query: searchQuery, path: 'translation.data', score: { boost: { value: 2 } }, ...(fuzzy && { fuzzy }) } },
         { text: { query: searchQuery, path: 'ocr.data', ...(fuzzy && { fuzzy }) } },
       ];

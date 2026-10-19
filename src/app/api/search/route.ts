@@ -417,9 +417,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
     // KEYWORD_SEARCH_MODE (#6852): the keyword page service on Hetzner beside
     // (shadow) or in front of (serve) the Atlas page lane. Global English
-    // searches only: a `book_id` search admits a book that is not visible, a
-    // tenant's lane is confined at its join, and `?lang=` is the Postgres lane.
+    // searches, plus `bookServe` below: a `book_id` search admits a book that is
+    // not visible, a tenant's lane is confined at its join, and `?lang=` is the
+    // Postgres lane.
     const keywordMode = (!bookId && !tenantId && !isLocalizedSearch) ? keywordSearchMode() : 'off';
+    // A `book_id` search on a LIVE book is served too (#2049): the book is the
+    // allow-list, and the service holds every live book. A book that is not
+    // live stays on Atlas, which is why the liveness is checked first. Serve
+    // only; no shadow comparison for this lane.
+    const bookServe = !!bookId && !tenantId && !isLocalizedSearch && keywordSearchMode() === 'serve';
     const keyword: {
       shadowCall?: Promise<{ ok: true; r: KeywordLaneResult; ms: number } | { ok: false; error: string; ms: number }>;
       k: number; filtered: boolean; variants: boolean;
@@ -664,10 +670,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // typed; name variants (#5888) arrive through the second query.
           const terms = (bookId || pagesOnly) ? null : rollupTerms(query);
           let nameQuery: Awaited<ReturnType<typeof expandNameQuery>> | undefined;
-          if (keywordMode === 'serve') {
+          const serveBook = bookServe && (await liveBookSet(db as any, [bookId!]).catch(() => new Set<string>())).has(bookId!);
+          if (keywordMode === 'serve' || serveBook) {
             nameQuery = await expandNameQuery(query);
             const { variants, topicWords } = nameQuery;
-            const served = await serveKeywordLane(keywordParams(terms, pageLimit, filteredBookIds, variants, topicWords));
+            const served = await serveKeywordLane(keywordParams(terms, pageLimit, serveBook ? [bookId!] : filteredBookIds, variants, topicWords));
             keyword.lane = served ? 'served' : 'fallback';
             if (served) return served;
           }

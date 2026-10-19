@@ -88,7 +88,8 @@ export interface GroundingImage {
 }
 
 // 'notebook_claim' is not produced here: src/lib/embassy/notebook-claims.ts (#6255).
-export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim';
+// 'citation_page' is produced by src/lib/embassy/citation-pages.ts (#6946).
+export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page';
 
 export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */
@@ -180,7 +181,7 @@ export function plainText(s: string): string {
 
 const BOOK_LINK = /(?<![\w.-])sourcelibrary\.org(?:\/es)?\/book\/[a-z0-9-]+/;
 
-function isMostlyLatin(s: string): boolean {
+export function isMostlyLatin(s: string): boolean {
   const letters = s.match(/\p{L}/gu) ?? [];
   if (letters.length === 0) return false;
   const latin = letters.filter(ch => /\p{Script=Latin}/u.test(ch)).length;
@@ -209,7 +210,7 @@ const ANY_TAG = /<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi;
 /** `<term>Retortam</term> <gloss>retort</gloss>`: a quoter writes one or the other. */
 const TERM_GLOSS = /<term>([\s\S]*?)<\/term>\s*<gloss>([\s\S]*?)<\/gloss>/gi;
 
-function pageReadings(text: string): string[] {
+export function pageReadings(text: string): string[] {
   const bare = text.replace(ANNOTATION_ELEMENT, ' ');
   return [
     text.replace(ANY_TAG, ' '),
@@ -438,7 +439,7 @@ function hasProperName(s: string): boolean {
 
 const INLINE_QUOTE = /(["“«])([^"“”«»\n]{3,500}?)(["”»])/g;
 
-function inlineQuotes(s: string): Array<{ full: string; inner: string }> {
+export function inlineQuotes(s: string): Array<{ full: string; inner: string }> {
   const out: Array<{ full: string; inner: string }> = [];
   // Quotes inside link text or URLs are titles, not quotations.
   const masked = s.replace(/\]\([^)]*\)/g, m => ' '.repeat(m.length));

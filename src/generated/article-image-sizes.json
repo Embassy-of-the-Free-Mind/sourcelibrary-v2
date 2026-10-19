@@ -112,6 +112,11 @@
   "h": 1194,
   "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQAgCdASoQAA8AA4BaJZwAD4KumGMSL1WAAP74Fn1CdJVF1HOaGkGrkfLqTBtUgdvRH1Kj0vGJ1xrqzIzd8YGOb3K6WOqgKLJK6ZD0QvML5EWD6NTZ+xfC6cCJ1nH8z69aoLC6LVDE26Nerci5GNAgAAA="
  },
+ "/articles/maya-mathematics/dresden-numerals.jpg": {
+  "w": 1400,
+  "h": 1082,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAAwAA4BaJYgCdAEQ43OyKfeKjAD+ySPuVvCavCCqyCcDwf8t49Qa3XPP0FEeUilxMlMUFtuHIJzZTULQADo9cLZZk4MttggAAA=="
+ },
  "/articles/one-sentence-of-hermes/1516-aldine.jpg": {
   "w": 760,
   "h": 317,
@@ -1212,6 +1217,26 @@
   "h": 6601,
   "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoQABUAPu1mqk2ppaQiMAgBMB2JQBOgBDvd0Cg8FMi5gAD+YCqwGrzaGHM2TfzJKdEykQvPoPizXrdD+n4YrE6P+kFGO7Ew2BvGogdzgrAa9+sJyx6Ii6MdPXwAAA=="
  },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/409.jpg": {
+  "w": 3702,
+  "h": 5065,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAgCdASoQABYAA4BaJZQC7AENBw6e2Uc/g/kJQAD+Zt+qrjYMXQLpXpVPA3sqCYNrAacOe/6AqH8Afc9ezUVzD5Hiob4NS9uXuaUkAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/493.jpg": {
+  "w": 3693,
+  "h": 5045,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQBACdASoQABYAPu1orU2ppqSiMAgBMB2JZwC7ACHpp99KG7bGX2+4AAD9/T448LSrhHb9llVC+YWmNZ2koSjgK/WuXJhnM9/3+u7z5uT1tgxdYQDF6Gp4soUMAEEZ0hhAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/500.jpg": {
+  "w": 3782,
+  "h": 5071,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoQABUAPu1yrU+pp6QiMAgBMB2JZQCdACHfZ4jUjqkfgADOPdBy8lVAQgnVGPBF/NkVnbUPmOOz9Ypa6U/vFl8U9coyIR0GVVAqN7bCv4QZNtAA"
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/746.jpg": {
+  "w": 3853,
+  "h": 5102,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAgCdASoQABUAA4BaJZQCdAEO/+jxk4K1kAAA9r7TDeH5Bbq3oEceowV0O0D6ExdPtUtmBg3RDMGz2Wn997ZvO2XQYFkDstwAAA=="
+ },
  "https://images.sourcelibrary.org/archived/69b51e19261c58d63664f8d4/367.jpg": {
   "w": 2133,
   "h": 3525,
@@ -1256,6 +1281,11 @@
   "w": 914,
   "h": 1482,
   "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JaWM+ADcsOHjwAP7wfN910JHmvlziiPtjX2HlzZgAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/26.jpg": {
+  "w": 3104,
+  "h": 6664,
+  "blur": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADQBACdASoQACIAPt1apE2opSOiNUgBEBuJYwC2yat2OjTLHbBX0107Fa10EP31gAD+mLioIF+WfmWWi0aMw/5eSg+QW7bqJm+1SVMSmIw0KOVxogk8bLzvVTwD2Hh2pZS6p9jOzlyoj/IDLkwqjNACeLHztomKAXyJHOs0n7j4zvXLtM6rD9lh5NVF06AxIUgt951k56AAAA=="
  },
  "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg": {
   "w": 3064,
@@ -1317,6 +1347,11 @@
   "h": 3000,
   "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoQABoAPu1kqU2ppaQiMAgBMB2JaQAAW+wk3VzTuxOcAAD2v1Y8QWQHdtxTuxgTC9EmOVqmNj8gsqhHNSthki+VEN4n/1FCUojV4rqpgN/9Zl/C6VHANDLLaIYmZwAA"
  },
+ "https://images.sourcelibrary.org/archived/69ee93b9f2c6312502f6a526/252.jpg": {
+  "w": 2472,
+  "h": 4318,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JY2bvRgATmgAA/uzzqXn8UU9V6/wTHa6uUU4GAz/j8szPRvHz5aPVxIfloOlmAAA="
+ },
  "https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg": {
   "w": 2782,
   "h": 3955,
@@ -1372,6 +1407,16 @@
   "h": 4344,
   "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoQABUAPu1kqU4ppaOiMAgBMB2JQBWAA3M6XcMKbWU9DgAA/rVC6tsvm71d4HRdzG6GGrBTfpM/lSGeEvhSz0vNE+SZ1pj21wpeTG+oAAA="
  },
+ "https://images.sourcelibrary.org/archived/6a09ff94fa20006dbaba9ecb/160.jpg": {
+  "w": 1925,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAwCdASoQABkAPu1kqU4ppaOiMAgBMB2JaQAAW+0lyiAcqns4AAD+835VabBnwy+fHviXW/S4kPSenuhZy6gAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6a09ff94fa20006dbaba9ecb/190.jpg": {
+  "w": 1914,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABkAPu1oqk6ppiQiMAgBMB2JaQAAW52zIocuYr+G5AAA/vN+WV3xhJ5Qh77M4IFm02DD974RR3g/L04gAA=="
+ },
  "https://images.sourcelibrary.org/archived/6a10090bf717292950967757/182.jpg": {
   "w": 800,
   "h": 1325,
@@ -1422,6 +1467,36 @@
   "h": 5780,
   "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADQAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JaQAAW6YMMeBYhfP/QSAAy0+i4YqVju2ygORJxyxZa7DF3KfrTGDqq41XeB+BgI2jnyNpHa+bXMLJYaLThzj6MyoxC0vzT8kKewXIHu11T//5ccAAAA=="
  },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/122.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABwAPu1iqU2ppaQiMAgBMB2JZV/2TKAU/bcrlCOAAAD+5NvnKGrZWVUMpnapr9pBtC+qKyZa2AQkaNQAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/235.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZQAAUZNWAnpAAPcepNMdVkT1Kn0HlhXyR2eWokaq2kCLJ7MVlbgA"
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/70.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoQABwAPu1iqU2ppaQiMAgBMB2JZWVuTKAU/oMv9SgAAP7k3LqHLGiC4xxX5MWFOpHo4p2Z9+eSvVZM5gFwAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/79.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAwAwCdASoQABwAPu1iqk2ppaQiMAgBMB2JZQAAeOJ6XrwAAP66PV/MvyjAFn279olcjik6EPWQsC9obWYavblQAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/80.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZQCo9Cz+1Pq3UAAA/uPPBHgluZNl+Iu98PpJ2pgK6sSc4CWzbUc4sQ4/coL64AAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/82.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAAAQAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZWi2TsyVGYAA/udcGjv9kFaWzUi9CEOlBTm3Xl2DZUAA"
+ },
  "https://images.sourcelibrary.org/archived/6ac2798f02c7f994f8506b1e/68.jpg": {
   "w": 864,
   "h": 1760,
@@ -1441,6 +1516,11 @@
   "w": 2943,
   "h": 4296,
   "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACQAwCdASoQABcAPu1iqk2ppaQiMAgBMB2JZACw7CHe1aTGMXdAAP5mpAKqgMzBkEk1YLlq84BH8szhXsqoodYRKnRcEx6b3ufMQVopASHK67PeSKEOlImNvqpLeMSQAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/417.jpg": {
+  "w": 2868,
+  "h": 4318,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JZACdACG636djK6SO1uWAAPyPsO3RDrMraK91IIJInDsFOWZw1429j24uev85UVl+UPPZ+CjH+pCo9sjqaGYRGSkAr6Gs8PejJAAA"
  },
  "https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg": {
   "w": 2868,
@@ -1877,6 +1957,11 @@
   "h": 1726,
   "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABcAPu1kq04ppaQiMAgBMB2JZQCdMoADTtV4Nht+8oRgAP7GBXMU8F7aYHMAehVWmt+bHiCe3PqGyIjVio4MkehiYDNgttKCGG2kT/JlDAnEGRAAAA=="
  },
+ "https://images.sourcelibrary.org/pages/69905f1140bc3a0478efa1d3/0146.jpg": {
+  "w": 1992,
+  "h": 3174,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwCdAC0A/e4ngAD+70Vfhoq0+e6gFr1ouqap/MPUz4Ilznx958iBoAA="
+ },
  "https://images.sourcelibrary.org/pages/699065763dc2ed39a49f155d/0098.jpg": {
   "w": 1778,
   "h": 2500,
@@ -1917,6 +2002,11 @@
   "h": 2667,
   "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoQABUAPu1mq04ppaQiMAgBMB2JZwAAUqjufWqPHpTAAP70MvqpLVAygOg4BjVOQrLlpxh+pOix3Yym/AA="
  },
+ "https://images.sourcelibrary.org/pages/699389ee74305116d72d2e0d/0290.jpg": {
+  "w": 2000,
+  "h": 3097,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABkAPu1kqU2ppaQiMAgBMB2JZQC7ACICg8T7e6R3dnQA/u1FGSTil1wFT5RX6303soPEYrE4Oir0TGAAAA=="
+ },
  "https://images.sourcelibrary.org/pages/69ac9bb999d9a0170d090d1e/0155.jpg": {
   "w": 2000,
   "h": 3157,
@@ -1926,6 +2016,26 @@
   "w": 1641,
   "h": 2670,
   "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACQAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwCdADBeQkGwCrmAAP7wD5+cs3yMM/N2JAus1u5wYAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69ad656c75811c30866e1810/0233.jpg": {
+  "w": 1939,
+  "h": 3148,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwAAesFXLxgQAP7vtf0epT3a/0l0t5AmxwFhX5ct4hV0iOAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69ad656c75811c30866e1810/0254.jpg": {
+  "w": 1939,
+  "h": 3148,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwC06C0Bt94C0AAA/u9rwqOjdFgpR/DcfpAP78quJ+gTAfRIAAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69b21dfa94025df5d290ae35/0457.jpg": {
+  "w": 2000,
+  "h": 2987,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAwCdASoQABgAPu1iqk4ppaQiMAgBMB2JaQAAW+uBMpW5/wr8AAD+8iDTKzRjCeV8B1odxr1c+zMUAi+hay2V6RbgzU59phUvuJgnJDTngAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69b21dfa94025df5d290ae35/0460.jpg": {
+  "w": 1995,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoQABgAPu1kqk4ppaQiMAgBMB2JaQAAW+0Nh/NwyJvQAAD+8jREWGppNl4oFZ2hVN7ZHIrjb3gQOqkBnIW/hVjusJGqQwTJ7OAAAA=="
  },
  "https://images.sourcelibrary.org/pages/69b220b356715b0e324732e1/0584.jpg": {
   "w": 2000,
@@ -1937,10 +2047,20 @@
   "h": 3000,
   "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JQBYdgzdKJZWEeAD+50Ck55Q9WzK/ns7g53cHbgKEL9VHY5OBaiSpY9hzisFofFDaVdQBUhQa9DXl16jYAAAA"
  },
+ "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a308/0122.jpg": {
+  "w": 1000,
+  "h": 1782,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoQAB0APu1iqU2ppaQiMAgBMB2JQBYdgwuqQmB4DMuAAPVrCDq+cSP8aeWRjNl2VerzHGPjCYtxX57WKVu9ZnVCxAYAAA=="
+ },
  "https://images.sourcelibrary.org/pages/69b525de2f891867c1ae5d21/0001.jpg": {
   "w": 2000,
   "h": 1581,
   "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAA0AA4BaJQBOgCHw8kWBC+AA/shdwsq3hSlXb/utkYaOP4YA3it1Ya13bH4OlBc0d2tsQn82wAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69bd9d546120d54bd0375241/0828.jpg": {
+  "w": 2000,
+  "h": 2848,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABcAPu1mqk2ppaQiMAgBMB2JQBOgBDvxNIdt9UyVOBMAAPlwzpT74A/4qQngcNTxR6jXotIrh3d3yoKdKxjnPspxS3/p7+3Cy6P5bqc9mZIB8JYrl8/aapvpRnF7BITdxf8AAAA="
  },
  "https://images.sourcelibrary.org/pages/69c6614901a26ccff09f5036/0098.jpg": {
   "w": 2000,
@@ -2002,6 +2122,21 @@
   "h": 3000,
   "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdACKUCDEtJOa8VM6snoAA/t6ZIfNKr/lQV82kQWg5nc5dBpY9qksrXXUGFav39k5HTR2JoIAA"
  },
+ "https://images.sourcelibrary.org/pages/6a08a85450cb4ea746a09fb5/0249.jpg": {
+  "w": 1581,
+  "h": 2687,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JY2ZARgATjdEPcxHsAP7txODtTh4tq4nDGEx/Swq/z2wDzsZ3xyo9OgMncKUsJrWCqAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a08a85450cb4ea746a09fb5/0258.jpg": {
+  "w": 1581,
+  "h": 2687,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoQABsAPu1kqU2ppaQiMAgBMB2JYwCw7C0BtUhaAAD+6xUuc9tiFgyW8u3cEtbWBOu5BtBMDmCdELgAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6a09dd1e24d4d312f5c30cae/0156.jpg": {
+  "w": 2000,
+  "h": 2583,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JZQC/OB6NqDBRx+CGwAD+8eChHY7xeFhj5RTcQWD7kibTwdNIfqNNvbAAAA=="
+ },
  "https://images.sourcelibrary.org/pages/6a09ece3b4da373307f15cf4/1096.jpg": {
   "w": 1166,
   "h": 1600,
@@ -2056,6 +2191,11 @@
   "w": 1200,
   "h": 1554,
   "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JaQAAW+j6lafaZnM/AAD42TiXgy4skriL3eafZ0oNG6knAfU7fIc08AAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0278-full.jpg": {
+  "w": 1390,
+  "h": 1926,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JZQC7ACG59iQfhB1JpgAA/dU7zUoWHJSzEM1wI1pEHF3gUKzmwCsVa4xuvLml6k6/UaIyAAA="
  },
  "https://images.sourcelibrary.org/pages/6acc3d5f230e9a56175cc731/0048.jpg": {
   "w": 1200,

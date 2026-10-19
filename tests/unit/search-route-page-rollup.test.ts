@@ -68,6 +68,7 @@ vi.mock('@/lib/semantic-search', () => ({
   semanticBookSearch: async () => [],
   semanticPageSearchGlobal: async () => [],
   semanticPageSearchUntranslated: async () => ({ rows: [], state: 'off' }),
+  getQueryEmbedding: async () => null,
   lexicalPageSearchLang: async () => [],
 }));
 vi.mock('@/lib/search/work-fanout', () => ({ fetchWorkFanouts: async () => new Map() }));

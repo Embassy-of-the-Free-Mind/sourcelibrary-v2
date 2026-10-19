@@ -35,9 +35,22 @@ const SORTERS: Record<Sort, (a: BlogPost, b: BlogPost) => number> = {
   title: (a, b) => a.title.localeCompare(b.title, 'en'),
 };
 
-export function ArticleCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
+export function ArticleCard({
+  post,
+  priority = false,
+  enter,
+}: {
+  post: BlogPost;
+  priority?: boolean;
+  // Place in the /articles entrance (globals.css .articles-enter); unset elsewhere.
+  enter?: number;
+}) {
   return (
-    <Link href={postHref(post)} className="group block">
+    <Link
+      href={postHref(post)}
+      className={`group block${enter === undefined ? '' : ' articles-enter'}`}
+      style={enter === undefined ? undefined : ({ '--enter': enter } as React.CSSProperties)}
+    >
       <div className="relative aspect-[16/9] overflow-hidden bg-cover-bg">
         <Image
           src={post.image}
@@ -223,14 +236,14 @@ export default function BlogIndex({
 
   return (
     <div>
-      <h1 className="font-serif text-5xl md:text-7xl text-primary tracking-tight">
+      <h1 className="articles-enter font-serif text-5xl md:text-7xl text-primary tracking-tight">
         {kind === 'all' ? 'Articles' : KIND_INFO[kind].label}
       </h1>
-      <p className="mt-6 mb-10 max-w-3xl text-lg md:text-xl text-secondary font-body leading-relaxed">
+      <p style={{ '--enter': 1 } as React.CSSProperties} className="articles-enter mt-6 mb-10 max-w-3xl text-lg md:text-xl text-secondary font-body leading-relaxed">
         {kind === 'all' ? INTRO : KIND_INFO[kind].definition}
       </p>
 
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div style={{ '--enter': 2 } as React.CSSProperties} className="articles-enter flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           <label className="block w-full md:w-96">
             <span className="sr-only">Search articles</span>
@@ -274,7 +287,8 @@ export default function BlogIndex({
       {shown.length > 0 ? (
         <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {pageItems.map((post, i) => (
-            <ArticleCard key={post.slug} post={post} priority={current === 1 && i < 3} />
+            // Cards below the first rows arrive with the rest, not later.
+            <ArticleCard key={post.slug} post={post} priority={current === 1 && i < 3} enter={3 + Math.min(i, 6)} />
           ))}
         </div>
       ) : (

@@ -363,11 +363,11 @@ function langArg(args: Record<string, unknown>): string {
   return /^[a-z]{2,3}$/.test(raw) ? raw : 'en';
 }
 
-async function searchWithinBook(args: Record<string, unknown>) {
+async function searchWithinBook(args: Record<string, unknown>, caller?: McpCaller) {
   const lang = langArg(args);
   const params = new URLSearchParams({ q: String(args.query) });
   if (lang !== 'en') params.set('lang', lang);
-  const result = await apiGet(`/books/${args.book_id}/search`, params) as Record<string, unknown>;
+  const result = await mcpApiGet(`/books/${args.book_id}/search`, params, caller) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
     const best = matches?.find((m) => m.field === 'translation') || matches?.[0];
@@ -1903,7 +1903,7 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'search_translations':
     case 'search_passages': return searchPassages(args, caller);
     case 'search_concept': return searchConcept(args, caller);
-    case 'search_within_book': return searchWithinBook(args);
+    case 'search_within_book': return searchWithinBook(args, caller);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);

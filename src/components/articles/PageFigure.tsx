@@ -22,6 +22,7 @@ export default function PageFigure({
   source,
   credit,
   wide = false,
+  linkToPage = false,
   children,
 }: {
   src: string;
@@ -30,12 +31,14 @@ export default function PageFigure({
   source?: ReactNode;
   credit?: ReactNode;
   wide?: boolean;
+  /** Clicking the picture opens `href` (the reader page) instead of the lightbox. */
+  linkToPage?: boolean;
   children?: ReactNode;
 }) {
   const img = <ArticleImage src={src} alt={alt} sizes={wide ? '(max-width: 768px) 100vw, 1060px' : undefined} />;
   return (
     <figure className={`not-prose my-10 ${wide ? 'md:-mx-16' : ''}`}>
-      <div data-lightbox-href={href}>{img}</div>
+      {linkToPage && href ? <Link href={href} className="block">{img}</Link> : <div data-lightbox-href={href}>{img}</div>}
       {(children || source || credit) && (
         <figcaption className="mt-2 text-sm text-muted leading-relaxed">
           {children}

@@ -60,6 +60,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // the printing-date /timeline is a separate question.
   '/timeline/written',
   '/articles',
+  // Maya monument pages (#6985): Source Library's own reading room for the University of Bonn's
+  // inscription archive, linking into the global articles. Not a partner holding.
+  '/inscriptions',
   '/contribute',
   '/support',
   // `/give` is /support's one-screen twin and the header's Support button. Both

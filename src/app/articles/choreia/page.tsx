@@ -5,10 +5,14 @@ import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
-// fetched through get_quote on 2026-10-18. English books (Jowett's Laws, the Fowlers' Lucian,
-// Archer-Hind's notes) are quoted in their printed English; the rest in the library's translation.
+// fetched through get_quote on 2026-10-18. English books (the Fowlers' Lucian, Archer-Hind's note) are
+// quoted in their printed English; the rest in the library's translation. Plato is quoted from the
+// Laurenziana manuscript of Ficino's Latin translation; its leaves 409 (Horum uero deorum choreas), 493
+// (Disciplinae igitur expers ... qui nunquam chorea usus est), 500 (Vtrorumque uero simul chorea
+// nominabatur, where the OCR drops the gloss "i. concentus") and 746 (omniumque chorearum
+// magnificentissima) were read from the page image on 2026-10-18.
 // Read from the page image on 2026-10-18: Plutarch p. 390 (the heading φορὰ καὶ σχῆμα καὶ δεῖξις),
-// Lucian p. 241, Jowett p. 223, Archer-Hind p. 134 (χορείας in the Greek and the note), Mercuriale
+// Lucian p. 241, Archer-Hind p. 134 (χορείας in the Greek and the note), Mercuriale
 // p. 136 (lationem, figuram, & indicationem), the Aldine Iliad leaf (ἐν δὲ χορὸν ποίκιλλε). The
 // Plotinus manuscript (BSB Cod.graec. 449) was opened but its hand was not read word by word, so it is
 // quoted briefly and the argument is given in summary. The Aldine Iliad leaf carries a ProQuest notice,
@@ -18,7 +22,7 @@ import SourceQuote from '@/components/articles/SourceQuote';
 
 const TITLE = 'Choreia: Dance in the Greek Sources';
 const DESCRIPTION =
-  'Choreia, the Greek choral dance, read in the sources: Homer’s dancing-floor, Plato on rhythm and on the dance of the planets, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.';
+  'The Greeks saw the planets dancing. Choreia read in the sources: Plato’s Timaeus, Lucian, Plotinus’s cosmos as one dancer, Homer’s dancing-floor, Plato’s chorus, Plutarch’s three parts of a dance, and the disease called chorea.';
 const HERO = 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg';
 const HERO_ALT =
   'Red chalk drawing of a woman dancing in a flowing robe, a cymbal raised in each hand, between a faun blowing a curved horn and a faun playing pan-pipes.';
@@ -38,7 +42,7 @@ export const metadata: Metadata = withArticleMeta('choreia', {
 // Reader links, written out so scripts/maintenance/generate-article-books.mjs can find the books.
 const BOOK = {
   iliad: '/book/homeri-ilias-1517-aldine-edition-homer',
-  laws: '/book/dialogues-of-plato-vol-5-laws-epinomis-letters-plato',
+  ficino: '/book/plato-complete-works-ficino-translation-translator',
   plutarch: '/book/plutarchi-chaeronensis-moralia-vol-1-bernardakis-teubner-bernardakis',
   mercuriale: '/book/de-arte-gymnastica-libri-sex-amsterdam-ed-mercuriale',
   timaeus: '/book/timaeus-greek-text-with-commentary-archer-hind',
@@ -54,18 +58,25 @@ const SLUG = Object.fromEntries(Object.entries(BOOK).map(([k, v]) => [k, v.slice
 
 const PAGES = 'https://images.sourcelibrary.org/pages';
 const IMG = {
-  laws233: `${PAGES}/69ad656c75811c30866e1810/0233.jpg`,
-  laws254: `${PAGES}/69ad656c75811c30866e1810/0254.jpg`,
   plutarch457: `${PAGES}/69b21dfa94025df5d290ae35/0457.jpg`,
   plutarch460: `${PAGES}/69b21dfa94025df5d290ae35/0460.jpg`,
   mercuriale156: `${PAGES}/6a09dd1e24d4d312f5c30cae/0156.jpg`,
-  timaeus146: `${PAGES}/69905f1140bc3a0478efa1d3/0146.jpg`,
   lucian249: `${PAGES}/6a08a85450cb4ea746a09fb5/0249.jpg`,
   lucian258: `${PAGES}/6a08a85450cb4ea746a09fb5/0258.jpg`,
   plotinus290: `${PAGES}/699389ee74305116d72d2e0d/0290.jpg`,
   agrippa122: `${PAGES}/69b51e1c47b06ecd5818a308/0122.jpg`,
   paracelsus828: `${PAGES}/69bd9d546120d54bd0375241/0828.jpg`,
 };
+
+// Ficino's Latin Plato, a manuscript in the Biblioteca Medicea Laurenziana (CC BY-SA 4.0).
+const FICINO = 'https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7';
+const FIC = {
+  timaeus409: `${FICINO}/409.jpg`,
+  laws493: `${FICINO}/493.jpg`,
+  laws500: `${FICINO}/500.jpg`,
+  epinomis746: `${FICINO}/746.jpg`,
+};
+const FICINO_SOURCE = 'Ficino’s Latin translation, manuscript, Biblioteca Medicea Laurenziana, Florence';
 
 const book = (slug: string, page?: number) => (page ? `/book/${slug}?page=${page}` : `/book/${slug}`);
 
@@ -101,7 +112,7 @@ export default function ChoreiaPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="The Greek word for choral dance, from Homer’s dancing-floor to the planets, read in the books"
+          subtitle="The planets as a chorus, and the human dance that copied them, read in the books"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -112,240 +123,50 @@ export default function ChoreiaPage() {
     >
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          <em>Choreia</em> is the ancient Greek word for dancing in a group while singing. Our words choreography,
-          chorus and choir all come from it. The Greek writers used it for village dances and temple festivals, and
-          also for the way the planets move across the sky. This article is for a dancer who has heard that the
-          ancients thought the cosmos was a dance and wants to read where they said so. Every passage below links to
+          Plato looked at the night sky and saw a chorus. In his account of how the world was made, the planets do
+          not simply circle: they dance, drawing level with one another, passing in front and behind, vanishing and
+          coming back into view, the way dancers do in a round. Later writers took the image further. Lucian said
+          dancing began with the creation of the universe, and Plotinus pictured the whole cosmos as a single dancer
+          whose every limb moves because the dance requires it.
+        </p>
+
+        <p className={p}>
+          The Greek word is <em>choreia</em>, dancing together in time, the root of choreography, chorus and choir.
+          It named the movement of the planets and also a ring of villagers at a festival, and Plato thought these
+          were the same activity at different scales: the gods gave people a sense of rhythm so that they could join
+          the dance, and a person never trained in a chorus was, in his word, uneducated. This article reads the idea
+          in the books that hold it, starting in the sky and coming down to the dancing-floor. Every passage links to
           the page it comes from.
         </p>
-
-        <p className={p}>
-          The idea is often credited to Aristotle. The passages are Plato&apos;s, Lucian&apos;s and Plotinus&apos;s.
-          Aristotle wrote about dance in the <em>Poetics</em>, where dancers are among the artists who imitate
-          character, feeling and action through rhythm, and in <em>On the Heavens</em> (book II, chapter 9) he
-          rejected the Pythagorean belief that the moving stars make music. His heavens turn in perfect circles and are
-          silent.
-        </p>
-
-        <h2 className={h2}>Six words</h2>
-
-        <p className={p}>
-          The sources use a small vocabulary, and most of it is still in use in dance studios in some form.
-        </p>
-
-        <dl className="my-8 border-y border-stone-200">
-          <Term greek="χορός" latin="choros">
-            The group of dancers, and also the place where they dance. Homer uses the same word for both.
-          </Term>
-          <Term greek="χορεία" latin="choreia">
-            What the choros does: dancing and singing together. Latin writers spelled it <em>chorea</em>.
-          </Term>
-          <Term greek="ὄρχησις" latin="orchēsis">
-            Dancing as such, the body&apos;s part of the art. The <em>orchestra</em> of a Greek theatre was the
-            dancing-floor in front of the stage.
-          </Term>
-          <Term greek="φορά" latin="phora">
-            Movement: the travel of the body from one position to the next.
-          </Term>
-          <Term greek="σχῆμα" latin="schēma">
-            Figure: the position a movement arrives at and holds, a pose. The same word is used for the arrangement of
-            the planets at a given moment.
-          </Term>
-          <Term greek="δεῖξις" latin="deixis">
-            Pointing: a gesture that shows a thing directly, the sky, the ground, a person standing nearby.
-          </Term>
-        </dl>
-
-        <h2 className={h2}>The dancing-floor</h2>
-
-        <p className={p}>
-          The oldest description is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
-          Achilles and covers it with scenes of ordinary life. In the vineyard the harvesters dance as they carry the
-          grapes, and at the end of the series he makes a dancing-floor. The Greek line, in the{' '}
-          <Link href={book(SLUG.iliad, 542)}>Aldine edition printed in Venice in 1517</Link>, reads{' '}
-          <span lang="grc">ἐν δὲ χορὸν ποίκιλλε</span>, &ldquo;and on it he worked a <em>choros</em>&rdquo;. In the
-          lines that follow, the <em>choros</em> is both the floor and the young men and women who dance on it.
-        </p>
-
-        <Quote href={book(SLUG.iliad, 542)} cite="Homer, Iliad 18, Aldine edition (Venice, 1517), p. 211">
-          In their midst, a boy played a sweet song on a clear-toned lyre, and sang beautifully of Linus with a
-          delicate voice; they, beating the ground in time, followed with song and shouting, dancing with their feet.
-          &hellip; The famous Amphigyeis wrought a dancing-floor similar to the one that once in wide Knossos the
-          skillful Daedalus made for the fair-haired Ariadne.
-        </Quote>
-
-        <p className={p}>
-          The dancers in this scene follow a musician, keep time with their feet, and sing while they move. That
-          combination of music, voice and footwork is what the later writers mean by <em>choreia</em>. The
-          dancing-floor Daedalus built for Ariadne at Knossos was a famous object in its own right. Pausanias, who
-          travelled Greece in the second century AD, says the people of Knossos still had{' '}
-          <Link href={book(SLUG.pausanias, 806)}>&ldquo;the dancing-floor of Ariadne, which Homer mentioned in the
-          Iliad, made of white stone&rdquo;</Link>.
-        </p>
-
-        <h2 className={h2}>Dance and song as one art</h2>
-
-        <p className={p}>
-          Plato gives the fullest account of <em>choreia</em> as a practice, in the second book of the{' '}
-          <em>Laws</em>, his last dialogue. An Athenian stranger is talking with a Cretan and a Spartan about how to
-          educate citizens. He starts from something anyone can watch: young animals and children cannot keep still.
-          What distinguishes people, he says, is that they can feel order in their movement.
-        </p>
-
-        <SourceQuote
-          book={SLUG.laws}
-          page={233}
-          printedPage={223}
-          src={IMG.laws233}
-          source={<>Plato, <em>Laws</em> II, tr. Benjamin Jowett (Oxford, 1875)</>}
-          pageAlt="Page 223 of Jowett's Laws, Book II: the Athenian on rhythm, harmony and the chorus."
-        >
-          But, whereas other animals have no perception of order or disorder in their movements, that is, of rhythm
-          or harmony, as they are called, to us, the Gods, who, as we say, have been appointed to be our partners in
-          the dance, have given the pleasurable sense of harmony and rhythm; and so they stir us into life, and we
-          follow them and join hands with one another in dances and songs; and these they call choruses, which is a
-          term naturally expressive of cheerfulness.
-        </SourceQuote>
-
-        <p className={p}>
-          Plato connects <em>choros</em> with <em>chara</em>, joy. Jowett notes at the foot of the page that the
-          derivation is wrong, and modern dictionaries agree, but it tells you how Plato thought of the thing. The
-          dialogue continues with a definition that a dancer can use: &ldquo;the uneducated is he who has not been
-          trained in the chorus, and the educated is he who has been well trained&rdquo;, and &ldquo;the chorus is made
-          up of two parts, dance and song&rdquo;.
-        </p>
-
-        <p className={p}>
-          Later in the same book the Athenian names what the two halves share.
-        </p>
-
-        <SourceQuote
-          book={SLUG.laws}
-          page={254}
-          printedPage={244}
-          src={IMG.laws254}
-          source={<>Plato, <em>Laws</em> II, tr. Jowett (1875)</>}
-          pageAlt="Page 244 of Jowett's Laws: the movement of body and voice share rhythm."
-        >
-          And the movement of the body and the movement of the voice have a common form which is rhythm, but they
-          differ, in that the one is gesture, and the other song. &hellip; man, as we were saying, having attained the
-          sense of rhythm, created and invented dancing; and melody arousing and awakening rhythm, both united formed
-          the choral art.
-        </SourceQuote>
-
-        <p className={p}>
-          For Plato a chorus also showed character. On the{' '}
-          <Link href={book(SLUG.laws, 234)}>next page of the dialogue</Link> he says that a brave person and a coward
-          in the same trouble will not use &ldquo;the same figures and gestures&rdquo;, and that the figures and
-          melodies of a good soul can be told from those of a bad one. That is why he treats training in the chorus as
-          the whole of early education, and why the <em>Laws</em> spends pages deciding which dances a city should
-          allow.
-        </p>
-
-        <h2 className={h2}>Three parts of a dance</h2>
-
-        <p className={p}>
-          The clearest technical account comes from Plutarch, more than four centuries after Plato. His{' '}
-          <em>Table Talk</em> records conversations at dinner parties, and in book IX, question 15, the guests are
-          judging a dance competition. Many of the dancers are dancing &ldquo;more eagerly than musically&rdquo;, and
-          someone asks what the dance teachers mean by the word <em>phora</em>. Ammonius answers by dividing a dance
-          into three parts.
-        </p>
-
-        <SourceQuote
-          book={SLUG.plutarch}
-          page={457}
-          printedPage={390}
-          src={IMG.plutarch457}
-          source={<>Plutarch, <em>Table Talk</em> IX.15, Teubner edition by Bernardakis</>}
-          original={<span lang="grc">Ὅτι τρία μέρη τῆς ὀρχήσεως, φορὰ καὶ σχῆμα καὶ δεῖξις</span>}
-          pageAlt="Page 390 of the Teubner Table Talk: the heading of Problem 15 on the three parts of dancing."
-        >
-          That there are three parts of dancing: movement, posture, and demonstration; what each of them is, and what
-          is common to poetry and the dance.
-        </SourceQuote>
-
-        <p className={p}>
-          A dance, he says on the <Link href={book(SLUG.plutarch, 458)}>next page</Link>, is made of movements and
-          positions, &ldquo;just as melody is composed of notes and
-          intervals; here, the pauses are the limits of the movements.&rdquo; The <em>phora</em> is the movement. The{' '}
-          <em>schēma</em> is the position the movement ends in, &ldquo;when, having posed the figure of Apollo or Pan or
-          some Bacchante upon the body, they remain graphically in those forms&rdquo;: the dancer arrives, holds a
-          recognisable shape for a moment, and the audience sees a god or a character. The third part, <em>deixis</em>,
-          does not imitate anything. It points: the dancer shows &ldquo;the earth, the heaven, the people themselves
-          standing nearby&rdquo;. The red chalk drawing at the top of this page shows a dancer in the kind of held
-          figure Plutarch describes, with two fauns of Pan&apos;s company.
-        </p>
-
-        <p className={p}>
-          Put in a rehearsal room&apos;s terms, <em>phora</em> is the transition, <em>schēma</em> is the shape you hit
-          on the count, and <em>deixis</em> is a gesture whose meaning is outside your body. Plutarch then compares the
-          whole to poetry.
-        </p>
-
-        <SourceQuote
-          book={SLUG.plutarch}
-          page={460}
-          printedPage={393}
-          src={IMG.plutarch460}
-          source={<>Plutarch, <em>Table Talk</em> IX.15</>}
-          pageAlt="Page 393 of the Teubner Table Talk: dance as silent poetry."
-        >
-          In short, he said he would transfer the dictum of Simonides from painting to dance: for dance is silent
-          poetry, and poetry is, in turn, speaking dance. &hellip; It would seem that, as in painting, the poems
-          resemble the colors, and the dances resemble the lines by which the forms are defined.
-        </SourceQuote>
-
-        <p className={p}>
-          The three parts had a long afterlife. When the physician Girolamo Mercuriale wrote his book on the ancient art
-          of physical exercise, <em>De arte gymnastica</em> (first published in 1569), he took
-          Plutarch&apos;s division over into Latin as <em>latio</em>, <em>figura</em> and <em>indicatio</em>, and
-          added Plutarch&apos;s complaint that dance had since been corrupted.
-        </p>
-
-        <SourceQuote
-          book={SLUG.mercuriale}
-          page={156}
-          printedPage={136}
-          src={IMG.mercuriale156}
-          source={<>Girolamo Mercuriale, <em>De arte gymnastica</em> (Amsterdam, 1672)</>}
-          original="lationem, figuram, & indicationem"
-          pageAlt="Page 136 of Mercuriale's De arte gymnastica, with lationem, figuram and indicationem in italics."
-        >
-          Plutarch, the most clear of all after Aristotle, expressed in book IX of his Symposiacs, where he wrote that
-          dance had three parts: lation, figure, and indication; because it consisted entirely of motions, postures,
-          and rest, just as harmony consists of tones and intervals.
-        </SourceQuote>
 
         <h2 className={h2}>The planets dance</h2>
 
         <p className={p}>
-          The cosmic side of <em>choreia</em> comes from Plato&apos;s <em>Timaeus</em>, a dialogue about how the world
-          was made. At 40c, after describing the stars as living, divine beings, Timaeus turns to how they move in
-          relation to one another, and the first word of the sentence is <em>choreias</em>, their dances.
+          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. Western Europe
+          read Plato through the Latin of Marsilio Ficino, who translated every dialogue in Florence for the Medici;
+          the library holds a manuscript of his translation from the Medici library, now the Laurenziana. At 40c,
+          after describing the stars as living, divine beings, Timaeus turns to how they move in relation to one
+          another. Plato&apos;s Greek word is <span lang="grc">χορείας</span>, and Ficino kept it: <em>choreas</em>,
+          dances.
         </p>
 
         <SourceQuote
-          book={SLUG.timaeus}
-          page={146}
-          printedPage={134}
-          src={IMG.timaeus146}
-          source={<>Plato, <em>Timaeus</em> 40c, ed. R. D. Archer-Hind (London, 1888)</>}
-          original={<span lang="grc">χορείας δὲ τούτων αὐτῶν καὶ παραβολὰς ἀλλήλων</span>}
-          pageAlt="Page 134 of Archer-Hind's Timaeus: the Greek of 40c, with his note on the word choreias below."
+          book={SLUG.ficino}
+          page={409}
+          src={FIC.timaeus409}
+          source={<>Plato, <em>Timaeus</em> 40c, in {FICINO_SOURCE}</>}
+          original="Horum uero deorum choreas et inter ipsos concursiones circulorumque ipsorum reuolutiones varias et accessus"
+          pageAlt="A leaf of Ficino's Latin Timaeus in a humanist hand; the line beginning Horum uero deorum choreas is near the middle."
         >
-          And the dances of these same stars, and their approaches one to another, and the returnings of their
-          circles upon themselves and their advances, and in their conjunctions which of the gods come to be
-          alongside of one another and which are opposite, and behind which each one is hidden from us at certain
-          times and again appearing &hellip;
+          But to explain the dances of these gods and their concurrences among themselves, and the various
+          revolutions of the circuits themselves, &hellip; joined to one another or opposed, whether before among
+          themselves or behind, &hellip; at what times and in what manner each one hides itself or emerges &hellip;
         </SourceQuote>
 
         <p className={p}>
           Read as a dancer, the list is a description of a round dance seen from inside it: dancers draw level with
           one another, pass in front and behind, disappear behind someone and come back into view, and each returns to
-          the place where it began. Archer-Hind, in his own English translation on the{' '}
-          <Link href={book(SLUG.timaeus, 147)}>facing page</Link>, renders the word as &ldquo;circlings&rdquo;. His note
-          under the Greek explains the choice.
+          the place where it began. R. D. Archer-Hind, editing the Greek in 1888, explained the word in a note.
         </p>
 
         <Quote href={book(SLUG.timaeus, 146)} cite="R. D. Archer-Hind, note on Timaeus 40c (1888), p. 134">
@@ -354,10 +175,25 @@ export default function ChoreiaPage() {
         </Quote>
 
         <p className={p}>
-          The passage he cites, from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, says the heavens
-          are &ldquo;dancing the most beautiful and magnificent movement and dance of all dances&rdquo;. For Plato the stars move in a
-          chorus, in formation, keeping time with each other, and the human chorus in the <em>Laws</em> is a small copy
-          of it.
+          The passage he cites is from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, and Ficino&apos;s
+          Latin again uses the word for a dance.
+        </p>
+
+        <SourceQuote
+          book={SLUG.ficino}
+          page={746}
+          src={FIC.epinomis746}
+          source={<>Plato, <em>Epinomis</em> 982e, in {FICINO_SOURCE}</>}
+          original="que progressu et chorea optima vtens omniumque chorearum magnificentissima"
+          pageAlt="A leaf of Ficino's Latin Epinomis; the words chorea and chorearum are near the foot of the text."
+        >
+          This nature of the stars is most beautiful to behold, which, using the best path and dance, and being the
+          most magnificent of all dances, provides advantages to all animals.
+        </SourceQuote>
+
+        <p className={p}>
+          For Plato the stars move in a chorus, in formation, keeping time with each other, and the human chorus,
+          which he describes in the <em>Laws</em> (below), is a small copy of it.
         </p>
 
         <h2 className={h2}>Dance began with the world</h2>
@@ -458,6 +294,163 @@ export default function ChoreiaPage() {
           creation of the world.
         </SourceQuote>
 
+        <h2 className={h2}>The dancing-floor</h2>
+
+        <p className={p}>
+          On earth, the oldest description of a chorus is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
+          Achilles and covers it with scenes of ordinary life. In the vineyard the harvesters dance as they carry the
+          grapes, and at the end of the series he makes a dancing-floor. The Greek line, in the{' '}
+          <Link href={book(SLUG.iliad, 542)}>Aldine edition printed in Venice in 1517</Link>, reads{' '}
+          <span lang="grc">ἐν δὲ χορὸν ποίκιλλε</span>, &ldquo;and on it he worked a <em>choros</em>&rdquo;. In the
+          lines that follow, the <em>choros</em> is both the floor and the young men and women who dance on it.
+        </p>
+
+        <Quote href={book(SLUG.iliad, 542)} cite="Homer, Iliad 18, Aldine edition (Venice, 1517), p. 211">
+          In their midst, a boy played a sweet song on a clear-toned lyre, and sang beautifully of Linus with a
+          delicate voice; they, beating the ground in time, followed with song and shouting, dancing with their feet.
+          &hellip; The famous Amphigyeis wrought a dancing-floor similar to the one that once in wide Knossos the
+          skillful Daedalus made for the fair-haired Ariadne.
+        </Quote>
+
+        <p className={p}>
+          The dancers in this scene follow a musician, keep time with their feet, and sing while they move. That
+          combination of music, voice and footwork is what the later writers mean by <em>choreia</em>. The
+          dancing-floor Daedalus built for Ariadne at Knossos was a famous object in its own right. Pausanias, who
+          travelled Greece in the second century AD, says the people of Knossos still had{' '}
+          <Link href={book(SLUG.pausanias, 806)}>&ldquo;the dancing-floor of Ariadne, which Homer mentioned in the
+          Iliad, made of white stone&rdquo;</Link>.
+        </p>
+
+        <h2 className={h2}>Dance and song as one art</h2>
+
+        <p className={p}>
+          Plato gives the fullest account of <em>choreia</em> as a practice, in the second book of the{' '}
+          <em>Laws</em>, his last dialogue. An Athenian stranger is talking with a Cretan and a Spartan about how to
+          educate citizens. He starts from something anyone can watch: young animals and children cannot keep still.
+          What distinguishes people, he says, is that they can feel order in their movement.
+        </p>
+
+        <SourceQuote
+          book={SLUG.ficino}
+          page={493}
+          src={FIC.laws493}
+          source={<>Plato, <em>Laws</em> II, 653e&ndash;654b, in {FICINO_SOURCE}</>}
+          original="Disciplinae igitur expers dicendus est: qui nunquam chorea usus est"
+          pageAlt="A leaf of Ficino's Latin Laws, with the speakers' names written in red."
+        >
+          &hellip; to those gods whom we said were given to us as fellow-celebrants, a share of rhythm and harmony has
+          been granted as a sense; and they move us with pleasure, leading our chorus while coupling us to one another
+          with songs and dances &hellip; which chorus they have named from chara, that is, joy. &hellip; Therefore, one who
+          has never engaged in the chorus must be called destitute of education, whereas one who has done so
+          sufficiently is, on the contrary, possessed of education.
+        </SourceQuote>
+
+        <p className={p}>
+          Plato connects <em>choros</em> with <em>chara</em>, joy. The derivation is wrong, as modern dictionaries
+          show, but it tells you how Plato thought of the thing. In the next line the Athenian defines the art: every{' '}
+          <em>chorea</em>, in Ficino&apos;s Latin, is <em>tripudium simul et concentus</em>, dance and song at once.
+        </p>
+
+        <p className={p}>
+          A few pages later he names what the two halves share.
+        </p>
+
+        <SourceQuote
+          book={SLUG.ficino}
+          page={500}
+          src={FIC.laws500}
+          source={<>Plato, <em>Laws</em> II, 664e&ndash;665a, in {FICINO_SOURCE}</>}
+          original="Vtrorumque uero simul chorea nominabatur"
+          pageAlt="A leaf of Ficino's Latin Laws; rhythmus, harmonia and chorea are in the lower half."
+        >
+          &hellip; no other animal except the nature of man alone has a sense of the order of both of these. The name
+          of the order which is seen in movement is rhythm; &hellip; But of both together, it was named chorea. We also
+          said that the gods, pitying us, gave us Apollo and the Muses as fellow-celebrants and leaders of the chorea.
+        </SourceQuote>
+
+        <p className={p}>
+          For Plato a chorus also showed character. Further down the{' '}
+          <Link href={book(SLUG.ficino, 493)}>same leaf of the <em>Laws</em></Link> he says that a brave person and
+          a coward in the same trouble will not move or sing alike, and that the figures and melodies of a good soul
+          can be told from those of a bad one. That is why he treats training in the chorus as the whole of early
+          education, and why the <em>Laws</em> spends pages deciding which dances a city should allow.
+        </p>
+
+        <h2 className={h2}>Three parts of a dance</h2>
+
+        <p className={p}>
+          The clearest technical account comes from Plutarch, more than four centuries after Plato. His{' '}
+          <em>Table Talk</em> records conversations at dinner parties, and in book IX, question 15, the guests are
+          judging a dance competition. Many of the dancers are dancing &ldquo;more eagerly than musically&rdquo;, and
+          someone asks what the dance teachers mean by the word <em>phora</em>. Ammonius answers by dividing a dance
+          into three parts.
+        </p>
+
+        <SourceQuote
+          book={SLUG.plutarch}
+          page={457}
+          printedPage={390}
+          src={IMG.plutarch457}
+          source={<>Plutarch, <em>Table Talk</em> IX.15, Teubner edition by Bernardakis</>}
+          original={<span lang="grc">Ὅτι τρία μέρη τῆς ὀρχήσεως, φορὰ καὶ σχῆμα καὶ δεῖξις</span>}
+          pageAlt="Page 390 of the Teubner Table Talk: the heading of Problem 15 on the three parts of dancing."
+        >
+          That there are three parts of dancing: movement, posture, and demonstration; what each of them is, and what
+          is common to poetry and the dance.
+        </SourceQuote>
+
+        <p className={p}>
+          A dance, he says on the <Link href={book(SLUG.plutarch, 458)}>next page</Link>, is made of movements and
+          positions, &ldquo;just as melody is composed of notes and
+          intervals; here, the pauses are the limits of the movements.&rdquo; The <em>phora</em> is the movement. The{' '}
+          <em>schēma</em> is the position the movement ends in, &ldquo;when, having posed the figure of Apollo or Pan or
+          some Bacchante upon the body, they remain graphically in those forms&rdquo;: the dancer arrives, holds a
+          recognisable shape for a moment, and the audience sees a god or a character. The third part, <em>deixis</em>,
+          does not imitate anything. It points: the dancer shows &ldquo;the earth, the heaven, the people themselves
+          standing nearby&rdquo;. The red chalk drawing at the top of this page shows a dancer in the kind of held
+          figure Plutarch describes, with two fauns of Pan&apos;s company.
+        </p>
+
+        <p className={p}>
+          Put in a rehearsal room&apos;s terms, <em>phora</em> is the transition, <em>schēma</em> is the shape you hit
+          on the count, and <em>deixis</em> is a gesture whose meaning is outside your body. Plutarch then compares the
+          whole to poetry.
+        </p>
+
+        <SourceQuote
+          book={SLUG.plutarch}
+          page={460}
+          printedPage={393}
+          src={IMG.plutarch460}
+          source={<>Plutarch, <em>Table Talk</em> IX.15</>}
+          pageAlt="Page 393 of the Teubner Table Talk: dance as silent poetry."
+        >
+          In short, he said he would transfer the dictum of Simonides from painting to dance: for dance is silent
+          poetry, and poetry is, in turn, speaking dance. &hellip; It would seem that, as in painting, the poems
+          resemble the colors, and the dances resemble the lines by which the forms are defined.
+        </SourceQuote>
+
+        <p className={p}>
+          The three parts had a long afterlife. When the physician Girolamo Mercuriale wrote his book on the ancient art
+          of physical exercise, <em>De arte gymnastica</em> (first published in 1569), he took
+          Plutarch&apos;s division over into Latin as <em>latio</em>, <em>figura</em> and <em>indicatio</em>, and
+          added Plutarch&apos;s complaint that dance had since been corrupted.
+        </p>
+
+        <SourceQuote
+          book={SLUG.mercuriale}
+          page={156}
+          printedPage={136}
+          src={IMG.mercuriale156}
+          source={<>Girolamo Mercuriale, <em>De arte gymnastica</em> (Amsterdam, 1672)</>}
+          original="lationem, figuram, & indicationem"
+          pageAlt="Page 136 of Mercuriale's De arte gymnastica, with lationem, figuram and indicationem in italics."
+        >
+          Plutarch, the most clear of all after Aristotle, expressed in book IX of his Symposiacs, where he wrote that
+          dance had three parts: lation, figure, and indication; because it consisted entirely of motions, postures,
+          and rest, just as harmony consists of tones and intervals.
+        </SourceQuote>
+
         <h2 className={h2}>Chorea as a disease</h2>
 
         <p className={p}>
@@ -489,13 +482,44 @@ export default function ChoreiaPage() {
           no order and no intention behind it.
         </p>
 
+        <h2 className={h2}>Six words</h2>
+
+        <p className={p}>
+          For reference, the words the sources use. Most are still heard in dance studios in some form.
+        </p>
+
+        <dl className="my-8 border-y border-stone-200">
+          <Term greek="χορός" latin="choros">
+            The group of dancers, and also the place where they dance. Homer uses the same word for both.
+          </Term>
+          <Term greek="χορεία" latin="choreia">
+            What the choros does: dancing and singing together. Latin writers spelled it <em>chorea</em>.
+          </Term>
+          <Term greek="ὄρχησις" latin="orchēsis">
+            Dancing as such, the body&apos;s part of the art. The <em>orchestra</em> of a Greek theatre was the
+            dancing-floor in front of the stage.
+          </Term>
+          <Term greek="φορά" latin="phora">
+            Movement: the travel of the body from one position to the next.
+          </Term>
+          <Term greek="σχῆμα" latin="schēma">
+            Figure: the position a movement arrives at and holds, a pose. The same word is used for the arrangement of
+            the planets at a given moment.
+          </Term>
+          <Term greek="δεῖξις" latin="deixis">
+            Pointing: a gesture that shows a thing directly, the sky, the ground, a person standing nearby.
+          </Term>
+        </dl>
+
         <p className="text-sm text-muted leading-relaxed">
-          Jowett&apos;s Plato, the Fowlers&apos; Lucian and Archer-Hind&apos;s notes are quoted in their printed
-          English. The other quotations are the library&apos;s translations, copied from the pages they link to. The
+          The Fowlers&apos; Lucian and Archer-Hind&apos;s note are quoted in their printed English. The other
+          quotations, Plato among them in Ficino&apos;s Latin, are the library&apos;s translations, copied from the
+          pages they link to. The
           Plotinus manuscript is hard to read and its transcription has gaps, so it is quoted briefly and the argument
-          is summarised from the standard text of <em>Enneads</em> IV.4.33. Aristotle&apos;s <em>Poetics</em> and{' '}
-          <em>On the Heavens</em> and the dates for Sydenham and Huntington
-          are cited from outside the library.
+          is summarised from the standard text of <em>Enneads</em> IV.4.33. The dates for Sydenham and Huntington
+          are cited from outside the library. The cosmic dance is sometimes credited to Aristotle, but the passages
+          are Plato&apos;s, Lucian&apos;s and Plotinus&apos;s; Aristotle, in <em>On the Heavens</em> II.9, rejected
+          the idea that the moving stars make music.
         </p>
       </article>
     </ContentPageLayout>

@@ -16,6 +16,16 @@ the models were missing. `learn_maya_items` (#6926) holds learner items, not ref
 | same, "potentially confusing signs" (printed p. 86) | confusable | 39, in `confusable_group`s | R2 `reference/maya/wayeb-handbook-2025/` |
 | same, Concise Dictionary of Maya Logograms (pp. 87-96) | logogram | 88, with transliteration, transcription, translation, alternative spellings | R2 (same prefix) |
 
+| Bonn TWKM *Digital Catalog of Maya Hieroglyphs* (Grube, Prager et al.), snapshot 2026-10-18 (#6980) | logogram 678, syllabogram 370, numeric 41, diacritic 3, undeciphered 514 | 1,606 graphs, 1,582 with a Prager drawing | R2 `reference/maya/twkm-signcatalog/` (public URL) |
+
+A TWKM doc is one *graph* (a sign variant, `graph_no` such as `796st`). It carries all its `readings` (value,
+TWKM type, `conf_level`: **1 is the most secure, higher is less secure**, criteria, bibliography); `kind` and
+`value` come from the most secure reading, and a phonogram is stored as `syllabogram`. It also carries `concordance`
+to all 11 catalogs (with `thompson` and `macri_vail` pulled out), `translation`, `nicknames`, `iconography` and
+`occurrence`. The full portal snapshot (decipherments, concordances, 7,826 bibliography rows, artefact zones,
+places…) is in `maya_twkm`, one doc per entity row (`_id` = `<entity>:<id>`), **Mongo only**: TWKM states no
+licence for the tabular data, so it never goes to the public bucket or this repo.
+
 Every doc carries `source_ref` (title, authors, edition, URL, PDF page and box), `rights`, and `checked`
 (every crop was viewed on a labelled contact sheet against its source page).
 
@@ -37,5 +47,23 @@ anything else stays inside the Mongo doc (`image.data`). Neither PDF is in this 
 4. `node --env-file=.env.production.local scripts/learn/maya-signs/load-maya-signs.mjs <out> [--apply]`
    (dry run without `--apply`; idempotent).
 
+5. TWKM: fetch `https://classicmayan.org/portal/sc/client/data/data.en.json`, then each graph's drawing
+   `https://classicmayan.org/portal/sc/client/data/images/graphs/<imgUrl>.jpg` (`imgUrl` from `graphs[]`,
+   0.2 s apart) into one dir; `twkm/build.py <data.en.json> <graphs-dir> <out>`; then the loader above, plus
+   `twkm/load-twkm-raw.mjs <out> [--apply]` for `maya_twkm`. Rights: Prager's drawings are CC BY 4.0
+   (legal notice https://classicmayan.org/portal/doc/246); credit on every use.
+
 Known gaps: empty cells of the Wayeb chart are not recorded; the parse keeps the handbook's text
 verbatim, including two rows where two senses share one image (K'AN).
+
+## ULB Bonn Maya archive (`maya_archive`, #6985)
+
+Objects and their photographs/drawings from the *Maya Hieroglyphic Text and Image Archive*
+(Universitäts- und Landesbibliothek Bonn, https://digitale-sammlungen.ulb.uni-bonn.de/maya), one doc per
+ULB record: `kind` artifact (site, current location, Long Count / Calendar Round / Gregorian date,
+material, extent, `images`) or photograph/drawing (`creator`, `date`, `licence`, `rights`, `image` on R2
+under `reference/maya/ulb-archive/`). Records are CC BY 4.0, some drawings PDM 1.0; an image goes to the
+public bucket only when its licence is one of those.
+`ulb/build.py <out> <artifact-oai-number>…` then `ulb/load-maya-archive.mjs <out> [--apply]`. Loaded so far:
+Yaxchilan, Lintel 21 (9605478), for the `/inscriptions/yaxchilan-lintel-21` prototype. The whole set's oai_dc
+records (27,319) were harvested on l7a to `/data/scratch/sl/ulb-maya-6980/` and are not loaded.

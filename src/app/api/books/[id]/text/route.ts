@@ -10,6 +10,7 @@ import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
+import { poolRefFor } from '@/lib/suspected-pool';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 
@@ -145,9 +146,17 @@ export const GET = withApiAuth(async (
     //     colophon — identity upgrades the marking, it never adds visible
     //     marks. Any response carrying a ref is served private/no-store
     //     below, so one caller's ref can never be shared-cached to another.
+    //   - a flagged residential proxy pool (classified human, rotating its
+    //     address per request) gets a per-pool ref keyed on its user-agent
+    //     string (#6950). Invisible only: the string is byte-identical to a
+    //     real browser, so a real reader sharing it must not see a notice.
+    const pool = !isBotRequest && !(identity.kind === 'apikey' && identity.apiKeyId)
+      ? await poolRefFor(request) : undefined;
     const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date())
       : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
-      : undefined;
+      : pool;
+    // Visible notice: unchanged for bots and key holders; never for a pool.
+    const noticeRef = pool ? undefined : ref;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
@@ -248,7 +257,7 @@ export const GET = withApiAuth(async (
           `# Pages ${ct.pageStart}–${ct.pageEnd}`,
           `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
           '',
-          ...(ref ? [attributionBlock(ref, bookSubject)] : []),
+          ...(noticeRef ? [attributionBlock(noticeRef, bookSubject)] : []),
           mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
         ].join('\n');
 
@@ -281,7 +290,7 @@ export const GET = withApiAuth(async (
           text: mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
           ...(content === 'both' && ct.ocr_text ? { ocr_text: mark(cleanText(ct.ocr_text)) } : {}),
         },
-        ...(ref ? { attribution: attributionMeta(ref) } : {}),
+        ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       }, {
         headers: {
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
@@ -366,7 +375,7 @@ export const GET = withApiAuth(async (
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.
-      if (ref) lines.push(attributionBlock(ref, bookSubject));
+      if (noticeRef) lines.push(attributionBlock(noticeRef, bookSubject));
 
       for (const page of pages) {
         const ocr = mark(cleanText(page.ocr?.data));
@@ -439,7 +448,7 @@ export const GET = withApiAuth(async (
       // this payload is unmodified apart from the invisible imprimatur — the
       // notice is a sibling field rather than injected prose precisely so a
       // consumer quoting `pages[].ocr` never picks up words we wrote.
-      ...(ref ? { attribution: attributionMeta(ref) } : {}),
+      ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       content_type: content,
       // What was asked for, and what the pages actually carry. A caller that
       // requested `es` and got 40 English pages back must be able to see it

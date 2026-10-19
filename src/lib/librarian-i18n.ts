@@ -57,6 +57,10 @@ export interface LibrarianStrings {
   /** '4 messages' in the thread list */
   messages: string;
   librarianIsReading: string;
+  /** Shown the moment Ask is pressed, before the first event (#6904) */
+  lookingThroughLibrary: string;
+  /** Shown once every search has returned and the answer is being written */
+  readingWhatItFound: string;
   /** Research notebook */
   notebook: string;
   exportNotebook: string;
@@ -109,6 +113,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     justNow: 'just now',
     messages: 'messages',
     librarianIsReading: 'The Librarian is reading',
+    lookingThroughLibrary: 'Looking through the library…',
+    readingWhatItFound: 'Reading what it found…',
     notebook: 'Research notebook',
     exportNotebook: 'Export',
     tools: {
@@ -223,6 +229,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     justNow: 'ahora mismo',
     messages: 'mensajes',
     librarianIsReading: 'El Bibliotecario está leyendo',
+    lookingThroughLibrary: 'Buscando en la biblioteca…',
+    readingWhatItFound: 'Leyendo lo que ha encontrado…',
     notebook: 'Cuaderno de investigación',
     exportNotebook: 'Exportar',
     tools: {
