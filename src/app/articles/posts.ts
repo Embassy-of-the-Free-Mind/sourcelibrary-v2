@@ -247,7 +247,7 @@ export const posts: BlogPost[] = [
     subtitle:
       'Bars, dots and a shell for zero; a count by twenties with one place of eighteen; and calendar cycles that meet after whole numbers of days. Try the numerals and the counts, with the codex pages and the colonial sources beside them.',
     summary:
-      'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex, Landa and Bowditch, with the Venus table and the 819-day count.',
+      'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex and Bowditch, with the Venus table, the eclipse table and the 819-day count.',
     date: '18 October 2026',
     readTime: '15 min read',
     kind: 'interactive',
