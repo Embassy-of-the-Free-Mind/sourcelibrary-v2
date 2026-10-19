@@ -11,6 +11,9 @@ import { getReadDb } from '@/lib/mongodb';
 
 export interface InscriptionConfig {
   slug: string;
+  /** Name and one-line description for the /inscriptions list. */
+  title: string;
+  subtitle: string;
   /** ULB archive record number of the artifact (its photographs hang off it). */
   ulb: string;
   /** TWKM artefact id, the `id` in `graphs[].artefacts`. */
@@ -21,7 +24,11 @@ export interface InscriptionConfig {
 }
 
 export const INSCRIPTIONS: Record<string, InscriptionConfig> = {
-  'yaxchilan-lintel-21': { slug: 'yaxchilan-lintel-21', ulb: '9605478', twkm: 48, panels: [['A', 'B'], ['C', 'D']], rows: 8 },
+  'yaxchilan-lintel-21': {
+    slug: 'yaxchilan-lintel-21',
+    title: 'Yaxchilan, Lintel 21',
+    subtitle: 'A carved limestone lintel from the Maya city of Yaxchilan, dated 10 May 752',
+    ulb: '9605478', twkm: 48, panels: [['A', 'B'], ['C', 'D']], rows: 8 },
 };
 
 export interface ArchiveImage {

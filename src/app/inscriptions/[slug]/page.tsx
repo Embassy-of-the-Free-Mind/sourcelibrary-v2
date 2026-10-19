@@ -19,9 +19,8 @@ export function generateStaticParams() {
 }
 
 /** What each monument says, in a few plain sentences. Everything here is checked against the record below. */
-const INTRO: Record<string, { subtitle: string; lead: ReactNode; named?: { block: string; text: ReactNode } }> = {
+const INTRO: Record<string, { lead: ReactNode; named?: { block: string; text: ReactNode } }> = {
   'yaxchilan-lintel-21': {
-    subtitle: 'A carved limestone lintel from the Maya city of Yaxchilan, dated 10 May 752',
     lead: (
       <>
         A lintel is the beam over a doorway. This one, from Yaxchilan on the Usumacinta river, on today&apos;s border
@@ -67,8 +66,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const images = photo ? [{ url: photo.url, alt: `${ins.title}, photographed by ${photo.creator}` }] : [];
   return {
     title: `${ins.title} - Maya inscriptions - Source Library`,
-    description: intro?.subtitle,
-    openGraph: { title: ins.title, description: intro?.subtitle, images },
+    description: ins.config.subtitle,
+    openGraph: { title: ins.title, description: ins.config.subtitle, images },
     twitter: { card: 'summary_large_image', images },
     alternates: { canonical: `/inscriptions/${slug}`, types: FEED_TYPES },
   };
@@ -106,7 +105,7 @@ export default async function InscriptionPage({ params }: { params: Promise<{ sl
     l ? (l.url ? <a href={l.url} className="underline">{l.label}</a> : l.label) : null;
 
   return (
-    <ContentPageLayout header={<ContentHeader title={ins.title} subtitle={intro?.subtitle} />} maxWidth="standard">
+    <ContentPageLayout header={<ContentHeader title={ins.title} subtitle={ins.config.subtitle} />} maxWidth="standard">
       <article className="max-w-[var(--container-narrow)] mx-auto">
         {photo && (
           <PageFigure
