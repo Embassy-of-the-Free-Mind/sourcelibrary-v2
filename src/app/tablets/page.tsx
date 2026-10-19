@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
-// TODO: Restore cuneiform-corpus.json import when data file is available
-// import corpus from '../../../scripts/output/cuneiform-corpus.json';
-const corpus: any[] = [];
+import corpus from '../../../scripts/output/cuneiform-corpus.json';
 import {
   tokenizeAtfLine,
   type AtfToken,
