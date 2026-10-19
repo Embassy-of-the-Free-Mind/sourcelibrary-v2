@@ -110,6 +110,11 @@ interface Candidate {
 
 const key = (b: string, p: number) => `${b}:${p}`;
 
+/** A page's own words, cleaned of AI notes and markup. Exported for the Librarian's whole-page view (#6946). */
+export function cleanPassageText(s: string): string {
+  return clean(s);
+}
+
 function clean(s: string): string {
   return stripAiAnnotations(stripEditorialWrappers(stripProvenanceMarks(s)))
     .replace(/<[^>]{1,80}>/g, ' ')
