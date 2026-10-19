@@ -87,17 +87,21 @@ async function searchCdliWitnesses(etcslId) {
 }
 
 /**
- * Check if a CDLI photo exists via HEAD request.
- * Returns true if HTTP 200.
+ * Find a CDLI photo via HEAD requests. Returns the file stem ('P357200' or
+ * 'P427592_d'), or null. Some tablets have only a detail shot, filed with a
+ * `_d` suffix — the artifact page shows it, but `dl/photo/P….jpg` 404s
+ * (e.g. NMI BK 01864, P427592).
  */
-async function checkPhotoExists(pNumber) {
-  const url = `${CDLI_PHOTO_URL}/${pNumber}.jpg`;
-  try {
-    const resp = await fetch(url, { method: 'HEAD' });
-    return resp.status === 200;
-  } catch {
-    return false;
+async function findPhotoStem(pNumber) {
+  for (const stem of [pNumber, `${pNumber}_d`]) {
+    try {
+      const resp = await fetch(`${CDLI_PHOTO_URL}/${stem}.jpg`, { method: 'HEAD' });
+      if (resp.status === 200) return stem;
+    } catch {
+      // try the next variant
+    }
   }
+  return null;
 }
 
 /**
@@ -108,8 +112,7 @@ async function checkPhotoBatch(pNumbers) {
   for (let i = 0; i < pNumbers.length; i += PHOTO_CHECK_CONCURRENCY) {
     const batch = pNumbers.slice(i, i + PHOTO_CHECK_CONCURRENCY);
     const checks = batch.map(async p => {
-      const exists = await checkPhotoExists(p);
-      results.set(p, exists);
+      results.set(p, await findPhotoStem(p));
     });
     await Promise.all(checks);
     if (i + PHOTO_CHECK_CONCURRENCY < pNumbers.length) {
@@ -122,7 +125,7 @@ async function checkPhotoBatch(pNumbers) {
 /**
  * Convert a CDLI artifact JSON to a CdliWitness object.
  */
-function artifactToWitness(artifact, hasPhoto, qNumber) {
+function artifactToWitness(artifact, photoStem, qNumber) {
   const pNumber = `P${String(artifact.id).padStart(6, '0')}`;
   const numericId = artifact.id;
 
@@ -133,9 +136,9 @@ function artifactToWitness(artifact, hasPhoto, qNumber) {
     museum: artifact.collections?.[0]?.collection?.collection || undefined,
     period: artifact.period?.name || artifact.period?.period || undefined,
     provenience: artifact.provenience?.provenience || undefined,
-    photo_url: hasPhoto ? `${CDLI_PHOTO_URL}/${pNumber}.jpg` : undefined,
-    thumbnail_url: hasPhoto ? `${CDLI_THUMBNAIL_URL}/${pNumber}.jpg` : undefined,
-    has_photo: hasPhoto,
+    photo_url: photoStem ? `${CDLI_PHOTO_URL}/${photoStem}.jpg` : undefined,
+    thumbnail_url: photoStem ? `${CDLI_THUMBNAIL_URL}/${photoStem}.jpg` : undefined,
+    has_photo: Boolean(photoStem),
     cdli_url: `${CDLI_ARTIFACT_URL}/${numericId}`,
   };
 }
@@ -201,7 +204,7 @@ async function main() {
     // Build witness array
     const witnesses = artifacts.map(a => {
       const pNum = `P${String(a.id).padStart(6, '0')}`;
-      return artifactToWitness(a, photoResults.get(pNum) || false, qNumber);
+      return artifactToWitness(a, photoResults.get(pNum) || null, qNumber);
     });
 
     const withPhotos = witnesses.filter(w => w.has_photo);
