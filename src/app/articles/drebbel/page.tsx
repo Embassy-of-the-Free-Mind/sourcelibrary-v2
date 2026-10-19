@@ -218,7 +218,7 @@ export default function DrebbelPage() {
             liquid that went up and down with the tide. The Jesuit Gaspar Schott wrote in 1657 that Drebbel
             &ldquo;is said to have enclosed two opposing and highly antipathetic liquids in a glass ring, which
             fought against each other in a perpetual struggle&rdquo; (
-            <Link href="/book/mechanica-hydraulico-pneumatica-schott?page=475">Schott, <em>Mechanica hydraulico-pneumatica</em>, p. 377</Link>). The
+            <Link href="/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott?page=474">Schott, <em>Mechanica hydraulico-pneumatica</em>, p. 377</Link>). The
             likeliest explanation today is that the liquid rose and fell with changes in air temperature and
             pressure: a thermometer and barometer made into a clock.
           </p>

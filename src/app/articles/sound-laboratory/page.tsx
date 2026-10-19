@@ -210,7 +210,7 @@ export default function SoundLaboratoryPage() {
           For Athanasius Kircher, the deepest evidence that harmony was woven into nature was
           sympathy: pluck a string, and an untouched string tuned in unison answers across the
           room, while its mistuned neighbours keep silent. His{' '}
-          <Link href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>{' '}
+          <Link href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>{' '}
           (1650) treats the effect as natural magic: consonance acting at a distance. The modern
           name for his magic is resonance, and the demonstration works exactly as he describes: the
           answer comes only when the tuning matches.
