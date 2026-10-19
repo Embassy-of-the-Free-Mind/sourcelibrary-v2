@@ -378,6 +378,8 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
       // Relevance and which leg found it. A page found by BOTH keyword and
       // meaning is the strongest signal the tool can give.
       ...(r.score !== undefined ? { score: r.score } : {}),
+      ...(r.similarity !== undefined ? { similarity: r.similarity } : {}),
+      ...(r.phrase_match !== undefined ? { phrase_match: r.phrase_match } : {}),
       ...(r.found_by ? { found_by: r.found_by } : {}),
       // Not body text: introduction, preface, contents, index, blank leaves,
       // binding photography. Surfaced, not
@@ -394,6 +396,12 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
   // through so the caveat reaches the agent that has to decide whether a blank
   // means "not here" — which, on an unembedded book, it does not.
   const coverage = result.semantic_coverage as { status?: string; caveat?: string } | undefined;
+  // "Nothing here" is the answer a quote-checker most needs and the one a
+  // within-book normalised score could never give (#3699). Say it outright when
+  // no page prints the words and nothing is near in meaning either.
+  const topScore = Math.max(0, ...(results ?? []).map((r) => Number(r.score) || 0));
+  const lexicalHit = (results ?? []).some((r) => r.found_by !== 'semantic');
+  const absent = !lexicalHit && topScore < 0.55;
   return {
     book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
     // Which edition of the book's text was searched, and which the snippets are
@@ -402,7 +410,7 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -1480,7 +1488,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_within_book',
     title: 'Search Within Book',
-    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Each result carries score (0-1, normalised within this book) and found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
+    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Results are ordered by relevance within this book. Each carries score (0-1, ABSOLUTE, not relative to the other results, so a query the book cannot answer scores low everywhere): the higher of similarity (raw cosine from the meaning pass, calibrated like search_concept: 0.70+ strong, 0.55–0.70 verify, below 0.55 drift) and phrase_match (how much of a multi-word query the page prints in order at one place; 1 is all of it; a one-word query the page prints scores 1). Each also carries found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
