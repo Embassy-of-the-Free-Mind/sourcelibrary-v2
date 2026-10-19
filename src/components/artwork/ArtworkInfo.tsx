@@ -457,6 +457,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {!isEmbedded && (book as any).author_cross_ref && (
           <AuthorCrossReference
             author={book.author}
+            authorId={book.author_id}
             crossRef={(book as any).author_cross_ref}
             context="artwork"
           />
