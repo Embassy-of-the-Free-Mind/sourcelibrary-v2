@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { NON_CONTENT_PAGE_TYPES, PHRASE_FIRST_BOOST } from '@/lib/atlas-search';
 // @ts-expect-error — plain .mjs, installed apart from the app (scripts/workers/keyword-search/README.md)
 import { pageRow } from '../../scripts/workers/keyword-search/lib.mjs';
 import {
@@ -221,6 +221,12 @@ describe('the service side stays in step with the Atlas lane', () => {
     expect(m).not.toBeNull();
     const list = [...m![1].matchAll(/"([^"]+)"/g)].map(x => x[1]);
     expect(list.sort()).toEqual([...NON_CONTENT_PAGE_TYPES].sort());
+  });
+  it("server.py's phrase-first boost is the Atlas lane's (#6877)", () => {
+    const py = readFileSync('scripts/workers/keyword-search/server.py', 'utf8');
+    const m = py.match(/^PHRASE_FIRST_BOOST = ([\d.]+)$/m);
+    expect(m).not.toBeNull();
+    expect(Number(m![1])).toBe(PHRASE_FIRST_BOOST);
   });
   it('pageRow skips pages the lane cannot match (page_number ≤ 0, no text)', () => {
     expect(pageRow({ id: 'p', book_id: 'b', page_number: 0, ocr: { data: 'x' } })).toBeNull();
