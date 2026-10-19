@@ -138,8 +138,9 @@ an ancestor of `main`, someone committed to `release` directly, and it fails and
   week to 2026-10-19, 131 merges touched build inputs (~19 builds a day), so a cached page lived about
   an hour, ISR writes outran reads, and the refill renders were most of the $717 cycle (#4753).
 - **Seeing a change before the release:** label the PR `preview` (`preview-label.yml` pushes its head to
-  `preview/pr-<n>` and keeps it current) or run `npm run preview` from a branch. An explicitly requested
-  preview always builds; the diff check applies to production only.
+  `preview/pr-<n>` and keeps it current) or run `npm run preview` from a branch. Every push to `release`
+  or `preview/**` builds: release.yml makes the diff decision (pushing only when build inputs changed,
+  or with `force`), because the ignore step has no previous deployment to diff against on a new branch.
 - **Alarm:** `vercel-prod-watch.mjs` fires `behind_main` past 13 h (the longest planned wait is
   19:00 → 07:00), which also catches a scheduled run GitHub dropped (#5276).
 - **`npm run deploy:prod` is for emergencies.** It deploys main's disk directly and leaves `release`
