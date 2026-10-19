@@ -11,6 +11,7 @@
 //   node --env-file=.env.production.local scripts/learn/maya-worksheets/build.mjs
 import { writeFileSync } from 'node:fs';
 import { MongoClient } from 'mongodb';
+import { makeRng } from '../../eval/lib/paired-stats.mjs';
 
 const OUT = new URL('../../../src/app/learn/maya/worksheets/sheets.json', import.meta.url);
 
@@ -63,8 +64,9 @@ const need = (v) => { const s = syl[v]; if (!s) throw new Error(`no Stuart sign 
 
 // Deterministic shuffle, so a rebuild prints the same sheets.
 function shuffle(arr, seed) {
-  const a = [...arr]; let x = [...seed].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
-  for (let i = a.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) >>> 0; const j = (x >>> 16) % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  const a = [...arr];
+  const rand = makeRng([...seed].reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0, 7));
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
 const block = (c) => {
