@@ -4,7 +4,7 @@
 # directory under $JOB_SCRATCH. #6948.
 #   bash scripts/eval/tib-translator-6948/run-agy.sh G4L gemini-4-argon-low
 cd "$(dirname "$0")/../../.."
-ARM=$1; MODEL=$2; JOB=tib-translator-6948; CAP=500
+ARM=$1; MODEL=$2; JOB=${JOB:-tib-translator-6948}; CAP=500  # JOB=tib-stored-6948 for the stored-English run
 S=$JOB_SCRATCH/$ARM; mkdir -p $S; cp -n $JOB_SCRATCH/req.jsonl $S/req.jsonl
 export TMPDIR=$JOB_SCRATCH/tmp; mkdir -p $TMPDIR
 calls_today() { python3 -c "
