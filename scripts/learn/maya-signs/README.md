@@ -55,3 +55,15 @@ anything else stays inside the Mongo doc (`image.data`). Neither PDF is in this 
 
 Known gaps: empty cells of the Wayeb chart are not recorded; the parse keeps the handbook's text
 verbatim, including two rows where two senses share one image (K'AN).
+
+## ULB Bonn Maya archive (`maya_archive`, #6985)
+
+Objects and their photographs/drawings from the *Maya Hieroglyphic Text and Image Archive*
+(Universitäts- und Landesbibliothek Bonn, https://digitale-sammlungen.ulb.uni-bonn.de/maya), one doc per
+ULB record: `kind` artifact (site, current location, Long Count / Calendar Round / Gregorian date,
+material, extent, `images`) or photograph/drawing (`creator`, `date`, `licence`, `rights`, `image` on R2
+under `reference/maya/ulb-archive/`). Records are CC BY 4.0, some drawings PDM 1.0; an image goes to the
+public bucket only when its licence is one of those.
+`ulb/build.py <out> <artifact-oai-number>…` then `ulb/load-maya-archive.mjs <out> [--apply]`. Loaded so far:
+Yaxchilan, Lintel 21 (9605478), for the `/inscriptions/yaxchilan-lintel-21` prototype. The whole set's oai_dc
+records (27,319) were harvested on l7a to `/data/scratch/sl/ulb-maya-6980/` and are not loaded.
