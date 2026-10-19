@@ -97,3 +97,14 @@ No Tesseract. Nothing is written to `pages` or `books`.
 - `reads/<arm>.jsonl.gz`: one row per page per arm (text, outcome, model, seconds). Images stay on the box under
   `$JOB_SCRATCH`. These are served books, whose OCR is already public; none is in the #3499 reserve.
 - `score.mjs` → `results.json`, `adjudication-<stratum>.jsonl`
+
+## Amendment 2 (2026-10-10): model adjudication (#6388 comment "Amendment 2")
+- `network.mjs`: re-exports the alignment, normaliser and outcome code from `panel-key.mjs` (#6434), so
+  `adjudicate.mjs` shares the panel's scorer. `score.mjs` is untouched.
+- Re-scored 2026-10-14 under `normalizeForScript` v4 (`results.json` `normaliser_version`), local compute only.
+  The replies were collected on v2 spans: they are re-attached to current spans by candidate readings, and spans
+  with no adjudicated twin (71 Latin, 66 English, all digit-bearing) accept every candidate. `--v3-digits`
+  reproduces the 2026-10-10 verdicts (0 of 84 change). Only Latin S vs L1 moves (cannot be told apart → switch).
+- `adjudicate.mjs` → `adjudication/pages.json` (spans, planted controls, option order), `adjudication/raw/*.jsonl.gz`
+  (every adjudicator reply), `adjudication/results.json` and `results.md` (Q1–Q3 on the **model-adjudicated key (no
+  human)**). Write-up: `../experiments/2026-10-10-ocr-prereg-adjudicated-6388.md`.
