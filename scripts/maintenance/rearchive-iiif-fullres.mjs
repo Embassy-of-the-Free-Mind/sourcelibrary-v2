@@ -123,6 +123,7 @@ import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSi
 import { checkAlignment as checkAlignmentShared, hashBuffer } from '../lib/page-alignment.mjs';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
+import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -857,6 +858,9 @@ async function recoverOne(book) {
   } finally {
     await session.endSession();
   }
+  // The deleted child pages must stop being served by semantic search: the new parents have
+  // new ids, so nothing will overwrite the children's rows (#6270).
+  await withdrawPageVectors(pages.map(p => p.id), { reason: 'removed', writer: 'rearchive-iiif-fullres' });
 
   return { refetched, fetchFailed, replaced_child_pages: pages.length, new_parent_pages: newPages.length };
 }
