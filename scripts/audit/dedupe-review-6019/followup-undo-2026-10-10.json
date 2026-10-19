@@ -1,0 +1,373 @@
+{
+ "sweep": "dedupe-followup-6019",
+ "applied_at": {
+  "$date": "2026-10-10T16:56:21.086Z"
+ },
+ "books": [
+  {
+   "id": "69b51e6947b06ecd5818faf1",
+   "before": {
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-10-03T20:13:44.533Z"
+    },
+    "publication": {
+     "state": "hidden",
+     "reason": "duplicate",
+     "note": "collection-copy-collapse-2026-10-03",
+     "since": {
+      "$date": "2026-10-03T20:13:44.533Z"
+     },
+     "by": "collection-copies-5689",
+     "version": 1,
+     "issue": 5689
+    },
+    "collections": [
+     "alchemy",
+     "shwep",
+     "natural-philosophy",
+     "mysticism",
+     "renaissance-philosophy"
+    ],
+    "categories": [
+     "rosicrucianism",
+     "alchemy",
+     "hermeticism",
+     "natural-magic",
+     "theology"
+    ],
+    "updated_at": {
+     "$date": "2026-10-06T21:48:17.066Z"
+    }
+   }
+  },
+  {
+   "id": "68fb0dc412055a03a58d3281",
+   "before": {
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-08-30T13:23:35.706Z"
+    },
+    "collections": [
+     "hermetica",
+     "shwep",
+     "renaissance-philosophy",
+     "classical-philosophy",
+     "mysticism",
+     "magic",
+     "newtons-other-science",
+     "neoplatonism",
+     "corpus-hermeticum",
+     "florentine-neoplatonism",
+     "jungs-library",
+     "school-of-athens"
+    ],
+    "categories": [
+     "hermeticism",
+     "neoplatonism",
+     "theurgy",
+     "florentine-platonism"
+    ],
+    "updated_at": {
+     "$date": "2026-10-06T21:48:17.066Z"
+    }
+   }
+  },
+  {
+   "id": "697a5562c915282d8f071f74",
+   "before": {
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-08-30T13:23:35.827Z"
+    },
+    "collections": [
+     "kabbalah",
+     "theology",
+     "sacred-texts",
+     "esoteric-capitalism",
+     "christianity",
+     "biblical-exegesis"
+    ],
+    "categories": [
+     "theology",
+     "biblical-exegesis",
+     "hermeneutics",
+     "biblical-studies",
+     "christian-cabala"
+    ],
+    "updated_at": {
+     "$date": "2026-10-06T21:48:17.066Z"
+    }
+   }
+  },
+  {
+   "id": "6984e8498a2f054f912420d1",
+   "before": {
+    "duplicate_of": "69c4ec33a3a4a7c546ee610b",
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-10-03T20:13:43.393Z"
+    },
+    "publication": {
+     "state": "hidden",
+     "reason": "duplicate",
+     "note": "collection-copy-collapse-2026-10-03",
+     "since": {
+      "$date": "2026-10-03T20:13:43.393Z"
+     },
+     "by": "collection-copies-5689",
+     "version": 1,
+     "issue": 5689,
+     "duplicate_of": "69c4ec33a3a4a7c546ee610b"
+    },
+    "collections": [
+     "natural-philosophy",
+     "medicine"
+    ],
+    "categories": [
+     "alchemy",
+     "natural-philosophy",
+     "medicine"
+    ],
+    "updated_at": {
+     "$date": "2026-10-03T20:13:43.393Z"
+    }
+   }
+  },
+  {
+   "id": "69c4ec33a3a4a7c546ee610b",
+   "before": {
+    "visible": true,
+    "hidden": false,
+    "collections": [
+     "alchemy",
+     "hermetica"
+    ],
+    "categories": [
+     "alchemy",
+     "medicine",
+     "chemistry",
+     "natural-philosophy"
+    ],
+    "updated_at": {
+     "$date": "2026-08-31T13:13:54.510Z"
+    }
+   }
+  },
+  {
+   "id": "69b6a4f5080b19f98fd2144e",
+   "before": {
+    "duplicate_of": "69a5f6cd1cf742c3604142ea",
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-10-03T20:13:53.766Z"
+    },
+    "publication": {
+     "state": "hidden",
+     "reason": "duplicate",
+     "note": "collection-copy-collapse-2026-10-03",
+     "since": {
+      "$date": "2026-10-03T20:13:53.766Z"
+     },
+     "by": "collection-copies-5689",
+     "version": 1,
+     "issue": 5689,
+     "duplicate_of": "69a5f6cd1cf742c3604142ea"
+    },
+    "collections": [],
+    "categories": [],
+    "updated_at": {
+     "$date": "2026-10-03T20:13:53.766Z"
+    }
+   }
+  },
+  {
+   "id": "69a5f6cd1cf742c3604142ea",
+   "before": {
+    "visible": true,
+    "hidden": false,
+    "collections": [
+     "theatres-of-machines",
+     "prehistory-of-ai",
+     "drebbel"
+    ],
+    "categories": [
+     "early-science",
+     "natural-philosophy",
+     "mathematics"
+    ],
+    "updated_at": {
+     "$date": "2026-10-04T16:43:27.878Z"
+    }
+   }
+  },
+  {
+   "id": "6952949cb184004c526a1ea2",
+   "before": {
+    "duplicate_of": "69b2ff985545150b61b4870e",
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-10-03T20:13:31.825Z"
+    },
+    "publication": {
+     "state": "hidden",
+     "reason": "duplicate",
+     "note": "collection-copy-collapse-2026-10-03",
+     "since": {
+      "$date": "2026-10-03T20:13:31.825Z"
+     },
+     "by": "collection-copies-5689",
+     "version": 1,
+     "issue": 5689,
+     "duplicate_of": "69b2ff985545150b61b4870e"
+    },
+    "collections": [
+     "herbalism",
+     "shwep",
+     "natural-history"
+    ],
+    "categories": [
+     "botany",
+     "natural-philosophy",
+     "scientific-observation",
+     "encyclopedic"
+    ],
+    "updated_at": {
+     "$date": "2026-10-03T20:13:31.825Z"
+    }
+   }
+  },
+  {
+   "id": "69b2ff985545150b61b4870e",
+   "before": {
+    "visible": true,
+    "collections": [
+     "natural-philosophy",
+     "renaissance-philosophy",
+     "shwep",
+     "medicine",
+     "renaissance-natural-philosophy"
+    ],
+    "categories": [
+     "natural-philosophy",
+     "botany",
+     "medicine",
+     "philosophy"
+    ],
+    "updated_at": {
+     "$date": "2026-10-08T14:54:51.934Z"
+    }
+   }
+  },
+  {
+   "id": "69529544b184004c526a2c3c",
+   "before": {
+    "duplicate_of": "69b2ff985545150b61b4870e",
+    "visible": false,
+    "hidden": true,
+    "hidden_reason": "duplicate",
+    "hidden_at": {
+     "$date": "2026-10-03T20:13:31.825Z"
+    },
+    "publication": {
+     "state": "hidden",
+     "reason": "duplicate",
+     "note": "collection-copy-collapse-2026-10-03",
+     "since": {
+      "$date": "2026-10-03T20:13:31.825Z"
+     },
+     "by": "collection-copies-5689",
+     "version": 1,
+     "issue": 5689,
+     "duplicate_of": "69b2ff985545150b61b4870e"
+    },
+    "collections": [
+     "magic",
+     "natural-magic-sympathies"
+    ],
+    "categories": [
+     "botany",
+     "natural-philosophy",
+     "scientific-observation",
+     "encyclopedic"
+    ],
+    "updated_at": {
+     "$date": "2026-10-03T20:13:31.825Z"
+    }
+   }
+  },
+  {
+   "id": "69907bd95f855ec553e7160b",
+   "before": {
+    "duplicate_of": "6953b56577f38f6761bd979d",
+    "visible": true,
+    "hidden": false,
+    "hidden_at": {
+     "$date": "2026-03-14T10:09:45.560Z"
+    },
+    "collections": [
+     "astrology",
+     "magic",
+     "shwep",
+     "natural-philosophy",
+     "islamic-philosophy",
+     "islamic-occult-sciences",
+     "middle-east-africa",
+     "signs-in-the-sky"
+    ],
+    "categories": [
+     "astrology",
+     "divination",
+     "astronomy",
+     "history"
+    ],
+    "updated_at": {
+     "$date": "2026-10-08T18:41:42.434Z"
+    }
+   }
+  },
+  {
+   "id": "6953b56577f38f6761bd979d",
+   "before": {
+    "visible": true,
+    "collections": [
+     "astrology",
+     "magic",
+     "natural-philosophy",
+     "demonology",
+     "cosmology-astronomy",
+     "celestial-divination",
+     "islamic-philosophy",
+     "islamic-occult-sciences",
+     "spirit-conjuration",
+     "the-moon",
+     "middle-east-africa",
+     "natural-magic-sympathies",
+     "great-manuscripts",
+     "en-espanol"
+    ],
+    "categories": [
+     "astrology",
+     "astronomy",
+     "divination",
+     "natural-philosophy"
+    ],
+    "updated_at": {
+     "$date": "2026-09-18T12:34:21.677Z"
+    }
+   }
+  }
+ ]
+}
