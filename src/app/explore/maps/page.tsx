@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { FEED_TYPES } from '@/lib/feed-links';
 import summary from './summary.json';
 
 // Theme maps moved from the atlas (#4922). Static: the figures come from summary.json,
@@ -15,7 +14,7 @@ const OG_IMAGE = { url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source L
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/explore/maps', types: { ...FEED_TYPES } },
+  alternates: { canonical: '/explore/maps' },
   openGraph: { title: TITLE, description: DESCRIPTION, url: 'https://sourcelibrary.org/explore/maps', siteName: 'Source Library', type: 'website', images: [OG_IMAGE] },
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION, images: [OG_IMAGE.url] },
 };
