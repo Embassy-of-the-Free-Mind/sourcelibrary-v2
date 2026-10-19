@@ -17,6 +17,7 @@
 
 import type { Db } from 'mongodb';
 import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { stripMarkupTags } from '@/lib/strip-markup-tags';
 
 export interface GhostDetectionResult {
@@ -144,6 +145,8 @@ export async function detectAndRemoveGhostPages(
 
     // Delete from pages
     await pagesCol.deleteMany({ id: { $in: ghostPageIds } });
+    // Their vectors must stop being served by semantic search (#6270).
+    await withdrawPageVectors(ghostPageIds, { reason: 'removed', writer: 'detect-ghost-pages' });
   }
 
   // Renumber remaining pages sequentially

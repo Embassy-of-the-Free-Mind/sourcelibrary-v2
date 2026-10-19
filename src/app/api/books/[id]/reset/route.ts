@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const POST = withAuth(async (request, session, context) => {
@@ -7,11 +8,12 @@ export const POST = withAuth(async (request, session, context) => {
     const { id } = await context.params;
     const db = await getDb();
 
-    // 1. Delete all split pages (pages created from splits)
-    const deleteResult = await db.collection('pages').deleteMany({
-      book_id: id,
-      split_from: { $exists: true, $ne: null }
-    });
+    // 1. Delete all split pages (pages created from splits), and withdraw their vectors from
+    //    semantic search (#6270).
+    const splitFilter = { book_id: id, split_from: { $exists: true, $ne: null } };
+    const splitPageIds: string[] = await db.collection('pages').distinct('id', splitFilter);
+    const deleteResult = await db.collection('pages').deleteMany(splitFilter);
+    await withdrawPageVectors(splitPageIds, { reason: 'removed', writer: 'POST /api/books/[id]/reset' });
 
     // 2. Restore original photos and clear crop/split data for remaining pages
     const pages = await db.collection('pages')

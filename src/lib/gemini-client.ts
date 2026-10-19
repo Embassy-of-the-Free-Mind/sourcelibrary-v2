@@ -160,26 +160,45 @@ type GenerateArgs = Parameters<GenerativeModel['generateContent']>;
  * Allow-list, not deny-list: a model that does not think (2.0, 1.5, TTS,
  * embedding, image) rejects the unknown field, and pro models reject a zero
  * budget — both are a 400 on a call that worked yesterday. Only the flash
- * text models from 2.5 on get the default; anything else is untouched.
+ * text models from 2.5 on get the default; anything else is untouched. Flash-lite
+ * from 3.5 on refuses a budget too, so it gets `thinkingLevel: 'minimal'` (#5232).
  */
 type LooseGenerationConfig = Record<string, unknown> & { thinkingConfig?: unknown };
-export const acceptsZeroThinking = (modelId: string) =>
+const thinksAndTakesConfig = (modelId: string) =>
   /^gemini-(2\.5|[3-9](\.\d+)?)-flash/.test(modelId) && !/tts|image|embedding|live|audio/.test(modelId);
 
-function withoutThinking<T>(config: T | undefined): T {
+// Flash-lite from 3.5 on refuses `thinkingBudget: 0` (400 INVALID_ARGUMENT, #5232)
+// but takes `thinkingLevel: 'minimal'`, its lowest setting.
+const levelOnly = (modelId: string) => /^gemini-(3\.[5-9]|[4-9](\.\d+)?)-flash-lite/.test(modelId);
+
+export const acceptsZeroThinking = (modelId: string) => thinksAndTakesConfig(modelId) && !levelOnly(modelId);
+
+/**
+ * The thinkingConfig that turns reasoning as far down as the model allows, or null
+ * when it takes none. Dropping the field on a level-only model would leave thinking
+ * ON and billed, so those get 'minimal'. Twin of `noThinkingConfig` in
+ * scripts/lib/model-pricing.mjs.
+ */
+export const noThinkingConfig = (modelId: string) => {
+  if (!thinksAndTakesConfig(modelId)) return null;
+  return levelOnly(modelId) ? { thinkingLevel: 'minimal' as const } : { thinkingBudget: 0 };
+};
+
+function withoutThinking<T>(config: T | undefined, off: object): T {
   const c = (config ?? {}) as LooseGenerationConfig;
   if (c.thinkingConfig !== undefined) return c as T;
-  return { ...c, thinkingConfig: { thinkingBudget: 0 } } as T;
+  return { ...c, thinkingConfig: off } as T;
 }
 
 function noThinkingByDefault(model: GenerativeModel, modelId: string): GenerativeModel {
-  if (!acceptsZeroThinking(modelId)) return model;
-  model.generationConfig = withoutThinking(model.generationConfig);
+  const off = noThinkingConfig(modelId);
+  if (!off) return model;
+  model.generationConfig = withoutThinking(model.generationConfig, off);
 
   const patch = <A extends unknown[]>(args: A): A => {
     const req = args[0];
     if (req && typeof req === 'object' && !Array.isArray(req) && 'generationConfig' in req && req.generationConfig) {
-      return [{ ...req, generationConfig: withoutThinking(req.generationConfig) }, ...args.slice(1)] as unknown as A;
+      return [{ ...req, generationConfig: withoutThinking(req.generationConfig, off) }, ...args.slice(1)] as unknown as A;
     }
     return args;
   };

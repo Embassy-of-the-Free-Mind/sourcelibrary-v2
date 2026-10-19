@@ -46,6 +46,7 @@ import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 
 const BOOK_ID = '69e77a1f0fc6fc955e35dde9';
@@ -226,6 +227,8 @@ async function main() {
         if (n && n !== p.page_number) ops.push({ updateOne: { filter: { _id: p._id }, update: { $set: { page_number: n, updated_at: new Date() } } } });
       }
       if (ops.length) await Pages.bulkWrite(ops, { ordered: true });
+      // The children are archived by the revert; their vectors stop being served (#6270).
+      await withdrawPageVectors(kids.map(c => c.id), { reason: 'archived', writer: SWEEP });
       await recordSweepAction(db, { sweep: SWEEP, book_id: BOOK_ID, action: 'reverted', detail: { run: RUN, parents: parents.length, children: kids.length } });
       console.log('  recount:', JSON.stringify((await recountBook(db, BOOK_ID, { reason: SWEEP })).after));
     }
@@ -318,6 +321,8 @@ async function main() {
   }
   const res = await Pages.bulkWrite(ops, { ordered: true });
   console.log(`  pages: inserted ${res.insertedCount}, modified ${res.modifiedCount}`);
+  // The soft-hidden parents stop being served by semantic search (#6270).
+  await withdrawPageVectors(built.map(b => b.page.id), { reason: 'archived', writer: SWEEP });
 
   // ── 4. gallery rows ──
   for (const { g, set } of galleryOps) await db.collection('gallery_images').updateOne({ _id: g._id }, { $set: { ...set, page_number: (await Pages.findOne({ id: set.page_id }, { projection: { page_number: 1 } })).page_number, updated_at: now } });
