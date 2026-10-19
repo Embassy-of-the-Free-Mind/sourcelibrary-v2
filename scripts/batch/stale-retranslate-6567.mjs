@@ -37,6 +37,14 @@
  * paid translate lanes, gap-fill and the OCR lanes off these books; this run writes pages directly instead. Books held for
  * any OTHER reason are excluded.
  *
+ * WITHHELD MODE (#6561 item 2, Derek "yes" 2026-10-13): `select-withheld --out=DIR` then `run --withheld --out=DIR ...`.
+ *   The pages job serve-6561 served (sweep_log sweep `serve-opus-correct-6561`: withheld Paddle table pages, now the
+ *   Opus-corrected reading) whose English is still withheld (`translation_withheld`, no `translation.data`). Same call,
+ *   prompt, guards and write door; a page qualifies only while its OCR is that served reading (job id
+ *   /^serve-opus-correct-6561/), not unreadable, not human-edited, and its book's hold is the lane's own or
+ *   `gpu-backlog-5660`. After the write, `translation_withheld` is unset (the old English stays in page_revisions).
+ *   Own sweep (`retranslate-withheld-tables-6561`), note and reason. Book holds are never touched.
+ *
  * CHECKPOINT: DIR/done.jsonl, one row per page with its outcome. A restart skips every page already there.
  * QUOTA: a 429 / RESOURCE_EXHAUSTED pauses every worker for --backoff minutes (default 20), then goes on; the call is
  * logged to /var/log/sourcelibrary/agy-calls.jsonl like every other. FAILURE: 12 failed pages in a row (not quota) stops
@@ -60,7 +68,7 @@ const SWEEP = 'stale-retranslate-6567';
 const ISSUE = 6567;
 const CLI = 'agy';
 const MODEL = 'gemini-3.8-flash-low';
-const JOB = process.env.CLI_JOB_NAME || 'stale-retranslate-6567';
+const JOB = process.env.CLI_JOB_NAME || (process.argv.includes('--withheld') ? 'retranslate-withheld-tables-6561' : 'stale-retranslate-6567');
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const GATE = path.join(path.dirname(new URL(import.meta.url).pathname), '../eval/stale-gate-6567/agy-tool-gate.py');
 const GATE_REASON = 'That tool is disabled here, and no tool or file is needed: the text to translate is in the prompt. Write the translation directly in your reply, between the markers, following the instructions exactly.';
@@ -73,10 +81,19 @@ const CLI_SUFFIX = '\n\nOutput only the English translation in the format above.
   + '\n\nWrite the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary.';
 
 const STAGE = process.argv[2];
+// #6561 item 2: the served table pages' withheld English (see WITHHELD MODE above).
+const WITHHELD = STAGE === 'select-withheld' || process.argv.includes('--withheld');
+const SERVED_SWEEP = 'serve-opus-correct-6561';
+const SERVED_JOB = /^serve-opus-correct-6561/;
+const WITHHELD_HOLD = /^(paddle-zh-\d+-ocr-only|gpu-backlog-5660)$/;
+const W = WITHHELD ? {
+  sweep: 'retranslate-withheld-tables-6561', issue: 6561, note: 'translate_cli_withheld_tables_6561', action: 'retranslated-withheld-through-cli',
+  reason: 'Withheld English of a served Opus-corrected Paddle table page: translated from the served reading with 3.8 Flash via the CLI, production prompt, same guards as the #6567 run (#6561 item 2; Derek approved 2026-10-13)',
+} : { sweep: SWEEP, issue: ISSUE, note: 'translate_cli_stale_6567', action: 'retranslated-stale-through-cli', reason: REASON };
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const OUT = arg('out') && path.resolve(arg('out'));
 const APPLY = process.argv.includes('--apply');
-if (!['select', 'pilot', 'run'].includes(STAGE) || !OUT) { console.error('usage: stale-retranslate-6567.mjs select|pilot|run --out=DIR ... (see the header)'); process.exit(2); }
+if (!['select', 'select-withheld', 'pilot', 'run'].includes(STAGE) || !OUT) { console.error('usage: stale-retranslate-6567.mjs select|pilot|run --out=DIR ... (see the header)'); process.exit(2); }
 fs.mkdirSync(OUT, { recursive: true });
 
 const HAN = /\p{Script=Han}/u;
@@ -103,6 +120,7 @@ const STALE_Q = { 'translation_stale.reason': 'ocr_rewritten', 'translation_stal
 
 // Why a page is not (or no longer) eligible, or null. `book` carries pipeline_auto and title.
 function ineligible(p, book) {
+  if (WITHHELD) return ineligibleWithheld(p, book);
   if (p.translation_stale?.lane !== LANE) return 'no longer stale (retranslated or reset)';
   if (p.ocr?.unreadable === true) return 'ocr.unreadable (withheld, e.g. #6574 tables)';
   if (p.translation_withheld) return 'English withheld';
@@ -115,6 +133,45 @@ function ineligible(p, book) {
   if (hold && !OWN_HOLD.test(hold.reason || '')) return `book held: ${hold.reason}`;
   if (!book) return 'book not found';
   return null;
+}
+
+function ineligibleWithheld(p, book) {
+  if (!p.translation_withheld) return 'English no longer withheld';
+  if (String(p.translation?.data || '').trim()) return 'has English';
+  if (p.ocr?.unreadable === true) return 'ocr.unreadable (still withheld)';
+  if (humanEdited(p.translation)) return 'human-edited translation';
+  if (humanEdited(p.ocr)) return 'human-edited OCR';
+  if (!SERVED_JOB.test(p.ocr?.engine?.run?.job_id || '')) return 'OCR is not the served Opus-corrected reading';
+  if (typeof p.ocr?.data !== 'string' || !p.ocr.data.trim()) return 'no OCR text';
+  if (!book) return 'book not found';
+  const hold = book.pipeline_auto?.hold;
+  if (hold && !WITHHELD_HOLD.test(hold.reason || '')) return `book held: ${hold.reason}`;
+  return null;
+}
+
+if (STAGE === 'select-withheld') {
+  const served = await db.collection('sweep_log').distinct('detail.page_id', { sweep: SERVED_SWEEP });
+  const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.unreadable': 1, 'ocr.source': 1, 'ocr.edited_by': 1, 'ocr.engine.run.job_id': 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, translation_withheld: 1 };
+  const pages = [];
+  for (let i = 0; i < served.length; i += 500) pages.push(...await db.collection('pages').find({ id: { $in: served.slice(i, i + 500) }, translation_withheld: { $exists: true, $ne: null } }, { projection: PROJ }).toArray());
+  const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { _id: 0, id: 1, title: 1, pipeline_auto: 1 } }).toArray()).map((b) => [b.id, b]));
+  const counts = { mode: 'withheld', served_pages: served.length, withheld_english: pages.length, excluded: {}, eligible: 0, holds: {} };
+  const set = [];
+  for (const p of pages) {
+    const book = books.get(p.book_id);
+    const h = book?.pipeline_auto?.hold?.reason || 'none'; counts.holds[h] = (counts.holds[h] || 0) + 1;
+    const why = ineligibleWithheld(p, book);
+    if (why) { counts.excluded[why] = (counts.excluded[why] || 0) + 1; continue; }
+    counts.eligible++;
+    set.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cer: null });
+  }
+  set.sort((a, b) => (a.book_id < b.book_id ? -1 : a.book_id > b.book_id ? 1 : a.page_number - b.page_number));
+  counts.books = new Set(set.map((s) => s.book_id)).size;
+  fs.writeFileSync(path.join(OUT, 'set.jsonl'), set.map((s) => JSON.stringify(s)).join('\n') + '\n');
+  fs.writeFileSync(path.join(OUT, 'census.json'), JSON.stringify({ computed_at: new Date().toISOString(), served_sweep: SERVED_SWEEP, ...counts }, null, 1) + '\n');
+  console.log(JSON.stringify(counts, null, 1));
+  await client.close();
+  process.exit(0);
 }
 
 if (STAGE === 'select') {
@@ -181,12 +238,14 @@ const PARALLEL = Number(arg('parallel') || 2);
 const LIMIT = arg('limit') ? Number(arg('limit')) : Infinity;
 const BACKOFF_MIN = Number(arg('backoff') || 20);
 const DONE = path.join(OUT, 'done.jsonl');
+{ let mode = null; try { mode = JSON.parse(fs.readFileSync(path.join(OUT, 'census.json'), 'utf8')).mode || null; } catch { /* no census */ }
+  if ((mode === 'withheld') !== WITHHELD) { console.error(`${OUT} was selected ${mode === 'withheld' ? 'with select-withheld: run it with --withheld' : 'by select: run it without --withheld'}`); process.exit(2); } }
 const RAW = path.join(OUT, 'raw'); fs.mkdirSync(RAW, { recursive: true });
 const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
 if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
 if (!fs.existsSync(GATE)) { console.error(`tool gate missing: ${GATE}`); process.exit(1); }
 const prompts = await loadTranslationPrompts(db);
-const runId = arg('run-id') || `${SWEEP}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+const runId = arg('run-id') || `${W.sweep}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
 const codeVer = await codeVersion();
 const done = new Set(readJsonl(DONE).map((r) => r.page_id));
 let set = readJsonl(path.join(OUT, 'set.jsonl'));
@@ -268,7 +327,7 @@ async function onePage(s, book) {
     if (!u.problem) break;
   }
   fs.writeFileSync(path.join(RAW, `${s.page_id}.txt`), r.text || '');
-  const meta = { calls, secs: Math.round(r.secs), tools: r.tools, prev_from: prev?.translation?.engine?.run?.job_id?.startsWith(SWEEP) ? 'this-sweep' : prev?.translation?.data ? 'stored' : null, prompt: `${built.promptRef?.name} v${built.promptRef?.version}`, prompt_hash: built.promptRef?.content_hash, sent_hash: contentHash(sent) };
+  const meta = { calls, secs: Math.round(r.secs), tools: r.tools, prev_from: prev?.translation?.engine?.run?.job_id?.startsWith(W.sweep) ? 'this-sweep' : prev?.translation?.data ? 'stored' : null, prompt: `${built.promptRef?.name} v${built.promptRef?.version}`, prompt_hash: built.promptRef?.content_hash, sent_hash: contentHash(sent) };
   if (u.problem) return { outcome: 'failed', why: u.problem, ...meta, err: r.err };
   const chatter = cliChatterReason(u.text);
   if (chatter) return { outcome: 'failed', why: `not a translation: ${chatter}`, ...meta };
@@ -282,12 +341,18 @@ async function onePage(s, book) {
     call_site: CALL_SITE, api: 'cli', cli: { name: CLI, version }, model: MODEL,
     prompt: { id: built.promptRef?.id, name: built.promptRef?.name, version: built.promptRef?.version, hash: built.promptRef?.content_hash, sent_hash: contentHash(sent), sent_chars: sent.length },
     generationConfig: notRecorded(`${CLI} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: codeVer, host: host(), at: new Date(), read_started_at: t0.toISOString(), reason: REASON },
+    run: { job_id: runId, code_version: codeVer, host: host(), at: new Date(), read_started_at: t0.toISOString(), reason: W.reason },
     input: translationInput({ ocrText: now.ocr.data, ocrUpdatedAt: now.ocr.updated_at, context: { previous_translation: !!prev?.translation?.data, previous_from: meta.prev_from, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped', sentinels: true, tool_gate: true } }),
   });
-  const res = await writePageTranslation(db, { page: now, book, text: u.text, promptRef: built.promptRef, model: MODEL, jobId: runId, note: 'translate_cli_stale_6567', refuseUnhealthy: true, engine });
+  const res = await writePageTranslation(db, { page: now, book, text: u.text, promptRef: built.promptRef, model: MODEL, jobId: runId, note: W.note, refuseUnhealthy: true, engine });
   if (res.protected) return { outcome: 'skipped', why: 'human-edited translation (door)', ...meta };
   if (res.unhealthy) return { outcome: 'refused', why: `door: ${res.reason}`, ...meta };
+  if (WITHHELD) {
+    // The English is back: the withheld marker goes (its old text stays in page_revisions). Only on this run's write.
+    const u2 = await db.collection('pages').updateOne({ id: s.page_id, 'translation.engine.run.job_id': runId, 'translation.data': { $type: 'string', $ne: '' } }, { $unset: { translation_withheld: '' } });
+    if (!u2.modifiedCount) return { outcome: 'written', why: 'translation_withheld NOT unset (page changed after the write)', chars: res.text.length, from_model: null, ...meta };
+    return { outcome: 'written', chars: res.text.length, from_model: null, was_withheld: { reason: now.translation_withheld?.reason ?? null, model: now.translation_withheld?.model ?? null, withheld_at: now.translation_withheld?.withheld_at ?? null }, ...meta };
+  }
   return { outcome: 'written', chars: res.text.length, from_model: p.translation?.model ?? null, ...meta };
 }
 
@@ -302,7 +367,7 @@ async function oneBook(job) {
     record({ page_id: s.page_id, book_id: s.book_id, page_number: s.page_number, cer: s.cer, ...res });
     if (res.outcome === 'written') {
       tally.written++; failStreak = 0; written.push(s.page_number);
-      sweepRows.push({ sweep: SWEEP, book_id: s.book_id, action: 'retranslated-stale-through-cli', detail: { page_id: s.page_id, page_number: s.page_number, cer: s.cer, from_model: res.from_model, to_model: MODEL, cli: `${CLI} ${version}`, run: runId, issue: ISSUE } });
+      sweepRows.push({ sweep: W.sweep, book_id: s.book_id, action: W.action, detail: { page_id: s.page_id, page_number: s.page_number, cer: s.cer, from_model: res.from_model, ...(res.was_withheld ? { was_withheld: res.was_withheld } : {}), to_model: MODEL, cli: `${CLI} ${version}`, run: runId, issue: W.issue } });
     } else if (res.outcome === 'would_write') { tally.would_write++; failStreak = 0; }
     else if (res.outcome === 'failed') {
       tally.failed[res.why] = (tally.failed[res.why] || 0) + 1;
@@ -314,7 +379,7 @@ async function oneBook(job) {
   if (APPLY && written.length) {
     await recordSweepActions(db, sweepRows);
     await syncBookTranslationCounters(db, job.book_id);
-    await db.collection('book_events').insertOne({ book_id: job.book_id, type: 'translated_cli', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [MODEL], pages: written.length, page_numbers: written.sort((a, b) => a - b), reason: REASON, issue: ISSUE } });
+    await db.collection('book_events').insertOne({ book_id: job.book_id, type: 'translated_cli', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [MODEL], pages: written.length, page_numbers: written.sort((a, b) => a - b), reason: W.reason, issue: W.issue } });
   }
 }
 
