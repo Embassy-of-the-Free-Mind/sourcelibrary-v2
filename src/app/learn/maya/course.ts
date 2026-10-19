@@ -212,6 +212,13 @@ export const isItem = (s: Example | Item): s is Item => 'kind' in s;
 
 const COL = [360, 20, 1];
 
+/** Printable sheets (src/app/learn/maya/worksheets, PR #6987) offered at the end of each lesson. */
+export const WORKSHEETS_URL = '/learn/maya/worksheets';
+export const LESSON_WORKSHEETS: Record<string, { slug: string; title: string }[]> = {
+  counting: [{ slug: 'bars-and-dots', title: 'Bars and dots' }, { slug: 'numbers-at-palenque', title: 'Numbers at Palenque' }],
+  syllables: [{ slug: 'syllable-chart', title: 'The syllable chart' }, { slug: 'first-signs', title: 'First signs' }, { slug: 'read-a-word', title: 'Read a word' }],
+};
+
 export const LESSONS: Lesson[] = [
   { id: 'intro', n: 0, title: 'A bishop and a scribe', blurb: 'Landa, his alphabet, and Knorozov', open: true, steps: [], recap: [] },
   {
@@ -355,7 +362,6 @@ export const LESSONS: Lesson[] = [
       {
         title: 'One sign, one syllable',
         body: 'Most signs are a consonant and a vowel: ba, la, ma. A few are a vowel alone: e, o.',
-        note: CARVED_NOTE,
         syllables: ['ba', 'la', 'ma', 'ka', 'na', 'e', 'o', 'ko', 'ti'],
       },
       { id: 'c3-ka', kind: 'sign', prompt: 'Which sign is ka?', answer: 'ka', options: ['sa', 'e', 'ka', 'ti'], why: 'The bare comb is ka, the same sign as Landa’s “ca”.' },

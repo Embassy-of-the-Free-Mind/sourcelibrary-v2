@@ -40,6 +40,8 @@ import {
   STUART_SOURCE,
   SYLLABLES,
   WAYEB_NOTE,
+  WORKSHEETS_URL,
+  LESSON_WORKSHEETS,
   YUCATEC,
   dresdenPage,
   isConfusable,
@@ -197,6 +199,7 @@ export default function MayaCourse() {
             <p key={c.label}>{c.label}: {c.href ? <a href={c.href} className="underline underline-offset-2">{c.text}</a> : c.text}</p>
           ))}
         </div>
+        <p className="text-sm text-secondary mt-4"><a href={WORKSHEETS_URL} className="underline underline-offset-2">Worksheets to print</a>, with David Stuart’s drawings.</p>
         <p className="text-sm text-secondary mt-4">The spoken language, in Roman letters: <a href={YUCATEC} className="underline underline-offset-2">Learn Yucatec Maya</a>.</p>
       </Shell>
     );
@@ -329,7 +332,7 @@ function CourseMap({ state, current, onOpen }: { state: CourseState; current: st
                 {status === 'done' && <span className="absolute -right-1 -top-1 w-7 h-7 lm-round bg-emerald-600 text-white text-sm flex items-center justify-center border-2 border-cream" aria-hidden>✓</span>}
                 {status === 'locked' && <LockBadge />}
               </button>
-              <span className={`mt-1 text-center text-sm leading-tight ${status === 'locked' ? 'text-muted' : 'text-primary font-medium'}`}>
+              <span className={`relative mt-1 px-1.5 bg-cream text-center text-sm leading-tight ${status === 'locked' ? 'text-muted' : 'text-primary font-medium'}`}>
                 {l.n}. {l.title}
               </span>
               {status === 'locked' && <span className="text-xs text-muted">coming</span>}
@@ -909,6 +912,17 @@ function Done({ view, onNext, onMap }: { view: Extract<View, { screen: 'done' }>
           <li key={r} className="flex gap-2 text-primary"><span className="text-emerald-700 shrink-0" aria-hidden>✓</span><Prose text={r} /></li>
         ))}
       </ul>
+      {(LESSON_WORKSHEETS[lesson.id] ?? []).length > 0 && (
+        <div className="mt-6">
+          <p className="text-sm font-medium text-primary mb-1">To print and practise</p>
+          <ul className="space-y-1">
+            {LESSON_WORKSHEETS[lesson.id].map((w) => (
+              <li key={w.slug}><a href={`${WORKSHEETS_URL}/${w.slug}`} className="text-secondary underline underline-offset-2">{w.title}</a></li>
+            ))}
+            <li><a href={WORKSHEETS_URL} className="text-sm text-muted underline underline-offset-2">All worksheets</a></li>
+          </ul>
+        </div>
+      )}
       {view.missed > 0 && (
         <p className="text-secondary mt-4">You missed {view.missed === 1 ? 'one' : view.missed}. {view.missed === 1 ? 'It comes' : 'They come'} back next time.</p>
       )}
