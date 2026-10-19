@@ -1,0 +1,133 @@
+/* A timeline map from the atlas (#4922), scoped to .atlas-map. Ported from
+   sourcelibrary-atlas src/app/globals.css; the atlas palette was already the
+   site's, so its names map onto the site tokens. Teal (held, not readable) and
+   the soft pill fills have no site token and stay local to the map. */
+.atlas-map{
+  --bg:var(--bg-cream); --bg-warm:var(--bg-warm); --panel:var(--bg-white); --ink:var(--text-primary); --ink-2:var(--text-secondary);
+  --muted:var(--text-muted); --line:var(--border-light); --line-2:var(--border-medium); --rust:var(--accent-rust); --gold:var(--accent-gold);
+  --rust-soft:#f0e2dd; --teal:#1a7fa6; --teal-soft:#dcedf3; --grey:#8a847c; --grey-soft:#efece6; --era:#f7f3eb; --era-2:#fdfcf9;
+  --display:var(--font-serif); --body:var(--font-body); --ui:var(--font-sans);
+  background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.atlas-map *{box-sizing:border-box}
+.atlas-map [hidden]{display:none!important}
+.atlas-map a{color:inherit;text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px}
+.atlas-map a:hover{text-decoration-color:var(--rust)}
+.atlas-map a:focus-visible,.atlas-map button:focus-visible,.atlas-map input:focus-visible,.atlas-map summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.atlas-map .crumbs{font-family:var(--ui);font-size:13px;color:var(--muted);margin:0 0 18px}
+.atlas-map .crumbs a{text-decoration:none;color:var(--ink-2)}
+.atlas-map .crumbs a:hover{color:var(--rust)}
+.atlas-map ul.eds .unlinked{color:var(--ink-2)}
+.atlas-map .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+@media (max-width:760px){.atlas-map .wrap{padding:0 16px}}
+.atlas-map header.mast{padding:64px 0 28px;border-bottom:1px solid var(--line)}
+.atlas-map .eyebrow{font-family:var(--ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.atlas-map h1{font-family:var(--display);font-weight:500;font-size:clamp(44px,7vw,84px);line-height:.95;margin:0 0 22px;letter-spacing:-.01em;text-wrap:balance}
+.atlas-map h1 em{font-style:italic;color:var(--rust)}
+.atlas-map .lede{max-width:62ch;font-size:20px;line-height:1.45;margin:0 0 30px;color:var(--ink-2)}
+.atlas-map .figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.atlas-map .fig{padding:18px 18px 16px;border-right:1px solid var(--line)}
+.atlas-map .fig:last-child{border-right:0}
+.atlas-map .fig b{display:block;font-family:var(--display);font-weight:500;font-size:44px;line-height:1;font-variant-numeric:tabular-nums;margin-bottom:6px}
+.atlas-map .fig span{font-family:var(--ui);font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.atlas-map .fig.r b{color:var(--rust)}
+.atlas-map .fig.t b{color:var(--teal)}
+.atlas-map .fig.g b{color:var(--grey)}
+.atlas-map .controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:18px 0 10px;font-family:var(--ui);font-size:13px}
+.atlas-map .chips{display:flex;gap:6px;flex-wrap:wrap}
+.atlas-map .chip{border:1px solid var(--line-2);background:var(--panel);color:var(--ink-2);border-radius:999px;padding:5px 11px 5px 8px;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:7px;line-height:1}
+.atlas-map .chip[aria-pressed="false"]{opacity:.45}
+.atlas-map .chip .sw{width:12px;height:12px;border-radius:50%;display:inline-block}
+.atlas-map .sw.r{background:var(--rust)}
+.atlas-map .sw.t{border:2.5px solid var(--teal)}
+.atlas-map .sw.g{border:1.5px dashed var(--grey)}
+.atlas-map .controls label.tog{display:inline-flex;align-items:center;gap:7px;color:var(--ink-2);cursor:pointer}
+.atlas-map .controls input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);color:var(--ink);min-width:220px}
+.atlas-map .controls .count{color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+.atlas-map .mapbox{position:relative;border:1px solid var(--line);background:var(--panel);border-radius:4px;overflow-x:auto;overflow-y:hidden;min-height:120px}
+.atlas-map svg.map{display:block;font-family:var(--ui)}
+.atlas-map .rowlab{font-size:12px;fill:var(--ink-2)}
+.atlas-map .rowlab.region{font-family:var(--display);font-size:15px;font-weight:600;fill:var(--ink)}
+.atlas-map .rowline{stroke:var(--line);stroke-width:1}
+.atlas-map .era{fill:var(--era)}
+.atlas-map .era2{fill:var(--era-2)}
+.atlas-map .eralab{font-size:11px;fill:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.atlas-map .tick{stroke:var(--line-2)}
+.atlas-map .ticklab{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.atlas-map .mk{cursor:pointer}
+.atlas-map .mk.readable{fill:var(--rust);stroke:var(--panel);stroke-width:1.2}
+.atlas-map .mk.held{fill:var(--panel);stroke:var(--teal);stroke-width:2}
+.atlas-map .mk.absent{fill:none;stroke:var(--grey);stroke-width:1.2;stroke-dasharray:2 1.6}
+.atlas-map .mk.adj{opacity:.55}
+.atlas-map .mk.sel{stroke:var(--ink);stroke-width:2.2}
+.atlas-map .mk.dim{opacity:.12}
+.atlas-map .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-family:var(--ui);font-size:12.5px;line-height:1.35;padding:7px 10px;border-radius:4px;max-width:300px;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.atlas-map .tip b{font-family:var(--body);font-size:14px;display:block;margin-bottom:2px}
+.atlas-map .loading{font-family:var(--ui);font-size:13px;color:var(--muted);padding:40px 18px}
+.atlas-map .detail{margin-top:14px;border:1px solid var(--line);border-left:4px solid var(--rust);background:var(--bg-warm);padding:18px 22px;border-radius:4px;min-height:96px}
+.atlas-map .detail.empty{border-left-color:var(--line-2);color:var(--muted);font-family:var(--ui);font-size:14px;display:flex;align-items:center}
+.atlas-map .detail h3{font-family:var(--display);font-size:30px;font-weight:500;margin:0 0 4px;line-height:1.1}
+.atlas-map .detail .meta{font-family:var(--ui);font-size:12.5px;color:var(--muted);margin-bottom:10px;display:flex;gap:14px;flex-wrap:wrap}
+.atlas-map .detail p{margin:0 0 10px;max-width:70ch}
+.atlas-map .detail .gap{font-family:var(--ui);font-size:13px;color:var(--ink-2);background:var(--panel);border:1px dashed var(--line-2);padding:8px 10px;border-radius:4px;max-width:80ch}
+.atlas-map .pill{font-family:var(--ui);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap;line-height:1.4}
+.atlas-map .pill.readable{background:var(--rust-soft);color:var(--rust)}
+.atlas-map .pill.held{background:var(--teal-soft);color:var(--teal)}
+.atlas-map .pill.absent{background:var(--grey-soft);color:var(--grey)}
+.atlas-map ul.eds{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:5px}
+.atlas-map ul.eds li{font-size:15px;line-height:1.35;display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:baseline}
+.atlas-map ul.eds .dot{width:9px;height:9px;border-radius:50%;display:inline-block;position:relative;top:0}
+.atlas-map .dot.readable{background:var(--rust)}
+.atlas-map .dot.held{border:2px solid var(--teal)}
+.atlas-map .dot.hidden{border:1.5px dashed var(--teal)}
+.atlas-map ul.eds .em{font-family:var(--ui);font-size:12px;color:var(--muted)}
+.atlas-map section.cat{padding:56px 0 80px}
+.atlas-map section.cat>.wrap>h2,.atlas-map section.plain h2{font-family:var(--display);font-size:40px;font-weight:500;margin:0 0 6px;line-height:1.05}
+.atlas-map section.cat .sub{color:var(--muted);font-family:var(--ui);font-size:13.5px;margin:0 0 30px;max-width:70ch}
+.atlas-map .region-h{font-family:var(--ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:44px 0 10px;padding-top:14px;border-top:1px solid var(--line-2)}
+.atlas-map .trad{margin:0 0 30px}
+.atlas-map .trad h3{font-family:var(--display);font-size:28px;font-weight:600;margin:0 0 2px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.atlas-map .trad h3 small{font-family:var(--ui);font-size:12px;font-weight:400;color:var(--muted);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.atlas-map .work{display:grid;grid-template-columns:76px 1fr;gap:0 16px;padding:10px 0;border-top:1px solid var(--line)}
+.atlas-map .work:first-of-type{border-top:0}
+.atlas-map .work .date{font-family:var(--ui);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:5px;text-align:right}
+.atlas-map .work .name{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.atlas-map .work .name .pill{position:relative;top:-2px}
+.atlas-map .work .gloss{color:var(--ink-2);font-size:15.5px;margin:2px 0 0;max-width:78ch}
+.atlas-map .work .gap{font-family:var(--ui);font-size:12.5px;color:var(--muted);margin-top:4px;max-width:80ch}
+.atlas-map .work .gap b{color:var(--ink-2);font-weight:500}
+.atlas-map .work.adj .name{font-weight:500;color:var(--ink-2)}
+.atlas-map .work .name .adjtag{font-family:var(--ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);padding:1px 5px;border-radius:3px}
+.atlas-map .more{font-family:var(--ui);font-size:12px;color:var(--teal);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.atlas-map footer.site{border-top:1px solid var(--line);padding:26px 0 60px;font-family:var(--ui);font-size:12.5px;color:var(--muted);line-height:1.6}
+.atlas-map footer.site p{max-width:80ch;margin:0 0 8px}
+@media (max-width:760px){.atlas-map .figs{grid-template-columns:repeat(2,1fr)}.atlas-map .fig:nth-child(2){border-right:0}.atlas-map .fig:nth-child(-n+2){border-bottom:1px solid var(--line)}.atlas-map .work{grid-template-columns:1fr}.atlas-map .work .date{text-align:left;padding-top:0}.atlas-map header.mast{padding-top:40px}}
+@media (prefers-reduced-motion:no-preference){.atlas-map .mk{transition:opacity .15s}}
+.atlas-map svg.map .mk.lens{stroke:var(--gold);stroke-width:2.6}
+.atlas-map svg.map .mk.lens.absent{stroke:var(--gold);stroke-dasharray:none;opacity:.7}
+.atlas-map .controls label.lens input{font:inherit;padding:6px 10px;border:1px solid var(--gold);border-radius:6px;background:var(--panel);color:var(--ink);min-width:200px}
+.atlas-map .detail .ideas{margin:6px 0 14px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:4px;font-family:var(--ui);font-size:13px}
+.atlas-map .detail .ideas>b{font-family:var(--display);font-size:17px;font-weight:600;margin-right:10px}
+.atlas-map .detail .ideas>.sub{color:var(--muted);font-size:12px}
+.atlas-map .detail .ideas ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px}
+.atlas-map .detail .ideas li{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;line-height:1.4}
+.atlas-map .detail .ideas li.gen .lensbtn{color:var(--grey)}
+.atlas-map .detail .ideas .lensbtn{font:inherit;font-family:var(--body);font-size:16px;font-weight:500;color:var(--rust);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.atlas-map .detail .ideas .from{color:var(--teal);font-size:12px}
+.atlas-map .detail .ideas .how{color:var(--ink-2)}
+.atlas-map .detail .ideas a{color:var(--ink-2);font-size:12.5px}
+.atlas-map .detail .ideas .more-tr{color:var(--muted);font-size:12.5px}
+.atlas-map .detail .l2{margin:4px 0 14px}
+.atlas-map .detail .l2 .about{font-size:17px;color:var(--ink);max-width:70ch}
+.atlas-map .detail .l2terms{font-family:var(--ui);font-size:13px;margin:10px 0 12px}
+.atlas-map .detail .l2terms>b,.atlas-map .detail .l2q>b{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:4px}
+.atlas-map .detail .l2terms ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.atlas-map .detail .l2terms .term{font-family:var(--body);font-size:16px;font-weight:500;color:var(--rust);text-decoration-color:var(--gold);text-underline-offset:3px}
+.atlas-map .detail .l2terms span{color:var(--ink-2)}
+.atlas-map .detail .l2q blockquote{margin:8px 0 12px;padding:2px 0 2px 14px;border-left:2px solid var(--gold);max-width:72ch}
+.atlas-map .detail .l2q blockquote p{margin:0 0 4px;font-size:16.5px;color:var(--ink)}
+.atlas-map .detail .l2q blockquote a{font-family:var(--ui);font-size:12.5px;color:var(--ink-2)}
+.atlas-map .detail .l2note{font-family:var(--ui);font-size:12px;color:var(--muted);margin:4px 0 0}
+.atlas-map .work .l2more{display:block;margin:5px 0 2px;text-align:left}
+.atlas-map .detail .edsh{display:block;font-family:var(--display);font-size:17px;font-weight:600;margin:14px 0 2px}
+.atlas-map .detail details.moreeds summary{font-family:var(--ui);font-size:12.5px;color:var(--teal);cursor:pointer;margin:4px 0}
