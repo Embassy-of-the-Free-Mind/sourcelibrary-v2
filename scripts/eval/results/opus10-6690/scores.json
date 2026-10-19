@@ -1,0 +1,1329 @@
+{
+ "judge": "gemini-3.8-flash-high (agy -p), one item per call, #6545 JUDGE-PROMPT-PRO.md",
+ "items_judged": 70,
+ "items": 70,
+ "arms": {
+  "O1": {
+   "n": 50,
+   "fidelity": 4.78,
+   "ci_by_page": [
+    4.64,
+    4.9
+   ],
+   "reversals_per_100": 0.0,
+   "omission_pct": 4.0,
+   "acc_spans_per_page": 0.34,
+   "major_acc_spans_per_page": 0.0,
+   "boundary_inventions": 4,
+   "boundary_pages": 4,
+   "unreadable_fill_pages": 3,
+   "span_not_same": {
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   }
+  },
+  "O10": {
+   "n": 50,
+   "fidelity": 4.48,
+   "ci_by_page": [
+    4.32,
+    4.64
+   ],
+   "reversals_per_100": 0.0,
+   "omission_pct": 22.0,
+   "acc_spans_per_page": 0.98,
+   "major_acc_spans_per_page": 0.04,
+   "boundary_inventions": 4,
+   "boundary_pages": 3,
+   "unreadable_fill_pages": 3,
+   "span_not_same": {
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 1,
+    "different": 0,
+    "cant_tell": 0
+   }
+  }
+ },
+ "paired_all": {
+  "n": 50,
+  "mean_O10_minus_O1": -0.3,
+  "ci_by_page": [
+   -0.54,
+   -0.08
+  ],
+  "O10_better": 10,
+  "O10_worse": 23,
+  "ties": 17,
+  "worse_pages": [
+   {
+    "item": "j-005",
+    "page": "00024",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-007",
+    "page": "00370",
+    "run": "grc",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-009",
+    "page": "00043",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-012",
+    "page": "00084",
+    "run": "fa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-017",
+    "page": "00030",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 3.0
+   },
+   {
+    "item": "j-018",
+    "page": "00168",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-019",
+    "page": "00029",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-022",
+    "page": "00028",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-025",
+    "page": "00166",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-028",
+    "page": "00031",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-030",
+    "page": "00085",
+    "run": "fa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-032",
+    "page": "00040",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 3.0
+   },
+   {
+    "item": "j-033",
+    "page": "00039",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-037",
+    "page": "00038",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-045",
+    "page": "00165",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-046",
+    "page": "00371",
+    "run": "grc",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-050",
+    "page": "00026",
+    "run": "zh",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-054",
+    "page": "00046",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-056",
+    "page": "00160",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-061",
+    "page": "00045",
+    "run": "he",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-062",
+    "page": "00163",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-068",
+    "page": "00372",
+    "run": "grc",
+    "O1": 5.0,
+    "O10": 4.0
+   },
+   {
+    "item": "j-069",
+    "page": "00162",
+    "run": "sa",
+    "O1": 5.0,
+    "O10": 4.0
+   }
+  ],
+  "ci_by_run_then_page": [
+   -0.6,
+   -0.02
+  ]
+ },
+ "by_run": {
+  "fa": {
+   "arms": {
+    "O1": {
+     "n": 10,
+     "fidelity": 4.9,
+     "ci_by_page": [
+      4.7,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 0.0,
+     "acc_spans_per_page": 0.3,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 0,
+     "boundary_pages": 0,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    },
+    "O10": {
+     "n": 10,
+     "fidelity": 4.8,
+     "ci_by_page": [
+      4.5,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 0.0,
+     "acc_spans_per_page": 0.2,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 0,
+     "boundary_pages": 0,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    }
+   },
+   "paired": {
+    "n": 10,
+    "mean_O10_minus_O1": -0.1,
+    "ci_by_page": [
+     -0.4,
+     0.2
+    ],
+    "O10_better": 1,
+    "O10_worse": 2,
+    "ties": 7,
+    "worse_pages": [
+     {
+      "item": "j-012",
+      "page": "00084",
+      "run": "fa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-030",
+      "page": "00085",
+      "run": "fa",
+      "O1": 5.0,
+      "O10": 4.0
+     }
+    ]
+   }
+  },
+  "sa": {
+   "arms": {
+    "O1": {
+     "n": 10,
+     "fidelity": 4.6,
+     "ci_by_page": [
+      4.1,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 10.0,
+     "acc_spans_per_page": 0.6,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 2,
+     "boundary_pages": 2,
+     "unreadable_fill_pages": 1,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    },
+    "O10": {
+     "n": 10,
+     "fidelity": 4.3,
+     "ci_by_page": [
+      4.0,
+      4.6
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 40.0,
+     "acc_spans_per_page": 1.5,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 1,
+     "boundary_pages": 1,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    }
+   },
+   "paired": {
+    "n": 10,
+    "mean_O10_minus_O1": -0.3,
+    "ci_by_page": [
+     -0.8,
+     0.3
+    ],
+    "O10_better": 3,
+    "O10_worse": 6,
+    "ties": 1,
+    "worse_pages": [
+     {
+      "item": "j-018",
+      "page": "00168",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-025",
+      "page": "00166",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-045",
+      "page": "00165",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-056",
+      "page": "00160",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-062",
+      "page": "00163",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-069",
+      "page": "00162",
+      "run": "sa",
+      "O1": 5.0,
+      "O10": 4.0
+     }
+    ]
+   }
+  },
+  "zh": {
+   "arms": {
+    "O1": {
+     "n": 10,
+     "fidelity": 4.6,
+     "ci_by_page": [
+      4.3,
+      4.9
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 10.0,
+     "acc_spans_per_page": 0.6,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 1,
+     "boundary_pages": 1,
+     "unreadable_fill_pages": 2,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    },
+    "O10": {
+     "n": 10,
+     "fidelity": 4.3,
+     "ci_by_page": [
+      3.9,
+      4.7
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 30.0,
+     "acc_spans_per_page": 1.4,
+     "major_acc_spans_per_page": 0.1,
+     "boundary_inventions": 0,
+     "boundary_pages": 0,
+     "unreadable_fill_pages": 3,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    }
+   },
+   "paired": {
+    "n": 10,
+    "mean_O10_minus_O1": -0.3,
+    "ci_by_page": [
+     -0.9,
+     0.4
+    ],
+    "O10_better": 4,
+    "O10_worse": 6,
+    "ties": 0,
+    "worse_pages": [
+     {
+      "item": "j-005",
+      "page": "00024",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-017",
+      "page": "00030",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 3.0
+     },
+     {
+      "item": "j-019",
+      "page": "00029",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-022",
+      "page": "00028",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-028",
+      "page": "00031",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-050",
+      "page": "00026",
+      "run": "zh",
+      "O1": 5.0,
+      "O10": 4.0
+     }
+    ]
+   }
+  },
+  "grc": {
+   "arms": {
+    "O1": {
+     "n": 10,
+     "fidelity": 4.8,
+     "ci_by_page": [
+      4.5,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 0.0,
+     "acc_spans_per_page": 0.2,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 1,
+     "boundary_pages": 1,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    },
+    "O10": {
+     "n": 10,
+     "fidelity": 4.7,
+     "ci_by_page": [
+      4.4,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 10.0,
+     "acc_spans_per_page": 0.5,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 3,
+     "boundary_pages": 2,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 1,
+      "different": 0,
+      "cant_tell": 0
+     }
+    }
+   },
+   "paired": {
+    "n": 10,
+    "mean_O10_minus_O1": -0.1,
+    "ci_by_page": [
+     -0.5,
+     0.3
+    ],
+    "O10_better": 2,
+    "O10_worse": 3,
+    "ties": 5,
+    "worse_pages": [
+     {
+      "item": "j-007",
+      "page": "00370",
+      "run": "grc",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-046",
+      "page": "00371",
+      "run": "grc",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-068",
+      "page": "00372",
+      "run": "grc",
+      "O1": 5.0,
+      "O10": 4.0
+     }
+    ]
+   }
+  },
+  "he": {
+   "arms": {
+    "O1": {
+     "n": 10,
+     "fidelity": 5.0,
+     "ci_by_page": [
+      5.0,
+      5.0
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 0.0,
+     "acc_spans_per_page": 0.0,
+     "major_acc_spans_per_page": 0.0,
+     "boundary_inventions": 0,
+     "boundary_pages": 0,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    },
+    "O10": {
+     "n": 10,
+     "fidelity": 4.3,
+     "ci_by_page": [
+      3.9,
+      4.7
+     ],
+     "reversals_per_100": 0.0,
+     "omission_pct": 30.0,
+     "acc_spans_per_page": 1.3,
+     "major_acc_spans_per_page": 0.1,
+     "boundary_inventions": 0,
+     "boundary_pages": 0,
+     "unreadable_fill_pages": 0,
+     "span_not_same": {
+      "starts_later": 0,
+      "ends_earlier": 0,
+      "extends_before": 0,
+      "extends_after": 0,
+      "different": 0,
+      "cant_tell": 0
+     }
+    }
+   },
+   "paired": {
+    "n": 10,
+    "mean_O10_minus_O1": -0.7,
+    "ci_by_page": [
+     -1.1,
+     -0.3
+    ],
+    "O10_better": 0,
+    "O10_worse": 6,
+    "ties": 4,
+    "worse_pages": [
+     {
+      "item": "j-009",
+      "page": "00043",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-032",
+      "page": "00040",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 3.0
+     },
+     {
+      "item": "j-033",
+      "page": "00039",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-037",
+      "page": "00038",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-054",
+      "page": "00046",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 4.0
+     },
+     {
+      "item": "j-061",
+      "page": "00045",
+      "run": "he",
+      "O1": 5.0,
+      "O10": 4.0
+     }
+    ]
+   }
+  }
+ },
+ "anchor_vs_rest": {
+  "anchor": {
+   "n": 5,
+   "mean_O10_minus_O1": 0.0,
+   "ci_by_page": [
+    -0.6,
+    0.6
+   ],
+   "O10_better": 1,
+   "O10_worse": 1,
+   "ties": 3,
+   "worse_pages": [
+    {
+     "item": "j-056",
+     "page": "00160",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  },
+  "non_anchor": {
+   "n": 45,
+   "mean_O10_minus_O1": -0.333,
+   "ci_by_page": [
+    -0.556,
+    -0.089
+   ],
+   "O10_better": 9,
+   "O10_worse": 22,
+   "ties": 14,
+   "worse_pages": [
+    {
+     "item": "j-005",
+     "page": "00024",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-007",
+     "page": "00370",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-009",
+     "page": "00043",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-012",
+     "page": "00084",
+     "run": "fa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-017",
+     "page": "00030",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 3.0
+    },
+    {
+     "item": "j-018",
+     "page": "00168",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-019",
+     "page": "00029",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-022",
+     "page": "00028",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-025",
+     "page": "00166",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-028",
+     "page": "00031",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-030",
+     "page": "00085",
+     "run": "fa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-032",
+     "page": "00040",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 3.0
+    },
+    {
+     "item": "j-033",
+     "page": "00039",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-037",
+     "page": "00038",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-045",
+     "page": "00165",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-046",
+     "page": "00371",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-050",
+     "page": "00026",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-054",
+     "page": "00046",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-061",
+     "page": "00045",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-062",
+     "page": "00163",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-068",
+     "page": "00372",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-069",
+     "page": "00162",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  }
+ },
+ "by_position_in_block": {
+  "(0,)": {
+   "n": 5,
+   "mean_O10_minus_O1": 0.0,
+   "ci_by_page": [
+    -0.6,
+    0.6
+   ],
+   "O10_better": 1,
+   "O10_worse": 1,
+   "ties": 3,
+   "worse_pages": [
+    {
+     "item": "j-056",
+     "page": "00160",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  },
+  "(1, 2, 3, 4)": {
+   "n": 20,
+   "mean_O10_minus_O1": -0.3,
+   "ci_by_page": [
+    -0.65,
+    0.05
+   ],
+   "O10_better": 4,
+   "O10_worse": 9,
+   "ties": 7,
+   "worse_pages": [
+    {
+     "item": "j-005",
+     "page": "00024",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-007",
+     "page": "00370",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-032",
+     "page": "00040",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 3.0
+    },
+    {
+     "item": "j-033",
+     "page": "00039",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-037",
+     "page": "00038",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-046",
+     "page": "00371",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-050",
+     "page": "00026",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-062",
+     "page": "00163",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-069",
+     "page": "00162",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  },
+  "(5, 6, 7, 8)": {
+   "n": 20,
+   "mean_O10_minus_O1": -0.4,
+   "ci_by_page": [
+    -0.75,
+    -0.05
+   ],
+   "O10_better": 3,
+   "O10_worse": 10,
+   "ties": 7,
+   "worse_pages": [
+    {
+     "item": "j-009",
+     "page": "00043",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-012",
+     "page": "00084",
+     "run": "fa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-017",
+     "page": "00030",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 3.0
+    },
+    {
+     "item": "j-018",
+     "page": "00168",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-019",
+     "page": "00029",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-022",
+     "page": "00028",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-025",
+     "page": "00166",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-045",
+     "page": "00165",
+     "run": "sa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-061",
+     "page": "00045",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-068",
+     "page": "00372",
+     "run": "grc",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  },
+  "(9,)": {
+   "n": 5,
+   "mean_O10_minus_O1": -0.2,
+   "ci_by_page": [
+    -1.0,
+    0.6
+   ],
+   "O10_better": 2,
+   "O10_worse": 3,
+   "ties": 0,
+   "worse_pages": [
+    {
+     "item": "j-028",
+     "page": "00031",
+     "run": "zh",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-030",
+     "page": "00085",
+     "run": "fa",
+     "O1": 5.0,
+     "O10": 4.0
+    },
+    {
+     "item": "j-054",
+     "page": "00046",
+     "run": "he",
+     "O1": 5.0,
+     "O10": 4.0
+    }
+   ]
+  }
+ },
+ "plants": {
+  "n": 10,
+  "located": 10,
+  "lower": 8,
+  "rows": [
+   {
+    "item": "j-008",
+    "run": "he",
+    "kind": "negation",
+    "how": "\\bis\\b → is not",
+    "located": true,
+    "fid": 3.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-023",
+    "run": "grc",
+    "kind": "name",
+    "how": "swap Adeimantus ↔ Zeus",
+    "located": true,
+    "fid": 4.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-036",
+    "run": "zh",
+    "kind": "number",
+    "how": "two → three",
+    "located": true,
+    "fid": 4.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-047",
+    "run": "zh",
+    "kind": "negation",
+    "how": "\\bis\\b → is not",
+    "located": true,
+    "fid": 3.0,
+    "O1_fid_unplanted": 4.0,
+    "lower": true
+   },
+   {
+    "item": "j-049",
+    "run": "sa",
+    "kind": "negation",
+    "how": "\\bis\\b → is not",
+    "located": true,
+    "fid": 3.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-055",
+    "run": "grc",
+    "kind": "clause",
+    "how": "clause dropped",
+    "located": true,
+    "fid": 4.0,
+    "O1_fid_unplanted": 4.0,
+    "lower": false
+   },
+   {
+    "item": "j-057",
+    "run": "fa",
+    "kind": "negation",
+    "how": "\\bis\\b → is not",
+    "located": true,
+    "fid": 3.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-059",
+    "run": "fa",
+    "kind": "negation",
+    "how": "\\bis\\b → is not",
+    "located": true,
+    "fid": 3.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   },
+   {
+    "item": "j-060",
+    "run": "sa",
+    "kind": "clause",
+    "how": "clause dropped",
+    "located": true,
+    "fid": 4.0,
+    "O1_fid_unplanted": 3.0,
+    "lower": false
+   },
+   {
+    "item": "j-064",
+    "run": "he",
+    "kind": "clause",
+    "how": "clause dropped",
+    "located": true,
+    "fid": 4.0,
+    "O1_fid_unplanted": 5.0,
+    "lower": true
+   }
+  ]
+ },
+ "repeats": {
+  "scores": 20,
+  "identical": 16,
+  "mean_abs_diff": 0.2,
+  "delta_pairs": [
+   [
+    -2.0,
+    -1.0
+   ],
+   [
+    0.0,
+    0.0
+   ],
+   [
+    -1.0,
+    -1.0
+   ],
+   [
+    0.0,
+    0.0
+   ],
+   [
+    -1.0,
+    -1.0
+   ],
+   [
+    -1.0,
+    -1.0
+   ],
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ],
+   [
+    -1.0,
+    1.0
+   ],
+   [
+    1.0,
+    0.0
+   ]
+  ],
+  "delta_same_sign_or_both_zero": 8
+ },
+ "bleed_mechanical": {
+  "O10_vs_O1": {
+   "sentences": 0,
+   "pages": 0,
+   "rows": []
+  },
+  "O1_vs_O10": {
+   "sentences": 0,
+   "pages": 0,
+   "rows": []
+  }
+ },
+ "lengths": {
+  "n": 50,
+  "median_O10_over_O1": 0.905,
+  "p10": 0.82,
+  "p90": 0.967,
+  "below_0.8": 3,
+  "above_1.25": 0
+ },
+ "quota": {
+  "O1": {
+   "pages": 45,
+   "total": {
+    "calls": 45,
+    "output_tokens": 90917,
+    "cache_creation": 563647,
+    "cache_read": 310590,
+    "list_usd": 6.39,
+    "secs": 1027.6
+   },
+   "per_100_pages": {
+    "calls": 100.0,
+    "output_tokens": 202037.78,
+    "cache_creation": 1252548.89,
+    "cache_read": 690200.0,
+    "list_usd": 14.2,
+    "secs": 2283.56
+   }
+  },
+  "O10": {
+   "pages": 50,
+   "total": {
+    "calls": 5,
+    "output_tokens": 87092,
+    "cache_creation": 112201,
+    "cache_read": 34510,
+    "list_usd": 2.65,
+    "secs": 820.7
+   },
+   "per_100_pages": {
+    "calls": 10.0,
+    "output_tokens": 174184.0,
+    "cache_creation": 224402.0,
+    "cache_read": 69020.0,
+    "list_usd": 5.29,
+    "secs": 1641.4
+   }
+  },
+  "note": "O1 counts the 45 one-page calls made here; the 5 anchor pages reuse #6545 OPUS rows, which kept no usage."
+ }
+}
