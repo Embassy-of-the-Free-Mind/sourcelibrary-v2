@@ -16,6 +16,16 @@ the models were missing. `learn_maya_items` (#6926) holds learner items, not ref
 | same, "potentially confusing signs" (printed p. 86) | confusable | 39, in `confusable_group`s | R2 `reference/maya/wayeb-handbook-2025/` |
 | same, Concise Dictionary of Maya Logograms (pp. 87-96) | logogram | 88, with transliteration, transcription, translation, alternative spellings | R2 (same prefix) |
 
+| Bonn TWKM *Digital Catalog of Maya Hieroglyphs* (Grube, Prager et al.), snapshot 2026-10-18 (#6980) | logogram 678, syllabogram 370, numeric 41, diacritic 3, undeciphered 514 | 1,606 graphs, 1,582 with a Prager drawing | R2 `reference/maya/twkm-signcatalog/` (public URL) |
+
+A TWKM doc is one *graph* (a sign variant, `graph_no` such as `796st`). It carries all its `readings` (value,
+TWKM type, `conf_level`: **1 is the most secure, higher is less secure**, criteria, bibliography); `kind` and
+`value` come from the most secure reading, and a phonogram is stored as `syllabogram`. It also carries `concordance`
+to all 11 catalogs (with `thompson` and `macri_vail` pulled out), `translation`, `nicknames`, `iconography` and
+`occurrence`. The full portal snapshot (decipherments, concordances, 7,826 bibliography rows, artefact zones,
+places…) is in `maya_twkm`, one doc per entity row (`_id` = `<entity>:<id>`), **Mongo only**: TWKM states no
+licence for the tabular data, so it never goes to the public bucket or this repo.
+
 Every doc carries `source_ref` (title, authors, edition, URL, PDF page and box), `rights`, and `checked`
 (every crop was viewed on a labelled contact sheet against its source page).
 
@@ -36,6 +46,12 @@ anything else stays inside the Mongo doc (`image.data`). Neither PDF is in this 
 3. `build.py <stuart-dir> <wayeb-dir> <out>`; check `sheet.py` contact sheets by eye.
 4. `node --env-file=.env.production.local scripts/learn/maya-signs/load-maya-signs.mjs <out> [--apply]`
    (dry run without `--apply`; idempotent).
+
+5. TWKM: fetch `https://classicmayan.org/portal/sc/client/data/data.en.json`, then each graph's drawing
+   `https://classicmayan.org/portal/sc/client/data/images/graphs/<imgUrl>.jpg` (`imgUrl` from `graphs[]`,
+   0.2 s apart) into one dir; `twkm/build.py <data.en.json> <graphs-dir> <out>`; then the loader above, plus
+   `twkm/load-twkm-raw.mjs <out> [--apply]` for `maya_twkm`. Rights: Prager's drawings are CC BY 4.0
+   (legal notice https://classicmayan.org/portal/doc/246); credit on every use.
 
 Known gaps: empty cells of the Wayeb chart are not recorded; the parse keeps the handbook's text
 verbatim, including two rows where two senses share one image (K'AN).
