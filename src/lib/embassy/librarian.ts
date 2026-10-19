@@ -1195,7 +1195,13 @@ async function executeTool(
     }
 
     case 'find_passages': {
-      const question = String(args.question || args.query || '');
+      const question = String(args.question || args.query || '').trim();
+      if (!question) {
+        return {
+          result: { found: 0, context: 'find_passages needs the reader\'s request as a sentence in `question`. Nothing was searched.' },
+          step: { type: 'tool_result', name: 'find_passages', query: '', found: 0, summary: 'No question given' },
+        };
+      }
       const { questionSearch } = await import('@/lib/search/question-search');
       const data = await questionSearch(question);
       const all = [...data.passages, ...data.untranslated];
