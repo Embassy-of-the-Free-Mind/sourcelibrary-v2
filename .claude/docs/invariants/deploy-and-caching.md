@@ -131,7 +131,7 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
 
 Since 2026-10-19 Vercel's production branch is `release`, not `main`. A merge builds nothing.
 `.github/workflows/release.yml` fast-forwards `release` to `main` at 07:00, 13:00 and 19:00 UTC,
-on `gh workflow run release.yml`, and on a hand merge whose message carries `[deploy-now]`
+on `gh workflow run release.yml`, and on a hand merge whose subject line (the PR title) carries `[deploy-now]`
 (auto-merge.yml merges with GITHUB_TOKEN and cannot trigger it). It never forces: if `release` is not
 an ancestor of `main`, someone committed to `release` directly, and it fails and pages.
 - **Why.** Vercel's ISR cache is per deployment, so every production build starts it empty. In the
