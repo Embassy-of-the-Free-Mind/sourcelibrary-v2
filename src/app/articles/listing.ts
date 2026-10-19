@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { FEED_TYPES } from '@/lib/feed-links';
 import { posts, LINKED_PAGES, BLOG_KINDS, KIND_INFO, type BlogKind, type BlogPost } from './posts';
 
 // What the /articles index and its category and page routes list, and their
@@ -53,7 +52,7 @@ export function listingMetadata(kind: Listing, page = 1): Metadata {
   return {
     title,
     description,
-    alternates: { canonical: url, types: FEED_TYPES },
+    alternates: { canonical: url },
     openGraph: { type: 'website', siteName: 'Source Library', title, description, url, images: [SHARE_IMAGE] },
     twitter: { card: 'summary_large_image', title, description, images: [SHARE_IMAGE.url] },
   };
