@@ -72,26 +72,34 @@ export default function MayaMathematicsPage() {
       bg="bg-cream"
     >
       <article className="prose-content max-w-none article-page">
-        <SourceQuote linkToPage
-          book={SLUG.landa} page={252} printedPage={134} src={img(ID.landa, 252)}
-          source={<>Diego de Landa, <em>Relación de las cosas de Yucatán</em>, §XXIV (1864 edition)</>}
-          pageAlt="Page 134 of Brasseur's 1864 edition of Landa, with the section on how the Yucatecans count"
-        >
-          Their count is from 5 to 5 until 20, and from 20 to 20 until 100, and from 100 to 100 until 400, and from
-          400 to 400 until 8,000. And they made much use of this count for the trade of cacao. They have other very
-          long counts, and which they extend <em>in infinitum</em>, counting them 8,000 twenty times, which is
-          160,000, and returning to 20 they double these 160,000, and then continue in this way doubling by 20 until
-          they make an uncountable number: they count on the ground or on a flat thing.
-        </SourceQuote>
+        <p className={p}>
+          Four books written by Maya scribes before the Spanish conquest are known to survive: the codices now in
+          Dresden, Madrid and Paris, and the Grolier Codex in Mexico City, whose authenticity is still argued over.
+          They are screenfolds of bark paper coated with lime plaster and painted in black, red and blue, and much of
+          what is on their pages is arithmetic. The <Link href={`/book/${SLUG.dresden}`}>Dresden Codex</Link> carries
+          a Venus table that runs for 104 years, a table of 405 lunar months that tracks the eclipse seasons, a
+          multiplication table, and counts of more than twelve million days.
+        </p>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure linkToPage
+            src={img(DRESDEN_ID, 26)}
+            alt="A Venus page of the Dresden Codex: columns of glyphs and numbers on the left, and three painted panels on the right, the middle one a figure with a spear, the bottom one a speared animal."
+            href={at(SLUG.dresden, 26)}
+            source={<em>Dresden Codex</em>}
+          >
+            One of the five Venus pages of the Dresden Codex (Förstemann&apos;s pages 46 to 50). The columns hold day
+            names and the intervals between them; the paintings show Venus as a spear-thrower and the one it strikes.
+          </PageFigure>
+        </div>
 
         <p className={p}>
-          Diego de Landa wrote this in the 1560s, a few years after he had burned the Maya books he found at Maní.
-          Three of those books survive anyway, in Dresden, Paris and Madrid, and they are full of numbers: columns of
-          bars and dots in black and red, sums that run into the millions of days. This article goes through the
-          system piece by piece. Each part has something to try, and beside it the page it comes from:
-          Landa&apos;s <Link href={at(SLUG.landa, 252)}>Relación</Link>, the colonial dictionaries and books
-          of Chilam Balam, the <Link href={`/book/${SLUG.dresden}`}>Dresden Codex</Link> itself, and the two
-          scholars who first worked out its arithmetic, Ernst Förstemann and Charles Bowditch.
+          This article reads that arithmetic piece by piece: how the numbers were written, how the counts of days fit
+          together, and how the scribes kept them in step with Venus and the moon. Each part has something to try, and
+          beside it the page it comes from: the Dresden Codex itself; Ernst Förstemann and Charles Bowditch, who first
+          worked out its arithmetic; and the colonial sources that recorded how the Maya counted aloud, Diego de
+          Landa&apos;s <Link href={at(SLUG.landa, 252)}>Relación</Link>, the Motul dictionary and the Books of Chilam
+          Balam.
         </p>
 
         <nav aria-label="On this page" data-card className="not-prose my-10 grid gap-4 sm:grid-cols-2 rounded-lg border border-border-light bg-white/60 p-5 font-sans text-sm">
@@ -114,8 +122,24 @@ export default function MayaMathematicsPage() {
         <h3 className={h3}>Twenty, four hundred, eight thousand</h3>
 
         <p className={p}>
-          Spoken Yucatec counts in twenties. The great Motul dictionary, compiled by Franciscans in the sixteenth
-          century, gives the words for each step.
+          The codices write numbers; the colonial sources say how they were spoken. Diego de Landa, the Franciscan who
+          burned the Maya books he found at Maní in 1562, describes how the Yucatec Maya counted:
+        </p>
+
+        <SourceQuote linkToPage
+          book={SLUG.landa} page={252} printedPage={134} src={img(ID.landa, 252)}
+          source={<>Diego de Landa, <em>Relación de las cosas de Yucatán</em>, §XXIV (1864 edition)</>}
+          pageAlt="Page 134 of Brasseur's 1864 edition of Landa, with the section on how the Yucatecans count"
+        >
+          Their count is from 5 to 5 until 20, and from 20 to 20 until 100, and from 100 to 100 until 400, and from
+          400 to 400 until 8,000. And they made much use of this count for the trade of cacao. They have other very
+          long counts, and which they extend <em>in infinitum</em>, counting them 8,000 twenty times, which is
+          160,000, and returning to 20 they double these 160,000, and then continue in this way doubling by 20 until
+          they make an uncountable number: they count on the ground or on a flat thing.
+        </SourceQuote>
+
+        <p className={p}>
+          The great Motul dictionary, compiled by Franciscans in the sixteenth century, gives the words for each step.
         </p>
 
         <SourceQuote linkToPage
@@ -296,18 +320,9 @@ export default function MayaMathematicsPage() {
           Venus takes about 583.92 days to return to the same place in the sky as seen from the Earth. The Maya
           scribes had no fractions. What they had instead was the habit of looking for a number of days in which
           several cycles all come out even. Five Venus cycles of 584 days are 2,920 days, and so are eight years of
-          365. Five pages of the Dresden Codex are built on this.
+          365. Five pages of the Dresden Codex are built on this; the page at the top of this article is one of them.
         </p>
 
-        <PageFigure linkToPage
-          src={img(DRESDEN_ID, 26)}
-          alt="A Venus page of the Dresden Codex: columns of glyphs and numbers on the left, and three painted panels on the right, the middle one a figure with a spear, the bottom one a speared animal."
-          href={at(SLUG.dresden, 26)}
-          source={<em>Dresden Codex</em>}
-        >
-          One of the five Venus pages of the Dresden Codex (Förstemann&apos;s pages 46 to 50). The columns hold day
-          names and the intervals between them; the paintings show Venus as a spear-thrower and the one it strikes.
-        </PageFigure>
 
         <SourceQuote linkToPage
           book={SLUG.bowditch} page={79} printedPage={55} src={img(ID.bowditch, 79)}
