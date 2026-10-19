@@ -18,7 +18,8 @@ import ArticleImage from './ArticleImage';
  *
  * `children` is the quotation as the article gives it (usually the library's
  * English); `original` is the source-language text when the article shows it.
- * On a phone the page sits under the quote.
+ * On a phone the page sits under the quote as a 12rem thumbnail, so a run of tall scans
+ * does not fill screen after screen.
  */
 export default function SourceQuote({
   book,
@@ -54,12 +55,12 @@ export default function SourceQuote({
         </figcaption>
       </blockquote>
       {linkToPage ? (
-        <Link href={href} className="block">
-          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
+        <Link href={href} className="block w-full max-w-[12rem] mx-auto md:max-w-none">
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
         </Link>
       ) : (
-        <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
-          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
+        <div className="w-full max-w-[12rem] mx-auto md:max-w-none" data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
         </div>
       )}
     </figure>
