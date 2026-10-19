@@ -6,46 +6,48 @@ import { LEVELS, SHEETS } from './data';
 export const metadata: Metadata = {
   title: 'Maya glyph worksheets to print - Source Library',
   description:
-    'Printable worksheets for learning Maya hieroglyphs: David Stuart’s syllable chart, sign drills, spelling, word signs and bar-and-dot numbers, each with an answer key.',
+    'Printable worksheets for learning Maya hieroglyphs: David Stuart’s syllable chart, sign drills, day signs, spelling, word signs and bar-and-dot numbers, each with an answer key.',
   alternates: { canonical: '/learn/maya/worksheets' },
 };
 
 const LEVEL_NOTE: Record<string, string> = {
-  'Level 1': 'Vowels, first signs, copying, numbers',
-  'Level 2': 'More signs, and telling them apart',
-  'Level 3': 'Spelling words, word signs',
-  Reference: 'Keep beside you',
+  Reference: 'Print this first and keep it beside you.',
+  'Level 1': 'Vowels, first signs, numbers and the day signs.',
+  'Level 2': 'More signs, and telling look-alikes apart.',
+  'Level 3': 'Spelling words, and signs that stand for whole words.',
 };
 
 export default function WorksheetsIndex() {
   return (
     <>
       <SiteHeader variant="dark" />
-      <main className="bg-cream min-h-screen">
+      <main>
         <div className="max-w-3xl mx-auto px-4 py-10">
-          <p className="text-sm text-stone-600 mb-2"><Link href="/learn/maya" className="hover:underline">← Learn to read Maya</Link></p>
-          <h1 className="font-serif text-3xl text-primary mb-4">Worksheets to print</h1>
-          <p className="leading-relaxed mb-3">
-            Pen-and-paper practice for reading Maya hieroglyphs. The syllable signs are David Stuart’s drawings from his
-            syllabary chart, the forms carved on monuments around AD 700.
+          <p className="ts-label ts-kicker uppercase"><Link href="/learn/maya" className="hover:underline">Learn to read Maya</Link> · worksheets</p>
+          <h1 className="ts-display text-[44px] leading-[48px] mt-1 mb-5">Glyph sheets</h1>
+          <p className="text-[19px] leading-[30px] mb-3 max-w-[60ch]">
+            Pen-and-paper practice for reading Maya hieroglyphs. The syllable signs are David Stuart’s drawings of the forms carved on
+            monuments around AD 700. The day signs are painted forms from the codices.
           </p>
-          <p className="leading-relaxed mb-8 text-stone-700">
-            Each sheet prints on one page, with its answer key on the page after it. Print the syllable chart first and
-            keep it beside you.
+          <p className="ts-body ts-suave mb-10 max-w-[60ch]">
+            Each sheet prints on one page, with its answer key on the next. Start anywhere; the numbers give a suggested order.
           </p>
           {LEVELS.map((level) => {
             const sheets = SHEETS.filter((s) => s.level === level);
             if (!sheets.length) return null;
             return (
-              <section key={level} className="mb-8">
-                <h2 className="font-serif text-xl text-primary">{level}</h2>
-                <p className="text-sm text-stone-600 mb-3">{LEVEL_NOTE[level]}</p>
-                <ul className="grid sm:grid-cols-2 gap-3">
+              <section key={level} className="mb-9">
+                <h2 className="text-[22px] leading-7 font-bold">{level}</h2>
+                <p className="ts-body ts-suave mb-3">{LEVEL_NOTE[level]}</p>
+                <ul className="space-y-3">
                   {sheets.map((s) => (
                     <li key={s.slug}>
-                      <Link href={`/learn/maya/worksheets/${s.slug}`} className="block h-full rounded-xl border border-border-light bg-white/70 p-4 hover:bg-white transition-colors">
-                        <span className="font-serif text-lg text-primary">{s.title}</span>
-                        <span className="block text-sm text-stone-600 mt-1 line-clamp-2">{s.intro}</span>
+                      <Link href={`/learn/maya/worksheets/${s.slug}`} className="ts-tile ts-link-tile flex items-center gap-4 p-4">
+                        <span className="ts-num ts-display w-11 h-11 shrink-0 flex items-center justify-center text-lg">{s.number}</span>
+                        <span>
+                          <span className="block text-[19px] font-bold leading-6">{s.title}</span>
+                          <span className="block text-[15px] ts-suave line-clamp-2">{s.intro}</span>
+                        </span>
                       </Link>
                     </li>
                   ))}
@@ -53,10 +55,15 @@ export default function WorksheetsIndex() {
               </section>
             );
           })}
-          <p className="text-xs text-stone-500 leading-relaxed mt-10">
-            Syllable drawings © David Stuart, used with permission. Word signs and look-alike pairs from Kettunen and Helmke’s
-            Wayeb workshop handbook (2025).
-          </p>
+          <div className="border-t ts-hair pt-3 mt-10 text-[13px] leading-5 ts-suave space-y-1">
+            <p>Syllable drawings © David Stuart, <i>Maya Hieroglyph Syllabary</i> (2013), used with permission; vector tracing by Source Library.</p>
+            <p>Word signs drawn by Christian Prager, Text Database and Dictionary of Classic Mayan (Bonn), CC BY 4.0.</p>
+            <p>
+              Day signs from Sylvanus G. Morley,{' '}
+              <a href="https://sourcelibrary.org/q/BoWmdDTIGXopuwJXH2T" className="underline">An Introduction to the Study of the Maya Hieroglyphs</a>{' '}
+              (1915), fig. 17. Public domain.
+            </p>
+          </div>
         </div>
       </main>
     </>
