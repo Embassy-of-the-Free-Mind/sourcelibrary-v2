@@ -381,7 +381,7 @@ export default function CuneiformOcrPage() {
           </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             P464358: The Code of Hammurabi stele, ca. 1792&ndash;1750 BCE.{' '}
-            <a href="https://sourcelibrary.org/book/code-of-hammurabi-p464358" className="text-accent-rust hover:text-accent-rust not-italic">Read in Source Library &rarr;</a>
+            <a href="https://cdli.earth/artifacts/464358" className="text-accent-rust hover:text-accent-rust not-italic">See the tablet on CDLI &rarr;</a>
           </figcaption>
         </figure>
 
@@ -424,7 +424,7 @@ export default function CuneiformOcrPage() {
           </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             P213189: Detail of the Cruciform Monument, British Museum (BM 91022).{' '}
-            <a href="https://sourcelibrary.org/book/manishtusu-obelisk-cruciform-monument-p213189" className="text-accent-rust hover:text-accent-rust not-italic">Read in Source Library &rarr;</a>
+            <a href="https://cdli.earth/artifacts/213189" className="text-accent-rust hover:text-accent-rust not-italic">See the tablet on CDLI &rarr;</a>
           </figcaption>
         </figure>
 
@@ -845,14 +845,14 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </ul>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Custom prompts are stored as named families in the <code className="bg-warm px-1.5 py-0.5 rounded text-sm">prompts</code> collection, and the reader, search, and translation percentage tracking all work without modification. The four test tablets are browsable in Source Library:
+          Custom prompts are stored as named families in the <code className="bg-warm px-1.5 py-0.5 rounded text-sm">prompts</code> collection, and the reader, search, and translation percentage tracking all work without modification. The four test tablets, with photographs and scholarly transliterations, are on CDLI:
         </p>
 
         <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
-          <li><a href="https://sourcelibrary.org/book/ur-iii-administrative-tablet-drehem-p102318" className="text-accent-rust hover:underline">Ur III Administrative Tablet</a></li>
-          <li><a href="https://sourcelibrary.org/book/manishtusu-obelisk-cruciform-monument-p213189" className="text-accent-rust hover:underline">Cruciform Monument of Manishtushu</a></li>
-          <li><a href="https://sourcelibrary.org/book/code-of-hammurabi-p464358" className="text-accent-rust hover:underline">Code of Hammurabi</a></li>
-          <li><a href="https://sourcelibrary.org/book/neo-assyrian-medical-prescriptions-bam-6-555-p394421" className="text-accent-rust hover:underline">Neo-Assyrian Tablet (K.2421+)</a></li>
+          <li><a href="https://cdli.earth/artifacts/102318" className="text-accent-rust hover:underline">Ur III Administrative Tablet</a></li>
+          <li><a href="https://cdli.earth/artifacts/213189" className="text-accent-rust hover:underline">Cruciform Monument of Manishtushu</a></li>
+          <li><a href="https://cdli.earth/artifacts/464358" className="text-accent-rust hover:underline">Code of Hammurabi</a></li>
+          <li><a href="https://cdli.earth/artifacts/394421" className="text-accent-rust hover:underline">Neo-Assyrian Tablet (K.2421+)</a></li>
         </ul>
 
         {/* --- Experimental Design for Future Work --- */}
