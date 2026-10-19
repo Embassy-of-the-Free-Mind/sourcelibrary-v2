@@ -370,7 +370,11 @@ export async function questionSearch(question: string, opts: { feature?: string 
 
   const total = Date.now() - t0;
   if (scored > 0 || notes.length > 0) {
-    logAiUsage({ feature: opts.feature || 'librarian_question_search', model: 'typesafe-ai/jev', costUsd, ms: total, ok: reranked });
+    logAiUsage({
+      feature: opts.feature || 'librarian_question_search', model: 'typesafe-ai/jev', costUsd, ms: total, ok: reranked,
+      // Where the time went: one production turn took 20.5 s against a usual 3–5 s, and the row could not say which stage.
+      detail: { lanesMs: tLanes - t0, jevMs: tJev - tLanes, candidates: english.length, scored, ...(notes.length ? { note: notes.join('; ') } : {}) },
+    });
   }
   return {
     passages,
