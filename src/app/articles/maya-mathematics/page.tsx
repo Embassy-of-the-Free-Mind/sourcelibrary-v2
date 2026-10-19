@@ -92,11 +92,10 @@ export default function MayaMathematicsPage() {
         </div>
 
         <p className={p}>
-          This article reads that arithmetic piece by piece: how the numbers were written, how the counts of days fit
-          together, and how the scribes kept them in step with Venus and the moon. Each part has something to try, and
-          beside it the page it comes from: the Dresden Codex itself; Ernst Förstemann and Charles Bowditch, who first
-          worked out its arithmetic; and the colonial Yucatec sources that recorded how the Maya counted aloud, the
-          Motul dictionary and the Books of Chilam Balam.
+          This article goes through that arithmetic: how the numbers were written, how the day counts fit together,
+          and how the scribes kept them in step with Venus and the moon. Each section has something to try, and beside
+          it the page it comes from: in the Dresden Codex, in the studies of it by Ernst Förstemann and Charles
+          Bowditch, or in the colonial Yucatec books, the Motul dictionary and the Books of Chilam Balam.
         </p>
 
         <nav aria-label="On this page" data-card className="not-prose my-10 grid gap-4 sm:grid-cols-2 rounded-lg border border-border-light bg-white/60 p-5 font-sans text-sm">
@@ -119,9 +118,8 @@ export default function MayaMathematicsPage() {
         <h3 className={h3}>Twenty, four hundred, eight thousand</h3>
 
         <p className={p}>
-          The codices write numbers; the colonial sources say how they were spoken. Spoken Yucatec counts in twenties,
-          and the great Motul dictionary, compiled by Franciscans in the sixteenth century, gives the words for each
-          step.
+          Yucatec Maya counts in twenties. The Motul dictionary, compiled by Franciscans in the sixteenth century,
+          gives the words.
         </p>
 
         <SourceQuote linkToPage
@@ -134,9 +132,8 @@ export default function MayaMathematicsPage() {
 
         <p className={p}>
           <em>Hun</em> is one, so <em>hunkal</em> is one twenty, <em>hunbak</em> one four hundred, <em>hunpic</em> one
-          eight thousand, and the same entry gives <em>hunkatun</em> for twenty years. Each unit is twenty of the one
-          below it, which is what we find in the codices: a number is a stack of places, each one worth twenty times
-          the place beneath it.
+          eight thousand, and the same entry gives <em>hunkatun</em> for twenty years. Each unit is twenty of the one below it. The written numbers in the codices work the same way: a number
+          is a stack of places, each worth twenty times the place beneath it.
         </p>
 
         <h3 className={h3}>Three marks</h3>
@@ -213,7 +210,7 @@ export default function MayaMathematicsPage() {
         <h3 className={h3}>Eighteen in the second place: the Long Count</h3>
 
         <p className={p}>
-          When the Maya counted days, they broke the pattern once. Twenty days make a winal, but eighteen winals, not
+          The count of days has one exception to the rule of twenty. Twenty days make a winal, but eighteen winals, not
           twenty, make a tun of 360 days, close to a year. Above that the count is in twenties again.
         </p>
 
@@ -260,9 +257,8 @@ export default function MayaMathematicsPage() {
 
         <p className={p}>
           The same counts can be drawn as meshing gears with one tooth for each day: a gear of 13 teeth, one of 20 and
-          one of 365, all turning a tooth a day. The gears are a picture, not a mechanism: the counts are separate
-          tallies, and all the picture shows is when they come round together. The colonial books drew the k&apos;atuns on a wheel; gears are a modern picture
-          of the same arithmetic. Each gear has a gold mark that starts on the reading line. Turn them and see how long it takes for
+          one of 365, all turning a tooth a day. The counts were separate tallies, and the gears only show when they come round together. The colonial books
+          drew the k&apos;atuns on a wheel; the gears are a modern drawing of the same arithmetic. Each gear has a gold mark that starts on the reading line. Turn them and see how long it takes for
           all the marks to come back to it together.
         </p>
 
@@ -298,9 +294,8 @@ export default function MayaMathematicsPage() {
         <h3 className={h3}>Whole numbers instead of fractions</h3>
 
         <p className={p}>
-          Venus takes about 583.92 days to return to the same place in the sky as seen from the Earth. The Maya
-          scribes had no fractions. What they had instead was the habit of looking for a number of days in which
-          several cycles all come out even. Five Venus cycles of 584 days are 2,920 days, and so are eight years of
+          Venus takes about 583.92 days to return to the same place in the sky as seen from the Earth. The Maya scribes did not use fractions. Instead they looked for a number of days in which several cycles all
+          come out even. Five Venus cycles of 584 days are 2,920 days, and so are eight years of
           365. Five pages of the Dresden Codex are built on this; the page at the top of this article is one of them.
         </p>
 
@@ -390,8 +385,8 @@ export default function MayaMathematicsPage() {
         <p className={p}>
           Förstemann also lists the whole series: 69 groups, each of 177, 178 or 148 days, with the 148s always in the
           same place before one of the table&apos;s pictures. Step through it below. The groups are counted in lunar
-          months, but the pattern of fives and sixes keeps the table in step with something else as well: the eclipse
-          seasons, the times of year when the moon crosses the sun&apos;s path and an eclipse can happen.
+          months, and the pattern of fives and sixes also keeps the table in step with the eclipse seasons, the times of year
+          when the moon crosses the sun&apos;s path and an eclipse can happen.
         </p>
 
         <EclipseTable />
@@ -417,15 +412,14 @@ export default function MayaMathematicsPage() {
         <p className={p}>
           The difference between the two numbers is a whole number of 260-day counts, so both land on the same day of
           that count. Förstemann ends the passage by asking how the person who made the table worked the values out.
-          The method is the one this article has followed from the start: place value in twenties, with eighteen in
-          the third place, and cycles that meet after a whole number of days.
+          The serpent numbers are written with the same place values as the rest of the codex, and chosen the same way,
+          as whole numbers of days at which several cycles meet.
         </p>
 
         <h2 id="since" className={h2}>What has been found since</h2>
 
         <p className={p}>
-          Bowditch and Förstemann had the three codices and a few hundred inscriptions. Most of what has changed
-          since then has come out of the ground.
+          Bowditch and Förstemann had the three codices and a few hundred inscriptions. Most of the new evidence since then has come from excavation and survey.
         </p>
 
         <h3 className={h3}>The oldest dated day</h3>
@@ -436,8 +430,7 @@ export default function MayaMathematicsPage() {
           carry the day 7 Deer, written as a bar and two dots beside a deer&apos;s head. Charcoal from the same sealed
           layer dates them to roughly 300 to 200 BCE, which makes them the earliest securely dated record of the
           260-day count (<a href="https://www.science.org/doi/10.1126/sciadv.abl9290">Stuart and others,{' '}
-          <em>Science Advances</em>, 2022</a>). The count was already written down, bars and dots and all, some
-          fifteen centuries before the Dresden Codex.
+          <em>Science Advances</em>, 2022</a>). That is about fifteen centuries before the Dresden Codex.
         </p>
 
         <h3 className={h3}>Older still, in the buildings</h3>
@@ -459,7 +452,7 @@ export default function MayaMathematicsPage() {
           plaster: lunar tables, and possibly tables for Venus and Mars, some five hundred years older than the Dresden
           Codex. One array of 4,784 days, 162 lunar months, is laid out much like the Dresden eclipse table
           (<a href="https://mayadecipherment.com/2012/05/">Stuart, <em>Maya Decipherment</em>, 2012</a>; the report
-          is in <em>Science</em> 336, 2012). The astronomy of the codices had a long working life behind it.
+          is in <em>Science</em> 336, 2012).
         </p>
 
         <h3 className={h3}>The 819-day count</h3>
@@ -471,8 +464,7 @@ export default function MayaMathematicsPage() {
           counts and of 780-day Mars cycles, and close to whole numbers of the other visible planets. The authors
           say the count is still not completely explained (
           <a href="https://doi.org/10.1017/S0956536122000323"><em>Ancient Mesoamerica</em>, 2023</a>). Choose the
-          819-day count and Mars in the cycles above, or the third set of gears, to see where they meet. It is the same
-          method as the Venus pages.
+          819-day count and Mars in the cycles above, or the third set of gears, to see where they meet.
         </p>
 
         <h3 className={h3}>The first Long Counts</h3>
@@ -481,8 +473,7 @@ export default function MayaMathematicsPage() {
           The oldest Long Count dates are not Maya. Stela 2 at Chiapa de Corzo in Chiapas carries 7.16.3.2.13, a day in
           36 BCE, and Stela C at Tres Zapotes in Veracruz carries 7.16.6.16.18, in 32 BCE; both come from the
           Isthmian region west of the Maya area. The earliest securely Maya Long Count is on Stela 29 at Tikal,
-          8.12.14.8.15, in 292 CE. The place-value count with its 360-day tun was in use before the Maya cities carved
-          it on their monuments.
+          8.12.14.8.15, in 292 CE. The Long Count, with its 360-day tun, was in use west of the Maya area before Maya cities carved it.
         </p>
 
         <h3 className={h3}>Correcting Venus</h3>
@@ -511,9 +502,8 @@ export default function MayaMathematicsPage() {
 
         <p className={p}>
           Stuart&apos;s book <em>The Order of Days</em> is the readable account of how these counts fit into Maya
-          ideas about time, written in the run-up to 2012. Its main point about that year is the one the arithmetic
-          above makes: 13.0.0.0.0 was the completion of a count, and the counts kept going. Inscriptions at Palenque
-          name dates thousands of years beyond it.
+          ideas about time, written in the run-up to 2012. On 2012, he points out that 13.0.0.0.0 completed a count of thirteen b&apos;ak&apos;tuns, and that
+          inscriptions at Palenque name dates thousands of years later.
         </p>
 
         <h3 className={h3}>Elsewhere</h3>

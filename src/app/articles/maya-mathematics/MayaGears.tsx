@@ -70,7 +70,7 @@ type Preset = { key: string; title: string; layout: 'mesh' | 'row'; gears: GearD
 export const GEAR_PRESETS: Preset[] = [
   {
     key: 'round', title: 'Calendar Round', layout: 'mesh', gears: [G20, G13, G365],
-    note: 'Thirteen numbers and twenty names make the 260-day count; the 365-day year turns beside them. The three marks meet again after 18,980 days, 52 years. Here the gears really mesh: the same tooth spacing on all three, so the year gear is too big to show whole.',
+    note: 'Thirteen numbers and twenty names make the 260-day count; the 365-day year turns beside them. The three marks meet again after 18,980 days, 52 years. These three gears mesh and share one tooth spacing, so the year gear is too big to show whole.',
   },
   {
     key: 'venus', title: 'Venus, the year and the 260 days', layout: 'row', gears: [ROW260, ROW365, ROWVENUS],
