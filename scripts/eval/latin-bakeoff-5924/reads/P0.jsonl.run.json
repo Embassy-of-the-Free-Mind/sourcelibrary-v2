@@ -1,0 +1,13 @@
+{
+ "arm": "latbake5924-l0",
+ "backend": "server",
+ "workers": 8,
+ "max_side": 0,
+ "layout": 0,
+ "page_batch": 1,
+ "pages": 99,
+ "errors": 0,
+ "wall_secs": 91.6,
+ "load_secs_max": 3.4,
+ "wall_secs_after_load": 88.2
+}

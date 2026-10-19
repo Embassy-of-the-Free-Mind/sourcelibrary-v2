@@ -1,0 +1,2579 @@
+{
+ "pages": [
+  {
+   "slug": "lr-69b62fe81c1c21a3737fc0b3-p132",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/3244825/full/1000,/0/default.jpg",
+   "sha256_original": "ebf421b29a434203964b5bf9c89464e121b8a1515d41df780de8f1f29ce382bf",
+   "original_size": [
+    1000,
+    1786
+   ],
+   "fed": {
+    "sha256": "ebf421b29a434203964b5bf9c89464e121b8a1515d41df780de8f1f29ce382bf",
+    "size": [
+     1000,
+     1786
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "4cfa2158e6ee41361710754808c719c64195457869ddb02737540f49a37e03be",
+    "size": [
+     721,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b63c691c1c21a373852e60-p67",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/543467/full/1000,/0/default.jpg",
+   "sha256_original": "6287dec50a199ce2faa98a3bab14a38dc1bbc3aa54f027bb97fe840312d5728a",
+   "original_size": [
+    1000,
+    1583
+   ],
+   "fed": {
+    "sha256": "6287dec50a199ce2faa98a3bab14a38dc1bbc3aa54f027bb97fe840312d5728a",
+    "size": [
+     1000,
+     1583
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "ccc5e91c9c2f8e7792bb917c9f6809b2592437c38aee5554bde872dae8ecd2e3",
+    "size": [
+     814,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b63d7e1c1c21a37385c5aa-p6",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/3429232/full/1000,/0/default.jpg",
+   "sha256_original": "0845198cfa71232416dd592766604ba0e4f42e63ec80f5b4522ecd760953ba4d",
+   "original_size": [
+    1000,
+    1484
+   ],
+   "fed": {
+    "sha256": "0845198cfa71232416dd592766604ba0e4f42e63ec80f5b4522ecd760953ba4d",
+    "size": [
+     1000,
+     1484
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "3ec633100741febc01333d5589b0c053cab10099d30d889d6456d68189b1f37f",
+    "size": [
+     868,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b641d01c1c21a37388850b-p29",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/12541190/full/1000,/0/default.jpg",
+   "sha256_original": "2193934e65abe71aca8782a970708b9dfd5b0ec70dce9240f5dfab13beacaf5a",
+   "original_size": [
+    1000,
+    1354
+   ],
+   "fed": {
+    "sha256": "2193934e65abe71aca8782a970708b9dfd5b0ec70dce9240f5dfab13beacaf5a",
+    "size": [
+     1000,
+     1354
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "bab2d68e6ca23eba3ccaef11137149852a3c42bb76c75a749d181b1aa575f5b8",
+    "size": [
+     951,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b650ca18b87551bfca20ca-p20",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/480076/full/1000,/0/default.jpg",
+   "sha256_original": "925315a849786b33cfd9954563b8a313bcc2cd7db074376ea61d1f1b8103f84c",
+   "original_size": [
+    1000,
+    1575
+   ],
+   "fed": {
+    "sha256": "925315a849786b33cfd9954563b8a313bcc2cd7db074376ea61d1f1b8103f84c",
+    "size": [
+     1000,
+     1575
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "1932bfe7d51b8f0bd32f5b22a3756190f707958ba0d99d9a43eda4d869b2e36e",
+    "size": [
+     818,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6535318b87551bfcbc552-p46",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/50553/full/1000,/0/default.jpg",
+   "sha256_original": "eed1a7dc97bed405f63ab06f6c0b47175c864fcb3815a1f4bb24e2c2e0ad8406",
+   "original_size": [
+    1000,
+    1343
+   ],
+   "fed": {
+    "sha256": "eed1a7dc97bed405f63ab06f6c0b47175c864fcb3815a1f4bb24e2c2e0ad8406",
+    "size": [
+     1000,
+     1343
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "2911de3f810ccbf8debea3eab8eb6f25df907a6715396386f28e0902c27a3cdb",
+    "size": [
+     959,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b654f218b87551bfccf7b1-p206",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/14458381/full/1000,/0/default.jpg",
+   "sha256_original": "7a17279ade0bda431f55c61194845d799bb615bae5467cf091b7ceb6f740063e",
+   "original_size": [
+    1000,
+    1496
+   ],
+   "fed": {
+    "sha256": "7a17279ade0bda431f55c61194845d799bb615bae5467cf091b7ceb6f740063e",
+    "size": [
+     1000,
+     1496
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "d1e6adbe3168b5b7afcc5778b61ebf9fce9307ad29d70101feadc9359ae9c611",
+    "size": [
+     861,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6590718b87551bfcf91e6-p288",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/15003706/full/1000,/0/default.jpg",
+   "sha256_original": "0f2ef2d9d671d1f0a816526429cb4aa2e8ce7daaecaca54288e91d1dd21ef529",
+   "original_size": [
+    1000,
+    1504
+   ],
+   "fed": {
+    "sha256": "0f2ef2d9d671d1f0a816526429cb4aa2e8ce7daaecaca54288e91d1dd21ef529",
+    "size": [
+     1000,
+     1504
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "7ab1c0a3296b6f0fa1177c2de6c5aa1ff9c330e1d73bdb17a0be3aa662957116",
+    "size": [
+     856,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b65d3fb3f4fc0441517802-p178",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/15046035/full/1000,/0/default.jpg",
+   "sha256_original": "0ccfc5af31b5488bd2698637f5428d8d98be35d62697b68993f1e474e7be7b2a",
+   "original_size": [
+    1000,
+    1667
+   ],
+   "fed": {
+    "sha256": "0ccfc5af31b5488bd2698637f5428d8d98be35d62697b68993f1e474e7be7b2a",
+    "size": [
+     1000,
+     1667
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "abdaf5b486acc2039102d53af9340a7580b68e6483006591aaf6c5215703ac52",
+    "size": [
+     773,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b65f40b3f4fc04415277f3-p57",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/5005152/full/1000,/0/default.jpg",
+   "sha256_original": "0a865edab08c76665e71d12d9f3b0b7df69fb87fd6d3b6d7ebaa93e51daa9808",
+   "original_size": [
+    1000,
+    1386
+   ],
+   "fed": {
+    "sha256": "0a865edab08c76665e71d12d9f3b0b7df69fb87fd6d3b6d7ebaa93e51daa9808",
+    "size": [
+     1000,
+     1386
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "f348c518a189eb4fcd49b2955cf6a540da7af4c58123d6560c22b8a55fbddb88",
+    "size": [
+     929,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b66125b3f4fc0441538679-p774",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/8144444/full/1000,/0/default.jpg",
+   "sha256_original": "fa8b104e23ae84711e07e705648c9596fcdbaa1ac936e94bfc156f21e28d3769",
+   "original_size": [
+    1000,
+    1453
+   ],
+   "fed": {
+    "sha256": "fa8b104e23ae84711e07e705648c9596fcdbaa1ac936e94bfc156f21e28d3769",
+    "size": [
+     1000,
+     1453
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "d5a9205149598a0a4eb663638434c7d6c17a2672d316c51554bd9f5403a84f5a",
+    "size": [
+     886,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b66156b3f4fc044153aef9-p162",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/349922/full/1000,/0/default.jpg",
+   "sha256_original": "d4aff159396d31e37b6bcc8d91462f8619156e216dab8803567b4e704697dc2e",
+   "original_size": [
+    1000,
+    1467
+   ],
+   "fed": {
+    "sha256": "d4aff159396d31e37b6bcc8d91462f8619156e216dab8803567b4e704697dc2e",
+    "size": [
+     1000,
+     1467
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "2613c0063215efb2bca4417e9f032dc55781d2c2e55bdb6bc55e1d03cf0a1e6b",
+    "size": [
+     878,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b66195b3f4fc044153c675-p6",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/1640998/full/1000,/0/default.jpg",
+   "sha256_original": "058f1b8c33b40bae5511d3438bf638c4e0880d3e3b2efda440a0772245b8634e",
+   "original_size": [
+    1000,
+    1431
+   ],
+   "fed": {
+    "sha256": "058f1b8c33b40bae5511d3438bf638c4e0880d3e3b2efda440a0772245b8634e",
+    "size": [
+     1000,
+     1431
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "1d9e1161909aeb00154f754dba893f5b855c35898f00df2b0585bf4d6e57e094",
+    "size": [
+     900,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b66318b3f4fc044154804f-p294",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/8725360/full/1000,/0/default.jpg",
+   "sha256_original": "a012d11730faae59a81317a0e3f510e424f3dfbf85b5e4fef4d1160762565502",
+   "original_size": [
+    1000,
+    1700
+   ],
+   "fed": {
+    "sha256": "a012d11730faae59a81317a0e3f510e424f3dfbf85b5e4fef4d1160762565502",
+    "size": [
+     1000,
+     1700
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "994d0b36fb790afbe7ff909aa719acefa774fb5cf17a108992c7ba91bf0c8222",
+    "size": [
+     758,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b66582b3f4fc0441555ece-p3",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/1402747/full/1000,/0/default.jpg",
+   "sha256_original": "90a2ba65ca3daea69b366dd01389422ea1076432d4f86015e7c3232a16a4c118",
+   "original_size": [
+    1000,
+    1261
+   ],
+   "fed": {
+    "sha256": "90a2ba65ca3daea69b366dd01389422ea1076432d4f86015e7c3232a16a4c118",
+    "size": [
+     1000,
+     1261
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "90a2ba65ca3daea69b366dd01389422ea1076432d4f86015e7c3232a16a4c118",
+    "size": [
+     1000,
+     1261
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b666edb3f4fc0441560ba8-p8",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/11313104/full/1000,/0/default.jpg",
+   "sha256_original": "d9f26f66620599b6a294aa27e049a54a86fa0f4a3bdc26bc21be40eb7752d43a",
+   "original_size": [
+    1000,
+    1326
+   ],
+   "fed": {
+    "sha256": "d9f26f66620599b6a294aa27e049a54a86fa0f4a3bdc26bc21be40eb7752d43a",
+    "size": [
+     1000,
+     1326
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "8afcd5c714d9b3b383d2c9a2e883f39c343aaa22ae83e56953a177c040089ace",
+    "size": [
+     971,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69bd9cf76120d54bd037254f-p140",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/2101499/full/1000,/0/default.jpg",
+   "sha256_original": "13d7ba661abbfb6b5768fadeb189f9f43a4a2496066f5ba4974ed89f0a68ec85",
+   "original_size": [
+    1000,
+    1522
+   ],
+   "fed": {
+    "sha256": "13d7ba661abbfb6b5768fadeb189f9f43a4a2496066f5ba4974ed89f0a68ec85",
+    "size": [
+     1000,
+     1522
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "a1f8a19a2d1e0db4c2948c49c84f5d714ef97c14303263d431791a5947832f4a",
+    "size": [
+     846,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69bd9d836120d54bd03774f6-p553",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/3261800/full/1000,/0/default.jpg",
+   "sha256_original": "50372f66a4076786749e09ae30b895fb9621b48b69ed824c87966e7a68e22b0d",
+   "original_size": [
+    1000,
+    1644
+   ],
+   "fed": {
+    "sha256": "50372f66a4076786749e09ae30b895fb9621b48b69ed824c87966e7a68e22b0d",
+    "size": [
+     1000,
+     1644
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "923cffdf47d00427104c94614f69586634ffaf497e4b29081fc3a212fb173ebd",
+    "size": [
+     783,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a08557415c643eb1af55fa5-p192",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_jVAUIkhxZXIC/page/n191/full/full/0/default.jpg",
+   "sha256_original": "0704c4ae8c1552504a2ed6213c05c6f1795bdb521d41e6872748a96fb6109172",
+   "original_size": [
+    1606,
+    2500
+   ],
+   "fed": {
+    "sha256": "5eeb5bd910f7b007ad6b80cbba7f308f54a0d180d65add50883a56054353ccf5",
+    "size": [
+     1542,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "9fbeea59c9dcbde069d637f9d57bb0d7c5c19e164b3768a8e132015d8349bd8b",
+    "size": [
+     827,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a08567915c643eb1af59235-p42",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_0t0SbH8JQVIC/page/n41/full/full/0/default.jpg",
+   "sha256_original": "d4b75044bd1adc81790918e2ba139831d1e3a4ea9102759023ad71056f026303",
+   "original_size": [
+    1582,
+    2500
+   ],
+   "fed": {
+    "sha256": "87671d254a443eb6cebafac413b31ebbfd13aec23f5ac3c698e46fb52cccaa44",
+    "size": [
+     1519,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "c49e8ed8dce0f24bbf44badb790ee75b6e8ceb1e61add360b1e9fc485f02f407",
+    "size": [
+     815,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a41aec44f7292ab3ec107f2-p28",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_oEA9qcYmBRMC/page/n27/full/full/0/default.jpg",
+   "sha256_original": "9de8a22b45e2892221f10c0a05c0589a9270049ac4779c864d90c6cdb9633d2d",
+   "original_size": [
+    1754,
+    2500
+   ],
+   "fed": {
+    "sha256": "a556a99478b6263a3cbc3d1d21f76976d0b6b87960ad210dad9feb6a23d63e2c",
+    "size": [
+     1684,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "445264b4a88d1eaa9040cd8b5c59dd23b9700ca2ce3dc190960a166bb0987cb8",
+    "size": [
+     904,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a424dd8c1f44d759e6cf921-p368",
+   "century": "1500s",
+   "url": "https://archive.org/download/b32983694/page/n367/full/full/0/default.jpg",
+   "sha256_original": "3113dff0104366134200b84aea7b707484a2f177ce095aa91ac87ba333864b12",
+   "original_size": [
+    2646,
+    3876
+   ],
+   "fed": {
+    "sha256": "494b601c0d66bc72a9dc78f508ccd909ef4ed7e1b89d88b4e13e8ee044c97bfb",
+    "size": [
+     1638,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "6efbc5a70a7b8d68a24197e9fc80f01a042b3214722e064359e0431df25e373c",
+    "size": [
+     879,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4260f7744db9e3105a80d6-p110",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_0IDnB-oWUekC/page/n109/full/full/0/default.jpg",
+   "sha256_original": "4a35a06b44997251f1fdfa15c682f5bf8adf309f724a14cdad876e480dd97f68",
+   "original_size": [
+    2500,
+    3447
+   ],
+   "fed": {
+    "sha256": "d7d4e587582630faa523c152cf1e24a3f2415abdf9dda8c562d1c349e8bdc027",
+    "size": [
+     1741,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "cf746aaf6f3c05bf4f2f765cfe55c6c7d54a13fb76dd5acb7f8ed24d46163e63",
+    "size": [
+     934,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4268b7aedf4c943f91f35b-p106",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_ZCLeBijyxB8C/page/n105/full/full/0/default.jpg",
+   "sha256_original": "eb469f91f175d0998fb04fe25b6fa5922613eb70372eb891b168e438db1e599c",
+   "original_size": [
+    1513,
+    2500
+   ],
+   "fed": {
+    "sha256": "fbcc361bcda3b8761620aea58d685d0f523646f323ac5ab082fadf2da7b84a28",
+    "size": [
+     1452,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "24ad5fcd10a5154f726ba9e2ed5378a5157014397800e525e8039b7c965d6580",
+    "size": [
+     779,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a426d18175f31ca3ec5391c-p58",
+   "century": "1500s",
+   "url": "https://archive.org/download/den-kbd-pil-130018100054-001/page/n57/full/full/0/default.jpg",
+   "sha256_original": "a6e95cb3e8025349efadb04b68dd178c885b7eac7ca547b24e4c0bef6af30b87",
+   "original_size": [
+    4959,
+    6601
+   ],
+   "fed": {
+    "sha256": "b9cd0314f518f6c4a0027cc73be0ccaa6d20864daff886cde789ace33c8190e9",
+    "size": [
+     1803,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "8b72fefb7ac60aca5f6765db3ac6bd2ae4ab5e4a06f48d7f6fef01d85b47b3d6",
+    "size": [
+     968,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42b98a5207af7c42f683b0-p207",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_lE37MfhaRw4C/page/n206/full/full/0/default.jpg",
+   "sha256_original": "1513d3c96415e61c81d402799a059de50da47c038dbcca42a14923cb3b89a481",
+   "original_size": [
+    1671,
+    2500
+   ],
+   "fed": {
+    "sha256": "6650d129f7203bc46f308017d6ea6867750bf8d58367bbbf0fab7eda053dfdca",
+    "size": [
+     1604,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "6bbd57a0d77826ce171b37e2aa8994cbdbcf8edde698cdc55e017f5ebf4f0b77",
+    "size": [
+     861,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42bdb497284560a2b078dc-p26",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_fGo4APoQ_qUC/page/n25/full/full/0/default.jpg",
+   "sha256_original": "d3236f6ae4820590b20ce5366e5b32fbb7f2af97f0a92e0fcdfbbfb6033a2e09",
+   "original_size": [
+    1601,
+    2500
+   ],
+   "fed": {
+    "sha256": "3bac5d2de1255aa0ce1e128d4e8bd6221ff464fb880bd340a90e25a5520eeda9",
+    "size": [
+     1537,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "d9c62a98f41f769872a76abf87328343f9d9057045141fe5b7aa229260e39d21",
+    "size": [
+     825,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4306ba22c0c8edb0f88ee5-p163",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_d5kkjYWuSr8C/page/n162/full/full/0/default.jpg",
+   "sha256_original": "93927f1578ee1742e1063d7b6696e7403b2aa6769545c6667e4fc8bf0583fee4",
+   "original_size": [
+    1795,
+    2500
+   ],
+   "fed": {
+    "sha256": "d0bbe9f3ab1a9367b1e4307314d9c0c0bc60ff4fea3952d24d0ece6ff725106c",
+    "size": [
+     1723,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "8bb4f2e862e8eede9c53145342e078110de30180a630d29db7c6846f5efad0ab",
+    "size": [
+     925,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4a5cb69050f0b43431f544-p217",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11218233_00217/full/full/0/default.jpg",
+   "sha256_original": "1c078a8055c3f2eed1ead351869ed8f6f67bf946b1a300eb5a91e3b3f8731a08",
+   "original_size": [
+    1651,
+    2478
+   ],
+   "fed": {
+    "sha256": "25c8458ab83480c7d9605feaf55bfea606b8c776abc949dc9723b9e57a2e171a",
+    "size": [
+     1599,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "f91720d698f00c0857aea10e01c0d54d1585e1e8dbfd354bca2ab85b5734da11",
+    "size": [
+     858,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4ad22c33aff31aa5243306-p33",
+   "century": "1500s",
+   "url": "https://archive.org/download/bim_early-english-books-1475-1640_epitaphia-et-inscription_barker-wm_1566/page/n32/full/full/0/default.jpg",
+   "sha256_original": "64e28163c37a8c02d9418ea0b48d20c5191fdb5a0cf2870ae4170329d580b698",
+   "original_size": [
+    7132,
+    10265
+   ],
+   "fed": {
+    "sha256": "85ff6f7b1cb69c789cea9ba1cdc07555760cb8e9db401db440811c5277f96494",
+    "size": [
+     1667,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "6447bfcd20b7bc8cd81659c45305a06b127330a408cc6cc8f6c63a8e236ef36a",
+    "size": [
+     895,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a506a2678825bd7fddf0013-p19",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00014553_00019/full/full/0/default.jpg",
+   "sha256_original": "40f0ba8233de6418f11a64a7cb9e384f36e5c1b15058b65e18d13bde98168d64",
+   "original_size": [
+    1768,
+    2652
+   ],
+   "fed": {
+    "sha256": "c10f198e936488160fdb3ac77ebeedfd95c9133d1f089e5b156fc5f5098f8ab9",
+    "size": [
+     1600,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "2d00f8887dcc4b3615558c278d0475eaf74c05468a2152d6ea63203526a295e7",
+    "size": [
+     859,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a905f881da1ecc792bd26b6-p613",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10191958_00613/full/full/0/default.jpg",
+   "sha256_original": "5ffe80c89b2a02bb1641a93e6e2cbb7897d6d65ffa20ff6fc5bc6b049f2da86a",
+   "original_size": [
+    1164,
+    1852
+   ],
+   "fed": {
+    "sha256": "5ffe80c89b2a02bb1641a93e6e2cbb7897d6d65ffa20ff6fc5bc6b049f2da86a",
+    "size": [
+     1164,
+     1852
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "12205fa425e48c700f63b85e69c8af0f4a746b6119b27737b69cb59787ec9cdd",
+    "size": [
+     810,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90955bac1fcc717ba305fe-p43",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10202713_00043/full/full/0/default.jpg",
+   "sha256_original": "6791f69bd34ee232c8e9f9153224b96cc3f50d216d2bf0df43edc49ea6f8098f",
+   "original_size": [
+    1530,
+    2327
+   ],
+   "fed": {
+    "sha256": "6791f69bd34ee232c8e9f9153224b96cc3f50d216d2bf0df43edc49ea6f8098f",
+    "size": [
+     1530,
+     2327
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "2934a36a6ee1c18c9d9a9da903b1fa79a23e917ab2103fb61c896299323f6e0e",
+    "size": [
+     847,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a9097f05fecff234ca5eb2b-p600",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10989130_00600/full/full/0/default.jpg",
+   "sha256_original": "66afc0009c380b8961c65ec5f35c85ea35bd731302f716afd1931e38ab62d729",
+   "original_size": [
+    1755,
+    2382
+   ],
+   "fed": {
+    "sha256": "66afc0009c380b8961c65ec5f35c85ea35bd731302f716afd1931e38ab62d729",
+    "size": [
+     1755,
+     2382
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "80bdaa00c427e715cd505d37a09d2a512df806b308745043290bbe49fdfb6738",
+    "size": [
+     949,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90bcd6a02f8189feb97ac6-p94",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00014264_00094/full/full/0/default.jpg",
+   "sha256_original": "15be5e153f3b83aa4be6aa22a40c5b1b3e51cd328e95178893d2e62e5e47f932",
+   "original_size": [
+    2513,
+    3429
+   ],
+   "fed": {
+    "sha256": "8c9b60da17175edd0252237df8507077866f6d99e6314c6b42927fdf924c8f04",
+    "size": [
+     1759,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "f5469de5214413557ec704d60132cd00b66d40359cabf49415a059e23e844558",
+    "size": [
+     944,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90d5430cdb00394ba531cd-p362",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10195572_00362/full/full/0/default.jpg",
+   "sha256_original": "a5ca7ff5a20ae57e59c6cc1450437a3224055781f9e8dcde809c45c3a739255b",
+   "original_size": [
+    2406,
+    3638
+   ],
+   "fed": {
+    "sha256": "7edc170f6dd3a8f40f3f07a5ea5b0ad9b77a239bd773a35b5c57546776719126",
+    "size": [
+     1587,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "ecf059588194ecddb995bca330ce8b0e37d64fcb0e1152adba7f0702b4744a26",
+    "size": [
+     852,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a941c8158e968ecd979f393-p98",
+   "century": "1500s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10182222_00098/full/full/0/default.jpg",
+   "sha256_original": "26f29732c3b4e1cf045acaed596ef7d223741d9fca1e36d23209c2a1ce31de07",
+   "original_size": [
+    1238,
+    2053
+   ],
+   "fed": {
+    "sha256": "26f29732c3b4e1cf045acaed596ef7d223741d9fca1e36d23209c2a1ce31de07",
+    "size": [
+     1238,
+     2053
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "9d25ff35d425518d1e6039cdf335fce9c4e1deef76b05a489415fc39705c9ed0",
+    "size": [
+     777,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a943b2545a4780cb83dd409-p108",
+   "century": "1500s",
+   "url": "https://archive.org/download/bub_gb_1a2Z6t_Zv2MC/page/n107/full/full/0/default.jpg",
+   "sha256_original": "c9a8f51b2782d78242564bb10902ec9601c72a0e61290648ef4fc69ad7b6d743",
+   "original_size": [
+    2500,
+    3603
+   ],
+   "fed": {
+    "sha256": "0845040c77949e7cd6278f172e2fe8ff110e86a91d524dff59b29e12ee7e306f",
+    "size": [
+     1665,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "e476e772941b25d75dab3fb11a477fc46f3359f9a1323b7b80916221181474a1",
+    "size": [
+     894,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6ac514204ba7223afe068770-p705",
+   "century": "1500s",
+   "url": "https://www.e-rara.ch/i3f/v21/30326045/full/full/0/default.jpg",
+   "sha256_original": "7d4a519653945f4f420a89759f1df309776071f4935b8f4e5616301e0e72fbbf",
+   "original_size": [
+    1286,
+    1958
+   ],
+   "fed": {
+    "sha256": "7d4a519653945f4f420a89759f1df309776071f4935b8f4e5616301e0e72fbbf",
+    "size": [
+     1286,
+     1958
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "0f8325ebcb9242e31f669238e88c78446b457cc60efb9a4d1e62b3267c4021f5",
+    "size": [
+     846,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6ac52d70ed10b8de509f0a53-p155",
+   "century": "1500s",
+   "url": "https://digi.ub.uni-heidelberg.de/iiif/2/remus1596%3A0113.jpg/full/full/0/default.jpg",
+   "sha256_original": "31aed5f90795344c11ca89f953bd35cb855a2dba8a674f2c791c8b15e86d5e6b",
+   "original_size": [
+    1229,
+    2133
+   ],
+   "fed": {
+    "sha256": "31aed5f90795344c11ca89f953bd35cb855a2dba8a674f2c791c8b15e86d5e6b",
+    "size": [
+     1229,
+     2133
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "525315c4aef053b73a18e3c95c95048f33f0d10d83b716efba41628b6852182f",
+    "size": [
+     742,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b51ea6cf111105c42a2b3f-p204",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11245628_00204/full/1000,/0/default.jpg",
+   "sha256_original": "00c446214eb7c4a6fc0f364674252b348862ac14aa6cf78ed3752866c3593187",
+   "original_size": [
+    1000,
+    1670
+   ],
+   "fed": {
+    "sha256": "00c446214eb7c4a6fc0f364674252b348862ac14aa6cf78ed3752866c3593187",
+    "size": [
+     1000,
+     1670
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "c6e0f5cadadd039baaffaad6492ad8791d14c153e3c3f48b91fe3f6c8d3c6884",
+    "size": [
+     771,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6797a70c69d645a6f59e2-p57",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/12712085/full/1000,/0/default.jpg",
+   "sha256_original": "73bac930035ed2a1be36100f5d73ec8620a955a99538687ee5818d707b1cec38",
+   "original_size": [
+    1000,
+    1265
+   ],
+   "fed": {
+    "sha256": "73bac930035ed2a1be36100f5d73ec8620a955a99538687ee5818d707b1cec38",
+    "size": [
+     1000,
+     1265
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "73bac930035ed2a1be36100f5d73ec8620a955a99538687ee5818d707b1cec38",
+    "size": [
+     1000,
+     1265
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b67a8070c69d645a6fb80e-p11",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/5627127/full/1000,/0/default.jpg",
+   "sha256_original": "e1bbc87a05f563d8529d7337bfd74c447b4c8e89231bd60363515b3b8004197f",
+   "original_size": [
+    1000,
+    1342
+   ],
+   "fed": {
+    "sha256": "e1bbc87a05f563d8529d7337bfd74c447b4c8e89231bd60363515b3b8004197f",
+    "size": [
+     1000,
+     1342
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "0850622c529908ef9b8fb6f9c14de6f32f9707e6f27a25e05bebfe8c6b83bd57",
+    "size": [
+     960,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b67e5270c69d645a70cbfc-p7",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/5660057/full/1000,/0/default.jpg",
+   "sha256_original": "101d51ccd5a6504e1b35bb70d818567ae369b2797a846fe7efc552cfa1609a6c",
+   "original_size": [
+    1000,
+    1261
+   ],
+   "fed": {
+    "sha256": "101d51ccd5a6504e1b35bb70d818567ae369b2797a846fe7efc552cfa1609a6c",
+    "size": [
+     1000,
+     1261
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "101d51ccd5a6504e1b35bb70d818567ae369b2797a846fe7efc552cfa1609a6c",
+    "size": [
+     1000,
+     1261
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b686ce70c69d645a74659d-p158",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/26099654/full/1000,/0/default.jpg",
+   "sha256_original": "b0f3ab28a1d5ed0d3574eddfbb8843719c9b5379cbe843ec8634f98696ac9b79",
+   "original_size": [
+    1000,
+    1510
+   ],
+   "fed": {
+    "sha256": "b0f3ab28a1d5ed0d3574eddfbb8843719c9b5379cbe843ec8634f98696ac9b79",
+    "size": [
+     1000,
+     1510
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "2483c18f018ec37e6978333de10a9ab332b0cc83816baf1c655b615dfce48957",
+    "size": [
+     853,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6887d2368e1fad320d102-p39",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/5994321/full/1000,/0/default.jpg",
+   "sha256_original": "bc67806bc7e565b1ad447b54c1aa855189fa80990ef1af746801fe01b2c0e1e8",
+   "original_size": [
+    1000,
+    1375
+   ],
+   "fed": {
+    "sha256": "bc67806bc7e565b1ad447b54c1aa855189fa80990ef1af746801fe01b2c0e1e8",
+    "size": [
+     1000,
+     1375
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "861c073e1ac7165f365435969f09662eba4479a604c8c01e1cf951472e25aad0",
+    "size": [
+     937,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b689dc2368e1fad3217c45-p7",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/5995107/full/1000,/0/default.jpg",
+   "sha256_original": "40a0f1494a628589c9c20cfd287b6820a39fd8ec64bb3b750a70c4d7a02435ec",
+   "original_size": [
+    1000,
+    1292
+   ],
+   "fed": {
+    "sha256": "40a0f1494a628589c9c20cfd287b6820a39fd8ec64bb3b750a70c4d7a02435ec",
+    "size": [
+     1000,
+     1292
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "6b5c837b12047090c9e8a09e6bfff628c7c1f738140a043a363d42658d2c1db5",
+    "size": [
+     997,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b68a232368e1fad3218e75-p104",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/10778556/full/1000,/0/default.jpg",
+   "sha256_original": "a79124e7ec1d48820ecd4b7b278d47d04aba63adf23d4ba3115af2df3549ca92",
+   "original_size": [
+    1000,
+    1292
+   ],
+   "fed": {
+    "sha256": "a79124e7ec1d48820ecd4b7b278d47d04aba63adf23d4ba3115af2df3549ca92",
+    "size": [
+     1000,
+     1292
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "f8252349efcdc07a6348cb2fdfdde6169c2471f1f6f71b052c0a6f70363e2170",
+    "size": [
+     997,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b690c7080b19f98fce0926-p15",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/6131490/full/1000,/0/default.jpg",
+   "sha256_original": "3514031a8be180126a2424be450295fbca3827d13abfad9cfb47d587fd2b50be",
+   "original_size": [
+    1000,
+    1300
+   ],
+   "fed": {
+    "sha256": "3514031a8be180126a2424be450295fbca3827d13abfad9cfb47d587fd2b50be",
+    "size": [
+     1000,
+     1300
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "bc56436f85e797390d1449b652285ea65fde4c06b1c69b5d106691745f278d77",
+    "size": [
+     991,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b69808080b19f98fcf59a7-p12",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/6150111/full/1000,/0/default.jpg",
+   "sha256_original": "ab9081aa37161db93d8d8afe0cc4ced247bf89c33bca07fa28ecd2b6414dfb6f",
+   "original_size": [
+    1000,
+    1325
+   ],
+   "fed": {
+    "sha256": "ab9081aa37161db93d8d8afe0cc4ced247bf89c33bca07fa28ecd2b6414dfb6f",
+    "size": [
+     1000,
+     1325
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "1c684d5a60725cedde312e0873f1e6aee91a0fd6c729064f420ca4b82cf5f982",
+    "size": [
+     972,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b699da080b19f98fcfbbc0-p417",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/8181659/full/1000,/0/default.jpg",
+   "sha256_original": "e53ba0c9025e691241e12b4b909ce0348752fcfb60dec211b6b0170aca9bbcc8",
+   "original_size": [
+    1000,
+    1678
+   ],
+   "fed": {
+    "sha256": "e53ba0c9025e691241e12b4b909ce0348752fcfb60dec211b6b0170aca9bbcc8",
+    "size": [
+     1000,
+     1678
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "d261053a645a1a3cb3d1641310ca14afadb24f9e7ae758a07b50a07e43841d22",
+    "size": [
+     768,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6a48a080b19f98fd202ca-p3",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/18129585/full/1000,/0/default.jpg",
+   "sha256_original": "0cd0428c46535da88e2f5e986a33b2ec32b726ead2779d6f76f4d9d75b1c6604",
+   "original_size": [
+    1000,
+    1233
+   ],
+   "fed": {
+    "sha256": "0cd0428c46535da88e2f5e986a33b2ec32b726ead2779d6f76f4d9d75b1c6604",
+    "size": [
+     1000,
+     1233
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "0cd0428c46535da88e2f5e986a33b2ec32b726ead2779d6f76f4d9d75b1c6604",
+    "size": [
+     1000,
+     1233
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6a4fa080b19f98fd2192d-p41",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/11030722/full/1000,/0/default.jpg",
+   "sha256_original": "138b0d51009d6c7bde82816f9bf9309b48b3843db3c4bfe52299fe32a138de42",
+   "original_size": [
+    1000,
+    1257
+   ],
+   "fed": {
+    "sha256": "138b0d51009d6c7bde82816f9bf9309b48b3843db3c4bfe52299fe32a138de42",
+    "size": [
+     1000,
+     1257
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "138b0d51009d6c7bde82816f9bf9309b48b3843db3c4bfe52299fe32a138de42",
+    "size": [
+     1000,
+     1257
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6a692080b19f98fd2b55b-p23",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/16295728/full/1000,/0/default.jpg",
+   "sha256_original": "a1b10c43ba37135f1c8affcbd38e548669c7bb35d5b8c432f6cd0dda03ead2c6",
+   "original_size": [
+    1000,
+    1295
+   ],
+   "fed": {
+    "sha256": "a1b10c43ba37135f1c8affcbd38e548669c7bb35d5b8c432f6cd0dda03ead2c6",
+    "size": [
+     1000,
+     1295
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "81ecc6ce4a01e8f973f9ee0e22a6d32ddf2cd1f8a7437a27e4c27bdbbda12202",
+    "size": [
+     995,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6a72a080b19f98fd2c751-p11",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/9771243/full/1000,/0/default.jpg",
+   "sha256_original": "d351340aeb8ad0b107ee0ff674a7e6e8fcb6beebff1346a69d512982b4348966",
+   "original_size": [
+    1000,
+    1322
+   ],
+   "fed": {
+    "sha256": "d351340aeb8ad0b107ee0ff674a7e6e8fcb6beebff1346a69d512982b4348966",
+    "size": [
+     1000,
+     1322
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "5d5e9f218582c08b690cb1deaaf641c77c9d46893141832b72492a49e0ba0850",
+    "size": [
+     974,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6aaec080b19f98fd40db6-p328",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/14089603/full/1000,/0/default.jpg",
+   "sha256_original": "663835c9545c10a640b7610efb2140715c4754832b3d48c1c45ae8fc11375667",
+   "original_size": [
+    1000,
+    1611
+   ],
+   "fed": {
+    "sha256": "663835c9545c10a640b7610efb2140715c4754832b3d48c1c45ae8fc11375667",
+    "size": [
+     1000,
+     1611
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "e2c04db9b1e1f9032859488bb96b01335b9009a304d08cd19826b51504eaf3f7",
+    "size": [
+     800,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6ac22080b19f98fd47814-p15",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/6387743/full/1000,/0/default.jpg",
+   "sha256_original": "b139228af41457d0a64614098b6425ad52c424c1735c284c83d0622e8e14c401",
+   "original_size": [
+    1000,
+    1350
+   ],
+   "fed": {
+    "sha256": "b139228af41457d0a64614098b6425ad52c424c1735c284c83d0622e8e14c401",
+    "size": [
+     1000,
+     1350
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "46bba230097a6e3e17efc0b05b8f648c640ef1472892b0c765825dc808328171",
+    "size": [
+     954,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6ac4f080b19f98fd47f41-p8",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/7092055/full/1000,/0/default.jpg",
+   "sha256_original": "029b57ba44616e752ddb9063262596fad5ebfb4f9c72715c70d19f7e0ef071a3",
+   "original_size": [
+    1000,
+    1233
+   ],
+   "fed": {
+    "sha256": "029b57ba44616e752ddb9063262596fad5ebfb4f9c72715c70d19f7e0ef071a3",
+    "size": [
+     1000,
+     1233
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "029b57ba44616e752ddb9063262596fad5ebfb4f9c72715c70d19f7e0ef071a3",
+    "size": [
+     1000,
+     1233
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6ae3edc00a90e322afdc9-p18",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/6962698/full/1000,/0/default.jpg",
+   "sha256_original": "96fc0e29c899f80b6427cc6bcc0b4306fa14f7ef534a959d646bf9e12382e574",
+   "original_size": [
+    1000,
+    1322
+   ],
+   "fed": {
+    "sha256": "96fc0e29c899f80b6427cc6bcc0b4306fa14f7ef534a959d646bf9e12382e574",
+    "size": [
+     1000,
+     1322
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "d21c0accbf0920d00c8ffd305f88d16729fc71a96fd2eece98c22933864eabe6",
+    "size": [
+     974,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6afd296dc15d4a16c8270-p70",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/10155761/full/1000,/0/default.jpg",
+   "sha256_original": "2afa95ee90aa615f83175d52edc5ce0dd2ea92eb91a327b950ca9d17e3889f05",
+   "original_size": [
+    1000,
+    1596
+   ],
+   "fed": {
+    "sha256": "2afa95ee90aa615f83175d52edc5ce0dd2ea92eb91a327b950ca9d17e3889f05",
+    "size": [
+     1000,
+     1596
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "88d2d83677f1665992b3afc730eb7be9674963030c472d2cf2d4f339783380bc",
+    "size": [
+     807,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6b04496dc15d4a16cb96d-p9",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/4195057/full/1000,/0/default.jpg",
+   "sha256_original": "a3d527083c2a50175707be5e857cf60252dd9a862f5b676a36de18800cebdd20",
+   "original_size": [
+    1000,
+    1256
+   ],
+   "fed": {
+    "sha256": "a3d527083c2a50175707be5e857cf60252dd9a862f5b676a36de18800cebdd20",
+    "size": [
+     1000,
+     1256
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "a3d527083c2a50175707be5e857cf60252dd9a862f5b676a36de18800cebdd20",
+    "size": [
+     1000,
+     1256
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6b60296dc15d4a16ea626-p87",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/3218956/full/1000,/0/default.jpg",
+   "sha256_original": "13a6320ffb0331642a69c462fddd72d06b56de422f221214698402023b4d3e28",
+   "original_size": [
+    1000,
+    1218
+   ],
+   "fed": {
+    "sha256": "13a6320ffb0331642a69c462fddd72d06b56de422f221214698402023b4d3e28",
+    "size": [
+     1000,
+     1218
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "13a6320ffb0331642a69c462fddd72d06b56de422f221214698402023b4d3e28",
+    "size": [
+     1000,
+     1218
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6b8058566c83814624dc2-p289",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/16429888/full/1000,/0/default.jpg",
+   "sha256_original": "aad9be9323aea9c88269db3f761cffb3b71899b7cb2612318f4153b7fd3f8eb6",
+   "original_size": [
+    1000,
+    1328
+   ],
+   "fed": {
+    "sha256": "aad9be9323aea9c88269db3f761cffb3b71899b7cb2612318f4153b7fd3f8eb6",
+    "size": [
+     1000,
+     1328
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "ec68b900cc00cad5413007e49983084f0814b6826abef10f9d5e9ea790ad21ac",
+    "size": [
+     970,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6b8588566c838146263bc-p223",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/6161822/full/1000,/0/default.jpg",
+   "sha256_original": "70d6dcf906cbe923b38f6a0925af1bb178d87b8a913c7eedda8a64cde9ee9368",
+   "original_size": [
+    1000,
+    1483
+   ],
+   "fed": {
+    "sha256": "70d6dcf906cbe923b38f6a0925af1bb178d87b8a913c7eedda8a64cde9ee9368",
+    "size": [
+     1000,
+     1483
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "db8c173c1aea0f3996fed5255238ce4ee6626c374e4e1eb4c0801df8f9a8a276",
+    "size": [
+     869,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6b9158566c83814628f76-p19",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/10438724/full/1000,/0/default.jpg",
+   "sha256_original": "7e814e1b7dcce359489c75ad6867a1e8509b8b0959206b24fb9e778e24d37b07",
+   "original_size": [
+    1000,
+    1275
+   ],
+   "fed": {
+    "sha256": "7e814e1b7dcce359489c75ad6867a1e8509b8b0959206b24fb9e778e24d37b07",
+    "size": [
+     1000,
+     1275
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "7e814e1b7dcce359489c75ad6867a1e8509b8b0959206b24fb9e778e24d37b07",
+    "size": [
+     1000,
+     1275
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69b6b9378566c8381462a96b-p15",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/18888015/full/1000,/0/default.jpg",
+   "sha256_original": "d57cdeeb0df7d7556396c3d2cf7c2dcbfa86fabe8832ede400ee0f0ff9ec7d12",
+   "original_size": [
+    1000,
+    1368
+   ],
+   "fed": {
+    "sha256": "d57cdeeb0df7d7556396c3d2cf7c2dcbfa86fabe8832ede400ee0f0ff9ec7d12",
+    "size": [
+     1000,
+     1368
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "e119a7dd6c49f51a4657d70c9f772f023db197d8f979da5a71c6fcd5f9ef554d",
+    "size": [
+     942,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6bdb18566c83814641d0c-p9",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/18779800/full/1000,/0/default.jpg",
+   "sha256_original": "9f98b4c705ada8719f7e343d7644106ec860f9746b8f3e6806caac6174e75072",
+   "original_size": [
+    1000,
+    1359
+   ],
+   "fed": {
+    "sha256": "9f98b4c705ada8719f7e343d7644106ec860f9746b8f3e6806caac6174e75072",
+    "size": [
+     1000,
+     1359
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "05679491fc86de8694d53ff191d28b28ebbd78dbb52edc88235ed67c8ad546eb",
+    "size": [
+     948,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-69b6bedd8566c83814646f26-p128",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/12606520/full/1000,/0/default.jpg",
+   "sha256_original": "5b86e896916296b8223f8ab1deb9ab0b1b8e396e941b34610c0727ea9531a687",
+   "original_size": [
+    1000,
+    1247
+   ],
+   "fed": {
+    "sha256": "5b86e896916296b8223f8ab1deb9ab0b1b8e396e941b34610c0727ea9531a687",
+    "size": [
+     1000,
+     1247
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "5b86e896916296b8223f8ab1deb9ab0b1b8e396e941b34610c0727ea9531a687",
+    "size": [
+     1000,
+     1247
+    ],
+    "downscaled": false
+   }
+  },
+  {
+   "slug": "lr-69ee643b7b983848aff567f7-p149",
+   "century": "1600s",
+   "url": "https://archive.org/download/runirinrunicchar00worm/page/n148/full/pct:50/0/default.jpg",
+   "sha256_original": "53350dc4f3819c093e4872f1f9167764c2ce3d1ed9f6ab3c3fadc44a009ea231",
+   "original_size": [
+    2667,
+    4245
+   ],
+   "fed": {
+    "sha256": "003abe7a0b3eab5a1855e22933f5f5954e41747069266a606af03eb518205e37",
+    "size": [
+     1508,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "31fc8ad920c80b9b2d54e5e4a30b03a73492f64bc7695f6b1b891584807b1129",
+    "size": [
+     809,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a1009fbf71729295096d465-p715",
+   "century": "1600s",
+   "url": "https://www.e-rara.ch/i3f/v21/2302154/full/full/0/default.jpg",
+   "sha256_original": "8761012c3ad137f57aa0913a500a856c5b346b9251baa02a33f15f9dc72cf842",
+   "original_size": [
+    1380,
+    2280
+   ],
+   "fed": {
+    "sha256": "8761012c3ad137f57aa0913a500a856c5b346b9251baa02a33f15f9dc72cf842",
+    "size": [
+     1380,
+     2280
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "49f9a9d3601d549de417a06f5286953ee1248aa3a5da74b2f88e0b8b5ee6dc91",
+    "size": [
+     780,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a26c3e3aad44c98627cbf3a-p15",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10861689_00015/full/full/0/default.jpg",
+   "sha256_original": "1d127a08abede1adc41bbffafed48fc1ecc1da9a233ca3cb171972d67333eae7",
+   "original_size": [
+    1620,
+    2259
+   ],
+   "fed": {
+    "sha256": "1d127a08abede1adc41bbffafed48fc1ecc1da9a233ca3cb171972d67333eae7",
+    "size": [
+     1620,
+     2259
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "b25b856d0184576bf7d3234686e4355c469ead0f78e7d81efb95f9647f065f9b",
+    "size": [
+     924,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a26c68faad44c98627dfd7e-p945",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10366989_00945/full/full/0/default.jpg",
+   "sha256_original": "c94e8e9b5254905cac577eb1b252f42b34f50e4c92f41a24245e6f8e58ce00f0",
+   "original_size": [
+    1830,
+    2360
+   ],
+   "fed": {
+    "sha256": "c94e8e9b5254905cac577eb1b252f42b34f50e4c92f41a24245e6f8e58ce00f0",
+    "size": [
+     1830,
+     2360
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "546f8a6b13421975a6937baf144aa370041b53ff1b336270ff02f141deb1cc41",
+    "size": [
+     999,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4255b0dfbbb4d07aa51571-p303",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_tmo37ySjqVIC/page/n302/full/full/0/default.jpg",
+   "sha256_original": "a735ca96d8f65d6dde5ff852d216c830128741036bb73dd2580eae5693705240",
+   "original_size": [
+    1393,
+    2500
+   ],
+   "fed": {
+    "sha256": "6ce8e8ab4f9e2f89dd6576d6c15be591616142337ff92014648c0f98453c7e94",
+    "size": [
+     1337,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "aef598930483c49363f48793ec96e0432ba1fffc11b2e30f49c5f9e3d1524c9c",
+    "size": [
+     718,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4259b5dfbbb4d07aa5afd4-p84",
+   "century": "1600s",
+   "url": "https://archive.org/download/BIUSante_06156x02/page/n83/full/full/0/default.jpg",
+   "sha256_original": "e57f3e885a7fce5a80182866aea34323d7e1263712912bb13aecf15063fec546",
+   "original_size": [
+    1732,
+    2865
+   ],
+   "fed": {
+    "sha256": "d5507e2007fbf80126d706c194088ba74fb75daf7866f5bd7f3e3b911e74be36",
+    "size": [
+     1451,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "fe1ddb6683b4bbf071ee9609d1fd4345476de8c4916ffc4c81acffd58801a8f2",
+    "size": [
+     779,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a425e51dfbbb4d07aa63e8c-p237",
+   "century": "1600s",
+   "url": "https://archive.org/download/b3299252x/page/n236/full/full/0/default.jpg",
+   "sha256_original": "3b9f14300ccda66a4fc3d0728e1a9019aef472f75d67a2e674100db0e2e1b548",
+   "original_size": [
+    1845,
+    2920
+   ],
+   "fed": {
+    "sha256": "be416bd4c3270ba8f9fa5ef6cfc03b51d85c250dcbcf8decb0950be0ffe4509a",
+    "size": [
+     1516,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "698d7e2b4d9f84de71c519ce010f49220733163cead5e9a5cce9d9d95394b18f",
+    "size": [
+     814,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42626f744db9e3105adafe-p286",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_QZ5Kkz_0_noC/page/n285/full/full/0/default.jpg",
+   "sha256_original": "f654dabb73d3205c831d501f8b10e1c66741ed2797b95b8bf1251c834522656e",
+   "original_size": [
+    1596,
+    2500
+   ],
+   "fed": {
+    "sha256": "99e62a698dc33c49282fac32a7b3315eee34c5b2309ab50043b3d11287c34c2e",
+    "size": [
+     1532,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "bc5ac917e1b5b815ffe96ef5564d3b7a8b7cee3e8ca1ce7a6dda0ea983dd680a",
+    "size": [
+     822,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42725728e9db2e39c135a7-p49",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_lQpqNXiN8fAC/page/n48/full/full/0/default.jpg",
+   "sha256_original": "2175e6357a29546236ee58f328902035d21f6a06334183d0367e11dc20048384",
+   "original_size": [
+    1483,
+    2500
+   ],
+   "fed": {
+    "sha256": "a10fadaec37ce02b0a3241862efcbb6927a86936053526fc6fe6fc21b38251d1",
+    "size": [
+     1424,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "1e327ac1455aea51b55b2f947c094022dacdf0ba80a2fa09afe2e76b58385eb6",
+    "size": [
+     764,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42af56466deeb51e55d1f6-p27",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_LDv87u8eVt0C/page/n26/full/full/0/default.jpg",
+   "sha256_original": "4d8a2608f13f77429d5eed5e82d6ad416667f0c559dfc17d078e1c0c54e56d83",
+   "original_size": [
+    2500,
+    3469
+   ],
+   "fed": {
+    "sha256": "b24843234c7d2dcb3b01d7898decab7670721e1e481254701bd2d4dd8c9ee326",
+    "size": [
+     1730,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "a3e4ebde8ca415d5d7d21c259e727fda59fe4c8b6a4100ba8b52166e9465ece3",
+    "size": [
+     928,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42bbcf5207af7c42f6f1a7-p40",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_tVynb4jBsc0C/page/n39/full/full/0/default.jpg",
+   "sha256_original": "d566dfe7194d7bd0db6225acd3f0a07adc5f2a37ecd97513851dbf9c99191300",
+   "original_size": [
+    1668,
+    2500
+   ],
+   "fed": {
+    "sha256": "6d26f6ec2183f037e73cb4668d42d2f8dd5ed1126343d890733f51a6511ee1a1",
+    "size": [
+     1601,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "ab67e284c49a5181fae9aeda793e1f1c0eb30d0c56606a78150c871a86285858",
+    "size": [
+     859,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42f6193ad4d80da123710b-p263",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_d8uY0iROevsC/page/n262/full/full/0/default.jpg",
+   "sha256_original": "905fde01329ffde47aedb661f5c1cf0b9ff43d48900d76819be0d7482eb5df98",
+   "original_size": [
+    1835,
+    2500
+   ],
+   "fed": {
+    "sha256": "bff98032dea8950b029e681529ff0a19bc49d1be942aebf0b082026ea3d90759",
+    "size": [
+     1762,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "5b5723073645330efd137b540f84b27a7afbeeac34c5669841a2bb4ec8bc23ad",
+    "size": [
+     945,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a42fbf7b519e35bbf24011b-p13",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_tYaAjwKFINoC/page/n12/full/full/0/default.jpg",
+   "sha256_original": "31bf600c9d39a8c32ae8d4939158ffb88c1ebf52c7874676117dc8555d3d1f27",
+   "original_size": [
+    2500,
+    3222
+   ],
+   "fed": {
+    "sha256": "2fc7bf9db592368913ed1e872990ee3296ea4e8d45139dd3e619dbda7d1c891a",
+    "size": [
+     1862,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "e36bea03aebdbb5173fa2b3b924b2ee02b911dcbcb500e12b7b12a83b695cc08",
+    "size": [
+     999,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4303a34e06bc233ecfcc50-p267",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_GP1_5qAbbLoC/page/n266/full/full/0/default.jpg",
+   "sha256_original": "492d9ceafe3e01b20af523c6b9893d604ded53c029252a944f3bf42f45d0e3fa",
+   "original_size": [
+    1629,
+    2500
+   ],
+   "fed": {
+    "sha256": "64950bd8560b361596af5e11415ee25dbd8c2cd15c1cc3c42d4430e0e23a67e3",
+    "size": [
+     1564,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "38d528db329f6c969a8d1fc38343d72787fbca8c611fa4b704bf8ea42677578c",
+    "size": [
+     839,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a437bd657a09c2c0fcb4d33-p262",
+   "century": "1600s",
+   "url": "https://archive.org/download/gri_33125012646630/page/n261/full/full/0/default.jpg",
+   "sha256_original": "6499a7f0c7adda1f13359fe3d4d5787e0f2fb0d8189c69a2bdc8430991e3c029",
+   "original_size": [
+    2278,
+    3308
+   ],
+   "fed": {
+    "sha256": "b086faf5848c86b00095e52ca0c015f5ff48c2cd7a8c0afd8ebccd859a966651",
+    "size": [
+     1653,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "e1ac9168f4b277eae5fae6a18ebfd15f6ac2fc0e01630c42215bed41e4d32b68",
+    "size": [
+     887,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a447bcdd4792484c6c18068-p382",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_Mzl4E0Y8saUC/page/n381/full/full/0/default.jpg",
+   "sha256_original": "7740805bbbeb698a41ed85e2c39636086a8eac80297a8d2e42fba2a8a52f734a",
+   "original_size": [
+    1988,
+    2500
+   ],
+   "fed": {
+    "sha256": "251706eeaadc23be2d2b3eb7375829b9c108987151c03586942b197d00ec4354",
+    "size": [
+     1908,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "307860420bebcd95f7352cf5cfc16b567b84f471b7b93ee998170c5b5e0d8d70",
+    "size": [
+     1024,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4a584b9050f0b4342e8c64-p80",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11270216_00080/full/full/0/default.jpg",
+   "sha256_original": "df67241d1c86fbe9b65cdfe43ac1803b97224b4a17ef8234858960c850a4fa97",
+   "original_size": [
+    882,
+    1524
+   ],
+   "fed": {
+    "sha256": "df67241d1c86fbe9b65cdfe43ac1803b97224b4a17ef8234858960c850a4fa97",
+    "size": [
+     882,
+     1524
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "db32afb0599de7906a0cc01c5a9c18108d6c7da095875ea4ec3f5a5f0a22d92b",
+    "size": [
+     745,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4a585e9050f0b4342e9a1a-p164",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10072086_00164/full/full/0/default.jpg",
+   "sha256_original": "d75f90b58974bf77366748df08d46fd524d396a5ee087c23d091c3058d4f4aec",
+   "original_size": [
+    1016,
+    1824
+   ],
+   "fed": {
+    "sha256": "d75f90b58974bf77366748df08d46fd524d396a5ee087c23d091c3058d4f4aec",
+    "size": [
+     1016,
+     1824
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "581d7d084a5e5cfc668567c9ac172827cf9e458a132786e8f0b8446408ab1d07",
+    "size": [
+     717,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a4ac35333aff31aa523ee90-p89",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_rVNTkObrQLoC/page/n88/full/full/0/default.jpg",
+   "sha256_original": "5669d492eb5ae7ec8e737f932064b7c852b554be73414c24e8b41112e0dd370b",
+   "original_size": [
+    1542,
+    2500
+   ],
+   "fed": {
+    "sha256": "4e45b389200217ffe1fb39d0efd7211e1d28a15a18fc90f90f86785d50e010b7",
+    "size": [
+     1480,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "fd5f1b05723a66c2a6527ca33bc15bdd52ae6cb92fbdcca4d67f7eea6e547dd5",
+    "size": [
+     794,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a9055cdce61c4a7de146884-p322",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_zXjxX4yFwF8C/page/n321/full/full/0/default.jpg",
+   "sha256_original": "ae801f62c55db39e1b94a91b85d52b83fe7e9aa1471e85ebcb15f57437f99c58",
+   "original_size": [
+    1561,
+    2500
+   ],
+   "fed": {
+    "sha256": "fcbd87fa5d0ff16079d9af3d1ecc8b55f8a1e9f2b944b52bd7e4725e2bd55a89",
+    "size": [
+     1499,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "a1409cea458b99641d298d3eb6060673b3c74f72f78c0aa89e1d1d6db096902f",
+    "size": [
+     804,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a9058d67f6818cc17cd7565-p164",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234344_00164/full/full/0/default.jpg",
+   "sha256_original": "27d7ccb1de5d3b1624ead40d8434a38f9c4800530bfdf5983af91b51d79bb3cf",
+   "original_size": [
+    1018,
+    1811
+   ],
+   "fed": {
+    "sha256": "27d7ccb1de5d3b1624ead40d8434a38f9c4800530bfdf5983af91b51d79bb3cf",
+    "size": [
+     1018,
+     1811
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "4cdc0a7ff5bcdeaad38ca873cc8b7453a881ad712c6a2b543c79d0921a48857b",
+    "size": [
+     724,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90620ec21b989bffd7625f-p30",
+   "century": "1600s",
+   "url": "https://archive.org/download/ned-kbn-all-00003320-004/page/n29/full/full/0/default.jpg",
+   "sha256_original": "90ee1f2fb59a24e4231159a6086dd5afe2dda152ae80da1ef0f44012b0d89f00",
+   "original_size": [
+    4959,
+    6601
+   ],
+   "fed": {
+    "sha256": "56f12d6815aaf84b4d04ac3f97ac4cd0c87e211eb582ce49c91128587b98ebdd",
+    "size": [
+     1803,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "2471ed8dbe3b7919551b04b31a1b24e64b0afd806f1540a63e4e3bc953271e78",
+    "size": [
+     968,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a907c707f9d520dd42e84a4-p20",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10947627_00020/full/full/0/default.jpg",
+   "sha256_original": "7986cac755c606302b7602869adccdbabfbbc9f4f033f439c60007c66cea10df",
+   "original_size": [
+    1596,
+    2163
+   ],
+   "fed": {
+    "sha256": "7986cac755c606302b7602869adccdbabfbbc9f4f033f439c60007c66cea10df",
+    "size": [
+     1596,
+     2163
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "eb3f703340659f1b2c9b9be71b7a36c975a6770dfa8e0a90768bc965618258ea",
+    "size": [
+     950,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a907e604e70467f352333ac-p13",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10955576_00013/full/full/0/default.jpg",
+   "sha256_original": "51620ae1861cefa89b0e5b8d248cff0315aaa70dad9346c32f52ecdd06b402ee",
+   "original_size": [
+    1680,
+    2105
+   ],
+   "fed": {
+    "sha256": "51620ae1861cefa89b0e5b8d248cff0315aaa70dad9346c32f52ecdd06b402ee",
+    "size": [
+     1680,
+     2105
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "a12c356a8857b2fd228a9189c181c7ebdf8c6dad077fb816b7e948a0d1441136",
+    "size": [
+     1028,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90877cc223d60c78ed0ef4-p94",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_3QkbE0TNWJoC/page/n93/full/full/0/default.jpg",
+   "sha256_original": "63bb7e7782e9af22460f01102da21cdbd8cf2a46a62436a6fd5b8845ecbacc9e",
+   "original_size": [
+    1304,
+    2500
+   ],
+   "fed": {
+    "sha256": "f795037759f022bf56e4bc4378b67efabeafa62954c3e89a2698a21a4ad8be00",
+    "size": [
+     1252,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "7787337b2ed234a033954bbadc7be1488d0e51ea614508a935e819b5aafbf25d",
+    "size": [
+     672,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90adb22764d973ba12dc61-p64",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10002117_00064/full/full/0/default.jpg",
+   "sha256_original": "ee27d57e4e45b0515c6821a3f09bce09cd3c5387214c9ac4a362f73df2732905",
+   "original_size": [
+    1739,
+    2252
+   ],
+   "fed": {
+    "sha256": "ee27d57e4e45b0515c6821a3f09bce09cd3c5387214c9ac4a362f73df2732905",
+    "size": [
+     1739,
+     2252
+    ],
+    "downscaled": false
+   },
+   "fed_olmocr": {
+    "sha256": "ff404e70dbb3c8238954d0a129e362a10347fa2af657ed0ef026a28c6343ab0d",
+    "size": [
+     995,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90c07c3822dc24e54022d9-p478",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11060722_00478/full/full/0/default.jpg",
+   "sha256_original": "431516434bd0b14b156d0b67a20c922eacd21513d019eddd922c89abaf16682f",
+   "original_size": [
+    1932,
+    2788
+   ],
+   "fed": {
+    "sha256": "f845f174c1875c396080f43891432706a4a50d35a326365050f77ac53925be97",
+    "size": [
+     1663,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "17081e458a7b89320650ccc5be040f8c0d606dab920571013c4e5fb23ea8ab5b",
+    "size": [
+     893,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90c3bca02f8189feb9f357-p406",
+   "century": "1600s",
+   "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10871134_00406/full/full/0/default.jpg",
+   "sha256_original": "7903291f400e846f97ccedb0975f9b7d200a9ec431c1a54146ddcce841f3fffc",
+   "original_size": [
+    2199,
+    3966
+   ],
+   "fed": {
+    "sha256": "7335b38e85e33c2ad9dea730dee805f6155dc68a4286eb2ca804024dca370ced",
+    "size": [
+     1331,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "a730c6c485f3d88082bd461cf2edac21bb6eed7612a666c212c3895a35b55d11",
+    "size": [
+     714,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6a90e847544007b776b38e58-p785",
+   "century": "1600s",
+   "url": "https://archive.org/download/bub_gb_JAw5561g0ZQC/page/n784/full/full/0/default.jpg",
+   "sha256_original": "ca84d065ca93e748d6cb1ea67bf160237de1b2da0a09337d468f127f9b66327a",
+   "original_size": [
+    1908,
+    2500
+   ],
+   "fed": {
+    "sha256": "65e4bb54d15752e198ecc935ed9315373614bcfc112e4d3caf4e6f03e4cf9977",
+    "size": [
+     1832,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "cfc366af171d9f870fce82fb1fefb4d12e47ab8bf34a65bd2ad56362a650165d",
+    "size": [
+     983,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6ac5035ceefc6804b9d7cca7-p126",
+   "century": "1600s",
+   "url": "https://digi.ub.uni-heidelberg.de/iiif/2/chifflet1657%3A082.jpg/full/full/0/default.jpg",
+   "sha256_original": "4b9203ec47b6188a4045df6ff9fc4233b41d5abb37c99bfdafed8d00ea370222",
+   "original_size": [
+    1730,
+    2528
+   ],
+   "fed": {
+    "sha256": "711580b66a6da8c6a04f5d916c9da3b329ad62596aeaa2fad6f3784734c4a28e",
+    "size": [
+     1642,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "66952932c80d36c7813928e002b7ad4dcfe71b459f3f4a27c35616bd6cec98e6",
+    "size": [
+     881,
+     1288
+    ],
+    "downscaled": true
+   }
+  },
+  {
+   "slug": "lr-6ac5152a0749a01cb81cd1b4-p353",
+   "century": "1600s",
+   "url": "https://digi.ub.uni-heidelberg.de/iiif/2/dulaurens1627bd1%3A333.jpg/full/full/0/default.jpg",
+   "sha256_original": "2165b850814fd3369cd2dd321c5c1f08cee850fe89d5b0c7f8df066c3d5ba99d",
+   "original_size": [
+    2126,
+    3800
+   ],
+   "fed": {
+    "sha256": "0bf5df07284862dccacec60f705a6d0ef5c5f4a1256a010db7cce89925ed7fdf",
+    "size": [
+     1343,
+     2400
+    ],
+    "downscaled": true
+   },
+   "fed_olmocr": {
+    "sha256": "57b70331d6ecd5761a818b23472cbafa4cf402b25128f70cd770cb28356716ce",
+    "size": [
+     721,
+     1288
+    ],
+    "downscaled": true
+   }
+  }
+ ],
+ "downscaled_2400": 38
+}
