@@ -1,0 +1,119 @@
+name: Release to production
+
+# Production is the `release` branch, not `main` (#7008). A merge to main builds nothing;
+# this workflow fast-forwards `release` to main's tip, and Vercel builds that push as the
+# production deployment.
+#
+# Why: Vercel's ISR cache belongs to one deployment, so every production build starts it
+# empty. When every merge that touched src/ was a production build (~19 a day in the week to
+# 2026-10-19) a cached page lived about an hour and the renders that refilled it were most
+# of the Vercel bill (#4753, #3645). Three releases a day keep pages cached ~8 h.
+#
+# When it runs:
+#   - 07:00, 13:00, 19:00 UTC (GitHub may drop a scheduled run under load, #5276;
+#     scripts/audit/vercel-prod-watch.mjs pages when production trails main by > 13 h)
+#   - on demand:  gh workflow run release.yml
+#   - on a push to main whose commit message carries [deploy-now] (a hand merge; merges by
+#     auto-merge.yml use GITHUB_TOKEN and never trigger push workflows)
+#
+# What it does: skips if `release` already holds main's tip; runs the entities-sweep interlock
+# when build inputs changed (a release IS a prod build; a bulk `entities` writer fails the
+# /explore prerender); pushes main's tip to `release` fast-forward only (it never forces);
+# then dispatches post-deploy-warm.yml for that commit, because a push made with GITHUB_TOKEN
+# does not trigger it. A release with no build-input change still moves `release`; Vercel's
+# ignore step skips the build.
+#
+# Rollback: in Vercel → Settings → Environments → Production, set the branch back to `main`,
+# and put `"main": true` back in vercel.json `git.deploymentEnabled`.
+
+on:
+  schedule:
+    - cron: '0 7,13,19 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write  # push to release
+  actions: write   # dispatch post-deploy-warm.yml
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[deploy-now]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 150  # up to 2 h waiting on the interlock
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: What would ship
+        id: diff
+        run: |
+          SHA=$(git rev-parse HEAD)
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          if ! git rev-parse --verify --quiet origin/release >/dev/null; then
+            echo "No release branch yet: first release creates it at ${SHA:0:7}."
+            echo "build=yes" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$(git rev-parse origin/release)" = "$SHA" ]; then
+            echo "release already at ${SHA:0:7}; nothing to ship."
+            echo "build=none" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! git merge-base --is-ancestor origin/release "$SHA"; then
+            echo "::error::release ($(git rev-parse --short origin/release)) is not an ancestor of main. Someone committed to release directly; resolve by hand, this workflow never forces."
+            exit 1
+          fi
+          echo "Shipping $(git rev-list --count origin/release..HEAD) commit(s):"
+          git log --oneline origin/release..HEAD | head -50
+          node scripts/vercel-ignore-build.mjs --changed-since origin/release | tee /tmp/changed.txt
+          grep '^build=' /tmp/changed.txt >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.diff.outputs.build == 'yes'
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --omit=dev --ignore-scripts
+        if: steps.diff.outputs.build == 'yes'
+
+      # Exit 0 is clear; 1 (a sweep is live) and 2 (UNKNOWN) are not. Retry every 15 min for 2 h.
+      - name: Entities-sweep interlock
+        if: steps.diff.outputs.build == 'yes'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          for i in $(seq 1 9); do
+            if node scripts/audit/entities-sweep-active.mjs; then echo "interlock clear"; exit 0; fi
+            echo "interlock not clear (attempt $i of 9)"
+            [ "$i" -lt 9 ] && sleep 900
+          done
+          echo "::error::entities-sweep interlock not clear after 2 h; release not pushed."
+          exit 1
+
+      - name: Fast-forward release
+        if: steps.diff.outputs.build != 'none'
+        env:
+          SHA: ${{ steps.diff.outputs.sha }}
+        run: git push origin "$SHA:refs/heads/release"
+
+      - name: Warm after the build
+        if: steps.diff.outputs.build == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.diff.outputs.sha }}
+        run: gh workflow run post-deploy-warm.yml --ref main -f sha="$SHA"
+
+      - name: Page on failure
+        if: failure()
+        run: |
+          curl -s -H "Title: Release to production failed" -H "Priority: high" -H "Tags: rocket" \
+            -d "release.yml run ${{ github.run_id }} failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            https://ntfy.sh/sourcelibrary-uptime || true

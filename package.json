@@ -11,6 +11,7 @@
     "start": "next start",
     "deploy:prod": "./scripts/deploy-prod.sh",
     "deploy:purge-warm": "./scripts/purge-warm.sh",
+    "preview": "git push --force origin HEAD:refs/heads/preview/$(git branch --show-current | tr / -)",
     "lint": "eslint",
     "test": "vitest run && vitest run --config vitest.integration.config.ts",
     "test:smoke": "vitest run --config vitest.smoke.config.ts",
