@@ -115,8 +115,8 @@ export async function getInscription(slug: string): Promise<Inscription | null> 
     .sort({ _id: 1 })
     .toArray();
   const signs = await db
-    .collection<{ _id: string; value: string | null; translation: string | null; image?: { url?: string } | null }>('maya_signs')
-    .find({ _id: { $in: graphs.map((g) => `twkm:${g.data.graphNo}`) } }, { projection: { value: 1, translation: 1, 'image.url': 1 } })
+    .collection<{ _id: string; kind: string; value: string | null; translation: string | null; image?: { url?: string } | null }>('maya_signs')
+    .find({ _id: { $in: graphs.map((g) => `twkm:${g.data.graphNo}`) } }, { projection: { kind: 1, value: 1, translation: 1, 'image.url': 1 } })
     .toArray();
   const byId = new Map(signs.map((s) => [s._id, s]));
   const blocks: Record<string, BlockSign[]> = {};
@@ -127,7 +127,9 @@ export async function getInscription(slug: string): Promise<Inscription | null> 
       (blocks[occ.zoneId] ??= []).push({
         graphNo: g.data.graphNo,
         value: s?.value ?? null,
-        translation: s?.translation ?? null,
+        // TWKM's translation describes the graph, so on a syllable or a numeral it names what the sign
+        // pictures ("hi" → "sihoom-flower", zero → "no"), not a meaning. Only a word sign has one.
+        translation: s?.kind === 'logogram' ? (s.translation ?? null) : null,
         image: s?.image?.url ?? null,
       });
     }
