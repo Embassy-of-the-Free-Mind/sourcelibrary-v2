@@ -215,7 +215,7 @@ const COL = [360, 20, 1];
 /** Printable sheets (src/app/learn/maya/worksheets, PR #6987) offered at the end of each lesson. */
 export const WORKSHEETS_URL = '/learn/maya/worksheets';
 export const LESSON_WORKSHEETS: Record<string, { slug: string; title: string }[]> = {
-  counting: [{ slug: 'bars-and-dots', title: 'Bars and dots' }, { slug: 'numbers-at-palenque', title: 'Numbers at Palenque' }],
+  counting: [{ slug: 'bars-and-dots', title: 'Bars and dots' }],
   syllables: [{ slug: 'syllable-chart', title: 'The syllable chart' }, { slug: 'first-signs', title: 'First signs' }, { slug: 'read-a-word', title: 'Read a word' }],
 };
 
