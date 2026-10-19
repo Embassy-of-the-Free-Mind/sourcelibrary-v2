@@ -3,7 +3,7 @@
     "four-volumes-of-divine-and-human-marvels-champier",
     "instruction-on-the-fortification-of-cities-durer",
     "minor-works-opuscula-schurman",
-    "on-the-fundamentals-of-hebrew-de-rudimentis-hebraicis-reuchlin"
+    "de-rudimentis-hebraicis-reuchlin"
   ],
   "aldine-roman": [
     "69b220f356715b0e32473bd0"
@@ -22,7 +22,7 @@
     "john-dunstable-s-compilation-of-judicial-astrology-compiler",
     "de-revolutionibus-1543-first-edition-copernicus",
     "astronomia-magna-philosophia-sagax-hohenheim",
-    "harmony-of-the-world-with-mysterium-cosmographicum-kepler",
+    "the-harmony-of-the-world-kepler",
     "unheard-of-curiosities-concerning-the-talismanic-sculpture-gaffarel",
     "the-ecstatic-journey-a-voyage-through-the-celestial-realms-kircher",
     "a5d0c381-d4ea-42cd-8864-44457e7fda33",
@@ -96,7 +96,7 @@
     "the-hammer-of-witches-sprenger",
     "polygraphie-1561-french-translator",
     "the-lesser-key-of-solomon-goetia-laurence",
-    "king-james-daemonologie-1597-first-edition-england"
+    "daemonologie-in-forme-of-a-dialogue-vi-i"
   ],
   "does-ai-get-religion": [
     "de-boeken-des-ouden-verbonds-old-testament-in-javanese",
@@ -106,7 +106,7 @@
   ],
   "drebbel": [
     "drebbel-tractatus-duo-1628-latin-laurembergius",
-    "mechanica-hydraulico-pneumatica-schott",
+    "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
     "magnes-sive-de-arte-magnetica-kircher",
     "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
     "mathematicall-magick-wilkins",
@@ -122,7 +122,7 @@
     "chief-works-of-spinoza-vol-i-elwes-spinoza",
     "monadology-leibniz",
     "jakob-bohme-his-life-and-writings-fechner",
-    "aurora-or-the-day-spring-bohme",
+    "aurora-that-is-the-day-spring-boehme",
     "mysterium-magnum-bohme",
     "elemente-der-psychophysik-vol-i-fechner",
     "elemente-der-psychophysik-vol-ii-fechner",
@@ -236,8 +236,7 @@
     "the-secret-symbols-of-the-rosicrucians",
     "a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel",
     "the-advancement-of-learning-1605-first-edition-bacon",
-    "the-notebooks-of-leonardo-da-vinci-richter",
-    "the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous"
+    "the-notebooks-of-leonardo-da-vinci-richter"
   ],
   "history-of-astrology": [
     "tetrabiblos-and-centiloquy-commentary",
@@ -251,7 +250,7 @@
     "margarita-philosophica-reisch",
     "three-books-on-life-1489-first-edition-ficino",
     "9754fae4-b3c6-45e6-8742-53c85117ca09",
-    "6fc11c7d-782a-47c3-a855-f3b4415e797b"
+    "the-harmony-of-the-world-kepler"
   ],
   "history-of-classification": [
     "aristotelis-opera-vol-1-organon-aristotle",
@@ -283,7 +282,7 @@
     "flamel-book-of-hieroglyphic-figures-abraham-le-juif-flamel",
     "aureum-vellus-oder-guldin-schatz-und-kunstkammer-1-1-solis",
     "mutus-liber-the-silent-book-saulat",
-    "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier",
+    "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3",
     "bodleian-library-ms-bodl-rolls-1-attributed",
     "historia-naturalis-elder",
     "hortus-sanitatis-meydenbach",
@@ -292,7 +291,7 @@
     "de-materia-medica-greek-manuscript-grec-2179-dioscorides",
     "herbarium-of-apuleius-dioscorides-on-herbs-c-1000-ad-musa",
     "harley-ms-4751-anonymous",
-    "serpentum-et-draconum-historiae-libri-duo-aldrovandi",
+    "serpentum-et-draconum-historiae-aldrovandi",
     "les-oeuvres-d-ambroise-pare-pare",
     "opera-divinarum-institutionum-libri-vii-de-ira-dei-de-lactantius",
     "ornithologiae-de-avibus-historiae-libri-xii-aldrovandi",
@@ -313,7 +312,7 @@
     "les-propheties-de-m-michel-nostradamus-1605-nostradamus",
     "a-true-faithful-relation-of-dr-john-dee-and-some-spirits-casaubon",
     "sphaera-mundi-1482-ratdolt-edition-sacrobosco",
-    "starry-messenger-galilei",
+    "sidereus-nuncius-1610-venice-galilei",
     "kepler-astronomia-nova-1609-prague-kepler",
     "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
     "hebrew-sefer-ha-bahir-hakana",
@@ -424,7 +423,7 @@
     "codex-nuttall-nuttall",
     "the-de-la-cruz-badiano-aztec-herbal-of-1552-gates",
     "ancient-nahuatl-poetry-brinton",
-    "the-yoruba-speaking-peoples-of-the-slave-coast-of-west-ellis",
+    "the-yoruba-speaking-peoples-of-the-slave-coast-of-west-africa",
     "the-tshi-speaking-peoples-of-the-gold-coast-of-west-africa-ellis",
     "the-ewe-speaking-peoples-of-the-slave-coast-of-west-africa-ellis",
     "nigerian-studies-religious-and-political-system-of-the-dennett",
@@ -552,10 +551,10 @@
     "6ad191c342debc962692561e"
   ],
   "mcp-server": [
-    "pymander-asclepius-on-the-mysteries-of-the-egyptians-on-trismegistus",
-    "on-the-revolutions-of-the-heavenly-spheres-1543-first-copernicus",
+    "pymander-asclepius-and-on-the-mysteries-of-the-egyptians-trismegistus",
+    "de-revolutionibus-1543-first-edition-copernicus",
     "the-hermetic-museum-various-sendivogius",
-    "6fc11c7d-782a-47c3-a855-f3b4415e797b",
+    "the-harmony-of-the-world-kepler",
     "6da19aeb-aec0-411c-b890-73035c92273d",
     "universal-music-making-musurgia-universalis-volume-i-kircher"
   ],
@@ -582,9 +581,9 @@
     "musicae-compendium-descartes",
     "universal-musical-work-volume-ii-musurgia-universalis-kircher",
     "the-thirteen-principal-upanishads-trans",
-    "apology-for-the-harmony-of-the-world-kepler",
+    "apologia-adversus-fludd-defense-against-fludd-kepler",
     "lectures-de-potentia-restitutiva-or-of-spring-hooke",
-    "traite-de-l-harmonie-rameau",
+    "traite-de-l-harmonie-reduite-a-ses-principes-naturels-rameau",
     "on-the-sensations-of-tone-helmholtz"
   ],
   "one-sentence-of-hermes": [
@@ -614,8 +613,7 @@
     "alchemical-writings-stone-of-philosophers-kelly",
     "on-the-method-of-making-the-philosopher-s-stone-ventura",
     "revealer-of-the-great-secret-of-the-philosophers-anonymous-2",
-    "the-saturnian-kingdoms-barma",
-    "revealer-of-the-great-secret-of-the-philosophers-in-which-th-anonymous-4933f6"
+    "the-saturnian-kingdoms-barma"
   ],
   "playable-page": [
     "dialogo-della-musica-antica-et-della-moderna-galilei",
@@ -651,7 +649,7 @@
     "the-advancement-of-learning-1605-first-edition-bacon",
     "the-sceptical-chymist-1661-first-edition-boyle",
     "kepler-astronomia-nova-1609-prague-kepler",
-    "le-diverse-et-artificiose-machine-ramelli",
+    "le-diverse-et-artificiose-machine-agostino-ramelli-1588",
     "de-re-metallica-libri-xii-agricola",
     "la-pyrotechnie-ou-art-du-feu-biringuccio",
     "bellifortis-kyeser",
@@ -675,7 +673,7 @@
     "arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis",
     "il-nobilissimo-et-antiquissimo-giuoco-pythagoreo-nominato-barozzi",
     "le-tres-excellent-et-ancien-jeu-pythagorique-dit-boissiere",
-    "de-institutione-arithmetica-libri-ii-de-institutione-musica-friedlein"
+    "de-institutione-arithmetica-de-institutione-musica-friedlein"
   ],
   "search-by-meaning": [
     "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
@@ -728,6 +726,7 @@
     "the-little-book-of-life-after-death-fechner",
     "zend-avesta-fechner",
     "harmonices-mundi-1619-first-edition-kepler",
+    "the-harmony-of-the-world-kepler",
     "the-great-art-of-light-and-shadow-kircher",
     "platonic-theology-on-the-immortality-of-souls-1525-edition-ficino",
     "novum-organum-bacon",
@@ -749,7 +748,6 @@
     "discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei",
     "mundus-subterraneus-tomus-ii-kircher",
     "the-harmony-of-the-world-kepler",
-    "kircher-musurgia-universalis-vol-ii-1650-kircher",
     "universal-musical-work-volume-ii-musurgia-universalis-kircher",
     "the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans",
     "recherches-sur-les-superstitions-en-chine-vol-12-dore",
