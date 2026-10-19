@@ -20,8 +20,8 @@ name: Release to production
 # when build inputs changed (a release IS a prod build; a bulk `entities` writer fails the
 # /explore prerender); pushes main's tip to `release` fast-forward only (it never forces);
 # then dispatches post-deploy-warm.yml for that commit, because a push made with GITHUB_TOKEN
-# does not trigger it. A release with no build-input change still moves `release`; Vercel's
-# ignore step skips the build.
+# does not trigger it. A release with no build-input change leaves `release` where it is
+# (`force` ships anyway); every push to `release` builds, because the decision is made here.
 #
 # Rollback: in Vercel → Settings → Environments → Production, set the branch back to `main`,
 # and put `"main": true` back in vercel.json `git.deploymentEnabled`.
@@ -32,6 +32,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Release and build even if no build input changed since the last release'
+        type: boolean
+        default: false
 
 permissions:
   contents: write  # push to release
@@ -70,6 +75,8 @@ jobs:
 
       - name: What would ship
         id: diff
+        env:
+          FORCE: ${{ inputs.force }}
         run: |
           SHA=$(git rev-parse HEAD)
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"
@@ -90,7 +97,12 @@ jobs:
           echo "Shipping $(git rev-list --count origin/release..HEAD) commit(s):"
           git log --oneline origin/release..HEAD | head -50
           node scripts/vercel-ignore-build.mjs --changed-since origin/release | tee /tmp/changed.txt
-          grep '^build=' /tmp/changed.txt >> "$GITHUB_OUTPUT"
+          if [ "$FORCE" = "true" ]; then
+            echo "force: releasing regardless of the diff."
+            echo "build=yes" >> "$GITHUB_OUTPUT"
+          else
+            grep '^build=' /tmp/changed.txt >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/setup-node@v4
         if: steps.diff.outputs.build == 'yes'
@@ -115,7 +127,7 @@ jobs:
           exit 1
 
       - name: Fast-forward release
-        if: steps.diff.outputs.build != 'none'
+        if: steps.diff.outputs.build == 'yes'
         env:
           SHA: ${{ steps.diff.outputs.sha }}
         run: git push origin "$SHA:refs/heads/release"

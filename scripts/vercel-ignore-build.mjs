@@ -94,6 +94,13 @@ function main() {
     console.log('Build: preview requested');
     process.exit(1);
   }
+  // Production is the `release` branch (#7008), and release.yml pushes to it only when build inputs
+  // changed since the last release, so a push there is already a decision to build. Diffing here
+  // again would compare against HEAD^ alone whenever Vercel has no previous deployment for the branch.
+  if (process.env.VERCEL_GIT_COMMIT_REF === 'release') {
+    console.log('Build: release (release.yml decided, #7008)');
+    process.exit(1);
+  }
   const prev = process.env.VERCEL_GIT_PREVIOUS_SHA || 'HEAD^';
   try {
     execFileSync('git', ['cat-file', '-e', `${prev}^{commit}`]);
