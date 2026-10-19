@@ -144,7 +144,7 @@ const WRITE_WORDS = [
 ];
 sheets.push({
   slug: 'write-a-word', title: 'Write a word', level: 'Level 3',
-  intro: 'Spell each word with signs from the chart, one sign per box. All five words are carved at Palenque, and you will meet them again on the last sheet.',
+  intro: 'Spell each word with signs from the chart, one sign per box. All five words are carved on the Cross Group tablets at Palenque.',
   layout: 'spell-write',
   items: WRITE_WORDS.map(([parts, word, gloss]) => ({ word, gloss, parts, answerSigns: parts.map(need) })),
   credits: ['stuart'],
@@ -201,5 +201,11 @@ sheets.push({
   layout: 'blocks-word', helper, items: wordItems, credits: ['palenque', 'stuart'],
 });
 
-writeFileSync(OUT, JSON.stringify({ built: new Date().toISOString().slice(0, 10), credits: CREDIT, sheets }, null, 1) + '\n');
-console.log(`${sheets.length} sheets; ${Object.keys(syl).length} syllables in the chart; wrote ${OUT.pathname}`);
+// Held back until the drawings are cleared. The Palenque blocks are the sourcebook's main-tablet drawings, mostly
+// Linda Schele's. Stuart's permission covers his sourcebook; the Schele drawings are copyrighted separately
+// (Ancient Americas at LACMA asks for written permission to publish), and no permission is on record (#6921).
+const RIGHTS_PENDING = new Set(['numbers-at-palenque', 'read-at-palenque']);
+const published = sheets.filter((s) => !RIGHTS_PENDING.has(s.slug));
+
+writeFileSync(OUT, JSON.stringify({ built: new Date().toISOString().slice(0, 10), credits: CREDIT, sheets: published }, null, 1) + '\n');
+console.log(`${published.length} sheets (${RIGHTS_PENDING.size} held for rights); ${Object.keys(syl).length} syllables in the chart; wrote ${OUT.pathname}`);

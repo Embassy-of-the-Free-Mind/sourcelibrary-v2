@@ -6,7 +6,7 @@ import { LEVELS, SHEETS } from './data';
 export const metadata: Metadata = {
   title: 'Maya glyph worksheets to print - Source Library',
   description:
-    'Printable worksheets for learning Maya hieroglyphs: David Stuart’s syllable chart, sign drills, spelling, bar-and-dot numbers, and real glyph blocks from the Cross Group tablets at Palenque, each with an answer key.',
+    'Printable worksheets for learning Maya hieroglyphs: David Stuart’s syllable chart, sign drills, spelling, word signs and bar-and-dot numbers, each with an answer key.',
   alternates: { canonical: '/learn/maya/worksheets' },
 };
 
@@ -14,7 +14,6 @@ const LEVEL_NOTE: Record<string, string> = {
   'Level 1': 'Vowels, first signs, copying, numbers',
   'Level 2': 'More signs, and telling them apart',
   'Level 3': 'Spelling words, word signs',
-  'Level 4': 'Reading carved blocks at Palenque',
   Reference: 'Keep beside you',
 };
 
@@ -28,8 +27,7 @@ export default function WorksheetsIndex() {
           <h1 className="font-serif text-3xl text-primary mb-4">Worksheets to print</h1>
           <p className="leading-relaxed mb-3">
             Pen-and-paper practice for reading Maya hieroglyphs. The syllable signs are David Stuart’s drawings from his
-            syllabary chart, the forms carved on monuments around AD 700. The last sheets use real glyph blocks from the
-            Cross Group tablets at Palenque, with Stuart’s readings as the answers.
+            syllabary chart, the forms carved on monuments around AD 700.
           </p>
           <p className="leading-relaxed mb-8 text-stone-700">
             Each sheet prints on one page, with its answer key on the page after it. Print the syllable chart first and
@@ -57,8 +55,7 @@ export default function WorksheetsIndex() {
           })}
           <p className="text-xs text-stone-500 leading-relaxed mt-10">
             Syllable drawings © David Stuart, used with permission. Word signs and look-alike pairs from Kettunen and Helmke’s
-            Wayeb workshop handbook (2025). Palenque blocks and readings from David Stuart, The Palenque Mythology (2006), used
-            with permission; most of its drawings are by Linda Schele.
+            Wayeb workshop handbook (2025).
           </p>
         </div>
       </main>
