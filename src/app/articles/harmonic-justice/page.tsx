@@ -54,7 +54,8 @@ const BOOK = {
   smithTms: '/book/the-theory-of-moral-sentiments-smith',
   xenophonLoeb: '/book/xenophon-memorabilia-oeconomicus-symposium-apologia-loeb-168-xenophon',
   cyropaedia: '/book/xenophon-opera-cyropaedia-hunting-spartan-constitution-xenophon',
-  noyes: '/book/history-of-american-socialisms-noyes',
+  fourierUnite: '/book/theorie-de-l-unite-universelle-fourier',
+  fourierQuatre: '/book/theorie-des-quatre-mouvements-et-des-destinees-generales-fourier',
   davis: '/book/the-principles-of-nature-davis',
   levi: '/book/le-grand-arcane-ou-l-occultisme-devoile-levi',
   bastiat: '/book/harmonies-economiques-bastiat',
@@ -68,7 +69,9 @@ const PAGE = {
   oeconomicus436: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947e`,
   oeconomicus437: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947f`,
   cyropaedia285: `${BOOK.cyropaedia}/page/69b2218b08069e96e8430469`,
-  noyes659: `${BOOK.noyes}/page/6a58a3da08c84bb29c91ce6e`,
+  fourierUnite140: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eab94`,
+  fourierUnite274: `${BOOK.fourierUnite}/page/6a8ee22f90f5a0e4155eac1a`,
+  fourierQuatre160: `${BOOK.fourierQuatre}/page/6a8ee2e990f5a0e4155ebabb`,
   davis586: `${BOOK.davis}/page/69905c85aaa7f10ed4cfbe2f`,
   levi35: `${BOOK.levi}/page/6959329ab91a6184ea943e45`,
   bastiat4: `${BOOK.bastiat}/page/6991dc4979a19ded6bdb3f04`,
@@ -798,22 +801,42 @@ export default function HarmonicJusticePage() {
           The first was Charles Fourier&apos;s (1772&ndash;1837). He called the society he was planning
           &ldquo;Harmony,&rdquo; to be built of communities called phalanxes, and his motto was that attractions are
           proportional to destinies: rightly arranged, people&apos;s passions would draw them to the work that needed
-          doing, as gravity draws the planets. Fourier&apos;s own books are not yet in the library, but the way he was
-          read is. An American summary of his system, which John Humphrey Noyes quoted in his{' '}
-          <Link href={BOOK.noyes}>
-            <em>History of American Socialisms</em>
+          doing, as gravity draws the planets. He meant the comparison with Newton exactly. In the{' '}
+          <Link href={BOOK.fourierUnite}>
+            <em>Théorie de l&apos;unité universelle</em>
           </Link>{' '}
-          (1870), begins:
+          he complained that philosophers had studied everything but man:
         </p>
 
-        <Quote href={PAGE.noyes659} cite="Fourier's system summarized, in J. H. Noyes, History of American Socialisms (Philadelphia, 1870), p. 659">
-          Fourier says: There are certain Laws of Organization in nature, which are the source of order and harmony in
-          creation. These laws human reason must discover and apply in the organization of society, if a true social order
-          is to be established on the earth.
+        <Quote href={PAGE.fourierUnite140} cite="Charles Fourier, Théorie de l'unité universelle (Paris, 1834), p. 140">
+          One might still pardon the ancients for committing such an oversight; but the moderns, well informed since
+          Newton of the role that attraction plays in the universe, ought to have finished what the geometer had begun,
+          extending to the sphere of the passions the theory of which he treated only the material branch.
         </Quote>
 
         <p className={p}>
-          The seer Andrew Jackson Davis took it literally. Fourier, he wrote in 1847, showed &ldquo;that the world of
+          The passions were also his notes. He counted twelve, &ldquo;forming the passional scale analogous to the
+          musical scale&rdquo; (
+          <Link href={PAGE.fourierQuatre160}>
+            <em>Théorie des quatre mouvements</em>, p. 160
+          </Link>
+          ), and the ties he meant to build between classes that normally repel each other he called{' '}
+          <em>accords</em>, the word for musical chords. When he came to dividing the phalanx&apos;s income, he applied
+          the law of gravitation to it:
+        </p>
+
+        <Quote href={PAGE.fourierUnite274} cite="Fourier, Théorie de l'unité universelle (1834), p. 274">
+          The other path to equilibrium, that of individual distribution, arises because every rich man increases his
+          income on the capital portion in proportion to his disinterestedness on the labor portion; so that the more
+          generous an opulent man is, the more he enriches himself. &hellip; it is the very one to which the Newtonian
+          theorem of direct ratio of masses and inverse ratio of the square of distances is applied. The associative
+          theory is therefore a passional geometry &hellip; the theory of neutral
+          [accords] or conquered antipathies, bonds between incompatible classes, such as rich and poor, masters and
+          servants.
+        </Quote>
+
+        <p className={p}>
+          His readers took the music literally. The seer Andrew Jackson Davis wrote in 1847 that Fourier had shown &ldquo;that the world of
           mankind is composed of the requisite notes to play a perfect tune of peace and harmony,&rdquo; and that each
           note needs only to be properly placed for the whole race to move &ldquo;like a perfectly-tuned
           instrument&rdquo; (
@@ -964,10 +987,11 @@ export default function HarmonicJusticePage() {
 
         <p className="text-sm text-muted leading-relaxed">
           Quotations are the library&apos;s English translations, or for English books (Malynes, Misselden, Davis,
-          Noyes, Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
+          Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
           (Marchant&apos;s Xenophon, Geijsbeek&apos;s Pacioli, Wolowski&apos;s Copernicus), the wording is the
           translator&apos;s. The word in square brackets in the Bastiat creed is his <em>harmonieusement</em>, restored
-          from the French. Bodin&apos;s <em>République</em> is not yet in the library,
+          from the French; in the Fourier passage on distribution it is his <em>accords</em>, which the translation
+          gives as &ldquo;harmonies.&rdquo; Bodin&apos;s <em>République</em> is not yet in the library,
           so his theory is given here in Kepler&apos;s account of it. Gresham&apos;s will and Petty&apos;s professorship
           are cited from outside the library.
         </p>
