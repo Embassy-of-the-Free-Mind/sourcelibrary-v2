@@ -172,6 +172,8 @@ export default async function InscriptionPage({ params }: { params: Promise<{ sl
 
       <article className="max-w-[var(--container-narrow)] mx-auto">
         {drawing && (
+          // The drawing is a narrow strip (two columns of blocks); at full column width it runs several screens tall.
+          <div className="max-w-[280px] mx-auto">
           <PageFigure
             src={drawing.url}
             alt={`An ink drawing of glyph blocks from ${ins.title}, two columns of seven blocks.`}
@@ -179,6 +181,7 @@ export default async function InscriptionPage({ params }: { params: Promise<{ sl
           >
             An older drawing of the opening blocks.
           </PageFigure>
+          </div>
         )}
 
         <h2 id="sources" className={h2}>Sources</h2>
