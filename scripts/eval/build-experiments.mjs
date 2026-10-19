@@ -168,7 +168,15 @@ export function buildIndex(srcDir = SRC) {
 export function stripPriorArt(text) {
   const lines = text.split('\n');
   let i = 0;
-  while (i < lines.length && (/^\s*(<!--\s*)?PRIOR ART:.*$/.test(lines[i]) || (i > 0 && lines[i].trim() === ''))) i++;
+  // Blank lines are skipped too, so a blank line after the front matter's closing
+  // --- (the usual way to write it) does not hide the heading. A PRIOR ART line may
+  // wrap: its paragraph runs to the next blank line or heading.
+  while (i < lines.length) {
+    if (lines[i].trim() === '') { i++; continue; }
+    if (!/^\s*(<!--\s*)?PRIOR ART:/.test(lines[i])) break;
+    i++;
+    while (i < lines.length && lines[i].trim() !== '' && !lines[i].startsWith('#')) i++;
+  }
   return i ? lines.slice(i).join('\n') : text;
 }
 
