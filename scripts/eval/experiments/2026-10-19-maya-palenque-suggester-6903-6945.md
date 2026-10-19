@@ -6,9 +6,9 @@ scripts: [Maya]
 canons: []
 n_books: 1
 n_pages: 0
-verdict: "PALENQUE: Gemini 4 Argon with retrieved parallels reads 45 of 100 held-out Cross Group blocks exactly (judged 56–60), against 10 from the bare image, and the Opus check of its readings is right on 74–80% of what it accepts (90% needed). Opus reads 9–10 with the image and 13 with the image withheld, so its readings come from the context, not the image. SUGGESTER: no-go. Fused recall@6 of the true sign is 32% on Palenque (80% needed) and 38% on the Dresden codex (50% needed). Even a perfect choice of channel per sign would reach only 51% and 58%. Picture search against the sign drawings is at chance on both."
+verdict: "PALENQUE: neither model reads the Cross Group tablets from the drawing. With the monument named and parallels given, Gemini 4 Argon is exact on 45 of 100 held-out blocks (judged 56–60), but with the crops WITHHELD it still gets 36. On the 90 blocks both arms ran the image adds 3 exact readings (39 vs 36), so the score is memory of a famous text plus context. Opus does better without the image (13) than with it (9–10). From the bare crop, Gemini gets 10–12 exact (almost all dates) and Opus 0. The Opus check of Gemini is right on 74–80% of what it accepts (90% needed). SUGGESTER: no-go. Fused recall@6 of the true sign is 32% on Palenque (80% needed) and 38% on the Dresden codex (50% needed). Even a perfect choice of channel per sign would reach only 51% and 58%. Picture search against the sign drawings is at chance on both."
 status: rejected
-decision: "No suggester UI yet (#6945): the picture channel is the limit. No AI glyph readings shown to readers (#6903): the best team is 74–80% precise on Palenque and 47–50% on the codex. Next for #6945: a numeral counter and a picture channel trained on confirmed blocks, re-measured with this replay."
+decision: "No suggester UI yet (#6945): the picture channel is the limit. No AI glyph readings shown to readers (#6903): on famous Classic texts the models recite rather than read, and on the codex they cannot read. Next for #6945: a numeral counter and a picture channel trained on confirmed blocks, re-measured with this replay, on texts a model cannot have memorised."
 superseded_by: null
 issue: [6903, 6945]
 ---
@@ -36,20 +36,25 @@ Harness: `scripts/eval/maya-suggest-6945/` (README there). Access was subscripti
 - **Added: a no-image arm.** The O-K prompt with every crop withheld, for Opus (O-noimg) and Gemini (G-noimg). The bare arm cannot tell whether the *monument name and coordinates* unlock a memorised text; this arm can.
 
 **Scoring.** As in rounds 1 and 2: deterministic exact (every legible reference sign present; number words and glottal stops folded), plus **two blind judges**. Opus 5.5 and Gemini 4 Argon saw every arm's attempted blocks mixed, shuffled and unlabelled, against Stuart's transliteration, transcription and translation.
-- Judge agreement, Krippendorff α (ordinal): **0.95** on transliteration (294 of 307 pairs identical) and **0.96** on gloss.
+- Judge agreement, Krippendorff α (ordinal): **0.96** on transliteration (416 of 436 pairs identical) and **0.96** on gloss.
+- G-noimg and the G-bare repeat came last and were judged by Opus only; their Gemini column reads "–".
 - Columns quote "O | G" = Opus judge | Gemini judge.
 
 | arm | attempted (of 100) | exact (Wilson CI) | judged match O \| G | gloss match O \| G | exact UNSEEN strict (of 93) / judged | wrong O \| G | wrong at conf ≥0.5 | controls read (of 10) |
 |---|---|---|---|---|---|---|---|---|
 | O-K | 47 | 9 (5–16) | 15 \| 15 | 16 \| 15 | 8 / 14 | 5 \| 5 | 1 | 1 ("MUWAAN-MAT", 0.25) |
 | O-K repeat | 53 | 10 (6–17) | 15 \| 15 | 16 \| 17 | 8 / 13 | 14 \| 13 | 0 | 3 ("GI" ×3, ≤0.3) |
-| **O-noimg** (crops withheld) | 55 | **13** (8–21) | 17 \| GNI_OJ | 23 \| GNI_OG | 13 / 16 | 15 \| GNI_OW | 0 | 5 (1 at ≥0.5) |
+| **O-noimg** (crops withheld) | 55 | **13** (8–21) | 17 \| 17 | 23 \| 23 | 13 / 16 | 15 \| 14 | 0 | 5 (1 at ≥0.5) |
 | O-bare (recall control) | 13 | 0 (0–4) | 0 \| 0 | 0 \| 0 | 0 / 0 | 7 \| 6 | 0 | 0 |
 | **G-K** | 94 | **45** (36–55) | **60 \| 56** | 64 \| 63 | 39 / 54 \| 50 | 9 \| 11 | 9 \| 11 (all) | 4 (all ≥0.8) |
-| G-noimg (crops withheld) | GNI | GNI | GNI | GNI | GNI | GNI | GNI | GNI |
-| G-bare (recall control) | 74 | 10 (6–17) | 15 \| GB_G | 15 \| GB_GG | 10 / 15 | 31 \| GB_GW | 28 | 1 ("K'INICH", 0.85) |
+| **G-noimg** (crops withheld)¹ | 76 | **36** (27–46) | 45 \| – | 49 \| – | 33 / 42 | 9 \| – | 6 | 7 (6 at ≥0.5) |
+| G-bare (recall control) | 74 | 10 (6–17) | 15 \| 12 | 15 \| 15 | 10 / 15 | 31 \| 32 | 28 | 1 ("K'INICH", 0.85) |
+| G-bare repeat² | 72 | 12 (7–20) | 18 \| – | 18 \| – | 12 / 18 | 33 \| – | 30 | 5 (all ≥0.6) |
 | **Team** (Opus checks G-K) | 51 | 22 (15–31) | 33 \| 33 | 35 \| 36 | 18 / 29 | 1 \| 1 | 1 | 2 (both "GI") |
 | Team repeat | 49 | 29 (21–39) | 37 \| 36 | 39 \| 40 | 25 / 33 | 2 \| 2 | 1 | 3 |
+
+¹ 2 of G-noimg's 27 groups (10 blocks, TC K2–K14 and TS A13–C6) failed three times and count as unread. **On the 90 blocks of the 25 groups both ran:** G-K exact 39 (judged 55), G-noimg 36 (judged 45). O-K 8 and 10, O-noimg 12 (judged 14–15 vs 15).
+² The helper on main stalled, so a second helper on cloudlayer re-ran G-bare; both finished, giving a free repeat.
 
 **Team precision** (judged match ÷ accepted):
 
@@ -58,27 +63,31 @@ Harness: `scripts/eval/maya-suggest-6945/` (README there). Access was subscripti
 | Team | 43 / 8 / 49 | **32 \| 32 of 43 = 74%** (Wilson 60–85) | 28 of 39 | 1 of 51 (the rest of the misses are partial) |
 | Team repeat | 44 / 5 / 51 | **35 \| 34 of 44 = 80%** (65–89) | 31 of 40 | 2 of 49 |
 
-**Recall control: neither model recognises these famous tablets from a crop.**
-- **O-bare** read 0 blocks. It named no monument for any of the 110 crops.
-- **G-bare** read 10 exact, and 9 of the 10 are dates or periods (`4-AJAW`, `9-IK'`, `1-WINIKHA'B'`, `9-HA'B'-ya`). It named a source for 16 crops, but only 5 named Palenque and 2 the right tablet. It also named the wrong monument for 6 at confidence 0.95 ("Piedras Negras Stela 3" ×5).
-- G-bare and G-K share 9 exact readings. So G-K's other 36 exact readings need the context (monument, coordinates, parallels), not just the image.
-- **The no-image arm** is what separates memory from reading:
-  - **Opus:** with the crops withheld it reads more (13 exact, judged 17) than with them (9–10, judged 15). Only 4 blocks are exact in both O-K and O-noimg. Opus's Palenque readings come from the context and its knowledge of the Cross Group, not from the drawing. The pre-stated round-2 bar ("≥5 UNSEEN blocks exact, 0 controls") is passed on paper (8 and 8) and fails in substance.
-  - **Gemini:** GNI_SENTENCE
+**Recall control: the crop alone is not recognised, but the monument name is enough.**
+- **From the crop alone, neither model recognises these famous tablets:**
+  - **O-bare** read 0 blocks and named no monument for any of the 110 crops.
+  - **G-bare** read 10 and 12 exact in two runs, 9 of each run's exact readings dates or periods (`4-AJAW`, `9-IK'`, `1-WINIKHA'B'`, `9-HA'B'-ya`).
+    - It named Palenque for 5 and 13 crops, the right tablet for 2 and 4, and the right coordinate for 0 and 2 (TC E1, E16).
+    - It also named the wrong monument at confidence 0.9–0.95 ("Piedras Negras Stela 3" ×5 in run 1; the Temple of the Inscriptions ×4 in run 2).
+- **Given the monument name, coordinates and parallels, the image hardly matters:**
+  - **Opus** reads more with the crops withheld (13 exact, judged 17) than with them (9–10, judged 15). Only 4 blocks are exact in both. Its O-K readings come from the context and its knowledge of the Cross Group, not from the drawing.
+    - So round 2's pre-stated bar ("≥5 UNSEEN blocks exact, 0 controls") is passed on paper (8 and 8) and fails in substance.
+  - **Gemini** with the crops withheld is exact on 36 blocks, judged 45. On the 90 blocks both arms ran, that is 36 vs 39 exact and 45 vs 55 judged: **the drawing adds 3 exact readings and 10 judged matches.**
+    - 26 blocks are exact in both. The rest of G-K's score is the published text, recalled from the monument name and coordinates and from the parallels. G-noimg is exact on 33 of the 93 blocks whose reading was not in its context, without seeing any block.
+- **What this means:** the Palenque set cannot measure reading. These are among the most published Maya texts, and Stuart's 2006 readings are online. The bare arm alone would have under-reported recall; the no-image arm shows it.
 
 **Findings**
-- **Gemini reads Classic Palenque far better than the Postclassic codex:**
-  - G-K is exact on 45 of 100 here, judged 56–60, against 26 of 70 on Dresden in round 2.
-  - It is exact on 39 of the 93 blocks whose reading was not in its context. 24 of its 45 exact blocks carry a numeral (dates, periods, distance numbers).
-  - Every judged-wrong answer is stated at confidence 0.9–0.95, and 32 of its 92 readings at confidence ≥0.9 are not judged a match (Opus judge).
-- **The team filters better here than on the codex, but not well enough.**
+- **G-K's 45 exact (judged 56–60) is not reading.** It is 26 of 70 on the Dresden codex in round 2. The difference is that Palenque can be recalled.
+  - 24 of its 45 exact blocks carry a numeral (dates, periods, distance numbers). Every judged-wrong answer is stated at confidence 0.9–0.95, and 32 of its 92 readings at confidence ≥0.9 are not judged a match (Opus judge).
+- **The team filters better here than on the codex, but not well enough, and it is filtering recall.**
   - Opus accepts 43–44 of G-K's 94 readings, at **74–80%** precision (codex: 47–50%), against the 90% bar.
   - What it stands behind is almost never wholly wrong (1–2 of ~50). The misses are near-misses: a dropped `i-` prefix (`K'AL-SAK-HUUN` for `I-K'AL-SAK-HU'N`), `CH'EEN-na` for `CHAN-na-CH'E'N-na`, a month written `K'AYAB` for Stuart's `K'AN-a-si-ya` (judged a match by both judges).
 - **Invention on controls.**
   - Gemini read 4 of the 10 controls at confidence ≥0.8. Two are "GI" for Stuart's "GI" name glyph, which is a correct identification. One is a bare "?".
   - One is the phonetic reading `AKAN-YAX?-ja` (0.95) for a GI name Stuart leaves unread. That is the codex finding again: a confident reading of a sign nobody reads.
   - The team accepted 2–3 controls, all "GI".
-- **Replicated?** O-K 9 vs 10 exact (15 vs 15 judged). Team 74% vs 80% precision. Ranking and verdict hold.
+  - Without the image, Gemini "read" 7 controls (6 at ≥0.5), among them `11-WINIK-ya` (0.85) for the reconstructed TC alfardas E1, and `ke-le-ma` (0.55) for a block Stuart leaves wholly unread.
+- **Replicated?** O-K 9 vs 10 exact (15 vs 15 judged). G-bare 10 vs 12. Team 74% vs 80% precision. G-K and G-noimg ran once each. Ranking and verdict hold.
 
 ### B. Suggester replay (#6945, step 1)
 

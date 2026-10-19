@@ -15,11 +15,11 @@ prompts to the Gemini helper on main and answers back; it is deleted after the r
 |---|---|
 | `common.py` | paths (`$MS` job scratch, `$R1`, `$R2`), reading normalisation (round 2's, plus number words, quotes, glottal stops) |
 | `palenque_set.py` | 100 held-out clean blocks stratified by monument, 10 controls, groups of ≤5 per call, layout-only retrieval, opaque image names |
-| `prompts.mjs` | arms OK (catalogue + retrieved parallels), TEAM (Opus checks Gemini), BARE (recall control: crop only, shuffled, "name the monument") |
+| `prompts.mjs` | arms OK (catalogue + retrieved parallels), TEAM (Opus checks Gemini), BARE (recall control: crop only, shuffled, "name the monument"), NOIMG (recall control: the OK prompt with the crops withheld) |
 | `run-claude.mjs` | Opus 5.5 through `claude -p` (subscription), one call per group, resumable |
-| `run-agy.mjs`, `build-payload.mjs`, `helper-brief.sh`, `scratch-doc.mjs` | Gemini 4 Argon through `agy` on main (not signed in on l7a): payload out, answers back, scratch deleted |
+| `run-agy.mjs`, `build-payload.mjs`, `helper-brief.sh`, `scratch-doc.mjs`, `ingest.py` | Gemini 4 Argon through `agy` on a box where it is signed in (main, cloudlayer; not l7a): payload out, answers back, scratch deleted |
 | `score.py` | deterministic: exact / wrong / SEEN (verbatim and token rule) / controls / team verdicts / monument named |
-| `judge_packet.py` | blind judge packets (all arms mixed and shuffled), tally, Krippendorff α |
+| `judge_packet.py`, `run-judge-claude.mjs`, `tables.py` | blind judge packets (arms mixed and shuffled, unlabelled), the Opus judge, tally, Krippendorff α, the result table |
 | `picture.py` | suggester picture channel: DINOv2 + CLIP, sign drawings (`maya_signs`) and reference block crops; run with round 2's CPU venv |
 | `suggester.py` | suggester replay: recall@1/3/6/8 per channel and fused, clicks per block, seen/unseen |
 
