@@ -67,7 +67,11 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - present_choices: Offer branching options (rarely used)
  */
 
-/** The answer model. LIBRARIAN_MODEL overrides it (#6946 measured gemini-3.8-flash as arm C). */
+/**
+ * The answer model. LIBRARIAN_MODEL overrides it. #6946 measured gemini-3.8-flash
+ * (with cite IDs): more wrong-page links than 3-flash and time to done p50
+ * 21.1 s vs 11.7 s at 2.3× the cost per turn, so the default stays.
+ */
 const MODEL = process.env.LIBRARIAN_MODEL || 'gemini-3-flash-preview';
 const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
@@ -95,8 +99,11 @@ const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
  * Cite by ID (#6946): every page in a tool result carries an ID (`[P7]`), the
  * model cites the ID, and the server writes the page link while the text
  * streams (cite-ids.ts). The top search hits are also shown whole instead of a
- * 1,200-character window. Off unless LIBRARIAN_CITE_IDS=1; measured in
- * scripts/eval/experiments/2026-10-19-librarian-cite-ids-6946.md.
+ * 1,200-character window. Off unless LIBRARIAN_CITE_IDS=1. Blind A/B on 40
+ * readers' questions (scripts/eval/experiments/2026-10-19-librarian-cite-ids-
+ * 6946.md): the model cited 2.7× as many pages and wrong-page links rose
+ * 25 → 115 (11% → 19% of links; IDs mixed up instead of page numbers), so the
+ * registered gate failed, though the judges preferred its answers 24 to 15.
  */
 const CITE_IDS_DEFAULT = process.env.LIBRARIAN_CITE_IDS === '1';
 /** With cite IDs: this many top hits of each search are shown whole… */
