@@ -37,6 +37,7 @@ import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import { passageWindow } from '@/lib/search/librarian-search';
 import { checkRateLimitShared } from '@/lib/rate-limit';
 import { logAiUsage } from '@/lib/log-ai-usage';
+import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 
 export const KEYWORD_CANDIDATES = 200;
 export const SEMANTIC_CANDIDATES = 100;
@@ -65,6 +66,8 @@ export interface QuestionPassage {
   book_id: string;
   bookTitle: string;
   bookAuthor: string;
+  /** Resolvable `/author/<authorSlug>` (books.author_id, else the slug of the stored name), as hybridSearch gives it. */
+  authorSlug?: string;
   bookSlug?: string;
   year?: number;
   language?: string;
@@ -251,7 +254,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
   const books = new Map(
     (bookIds.length ? await db.collection('books').find(
       { id: { $in: bookIds }, visible: true, pages_count: { $gt: 0 }, hidden: { $ne: true }, tenantId: { $in: [null, undefined] } },
-      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1 } },
+      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1 } },
     ).toArray() : []).map(b => [b.id as string, b]),
   );
   const kept = order.filter(c => books.has(c.book_id));
@@ -333,6 +336,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
       book_id: c.book_id,
       bookTitle: (b.display_title || b.title || 'Unknown') as string,
       bookAuthor: (b.author || 'Unknown') as string,
+      ...(b.author ? { authorSlug: (b.author_id || toAuthorSlug(b.author as string)) as string } : {}),
       bookSlug: b.slug as string | undefined,
       year,
       language: typeof b.language === 'string' ? b.language : undefined,

@@ -1202,7 +1202,10 @@ async function executeTool(
       const localized = await loadLocalizedTexts(lang, all.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
       const header = (p: (typeof all)[number], extra: string) => {
         const url = `${base}/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
-        return `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${extra} ---\n`;
+        // The author's link, not the name alone: given a name, the model builds
+        // an /author/ slug of its own and it 404s (agent-tool-results.md).
+        const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
+        return `\n--- ${p.bookTitle}${editionTag(p)} by ${author}, Page ${p.page_number} (${url})${extra} ---\n`;
       };
       let context = '';
       if (data.note) context += `Note: ${data.note}. Tell the reader in one plain clause if it matters to the answer.\n`;
@@ -1584,7 +1587,7 @@ For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, p
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
-**Requests for a kind of passage go to find_passages.** "A passage where someone describes leaving their body", "an account of a dream that came true", "instructions for making a talisman", "does anyone describe curing a wound by treating the weapon?" ask for a page that does something, not a page that uses certain words. Call **find_passages** with the reader's request as a full sentence; it reads a few hundred candidate pages and ranks them against the request. Quote from the pages it returns and link them with the URLs it gives. Use \`search\` beside it when the request also names a person, a book or a term.
+**Requests for a kind of passage go to find_passages.** "A passage where someone describes leaving their body", "an account of a dream that came true", "instructions for making a talisman", "does anyone describe curing a wound by treating the weapon?" ask for a page that does something, not a page that uses certain words. Call **find_passages** with the reader's request as a full sentence; it reads a few hundred candidate pages and ranks them against the request. Quote from the pages it returns and link them, and their authors, with the URLs it gives; an author it gives no link for is plain text. Use \`search\` beside it when the request also names a person, a book or a term.
 
 **Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
