@@ -9,7 +9,7 @@ import { GearTrain } from './MayaGears';
 import { EclipseTable, VenusTable } from './MayaTables';
 
 // Every quotation below is copied from the stored text of the page it links to (#6925): the served English
-// translation for Landa, the Motul dictionary, the Kaua book and Förstemann's commentary (Förstemann's is the
+// translation for the Motul dictionary, the Kaua book and Förstemann's commentary (Förstemann's is the
 // printed 1906 English), and the printed English for Bowditch. The Dresden pages were identified by eye on
 // 2026-10-18: reader pages 25 to 29 are the five Venus pages (Förstemann's 46 to 50). The arithmetic in the
 // interactives is pinned by tests/maya-calendar.test.ts.
@@ -36,7 +36,6 @@ export const metadata: Metadata = withArticleMeta('maya-mathematics', {
 });
 
 const SLUG = {
-  landa: 'relation-des-choses-de-yucatan-de-diego-de-landa-ed',
   motul2: 'diccionario-de-motul-maya-espanol-vol-2-antonio-de-ciudad-real',
   bowditch: 'the-numeration-calendar-systems-and-astronomical-knowledge-of-the-maya',
   forstemann: 'commentary-on-the-maya-manuscript-in-the-royal-public-forstemann',
@@ -46,7 +45,6 @@ const SLUG = {
   brinton: 'the-maya-chronicles-library-of-aboriginal-american-brinton',
 };
 const ID = {
-  landa: '69ee93b9f2c6312502f6a526',
   motul2: '6acc3d6c230e9a56175ccae2',
   bowditch: '6abfbf413c453a90d66637dc',
   forstemann: '6a09ff94fa20006dbaba9ecb',
@@ -97,9 +95,8 @@ export default function MayaMathematicsPage() {
           This article reads that arithmetic piece by piece: how the numbers were written, how the counts of days fit
           together, and how the scribes kept them in step with Venus and the moon. Each part has something to try, and
           beside it the page it comes from: the Dresden Codex itself; Ernst Förstemann and Charles Bowditch, who first
-          worked out its arithmetic; and the colonial sources that recorded how the Maya counted aloud, Diego de
-          Landa&apos;s <Link href={at(SLUG.landa, 252)}>Relación</Link>, the Motul dictionary and the Books of Chilam
-          Balam.
+          worked out its arithmetic; and the colonial Yucatec sources that recorded how the Maya counted aloud, the
+          Motul dictionary and the Books of Chilam Balam.
         </p>
 
         <nav aria-label="On this page" data-card className="not-prose my-10 grid gap-4 sm:grid-cols-2 rounded-lg border border-border-light bg-white/60 p-5 font-sans text-sm">
@@ -122,24 +119,9 @@ export default function MayaMathematicsPage() {
         <h3 className={h3}>Twenty, four hundred, eight thousand</h3>
 
         <p className={p}>
-          The codices write numbers; the colonial sources say how they were spoken. Diego de Landa, the Franciscan who
-          burned the Maya books he found at Maní in 1562, describes how the Yucatec Maya counted:
-        </p>
-
-        <SourceQuote linkToPage
-          book={SLUG.landa} page={252} printedPage={134} src={img(ID.landa, 252)}
-          source={<>Diego de Landa, <em>Relación de las cosas de Yucatán</em>, §XXIV (1864 edition)</>}
-          pageAlt="Page 134 of Brasseur's 1864 edition of Landa, with the section on how the Yucatecans count"
-        >
-          Their count is from 5 to 5 until 20, and from 20 to 20 until 100, and from 100 to 100 until 400, and from
-          400 to 400 until 8,000. And they made much use of this count for the trade of cacao. They have other very
-          long counts, and which they extend <em>in infinitum</em>, counting them 8,000 twenty times, which is
-          160,000, and returning to 20 they double these 160,000, and then continue in this way doubling by 20 until
-          they make an uncountable number: they count on the ground or on a flat thing.
-        </SourceQuote>
-
-        <p className={p}>
-          The great Motul dictionary, compiled by Franciscans in the sixteenth century, gives the words for each step.
+          The codices write numbers; the colonial sources say how they were spoken. Spoken Yucatec counts in twenties,
+          and the great Motul dictionary, compiled by Franciscans in the sixteenth century, gives the words for each
+          step.
         </p>
 
         <SourceQuote linkToPage
@@ -152,9 +134,8 @@ export default function MayaMathematicsPage() {
 
         <p className={p}>
           <em>Hun</em> is one, so <em>hunkal</em> is one twenty, <em>hunbak</em> one four hundred, <em>hunpic</em> one
-          eight thousand. These are the units Landa lists, and the same entry gives <em>hunkatun</em> for twenty years.
-          Each unit is twenty of the one below it. Landa adds that the counts were kept on the ground or on a flat
-          surface, which fits what we find in the codices: a number is a stack of places, each one worth twenty times
+          eight thousand, and the same entry gives <em>hunkatun</em> for twenty years. Each unit is twenty of the one
+          below it, which is what we find in the codices: a number is a stack of places, each one worth twenty times
           the place beneath it.
         </p>
 
@@ -270,8 +251,8 @@ export default function MayaMathematicsPage() {
           2 Ik&apos;, 3 Ak&apos;b&apos;al, and so on, until 13 Ben is followed by 1 Ix. Because 13 and 20 have no
           common factor, every pairing occurs once before the cycle repeats, after 260 days. The 365-day year runs
           beside it, eighteen months of twenty days and five more at the end. A given day in both counts comes back
-          only when both have come round, after 18,980 days, or 52 years. Landa describes how the four day names that
-          can begin a year divided the years among four gods, which is the subject of{' '}
+          only when both have come round, after 18,980 days, or 52 years. Only four of the twenty day names can begin a
+          year; what the colonial books say about them is the subject of{' '}
           <Link href="/articles/maya-ritual-in-the-colonial-dictionaries">another article</Link>.
         </p>
 
@@ -546,7 +527,7 @@ export default function MayaMathematicsPage() {
         </p>
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
-          The English of Landa, the Motul dictionary and the Kaua book is the library&apos;s translation. Bowditch and
+          The English of the Motul dictionary and the Kaua book is the library&apos;s translation. Bowditch and
           Förstemann are quoted from their printed English. The Paris Codex and Brinton&apos;s{' '}
           <Link href={`/book/${SLUG.brinton}?page=60`}>Maya Chronicles</Link>, on the colonial count of k&apos;atuns,
           are also in the library. The date converter uses the proleptic Gregorian calendar for all dates.
