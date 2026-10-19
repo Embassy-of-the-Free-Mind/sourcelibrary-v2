@@ -1,0 +1,420 @@
+[
+{
+"key": "1:44",
+"page_id": "69dfeba8090ad7d5c33b0f62",
+"codex_book": 1,
+"folio": "4r",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "1:62",
+"page_id": "69dfeba8090ad7d5c33b0f74",
+"codex_book": 1,
+"folio": "13r",
+"labels": {
+"X": "opus",
+"Y": "twopass",
+"Z": "draft"
+}
+},
+{
+"key": "1:70",
+"page_id": "69dfeba8090ad7d5c33b0f7c",
+"codex_book": 1,
+"folio": "17r",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "1:102",
+"page_id": "69dfeba8090ad7d5c33b0f9c",
+"codex_book": 1,
+"folio": "33r",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "1:107",
+"page_id": "69dfeba8090ad7d5c33b0fa1",
+"codex_book": 1,
+"folio": "35v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:163",
+"page_id": "69dfeba8090ad7d5c33b0fd9",
+"codex_book": 2,
+"folio": "21v",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "1:217",
+"page_id": "69dfeba8090ad7d5c33b100f",
+"codex_book": 2,
+"folio": "48v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:291",
+"page_id": "69dfeba8090ad7d5c33b1059",
+"codex_book": 2,
+"folio": "85v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:342",
+"page_id": "69dfeba8090ad7d5c33b108c",
+"codex_book": 2,
+"folio": "111r",
+"labels": {
+"X": "draft",
+"Y": "opus",
+"Z": "twopass"
+}
+},
+{
+"key": "1:359",
+"page_id": "69dfeba8090ad7d5c33b109d",
+"codex_book": 2,
+"folio": "119v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "4:428",
+"page_id": "69dfeba8090ad7d5c33b10e2",
+"codex_book": 3,
+"folio": "7r",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:444",
+"page_id": "69dfeba8090ad7d5c33b10f2",
+"codex_book": 3,
+"folio": "15r",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "4:460",
+"page_id": "69dfeba8090ad7d5c33b1102",
+"codex_book": 3,
+"folio": "23r",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "4:469",
+"page_id": "69dfeba8090ad7d5c33b110b",
+"codex_book": 3,
+"folio": "27v",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "1:479",
+"page_id": "69dfeba8090ad7d5c33b1115",
+"codex_book": 3,
+"folio": "32v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:504",
+"page_id": "69dfeba8090ad7d5c33b112e",
+"codex_book": 4,
+"folio": "3r",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "1:549",
+"page_id": "69dfeba8090ad7d5c33b115b",
+"codex_book": 4,
+"folio": "25v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:570",
+"page_id": "69dfeba8090ad7d5c33b1170",
+"codex_book": 4,
+"folio": "36r",
+"labels": {
+"X": "draft",
+"Y": "opus",
+"Z": "twopass"
+}
+},
+{
+"key": "1:590",
+"page_id": "69dfeba8090ad7d5c33b1184",
+"codex_book": 4,
+"folio": "46r",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "1:625",
+"page_id": "69dfeba8090ad7d5c33b11a7",
+"codex_book": 4,
+"folio": "63v",
+"labels": {
+"X": "opus",
+"Y": "draft",
+"Z": "twopass"
+}
+},
+{
+"key": "1:683",
+"page_id": "69dfeba8090ad7d5c33b11e1",
+"codex_book": 5,
+"folio": "4v",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "1:686",
+"page_id": "69dfeba8090ad7d5c33b11e4",
+"codex_book": 5,
+"folio": "6r",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "1:698",
+"page_id": "69dfeba8090ad7d5c33b11f0",
+"codex_book": 5,
+"folio": "12r",
+"labels": {
+"X": "opus",
+"Y": "draft",
+"Z": "twopass"
+}
+},
+{
+"key": "1:704",
+"page_id": "69dfeba8090ad7d5c33b11f6",
+"codex_book": 5,
+"folio": "15r",
+"labels": {
+"X": "opus",
+"Y": "draft",
+"Z": "twopass"
+}
+},
+{
+"key": "1:716",
+"page_id": "69dfeba8090ad7d5c33b1202",
+"codex_book": 5,
+"folio": "21r",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "2:57",
+"page_id": "69dfebaa090ad7d5c33b124a",
+"codex_book": 6,
+"folio": "21v",
+"labels": {
+"X": "opus",
+"Y": "draft",
+"Z": "twopass"
+}
+},
+{
+"key": "2:111",
+"page_id": "69dfebaa090ad7d5c33b1280",
+"codex_book": 6,
+"folio": "48v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "2:197",
+"page_id": "69dfebaa090ad7d5c33b12d6",
+"codex_book": 6,
+"folio": "90v",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "2:377",
+"page_id": "69dfebaa090ad7d5c33b138a",
+"codex_book": 6,
+"folio": "180v",
+"labels": {
+"X": "draft",
+"Y": "twopass",
+"Z": "opus"
+}
+},
+{
+"key": "2:462",
+"page_id": "69dfebaa090ad7d5c33b13df",
+"codex_book": 7,
+"folio": "1r",
+"labels": {
+"X": "twopass",
+"Y": "opus",
+"Z": "draft"
+}
+},
+{
+"key": "2:476",
+"page_id": "69dfebaa090ad7d5c33b13ed",
+"codex_book": 7,
+"folio": "8r",
+"labels": {
+"X": "draft",
+"Y": "opus",
+"Z": "twopass"
+}
+},
+{
+"key": "2:486",
+"page_id": "69dfebaa090ad7d5c33b13f7",
+"codex_book": 7,
+"folio": "13r",
+"labels": {
+"X": "opus",
+"Y": "twopass",
+"Z": "draft"
+}
+},
+{
+"key": "2:501",
+"page_id": "69dfebaa090ad7d5c33b1406",
+"codex_book": 7,
+"folio": "20v",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "2:530",
+"page_id": "69dfebaa090ad7d5c33b1423",
+"codex_book": 8,
+"folio": "11r",
+"labels": {
+"X": "twopass",
+"Y": "draft",
+"Z": "opus"
+}
+},
+{
+"key": "2:571",
+"page_id": "69dfebaa090ad7d5c33b144c",
+"codex_book": 8,
+"folio": "31v",
+"labels": {
+"X": "opus",
+"Y": "draft",
+"Z": "twopass"
+}
+},
+{
+"key": "2:579",
+"page_id": "69dfebaa090ad7d5c33b1454",
+"codex_book": 8,
+"folio": "35v",
+"labels": {
+"X": "opus",
+"Y": "twopass",
+"Z": "draft"
+}
+},
+{
+"key": "2:603",
+"page_id": "69dfebaa090ad7d5c33b146c",
+"codex_book": 8,
+"folio": "47v",
+"labels": {
+"X": "opus",
+"Y": "twopass",
+"Z": "draft"
+}
+},
+{
+"key": "2:626",
+"page_id": "69dfebaa090ad7d5c33b1483",
+"codex_book": 9,
+"folio": "1r",
+"labels": {
+"X": "opus",
+"Y": "twopass",
+"Z": "draft"
+}
+}
+]
