@@ -13,7 +13,7 @@ export interface Block extends Img {
 }
 
 export type Sheet = {
-  slug: string; title: string; level: string; intro: string; credits: CreditKey[];
+  slug: string; number: number; title: string; level: string; intro: string; credits: CreditKey[];
 } & (
   | { layout: 'chart'; chart: { consonant: string; cells: Sign[] }[] }
   | { layout: 'write' | 'trace'; items: (Sign & { answer: string })[] }
@@ -27,11 +27,11 @@ export type Sheet = {
   | { layout: 'blocks-word'; helper: Sign[]; items: Block[] }
 );
 
-export type CreditKey = 'stuart' | 'wayeb' | 'palenque';
+export type CreditKey = 'stuart' | 'twkm' | 'morley' | 'palenque';
 
 export const CREDITS = data.credits as Record<CreditKey, string>;
 export const SHEETS = data.sheets as Sheet[];
-export const LEVELS = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Reference'];
+export const LEVELS = ['Reference', 'Level 1', 'Level 2', 'Level 3', 'Level 4'];
 
 export function getSheet(slug: string): Sheet | undefined {
   return SHEETS.find((s) => s.slug === slug);

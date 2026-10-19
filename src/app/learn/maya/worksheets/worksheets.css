@@ -1,0 +1,157 @@
+/* Printable Maya glyph worksheets in the Ts'íib style (Derek's design system for Maya learning
+   materials, ~/mayan/design-system/project/tokens.json). Line first, colour second: every tile is
+   an ink outline; on screen it carries the hard spray offset, on paper it is left white. */
+
+.ts-root {
+  --ts-cal: #f5f6f1;
+  --ts-tinta: #161616;
+  --ts-tinta-suave: #55574f;
+  --ts-linea: #cfd1c6;
+  --ts-azul: #2496bf;
+  --ts-kan: #f2c200;
+  --ts-line-heavy: 3px;
+  --ts-offset: 4px 4px 0 0 var(--ts-tinta);
+  background: var(--ts-cal);
+  color: var(--ts-tinta);
+  font-family: var(--ts-sans), 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.ts-root h1,
+.ts-root h2,
+.ts-root h3 {
+  font-family: var(--ts-sans), 'Helvetica Neue', Arial, sans-serif;
+}
+.ts-root .ts-display {
+  font-family: var(--ts-display), 'Arial Black', Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.ts-label {
+  font-family: var(--ts-label), var(--ts-sans), Arial, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+}
+.ts-kicker {
+  color: var(--ts-azul);
+}
+.ts-body {
+  font-size: 17px;
+  line-height: 26px;
+}
+.ts-suave {
+  color: var(--ts-tinta-suave);
+}
+.ts-glyph-label {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+/* The glyph block: rounded-square cartouche, heavy ink outline, hard offset when raised. */
+.ts-tile {
+  background: #fff;
+  border: var(--ts-line-heavy) solid var(--ts-tinta);
+  border-radius: 18px;
+  box-shadow: var(--ts-offset);
+}
+.ts-tile-flat {
+  background: #fff;
+  border: var(--ts-line-heavy) solid var(--ts-tinta);
+  border-radius: 18px;
+}
+.ts-empty {
+  border: 2px dashed var(--ts-tinta-suave);
+  border-radius: 14px;
+}
+.ts-rule {
+  border-bottom: var(--ts-line-heavy) solid var(--ts-tinta);
+}
+.ts-line {
+  border-bottom: 1.5px solid var(--ts-tinta);
+  height: 28px;
+}
+.ts-hair {
+  border-color: var(--ts-linea);
+}
+.ts-num {
+  background: var(--ts-kan);
+  border: var(--ts-line-heavy) solid var(--ts-tinta);
+  border-radius: 10px;
+}
+.ts-button {
+  background: var(--ts-azul);
+  color: var(--ts-tinta);
+  border: var(--ts-line-heavy) solid var(--ts-tinta);
+  border-radius: 14px;
+  box-shadow: var(--ts-offset);
+  font-weight: 700;
+  transition: transform 120ms, box-shadow 120ms;
+}
+.ts-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+.ts-link-tile {
+  transition: transform 120ms, box-shadow 120ms;
+}
+.ts-link-tile:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--ts-tinta);
+}
+.ts-paper {
+  background: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ts-button,
+  .ts-link-tile {
+    transition: none;
+  }
+}
+
+@page {
+  margin: 12mm;
+}
+
+@media print {
+  .ts-root,
+  .ts-paper {
+    background: #fff !important;
+  }
+  .ts-tile {
+    box-shadow: none;
+    border-width: 2px;
+  }
+  .ts-tile-flat {
+    border-width: 2px;
+  }
+  .ts-num {
+    background: #fff;
+  }
+  .ws-frame {
+    border: 0 !important;
+    max-width: none !important;
+  }
+  .ws-key {
+    break-before: page;
+  }
+  .ws-noprint,
+  [data-cookie-banner],
+  [data-site-mode-indicator] {
+    display: none !important;
+  }
+  /* globals.css sets break-inside: avoid on every element, which pushes a whole grid onto the
+     next page; let the sheet break between items instead. */
+  .ws-page * {
+    break-inside: auto;
+  }
+  .ws-page .ws-avoid {
+    break-inside: avoid;
+  }
+  body {
+    background: #fff !important;
+  }
+}

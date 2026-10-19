@@ -1,28 +1,17 @@
-/* eslint-disable @next/next/no-img-element -- fixed-size line drawings from images.sourcelibrary.org, printed */
+/* eslint-disable @next/next/no-img-element -- vector glyph traces and line drawings, printed at fixed sizes */
 import type { ReactNode } from 'react';
 import { CREDITS, type Block, type Sheet, type Sign } from './data';
 
-const line = 'border-b border-stone-400 h-7';
-
 function Glyph({ s, h = 64, label }: { s: Sign; h?: number; label?: string }) {
   return (
-    <figure className="flex flex-col items-center gap-1">
+    <figure className="flex flex-col items-center gap-2">
       <img src={s.src} alt={label ? `Maya sign ${label}` : 'Maya sign'} style={{ height: h, width: 'auto', maxWidth: h * 1.6 }} className="object-contain" />
-      {label && <figcaption className="text-xs text-stone-600 font-mono">{label}</figcaption>}
+      {label && <figcaption className="ts-glyph-label">{label}</figcaption>}
     </figure>
   );
 }
 
-function ChartCell({ s }: { s: Sign }) {
-  return (
-    <div className="flex items-center justify-between gap-1">
-      <img src={s.src} alt={`Maya sign ${s.value}`} style={{ height: 27, width: 'auto', maxWidth: 44 }} className="object-contain" />
-      <span className="text-[10px] text-stone-600 font-mono">{s.value}</span>
-    </div>
-  );
-}
-
-function BlockImg({ b, h = 150 }: { b: Block; h?: number }) {
+function BlockImg({ b, h = 110 }: { b: Block; h?: number }) {
   return <img src={b.src} alt={`Glyph block ${b.coord}, ${b.monument}`} style={{ height: h, width: 'auto' }} className="object-contain mx-auto" />;
 }
 
@@ -51,16 +40,16 @@ function Numeral({ value, size = 44 }: { value: number; size?: number }) {
 }
 
 function Num({ n }: { n: number }) {
-  return <span className="text-xs text-stone-500 tabular-nums w-5 shrink-0">{n}.</span>;
+  return <span className="ts-label ts-suave tabular-nums w-5 shrink-0">{n}</span>;
 }
 
-function Box({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`border border-stone-300 rounded-lg p-3 ws-avoid ${className}`}>{children}</div>;
+function Tile({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <div className={`ts-tile p-3 ws-avoid ${className}`}>{children}</div>;
 }
 
 function Bank({ words }: { words: string[] }) {
   return (
-    <div className="border border-stone-400 rounded-lg px-4 py-2 mb-5 text-sm flex flex-wrap gap-x-5 gap-y-1 ws-avoid">
+    <div className="ts-tile-flat px-4 py-2 mb-6 flex flex-wrap gap-x-5 gap-y-1 ts-body ws-avoid">
       {words.map((w) => <span key={w}>{w}</span>)}
     </div>
   );
@@ -76,16 +65,21 @@ function Body({ sheet }: { sheet: Sheet }) {
           <thead>
             <tr>
               <th />
-              {['a', 'e', 'i', 'o', 'u'].map((v) => <th key={v} className="font-mono text-sm px-2 pb-1">{v}</th>)}
+              {['a', 'e', 'i', 'o', 'u'].map((v) => <th key={v} className="ts-display text-lg px-2 pb-1">{v}</th>)}
             </tr>
           </thead>
           <tbody>
             {sheet.chart.map((row) => (
               <tr key={row.consonant || 'vowel'} className="ws-avoid">
-                <th className="font-mono text-sm pr-3 text-right align-middle">{row.consonant || '–'}</th>
+                <th className="ts-glyph-label pr-3 text-right align-middle">{row.consonant || 'vowel'}</th>
                 {row.cells.map((c) => (
-                  <td key={c.value} className="border border-stone-200 px-1 py-0.5 align-middle w-20">
-                    {c.missing ? null : <ChartCell s={c} />}
+                  <td key={c.value} className="border ts-hair px-1.5 py-0.5 align-middle w-[86px]">
+                    {c.missing ? <span className="block text-center ts-suave">–</span> : (
+                      <div className="flex items-center justify-between gap-1">
+                        <img src={c.src} alt={`Maya sign ${c.value}`} style={{ height: 28, width: 'auto', maxWidth: 46 }} className="object-contain" />
+                        <span className="text-[12px] font-bold">{c.value}</span>
+                      </div>
+                    )}
                   </td>
                 ))}
               </tr>
@@ -93,26 +87,31 @@ function Body({ sheet }: { sheet: Sheet }) {
           </tbody>
         </table>
       );
-    case 'write':
+    case 'write': {
+      const dense = sheet.items.length > 16;
       return (
-        <div className={`grid grid-cols-3 gap-3 ${sheet.items.length > 16 ? 'sm:grid-cols-5 print:grid-cols-5' : 'sm:grid-cols-4 print:grid-cols-4'}`}>
+        <div className={`grid grid-cols-3 ${dense ? 'gap-3 sm:grid-cols-6 print:grid-cols-6' : 'gap-4 sm:grid-cols-4 print:grid-cols-4'}`}>
           {sheet.items.map((it, i) => (
-            <Box key={i}>
-              <div className="flex"><Num n={i + 1} /></div>
-              <Glyph s={it} h={sheet.items.length > 16 ? 52 : 64} />
-              <div className={`${line} mt-2`} />
-            </Box>
+            <Tile key={i}>
+              <Num n={i + 1} />
+              <Glyph s={it} h={dense ? 46 : 62} />
+              <div className="ts-line mt-1" />
+            </Tile>
           ))}
         </div>
       );
+    }
     case 'trace':
       return (
         <div className="space-y-2">
           {sheet.items.map((it, i) => (
             <div key={i} className="flex items-center gap-3 ws-avoid">
               <Num n={i + 1} />
-              <div className="w-28 flex items-center justify-center gap-2"><Glyph s={it} h={44} /><span className="font-mono text-sm text-stone-600 w-8">{it.value}</span></div>
-              {[0, 1, 2].map((k) => <div key={k} className="flex-1 h-16 border border-dashed border-stone-400 rounded-lg" />)}
+              <div className="ts-tile-flat w-28 h-[60px] flex items-center justify-center gap-2 px-2">
+                <img src={it.src} alt={`Maya sign ${it.value}`} style={{ height: 40, width: 'auto', maxWidth: 56 }} className="object-contain" />
+                <span className="ts-glyph-label w-8">{it.value}</span>
+              </div>
+              {[0, 1, 2].map((k) => <div key={k} className="ts-empty flex-1 h-[60px]" />)}
             </div>
           ))}
         </div>
@@ -121,13 +120,13 @@ function Body({ sheet }: { sheet: Sheet }) {
       return (
         <div className="space-y-2">
           {sheet.items.map((it, i) => (
-            <div key={i} className="flex items-center gap-4 ws-avoid border-b border-stone-200 pb-2">
+            <div key={i} className="flex items-center gap-4 ws-avoid border-b ts-hair pb-2">
               <Num n={i + 1} />
-              <span className="font-mono text-xl w-14">{it.prompt}</span>
+              <span className="ts-display text-xl w-16">{it.prompt}</span>
               {it.options.map((o, k) => (
-                <div key={k} className="flex items-center gap-1">
-                  <span className="text-xs text-stone-500">{'ABCD'[k]}</span>
-                  <Glyph s={o} h={48} />
+                <div key={k} className="flex items-center gap-1.5">
+                  <span className="ts-label ts-suave">{'ABCD'[k]}</span>
+                  <Glyph s={o} h={46} />
                 </div>
               ))}
             </div>
@@ -142,10 +141,10 @@ function Body({ sheet }: { sheet: Sheet }) {
             {sheet.items.map((it, i) => (
               <div key={i} className="flex items-center gap-4 ws-avoid">
                 <Num n={i + 1} />
-                <div className="flex items-center gap-2 w-64">{it.signs.map((s, k) => <Glyph key={k} s={s} h={56} />)}</div>
-                <div className="flex-1 grid grid-cols-2 gap-4 text-xs text-stone-500">
-                  <div>syllables<div className={line} /></div>
-                  <div>word and meaning<div className={line} /></div>
+                <div className="ts-tile-flat flex items-center gap-2 px-3 py-2 w-64">{it.signs.map((s, k) => <Glyph key={k} s={s} h={50} />)}</div>
+                <div className="flex-1 grid grid-cols-2 gap-4 ts-label ts-suave">
+                  <div>syllables<div className="ts-line" /></div>
+                  <div>word and meaning<div className="ts-line" /></div>
                 </div>
               </div>
             ))}
@@ -159,67 +158,69 @@ function Body({ sheet }: { sheet: Sheet }) {
             <div key={i} className="flex items-center gap-4 ws-avoid">
               <Num n={i + 1} />
               <div className="w-48">
-                <div className="font-serif text-lg">{it.word}</div>
-                <div className="text-xs text-stone-600">“{it.gloss}”, {it.parts.length} syllables</div>
+                <div className="text-xl font-bold">{it.word}</div>
+                <div className="text-sm ts-suave">“{it.gloss}”, {it.parts.length} syllables</div>
               </div>
-              {it.parts.map((_, k) => <div key={k} className="w-20 h-20 border border-dashed border-stone-400 rounded-lg" />)}
+              {it.parts.map((_, k) => <div key={k} className="ts-empty w-20 h-20" />)}
             </div>
           ))}
         </div>
       );
     case 'pairs':
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-5">
           {sheet.items.map((it, i) => (
-            <Box key={i}>
-              <div className="flex"><Num n={i + 1} /></div>
+            <Tile key={i}>
+              <Num n={i + 1} />
               <div className="flex justify-around">
                 {it.signs.map((s, k) => (
-                  <div key={k} className="w-24">
-                    <Glyph s={s} h={72} />
-                    <div className={`${line} mt-2`} />
+                  <div key={k} className="w-28">
+                    <Glyph s={s} h={66} />
+                    <div className="ts-line mt-1" />
                   </div>
                 ))}
               </div>
-            </Box>
+            </Tile>
           ))}
         </div>
       );
-    case 'match':
+    case 'match': {
+      const dense = sheet.items.length > 12;
       return (
         <>
           <Bank words={sheet.bank} />
-          <div className="grid grid-cols-3 sm:grid-cols-4 print:grid-cols-4 gap-4">
+          <div className={`grid grid-cols-3 gap-4 ${dense ? 'sm:grid-cols-5 print:grid-cols-5' : 'sm:grid-cols-4 print:grid-cols-4'}`}>
             {sheet.items.map((it, i) => (
-              <Box key={i}>
-                <div className="flex"><Num n={i + 1} /></div>
-                <Glyph s={it} h={88} />
-                <div className={`${line} mt-2`} />
-              </Box>
+              <Tile key={i}>
+                <Num n={i + 1} />
+                <Glyph s={it} h={dense ? 54 : 76} />
+                <div className="ts-line mt-1" />
+              </Tile>
             ))}
           </div>
         </>
       );
+    }
     case 'numerals':
       return (
         <>
-          <h3 className="font-serif text-lg mb-3">A. Write the number</h3>
+          <h3 className="text-[22px] leading-7 font-bold mb-3">A. Write the number</h3>
           <div className="grid grid-cols-5 gap-4 mb-8">
             {sheet.read.map((n, i) => (
-              <Box key={i}>
-                <div className="flex"><Num n={i + 1} /></div>
+              <Tile key={i}>
+                <Num n={i + 1} />
                 <div className="flex justify-center items-end h-16"><Numeral value={n} size={52} /></div>
-                <div className={`${line} mt-2`} />
-              </Box>
+                <div className="ts-line mt-1" />
+              </Tile>
             ))}
           </div>
-          <h3 className="font-serif text-lg mb-3">B. Draw the number in bars and dots</h3>
+          <h3 className="text-[22px] leading-7 font-bold mb-3">B. Draw the number in bars and dots</h3>
           <div className="grid grid-cols-3 gap-4">
             {sheet.draw.map((n, i) => (
-              <Box key={i}>
-                <div className="flex items-baseline gap-2"><Num n={i + 1} /><span className="font-serif text-2xl">{n}</span></div>
+              <Tile key={i}>
+                <div className="flex items-baseline gap-2"><Num n={i + 1} /><span className="ts-display text-2xl">{n}</span></div>
                 <div className="h-24" />
-              </Box>
+              </Tile>
             ))}
           </div>
         </>
@@ -228,29 +229,28 @@ function Body({ sheet }: { sheet: Sheet }) {
       return (
         <div className="grid grid-cols-2 sm:grid-cols-5 print:grid-cols-5 gap-3">
           {sheet.items.map((b, i) => (
-            <Box key={b.id}>
-              <div className="flex"><Num n={i + 1} /></div>
+            <Tile key={b.id}>
+              <Num n={i + 1} />
               <BlockImg b={b} h={100} />
-              <div className="text-xs text-stone-500 mt-2">number<div className={line} /></div>
-              <div className="text-[10px] text-stone-500 mt-1">{blockSource(b)}</div>
-            </Box>
+              <div className="ts-label ts-suave mt-2">number<div className="ts-line" /></div>
+            </Tile>
           ))}
         </div>
       );
     case 'blocks-word':
       return (
         <>
-          <div className="border border-stone-400 rounded-lg px-3 py-2 mb-5 flex flex-wrap gap-3 justify-center ws-avoid">
+          <div className="ts-tile-flat px-3 py-2 mb-5 flex flex-wrap gap-3 justify-center ws-avoid">
             {sheet.helper.map((s) => <Glyph key={s.value} s={s} h={32} label={s.value} />)}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 print:grid-cols-4 gap-3">
             {sheet.items.map((b, i) => (
-              <Box key={b.id}>
-                <div className="flex"><Num n={i + 1} /></div>
+              <Tile key={b.id}>
+                <Num n={i + 1} />
                 <BlockImg b={b} h={110} />
-                <div className="text-xs text-stone-500 mt-2">syllables<div className={line} /></div>
-                <div className="text-xs text-stone-500 mt-1">word<div className={line} /></div>
-              </Box>
+                <div className="ts-label ts-suave mt-2">syllables<div className="ts-line" /></div>
+                <div className="ts-label ts-suave mt-1">word<div className="ts-line" /></div>
+              </Tile>
             ))}
           </div>
         </>
@@ -260,75 +260,75 @@ function Body({ sheet }: { sheet: Sheet }) {
 
 function Answers({ sheet }: { sheet: Sheet }) {
   const list = (xs: ReactNode[]) => (
-    <ol className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm">
-      {xs.map((x, i) => <li key={i} className="flex gap-2"><Num n={i + 1} /><span>{x}</span></li>)}
+    <ol className="grid grid-cols-2 gap-x-8 gap-y-1.5 ts-body">
+      {xs.map((x, i) => <li key={i} className="flex gap-3"><Num n={i + 1} /><span>{x}</span></li>)}
     </ol>
   );
   const blockAnswer = (b: Block, lead?: string) => (
     <span>
       {lead && <strong>{lead} · </strong>}
-      <span className="font-mono">{b.transliteration}</span> · <em>{b.transcription}</em> · “{b.translation}”
-      <span className="text-stone-500"> ({blockSource(b)}; Stuart 2006, p. {b.page})</span>
+      <span className="font-bold">{b.transliteration}</span> · <em>{b.transcription}</em> · “{b.translation}”
+      <span className="ts-suave"> ({blockSource(b)}; Stuart 2006, p. {b.page})</span>
     </span>
   );
   switch (sheet.layout) {
-    case 'chart': return null;
-    case 'trace': return null;
+    case 'chart': case 'trace': return null;
     case 'write': case 'circle': case 'spell-read': case 'pairs': case 'match':
-      return list(sheet.items.map((it) => <span className="font-mono">{it.answer}</span>));
+      return list(sheet.items.map((it) => <span className="font-bold">{it.answer}</span>));
     case 'spell-write':
       return (
-        <ol className="space-y-2 text-sm">
+        <ol className="space-y-2 ts-body">
           {sheet.items.map((it, i) => (
             <li key={i} className="flex items-center gap-3">
               <Num n={i + 1} />
               <span className="w-28">{it.word}</span>
-              <span className="font-mono w-32">{it.parts.join('-')}</span>
-              {it.answerSigns.map((s, k) => <Glyph key={k} s={s} h={32} />)}
+              <span className="font-bold w-32">{it.parts.join('-')}</span>
+              {it.answerSigns.map((s, k) => <Glyph key={k} s={s} h={30} />)}
             </li>
           ))}
         </ol>
       );
     case 'numerals':
       return (
-        <div className="text-sm space-y-2">
+        <div className="ts-body space-y-3">
           <p><strong>A.</strong> {sheet.read.join(', ')}</p>
           <div className="flex flex-wrap items-end gap-6"><strong>B.</strong>
-            {sheet.draw.map((n) => <span key={n} className="flex flex-col items-center gap-1"><Numeral value={n} size={34} /><span className="text-xs">{n}</span></span>)}
+            {sheet.draw.map((n) => <span key={n} className="flex flex-col items-center gap-1"><Numeral value={n} size={34} /><span className="text-sm">{n}</span></span>)}
           </div>
         </div>
       );
     case 'blocks-number':
       return list(sheet.items.map((b) => blockAnswer(b, String(b.number))));
     case 'blocks-word':
-      return <ol className="space-y-1 text-sm">{sheet.items.map((b, i) => <li key={b.id} className="flex gap-2"><Num n={i + 1} />{blockAnswer(b)}</li>)}</ol>;
+      return <ol className="space-y-1 ts-body">{sheet.items.map((b, i) => <li key={b.id} className="flex gap-3"><Num n={i + 1} />{blockAnswer(b)}</li>)}</ol>;
   }
 }
 
-export default function SheetView({ sheet, withKey = true }: { sheet: Sheet; withKey?: boolean }) {
+export default function SheetView({ sheet }: { sheet: Sheet }) {
+  const hasKey = sheet.layout !== 'chart' && sheet.layout !== 'trace';
   return (
-    <article className="ws-page bg-white text-stone-900 max-w-[800px] mx-auto px-8 py-8 print:p-0 print:max-w-none">
-      <div className="flex items-start justify-between gap-6 mb-4">
+    <article className="ws-page ts-paper max-w-[820px] mx-auto px-8 py-8 print:px-1 print:py-0 print:max-w-none">
+      <div className="flex items-end justify-between gap-6 pb-3 mb-4 ts-rule">
         <div>
-          <p className="text-xs uppercase tracking-wider text-stone-500">Learn to read Maya · {sheet.level}</p>
-          <h2 className="font-serif text-2xl">{sheet.title}</h2>
+          <p className="ts-label ts-kicker uppercase">Maya glyphs · Sheet {sheet.number} · {sheet.level}</p>
+          <h2 className="ts-display text-[32px] leading-9 mt-1">{sheet.title}</h2>
         </div>
-        <div className="text-xs text-stone-500 w-56 space-y-2 shrink-0">
-          <div>Name<div className="border-b border-stone-400 h-5" /></div>
-          <div>Date<div className="border-b border-stone-400 h-5" /></div>
+        <div className="ts-label ts-suave w-52 space-y-2 shrink-0">
+          <div>Name<div className="ts-line h-5" /></div>
         </div>
       </div>
-      <p className="text-sm leading-relaxed mb-6 max-w-[65ch]">{sheet.intro}</p>
+      <p className="ts-body mb-6 max-w-[62ch]">{sheet.intro}</p>
       <Body sheet={sheet} />
       {sheet.credits.length > 0 && (
-        <div className="mt-6 pt-2 border-t border-stone-200 text-[10px] leading-snug text-stone-500 space-y-0.5">
+        <div className="mt-6 pt-2 border-t ts-hair text-[10px] leading-snug ts-suave space-y-0.5">
           {sheet.credits.map((c) => <p key={c}>{CREDITS[c]}</p>)}
           <p>sourcelibrary.org/learn/maya/worksheets/{sheet.slug}</p>
         </div>
       )}
-      {withKey && sheet.layout !== 'chart' && sheet.layout !== 'trace' && (
-        <section className="ws-key mt-10 pt-6 border-t-2 border-dashed border-stone-300">
-          <h3 className="font-serif text-lg mb-3">Answer key: {sheet.title}</h3>
+      {hasKey && (
+        <section className="ws-key mt-12 pt-6 border-t-2 border-dashed ts-hair print:mt-0 print:pt-0 print:border-0">
+          <p className="ts-label ts-kicker uppercase">Answer key · Sheet {sheet.number}</p>
+          <h3 className="ts-display text-2xl mb-4 mt-1">{sheet.title}</h3>
           <Answers sheet={sheet} />
         </section>
       )}
