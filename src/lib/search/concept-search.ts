@@ -18,8 +18,9 @@
  *     #5853 (2026-10-16; the no-filter branch was the session default 40).
  *     The pool stays 40 rows; the higher ef buys recall inside it.
  *  2. Original-text lane when it is switched on and deployed, started beside
- *     the English lane and given UNTRANSLATED_GRACE_MS past it; otherwise
- *     nothing, and `lanes.untranslated` says which (`late` = not back in time).
+ *     the English lane and given UNTRANSLATED_GRACE_MS from its own start;
+ *     otherwise nothing, and `lanes.untranslated` says which (`late` = not
+ *     back in time).
  *  3. Reciprocal-rank fusion. The lanes share no row (a page has a
  *     translation or it does not), so this interleaves them by rank.
  *  4. Books the reader does not serve are dropped BEFORE the caps are
@@ -37,6 +38,7 @@
  */
 import { getDb } from '@/lib/mongodb';
 import {
+  getQueryEmbedding,
   semanticConceptSearch,
   semanticPageSearchGlobal,
   semanticPageSearchUntranslated,
@@ -55,14 +57,23 @@ import { stripMarkupTags } from '@/lib/strip-markup-tags';
 const CANDIDATES = 40;
 const UNTRANSLATED_CANDIDATES = 20;
 /**
- * How long the original-text lane may run past the English lane before the
- * answer goes out without it (state `late`). Its 7.5 GB index does not fit in
- * shared_buffers: warm it answers in ~0.1 s, cold in 1.3 s or more, and 21–28%
- * of /api/search calls waited out its 4 s abort and answered at a p50 of 4.4 s
- * (search_queries, 2026-10-13..16). A late lane's query still runs to its own
- * abort, so it keeps warming the index for the next one.
+ * How long the original-text lane may run, from its own start (the query
+ * vector both lanes share is ready), before the answer goes out without it
+ * (state `late`). The English answer never waits past it, and a slow English
+ * answer waits for nothing. Its 7.5 GB index does not fit in shared_buffers:
+ * warm it answers in ~0.1 s, cold in 1.3 s or more, and 21–28% of /api/search
+ * calls waited out its 4 s abort and answered at a p50 of 4.4 s (search_queries,
+ * 2026-10-13..16). A late lane's query still runs to its own abort, so it keeps
+ * warming the index for the next one.
+ *
+ * 550 (#2049): until 2026-10-18 the grace was 500 ms counted AFTER the English
+ * answer. On 60 real search_translations calls that showed the lane's rows on
+ * 8 searches; the latest of them arrived 522 ms after the lane's start, and 500
+ * from the start would have dropped 5 of the 40 rows. 550 from the start shows
+ * all 40, the same output on all 60 searches
+ * (scripts/eval/experiments/2026-10-18-untranslated-grace-2049.md).
  */
-export const UNTRANSLATED_GRACE_MS = 500;
+export const UNTRANSLATED_GRACE_MS = 550;
 /** Untranslated rows per screen of ten: found, but not most of what a reader of English sees. */
 export const ORIGINAL_PER_SCREEN = 3;
 /**
@@ -156,10 +167,28 @@ export async function conceptPageSearch(
     // Both lanes start together; the English answer does not wait out the
     // original-text lane's 4 s abort (#5729). The lane never throws.
     const pending = semanticPageSearchUntranslated(query, UNTRANSLATED_CANDIDATES, laneOpts);
+    // The lane's start: the vector it shares with the English lane (one cached
+    // request, so this costs no Gemini call of its own).
+    const laneStarted = getQueryEmbedding(query).then(() => performance.now());
     english = await semanticPageSearchGlobal(query, want, laneOpts);
-    original = await withinGrace(pending, UNTRANSLATED_GRACE_MS);
+    const left = (await laneStarted) + UNTRANSLATED_GRACE_MS - performance.now();
+    original = await withinGrace(pending, Math.max(0, left));
   }
+  return fuseConceptLanes(english, original, limit, { diversity: requested, maxPerBook });
+}
 
+/**
+ * Steps 3–6 above, on the two lanes' answers. Exported for the grace harness
+ * (scripts/eval/search-evals-2049/untranslated-grace.ts), which replays one
+ * search with and without the original-text rows.
+ */
+export async function fuseConceptLanes(
+  english: SemanticPageResult[],
+  original: UntranslatedLaneResult,
+  limit: number,
+  opts: { diversity: DiversityMode; maxPerBook?: number },
+): Promise<ConceptSearchResult> {
+  const { diversity: requested, maxPerBook } = opts;
   // An English-lane row with no stored translation is a page embedded from
   // its own text: same handling as the original-text lane's rows.
   const fromEnglish = (r: SemanticPageResult): ConceptPageRow => (r.snippet
