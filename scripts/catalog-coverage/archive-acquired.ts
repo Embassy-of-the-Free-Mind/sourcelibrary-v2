@@ -16,6 +16,9 @@
  * Provider mode records completion on the BOOK (there is no queue row) and is
  * idempotent: archiveIiif only fetches pages that lack `archived_photo`.
  * `--campaign <tag>` does the same keyed on `acquisition_campaign` (#5457).
+ * `--book <id[,id]>` does the same for named books, e.g. one a reader is waiting
+ * on whose provider tag no other lane selects (#6968):
+ *   npx tsx scripts/catalog-coverage/archive-acquired.ts --book 6ac4fce44ba7223afef75aa9
  *
  * Host lanes (#4397) — one process per host, each at its own polite rate, so a
  * throttled host stalls its own lane and nobody else's:
@@ -341,10 +344,12 @@ async function main() {
   // `acquisition-wave-2026-10`). The two may be combined.
   const campIdx = process.argv.indexOf('--campaign');
   const CAMPAIGN = campIdx > -1 ? process.argv[campIdx + 1] : null;
-  const BOOK_MODE = !!(PROVIDER || CAMPAIGN);
+  const BOOK_IDS = listArg('book');
+  const BOOK_MODE = !!(PROVIDER || CAMPAIGN || BOOK_IDS);
   const bookModeFilter: Record<string, unknown> = {
     ...(PROVIDER ? { 'image_source.provider': PROVIDER } : {}),
     ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
+    ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
     archive_status: { $ne: 'archive_complete' },
   };
@@ -391,7 +396,7 @@ async function main() {
     const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
     await cur.close();
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
-    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, CAMPAIGN && `campaign ${CAMPAIGN}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
+    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, CAMPAIGN && `campaign ${CAMPAIGN}`, BOOK_IDS && `book ${[...BOOK_IDS].join(',')}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
   } else {
     // Least-attempted first. The selection had no sort, so it returned the same
     // head of the queue every hour — and once that head was a set of books on a
