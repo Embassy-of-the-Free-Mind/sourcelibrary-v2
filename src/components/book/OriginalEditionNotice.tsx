@@ -23,6 +23,9 @@ interface OriginalEditionNoticeProps {
   originalEditionId?: string | null;
   originalInScan?: boolean;
   originalLanguage?: string | null;
+  /** The edition's own language (`books.language`). The notice used to say "English" for every
+   *  translation role, which is false on the ~150 live Latin, German, Dutch … translations (#6056). */
+  language?: string | null;
   year?: number | null;
   showCrossLink: boolean;
 }
@@ -32,6 +35,7 @@ export default async function OriginalEditionNotice({
   originalEditionId,
   originalInScan,
   originalLanguage,
+  language,
   year,
   showCrossLink,
 }: OriginalEditionNoticeProps) {
@@ -39,6 +43,8 @@ export default async function OriginalEditionNotice({
 
   const yearStr = year && year > 0 ? ` (${year})` : '';
   const langStr = originalLanguage || 'another language';
+  // "a historical Latin translation"; the English wording stays when the edition is English or unlabelled.
+  const editionLang = language && !/^english\b/i.test(language.trim()) ? language.trim() : 'English';
 
   interface OriginalEdition { slug?: string; id?: string; title?: string; language?: string; year?: number; pages_translated?: number }
   let original: OriginalEdition | null = null;
@@ -56,7 +62,7 @@ export default async function OriginalEditionNotice({
       <div className="text-stone-300">
         {original ? (
           <>
-            This volume is a historical English translation{yearStr}. The library holds the
+            This volume is a historical {editionLang} translation{yearStr}. The library holds the
             original {original.language || langStr} edition:{' '}
             <Link
               href={`/book/${encodeURIComponent(original.slug || original.id || '')}`}
@@ -69,11 +75,11 @@ export default async function OriginalEditionNotice({
           </>
         ) : originalInScan ? (
           <>
-            This edition includes the original {langStr} text alongside the English translation.
+            This edition includes the original {langStr} text alongside the {editionLang} translation.
           </>
         ) : (
           <>
-            This volume is a historical English translation{yearStr} of a work originally
+            This volume is a historical {editionLang} translation{yearStr} of a work originally
             written in {langStr}.
           </>
         )}
