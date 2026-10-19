@@ -8,7 +8,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import type { ShelfBook, ShelfScene } from './shelf-scene';
+import type { ShelfBook, ShelfLayout, ShelfScene } from './shelf-scene';
 
 interface CollectionOption { slug: string; title: string; book_count?: number }
 
@@ -26,6 +26,9 @@ export default function ShelfViewer() {
   const router = useRouter();
   const params = useSearchParams();
   const slug = params.get('c') || 'alchemy';
+  const layout: ShelfLayout = params.get('layout') === 'upright' ? 'upright' : 'stacked';
+  const go = (c: string, l: ShelfLayout) =>
+    router.replace(`/prototype/shelf?c=${encodeURIComponent(c)}${l === 'upright' ? '&layout=upright' : ''}`);
 
   const hostRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<ShelfScene | null>(null);
@@ -85,7 +88,7 @@ export default function ShelfViewer() {
       scene = mod.createShelfScene(books, {
         onPick: id => { scene?.select(id); setPicked(id ? byId.get(id) ?? null : null); setHover(null); },
         onHover: (b, x, y) => setHover(b ? { book: b, x, y } : null),
-      });
+      }, layout);
       sceneRef.current = scene;
       host.appendChild(scene.canvas);
       resize();
@@ -96,7 +99,7 @@ export default function ShelfViewer() {
       sceneRef.current = null;
       if (scene) { scene.canvas.remove(); scene.dispose(); }
     };
-  }, [books]);
+  }, [books, layout]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -138,13 +141,19 @@ export default function ShelfViewer() {
             <select
               aria-label="Collection"
               value={slug}
-              onChange={e => router.replace(`/prototype/shelf?c=${encodeURIComponent(e.target.value)}`)}
+              onChange={e => go(e.target.value, layout)}
               className="max-w-[60vw] rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50"
             >
               {!collections.some(c => c.slug === slug) && <option value={slug}>{title || slug}</option>}
               {collections.map(c => <option key={c.slug} value={c.slug}>{c.title}</option>)}
             </select>
           )}
+          <button
+            onClick={() => { setPicked(null); go(slug, layout === 'stacked' ? 'upright' : 'stacked'); }}
+            className="rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70"
+          >
+            {layout === 'stacked' ? 'Stand them up' : 'Lay them flat'}
+          </button>
           <Link href={`/collections/${slug}`} className="rounded border border-amber-200/20 bg-black/50 px-2 py-1 text-sm text-amber-50 hover:bg-black/70">
             List view
           </Link>
