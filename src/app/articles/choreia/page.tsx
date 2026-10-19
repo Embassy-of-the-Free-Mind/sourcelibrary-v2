@@ -7,10 +7,10 @@ import SourceQuote from '@/components/articles/SourceQuote';
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
 // fetched through get_quote on 2026-10-18. English books (the Fowlers' Lucian, Archer-Hind's note) are
 // quoted in their printed English; the rest in the library's translation. Plato is quoted from the
-// Laurenziana manuscript of Ficino's Latin translation; its leaves 409 (Horum uero deorum choreas), 493
-// (Disciplinae igitur expers ... qui nunquam chorea usus est), 500 (Vtrorumque uero simul chorea
-// nominabatur, where the OCR drops the gloss "i. concentus") and 746 (omniumque chorearum
-// magnificentissima) were read from the page image on 2026-10-18.
+// Aldine editio princeps (Venice, 1513); the Greek on its leaves 173 (χορείας δὲ τούτων αὐτῶν, printed
+// p. 153), 227 (ἀπαίδευτος ἀχόρευτος, p. 107), 233 (χορεία δέ που ξυναμφότερον, p. 113) and 390 (πάντων
+// χορῶν καλλίστην, p. 370) was read from the page images on 2026-10-18. Ficino's Latin (Laurenziana
+// manuscript, leaf 409, Horum uero deorum choreas) was read the same day and is linked, not shown.
 // Read from the page image on 2026-10-18: Plutarch p. 390 (the heading φορὰ καὶ σχῆμα καὶ δεῖξις),
 // Lucian p. 241, Archer-Hind p. 134 (χορείας in the Greek and the note), Mercuriale
 // p. 136 (lationem, figuram, & indicationem), the Aldine Iliad leaf (ἐν δὲ χορὸν ποίκιλλε). The
@@ -42,6 +42,7 @@ export const metadata: Metadata = withArticleMeta('choreia', {
 // Reader links, written out so scripts/maintenance/generate-article-books.mjs can find the books.
 const BOOK = {
   iliad: '/book/homeri-ilias-1517-aldine-edition-homer',
+  plato: '/book/omnia-platonis-opera-aldine-editio-princeps-plato',
   ficino: '/book/plato-complete-works-ficino-translation-translator',
   plutarch: '/book/plutarchi-chaeronensis-moralia-vol-1-bernardakis-teubner-bernardakis',
   mercuriale: '/book/de-arte-gymnastica-libri-sex-amsterdam-ed-mercuriale',
@@ -68,15 +69,15 @@ const IMG = {
   paracelsus828: `${PAGES}/69bd9d546120d54bd0375241/0828.jpg`,
 };
 
-// Ficino's Latin Plato, a manuscript in the Biblioteca Medicea Laurenziana (CC BY-SA 4.0).
-const FICINO = 'https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7';
-const FIC = {
-  timaeus409: `${FICINO}/409.jpg`,
-  laws493: `${FICINO}/493.jpg`,
-  laws500: `${FICINO}/500.jpg`,
-  epinomis746: `${FICINO}/746.jpg`,
+// Plato's Greek, the Aldine first edition (Venice, 1513), from the Internet Archive's copy.
+const ALDINE = 'https://images.sourcelibrary.org/archived/69ae67594b74f168e0c15d24';
+const ALD = {
+  timaeus173: `${ALDINE}/173.jpg`,
+  laws227: `${ALDINE}/227.jpg`,
+  laws233: `${ALDINE}/233.jpg`,
+  epinomis390: `${ALDINE}/390.jpg`,
 };
-const FICINO_SOURCE = 'Ficino’s Latin translation, manuscript, Biblioteca Medicea Laurenziana, Florence';
+const ALDINE_SOURCE = 'first printed Greek edition (Venice: Aldus Manutius, 1513)';
 
 const book = (slug: string, page?: number) => (page ? `/book/${slug}?page=${page}` : `/book/${slug}`);
 
@@ -142,26 +143,31 @@ export default function ChoreiaPage() {
         <h2 className={h2}>The planets dance</h2>
 
         <p className={p}>
-          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. Western Europe
-          read Plato through the Latin of Marsilio Ficino, who translated every dialogue in Florence for the Medici;
-          the library holds a manuscript of his translation from the Medici library, now the Laurenziana. At 40c,
-          after describing the stars as living, divine beings, Timaeus turns to how they move in relation to one
-          another. Plato&apos;s Greek word is <span lang="grc">χορείας</span>, and Ficino kept it: <em>choreas</em>,
-          dances.
+          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. At 40c, after
+          describing the stars as living, divine beings, Timaeus turns to how they move in relation to one another,
+          and the first word of the sentence is <span lang="grc">χορείας</span>, their dances. The library holds
+          the passage in the first printed edition of Plato in Greek, made by Aldus Manutius in Venice in 1513.
         </p>
 
         <SourceQuote
-          book={SLUG.ficino}
-          page={409}
-          src={FIC.timaeus409}
-          source={<>Plato, <em>Timaeus</em> 40c, in {FICINO_SOURCE}</>}
-          original="Horum uero deorum choreas et inter ipsos concursiones circulorumque ipsorum reuolutiones varias et accessus"
-          pageAlt="A leaf of Ficino's Latin Timaeus in a humanist hand; the line beginning Horum uero deorum choreas is near the middle."
+          book={SLUG.plato}
+          page={173}
+          printedPage={153}
+          src={ALD.timaeus173}
+          source={<>Plato, <em>Timaeus</em> 40c, {ALDINE_SOURCE}</>}
+          original={<span lang="grc">χορείας δὲ τούτων αὐτῶν καὶ παραβολὰς ἀλλήλων</span>}
+          pageAlt="A page of the Aldine Greek Plato headed ΤΙΜΑΙΟΣ; the word χορείας is in the third line."
         >
-          But to explain the dances of these gods and their concurrences among themselves, and the various
-          revolutions of the circuits themselves, &hellip; joined to one another or opposed, whether before among
-          themselves or behind, &hellip; at what times and in what manner each one hides itself or emerges &hellip;
+          But to speak of the dances of these bodies, and their relative passings, and the retrogradations and
+          forward movements of their circles, &hellip; and behind whom each is hidden from our sight at certain
+          times, and appearing again &hellip;
         </SourceQuote>
+
+        <p className={p}>
+          When Marsilio Ficino put Plato into Latin for the Medici in the fifteenth century he kept the word:{' '}
+          <Link href={book(SLUG.ficino, 409)}><em>Horum uero deorum choreas</em></Link>, &ldquo;the dances of
+          these gods&rdquo;.
+        </p>
 
         <p className={p}>
           Read as a dancer, the list is a description of a round dance seen from inside it: dancers draw level with
@@ -175,20 +181,21 @@ export default function ChoreiaPage() {
         </Quote>
 
         <p className={p}>
-          The passage he cites is from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, and Ficino&apos;s
-          Latin again uses the word for a dance.
+          The passage he cites is from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, and it puts the
+          word for dancing three times into one phrase about the stars.
         </p>
 
         <SourceQuote
-          book={SLUG.ficino}
-          page={746}
-          src={FIC.epinomis746}
-          source={<>Plato, <em>Epinomis</em> 982e, in {FICINO_SOURCE}</>}
-          original="que progressu et chorea optima vtens omniumque chorearum magnificentissima"
-          pageAlt="A leaf of Ficino's Latin Epinomis; the words chorea and chorearum are near the foot of the text."
+          book={SLUG.plato}
+          page={390}
+          printedPage={370}
+          src={ALD.epinomis390}
+          source={<>Plato, <em>Epinomis</em> 982e, {ALDINE_SOURCE}</>}
+          original={<span lang="grc">πορείαν δὲ καὶ χορείαν, πάντων χορῶν καλλίστην καὶ μεγαλοπρεπεστάτην χορεύοντα</span>}
+          pageAlt="A page of the Aldine Greek Plato; the phrase about the dance of the stars is a third of the way down."
         >
-          This nature of the stars is most beautiful to behold, which, using the best path and dance, and being the
-          most magnificent of all dances, provides advantages to all animals.
+          &hellip; to look upon them is most beautiful; and in their course and dance, dancing the most beautiful and
+          magnificent of all dances, they accomplish what is necessary for all living things.
         </SourceQuote>
 
         <p className={p}>
@@ -331,24 +338,27 @@ export default function ChoreiaPage() {
         </p>
 
         <SourceQuote
-          book={SLUG.ficino}
-          page={493}
-          src={FIC.laws493}
-          source={<>Plato, <em>Laws</em> II, 653e&ndash;654b, in {FICINO_SOURCE}</>}
-          original="Disciplinae igitur expers dicendus est: qui nunquam chorea usus est"
-          pageAlt="A leaf of Ficino's Latin Laws, with the speakers' names written in red."
+          book={SLUG.plato}
+          page={227}
+          printedPage={107}
+          src={ALD.laws227}
+          source={<>Plato, <em>Laws</em> II, 653e&ndash;654b, {ALDINE_SOURCE}</>}
+          original={<span lang="grc">ὁ μὲν ἀπαίδευτος ἀχόρευτος ἡμῖν ἔσται</span>}
+          pageAlt="A page of the Aldine Greek Plato headed with the second book of the Laws."
         >
-          &hellip; to those gods whom we said were given to us as fellow-celebrants, a share of rhythm and harmony has
-          been granted as a sense; and they move us with pleasure, leading our chorus while coupling us to one another
-          with songs and dances &hellip; which chorus they have named from chara, that is, joy. &hellip; Therefore, one who
-          has never engaged in the chorus must be called destitute of education, whereas one who has done so
-          sufficiently is, on the contrary, possessed of education.
+          But to us, the gods whom we said were given as our fellow-dancers are also the ones who have bestowed the
+          perception of rhythm and harmony along with pleasure, by which they move us and lead us in chorus, stringing
+          us together with songs and dances; and they have named them &ldquo;choruses&rdquo; from the word for the joy
+          that is innate. &hellip; Therefore, the uneducated man will be for us the one who is &ldquo;unchoral,&rdquo;
+          and the one who has been sufficiently educated must be deemed one who has danced well.
         </SourceQuote>
 
         <p className={p}>
           Plato connects <em>choros</em> with <em>chara</em>, joy. The derivation is wrong, as modern dictionaries
-          show, but it tells you how Plato thought of the thing. In the next line the Athenian defines the art: every{' '}
-          <em>chorea</em>, in Ficino&apos;s Latin, is <em>tripudium simul et concentus</em>, dance and song at once.
+          show, but it tells you how Plato thought of the thing. His word for the uneducated is{' '}
+          <span lang="grc">ἀχόρευτος</span>, &ldquo;unchoral&rdquo;. In the next line the Athenian defines the art:{' '}
+          <span lang="grc">χορεία</span> is <span lang="grc">ὄρχησίς τε καὶ ᾠδή</span>, dancing and singing
+          together.
         </p>
 
         <p className={p}>
@@ -356,21 +366,23 @@ export default function ChoreiaPage() {
         </p>
 
         <SourceQuote
-          book={SLUG.ficino}
-          page={500}
-          src={FIC.laws500}
-          source={<>Plato, <em>Laws</em> II, 664e&ndash;665a, in {FICINO_SOURCE}</>}
-          original="Vtrorumque uero simul chorea nominabatur"
-          pageAlt="A leaf of Ficino's Latin Laws; rhythmus, harmonia and chorea are in the lower half."
+          book={SLUG.plato}
+          page={233}
+          printedPage={113}
+          src={ALD.laws233}
+          source={<>Plato, <em>Laws</em> II, 664e&ndash;665a, {ALDINE_SOURCE}</>}
+          original={<span lang="grc">χορεία δέ που ξυναμφότερον κληθείη</span>}
+          pageAlt="A page of the Aldine Greek Laws, book II; the definition of rhythm, harmony and choreia is in the upper half."
         >
-          &hellip; no other animal except the nature of man alone has a sense of the order of both of these. The name
-          of the order which is seen in movement is rhythm; &hellip; But of both together, it was named chorea. We also
-          said that the gods, pitying us, gave us Apollo and the Muses as fellow-celebrants and leaders of the chorea.
+          And for the order of movement, &ldquo;rhythm&rdquo; would be the name; and for the order of the voice, of
+          the high and low mingled together, &ldquo;harmony&rdquo; would be the term; and the two together would be
+          called &ldquo;dance.&rdquo; And we said that the gods, taking pity on us, gave us Apollo and the Muses as
+          fellow-dancers and chorus-leaders.
         </SourceQuote>
 
         <p className={p}>
-          For Plato a chorus also showed character. Further down the{' '}
-          <Link href={book(SLUG.ficino, 493)}>same leaf of the <em>Laws</em></Link> he says that a brave person and
+          For Plato a chorus also showed character. On the{' '}
+          <Link href={book(SLUG.plato, 228)}>next page of the <em>Laws</em></Link> he says that a brave person and
           a coward in the same trouble will not move or sing alike, and that the figures and melodies of a good soul
           can be told from those of a bad one. That is why he treats training in the chorus as the whole of early
           education, and why the <em>Laws</em> spends pages deciding which dances a city should allow.
@@ -513,7 +525,7 @@ export default function ChoreiaPage() {
 
         <p className="text-sm text-muted leading-relaxed">
           The Fowlers&apos; Lucian and Archer-Hind&apos;s note are quoted in their printed English. The other
-          quotations, Plato among them in Ficino&apos;s Latin, are the library&apos;s translations, copied from the
+          quotations, Plato&apos;s Greek among them, are the library&apos;s translations, copied from the
           pages they link to. The
           Plotinus manuscript is hard to read and its transcription has gaps, so it is quoted briefly and the argument
           is summarised from the standard text of <em>Enneads</em> IV.4.33. The dates for Sydenham and Huntington
