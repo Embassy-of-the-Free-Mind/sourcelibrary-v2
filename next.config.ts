@@ -409,6 +409,8 @@ const nextConfig: NextConfig = {
       // own name.
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      // Choreia renamed to its main idea (2026-10-19).
+      { source: '/articles/choreia', destination: '/articles/choreia-the-dance-of-the-cosmos', permanent: true },
       // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
       { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
       { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
