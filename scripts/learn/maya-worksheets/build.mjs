@@ -64,7 +64,7 @@ const RIGHTS_PENDING = new Set(['numbers-at-palenque', 'read-at-palenque']);
 const CREDIT = {
   stuart: 'Syllable drawings © David Stuart, Maya Hieroglyph Syllabary (2013), used with permission; vector tracing by Source Library. These are Classic carved forms (about AD 700), not the painted forms of the codices.',
   twkm: 'Word-sign drawings by Christian Prager, Text Database and Dictionary of Classic Mayan (Bonn), CC BY 4.0.',
-  morley: 'Day signs from Sylvanus G. Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 17: the painted forms of the codices. Public domain.',
+  morley: 'Day signs from Sylvanus G. Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 17: the painted forms of the codices. Public domain. The meanings are traditional and approximate.',
   palenque: 'Glyph blocks and readings from David Stuart, The Palenque Mythology: Inscriptions from the Cross Group at Palenque (2006), used with permission. Most drawings in the sourcebook are by Linda Schele.',
 };
 

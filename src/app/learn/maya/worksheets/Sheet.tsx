@@ -74,7 +74,7 @@ function Body({ sheet }: { sheet: Sheet }) {
                 <th className="ts-glyph-label pr-3 text-right align-middle">{row.consonant || 'vowel'}</th>
                 {row.cells.map((c) => (
                   <td key={c.value} className="border ts-hair px-1.5 py-0.5 align-middle w-[86px]">
-                    {c.missing ? <span className="block text-center ts-suave">—</span> : (
+                    {c.missing ? <span className="block text-center ts-suave">–</span> : (
                       <div className="flex items-center justify-between gap-1">
                         <img src={c.src} alt={`Maya sign ${c.value}`} style={{ height: 28, width: 'auto', maxWidth: 46 }} className="object-contain" />
                         <span className="text-[12px] font-bold">{c.value}</span>
