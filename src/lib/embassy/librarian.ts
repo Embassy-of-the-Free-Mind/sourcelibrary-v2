@@ -54,6 +54,8 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - search: Hybrid keyword + semantic via RRF (replaces the prior
  *             search_collection and search_semantic; both old names accepted
  *             as aliases for one release)
+ *   - find_passages: pages that answer a question-shaped request, re-ranked
+ *             against the reader's question by Jev (#6875)
  *   - search_site: the site's own writing — essays, collection intros, tools (site_pages)
  *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
@@ -258,6 +260,17 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         collection: { type: Type.STRING, description: 'Optional. A collection slug from the "Collections" list in your instructions to FOCUS the search on. Results are weighted toward that collection but still include strong matches from the rest of the library — it is a lean, not a filter. Set this whenever the user\'s question is clearly about one collection\'s subject (e.g. a question about fungi or mushrooms → "mycology"; about tarot or planetary seals → "astrology"). Pick the single most relevant slug; if unsure or the topic spans the whole library, omit it.' },
       },
       required: ['query'],
+    },
+  },
+  {
+    name: 'find_passages',
+    description: 'Find the pages that answer a request for a KIND of passage: "a passage where someone describes leaving their body", "an account of a dream that foretold the future", "instructions for making a talisman at a planetary hour", "does any author describe a cure by sympathy?". It reads about 300 pages that keyword and meaning search turn up and scores each against the whole request, so it finds the page that does what was asked, where `search` finds pages that share its words. Returns the 10 best pages (at most 2 a book), each with its link and its own words, plus a separate short list of pages with no English translation yet. Slower than `search` (a few seconds more), so use it for these requests and use `search` for names, terms, quotations and topics. It ranks: it cannot count or list everything (that is browse_catalog).',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        question: { type: Type.STRING, description: 'The request as a full plain-English sentence, in the reader\'s own terms ("a passage where someone describes leaving their body"), not keywords. Translate a request written in another language into English.' },
+      },
+      required: ['question'],
     },
   },
   {
@@ -1181,6 +1194,58 @@ async function executeTool(
       };
     }
 
+    case 'find_passages': {
+      const question = String(args.question || args.query || '').trim();
+      if (!question) {
+        return {
+          result: { found: 0, context: 'find_passages needs the reader\'s request as a sentence in `question`. Nothing was searched.' },
+          step: { type: 'tool_result', name: 'find_passages', query: '', found: 0, summary: 'No question given' },
+        };
+      }
+      const { questionSearch } = await import('@/lib/search/question-search');
+      const data = await questionSearch(question);
+      const all = [...data.passages, ...data.untranslated];
+      const localized = await loadLocalizedTexts(lang, all.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
+      const header = (p: (typeof all)[number], extra: string) => {
+        const url = `${base}/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
+        // The author's link, not the name alone: given a name, the model builds
+        // an /author/ slug of its own and it 404s (agent-tool-results.md).
+        const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
+        return `\n--- ${p.bookTitle}${editionTag(p)} by ${author}, Page ${p.page_number} (${url})${extra} ---\n`;
+      };
+      let context = '';
+      if (data.note) context += `Note: ${data.note}. Tell the reader in one plain clause if it matters to the answer.\n`;
+      if (data.passages.length > 0) {
+        context += data.reranked
+          ? `The ${data.passages.length} pages that best answer "${question}", best first, out of ${data.candidates} read. A high score means the page itself presents what was asked; still read the text before you quote it. Link a page with EXACTLY the URL given.\n`
+          : `${data.passages.length} pages from search for "${question}", in search order (not ranked against the question). Read each before you rely on it. Link a page with EXACTLY the URL given.\n`;
+        for (const p of data.passages) {
+          const k = `${p.book_id}:${p.page_number}`;
+          const t = localized.get(k);
+          const langTag = lang === 'en' ? '' : (t ? ` [text: ${LANG_NAMES[lang]} edition]` : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
+          context += header(p, `${p.score !== undefined ? ` [score ${p.score}]` : ''}${langTag}`) + (t ? t.slice(0, 1200) : p.text) + '\n';
+        }
+      }
+      if (data.untranslated.length > 0) {
+        context += `\nPages with NO English translation yet that may also answer it (found by meaning across languages, not scored against the question). The text below is the original language: quote it only in the original, label any English you give as your own paraphrase, and say the page is untranslated.\n`;
+        for (const p of data.untranslated) context += header(p, ` [untranslated: ${p.language || 'original language'}]`) + p.text.slice(0, 800) + '\n';
+      }
+      if (all.length === 0) {
+        context = `No pages found for "${question}"${data.note ? ` (${data.note})` : ''}. Do not write a page link for it; say the library search found nothing and try \`search\` with the key terms.`;
+      }
+      const sources: SourceCard[] = all.map(p => ({
+        book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
+        pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
+      }));
+      return {
+        result: { found: all.length, context },
+        step: { type: 'tool_result', name: 'find_passages', query: question, found: all.length,
+          summary: all.length === 0 ? 'No pages found'
+            : `${data.passages.length} pages${data.reranked ? ' ranked against the question' : ' (not re-ranked)'}${data.untranslated.length ? `, ${data.untranslated.length} untranslated` : ''}` },
+        sources,
+      };
+    }
+
     case 'browse_catalog': {
       const data = await executeBrowseCatalog(args as BrowseArgs, lang);
       let context = `Catalogue browse — ${data.total} book${data.total === 1 ? '' : 's'} match: ${data.filterLabel}. This count is EXACT and covers the whole library — report IT as the answer, never the number of rows listed below.\n`;
@@ -1528,6 +1593,8 @@ For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, p
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
+**Requests for a kind of passage go to find_passages.** "A passage where someone describes leaving their body", "an account of a dream that came true", "instructions for making a talisman", "does anyone describe curing a wound by treating the weapon?" ask for a page that does something, not a page that uses certain words. Call **find_passages** with the reader's request as a full sentence; it reads a few hundred candidate pages and ranks them against the request. Quote from the pages it returns and link them, and their authors, with the URLs it gives; an author it gives no link for is plain text. Use \`search\` beside it when the request also names a person, a book or a term.
+
 **Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
 **Step 5: Save and cite with links.**
@@ -1814,7 +1881,7 @@ export async function* streamAgenticResponse(
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
       const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-      yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
+      yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.question as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
     }
 
     // Execute all tools in parallel — catch individual failures so one broken tool doesn't crash everything
