@@ -1,0 +1,2413 @@
+{
+ "built": "2026-10-19",
+ "credits": {
+  "stuart": "Syllable drawings © David Stuart, Maya Hieroglyph Syllabary (2013), used with permission. These are Classic carved forms (about AD 700), not the painted forms of the codices.",
+  "wayeb": "Sign drawings from Harri Kettunen and Christophe Helmke, Introduction to Maya Hieroglyphs: Workshop Handbook, 20th edition (Wayeb, 2025).",
+  "palenque": "Glyph blocks and readings from David Stuart, The Palenque Mythology: Inscriptions from the Cross Group at Palenque (2006), used with permission. Most drawings in the sourcebook are by Linda Schele."
+ },
+ "sheets": [
+  {
+   "slug": "syllable-chart",
+   "title": "The syllable chart",
+   "level": "Reference",
+   "intro": "Maya scribes wrote with about 80 syllable signs, each a consonant plus a vowel. This chart shows one clear form of each, drawn by David Stuart. Keep it beside you for the other sheets. Empty squares are syllables with no securely known sign.",
+   "layout": "chart",
+   "chart": [
+    {
+     "consonant": "",
+     "cells": [
+      {
+       "value": "a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-1-75624c83.png",
+       "w": 106,
+       "h": 106
+      },
+      {
+       "value": "e",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-e-1-3e0e4802.png",
+       "w": 112,
+       "h": 107
+      },
+      {
+       "value": "i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-i-1-ca4e9aa0.png",
+       "w": 101,
+       "h": 116
+      },
+      {
+       "value": "o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-o-1-e7be482c.png",
+       "w": 58,
+       "h": 125
+      },
+      {
+       "value": "u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+       "w": 43,
+       "h": 114
+      }
+     ]
+    },
+    {
+     "consonant": "b'",
+     "cells": [
+      {
+       "value": "b'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+       "w": 110,
+       "h": 122
+      },
+      {
+       "value": "b'e",
+       "missing": true
+      },
+      {
+       "value": "b'i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-i-1-fe8139bc.png",
+       "w": 92,
+       "h": 87
+      },
+      {
+       "value": "b'o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-o-1-fa23afbe.png",
+       "w": 109,
+       "h": 101
+      },
+      {
+       "value": "b'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-u-1-fa8a1d88.png",
+       "w": 105,
+       "h": 87
+      }
+     ]
+    },
+    {
+     "consonant": "ch",
+     "cells": [
+      {
+       "value": "cha",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-cha-1-74827221.png",
+       "w": 96,
+       "h": 95
+      },
+      {
+       "value": "che",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-che-1-6345e30f.png",
+       "w": 63,
+       "h": 115
+      },
+      {
+       "value": "chi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chi-1-b2d92c6c.png",
+       "w": 116,
+       "h": 96
+      },
+      {
+       "value": "cho",
+       "missing": true
+      },
+      {
+       "value": "chu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chu-1-77a59f8d.png",
+       "w": 125,
+       "h": 107
+      }
+     ]
+    },
+    {
+     "consonant": "ch'",
+     "cells": [
+      {
+       "value": "ch'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-a-1-e7ffb680.png",
+       "w": 116,
+       "h": 113
+      },
+      {
+       "value": "ch'e",
+       "missing": true
+      },
+      {
+       "value": "ch'i",
+       "missing": true
+      },
+      {
+       "value": "ch'o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-o-1-88f9db66.png",
+       "w": 123,
+       "h": 110
+      },
+      {
+       "value": "ch'u",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "h",
+     "cells": [
+      {
+       "value": "ha",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ha-2-f0b6caf1.png",
+       "w": 108,
+       "h": 108
+      },
+      {
+       "value": "he",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-he-1-839dfe18.png",
+       "w": 129,
+       "h": 113
+      },
+      {
+       "value": "hi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-hi-1-9e8e5ebc.png",
+       "w": 124,
+       "h": 132
+      },
+      {
+       "value": "ho",
+       "missing": true
+      },
+      {
+       "value": "hu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-hu-1-36b17a14.png",
+       "w": 139,
+       "h": 131
+      }
+     ]
+    },
+    {
+     "consonant": "j",
+     "cells": [
+      {
+       "value": "ja",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ja-1-f7c7aa06.png",
+       "w": 137,
+       "h": 128
+      },
+      {
+       "value": "je",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-je-1-75370da3.png",
+       "w": 126,
+       "h": 129
+      },
+      {
+       "value": "ji",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ji-1-c8987050.png",
+       "w": 116,
+       "h": 71
+      },
+      {
+       "value": "jo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-jo-1-89a4bd40.png",
+       "w": 123,
+       "h": 137
+      },
+      {
+       "value": "ju",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ju-1-71e57cfa.png",
+       "w": 148,
+       "h": 82
+      }
+     ]
+    },
+    {
+     "consonant": "k",
+     "cells": [
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "ke",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ke-1-e69c9bfc.png",
+       "w": 122,
+       "h": 117
+      },
+      {
+       "value": "ki",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ki-2-feab3991.png",
+       "w": 116,
+       "h": 68
+      },
+      {
+       "value": "ko",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ko-1-7e6b919c.png",
+       "w": 138,
+       "h": 91
+      },
+      {
+       "value": "ku",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ku-1-3b07a88d.png",
+       "w": 129,
+       "h": 127
+      }
+     ]
+    },
+    {
+     "consonant": "k'",
+     "cells": [
+      {
+       "value": "k'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-a-1-f9187661.png",
+       "w": 131,
+       "h": 115
+      },
+      {
+       "value": "k'e",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-e-1-106fa894.png",
+       "w": 130,
+       "h": 120
+      },
+      {
+       "value": "k'i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-i-1-8f26bb9e.png",
+       "w": 130,
+       "h": 70
+      },
+      {
+       "value": "k'o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-o-1-7b7a9d75.png",
+       "w": 135,
+       "h": 107
+      },
+      {
+       "value": "k'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-u-1-6ed078e1.png",
+       "w": 130,
+       "h": 124
+      }
+     ]
+    },
+    {
+     "consonant": "l",
+     "cells": [
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      },
+      {
+       "value": "le",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-le-1-7e0648ba.png",
+       "w": 120,
+       "h": 72
+      },
+      {
+       "value": "li",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-li-2-fc7ae4c7.png",
+       "w": 131,
+       "h": 81
+      },
+      {
+       "value": "lo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-lo-1-9aaa5b8a.png",
+       "w": 127,
+       "h": 122
+      },
+      {
+       "value": "lu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-lu-1-47fc956e.png",
+       "w": 129,
+       "h": 130
+      }
+     ]
+    },
+    {
+     "consonant": "m",
+     "cells": [
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      },
+      {
+       "value": "me",
+       "missing": true
+      },
+      {
+       "value": "mi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mi-1-59c1b973.png",
+       "w": 86,
+       "h": 133
+      },
+      {
+       "value": "mo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mo-1-bc377ecc.png",
+       "w": 119,
+       "h": 119
+      },
+      {
+       "value": "mu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mu-1-a596ac49.png",
+       "w": 128,
+       "h": 99
+      }
+     ]
+    },
+    {
+     "consonant": "n",
+     "cells": [
+      {
+       "value": "na",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-1-57a3e69e.png",
+       "w": 154,
+       "h": 67
+      },
+      {
+       "value": "ne",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ne-1-135c0736.png",
+       "w": 115,
+       "h": 105
+      },
+      {
+       "value": "ni",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ni-1-281e5c8a.png",
+       "w": 145,
+       "h": 61
+      },
+      {
+       "value": "no",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-no-1-bda3492c.png",
+       "w": 145,
+       "h": 109
+      },
+      {
+       "value": "nu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-nu-1-a145ebb2.png",
+       "w": 107,
+       "h": 100
+      }
+     ]
+    },
+    {
+     "consonant": "p",
+     "cells": [
+      {
+       "value": "pa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pa-1-0e22fc82.png",
+       "w": 109,
+       "h": 113
+      },
+      {
+       "value": "pe",
+       "missing": true
+      },
+      {
+       "value": "pi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pi-1-9515baaf.png",
+       "w": 164,
+       "h": 93
+      },
+      {
+       "value": "po",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-po-1-2a3ccccc.png",
+       "w": 119,
+       "h": 121
+      },
+      {
+       "value": "pu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pu-1-3d3cb84f.png",
+       "w": 121,
+       "h": 112
+      }
+     ]
+    },
+    {
+     "consonant": "s",
+     "cells": [
+      {
+       "value": "sa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-sa-1-d76d7fc5.png",
+       "w": 116,
+       "h": 95
+      },
+      {
+       "value": "se",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-se-1-f73456c4.png",
+       "w": 135,
+       "h": 119
+      },
+      {
+       "value": "si",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-si-1-a64d7b8c.png",
+       "w": 64,
+       "h": 124
+      },
+      {
+       "value": "so",
+       "missing": true
+      },
+      {
+       "value": "su",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-su-1-d17bf577.png",
+       "w": 129,
+       "h": 88
+      }
+     ]
+    },
+    {
+     "consonant": "t",
+     "cells": [
+      {
+       "value": "ta",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ta-1-102b29e4.png",
+       "w": 54,
+       "h": 116
+      },
+      {
+       "value": "te",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-te-1-76bdd982.png",
+       "w": 129,
+       "h": 120
+      },
+      {
+       "value": "ti",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ti-1-b5a2073a.png",
+       "w": 72,
+       "h": 142
+      },
+      {
+       "value": "to",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-to-1-2c22528a.png",
+       "w": 118,
+       "h": 119
+      },
+      {
+       "value": "tu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tu-1-3def7bb5.png",
+       "w": 66,
+       "h": 122
+      }
+     ]
+    },
+    {
+     "consonant": "t'",
+     "cells": [
+      {
+       "value": "t'a",
+       "missing": true
+      },
+      {
+       "value": "t'e",
+       "missing": true
+      },
+      {
+       "value": "t'i",
+       "missing": true
+      },
+      {
+       "value": "t'o",
+       "missing": true
+      },
+      {
+       "value": "t'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-t-u-1-c2b55e8f.png",
+       "w": 137,
+       "h": 123
+      }
+     ]
+    },
+    {
+     "consonant": "tz",
+     "cells": [
+      {
+       "value": "tza",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tza-1-79689730.png",
+       "w": 129,
+       "h": 133
+      },
+      {
+       "value": "tze",
+       "missing": true
+      },
+      {
+       "value": "tzi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tzi-1-9b2c46c3.png",
+       "w": 142,
+       "h": 119
+      },
+      {
+       "value": "tzo",
+       "missing": true
+      },
+      {
+       "value": "tzu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tzu-1-027b3516.png",
+       "w": 122,
+       "h": 133
+      }
+     ]
+    },
+    {
+     "consonant": "tz'",
+     "cells": [
+      {
+       "value": "tz'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tz-a-1-f62727e5.png",
+       "w": 75,
+       "h": 132
+      },
+      {
+       "value": "tz'e",
+       "missing": true
+      },
+      {
+       "value": "tz'i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tz-i-1-a7a8d064.png",
+       "w": 118,
+       "h": 81
+      },
+      {
+       "value": "tz'o",
+       "missing": true
+      },
+      {
+       "value": "tz'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tz-u-1-16bccffb.png",
+       "w": 69,
+       "h": 138
+      }
+     ]
+    },
+    {
+     "consonant": "w",
+     "cells": [
+      {
+       "value": "wa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wa-1-cf426dfc.png",
+       "w": 156,
+       "h": 61
+      },
+      {
+       "value": "we",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-we-1-2fc8bf07.png",
+       "w": 121,
+       "h": 124
+      },
+      {
+       "value": "wi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wi-1-000ebe89.png",
+       "w": 61,
+       "h": 157
+      },
+      {
+       "value": "wo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wo-1-c4270c13.png",
+       "w": 149,
+       "h": 63
+      },
+      {
+       "value": "wu",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "x",
+     "cells": [
+      {
+       "value": "xa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-xa-1-47c10b4d.png",
+       "w": 68,
+       "h": 124
+      },
+      {
+       "value": "xe",
+       "missing": true
+      },
+      {
+       "value": "xi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-xi-1-97f6ee8d.png",
+       "w": 102,
+       "h": 109
+      },
+      {
+       "value": "xo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-xo-1-8c59d5dc.png",
+       "w": 138,
+       "h": 108
+      },
+      {
+       "value": "xu",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "y",
+     "cells": [
+      {
+       "value": "ya",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+       "w": 45,
+       "h": 141
+      },
+      {
+       "value": "ye",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ye-1-46d78cc3.png",
+       "w": 93,
+       "h": 114
+      },
+      {
+       "value": "yi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yi-1-2043846a.png",
+       "w": 80,
+       "h": 124
+      },
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+       "w": 88,
+       "h": 114
+      },
+      {
+       "value": "yu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yu-1-3bbc0c3c.png",
+       "w": 64,
+       "h": 133
+      }
+     ]
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "first-signs",
+   "title": "First signs",
+   "level": "Level 1",
+   "intro": "Write the sound of each sign on the line. Start with the five vowels, then use the chart for the rest.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-1-75624c83.png",
+     "w": 106,
+     "h": 106,
+     "answer": "a"
+    },
+    {
+     "value": "e",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-e-1-3e0e4802.png",
+     "w": 112,
+     "h": 107,
+     "answer": "e"
+    },
+    {
+     "value": "i",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-i-1-ca4e9aa0.png",
+     "w": 101,
+     "h": 116,
+     "answer": "i"
+    },
+    {
+     "value": "o",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-o-1-e7be482c.png",
+     "w": 58,
+     "h": 125,
+     "answer": "o"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+     "w": 43,
+     "h": 114,
+     "answer": "u"
+    },
+    {
+     "value": "b'a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+     "w": 110,
+     "h": 122,
+     "answer": "b'a"
+    },
+    {
+     "value": "ka",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+     "w": 130,
+     "h": 107,
+     "answer": "ka"
+    },
+    {
+     "value": "la",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+     "w": 134,
+     "h": 129,
+     "answer": "la"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+     "w": 112,
+     "h": 113,
+     "answer": "ma"
+    },
+    {
+     "value": "na",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-1-57a3e69e.png",
+     "w": 154,
+     "h": 67,
+     "answer": "na"
+    },
+    {
+     "value": "ja",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ja-1-f7c7aa06.png",
+     "w": 137,
+     "h": 128,
+     "answer": "ja"
+    },
+    {
+     "value": "ya",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+     "w": 45,
+     "h": 141,
+     "answer": "ya"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "more-signs",
+   "title": "More signs",
+   "level": "Level 2",
+   "intro": "Write the sound of each sign. Look at the inside details as well as the outline: many signs share the same rounded frame.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "chi",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chi-1-b2d92c6c.png",
+     "w": 116,
+     "h": 96,
+     "answer": "chi"
+    },
+    {
+     "value": "hu",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-hu-1-36b17a14.png",
+     "w": 139,
+     "h": 131,
+     "answer": "hu"
+    },
+    {
+     "value": "k'u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-u-1-6ed078e1.png",
+     "w": 130,
+     "h": 124,
+     "answer": "k'u"
+    },
+    {
+     "value": "mo",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mo-1-bc377ecc.png",
+     "w": 119,
+     "h": 119,
+     "answer": "mo"
+    },
+    {
+     "value": "pa",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pa-1-0e22fc82.png",
+     "w": 109,
+     "h": 113,
+     "answer": "pa"
+    },
+    {
+     "value": "te",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-te-1-76bdd982.png",
+     "w": 129,
+     "h": 120,
+     "answer": "te"
+    },
+    {
+     "value": "tu",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tu-1-3def7bb5.png",
+     "w": 66,
+     "h": 122,
+     "answer": "tu"
+    },
+    {
+     "value": "wa",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wa-1-cf426dfc.png",
+     "w": 156,
+     "h": 61,
+     "answer": "wa"
+    },
+    {
+     "value": "xa",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-xa-1-47c10b4d.png",
+     "w": 68,
+     "h": 124,
+     "answer": "xa"
+    },
+    {
+     "value": "yu",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yu-1-3bbc0c3c.png",
+     "w": 64,
+     "h": 133,
+     "answer": "yu"
+    },
+    {
+     "value": "ku",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ku-1-3b07a88d.png",
+     "w": 129,
+     "h": 127,
+     "answer": "ku"
+    },
+    {
+     "value": "li",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-li-2-fc7ae4c7.png",
+     "w": 131,
+     "h": 81,
+     "answer": "li"
+    },
+    {
+     "value": "ti",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ti-1-b5a2073a.png",
+     "w": 72,
+     "h": 142,
+     "answer": "ti"
+    },
+    {
+     "value": "lo",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-lo-1-9aaa5b8a.png",
+     "w": 127,
+     "h": 122,
+     "answer": "lo"
+    },
+    {
+     "value": "ni",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ni-1-281e5c8a.png",
+     "w": 145,
+     "h": 61,
+     "answer": "ni"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "find-the-sign",
+   "title": "Find the sign",
+   "level": "Level 2",
+   "intro": "Circle the sign that spells the sound on the left. One of the wrong choices is often a sign that looks very like the right one.",
+   "layout": "circle",
+   "items": [
+    {
+     "prompt": "ma",
+     "options": [
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      },
+      {
+       "value": "b'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+       "w": 110,
+       "h": 122
+      },
+      {
+       "value": "pa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pa-1-0e22fc82.png",
+       "w": 109,
+       "h": 113
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "te",
+     "options": [
+      {
+       "value": "lo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-lo-1-9aaa5b8a.png",
+       "w": 127,
+       "h": 122
+      },
+      {
+       "value": "ne",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ne-1-135c0736.png",
+       "w": 115,
+       "h": 105
+      },
+      {
+       "value": "we",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-we-1-2fc8bf07.png",
+       "w": 121,
+       "h": 124
+      },
+      {
+       "value": "te",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-te-1-76bdd982.png",
+       "w": 129,
+       "h": 120
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "ka",
+     "options": [
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "wa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wa-1-cf426dfc.png",
+       "w": 156,
+       "h": 61
+      },
+      {
+       "value": "sa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-sa-1-d76d7fc5.png",
+       "w": 116,
+       "h": 95
+      },
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      }
+     ],
+     "answer": "A"
+    },
+    {
+     "prompt": "ni",
+     "options": [
+      {
+       "value": "si",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-si-1-a64d7b8c.png",
+       "w": 64,
+       "h": 124
+      },
+      {
+       "value": "b'i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-i-1-fe8139bc.png",
+       "w": 92,
+       "h": 87
+      },
+      {
+       "value": "ni",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ni-1-281e5c8a.png",
+       "w": 145,
+       "h": 61
+      },
+      {
+       "value": "wi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wi-1-000ebe89.png",
+       "w": 61,
+       "h": 157
+      }
+     ],
+     "answer": "C"
+    },
+    {
+     "prompt": "ku",
+     "options": [
+      {
+       "value": "pi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pi-1-9515baaf.png",
+       "w": 164,
+       "h": 93
+      },
+      {
+       "value": "nu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-nu-1-a145ebb2.png",
+       "w": 107,
+       "h": 100
+      },
+      {
+       "value": "u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+       "w": 43,
+       "h": 114
+      },
+      {
+       "value": "ku",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ku-1-3b07a88d.png",
+       "w": 129,
+       "h": 127
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "chi",
+     "options": [
+      {
+       "value": "b'i",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-i-1-fe8139bc.png",
+       "w": 92,
+       "h": 87
+      },
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+       "w": 88,
+       "h": 114
+      },
+      {
+       "value": "ye",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ye-1-46d78cc3.png",
+       "w": 93,
+       "h": 114
+      },
+      {
+       "value": "chi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chi-1-b2d92c6c.png",
+       "w": 116,
+       "h": 96
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "la",
+     "options": [
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      },
+      {
+       "value": "b'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+       "w": 110,
+       "h": 122
+      },
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      }
+     ],
+     "answer": "A"
+    },
+    {
+     "prompt": "mu",
+     "options": [
+      {
+       "value": "k'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-u-1-6ed078e1.png",
+       "w": 130,
+       "h": 124
+      },
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+       "w": 88,
+       "h": 114
+      },
+      {
+       "value": "mu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mu-1-a596ac49.png",
+       "w": 128,
+       "h": 99
+      },
+      {
+       "value": "b'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-u-1-fa8a1d88.png",
+       "w": 105,
+       "h": 87
+      }
+     ],
+     "answer": "C"
+    },
+    {
+     "prompt": "sa",
+     "options": [
+      {
+       "value": "sa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-sa-1-d76d7fc5.png",
+       "w": 116,
+       "h": 95
+      },
+      {
+       "value": "pa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pa-1-0e22fc82.png",
+       "w": 109,
+       "h": 113
+      },
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      }
+     ],
+     "answer": "A"
+    },
+    {
+     "prompt": "yo",
+     "options": [
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+       "w": 88,
+       "h": 114
+      },
+      {
+       "value": "mo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mo-1-bc377ecc.png",
+       "w": 119,
+       "h": 119
+      },
+      {
+       "value": "chi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chi-1-b2d92c6c.png",
+       "w": 116,
+       "h": 96
+      },
+      {
+       "value": "mu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mu-1-a596ac49.png",
+       "w": 128,
+       "h": 99
+      }
+     ],
+     "answer": "A"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "one-sound-many-signs",
+   "title": "One sound, many signs",
+   "level": "Level 2",
+   "intro": "Scribes could spell the same syllable with different signs. Every sign here spells one of these six sounds: a, u, ma, ji, ka, na. Write the sound under each.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "ka",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+     "w": 130,
+     "h": 107,
+     "answer": "ka"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-6-08c40bfd.png",
+     "w": 52,
+     "h": 123,
+     "answer": "u"
+    },
+    {
+     "value": "na",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-2-2120107e.png",
+     "w": 106,
+     "h": 100,
+     "answer": "na"
+    },
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-4-1937549c.png",
+     "w": 55,
+     "h": 109,
+     "answer": "a"
+    },
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-1-75624c83.png",
+     "w": 106,
+     "h": 106,
+     "answer": "a"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-3-1bccfedb.png",
+     "w": 86,
+     "h": 93,
+     "answer": "u"
+    },
+    {
+     "value": "ji",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ji-2-16a192bd.png",
+     "w": 115,
+     "h": 114,
+     "answer": "ji"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-5-36e16785.png",
+     "w": 50,
+     "h": 123,
+     "answer": "u"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-4-c1bab232.png",
+     "w": 113,
+     "h": 41,
+     "answer": "ma"
+    },
+    {
+     "value": "ka",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-3-a1a99b44.png",
+     "w": 159,
+     "h": 47,
+     "answer": "ka"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-4-d2d705f7.png",
+     "w": 93,
+     "h": 91,
+     "answer": "u"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-3-8c0aea74.png",
+     "w": 113,
+     "h": 57,
+     "answer": "ma"
+    },
+    {
+     "value": "ka",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-2-b3c3a0aa.png",
+     "w": 58,
+     "h": 142,
+     "answer": "ka"
+    },
+    {
+     "value": "ji",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ji-1-c8987050.png",
+     "w": 116,
+     "h": 71,
+     "answer": "ji"
+    },
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-3-35a82290.png",
+     "w": 51,
+     "h": 110,
+     "answer": "a"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-2-4321cb30.png",
+     "w": 48,
+     "h": 105,
+     "answer": "u"
+    },
+    {
+     "value": "na",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-1-57a3e69e.png",
+     "w": 154,
+     "h": 67,
+     "answer": "na"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-2-ed07eeee.png",
+     "w": 107,
+     "h": 111,
+     "answer": "ma"
+    },
+    {
+     "value": "ji",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ji-3-186e9992.png",
+     "w": 129,
+     "h": 53,
+     "answer": "ji"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+     "w": 43,
+     "h": 114,
+     "answer": "u"
+    },
+    {
+     "value": "na",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-3-6ba91a17.png",
+     "w": 110,
+     "h": 106,
+     "answer": "na"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+     "w": 112,
+     "h": 113,
+     "answer": "ma"
+    },
+    {
+     "value": "ji",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ji-4-2d481928.png",
+     "w": 130,
+     "h": 54,
+     "answer": "ji"
+    },
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-2-9ae31b14.png",
+     "w": 57,
+     "h": 112,
+     "answer": "a"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "read-a-word",
+   "title": "Read a word",
+   "level": "Level 3",
+   "intro": "Maya words are spelled syllable by syllable, and the vowel of the last syllable is usually not spoken: ka-ka-wa is read kakaw, “cacao”. Write the syllables, then the word. The meanings are in the box, in a different order.",
+   "layout": "spell-read",
+   "bank": [
+    "macaw",
+    "turtle",
+    "shield",
+    "youth",
+    "jaguar",
+    "cacao"
+   ],
+   "items": [
+    {
+     "signs": [
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "wa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wa-1-cf426dfc.png",
+       "w": 156,
+       "h": 61
+      }
+     ],
+     "answer": "ka-ka-wa → kakaw, “cacao”"
+    },
+    {
+     "signs": [
+      {
+       "value": "b'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+       "w": 110,
+       "h": 122
+      },
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      }
+     ],
+     "answer": "b'a-la-ma → b'ahlam, “jaguar”"
+    },
+    {
+     "signs": [
+      {
+       "value": "mo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-mo-1-bc377ecc.png",
+       "w": 119,
+       "h": 119
+      },
+      {
+       "value": "o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-o-1-e7be482c.png",
+       "w": 58,
+       "h": 125
+      }
+     ],
+     "answer": "mo-o → mo', “macaw”"
+    },
+    {
+     "signs": [
+      {
+       "value": "a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-1-75624c83.png",
+       "w": 106,
+       "h": 106
+      },
+      {
+       "value": "ku",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ku-1-3b07a88d.png",
+       "w": 129,
+       "h": 127
+      }
+     ],
+     "answer": "a-ku → ahk, “turtle”"
+    },
+    {
+     "signs": [
+      {
+       "value": "pa",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-pa-1-0e22fc82.png",
+       "w": 109,
+       "h": 113
+      },
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+       "w": 130,
+       "h": 107
+      },
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      }
+     ],
+     "answer": "pa-ka-la → pakal, “shield”"
+    },
+    {
+     "signs": [
+      {
+       "value": "ch'o",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-o-1-88f9db66.png",
+       "w": 123,
+       "h": 110
+      },
+      {
+       "value": "ko",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ko-1-7e6b919c.png",
+       "w": 138,
+       "h": 91
+      }
+     ],
+     "answer": "ch'o-ko → ch'ok, “youth”"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "write-a-word",
+   "title": "Write a word",
+   "level": "Level 3",
+   "intro": "Spell each word with signs from the chart, one sign per box. All five words are carved at Palenque, and you will meet them again on the last sheet.",
+   "layout": "spell-write",
+   "items": [
+    {
+     "word": "huliiy",
+     "gloss": "he arrived",
+     "parts": [
+      "hu",
+      "li",
+      "ya"
+     ],
+     "answerSigns": [
+      {
+       "value": "hu",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-hu-1-36b17a14.png",
+       "w": 139,
+       "h": 131
+      },
+      {
+       "value": "li",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-li-2-fc7ae4c7.png",
+       "w": 131,
+       "h": 81
+      },
+      {
+       "value": "ya",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+       "w": 45,
+       "h": 141
+      }
+     ]
+    },
+    {
+     "word": "uhtiiy",
+     "gloss": "it happened",
+     "parts": [
+      "u",
+      "ti",
+      "ya"
+     ],
+     "answerSigns": [
+      {
+       "value": "u",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+       "w": 43,
+       "h": 114
+      },
+      {
+       "value": "ti",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ti-1-b5a2073a.png",
+       "w": 72,
+       "h": 142
+      },
+      {
+       "value": "ya",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+       "w": 45,
+       "h": 141
+      }
+     ]
+    },
+    {
+     "word": "yotoot",
+     "gloss": "his house",
+     "parts": [
+      "yo",
+      "to",
+      "ti"
+     ],
+     "answerSigns": [
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+       "w": 88,
+       "h": 114
+      },
+      {
+       "value": "to",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-to-1-2c22528a.png",
+       "w": 118,
+       "h": 119
+      },
+      {
+       "value": "ti",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ti-1-b5a2073a.png",
+       "w": 72,
+       "h": 142
+      }
+     ]
+    },
+    {
+     "word": "Matwiil",
+     "gloss": "a mythical place",
+     "parts": [
+      "ma",
+      "ta",
+      "wi",
+      "la"
+     ],
+     "answerSigns": [
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      },
+      {
+       "value": "ta",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ta-1-102b29e4.png",
+       "w": 54,
+       "h": 116
+      },
+      {
+       "value": "wi",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wi-1-000ebe89.png",
+       "w": 61,
+       "h": 157
+      },
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+       "w": 134,
+       "h": 129
+      }
+     ]
+    },
+    {
+     "word": "ch'ajoom",
+     "gloss": "he who scatters incense",
+     "parts": [
+      "ch'a",
+      "jo",
+      "ma"
+     ],
+     "answerSigns": [
+      {
+       "value": "ch'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-a-1-e7ffb680.png",
+       "w": 116,
+       "h": 113
+      },
+      {
+       "value": "jo",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-jo-1-89a4bd40.png",
+       "w": 123,
+       "h": 137
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+       "w": 112,
+       "h": 113
+      }
+     ]
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "copy-the-signs",
+   "title": "Copy the signs",
+   "level": "Level 1",
+   "intro": "Draw each sign three times, saying its sound aloud. Copy the outline first, then the details inside. Drawing a sign is the fastest way to remember it.",
+   "layout": "trace",
+   "items": [
+    {
+     "value": "a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-a-1-75624c83.png",
+     "w": 106,
+     "h": 106,
+     "answer": "a"
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+     "w": 43,
+     "h": 114,
+     "answer": "u"
+    },
+    {
+     "value": "ka",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ka-1-2700ef0f.png",
+     "w": 130,
+     "h": 107,
+     "answer": "ka"
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+     "w": 112,
+     "h": 113,
+     "answer": "ma"
+    },
+    {
+     "value": "na",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-na-1-57a3e69e.png",
+     "w": 154,
+     "h": 67,
+     "answer": "na"
+    },
+    {
+     "value": "la",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+     "w": 134,
+     "h": 129,
+     "answer": "la"
+    },
+    {
+     "value": "b'a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+     "w": 110,
+     "h": 122,
+     "answer": "b'a"
+    },
+    {
+     "value": "ya",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+     "w": 45,
+     "h": 141,
+     "answer": "ya"
+    },
+    {
+     "value": "chi",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-chi-1-b2d92c6c.png",
+     "w": 116,
+     "h": 96,
+     "answer": "chi"
+    },
+    {
+     "value": "ku",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ku-1-3b07a88d.png",
+     "w": 129,
+     "h": 127,
+     "answer": "ku"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ]
+  },
+  {
+   "slug": "tell-them-apart",
+   "title": "Tell them apart",
+   "level": "Level 3",
+   "intro": "Each pair is two different syllables that beginners often mix up. Write the sound under each sign, then circle the detail that tells them apart. Use the syllable chart to check.",
+   "layout": "pairs",
+   "items": [
+    {
+     "signs": [
+      {
+       "value": "b'a",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-1-fe13940a.png",
+       "w": 324,
+       "h": 367
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-2-3d7238b9.png",
+       "w": 400,
+       "h": 391
+      }
+     ],
+     "answer": "b'a / ma"
+    },
+    {
+     "signs": [
+      {
+       "value": "lo",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-3-d8caf124.png",
+       "w": 380,
+       "h": 333
+      },
+      {
+       "value": "te",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-4-f15e349e.png",
+       "w": 400,
+       "h": 365
+      }
+     ],
+     "answer": "lo / te"
+    },
+    {
+     "signs": [
+      {
+       "value": "mu",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-7-b9c988fe.png",
+       "w": 266,
+       "h": 359
+      },
+      {
+       "value": "yo",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-8-252230ca.png",
+       "w": 265,
+       "h": 450
+      }
+     ],
+     "answer": "mu / yo"
+    },
+    {
+     "signs": [
+      {
+       "value": "la",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-11-fe63f8cd.png",
+       "w": 371,
+       "h": 112
+      },
+      {
+       "value": "ma",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-12-986de1d0.png",
+       "w": 650,
+       "h": 151
+      }
+     ],
+     "answer": "la / ma"
+    },
+    {
+     "signs": [
+      {
+       "value": "ka",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-13-68bd6d8b.png",
+       "w": 207,
+       "h": 414
+      },
+      {
+       "value": "sa",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-14-a2a8909a.png",
+       "w": 220,
+       "h": 339
+      }
+     ],
+     "answer": "ka / sa"
+    },
+    {
+     "signs": [
+      {
+       "value": "ni",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-15-62b3120b.png",
+       "w": 236,
+       "h": 469
+      },
+      {
+       "value": "wi",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-16-0d1b73f4.png",
+       "w": 220,
+       "h": 500
+      }
+     ],
+     "answer": "ni / wi"
+    },
+    {
+     "signs": [
+      {
+       "value": "ku",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-21-5a79c36c.png",
+       "w": 591,
+       "h": 601
+      },
+      {
+       "value": "pi",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-22-cd82f424.png",
+       "w": 473,
+       "h": 344
+      }
+     ],
+     "answer": "ku / pi"
+    },
+    {
+     "signs": [
+      {
+       "value": "b'u",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-5-7f56c44c.png",
+       "w": 281,
+       "h": 450
+      },
+      {
+       "value": "mu",
+       "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-confusable-6-ee347fec.png",
+       "w": 266,
+       "h": 359
+      }
+     ],
+     "answer": "b'u / mu"
+    }
+   ],
+   "credits": [
+    "wayeb"
+   ]
+  },
+  {
+   "slug": "word-signs",
+   "title": "Word signs",
+   "level": "Level 3",
+   "intro": "Some signs stand for a whole word. Match each sign to its meaning from the box. Look for the picture in the sign: the macaw’s beak, the jaguar’s spots, the tree’s grain.",
+   "layout": "match",
+   "bank": [
+    "turtle",
+    "macaw",
+    "tree, wood",
+    "sun, day",
+    "lord, king",
+    "jaguar",
+    "blue-green, first",
+    "mountain",
+    "fire",
+    "sky",
+    "water",
+    "wind, breath"
+   ],
+   "items": [
+    {
+     "value": "YAX",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-yax-1-80c91dd3.png",
+     "w": 1181,
+     "h": 587,
+     "meaning": "blue-green, first",
+     "answer": "YAX (yax), “blue-green, first”"
+    },
+    {
+     "value": "IK’",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-ik-1-b27c7fac.png",
+     "w": 326,
+     "h": 303,
+     "meaning": "wind, breath",
+     "answer": "IK’ (ik’), “wind, breath”"
+    },
+    {
+     "value": "BALAM",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-balam-1-87eae2b7.png",
+     "w": 709,
+     "h": 728,
+     "meaning": "jaguar",
+     "answer": "BALAM (ba[h]lam), “jaguar”"
+    },
+    {
+     "value": "CHAN",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-chan-1-1cbdcf22.png",
+     "w": 709,
+     "h": 560,
+     "meaning": "sky",
+     "answer": "CHAN (chan), “sky”"
+    },
+    {
+     "value": "MO’",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-mo-1-b52a1052.png",
+     "w": 567,
+     "h": 945,
+     "meaning": "macaw",
+     "answer": "MO’ (mo’), “macaw”"
+    },
+    {
+     "value": "TE’",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-te-1-48ce52df.png",
+     "w": 709,
+     "h": 286,
+     "meaning": "tree, wood",
+     "answer": "TE’ (te’), “tree, wood”"
+    },
+    {
+     "value": "K’AK’",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-k-ak-1-da2b9adf.png",
+     "w": 591,
+     "h": 478,
+     "meaning": "fire",
+     "answer": "K’AK’ (k’a[h]k’), “fire”"
+    },
+    {
+     "value": "HA’",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-ha-1-390ad6fa.png",
+     "w": 709,
+     "h": 748,
+     "meaning": "water",
+     "answer": "HA’ (ha’), “water”"
+    },
+    {
+     "value": "AK",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-ak-1-9eb85c5f.png",
+     "w": 785,
+     "h": 510,
+     "meaning": "turtle",
+     "answer": "AK (a[h]k), “turtle”"
+    },
+    {
+     "value": "WITZ",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-witz-1-2fdee921.png",
+     "w": 591,
+     "h": 560,
+     "meaning": "mountain",
+     "answer": "WITZ (witz), “mountain”"
+    },
+    {
+     "value": "AJAW",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-ajaw-1-d4ca9359.png",
+     "w": 709,
+     "h": 643,
+     "meaning": "lord, king",
+     "answer": "AJAW (ajaw), “lord, king”"
+    },
+    {
+     "value": "K’IN-ni",
+     "src": "https://images.sourcelibrary.org/reference/maya/wayeb-handbook-2025/wayeb2025-logo-k-in-ni-1-35844c61.png",
+     "w": 309,
+     "h": 322,
+     "meaning": "sun, day",
+     "answer": "K’IN-ni (k’in), “sun, day”"
+    }
+   ],
+   "credits": [
+    "wayeb"
+   ]
+  },
+  {
+   "slug": "bars-and-dots",
+   "title": "Bars and dots",
+   "level": "Level 1",
+   "intro": "A dot is one and a bar is five, so three bars and two dots make seventeen. The shell is zero. Write each number, then draw the numbers in part B.",
+   "layout": "numerals",
+   "read": [
+    3,
+    7,
+    11,
+    14,
+    19,
+    5,
+    0,
+    8,
+    16,
+    12
+   ],
+   "draw": [
+    4,
+    9,
+    13,
+    17,
+    10,
+    6
+   ],
+   "credits": []
+  },
+  {
+   "slug": "numbers-at-palenque",
+   "title": "Numbers at Palenque",
+   "level": "Level 4",
+   "intro": "These blocks are carved on the Cross Group tablets at Palenque. Each begins with a bar-and-dot number, set beside or above the main sign. Write the number. The curls and crescents beside the dots are fillers that keep the block square, and they are not counted.",
+   "layout": "blocks-number",
+   "items": [
+    {
+     "id": "tfc-main-tablet-C8",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-C8-0fd3693a.png",
+     "w": 146,
+     "h": 131,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "C8",
+     "page": 144,
+     "transliteration": "2-AJAW",
+     "transcription": "Cha’ Ajaw",
+     "translation": "Two Ajaw",
+     "number": 2
+    },
+    {
+     "id": "tc-main-tablet-F6",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-F6-5e082935.png",
+     "w": 145,
+     "h": 127,
+     "monument": "Tablet of the Cross",
+     "coord": "F6",
+     "page": 123,
+     "transliteration": "2-PIK-ya",
+     "transcription": "cha’ pik-iiy",
+     "translation": "(and) two Bak’tun’s ago",
+     "number": 2
+    },
+    {
+     "id": "tc-main-tablet-D3",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-D3-f520e032.png",
+     "w": 153,
+     "h": 139,
+     "monument": "Tablet of the Cross",
+     "coord": "D3",
+     "page": 121,
+     "transliteration": "4-AJAW",
+     "transcription": "Chan Ajaw",
+     "translation": "Four Ajaw",
+     "number": 4
+    },
+    {
+     "id": "tfc-main-tablet-D15",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-D15-c3cf11a0.png",
+     "w": 144,
+     "h": 141,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "D15",
+     "page": 146,
+     "transliteration": "7-PIK",
+     "transcription": "wuk pik",
+     "translation": "seven Bak’tuns",
+     "number": 7
+    },
+    {
+     "id": "tc-main-tablet-H17",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-H17-09e81cba.png",
+     "w": 151,
+     "h": 162,
+     "monument": "Tablet of the Cross",
+     "coord": "H17",
+     "page": 126,
+     "transliteration": "8-AJAW",
+     "transcription": "Waxak Ajaw",
+     "translation": "Eight Ajaw",
+     "number": 8
+    },
+    {
+     "id": "tc-main-tablet-K12",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-K12-c5c20fbd.png",
+     "w": 155,
+     "h": 151,
+     "monument": "Tablet of the Cross",
+     "coord": "K12",
+     "page": 129,
+     "transliteration": "8-HA’B’-ya",
+     "transcription": "waxak ha’b’-iiy",
+     "translation": "(and) eight years",
+     "number": 8
+    },
+    {
+     "id": "tc-main-tablet-E9",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-E9-3f8c70d0.png",
+     "w": 149,
+     "h": 157,
+     "monument": "Tablet of the Cross",
+     "coord": "E9",
+     "page": 124,
+     "transliteration": "9-IK’",
+     "transcription": "B’olon Ik’",
+     "translation": "(on) Nine Ik’",
+     "number": 9
+    },
+    {
+     "id": "tc-main-tablet-I2",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-I2-e048517d.png",
+     "w": 145,
+     "h": 139,
+     "monument": "Tablet of the Cross",
+     "coord": "I2",
+     "page": 126,
+     "transliteration": "9-PIK",
+     "transcription": "b’olon pik",
+     "translation": "Nine Bak’tuns",
+     "number": 9
+    },
+    {
+     "id": "ts-main-tablet-K2",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/ts-main-tablet-K2-a3962869.png",
+     "w": 116,
+     "h": 130,
+     "monument": "Tablet of the Sun",
+     "coord": "K2",
+     "page": 171,
+     "transliteration": "13-AJAW",
+     "transcription": "Uxlajuun Ajaw",
+     "translation": "Thirteen Ajaw",
+     "number": 13
+    }
+   ],
+   "credits": [
+    "palenque"
+   ]
+  },
+  {
+   "slug": "read-at-palenque",
+   "title": "Read at Palenque",
+   "level": "Level 4",
+   "intro": "Each block spells one word with syllable signs only. The signs you need are in the strip below, but on the tablets they are squeezed, turned and joined together. Find them in the block, then write the syllables and the word. Read a block left to right, then top to bottom.",
+   "layout": "blocks-word",
+   "helper": [
+    {
+     "value": "b'a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+     "w": 110,
+     "h": 122
+    },
+    {
+     "value": "ch'a",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-a-1-e7ffb680.png",
+     "w": 116,
+     "h": 113
+    },
+    {
+     "value": "ch'o",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ch-o-1-88f9db66.png",
+     "w": 123,
+     "h": 110
+    },
+    {
+     "value": "hu",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-hu-1-36b17a14.png",
+     "w": 139,
+     "h": 131
+    },
+    {
+     "value": "i",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-i-1-ca4e9aa0.png",
+     "w": 101,
+     "h": 116
+    },
+    {
+     "value": "jo",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-jo-1-89a4bd40.png",
+     "w": 123,
+     "h": 137
+    },
+    {
+     "value": "ko",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ko-1-7e6b919c.png",
+     "w": 138,
+     "h": 91
+    },
+    {
+     "value": "la",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+     "w": 134,
+     "h": 129
+    },
+    {
+     "value": "li",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-li-2-fc7ae4c7.png",
+     "w": 131,
+     "h": 81
+    },
+    {
+     "value": "ma",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ma-1-a9e12689.png",
+     "w": 112,
+     "h": 113
+    },
+    {
+     "value": "ta",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ta-1-102b29e4.png",
+     "w": 54,
+     "h": 116
+    },
+    {
+     "value": "ti",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ti-1-b5a2073a.png",
+     "w": 72,
+     "h": 142
+    },
+    {
+     "value": "to",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-to-1-2c22528a.png",
+     "w": 118,
+     "h": 119
+    },
+    {
+     "value": "u",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-1-455d5ca5.png",
+     "w": 43,
+     "h": 114
+    },
+    {
+     "value": "wi",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-wi-1-000ebe89.png",
+     "w": 61,
+     "h": 157
+    },
+    {
+     "value": "ya",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-1-10688c7a.png",
+     "w": 45,
+     "h": 141
+    },
+    {
+     "value": "yo",
+     "src": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-yo-1-8f5ae71f.png",
+     "w": 88,
+     "h": 114
+    }
+   ],
+   "items": [
+    {
+     "id": "tfc-main-tablet-C2",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-C2-efc67046.png",
+     "w": 146,
+     "h": 111,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "C2",
+     "page": 144,
+     "transliteration": "ch’o-ko",
+     "transcription": "ch’ok",
+     "translation": "the young one"
+    },
+    {
+     "id": "tc-main-tablet-E12",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-E12-8a5a092f.png",
+     "w": 149,
+     "h": 139,
+     "monument": "Tablet of the Cross",
+     "coord": "E12",
+     "page": 124,
+     "transliteration": "u-ti-ya",
+     "transcription": "uhti-iiy",
+     "translation": "it happened"
+    },
+    {
+     "id": "tc-main-tablet-C17",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-C17-60324967.png",
+     "w": 147,
+     "h": 134,
+     "monument": "Tablet of the Cross",
+     "coord": "C17",
+     "page": 123,
+     "transliteration": "i-hu-li",
+     "transcription": "i huli",
+     "translation": "then he arrives"
+    },
+    {
+     "id": "tfc-main-tablet-J2",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-J2-2cae842b.png",
+     "w": 154,
+     "h": 144,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "J2",
+     "page": 151,
+     "transliteration": "yo-to-ti",
+     "transcription": "y-otoot",
+     "translation": "is the house of"
+    },
+    {
+     "id": "tfc-main-tablet-H14",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-H14-dc5c9ebb.png",
+     "w": 148,
+     "h": 141,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "H14",
+     "page": 149,
+     "transliteration": "u-to-ma",
+     "transcription": "uht-oom",
+     "translation": "it will happen"
+    },
+    {
+     "id": "tfc-main-tablet-F8",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-F8-d027a7cc.png",
+     "w": 150,
+     "h": 136,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "F8",
+     "page": 146,
+     "transliteration": "ch’a-jo-ma",
+     "transcription": "ch’aj-oom",
+     "translation": "he who censes"
+    },
+    {
+     "id": "tfc-main-tablet-K3",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tfc-main-tablet-K3-16d50dbe.png",
+     "w": 173,
+     "h": 129,
+     "monument": "Tablet of the Foliated Cross",
+     "coord": "K3",
+     "page": 151,
+     "transliteration": "b’a-ch’o-ko",
+     "transcription": "b’aah ch’ok",
+     "translation": "the principal youth"
+    },
+    {
+     "id": "tc-main-tablet-D17",
+     "src": "https://images.sourcelibrary.org/reference/maya/palenque-mythology-2006/tc-main-tablet-D17-7652c95b.png",
+     "w": 153,
+     "h": 134,
+     "monument": "Tablet of the Cross",
+     "coord": "D17",
+     "page": 123,
+     "transliteration": "ma-ta-wi-la",
+     "transcription": "Matwiil",
+     "translation": "(at) Matwiil"
+    }
+   ],
+   "credits": [
+    "palenque",
+    "stuart"
+   ]
+  }
+ ]
+}
