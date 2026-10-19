@@ -66,7 +66,7 @@ for g in d['graphs']:
          'iconography': [icon.get(i, i) for i in g.get('iconography') or []],
          'occurrence': g.get('occurrence'), 'concordance': dict(cc),
          'thompson': cc.get('Thompson (1962)', []), 'macri_vail': cc.get('Macri & Vail (2009)', []),
-         'empty': False, 'src_page': {'url': f"https://classicmayan.org/signcatalog/{g['graphNo']}", 'img': g.get('imgUrl')}}
+         'empty': False, 'src_page': {'url': 'https://classicmayan.org/portal/signcatalog', 'img': g.get('imgUrl')}}  # no per-graph deep link: /signcatalog/<graphNo> 404s
     if r['kind'] == 'syllabogram' and re.fullmatch(r"[a-z'’]*[aeiou]", r['value'] or ''):
         v = r['value'].replace('’', "'"); r['consonant'], r['vowel'] = (v[:-1] or "'"), v[-1]
     f = f"{GRAPHS}/{g.get('imgUrl')}.jpg"
