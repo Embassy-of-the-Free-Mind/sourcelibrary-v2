@@ -50,8 +50,15 @@ const JEV_CHARS = 4000;
 const MIN_TRANSLATION_CHARS = 200;
 const JEV_CONCURRENCY = 48;
 const JEV_CALL_TIMEOUT_MS = 8000;
-/** Wall clock for the whole re-rank; pages not scored by then keep lane order, after the scored ones. */
+/** Wall clock for the whole re-rank; pages not scored by then are left out of the ranking. */
 const JEV_BUDGET_MS = 15000;
+/**
+ * Once every page is sent and TAIL_SHARE of them have answered, the rest get
+ * this long and are then dropped. Without it a few slow gateway calls held two
+ * of ten local runs at ~9 s against a usual ~2 s (2026-10-19).
+ */
+const TAIL_SHARE = 0.9;
+const TAIL_GRACE_MS = 1000;
 const KEYWORD_TIMEOUT_MS = 8000;
 /**
  * Re-ranked searches per UTC day, all callers together. ~$0.011 each, so the
@@ -144,14 +151,14 @@ export const jevWordings = (q: string) => ({
 
 class JevAuthError extends Error {}
 
-async function jevScore(token: string, state: string, questions: ReturnType<typeof jevWordings>, deadline: number): Promise<{ score: number; cost: number } | null> {
+async function jevScore(token: string, state: string, questions: ReturnType<typeof jevWordings>, deadline: number, tail: AbortSignal): Promise<{ score: number; cost: number } | null> {
   for (let attempt = 0; attempt < 2; attempt++) {
     const left = deadline - Date.now();
-    if (left < 500) return null;
+    if (left < 500 || tail.aborted) return null;
     try {
       const r = await fetch(JEV_URL, {
         method: 'POST',
-        signal: AbortSignal.timeout(Math.min(JEV_CALL_TIMEOUT_MS, left)),
+        signal: AbortSignal.any([AbortSignal.timeout(Math.min(JEV_CALL_TIMEOUT_MS, left)), tail]),
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: 'typesafe-ai/jev', state, questions }),
       });
@@ -300,7 +307,10 @@ export async function questionSearch(question: string, opts: { feature?: string 
     const questions = jevWordings(question);
     const deadline = Date.now() + JEV_BUDGET_MS;
     let idx = 0;
+    let answered = 0;
     let authFailed = false;
+    const tail = new AbortController();
+    let tailTimer: ReturnType<typeof setTimeout> | undefined;
     await Promise.all(Array.from({ length: Math.min(JEV_CONCURRENCY, english.length) }, async () => {
       while (idx < english.length && !authFailed && Date.now() < deadline) {
         const c = english[idx++];
@@ -308,20 +318,25 @@ export async function questionSearch(question: string, opts: { feature?: string 
         const title = (b.display_title || b.title || '') as string;
         const year = b.published || b.year;
         try {
-          const r = await jevScore(token, `${title}${year ? ` (${year})` : ''}\n\n${c.text!.slice(0, JEV_CHARS)}`, questions, deadline);
+          const r = await jevScore(token, `${title}${year ? ` (${year})` : ''}\n\n${c.text!.slice(0, JEV_CHARS)}`, questions, deadline, tail.signal);
           if (r) { c.score = r.score; costUsd += r.cost; scored++; }
         } catch {
           authFailed = true;
         }
+        answered++;
+        if (!tailTimer && idx >= english.length && answered >= english.length * TAIL_SHARE) {
+          tailTimer = setTimeout(() => tail.abort(), TAIL_GRACE_MS);
+        }
       }
     }));
+    clearTimeout(tailTimer);
     if (authFailed) {
       notes.push('the re-ranker refused its credentials, so these are in search order, not ranked against the question');
     } else if (scored < english.length / 2) {
       notes.push(`the re-ranker answered for only ${scored} of ${english.length} candidates, so these are in search order, not ranked against the question`);
     } else {
       reranked = true;
-      if (scored < english.length) notes.push(`${english.length - scored} of ${english.length} candidates were not scored in time and were left out of the ranking`);
+      if (scored < english.length * TAIL_SHARE) notes.push(`${english.length - scored} of ${english.length} candidates were not scored in time and were left out of the ranking`);
     }
   }
   const tJev = Date.now();
@@ -355,7 +370,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
 
   const total = Date.now() - t0;
   if (scored > 0 || notes.length > 0) {
-    logAiUsage({ feature: opts.feature || 'librarian_question_search', model: 'typesafe-ai/jev', costUsd, ms: tJev - tLanes, ok: reranked });
+    logAiUsage({ feature: opts.feature || 'librarian_question_search', model: 'typesafe-ai/jev', costUsd, ms: total, ok: reranked });
   }
   return {
     passages,
