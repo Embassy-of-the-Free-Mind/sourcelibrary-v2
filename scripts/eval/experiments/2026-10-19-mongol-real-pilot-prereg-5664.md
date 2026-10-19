@@ -7,9 +7,9 @@ canons: [mongolian-kanjur]
 n_books: 5
 n_pages: 34
 verdict: "Preregistration only: continue the synthetic-trained Kanjur reader on ~500 real columns (B/C/D transliterations), 40 % of a 14,400-row mix, 900 steps; scored on v23 real prose (baseline CER 55.5 %) and the frozen 30-column meaning check (baseline 0/30). No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-19-mongol-real-pilot-score-5664.md"
 issue: [5664, 6871]
 ---
 PRIOR ART: `2026-10-18-mongol-real-ground-truth-5664.md` (PR #6960: the 628 confirmed real columns, the v23 eval set, the 55.5 % baseline, and `build_train.py` + `train.py --init-adapter`, used unchanged here); `2026-10-18-mongol-synth-prereg-5664.md` (the frozen meaning set and `judge.mjs`, scored unchanged) and its score entry in PR #6924 (0/30 match, synthetic held-out CER 3.9 %: a domain gap, so "train next on real Kanjur lines"). Nothing in `scripts/eval/INDEX.md` trains a Mongolian reader on real columns.
