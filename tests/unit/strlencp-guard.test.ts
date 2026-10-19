@@ -54,7 +54,7 @@ function unguardedSites(file: string, src: string): Hit[] {
 }
 
 function sourceFiles(): string[] {
-  return execFileSync('git', ['ls-files', 'src', 'scripts'], { cwd: ROOT, encoding: 'utf8' })
+  return execFileSync('git', ['ls-files', 'src', 'scripts'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
     .split('\n')
     .filter((f) => /\.(m?[jt]sx?|cjs)$/.test(f));
 }
