@@ -1,0 +1,625 @@
+{
+ "items": {
+  "T001": {
+   "kind": "ARMS",
+   "page_id": "69dfee88ce6bb8619e07f93b",
+   "book": "69dfee88ce6bb8619e07f8f5",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T002": {
+   "kind": "ARMS",
+   "page_id": "69e7463b831080b8de4a7df2",
+   "book": "69e7463b831080b8de4a7d1a",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T003": {
+   "kind": "ARMS",
+   "page_id": "6abeb247896ea18127c82f9e",
+   "book": "6abeb246896ea18127c82d97",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T004": {
+   "kind": "ARMS",
+   "page_id": "6abed5e1896ea18127c8e1ea",
+   "book": "6abed5db896ea18127c8e188",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T005": {
+   "kind": "ARMS",
+   "page_id": "6abee418a43718d234bf2431",
+   "book": "6abee417a43718d234bf2288",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T006": {
+   "kind": "ARMS",
+   "page_id": "6abee266a43718d234bf19c7",
+   "book": "6abee265a43718d234bf1807",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "STORED"
+   }
+  },
+  "T007": {
+   "kind": "ARMS",
+   "page_id": "6abede64896ea18127c91c2b",
+   "book": "6abede62896ea18127c91a4e",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T008": {
+   "kind": "ARMS",
+   "page_id": "6abedd95896ea18127c915c9",
+   "book": "6abedd7f896ea18127c91551",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T009": {
+   "kind": "ARMS",
+   "page_id": "6abeb2b4896ea18127c833c2",
+   "book": "6abeb2b1896ea18127c8327d",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T010": {
+   "kind": "PLANT",
+   "page_id": "6abed81b896ea18127c8f2f6",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "If both of these options are untenable, there will be no connection to an argument that makes known what was not known.",
+    "new": "If both of these options are not untenable, there will be no connection to an argument that makes known what was not known.",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "T011": {
+   "kind": "DUP",
+   "page_id": "6abed661896ea18127c8e993",
+   "labels": {
+    "T1": "G4L",
+    "T2": "P_DUP",
+    "T3": "P"
+   }
+  },
+  "T012": {
+   "kind": "ARMS",
+   "page_id": "6abeb159896ea18127c82709",
+   "book": "6abeb158896ea18127c82682",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "STORED"
+   }
+  },
+  "T013": {
+   "kind": "ARMS",
+   "page_id": "6abeb1dd896ea18127c829e0",
+   "book": "6abeb1dc896ea18127c828bc",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T014": {
+   "kind": "ARMS",
+   "page_id": "6abea80d6a920ffd924dce4f",
+   "book": "6abea80b6a920ffd924dcde3",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T015": {
+   "kind": "ARMS",
+   "page_id": "69e74626831080b8de4a7658",
+   "book": "69e74626831080b8de4a7494",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T016": {
+   "kind": "ARMS",
+   "page_id": "6abee1cda43718d234bf16f2",
+   "book": "6abee1cca43718d234bf15db",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T017": {
+   "kind": "PLANT",
+   "page_id": "69e74635831080b8de4a7b68",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "All those to be embraced are red, with faces that are red, white, and black.",
+    "new": "All those to be embraced are not red, with faces that are red, white, and black.",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "T018": {
+   "kind": "ARMS",
+   "page_id": "6abed76e896ea18127c8ee91",
+   "book": "6abed76c896ea18127c8ee40",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T019": {
+   "kind": "ARMS",
+   "page_id": "6abeb361896ea18127c83c31",
+   "book": "6abeb35b896ea18127c83af5",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T020": {
+   "kind": "ARMS",
+   "page_id": "6abeddd5896ea18127c9186e",
+   "book": "6abeddd2896ea18127c917a3",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T021": {
+   "kind": "PLANT",
+   "page_id": "6abeb289896ea18127c8304c",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "It is stated with the intention: \"Because those reasons and examples presented by that opponent are unestablished as equivalent to what is to be proved, that subsequent reasoning is not established.\" ",
+    "new": "It is stated with the intention: \"Because those reasons and examples presented by that opponent are unestablished as equivalent to what is to be proved, that subsequent reasoning is established.\" ",
+    "how": "\\bis not\\b → is"
+   }
+  },
+  "T022": {
+   "kind": "ARMS",
+   "page_id": "6abed8d1896ea18127c8f986",
+   "book": "6abed8c2896ea18127c8f75e",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T023": {
+   "kind": "PLANT",
+   "page_id": "6abeb20c896ea18127c82d53",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "For death refers to that which has been born undergoing deterioration, whereas that which is deathless does not deteriorate.",
+    "new": "For death refers to that which has been born undergoing deterioration, whereas that which is deathless does deteriorate.",
+    "how": "\\bdoes not\\b → does"
+   }
+  },
+  "T024": {
+   "kind": "ARMS",
+   "page_id": "69e74635831080b8de4a7b68",
+   "book": "69e74635831080b8de4a7add",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "STORED",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T025": {
+   "kind": "ARMS",
+   "page_id": "6abeb20c896ea18127c82d53",
+   "book": "6abeb20a896ea18127c82b01",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T026": {
+   "kind": "DUP",
+   "page_id": "6abedd95896ea18127c915c9",
+   "labels": {
+    "T1": "P",
+    "T2": "G4L",
+    "T3": "P_DUP"
+   }
+  },
+  "T027": {
+   "kind": "ARMS",
+   "page_id": "69e792ea80b52390feb171a6",
+   "book": "69e792ea80b52390feb17135",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T028": {
+   "kind": "ARMS",
+   "page_id": "6abee4aca43718d234bf2a70",
+   "book": "6abee496a43718d234bf2965",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T029": {
+   "kind": "ARMS",
+   "page_id": "6abed72a896ea18127c8ec64",
+   "book": "6abed724896ea18127c8ec34",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T030": {
+   "kind": "ARMS",
+   "page_id": "6abeb289896ea18127c8304c",
+   "book": "6abeb286896ea18127c82fd7",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "STORED"
+   }
+  },
+  "T031": {
+   "kind": "PLANT",
+   "page_id": "6abee2a8a43718d234bf1ceb",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "If one asks, \"For whose sake is the teaching given?\", it is teaching for the sake of those who are vessels for the instructions on the remedies, vessels for the teaching of the doctrine, vessels for establishing appropriate examples, and vessels for various methods and the like.",
+    "new": "If one asks, \"For whose sake is not the teaching given?\", it is teaching for the sake of those who are vessels for the instructions on the remedies, vessels for the teaching of the doctrine, vessels for establishing appropriate examples, and vessels for various methods and the like.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T032": {
+   "kind": "ARMS",
+   "page_id": "69dfee83ce6bb8619e07f32d",
+   "book": "69dfee83ce6bb8619e07f177",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T033": {
+   "kind": "DUP",
+   "page_id": "6abeddd5896ea18127c9186e",
+   "labels": {
+    "T1": "P",
+    "T2": "G4L",
+    "T3": "P_DUP"
+   }
+  },
+  "T034": {
+   "kind": "ARMS",
+   "page_id": "6abeb51e896ea18127c84e68",
+   "book": "6abeb51b896ea18127c84c67",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "G4L",
+    "T3": "STORED"
+   }
+  },
+  "T035": {
+   "kind": "ARMS",
+   "page_id": "6abee594a43718d234bf35e6",
+   "book": "6abee585a43718d234bf3203",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T036": {
+   "kind": "ARMS",
+   "page_id": "6abed7ae896ea18127c8f0dc",
+   "book": "6abed7ad896ea18127c8f0d2",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T037": {
+   "kind": "ARMS",
+   "page_id": "69e7482f85f786e884a4bc97",
+   "book": "69e7482f85f786e884a4bb0c",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T038": {
+   "kind": "ARMS",
+   "page_id": "69e7482885f786e884a4bad7",
+   "book": "69e7482885f786e884a4b959",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T039": {
+   "kind": "ARMS",
+   "page_id": "69e7483885f786e884a4bf74",
+   "book": "69e7483885f786e884a4bd19",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "G4L",
+    "T2": "OP",
+    "T3": "STORED"
+   }
+  },
+  "T040": {
+   "kind": "ARMS",
+   "page_id": "6abee2a8a43718d234bf1ceb",
+   "book": "6abee2a5a43718d234bf1afb",
+   "stratum": "S3P",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T041": {
+   "kind": "ARMS",
+   "page_id": "69ead9e5c5cc3c2b71cfaa45",
+   "book": "69ead9e5c5cc3c2b71cfa8fa",
+   "stratum": "S3P",
+   "src": "bdrc-yigdzin-v1",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T042": {
+   "kind": "ARMS",
+   "page_id": "6abeb331896ea18127c839bb",
+   "book": "6abeb325896ea18127c83819",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T043": {
+   "kind": "DUP",
+   "page_id": "6abee266a43718d234bf19c7",
+   "labels": {
+    "T1": "G4L",
+    "T2": "P",
+    "T3": "P_DUP"
+   }
+  },
+  "T044": {
+   "kind": "PLANT",
+   "page_id": "6abed7ae896ea18127c8f0dc",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "By this, it is shown that for an intelligent investigator who is not confused...",
+    "new": "By this, it is shown that for an intelligent investigator who is confused...",
+    "how": "\\bis not\\b → is"
+   }
+  },
+  "T045": {
+   "kind": "ARMS",
+   "page_id": "6abed81b896ea18127c8f2f6",
+   "book": "6abed7f8896ea18127c8f2ca",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T046": {
+   "kind": "ARMS",
+   "page_id": "6abed42d896ea18127c8d806",
+   "book": "6abed42c896ea18127c8d54f",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "G4L",
+    "T3": "OP"
+   }
+  },
+  "T047": {
+   "kind": "ARMS",
+   "page_id": "6abeb2ee896ea18127c835d3",
+   "book": "6abeb2ec896ea18127c83529",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T048": {
+   "kind": "ARMS",
+   "page_id": "6abeb3a1896ea18127c83ed6",
+   "book": "6abeb39f896ea18127c83db1",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "G4L",
+    "T2": "STORED",
+    "T3": "OP"
+   }
+  },
+  "T049": {
+   "kind": "PLANT",
+   "page_id": "6abeb247896ea18127c82f9e",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "In response, it is said: \"That objection finds no basis against us.\" The reasoning is as follows.",
+    "new": "In response, it is not said: \"That objection finds no basis against us.\" The reasoning is as follows.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "T050": {
+   "kind": "ARMS",
+   "page_id": "6abeb406896ea18127c84281",
+   "book": "6abeb404896ea18127c84235",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "OP",
+    "T2": "STORED",
+    "T3": "G4L"
+   }
+  },
+  "T051": {
+   "kind": "ARMS",
+   "page_id": "6abed661896ea18127c8e993",
+   "book": "6abed65f896ea18127c8e6d6",
+   "stratum": "S38",
+   "src": "derge-tengyur",
+   "labels": {
+    "T1": "STORED",
+    "T2": "OP",
+    "T3": "G4L"
+   }
+  },
+  "T052": {
+   "kind": "PLANT",
+   "page_id": "6abee418a43718d234bf2431",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "However, there are slight differences in the application of the grammatical rules.",
+    "new": "However, there are not slight differences in the application of the grammatical rules.",
+    "how": "\\bare\\b → are not"
+   }
+  }
+ },
+ "missing_arm": {}
+}
