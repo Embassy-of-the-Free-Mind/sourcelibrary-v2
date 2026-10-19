@@ -23,7 +23,8 @@ prompts to the Gemini helper on main and answers back; it is deleted after the r
 | `picture.py` | suggester picture channel: DINOv2 + CLIP, sign drawings (`maya_signs`) and reference block crops; run with round 2's CPU venv |
 | `suggester.py` | suggester replay: recall@1/3/6/8 per channel and fused, clicks per block, seen/unseen |
 
-Order: `palenque_set.py` → `run-claude.mjs OK OK` (and `BARE OBARE`) → `build-payload.mjs arms OK:GK BARE:GBARE` +
-`scratch-doc.mjs put` + `helper-brief.sh … | box.sh main start` → `scratch-doc.mjs get out-GK …` → `team_proposals` →
-`run-claude.mjs TEAM TEAM` → `score.py …` → `judge_packet.py <runs>` → judges (Opus here, Gemini on main) →
-`judge_packet.py --tally`. Suggester: `$R2/venv/bin/python picture.py` → `python3 suggester.py`.
+Order: `palenque_set.py` → `run-claude.mjs OK OK` (also `BARE OBARE`, `NOIMG ONOIMG`) →
+`build-payload.mjs arms OK:GK BARE:GBARE` + `scratch-doc.mjs put` + `helper-brief.sh … | box.sh <box> start` →
+`scratch-doc.mjs get out-GK …` → `ingest.py … GK --team` → `run-claude.mjs TEAM TEAM` → `score.py …` →
+`judge_packet.py <tag> <runs>` → `run-judge-claude.mjs <tag>` here and the same packets as a Gemini run →
+`judge_packet.py --tally`, `tables.py <runs>`. Suggester: `$R2/venv/bin/python picture.py` → `python3 suggester.py`.
