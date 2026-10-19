@@ -6,7 +6,6 @@ import { getSiteStats } from '@/lib/site-stats';
 import { loadJourney } from '@/lib/journey/load-journey';
 import type { JourneyData, JourneyInstanceConfig } from '@/lib/journey/types';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
-import { FEED_TYPES } from '@/lib/feed-links';
 import SiteHeader from '@/components/layout/SiteHeader';
 import JourneyFilm from '@/components/journey/JourneyFilm';
 import JourneyProse from '@/components/journey/JourneyProse';
@@ -86,7 +85,7 @@ export const metadata: Metadata = {
   title: `${TITLE} · Source Library`,
   description: DESCRIPTION,
   // Declaring `alternates` replaces the layout's, so the feed links are spread back in.
-  alternates: { canonical: '/how-it-works', types: FEED_TYPES },
+  alternates: { canonical: '/how-it-works' },
 };
 
 // UTC, so the server render and the browser agree on the day.

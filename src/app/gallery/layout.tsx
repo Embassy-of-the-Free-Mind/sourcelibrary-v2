@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   description: galleryDescription,
   alternates: {
     canonical: '/gallery',
-    types: {
-      'application/atom+xml': '/api/feed/gallery',
-    },
   },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
