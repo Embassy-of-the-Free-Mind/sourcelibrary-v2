@@ -1,3 +1,15 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: 54
+n_pages: 198
+verdict: "Against CBETA fitted to our own scans, Gemini 3 Flash reads Chinese print at median Han CER 0.052 and Flash-Lite at 0.068 on 198 shared pages (54 books); Flash had no catastrophic page (CER > 0.5)."
+status: informational
+issue: [6101, 6139]
+---
 ## 2026-10-07 · Which engine reads Chinese print, measured against CBETA fitted to our own scans? (#6101)
 
 **Question.** The /quality Pareto panel for Chinese print had n=19 and overlapping intervals of roughly 64–87 %, so no engine could be chosen. #5566 fitted CBETA's typed text (CC BY-NC-SA 4.0) to our scans of the same editions. Used as a reference only (never committed, never translated from), does it separate PaddleOCR-VL 1.6, Gemini 3.1 Flash-Lite and Gemini 3 Flash on print? Prereg: `PREREGISTRATION-chinese-print-cbeta-6101.md`, committed before any engine ran.
