@@ -1,0 +1,178 @@
+{
+ "run": "meta-round-6056-r1-books",
+ "entries": [
+  {
+   "book_id": "69c842b96c6f3cc53c850d69",
+   "before": {
+    "language": "French",
+    "languages": [
+     "French"
+    ]
+   },
+   "after": {
+    "language": "Latin",
+    "languages": [
+     "Latin"
+    ]
+   },
+   "at": "2026-10-19T21:38:22.100Z"
+  },
+  {
+   "book_id": "69b51de0efd8df28f2dac79b",
+   "before": {
+    "language": "English",
+    "languages": [
+     "Latin"
+    ],
+    "original_language": "Latin",
+    "text_role": "modern-translation",
+    "text_role_source": "heuristic-v1"
+   },
+   "after": {
+    "language": "German",
+    "languages": [
+     "German"
+    ],
+    "original_language": "German",
+    "text_role": "original",
+    "text_role_source": "meta-round-6056-by-eye"
+   },
+   "at": "2026-10-19T21:38:22.972Z"
+  },
+  {
+   "book_id": "69f13412715b735032de724e",
+   "before": {
+    "language": "Latin",
+    "languages": [
+     "Latin"
+    ],
+    "year": 2018
+   },
+   "after": {
+    "year": null,
+    "language": "Chinese",
+    "languages": [
+     "Chinese"
+    ]
+   },
+   "at": "2026-10-19T21:38:23.355Z"
+  },
+  {
+   "book_id": "6a08e2c950bd891addfb4f7b",
+   "before": {
+    "published": "1913",
+    "year": 1913,
+    "source_work_dates_meta.edition": {
+     "year": 1913,
+     "from": 1913,
+     "to": 1913,
+     "display": "1913",
+     "precision": "exact",
+     "basis": "catalogue",
+     "evidence": "",
+     "rule": "published"
+    },
+    "source_work_dates.1": {
+     "type": "edition",
+     "date": "1913",
+     "date_display": "1913",
+     "date_precision": "exact",
+     "basis": "catalogue",
+     "evidence": ""
+    }
+   },
+   "after": {
+    "published": "1914",
+    "year": 1914,
+    "source_work_dates_meta.edition": {
+     "year": 1914,
+     "from": 1914,
+     "to": 1914,
+     "display": "1914",
+     "precision": "exact",
+     "basis": "colophon",
+     "evidence": "大正三年三月二十日發行 (Taishō 3 = 1914)"
+    },
+    "source_work_dates.1": {
+     "type": "edition",
+     "date": "1914",
+     "date_display": "1914",
+     "date_precision": "exact",
+     "basis": "colophon",
+     "evidence": "大正三年三月二十日發行 (Taishō 3 = 1914)"
+    }
+   },
+   "at": "2026-10-19T21:38:23.863Z"
+  },
+  {
+   "book_id": "6a4f03a5e39e71f6b6e3b66a",
+   "before": {
+    "published": "Unknown",
+    "year": null,
+    "place_published": "Berlin"
+   },
+   "after": {
+    "published": "1648",
+    "year": 1648,
+    "place_published": "Vienna"
+   },
+   "at": "2026-10-19T21:38:24.241Z"
+  },
+  {
+   "book_id": "6a492128cc006f976d7f5b30",
+   "before": {
+    "published": "Unknown",
+    "year": null
+   },
+   "after": {
+    "published": "1668",
+    "year": 1668
+   },
+   "at": "2026-10-19T21:38:24.590Z"
+  },
+  {
+   "book_id": "69b51eb4cf111105c42a3669",
+   "before": {
+    "original_language": "Latin"
+   },
+   "after": {
+    "original_language": "French"
+   },
+   "at": "2026-10-19T21:38:24.899Z"
+  },
+  {
+   "book_id": "69b51db9768235dc65987073",
+   "before": {
+    "original_language": "German",
+    "translator": null
+   },
+   "after": {
+    "original_language": "Latin",
+    "translator": "Georg Beatus"
+   },
+   "at": "2026-10-19T21:38:25.139Z"
+  },
+  {
+   "book_id": "69dbc7dd1040d1d5e2094cd9",
+   "before": {
+    "original_language": null
+   },
+   "after": {
+    "original_language": "Greek"
+   },
+   "at": "2026-10-19T21:38:25.363Z"
+  },
+  {
+   "book_id": "69afd3f87e835c55c61b4dbb",
+   "before": {
+    "original_language": null,
+    "translator": null
+   },
+   "after": {
+    "original_language": "Greek",
+    "translator": "Joachim Périon"
+   },
+   "at": "2026-10-19T21:38:25.602Z"
+  }
+ ]
+}

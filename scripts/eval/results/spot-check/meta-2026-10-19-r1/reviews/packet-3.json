@@ -1,0 +1,559 @@
+{
+ "packet": 3,
+ "reviewer": "opus",
+ "books": [
+  {
+   "id": "6a43baa93c91e2a63d4dd3e0",
+   "title_page": {
+    "page": 1,
+    "url": "https://sourcelibrary.org/book/6a43baa93c91e2a63d4dd3e0?page=1",
+    "reads": "Q. D. B. V. DISPUTATIONEM JURIS PUBLICI ET PRIVATI DE ENSIFERIS SUB PRÆSIDIO DN. GEORGII ADAMI STRUVII, JCTI CONSUMMATISSIMI ... IN CELEBERRIMA HAC SALANA publicæ disquisitioni exponet IN AUDITORIO JCTORUM ad d. Mart. AUTOR JOHANNES JACOBUS NICOLAI, Dresd. Misn. JENÆ, Stanno JOH. DAV. WERTHERI. 1683."
+   },
+   "last_leaf": {
+    "page": 40,
+    "reads": "End of Italian gratulatory letter signed \"Carlo Caffa, D.P.P.\"; Latin epigram to the \"Nobilissimum Dominum Authorem\" signed \"Excellent. Dn. D. Frisii Præf. Jen. COMMENSALES\"; no colophon."
+   },
+   "fields": {
+    "title": {
+     "verdict": "ok"
+    },
+    "display_title": {
+     "verdict": "ok"
+    },
+    "author": {
+     "verdict": "wrong",
+     "catalogued": "Struve, Georg Adam",
+     "book_shows": "Johannes Jacobus Nicolai (respondent, named as author); Struve is praeses",
+     "quote": "SUB PRÆSIDIO DN. GEORGII ADAMI STRUVII ... AUTOR JOHANNES JACOBUS NICOLAI, Dresd. Misn.",
+     "page": 1,
+     "class": "praeses-as-author",
+     "severity": "serious",
+     "note": "The title page explicitly names the respondent as AUTOR, and the gratulatory poems (pp.39-40) address him as author (\"Nob. Dn. Autori\", \"Dominum Authorem\"). Per brief, praeses convention does not apply when the title page says the respondent wrote it."
+    },
+    "author_id": {
+     "verdict": "wrong",
+     "catalogued": "georg-adam-struve (Georg Adam Struve, Q97853)",
+     "book_shows": "Johannes Jacobus Nicolai of Dresden",
+     "quote": "AUTOR JOHANNES JACOBUS NICOLAI, Dresd. Misn.",
+     "page": 1,
+     "class": "praeses-as-author",
+     "severity": "serious",
+     "note": "Follows from the author error; the book appears on /author/georg-adam-struve as his work."
+    },
+    "translator": {
+     "verdict": "na"
+    },
+    "editor": {
+     "verdict": "na"
+    },
+    "published": {
+     "verdict": "ok"
+    },
+    "year": {
+     "verdict": "ok"
+    },
+    "edition_date": {
+     "verdict": "ok"
+    },
+    "work_date": {
+     "verdict": "wrong",
+     "catalogued": "1634–1683, the author's adult life (Struve lifespan, Q97853)",
+     "book_shows": "Disputation held at Jena in March 1683",
+     "quote": "publicæ disquisitioni exponet IN AUDITORIO JCTORUM ad d. Mart. ... 1683",
+     "page": 1,
+     "class": "work-date-from-wrong-author",
+     "severity": "minor",
+     "note": "Range anchored on the praeses' lifespan; the work is a 1683 disputation by Nicolai."
+    },
+    "place_published": {
+     "verdict": "missing",
+     "catalogued": "(empty)",
+     "book_shows": "Jena",
+     "quote": "JENÆ, Stanno JOH. DAV. WERTHERI. 1683.",
+     "page": 1,
+     "class": "imprint-place-missing",
+     "severity": "minor"
+    },
+    "publisher": {
+     "verdict": "ok",
+     "note": "\"stanno Joh. Dav. Wertheri\" keeps the Latin \"Stanno\" (= printed by/with the type of); printer is Johann David Werther. Form only."
+    },
+    "language": {
+     "verdict": "ok"
+    },
+    "original_language": {
+     "verdict": "na"
+    },
+    "languages": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "Latin, plus an Italian gratulatory letter in the back matter",
+     "quote": "la gratitudine, à lei dovuta, non mi permetteva di celar al Mondo una tal verità ... Carlo Caffa, D.P.P.",
+     "page": 40,
+     "class": "languages-incomplete",
+     "severity": "minor"
+    },
+    "text_role": {
+     "verdict": "ok"
+    },
+    "work_id": {
+     "verdict": "ok",
+     "note": "No siblings; no other edition of De Ensiferis among Struve books. Slug is built on the praeses name."
+    },
+    "edition_key": {
+     "verdict": "ok",
+     "note": "Author component \"struve\" inherits the author error."
+    },
+    "categories": {
+     "verdict": "ok"
+    },
+    "pages_count": {
+     "verdict": "ok"
+    }
+   },
+   "notes": "Fix author to Nicolai, Johannes Jacobus (respondent/author), with Struve as praeses. Imprint place Jena missing."
+  },
+  {
+   "id": "69b51db9768235dc65987073",
+   "title_page": {
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/69b51db9768235dc65987073?page=3",
+    "reads": "VERUM INVENTUM, Das ist/ Von den hochnützlichen/ herzlichen Erfindungen vnd Künsten ... Alles in einem sondern Tractat erstlich Lateinisch beschrieben Durch Michaelem Maierum ... Nunmehr der Teutschen Nation zu sonderm Wolgefallen/ in selbige Sprach versetzt Durch M. Georgium Beatum, Francof. Gedruckt zu Franckfurt am Mayn/ bey Nicolao Hoffmann/ in verlegung Lucæ Jennis. M.DC.XIX."
+   },
+   "last_leaf": {
+    "page": 258,
+    "reads": "Blank endleaf with stamp \"Königl. Kreisbibliothek in Augsburg\"; p.259 pencil \"Techn. Maier 1619\". No colophon."
+   },
+   "fields": {
+    "title": {
+     "verdict": "ok"
+    },
+    "display_title": {
+     "verdict": "ok"
+    },
+    "author": {
+     "verdict": "ok"
+    },
+    "author_id": {
+     "verdict": "ok"
+    },
+    "translator": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "M. Georg Beatus of Frankfurt",
+     "quote": "in selbige Sprach versetzt Durch M. Georgium Beatum, Francof.",
+     "page": 3,
+     "class": "translator-missing",
+     "severity": "minor"
+    },
+    "editor": {
+     "verdict": "na"
+    },
+    "published": {
+     "verdict": "ok"
+    },
+    "year": {
+     "verdict": "ok"
+    },
+    "edition_date": {
+     "verdict": "ok"
+    },
+    "work_date": {
+     "verdict": "ok",
+     "note": "Author-lifespan range 1583–1619 includes the true date (Latin Verum inventum, 1619); low precision only."
+    },
+    "place_published": {
+     "verdict": "missing",
+     "catalogued": "(empty)",
+     "book_shows": "Frankfurt am Main",
+     "quote": "Gedruckt zu Franckfurt am Mayn",
+     "page": 3,
+     "class": "imprint-place-missing",
+     "severity": "minor"
+    },
+    "publisher": {
+     "verdict": "missing",
+     "catalogued": "(empty)",
+     "book_shows": "Nicolaus Hoffmann for Lucas Jennis",
+     "quote": "bey Nicolao Hoffmann/ in verlegung Lucæ Jennis",
+     "page": 3,
+     "class": "imprint-publisher-missing",
+     "severity": "minor"
+    },
+    "language": {
+     "verdict": "ok"
+    },
+    "original_language": {
+     "verdict": "wrong",
+     "catalogued": "German",
+     "book_shows": "Latin (translated from Latin into German)",
+     "quote": "Alles in einem sondern Tractat erstlich Lateinisch beschrieben ... in selbige Sprach versetzt",
+     "page": 3,
+     "class": "original-language-wrong",
+     "severity": "serious"
+    },
+    "languages": {
+     "verdict": "ok"
+    },
+    "text_role": {
+     "verdict": "wrong",
+     "catalogued": "original",
+     "book_shows": "translation",
+     "quote": "Nunmehr der Teutschen Nation zu sonderm Wolgefallen/ in selbige Sprach versetzt Durch M. Georgium Beatum",
+     "page": 3,
+     "class": "translation-as-original",
+     "severity": "serious"
+    },
+    "work_id": {
+     "verdict": "ok",
+     "note": "Siblings are the Latin Verum inventum (1619) and other German copies: same work, correctly grouped. Sibling 6a4a5baf9050f0b4343133a0 has a German title but language \"Latin\" (its own defect). 69b51db7ff09e4fe943a7d17 looks like a duplicate German copy."
+    },
+    "edition_key": {
+     "verdict": "ok"
+    },
+    "categories": {
+     "verdict": "ok"
+    },
+    "pages_count": {
+     "verdict": "ok"
+    }
+   },
+   "notes": "German translation by Georg Beatus of Maier's Latin Verum inventum (both 1619). Record treats it as a German original. Page 4 is show-through of the title page, not a Uranometria imprint as the OCR claims."
+  },
+  {
+   "id": "69c648c1b2d26d717d1aaa41",
+   "title_page": {
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/69c648c1b2d26d717d1aaa41?page=3",
+    "reads": "DU VRAY ET PARFAIT AMOUR. Escrit en Grec, PAR ATHENAGORAS PHILOSOPHE ATHENIEN. Contenant les Amours honestes de Theogenes & de Charide, de Pherecides & de Melangenie. A PARIS, Chez la vefue M. Guillemot, & S. Thiboust, au Palais dans la gallerie des Prisonniers. M. D. C. XII."
+   },
+   "last_leaf": {
+    "page": 799,
+    "reads": "Pastedown pencil notes: \"Collated ... 65.-\", \"OH.K\", \"Quérard I, 398 / Brunet I, 538\", \"UBN 15632\". Page 800 is a cover image."
+   },
+   "fields": {
+    "title": {
+     "verdict": "ok"
+    },
+    "display_title": {
+     "verdict": "ok"
+    },
+    "author": {
+     "verdict": "ok",
+     "note": "Title page names the purported Greek author \"Athenagoras\"; the work is a pseudo-translation by Martin Fumée, and the bracketed attribution \"[Fumée, Martin]\" is the standard catalogue attribution. Not shown on the book itself."
+    },
+    "author_id": {
+     "verdict": "ok",
+     "note": "fumee-martin / Q3295428 = Martin Fumée, sieur de Genillé, the accepted author."
+    },
+    "translator": {
+     "verdict": "na"
+    },
+    "editor": {
+     "verdict": "na"
+    },
+    "published": {
+     "verdict": "ok"
+    },
+    "year": {
+     "verdict": "ok"
+    },
+    "edition_date": {
+     "verdict": "ok"
+    },
+    "work_date": {
+     "verdict": "ok",
+     "note": "Range 1555–1590 (author lifespan) is consistent; first edition 1599 posthumous. A superseded model note calling it a translation of Achilles Tatius is wrong but no longer the active value."
+    },
+    "place_published": {
+     "verdict": "ok"
+    },
+    "publisher": {
+     "verdict": "ok",
+     "note": "\"Guillemot, widow of Matthieu| Thiboust, Samuel\" — content matches; pipe separator is a formatting artefact."
+    },
+    "language": {
+     "verdict": "ok"
+    },
+    "original_language": {
+     "verdict": "na",
+     "note": "Claims to be \"Escrit en Grec\" but is a French original (pseudo-translation); absence is defensible."
+    },
+    "languages": {
+     "verdict": "ok"
+    },
+    "text_role": {
+     "verdict": "ok"
+    },
+    "work_id": {
+     "verdict": "ok"
+    },
+    "edition_key": {
+     "verdict": "ok"
+    },
+    "categories": {
+     "verdict": "ok"
+    },
+    "pages_count": {
+     "verdict": "ok"
+    }
+   },
+   "notes": "Reader order is irregular: p.1 is a cover, p.800 is the front cover again (0401-full.jpg), and p.10 is a handwritten replacement leaf. Consider recording \"Athenagoras\" (pseudo) as attributed name for search."
+  },
+  {
+   "id": "6a4f03a5e39e71f6b6e3b66a",
+   "title_page": {
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a4f03a5e39e71f6b6e3b66a?page=5",
+    "reads": "PROPOSITIONES PHILOSOPHICÆ DE LOCO PLENO ET VACUO QUAS SUB AUSPICIIS ... VALENTINI, ... MONASTERII MELICENSIS, ORDINIS SANCTI BENEDICTI, ABBATIS ... IN ANTIQUISSIMA ET CELEBERRIMA UNIVERSITATE Viennensi, Anno à Virgineo partu M. DC. XLVIII. Mense Martio, Die PRÆSIDE R.P. ANGELO BROGIOLLO, è Societate JESU ... Propugnabit R. F. CAROLUS à POPPEN, Austriacus Viennen. ... Viennæ Austriæ, Typis Matthæi Cosmerovij, in Aula Coloniensi."
+   },
+   "last_leaf": {
+    "page": 37,
+    "reads": "Colour target over a repeat shot of the title page; p.35 is the rear board with SBB barcode; last text leaf p.32 is show-through of a gratulatory poem signed \"GEORGIUS FORI ... AA. & Philosoph. Baccalaureus\"."
+   },
+   "fields": {
+    "title": {
+     "verdict": "wrong",
+     "catalogued": "Propositiones Philosophicae De Loco Pleno Et Vacuo , Quas Sub Auspiciis ... Praeside R.P. Angelo Brogiollo, e",
+     "book_shows": "... PRÆSIDE R.P. ANGELO BROGIOLLO, è Societate JESU",
+     "quote": "R.P. ANGELO BROGIOLLO, è Societate JESU",
+     "page": 5,
+     "class": "title-truncated",
+     "severity": "minor"
+    },
+    "display_title": {
+     "verdict": "wrong",
+     "catalogued": "Brogiollo, AngeloPoppen, Carl von: Propositiones Philosophicae De Loco Pleno Et Vacuo",
+     "book_shows": "Propositiones Philosophicae De Loco Pleno Et Vacuo",
+     "quote": "PROPOSITIONES PHILOSOPHICÆ DE LOCO PLENO ET VACUO",
+     "page": 5,
+     "class": "display-title-junk",
+     "severity": "minor",
+     "note": "Two author headings run together (\"AngeloPoppen\") prefixed to the title."
+    },
+    "author": {
+     "verdict": "ok",
+     "note": "Praeses Angelo Brogiollo SJ; respondent Carolus à Poppen \"propugnabit\" (defends), not named as author."
+    },
+    "author_id": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "Angelo Brogiollo, SJ, professor at Vienna",
+     "quote": "PRÆSIDE R.P. ANGELO BROGIOLLO, è Societate JESU",
+     "page": 5,
+     "class": "author-id-missing",
+     "severity": "minor"
+    },
+    "translator": {
+     "verdict": "na"
+    },
+    "editor": {
+     "verdict": "na"
+    },
+    "published": {
+     "verdict": "wrong",
+     "catalogued": "Unknown",
+     "book_shows": "1648",
+     "quote": "Anno à Virgineo partu M. DC. XLVIII. Mense Martio",
+     "page": 5,
+     "class": "date-missing-shown",
+     "severity": "serious"
+    },
+    "year": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "1648",
+     "quote": "M. DC. XLVIII.",
+     "page": 5,
+     "class": "date-missing-shown",
+     "severity": "serious"
+    },
+    "edition_date": {
+     "verdict": "ok"
+    },
+    "work_date": {
+     "verdict": "ok"
+    },
+    "place_published": {
+     "verdict": "wrong",
+     "catalogued": "Berlin",
+     "book_shows": "Vienna",
+     "quote": "Viennæ Austriæ, Typis Matthæi Cosmerovij, in Aula Coloniensi.",
+     "page": 5,
+     "class": "holding-library-as-place",
+     "severity": "serious",
+     "note": "Berlin is the holding library (Staatsbibliothek zu Berlin), taken from catalog_metadata.place."
+    },
+    "publisher": {
+     "verdict": "missing",
+     "catalogued": "(empty)",
+     "book_shows": "Matthaeus Cosmerovius",
+     "quote": "Typis Matthæi Cosmerovij",
+     "page": 5,
+     "class": "imprint-publisher-missing",
+     "severity": "minor"
+    },
+    "language": {
+     "verdict": "ok"
+    },
+    "original_language": {
+     "verdict": "na"
+    },
+    "languages": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "Latin",
+     "quote": "PROPOSITIONES PHILOSOPHICÆ",
+     "page": 5,
+     "class": "languages-missing",
+     "severity": "minor"
+    },
+    "text_role": {
+     "verdict": "ok"
+    },
+    "work_id": {
+     "verdict": "ok",
+     "note": "No siblings; slug contains the junk \"angelopoppen\" from display_title."
+    },
+    "edition_key": {
+     "verdict": "wrong",
+     "catalogued": "...|brogiollo||v",
+     "book_shows": "1648",
+     "quote": "M. DC. XLVIII.",
+     "page": 5,
+     "class": "edition-key-missing-year",
+     "severity": "minor"
+    },
+    "categories": {
+     "verdict": "missing",
+     "catalogued": "[]",
+     "book_shows": "natural philosophy (theses on place, plenum and vacuum)",
+     "quote": "DE LOCO PLENO ET VACUO",
+     "page": 5,
+     "class": "categories-missing",
+     "severity": "minor"
+    },
+    "pages_count": {
+     "verdict": "ok"
+    }
+   },
+   "notes": "Record is a thin IIIF import: published \"Unknown\" although source_work_dates_meta already has 1648 from the title page; place is the holding library. Pages 25 of 37 OCR'd, none translated."
+  },
+  {
+   "id": "69cfb6fe709cb88a028365a4",
+   "title_page": {
+    "page": 1,
+    "url": "https://sourcelibrary.org/book/69cfb6fe709cb88a028365a4?page=1",
+    "reads": "JOH. AMOS COMENII ORBIS SENSUALIUM PICTUS. Hoc est: Omnium fundamentalium in mundo rerum, & in vitâ actionum, Pictura & Nomenclatura. Editio auctior & emendatior ... Die sichtbare Welt. Das ist: Aller vornehmsten Welt-Dinge/ und Lebens-Verrichtungen/ Vorbildung und Benamung ... NORIBERGÆ, Sumtibus MICHAELIS & JOANNIS FRIDERICI ENDTERI, Anno Salutis cIↄ Iↄc XCVIII."
+   },
+   "last_leaf": {
+    "page": 425,
+    "reads": "Wörter-Register (German word index), W entries, ends on catchword \"wür\" — index continues beyond the last scanned leaf; no colophon."
+   },
+   "fields": {
+    "title": {
+     "verdict": "wrong",
+     "catalogued": "Orbis Sensualium Pictus (1698 Nuremberg edition)",
+     "book_shows": "Joh. Amos Comenii Orbis Sensualium Pictus. Hoc est: ... Die sichtbare Welt",
+     "quote": "JOH. AMOS COMENII ORBIS SENSUALIUM PICTUS. Hoc est:",
+     "page": 1,
+     "class": "title-cataloguer-gloss",
+     "severity": "minor",
+     "note": "Cataloguer parenthetical in the title field, not a transcription."
+    },
+    "display_title": {
+     "verdict": "ok"
+    },
+    "author": {
+     "verdict": "ok"
+    },
+    "author_id": {
+     "verdict": "ok"
+    },
+    "translator": {
+     "verdict": "na"
+    },
+    "editor": {
+     "verdict": "na"
+    },
+    "published": {
+     "verdict": "ok"
+    },
+    "year": {
+     "verdict": "ok"
+    },
+    "edition_date": {
+     "verdict": "ok"
+    },
+    "work_date": {
+     "verdict": "ok"
+    },
+    "place_published": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "Nuremberg",
+     "quote": "NORIBERGÆ",
+     "page": 1,
+     "class": "imprint-place-missing",
+     "severity": "minor"
+    },
+    "publisher": {
+     "verdict": "missing",
+     "catalogued": "(absent)",
+     "book_shows": "Michael & Johann Friedrich Endter",
+     "quote": "Sumtibus MICHAELIS & JOANNIS FRIDERICI ENDTERI",
+     "page": 1,
+     "class": "imprint-publisher-missing",
+     "severity": "minor"
+    },
+    "language": {
+     "verdict": "ok",
+     "note": "Latin primary, but the edition is a Latin-German parallel text."
+    },
+    "original_language": {
+     "verdict": "na"
+    },
+    "languages": {
+     "verdict": "wrong",
+     "catalogued": "[\"Latin\"] (language_multi: false)",
+     "book_shows": "Latin and German in parallel throughout",
+     "quote": "ORBIS SENSUALIUM PICTUS ... Die sichtbare Welt. Das ist: Aller vornehmsten Welt-Dinge",
+     "page": 1,
+     "class": "languages-incomplete",
+     "severity": "serious",
+     "note": "Every text page is bilingual (Invitatio/Einleitung, p.4); the index on p.425 is German."
+    },
+    "text_role": {
+     "verdict": "ok"
+    },
+    "work_id": {
+     "verdict": "wrong",
+     "catalogued": "Q23653082",
+     "book_shows": "Orbis sensualium pictus",
+     "quote": "JOH. AMOS COMENII ORBIS SENSUALIUM PICTUS",
+     "page": 1,
+     "class": "work-split",
+     "severity": "serious",
+     "note": "69b6c0348566c8381464cd0e (\"Joh. Amos Comenii Orbis sensualium pictus : Hoc est...\", 1698) is the same work, probably the same edition, under local:a:john-amos-comenius:comenii-joh-orbis-pictus-sensuali; 69e5362ece6791c1bca7d820 (\"OrbisPictus b 204\", 1658) has no work_id."
+    },
+    "edition_key": {
+     "verdict": "wrong",
+     "catalogued": "orbis sensualium pictus 1698 nuremberg edition|comenius|1698|v",
+     "book_shows": "Orbis sensualium pictus ... 1698",
+     "quote": "ORBIS SENSUALIUM PICTUS",
+     "page": 1,
+     "class": "edition-key-gloss",
+     "severity": "minor",
+     "note": "Key carries the cataloguer gloss, so it will not match 69b6c0348566c8381464cd0e, a likely duplicate of the same 1698 Endter edition."
+    },
+    "categories": {
+     "verdict": "ok"
+    },
+    "pages_count": {
+     "verdict": "ok"
+    }
+   },
+   "notes": "Check 69b6c0348566c8381464cd0e for a duplicate of this 1698 Nuremberg edition. Scan may end before the end of the index (last leaf ends on catchword)."
+  }
+ ]
+}
