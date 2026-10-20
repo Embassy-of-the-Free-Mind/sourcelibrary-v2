@@ -12,6 +12,7 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { resolveSinglePageBatchResponses, findUnresolvedPageIds } from '../lib/batch-response-matching.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -155,12 +156,18 @@ async function processOneJob(db, job) {
     // Build flat list of { pageId, text, usage }
     const pageResults = [];
 
+    // Why pages failed, tallied by reason (mirrors scripts/workers/batch-collector.mjs
+    // and the #4674 give-up-counter lesson: an aggregate failCount is enough to know
+    // something went wrong and never enough to find out what).
+    const failReasons = {};
+    const noteFail = (reason) => { failReasons[reason] = (failReasons[reason] || 0) + 1; };
+
     if (isMultiPage && job.type === 'ocr') {
       // Multi-page OCR: parse <page id="...">...</page> blocks from each response
       for (const result of responses) {
-        if (result.error) { failCount++; continue; }
+        if (result.error) { failCount++; noteFail(`error:${String(result.error?.status || result.error?.code || result.error).slice(0, 60)}`); continue; }
         const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
+        if (!text) { failCount++; noteFail(`no-text:${result.response?.candidates?.[0]?.finishReason || 'no-candidate'}`); continue; }
         const usage = result.response?.usageMetadata;
         const parsed = parseMultiPageOcr(text, { lenient: true });
         for (const [pageId, ocrText] of parsed) {
@@ -168,14 +175,10 @@ async function processOneJob(db, job) {
         }
       }
     } else {
-      for (let idx = 0; idx < responses.length; idx++) {
-        const result = responses[idx];
-        const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
-        if (!pageId) { failCount++; continue; }
-        const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
-        pageResults.push({ pageId, text, usage: result.response?.usageMetadata });
-      }
+      const { pageResults: resolved, failCount: singlePageFailCount } =
+        resolveSinglePageBatchResponses(responses, job.page_ids, noteFail);
+      pageResults.push(...resolved);
+      failCount += singlePageFailCount;
     }
 
     // Human-edit guard (#3749): pages whose ocr/translation was written or
@@ -198,9 +201,24 @@ async function processOneJob(db, job) {
       await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
     }
 
+    // #4685(b): a Gemini batch response can (rarely) carry a metadata.key that
+    // duplicates an earlier response's — same shape as the index-fallback bug
+    // this file used to have, just Gemini-side instead of ours. Keep only the
+    // first response per pageId so one page never receives two writes while
+    // its true intended target (whichever page's response got silently
+    // shadowed) falls through to the reconciliation pass below instead of
+    // vanishing without a trace.
+    const seenPageIds = new Set();
+    const dedupedPageResults = [];
+    for (const r of pageResults) {
+      if (seenPageIds.has(r.pageId)) { noteFail('duplicate-metadata-key'); continue; }
+      seenPageIds.add(r.pageId);
+      dedupedPageResults.push(r);
+    }
+
     // Second pass: save results
     const bulkOps = [];
-    for (const { pageId, text, usage } of pageResults) {
+    for (const { pageId, text, usage } of dedupedPageResults) {
       if (humanEditedIds.has(pageId)) {
         console.log(`  PROTECTED: page ${pageId} has a human-edited ${guardField} — skipping (#3749)`);
         protectedCount++;
@@ -275,8 +293,53 @@ async function processOneJob(db, job) {
         { jobId: jobIdStr, reason: job.type === 'ocr' ? 'reocr_batch' : 'retranslate_batch' }
       );
       const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+      // matchedCount now safely equals distinct pages written: bulkOps is built
+      // from dedupedPageResults, so each op targets a unique pageId (#4685(b) —
+      // before the dedup above, a stray duplicate metadata.key could inflate
+      // matchedCount above the number of pages actually touched, which is how a
+      // job could report "completed == page_count, failed == 0" while some of
+      // those page_ids never got a write at all).
       successCount = bulkResult.matchedCount;
       failCount += (bulkOps.length - bulkResult.matchedCount);
+    }
+
+    // #4685(b) reconciliation: a page can be in job.page_ids and still never
+    // receive a write — its response was missing metadata.key, pointed at a
+    // different page, errored, or simply never came back from Gemini at all
+    // (fewer response lines than requests, with no per-line error to catch).
+    // Every one of those is invisible to completed_pages/failed_pages above.
+    // Stamp a failure marker directly on the PAGE so it stops looking
+    // "never queued" — the give-up counters in #4674 and any future retry
+    // sweep can select on it, and it survives even if this job document is
+    // later abandoned as stale.
+    let unresolvedCount = 0;
+    if (Array.isArray(job.page_ids) && job.page_ids.length > 0) {
+      const writtenIds = new Set(bulkOps.map(op => op.updateOne.filter.id));
+      const unresolvedIds = findUnresolvedPageIds(job.page_ids, writtenIds, humanEditedIds);
+      if (unresolvedIds.length > 0) {
+        const failField = job.type === 'ocr' ? 'ocr' : 'translation';
+        const dataField = `${failField}.data`;
+        const failOps = unresolvedIds.map(id => ({
+          updateOne: {
+            // Only stamp pages that are STILL genuinely empty for this field —
+            // never overwrite a page that got its data some other way (e.g. a
+            // realtime Lambda worker) in the time between submit and collect.
+            filter: { id, $or: [{ [dataField]: { $exists: false } }, { [dataField]: null }, { [dataField]: '' }] },
+            update: {
+              $set: {
+                [`${failField}.failed_at`]: now,
+                [`${failField}.fail_reason`]: 'batch_response_missing_or_misaligned',
+                [`${failField}.failed_batch_job_id`]: jobIdStr,
+              },
+            },
+          },
+        }));
+        const failResult = await db.collection('pages').bulkWrite(failOps, { ordered: false });
+        unresolvedCount = failResult.modifiedCount;
+        if (unresolvedCount > 0) {
+          console.log(`  RECONCILE: ${unresolvedCount}/${unresolvedIds.length} page(s) in job.page_ids never got a write — marked ${failField}.failed_at (#4685)`);
+        }
+      }
     }
 
     // Update job status using _id (not id — pipeline cron creates records with only _id)
@@ -289,6 +352,8 @@ async function processOneJob(db, job) {
           completed_pages: successCount,
           failed_pages: failCount,
           ...(protectedCount > 0 && { protected_pages: protectedCount }),
+          ...(unresolvedCount > 0 && { unresolved_pages: unresolvedCount }),
+          ...(Object.keys(failReasons).length > 0 && { fail_reasons: failReasons }),
           results_collected: true,
           completed_at: now,
           updated_at: now,
@@ -535,4 +600,10 @@ async function updateBookCounts(db, bookId) {
   }
 }
 
-run().catch(err => { console.error(err); process.exit(1); });
+// Only run when executed directly (`node scripts/batch/collect-batch-results.mjs`),
+// not when imported — resolveSinglePageBatchResponses / findUnresolvedPageIds
+// are unit-tested by importing this module, which must not open a Mongo
+// connection or hit the Gemini API as a side effect of that import.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  run().catch(err => { console.error(err); process.exit(1); });
+}
