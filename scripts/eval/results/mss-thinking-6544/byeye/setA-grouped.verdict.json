@@ -1,0 +1,1096 @@
+[
+ {
+  "uid": "cremma-medii-aevi|Mazarine915/751063002_MSS000915_0000000_0430",
+  "arm": "pro",
+  "cer": 0.779,
+  "shares": {
+   "convention": 5,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 0,
+   "invented": 5,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 55
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "line 1 'Ad talem 9cluſionẽ adducit te io. okã' vs page/ref 'ad talem tnͣsitũ a ꝯͣdicõrio ĩ ꝯͣdcoriũ' (Ockham's name is not on the page)",
+   "col 2: 'k c h a l v d x f v p l b b ...' spaced-letter salad"
+  ],
+  "note": "Column 1 is a weak read that turns into a plausible scholastic opening naming Ockham; column 2 (62 lines) degenerates into spaced single letters."
+ },
+ {
+  "uid": "cremma-medii-aevi|Mazarine915/751063002_MSS000915_0000000_0430",
+  "arm": "f38h",
+  "cer": 0.617,
+  "shares": {
+   "convention": 5,
+   "misreading": 40,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 50,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'do talē caliditatē a suo 9ͬio intēsam' vs page 'ad talem transitum a contradictorio in contradictorium'",
+   "closing rubric 'caliditatē posse fieri a gͣdu 10 ad 10m' vs 'tnͣssitũ posse fi̾ a ꝯͣdcõ ͦ in ꝯͣdod ͫ'"
+  ],
+  "note": "Column 1 is a fluent scholastic text about the intensity of heat (caliditas, latitudo, gradus) that is not on this page, whose topic is quantity and transitus; column 2 follows the real text loosely."
+ },
+ {
+  "uid": "cremma-medii-aevi|Mazarine915/751063002_MSS000915_0000000_0430",
+  "arm": "corr-pro",
+  "cer": 0.546,
+  "shares": {
+   "convention": 15,
+   "misreading": 50,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 30
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'d̄ d̄ꝫ sēꝫ d̄ud̄ꝫ q̄ ad̄a q̄titas'",
+   "col 2 'dꝫ dꝫ dꝫ' filler made of abbreviation marks"
+  ],
+  "note": "A soup of abbreviation marks: real words survive ('q̄titas', 'ceras facꝛ', the musca line), but much of col 2 is filler; the Opus draft is not in the packet, so the second pass cannot be judged."
+ },
+ {
+  "uid": "cremma-medii-aevi|Mazarine915/751063002_MSS000915_0000000_0430",
+  "arm": "corr-opus",
+  "cer": 0.458,
+  "shares": {
+   "convention": 10,
+   "misreading": 70,
+   "omission": 5,
+   "extra_real_text": 5,
+   "invented": 10,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "kept Pro's 'adducit io. okam'",
+   "put 'infinito/infĩa' in place of 'młtiᵈ ͦ' (multitudo) where Pro had the odd form 'inĩa'",
+   "'albanteus digitũ bouis' vs 'abscindens digitũ homĩs'"
+  ],
+  "note": "Re-read col 2 well and replaced Pro's salad with real text ('musca... aer emissus de nouo'), but kept the Ockham invention and smoothed Pro's odd 'inĩa' into the common word 'infinito' throughout."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0448",
+  "arm": "pro",
+  "cer": 0.749,
+  "shares": {
+   "convention": 5,
+   "misreading": 30,
+   "omission": 5,
+   "extra_real_text": 0,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 60
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'ꝙ f as as [?] p m as n oꝰ c uꝰ & a a p'"
+  ],
+  "note": "The first ~10 lines are a weak but real read; the rest of both columns degenerates into spaced single letters and [?] (96 salad lines)."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0448",
+  "arm": "f38h",
+  "cer": 0.451,
+  "shares": {
+   "convention": 10,
+   "misreading": 75,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 5,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "opens with margin notes '· 1 · n̄ z̄ tē · aḋ aq̇ ear̄', '· 2. aṅ odiē dm̃ q̄ ex eq̄le ·'",
+   "'morte eētñ opnē p̄kmī b̃ ẽ de / sono qne ille'"
+  ],
+  "note": "Most of the cursive scholastic hand is misread letter by letter; margin glosses, which the reference places mid-text, are put first."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0448",
+  "arm": "corr-pro",
+  "cer": 0.497,
+  "shares": {
+   "convention": 10,
+   "misreading": 65,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 15
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "running header '| q. 9. ar' /sicut ex pte = expti/ |' (real, at the top of col 2)",
+   "tail 'ꝯ pꝯ u e ic de c c a e ꝯ a m'"
+  ],
+  "note": "Readable start that keeps the real header and margin notes, then ends in spaced-letter salad; the Opus draft is not visible."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0448",
+  "arm": "corr-opus",
+  "cer": 0.4,
+  "shares": {
+   "convention": 15,
+   "misreading": 60,
+   "omission": 10,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 5,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "'[C]ōtra' put in place of 'Item'/'uł' again and again ('[C]ōtra credit esse' vs ref 'uł 3 ͦ reatus')",
+   "'ꝗ ꝗ ꝗ' placeholders for unread words"
+  ],
+  "note": "Rescued the page from Pro's salad (the first lines are close: 'tedi siñ ꝙ mereat'), but turned the Item paragraph marks into 'Contra' and filled gaps with 'ꝗ' placeholders."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0448",
+  "arm": "disagree",
+  "cer": 0.999,
+  "shares": {
+   "convention": 0,
+   "misreading": 0,
+   "omission": 100,
+   "extra_real_text": 0,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "entire output: '` and `'"
+  ],
+  "note": "Pipeline failure: a 7-character output with the whole page missing. The 0.999 CER is a run error, not a reading."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0447",
+  "arm": "pro",
+  "cer": 0.627,
+  "shares": {
+   "convention": 5,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 2,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 48
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'mō amō oīmb9 mlītb9' vs 'moͧ amor̾ om̃ib amabłib'",
+   "col 2 '[?] o [?] n n v / f n b m p t b'"
+  ],
+  "note": "Column 1 is a poor but real read; column 2 collapses into letter salad."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0447",
+  "arm": "f38h",
+  "cer": 0.532,
+  "shares": {
+   "convention": 15,
+   "misreading": 75,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 5,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'q̃ ſĩ m̃ hac õĩ q̃r̃ẽet celid̃ate' vs 'qr si in hoc Ø pcͨat deliba̾te'"
+  ],
+  "note": "Heavy letter-level misreading full of tildes in both columns; folio '223' and margin words added."
+ },
+ {
+  "uid": "cremma-medii-aevi|BIS-193/BIS_00_00615_0447",
+  "arm": "corr-opus",
+  "cer": 0.66,
+  "shares": {
+   "convention": 5,
+   "misreading": 35,
+   "omission": 55,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": false,
+  "examples": [
+   "col 2 cut down to ~60 lines of '[?]' with stray margin letters 'G.', 'H.', 'A potuit'"
+  ],
+  "note": "Column 1 was revised plausibly from Pro's draft; for column 2 it put [?] markers in place of Pro's salad instead of reading the text, so most of the CER is omission."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_24_41491",
+  "arm": "pro",
+  "cer": 0.561,
+  "shares": {
+   "convention": 0,
+   "misreading": 20,
+   "omission": 15,
+   "extra_real_text": 5,
+   "invented": 60,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "verse 'ايا زيد زيد اليعملات' / 'يا تيم تيم عدي' in place of the page's 'اني واسطار سطرت سطرا / لقايل يا نصر نصر نصرا' (red ink, clearly legible)",
+   "'والتابع يطابق متبوعه كالنعت المنعوت في التذكير' and 'قراة حمزة عزير ابن' are not on the page"
+  ],
+  "note": "Swaps the page's shawahid and argument for the standard textbook ones from the Alfiyya commentaries on ʿatf al-bayan: memorised grammar, fluent and wrong. Adds folio '98'."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+  "arm": "pro",
+  "cer": 0.483,
+  "shares": {
+   "convention": 10,
+   "misreading": 60,
+   "omission": 15,
+   "extra_real_text": 5,
+   "invented": 10,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'aliud et sic diligimus caritatē / deum vnā caritate' vs 'diligimꝰ creatua̾s / deus utit᷑ creatis'",
+   "'quidam est fides que ē causa' vs 'quedam est sciẽtia que ẽ causa'"
+  ],
+  "note": "Col 1 drifts toward theologically plausible words (caritas, fides); col 2 has many [?] gaps."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+  "arm": "f38h",
+  "cer": 0.403,
+  "shares": {
+   "convention": 10,
+   "misreading": 70,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 15,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'pari nullificantur obscuritate' vs 'scdm̃ multiplicatoẽ obiectoꝵ'",
+   "'non pōt ē magis p̄paratus aliquis'"
+  ],
+  "note": "Mostly misreading, with several fluent Latin phrases that are not on the page."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+  "arm": "corr-pro",
+  "cer": 0.367,
+  "shares": {
+   "convention": 10,
+   "misreading": 50,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 30,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'cendum ē salvis melioribus q sic quia' vs page 'cendum ẽ uno mõ ꝙ sic qr'",
+   "inserted line 'nō pót ei irrogari pena illi quò'",
+   "'Ita q deus ē mensura / illius veritatis quoniam sicut' vs 'deus Iudicat ꝙ um̾ ẽ sortẽ c᷑re̾'"
+  ],
+  "note": "Clean-looking expanded Latin, but whole clauses are fluent scholastic stock phrases ('salvis melioribus') that are not on the page; also picks up the margin 'nota'."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+  "arm": "corr-opus",
+  "cer": 0.275,
+  "shares": {
+   "convention": 15,
+   "misreading": 65,
+   "omission": 5,
+   "extra_real_text": 5,
+   "invented": 10,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "inherited 'diligimus caritatē / deum vnā caritate'",
+   "filled Pro's '[?]' gap with 'cendum ē quod nō et q sic' (page: 'uno mõ ꝙ sic')",
+   "'Fides nō est posterior primo' (page: 'ymo')"
+  ],
+  "note": "Improves many of Pro's lines, but keeps Pro's invented opening and fills gaps with guesses."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 4r",
+  "arm": "disagree",
+  "cer": 0.998,
+  "shares": {
+   "convention": 0,
+   "misreading": 0,
+   "omission": 100,
+   "extra_real_text": 0,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "entire output: 'and'"
+  ],
+  "note": "Run failure: 3-character output."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 3r",
+  "arm": "pro",
+  "cer": 0.424,
+  "shares": {
+   "convention": 15,
+   "misreading": 50,
+   "omission": 0,
+   "extra_real_text": 15,
+   "invented": 10,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "margin 'nota op~ / inio~e~ / de in / fusione' and 'opi~o hol / kot' inlined",
+   "'e~ auctoritas Jacobi sc~tm / astruit se on~ndere q~ homo / no~ h~t fide~' vs 'apłus si caritatẽ nõ heam̃ nichil sum'"
+  ],
+  "note": "Reasonable read that includes the margin notes the reference leaves out, interleaved with the body; a few lines turn into plausible filler."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 3r",
+  "arm": "f38h",
+  "cer": 0.415,
+  "shares": {
+   "convention": 25,
+   "misreading": 60,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 10,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'q̃ quid cogitandi d[icit] Augustinus' and 'augustinus facit' vs 'dixit mgs̃ petrꝰ'",
+   "'fides est anazma seu potentior' vs 'fides est mortua cũ peccatoreꝭ'"
+  ],
+  "note": "Bracketed expansions (convention) plus misreads; inserts Augustine where the page cites Master Peter (Lombard)."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 3r",
+  "arm": "corr-pro",
+  "cer": 0.351,
+  "shares": {
+   "convention": 20,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 15,
+   "invented": 20,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'adhuc salvari posset. Ex dictis seq' q fides' vs 'adħesi S dices si ͨ fides'",
+   "'sine racionibus probabilibus sic̄ freq̄ / frustra diceret q perseverans / in peccatis'"
+  ],
+  "note": "Mostly a good line-by-line read with the margin notes, but several lines are rewritten into fluent text that is not on the page."
+ },
+ {
+  "uid": "cremma-medii-aevi|PalLat373/Biblioteca Apostolica Vaticana, ms. Cod. pal. lat. 373 - 3r",
+  "arm": "corr-opus",
+  "cer": 0.292,
+  "shares": {
+   "convention": 20,
+   "misreading": 55,
+   "omission": 5,
+   "extra_real_text": 15,
+   "invented": 5,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "'non est ibi meritum & virtus' vs 'nõ est ibi caritas ⁊ uita' (Pro had 'vnita t~ virtut~')",
+   "inherited 'fides est anxia' from Pro"
+  ],
+  "note": "Best read on the page and keeps the margin notes; a few of Pro's odd readings are smoothed into common words."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_609_00166",
+  "arm": "pro",
+  "cer": 0.39,
+  "shares": {
+   "convention": 0,
+   "misreading": 45,
+   "omission": 10,
+   "extra_real_text": 5,
+   "invented": 40,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'يعني وانما يقال للبنت اربع وللابن نقصه' vs page 'فصحح الانكار البيت اي فصحح اولا فريضة الانكار'",
+   "'اقتصرنا منها على اسهلها واقربها الى الفهم واقلها في المعلوم' vs page 'على ستة اوجه وكل موصل الى المطلوب'"
+  ],
+  "note": "Fluent inheritance-law (fara'id) prose stands in for several lines; 'البيت' is read as 'البنت' and then continued plausibly."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_609_00166",
+  "arm": "f38h",
+  "cer": 0.374,
+  "shares": {
+   "convention": 0,
+   "misreading": 40,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 55,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'باستعمال التمرين يلقى قوة المولود وتنشط خاطره على استنباط الجواب'",
+   "'ما تصح منه الابعاض كالعقار والاشجار والاقمشة' vs 'ما تصح منه الفريضة على الاقرار والانكار'"
+  ],
+  "note": "Long fluent stretches about dividing property (real estate, trees, cloth) that are not on the page."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_609_00166",
+  "arm": "corr-pro",
+  "cer": 0.284,
+  "shares": {
+   "convention": 0,
+   "misreading": 55,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 35,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'بيمين الانكار ... ثم بيمين الاقرار' vs page 'فريضة الانكار ثم فريضة الاقرار' (oaths instead of the two calculations)"
+  ],
+  "note": "The second half is close to the page; the opening lines are rewritten as plausible legal text."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_609_00166",
+  "arm": "corr-opus",
+  "cer": 0.264,
+  "shares": {
+   "convention": 0,
+   "misreading": 55,
+   "omission": 5,
+   "extra_real_text": 10,
+   "invented": 30,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "kept and extended Pro's invention: 'يعني لا يقال للبنت اربعه وللابن بقيه لانه لا يقال ثم فريضة الا قرابة'",
+   "kept 'اقتصرنا منها على اسهلها'"
+  ],
+  "note": "Corrected many words but kept and extended Pro's invented clauses."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max",
+  "arm": "pro",
+  "cer": 0.264,
+  "shares": {
+   "convention": 35,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 15,
+   "invented": 0,
+   "order": 15,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "margin question numbers inline ('14 Q Uue sit...') where the reference lists them as a block at the top",
+   "line fillers '////////' and 'o/o/o/o/' transcribed"
+  ],
+  "note": "Clear hand. Because the reference lists the margin numbers at the top, inline numbers count as order and extra text; real misreads include 'nō ē 1 ōr' for 'Nõ s̃ id̾ ĩ'."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max",
+  "arm": "f38h",
+  "cer": 0.298,
+  "shares": {
+   "convention": 50,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'¶ Utrum essentia vere praedicetur de essentia' vs 'Utͫ tͥnitas u̾e p̃dicet᷑ d̾ eẽnͣ'",
+   "'¶ Utrum concedendum sit quod essentia' (expanded)"
+  ],
+  "note": "Switches to full expansion partway through (convention), with an occasional wrong word."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max",
+  "arm": "corr-pro",
+  "cer": 0.204,
+  "shares": {
+   "convention": 40,
+   "misreading": 30,
+   "omission": 0,
+   "extra_real_text": 15,
+   "invented": 0,
+   "order": 15,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'~~~~~~~~~~' and 'o÷o÷o÷o' line fillers",
+   "'Rꝰ' for '.R̵.'"
+  ],
+  "note": "Close read; the CER comes from heavy variation in abbreviation marks, the margin numbers and the line fillers."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max",
+  "arm": "corr-opus",
+  "cer": 0.173,
+  "shares": {
+   "convention": 40,
+   "misreading": 30,
+   "omission": 0,
+   "extra_real_text": 15,
+   "invented": 0,
+   "order": 15,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": false,
+  "examples": [
+   "fixed Pro's 'nō ē 1 ōr' to 'slō s iō ī'",
+   "'℞.' for '.R̵.'"
+  ],
+  "note": "Polished Pro's read; no new substantive errors seen."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_109r_max",
+  "arm": "disagree",
+  "cer": 0.185,
+  "shares": {
+   "convention": 35,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 20,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": false,
+  "examples": [
+   "'iō n̄ dnt̄ . ī līt . 4 Vtrꝰ possit' (two lines joined)",
+   "'ꝫ' used for tironian et throughout"
+  ],
+  "note": "The settled spans mostly fixed Pro's misreads (e.g. 'ulte t̄s' for 'iīte is'); joined lines and inline numbers count as order errors."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_1944_0005",
+  "arm": "pro",
+  "cer": 0.256,
+  "shares": {
+   "convention": 0,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 30,
+   "order": 25,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'وكان عالما متبحرا لمقارعة الملحدين يبدعه ويكفره' vs page 'وكان على صخرة بقارعة الطريق قريبا من ديار صلاته'",
+   "'الصفار المعروف بابي مقمع' vs 'الصقلي المدفون باجر'"
+  ],
+  "note": "Places the margin notes at the end (the reference puts them first), and invents a fluent biographical clause out of 'بقارعة'."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_1944_0005",
+  "arm": "corr-opus",
+  "cer": 0.223,
+  "shares": {
+   "convention": 0,
+   "misreading": 35,
+   "omission": 5,
+   "extra_real_text": 5,
+   "invented": 25,
+   "order": 30,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": true,
+  "examples": [
+   "new: 'فقال له على يديك يا محمد' (page 'على يديك فاكدت'; Pro had 'تتم')",
+   "kept 'وكان يحكم بمقارعة الملحدين'"
+  ],
+  "note": "Fixed 'الصقلي' and 'اللهم مزق', but introduced 'يا محمد' and kept the invented clause about fighting heretics."
+ },
+ {
+  "uid": "cremma-medii-aevi|LaurentianusPluteus53.08/Plut._53.08_103r",
+  "arm": "pro",
+  "cer": 0.251,
+  "shares": {
+   "convention": 40,
+   "misreading": 40,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'ꝫ' for the scribe's final '-z' (= -m), e.g. 'argumẽtũꝫ'",
+   "margin glosses 'Heri heri . / mane . mani .' appended to body lines"
+  ],
+  "note": "Mostly convention (long s, z for m) and letter misreads in a dense humanist commentary; side glosses are inlined."
+ },
+ {
+  "uid": "cremma-medii-aevi|LaurentianusPluteus53.08/Plut._53.08_103r",
+  "arm": "f38h",
+  "cer": 0.986,
+  "shares": {
+   "convention": 0,
+   "misreading": 0,
+   "omission": 100,
+   "extra_real_text": 0,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "entire output: 'An error occurred while generating the response. Please try again.'"
+  ],
+  "note": "A CLI error string was scored as a transcription."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_24_41322",
+  "arm": "f38h",
+  "cer": 0.252,
+  "shares": {
+   "convention": 0,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 45,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'وقد مال قطرب وجماعة معه الى انه' vs page 'وذو مال معربين وهما على حرف واحد'",
+   "'كمذهب الاخفش والذي' vs page 'كالمقصور لكن'"
+  ],
+  "note": "Recasts hard lines as grammar-treatise doxography naming Qutrub and al-Akhfash, neither of whom is on the page; adds the catchword 'بعطف'."
+ },
+ {
+  "uid": "cremma-medii-aevi|CLM13027/38r",
+  "arm": "f38h",
+  "cer": 0.24,
+  "shares": {
+   "convention": 10,
+   "misreading": 80,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 5,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'Pinnñlucūi. fymatz' for 'ꝑmiriꝰ ut᷑umq sꝑmatis'",
+   "'ĩ. iii. b. vĩ. vel. ix. dieb;' for 'ĩme̾a̾ ⁊ ue̾ ꝓ ĩuno qͦ m̃se'"
+  ],
+  "note": "Letter-level misreading of a clear but compressed hand, with a few smoothings ('Cōplet aut̃ mēbrorū figuratōne')."
+ },
+ {
+  "uid": "cremma-medii-aevi|CLM13027/38r",
+  "arm": "corr-opus",
+  "cer": 0.191,
+  "shares": {
+   "convention": 20,
+   "misreading": 70,
+   "omission": 5,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'suggerentibꝫ' for 'suggentib' (sugentibus)",
+   "'infimis cellis' for 'sinistͣ cella'"
+  ],
+  "note": "Generally aligned, but misreads lean toward common words. Pro's draft for this page is not in the packet."
+ },
+ {
+  "uid": "cremma-medii-aevi|CLM13027/38r",
+  "arm": "disagree",
+  "cer": 0.147,
+  "shares": {
+   "convention": 25,
+   "misreading": 50,
+   "omission": 15,
+   "extra_real_text": 0,
+   "invented": 0,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'Si in media q sedm̄ [?] ⁊ [?] ē cellis supi?'",
+   "two manuscript lines merged at line 11"
+  ],
+  "note": "Close read with [?] gaps and a few merged lines."
+ },
+ {
+  "uid": "bentham-r0|115_078_002",
+  "arm": "corr-pro",
+  "cer": 0.167,
+  "shares": {
+   "convention": 10,
+   "misreading": 0,
+   "omission": 0,
+   "extra_real_text": 80,
+   "invented": 0,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "margin note '4 New Consideration money for Building &c for Supernumeraries - N.B. This article saves the public the expence...'",
+   "'+ This is no more than two years continuation of the present Hulk price'"
+  ],
+  "note": "Near-perfect read of the body; the CER comes from real margin notes the reference leaves out, plus the '~~such~~' strike notation."
+ },
+ {
+  "uid": "bentham-r0|115_078_002",
+  "arm": "disagree",
+  "cer": 0.167,
+  "shares": {
+   "convention": 10,
+   "misreading": 0,
+   "omission": 0,
+   "extra_real_text": 80,
+   "invented": 0,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "same margin notes as corr-pro"
+  ],
+  "note": "Same as corr-pro: real margin text that the reference leaves out."
+ },
+ {
+  "uid": "cremma-medii-aevi|CLM13027/38v",
+  "arm": "corr-pro",
+  "cer": 0.161,
+  "shares": {
+   "convention": 50,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'ẽ' for 's̃' (sunt) throughout",
+   "'uiꝛib; uictis' vs 'm̃b̾ ͦꝵ iũct̾is'",
+   "'Pꝛimũ ut caueat̃' vs 'P̃cipimꝰ ut caueãt'"
+  ],
+  "note": "Good read; the choice of abbreviation signs drives most of the CER."
+ },
+ {
+  "uid": "rasam|BULAC_MS_ARA_609_00012",
+  "arm": "corr-pro",
+  "cer": 0.153,
+  "shares": {
+   "convention": 20,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 35,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "red margin numerals '١ ... ٩' appended to lines (real, on the page)",
+   "'اثنان وكذلك الى تسعة وتسعين' vs 'الى تسعة وهاذه'"
+  ],
+  "note": "The real margin numerals and the dot formatting of the verses count as extra text; there are few true misreads."
+ },
+ {
+  "uid": "cremma-medii-aevi|Phi_10a135/6025_0009-0",
+  "arm": "corr-pro",
+  "cer": 0.152,
+  "shares": {
+   "convention": 40,
+   "misreading": 45,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'ꝯ' (con-) for tironian '⁊' throughout",
+   "'iusticia' for 'tͥsticiã' (tristitiam)"
+  ],
+  "note": "The reference itself looks noisy here ('caũrẽ', 'pollias de dianũ', 'bieb'), so part of the CER is reference error."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_108v_max",
+  "arm": "corr-opus",
+  "cer": 0.177,
+  "shares": {
+   "convention": 35,
+   "misreading": 25,
+   "omission": 5,
+   "extra_real_text": 15,
+   "invented": 0,
+   "order": 20,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'~~~~~' line fillers",
+   "margin numbers '6', '8', '9' inline vs the reference's top block"
+  ],
+  "note": "The reference lists the margin numbers 6–13 at the top; inline numbers and line fillers make up most of the CER."
+ },
+ {
+  "uid": "cremma-medii-aevi|WettF0015/e-codices_kba-WettF0015_108v_max",
+  "arm": "disagree",
+  "cer": 0.113,
+  "shares": {
+   "convention": 35,
+   "misreading": 20,
+   "omission": 0,
+   "extra_real_text": 10,
+   "invented": 0,
+   "order": 35,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "several manuscript lines joined into one ('ẽ cogsc̃e p uestigiũ. a ĩ uestigio q̇ uno m ẽ mediũ. alio m obm. It nõ q̇ cog')"
+  ],
+  "note": "Accurate text; joined lines and the placement of the numbers drive the CER."
+ },
+ {
+  "uid": "bentham-r0|071_192_002",
+  "arm": "disagree",
+  "cer": 0.12,
+  "shares": {
+   "convention": 0,
+   "misreading": 0,
+   "omission": 0,
+   "extra_real_text": 70,
+   "invented": 0,
+   "order": 30,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "margin notes inline: 'It treats them ... worse than Crimi= :nals.', 'Absurdity of mak= :ing the Creditor sub= :sist the Debtor.'"
+  ],
+  "note": "The body text is right; real margin notes are interleaved with it line by line."
+ },
+ {
+  "uid": "cremma-medii-aevi|CCCC-MSS-165/29",
+  "arm": "disagree",
+  "cer": 0.102,
+  "shares": {
+   "convention": 35,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 5,
+   "invented": 15,
+   "order": 10,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": true,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'ad maximinū hereticū Vnitatem' vs page 'ad maximum medicum Thenitanum'",
+   "'equalitate scindat' vs 'aequalitatẽ teneat'; 'Ex libro sententiarū pmi̅' vs 'ꝓspꝑi'"
+  ],
+  "note": "Mostly a good read, but the address of Augustine's letter is replaced by the memorised title 'Contra Maximinum haereticum'."
+ },
+ {
+  "uid": "cremma-medii-aevi|CCCC-MSS-165/30",
+  "arm": "disagree",
+  "cer": 0.092,
+  "shares": {
+   "convention": 50,
+   "misreading": 35,
+   "omission": 0,
+   "extra_real_text": 0,
+   "invented": 5,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "'de pluralitate diuina subdit' vs 'de simplicitate diuinae sũbãe'",
+   "'gladius vnꝰ, mucro vnꝰ' is correct where the reference has 'numero unꝰ' (reference error)"
+  ],
+  "note": "Clean read; part of the CER is the reference's own mucro/numero swap."
+ },
+ {
+  "uid": "bentham-r0|116_100_002",
+  "arm": "disagree",
+  "cer": 0.086,
+  "shares": {
+   "convention": 10,
+   "misreading": 0,
+   "omission": 0,
+   "extra_real_text": 90,
+   "invented": 0,
+   "order": 0,
+   "repetition": 0,
+   "degenerate_noise": 0
+  },
+  "invented_text": false,
+  "second_pass_introduced_errors": null,
+  "examples": [
+   "headers 'Note to page 4 / Panopt versus N S Wales / 4 Compensation'",
+   "'crores' read correctly where the reference has <gap/>"
+  ],
+  "note": "The body is right; all of the CER is real header and margin text plus filling the reference's gap."
+ }
+]

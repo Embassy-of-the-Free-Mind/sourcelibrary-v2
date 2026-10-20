@@ -413,7 +413,7 @@ async function main() {
           if (validSlugs.length > 0) {
             await books.updateOne(
               { _id: art._id },
-              { $addToSet: { collections: { $each: validSlugs } } }
+              { $addToSet: { collections: { $each: validSlugs } }, $currentDate: { updated_at: true } }
             );
           }
         }

@@ -132,7 +132,7 @@ ${bookList}`;
       const bulkOps = [...assignments.entries()].map(([bookId, subSlug]) => ({
         updateOne: {
           filter: { id: bookId },
-          update: { $addToSet: { collections: subSlug } },
+          update: { $addToSet: { collections: subSlug }, $currentDate: { updated_at: true } },
         },
       }));
       const result = await db.collection('books').bulkWrite(bulkOps);

@@ -218,7 +218,7 @@ async function main() {
     if (matchingArtworks.length > 0) {
       const result = await books.updateMany(
         { _id: { $in: matchingArtworks.map(a => a._id) } },
-        { $addToSet: { collections: col.slug } }
+        { $addToSet: { collections: col.slug }, $currentDate: { updated_at: true } }
       );
       console.log(`  Tagged ${result.modifiedCount} artworks with collection '${col.slug}'`);
     }

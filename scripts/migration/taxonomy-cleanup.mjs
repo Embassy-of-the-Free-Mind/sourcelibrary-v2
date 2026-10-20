@@ -147,7 +147,7 @@ async function run() {
     const ids = booksNeedingTag.map(b => b._id);
     const result = await books.updateMany(
       { _id: { $in: ids } },
-      { $addToSet: { collections: 'indic-traditions' } }
+      { $addToSet: { collections: 'indic-traditions' }, $currentDate: { updated_at: true } }
     );
     log(`  Tagged ${result.modifiedCount} books`);
   }
@@ -176,7 +176,7 @@ async function run() {
       // Tag books with parent collection
       await books.updateMany(
         { $and: [{ collections: slug }, { collections: { $ne: parent } }] },
-        { $addToSet: { collections: parent } }
+        { $addToSet: { collections: parent }, $currentDate: { updated_at: true } }
       );
     }
     results.consolidated++;

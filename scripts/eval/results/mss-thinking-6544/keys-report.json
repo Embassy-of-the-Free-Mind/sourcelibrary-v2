@@ -1,0 +1,31 @@
+{
+ "key-o": {
+  "pages": 39,
+  "B": 298,
+  "A": 291,
+  "control_caught": 27,
+  "none": 17,
+  "whole_page_failed": 1,
+  "illegible": 5,
+  "whole_page": 1
+ },
+ "key-g": {
+  "pages": 40,
+  "B": 250,
+  "none": 151,
+  "A": 210,
+  "control_caught": 26,
+  "control_missed": 1,
+  "whole_page": 2
+ },
+ "spans_both_keys": 638,
+ "spans_keys_agree": 311,
+ "spans_to_fable": 327,
+ "fable_pages": 32,
+ "fable": {
+  "key_o_lost": 130,
+  "key_g_lost": 166,
+  "fable_none_or_missing": 31
+ },
+ "key-f_pages": 39
+}

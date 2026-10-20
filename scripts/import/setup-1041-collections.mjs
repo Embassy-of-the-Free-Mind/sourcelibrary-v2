@@ -258,7 +258,7 @@ async function main() {
     for (const book of matchedBooks) {
       const result = await books.updateOne(
         { _id: book._id },
-        { $addToSet: { collections: { $each: rule.collections } } }
+        { $addToSet: { collections: { $each: rule.collections } }, $currentDate: { updated_at: true } }
       );
       if (result.modifiedCount > 0) {
         console.log(`  + ${book.title.substring(0, 60)} → [${rule.collections.join(', ')}]`);
