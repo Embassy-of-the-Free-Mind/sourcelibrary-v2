@@ -13,6 +13,7 @@ import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { trackEvent } from '@/lib/track-event';
+import { adminMenuLinks } from '@/lib/admin-links';
 
 interface NavLink {
   key: keyof NavStrings;
@@ -250,13 +251,16 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     image: session.user?.image,
     initials: (session.user?.name?.split(' ').map((n) => n[0]).join('') || session.user?.email?.[0] || '?').toUpperCase().slice(0, 2),
   } : undefined;
-  // Admins keep their avatar menu (and its admin links) on narrow screens too:
-  // the phone menu offers readers only Account, which has none of them.
+  // Admins get the avatar dropdown's admin links inside the phone menu too;
+  // without them the menu's Account button was their only way in, and /account
+  // has none. Readers keep the plain Account button.
   const role = (session?.user as { role?: string } | undefined)?.role;
-  const showAdminAvatar = role === 'admin' || role === 'superadmin';
+  const adminLinks = role === 'admin' || role === 'superadmin'
+    ? adminMenuLinks({ role }).map((l) => ({ href: l.href, label: l.label }))
+    : undefined;
 
   return (
-    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-30 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
+    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-40 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
       <header
         data-site-header=""
         className={`${barBg} text-white ${position}`}
@@ -348,10 +352,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             )}
           </div>
 
-          {showAdminAvatar && (
-            <span className="ml-auto mr-1 lg:hidden"><UserMenu variant="nav" /></span>
-          )}
-
           {/* Hamburger: phones, and wide screens where the links don't fit. */}
           <button
             ref={burgerRef}
@@ -360,7 +360,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             aria-label={menuOpen ? CHROME_STRINGS[locale].close : t.menu}
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
-            className={`relative w-11 h-11 shrink-0 ${showAdminAvatar ? 'lg:ml-auto' : 'ml-auto'} text-white ${compact ? '' : 'lg:hidden'}`}
+            className={`relative w-11 h-11 shrink-0 ml-auto text-white ${compact ? '' : 'lg:hidden'}`}
           >
             {[0, 1, 2].map((k) => (
               <i
@@ -390,7 +390,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           label: HEADER_LANGUAGE_NAME[l],
           current: l === locale,
         }))}
-        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar }}
+        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar, adminLinks }}
         support={showSupport ? { href: '/give', label: t.support, onClick: onSupportClick } : null}
         instant={closeInstantly}
       />
