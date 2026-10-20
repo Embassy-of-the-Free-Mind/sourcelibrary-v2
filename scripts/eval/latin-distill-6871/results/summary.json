@@ -1,0 +1,10 @@
+{
+ "steps": 495,
+ "train_pages": 1982,
+ "val_pages": 99,
+ "first5_loss": 1.0156410098075868,
+ "last5_loss": 0.27691954988986256,
+ "val_loss": 0.3490630699077038,
+ "secs": 9035,
+ "peak_vram_mib": 7855
+}
