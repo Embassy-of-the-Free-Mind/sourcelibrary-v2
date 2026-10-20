@@ -20,6 +20,17 @@ describe('canonicalPath', () => {
   });
 });
 
+describe('the prerendered homepage reports /index (#7025)', () => {
+  it('canonicalPath reads /index as the homepage', () => {
+    expect(canonicalPath('/index')).toBe('/');
+    expect(canonicalPath('/zh/index')).toBe('/');
+  });
+  it('the language menu on / goes to each locale homepage, not /index?lang=', () => {
+    for (const l of ['es', 'la', 'nl', 'zh'] as const) expect(localeHref(l, '/index')).toBe(`/${l}`);
+    expect(localeHref('en', '/index')).toBe('/');
+  });
+});
+
 describe('localeHref (sitewide toggle, #2763)', () => {
   it('EN always returns the canonical page so the reader stays put', () => {
     expect(localeHref('en', '/es')).toBe('/');
