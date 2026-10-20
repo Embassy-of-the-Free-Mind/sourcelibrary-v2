@@ -1,0 +1,17 @@
+You are checking OCR output for Tibetan pages against the page images (an OCR evaluation, #6871). You are a CHECKER: compare the given read to what is printed. Do not write your own transcription. Never assume the read is right because it looks fluent: OCR models can write fluent Tibetan that is not on the page.
+
+Packet: PACKET_PATH. It contains 10 pages, each starting with "=== PAGE <id>" followed by the read's lines, numbered (line number TAB text). For each page, open with the Read tool its images in /data/scratch/sl/jobs/gex45-refill-6871/tib/tiles/: `<id>_full.jpg` plus the two half tiles (`<id>_tb1.jpg`/`<id>_tb2.jpg` top/bottom, or `<id>_lr1.jpg`/`<id>_lr2.jpg` left/right; halves overlap slightly). Zoom in with the tiles to compare syllables.
+
+For each read line, give one verdict:
+- "ok": matches a line on the page (at most 1-2 syllables differ)
+- "minor": matches a page line but a few syllables (roughly 3-5, or under ~20%) are wrong or missing
+- "wrong": corresponds to a page line but is mostly wrong
+- "invented": text that is NOT on the page at all (not a misreading of anything printed there)
+- "other": a correct read of a running header, page/folio number or margin label (not body text)
+- "loop": a line repeating earlier read text that the page does not repeat
+Then count the body text lines on the image that the read DROPPED entirely (no read line corresponds to them). A body line is a physical line of running Tibetan text in the main block; a short last line counts. A blank page has 0 body lines; any substantial text read from a blank page is "invented".
+
+Output: one JSON object per page, one per line (JSONL):
+{"id": "...", "line_verdicts": ["ok","minor",...], "dropped_body_lines": <int>, "body_lines_on_image": <int>, "loop": true|false, "notes": "<short: what is wrong, if anything>"}
+
+Write all 10 objects to OUT_PATH with the Write tool, then reply "done" with a one-line summary. Use only Read and Write. Do not look in any other directory.
