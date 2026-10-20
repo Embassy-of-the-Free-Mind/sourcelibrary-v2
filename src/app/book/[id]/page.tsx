@@ -2271,6 +2271,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     originalEditionId={(book as any).original_edition_id ?? null}
                     originalInScan={(book as any).original_in_scan ?? false}
                     originalLanguage={(book as any).original_language ?? null}
+                    language={(book as any).language ?? null}
                     year={Number((book as any).year || book.published) || null}
                     showCrossLink={embedPolicy.showRelatedEditions}
                   />
