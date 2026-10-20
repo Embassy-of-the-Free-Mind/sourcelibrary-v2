@@ -199,15 +199,31 @@ function paragraphAt(text: string, at: number): { start: number; end: number } {
 }
 
 /**
- * A caption: the link sits on an image-embed line or the line right after one. It names the image's own page,
- * which a page's TEXT need not describe (4 of the 25 wrong-page links #6956 counted were this), and the
- * image records are not reliable enough to check it against (a gallery row with page -60 for p.60). Left alone.
+ * Page images whose URL carries the book id and the page number. On the replay, 194 of the 195 caption links
+ * under these shapes name the URL's page. `books/<id>/pages/NNNN.jpg` is not read: its number is one below the
+ * linked page on all 5 links that use it.
  */
-function isCaptionLink(text: string, link: PageLink): boolean {
+const IMAGE_PAGE_URL = /images\.sourcelibrary\.org\/(?:archived|enhanced)\/([0-9a-f]{24})\/(\d+)\.jpg|images\.sourcelibrary\.org\/pages\/([0-9a-f]{24})\/(\d+)-full\.jpg/;
+
+/**
+ * A caption: the link sits on an image-embed line or the line right after one. It names the image's own page,
+ * which a page's TEXT need not describe (4 of the 25 wrong-page links #6956 counted were this), and the gallery
+ * records are not reliable enough to check it against (a row with page -60 for p.60). Left alone — UNLESS the
+ * image URL itself names a page and it is not the linked one: then the reason to leave it is gone, and the link
+ * goes through the fixer like any other (amendment 1, PREREGISTRATION.md).
+ */
+function isCaptionLink(text: string, link: PageLink, pages: GroundingPage[]): boolean {
   const lineStart = text.lastIndexOf('\n', link.start - 1) + 1;
   const prevStart = lineStart > 0 ? text.lastIndexOf('\n', lineStart - 2) + 1 : lineStart;
   const lineEnd = text.indexOf('\n', link.start);
-  return /!\[[^\]]*\]\(/.test(text.slice(prevStart, lineEnd === -1 ? text.length : lineEnd));
+  const seg = text.slice(prevStart, lineEnd === -1 ? text.length : lineEnd);
+  const embeds = [...seg.matchAll(/!\[[^\]]*\]\(\s*([^)\s]+)/g)].map(m => m[1]);
+  if (embeds.length === 0) return false;
+  const named = embeds.map(u => u.match(IMAGE_PAGE_URL)).filter((m): m is RegExpMatchArray => !!m)
+    .map(m => ({ bookId: m[1] ?? m[3], page: Number(m[2] ?? m[4]) }));
+  if (named.length === 0) return true;
+  const linkBook = pages.find(p => p.bookSlug === link.slug || p.bookId === link.slug)?.bookId;
+  return named.some(n => n.page === link.page && (!linkBook || n.bookId === linkBook));
 }
 
 export function validateVerdicts(
@@ -219,7 +235,7 @@ export function validateVerdicts(
     const v = byId.get(id);
     const base = { id, link, action: v?.action ?? null, span: v?.span, claim: v?.claim };
     if (pageIdx === null) return { ...base, outcome: 'not_loaded' as const };
-    if (isCaptionLink(text, link)) return { ...base, outcome: 'caption' as const };
+    if (isCaptionLink(text, link, packet.pages)) return { ...base, outcome: 'caption' as const };
     if (!v || !['keep', 'move', 'drop'].includes(v.action)) return { ...base, outcome: 'no_verdict' as const };
     if (v.action === 'drop') return { ...base, outcome: 'drop' as const };
     const span = typeof v.span === 'string' ? v.span : '';

@@ -83,6 +83,13 @@ describe('validateVerdicts + fixerEdits', () => {
     const p = fixerPacket('q', t, PAGES);
     expect(validateVerdicts(t, p, [{ id: 'L1', action: 'drop' }])[0].outcome).toBe('caption');
   });
+  it('sends a caption through the fixer when its image URL names another page', () => {
+    const own = `![Saturn](https://images.sourcelibrary.org/archived/id-de-vita/22.jpg)\n*Saturn — ${L('de-vita', 22)}*`;
+    expect(validateVerdicts(own, fixerPacket('q', own, PAGES), [{ id: 'L1', action: 'drop' }])[0].outcome).toBe('caption');
+    const ids = PAGES.map(p => ({ ...p, bookId: '0123456789abcdef01234567' }));
+    const off = `![Saturn](https://images.sourcelibrary.org/archived/0123456789abcdef01234567/22.jpg)\n*Saturn — ${L('de-vita', 23)}*`;
+    expect(validateVerdicts(off, fixerPacket('q', off, ids), [{ id: 'L1', action: 'move', page: 'P1', span: 'Black bile which we called natural contributes' }])[0].outcome).toBe('move');
+  });
   it('drops one page link of a shared citation without touching the other', () => {
     const t = `Both pages say it — *[De Vita](https://sourcelibrary.org/book/de-vita)*, ${L('de-vita', 22)}, ${L('de-vita', 23)}.`;
     const p = fixerPacket('q', t, PAGES);

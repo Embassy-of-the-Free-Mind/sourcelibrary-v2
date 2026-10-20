@@ -68,3 +68,24 @@ the original page left among the pages. Reported: catch rate per kind, restored 
 ## Budget
 
 ≤ ~800 `claude -p` calls in total (subscription). $0 Gemini API.
+
+## Amendment 1 — committed after the registered run, before draw 2 (2026-10-20)
+
+**Registered result** (non-dev replay, prompt and rules as committed in `83483c9aa`): G1 pass (410 → 182 wrong-page
+links), G2 pass (4 of 2,294), G3 pass (30 of 1,781), **G4 fail**: adjacent 29/40 = 72.5%, other-book 18/20 = 90%.
+**The registered gate is not met.** That result stands and is reported as such.
+
+**Cause.** 8 of the 40 adjacent plants (and 1 other-book) were on image-caption lines, which the caption rule leaves
+alone by construction. On the links the fixer judges, adjacent was 29/32.
+
+**Amendment.** The caption rule exists because a caption links *the image's own page*. When the image URL itself
+names a page (`archived|enhanced/<book id>/<n>.jpg`, `pages/<book id>/<n>-full.jpg`) and it is not the linked page,
+that reason is gone: the link goes through the fixer like any other link. Prompt and every other rule unchanged.
+
+**Test of the amendment.** A FRESH planted draw (`plant.ts --seed=librarian-fixer-6946-planted-v2`, excluding draw 1's
+40 answers and the dev set), Sonnet. G4 re-tested on draw 2 with the same thresholds (≥ 80% adjacent, ≥ 90%
+other-book). G1–G3 re-checked on the replay under the amended rule (re-validation of the stored verdicts: the model
+gave a verdict for every link, captions included, so no new calls). Draw 1 under the amended rule is reported as
+exploratory only: the amendment was written after seeing it.
+
+**If draw 2 passes G4 and G1–G3 still pass**, stage 1 proceeds to the dry-run worker under the amended rule.

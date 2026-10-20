@@ -5,7 +5,7 @@
 // the re-judge noise on links the fixer left alone, and the planted-error catch rate.
 //
 // Usage: node score.mjs --items=<items.jsonl.gz> --fixed=<fixed.jsonl> --judge=<judge dir> --after=<tag>
-//          [--gauge-before=<tag>] [--planted=<planted.json>] [--json=<out>] [--group=run|arm]
+//          [--gauge-before=<tag>] [--planted=<planted.json>] [--json=<out>] [--group=run|arm] [--exclude=<regex of keys>]
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -40,7 +40,9 @@ function beforeLabels(it) {
 
 const per = [];
 const problems = [];
+const exclude = flag('exclude') ? new RegExp(flag('exclude')) : null;
 for (const [key, r] of fixed) {
+  if (exclude?.test(key)) continue;
   const it = items.get(key);
   const before = beforeLabels(it);
   if (!before) { problems.push(`${key}: no pre-fix labels`); continue; }
@@ -85,6 +87,7 @@ function tally(rows) {
   // Noise floor: links the fixer left as written, inside answers that were re-judged.
   const untouched = scorable.filter(x => x.changedAnswer && !['move', 'drop', 'drop_unverified'].includes(x.outcome) && JUDGED.has(x.after));
   const flips = untouched.filter(x => WRONG.has(x.before) !== WRONG.has(x.after));
+  const flipsToWrong = flips.filter(x => WRONG.has(x.after)).length;
   const pct = (a, b) => (b ? +(100 * a / b).toFixed(1) : null);
   return {
     ...t,
@@ -95,7 +98,7 @@ function tally(rows) {
     moves: moves.length, madeWrong: madeWrong.length, madeWrongRate: pct(madeWrong.length, scorable.length), fixedByMove: fixedByMove.length,
     dropped: dropped.length, droppedWrong: dropped.filter(x => WRONG.has(x.before)).length, droppedWrongFact: dropped.filter(x => x.before === 'wrong_fact').length,
     citedBefore: citedBefore.length, citedDropped: citedDropped.length, citedDroppedRate: pct(citedDropped.length, citedBefore.length),
-    rejudgeNoise: { links: untouched.length, flips: flips.length, rate: pct(flips.length, untouched.length) },
+    rejudgeNoise: { links: untouched.length, flips: flips.length, toWrong: flipsToWrong, toRight: flips.length - flipsToWrong, rate: pct(flips.length, untouched.length) },
     unjudged: rows.filter(x => x.after === 'unjudged').length,
   };
 }
@@ -129,7 +132,14 @@ console.log(`links ${a.links}; judged before ${a.judgedBefore}; wrong-page befor
 console.log(`scorable ${a.scorable} (wrong before ${a.wrongBeforeScorable}); survivors ${a.survivors}; wrong after ${a.wrongAfter} (${a.wrongAfterRate}%); reduction ${a.wrongPageReduction}%`);
 console.log(`moves ${a.moves}: made wrong ${a.madeWrong} (${a.madeWrongRate}% of links), fixed by move ${a.fixedByMove}`);
 console.log(`dropped ${a.dropped} (were wrong-page ${a.droppedWrong}, wrong_fact ${a.droppedWrongFact}); cited dropped ${a.citedDropped}/${a.citedBefore} (${a.citedDroppedRate}%)`);
-console.log(`re-judge noise on untouched links: ${a.rejudgeNoise.flips}/${a.rejudgeNoise.links} (${a.rejudgeNoise.rate}%); unjudged ${a.unjudged}`);
+console.log(`re-judge noise on untouched links: ${a.rejudgeNoise.flips}/${a.rejudgeNoise.links} (${a.rejudgeNoise.rate}%; ${a.rejudgeNoise.toWrong} to wrong-page, ${a.rejudgeNoise.toRight} out of it); unjudged ${a.unjudged}`);
+const gate = {
+  G1: { value: `${a.wrongBeforeScorable} → ${a.wrongAfter} (−${a.wrongPageReduction}%), noise flips ${a.rejudgeNoise.flips}`, pass: a.wrongPageReduction >= 40 && a.wrongBeforeScorable - a.wrongAfter > a.rejudgeNoise.flips },
+  G2: { value: `${a.madeWrong} of ${a.scorable} (${a.madeWrongRate}%)`, pass: a.madeWrongRate <= 1 },
+  G3: { value: `${a.citedDropped} of ${a.citedBefore} (${a.citedDroppedRate}%)`, pass: a.citedDroppedRate <= 5 },
+};
+console.table(gate);
+out.gate = gate;
 console.log('outcome × pre-fix label:'); console.table(a.cross);
 console.table(Object.fromEntries(Object.entries(out.groups).map(([g, t]) => [g, { links: t.links, wrongBefore: t.wrongBefore, wrongBeforeRate: t.wrongBeforeRate, wrongAfter: t.wrongAfter, wrongAfterRate: t.wrongAfterRate, moves: t.moves, madeWrong: t.madeWrong, citedDropped: `${t.citedDropped}/${t.citedBefore}` }])));
 if (out.planted) console.table(out.planted);

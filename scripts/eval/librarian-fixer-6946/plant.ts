@@ -18,7 +18,8 @@
  * errors only; the move itself reuses fixerEdits (src/lib/embassy/citation-fixer.ts).
  *
  * Usage: npx tsx --env-file=/root/sourcelibrary/.env.production.local scripts/eval/librarian-fixer-6946/plant.ts \
- *          --items=<items.jsonl.gz> --out=<dir> [--exclude=<regex of dev keys>]
+ *          --items=<items.jsonl.gz> --out=<dir> [--exclude=<regex of dev keys>] [--seed=<string>]
+ *   Draw 1: the default seed. Draw 2 (amendment 1): --seed=librarian-fixer-6946-planted-v2, excluding draw 1's answers.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -34,6 +35,7 @@ const arg = (name: string, def?: string) => process.argv.find(a => a.startsWith(
 const readMaybeGz = (f: string) => (f.endsWith('.gz') ? zlib.gunzipSync(fs.readFileSync(f)) : fs.readFileSync(f)).toString('utf8');
 const OUT = arg('out')!;
 const EXCLUDE = arg('exclude') ? new RegExp(arg('exclude')!) : null;
+const SEED = arg('seed', 'librarian-fixer-6946-planted')!;
 const N_ANSWERS = 40;
 const N_OTHER = 20;
 
@@ -44,7 +46,7 @@ function rng(seed: string) {
 }
 
 async function main() {
-  const rand = rng('librarian-fixer-6946-planted');
+  const rand = rng(SEED);
   const items: Item[] = readMaybeGz(arg('items')!).split('\n').filter(Boolean).map(l => JSON.parse(l));
   const pool = items.filter(it => it.before && !(EXCLUDE?.test(it.key)))
     .filter(it => it.before!.filter(l => l.label === 'cited' && l.j.every(x => x === 'cited')).length >= 2);
