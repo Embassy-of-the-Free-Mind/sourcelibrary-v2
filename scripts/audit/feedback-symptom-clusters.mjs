@@ -119,8 +119,8 @@ if (reportedIds.length) {
     { $match: { id: { $in: reportedIds } } },
     { $project: {
       id: 1, page_type: 1,
-      ocr_len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } },
-      tr_len: { $strLenCP: { $ifNull: ['$translation.data', ''] } },
+      ocr_len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
+      tr_len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } },
       ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 200] },
     } },
   ]).toArray();
