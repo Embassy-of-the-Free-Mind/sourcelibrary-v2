@@ -7,7 +7,7 @@ import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
-import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
+import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
 import { localizedEditionFilterIndexed } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
@@ -432,12 +432,14 @@ function workKey(b: CatalogBook): string {
 // We over-fetch because the newest translations are batch imports whose covers
 // aren't rehosted yet, and big multi-volume sets dedupe down (15 distinct
 // cover-complete works currently sit within the first ~140 rows).
-async function getRecentlyTranslated(): Promise<CatalogBook[]> {
+// With `language`, only books written in it (a native-first homepage).
+async function getRecentlyTranslated(language?: string): Promise<CatalogBook[]> {
   const { books } = await browseBooks({
     hasTranslation: true,
     sort: 'last_translated',
     limit: 400,
     skipCount: true,
+    ...(language ? { language } : {}),
   });
 
   const seen = new Set<string>();
@@ -476,6 +478,32 @@ async function getNativeShelf(language: string): Promise<CatalogBook[]> {
     seen.add(key);
     out.push(b);
     if (out.length >= NATIVE_SHELF_COUNT) break;
+  }
+  return out;
+}
+
+// ---------- Subject shelves (native-first homepages) ----------
+
+const SUBJECT_SHELF_COUNT = 15;
+// Below this many readable works a shelf reads as a stub; drop it.
+const SUBJECT_SHELF_MIN = 6;
+
+/**
+ * One collection's most-read books WRITTEN in the page's language, for the
+ * "分类书架" band on `/zh` (NATIVE_SUBJECT_SHELVES in home-i18n.ts). Same rules as
+ * the native shelf: transcribed, real cover, one card per work.
+ */
+async function getSubjectShelf(slug: string, language: string): Promise<CatalogBook[]> {
+  const { books } = await browseBooks({ collection: slug, language, sort: 'popular', limit: 200, skipCount: true });
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b) || !b.pages_ocr) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= SUBJECT_SHELF_COUNT) break;
   }
   return out;
 }
@@ -609,14 +637,28 @@ function mulberry32(seed: number): () => number {
 // stays fixed within a `GALLERY_ROTATION_HOURS` window and rotates between windows
 // (dynamic, but not per-refresh). `extracted_width/height` come back so the
 // masonry reserves each cell's aspect ratio and loads without layout shift.
-async function getHomeGalleryPlates(): Promise<Plate[]> {
+// With `language` (a native-first homepage), only plates from books written in
+// it. No plate from a Chinese book carries `extracted_width/height` (measured
+// 2026-10-20: 0 of 1,518), so that filter is dropped there and the masonry
+// sizes those cells as they load. Multi-volume works (Sancai Tuhui's ~100
+// volumes) are capped per WORK as well as per book, or one encyclopedia fills
+// the wall.
+const PLATES_PER_WORK = 3;
+const plateWorkKey = (title: unknown) => {
+  let t = String(title ?? '');
+  for (let i = 0; i < 3; i++) t = t.replace(/\s*[(（][^()（）]*[)）]\s*$/, '').replace(/,?\s*Vol\.?\s*\d+\s*$/i, '');
+  return t.trim().toLowerCase();
+};
+
+async function getHomeGalleryPlates(language?: string): Promise<Plate[]> {
   const db = await getReadDb();
   const raw = await db.collection('gallery_images').find(
     {
       book_hidden: { $ne: true },
       gallery_quality: { $gte: 0.85 },
-      extracted_width: { $gt: 0 },
-      extracted_height: { $gt: 0 },
+      ...(language
+        ? { book_language: language }
+        : { extracted_width: { $gt: 0 }, extracted_height: { $gt: 0 } }),
       $or: [
         { thumbnail_url: { $type: 'string', $gt: '' } },
         { extracted_url: { $type: 'string', $gt: '' } },
@@ -631,11 +673,14 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
   // Build the candidate pool (max 2 plates per book for variety), in the stable
   // quality-sorted order.
   const perBook = new Map<string, number>();
+  const perWork = new Map<string, number>();
   const pool: Plate[] = [];
   for (const g of raw as Array<Record<string, unknown>>) {
     const bookId = String(g.book_id ?? '');
     const n = perBook.get(bookId) ?? 0;
     if (n >= 2) continue;
+    const work = plateWorkKey(g.book_title);
+    if (work && (perWork.get(work) ?? 0) >= PLATES_PER_WORK) continue;
     const thumb = g.thumbnail_url as string | undefined;
     const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
     const card = thumb ? toGalleryCardUrl(thumb) : null;
@@ -645,6 +690,7 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
     const fallback = [card ? thumb : null, full].filter((u): u is string => !!u && u !== src);
     const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
     perBook.set(bookId, n + 1);
+    if (work) perWork.set(work, (perWork.get(work) ?? 0) + 1);
     pool.push({
       src,
       fallback,
@@ -886,20 +932,35 @@ export interface HomeData {
    * every book is already in the page's language and the line would be noise.
    */
   localizedCollectionCounts: Record<string, number>;
+  /** Native-first homepages only (`/zh`): one shelf per subject, books in the page's language. */
+  subjectShelves: { slug: string; heading: string; books: CatalogBook[] }[];
 }
 
-// `lang` selects the Spanish-edition band and the localized counts,
-// and nothing else — every other query is language-agnostic, which is what
-// keeps the two homepages structurally identical (see the note at the top of
-// this file).
+/**
+ * Homepages whose book sections are filled with books WRITTEN in the page's
+ * language, not the site-wide picks. The point of `/zh` is the books printed in
+ * Chinese; the site-wide "recently translated", favourites and featured band
+ * are almost all European, so on `/zh` they buried the shelf the page exists
+ * for (Derek, 2026-10-20). Here: recently translated and the gallery are
+ * filtered to the language; the favourites (no Chinese book has three likes
+ * yet) and the English-only featured band give way to subject shelves.
+ * `/la` and `/nl` can join by adding themselves and their shelves.
+ */
+const NATIVE_FIRST_LANGS = new Set<HomeLang>(['zh']);
+
+// `lang` selects the Spanish-edition band, the localized counts and, on a
+// native-first homepage, which books fill the book sections; the structure of
+// the page is the same everywhere (see the note at the top of this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
-  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf] = await Promise.all([
-    withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
+  const nativeFirst = NATIVE_FIRST_LANGS.has(lang) ? NATIVE_SHELF_LANGUAGE[lang] : undefined;
+  const subjectConfig = nativeFirst ? NATIVE_SUBJECT_SHELVES[lang]?.shelves ?? [] : [];
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks] = await Promise.all([
+    nativeFirst ? Promise.resolve([] as FeaturedItem[]) : withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
-    withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
-    withTimeout(getMostLiked(), 8000, [] as LikedBook[]),
-    withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
+    withTimeout(getRecentlyTranslated(nativeFirst), 20000, [] as CatalogBook[]),
+    nativeFirst ? Promise.resolve([] as LikedBook[]) : withTimeout(getMostLiked(), 8000, [] as LikedBook[]),
+    withTimeout(getHomeGalleryPlates(nativeFirst), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getCuratedShowcase(lang), 8000, emptyShowcase),
@@ -909,11 +970,27 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
     NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
+    Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
   ]);
+
+  // One work, one appearance across the book shelves of a native-first page:
+  // the shelf under the hero claims first, then recently translated, then the
+  // subject shelves in order. (dedupeHomeSections below covers the rest.)
+  const claimed = new Set<string>(nativeFirst ? nativeShelf.map(workKey) : []);
+  const claim = (books: CatalogBook[]) => books.filter((b) => {
+    const key = workKey(b);
+    if (claimed.has(key)) return false;
+    claimed.add(key);
+    return true;
+  });
+  const shelfRecentlyTranslated = nativeFirst ? claim(recentlyTranslated) : recentlyTranslated;
+  const subjectShelves = subjectConfig
+    .map((s, i) => ({ ...s, books: claim(subjectShelfBooks[i] ?? []) }))
+    .filter((s) => s.books.length >= SUBJECT_SHELF_MIN);
 
   // One book, one appearance: see src/lib/home-dedupe.ts.
   const deduped = dedupeHomeSections({
-    recentlyTranslated,
+    recentlyTranslated: shelfRecentlyTranslated,
     mostLiked,
     showcaseItems: curatedShowcase.items,
     featuredItems,
@@ -925,7 +1002,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   return {
     featuredItems: deduped.featuredItems,
     discoverBooks,
-    recentlyTranslated,
+    recentlyTranslated: shelfRecentlyTranslated,
     mostLiked: deduped.mostLiked,
     galleryPlates: deduped.galleryPlates.slice(0, HOME_GALLERY_COUNT),
     counts,
@@ -937,5 +1014,6 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     // One book, one appearance: the beginner's shelf is the hand-picked one, so it keeps the card.
     nativeShelf: nativeShelf.filter((b) => !beginnerShelf.some((p) => p.id === b.id)),
     beginnerShelf,
+    subjectShelves,
   };
 }

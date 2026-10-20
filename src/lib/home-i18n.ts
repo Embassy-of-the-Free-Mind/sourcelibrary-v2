@@ -697,8 +697,8 @@ const zh: HomeStrings = {
   bySubjectHeading: '按主题浏览',
   bySubjectLead: '全部馆藏：',
 
-  recentlyTranslatedHeading: '最新译出',
-  recentlyTranslatedSubtitle: 'Source Library 最近译成现代可读译文的作品。',
+  recentlyTranslatedHeading: '最新译出的中文书',
+  recentlyTranslatedSubtitle: '最近译成英文的中文古籍，原文与英译逐页对照。',
   mostLikedHeading: '读者最爱',
   mostLikedSubtitle: '读者点赞最多的书。遇到喜欢的书？在它的页面上点 ♥，投上您的一票。',
   spanishHeading: '西班牙文阅读',
@@ -709,7 +709,7 @@ const zh: HomeStrings = {
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
   spanishSubtitle: '馆内已有西班牙文版的作品，与原文逐页对照。',
   galleryHeading: '图库',
-  gallerySubtitle: '馆内珍本中的图版、插图与版画。',
+  gallerySubtitle: '中文古籍中的木刻插图与图版。',
   galleryViewAll: (n) => `查看全部 ${n.toLocaleString('zh-CN')} 幅插图`,
   discoverHeading: '发现',
   discoverSubtitle: '馆藏中已翻译的原始文献。',
@@ -1134,6 +1134,30 @@ export const NATIVE_SHELF_LANGUAGE: Partial<Record<HomeLang, string>> = {
   la: 'Latin',
   nl: 'Dutch',
   zh: 'Chinese',
+};
+
+/**
+ * Subject shelves for an original-text homepage whose sections are filled with
+ * books in its own language (`NATIVE_FIRST_LANGS` in home-data.ts). Each shelf
+ * is one collection, filtered to books written in the page's language; a shelf
+ * with too few readable books is dropped rather than padded with others.
+ */
+export interface NativeSubjectShelves {
+  heading: string;
+  allLabel: string;
+  shelves: { slug: string; heading: string }[];
+}
+export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelves>> = {
+  zh: {
+    heading: '分类书架',
+    allLabel: '查看全部',
+    shelves: [
+      { slug: 'daoist-classics', heading: '道家经典' },
+      { slug: 'chinese-buddhist-texts', heading: '佛教典籍' },
+      { slug: 'chinese-medicine-natural-philosophy', heading: '医学与自然知识' },
+      { slug: 'chinese-history-statecraft', heading: '史地与治术' },
+    ],
+  },
 };
 
 /** Hand-written collection names per locale. English is the stored name. */
