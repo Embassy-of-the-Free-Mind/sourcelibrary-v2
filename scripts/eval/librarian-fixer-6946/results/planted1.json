@@ -1,0 +1,782 @@
+[
+ {
+  "key": "planted:6904:A:q13",
+  "id": "L7",
+  "kind": "adjacent",
+  "from": {
+   "slug": "hermes-trismegistus-on-the-power-and-wisdom-of-god-ficino-translator",
+   "page": 7
+  },
+  "to": {
+   "slug": "hermes-trismegistus-on-the-power-and-wisdom-of-god-ficino-translator",
+   "page": 8
+  }
+ },
+ {
+  "key": "planted:6904:A:q13",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "hermes-trismegistus-on-the-power-and-wisdom-of-god-ficino-translator",
+   "page": 7
+  },
+  "to": {
+   "slug": "the-true-intellectual-system-of-the-universe-cudworth",
+   "page": 340
+  }
+ },
+ {
+  "key": "planted:7021:C:q39",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "symbolographia-sive-de-arte-symbolica-sermones-septem-bosch-2",
+   "page": 67
+  },
+  "to": {
+   "slug": "symbolographia-sive-de-arte-symbolica-sermones-septem-bosch-2",
+   "page": 66
+  }
+ },
+ {
+  "key": "planted:7021:C:q39",
+  "id": "L6",
+  "kind": "other_book",
+  "from": {
+   "slug": "pandora-das-ist-die-edlest-gab-gottes-oder-der-werde-und-reusner-3",
+   "page": 270
+  },
+  "to": {
+   "slug": "horou-apollonos-neiloou-hieroglyphika-eklekta-hori-horapollo",
+   "page": 9
+  }
+ },
+ {
+  "key": "planted:6904:B:q32",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "me-irat-enayim-isaac-ben-samuel",
+   "page": 5
+  },
+  "to": {
+   "slug": "me-irat-enayim-isaac-ben-samuel",
+   "page": 6
+  }
+ },
+ {
+  "key": "planted:6904:B:q32",
+  "id": "L7",
+  "kind": "other_book",
+  "from": {
+   "slug": "the-kabbalah-its-doctrines-development-and-literature-ginsburg",
+   "page": 24
+  },
+  "to": {
+   "slug": "me-irat-enayim-isaac-ben-samuel",
+   "page": 5
+  }
+ },
+ {
+  "key": "planted:6904:B:q01",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "three-books-on-life-ficino-2",
+   "page": 240
+  },
+  "to": {
+   "slug": "three-books-on-life-ficino-2",
+   "page": 241
+  }
+ },
+ {
+  "key": "planted:6904:B:q01",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "three-books-on-life-ficino-2",
+   "page": 240
+  },
+  "to": {
+   "slug": "the-minor-works-of-marsilio-ficino-ficino",
+   "page": 2
+  }
+ },
+ {
+  "key": "planted:6970:B:q36",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97
+  },
+  "to": {
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 98
+  }
+ },
+ {
+  "key": "planted:6970:B:q36",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14
+  },
+  "to": {
+   "slug": "astronomica-et-astrologica-astronomical-and-astrological-paracelsus",
+   "page": 25
+  }
+ },
+ {
+  "key": "planted:7021:A:q02",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "jikji-anthology-of-great-buddhist-priests-zen-teachings",
+   "page": 6
+  },
+  "to": {
+   "slug": "jikji-anthology-of-great-buddhist-priests-zen-teachings",
+   "page": 7
+  }
+ },
+ {
+  "key": "planted:7021:A:q02",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "alberuni-s-india-sachau",
+   "page": 144
+  },
+  "to": {
+   "slug": "tarjuman-al-ashwaq-interpreter-of-desires-arabi",
+   "page": 70
+  }
+ },
+ {
+  "key": "planted:6970:A:q18",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "mund-sches-system-auszuge-nebst-abzeichnungen-aus-dessen-ori",
+   "page": 7
+  },
+  "to": {
+   "slug": "mund-sches-system-auszuge-nebst-abzeichnungen-aus-dessen-ori",
+   "page": 6
+  }
+ },
+ {
+  "key": "planted:6970:A:q18",
+  "id": "L5",
+  "kind": "other_book",
+  "from": {
+   "slug": "de-occultis-literarum-notis-secret-writing-porta",
+   "page": 587
+  },
+  "to": {
+   "slug": "steganographia-vindicata-reserata-et-illustrata-trithemius",
+   "page": 343
+  }
+ },
+ {
+  "key": "planted:6970:B:q07",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "anaskeue-hopliatrias-quam-sub-praesidio-domini-joh-rudolphi-saltzmann",
+   "page": 15
+  },
+  "to": {
+   "slug": "anaskeue-hopliatrias-quam-sub-praesidio-domini-joh-rudolphi-saltzmann",
+   "page": 16
+  }
+ },
+ {
+  "key": "planted:6970:B:q07",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "florilegium-hippocrateo-galenochymicum-novum-philippi-gruling",
+   "page": 550
+  },
+  "to": {
+   "slug": "de-magnetica-vulnerum-curatione-goclenius",
+   "page": 16
+  }
+ },
+ {
+  "key": "planted:7021:C:q36",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 13
+  },
+  "to": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 12
+  }
+ },
+ {
+  "key": "planted:7021:C:q36",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 13
+  },
+  "to": {
+   "slug": "de-secretis-antimonii-liber-unus-suchten",
+   "page": 98
+  }
+ },
+ {
+  "key": "planted:7021:A:q31",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel",
+   "page": 4
+  },
+  "to": {
+   "slug": "ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel",
+   "page": 5
+  }
+ },
+ {
+  "key": "planted:7021:A:q31",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50
+  },
+  "to": {
+   "slug": "relation-dun-voyage-en-angleterre-ou-sont-touchees-plusieurs-choses-qu",
+   "page": 70
+  }
+ },
+ {
+  "key": "planted:7021:A:q20",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-book-of-enoch-charles",
+   "page": 82
+  },
+  "to": {
+   "slug": "the-book-of-enoch-charles",
+   "page": 83
+  }
+ },
+ {
+  "key": "planted:7021:A:q20",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "the-book-of-enoch-charles",
+   "page": 82
+  },
+  "to": {
+   "slug": "das-buch-henoch-athiopischer-text-dillmann",
+   "page": 370
+  }
+ },
+ {
+  "key": "planted:6904:B:q13",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "revealer-of-the-great-secret-of-the-philosophers-anonymous-2",
+   "page": 5
+  },
+  "to": {
+   "slug": "revealer-of-the-great-secret-of-the-philosophers-anonymous-2",
+   "page": 6
+  }
+ },
+ {
+  "key": "planted:6904:B:q13",
+  "id": "L1",
+  "kind": "other_book",
+  "from": {
+   "slug": "hermetica-vol-i-texts-and-translation-ed",
+   "page": 7
+  },
+  "to": {
+   "slug": "corpus-hermeticum-pimander-ficino-translation-translator",
+   "page": 7
+  }
+ },
+ {
+  "key": "planted:6904:A:q16",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "dell-elixir-vitae-on-the-elixir-of-life-d-eremita",
+   "page": 223
+  },
+  "to": {
+   "slug": "dell-elixir-vitae-on-the-elixir-of-life-d-eremita",
+   "page": 224
+  }
+ },
+ {
+  "key": "planted:6904:A:q16",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "new-light-of-alchemy-with-paracelsus-sendivogius",
+   "page": 274
+  },
+  "to": {
+   "slug": "operis-medico-chymici-pars-altera-basilica-philosophica-mylius",
+   "page": 1326
+  }
+ },
+ {
+  "key": "planted:7021:C:q15",
+  "id": "L26",
+  "kind": "adjacent",
+  "from": {
+   "slug": "daoyan-neiwai-mijue-quanshu-wuzhen-pian",
+   "page": 19
+  },
+  "to": {
+   "slug": "daoyan-neiwai-mijue-quanshu-wuzhen-pian",
+   "page": 18
+  }
+ },
+ {
+  "key": "planted:7021:C:q15",
+  "id": "L16",
+  "kind": "other_book",
+  "from": {
+   "slug": "vivekachudamani-crest-jewel-of-discrimination-shankaracharya",
+   "page": 211
+  },
+  "to": {
+   "slug": "taoist-texts-ethical-political-and-speculative-balfour",
+   "page": 23
+  }
+ },
+ {
+  "key": "planted:6970:A:q25",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "libro-de-los-juegos-book-of-games-sabio",
+   "page": 187
+  },
+  "to": {
+   "slug": "libro-de-los-juegos-book-of-games-sabio",
+   "page": 188
+  }
+ },
+ {
+  "key": "planted:6970:A:q25",
+  "id": "L1",
+  "kind": "other_book",
+  "from": {
+   "slug": "coloquios-dos-simples-e-drogas-da-india-orta",
+   "page": 171
+  },
+  "to": {
+   "slug": "sancai-tuhui-juan-65",
+   "page": 60
+  }
+ },
+ {
+  "key": "planted:7021:B:q28",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "confessions-hippo",
+   "page": 122
+  },
+  "to": {
+   "slug": "confessions-hippo",
+   "page": 121
+  }
+ },
+ {
+  "key": "planted:7021:B:q28",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "de-summo-bono-isidorus-hispalensis-1",
+   "page": 117
+  },
+  "to": {
+   "slug": "quintilian-institutio-oratoria-vol-iv-loeb-quintilian",
+   "page": 243
+  }
+ },
+ {
+  "key": "planted:7021:C:q09",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86
+  },
+  "to": {
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 85
+  }
+ },
+ {
+  "key": "planted:7021:C:q09",
+  "id": "L13",
+  "kind": "other_book",
+  "from": {
+   "slug": "aureoli-philippi-theophrasti-bombasts-von-hohenheim-paracelsus-3",
+   "page": 170
+  },
+  "to": {
+   "slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n",
+   "page": 86
+  }
+ },
+ {
+  "key": "planted:6970:B:q34",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-latin-works-of-giordano-bruno-bruno",
+   "page": 108
+  },
+  "to": {
+   "slug": "the-latin-works-of-giordano-bruno-bruno",
+   "page": 109
+  }
+ },
+ {
+  "key": "planted:6970:B:q34",
+  "id": "L3",
+  "kind": "other_book",
+  "from": {
+   "slug": "iordani-bruni-nolani-de-imaginum-signorum-amp-idearum-bruno",
+   "page": 69
+  },
+  "to": {
+   "slug": "songs-of-innocence-and-of-experience-blake",
+   "page": 20
+  }
+ },
+ {
+  "key": "planted:6970:B:q29",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "aristotle-s-psychology-de-anima-and-parva-naturalia-hammond",
+   "page": 341
+  },
+  "to": {
+   "slug": "aristotle-s-psychology-de-anima-and-parva-naturalia-hammond",
+   "page": 342
+  }
+ },
+ {
+  "key": "planted:6970:B:q29",
+  "id": "L2",
+  "kind": "other_book",
+  "from": {
+   "slug": "traumbuch-artemidori-darinnen-ursprung-unterscheid-und-artemidorus",
+   "page": 22
+  },
+  "to": {
+   "slug": "fasciculus-medicinae-add-petrus-de-tussignano-consilium-pro-ketham",
+   "page": 14
+  }
+ },
+ {
+  "key": "planted:6904:A:q19",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-complete-works-of-marsilio-ficino-ficino",
+   "page": 666
+  },
+  "to": {
+   "slug": "the-complete-works-of-marsilio-ficino-ficino",
+   "page": 665
+  }
+ },
+ {
+  "key": "planted:6904:A:q19",
+  "id": "L4",
+  "kind": "other_book",
+  "from": {
+   "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+   "page": 462
+  },
+  "to": {
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 5
+  }
+ },
+ {
+  "key": "planted:7021:A:q21",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+   "page": 74
+  },
+  "to": {
+   "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+   "page": 75
+  }
+ },
+ {
+  "key": "planted:6904:B:q24",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "keely-and-his-discoveries-bloomfield-moore",
+   "page": 397
+  },
+  "to": {
+   "slug": "keely-and-his-discoveries-bloomfield-moore",
+   "page": 398
+  }
+ },
+ {
+  "key": "planted:6970:A:q21",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90
+  },
+  "to": {
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89
+  }
+ },
+ {
+  "key": "planted:7021:A2:q16",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+   "page": 1427
+  },
+  "to": {
+   "slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+   "page": 1428
+  }
+ },
+ {
+  "key": "planted:6970:A2:q16",
+  "id": "L4",
+  "kind": "adjacent",
+  "from": {
+   "slug": "rasa-jala-nidhi-or-ocean-of-indian-chemistry-alchemy-vol-1-mookerji",
+   "page": 97
+  },
+  "to": {
+   "slug": "rasa-jala-nidhi-or-ocean-of-indian-chemistry-alchemy-vol-1-mookerji",
+   "page": 96
+  }
+ },
+ {
+  "key": "planted:6904:A:q18",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "vorlesungen-uber-d-gesch-d-freimaurerei-im-winter-1853-4-in-",
+   "page": 485
+  },
+  "to": {
+   "slug": "vorlesungen-uber-d-gesch-d-freimaurerei-im-winter-1853-4-in-",
+   "page": 484
+  }
+ },
+ {
+  "key": "planted:6970:B:q18",
+  "id": "L6",
+  "kind": "adjacent",
+  "from": {
+   "slug": "steganologia-steganographia-aucta-geheime-magische-schwenter",
+   "page": 249
+  },
+  "to": {
+   "slug": "steganologia-steganographia-aucta-geheime-magische-schwenter",
+   "page": 248
+  }
+ },
+ {
+  "key": "planted:6970:A:q22",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "derge-tengyur-vol-206",
+   "page": 493
+  },
+  "to": {
+   "slug": "derge-tengyur-vol-206",
+   "page": 494
+  }
+ },
+ {
+  "key": "planted:6904:B:q21",
+  "id": "L2",
+  "kind": "adjacent",
+  "from": {
+   "slug": "joh-joach-becheri-opvscvla-chymica-rariora-becher",
+   "page": 391
+  },
+  "to": {
+   "slug": "joh-joach-becheri-opvscvla-chymica-rariora-becher",
+   "page": 390
+  }
+ },
+ {
+  "key": "planted:6904:B:q39",
+  "id": "L1",
+  "kind": "adjacent",
+  "from": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 224
+  },
+  "to": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 223
+  }
+ },
+ {
+  "key": "planted:7021:A:q19",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 968
+  },
+  "to": {
+   "slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+   "page": 967
+  }
+ },
+ {
+  "key": "planted:7021:B:q12",
+  "id": "L14",
+  "kind": "adjacent",
+  "from": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 178
+  },
+  "to": {
+   "slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath-4",
+   "page": 179
+  }
+ },
+ {
+  "key": "planted:6970:A2:q21",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+   "page": 74
+  },
+  "to": {
+   "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+   "page": 75
+  }
+ },
+ {
+  "key": "planted:7021:A2:q36",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14
+  },
+  "to": {
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 13
+  }
+ },
+ {
+  "key": "planted:6970:A:q15",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "brahma-sutra-bhashya-shankaracharya",
+   "page": 168
+  },
+  "to": {
+   "slug": "brahma-sutra-bhashya-shankaracharya",
+   "page": 169
+  }
+ },
+ {
+  "key": "planted:6904:A:q05",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "opera-omnia-kuhn-edition-vol-i-galen",
+   "page": 63
+  },
+  "to": {
+   "slug": "opera-omnia-kuhn-edition-vol-i-galen",
+   "page": 64
+  }
+ },
+ {
+  "key": "planted:7021:A2:q26",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3",
+   "page": 10
+  },
+  "to": {
+   "slug": "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3",
+   "page": 9
+  }
+ },
+ {
+  "key": "planted:6904:B:q05",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-writings-of-hippocrates-and-galen-galen",
+   "page": 42
+  },
+  "to": {
+   "slug": "the-writings-of-hippocrates-and-galen-galen",
+   "page": 41
+  }
+ },
+ {
+  "key": "planted:6970:A:q23",
+  "id": "L5",
+  "kind": "adjacent",
+  "from": {
+   "slug": "the-masculine-cross-a-history-of-ancient-and-modern-crosses-anonymous",
+   "page": 30
+  },
+  "to": {
+   "slug": "the-masculine-cross-a-history-of-ancient-and-modern-crosses-anonymous",
+   "page": 29
+  }
+ },
+ {
+  "key": "planted:6970:B:q24",
+  "id": "L3",
+  "kind": "adjacent",
+  "from": {
+   "slug": "iohannis-de-sacro-bvsto-libellvs-de-sphaera-johannes",
+   "page": 20
+  },
+  "to": {
+   "slug": "iohannis-de-sacro-bvsto-libellvs-de-sphaera-johannes",
+   "page": 19
+  }
+ }
+]
