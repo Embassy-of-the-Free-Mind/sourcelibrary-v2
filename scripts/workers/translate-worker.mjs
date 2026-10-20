@@ -453,6 +453,38 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused, evidence kept`);
     return { written: false, reason: health.reason };
   }
+
+  // Empty-response guard (#4685 population C): assessTranslationHealth's
+  // collapse check only fires when the OCR body is >=400 chars, so a genuinely
+  // empty response on a short page sailed straight through to a normal write —
+  // `translation.data: ''`, which looks done and is picked up again next run
+  // only to fail the same deterministic way, forever, with no trace it had
+  // ever been tried (the shape #4674 found on the OCR side). Record a failure
+  // marker instead, and never let an empty response clobber a real existing
+  // translation (this page can be selected for retranslation when its OCR is
+  // newer than its translation — see the `$lt` clause in processBook's query).
+  if (!text) {
+    const existing = await db.collection('pages').findOne(
+      { id: page.id }, { projection: { 'translation.data': 1, 'translation.fail_count': 1 } }
+    );
+    if (existing?.translation?.data) {
+      console.log(`  [empty-response] ${page.id} p${page.page_number}: empty retry, keeping existing translation`);
+      return { written: false, reason: 'empty_response' };
+    }
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      { $set: {
+          'translation.fail_count': (existing?.translation?.fail_count || 0) + 1,
+          'translation.fail_reason': 'empty_response',
+          'translation.failed_at': new Date(),
+          'translation.language': 'English',
+          updated_at: new Date(),
+        } }
+    );
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model response — write refused, marked`);
+    return { written: false, reason: 'empty_response' };
+  }
+
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
     translation: {
@@ -469,7 +501,10 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     },
     updated_at: new Date(),
   };
-  await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload });
+  await db.collection('pages').updateOne(
+    { id: page.id },
+    { $set: setPayload, $unset: { 'translation.fail_count': '', 'translation.fail_reason': '', 'translation.failed_at': '' } }
+  );
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
 }
@@ -492,6 +527,49 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
     for (const u of unhealthy) {
       await persistRefusedTranslation(db, u.page, u.text, u.reason, { jobId: book?.job?.job_id, model: getModelForBook(book) });
       console.log(`  [health-gate] ${u.page.id} p${u.page.page_number}: ${u.reason} (${u.len} chars) — write refused, evidence kept`);
+    }
+  }
+  if (entries.length === 0) return;
+  if (entries.length === 1) {
+    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
+  }
+
+  // Empty-response guard (#4685 population C) — same reasoning as the
+  // single-page writer above: a genuinely empty response must never be
+  // written as `translation.data: ''`, and must never clobber a real
+  // existing translation on a stale-retranslation pass.
+  const emptyEntries = entries.filter(({ text }) => !text);
+  entries = entries.filter(({ text }) => !!text);
+  if (emptyEntries.length > 0) {
+    const emptyIds = emptyEntries.map(({ page }) => page.id);
+    const existingDocs = await db.collection('pages')
+      .find({ id: { $in: emptyIds } }, { projection: { id: 1, 'translation.data': 1, 'translation.fail_count': 1 } })
+      .toArray();
+    const existingById = new Map(existingDocs.map(d => [d.id, d.translation]));
+    const failNow = new Date();
+    const failOps = [];
+    for (const { page } of emptyEntries) {
+      const existing = existingById.get(page.id);
+      if (existing?.data) {
+        console.log(`  [empty-response] ${page.id} p${page.page_number}: empty retry, keeping existing translation`);
+        continue;
+      }
+      failOps.push({
+        updateOne: {
+          filter: { id: page.id },
+          update: { $set: {
+            'translation.fail_count': (existing?.fail_count || 0) + 1,
+            'translation.fail_reason': 'empty_response',
+            'translation.failed_at': failNow,
+            'translation.language': 'English',
+            updated_at: failNow,
+          } },
+        },
+      });
+    }
+    if (failOps.length > 0) {
+      await db.collection('pages').bulkWrite(failOps, { ordered: false });
+      console.log(`  [empty-response] marked ${failOps.length} page(s) with empty model responses`);
     }
   }
   if (entries.length === 0) return;
@@ -523,6 +601,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
           },
           updated_at: now,
         },
+        $unset: { 'translation.fail_count': '', 'translation.fail_reason': '', 'translation.failed_at': '' },
       },
     },
   }));

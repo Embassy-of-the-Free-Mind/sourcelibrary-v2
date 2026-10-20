@@ -186,8 +186,9 @@ async function importBook(client: MongoClient, book: BookImport) {
       photo: getPageImageUrl(i),
       thumbnail: getThumbnailUrl(i),
       photo_original: getPageImageUrl(i),
-      ocr: { language: book.language, model: null, data: '' },
-      translation: { language: 'English', model: null, data: '' },
+      // Don't initialize ocr/translation with empty strings -- they cause
+      // false completion in job-completion.ts (see: translation loop bug fix).
+      // Matches src/app/api/import/{ia,gallica,google-books}/route.ts (#4685).
       created_at: now,
       updated_at: now
     }));

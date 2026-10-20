@@ -110,6 +110,11 @@ export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
   /**
+   * True when the incoming `text` was empty and a failure marker was recorded
+   * instead of a write (#4685 population C) — see writePageTranslation below.
+   */
+  emptyResponse?: boolean;
+  /**
    * When protected, the EXISTING human translation (use it for previous-page
    * continuity); when written, the new text.
    */
@@ -134,11 +139,38 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1, 'translation.fail_count': 1 } }
   );
-  const existing = current?.translation as HumanEditableField | undefined;
+  const existing = current?.translation as (HumanEditableField & { fail_count?: number }) | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
     return { written: false, protected: true, text: existing?.data ?? '' };
+  }
+
+  // Empty-response guard (#4685 population C): a model call can return an
+  // empty string without throwing. Writing it as `translation.data: ''` looks
+  // like a finished (if uninteresting) translation and is never retried.
+  // Record a failure marker instead, and never let an empty response clobber
+  // an existing real translation. Shape mirrors the OCR give-up (#4674:
+  // ocr.fail_count/fail_reason) so the same kind of retry/give-up logic can
+  // read it later; this door does not itself block retries.
+  if (!text) {
+    if (existing?.data) {
+      return { written: false, protected: false, emptyResponse: true, text: existing.data };
+    }
+    const now = new Date();
+    await db.collection('pages').updateOne(
+      { id: pageId },
+      {
+        $set: {
+          'translation.fail_count': (existing?.fail_count ?? 0) + 1,
+          'translation.fail_reason': 'empty_response',
+          'translation.failed_at': now,
+          'translation.language': language,
+          updated_at: now,
+        },
+      }
+    );
+    return { written: false, protected: false, emptyResponse: true, text: '' };
   }
 
   // Promise 2: snapshot existing content first (non-fatal — createRevision
@@ -169,6 +201,8 @@ export async function writePageTranslation(
         ...(extraSet || {}),
         updated_at: now,
       },
+      // A successful write clears any prior empty-response strikes.
+      $unset: { 'translation.fail_count': '', 'translation.fail_reason': '', 'translation.failed_at': '' },
     }
   );
   return { written: true, protected: false, text };

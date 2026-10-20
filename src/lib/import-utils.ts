@@ -494,16 +494,14 @@ export async function importBookFromIIIF(
       photo: pageImages[i]?.photo || '',
       thumbnail: pageImages[i]?.thumbnail || '',
       photo_original: pageImages[i]?.photo || '',
-      ocr: {
-        language: lang.language,
-        model: null,
-        data: '',
-      },
-      translation: {
-        language: 'English',
-        model: null,
-        data: '',
-      },
+      // Don't initialize ocr/translation with empty strings -- they cause
+      // false completion in job-completion.ts (see: translation loop bug fix).
+      // Matches the fix already applied in src/app/api/import/{ia,gallica,
+      // google-books}/route.ts — this shared IIIF importer (#4685 population B)
+      // was the one writer still stamping the {data: '', model: null}
+      // placeholder that `hasOcr()` correctly treats as "not done" but that
+      // downstream pipeline sweeps never picked up for retry, because the
+      // field looked initialized rather than absent.
       created_at: new Date(),
       updated_at: new Date(),
     });

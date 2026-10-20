@@ -155,6 +155,87 @@ describe('writePageTranslation (TS door) human-edit guard', () => {
   });
 });
 
+// ── Empty-response guard (#4685 population C) ──────────────────────────────
+// A model call can return '' without erroring or tripping the health gate.
+// The door must never write `translation.data: ''` (it reads as done and is
+// never retried) and must never let an empty response clobber a real
+// existing translation.
+describe('writePageTranslation (TS door) empty-response guard', () => {
+  it('refuses to write an empty response and stamps a failure marker, not translation.data', async () => {
+    setPage(null); // no existing translation
+    const r = await writePageTranslation({ ...writeArgs, text: '' });
+    expect(r.written).toBe(false);
+    expect(r.emptyResponse).toBe(true);
+    expect(state.updates.length).toBe(1);
+    const [, update] = state.updates[0];
+    const set = (update as { $set: Record<string, unknown> }).$set;
+    expect(set.translation).toBeUndefined(); // never a translation subdocument write
+    expect(set['translation.fail_count']).toBe(1);
+    expect(set['translation.fail_reason']).toBe('empty_response');
+    expect(set['translation.failed_at']).toBeInstanceOf(Date);
+  });
+
+  it('increments fail_count on a repeat empty response', async () => {
+    setPage({ fail_count: 2 });
+    await writePageTranslation({ ...writeArgs, text: '' });
+    const [, update] = state.updates[0];
+    const set = (update as { $set: Record<string, unknown> }).$set;
+    expect(set['translation.fail_count']).toBe(3);
+  });
+
+  it('never clobbers an existing real translation with an empty retry', async () => {
+    setPage({ data: 'REAL EXISTING TRANSLATION', source: 'ai' });
+    const r = await writePageTranslation({ ...writeArgs, text: '' });
+    expect(r.written).toBe(false);
+    expect(r.emptyResponse).toBe(true);
+    expect(r.text).toBe('REAL EXISTING TRANSLATION');
+    expect(state.updates.length).toBe(0); // no write at all — existing text is untouched
+  });
+
+  it('a successful write clears any prior empty-response strikes', async () => {
+    setPage({ fail_count: 2, fail_reason: 'empty_response' });
+    const r = await writePageTranslation(writeArgs);
+    expect(r.written).toBe(true);
+    const [, update] = state.updates[0];
+    const unset = (update as { $unset: Record<string, unknown> }).$unset;
+    expect(unset).toEqual({
+      'translation.fail_count': '',
+      'translation.fail_reason': '',
+      'translation.failed_at': '',
+    });
+  });
+});
+
+describe('writePageTranslation (.mjs door) empty-response guard parity', () => {
+  const mjsArgs = {
+    page: { id: 'p1', book_id: 'b1' },
+    book: { language: 'latin' },
+    text: '',
+    promptRef: { id: 'x', name: 'Standard Translation', version: 12 },
+  };
+
+  it('refuses to write and stamps the same failure marker shape', async () => {
+    setPage(null);
+    const r = await writePageTranslationMjs(makeDb(), mjsArgs);
+    expect(r.written).toBe(false);
+    expect(r.emptyResponse).toBe(true);
+    expect(state.updates.length).toBe(1);
+    const [, update] = state.updates[0];
+    const set = (update as { $set: Record<string, unknown> }).$set;
+    expect(set.translation).toBeUndefined();
+    expect(set['translation.fail_count']).toBe(1);
+    expect(set['translation.fail_reason']).toBe('empty_response');
+  });
+
+  it('never clobbers an existing real translation with an empty retry', async () => {
+    setPage({ data: 'REAL EXISTING TRANSLATION', source: 'ai' });
+    const r = await writePageTranslationMjs(makeDb(), mjsArgs);
+    expect(r.written).toBe(false);
+    expect(r.emptyResponse).toBe(true);
+    expect(state.updates.length).toBe(0);
+  });
+});
+
 describe('isHumanEditedTranslation predicate', () => {
   it('matches the door: manual OR edited_by; ai/empty pass', () => {
     expect(isHumanEditedTranslation({ source: 'manual' })).toBe(true);

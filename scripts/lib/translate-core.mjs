@@ -409,12 +409,40 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1, 'translation.fail_count': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
   if (isHumanEdited && !overwriteHuman) {
     return { written: false, protected: true, text: existing.data };
+  }
+
+  // Empty-response guard (#4685 population C): the model can return an empty
+  // string without erroring or tripping assessTranslationHealth's collapse
+  // check (which only fires when the OCR body is >=400 chars) — this writer
+  // used to store it as `translation.data: ''`, a subdocument that looks done
+  // and is never retried (40/40 sampled were real, short, untranslated text).
+  // Record a failure marker instead, and never let an empty response clobber
+  // an existing real translation. Shape mirrors the OCR give-up (#4674:
+  // ocr.fail_count/fail_reason) so the same kind of retry/give-up logic can
+  // read it later; this door does not itself block retries.
+  if (!clean) {
+    if (existing?.data) {
+      return { written: false, protected: false, emptyResponse: true, text: existing.data };
+    }
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      {
+        $set: {
+          'translation.fail_count': (existing?.fail_count || 0) + 1,
+          'translation.fail_reason': 'empty_response',
+          'translation.failed_at': new Date(),
+          'translation.language': 'English',
+          updated_at: new Date(),
+        },
+      }
+    );
+    return { written: false, protected: false, emptyResponse: true, text: '' };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/
@@ -440,6 +468,9 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
         ...(extraSet || {}),
         updated_at: new Date(),
       },
+      // A successful write clears any prior empty-response strikes — the
+      // counter measures consecutive failures, matching the OCR give-up.
+      $unset: { 'translation.fail_count': '', 'translation.fail_reason': '', 'translation.failed_at': '' },
     }
   );
   return { written: true, protected: false, text: clean };

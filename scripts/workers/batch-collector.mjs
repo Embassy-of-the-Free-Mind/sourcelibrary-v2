@@ -447,6 +447,7 @@ async function processOneJob(db, job) {
 
     const bulkOps = [];
     let galleryDocs = null; // Populated by image_extraction jobs
+    const emptyTranslationPageIds = []; // #4685 population C — see the guard below
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
     // fetched + sent, recorded on the batch job at submit. Lets us stamp
@@ -513,6 +514,19 @@ async function processOneJob(db, job) {
         continue;
       }
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
+
+      // Empty-response guard (#4685 population C): the per-response parse
+      // above already discards a genuinely empty `text` before it reaches
+      // pageResults, but a whitespace-only response would pass that check and
+      // land here as an effectively-empty translation. Route it the same way
+      // the sequential worker does — a failure marker, never a written
+      // `translation.data: ''` — rather than let it through unguarded.
+      if (job.type === 'translation' && text.trim().length === 0) {
+        failCount++;
+        noteFail('empty-translation');
+        emptyTranslationPageIds.push(pageId);
+        continue;
+      }
 
       // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
@@ -653,9 +667,45 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokens,
                 updated_at: now,
               },
+              // A real write clears any prior empty-response strikes (#4685).
+              $unset: { 'translation.fail_count': '', 'translation.fail_reason': '', 'translation.failed_at': '' },
             },
           },
         });
+      }
+    }
+
+    // ── Empty-response guard follow-through (#4685 population C) ──
+    // Never write `translation.data: ''` — record a failure marker, and never
+    // let an empty response clobber a real existing translation. Same shape as
+    // the OCR give-up (#4674: ocr.fail_count/fail_reason); this door does not
+    // itself block retries, it just stops them from looking like completions.
+    if (emptyTranslationPageIds.length > 0) {
+      const existingDocs = await db.collection('pages')
+        .find({ id: { $in: emptyTranslationPageIds } }, { projection: { id: 1, 'translation.data': 1, 'translation.fail_count': 1 } })
+        .toArray();
+      const existingById = new Map(existingDocs.map(d => [d.id, d.translation]));
+      const failNow = new Date();
+      const failOps = [];
+      for (const pageId of emptyTranslationPageIds) {
+        const existing = existingById.get(pageId);
+        if (existing?.data) { continue; } // empty retry — keep the real translation
+        failOps.push({
+          updateOne: {
+            filter: { id: pageId },
+            update: { $set: {
+              'translation.fail_count': (existing?.fail_count || 0) + 1,
+              'translation.fail_reason': 'empty_response',
+              'translation.failed_at': failNow,
+              'translation.language': job.language || 'English',
+              updated_at: failNow,
+            } },
+          },
+        });
+      }
+      if (failOps.length > 0) {
+        await db.collection('pages').bulkWrite(failOps, { ordered: false });
+        console.log(`  Marked ${failOps.length} page(s) with empty translation responses (book: ${job.book_id})`);
       }
     }
 
