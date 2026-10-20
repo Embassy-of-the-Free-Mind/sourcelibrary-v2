@@ -17,7 +17,7 @@ issue: 6871
 
 **Question.** The #4523 leaf worker refused 5,135 pages in 130 hidden Tibetan books because its gutter detector saw a bound-book opening. 5,132 still had no OCR on 2026-10-20. Would Yigdzin 1, reading the page whole instead of cut into leaves, give text we would serve?
 
-**What the pages are.** By eye, on 30 drawn pages: mostly **single pecha leaves** (22) and **modern book pages** (7), plus one other. None is a two-page opening. So the detector misfires on single leaves in reprint frames and on book pages. 5 of the 30 are blank leaves or empty frames.
+**What the pages are.** By eye, on 30 drawn pages: mostly **single pecha leaves** (21) and **book pages** (8), plus one other. None is a two-page opening. So the detector misfires on single leaves in reprint frames and on book pages. 5 of the 30 are blank leaves or empty frames.
 
 **Design.** Committed before any read was scored: `scripts/eval/tibetan-gutter-6871/PREREGISTRATION.md` (63c92743e).
 - **Draw.** 30 pages, page-weighted, at most 2 per book, 19 books, seed 6871.
