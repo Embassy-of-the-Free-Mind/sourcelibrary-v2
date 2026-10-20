@@ -38,6 +38,9 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  isEmptyTranslation,
+  recordEmptyTranslation,
+  EMPTY_RESPONSE_REASON,
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
@@ -502,6 +505,14 @@ function engineFor(page, book, promptRef, call) {
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef, call) {
   text = unwrapForWrite(page, text, book);
+  // Empty-response guard (#4685): the health gate's collapse tier needs a long source, so an empty
+  // answer on a short page used to be written as `translation.data: ''` — over the English when
+  // the page was a retranslation. Never stored; recorded as a failure (recordEmptyTranslation).
+  if (isEmptyTranslation(text)) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+    return { written: false, reason: EMPTY_RESPONSE_REASON };
+  }
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -558,6 +569,14 @@ function unwrapForWrite(page, text, book) {
 
 async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text, book) }));
+  // Empty-response guard (#4685), as in writePageTranslation: a page the block answer left empty
+  // is recorded as a failure, never written.
+  const empty = entries.filter(({ text }) => isEmptyTranslation(text));
+  entries = entries.filter(({ text }) => !isEmptyTranslation(text));
+  for (const { page } of empty) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+  }
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -576,10 +595,10 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     }
   }
   // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
-  if (entries.length === 0) return { refused: unhealthy.length };
+  if (entries.length === 0) return { refused: unhealthy.length + empty.length };
   if (entries.length === 1) {
     const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
-    return { refused: unhealthy.length + (one.written ? 0 : 1) };
+    return { refused: unhealthy.length + empty.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -639,7 +658,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       updated_at: now,
     },
   })));
-  return { refused: unhealthy.length };
+  return { refused: unhealthy.length + empty.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
