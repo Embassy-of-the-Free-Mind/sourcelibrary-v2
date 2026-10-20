@@ -34,6 +34,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { setCatalogueFields, assertCatalogueStamp } from '../lib/catalogue-fields.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SCRIPT = 'scripts/maintenance/correct-imprint-from-titlepage.mjs';
@@ -115,9 +116,9 @@ if (!Object.keys(changed).length) { console.log('nothing differs; no write'); aw
 const now = new Date().toISOString();
 const before = Object.fromEntries(Object.keys(changed).map((f) => [f, b[f]]));
 const beforeProv = Object.fromEntries(Object.keys(changed).map((f) => [f, b.field_provenance?.[f]]));
-const stamps = Object.fromEntries(Object.keys(changed).map((f) => [`field_provenance.${f}`, {
-  source: 'titlepage', script: SCRIPT, date: now, previous_value: b[f] ?? null, previous_provenance: b.field_provenance?.[f] ?? null, evidence,
-}]));
+// setCatalogueFields (#6327) reads previous_value / previous_provenance itself and appends the history entry.
+const stamp = { source: 'titlepage', script: SCRIPT, date: now, evidence };
+assertCatalogueStamp(stamp);
 if (!APPLY) {
   console.log('  supabase        ', JSON.stringify(await supabaseMirror(b.id, changed)));
   console.log('\ndry run — add --apply to write'); await mc.close(); process.exit(0);
@@ -127,10 +128,10 @@ const bk = readBackup();
 bk.entries.push({ book_id: b.id, at: now, before, before_provenance: beforeProv, after: changed, evidence });
 mkdirSync(dirname(BACKUP), { recursive: true });
 writeFileSync(BACKUP, JSON.stringify(bk, null, 1));
-// Guard on the values read above: if another writer changed the record in between, write nothing.
-const r = await books.updateOne({ id: b.id, ...Object.fromEntries(Object.keys(changed).map((f) => [f, b[f] === undefined ? { $exists: false } : b[f]])) }, { $set: { ...changed, ...stamps, updated_at: new Date() } });
-console.log(`\nbooks.modifiedCount ${r.modifiedCount}`);
-if (r.modifiedCount !== 1) { console.error('!! the record changed since it was read; nothing written'); await mc.close(); process.exit(1); }
+// The helper guards on the values it reads: if another writer changed the record in between, it writes nothing.
+const r = await setCatalogueFields(db, b.id, changed, stamp).catch((e) => ({ error: e }));
+if (r.error) { console.error(`!! ${r.error.message}`); await mc.close(); process.exit(1); }
+console.log(`\nbooks.modifiedCount ${r.modified}`);
 console.log('supabase', JSON.stringify(await supabaseMirror(b.id, changed)));
 await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'imprint-corrected-from-titlepage', detail: { from: before, to: changed, evidence } });
 console.log('sweep_log row written. Next: npx tsx scripts/maintenance/materialize-edition-keys.ts (dry run) to restamp edition_key.');
