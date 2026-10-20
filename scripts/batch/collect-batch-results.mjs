@@ -198,10 +198,17 @@ async function processOneJob(db, job) {
         }
       }
     } else {
-      for (let idx = 0; idx < responses.length; idx++) {
-        const result = responses[idx];
-        const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
-        if (!pageId) { failCount++; continue; }
+      // Match by metadata.key ONLY. Gemini Batch does not keep request order, so
+      // the old fallback to job.page_ids[idx] wrote one page's text onto another,
+      // across books (2026-03-24 contamination; batch-collector.mjs was fixed then,
+      // this cron'd collector was not, #4685). A key must also name a page this
+      // job submitted, and a repeated key keeps only its first response.
+      const submitted = new Set((job.page_ids || []).map(String));
+      const seenKeys = new Set();
+      for (const result of responses) {
+        const pageId = result.metadata?.key;
+        if (!pageId || !submitted.has(String(pageId)) || seenKeys.has(String(pageId))) { failCount++; continue; }
+        seenKeys.add(String(pageId));
         const candidate = result.response?.candidates?.[0];
         const text = candidateText(candidate);
         if (!text) { failCount++; continue; }
