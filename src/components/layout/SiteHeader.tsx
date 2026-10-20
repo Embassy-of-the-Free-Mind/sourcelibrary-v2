@@ -250,6 +250,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     image: session.user?.image,
     initials: (session.user?.name?.split(' ').map((n) => n[0]).join('') || session.user?.email?.[0] || '?').toUpperCase().slice(0, 2),
   } : undefined;
+  // Admins keep their avatar menu (and its admin links) on narrow screens too:
+  // the phone menu offers readers only Account, which has none of them.
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const showAdminAvatar = role === 'admin' || role === 'superadmin';
 
   return (
     <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-30 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
@@ -344,6 +348,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             )}
           </div>
 
+          {showAdminAvatar && (
+            <span className="ml-auto mr-1 lg:hidden"><UserMenu variant="nav" /></span>
+          )}
+
           {/* Hamburger: phones, and wide screens where the links don't fit. */}
           <button
             ref={burgerRef}
@@ -352,7 +360,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             aria-label={menuOpen ? CHROME_STRINGS[locale].close : t.menu}
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
-            className={`relative w-11 h-11 shrink-0 ml-auto text-white ${compact ? '' : 'lg:hidden'}`}
+            className={`relative w-11 h-11 shrink-0 ${showAdminAvatar ? 'lg:ml-auto' : 'ml-auto'} text-white ${compact ? '' : 'lg:hidden'}`}
           >
             {[0, 1, 2].map((k) => (
               <i
