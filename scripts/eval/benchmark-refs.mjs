@@ -27,6 +27,7 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { foldGreekWord } from './build-greek-corpus.mjs';
+import { cleanPageText, pageQuality } from './lib/wikisource-text.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -364,8 +365,269 @@ async function corpusLookup(probeByEngine) {
   return { source: 'Digital Syriac Corpus', work: bestHit.id, work_title: index[bestHit.id]?.title || null, url: `https://syriaccorpus.org/${bestHit.id}`, window: w.window, overlap: w.overlap, probe_engine: bestHit.engine, shared_bigrams: bestHit.shared };
 }
 
+// ── English (english-1800s, english-1900s; #5182, PREREGISTRATION-english-modern-5182.md) ──
+// Sources in order, all free: (1) en.wikisource Page: namespace (ns 104) — a proofread transcription
+// of ONE scan page, found by quoted content phrases from the probe; the leaf's neighbours are fetched
+// too, so an edition with a different pagination still yields a window; (2) en.wikisource main
+// namespace — a whole-work transcription, windowed; (3) Project Gutenberg — Gutendex when it answers
+// (it was timing out on 2026-09-26), else the catalogue CSV matched on title words + author surname,
+// then the plain text, windowed. The PROBE is the page's stored production read
+// (<root>/<stratum>/probe/<slug>.txt, written by benchmark-seal.mjs); it only locates the window
+// and is never the reference. IA djvu text is used nowhere here. Every record carries the
+// eval-design §4 fields; leaf_check starts `unchecked` and is set by eye afterwards.
+const WS_EN = 'https://en.wikisource.org/w/api.php';
+const COMMONS = 'https://commons.wikimedia.org/w/api.php';
+const PG_CATALOG = argOf('pg-catalog', path.join(process.env.HOME || '', '.claude/jobs/496557a4/tmp/pg_catalog.csv'));
+const foldEn = s => String(s || '').normalize('NFD').replace(/\p{M}+/gu, '').normalize('NFC').toLowerCase().replace(/ſ/g, 's').replace(/[’‘ʼ`´]/g, "'").replace(/æ/g, 'ae').replace(/œ/g, 'oe');
+// Words with raw offsets; the fold is for matching only, the reference keeps the raw text.
+function enWords(text) {
+  const words = [], offs = [];
+  for (const m of text.matchAll(/\p{L}[\p{L}'’]*/gu)) { const f = foldEn(m[0]).replace(/[^a-z']/g, ''); if (f.length >= 1) { words.push(f); offs.push([m.index, m.index + m[0].length]); } }
+  return { words, offs };
+}
+// Quoted search phrases: 5 consecutive alphabetic words of ≥ 3 letters, spread over the probe.
+function enPhrases(words, max) {
+  const runs = [];
+  for (let i = 0; i + 5 <= words.length; i++) { const r = words.slice(i, i + 5); if (r.every(w => w.length >= 3 && /^[a-z]+$/.test(w)) && r.join('').length >= 22) runs.push(r.join(' ')); }
+  const uniq = [...new Set(runs)]; if (uniq.length <= max) return uniq;
+  const step = uniq.length / max; return Array.from({ length: max }, (_, k) => uniq[Math.floor(k * step)]);
+}
+const grams4 = ws => { const s = new Set(); for (let i = 0; i + 4 <= ws.length; i++) s.add(ws.slice(i, i + 4).join(' ')); return s; };
+function gramOverlap(refWords, probeWords) { const P = grams4(probeWords), R = grams4(refWords); let hit = 0; for (const g of P) if (R.has(g)) hit++; return P.size ? hit / P.size : 0; }
+// Word-4-gram vote → densest probe-length window → edges trimmed to the outermost probe 4-gram
+// (±2 words). An edge omission by the probe engine is the one blind spot; the by-eye leaf check
+// reads the reference's first and last lines against the image for exactly that.
+function enWindow(words, probeWords) {
+  const idx = new Map();
+  for (let i = 0; i + 4 <= words.length; i++) { const g = words.slice(i, i + 4).join(' '); let a = idx.get(g); if (!a) { a = []; idx.set(g, a); } a.push(i); }
+  const P = grams4(probeWords); const votes = new Float64Array(words.length + 1);
+  for (const g of P) { const pos = idx.get(g); if (!pos || pos.length > 20) continue; for (const p of pos) votes[p] += 1 / pos.length; }
+  const L = Math.max(30, Math.round(probeWords.length * 1.3));
+  let best = 0, at = 0, run = 0;
+  for (let i = 0; i < votes.length; i++) { run += votes[i]; if (i >= L) run -= votes[i - L]; if (run > best) { best = run; at = Math.max(0, i - L + 1); } }
+  const s = Math.max(0, at - Math.round(L * 0.15)), e = Math.min(words.length, at + L + Math.round(L * 0.15));
+  let first = -1, last = -1; for (let i = s; i + 4 <= e; i++) if (P.has(words.slice(i, i + 4).join(' '))) { if (first < 0) first = i; last = i + 4; }
+  const from = first < 0 ? s : Math.max(s, first - 2), to = first < 0 ? e : Math.min(e, last + 2);
+  return { from, to, overlap: gramOverlap(words.slice(from, to), probeWords), votes: best };
+}
+async function wsSearch(api, ns, phrase) {
+  const j = await wsJson(`${api}?action=query&list=search&srsearch=${encodeURIComponent(`"${phrase}"`)}&srnamespace=${ns}&srlimit=5&format=json&utf8=1`);
+  return (j.query?.search || []).map(r => r.title);
+}
+async function wsRevisions(api, titles) {
+  const j = await wsJson(`${api}?action=query&prop=revisions&rvprop=content|ids|timestamp&rvslots=main&titles=${encodeURIComponent(titles.join('|'))}&format=json&formatversion=2`);
+  const out = {}; for (const p of j.query?.pages || []) { const r = p.revisions?.[0]; if (r) out[p.title] = { text: r.slots.main.content, revid: r.revid, timestamp: r.timestamp, ns: p.ns }; }
+  return out;
+}
+async function wsVote(ns, phrases, log) {
+  const counts = new Map();
+  for (const ph of phrases) {
+    try { for (const t of await wsSearch(WS_EN, ns, ph)) counts.set(t, (counts.get(t) || 0) + 1); }
+    catch (e) { log(`    wikisource ns${ns} search error: ${e.message.slice(0, 80)}`); }
+    await sleep(500);
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+}
+// The scan a Wikisource Index was made from: an archive.org identifier on the Commons (or local)
+// File: page. Equal to our book's ia_identifier → edition_match `same` (same scan, same edition).
+const fileIaCache = new Map();
+async function wsFileIaId(file) {
+  if (fileIaCache.has(file)) return fileIaCache.get(file);
+  let id = null;
+  for (const api of [COMMONS, WS_EN]) {
+    try { const revs = await wsRevisions(api, [`File:${file}`]); const r = Object.values(revs)[0]; if (!r) continue; const m = r.text.match(/archive\.org\/(?:details|download|stream)\/([A-Za-z0-9._-]+)/) || r.text.match(/\{\{\s*IA\s*\|\s*([^|}\s]+)/i); id = m ? m[1].trim() : null; break; }
+    catch (e) { /* file page absent here */ }
+  }
+  fileIaCache.set(file, id); return id;
+}
+async function wsPageLookup(probeWords, meta, log) {
+  const phrases = enPhrases(probeWords, 5);
+  if (phrases.length < 2) return { reason: 'probe too noisy for search phrases' };
+  const ranked = await wsVote(104, phrases, log);
+  // Votes per FILE: consecutive pages of one djvu are one candidate — an edition with a different
+  // pagination splits our leaf across two of its pages.
+  const byFile = new Map();
+  for (const [t, c] of ranked) { const m = t.match(/^Page:(.+)\/(\d+)$/); if (!m) continue; let g = byFile.get(m[1]); if (!g) { g = { file: m[1], votes: 0, pages: [] }; byFile.set(m[1], g); } g.votes += c; g.pages.push({ n: +m[2], c }); }
+  const top = [...byFile.values()].sort((a, b) => b.votes - a.votes)[0];
+  if (!top || top.votes < 2) return { tried: ranked.slice(0, 3).map(([t, c]) => `${t}:${c}`) };
+  top.pages.sort((a, b) => b.c - a.c || a.n - b.n); const center = top.pages[0].n;
+  const ns = [center - 1, center, center + 1].filter(n => n > 0);
+  const revs = await wsRevisions(WS_EN, ns.map(n => `Page:${top.file}/${n}`));
+  const parts = []; for (const n of ns) { const r = revs[`Page:${top.file}/${n}`]; if (r) parts.push({ n, revid: r.revid, timestamp: r.timestamp, quality: pageQuality(r.text), text: cleanPageText(r.text) }); }
+  const cp = parts.find(p => p.n === center); if (!cp || cp.text.length < 40) return { tried: [`Page:${top.file}/${center} (empty or unfetched)`] };
+  const raw = parts.map(p => p.text).join('\n\n'); const { words, offs } = enWords(raw);
+  let cursor = 0; const range = new Map(); for (const p of parts) { range.set(p.n, [cursor, cursor + p.text.length]); cursor += p.text.length + 2; }
+  const [c0, c1] = range.get(center);
+  const w = enWindow(words, probeWords);
+  const inCenter = i => offs[i][0] >= c0 && offs[i][0] < c1;
+  const centerIdx = []; for (let i = 0; i < words.length; i++) if (inCenter(i)) centerIdx.push(i);
+  const winCenter = centerIdx.filter(i => i >= w.from && i < w.to).length;
+  const centerShare = winCenter / Math.max(1, w.to - w.from), centerCovered = winCenter / Math.max(1, centerIdx.length);
+  let text, unit, overlap;
+  if (centerShare >= 0.9 && centerCovered >= 0.8) { text = cp.text; unit = { kind: 'page', chars: text.length }; overlap = gramOverlap(enWords(text).words, probeWords); }
+  else { text = raw.slice(offs[w.from][0], offs[w.to - 1][1]); unit = { kind: 'window', chars: text.length, note: `window over Page:${top.file}/${ns[0]}–${ns[ns.length - 1]}; centre page share ${centerShare.toFixed(2)}, covered ${centerCovered.toFixed(2)}` }; overlap = w.overlap; }
+  const ia = await wsFileIaId(top.file);
+  const same = ia && meta?.ia_identifier && ia.toLowerCase() === meta.ia_identifier.toLowerCase();
+  return { src: {
+    source: 'en.wikisource', source_url: `https://en.wikisource.org/wiki/${encodeURIComponent(`Page:${top.file}/${center}`)}`, source_revision: `oldid ${cp.revid} (${cp.timestamp})`,
+    licence: 'CC-BY-SA-4.0 (Wikisource transcription of a public-domain work)', work: `Index:${top.file}`, work_title: top.file.replace(/\.(djvu|pdf)$/i, ''),
+    page_quality: cp.quality, phrase_hits: top.votes, unit, alignment: { method: unit.kind === 'page' ? 'wikisource-page (whole proofread page)' : 'word-4gram-vote+edge-trim over the page and its neighbours', window_words: unit.kind === 'page' ? enWords(text).words.length : w.to - w.from, probe_words: probeWords.length, overlap: +overlap.toFixed(3) },
+    edition_match: same ? 'same' : (ia ? 'different' : 'unknown'), edition_match_basis: ia ? `Wikisource scan is archive.org/${ia}; ours is ${meta?.ia_identifier || 'not IA'}` : 'Wikisource File: page names no archive.org item',
+    window: text, overlap,
+  } };
+}
+async function wsMainLookup(probeWords, log) {
+  const phrases = enPhrases(probeWords, 5);
+  if (phrases.length < 2) return null;
+  const ranked = (await wsVote(0, phrases, log)).filter(([t]) => !/^(Author|Portal|Index|Page|Wikisource|Translation|Category|Template):/i.test(t));
+  const best = ranked[0]; if (!best || best[1] < 2) return ranked.length ? { tried: ranked.slice(0, 3).map(([t, c]) => `${t}:${c}`) } : null;
+  const j = await wsJson(`${WS_EN}?action=parse&page=${encodeURIComponent(best[0])}&prop=text|revid&format=json&utf8=1&disabletoc=1`);
+  const raw = htmlDecode((j.parse?.text?.['*'] || '').replace(/<(style|script)[\s\S]*?<\/\1>/g, ' ').replace(/<span class="pagenum[^"]*"[^>]*>[\s\S]*?<\/span>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').trim();
+  const { words, offs } = enWords(raw); if (words.length < 30) return null;
+  const w = enWindow(words, probeWords); if (w.to <= w.from) return null;
+  const text = raw.slice(offs[w.from][0], offs[w.to - 1][1]);
+  return { src: {
+    source: 'en.wikisource (main namespace)', source_url: `https://en.wikisource.org/wiki/${encodeURIComponent(best[0])}`, source_revision: `revid ${j.parse?.revid} (fetched ${new Date().toISOString().slice(0, 10)})`,
+    licence: 'CC-BY-SA-4.0 (Wikisource transcription of a public-domain work)', work: best[0], work_title: best[0], phrase_hits: best[1],
+    unit: { kind: 'window', chars: text.length }, alignment: { method: 'word-4gram-vote+edge-trim over the work text', window_words: w.to - w.from, probe_words: probeWords.length, overlap: +w.overlap.toFixed(3) },
+    edition_match: 'unknown', edition_match_basis: 'main-namespace transcription; edition not compared', window: text, overlap: w.overlap,
+  } };
+}
+// ── Project Gutenberg ──
+function parseCsv(text) {   // RFC 4180: quoted fields may hold commas and newlines
+  const rows = []; let row = [], field = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else q = false; } else field += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(field); field = ''; }
+    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+    else if (c !== '\r') field += c;
+  }
+  if (field || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+const TITLE_STOP = new Set(['the', 'and', 'of', 'a', 'an', 'in', 'on', 'to', 'for', 'with', 'vol', 'volume', 'part', 'from', 'by', 'or', 'its', 'edition', 'translated', 'translation', 'tr', 'ed', 'complete', 'works', 'book', 'books', 'new', 'first', 'second', 'third', 'vols', 'series', 'other', 'his', 'her', 'their', 'into', 'english', 'notes', 'introduction', 'with']);
+const titleWords = t => [...new Set(foldEn(t).replace(/[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length >= 3 && !TITLE_STOP.has(w)))];
+const nameWords = a => foldEn(a).replace(/[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length >= 3 && !/^(ed|tr|trans|and|the|of|sir|rev|von|van|der|de)$/.test(w));
+let pgCatalog = null;
+function loadPg() {
+  if (pgCatalog) return pgCatalog;
+  if (!fs.existsSync(PG_CATALOG)) { console.log(`  ! Gutenberg catalogue not found at ${PG_CATALOG} (fetch https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv, or --pg-catalog=)`); return (pgCatalog = []); }
+  const rows = parseCsv(fs.readFileSync(PG_CATALOG, 'utf8')); const h = rows[0];
+  const iId = h.indexOf('Text#'), iType = h.indexOf('Type'), iTitle = h.indexOf('Title'), iLang = h.indexOf('Language'), iAu = h.indexOf('Authors');
+  pgCatalog = rows.slice(1).filter(r => r[iType] === 'Text' && /\ben\b/.test(r[iLang] || '')).map(r => ({ id: +r[iId], title: r[iTitle] || '', authors: r[iAu] || '', via: 'pg_catalog.csv' }));
+  console.log(`  Gutenberg catalogue: ${pgCatalog.length} English texts`);
+  return pgCatalog;
+}
+function pgCandidates(title, author) {
+  const head = titleWords(title.split(/[(—–:|;]/)[0]), full = titleWords(title), au = author ? nameWords(author) : [];
+  const scored = [];
+  for (const r of loadPg()) {
+    const rt = r._tw || (r._tw = titleWords(r.title)); let s = 0;
+    for (const w of full) if (rt.includes(w)) s += head.includes(w) ? 2 : 1;
+    if (!s) continue;
+    const ra = r._au || (r._au = nameWords(r.authors));
+    if (au.some(w => ra.includes(w))) s += 3;
+    // penalise catalogue titles with many words we never mention (a 12-word title sharing one word)
+    s -= Math.max(0, rt.length - full.length) * 0.25;
+    scored.push({ ...r, score: s });
+  }
+  return scored.sort((a, b) => b.score - a.score).filter(c => c.score >= 3).slice(0, 3);
+}
+async function gutendex(q) {
+  try { const r = await fetch(`https://gutendex.com/books?search=${encodeURIComponent(q)}&languages=en`, { signal: AbortSignal.timeout(15000) }); if (!r.ok) return null; const j = await r.json(); return (j.results || []).slice(0, 3).map(b => ({ id: b.id, title: b.title, authors: (b.authors || []).map(a => a.name).join('; '), via: 'gutendex' })); }
+  catch (e) { return null; }
+}
+const pgTextCache = new Map();
+async function pgText(id) {
+  if (pgTextCache.has(id)) return pgTextCache.get(id);
+  let got = null;
+  for (const u of [`https://www.gutenberg.org/cache/epub/${id}/pg${id}.txt`, `https://www.gutenberg.org/ebooks/${id}.txt.utf-8`]) { try { got = { url: u, text: await getText(u) }; break; } catch (e) { /* next mirror path */ } }
+  if (got) { const t = got.text; const s = t.search(/\*\*\* ?START OF TH(E|IS) PROJECT GUTENBERG EBOOK/i), e = t.search(/\*\*\* ?END OF TH(E|IS) PROJECT GUTENBERG EBOOK/i); const from = s >= 0 ? t.indexOf('\n', s) + 1 : 0; got.body = t.slice(from, e > from ? e : t.length); }
+  pgTextCache.set(id, got); await sleep(400); return got;
+}
+async function gutenbergLookup(title, author, probeWords, log) {
+  let cands = await gutendex(`${author ? nameWords(author).slice(-1)[0] || '' : ''} ${titleWords(title.split(/[(—–:|;]/)[0]).slice(0, 4).join(' ')}`.trim());
+  const via = cands ? 'gutendex' : 'pg_catalog.csv (Gutendex unreachable)';
+  if (!cands || !cands.length) cands = pgCandidates(title, author);
+  if (!cands.length) return { tried: [], via };
+  let best = null; const tried = [];
+  for (const c of cands) {
+    const g = await pgText(c.id); if (!g || !g.body || g.body.length < 2000) { tried.push(`#${c.id} (no text)`); continue; }
+    const { words, offs } = enWords(g.body); const w = enWindow(words, probeWords);
+    tried.push(`#${c.id} ${c.title.slice(0, 40)}: ${w.overlap.toFixed(2)}`);
+    if (!best || w.overlap > best.overlap) best = { c, g, w, words, offs, overlap: w.overlap };
+    if (w.overlap >= 0.7) break;
+  }
+  if (!best || best.w.to <= best.w.from) return { tried, via };
+  const text = best.g.body.slice(best.offs[best.w.from][0], best.offs[best.w.to - 1][1]);
+  return { tried, via, src: {
+    source: 'gutenberg', source_url: `https://www.gutenberg.org/ebooks/${best.c.id}`, source_revision: `${best.g.url} fetched ${new Date().toISOString().slice(0, 10)}`,
+    licence: 'Project Gutenberg License (public-domain text; PG trademark terms)', work: `pg${best.c.id}`, work_title: `${best.c.authors ? best.c.authors + ' — ' : ''}${best.c.title}`, catalogue_via: via,
+    unit: { kind: 'window', chars: text.length }, alignment: { method: 'word-4gram-vote+edge-trim over the whole e-text', window_words: best.w.to - best.w.from, probe_words: probeWords.length, overlap: +best.overlap.toFixed(3) },
+    edition_match: 'unknown', edition_match_basis: 'Gutenberg rarely records its source edition; counted apart from `same`', window: text, overlap: best.overlap,
+  } };
+}
+async function englishRefs(reg) {
+  const target = reg.n;
+  const probeDir = path.join(ROOT, STRATUM, 'probe');
+  const metaPath = path.join(probeDir, '_meta.json'); const bookMeta = fs.existsSync(metaPath) ? JSON.parse(fs.readFileSync(metaPath, 'utf8')) : {};
+  const tally = { referenced: 0, retired_no_etext: 0, no_probe: 0, by_source: {}, edition: {}, walked: 0 };
+  const retiredQueue = [];   // retired slugs awaiting a promoted spare (pairs recorded both ways)
+  const regPath = path.join(__dirname, 'benchmark', `${STRATUM}.json`);
+  for (const p of reg.pages) {
+    if (ONLY && p.slug !== ONLY) continue;
+    if (p.retired && !ONLY) { if (!p.spare) retiredQueue.push(p.slug); continue; }
+    // Sealed pages are always resolved (reference or recorded skip); spares only while short of the quota.
+    if (p.spare && !p.promoted && tally.referenced >= target && !ONLY) break;
+    tally.walked++;
+    const outTxt = path.join(REFS, `${p.slug}.txt`), outJson = path.join(REFS, `${p.slug}.json`);
+    const promoteIfSpare = () => { if (p.spare && !p.promoted) { p.promoted = true; p.promoted_for = 'no-e-text'; const r = retiredQueue.shift(); if (r) { p.replaces = r; const rp = reg.pages.find(x => x.slug === r); if (rp) rp.replaced_by = p.slug; } } };
+    if (fs.existsSync(outJson) && !FORCE && !(RETRY && !fs.existsSync(outTxt))) {
+      const j = JSON.parse(fs.readFileSync(outJson, 'utf8'));
+      if (fs.existsSync(outTxt)) { tally.referenced++; promoteIfSpare(); tally.by_source[j.source] = (tally.by_source[j.source] || 0) + 1; tally.edition[j.edition_match] = (tally.edition[j.edition_match] || 0) + 1; }
+      else if (!p.retired) { p.retired = j.skipped || 'no-e-text'; if (!p.spare) retiredQueue.push(p.slug); tally.retired_no_etext++; }
+      continue;
+    }
+    const probeFile = path.join(probeDir, `${p.slug}.txt`);
+    const probeText = fs.existsSync(probeFile) ? fs.readFileSync(probeFile, 'utf8') : '';
+    const probeWords = enWords(probeText).words;
+    const note = { slug: p.slug, substratum: p.substratum, title: p.title, year: p.year, probe: { source: 'stored production read (pages.ocr.data, tags stripped)', words: probeWords.length } };
+    if (probeWords.length < 40) { note.skipped = 'no-probe'; note.reason = 'stored read has < 40 words'; tally.no_probe++; p.retired = 'no-probe'; if (!p.spare) retiredQueue.push(p.slug); if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason}`); continue; }
+    const meta = bookMeta[p.slug] || {};
+    let src = null; const tried = {};
+    try {
+      const a = await wsPageLookup(probeWords, meta, m => console.log(m)); tried.wikisource_page = a.tried || a.reason || null; if (a.src && a.src.overlap >= MIN_OVERLAP) src = a.src;
+      if (!src) { const b = await wsMainLookup(probeWords, m => console.log(m)); tried.wikisource_main = b?.tried || null; if (b?.src && b.src.overlap >= MIN_OVERLAP && (!src || b.src.overlap > src.overlap)) src = b.src; else if (b?.src) tried.wikisource_main = [`${b.src.work}: overlap ${b.src.overlap.toFixed(2)}`]; }
+      if (!src) { const c = await gutenbergLookup(p.title || '', meta.author, probeWords, m => console.log(m)); tried.gutenberg = c.tried; tried.gutenberg_via = c.via; if (c.src && c.src.overlap >= MIN_OVERLAP) src = c.src; }
+    } catch (e) { note.error = e.message.slice(0, 160); }
+    note.tried = tried;
+    if (!src) {
+      note.skipped = 'no-e-text'; note.reason = `no e-text window reaches ${MIN_OVERLAP} word-4-gram overlap with the probe (en.wikisource Page:/main, Gutenberg)`;
+      tally.retired_no_etext++; p.retired = 'no-e-text'; if (!p.spare) retiredQueue.push(p.slug);
+      if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2));
+      console.log(`  – ${p.slug} (${p.year}, ${(p.title || '').slice(0, 40)}): no e-text ${note.error ? '[' + note.error + ']' : ''}`);
+      continue;
+    }
+    const { window, overlap, ...rest } = src;
+    Object.assign(note, rest, {
+      leaf_check: { status: 'unchecked', by: null, at: null, note: null },
+      canonical: null, memorization_risk: null,   // set with the by-eye classification
+      made_by: null, reference_error_rate: null,
+      lines: window.split('\n').filter(l => l.trim()).length,
+    });
+    if (!DRY) { fs.writeFileSync(outTxt, window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
+    tally.referenced++; promoteIfSpare(); tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.edition[src.edition_match] = (tally.edition[src.edition_match] || 0) + 1;
+    console.log(`  ✓ ${p.slug} (${p.year}, ${(p.title || '').slice(0, 40)}): ${src.source} ${src.work_title.slice(0, 50)} — ${src.unit.kind} ${src.unit.chars} chars, overlap ${overlap.toFixed(2)}, edition ${src.edition_match}${p.spare ? ' [spare promoted]' : ''}`);
+  }
+  if (!DRY && !ONLY) { reg.reference_walk = { at: new Date().toISOString(), target, referenced: tally.referenced, walked: tally.walked, retired_no_etext: tally.retired_no_etext, no_probe: tally.no_probe, rule: 'draw order walked until `n` pages hold a reference; a page with no e-text is retired `no-e-text` and the next spare promoted (`replaces`/`replaced_by` pair them in order); pages after the quota stay unused spares' }; fs.writeFileSync(regPath, JSON.stringify(reg, null, 2)); }
+  console.log(`\n${STRATUM}: ${tally.referenced}/${target} referenced after walking ${tally.walked} pages; ${tally.retired_no_etext} no-e-text, ${tally.no_probe} no-probe; by source ${JSON.stringify(tally.by_source)}; edition ${JSON.stringify(tally.edition)}`);
+}
+
 // ── main ──
 const reg = JSON.parse(fs.readFileSync(path.join(__dirname, 'benchmark', `${STRATUM}.json`), 'utf8'));
+if (STRATUM.startsWith('english')) { await englishRefs(reg); process.exit(0); }
 if (STRATUM === 'syriac') {
   const pages = reg.pages.filter(p => (!p.spare || p.promoted) && !p.retired && (!ONLY || p.slug === ONLY));
   const outRoot = path.join(ROOT, STRATUM, 'out');

@@ -216,10 +216,25 @@ export const STRATA = {
     { name: 'english-1600-1779', n: 10, columns: 3, filter: { language: /^(English|eng)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1600, 1780)(b) && !MS_RE.test(b.title || ''), reference: 'agreement + invention' },
     { name: 'french-1600-1779', n: 10, columns: 2, filter: { language: /^(French|fre|fra)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1600, 1780)(b) && !MS_RE.test(b.title || ''), reference: 'agreement + invention' },
   ] },
+  // Modern English print (#5182, PREREGISTRATION-english-modern-5182.md): the first English
+  // library pages with a reference. `visible: true` (the design's live filter), interior 15–95 %
+  // (eval-design §3.2), stored OCR required (it is the free PROBE that locates the e-text window —
+  // never the reference), and a LONG sealed spare tail: the reference step walks the draw order
+  // and retires pages with no e-text / a shifted leaf / no alignment until 50 are referenced.
+  // Walking further down a sealed order is not a redraw; the order is the seal.
+  'english-1800s': { issue: 5182, seed: 5182, export: 'active', subs: [
+    { name: 'english-1800-1899', n: 50, spares: 150, interior: [0.15, 0.95], requireOcr: true, filter: { visible: true, language: /^(English|eng)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1800, 1900)(b) && !MS_RE.test(b.title || '') && !sealedBooks('longs-en-fr').has(b.id), reference: 'en.wikisource (Page: namespace of the scan, then main namespace), then Project Gutenberg; window by word-4-gram vote against the stored production read; leaf check by eye' },
+  ] },
+  'english-1900s': { issue: 5182, seed: 5183, export: 'active', subs: [
+    { name: 'english-1900-2029', n: 50, spares: 150, interior: [0.15, 0.95], requireOcr: true, filter: { visible: true, language: /^(English|eng)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1900, 2030)(b) && !MS_RE.test(b.title || '') && !sealedBooks('longs-en-fr').has(b.id), reference: 'same as english-1800s' },
+  ] },
 };
 
 const letters = s => ((s || '').match(/\p{L}/gu) || []).length;
-const stripTags = s => (s || '').replace(/<[^>]+>/g, ' ');
+// Metadata wrappers go WITH their payload (<language>English</language> is not page text);
+// inline annotations keep theirs (<header>, <unclear>, <term> wrap words the page prints).
+const WRAPPER_RE = /<(warning|meta|image-desc|figure|note|scan-quality|language|script|page-type|columns|detected-images|vocab|page-num|sig|summary|keywords)\b[^>]*>[\s\S]*?<\/\1>/gi;
+const stripTags = s => (s || '').replace(WRAPPER_RE, ' ').replace(/<[^>]+>/g, ' ');
 const COLUMNS_RE = /<columns>\s*([2-9])/i;
 
 async function drawSub(db, stratum, sub, rand) {
@@ -238,9 +253,11 @@ async function drawSub(db, stratum, sub, rand) {
   // plate — the stored-OCR filter cannot see pages that were never OCR'd) can be replaced by
   // the next book in the same deterministic order instead of by a fresh, unsealed draw.
   const want = sub.n + (sub.spares ?? SPARES);
+  const [fLo, fHi] = sub.interior || [0.10, 0.90];
+  let noOcrBooks = 0;
   for (const book of books) {
     if (out.length >= want) break;
-    const lo = Math.max(1, Math.floor(book.pages_count * 0.10)), hi = Math.max(lo + 1, Math.floor(book.pages_count * 0.90));
+    const lo = Math.max(1, Math.floor(book.pages_count * fLo)), hi = Math.max(lo + 1, Math.floor(book.pages_count * fHi));
     let chosen = null;
     // Multi-column quota: prefer a page whose stored OCR carries a multi-column tag.
     if (wantColumns > 0) {
@@ -257,6 +274,9 @@ async function drawSub(db, stratum, sub, rand) {
       if (!page) continue;
       if (!getPageSource(page)) continue;
       if (page.ocr?.data && letters(stripTags(page.ocr.data)) < MIN_LETTERS) continue;
+      // requireOcr: the stratum needs a stored read as the e-text PROBE (never the reference);
+      // a page never OCR'd is skipped and the book counted, so the bias is on record.
+      if (sub.requireOcr && !page.ocr?.data) { noOcrBooks++; continue; }
       chosen = page;
     }
     if (!chosen) { skippedBooks++; continue; }
@@ -264,8 +284,38 @@ async function drawSub(db, stratum, sub, rand) {
     out.push(entry(stratum, sub, book, chosen));
   }
   out.forEach((p, i) => { p.spare = i >= sub.n; });
-  console.log(`  ${sub.name}: ${Math.min(out.length, sub.n)}/${sub.n} pages + ${Math.max(0, out.length - sub.n)} spares from ${books.length} eligible books (${skippedBooks} books skipped, ${out.filter(p => p.multi_column_tag && !p.spare).length} multi-column-tagged)`);
+  console.log(`  ${sub.name}: ${Math.min(out.length, sub.n)}/${sub.n} pages + ${Math.max(0, out.length - sub.n)} spares from ${books.length} eligible books (${skippedBooks} books skipped${sub.requireOcr ? `, ${noOcrBooks} no-stored-OCR page draws` : ''}, ${out.filter(p => p.multi_column_tag && !p.spare).length} multi-column-tagged)`);
   return out;
+}
+
+// Probe export (requireOcr strata): the stored production read of each drawn page, tags
+// stripped, to <out>/<stratum>/probe/<slug>.txt — the free text benchmark-refs.mjs uses to
+// FIND the e-text window. It is production's read (usually lite's), so it locates the leaf; it
+// is never scored against and never written to refs/. Resumable: existing files are kept.
+async function exportProbes(reg, outDir) {
+  const dir = path.join(outDir, 'probe'); fs.mkdirSync(dir, { recursive: true });
+  const metaPath = path.join(dir, '_meta.json');
+  const meta = fs.existsSync(metaPath) ? JSON.parse(fs.readFileSync(metaPath, 'utf8')) : {};
+  const todo = reg.pages.filter(p => !fs.existsSync(path.join(dir, `${p.slug}.txt`)) || !meta[p.slug]);
+  if (!todo.length) return 0;
+  const { db } = await connect();
+  let n = 0;
+  for (const p of todo) {
+    if (!fs.existsSync(path.join(dir, `${p.slug}.txt`))) {
+      const page = await db.collection('pages').findOne({ book_id: p.book_id, page_number: p.page_number }, { projection: { 'ocr.data': 1 }, maxTimeMS: 30000 });
+      const txt = page?.ocr?.data ? stripTags(page.ocr.data).replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').trim() : '';
+      fs.writeFileSync(path.join(dir, `${p.slug}.txt`), txt); n++;
+    }
+    // Book metadata the reference step needs for edition matching (our IA identifier against
+    // the scan a Wikisource Index was made from) and for catalogue lookups (author surname).
+    if (!meta[p.slug]) {
+      const b = await db.collection('books').findOne({ id: p.book_id }, { projection: { author: 1, ia_identifier: 1, 'image_source.identifier': 1, 'image_source.source_url': 1, text_role: 1, original_language: 1, publisher: 1 }, maxTimeMS: 30000 });
+      meta[p.slug] = { author: b?.author || null, ia_identifier: b?.ia_identifier || b?.image_source?.identifier || null, source_url: b?.image_source?.source_url || null, text_role: b?.text_role || null, original_language: b?.original_language || null, publisher: b?.publisher || null };
+    }
+  }
+  fs.writeFileSync(metaPath, JSON.stringify(meta, null, 1));
+  console.log(`  exported ${n} probes to ${dir} (+ _meta.json for ${Object.keys(meta).length} pages)`);
+  return n;
 }
 
 const PAGE_PROJ = { page_number: 1, 'ocr.data': 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1 };
@@ -352,10 +402,14 @@ async function sealStratum(stratum) {
   // Export images, downscaled to MAX_WIDTH so every engine sees the same pixels.
   const outDir = path.join(args.out, stratum);
   fs.mkdirSync(outDir, { recursive: true });
+  if (cfg.subs.some(s => s.requireOcr)) await exportProbes(reg, outDir);
   const sharp = (await import('sharp')).default;
   const manifest = [];
   let n = 0, failed = 0;
-  for (const p of reg.pages) {
+  // export: 'active' (or --export=active) fetches only the pages in play — sealed and not
+  // retired, or promoted spares — so a 150-spare tail is not 150 image downloads.
+  const active = (cfg.export === 'active' || args.export === 'active') ? reg.pages.filter(p => !p.retired && (!p.spare || p.promoted)) : reg.pages;
+  for (const p of active) {
     const dest = path.join(outDir, `${p.slug}.jpg`);
     if (fs.existsSync(dest)) { manifest.push({ slug: p.slug, cached: true }); n++; continue; }
     try {
@@ -387,7 +441,10 @@ function promote(stratum, retireSlugs, reason) {
   for (const slug of retireSlugs) {
     const p = reg.pages.find(x => x.slug === slug);
     if (!p || p.retired) continue;
-    const spare = reg.pages.find(x => x.spare && !x.promoted && x.substratum === p.substratum && (!args.out || fs.existsSync(path.join(args.out, stratum, `${x.slug}.jpg`))));
+    // A spare must have an image when --out is given, unless the stratum exports lazily
+    // (export: 'active'), where the image is fetched on the next --out run.
+    const lazy = STRATA[stratum]?.export === 'active' || args.export === 'active';
+    const spare = reg.pages.find(x => x.spare && !x.promoted && !x.retired && x.substratum === p.substratum && (!args.out || lazy || fs.existsSync(path.join(args.out, stratum, `${x.slug}.jpg`))));
     p.retired = reason; p.replaced_by = spare ? spare.slug : null;
     if (spare) { spare.promoted = true; spare.replaces = slug; }
     console.log(`  ${stratum}: retired ${slug} (${reason}) → ${spare ? spare.slug : 'NO SPARE LEFT'}`);
