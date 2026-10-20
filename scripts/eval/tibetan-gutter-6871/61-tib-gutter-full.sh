@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
-# timeout: 48h
+# timeout: 24h
 # issue: 6871
-# Row 4 full read, queued only after 60-tib-gutter-bakeoff PASSED its prereg: Yigdzin 1 whole-page reads of all
-# 5,132 guttered Tibetan pages, to FILES (full/). Applying them is a separate decision (#4523 write rule).
-# 1. vLLM reader on the 30 bake-off pages; must match the HF reads (median syllable ratio >= 0.95), else fall back.
-# 2. the 5,132 pages with vLLM (or HF if vLLM failed parity). Resumable: a page with a .txt is skipped.
+# Row 4 full read (round 2 PASSED, r2/PREREGISTRATION.md): Yigdzin 1 whole-page reads of the 5,132 guttered Tibetan
+# pages to FILES (full/), on HF: the vLLM arm crashed (V2 runner) and then deadlocked after warm-up with
+# VLLM_USE_V2_MODEL_RUNNER=0, so the prereg's HF path applies. ~2.5 min/page ≈ 9 GPU-days: this task stops at its
+# 24 h timeout and is re-queued under a new name (80-tib-gutter-full-b, -c …) until full/ holds every page — resumable, so other
+# gated tests can run between chunks. Applying the reads (#4523 write rule, revisions first) is a decision for Derek.
 set -uo pipefail
 J=/root/jobs/tib-gutter-6871; cd "$J"
-export OMP_NUM_THREADS=8 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_USE_V2_MODEL_RUNNER=0
-ARM=${ARM:-page}   # set from the bake-off verdict
-if vv/bin/python yig_vllm.py --manifest todo30.jsonl --out arm-vllm --mode "$ARM" && vv/bin/python parity.py "arm-$ARM" arm-vllm 0.95; then
-  echo "vLLM parity ok: full run under vLLM"
-  vv/bin/python yig_vllm.py --manifest full.jsonl --out full --mode "$ARM"
-else
-  echo "vLLM failed or missed parity: full run under HF (slow, resumable)"
-  /root/jobs/mongol-synth-5664/venv/bin/python yig_page.py --manifest full.jsonl --out full --mode "$ARM"
-fi
-echo "full: $(ls full | grep -c '\.txt$') txt, $(ls full | grep -c '\.err$') err"
+export OMP_NUM_THREADS=8
+/root/jobs/mongol-synth-5664/venv/bin/python yig_page.py --manifest full.jsonl --out full --mode page
+echo "full: $(ls full | grep -c '\.txt$') txt, $(ls full | grep -c '\.err$') err of $(wc -l < full.jsonl)"

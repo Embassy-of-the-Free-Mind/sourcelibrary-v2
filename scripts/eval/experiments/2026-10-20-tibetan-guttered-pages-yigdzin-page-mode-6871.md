@@ -6,13 +6,15 @@ scripts: [Tibt]
 canons: [tibetan]
 n_books: 19
 n_pages: 30
-verdict: "Yigdzin 1 reading the whole page (no leaf cut) on 30 of the 5,132 guttered pages: line recall 0.979, 29/30 clean, but 1 page loops and invents a line; the 3-band arm: recall 1.000, 28/30 clean once blank-markers are set aside, but inserts a head mark and a stray syllable. Neither clears the preregistered 0-invented bar."
-status: rejected
-decision: "No full read of the 5,132 pages queued. A follow-up needs a new prereg on a fresh draw: bands arm, blank-markers stripped, the #4523 guard applied, an invented-text bar in syllables (#6871 row 4)"
+verdict: "Round 1 (every read scored): page-mode Yigdzin recall 0.979 but 1 of 30 pages loops and invents a line — fails. Round 2 (fresh 30, #4523 write rule preregistered): 15 of 29 text pages written, 0 invented, line recall 1.00, 15/15 clean — passes; the guard withheld both looping pages."
+status: adopted
+decision: "Read all 5,132 pages to FILES with HF Yigdzin page-mode (gex45 queue 80-tib-gutter-full-a, ~9 GPU-days in 24 h chunks); applying them under the #4523 write rule is a DECISION for Derek (#6871 row 4)"
 superseded_by: null
 issue: 6871
 ---
 ## 2026-10-20 · Can Yigdzin read the 5,132 Tibetan pages its leaf worker refused as "guttered"? (#6871 row 4, job gex45-refill-6871)
+
+**Round 1 below fails; round 2 (at the end) passes with the write rule fixed in advance.**
 <!-- PRIOR ART: 2026-10-14-yigdzin-hidden-tibetan-books-4523.md (the run whose worker refused these pages; same reader, leaf mode) and PREREGISTRATION-tibetan-woodblock-yigdzin-5660.md (same reader against a Derge e-text; these pages have none). -->
 
 **Question.** The #4523 leaf worker refused 5,135 pages in 130 hidden Tibetan books because its gutter detector saw a bound-book opening. 5,132 still had no OCR on 2026-10-20. Would Yigdzin 1, reading the page whole instead of cut into leaves, give text we would serve?
@@ -53,3 +55,44 @@ issue: 6871
 Derek's 10-20 order puts this row fourth.
 
 `n = 30 / 19 books`: this rules out a high failure rate, not a low one. Checker labels are an Opus judgement against the image (`read-from-image`), not a syllable-level reference.
+
+### Round 2 — the #4523 write rule, preregistered, on 30 fresh pages
+
+**Why a second round.** Round 1 scored every read, but a lane serves only what #4523's write rule lets through:
+blank-band markers stripped, `first-ocr-guard` unflagged, ≥ 150 syllables. Applied post hoc to round 1, that rule
+withheld the one page with a loop and wrote 16 of 30 with nothing invented. A post-hoc rule decides nothing, so round 2
+fixed it in advance (`r2/PREREGISTRATION.md`, 06f91f3b1).
+- **Draw.** 30 new pages from 22 books, seed 68712: 24 pecha leaves, 6 book pages, 1 blank. The two blind readers
+  agree on line counts on 30/30.
+- **Arms.** **V** (vLLM) never produced a read. vLLM 0.31's V2 runner rejected the DRY logits processor; with
+  `VLLM_USE_V2_MODEL_RUNNER=0` the engine then deadlocked after warm-up (futex wait, 0 % GPU, killed after 6 min).
+  By the prereg, a failed V means **H** (HF) is scored.
+
+**Result (H, `r2/score-r2.mjs`; Opus line-check against the image, arm unnamed):**
+
+| | value | bar |
+|---|---|---|
+| text pages written by the rule | 15 / 29 (coverage 0.52) | reported |
+| written pages with an invented line (≥ 3 syllables, or a loop) | **0** | 0 |
+| line recall on written pages | **1.00** | ≥ 0.95 |
+| clean written pages | **15 / 15** | ≥ 90 % |
+| ok + minor of read lines | **1.00** | ≥ 0.90 |
+| parity V vs H | V produced nothing | → H path |
+
+- **The guard did the work.**
+  - Two pages read badly: an errata table with merged and repeated rows, and a two-column name list with 10 loop lines.
+  - One page ended in a `ལ་ལ་ལ…` run.
+  - All three were withheld: under 150 syllables, `local_loop`, `dominant_unit`.
+- **Written pages were checked line by line.** No drops. "Minor" lines sit on cursive dbu med and on interlinear notes.
+  One cursive leaf writes final ང as ཌ and final མ as ཾ throughout, every line minor.
+- **What is not written.** 14 of 29 text pages stay empty: 2 flagged by the guard, and 12 under 150 syllables. The 12
+  include title leaves, short verse and list pages, and two full pages that fall just short (143 and 147 syllables).
+  That is the rule's design (it trades coverage for safety), not a read failure.
+
+**Decision.**
+- Queued as gex45 task `80-tib-gutter-full-a`: all 5,132 pages read to FILES with H. At ~2.5 min/page that is ≈ 9
+  GPU-days, run in 24 h chunks (re-queued as 80-tib-gutter-full-b, -c …) so other gated tests can run between them.
+- **Applying** the reads through #4523's write rule (revisions first, books stay held) is a DECISION for Derek.
+- Expected: about half the pages written, and 0 invented in 15 here. n = 15 written pages rules out a high invented
+  rate, not a low one: the #5660 measurement (5 % [2–13 %] for unflagged pages ≥ 150 syllables) is the better prior.
+- A working vLLM path would cut the 9 days to hours. That is engineering work, not a gate.
