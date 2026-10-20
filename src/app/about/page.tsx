@@ -102,10 +102,13 @@ export default async function AboutPage() {
               Very little. Start with the books one small country printed before 1700, then keep zooming out.
             </p>
             <p className="mt-4 text-secondary leading-relaxed">
-              Machine reading and translation are now good enough to make a first pass at all of it, quickly, with the original page always beside the English so anyone can check it. That is the job Source Library has taken on.
+              Machine reading and translation are now good enough to make a first pass at all of it, quickly, with the original page always beside the English so anyone can check it. That is the job Source Library has taken on: to build the world&apos;s largest open-access collection of translated primary sources, so that scholars, seekers and AI systems can draw on the whole of the human intellectual tradition.
             </p>
             <p className="mt-4 text-secondary leading-relaxed">
-              It also matters for AI. Give a capable model the actual texts, every line checkable against its scan, and it becomes a research instrument. Ask it <em>what is mind?</em> and it can set{' '}
+              These are not obscure footnotes. They are the roots of modern science, psychology and philosophy of mind, and of the old questions about what it means to be human.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              It also matters for AI. Today&apos;s models were trained on Reddit, not the Renaissance. Give a capable model the actual texts, every line checkable against its scan, and it becomes a research instrument. Ask it <em>what is mind?</em> and it can set{' '}
               <Link href="/q/BhIfljO2ApigrcHcTeD" className={link}>Plato&apos;s Greek</Link> beside{' '}
               <Link href="/q/BgRsFohtofMtBqdNmop" className={link}>Śaṅkara&apos;s Sanskrit</Link>, a Tibetan master&apos;s{' '}
               <Link href="/q/BijCMw143jlgk5jBxGl" className={link}>pointing-out instructions</Link> and{' '}
@@ -150,7 +153,7 @@ export default async function AboutPage() {
           <div className="md:order-1 order-2">
             <h2 className={h2}>Where it started</h2>
             <p className="mt-6 text-secondary leading-relaxed">
-              When a Greek manuscript of the <em>Corpus Hermeticum</em> reached Florence around 1460, Cosimo de&apos; Medici had the young scholar Marsilio Ficino translate it before he turned to Plato. Ficino went on to put all of Plato and Plotinus into Latin, along with selected works of Iamblichus, Proclus and other Neoplatonists. Those translations helped set off the Renaissance.
+              Around 1460 a monk, Leonardo of Pistoia, brought a Greek manuscript of the <em>Corpus Hermeticum</em> to Florence from Macedonia. Cosimo de&apos; Medici was paying the young scholar Marsilio Ficino (1433&ndash;1499) to translate Plato into Latin. Old and ill, Cosimo asked him to put Plato aside and translate Hermes first, sure that it held the oldest wisdom of all. Ficino went on to put all of Plato and Plotinus into Latin, along with selected works of Iamblichus, Proclus and other Neoplatonists, and with them the idea of a <em>prisca theologia</em>, one ancient wisdom shared by every seeker of truth. Those translations helped set off the Renaissance. We think it is time for another.
             </p>
             <p className="mt-4 text-secondary leading-relaxed">
               Five and a half centuries later, Derek Lomas found he couldn&apos;t read Ficino&apos;s own books. He came across Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam and couldn&apos;t read it, because most of what the Renaissance wrote has never been translated. He started Source Library there in 2022, under the bust of Ficino that still watches over the work.
@@ -254,7 +257,7 @@ export default async function AboutPage() {
           <div className="border border-border-medium p-8 md:p-10">
             <h2 className={h2}>Join the work</h2>
             <p className="mt-4 text-secondary leading-relaxed">
-              We want this to outlast us: a lasting home for humanity&apos;s written heritage, from books to oral histories to expeditions in the field. Read the plan, explore the library, or help pay for the next translation.
+              We want this to outlast us: a lasting home for humanity&apos;s written heritage, from books to oral histories to expeditions in the field. The work is kept going by the people who use and value it. Read the plan, explore the library, or help pay for the next translation.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/support" className="px-5 py-2.5 bg-accent-rust text-white hover:opacity-90 transition-opacity font-medium">
