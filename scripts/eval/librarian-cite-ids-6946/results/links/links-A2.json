@@ -1,0 +1,375 @@
+{
+ "q01:A2": [
+  {
+   "id": "L1",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 19,
+   "at": 723,
+   "text": "Page 19"
+  },
+  {
+   "id": "L2",
+   "slug": "three-books-on-life-ficino",
+   "page": 41,
+   "at": 1165,
+   "text": "Page 41"
+  },
+  {
+   "id": "L3",
+   "slug": "three-books-on-life-ficino",
+   "page": 42,
+   "at": 1592,
+   "text": "Page 42"
+  },
+  {
+   "id": "L4",
+   "slug": "three-books-on-life-1489-first-edition-ficino",
+   "page": 18,
+   "at": 2435,
+   "text": "Page 18"
+  },
+  {
+   "id": "L5",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-1",
+   "page": 18,
+   "at": 4304,
+   "text": "Page 18"
+  }
+ ],
+ "q06:A2": [
+  {
+   "id": "L1",
+   "slug": "three-books-of-occult-philosophy-nettesheim",
+   "page": 37,
+   "at": 760,
+   "text": "Page 37"
+  },
+  {
+   "id": "L2",
+   "slug": "de-occulta-philosophia-libri-i-latin-1531-agrippa",
+   "page": 52,
+   "at": 1300,
+   "text": "Page 52"
+  },
+  {
+   "id": "L3",
+   "slug": "three-books-of-occult-philosophy-nettesheim",
+   "page": 37,
+   "at": 1920,
+   "text": "Page 37"
+  },
+  {
+   "id": "L4",
+   "slug": "ten-books-on-architecture-pollio",
+   "page": 47,
+   "at": 2708,
+   "text": "Page 47"
+  },
+  {
+   "id": "L5",
+   "slug": "chilam-balam-de-kaua-maler-photographs-1887",
+   "page": 128,
+   "at": 3388,
+   "text": "Page 128"
+  },
+  {
+   "id": "L6",
+   "slug": "the-mystical-initiations-or-hymns-of-orpheus-taylor",
+   "page": 184,
+   "at": 3923,
+   "text": "Page 184"
+  },
+  {
+   "id": "L7",
+   "slug": "cosmographicus-liber-apian",
+   "page": 167,
+   "at": 4401,
+   "text": "Page 167"
+  },
+  {
+   "id": "L8",
+   "slug": "ars-magnesia-athanasius-kircher",
+   "page": 52,
+   "at": 5138,
+   "text": "Page 52"
+  }
+ ],
+ "q11:A2": [
+  {
+   "id": "L1",
+   "slug": "three-books-on-life-ficino",
+   "page": 260,
+   "at": 1498,
+   "text": "Page 260"
+  },
+  {
+   "id": "L2",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-1",
+   "page": 165,
+   "at": 1914,
+   "text": "Page 165"
+  },
+  {
+   "id": "L3",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-1",
+   "page": 165,
+   "at": 2243,
+   "text": "Page 165"
+  },
+  {
+   "id": "L4",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-1",
+   "page": 165,
+   "at": 2562,
+   "text": "Page 165"
+  },
+  {
+   "id": "L5",
+   "slug": "de-vita-libri-tres-three-books-on-life-1529-ficino",
+   "page": 264,
+   "at": 2861,
+   "text": "Page 264"
+  },
+  {
+   "id": "L6",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-1",
+   "page": 165,
+   "at": 3175,
+   "text": "Page 165"
+  },
+  {
+   "id": "L7",
+   "slug": "de-vita-libri-tres-de-triplici-vita-apologia-quod-necessaria-ficinus-2",
+   "page": 153,
+   "at": 3619,
+   "text": "Page 153"
+  },
+  {
+   "id": "L8",
+   "slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+   "page": 181,
+   "at": 4519,
+   "text": "Page 181"
+  },
+  {
+   "id": "L9",
+   "slug": "history-of-the-macrocosm-and-microcosm-fludd",
+   "page": 731,
+   "at": 5013,
+   "text": "Page 731"
+  }
+ ],
+ "q16:A2": [
+  {
+   "id": "L1",
+   "slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+   "page": 1427,
+   "at": 969,
+   "text": "Page 1427"
+  },
+  {
+   "id": "L2",
+   "slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+   "page": 1427,
+   "at": 1281,
+   "text": "Page 1427"
+  },
+  {
+   "id": "L3",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 335,
+   "at": 2437,
+   "text": "Page 335"
+  },
+  {
+   "id": "L4",
+   "slug": "paracelsia-henningi-scheunemanni-philosophiae-ac-medicinae-scheunemann",
+   "page": 18,
+   "at": 3163,
+   "text": "Page 18"
+  },
+  {
+   "id": "L5",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 335,
+   "at": 4129,
+   "text": "Page 335"
+  },
+  {
+   "id": "L6",
+   "slug": "theatrum-chimicum-ofte-geopende-deure-der-chymische-blankaart",
+   "page": 33,
+   "at": 4565,
+   "text": "Page 33"
+  }
+ ],
+ "q21:A2": [
+  {
+   "id": "L1",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90,
+   "at": 1619,
+   "text": "Page 90"
+  },
+  {
+   "id": "L2",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 90,
+   "at": 2130,
+   "text": "Page 90"
+  },
+  {
+   "id": "L3",
+   "slug": "ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel",
+   "page": 4,
+   "at": 2428,
+   "text": "Ein kurtzer Tractat von der Natur der Elementen"
+  },
+  {
+   "id": "L4",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 88,
+   "at": 3246,
+   "text": "Page 88"
+  },
+  {
+   "id": "L5",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 3751,
+   "text": "Page 89"
+  },
+  {
+   "id": "L6",
+   "slug": "cornelis-drebbel-en-zijne-tijdgenooten-jaeger-f-m-frans-maurits",
+   "page": 89,
+   "at": 4291,
+   "text": "Page 89"
+  },
+  {
+   "id": "L7",
+   "slug": "warhafftiger-bericht-vom-philosophischen-athanore-auch-khunrath",
+   "page": 16,
+   "at": 4823,
+   "text": "Page 16"
+  }
+ ],
+ "q26:A2": [
+  {
+   "id": "L1",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 15,
+   "at": 510,
+   "text": "Page 15"
+  },
+  {
+   "id": "L2",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 20,
+   "at": 1083,
+   "text": "Page 20"
+  },
+  {
+   "id": "L3",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 20,
+   "at": 1451,
+   "text": "Page 20"
+  },
+  {
+   "id": "L4",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 10,
+   "at": 1889,
+   "text": "Page 10"
+  },
+  {
+   "id": "L5",
+   "slug": "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3",
+   "page": 10,
+   "at": 2402,
+   "text": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae…, Page 10"
+  },
+  {
+   "id": "L6",
+   "slug": "atalanta-fugiens-c-1625-english-ms-translator",
+   "page": 19,
+   "at": 2945,
+   "text": "Page 19"
+  },
+  {
+   "id": "L7",
+   "slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+   "page": 16,
+   "at": 3440,
+   "text": "Page 16"
+  }
+ ],
+ "q31:A2": [
+  {
+   "id": "L1",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 1468,
+   "text": "Page 50"
+  },
+  {
+   "id": "L2",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 50,
+   "at": 2378,
+   "text": "Page 50"
+  },
+  {
+   "id": "L3",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 46,
+   "at": 2721,
+   "text": "Page 46"
+  },
+  {
+   "id": "L4",
+   "slug": "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys",
+   "page": 47,
+   "at": 2850,
+   "text": "Page 47"
+  }
+ ],
+ "q36:A2": [
+  {
+   "id": "L1",
+   "slug": "paracelsus-complete-works-latin-paracelsus",
+   "page": 50,
+   "at": 530,
+   "text": "Page 50"
+  },
+  {
+   "id": "L2",
+   "slug": "paracelsus-complete-works-latin-paracelsus",
+   "page": 50,
+   "at": 1478,
+   "text": "Page 50"
+  },
+  {
+   "id": "L3",
+   "slug": "pharmacandi-modus-was-der-arzt-in-dem-menschen-zu-purgieren-paracelsus",
+   "page": 14,
+   "at": 2249,
+   "text": "Page 14"
+  },
+  {
+   "id": "L4",
+   "slug": "liber-unus-de-secretis-antimonii-suchten",
+   "page": 97,
+   "at": 3205,
+   "text": "Page 97"
+  },
+  {
+   "id": "L5",
+   "slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+   "page": 7,
+   "at": 3447,
+   "text": "The Works of Paracelsus, Volume 6"
+  }
+ ]
+}

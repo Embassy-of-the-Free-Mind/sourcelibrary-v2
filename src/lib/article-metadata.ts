@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { posts } from '@/app/articles/posts';
 import revisions from '@/generated/blog-revisions.json';
 import heroes from '@/generated/article-heroes.json';
-import { FEED_TYPES } from '@/lib/feed-links';
 
 /**
  * Fills in the share-card, canonical and feed metadata an article page did not
@@ -74,7 +73,6 @@ export function withArticleMeta(slug: string, meta: Metadata): Metadata {
   const alternates: NonNullable<Metadata['alternates']> = {
     ...meta.alternates,
     canonical: meta.alternates?.canonical ?? path,
-    types: { ...FEED_TYPES, ...meta.alternates?.types },
   };
 
   if (NOT_ARTICLES.has(slug)) return { ...meta, alternates };

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
-import { FEED_TYPES } from '@/lib/feed-links';
 import { siteOgImage } from '@/lib/og-locale';
 
 // Spanish-language edition of the homepage — a real, server-rendered, indexable
@@ -25,7 +24,6 @@ export const metadata: Metadata = {
     },
     // See src/lib/feed-links.ts — declaring `languages` here replaces the
     // layout's whole `alternates`, feed links included.
-    types: FEED_TYPES,
   },
   openGraph: {
     images: [siteOgImage('es')],

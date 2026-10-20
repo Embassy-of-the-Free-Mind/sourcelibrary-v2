@@ -118,7 +118,11 @@ describe('new-field-writes.mjs, end to end', () => {
     const dir = mkdtempSync(join(tmpdir(), 'nfw-'));
     try {
       for (const d of ['src', 'scripts/audit', 'scripts/lib', 'scripts/maintenance']) mkdirSync(join(dir, d), { recursive: true });
-      for (const f of ['scripts/audit/new-field-writes.mjs', 'scripts/lib/books-set-attribution.mjs', 'scripts/lib/books-known-fields.json']) cpSync(f, join(dir, f));
+      for (const f of [
+        'scripts/audit/new-field-writes.mjs', 'scripts/lib/books-set-attribution.mjs', 'scripts/lib/books-known-fields.json',
+        // The same CI step runs the imprint-provenance gate (#6327).
+        'scripts/audit/imprint-field-writes.mjs', 'scripts/lib/imprint-write-lint.mjs', 'scripts/lib/catalogue-fields.mjs', 'scripts/lib/field-provenance.mjs',
+      ]) cpSync(f, join(dir, f));
       const run = (src: string) => {
         writeFileSync(join(dir, 'scripts/maintenance/sweep.mjs'), src);
         try { execFileSync('node', ['scripts/audit/new-field-writes.mjs'], { cwd: dir, encoding: 'utf8' }); return 0; }
@@ -126,6 +130,8 @@ describe('new-field-writes.mjs, end to end', () => {
       };
       expect(run(HOISTED)).toBe(0);
       expect(run(HOISTED.replace('pages_count:', 'zz_negative_control_4493: 1, pages_count:'))).toBe(1);
+      // A KNOWN field, but an imprint one written with no stamp: the second gate in the same step fails it.
+      expect(run(HOISTED.replace('pages_count:', "place_published: 'Venice', pages_count:"))).toBe(1);
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });

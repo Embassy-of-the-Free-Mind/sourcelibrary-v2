@@ -4,7 +4,7 @@
  * search surfaces readers and agents use — `/api/search`, `/api/search/semantic?level=page`, and
  * MCP `search_library` / `search_concept` — every 15 min from the main Hetzner box. One JSON line
  * per run goes to the log; ntfy (sourcelibrary-uptime) fires when a surface's p90 this run is more
- * than 2× its trailing-24 h p90, or on an error streak (3 runs in a row with a failed or empty call),
+ * than 2× its trailing-24 h p90 in two runs in a row, or on an error streak (3 runs in a row with a failed or empty call),
  * once per state change, and once more when it clears.
  *
  * Why: on 2026-10-17 21:04–21:20Z every vector-service call timed out (#6821) and nothing paged —
@@ -59,6 +59,7 @@ const TIMEOUT_MS = 20000;
 const MIN_HISTORY_RUNS = 24;
 const ERROR_STREAK = 3;
 const P90_FACTOR = 2;
+const SLOW_STREAK = 2;
 
 const pct = (xs, p) => { const a = xs.filter((x) => x != null).sort((x, y) => x - y); return a.length ? a[Math.min(a.length - 1, Math.floor(p * a.length))] : null; };
 
@@ -150,7 +151,11 @@ export function judge(run, history) {
   for (const [s, cur] of Object.entries(run.surfaces)) {
     const past = history.map((h) => h.surfaces?.[s]).filter(Boolean);
     const trailingP90 = past.length >= MIN_HISTORY_RUNS ? pct(past.flatMap((p) => p.ms || []), 0.9) : null;
-    const slow = trailingP90 != null && cur.p90 > P90_FACTOR * trailingP90;
+    // p90 of ten calls is the second-slowest call, so one slow run is one slow call. SLOW needs
+    // SLOW_STREAK runs in a row over the bar (2026-10-19: five one-run pages, medians flat).
+    const over = (p) => trailingP90 != null && p.p90 > P90_FACTOR * trailingP90;
+    const lastRuns = [...past.slice(-(SLOW_STREAK - 1)), cur];
+    const slow = lastRuns.length === SLOW_STREAK && lastRuns.every(over);
     const recent = [...past.slice(-(ERROR_STREAK - 1)), cur];
     const streak = recent.length === ERROR_STREAK && recent.every((p) => p.errors > 0);
     out[s] = { bad: slow || streak, slow, streak, p90: cur.p90, trailing_p90: trailingP90, errors: cur.errors };

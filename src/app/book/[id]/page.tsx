@@ -2478,6 +2478,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {embedPolicy.showAuthorCrossReference && (book as any).author_cross_ref && (
                 <AuthorCrossReference
                   author={book.author}
+                  authorId={book.author_id}
                   crossRef={(book as any).author_cross_ref}
                   context="book"
                 />

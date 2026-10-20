@@ -95,7 +95,9 @@ const DEFAULT_DISALLOW = [
   '/qa',
   '/data?admin=true',
   '/upload',
-  '/auth/',
+  // NOT '/auth/': those pages carry `noindex` (src/app/auth/layout.tsx), and
+  // Google only sees a noindex on a page it may fetch. Disallowed, the sign-in
+  // URLs stayed indexed from links and drew ~200 search landings/30d (#6398).
   '/beta/',
   '/unauthorized',
   '/reading-history',

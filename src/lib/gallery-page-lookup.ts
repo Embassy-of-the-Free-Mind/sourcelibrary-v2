@@ -8,7 +8,7 @@
  * times over (layout gate + layout data + opengraph image), and once more for
  * the API the viewer calls.
  *
- * Field lists are the union of what the four callers read (#4603 starvation
+ * Field lists are the union of what the two callers read (#4603 starvation
  * check, per site):
  *  - src/app/gallery/image/[id]/layout.tsx — `imageResolves` (book.hidden,
  *    detected_images), `getImageData` → generateMetadata + ImageLayout +
@@ -16,8 +16,6 @@
  *    image_source.{license,attribution,provider}/license; page id/book_id/
  *    page_number/detected_images/enhanced_photo/cropped_photo/archived_photo/
  *    photo).
- *  - src/app/gallery/image/[id]/opengraph-image.tsx — detected_images and
- *    `getPageImageUrl(page)` (the image-field family).
  *  - src/app/api/gallery/image/[id]/route.ts — the above plus deepzoom,
  *    fullres_master, `remapBboxToMaster` (crop, cropped_photo, image_width,
  *    image_height, split_from_spread), `allmapsEditorUrl` (photo_original,

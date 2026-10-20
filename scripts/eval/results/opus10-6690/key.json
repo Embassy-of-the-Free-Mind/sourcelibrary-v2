@@ -1,0 +1,820 @@
+{
+ "items": {
+  "j-001": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00080",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-002": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00077",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-003": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00044",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-004": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-005": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00024",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-006": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-007": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00370",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-008": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "And if, God forbid, some harm should befall you, your Employer is faithful to repay you for the loss you suffered for His sake.",
+    "new": "And if, God forbid, some harm should befall you, your Employer is not faithful to repay you for the loss you suffered for His sake.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "j-009": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-010": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00023",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-011": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00374",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-012": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00084",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-013": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-014": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00376",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-015": {
+   "kind": "REPEAT",
+   "page_id": "69e792fd80b52390feb1770f_00030",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-016": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00042",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-017": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00030",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-018": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-019": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00029",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-020": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00369",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-021": {
+   "kind": "REPEAT",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-022": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00028",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-023": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "\"But, Adeimantus, in the name of Zeus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "new": "\"But, Zeus, in the name of Adeimantus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "how": "swap Adeimantus ↔ Zeus"
+   }
+  },
+  "j-024": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-025": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00166",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-026": {
+   "kind": "REPEAT",
+   "page_id": "69b52593cced70d8e6d72941_00038",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-027": {
+   "kind": "REPEAT",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-028": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-029": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-030": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-031": {
+   "kind": "REPEAT",
+   "page_id": "699376d2b0a84a5763961a97_00372",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-032": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-033": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00039",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-034": {
+   "kind": "REPEAT",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-035": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00081",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-036": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "they saw Boshe coming toward them, with two jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "new": "they saw Boshe coming toward them, with three jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "how": "two → three"
+   }
+  },
+  "j-037": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00038",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-038": {
+   "kind": "REPEAT",
+   "page_id": "69ea3e63300d991d0f1d3186_00169",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-039": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-040": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00041",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-041": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-042": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00169",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-043": {
+   "kind": "REPEAT",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-044": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00079",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-045": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00165",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-046": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-047": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The attendants said, \"He is in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "new": "The attendants said, \"He is not in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "j-048": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00167",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-049": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "For middle-grade and low-grade horses it is one-fifth less.",
+    "new": "For middle-grade and low-grade horses it is not one-fifth less.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "j-050": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00026",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-051": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00375",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-052": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00025",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-053": {
+   "kind": "REPEAT",
+   "page_id": "69e792fd80b52390feb1770f_00029",
+   "run": "zh",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-054": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00046",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-055": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "\"Is it anything other, then,\" I said, \"than that the tyrannical man, in the",
+    "new": "\"Is it anything other, then,\" I said, in the",
+    "how": "clause dropped",
+    "dropped": "\"than that the tyrannical man,"
+   }
+  },
+  "j-056": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-057": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Once he has grown hard and coarse, so that he is good for nothing, he turns gentle and shows friendliness.",
+    "new": "Once he has grown hard and coarse, so that he is not good for nothing, he turns gentle and shows friendliness.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "j-058": {
+   "kind": "REPEAT",
+   "page_id": "699376d2b0a84a5763961a97_00376",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-059": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "and can a \"raising\" ever be right when the governing word is one of \"dragging\"?",
+    "new": "and can a \"raising\" ever be right when the governing word is not one of \"dragging\"?",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "j-060": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Among the females: female calves, heifers, cows that have not yet calved, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "new": "Among the females: female calves, heifers, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "how": "clause dropped",
+    "dropped": "cows that have not yet calved,"
+   }
+  },
+  "j-061": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00045",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-062": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00163",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-063": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00368",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-064": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Do not praise any gentile, not for charm and not for beauty, but only for his deeds.",
+    "new": "Do not praise any gentile, but only for his deeds.",
+    "how": "clause dropped",
+    "dropped": "not for charm and not for beauty,"
+   }
+  },
+  "j-065": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00161",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-066": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00083",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-067": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00078",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-068": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00372",
+   "run": "grc",
+   "lang": "Greek",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10"
+   }
+  },
+  "j-069": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00162",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  },
+  "j-070": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1"
+   }
+  }
+ },
+ "missing": [],
+ "refs_how": {
+  "69e748bd49abba5e982816d3_00076": "#6545 reference, unchanged",
+  "69e748bd49abba5e982816d3_00077": "slice of gulistan.txt [212159, 215804) by pooled-arm word overlap (64 matches, L=159), ±40%",
+  "69e748bd49abba5e982816d3_00078": "slice of gulistan.txt [213893, 218360) by pooled-arm word overlap (71 matches, L=189), ±40%",
+  "69e748bd49abba5e982816d3_00079": "slice of gulistan.txt [216800, 220402) by pooled-arm word overlap (63 matches, L=149), ±40%",
+  "69e748bd49abba5e982816d3_00080": "slice of gulistan.txt [218665, 223033) by pooled-arm word overlap (74 matches, L=181), ±40%",
+  "69e748bd49abba5e982816d3_00081": "slice of gulistan.txt [221867, 225578) by pooled-arm word overlap (58 matches, L=155), ±40%",
+  "69e748bd49abba5e982816d3_00082": "slice of gulistan.txt [223267, 228233) by pooled-arm word overlap (79 matches, L=208), ±40%",
+  "69e748bd49abba5e982816d3_00083": "slice of gulistan.txt [226043, 230065) by pooled-arm word overlap (76 matches, L=168), ±40%",
+  "69e748bd49abba5e982816d3_00084": "slice of gulistan.txt [228022, 232374) by pooled-arm word overlap (95 matches, L=195), ±40%",
+  "69e748bd49abba5e982816d3_00085": "slice of gulistan.txt [230546, 234014) by pooled-arm word overlap (60 matches, L=190), ±40%",
+  "69ea3e63300d991d0f1d3186_00160": "#6545 reference, unchanged",
+  "69ea3e63300d991d0f1d3186_00161": "slice of artha.txt [168693, 172793) by pooled-arm word overlap (99 matches, L=191), ±40%",
+  "69ea3e63300d991d0f1d3186_00162": "slice of artha.txt [171108, 174871) by pooled-arm word overlap (73 matches, L=177), ±40%",
+  "69ea3e63300d991d0f1d3186_00163": "slice of artha.txt [173024, 177437) by pooled-arm word overlap (101 matches, L=211), ±40%",
+  "69ea3e63300d991d0f1d3186_00164": "slice of artha.txt [175326, 179536) by pooled-arm word overlap (94 matches, L=198), ±40%",
+  "69ea3e63300d991d0f1d3186_00165": "slice of artha.txt [177895, 181428) by pooled-arm word overlap (66 matches, L=162), ±40%",
+  "69ea3e63300d991d0f1d3186_00166": "slice of artha.txt [179668, 184684) by pooled-arm word overlap (118 matches, L=230), ±40%",
+  "69ea3e63300d991d0f1d3186_00167": "slice of artha.txt [182639, 187013) by pooled-arm word overlap (91 matches, L=210), ±40%",
+  "69ea3e63300d991d0f1d3186_00168": "slice of artha.txt [184892, 189144) by pooled-arm word overlap (89 matches, L=209), ±40%",
+  "69ea3e63300d991d0f1d3186_00169": "slice of artha.txt [187038, 190406) by pooled-arm word overlap (72 matches, L=209), ±40%",
+  "69e792fd80b52390feb1770f_00022": "#6545 reference, unchanged",
+  "69e792fd80b52390feb1770f_00023": "slice of sanguo.txt [97729, 100154) by pooled-arm word overlap (37 matches, L=99), ±40%",
+  "69e792fd80b52390feb1770f_00024": "slice of sanguo.txt [98422, 102631) by pooled-arm word overlap (63 matches, L=178), ±40%",
+  "69e792fd80b52390feb1770f_00025": "slice of sanguo.txt [100942, 104141) by pooled-arm word overlap (50 matches, L=137), ±40%",
+  "69e792fd80b52390feb1770f_00026": "slice of sanguo.txt [102926, 106007) by pooled-arm word overlap (48 matches, L=120), ±40%",
+  "69e792fd80b52390feb1770f_00027": "slice of sanguo.txt [104106, 107664) by pooled-arm word overlap (59 matches, L=139), ±40%",
+  "69e792fd80b52390feb1770f_00028": "slice of sanguo.txt [106130, 108636) by pooled-arm word overlap (42 matches, L=99), ±40%",
+  "69e792fd80b52390feb1770f_00029": "slice of sanguo.txt [107737, 110543) by pooled-arm word overlap (51 matches, L=112), ±40%",
+  "69e792fd80b52390feb1770f_00030": "slice of sanguo.txt [109190, 112155) by pooled-arm word overlap (61 matches, L=116), ±40%",
+  "69e792fd80b52390feb1770f_00031": "slice of sanguo.txt [110077, 113709) by pooled-arm word overlap (68 matches, L=149), ±40%",
+  "699376d2b0a84a5763961a97_00367": "#6545 reference, unchanged",
+  "699376d2b0a84a5763961a97_00368": "slice of republic.txt [1081593, 1084895) by pooled-arm word overlap (49 matches, L=128), ±40%",
+  "699376d2b0a84a5763961a97_00369": "slice of republic.txt [1083470, 1086303) by pooled-arm word overlap (54 matches, L=109), ±40%",
+  "699376d2b0a84a5763961a97_00370": "slice of republic.txt [1085039, 1087409) by pooled-arm word overlap (32 matches, L=82), ±40%",
+  "699376d2b0a84a5763961a97_00371": "slice of republic.txt [1086160, 1089640) by pooled-arm word overlap (46 matches, L=127), ±40%",
+  "699376d2b0a84a5763961a97_00372": "slice of republic.txt [1087931, 1091018) by pooled-arm word overlap (53 matches, L=116), ±40%",
+  "699376d2b0a84a5763961a97_00373": "slice of republic.txt [1089769, 1092547) by pooled-arm word overlap (43 matches, L=92), ±40%",
+  "699376d2b0a84a5763961a97_00374": "slice of republic.txt [1091133, 1094265) by pooled-arm word overlap (37 matches, L=101), ±40%",
+  "699376d2b0a84a5763961a97_00375": "slice of republic.txt [1092982, 1095428) by pooled-arm word overlap (37 matches, L=87), ±40%",
+  "699376d2b0a84a5763961a97_00376": "slice of republic.txt [1094710, 1096316) by pooled-arm word overlap (31 matches, L=62), ±40%",
+  "69b52593cced70d8e6d72941_00037": "#6545 reference, unchanged",
+  "69b52593cced70d8e6d72941_00038": "Kerber sections [236, 237, 238, 239, 256, 254, 234, 235], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00039": "Kerber sections [243, 244, 246, 239, 240, 242], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00040": "Kerber sections [247, 248, 249, 250], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00041": "Kerber sections [250, 251, 252, 253], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00042": "Kerber sections [253, 257, 258, 259, 260, 261, 262], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00043": "Kerber sections [263, 264, 265, 266, 267], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00044": "Kerber sections [268, 269, 270, 271, 272, 273], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00045": "Kerber sections [276, 277, 278, 279, 280, 281, 282, 274, 275], by hand (recension order differs)",
+  "69b52593cced70d8e6d72941_00046": "Kerber sections [282, 283, 284, 285, 286], by hand (recension order differs)"
+ }
+}

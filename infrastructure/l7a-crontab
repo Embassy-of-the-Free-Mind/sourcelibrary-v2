@@ -31,3 +31,11 @@
 # and a #6946 comment only when the wrong-page rate moves 10 points above (or back under) its trailing 4-run median.
 # Guarded on the file so it waits for the merge; flock -n so two never overlap; timeout 2h.
 0 6 * * 1 f=/data/scratch/sl/sourcelibrary/scripts/audit/librarian-citation-gauge.ts; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/librarian-citation-gauge.lock timeout 2h systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/npx tsx --env-file=/root/sourcelibrary/.env.production.local $f >> /data/scratch/sl/logs/librarian-citation-gauge.log 2>&1  # weekly page-link gauge, #6946
+
+# Every 10 min: the Librarian citation fixer, DRY-RUN (#6946 stage 1, scripts/workers/librarian-citation-fixer.ts). INSTALLED
+# 2026-10-20 in root's crontab on l7a (backup: /root/backups/crontab-20261020-005126). New AI turns from embassy_messages → Claude Sonnet
+# (claude -p, subscription; no Gemini) → proposed page-link edits in librarian_citation_fixes, one document per answer. Writes
+# NOTHING else: not embassy_messages, not the threads, not the replay cache. Nothing reads librarian_citation_fixes yet.
+# At most 8 calls a run and 200 answers a day; skips the run when this box's Claude account is at >= 80% of its 5-hour
+# window or >= 90% of its week. Guarded on the file so it waits for the merge; flock -n so two never overlap; timeout 30m.
+*/10 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/librarian-citation-fixer.ts; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/librarian-citation-fixer.lock timeout 30m systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/npx tsx --env-file=/root/sourcelibrary/.env.production.local $f >> /data/scratch/sl/logs/librarian-citation-fixer.log 2>&1  # citation fixer DRY-RUN, #6946

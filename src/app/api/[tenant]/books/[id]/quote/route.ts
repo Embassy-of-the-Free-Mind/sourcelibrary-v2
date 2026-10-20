@@ -8,6 +8,7 @@ import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOT
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { isBookReadable } from '@/lib/book-access';
 
@@ -101,9 +102,12 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
-    if (isBot(request) && !(await isTrustedBot(request))) {
-      const maxPage = botMaxPage(book.pages_count || 0);
-      if (pageNumber > maxPage) {
+    if (isBot(request)) {
+      const trusted = await isTrustedBot(request);
+      const maxPage = trusted ? undefined : botMaxPage(book.pages_count || 0);
+      const clamped = maxPage !== undefined && pageNumber > maxPage;
+      logBotRead(request, { route: 'quote', book: resolvedBookId, trusted, pageFrom: pageNumber, maxPage, clamped });
+      if (clamped) {
         return NextResponse.json({
           error: `Page ${pageNumber} is beyond the bot-accessible range (pages 1–${maxPage}). Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server`,
           accessible_pages: maxPage,

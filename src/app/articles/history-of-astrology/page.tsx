@@ -295,7 +295,7 @@ export default function HistoryOfAstrologyPage() {
           Source Library holds both of Kepler&apos;s great cosmological works.{' '}
           <Link href="/book/9754fae4-b3c6-45e6-8742-53c85117ca09" className="text-accent-rust hover:text-accent-rust underline">The <em>Mysterium Cosmographicum</em> (1596)</Link>
           , in which the young Kepler argues that the solar system is structured by the five Platonic solids nested within each other, and{' '}
-          <Link href="/book/6fc11c7d-782a-47c3-a855-f3b4415e797b" className="text-accent-rust hover:text-accent-rust underline">the <em>Harmonices Mundi</em> (1619)</Link>
+          <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust underline">the <em>Harmonices Mundi</em> (1619)</Link>
           , the mature synthesis in which he discovers the third law of planetary motion as a consequence of a vast harmonic theory of the cosmos. In the <em>Harmonices</em>, Kepler argues that the soul has an innate knowledge of geometrical forms, which is why it responds to the geometrical patterns in the sky:
         </p>
 
@@ -313,7 +313,7 @@ export default function HistoryOfAstrologyPage() {
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;The soul carries within itself an image of the world, as if it were the inner pattern from which the outer world was fashioned. When the aspects of the planets make angles that correspond to the inscribable polygons &mdash; the triangle, the square, the pentagon, the hexagon &mdash; the soul recognises them, as a musician recognises a chord even without consciously counting intervals. This recognition is the mechanism of astrology.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/6fc11c7d-782a-47c3-a855-f3b4415e797b" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/the-harmony-of-the-world-kepler" className="hover:text-accent-rust transition-colors">
               Johannes Kepler, <em>Harmonices Mundi</em> (Linz, 1619), Book IV, sourcelibrary.org
             </Link>
           </footer>
@@ -386,7 +386,7 @@ export default function HistoryOfAstrologyPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/6fc11c7d-782a-47c3-a855-f3b4415e797b" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust text-sm">
                     Kepler, <em>Harmonices Mundi</em> (1619)
                   </Link>
                 </li>

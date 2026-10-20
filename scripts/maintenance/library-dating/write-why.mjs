@@ -57,6 +57,7 @@ for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i
     if (m?.edited_by) { stats.human++; continue; }
     if (w?.basis !== 'model_knowledge' || w.year !== t.work.year || w.from !== t.work.from || w.to !== t.work.to) { stats.redated++; continue; }
     // the model is asked for "y" only beyond 50 years but does not always keep to it: the test is applied here
+    // imprint-write-ok: the model's disagreeing year on the in-memory task, stored as why_year, not books.year
     t.year = t.y != null && Math.abs(t.y - w.year) > 50 ? t.y : null;
     if (w.why === t.why && w.why_prompt_version === t.prompt_version && (w.why_year ?? null) === t.year
       && (m.checks || []).includes('why_disagrees') === (t.year != null)) { stats.already++; continue; }

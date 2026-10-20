@@ -296,3 +296,86 @@ Page CER is capped at 1.0. A refusal is CER 1.0. A `no-text` page scores 0 if th
   against the page image by subscription (Claude) judges; Gemini ≤ $1, inside the $7 cap, else not run and said so.
 
 No routing change, no writes to `books` or `pages`.
+
+## Amendment 4 — the GEX45 Latin bake-off on the Opus leaf references (job latin-bakeoff-5924, #5924 / #6871 row 2; written 2026-10-18 before any arm read these pages)
+
+The question, from the brief: does any open engine on the owned GEX45 read Latin print better than flash-lite,
+century by century? If one does, the box gets a standing Latin lane. Rounds 1–4 above are untouched; this round
+has its own references, unit, fold and rule. At the time of this commit the only thing done with these pages is
+fetching the leaf images and checking their hashes. No engine has read them.
+
+### Pages and images
+- **Pages.** `scripts/eval/benchmark/latin-refs-5924.json`, 99 pages, one leaf per book (PR #6883): **1600s 59, 1500s 40**.
+  Reference = `benchmark/refs/<slug>.txt` (convention `latin-refs-5924@1`: diplomatic, marginal notes after the body).
+  **Unit = page = book.** Both cells are decision grade by #5924's DoD (≥ 50 / ≥ 30). No 1700s or 1400s cell.
+- **Image.** For each page, the sidecar's `image.url` is fetched once and its sha256 is checked against
+  `image.sha256`. All 99 matched (fetched from gex45; e-rara answers 403 to the job host). The **same derived file goes to every
+  arm**: the verified bytes unchanged when the long side is ≤ 2,400 px (61 pages), otherwise downscaled once to a long side of 2,400 px
+  (Lanczos, JPEG quality 92; 38 pages, up to 7,132 × 10,265). The cap is the capability card's, and the vLLM servers'
+  context cannot take a 73 MP page. Both hashes (original and fed) go into `inputs.json`. An engine's own documented
+  preprocessing is still applied on top: olmOCR's pipeline renders the page at a long side of 1,288 px, so its arm gets that.
+
+### Arms
+| arm | engine | how |
+|---|---|---|
+| `L` | gemini-3.1-flash-lite (paid, production model) | `callGemini` (`gemini-script-client.mjs`), GENERIC prompt of rounds 1–4 (`benchmark-run-api.mjs`), thinking 0, temperature 0, maxOutputTokens 16,000 |
+| `L1a`, `L1b` | the same, at **temperature 1**, two independent runs | the **noise floor** only; never ranked |
+| `F` | Gemini 3.8 Flash low via `agy -p` (subscription, $0) | `run-cli-arm.py --kind ocr`, the GENERIC prompt, plan mode + tool gate. A Gemini baseline, not a box lane |
+| `P0` | PaddleOCR-VL-1.6, layout off (the #5660 fleet recipe) | `paddle-zh-box.sh arm`, 8 runners → genai server, as the capability card ran it |
+| `P1` | PaddleOCR-VL-1.6, layout on | the same, `LAYOUT=1` (PP-DocLayout blocks: side-notes come out as their own blocks) |
+| `M` | MinerU2.5-Pro-2605-1.2B | `mineru_vl_utils` two-step extract, vLLM V1 runner |
+| `G` | GLM-OCR 0.9B | `Text Recognition:`, MTP speculative decoding |
+| `O` | olmOCR-2-7B-1025-FP8 | its v4 prompt (`build_no_anchoring_v4_yaml_prompt`), image at a long side of 1,288 px |
+| `K` | Kraken + CATMuS-Print (`catmus-print-fondue-large`, zenodo 10.5281/zenodo.10592716) | `kraken segment -bl ocr`, CPU on gex45 |
+
+- GPU arms: vLLM `--gpu-memory-utilization 0.6` (olmOCR 0.85: its FP8 weights alone are 9.6 GiB), max output
+  **6,000 tokens** for every VLM (the densest reference page has 7,848 characters), temperature 0, 16 clients, one model
+  at a time, each load under `flock /root/gpu.lock` for at most ~20 min, the model stopped after.
+- **Not run: Kraken-ft (#5730).** It exists, but only on the main Hetzner box (`/root/models/kraken/catmus-ft-latin-5730/`), which neither gex45
+  nor this job's host can reach (the box mesh carries no files). #5730 also found that it ties stock CATMuS off EEBO film, and these
+  leaves are e-rara, archive.org, BSB and Heidelberg scans, not EEBO.
+- Every arm's text is cleaned the same way before scoring: YAML front matter, HTML tags, markdown markers (`#`, `**`,
+  `*`, `|`, image links) and the agy sentinels are stripped. Nothing else.
+
+### Views and metric
+- **N, normalised (PRIMARY).** `latin-norm@1` (`latin-r4-report-5924.mjs` `foldDeterministic` on both sides, `foldGuided` on the
+  engine side, unchanged). So an abbreviation is right whether it is kept as printed or expanded. Then on both sides:
+  NFD with marks dropped, lower case, **ſ → s, v → u, j → i**, letters only (`\p{L}`).
+- **D, diplomatic.** NFC, lower case, keep letters, combining marks, `&` and `⁊`. Nothing folded: ſ ≠ s, u ≠ v, i ≠ j,
+  æ ≠ ae, an expanded abbreviation ≠ the printed one.
+- **Order tolerance (marginalia).** The reference puts side-notes after the body, and an engine may interleave them. So the
+  engine text is split into segments at line breaks. Each segment is placed at the reference offset where most of its
+  character 6-grams fall (the mode of reference position minus segment position, in view N). Segments with no shared 6-gram keep
+  their place after the segment before them. The segments are then stably re-sorted by that offset and joined. **The deciding
+  CER is computed on this reordered text.** Plain CER in the engine's own order is reported beside it.
+- **Page CER** = Levenshtein(ref, hyp) / |ref|, capped at 1.0. An empty output, a refusal or an error is 1.0.
+
+### Per century, and the bar
+- Per arm: the median page CER, with a 95% percentile bootstrap CI (10,000 resamples of pages, seed 5924).
+- Paired against L: d = CER(arm) − CER(L) per page; the median of d with a 95% percentile bootstrap CI (10,000, seed 5924).
+- **Noise floor** per century = the median over pages of |CER(L1a) − CER(L1b)| (view N, reordered).
+- **An open engine X earns a standing lane for century Y iff all three hold in that century:**
+  1. the CI of median d lies entirely below 0;
+  2. |median d| > the noise floor;
+  3. catastrophic pages (N CER > 0.5, or output more than twice the reference's letters, i.e. a loop) ≤ L's count + 1.
+  Criterion 3 is added here to the brief's two. It is fixed before any read, because a loop that a median hides is a
+  quality failure in a lane.
+- If two engines pass in one century, the lower median N CER is named, and the other is listed.
+- **F** is scored the same way against L. It is reported, but it is not a box lane.
+
+### Also reported (descriptive, never deciding)
+- **ſ errors per century** (view D alignment of reference to engine): the reference's ſ read as `f`, as `s`, or kept as `ſ`;
+  the reference's `f` read as `ſ`.
+- The D view: medians and Δ vs L. Plain (unreordered) CER. Catastrophic and loop counts. Hit-the-cap counts.
+- **Throughput.** Pages/h per GPU arm = 99 / the wall time of the timed pass with the model already loaded, 16 clients (8 Paddle
+  runners), alone on the card. Kraken: pages/h with 10 processes × 2 threads on the i5-13500. **GPU-days for the backlog** =
+  pages / (pages/h × 24) for 1600s 2.81M, 1500s 2.21M, and the whole Latin queue 7.5M (#5924's counts). The capability card's
+  100-page rates are quoted beside.
+- **By eye:** for the best open arm in each century, the 3 largest page wins and the 3 largest losses against L, read against the image
+  by an Opus subagent (≤ 10 pages per call). `read-from-image`.
+
+### Caps and writes
+- The only paid API is gemini-3.1-flash-lite: 3 × 99 = 297 page reads, estimated < $0.60. The hard cap is $1. Spend is
+  logged by `gemini-script-client.mjs` and stated in the result.
+- No Claude model goes through agy. Nothing is written to `pages`, `books` or any production store. Outputs go to gex45
+  `/root/jobs/latin-bakeoff-5924/` and to the repo as packed JSONL.

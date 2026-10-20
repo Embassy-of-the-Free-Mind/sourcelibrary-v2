@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
-import { FEED_TYPES } from '@/lib/feed-links';
 import { siteOgImage } from '@/lib/og-locale';
 
 // Chinese edition of the homepage (#6382), the mirror of `/la` (#6254): a
@@ -31,7 +30,6 @@ export const metadata: Metadata = {
     },
     // See src/lib/feed-links.ts — declaring `languages` here replaces the
     // layout's whole `alternates`, feed links included.
-    types: FEED_TYPES,
   },
   // Both blocks, or neither: declaring `openGraph` replaces the layout's block
   // whole while its `twitter` block survives (.claude/docs/i18n.md, share card).

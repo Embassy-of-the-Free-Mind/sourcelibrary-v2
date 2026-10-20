@@ -54,9 +54,21 @@ export function coerceImageType(value) {
  * decorative — a historiated initial with a scene, a full-page border — stays:
  * those are the woodcuts a reader searches the gallery for.
  *
+ * An ownership mark is refused at ANY size and quality (#5200). The prompt says
+ * "Ownership bookplates / ex-libris: ALWAYS type exlibris with gallery_quality ≤ 0.3",
+ * and the model ignores both halves: the BPH pelican plate went in ~900 times as
+ * `emblem` at 0.85–0.95, and 157 rows typed `exlibris` sat at quality ≥ 0.7 on the
+ * public gallery (measured 2026-10-11). So the type is checked, and so is the
+ * description — 40 of 40 sampled public rows whose description says bookplate or
+ * ex-libris, typed emblem/engraving/woodcut, were bookplates by their own words
+ * (Jung's, Bibliotheca Lindesiana, Harvard, Stanford…).
+ *
  * Keep identical to the TS twin; `tests/unit/gallery-image-types.test.ts` pins it.
  */
 export const TRIVIAL_MAX_AREA = 0.05;
+export const OWNERSHIP_IMAGE_TYPES = ['exlibris', 'bookplate'];
+const OWNERSHIP_TYPES = new Set(OWNERSHIP_IMAGE_TYPES);
+const OWNERSHIP_WORDS = /\b(book[- ]?plates?|ex[- ]?libris)\b|philosophia hermetica|bibliotheca philosophica|ritman library/i;
 const INITIAL_WORDS = /\b(initial|initials|drop[- ]caps?|lettrine|versal)\b/i;
 
 /**
@@ -64,11 +76,13 @@ const INITIAL_WORDS = /\b(initial|initials|drop[- ]caps?|lettrine|versal)\b/i;
  * @returns {boolean}
  */
 export function isTrivialGalleryDetection(img) {
-  if (!img || !img.bbox) return false;
+  if (!img) return false;
+  const type = coerceImageType(img.type);
+  const desc = typeof img.description === 'string' ? img.description : '';
+  if ((type && OWNERSHIP_TYPES.has(type)) || OWNERSHIP_WORDS.test(desc)) return true;
+  if (!img.bbox) return false;
   const w = Number(img.bbox.width), h = Number(img.bbox.height);
   if (!Number.isFinite(w) || !Number.isFinite(h)) return false;
   if (w * h >= TRIVIAL_MAX_AREA) return false;
-  const type = coerceImageType(img.type);
-  const desc = typeof img.description === 'string' ? img.description : '';
   return type === 'decorative' || INITIAL_WORDS.test(desc);
 }
