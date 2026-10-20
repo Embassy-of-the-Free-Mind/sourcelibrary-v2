@@ -7,7 +7,7 @@
 # 2. the 5,132 pages with vLLM (or HF if vLLM failed parity). Resumable: a page with a .txt is skipped.
 set -uo pipefail
 J=/root/jobs/tib-gutter-6871; cd "$J"
-export OMP_NUM_THREADS=8 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential VLLM_USE_FLASHINFER_SAMPLER=0
+export OMP_NUM_THREADS=8 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_USE_V2_MODEL_RUNNER=0
 ARM=${ARM:-page}   # set from the bake-off verdict
 if vv/bin/python yig_vllm.py --manifest todo30.jsonl --out arm-vllm --mode "$ARM" && vv/bin/python parity.py "arm-$ARM" arm-vllm 0.95; then
   echo "vLLM parity ok: full run under vLLM"
