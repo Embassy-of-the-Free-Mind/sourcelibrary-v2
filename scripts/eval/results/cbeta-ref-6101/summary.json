@@ -1,0 +1,244 @@
+{
+ "issue": 6101,
+ "generated_at": "2026-10-07",
+ "stratum": "chinese-print-cbeta",
+ "n_sealed": 200,
+ "n_books": 54,
+ "note": "CER against CBETA fitted to the page, Han only. CIs: book-cluster bootstrap (2,000 resamples, seed 6101) for medians and paired deltas; Wilson for rates (page-level, so slightly narrow).",
+ "shared": {
+  "scored_file": "scripts/eval/results/benchmark/chinese-print-cbeta-2026-10-06.json",
+  "n_pages_scored": 200,
+  "reference_misfit": [
+   "chinese-print-cbeta-5595ab-p45"
+  ],
+  "n_all_three_answered": 198,
+  "n_books_answered": 54,
+  "engines": {
+   "paddleocr-vl-1.6": {
+    "n": 198,
+    "median_cer": 0.128,
+    "median_cer_ci95": [
+     0.115,
+     0.142
+    ],
+    "mean_cer": 0.253,
+    "catastrophic": 29,
+    "catastrophic_rate": 0.146,
+    "catastrophic_ci95": [
+     0.104,
+     0.202
+    ],
+    "invention_ref_median": 0.197,
+    "loops": 0,
+    "refused": 0,
+    "empty": 16
+   },
+   "gemini-3.1-flash-lite": {
+    "n": 198,
+    "median_cer": 0.068,
+    "median_cer_ci95": [
+     0.061,
+     0.086
+    ],
+    "mean_cer": 0.187,
+    "catastrophic": 3,
+    "catastrophic_rate": 0.015,
+    "catastrophic_ci95": [
+     0.005,
+     0.044
+    ],
+    "invention_ref_median": 0.155,
+    "loops": 2,
+    "refused": 0,
+    "empty": 0
+   },
+   "gemini-3-flash-preview": {
+    "n": 198,
+    "median_cer": 0.052,
+    "median_cer_ci95": [
+     0.045,
+     0.061
+    ],
+    "mean_cer": 0.062,
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.019
+    ],
+    "invention_ref_median": 0.121,
+    "loops": 0,
+    "refused": 1,
+    "empty": 0
+   }
+  },
+  "paired": [
+   {
+    "a": "gemini-3.1-flash-lite",
+    "b": "paddleocr-vl-1.6",
+    "n": 198,
+    "a_wins": 165,
+    "a_losses": 33,
+    "ties": 0,
+    "median_delta_b_minus_a": 0.062,
+    "ci95": [
+     0.053,
+     0.076
+    ],
+    "p_sign": 0,
+    "reading": "Δ = CER(paddleocr-vl-1.6) − CER(gemini-3.1-flash-lite); negative = paddleocr-vl-1.6 better"
+   },
+   {
+    "a": "gemini-3.1-flash-lite",
+    "b": "gemini-3-flash-preview",
+    "n": 198,
+    "a_wins": 30,
+    "a_losses": 162,
+    "ties": 6,
+    "median_delta_b_minus_a": -0.019,
+    "ci95": [
+     -0.026,
+     -0.014
+    ],
+    "p_sign": 0,
+    "reading": "Δ = CER(gemini-3-flash-preview) − CER(gemini-3.1-flash-lite); negative = gemini-3-flash-preview better"
+   },
+   {
+    "a": "gemini-3-flash-preview",
+    "b": "paddleocr-vl-1.6",
+    "n": 198,
+    "a_wins": 187,
+    "a_losses": 11,
+    "ties": 0,
+    "median_delta_b_minus_a": 0.077,
+    "ci95": [
+     0.068,
+     0.088
+    ],
+    "p_sign": 0,
+    "reading": "Δ = CER(paddleocr-vl-1.6) − CER(gemini-3-flash-preview); negative = paddleocr-vl-1.6 better"
+   }
+  ],
+  "by_class": {
+   "woodblock": {
+    "n": 172,
+    "engines": {
+     "paddleocr-vl-1.6": {
+      "median_cer": 0.122,
+      "catastrophic": 29
+     },
+     "gemini-3.1-flash-lite": {
+      "median_cer": 0.068,
+      "catastrophic": 3
+     },
+     "gemini-3-flash-preview": {
+      "median_cer": 0.05,
+      "catastrophic": 0
+     }
+    }
+   },
+   "typeset": {
+    "n": 26,
+    "engines": {
+     "paddleocr-vl-1.6": {
+      "median_cer": 0.192,
+      "catastrophic": 0
+     },
+     "gemini-3.1-flash-lite": {
+      "median_cer": 0.073,
+      "catastrophic": 0
+     },
+     "gemini-3-flash-preview": {
+      "median_cer": 0.057,
+      "catastrophic": 0
+     }
+    }
+   }
+  },
+  "textless": []
+ },
+ "all_pages": {
+  "engine": "paddleocr-vl-1.6",
+  "pages_read": 2048,
+  "not_reached": 2239,
+  "order": "sealed 200, then the other print pages in a seeded shuffle (seed 6102), manuscript last; read until the 5-hour box deadline",
+  "timeouts": 52,
+  "by_class": {
+   "woodblock": {
+    "n_pages": 1883,
+    "n_books": 47,
+    "scored": 1596,
+    "median_cer": 0.113,
+    "median_cer_ci95": [
+     0.108,
+     0.119
+    ],
+    "cer_over_0_5_or_misfit": 177,
+    "no_text_on_text_page": 110,
+    "of_which_timeout": 50,
+    "textless_both": 0,
+    "failure_rate": 0.152,
+    "failure_ci95": [
+     0.137,
+     0.169
+    ],
+    "loops": 0
+   },
+   "typeset": {
+    "n_pages": 165,
+    "n_books": 7,
+    "scored": 160,
+    "median_cer": 0.166,
+    "median_cer_ci95": [
+     0.13,
+     0.21
+    ],
+    "cer_over_0_5_or_misfit": 2,
+    "no_text_on_text_page": 3,
+    "of_which_timeout": 2,
+    "textless_both": 0,
+    "failure_rate": 0.03,
+    "failure_ci95": [
+     0.013,
+     0.069
+    ],
+    "loops": 0
+   },
+   "manuscript-regular": {
+    "n_pages": 0,
+    "n_books": 0,
+    "scored": 0,
+    "median_cer": null,
+    "median_cer_ci95": null,
+    "cer_over_0_5_or_misfit": 0,
+    "no_text_on_text_page": 0,
+    "of_which_timeout": 0,
+    "textless_both": 0,
+    "failure_rate": null,
+    "failure_ci95": null,
+    "loops": 0
+   },
+   "all": {
+    "n_pages": 2048,
+    "n_books": 54,
+    "scored": 1756,
+    "median_cer": 0.117,
+    "median_cer_ci95": [
+     0.111,
+     0.123
+    ],
+    "cer_over_0_5_or_misfit": 179,
+    "no_text_on_text_page": 113,
+    "of_which_timeout": 52,
+    "textless_both": 0,
+    "failure_rate": 0.143,
+    "failure_ci95": [
+     0.128,
+     0.158
+    ],
+    "loops": 0
+   }
+  },
+  "note": "one engine: the misfit guard cannot separate a misread from a misfitted reference, so CER > 0.5 pages are counted together as cer_over_0_5_or_misfit; no_text_on_text_page = Paddle returned < 30 characters (timeout, empty, or the NDL label only) on a page whose reference has ≥ 30; failure = either"
+ }
+}
