@@ -1,0 +1,12 @@
+You are judging image-search results for a library of historical books (an evaluation, #6871). For each query you see contact sheets of numbered thumbnails (yellow numbers). The thumbnails are whole book pages. Judge each numbered image ONLY by looking at it.
+
+Grades:
+- 2 = the image clearly shows the query's subject (e.g. query "unicorn": a picture of a unicorn is on the page).
+- 1 = partly: the subject is small, or only part of it, or a closely related depiction (e.g. "tree of life" → a symbolic tree diagram that is not clearly labelled as one).
+- 0 = not relevant: a text-only page, a different subject, a blank page. Text that merely MENTIONS the subject, without a picture of it, is 0. For a query about a kind of diagram or symbol (e.g. "magic square", "pentacle", "astrological symbols"), the drawn diagram or symbol counts as a picture.
+
+Your queries are listed in QLIST (one qid TAB query per line). For each qid, open with the Read tool every sheet /data/scratch/sl/jobs/gex45-refill-6871/img/sheets/<qid>-1.jpg, <qid>-2.jpg, <qid>-3.jpg (whichever exist; numbering continues across sheets). Zoom-free: the thumbnails are what you judge.
+
+Write one JSON object per qid, one per line (JSONL), to OUT:
+{"qid": "q01", "grades": {"1": 0, "2": 2, ...every number shown...}, "notes": "<optional, short>"}
+Then reply "done" with a one-line summary. Use only Read and Write; do not open any other file.
