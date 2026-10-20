@@ -17,7 +17,9 @@
  * idempotent: archiveIiif only fetches pages that lack `archived_photo`.
  * `--campaign <tag>` does the same keyed on `acquisition_campaign` (#5457).
  * `--book <id[,id]>` does the same for named books, e.g. one a reader is waiting
- * on whose provider tag no other lane selects (#6968):
+ * on whose provider tag no other lane selects (#6968). A named book is retried
+ * even when archive_complete, and every missing page is fetched, not just
+ * until the 99% completion bar:
  *   npx tsx scripts/catalog-coverage/archive-acquired.ts --book 6ac4fce44ba7223afef75aa9
  *
  * Host lanes (#4397) — one process per host, each at its own polite rate, so a
@@ -351,7 +353,7 @@ async function main() {
     ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
     ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
-    archive_status: { $ne: 'archive_complete' },
+    ...(BOOK_IDS ? {} : { archive_status: { $ne: 'archive_complete' } }),
   };
 
   // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
@@ -433,7 +435,7 @@ async function main() {
       hostSkipped++; return;
     }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
-    if (have0 < (b.pages_count || 0) * 0.99) {
+    if (have0 < (b.pages_count || 0) * (BOOK_IDS ? 1 : 0.99)) {
       if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
       else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
