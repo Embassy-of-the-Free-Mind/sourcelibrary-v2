@@ -18,6 +18,8 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 const OCR_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
@@ -47,7 +49,7 @@ async function main() {
     'image_source.provider_name': 'Embassy of the Free Mind',
   }, {
     projection: {
-      id: 1, title: 1, language: 1, year: 1, published: 1,
+      id: 1, title: 1, language: 1, 'image_source.provider': 1, year: 1, published: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1,
       read_count: 1, likes_count: 1, gallery_image_count: 1,
       reading_summary: 1, index: 1, quality_score: 1, job: 1
@@ -137,7 +139,7 @@ async function main() {
       book_title: book.title,
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
+      config: { page_ids: pageIds, model: getOcrModelForBook(book), language: book.language || 'auto-detect' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),
@@ -212,7 +214,7 @@ async function main() {
       book_title: book.title,
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
+      config: { page_ids: pageIds, model: getTranslateModelForBook(book), language: book.language || 'auto-detect' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),
