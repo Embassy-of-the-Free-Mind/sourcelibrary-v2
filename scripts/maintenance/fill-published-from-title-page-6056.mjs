@@ -52,6 +52,7 @@ import { findImprint, loose, DESCRIBING, LABEL } from '../lib/date-works.mjs';
 import { stripEditorialWrappers } from '../lib/strip-editorial-wrappers.mjs';
 import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
 import { makeRng } from '../eval/lib/paired-stats.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RESULTS = join(HERE, '..', 'eval', 'results', 'published-fill-6056');
@@ -187,14 +188,14 @@ for (let i = 0; i < toFind.length; i += 150) {
   const rows = await db.collection('pages').find({
     $or: chunk.map((p) => (p.edition.basis === 'colophon' ? { book_id: p.id, page_number: { $gt: p.pages_count - 4 } } : { book_id: p.id, page_number: { $lte: 12 } })),
     'ocr.data': { $type: 'string', $ne: '' },
-  }, { projection: { _id: 0, book_id: 1, page_number: 1, archived_photo: 1, photo: 1, text: { $substrCP: ['$ocr.data', 0, 2400] } }, maxTimeMS: 120_000 }).toArray();
+  }, { projection: { _id: 0, book_id: 1, page_number: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1, photo: 1, text: { $substrCP: ['$ocr.data', 0, 2400] } }, maxTimeMS: 120_000 }).toArray();
   const by = new Map();
   for (const r of rows) by.set(r.book_id, [...(by.get(r.book_id) || []), r]);
   for (const p of chunk) {
     const want = loose(p.edition.evidence);
     const hit = (by.get(p.id) || []).sort((a, b) => a.page_number - b.page_number)
       .find((r) => loose(stripMarkupTags(stripEditorialWrappers(r.text || '') || '', ' ')).includes(want));
-    if (hit) { p.page = hit.page_number; p.image = hit.archived_photo || hit.photo || null; } else {
+    if (hit) { p.page = hit.page_number; p.image = getPageSource(hit); } else {
       p.reason = 'evidence-page-not-found'; reasons[p.reason] = (reasons[p.reason] || 0) + 1; delete p.value;
     }
   }
