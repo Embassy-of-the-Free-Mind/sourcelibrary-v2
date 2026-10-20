@@ -24,6 +24,7 @@
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
 
 const FILTER = { work_id: 'Q1761479', published: '1609', year: 1607 };
 const EXPECTED = 13;
@@ -66,25 +67,17 @@ try {
   for (const b of books) console.log(`  ${b.id}  ${b.title}`);
   if (!apply) process.exit(0);
 
-  const now = new Date();
-  const res = await db.collection('books').bulkWrite(books.map((b) => ({
-    updateOne: {
-      filter: { _id: b._id, year: OLD_YEAR },
-      update: {
-        $set: {
-          year: NEW_YEAR,
-          'field_provenance.year': {
-            source: 'maintenance',
-            script: 'scripts/maintenance/sancai-year-1609-4576.mjs',
-            date: now,
-            previous_value: OLD_YEAR,
-            note: 'aligned with published "1609", shared by all 108 witnesses of Q1761479 (#4576)',
-          },
-        },
-      },
-    },
-  })), { ordered: false });
-  console.log(`matched ${res.matchedCount}, modified ${res.modifiedCount}`);
+  // The imprint write path (#6327): reads the current year itself, stamps previous_value, compare-and-sets.
+  let modified = 0;
+  for (const b of books) {
+    const r = await setCatalogueFields(db, b.id, { year: NEW_YEAR }, {
+      source: 'maintenance',
+      script: 'scripts/maintenance/sancai-year-1609-4576.mjs',
+      note: 'aligned with published "1609", shared by all 108 witnesses of Q1761479 (#4576)',
+    });
+    modified += r.modified;
+  }
+  console.log(`matched ${books.length}, modified ${modified}`);
 
   await recordSweepActions(db, books.map((b) => ({
     sweep: 'sancai-year-1609-4576', book_id: b.id, action: 'year-aligned-with-published',
