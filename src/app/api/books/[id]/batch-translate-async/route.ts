@@ -8,6 +8,7 @@ import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts
 import { createRevision } from '@/lib/page-revisions';
 import { findHumanEditedPageIds, findPendingBatchJob } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
+import { getModelForBook } from '@/lib/types/ai-models';
 import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
 
 /**
@@ -47,7 +48,7 @@ export const POST = withAuth(async (request, session, context) => {
     const {
       limit = 500,
       targetLanguage = 'English',
-      model = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview',
+      model: requestedModel, // explicit override only — the default is routed by book below
       force = false, // When true, include pages that already have translation (for re-processing)
       staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
       resubmit = false, // When true, bypass the pending-job double-submit guard
@@ -60,6 +61,13 @@ export const POST = withAuth(async (request, session, context) => {
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+
+    // The MODEL is chosen by routing, never hardcoded (#3725, #4749). This route
+    // defaulted to full flash and never called the router, so 1,776 lite-eligible
+    // pages (German, Polish, Latin, French) ran at the flash rate in 30 days. An
+    // explicit `model` in the body or GEMINI_BATCH_MODEL in the environment is a
+    // deliberate override and still wins; absent both, the book decides.
+    const model: string = requestedModel || process.env.GEMINI_BATCH_MODEL || getModelForBook(book);
 
     // Double-submit guard (#3749, archaeology I68): a pending translation
     // batch for this book means submitting again pays Gemini twice for the

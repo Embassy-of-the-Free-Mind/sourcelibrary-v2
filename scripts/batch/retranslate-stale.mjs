@@ -13,7 +13,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -24,8 +24,11 @@ const SINGLE_BOOK_ID = BOOK_ID_ARG ? BOOK_ID_ARG.split('=')[1] : null;
 const INITIATED_BY = 'script:retranslate-stale';
 const REASON = parseInitiatedReason(process.argv.slice(2), INITIATED_BY);
 
+// The OCR generation this script treats as current — a DETECTION constant, not
+// the model translations are submitted on. The submission model is routed by
+// book (getTranslateModelForBook, #4749); a flash constant here sent every
+// lite-eligible book to the full model.
 const CURRENT_MODEL = 'gemini-3-flash-preview';
-const BATCH_MODEL = 'gemini-3-flash-preview';
 const MAX_PAGES_PER_BATCH = 300;
 
 // Skip page types that don't need translation
@@ -76,7 +79,7 @@ async function getTranslationPrompt(db, language) {
   };
 }
 
-async function submitBatch(batchRequests, displayName, keyIndex = 0) {
+async function submitBatch(batchRequests, displayName, model, keyIndex = 0) {
   if (keyIndex >= UNIQUE_KEYS.length) {
     throw new Error('All API keys exhausted');
   }
@@ -85,7 +88,7 @@ async function submitBatch(batchRequests, displayName, keyIndex = 0) {
 
   try {
     const batchJob = await client.batches.create({
-      model: BATCH_MODEL,
+      model,
       src: batchRequests.map(r => ({
         ...r.request,
         metadata: { key: r.key },
@@ -97,7 +100,7 @@ async function submitBatch(batchRequests, displayName, keyIndex = 0) {
     const msg = err.message || '';
     if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
       console.warn(`  Key ${keyIndex} quota exhausted, trying next...`);
-      return submitBatch(batchRequests, displayName, keyIndex + 1);
+      return submitBatch(batchRequests, displayName, model, keyIndex + 1);
     }
     throw err;
   }
@@ -170,6 +173,7 @@ async function main() {
     }
 
     const language = book.language || 'Latin';
+    const batchModel = getTranslateModelForBook(book);
     const promptInfo = await getTranslationPrompt(db, language);
 
     // Fetch stale pages for this book
@@ -231,14 +235,14 @@ async function main() {
       const displayName = `retranslate-stale-${bookId}-${bi}-${Date.now()}`;
 
       try {
-        const { job } = await submitBatch(batchRequests, displayName);
+        const { job } = await submitBatch(batchRequests, displayName, batchModel);
 
         // Record in batch_jobs
         await db.collection('batch_jobs').insertOne({
           job_name: job.name,
           book_id: bookId,
           type: 'translation',
-          model: BATCH_MODEL,
+          model: batchModel,
           source_language: language,
           target_language: 'English',
           force: true,
@@ -259,7 +263,7 @@ async function main() {
         await db.collection('gemini_usage').insertOne({
           type: 'translate',
           mode: 'batch',
-          model: BATCH_MODEL,
+          model: batchModel,
           book_id: bookId,
           book_title: book.title,
           page_ids: batchRequests.map(r => r.key),

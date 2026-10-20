@@ -17,12 +17,11 @@
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
-const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -98,7 +97,7 @@ async function main() {
         };
 
     const efmBooks = await db.collection('books').find(efmFilter)
-      .project({ id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, _id: 0 })
+      .project({ id: 1, title: 1, language: 1, image_source: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, _id: 0 })
       .toArray();
 
     // Filter to books needing translation
@@ -185,7 +184,7 @@ async function main() {
           progress: { total: pageIds.length, completed: 0, failed: 0 },
           config: {
             page_ids: pageIds,
-            model: DEFAULT_MODEL,
+            model: getTranslateModelForBook(book), // routed by book, never a constant (#4749)
             language: book.language || 'auto-detect',
           },
           // Was the bare 'script', which named no lane — reconstruction needs to know

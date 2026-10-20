@@ -23,6 +23,7 @@
  *   --smallest       Sort smallest books first (default — fastest to complete)
  *   --largest        Sort largest books first
  *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
+ *   --model=ID       Override routing for every job (default: getTranslateModelForBook per book, #4749)
  *
  * Requires env: MONGODB_URI, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SQS_PAGE_TRANSLATION_QUEUE_URL
  */
@@ -34,6 +35,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getTranslateModelForBook } from '../lib/translate-core.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
 try {
@@ -65,7 +67,6 @@ if (!process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_SECRET_ACCESS_KEY_SOUR
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
-const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -81,6 +82,11 @@ const DRY_RUN = hasFlag('dry-run');
 const SINGLE_BOOK = getArg('book-id');
 const MAX_PAGES = parseInt(getArg('max-pages') || '9999', 10);
 const SORT_LARGEST = hasFlag('largest');
+// Deliberate override only (e.g. --model=gemini-3-flash-preview to re-run a book on
+// the full model). Without it every job is routed by book: this script used to
+// stamp a flash constant on every job, and the Lambda honours job.config.model
+// before routing, so 4,823 lite-eligible pages ran on flash in 30 days (#4749).
+const MODEL_OVERRIDE = getArg('model');
 const INITIATED_BY = 'bulk-translate-script';
 const REASON = parseInitiatedReason(args, INITIATED_BY);
 
@@ -150,7 +156,7 @@ async function main() {
   const books = await db.collection('books')
     .find(bookQuery, {
       projection: {
-        id: 1, title: 1, language: 1, pages_count: 1,
+        id: 1, title: 1, language: 1, image_source: 1, pages_count: 1,
         pages_ocr: 1, pages_translated: 1, job: 1, _id: 0,
       },
     })
@@ -238,7 +244,7 @@ async function main() {
       },
       config: {
         page_ids: pageIds,
-        model: DEFAULT_MODEL,
+        model: MODEL_OVERRIDE || getTranslateModelForBook(book),
         language: book.language || 'auto-detect',
       },
       initiated_by: INITIATED_BY,

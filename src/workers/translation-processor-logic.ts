@@ -93,7 +93,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   // Fetch book metadata for translation context (title, author, year)
   const bookDoc = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1, 'image_source.provider': 1 } }
+    // `language` is what getModelForBook routes on. It was missing from this
+    // projection, so the router saw `language: undefined` and sent EVERY job
+    // that named no model to full flash — the Lambda lane ran at $3.66/1K for
+    // Latin and German books that policy routes to lite (#4749).
+    { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, 'image_source.provider': 1 } }
   );
   const bookContext = bookDoc ? {
     title: bookDoc.display_title || bookDoc.title,
@@ -202,7 +206,15 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     }
   }
 
-  const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string }; language?: string | null } | null) || DEFAULT_MODEL;
+  const routedModel = getModelForBook(bookDoc as { image_source?: { provider?: string }; language?: string | null } | null) || DEFAULT_MODEL;
+  const modelId: string = job.config.model || routedModel;
+  if (job.config.model && job.config.model !== routedModel) {
+    // A producer overrode routing. Legitimate for a deliberate re-run
+    // (retranslate-pages.mjs --model=flash), a leak when a script pasted a
+    // constant (#4749: 4,823 lite-eligible pages ran on flash in 30 days this
+    // way). Name the producer so the leak is attributable from the logs.
+    console.log(`[TRANS] Job ${jobId} overrides routing: ${job.config.model} (routed: ${routedModel}) initiated_by=${job.initiated_by ?? 'unknown'} reason=${job.initiated_reason ?? 'none'}`);
+  }
   const startTime = Date.now();
 
   // Resolve the translation prompt from DB (source of truth for prompt content + version)

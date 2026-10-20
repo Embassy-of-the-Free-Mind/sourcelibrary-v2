@@ -22,6 +22,8 @@
  * shared module rather than pasting the list, and add it here.
  */
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { getModelForBook as routeTs } from '@/lib/types/ai-models';
 import {
   getTranslateModelForBook as routeMjs,
@@ -128,5 +130,54 @@ describe('OCR_LITE_ONLY (2026-09-11): every batch OCR submission is flash-lite',
   it('does not touch translation routing', () => {
     expect(routeMjs({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_FLASH);
     expect(routeMjs({ language: 'tibetan' })).toBe(MODEL_FLASH);
+  });
+});
+
+/**
+ * PRODUCER SWEEP (#4749) — the routing functions above agreeing with each other
+ * is worth nothing to a producer that never calls one. Three did not: the
+ * batch-translate-async route defaulted to a flash literal, and two Lambda
+ * queueing scripts stamped `model: 'gemini-3-flash-preview'` on every job — the
+ * Lambda honours `job.config.model` before routing, so 6,599 lite-eligible
+ * pages (11% of 30 days of translation) ran at the flash rate.
+ *
+ * Every file that creates a `type: 'translation'` job or batch must import a
+ * router and must not name a model literal on the job it creates. This is a
+ * source scan, not a behavioural guard — the .mjs producers run `main()` on
+ * import and cannot be driven from a test — so the two producers that CAN be
+ * driven are: `translation-lambda-routing.test.ts` (the Lambda sink) and
+ * `batch-translate-async-routing.test.ts` (the Batch API route). A new
+ * producer goes in this list AND, if it is importable, gets a behavioural test.
+ */
+const TRANSLATION_PRODUCERS = [
+  'scripts/batch/bulk-translate-lambda.mjs',
+  'scripts/batch/queue-translations.mjs',
+  'scripts/batch/queue-translations-to-80pct.mjs',
+  'scripts/batch/queue-efm-priority.mjs',
+  'scripts/batch/queue-efm-translations.mjs',
+  'scripts/batch/retranslate-stale.mjs',
+  'src/app/api/books/[id]/batch-translate-async/route.ts',
+  'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts',
+  'src/app/api/jobs/queue-books/route.ts',
+];
+
+describe('translation producers route through the router (#4749)', () => {
+  it.each(TRANSLATION_PRODUCERS)('%s', (rel) => {
+    const src = readFileSync(resolve(process.cwd(), rel), 'utf8');
+    expect(src, `${rel} must import getTranslateModelForBook or getModelForBook`)
+      .toMatch(/\b(getTranslateModelForBook|getModelForBook)\b/);
+
+    // A model literal on a job the file creates. The window after each
+    // `type: 'translation'` / `type: 'translate'` covers the job or batch_jobs
+    // document being built; a `_MODEL = '...'` constant is the other way the
+    // leak was written. Detection constants (retranslate-stale compares
+    // `ocr.model` against one) are named CURRENT_MODEL and are not job models.
+    const windows = [...src.matchAll(/type:\s*'translat(?:ion|e)'/g)]
+      .map((m) => src.slice(m.index ?? 0, (m.index ?? 0) + 800));
+    for (const w of windows) {
+      expect(w, `${rel} names a model literal on a translation job`).not.toMatch(/model:\s*(?:process\.env\.\w+\s*\|\|\s*)?'gemini-/);
+    }
+    expect(src, `${rel} carries a hardcoded translation model constant`)
+      .not.toMatch(/(?:DEFAULT|BATCH|TRANSLAT\w*)_MODEL\s*=\s*'gemini-/);
   });
 });
