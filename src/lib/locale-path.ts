@@ -129,9 +129,13 @@ function hasLocalizedPath(canonical: string, lang: PrefixedLocale): boolean {
 export function canonicalPath(pathname: string | null | undefined): string {
   if (!pathname) return '/';
   for (const l of PREFIXED_LOCALES) {
-    if (pathname === `/${l}`) return '/';
+    if (pathname === `/${l}` || pathname === `/${l}/index`) return '/';
     if (pathname.startsWith(`/${l}/`)) return pathname.slice(l.length + 1); // '/es/x' → '/x'
   }
+  // A prerendered homepage reports `usePathname() === '/index'` at build, and
+  // that is what ships in its HTML. Read as an ordinary English-only page, the
+  // language menu sent 中文 to `/index?lang=zh` — the English homepage (#7025).
+  if (pathname === '/index') return '/';
   return pathname;
 }
 
