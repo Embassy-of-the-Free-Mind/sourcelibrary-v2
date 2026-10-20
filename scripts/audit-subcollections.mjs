@@ -124,7 +124,7 @@ async function main() {
     if (!DRY_RUN && result.removeIds?.length > 0) {
       const bulkResult = await db.collection('books').updateMany(
         { id: { $in: result.removeIds } },
-        { $pull: { collections: sub.slug } },
+        { $pull: { collections: sub.slug }, $currentDate: { updated_at: true } },
       );
       console.log(`    Removed from ${bulkResult.modifiedCount} books`);
 
