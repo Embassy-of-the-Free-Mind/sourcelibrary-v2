@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ThemeMap from '@/components/explore/maps/ThemeMap';
 import { MAP_THEMES, mapThemeBySlug } from '@/lib/explore-maps';
-import { FEED_TYPES } from '@/lib/feed-links';
 
 // Static: the map is drawn on the client from copied JSON in public/data/maps/ (#4922).
 // dynamicParams=false makes an unknown slug a routing-level 404, not a notFound() under
@@ -20,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ theme: st
   const url = `https://sourcelibrary.org/explore/maps/${t.slug}`;
   return {
     title, description: t.short,
-    alternates: { canonical: `/explore/maps/${t.slug}`, types: { ...FEED_TYPES } },
+    alternates: { canonical: `/explore/maps/${t.slug}` },
     openGraph: { title, description: t.short, url, siteName: 'Source Library', type: 'website', images: [OG_IMAGE] },
     twitter: { card: 'summary_large_image', title, description: t.short, images: [OG_IMAGE.url] },
   };

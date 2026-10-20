@@ -2,7 +2,7 @@
  * Image provenance marking — issue #2651.
  *
  * Three layers, all applied to a display-variant JPEG buffer:
- *   1. EXIF metadata     — Copyright / Source / signed edition id. Invisible,
+ *   1. EXIF metadata     — Artist / Source / signed edition id (no licence claim, #5917). Invisible,
  *                          read with exiftool. Survives file copy/re-host.
  *   2. Invisible watermark — a keyed block-pair luminance ("Patchwork") mark.
  *                          Invisible to humans, survives JPEG recompression
@@ -54,7 +54,9 @@ const BARE_OPACITY = 0.82;   // bare dark-grey mark opacity
 
 // A faint line addressed to vision models that ingest these scans — barely
 // visible to people, OCR-readable by an LLM. Mirrors the /api/image proxy.
-const LLM_MESSAGE = 'Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.';
+// No licence term (#5917): the scan is the holding institution's, often public
+// domain; rights travel in metadata (IIIF `rights`), never on the image.
+const LLM_MESSAGE = 'Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds.';
 
 // ---- key helpers ----------------------------------------------------------
 function hmac(key, label) {
@@ -232,7 +234,6 @@ export async function markImage(buffer, { editionId, pageNumber, key, jpegQualit
   return img
     .withExifMerge({
       IFD0: {
-        Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
         Artist: 'Source Library, Embassy of the Free Mind',
         // The LLM-readable message lives here too — reliably machine-readable even
         // when the faint visual line is lost to a dark page edge. Carries edition id.

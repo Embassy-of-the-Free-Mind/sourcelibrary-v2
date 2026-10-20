@@ -91,6 +91,9 @@ $HOST_RULES
 - Vercel previews are opt-in (#5976, #6000): only main and preview/** branches deploy. If a human must look at
   a page, push ONCE at the end: git push origin HEAD:preview/<job-name>, and post that preview URL. Otherwise check
   locally (route harness, next dev --webpack). Never push preview/ on every commit; it holds the one build slot.
+- COMMITS: always \`git commit -s\`, which signs as this checkout's git identity. Never type a Signed-off-by
+  line yourself: a hand-typed trailer (e.g. the box's Claude login, team@) does not match the commit author,
+  fails DCO, and a tier:auto PR then never merges (#6960, #6715 sat for days).
 - Before you write the done file, \`git status --porcelain\` in your worktree must be empty: commit and push what
   is worth keeping, move scratch to \$JOB_SCRATCH, delete the rest. Anything left uncommitted or unpushed pages
   Derek at high priority as work at risk (#6358).

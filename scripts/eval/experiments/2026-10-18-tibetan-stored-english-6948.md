@@ -12,7 +12,7 @@ decision: null
 superseded_by: null
 issue: [6948]
 ---
-## 2026-10-19 · Is the Tibetan English already on the site good enough, or must it be re-translated first? (#6948)
+## 2026-10-18 · Is the Tibetan English already on the site good enough, or must it be re-translated first? (#6948)
 
 PRIOR ART: `2026-10-18-tibetan-translator-85k-6948.md` (#6957: the 60-page blind test that chose Gemini 4 Argon low for
 the untranslated pages; its harness `scripts/eval/tib-translator-6948/` is reused: `requests.mjs`, `run-agy.sh`,

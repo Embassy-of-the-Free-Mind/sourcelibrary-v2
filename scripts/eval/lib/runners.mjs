@@ -10,7 +10,7 @@ import { logUsage } from '../../workers/lib/supabase-usage-logger.mjs';
 import { execFileSync } from 'child_process';
 // Prices come from the one shared table — this file used to carry its own copy,
 // which is how `gemini-3.1-flash-lite` ended up costed 3.3x apart across lanes.
-import { priceFor, acceptsZeroThinking } from '../../lib/model-pricing.mjs';
+import { priceFor, noThinkingConfig } from '../../lib/model-pricing.mjs';
 
 
 function calcCost(model, inputTokens, outputTokens) {
@@ -125,12 +125,12 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
       : { thinkingBudget: 8192 };
   } else if (typeof thinkingBudget === 'number') {
     body.generationConfig.thinkingConfig = { thinkingBudget };
-  } else if (thinkingBudget !== 'model-default' && acceptsZeroThinking(model)) {
+  } else if (thinkingBudget !== 'model-default' && noThinkingConfig(model)) {
     // `thinking: false` used to send NO thinkingConfig, which on Gemini 2.5+/3.x means thinking
     // ON, billed at the output rate — an arm labelled "no thinking" that thought (#4581, #4599).
     // Production runs a zero budget, so an eval that means to predict production must too.
     // To reproduce a pre-2026-09-21 run exactly, pass `thinkingBudget: 'model-default'`.
-    body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+    body.generationConfig.thinkingConfig = noThinkingConfig(model);
   }
 
   const start = Date.now();

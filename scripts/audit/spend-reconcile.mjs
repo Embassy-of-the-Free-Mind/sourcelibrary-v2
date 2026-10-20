@@ -161,7 +161,7 @@ const dayKey = iso => String(iso).slice(0, 10);
  * paginates by default and silently returned five of six.
  * Re-derive with: gcloud billing projects list --billing-account=<id> --limit=100
  */
-const PROJECTS = [
+export const PROJECTS = [
   { id: 'gen-lang-client-0278315411', name: 'booksplit', note: 'primary pipeline key lives here; also holds smartpaper + Kaiju Rampage keys' },
   { id: 'gen-lang-client-0352480887', name: 'Sourcelibrary', note: '' },
   { id: 'gen-lang-client-0720939617', name: 'soma', note: 'GEMINI_API_KEY_TIER3 lives here; also non-SL keys' },

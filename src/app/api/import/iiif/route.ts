@@ -11,6 +11,9 @@ import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup'
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
+import {
+  flattenIiifValue, readManifestMetadataPairs, labelContains, labelIs, splitImprint, resolveImportAuthor,
+} from '@/lib/iiif-manifest-metadata';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 import { initialPageCounters } from '@/lib/page-counts';
 
@@ -205,7 +208,7 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
  *   manifest_url: string,    // Full URL to IIIF manifest.json
  *   title: string,
  *   display_title?: string,
- *   author: string,
+ *   author?: string,         // 'Unknown'/empty falls back to the manifest's By/Creator (#6113)
  *   language?: string,
  *   published?: string,
  *   categories?: string[],
@@ -223,7 +226,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       manifest_data,
       title,
       display_title,
-      author,
+      author: candidateAuthor,
       language,
       published,
       year,
@@ -237,9 +240,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       shelfmark,
     } = body;
 
-    if (!manifest_url || !title || !author) {
+    if (!manifest_url || !title) {
       return NextResponse.json(
-        { error: 'Missing required fields: manifest_url, title, author' },
+        { error: 'Missing required fields: manifest_url, title' },
         { status: 400 }
       );
     }
@@ -266,6 +269,34 @@ export const POST = withCuratorAuth(async (request, session) => {
       manifest = await manifestRes.json();
     }
     const v3 = isV3Manifest(manifest);
+
+    // Extract the manifest's `metadata` array — IIIF stores publisher,
+    // creator, persistent ID, call number, DOI, etc. as label/value pairs
+    // here. Read before the dedup gate: when the candidate has no author the
+    // manifest's own By/Creator is the one we gate and slug on (#6113).
+    const iiifMetadata = readManifestMetadataPairs(manifest.metadata);
+    // Labels vary per institution ("Publisher", "Publication Date", "Author",
+    // "Creator", "Call Number", "DOI", "Persistent ID", "Bibliographic ID");
+    // BSB uses By / Published (`Place : Publisher`) / Date.
+    const labelGet = (...needles: string[]) => labelContains(iiifMetadata, ...needles);
+    const imprint = splitImprint(labelIs(iiifMetadata, 'published', 'imprint'));
+    const iiifPublisher = labelGet('publisher') || imprint.publisher;
+    const iiifPlace = labelGet('publication place', 'place of publication', 'place') || imprint.place;
+    const iiifPubDate = labelGet('publication date', 'date issued', 'date');
+    const iiifCreator = labelGet('creator', 'author');
+    const iiifBy = labelIs(iiifMetadata, 'by');
+
+    const author = resolveImportAuthor(candidateAuthor, iiifBy, iiifCreator);
+    if (!author) {
+      return NextResponse.json(
+        { error: 'Missing required field: author (and the manifest names no By/Creator)' },
+        { status: 400 }
+      );
+    }
+    // A candidate's 'Unknown' is no date at all; the manifest's (bracketed
+    // values like `[1695]` kept as text) beats writing 'Unknown'.
+    const candidatePublished = typeof published === 'string' && /^\s*unknown\s*$/i.test(published) ? null : published;
+    const resolvedPublished: string | null = candidatePublished || iiifPubDate || null;
 
     // Extract canvases from v2 or v3 manifest
     let totalCanvasCount: number;
@@ -311,7 +342,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const gate = await acquisitionGate(db, {
-      title, author, display_title, year, published,
+      title, author, display_title, year, published: resolvedPublished ?? undefined,
       image_source: { provider: 'iiif', iiif_manifest: manifest_url, source_url: manifest_url },
     }, { importer: 'api:iiif' });
     if (!gate.ok) {
@@ -387,44 +418,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       if (vals?.[0]) attributionText = vals[0].replace(/<[^>]*>/g, '').trim();
     }
 
-    // Extract the manifest's `metadata` array — IIIF stores publisher,
-    // creator, persistent ID, call number, DOI, etc. as label/value pairs
-    // here. Both v2 and v3 use the same structure but values can be a
-    // string, array, or {language: [strings]} map. Normalise to {label: string,
-    // value: string} for downstream display.
-    const flattenIiifValue = (v: unknown): string => {
-      if (typeof v === 'string') return v.replace(/<[^>]*>/g, '').trim();
-      if (Array.isArray(v)) return v.map(flattenIiifValue).filter(Boolean).join(' / ');
-      if (v && typeof v === 'object') {
-        const obj = v as Record<string, unknown>;
-        // v3 language map: {en: ['…']}
-        const en = obj['en'] || obj['none'] || Object.values(obj)[0];
-        if (Array.isArray(en)) return en.map(flattenIiifValue).filter(Boolean).join(' / ');
-        if (typeof en === 'string') return en;
-      }
-      return '';
-    };
-    const iiifMetadata: Array<{ label: string; value: string }> = [];
-    for (const item of (manifest.metadata || [])) {
-      const label = flattenIiifValue(item.label);
-      const value = flattenIiifValue(item.value);
-      if (label && value) iiifMetadata.push({ label, value });
-    }
-    // Index by common labels for quick access. Labels vary per institution
-    // ("Publisher", "Publication Date", "Author", "Creator", "Call Number",
-    // "DOI", "Persistent ID", "Bibliographic ID") — we collapse a few
-    // synonyms so the catalog_metadata has stable keys.
-    const labelGet = (...needles: string[]): string | null => {
-      for (const n of needles) {
-        const hit = iiifMetadata.find(m => m.label.toLowerCase().includes(n.toLowerCase()));
-        if (hit) return hit.value;
-      }
-      return null;
-    };
-    const iiifPublisher = labelGet('publisher');
-    const iiifPlace = labelGet('publication place', 'place of publication', 'place');
-    const iiifPubDate = labelGet('publication date', 'date issued', 'date');
-    const iiifCreator = labelGet('creator', 'author');
     const iiifCallNumber = labelGet('call number', 'shelfmark', 'shelf mark');
     const iiifDoi = labelGet('doi');
     const iiifBibId = labelGet('bibliographic id', 'bibliographic identifier', 'identifier');
@@ -446,6 +439,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       place: iiifPlace,
       publication_date: iiifPubDate,
       creator: iiifCreator,
+      by: iiifBy,
       call_number: iiifCallNumber,
       doi: iiifDoi,
       bibliographic_id: iiifBibId,
@@ -519,9 +513,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       // and writing 'Unknown'. It was already extracted for catalog_metadata
       // above, so refusing to use it here left the year sitting unread in the
       // same document while the book fell out of every date-bounded query.
-      published: published || iiifPubDate || 'Unknown',
-      ...(publishedToYear(typeof year === 'number' ? year : (published || iiifPubDate)) !== null
-        ? { year: publishedToYear(typeof year === 'number' ? year : (published || iiifPubDate))! }
+      published: resolvedPublished || 'Unknown',
+      ...(publishedToYear(typeof year === 'number' ? year : resolvedPublished) !== null
+        ? { year: publishedToYear(typeof year === 'number' ? year : resolvedPublished)! }
         : {}),
       categories: categories || [],
       ...(requestCollections?.length ? { collections: requestCollections } : {}),

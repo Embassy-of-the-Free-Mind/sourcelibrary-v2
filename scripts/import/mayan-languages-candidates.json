@@ -1,0 +1,605 @@
+{
+  "_comment": [
+    "Mayan-language books (#6559). IA language codes (myn yua quc cak tzo tzh kek mam) + subjects (Maya/Quiché/Cakchikel/Tzotzil/Tzeltal/Kekchi/Mam/Pokonchi/Chol/Huastec language, Maya literature) -> 378 items -> 229 editions after holdings/dupe filter -> hand selection of grammars, dictionaries, devotional/sermon texts, colonial MSS and a few decipherment classics. Dropped: Gage travels (12 eds), Brinton LAAL series (Maya vols held), printing manuals, archaeology without language content. Decipherment-history scope belongs to #5653; only works not held were taken."
+  ],
+  "books": [
+    {
+      "ia": "ayer_ms_1688",
+      "region": "maya",
+      "title": "Egregium opus fratris Dominici Dehara: de comparacionibus & similtudinibus",
+      "author": "Domingo de Ara",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Tzeltal"
+      ],
+      "published": "1560",
+      "text_role": "original",
+      "note": "1560. Mayan-language or Mayan-studies work (#6559). IA newberry."
+    },
+    {
+      "ia": "diccionariodemot01ciud",
+      "region": "maya",
+      "title": "Diccionario de Motul, maya español, vol. 1",
+      "author": "Antonio de Ciudad Real",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Yucatec Maya",
+        "Spanish"
+      ],
+      "published": "1577",
+      "text_role": "original",
+      "note": "1577. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "diccionariodemot02ciud",
+      "region": "maya",
+      "title": "Diccionario de Motul, maya español, vol. 2",
+      "author": "Antonio de Ciudad Real",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Yucatec Maya",
+        "Spanish"
+      ],
+      "published": "1577",
+      "text_role": "original",
+      "note": "1577. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_ms_1508",
+      "region": "maya",
+      "title": "Libro de pláticas",
+      "author": "Antonio del Saz",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Kaqchikel"
+      ],
+      "published": "1662",
+      "text_role": "original",
+      "note": "1662. Mayan-language or Mayan-studies work (#6559). IA newberry."
+    },
+    {
+      "ia": "historiadeyucath00lpez",
+      "region": "maya",
+      "title": "Historia de Yucathan",
+      "author": "Diego López Cogolludo",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1688",
+      "text_role": "original",
+      "note": "1688. Mayan-language or Mayan-studies work (#6559). IA JohnCarterBrownLibrary, americana."
+    },
+    {
+      "ia": "compendiodenombr00guzm",
+      "region": "maya",
+      "title": "Compendio de nombres en lengua cakchiquel.: Año D. 1704",
+      "author": "Pantaleón de Guzmán",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya",
+        "Kaqchikel"
+      ],
+      "published": "1704",
+      "text_role": "original",
+      "note": "1704. Mayan-language or Mayan-studies work (#6559). IA JohnCarterBrownLibrary, americana."
+    },
+    {
+      "ia": "artedeelidiomama00belt",
+      "region": "maya",
+      "title": "Arte de el idioma maya reducido a succintas reglas, y semilexicon yucateco",
+      "author": "Pedro Beltrán de Santa Rosa",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1746",
+      "text_role": "original",
+      "note": "1746. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_ms_1503",
+      "region": "maya",
+      "title": "Arte pronunciacion y ortographia de la lengua en el mismo ydioma cakchiquel",
+      "author": "Francisco Maldonado",
+      "language": "Kaqchikel",
+      "published": "1748",
+      "text_role": "original",
+      "note": "1748. Mayan-language or Mayan-studies work (#6559). IA newberry, fav-juan_salinas_portal."
+    },
+    {
+      "ia": "vaeriqutubalqhab00bras",
+      "region": "maya",
+      "title": "Vae ri qutubal qhabal, Ealahicabal pe richin Christianoil tzih Doctrina christiana tucheex",
+      "author": "Anonymous",
+      "language": "Yucatec Maya",
+      "languages": [
+        "Yucatec Maya",
+        "Spanish",
+        "K'iche' Maya"
+      ],
+      "published": "1750",
+      "text_role": "original",
+      "note": "1750. Mayan-language or Mayan-studies work (#6559). IA jcbguatemala, jcbspanishamerica."
+    },
+    {
+      "ia": "artedelalenguame00flor_0",
+      "region": "maya",
+      "title": "Arte de la lengua metropolitana del reyno Cakchiquel, o Guatemalico,: con un parallelo de las lenguas metropolitana de los reynos Kiche, Cakchiquel, y Q,utuhil, que hoy integran el reyno de Guatemala",
+      "author": "Ildefonso José Flores",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya",
+        "Kaqchikel"
+      ],
+      "published": "1753",
+      "text_role": "original",
+      "note": "1753. Mayan-language or Mayan-studies work (#6559). IA jcbguatemala, jcbspanishamerica."
+    },
+    {
+      "ia": "platicasdelospri00domn",
+      "region": "maya",
+      "title": "Platicas de los principales mysterios de nuestra Sta. Fee, con una breve exortacion al fin del modo con que deben excitarse al dolor de las culpas.: Hechas en el idioma yucateco, por orden del Illmo. ",
+      "author": "Francisco Eugenio Domínguez y Argáiz",
+      "language": "Yucatec Maya",
+      "languages": [
+        "Yucatec Maya",
+        "Spanish"
+      ],
+      "published": "1758",
+      "text_role": "original",
+      "note": "1758. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "noticiadelalengu01tapi",
+      "region": "maya",
+      "title": "Noticia de la lengua huasteca, que en beneficio de sus nacionales, de orden del Ilmô. Sr. arzopispo sic de esta santa Iglesia metropolitana, y a sus expensas",
+      "author": "Carlos de Tapia Zenteno",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya",
+        "Huastec"
+      ],
+      "published": "1767",
+      "text_role": "original",
+      "note": "1767. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "Ayer_PM3965_R89_1845",
+      "region": "maya",
+      "title": "Cartilla, ó, Silabario de lengua maya: para la enseñanza de los niños indigenas",
+      "author": "Joaquin Ruz",
+      "language": "Yucatec Maya",
+      "published": "1845",
+      "text_role": "original",
+      "note": "1845. Mayan-language or Mayan-studies work (#6559). IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "Ayer_BX1756.A2_C65_1846_0",
+      "region": "maya",
+      "title": "Coleccion de sermones para los domingos de todo el año, y cuaresma",
+      "author": "Anonymous",
+      "language": "Yucatec Maya",
+      "published": "1846",
+      "text_role": "original",
+      "note": "1846. Mayan-language or Mayan-studies work (#6559). IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "explicaciondeun00ruzgoog",
+      "region": "maya",
+      "title": "Explicacion de una parte de la doctrina cristiana: Se amplian los diferentes ..",
+      "author": "Joaquín Ruz Plácido Rico Frontaura",
+      "language": "Yucatec Maya",
+      "published": "1847",
+      "text_role": "original",
+      "note": "1847. Mayan-language or Mayan-studies work (#6559). IA americana, fav-isaacdime."
+    },
+    {
+      "ia": "Ayer_BX1965_R5716_1847",
+      "region": "maya",
+      "title": "Catecismo y exposicion breve de la doctrina cristiana",
+      "author": "Gerónimo de Ripalda",
+      "language": "Yucatec Maya",
+      "published": "1847",
+      "text_role": "original",
+      "note": "1847. Mayan-language or Mayan-studies work (#6559). IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "Ayer_BX2128.M39_A36_1851a",
+      "region": "maya",
+      "title": "Oraciones devotas que comprenden los actos de fe, esperanza, caridad, afectos para un cristiano y una oracion para pedir una buena muerte, en idioma..",
+      "author": "José Antonio Acosta",
+      "language": "Yucatec Maya",
+      "published": "1851",
+      "text_role": "original",
+      "note": "1851. Mayan-language or Mayan-studies work (#6559). IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "vocabularioenlen00sola",
+      "region": "maya",
+      "title": "Vocabulario en lengua castellana y guatemalteca que se llama Cak chi quel chi",
+      "author": "Félix Solano",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya",
+        "Kaqchikel"
+      ],
+      "published": "1856",
+      "text_role": "original",
+      "note": "1856. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "declaracindelad00beltgoog",
+      "region": "maya",
+      "title": "Declaración de la doctrina cristiana en el idioma yucateco",
+      "author": "Pedro Beltran",
+      "language": "Yucatec Maya",
+      "published": "1860",
+      "text_role": "original",
+      "note": "1860. Mayan-language or Mayan-studies work (#6559). IA europeanlibraries, fav-wayne876."
+    },
+    {
+      "ia": "diccionariodela00suasgoog",
+      "region": "maya",
+      "title": "Diccionario de la lengua maya",
+      "author": "Juan Pío Pérez",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1866",
+      "text_role": "original",
+      "note": "1866. Mayan-language or Mayan-studies work (#6559). IA americana, fav-7_7alexandra."
+    },
+    {
+      "ia": "elejerciciodelsa00nola",
+      "region": "maya",
+      "title": "El ejercicio del santo viacrucis puesto en lengua maya y copiado de un antiguo manuscrito ..",
+      "author": "Pedro Nolasco de los Reyes",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1869",
+      "text_role": "original",
+      "note": "1869. Mayan-language or Mayan-studies work (#6559). IA university_of_illinois_urbana-champaign, americana."
+    },
+    {
+      "ia": "letiuebanheliohe00lond",
+      "region": "maya",
+      "title": "Leti u ebanhelio Hezu Crizto hebix Huan",
+      "author": "Anonymous",
+      "language": "Yucatec Maya",
+      "published": "1869",
+      "text_role": "original",
+      "note": "1869. Mayan-language or Mayan-studies work (#6559). IA brigham_young_university, americana."
+    },
+    {
+      "ia": "ancientphonetica00brin",
+      "region": "maya",
+      "title": "The ancient phonetic alphabet of Yucatan",
+      "author": "Daniel G. (Daniel Garrison) Brinton",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1870",
+      "text_role": "original",
+      "note": "1870. Mayan-language or Mayan-studies work (#6559). IA library_of_congress, americana."
+    },
+    {
+      "ia": "cartillaenlengua00bere",
+      "region": "maya",
+      "title": "Cartilla en lengua maya para la enseñanza de los niños indigenas",
+      "author": "C. Hermann (Carl Hermann) Berendt",
+      "language": "Yucatec Maya",
+      "published": "1871",
+      "text_role": "original",
+      "note": "1871. Mayan-language or Mayan-studies work (#6559). IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "gri_33125015553734",
+      "region": "maya",
+      "title": "Essai sur le déchiffrement de l'écriture hiératique de l'Amérique Centrale",
+      "author": "Léon de Rosny",
+      "language": "French",
+      "languages": [
+        "French",
+        "Yucatec Maya"
+      ],
+      "published": "1876",
+      "text_role": "original",
+      "note": "1876. Mayan-language or Mayan-studies work (#6559). IA getty, americana."
+    },
+    {
+      "ia": "doctrinanecesari00unse",
+      "region": "maya",
+      "title": "Doctrina necesaria para confesarse en la regla dispuesta en lengua maya",
+      "author": "Anonymous",
+      "language": "Yucatec Maya",
+      "languages": [
+        "Yucatec Maya",
+        "Spanish"
+      ],
+      "published": "1883",
+      "text_role": "original",
+      "note": "1883. Mayan-language or Mayan-studies work (#6559). IA university_of_illinois_urbana-champaign, americana."
+    },
+    {
+      "ia": "grammairelme00alemuoft",
+      "region": "maya",
+      "title": "Grammaire élémentaire de la langue quichée",
+      "author": "L Aleman",
+      "language": "French",
+      "languages": [
+        "French",
+        "K'iche' Maya"
+      ],
+      "published": "1884",
+      "text_role": "original",
+      "note": "1884. Mayan-language or Mayan-studies work (#6559). IA robarts, toronto."
+    },
+    {
+      "ia": "agrammarcakchiq00bringoog",
+      "region": "maya",
+      "title": "A grammar of the Cakchiquel language of Guatemala; tr. from a MS. in the library of the American Philosophical Society, with an introduction and additions",
+      "author": "Daniel Garrison Brinton",
+      "language": "English",
+      "languages": [
+        "English",
+        "Kaqchikel"
+      ],
+      "published": "1884",
+      "text_role": "original",
+      "note": "1884. Mayan-language or Mayan-studies work (#6559). IA americana, fav-latigo."
+    },
+    {
+      "ia": "vocabulairedela00chargoog",
+      "region": "maya",
+      "title": "Vocabulaire de la langue tzotzil",
+      "author": "Hyacinthe Charencey",
+      "language": "French",
+      "languages": [
+        "French",
+        "Tzotzil"
+      ],
+      "published": "1885",
+      "text_role": "original",
+      "note": "1885. Mayan-language or Mayan-studies work (#6559). IA americana, fav-angell_guillen."
+    },
+    {
+      "ia": "delaconjugaison01chargoog",
+      "region": "maya",
+      "title": "De la conjugaison dans les langues de la famille mayaquichée",
+      "author": "Hyacinthe Charencey",
+      "language": "French",
+      "languages": [
+        "French",
+        "Yucatec Maya"
+      ],
+      "published": "1885",
+      "text_role": "original",
+      "note": "1885. Mayan-language or Mayan-studies work (#6559). IA americana."
+    },
+    {
+      "ia": "bub_gb_a0FJAAAAYAAJ",
+      "region": "maya",
+      "title": "Das konjugationssystem der Mayasprachen",
+      "author": "Eduard Seler",
+      "language": "German",
+      "languages": [
+        "German",
+        "Yucatec Maya"
+      ],
+      "published": "1887",
+      "text_role": "original",
+      "note": "1887. Mayan-language or Mayan-studies work (#6559). IA americana."
+    },
+    {
+      "ia": "diemayasprachen01stolgoog",
+      "region": "maya",
+      "title": "Die Maya-sprachen der Pokom-gruppe .",
+      "author": "Otto Stoll",
+      "language": "German",
+      "languages": [
+        "German",
+        "Yucatec Maya",
+        "Poqomchi'"
+      ],
+      "published": "1888",
+      "text_role": "original",
+      "note": "1888. Mayan-language or Mayan-studies work (#6559). IA americana."
+    },
+    {
+      "ia": "b24882082",
+      "region": "maya",
+      "title": "Aids to the study of the Maya codices",
+      "author": "Cyrus Thomas",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1888",
+      "text_role": "original",
+      "note": "1888. Mayan-language or Mayan-studies work (#6559). IA wellcomelibrary, ukmhl."
+    },
+    {
+      "ia": "b24873779",
+      "region": "maya",
+      "title": "A primer of Mayan hieroglyphics",
+      "author": "Daniel G. (Daniel Garrison) Brinton",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1895",
+      "text_role": "original",
+      "note": "1895. Mayan-language or Mayan-studies work (#6559). IA wellcomelibrary, ukmhl."
+    },
+    {
+      "ia": "queenmooegyptian00lepl",
+      "region": "maya",
+      "title": "Queen M'oo and the Egyptian sphinx",
+      "author": "Augustus Le Plongeon",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1896",
+      "text_role": "original",
+      "note": "1896. Mayan-language or Mayan-studies work (#6559). IA Wellesley_College_Library, blc."
+    },
+    {
+      "ia": "vocabulariocaste00bourrich",
+      "region": "maya",
+      "title": "Vocabulario castellano-k'ak'chi (dialecto de Coban): sacado de los documentos recogidos",
+      "author": "Henry G Bourgeois",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Q'eqchi'"
+      ],
+      "published": "1897",
+      "text_role": "original",
+      "note": "1897. Mayan-language or Mayan-studies work (#6559). IA cdl, americana."
+    },
+    {
+      "ia": "vocabularioespa00zava",
+      "region": "maya",
+      "title": "Vocabulario español-maya",
+      "author": "M. (Mauricio) Zavala",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1898",
+      "text_role": "original",
+      "note": "1898. Mayan-language or Mayan-studies work (#6559). IA brigham_young_university, americana."
+    },
+    {
+      "ia": "umolcabthanilcam00belt",
+      "region": "maya",
+      "title": "U molcabthanil camathan = catecismo de la doctrina cristiana",
+      "author": "Pedro Beltrán",
+      "language": "Yucatec Maya",
+      "published": "1905",
+      "text_role": "original",
+      "note": "1905. Mayan-language or Mayan-studies work (#6559). IA university_of_illinois_urbana-champaign, americana."
+    },
+    {
+      "ia": "bub_gb_DWkiAAAAMAAJ",
+      "region": "maya",
+      "title": "Material zur Sprache von Comalapa in Guatemala",
+      "author": "Jakob Schoembs",
+      "language": "German",
+      "languages": [
+        "German",
+        "Kaqchikel"
+      ],
+      "published": "1905",
+      "text_role": "original",
+      "note": "1905. Mayan-language or Mayan-studies work (#6559). IA americana."
+    },
+    {
+      "ia": "codexperezmayatz00poin",
+      "region": "maya",
+      "title": "Codex Perez, Maya-Tzental",
+      "author": "Anonymous",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1909",
+      "text_role": "original",
+      "note": "1909. Mayan-language or Mayan-studies work (#6559). IA byuspecialcollections, brigham_young_university."
+    },
+    {
+      "ia": "losgrandesciclos00mart",
+      "region": "maya",
+      "title": "Los grandes ciclos de la historia maya según el manuscrito de Chumayel: compte-rendu del XVII Congreso Internacional de Americanistas efectuado en la Ciudad de México con motivo del centenario de su",
+      "author": "Juan Martínez Hernández",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1912",
+      "text_role": "original",
+      "note": "1912. Mayan-language or Mayan-studies work (#6559). IA getty, americana."
+    },
+    {
+      "ia": "cu31924103130260",
+      "region": "maya",
+      "title": "An introduction to the study of the Maya hieroglyphs",
+      "author": "Sylvanus Griswold Morley",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1915",
+      "text_role": "original",
+      "note": "1915. Mayan-language or Mayan-studies work (#6559). IA cornell, americana."
+    },
+    {
+      "ia": "vocabulariodelal00reinuoft",
+      "region": "maya",
+      "title": "Vocabulario de la lengua mame, compuesto por el padre predicador fray Diego de Reynoso: impreso por Francisco Robledo en 1644 y reimpreso con una breve noticia acerca de los mames y de su lengua",
+      "author": "Diego de Reinoso",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Mam"
+      ],
+      "published": "1916",
+      "text_role": "original",
+      "note": "1916. Mayan-language or Mayan-studies work (#6559). IA robarts, toronto."
+    },
+    {
+      "ia": "mayagrammarwithb00tozz",
+      "region": "maya",
+      "title": "A Maya grammar, with bibliography and appraisement of the works noted",
+      "author": "Alfred M. (Alfred Marston) Tozzer",
+      "language": "English",
+      "languages": [
+        "English",
+        "Yucatec Maya"
+      ],
+      "published": "1921",
+      "text_role": "original",
+      "note": "1921. Mayan-language or Mayan-studies work (#6559). IA library_of_congress, americana."
+    },
+    {
+      "ia": "historiadeldesc01goog",
+      "region": "maya",
+      "title": "Historia del descubrimiento y conquista de Yucatán",
+      "author": "Juan Francisco Molina Solis",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Yucatec Maya"
+      ],
+      "published": "1896",
+      "text_role": "original",
+      "note": "1896. Mayan-language or Mayan-studies work (#6559). IA americana, fav-voraz."
+    }
+  ]
+}
