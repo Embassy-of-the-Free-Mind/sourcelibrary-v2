@@ -22,7 +22,7 @@ const INK = '#57534e';
 const tint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, transparent)`;
 const fmt = (n: number) => n.toLocaleString('en-GB');
 const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
-const GRID = 'grid grid-cols-[5.75rem_minmax(0,1fr)_auto] sm:grid-cols-[7.5rem_minmax(0,1fr)_8.5rem] items-center gap-x-3';
+const GRID = 'grid grid-cols-[5rem_minmax(0,1fr)_4.25rem_3.25rem] sm:grid-cols-[8rem_minmax(0,1fr)_6.5rem_6rem] items-center gap-x-3 sm:gap-x-4';
 
 export default function WrittenPastChart() {
   const [step, setStep] = useState(0);
@@ -99,19 +99,21 @@ export default function WrittenPastChart() {
 
   return (
     <div ref={rootRef} className="written-past">
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] text-muted mb-4">
-        <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: INK }} />
-          translated into English
-        </span>
-        <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: tint(INK, 22) }} />
-          no English translation
-        </span>
-        <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5 wp-hatch border" style={{ ['--c' as string]: INK, borderColor: tint(INK, 35) }} />
-          estimate, counted in other units
-        </span>
+      <div className="flex flex-wrap items-end gap-x-8 gap-y-3 text-sm text-secondary mb-6">
+        <div>
+          <div className="flex h-3.5 w-80 max-w-full" aria-hidden="true">
+            <i className="block h-full w-[18%]" style={{ background: INK }} />
+            <i className="block h-full flex-1" style={{ background: tint(INK, 22) }} />
+          </div>
+          <div className="mt-1.5 flex w-80 max-w-full justify-between gap-3">
+            <span className="text-primary font-medium">translated into English</span>
+            <span>never translated</span>
+          </div>
+        </div>
+        <div>
+          <i className="block h-3.5 w-24 wp-hatch border" style={{ ['--c' as string]: INK, borderColor: tint(INK, 35) }} aria-hidden="true" />
+          <span className="mt-1.5 block">only estimated, in manuscripts</span>
+        </div>
       </div>
 
       <div className="flex items-stretch gap-1.5 sm:gap-2">
@@ -154,7 +156,8 @@ export default function WrittenPastChart() {
       <div className={`${GRID} text-xs text-muted pb-2 mb-2 border-b border-border-light`}>
         <span />
         <span className="text-right font-semibold text-secondary tabular-nums">{axisMax}</span>
-        <span className="text-right">size · translated</span>
+        <span className="text-right">works</span>
+        <span className="text-right text-primary font-semibold">in English</span>
       </div>
 
       <div>
@@ -164,7 +167,7 @@ export default function WrittenPastChart() {
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
           const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
           const c = r.color ?? RUST;
-          const size = r.open ? 'likely largest' : r.none ? 'no estimate' : r.estimate ? `${compact(r.n)} mss.` : fmt(r.n);
+          const size = r.open ? 'largest?' : r.none ? 'uncounted' : r.estimate ? `${compact(r.n)} mss.` : solo ? fmt(r.n) : `${Math.round(r.n / 1000)}K`;
           return (
             <div
               key={r.key}
@@ -197,14 +200,9 @@ export default function WrittenPastChart() {
                   </>
                 )}
               </div>
-              <span className={`text-right tabular-nums whitespace-nowrap text-muted ${solo ? 'text-base' : 'text-[13px]'}`}>
-                <span className="text-primary">{size}</span>
-                {pct && (
-                  <>
-                    {' · '}
-                    <b className="font-semibold text-primary">{pct}%</b>
-                  </>
-                )}
+              <span className={`text-right tabular-nums whitespace-nowrap text-secondary ${solo ? 'text-base' : 'text-[12px] sm:text-[13px]'}`}>{size}</span>
+              <span className={`text-right tabular-nums whitespace-nowrap ${solo ? 'text-xl' : 'text-sm sm:text-base'}`}>
+                {pct ? <b className="font-semibold text-primary">{pct}%</b> : <span className="text-muted">?</span>}
               </span>
             </div>
           );
