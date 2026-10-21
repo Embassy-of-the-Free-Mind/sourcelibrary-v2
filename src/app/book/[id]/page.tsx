@@ -10,6 +10,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
+import { localizePublished } from '@/lib/book-labels';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -1281,7 +1282,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
     const heroDate = (() => {
       const pub = book.published ? String(book.published).trim() : '';
-      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: pub };
+      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: localizePublished(pub, lang) };
       if (compDateDisplay) return { label: t.written, value: compDateDisplay };
       return null;
     })();
@@ -1769,9 +1770,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
-                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
+                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
                     </Link>
-                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />)}
                   {/* The name stays clickable and searchable — a byline is how a
                       reader REACHES a book, and for the Bhutanese manuscript
                       volumes the monastery is the only handle they have. What
@@ -2111,14 +2112,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                         <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
-                          <AuthorName author={book.author} />
+                          <AuthorName author={book.author} lang={lang} />
                         </Link>
-                      ) : <AuthorName author={book.author} />
+                      ) : <AuthorName author={book.author} lang={lang} />
                     ) : heroByline.role === 'editor' ? (
-                      <span>edited by <AuthorName author={heroByline.editor} /></span>
-                    ) : <AuthorName author={book.author} />}
+                      <span>edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
+                    ) : <AuthorName author={book.author} lang={lang} />}
                     {heroByline.role === 'author' && heroByline.editor && (
-                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} /></span>
+                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
                     )}
                   </p>
                 );
