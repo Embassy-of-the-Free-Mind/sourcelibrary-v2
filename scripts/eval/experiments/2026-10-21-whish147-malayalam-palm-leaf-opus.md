@@ -3,10 +3,9 @@ stage: ocr
 measure: [accuracy]
 languages: [sa]
 scripts: [Mlym]
-canons: [sankhya]
+canons: [sanskrit]
 n_books: 1
 n_pages: 5
-models: [claude-opus-5-5, claude-fable-5-1]
 verdict: "Neither Opus 5.5 nor Fable 5.1 (claude -p, subscription) can read Sanskrit in Malayalam script on palm leaf. Both decline the whole page without inventing text. On crops, Opus scores CER 0.71–0.75 against the GRETIL Sāṃkhyakārikā, at chance (0.74–0.78); Fable is at chance on quarter-leaf crops and 0.64–0.71 on half-leaf crops, slightly above chance and far from usable."
 status: informational
 decision: "Collation against the edition with planted errors is the only arm with signal (Opus 3/4 plants, Fable 2/4, no false 'certain'); it needs a multi-leaf planted test before use. Book stays held (malayalam-palm-leaf-lane). No Opus lane for Malayalam palm leaf. Gemini CLI arm pending its quota reset (~2026-10-23)."
