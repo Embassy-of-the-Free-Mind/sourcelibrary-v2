@@ -9,7 +9,7 @@ n_pages: 5
 models: [claude-opus-5-5, claude-fable-5-1]
 verdict: "Neither Opus 5.5 nor Fable 5.1 (claude -p, subscription) can read Sanskrit in Malayalam script on palm leaf. Both decline the whole page without inventing text. On crops, Opus scores CER 0.71–0.75 against the GRETIL Sāṃkhyakārikā, at chance (0.74–0.78); Fable is at chance on quarter-leaf crops and 0.64–0.71 on half-leaf crops, slightly above chance and far from usable."
 status: informational
-decision: "Book stays held (malayalam-palm-leaf-lane). No Opus lane for Malayalam palm leaf. Gemini CLI arm pending its quota reset (~2026-10-23)."
+decision: "Collation against the edition with planted errors is the only arm with signal (Opus 3/4 plants, Fable 2/4, no false 'certain'); it needs a multi-leaf planted test before use. Book stays held (malayalam-palm-leaf-lane). No Opus lane for Malayalam palm leaf. Gemini CLI arm pending its quota reset (~2026-10-23)."
 superseded_by: null
 issue: 5935
 ---
@@ -53,6 +53,28 @@ PRIOR ART: 2026-10-04-hidden-flash-5795.md — it noted that Claude adjudicators
 - **Not image size, not contrast:** quarter-leaf crops at native resolution and contrast-enhanced crops both stay at chance.
 - **Good behaviour:** on every page Opus marks what it cannot read instead of inventing it.
 - **Consistent with #5795:** Claude models can't read South Asian palm-leaf hands word for word.
+
+**Combining readers.** Prior work sets the frame:
+- Lane B (#6420) adjudicates between two reads, so it needs at least one usable read.
+- Correction (#6561, #6545) needs a usable draft.
+- Edition fitting (#5560, #5619) needs reads good enough to locate the text in the edition.
+
+None applies to reads at chance. Two cheap probes on the same half-leaf (t03):
+- *Agreement:* the runs of 6+ letters on which Opus and Fable agree are precise (70 of 88 characters match GRETIL) but cover about 6% of the leaf. That is a trust filter, not a text.
+- *Collation against the edition, with planted errors* (an image-reading variant of #5619's algorithmic fitting). Each model gets the GRETIL kārikās 7–16 carrying 4 planted errors and is asked to list where the LEAF differs from the edition, marking each difference certain or uncertain. No word index was included: a first pilot leaked the GRETIL index, Opus cited it, and that pilot is discarded.
+
+| plant | Opus | Fable |
+|---|---|---|
+| SK_11 aviveki → aviveka | caught (certain) | caught (certain) |
+| SK_11 pumān → puruṣaḥ | missed | missed |
+| SK_12 niyamā → viyamā | caught (certain) | missed (said it agrees) |
+| SK_13 laghu → guru | caught (certain) | caught (certain) |
+
+- No "certain" difference from either model was false.
+- Both models independently flagged two unplanted differences, both as uncertain: `satvaṃ` for sattvaṃ (SK_13) and `vaiśvarūpyasya` for vaiśva-rūpasya (SK_15). These are candidate real readings of this manuscript; not checked by eye.
+- Both models also report the scribe's sandhi spellings ("viṣayas sāmānyam", "pradhānan tad"). A copy of the edition would not produce those.
+- **Failure mode: copy-through.** Where a word is hard to see, a model can report agreement with the edition: 1 of 4 plants for Opus, 2 of 4 for Fable. That would put the edition's text, not the scribe's, into a transcription.
+- n = 4 plants on one half-leaf: far too few to estimate a catch rate. Before any use, the gate is a planted-error test across several leaves (enough plants for an interval) on the verse text and on the published commentaries (Jayamaṅgalā, Tattvakaumudī). It would only ever cover text that has an edition; the Malayalam glosses stay unread.
 
 **Found on the way: the images were shifted by two leaves.** The first read of page 3 showed the cover board. The bulk archiver had fallen back to positional mapping after a transient scandata failure (162 zip files for 159 IIIF leaves), and its dHash check passed the shift. It was repaired and pixel-verified before any read reported above. Details are on #3368.
 
