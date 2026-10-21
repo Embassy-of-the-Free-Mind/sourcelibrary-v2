@@ -1055,7 +1055,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // Prose links go only to published-tier entity pages (#4321) — linking every
   // index term is how one-book vocabulary like "Axis" earned sitewide links.
   // On lookup failure, degrade to unlinked prose rather than linking unvetted.
-  const summaryEntities = await (async () => {
+  // Started here, awaited with the other independent lookups below (render-profile, #7057).
+  const summaryEntitiesP = (async () => {
     const all = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
     if (all.length === 0) return all;
     try {
@@ -1073,7 +1074,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // ============================================================================
   if (!isEmbedded) {
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
-    const bookWarning = (await getQualityWarnings(await getReadDb(), [book.id])).book;
+    // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
+    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id])).then(w => w.book);
     const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
@@ -1180,8 +1182,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const relatedYear = Number(String(book.published ?? '').match(/\d{3,4}/)?.[0])
       || (book as unknown as { year?: number }).year
       || null;
-    const tagRelated: CatalogBook[] = embedPolicy.showBookRelatedBooks
-      ? await getRelatedBooks({
+    const tagRelatedP: Promise<CatalogBook[]> = embedPolicy.showBookRelatedBooks
+      ? getRelatedBooks({
           id: book.id,
           author: book.author,
           categories: book.categories,
@@ -1190,15 +1192,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           year: relatedYear,
           place: resolveImprintPlace(book)?.display, // family resolver, #4043
         }, renderableCover, 12).catch(() => [] as CatalogBook[])
-      : [] as CatalogBook[];
-    const hasRelated = tagRelated.length > 0;
+      : Promise.resolve([] as CatalogBook[]);
 
     // Provenance section: who holds the original, who digitised it, what Source
     // Library did, and where the scans came from (src/lib/book-provenance.ts).
     // Keyed on the HOLDER, never the platform: "From the collection of
     // Internet Archive" credited the wrong party (#6503). With no holder on
     // record it says where the scans are from instead. Skipped in embed/tenant views.
-    const librarySection: LibrarySectionData | null = await (async () => {
+    const librarySectionP: Promise<LibrarySectionData | null> = (async () => {
       if (!embedPolicy.showBookRelatedBooks) return null;
       const src = (book as unknown as { image_source?: ProvenanceSource }).image_source;
       const prov = resolveBookProvenance(src);
@@ -1258,6 +1259,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         ownImage: hasScans && renderableCover(ownCover) ? ownCover : undefined,
       };
     })();
+
+    // The four lookups above are independent (entity terms, quality warning,
+    // related books, holder shelf): run them concurrently instead of one after
+    // another. Only synchronous code sits between their creation and this await.
+    const [summaryEntities, bookWarning, tagRelated, librarySection] = await Promise.all([
+      summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP,
+    ]);
+    const hasRelated = tagRelated.length > 0;
 
     // Publisher / place only — the DATE is surfaced separately as a labelled
     // chip (heroDate) so it's clear, not buried at the end of the impressum.
@@ -2049,6 +2058,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       </>
     );
   }
+
+  const summaryEntities = await summaryEntitiesP;
 
   return (
     <>

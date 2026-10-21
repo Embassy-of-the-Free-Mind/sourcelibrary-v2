@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
@@ -43,16 +44,24 @@ const EDITION_PROJECTION = {
   is_first_translation: 1,
 };
 
-async function getWorkEditions(idOrSlug: string) {
+// cache(): generateMetadata and the page body both need the editions, and a cold
+// ISR render used to run this query twice (#7057).
+const getWorkEditions = cache(async (idOrSlug: string) => {
   const db = await getReadDb();
-  // canon slugs expand to their verified work_id set; anything else resolves by
-  // work_slug first, then raw work_id (back-compat)
-  const editions = await db.collection('books').find(
-    workEditionsFilter(idOrSlug),
-    { projection: EDITION_PROJECTION }
-  ).toArray();
+  // canon slugs expand to their verified work_id set (work_id_1 index; the
+  // work_slug half of workEditionsFilter has no index and scans all ~58K
+  // visible books, ~2s measured 2026-10-20, and selects the same set, see
+  // workEditionsCountFilter). Anything else tries the indexed work_id first,
+  // and only a miss pays for the work_slug scan.
+  const canon = canonWork(idOrSlug);
+  const find = (filter: Record<string, unknown>) =>
+    db.collection('books').find(filter, { projection: EDITION_PROJECTION }).toArray();
+  let editions = canon
+    ? await find({ work_id: { $in: canon.workIds }, visible: true })
+    : await find({ work_id: idOrSlug, visible: true });
+  if (editions.length === 0 && !canon) editions = await find(workEditionsFilter(idOrSlug));
   return byChronology(editions as unknown as WorkEdition[]);
-}
+});
 
 /**
  * Chronological order, replacing the old `sort: { published: 1 }`. `published`
@@ -75,8 +84,9 @@ async function getCollectedEditions(canon: CanonWork) {
   const ids = canon.collectedWorkIds || [];
   if (ids.length === 0) return [];
   const db = await getReadDb();
+  // work_id only: the work_slug branch is unindexed (full scan, ~2s) and adds nothing
   const editions = await db.collection('books').find(
-    { $or: [{ work_id: { $in: ids } }, { work_slug: { $in: ids } }], visible: true },
+    { work_id: { $in: ids }, visible: true },
     { projection: EDITION_PROJECTION }
   ).toArray();
   return byChronology(editions as unknown as WorkEdition[]);
@@ -310,9 +320,12 @@ export default async function WorkPage({ params }: PageProps) {
     if (target) redirect(`/work/${encodeURIComponent(target)}`);
   }
 
-  const editions = await getWorkEditions(id);
+  // Independent reads: run together rather than back to back.
+  const [editions, collected] = await Promise.all([
+    getWorkEditions(id),
+    canon ? getCollectedEditions(canon) : Promise.resolve([] as WorkEdition[]),
+  ]);
   if (editions.length === 0) notFound();
-  const collected = canon ? await getCollectedEditions(canon) : [];
 
   const title = canon ? canon.title : workTitleFromEditions(editions as TitledEdition[], id);
   const author = canon ? canon.author : workAuthorFromEditions(editions);
