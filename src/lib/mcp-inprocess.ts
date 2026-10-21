@@ -33,11 +33,17 @@
 import { NextRequest } from 'next/server';
 import type { ApiIdentity } from '@/lib/api-auth';
 import { setInProcessCaller } from '@/lib/inprocess-caller';
+import { GEO_UNKNOWN_HEADER } from '@/lib/rights-geo';
 
 const API_ORIGIN = 'https://sourcelibrary.org';
 const API_BASE = `${API_ORIGIN}/api`;
-/** What the self-call sent. `search_queries.user_agent` is how MCP traffic is counted (#2049). */
-export const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.3', 'Accept-Language': 'en' };
+/**
+ * What the self-call sent. `search_queries.user_agent` is how MCP traffic is counted (#2049).
+ * The self-call reaches the API from a Vercel function in the US on behalf of a
+ * reader anywhere, so it declares the reader's country unknown: a book shown only
+ * in some countries is then refused to MCP callers everywhere (#7092, rights-geo.ts).
+ */
+export const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.3', 'Accept-Language': 'en', [GEO_UNKNOWN_HEADER]: '1' };
 
 export interface McpCaller {
   identity: ApiIdentity;

@@ -1,0 +1,23 @@
+{
+  "_comment": "Books shown only in some countries (#7092). The EDGE copy of books.rights_geo: src/proxy.ts and next.config.ts cannot query Mongo, so they read this list. Every segment a URL can name the book by (id, slug, slug_aliases) must be listed, lowercase. scripts/audit/rights-geo-registry.mjs fails when this file and the books.rights_geo field disagree. Read src/lib/rights-geo.ts before editing.",
+  "books": [
+    {
+      "id": "69a5526e1e2c2347112f0300",
+      "segments": ["69a5526e1e2c2347112f0300", "the-secret-teachings-of-all-ages-hall"],
+      "allow": ["US"],
+      "title": "The Secret Teachings of All Ages",
+      "author": "Manly P. Hall",
+      "published": "1928",
+      "issue": 7092
+    },
+    {
+      "id": "69c874af6c6f3cc53c857cd4",
+      "segments": ["69c874af6c6f3cc53c857cd4", "an-encyclopedic-outline-of-masonic-hermetic-cabbalistic-and-hall"],
+      "allow": ["US"],
+      "title": "An encyclopedic outline of masonic, hermetic, cabbalistic and rosicrucian symbolical philosophy",
+      "author": "Manly P. Hall",
+      "published": "1928",
+      "issue": 7092
+    }
+  ]
+}

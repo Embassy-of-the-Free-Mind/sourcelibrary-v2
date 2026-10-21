@@ -3,6 +3,7 @@ import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
+import { geoNoStoreHeaderRules } from './src/lib/rights-geo';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -378,6 +379,11 @@ const nextConfig: NextConfig = {
         source: '/account',
         headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
       },
+      // Books shown only in some countries (#7092): every path that addresses one
+      // is no-store at both CDNs, so a US render is never served to an EU visitor.
+      // MUST stay last — the last matching rule wins, and /book/:path* above sets
+      // a 24h CDN TTL. See src/lib/rights-geo.ts.
+      ...geoNoStoreHeaderRules(),
     ];
   },
   async rewrites() {

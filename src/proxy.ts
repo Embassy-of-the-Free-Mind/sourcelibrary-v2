@@ -16,6 +16,10 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import {
+  geoEntryForPath, isCountryAllowed, requestCountry, hasCronBearer,
+  geoUnavailableHtml, geoUnavailableJson, GEO_NO_STORE_HEADERS,
+} from '@/lib/rights-geo';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
 import { isTrustedByUserAgent } from '@/lib/bot-gate';
@@ -739,6 +743,33 @@ export async function proxy(request: NextRequest) {
           'Cache-Control': 'no-store',
         },
       });
+    }
+  }
+
+  // Books shown only in some countries (#7092). Decided HERE because this runs
+  // before Vercel's cache: a visitor outside the allowed countries never
+  // reaches the ISR render of the book, and next.config.ts keeps every such
+  // path out of Cloudflare's cache, so no country is served another's copy.
+  // Placed before the embed-CORS branch, which passes /api/books straight
+  // through. The bare `/api/books/<seg>` record stays open: the route answers
+  // it with the catalogue card (isBookReadable). CRON_SECRET (the pipeline,
+  // which runs in Germany) passes. See src/lib/rights-geo.ts.
+  const geoEntry = geoEntryForPath(pathname);
+  if (geoEntry && !isCountryAllowed(geoEntry, requestCountry(request.headers)) && !hasCronBearer(request.headers)) {
+    const isApi = pathname.startsWith('/api/');
+    const isBookRecord = /^\/api\/(?:[^/]+\/)?books\/[^/]+\/?$/.test(pathname);
+    if (!isBookRecord) {
+      return new NextResponse(
+        isApi ? JSON.stringify(geoUnavailableJson(geoEntry)) : geoUnavailableHtml(geoEntry),
+        {
+          status: 451,
+          headers: {
+            'Content-Type': isApi ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8',
+            'X-Robots-Tag': 'noindex, nofollow',
+            ...GEO_NO_STORE_HEADERS,
+          },
+        },
+      );
     }
   }
 

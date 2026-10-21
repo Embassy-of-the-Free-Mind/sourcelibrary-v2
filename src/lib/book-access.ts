@@ -2,6 +2,7 @@ import type { Db } from 'mongodb';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
+import { isGeoGatedBook, isAllowedHere, pathCoversBook } from '@/lib/rights-geo';
 
 /**
  * Access control for HIDDEN books (`visible === false`).
@@ -116,6 +117,22 @@ export async function canReadHiddenBook(request: Request): Promise<boolean> {
 }
 
 /**
+ * The country half of the gate (#7092, src/lib/rights-geo.ts). A book with a
+ * country rule is readable only from an allowed country, and only at a path the
+ * edge knows addresses it — anything else bypassed the proxy's decision and the
+ * no-store rules, so it is refused rather than served into a shared cache.
+ * Unknown country (in-process MCP calls carry none) is refused. CRON_SECRET passes.
+ */
+export function isGeoReadable(book: BookLike, request: Request): boolean {
+  if (!isGeoGatedBook(book)) return true;
+  if (hasCronAuth(request)) return true;
+  if (!isAllowedHere(book, request.headers)) return false;
+  let pathname = '';
+  try { pathname = new URL(request.url).pathname; } catch { return false; }
+  return pathCoversBook(pathname, book);
+}
+
+/**
  * Final gate for API routes: returns true if the book may be served to this
  * requester. Public books (visible !== false) always pass; hidden books pass
  * only for CRON_SECRET or an editor session. A null book never passes
@@ -123,6 +140,7 @@ export async function canReadHiddenBook(request: Request): Promise<boolean> {
  */
 export async function isBookReadable(book: BookLike | null | undefined, request: Request): Promise<boolean> {
   if (!book) return false;
+  if (!isGeoReadable(book, request)) return false;
   if (!isHiddenBook(book)) return true;
   return canReadHiddenBook(request);
 }
@@ -154,6 +172,13 @@ export function hiddenBookMetadataCard(book: BookLike): Record<string, unknown> 
   // Per-language edition counters (pages_translated_es, …) — same public
   // surface as the visible-book card.
   for (const k of Object.keys(b)) if (k.startsWith('pages_translated_')) card[k] = b[k];
+  if (isGeoGatedBook(book) && !isHiddenBook(book)) {
+    // A country-gated book shows no page images at all — its cover is a page
+    // scan — and is not hidden, so the card does not say it is (#7092).
+    for (const f of ['thumbnail', 'thumbnail_blob', 'image_display', 'image_thumb']) delete card[f];
+    card.access = 'not_available_in_your_country';
+    return card;
+  }
   card.visible = false;
   card.access = 'metadata_only';
   return card;
