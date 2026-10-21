@@ -260,7 +260,7 @@ export const posts: BlogPost[] = [
     slug: 'pythagoras-in-the-library',
     title: 'Pythagoras in the Library',
     subtitle:
-      'He wrote nothing that survives, and nearly four thousand works in the library claim to know what he said. Every one, in date order, with the passage and the page.',
+      'He wrote nothing that survives, and four thousand works in the library claim to know what he said. Every one, in date order, with the passage and the page.',
     summary:
       'Every work in the library that names Pythagoras, from Aristotle and Euclid to the 20th century: beans, silence, the smiths’ hammers, each with its page.',
     date: '20 October 2026',

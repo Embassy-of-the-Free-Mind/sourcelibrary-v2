@@ -8,7 +8,9 @@ import PythagorasIndex from './PythagorasIndex';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
-// pages). Index, contents, errata and title pages are dropped; editions are grouped by work_id. A
+// pages). The translation's own apparatus (<meta> page summaries, <gloss>, <vocab>, and <note>s that do not
+// open with a printed-footnote marker) is removed before matching, so a page where only the translator's note
+// names him does not count. Index, contents, errata and title pages are dropped; editions are grouped by work_id. A
 // passage counts as "reports his words" when a regex finds Pythagoras with a verb of saying, teaching or
 // forbidding, or a phrase like "according to Pythagoras": a pattern, not a reading. Dates are the
 // catalogue's `year`, which is sometimes the work's date and sometimes the edition's.
@@ -50,7 +52,7 @@ export default function PythagorasInTheLibraryPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="He wrote nothing that survives, and nearly four thousand works in the library claim to know what he said"
+          subtitle="He wrote nothing that survives, and four thousand works in the library claim to know what he said"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -116,8 +118,9 @@ export default function PythagorasInTheLibraryPage() {
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
           How the list was made: a search of the library’s English translations for every word beginning
-          “Pythagor-” (Pythagoras, Pythagorean, Pythagoreans), across the public books on 20 October 2026. Index,
-          contents and errata pages are left out, and editions of the same work are grouped. A passage is marked as
+          “Pythagor-” (Pythagoras, Pythagorean, Pythagoreans), across the public books on 20 October 2026. A page counts only when the
+          book itself names him, not when only a translator’s note or summary does. Index, contents and errata pages
+          are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
           such as “according to Pythagoras”; that is a pattern match, so it misses some and catches some it should
           not. Dates are the earliest the catalogue gives for the work, which for some books is the date of the
