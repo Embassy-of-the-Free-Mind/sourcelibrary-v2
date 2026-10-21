@@ -100,6 +100,7 @@ import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { markPageForReader } from '@/lib/provenance';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { resolvePageIdsByNumber, pageNumberHref } from '@/lib/page-number-resolve';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
@@ -894,7 +895,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
-      .map((p) => markPageForReader(p, book.id));
+      // English edition, English leaf: the transcription is the text (#7100).
+      .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));
     return <TextReader book={book as any} pages={markedTextPages as any} collections={bookCollections} />;
   }
 
@@ -983,7 +985,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const translationState = (book as unknown as TranslationStateSource).translation_state;
   const verdict = translationVerdict({ translation_state: translationState });
   const translationRung = storedRung({ translation_state: translationState });
-  // English editions: the stored "translation" is the OCR, and a first English
+  // English editions: no English translation is served (an English leaf's
+  // stored "translation" is withheld at every door, #7100), and a first English
   // translation can't be true (#3524). Main site only; embed/tenant views are
   // unchanged until BPH approves.
   const englishOriginalHere = !isEmbedded && !tenantSlug && !!translationState?.english_original;
