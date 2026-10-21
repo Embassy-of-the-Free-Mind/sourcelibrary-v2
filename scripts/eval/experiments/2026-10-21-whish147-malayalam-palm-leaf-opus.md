@@ -42,11 +42,15 @@ PRIOR ART: 2026-10-04-hidden-flash-5795.md — it noted that Claude adjudicators
 | **Fable 5.1**, quarter-leaf tiles (4) | 148–187 | 26–38 | 0.72–0.74; two of four aligned far from the right region |
 | *noise floor:* shuffled reference letters, or a reversed real passage (12 draws, 300 chars) | — | — | **0.74–0.78** |
 
+| contrast-enhanced (CLAHE 3.0, 16×16) half-leaf t03: Opus / Fable | — | 43 / 36 | 0.71 / 0.73 (Fable aligned 6,000 characters away); no gain |
+
 **Read against the noise floor.** The best-window matcher gives 0.74–0.78 to text that contains no reading at all (`noise_floor.py`). So Opus's crops are at chance. Fable's quarter-leaf crops are at chance too. Fable's half-leaf crops, at 0.64 and 0.71, are a little above chance and sit in the right place: some real signal, nowhere near usable. A usable OCR would be under about 0.10.
 
 - **Where it does read:** fragments land in the right region of the text. For example, a tile carries "prakāśa … abhibhava … vṛttayaśca" from kārikā 12, in the leaf where kārikās 8–12 fall. But most of each line is marked unclear or is not recoverable.
 - **Caveat on the CER:** the leaves also carry Malayalam glosses that the verse-only reference lacks, which inflates the figure. That does not change the verdict: even the spans that do align to a kārikā differ from it in most letters.
 - **Contents leaf (page 3):** this one Opus reads well, because it is a large hand: the English list ("1 SĀNKHYA-SAPTATI or golden verses of Pythagoras …") and the Malayalam list beneath it, with Malayalam numerals.
+- **Fable's 0.64 tile is a mix, not uniform noise.** It contains kārikā 11 nearly verbatim: "triguṇamavivèkiviṣayassāmānyama cè … prasavadhaൎmmi vyaktaṃ tathā pradhānaṃ". "dhaൎmmi" has the Kerala scribal gemination that GRETIL does not, which points to reading rather than recall (no prompt named the work). The other lines are noise or Malayalam gloss. A per-line score, against the verse lines only, is the instrument that would separate the two.
+- **Not image size, not contrast:** quarter-leaf crops at native resolution and contrast-enhanced crops both stay at chance.
 - **Good behaviour:** on every page Opus marks what it cannot read instead of inventing it.
 - **Consistent with #5795:** Claude models can't read South Asian palm-leaf hands word for word.
 
