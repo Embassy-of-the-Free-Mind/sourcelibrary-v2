@@ -314,11 +314,11 @@ export function workEditionsFilter(idOrSlug: string): Record<string, unknown> {
  * The same edition set as `workEditionsFilter`, in a form a REQUEST PATH can
  * afford — for counting "N editions of this work" on a search result (#4300).
  *
- * `workEditionsFilter`'s `$or` reaches `work_slug`, which carries no index, so
- * Mongo scans the whole `books` collection: measured 2026-08-28 that filter
- * takes **7,990 ms** for one work while the `work_id` half takes **38 ms**.
- * That is fine on `/work/[id]` (ISR, 6h window) and not fine inside a search
- * response (request-path-queries.md).
+ * `workEditionsFilter`'s `$or` reaches `work_slug`, which carried no index until
+ * 2026-10-20, so Mongo scanned the whole `books` collection: measured 2026-08-28
+ * at **7,990 ms** for one work while the `work_id` half took **38 ms**. The sparse
+ * `work_slug_1` index (#7057) brought the full filter to 6 ms; this narrower
+ * form remains the request-path choice (request-path-queries.md).
  *
  * Dropping the `work_slug` branch is safe **when the argument is a work_id**,
  * which is the only way this is called: `work_slug` holds human slugs

@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
@@ -43,16 +44,20 @@ const EDITION_PROJECTION = {
   is_first_translation: 1,
 };
 
-async function getWorkEditions(idOrSlug: string) {
+// cache(): generateMetadata and the page body both need the editions, and a cold
+// ISR render used to run this query twice (#7057).
+const getWorkEditions = cache(async (idOrSlug: string) => {
   const db = await getReadDb();
   // canon slugs expand to their verified work_id set; anything else resolves by
-  // work_slug first, then raw work_id (back-compat)
+  // work_slug first, then raw work_id (back-compat). Both halves of the $or are
+  // indexed (work_id_1, work_slug_1 sparse, added 2026-10-20 for #7057: the
+  // work_slug half had scanned ~58K books, 2.4s -> 6ms).
   const editions = await db.collection('books').find(
     workEditionsFilter(idOrSlug),
     { projection: EDITION_PROJECTION }
   ).toArray();
   return byChronology(editions as unknown as WorkEdition[]);
-}
+});
 
 /**
  * Chronological order, replacing the old `sort: { published: 1 }`. `published`
@@ -310,9 +315,12 @@ export default async function WorkPage({ params }: PageProps) {
     if (target) redirect(`/work/${encodeURIComponent(target)}`);
   }
 
-  const editions = await getWorkEditions(id);
+  // Independent reads: run together rather than back to back.
+  const [editions, collected] = await Promise.all([
+    getWorkEditions(id),
+    canon ? getCollectedEditions(canon) : Promise.resolve([] as WorkEdition[]),
+  ]);
   if (editions.length === 0) notFound();
-  const collected = canon ? await getCollectedEditions(canon) : [];
 
   const title = canon ? canon.title : workTitleFromEditions(editions as TitledEdition[], id);
   const author = canon ? canon.author : workAuthorFromEditions(editions);
