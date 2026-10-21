@@ -15,6 +15,9 @@ const SISTER_SITES: Record<string, string> = {
   'https://thenaturelibrary.org': 'thenaturelibrary.org',
   'https://www.thenaturelibrary.org': 'thenaturelibrary.org',
   'https://nature-library.vercel.app': 'thenaturelibrary.org',
+  // Maaya (maaya-aprende.vercel.app, ~/mayan): Yucatec, Ch'orti' and glyph course. Its in-lesson
+  // "report a problem" flag and its native-speaker review page post here.
+  'https://maaya-aprende.vercel.app': 'maaya-aprende.vercel.app',
 };
 
 /** The sister site a request's Origin header names, or null for anything else. */
