@@ -125,13 +125,17 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   // so the menu settles rather than jumps. Closing is quick and plain.
   const item = `transition-[opacity,transform] ease-out ${open ? 'duration-[950ms] opacity-100 translate-y-0' : 'duration-200 opacity-0 translate-y-1'}`;
 
-  const accountButton = `flex-1 min-w-0 flex items-center justify-center gap-2 text-base font-medium bg-accent-rust text-white ${CONTROL_H[level]}`;
+  // Rust is the Sign in call to action; once signed in, the button is a quiet
+  // outline (like the search field) so the picture doesn't sit on the rust.
+  const accountButton = `flex-1 min-w-0 flex items-center justify-center gap-2 text-base font-medium ${
+    account.avatar ? 'border border-border-medium bg-cream text-primary' : 'bg-accent-rust text-white'
+  } ${CONTROL_H[level]}`;
   // shrink-0 + object-cover keep the picture round in the flex row.
   const accountAvatar = account.avatar?.image ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={account.avatar.image} alt="" className="w-6 h-6 shrink-0 rounded-full object-cover border border-white/40" />
+    <img src={account.avatar.image} alt="" className="w-6 h-6 shrink-0 rounded-full object-cover" />
   ) : account.avatar ? (
-    <span aria-hidden="true" className="w-6 h-6 shrink-0 rounded-full bg-white/20 text-xs flex items-center justify-center">{account.avatar.initials}</span>
+    <span aria-hidden="true" className="w-6 h-6 shrink-0 rounded-full bg-warm text-primary text-xs flex items-center justify-center">{account.avatar.initials}</span>
   ) : (
     <UserIcon className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
   );
