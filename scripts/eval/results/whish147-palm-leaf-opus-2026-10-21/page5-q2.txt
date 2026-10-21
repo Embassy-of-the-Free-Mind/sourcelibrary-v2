@@ -1,0 +1,31 @@
+===== PAGE p01 =====
+<scan-quality>good</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Malayalam script on palm leaf (Sanskrit in Malayalam script). This crop shows about a quarter of the leaf, so lines are cut off at the left and right edges. The string hole and its cord interrupt lines 3–8, leaving short fragments to the left of the hole. Readings are tentative throughout.</warning>
+<meta>Palm-leaf folio crop with binding cord through the string hole; the edges of the lines are cropped.</meta>
+
+<unclear>…ഘ്</unclear>കിം വിഷയസ്പൃശാമാന്ദ്യമ<unclear>…</unclear>
+
+<unclear>…</unclear>ലികങ്ങ. ഭാച<unclear>ക്ഷുഷ</unclear>മാൻ <unclear>ഷ്ട…</unclear>
+
+<unclear>…</unclear>ലമൗ <unclear>ഷ്ടഃ</unclear> ബിന്ദ്വൈരാഗ്ര<unclear>…</unclear>
+
+<unclear>…</unclear>ഖം ലക്ഷ്യപ്രകാശക<unclear>മി…</unclear>
+
+<unclear>…</unclear>കാ മവകമഃ<unclear>പ്രതി…</unclear>
+
+<unclear>…</unclear>റു സിദ്ധ<unclear>വൈസൃഷ്ടൈ…</unclear>
+
+<unclear>…</unclear>ക്കി <unclear>ഖാൽമാദ്ദൃന്യാ…</unclear>
+
+<unclear>…</unclear>ന്യാ <unclear>ൽ</unclear>സമവായാ<unclear>ൽ…</unclear>
+
+<unclear>…</unclear>ളാമെദുഃഖ്യ<unclear>ഗുപ്ര</unclear>സ്ത്രീകാഗാര<unclear>…</unclear>
+
+<unclear>…</unclear>ഷമിണാമക്ഷി<unclear>വില</unclear>വൽ<unclear>ഗ്രൈ…</unclear>
+
+<image-desc size="small" type="decorative" significance="low">String hole pierced through the palm leaf, with a twisted fibre binding cord running up through it to the top edge.</image-desc>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, viṣaya, lakṣya, prakāśaka, samavāya, siddha</vocab>

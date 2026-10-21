@@ -1,0 +1,34 @@
+<scan-quality>fair</scan-quality>
+<language>English</language>
+<script>handwritten</script>
+<page-type>toc</page-type>
+<warning>Handwritten: two palm leaves photographed together on a dark cloth and tied with string. The upper leaf has an English contents list in a 19th-century cursive hand mixed with capitals. The lower leaf has the same list in Malayalam script. The upper leaf is worn and cracked at the right edge. The string runs across some words on both leaves.</warning>
+<image-desc size="large" type="decorative" significance="low">Two palm-leaf boards, one above the other, each bored with two holes and strung with cord. The upper leaf is written in ink in English; the lower leaf is incised or inked in Malayalam script. The lower leaf carries a purple library stamp at the lower right.</image-desc>
+
+1 SĀNKHYA-SAPTATI or golden verses of Pythagoras —
+
+2. <unclear>Sankhar's</unclear> comment of Do. JAYA-MANGALA
+
+3. <unclear>Vachespati misris</unclear> do of do; TATWA KAUMADI.
+
+4. <unclear>Tarkha Sungraham</unclear>. NYAYA-SASTRAM
+
+5. <unclear>Commented</unclear> do by its author —
+
+---
+
+൧ - സാംഖ്യസപ്തതി:
+
+൨ - സാംഖ്യസപ്തതിക്കു ജയമംഗല
+
+൩ - സാംഖ്യസപ്തതിക്കു തത്വകൌമുദി
+
+൪ - തൎക്കസംഗ്രഹ<unclear>ത്തിവി</unclear> ക്കു
+
+൫ - തൎക്കസംഗ്രഹഃ
+
+<insert>ROYAL ASIATIC SOCIETY</insert>
+
+<meta>The library stamp on the lower leaf is struck at an angle and is upside down/reversed in relation to the writing. The lower leaf is the Malayalam version of the English list above it; on line 4 the end of the work name is hard to read.</meta>
+
+<vocab>Sāṅkhya-saptati, Sāṃkhyakārikā, Jayamaṅgalā, Tattvakaumudī, Vācaspati Miśra, Tarkasaṃgraha, Nyāya-śāstra, Pythagoras, golden verses, Royal Asiatic Society, palm-leaf manuscript, Malayalam script</vocab>

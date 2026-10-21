@@ -1,0 +1,16 @@
+<warning>Handwritten: incised palm-leaf manuscript (two leaves, strung on cords) in Malayalam script. The writing is a small, cursive, incised hand, broken up around the string holes, and is too small at this resolution to read reliably. I have not attempted a reading, so that no text is invented. The page appears to be Sanskrit written in Malayalam script, though parts may be in Malayalam. Please supply a higher-resolution image or crops of each leaf so the text can be transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Two palm leaves photographed together against a dark background, each bound with a cord through two string holes. The text is written around the holes, which leaves blank spaces in the middle lines of each leaf. Upper leaf: 9 lines. Lower leaf: 10 lines. A small mark in the left margin of the lower leaf, about line 5, may be a leaf number or a correction mark.</meta>
+
+<image-desc size="large" type="decorative" significance="low">Two palm-leaf folios, one above the other, each bound with a twisted cord through two holes. Incised text in Malayalam script fills both leaves and is set around the string holes.</image-desc>
+
+<unclear>Upper leaf: 9 lines of incised Malayalam-script text written around two string holes, not transcribed</unclear>
+
+<unclear>Lower leaf: 10 lines of incised Malayalam-script text written around two string holes, not transcribed</unclear>
+
+<margin><unclear>small mark in the left margin of the lower leaf, possibly a leaf number</unclear></margin>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, grantha</vocab>

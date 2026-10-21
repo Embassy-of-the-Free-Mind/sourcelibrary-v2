@@ -1,0 +1,23 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam/Grantha-type script incised on palm leaf and blackened. This image is only part of the leaf, so the lines are cut off at the left and right edges. The string hole and cord in the centre-right interrupt lines 4–7. The script is unusual and many letter forms are ambiguous, so the readings below are low-confidence approximations.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>മൈകനം പ്രസവസ്ഥിവ്യാക</unclear>
+<unclear>ഷ്ടിത്ര്യഷ്ടികവിധാദ്യാമേക</unclear>
+<unclear>ഗ്രാഭിദവാഗ്രൂയജ്ഞാനമിഷ</unclear>
+<unclear>കമിഷ്ടശ്രുപക്ഷം ദ</unclear> <unclear>കമ</unclear>
+<unclear>ശ്ചിദ്ദിപവസ്ഥാൽ</unclear> <unclear>തെ</unclear>
+<unclear>ഏഇത്രാഭദിപസ്യ</unclear> <unclear>യാ</unclear>
+<unclear>ഷ്ട്ര്യാപ്രക്ഷമവി</unclear> <unclear>സ്ഥ</unclear>
+<unclear>ാക്ഷകിമേവ്രൈസൈക്കഢകി ാനെ</unclear>
+<unclear>എനഞമസ്യ്യാഗ്രുകപ്ലവഭൈചെ</unclear>
+<unclear>പ്രഭൈക്കിശ്ശരാഗ്രുയവിജ്ഞൈക്ക</unclear>
+
+<image-desc size="small" type="decorative" significance="low">A twisted cord runs through a binding hole in the palm leaf, to the right of centre. The writing on lines 4–7 leaves a gap around the hole.</image-desc>
+
+<meta>Palm-leaf manuscript fragment showing about a quarter of the leaf. It has ten lines of incised text. There is a short ruled stroke under the last line, and a small faint mark near the top margin.</meta>
+
+<vocab>palm-leaf manuscript, Grantha script, Malayalam script, Sanskrit</vocab>
