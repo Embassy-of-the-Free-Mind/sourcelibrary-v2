@@ -32,22 +32,24 @@ export type WrittenPastRow = {
   open?: boolean;
   /** No estimate at all: a dashed row with words only. */
   none?: boolean;
+  /** The row's own hue. Solid = translated, a tint of it = untranslated. */
+  color?: string;
 };
 
 const PRINTED = 'works printed before 1700';
 
 export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
-  { key: 'nl', name: 'Dutch', n: 82651, translated: 462, unit: PRINTED, step: 0, highlight: true },
-  { key: 'la', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 1 },
-  { key: 'de', name: 'German', n: 295566, translated: 419, unit: PRINTED, step: 1 },
-  { key: 'fr', name: 'French', n: 194874, translated: 1615, unit: PRINTED, step: 1 },
-  { key: 'en', name: 'English', n: 149462, translated: 553, unit: PRINTED, step: 1 },
-  { key: 'it', name: 'Italian', n: 101335, translated: 576, unit: PRINTED, step: 1 },
-  { key: 'es', name: 'Spanish', n: 76472, translated: 340, unit: PRINTED, step: 1 },
-  { key: 'tib', name: 'Tibetan', n: 30437, translated: 822, unit: 'works in the BDRC catalogue', step: 2 },
-  { key: 'ara', name: 'Arabic script', n: 3500000, translated: null, unit: 'surviving manuscripts (estimate); the works themselves are uncounted', step: 2, estimate: true },
-  { key: 'ind', name: 'India', n: 10000000, translated: null, unit: 'manuscripts (national estimate)', step: 3, estimate: true },
-  { key: 'chi', name: 'Chinese', n: 10000000, translated: null, unit: '200,000 titles and 500,000 editions catalogued to 1912, before manuscripts and local printing. The true size is uncounted.', step: 4, open: true },
+  { key: 'nl', name: 'Dutch', n: 82651, translated: 462, unit: PRINTED, step: 0, highlight: true, color: '#aa442b' },
+  { key: 'la', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 1, color: '#488acb' },
+  { key: 'de', name: 'German', n: 295566, translated: 419, unit: PRINTED, step: 1, color: '#437224' },
+  { key: 'fr', name: 'French', n: 194874, translated: 1615, unit: PRINTED, step: 1, color: '#bf6aa5' },
+  { key: 'en', name: 'English', n: 149462, translated: 553, unit: PRINTED, step: 1, color: '#4160a7' },
+  { key: 'it', name: 'Italian', n: 101335, translated: 576, unit: PRINTED, step: 1, color: '#c0851f' },
+  { key: 'es', name: 'Spanish', n: 76472, translated: 340, unit: PRINTED, step: 1, color: '#008478' },
+  { key: 'tib', name: 'Tibetan', n: 30437, translated: 822, unit: 'works in the BDRC catalogue', step: 2, color: '#6a499b' },
+  { key: 'ara', name: 'Arabic script', n: 3500000, translated: null, unit: 'surviving manuscripts (estimate); the works themselves are uncounted', step: 2, estimate: true, color: '#cc5e6b' },
+  { key: 'ind', name: 'India', n: 10000000, translated: null, unit: 'manuscripts (national estimate)', step: 3, estimate: true, color: '#006d95' },
+  { key: 'chi', name: 'Chinese', n: 10000000, translated: null, unit: '200,000 titles and 500,000 editions catalogued to 1912, before manuscripts and local printing. The true size is uncounted.', step: 4, open: true, color: '#5e9f50' },
   { key: 'rest', name: 'Not yet counted', n: 10000000, translated: null, unit: 'Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek, medieval Latin…', step: 4, none: true },
 ];
 

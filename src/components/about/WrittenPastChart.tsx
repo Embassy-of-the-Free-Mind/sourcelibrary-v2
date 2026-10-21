@@ -6,15 +6,20 @@ import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
 /**
  * A bar chart whose scale keeps growing. Step 1 is Dutch print alone; each
  * later step adds bigger bodies of writing, and every earlier bar shrinks as
- * the axis stretches. Translated = solid green sliver, untranslated = pale
- * green, estimates in other units = hatched. Autoplays while on screen
+ * the axis stretches. Translated = solid sliver in the row's hue, untranslated
+ * = a tint of it, estimates in other units = hatched. Autoplays while on screen
  * (never under reduced motion); clicking a step jumps to it.
  */
 
 const STEP_MS = 5500;
-// Source Library's rust accent (--accent-rust #9e4a3a) and tints of it: one
-// hue for the whole chart. Rust only colours marks, never text.
+// Each row has its own hue (written-past-data.ts): solid for what is
+// translated, a tint of the same hue for what is not. The palette passed the
+// dataviz validator (lightness band, adjacent CVD and contrast) on cream; rows
+// are named on the left, so colour is never the only label. The legend and the
+// step progress bars stay neutral / rust. Colour only marks, never text.
 const RUST = '#9e4a3a';
+const INK = '#57534e';
+const tint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, transparent)`;
 const fmt = (n: number) => n.toLocaleString('en-GB');
 const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
 const GRID = 'grid grid-cols-[5.75rem_minmax(0,1fr)_auto] sm:grid-cols-[7.5rem_minmax(0,1fr)_8.5rem] items-center gap-x-3';
@@ -96,15 +101,15 @@ export default function WrittenPastChart() {
     <div ref={rootRef} className="written-past">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] text-muted mb-4">
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: RUST }} />
+          <i className="inline-block w-3.5 h-3.5" style={{ background: INK }} />
           translated into English
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: 'rgba(158,74,58,.22)' }} />
+          <i className="inline-block w-3.5 h-3.5" style={{ background: tint(INK, 22) }} />
           no English translation
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5 wp-hatch border" style={{ borderColor: 'rgba(158,74,58,.35)' }} />
+          <i className="inline-block w-3.5 h-3.5 wp-hatch border" style={{ ['--c' as string]: INK, borderColor: tint(INK, 35) }} />
           estimate, counted in other units
         </span>
       </div>
@@ -158,6 +163,7 @@ export default function WrittenPastChart() {
           const w = on ? (r.open ? 100 : (r.n / max) * 100) : 0;
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
           const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
+          const c = r.color ?? RUST;
           const size = r.open ? 'likely largest' : r.none ? 'no estimate' : r.estimate ? `${compact(r.n)} mss.` : fmt(r.n);
           return (
             <div
@@ -178,14 +184,15 @@ export default function WrittenPastChart() {
                     <div
                       className={`wp-bar absolute left-0 top-0 h-full ${r.estimate || r.open ? 'wp-hatch border' : ''} ${r.open ? 'wp-open' : ''}`}
                       style={{
+                        ['--c' as string]: c,
                         width: `${w}%`,
                         minWidth: on ? 2 : 0,
-                        background: r.estimate || r.open ? undefined : r.highlight ? 'rgba(158,74,58,.34)' : 'rgba(158,74,58,.22)',
-                        borderColor: 'rgba(158,74,58,.35)',
+                        background: r.estimate || r.open ? undefined : tint(c, 24),
+                        borderColor: tint(c, 45),
                       }}
                     />
                     {r.translated != null && (
-                      <div className="wp-bar absolute left-0 top-0 h-full" style={{ width: `${t}%`, minWidth: on ? 2 : 0, background: RUST }} />
+                      <div className="wp-bar absolute left-0 top-0 h-full" style={{ width: `${t}%`, minWidth: on ? 2 : 0, background: c }} />
                     )}
                   </>
                 )}
@@ -207,7 +214,7 @@ export default function WrittenPastChart() {
       <style>{`
         .written-past .wp-row { transition: height .6s ease, opacity .5s ease; }
         .written-past .wp-bar { transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
-        .written-past .wp-hatch { background: repeating-linear-gradient(135deg, rgba(158,74,58,.18) 0 5px, rgba(158,74,58,.05) 5px 10px); }
+        .written-past .wp-hatch { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--c) 30%, transparent) 0 5px, color-mix(in srgb, var(--c) 7%, transparent) 5px 10px); }
         .written-past .wp-open { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
         @media (prefers-reduced-motion: reduce) {
           .written-past .wp-row, .written-past .wp-bar { transition: none; }
