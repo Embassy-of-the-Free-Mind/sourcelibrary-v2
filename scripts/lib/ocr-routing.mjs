@@ -92,10 +92,23 @@ export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
  * created on or after the decision. The hidden backlog of these scripts (~300K pages)
  * is a separate spend decision.
  *
- * Deliberately NOT here: Chinese (waits for #5574, Paddle vs flash off SKQS), Tibetan
+ * Chinese (`zho`, which folds Classical Chinese) joined on 2026-10-21 (#7075): #6101 measured
+ * Gemini 3 Flash best on Chinese print against CBETA, median CER 5.2% with 0 of 198 pages
+ * catastrophic, against lite's 3 of 198 and PaddleOCR-VL failing about one woodblock spread in
+ * seven; Derek routed the #7037 woodblock books to it on 2026-10-20. Chinese MANUSCRIPT stays
+ * as the decision tree says: the Paddle cost lane is adopted but has no writer (#4743), so until
+ * it does, flash; the books held for the Paddle lane keep their hold, and a hold wins over this
+ * router. Same scope as the others: visible books and books created from the date.
+ *
+ * Deliberately NOT here: Tibetan
  * and Syriac (own lanes; Gemini is not their reader), Japanese (NDL lane for cursive;
  * typeset unmeasured), Hebrew and everything unmeasured. Add a family only with a
  * measured cell, and cite it.
+ *
+ * THE CHANNEL (#7075). Since 2026-10-08 the only Gemini model that runs on the paid API is
+ * gemini-3.1-flash-lite (Derek; DECIDED 2026-10-10 "Only via the CLI lane, no API"). A book this
+ * function picks therefore does NOT go to the Batch API: `ocrLaneForBook` below sends it to the
+ * agy CLI lane, and when that lane has no quota the book waits.
  *
  * Keyed by language FAMILY (codeFamily of the first language), so "Judeo-Arabic"
  * (Hebrew script, family jrb) and "Latin, Arabic" do not qualify.
@@ -107,6 +120,7 @@ export const FLASH_OCR_FROM = Object.freeze({
   pli: new Date('2026-10-04T00:00:00Z'),
   ara: new Date('2026-10-04T00:00:00Z'),
   gez: new Date('2026-10-04T00:00:00Z'),
+  zho: new Date('2026-10-21T00:00:00Z'),
 });
 
 /**
@@ -162,6 +176,71 @@ export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
   const lang = (book?.language || '').toLowerCase().trim();
   if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;
   return OCR_MODEL_LITE;
+}
+
+/**
+ * THE CHANNEL RULE (#7075): the model fixes the channel.
+ *
+ *   gemini-3.1-flash-lite   paid Gemini API (Batch by default)
+ *   any other Gemini model  the agy CLI on the subscription (scripts/batch/cli-ocr.mjs), never the API
+ *   Claude                  `claude -p` on the subscription, never via agy
+ *
+ * Derek, 2026-10-08: "the only Gemini model that may run on the paid API without asking is
+ * gemini-3.1-flash-lite"; DECIDED 2026-10-10 for Flash OCR: "Only via the CLI lane, no API". Before
+ * this, the orchestrator sent every book getOcrModelForBook answered flash for to the Batch API on
+ * gemini-3-flash-preview: 502 jobs, 4,106 pages, $10.50 between 2026-10-08 and 2026-10-21 (#7075).
+ *
+ * When the CLI lane has no quota the book WAITS. Nothing here falls through to the API.
+ */
+export const API_OCR_MODELS = Object.freeze(new Set([OCR_MODEL_LITE]));
+
+/** May this model be sent to the paid Gemini API (Batch or realtime) for OCR? */
+export function isApiOcrModel(model) {
+  return API_OCR_MODELS.has(model);
+}
+
+/**
+ * Throw before any paid-API OCR submission whose model is not flash-lite. Every OCR submitter in
+ * scripts/ calls it at the point of submission; tests/unit/ocr-api-channel-guard.test.ts checks
+ * that they do.
+ */
+export function assertApiOcrModel(model, callSite = 'unknown') {
+  if (!isApiOcrModel(model)) {
+    throw new Error(`${callSite}: refusing to send ${model} to the paid Gemini API for OCR. Only ${[...API_OCR_MODELS].join(', ')} runs on the API (#7075); `
+      + 'every other Gemini model reads through the agy CLI lane (scripts/batch/cli-ocr.mjs).');
+  }
+  return model;
+}
+
+/**
+ * The pipeline hold that queues a book for the CLI Flash lane (#7075). It is the mechanism the
+ * #7037 Chinese woodblock books used by hand (`zh-flash-agy-7037`): a held book is out of every
+ * lane (scripts/lib/pipeline-hold.mjs), so it cannot fall back to an API read while it waits, and
+ * the CLI run finds its books by this reason. The run reads the unread pages
+ * (`cli-ocr.mjs read --page-ids-file=…` then `apply`), then releases the book to the status it was
+ * held at; Phase 2 then finds nothing left to read and advances it.
+ */
+export const CLI_FLASH_OCR_HOLD = Object.freeze({
+  reason: 'ocr-flash-cli-7075',
+  issue: 7075,
+  release: 'the agy CLI lane (scripts/batch/cli-ocr.mjs read + apply, Gemini 3 Flash on the subscription) has read the unread pages; release with scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ocr-flash-cli-7075 --book <id> --apply',
+});
+
+/**
+ * Which channel reads this book, and with which model.
+ *   { channel: 'api', model: flash-lite }       the paid Batch API
+ *   { channel: 'cli', model: <the routed one> } the agy CLI lane; the book waits for it
+ * isFlashOcrBook (through getOcrModelForBook) stays the decision; this only names the channel.
+ */
+export function ocrLaneForBook(book, opts) {
+  const model = getOcrModelForBook(book, opts);
+  return { channel: isApiOcrModel(model) ? 'api' : 'cli', model };
+}
+
+/** The model to send to the paid API for this book, or null when the book belongs to the CLI lane. */
+export function apiOcrModelForBook(book, opts) {
+  const lane = ocrLaneForBook(book, opts);
+  return lane.channel === 'api' ? lane.model : null;
 }
 
 /**

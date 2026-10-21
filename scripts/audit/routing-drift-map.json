@@ -16,7 +16,8 @@
    "note": "The row names the scripts it overrides; Greek left it in the next row.",
    "probes": [
     { "fn": "constant", "name": "OCR_LITE_ONLY", "expect": "on" },
-    { "fn": "ocr", "language": ["Chinese", "Hebrew", "Armenian", "Russian", "Japanese"], "expect": "lite" }
+    { "fn": "ocr", "language": ["Hebrew", "Armenian", "Russian", "Japanese"], "expect": "lite" },
+    { "fn": "ocr", "language": "Chinese", "visibility": "hidden backlog", "expect": "lite" }
    ]
   },
   "ocr/greek-exception-to-the-cost-switch--read-greek-on-flash-batch-again-instead": {
@@ -34,6 +35,16 @@
   },
   "ocr/persian-hidden-backlog-55-6k-pp--override-the-5795-rule-s-b-failure": {
    "probes": [{ "fn": "ocr", "language": "Persian", "visibility": "hidden backlog", "expect": "flash" }]
+  },
+  "ocr/chinese-print-exception-to-the-cost-switch--read-on-gemini-3-flash-agy-cli-instead-o": {
+   "note": "Chinese left the cost switch's lite list here (#7075); flash reads through the agy CLI, not the API (next row).",
+   "probes": [
+    { "fn": "ocr", "language": "Chinese", "visibility": ["visible", "new"], "expect": "flash" },
+    { "fn": "ocr", "language": "Chinese", "visibility": "hidden backlog", "expect": "lite" }
+   ]
+  },
+  "ocr/all-gemini-ocr-channel--which-channel-runs-a-gemini-model-other": {
+   "not_routing": "The channel is enforced where a job is submitted (assertApiOcrModel, and the CLI_FLASH_OCR_HOLD queue in the orchestrator), not by the routing functions this audit probes; tests/unit/ocr-api-channel-guard.test.ts checks it."
   },
   "ocr/syriac-print-and-ms--gemini-or-the-kraken-lane": {
    "not_routing": "Syriac is read by its own lane (syriac-kraken-lane) and kept from Gemini by holds; getOcrModelForBook still answers lite for a Syriac book, so the router cannot show this decision."

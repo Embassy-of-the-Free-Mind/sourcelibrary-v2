@@ -76,7 +76,7 @@
       "stored": "495,404 pages: 418,469 (84%) read by Gemini 3 Flash, 38,638 (8%) by Flash-Lite, 37,376 (8%) with no text yet.",
       "status": "settled",
       "routed": "partly",
-      "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884).",
+      "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
       "code": {
         "router": {
           "language": "Greek",
@@ -118,7 +118,7 @@
       "stored": "Arabic, 60,503 pages: 31,542 (52%) read by Gemini 3 Flash, 26,234 (43%) by Flash-Lite, 2,618 (4%) with no text yet. In the same order, Persian, 15,596 pages: 7,515 (48%), 6,428 (41%), 1,646 (11%). Sanskrit, 115,121 pages: 62,287 (54%), 46,563 (40%), 6,243 (5%). Pali, 8,540 pages: 968 (11%), 7,320 (86%), 249 (3%).",
       "status": "provisional",
       "routed": "partly",
-      "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729).",
+      "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
       "code": {
         "router": {
           "language": "Persian",
@@ -284,21 +284,26 @@
     {
       "id": "chinese-print",
       "kind": "Chinese woodblock and typeset print outside the Siku Quanshu",
-      "reader": "Gemini 3.1 Flash-Lite, for now",
-      "why": "Not settled. Only 19 pages have a typed reference, too few to choose a reader. They are read by the default engine until more are measured.",
-      "in_use": "In use, as the default.",
+      "reader": "Gemini 3 Flash, through the Gemini command-line tool",
+      "why": "Measured on 7 October 2026 against a typed text of the same editions, on 198 pages from 54 books: Gemini 3 Flash got a median 5.2% of characters wrong and no page more than half wrong. Flash-Lite got 6.8% wrong with 3 pages more than half wrong, and PaddleOCR-VL 12.8% with 29.",
+      "in_use": "In use for visible books and books added from 21 October 2026. Older hidden books are still read by Flash-Lite.",
       "stored": "Counted 13 October 2026 with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
-      "status": "open",
-      "routed": "yes",
-      "production": "lite through getOcrModelForBook. Chinese is deliberately not in FLASH_OCR_FROM (it waits for #5574, Paddle against flash off the Siku Quanshu). Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold, which the scheduled Gemini lane (orchestrator-ocr) will read on lite; about 68K held for the Paddle lane (row chinese-siku-manuscript); about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
+      "status": "settled",
+      "routed": "partly",
+      "production": "FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API, and it waits there. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Paddle lane (row chinese-siku-manuscript) keep that hold. Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold; about 68K held for the Paddle lane; about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
       "code": {
         "router": {
           "language": "Chinese",
           "visible": true
         },
-        "expect": "lite"
+        "expect": "flash"
       },
       "evidence": [
+        {
+          "file": "2026-10-07-chinese-print-against-cbeta-6101.md",
+          "n": "198 pages from 54 books",
+          "date": "2026-10-07"
+        },
         {
           "file": "2026-10-07-ocr-engines-full-sets-wave2-6011.md",
           "n": "19 Chinese print pages",
@@ -306,7 +311,7 @@
         }
       ],
       "audit": {
-        "select": "ocr.model gemini-3.1-flash-lite*, book language family zho",
+        "select": "ocr.model gemini-3-flash*, book language family zho",
         "reviewer": "claude"
       },
       "charts": [
