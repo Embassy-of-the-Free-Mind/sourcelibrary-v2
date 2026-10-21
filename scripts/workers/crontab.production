@@ -238,6 +238,12 @@
 # a clean run closes it. Exit 2 never files. Guarded by [ -f ] until the script is on main.
 # Approved 2026-10-10 (Derek, Decision Deck): gemini-embedding on the paid API, an explicit exception to the flash-lite-only rule (#6197).
 15 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/page-vector-truth.mjs ] && flock -n /tmp/sl-page-vector-truth.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/page-vector-truth.mjs --books 200 --seed \$(date +\%G\%V) --plant --dup-probe 50 --file-issue --json /var/log/sourcelibrary/page-vector-truth-last.json" >> /var/log/sourcelibrary/page-vector-truth.log 2>&1
+# english-served-divergence weekly (#7100): on English-original books, does the served English equal the transcription?
+# One seeded page per live English-original book (~2.2K, Mongo only), then up to 200 quote-API probes of the leaves whose
+# stored English differs. Hall p.40 positive control every run. Exit 1 files/updates "English served divergence: "; a clean
+# run closes it; exit 2 (control silent, >10% unreadable probes) never files. Read-only, no model call, ~1 min.
+# Approved 2026-10-21 (Derek, "do it"). Guarded by [ -f ] until the script is on main.
+35 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/english-served-divergence.mjs ] && flock -n /tmp/sl-english-served.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/english-served-divergence.mjs --seed \$(date +\%G\%V) --max-probes 200 --file-issue --json /var/log/sourcelibrary/english-served-divergence-last.json" >> /var/log/sourcelibrary/english-served-divergence.log 2>&1
 # translation-language-label weekly (#4937): does a page whose translation says English contain English? Full sweep
 # of books with pages_translated > 0, 12 pages each, read-only (~28 min). --out is dated per ISO week because books.jsonl
 # is a checkpoint (a rerun skips books already written). Exit 1 on findings; nothing files an issue yet.
