@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
+import { localeHref, localeFromPathname, localePath, useLocale, type Locale } from '@/lib/i18n';
 import { LOCALE_NATIVE_NAME, ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
@@ -3644,7 +3644,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           className="col-span-2 flex items-center gap-3 px-4"
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
-          {!isEmbedded && <Logo white compact />}
+          {!isEmbedded && <Logo white compact lang={siteLocale} />}
           {/* Left to right: the book you are in and, while editing it, the
               two buttons that end the edit. Everything on the right end is
               about the page rather than the book. Cancel and Save sit beside
@@ -3652,7 +3652,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
               save button next to the view toggles reads as saving a view. */}
           <BackToBook
             framed={isEmbedded}
-            href={embedHref(`/book/${r.bookPath}`)}
+            // Back to the book in the reader's language: /zh/book/x from /zh/book/x/page/… (#7072 spot-check).
+            href={embedHref(localePath(`/book/${r.bookPath}`, siteLocale))}
             className={`${BAR_CONTROL} min-w-0 max-w-[46%] no-underline group !justify-start gap-2 pl-1.5 pr-3`}
             style={barControlStyle()}
             title={t.toolbar.backToTheBook}
