@@ -1,0 +1,22 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf (Sanskrit text); image is the left half of one leaf, so every line runs on to the other crop. A string hole with cord interrupts lines 3–6; readings around it and at the right edge are uncertain.</warning>
+<scan-quality>good</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio, left half; binding cord passes through a hole in the middle of the leaf. Text is Sāṅkhyakārikā verses 11–16. A small stray stroke stands in the left margin beside line 6 and a faint ink smudge at the extreme left edge of lines 1–2; neither is legible text. Lines 3–8 are split by the string hole into a left and right portion but belong to one continuous line each.</meta>
+
+ത്രിഗുണമവിവെകിവിഷയസ്സാമാന്യമ<unclear>ചെ</unclear>
+<unclear>ാ</unclear>നം പ്രസവധൎമ്മി . <unclear>വ്യക്തം</unclear> തഥാ പ്രധാനം <unclear>ത</unclear>
+പ്ര<unclear>വൃ</unclear>ത്തിനിയമാ ൎത്ഥാഃ അന്യൊന്യാഭി
+ഗുണാഃ <unclear>സ്നെഃ</unclear> സ<unclear>ത്വ</unclear>ം ലഘുപ്രകാശകമി
+ഗുരുവരണകമെ <unclear>മ</unclear>വ തമഃ പ്ര<unclear>ദീപ</unclear>
+<unclear>അ</unclear>വിവെക്യാദെ സിദ്ധിസ്ത്രൈഗുണ്യാ
+രണഗുണാത്മക ത്വാത്കാൎയ്യസ്യാ<unclear>വ്യ</unclear>
+<unclear>വാ</unclear>ം പരിമാണാ ത്സമന്വയാ<unclear>ച്ഛ</unclear>
+ഗാദവിഭാഗാദ്വൈശ്വരൂപ്യസ്യ ॥ കാരണമ
+<unclear>മു</unclear>ദയാച്ച പരിണാമതഃ സലിലവത് പ്രതിപ്ര
+
+<note>The passage corresponds to Sāṅkhyakārikā 11–16 (triguṇam aviveki viṣayaḥ … pariṇāmataḥ salilavat pratipratiguṇāśrayaviśeṣāt); the second half of each line is on the other crop of this leaf.</note>
+
+<vocab>Sāṅkhyakārikā, triguṇa, aviveki, prasavadharmi, vyakta, pradhāna, pravṛtti, niyama, guṇa, sattva, laghu, prakāśaka, guru, varaṇaka, tamas, pradīpa, siddhi, traiguṇya, kāraṇa, kārya, parimāṇa, samanvaya, vibhāga, vaiśvarūpya, pariṇāma, salila</vocab>
