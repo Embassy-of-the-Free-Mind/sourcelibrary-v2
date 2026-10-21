@@ -40,6 +40,7 @@ import { dirname, join } from 'node:path';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { normalizeTitle } from '../lib/dedup-normalize.mjs';
 import { revalidateBookPages } from '../lib/revalidate.mjs';
 // The repo's slug helper (plain TS, no imports; Node strips the types). Not hand-rolled.
 const { generateBookSlug } = await import('../../src/lib/slugify.ts');
@@ -78,12 +79,6 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SH = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' };
 const sb = (q, init = {}) => fetch(`${SUPABASE_URL}/rest/v1/books_catalog?${q}`, { ...init, headers: { ...SH, ...(init.headers || {}) } });
-// Mirrors normalizeTitle() in src/lib/dedup.ts (TypeScript; a script cannot import it).
-const normalizeTitle = (t) => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-  .replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|gli|i|el|los|las)\s+/i, '')
-  .replace(/\s*[(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[)\]]?\s*$/i, '')
-  .replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-
 const BOOK_UNSET = ['summary_candidate', 'description', 'subject_keywords', 'index.bookSummary', 'collection_scores', 'collection_scores_meta',
   'quality_assessment.ai_scores.historical_significance.reasoning', 'translation_verification', 'first_translation', 'first_translation_status',
   'work_id', 'work_slug', 'work_title', 'work_id_source', 'work_id_confidence'];

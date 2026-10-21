@@ -87,7 +87,7 @@ export const READER_PAGE_PATTERN = '/book/[id]/page/[pageId]';
 // Mirrors PREFIXED_LOCALES in src/lib/locale-path.ts (a script cannot import TS).
 // Each locale serves its own cached copy of /book/<x>, so evicting only the English
 // path leaves every metadata fix stale on /la /es /nl /zh (#7060).
-export const PREFIXED_LOCALES = ['la', 'es', 'nl', 'zh'];
+export const PREFIXED_LOCALES = ['es', 'la', 'nl', 'zh'];
 
 function bookPaths(books) {
   const set = new Set();
