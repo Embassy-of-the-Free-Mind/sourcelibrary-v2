@@ -84,3 +84,74 @@ export function localizePublished(raw: string, lang: Locale): string {
   if (two) return centuries(Number(two[1]), Number(two[2]), lang);
   return raw;
 }
+
+// ---------- Work dates (`source_work_dates[].date_display`, #7072) ----------
+//
+// The dating run (#6721) writes `date_display` as English prose: a year range
+// plus how it was reached ("1532–1593, the author's adult life"), "c.", BCE/CE,
+// the odd "15th century". Twelve shapes cover 98% of live books. Each known
+// phrase is rendered per locale; a string with an unrecognised phrase comes
+// back unchanged rather than half-translated.
+
+type Foreign = Exclude<Locale, 'en'>;
+
+const DATE_PHRASES: { re: RegExp; t: Record<Foreign, string> }[] = [
+  { re: /^the author['’]s adult life$/i, t: { es: 'vida adulta del autor', la: 'aetate auctoris adulta', nl: 'volwassen leven van de auteur', zh: '作者成年时期' } },
+  { re: /^the author['’]s likely working life$/i, t: { es: 'probable época de actividad del autor', la: 'aetate auctoris operosa, ut videtur', nl: 'vermoedelijke werkzame jaren van de auteur', zh: '作者可能的创作时期' } },
+  { re: /^the author['’]s working years$/i, t: { es: 'años de actividad del autor', la: 'annis auctoris operosis', nl: 'werkzame jaren van de auteur', zh: '作者创作时期' } },
+  { re: /^before the author['’]s death$/i, t: { es: 'antes de la muerte del autor', la: 'ante mortem auctoris', nl: 'vóór de dood van de auteur', zh: '作者去世之前' } },
+  { re: /^around the author['’]s floruit$/i, t: { es: 'en torno al floruit del autor', la: 'circa floruit auctoris', nl: 'rond de bloeitijd van de auteur', zh: '作者活跃时期前后' } },
+  { re: /^Indian composition$/i, t: { es: 'composición india', la: 'compositio Indica', nl: 'Indiase compositie', zh: '印度成书' } },
+];
+
+const UNCERTAIN: Record<Foreign, string> = { es: 'incierta', la: 'incerta', nl: 'onzeker', zh: '不详' };
+const CIRCA: Record<Foreign, string> = { es: 'c.', la: 'c.', nl: 'ca.', zh: '约' };
+const ERA: Record<Foreign, { bce: string; ce: string }> = {
+  es: { bce: 'a. C.', ce: 'd. C.' },
+  la: { bce: 'a.C.n.', ce: 'p.C.n.' },
+  nl: { bce: 'v.Chr.', ce: 'n.Chr.' },
+  zh: { bce: '公元前', ce: '公元' },
+};
+const ERA_WORDS = /a\. C\.|d\. C\.|a\.C\.n\.|p\.C\.n\.|v\.Chr\.|n\.Chr\.|ca\.|c\./g;
+
+/** The date part only: years, "c.", BCE/CE, "Nth century". Null if any other word is left. */
+function localizeDatePart(s: string, lang: Foreign): string | null {
+  const cent = /^(c\.\s*)?(\d{1,2})(?:st|nd|rd|th)(?:\s*[-–—]\s*(\d{1,2})(?:st|nd|rd|th))?\s+(?:century|c\.)$/i.exec(s);
+  if (cent) return `${cent[1] ? `${CIRCA[lang]} ` : ''}${centuries(Number(cent[2]), cent[3] ? Number(cent[3]) : null, lang)}`;
+  const era = ERA[lang];
+  let out = s.replace(/\b(?:AD|A\.D\.)\s*(\d+)/g, '$1 CE');
+  // Chinese puts the era before the year (公元前500); the others after it.
+  out = out.replace(/(\d+)\s*(BCE|BC|CE)\b/g, (_, y: string, e: string) => {
+    const word = e === 'CE' ? era.ce : era.bce;
+    return lang === 'zh' ? `${word}${y}` : `${y} ${word}`;
+  });
+  out = out.replace(/^c\.\s*/i, lang === 'zh' ? CIRCA.zh : `${CIRCA[lang]} `);
+  // Any Latin letter left that is not one of our own era words is an English
+  // word we do not know.
+  return /[A-Za-z]/.test(out.replace(ERA_WORDS, '')) ? null : out;
+}
+
+/**
+ * A `source_work_dates[].date_display` string in the locale's words. Rendering
+ * only; an unrecognised string is returned as stored.
+ */
+export function localizeDateDisplay(raw: string, lang: Locale): string {
+  if (lang === 'en' || !raw) return raw;
+  const s = raw.trim();
+  if (/^uncertain$/i.test(s)) return UNCERTAIN[lang];
+  const comma = s.indexOf(',');
+  const date = localizeDatePart(comma === -1 ? s : s.slice(0, comma).trim(), lang);
+  if (date === null) return raw;
+  if (comma === -1) return date;
+  const phrase = s.slice(comma + 1).trim();
+  const known = DATE_PHRASES.find((p) => p.re.test(phrase));
+  if (!known) return raw;
+  return lang === 'zh' ? `${date}，${known.t.zh}` : `${date}, ${known.t[lang]}`;
+}
+
+const TRANSLATED_ABBR: Record<Locale, string> = { en: 'trans.', es: 'trad.', la: 'interpr.', nl: 'vert.', zh: '译' };
+
+/** The short "trans." word before a translation date. */
+export function translatedAbbr(lang: Locale): string {
+  return TRANSLATED_ABBR[lang];
+}

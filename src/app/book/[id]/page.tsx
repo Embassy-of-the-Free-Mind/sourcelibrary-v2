@@ -10,7 +10,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
-import { localizePublished } from '@/lib/book-labels';
+import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -1292,7 +1292,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const heroDate = (() => {
       const pub = book.published ? String(book.published).trim() : '';
       if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: localizePublished(pub, lang) };
-      if (compDateDisplay) return { label: t.written, value: compDateDisplay };
+      if (compDateDisplay) return { label: t.written, value: localizeDateDisplay(compDateDisplay, lang) };
       return null;
     })();
     // Meta line: publisher/place, plus the source-work line ONLY when its author
@@ -1305,9 +1305,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
       if (comp) {
         const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
-        if (!sameAuthor) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+        if (!sameAuthor) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
       } else if (trans) {
-        parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+        parts.push(`${trans.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(trans.date_display, lang)}`.trim());
       }
       return parts.filter(Boolean).join(' · ');
     })();
@@ -1382,7 +1382,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = (compDate || (book.published ? String(book.published) : '')).trim();
+    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (book.published ? String(book.published) : '')).trim();
     const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
     if (histInformative) {
       // Publisher/place only make sense for a printed impressum, not an ancient
@@ -2208,13 +2208,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <Calendar className="w-4 h-4" />
                     <span>
                       {book.source_work_dates.find(l => l.type === 'composition')
-                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
+                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'composition')!.date_display, lang)}`.trim()
                         : ''}
                       {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                        ? <span className="text-stone-500"> · published {book.published}</span>
+                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(String(book.published), lang)}</span>
                         : ''}
                       {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
-                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
+                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'translation')!.date_display, lang)}`.trim()
                         : ''}
                     </span>
                   </div>
