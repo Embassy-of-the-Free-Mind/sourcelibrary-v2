@@ -8,7 +8,7 @@ n_books: 1
 n_pages: 5
 verdict: "Neither Opus 5.5 nor Fable 5.1 (claude -p, subscription) can read Sanskrit in Malayalam script on palm leaf. Both decline the whole page without inventing text. On crops, Opus scores CER 0.71–0.75 against the GRETIL Sāṃkhyakārikā, at chance (0.74–0.78); Fable is at chance on quarter-leaf crops and 0.64–0.71 on half-leaf crops, slightly above chance and far from usable."
 status: informational
-decision: "Collation against the edition with planted errors is the only arm with signal (Opus 3/4 plants, Fable 2/4, no false 'certain'); it needs a multi-leaf planted test before use. Book stays held (malayalam-palm-leaf-lane). No Opus lane for Malayalam palm leaf. Gemini CLI arm pending its quota reset (~2026-10-23)."
+decision: "Collation against the edition is the only arm with signal. On 36 planted errors over 9 leaves, Opus caught 69% and Fable 61%, and none of their certain substantive flags was false; about a third went unflagged, 5–6 by copy-through. Usable as a variant finder (trust certain flags only), not as a transcription. Book stays held (malayalam-palm-leaf-lane). No Opus lane for Malayalam palm leaf. Gemini CLI arm pending its quota reset (~2026-10-23)."
 superseded_by: null
 issue: 5935
 ---
@@ -75,10 +75,36 @@ None applies to reads at chance. Two cheap probes on the same half-leaf (t03):
 - **Failure mode: copy-through.** Where a word is hard to see, a model can report agreement with the edition: 1 of 4 plants for Opus, 2 of 4 for Fable. That would put the edition's text, not the scribe's, into a transcription.
 - n = 4 plants on one half-leaf: far too few to estimate a catch rate. Before any use, the gate is a planted-error test across several leaves (enough plants for an interval) on the verse text and on the published commentaries (Jayamaṅgalā, Tattvakaumudī). It would only ever cover text that has an edition; the Malayalam glosses stay unread.
 
+**Multi-leaf collation (same day).** The gate above, run on the verse text.
+- *Design.* Fifteen left half-leaves (pages 4–11, the pilot's crop geometry) were located in GRETIL by an Opus pass that only placed each line, with no collation. Nine were placed in sequence: kārikās 1–58, pages 4–9. They were used.
+- *Skipped.* Pages 7b, 9b and 10t were placed out of sequence or not at all. Page 10b had too little verse for four plants. Pages 11t and 11b are the commentary that follows the verses.
+- *Plants.* Each leaf's excerpt (its verses ±2) got 4 seeded plants, one of each kind: near-homograph letter swap, substitution by a word from elsewhere in the text, a plausible wrong form (case ending or a- negation), and omission. That is 36 plants. Plants went only on words inside a located line's visible span.
+- *Prompt and models.* Same collation prompt as the pilot, Opus and Fable on each leaf.
+- *Scoring.* `score.py`; plants are in `plants.json`, never in a prompt. A spelling note whose leaf column is the planted word counts as copy-through, not a catch.
+
+| | Opus | Fable | either |
+|---|---|---|---|
+| plants caught | 25/36 (69%, 95% CI 53–82%) | 22/36 (61%, 45–75%) | 26/36 |
+| caught as certain / uncertain | 14 / 11 | 16 / 6 | |
+| catch restores the GRETIL word | 23 of 25 | 20 of 22 | |
+| missed: copy-through / silent | 5 / 6 | 6 / 8 | |
+| near-homograph · substitution · plausible form · omission | 8 · 6 · 5 · 6 (of 9 each) | 7 · 6 · 3 · 6 | |
+| unplanted flags: spelling habit / substantive | 8 / 5 | 16 / 6 | |
+| substantive unplanted flags marked certain | 0 | 0 | |
+
+- **"Certain" is trustworthy; silence is not.** All 30 substantive differences the two models marked certain were real plants. The unplanted flags marked certain were all scribal spelling: gemination after r, anusvāra written as n, visarga as s.
+- About a third of the plants went unflagged, and 5–6 of the 36 were copied straight into the model's reading of the leaf. Agreement with the edition therefore does not show that the leaf agrees.
+- The plausible wrong form, a one-letter case ending or an a- prefix, is the weakest catch for both models: Opus 5 of 9, Fable 3 of 9.
+- No substantive unplanted difference was raised by both models, so no crop needed opening by eye. The two flags they shared (SK_5 *vacanan tu*, SK_27 *manas*) are spelling habits.
+- **Caveats.**
+  - The same Opus model placed the plants (its locate pass), which may favour Opus.
+  - Both models missed all three plants in SK_21–22 on page 6t. Those lines may be outside the legible part of the half-leaf rather than true misses.
+- **Verdict.** Collation against an edition works as a variant finder on this manuscript: trust its certain flags, and treat the rest as unexamined. It does not certify a text, and it does not touch the commentary or the Malayalam glosses.
+
 **Found on the way: the images were shifted by two leaves.** The first read of page 3 showed the cover board. The bulk archiver had fallen back to positional mapping after a transient scandata failure (162 zip files for 159 IIIF leaves), and its dHash check passed the shift. It was repaired and pixel-verified before any read reported above. Details are on #3368.
 
 **Not run.** Gemini 3.8 Flash through `agy`: the CLI account is out of quota until about 2026-10-23, on the laptop and on Hetzner alike. A paid API arm is not allowed for this model. The translation comparison against Colebrooke & Wilson 1837 (`69925814ad311253224cc20c`) waits for a usable read.
 
-- *Replicated?* No. One page of one manuscript, but the whole-page refusal is categorical.
+- *Replicated?* The OCR result: no, one page of one manuscript, though the whole-page refusal is categorical. The collation result: across 9 leaves of the same manuscript, not on a second manuscript.
 - *Arm added the same day:* Fable 5.1, through the same `claudeCall` and prompt, on the same images.
 - **Artifact.** `scripts/eval/results/whish147-palm-leaf-opus-2026-10-21/`

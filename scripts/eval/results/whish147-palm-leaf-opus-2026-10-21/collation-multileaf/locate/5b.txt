@@ -1,0 +1,19 @@
+LINE 1 | SK_11 | tri-guṇam | a-cetanaṃ | confident
+LINE 2 | SK_11-SK_12 | pradhānaṃ | prīty- | confident
+LINE 3 | SK_12 | pravṛtti- | anyo.anyā- | unsure
+LINE 4 | SK_12-SK_13 | guṇāḥ | iṣṭam | confident
+LINE 5 | SK_13 | guru | pradīpavac | confident
+LINE 6 | SK_14 | a-viveky-ādi | traiguṇyāt | confident
+LINE 7 | SK_14 | kāraṇa-guṇā`tmakatvāt | a-vyaktam | confident
+LINE 8 | SK_15 | bhedānāṃ | chaktitaḥ | confident
+LINE 9 | SK_15-SK_16 | vibhāgād | kāraṇam | confident
+LINE 10 | SK_16 | samudayāc | prati- | confident
+
+FIRST_VISIBLE_VERSE=11 LAST_VISIBLE_VERSE=16
+
+Notes:
+- **Lines 3–8:** The string hole splits each of these lines into a short piece on the left and a piece further right. I read both pieces as one continuous line, left first, and the text runs on correctly that way.
+- **Line 2:** It starts in the middle of a word ("-ānaṃ", the end of pradhānaṃ). The words between a-cetanaṃ and pradhānaṃ ("prasava-dharmi vyaktaṃ tathā") must be on the missing right half of line 1.
+- **Line 3:** This is my least certain line. The left piece looks like "pravṛtti-niyamā", and the right piece looks like "-rthāḥ anyonyā…".
+- **Line 9:** It starts in the middle of the compound kāraṇa-kārya-vibhāgād, at "-gād".
+- **Line 10:** It starts at "-mudayāc", the end of samudayāc.

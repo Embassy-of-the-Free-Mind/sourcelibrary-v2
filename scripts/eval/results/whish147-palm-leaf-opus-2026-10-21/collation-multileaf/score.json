@@ -1,0 +1,463 @@
+{
+ "opus": {
+  "tally": {
+   "plants": 36,
+   "caught_certain": 14,
+   "caught_uncertain": 11,
+   "restored": 23,
+   "copy_through": 5,
+   "silent": 6,
+   "flags": 39,
+   "false_orthographic": 8,
+   "false_substantive": 5,
+   "false_substantive_certain": 0
+  },
+  "per_leaf": {
+   "4b": [
+    "u?",
+    "u",
+    "C",
+    "C"
+   ],
+   "5t": [
+    "copy",
+    "C",
+    "u",
+    "C"
+   ],
+   "5b": [
+    "C",
+    "u",
+    "u",
+    "C"
+   ],
+   "6t": [
+    "C",
+    "miss",
+    "copy",
+    "miss"
+   ],
+   "6b": [
+    "u",
+    "C",
+    "u",
+    "C"
+   ],
+   "7t": [
+    "copy",
+    "C",
+    "miss",
+    "u"
+   ],
+   "8t": [
+    "C",
+    "miss",
+    "u",
+    "C"
+   ],
+   "8b": [
+    "C?",
+    "u",
+    "C",
+    "miss"
+   ],
+   "9t": [
+    "copy",
+    "miss",
+    "copy",
+    "u"
+   ]
+  },
+  "by_kind": {
+   "near_homograph": [
+    8,
+    9
+   ],
+   "wrong_plausible": [
+    5,
+    9
+   ],
+   "omission": [
+    6,
+    9
+   ],
+   "substitution": [
+    6,
+    9
+   ]
+  },
+  "false_flags": [
+   {
+    "leaf": "5t",
+    "kind": "orthographic",
+    "verse": 5,
+    "edition": "vacanaṃ (tu)",
+    "reading": "vacanan (tu)",
+    "cert": "certain"
+   },
+   {
+    "leaf": "5b",
+    "kind": "orthographic",
+    "verse": 15,
+    "edition": "vaiśva-rūpasya",
+    "reading": "vaiśvarūpyasya",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6t",
+    "kind": "orthographic",
+    "verse": 19,
+    "edition": "kaivalyam",
+    "reading": "kaivalyaṃ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "substantive",
+    "verse": 24,
+    "edition": "pravartate",
+    "reading": "pravṛ[…]",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 24,
+    "edition": "tan-mātraḥ pañcakaś",
+    "reading": "[tanmā]trapañcakaś",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 26,
+    "edition": "ākhyāni",
+    "reading": "ākhyāṇi",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 27,
+    "edition": "manaḥ",
+    "reading": "manas",
+    "cert": "certain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "substantive",
+    "verse": 43,
+    "edition": "karaṇā`śrayiṇaḥ",
+    "reading": "karaṇāśri… (underlined/corrected akṣara)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8b",
+    "kind": "substantive",
+    "verse": 46,
+    "edition": "vimardāt",
+    "reading": "vimardanāt (?)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8b",
+    "kind": "substantive",
+    "verse": 46,
+    "edition": "tasya ca",
+    "reading": "t[v]a… (ca possibly missing)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "orthographic",
+    "verse": 53,
+    "edition": "pūrvikā",
+    "reading": "pūrvvikā",
+    "cert": "certain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "orthographic",
+    "verse": 55,
+    "edition": "duḥkham",
+    "reading": "duḥkhaṃ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "substantive",
+    "verse": 54,
+    "edition": "sargaḥ",
+    "reading": "s[argaḥ?], possibly another word",
+    "cert": "uncertain"
+   }
+  ]
+ },
+ "fable": {
+  "tally": {
+   "plants": 36,
+   "caught_certain": 16,
+   "caught_uncertain": 6,
+   "restored": 20,
+   "copy_through": 6,
+   "silent": 8,
+   "flags": 45,
+   "false_orthographic": 16,
+   "false_substantive": 6,
+   "false_substantive_certain": 0
+  },
+  "per_leaf": {
+   "4b": [
+    "copy",
+    "miss",
+    "miss",
+    "C"
+   ],
+   "5t": [
+    "copy",
+    "C",
+    "C?",
+    "C"
+   ],
+   "5b": [
+    "C",
+    "u",
+    "C",
+    "u"
+   ],
+   "6t": [
+    "C",
+    "miss",
+    "miss",
+    "copy"
+   ],
+   "6b": [
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "7t": [
+    "copy",
+    "copy",
+    "miss",
+    "u"
+   ],
+   "8t": [
+    "C",
+    "copy",
+    "C",
+    "u"
+   ],
+   "8b": [
+    "u?",
+    "u",
+    "C",
+    "C"
+   ],
+   "9t": [
+    "miss",
+    "miss",
+    "miss",
+    "C"
+   ]
+  },
+  "by_kind": {
+   "near_homograph": [
+    7,
+    9
+   ],
+   "wrong_plausible": [
+    3,
+    9
+   ],
+   "omission": [
+    6,
+    9
+   ],
+   "substitution": [
+    6,
+    9
+   ]
+  },
+  "false_flags": [
+   {
+    "leaf": "5t",
+    "kind": "orthographic",
+    "verse": 5,
+    "edition": "vacanaṃ tu",
+    "reading": "vacanantu",
+    "cert": "certain"
+   },
+   {
+    "leaf": "5b",
+    "kind": "substantive",
+    "verse": 11,
+    "edition": "vyaktaṃ tathā pradhānaṃ",
+    "reading": "(vyakta)n tathā pradhānan",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "5b",
+    "kind": "orthographic",
+    "verse": 14,
+    "edition": "a-viveky-ādi hi",
+    "reading": "avivekyādi (hi not visible)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "5b",
+    "kind": "orthographic",
+    "verse": 14,
+    "edition": "siddhaṃ",
+    "reading": "siddhan",
+    "cert": "certain"
+   },
+   {
+    "leaf": "5b",
+    "kind": "orthographic",
+    "verse": 16,
+    "edition": "pariṇāmataḥ",
+    "reading": "pariṇāmatas",
+    "cert": "certain"
+   },
+   {
+    "leaf": "6t",
+    "kind": "substantive",
+    "verse": 20,
+    "edition": "a-cetanaṃ",
+    "reading": "ācetanaṃ (sign after gād looks like ā)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 23,
+    "edition": "aiśvaryam",
+    "reading": "aiśvaryyaṃ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 24,
+    "edition": "dvi-vidhaḥ",
+    "reading": "vividhaḥ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "substantive",
+    "verse": 26,
+    "edition": "cakṣuḥ",
+    "reading": "cakṣuś",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "6b",
+    "kind": "orthographic",
+    "verse": 27,
+    "edition": "manaḥ",
+    "reading": "manas (manassaṃkalpakam)",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "7t",
+    "kind": "substantive",
+    "verse": 31,
+    "edition": "ākūta-hetukāṃ",
+    "reading": "ākūtaṃ hetu",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "orthographic",
+    "verse": 44,
+    "edition": "ūrdhvaṃ",
+    "reading": "ūrddhvaṃ",
+    "cert": "certain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "orthographic",
+    "verse": 42,
+    "edition": "vibhutva",
+    "reading": "vvibhutva",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "orthographic",
+    "verse": 43,
+    "edition": "dharmādyāḥ",
+    "reading": "dharmmādyāḥ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "orthographic",
+    "verse": 44,
+    "edition": "dharmeṇa",
+    "reading": "dharmmeṇa",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8t",
+    "kind": "orthographic",
+    "verse": 44,
+    "edition": "'pavargo",
+    "reading": "pavarggo",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8b",
+    "kind": "orthographic",
+    "verse": 49,
+    "edition": "vadhāḥ",
+    "reading": "vadhās",
+    "cert": "certain"
+   },
+   {
+    "leaf": "8b",
+    "kind": "orthographic",
+    "verse": 51,
+    "edition": "trayaḥ",
+    "reading": "trayas",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "8b",
+    "kind": "orthographic",
+    "verse": 51,
+    "edition": "dānaṃ",
+    "reading": "dānañ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "substantive",
+    "verse": 52,
+    "edition": "liṅgena bhāva-nirvṛttiḥ",
+    "reading": "bhāvena liṅga-nirvṛttiḥ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "orthographic",
+    "verse": 53,
+    "edition": "bhautikaḥ sargaḥ",
+    "reading": "bhautikas sargaḥ",
+    "cert": "uncertain"
+   },
+   {
+    "leaf": "9t",
+    "kind": "substantive",
+    "verse": 55,
+    "edition": "duḥkham prāpnoti cetanaḥ puruṣaḥ a-liṅgasyā vinivṛttes tasmād duḥkhaṃ",
+    "reading": "omitted (leaf reads jarāmaraṇa[kṛtaṃ] duḥkha svabhāvena)",
+    "cert": "uncertain"
+   }
+  ]
+ },
+ "both_agree_unplanted": []
+}
