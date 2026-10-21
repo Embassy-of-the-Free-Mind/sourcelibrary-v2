@@ -207,7 +207,7 @@ export default function HarmonyMapPage() {
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">21 October 2026 &middot; 25 min read</p>
+          <p className="text-stone-400 text-sm mt-4">21 October 2026 &middot; 29 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"

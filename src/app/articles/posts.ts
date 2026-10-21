@@ -235,7 +235,7 @@ export const posts: BlogPost[] = [
     summary:
       'Eleven ideas about harmony, from lock and dissonance to AI alignment, each with its sources: Philolaus, Plato, Aristotle, Iamblichus, Huygens, Rameau.',
     date: '21 October 2026',
-    readTime: '25 min read',
+    readTime: '29 min read',
     kind: 'stories',
     // Robert Fludd's world monochord, Utriusque cosmi historia (1617), scan p. 99.
     image: 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg',
