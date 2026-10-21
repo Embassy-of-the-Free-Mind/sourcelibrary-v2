@@ -1,0 +1,20 @@
+**Leaf reading (left half only; the hole and abrasion around the string swallow a few akṣaras on each line). Bracketed text is not visible; "..." marks the gap at the hole.**
+
+- **Line 1, SK_5 end / SK_6 start:** `[āpta-śrutir ā]ptavacanantu | sāmānyatas tu dṛ[ṣṭād]`. The leaf writes the final anusvāra as a conjunct nasal, vacanantu for vacanaṃ tu. The first akṣara before ptavacana is abraded.
+- **Line 2, SK_6:** left portion uncertain. I think I see `[ṣ]ṭād atīndriyāṇā`, but the akṣaras are faint and I would not swear to them. Right of the hole: `...ṃ pratī(tir anu)mānā[t]`. The syllables tir anu are smudged, so I cannot confirm pratītir against the edition.
+- **Line 3, SK_6 end / SK_7 start:** `[paro]kṣam āptāgamā[t siddham | atidūrāt sāmīpyād indriyaghā]...tān mano'nava[sthānāt]`. Both pieces fairly clear.
+- **Line 4, SK_7 end:** `[saukṣmyād vyavadhān]ād abhibhavāt ...samānābhi[hārāc ca]`. The word abhibhavāt is clearly legible. The edition's sāṃsiddhikāś is not on the leaf.
+- **Line 5, SK_8 first half:** `[saukṣmyāt tadanupa]labdhir nābhā...vāt kāryatas ta[du]`. The left piece is clear; kāryatas ta is a little cramped but readable.
+- **Line 6, SK_8 second half:** `[mahadādi tac ca] kāryaṃ prakṛti...sarūpaṃ virū[paṃ ca]`. kāryaṃ prakṛti is clear. sarūpaṃ virū is legible but the ū-signs are faint. The edition has neither prakṛti nor virūpaṃ.
+- **Line 7, SK_9:** `[asadakaraṇād up]ādānagrahaṇā[t]...` then on the right something like `[sarvasambha]vābhāvāt śaktasya`. I can read grahaṇā with confidence. The right-hand sequence I cannot read securely enough to check the edition's sarva-sambhavā-bhāvāt.
+- **Line 8, SK_9 end / SK_10 start:** `[śakyakaraṇ]āt kāraṇabhāvāc ca satkāryaṃ | he[tumad]`. The final he is at the edge and uncertain.
+- **Line 9, SK_10:** `[sakriyam a]nekam āśritaṃ liṅgaṃ sāvayavaṃ parata[ntraṃ]`. Clear. The leaf has sāvayavaṃ, not the edition's sā'vamavaṃ.
+
+**Not visible on this half:** the rest of SK_10, SK_11, SK_12, SK_3, SK_4, and the first half of SK_5. I found no line on this half that I could identify as commentary rather than verse. Every line I can read continues the kārikā text, with roughly one verse per line. If commentary is present it is in the right half or in the illegible stretches.
+
+DIFFERENCES:
+SK_5 | vacanaṃ tu | vacanantu | certain (orthographic, nasal conjunct for anusvāra)
+SK_7 | sāṃsiddhikāś | abhibhavāt | certain
+SK_8 | kāryam sa-rūpaṃ ca (prakṛti omitted) | kāryaṃ prakṛti[...]sarūpaṃ | certain
+SK_8 | sa-rūpaṃ ca (virūpaṃ omitted) | sarūpaṃ virū[paṃ ca] | uncertain (virū visible, paṃ ca lost at the hole)
+SK_10 | sā'vamavaṃ | sāvayavaṃ | certain

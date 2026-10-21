@@ -1,0 +1,39 @@
+# Collation of leaf.jpg against SK 46–50
+
+**How reliable this is.** I could only view the image at reduced resolution and could not crop or zoom it. The script is small and faint in places, and the right edge is cut off. Several syllables I could not read, and I've marked them instead of filling them in from the edition.
+
+**Layout.** The verse runs across the full width in rows 1–2 and 8. In rows 3–7 the scribe left a gap around the string-hole, so each row has a short piece on the left and another on the right. I could not work out the reading order of the right-hand pieces in rows 4–6 with any confidence. Rows 9–10, and probably part of row 1, look like commentary, so I haven't transcribed them.
+
+## Verse lines
+
+**SK_46** (rows 1–2)
+- Row 1: …*ākhyaḥ* (preceded by a syllable I can't read), then *eṣa pratyaya-sarg[o/ā] viparya*… The edition prints *sarko*, but the leaf clearly has the conjunct *rgg* (ർഗ്ഗ), so it reads *sarga-*. That is almost certainly an error in the edition.
+- Row 2: *-ma[rd/ṭṭ]?…n… t[v/asy]a bhedās tu pañcāśat*. The opening is unclear. It could be *vimardanāt* rather than *vimardāt*. Where the edition has *tasya ca* I see something like *tva*, but I can't confirm whether *ca* is there or missing.
+
+**SK_47** (rows 2–3)
+- End of row 2: *pañca vi*… The leaf seems to have *pañca*, not the edition's *a-pañca*. The edition's *a-* looks like an error.
+- Row 3: *…[karaṇa]vaikalyāt* || *[a]ṣṭāviṃśati-bhedā*… These match the edition.
+
+**SK_48** (rows 4–5)
+- Row 4, left: *…daśa… mahāmoha*… Some middle syllables are unclear. I can't confirm *daśa-vidho*.
+- Row 5, left: *[tā]misro 'ṣṭādaśa*. This matches.
+- Row 5, right: *…dhā tathā bhavaty andha*… This matches.
+
+**SK_49** (rows 6–7)
+- Row 6, left: *[ekādaś'endriya-va]dhāḥ saha buddhi-vadhai[r]*. This matches.
+- Row 7, left: *[a]śaktir uddiṣṭā*. This matches.
+- Row 7, right: *…[si]ddhīnām* ||, possibly followed by the verse number. I can't read the rest of the right-hand material in rows 6–7 (*saptadaśa vadhā buddher viparyayāt*).
+
+**SK_50** (rows 7–8)
+- End of row 7: probably *ādhyātmik*…, but this is uncertain.
+- Row 8: *…kāla-bhāgyākhyāḥ bāhyā viṣayoparamā*… The leaf clearly has **bāhyā** where the edition has *vijñāya*. *Bāhyā* is the reading most other witnesses have.
+- I can't make out *pañca nava tuṣṭayo 'bhimatāḥ* on this leaf. It may be on the right half.
+
+I can't see SK_43–45 or SK_51–53 on this leaf.
+
+## DIFFERENCES:
+SK_46 | sarko | sarga- (sargo/sargā) | certain
+SK_46 | vimardāt | vimardanāt (?) | uncertain
+SK_46 | tasya ca | t[v]a… (ca possibly missing) | uncertain
+SK_47 | a-pañca | pañca | uncertain
+SK_50 | vijñāya | bāhyā | certain

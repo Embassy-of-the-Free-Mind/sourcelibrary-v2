@@ -1,0 +1,50 @@
+I could only partly read the leaf. Many akṣaras are small or worn, and the right edge of every line is cut off because this is the left half. Each verse line on the leaf runs in two pieces, one on each side of the string hole, and wraps onto the next line. Readings below follow the leaf; "[…]" means the text runs off the image, and "?" marks an uncertain reading.
+
+**Leaf line 1 – SK_11 (first part)**
+Leaf: *triguṇam aviveki viṣayas sāmānyam ace[…]*
+- *munir* (edition) → **viṣayas / viṣayaḥ** on the leaf (ഷ is clear).
+
+**Leaf line 2 – SK_11 (end)**
+Leaf: *[pra]dhānaṃ tadviparītas(?) … [ta]thā ca pumān ‖ prī[…]*
+- *tad-niparītas*: the leaf seems to have **tadviparītas** (vi, not ni), but this stretch is blurred. Uncertain.
+
+**Leaf line 3 – SK_12**
+Leaf: *pravṛttiniyamā ‖ rthāḥ(?) anyonyā(?)[…]*
+- The text before *pravṛtti* (*prīty-aprīti-viṣādātmakāḥ prakāśa-*) is on the cut-off part of line 2. I see no difference in the visible words. *-rthāḥ* and *anyonyā* are hard to read.
+
+**Leaf line 4 – SK_12 end / SK_13 start**
+Leaf: *guṇāḥ ‖ sattvaṃ(?) | laghu prakāśakam iṣ[…]*
+- The leaf has an extra word, **sattvaṃ** (സത്വം), before *laghu*. The edition leaves it out, though the standard text has it. Fairly likely, but the akṣaras are faint, so uncertain.
+
+**Leaf line 5 – SK_13**
+Leaf: *guru varaṇakam e | va tamaḥ pradī[…]*
+- *tamaṃ* (edition) → **tamaḥ**. The visarga is visible, so this is certain.
+
+**Leaf line 6 – SK_13 end / SK_14**
+Leaf: *[left part mostly illegible, ends …kyādi(?)] | siddhaṃ traiguṇyā[…]*
+- I can't read the left part (*…vac cārthato vṛttiḥ / aviveky ādi hi*?). There are no differences in *siddhaṃ traiguṇyā-*.
+
+**Leaf line 7 – SK_14**
+Leaf: *[kāra]ṇaguṇātmaka | [tvāt] kāryasyā[…]*
+- No differences visible.
+
+**Leaf line 8 – SK_15**
+Leaf: *[bhe]dānāṃ parimāṇā | t samanvayāc chakti[…]*
+- No differences visible.
+
+**Leaf line 9 – SK_15 end / SK_16 start**
+Leaf: *[vibhā]gād avibhāgād vaiśvarūpyasya(?) kāraṇa[…]*
+- *vaiśva-rūpasya* → **vaiśvarūpyasya** (a -py- conjunct seems to be there). Uncertain.
+
+**Leaf line 10 – SK_16**
+Leaf: *[samu]dayāc ca pariṇāmatas salilavat prati[…]*
+- No differences in the visible words. *pariṇāmatas* is just the visarga written as -s before *s-*, which is spelling only.
+
+SK_9, SK_10, SK_17 and SK_18 are not on this half of the leaf. The commentary was not transcribed.
+
+DIFFERENCES:
+- SK_11 | munir | viṣayas (viṣayaḥ) | certain
+- SK_11 | tad-niparītas | tadviparītas | uncertain
+- SK_13 | (omitted) | sattvaṃ (before laghu) | uncertain
+- SK_13 | tamaṃ | tamaḥ | certain
+- SK_15 | vaiśva-rūpasya | vaiśvarūpyasya | uncertain

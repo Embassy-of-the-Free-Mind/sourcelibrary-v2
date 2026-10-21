@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten old Malayalam (Āryaeḻuttu) script on palm leaf; this image is a crop of the right-hand quarter of the leaf, so every line begins mid-word at the left cut edge. Readings of individual akṣaras are uncertain.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio, right edge of leaf visible with rounded corner; incised letters inked; ten lines, each truncated at left by the crop. No page number, header or marginalia visible in this crop.</meta>
+
+<unclear>വ്യ</unclear>ക്കന്ത<unclear>ഥാ</unclear>പ്രഖ
+ാത്മകാഃ പ്രകാശ
+മി<unclear>ഥ്യ</unclear><unclear>ണ</unclear>പ്ര<unclear>ത്ത</unclear>യശ്ച
+ക<unclear>ഖ</unclear>ല<unclear>ഖേ</unclear>രജഃ
+<unclear>തൊ</unclear>ാവൃ<unclear>ക്കി</unclear>ഃ സ്വസ്വ
+യാഭാവാർകാ
+<unclear>ബി</unclear>ദ്ധം · <unclear>സ്സ</unclear>ശ്ര<unclear>ട്ടാ</unclear>
+ാന<unclear>ണ</unclear>കാ<unclear>ര്യ</unclear>വിഭാ
+രക<unclear>ത്തി</unclear><unclear>ഉള</unclear>ക<unclear>ന്ന</unclear>
+ശക്കാർ<unclear>ന്ന</unclear>സം<unclear>ങ്ങ</unclear>
+
+<vocab>ആത്മകാഃ, പ്രകാശ, പ്രത്യയ, രജഃ, ആവൃത്തിഃ, സ്വസ്വ, ഭാവ, കാര്യവിഭാ, palm-leaf manuscript, Malayalam script, Sanskrit</vocab>
