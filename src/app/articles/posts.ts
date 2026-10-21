@@ -228,6 +228,22 @@ export const posts: BlogPost[] = [
       'Chinese painting on silk: court women around a long table drink and play a lute, pipes and a flute while one keeps time with clappers.',
   },
   {
+    slug: 'harmony-map',
+    title: 'Harmony: Eleven Ideas and Their Sources',
+    subtitle:
+      'What harmony is, where it fails, and what it would mean for people, machines and the natural world: eleven ideas from Derek Lomas’s research, each with the primary sources it rests on, its tensions and its open questions.',
+    summary:
+      'Eleven ideas about harmony, from lock and dissonance to AI alignment, each with its sources: Philolaus, Plato, Aristotle, Iamblichus, Huygens, Rameau.',
+    date: '21 October 2026',
+    readTime: '25 min read',
+    kind: 'stories',
+    // Robert Fludd's world monochord, Utriusque cosmi historia (1617), scan p. 99.
+    image: 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg',
+    imageAlt:
+      'Engraving: a hand from a cloud tunes a single string that runs from the earth through the planets to the stars, with musical ratios marked beside it.',
+    imagePosition: 'center 20%',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
