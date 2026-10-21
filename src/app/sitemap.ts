@@ -25,7 +25,7 @@ const PAGES_PER_CHUNK = 5000;
 const PAGE_CHUNK_OFFSET = 1000;
 // Gallery-image and artwork chunks (issue #4357, Phase 1). Gallery images are
 // ~150K rows (30 chunks), so the artwork offset leaves the same 1000-chunk
-// headroom the page offset does. All offsets must match sitemap-index/route.ts.
+// headroom the page offset does. All offsets must match src/lib/sitemap-index.ts.
 const GALLERY_CHUNK_OFFSET = 2000;
 const GALLERY_PER_CHUNK = 5000;
 const ARTWORK_CHUNK_OFFSET = 3000;
