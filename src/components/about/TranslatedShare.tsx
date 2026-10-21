@@ -7,7 +7,7 @@ import { useReducedMotion } from './useReducedMotion';
  * The chart's last word: 100 squares for everything printed in Europe before
  * 1700, of which 0.9 of one square has an English translation (the census
  * figure in written-past-data.ts, step 2). The squares come in when the block
- * reaches the screen; the filled one comes last.
+ * reaches the screen and go again when it comes back; the filled one comes last.
  */
 
 const SHARE = 0.9; // percent
@@ -22,7 +22,7 @@ export default function TranslatedShare() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(true), { threshold: 0.4 });
+    const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting), { threshold: 0.4 });
     io.observe(el);
     return () => io.disconnect();
   }, []);

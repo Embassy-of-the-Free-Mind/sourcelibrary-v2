@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
 
 /**
- * A bar chart whose scale keeps growing. Step 1 is Dutch print alone; each
+ * A bar chart whose scale keeps growing. Step 1 is Latin print alone, the language of the Renaissance; each
  * later step adds bigger bodies of writing, and every earlier bar shrinks as
  * the axis stretches. Translated = solid sliver in the row's hue, untranslated
  * = a tint of it, estimates in other units = hatched. Autoplays while on screen

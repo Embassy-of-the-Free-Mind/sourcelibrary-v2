@@ -39,8 +39,8 @@ export type WrittenPastRow = {
 const PRINTED = 'works printed before 1700';
 
 export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
-  { key: 'nl', name: 'Dutch', n: 82651, translated: 462, unit: PRINTED, step: 0, highlight: true, color: '#aa442b' },
-  { key: 'la', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 1, color: '#488acb' },
+  { key: 'la', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 0, highlight: true, color: '#aa442b' },
+  { key: 'nl', name: 'Dutch', n: 82651, translated: 462, unit: PRINTED, step: 1, color: '#488acb' },
   { key: 'de', name: 'German', n: 295566, translated: 419, unit: PRINTED, step: 1, color: '#437224' },
   { key: 'fr', name: 'French', n: 194874, translated: 1615, unit: PRINTED, step: 1, color: '#bf6aa5' },
   { key: 'en', name: 'English', n: 149462, translated: 553, unit: PRINTED, step: 1, color: '#4160a7' },
@@ -54,8 +54,8 @@ export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
 ];
 
 export const WRITTEN_PAST_STEPS: { name: string; caption: string }[] = [
-  { name: 'Dutch', caption: '82,651 works were printed in Dutch before 1700. 0.56% of them have an English translation.' },
-  { name: 'Europe', caption: 'Latin alone is 444,120 works. All of Europe before 1700 comes to 1.39 million, and about 0.9% can be read in English.' },
+  { name: 'Latin', caption: '444,120 works were printed in Latin before 1700, the language of the Renaissance and of early science. 1.95% of them have an English translation.' },
+  { name: 'Europe', caption: 'Add the rest of Europe and it comes to 1.39 million works, of which about 0.9% can be read in English.' },
   { name: 'Arabic', caption: '3 to 4 million Arabic-script manuscripts survive, counted in copies, not works. Europe’s print is already a thin strip.' },
   { name: 'India', caption: 'India estimates 10 million manuscripts, the largest figure anyone has published. The Dutch bar is now a hairline.' },
   { name: 'China', caption: 'China is almost certainly larger than any of these, and nobody has counted it. Nor most of the rest of the world.' },
