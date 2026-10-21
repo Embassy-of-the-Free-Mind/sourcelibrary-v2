@@ -9,13 +9,25 @@
  *      tell fresh results from stale ones.
  *
  * This script does the reset safely, in order:
- *   1. Saves a page_revisions snapshot of every cleared field (recoverable).
+ *   0. Refuses a book where the run would clear text on more than 20% of its pages, unless
+ *      --force-full (#7058). That is the 2026-10-21 failure: a requeue ran this on fully-read,
+ *      untranslated books (Oettingen's Klang, Huygens's Œuvres vol. 20) and cleared 759 good
+ *      pages. A reset is for a few poisoned pages or a book that never read; a full re-read of
+ *      a book that reads is a decision, and the flag is where it is made.
+ *   1. (was: a hand-rolled page_revisions snapshot — lossy: it kept text, source, model,
+ *      language and prompt_version and dropped the rest of the record. Step 4 now clears
+ *      through writePageText, which keeps the WHOLE prior field per page.)
  *   2. Ends the book's outstanding (pending/processing) OCR batch_jobs: never-submitted rows are
  *      cancelled; submitted single-book rows are marked `superseded` (paid output discarded on
  *      purpose — see step 4); cross-book rows are left to the generation guard.
  *   3. Bumps pipeline_auto.ocr_generation — submitters stamp this on new jobs,
  *      and batch-collector refuses to save results from an older generation.
- *   4. Clears ocr (and optionally translation) on the selected pages.
+ *   4. Clears ocr (and optionally translation) on the selected pages through writePageText()
+ *      (scripts/lib/page-text-writer.mjs) with one run_id: every cleared field becomes a
+ *      page_revisions row carrying the whole prior object, and the whole run is undone with
+ *        node scripts/maintenance/revert-run.mjs --run-id <id> [--apply]
+ *      Human-edited fields (source 'manual' or edited_by) are skipped and reported unless
+ *      --include-human-edited, the same protection the collectors apply.
  *   5. Resets book counters and queues it at archive_complete.
  *
  * A HELD book (scripts/lib/pipeline-hold.mjs) gets steps 1-4 and NOT step 5's
@@ -51,16 +63,26 @@
  *                          of one run per range, each bumping the generation again.
  *   --pages-file PATH      Same, read from a file: whitespace/comma-separated page numbers and ranges.
  *   --reason "..."         Recorded on the revision notes (default: manual reset).
+ *   --force-full           Clear even when more than 20% of the book's pages would lose text.
+ *   --include-human-edited Also clear fields a person edited (refused by default).
+ *   --run-id ID            Use this run id (default: reset-book-ocr-<UTC stamp>-<hex>); printed either way.
  */
 
 import { MongoClient } from 'mongodb';
-import { randomBytes } from 'crypto';
+import { writePageText, newRunId, isHumanEditedField } from '../lib/page-text-writer.mjs';
 import { isHeld } from '../lib/pipeline-hold.mjs';
 import { endNamelessBatchJobs } from '../lib/end-batch-job.mjs';
 import { hasGeminiJobNameClause } from '../lib/batch-job-filters.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
+const FORCE_FULL = args.includes('--force-full');
+const INCLUDE_HUMAN = args.includes('--include-human-edited');
+/** Above this share of the book's pages losing text, the run refuses without --force-full (#7058). */
+const MAX_CLEAR_SHARE = 0.2;
+const runIdIdx = args.indexOf('--run-id');
+const RUN_ID = runIdIdx !== -1 ? args[runIdIdx + 1] : newRunId('reset-book-ocr');
+if (!RUN_ID || RUN_ID.startsWith('--')) { console.error('--run-id expects a value'); process.exit(1); }
 const ALSO_TRANSLATION = args.includes('--also-translation');
 const TRANSLATION_ONLY = args.includes('--translation-only');
 if (ALSO_TRANSLATION && TRANSLATION_ONLY) {
@@ -69,7 +91,9 @@ if (ALSO_TRANSLATION && TRANSLATION_ONLY) {
 }
 /** Which page fields this run destroys. The rest of the script keys off this. */
 const FIELDS = TRANSLATION_ONLY ? ['translation'] : ALSO_TRANSLATION ? ['ocr', 'translation'] : ['ocr'];
-const target = args.find(a => !a.startsWith('--'));
+// The first bare argument that is not the value of a value-taking flag.
+const VALUE_FLAGS = new Set(['--reason', '--pages', '--pages-file', '--run-id']);
+const target = args.find((a, i) => !a.startsWith('--') && !VALUE_FLAGS.has(args[i - 1]));
 const reasonIdx = args.indexOf('--reason');
 const REASON = reasonIdx !== -1 ? args[reasonIdx + 1] : 'manual reset via reset-book-ocr.mjs';
 const pagesIdx = args.indexOf('--pages');
@@ -154,36 +178,38 @@ const activeJobFilter = {
 const activeJobs = await db.collection('batch_jobs').countDocuments(activeJobFilter);
 console.log(`Outstanding ${JOB_TYPE} batch_jobs to cancel: ${activeJobs}`);
 
-// 2. Pages to clear — selected on the field this run actually destroys.
-// The page selection is a filter fragment ({page_number: …} or {$or: [...]}),
-// so it is merged with $and rather than assigned to page_number.
-const pageFilter = { book_id: book.id, [`${FIELDS[0]}.data`]: { $exists: true, $nin: [null, ''] } };
+// 2. Pages to clear — every page in the selection that carries any field this run destroys
+// (a text-less marker object such as {source: 'skip'} is cleared too, as the old $unset did).
+// The page selection is a filter fragment ({page_number: …} or {$or: [...]}), so it is merged
+// with $and rather than assigned to page_number.
+const pageFilter = { book_id: book.id, $or: FIELDS.map((f) => ({ [f]: { $exists: true, $ne: null } })) };
 if (pageRange) pageFilter.$and = [pageRange];
 const pages = await db.collection('pages').find(
-  pageFilter, { projection: { id: 1, book_id: 1, ocr: 1, translation: 1 } }
+  pageFilter, { projection: { id: 1, book_id: 1, page_number: 1, ...Object.fromEntries(FIELDS.map((f) => [f, 1])) } }
 ).toArray();
+const hasText = (p) => FIELDS.some((f) => typeof p[f]?.data === 'string' && p[f].data !== '');
+const textPages = pages.filter(hasText).length;
+const humanEdited = pages.filter((p) => FIELDS.some((f) => isHumanEditedField(p[f]))).length;
+const totalPages = await db.collection('pages').countDocuments({ book_id: book.id });
+const share = totalPages ? textPages / totalPages : 0;
 const specSummary = pageSpecText ? pageSpecText.trim().split(/[\s,]+/).filter(Boolean) : null;
-console.log(`Pages to clear: ${pages.length}${specSummary ? ` (page_number ${specSummary.length <= 6 ? specSummary.join(',') : `${specSummary.slice(0, 6).join(',')},… ${specSummary.length} parts`})` : ''} (${FIELDS.join(' + ')} only)`);
+console.log(`Pages to clear: ${textPages} with text, ${pages.length - textPages} marker-only${specSummary ? ` (page_number ${specSummary.length <= 6 ? specSummary.join(',') : `${specSummary.slice(0, 6).join(',')},… ${specSummary.length} parts`})` : ''} (${FIELDS.join(' + ')} only)`);
+console.log(`Text lost: ${textPages}/${totalPages} pages of the book = ${(share * 100).toFixed(1)}% (limit ${MAX_CLEAR_SHARE * 100}% without --force-full)`);
+if (humanEdited) {
+  console.log(`Human-edited pages in the selection: ${humanEdited} — ${INCLUDE_HUMAN ? 'WILL be cleared (--include-human-edited)' : 'will be SKIPPED (pass --include-human-edited to clear them)'}`);
+}
+console.log(`run_id: ${RUN_ID}`);
+
+// 3. The 20% guard (#7058) — before ANY write, jobs and generation included.
+if (share > MAX_CLEAR_SHARE && !FORCE_FULL) {
+  console.error(`\nREFUSED: this would clear text on ${(share * 100).toFixed(1)}% of the book's pages (> ${MAX_CLEAR_SHARE * 100}%).`);
+  console.error('A book that reads is not reset by default — 759 good pages were cleared this way on 2026-10-21 (#7058).');
+  console.error('Narrow the run with --pages, or pass --force-full if a full re-read is really the decision.');
+  await client.close();
+  process.exit(2);
+}
 
 if (DRY_RUN) { await client.close(); process.exit(0); }
-
-// 3. Revisions first — never destroy without a snapshot
-let revisions = 0;
-for (const p of pages) {
-  for (const field of FIELDS) {
-    if (!p[field]?.data) continue;
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: p.id, book_id: p.book_id, field,
-      data: p[field].data, source: p[field].source || 'ai', model: p[field].model,
-      language: p[field].language, prompt_version: p[field].prompt_version,
-      original_date: p[field].updated_at, created_at: new Date(),
-      note: `reset-book-ocr: ${REASON}`,
-    });
-    revisions++;
-  }
-}
-console.log(`Revisions saved: ${revisions}`);
 
 // 4. End outstanding jobs BEFORE clearing pages (closes the resurrect window).
 // A row with no Gemini name never reached Gemini: cancelled. A submitted row is PAID output
@@ -217,12 +243,21 @@ if (!TRANSLATION_ONLY) {
   });
 }
 
-// 6. Clear page fields
-const unset = Object.fromEntries(FIELDS.map((f) => [f, '']));
-const clearFilter = { book_id: book.id };
-if (pageRange) clearFilter.$and = [pageRange];
-const clearRes = await db.collection('pages').updateMany(clearFilter, { $unset: unset });
-console.log(`Pages cleared: ${clearRes.modifiedCount}`);
+// 6. Clear page fields — through the one writer, one run_id, so every cleared field is a full
+// page_revisions row and the run is revertible as a unit (revert-run.mjs).
+const tally = { written: 0, unchanged: 0, refused_human_edit: 0, conflict: 0, not_found: 0 };
+const clearOne = async (p) => {
+  for (const field of FIELDS) {
+    if (p[field] === undefined || p[field] === null) continue;
+    const r = await writePageText(db, p.id, field, null, {
+      by: RESET_BY, reason: `reset-book-ocr: ${REASON}`, run_id: RUN_ID, overrideHumanEdit: INCLUDE_HUMAN,
+    });
+    tally[r.status] = (tally[r.status] || 0) + 1;
+  }
+};
+for (let i = 0; i < pages.length; i += 16) await Promise.all(pages.slice(i, i + 16).map(clearOne));
+console.log(`Fields cleared: ${tally.written} | skipped human-edited: ${tally.refused_human_edit} | changed under us (left alone): ${tally.conflict}`);
+console.log(`Undo this run: node scripts/maintenance/revert-run.mjs --run-id ${RUN_ID}   (dry run; add --apply)`);
 
 // 7. Recount + requeue
 const remainingOcr = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $nin: [null, ''] } });

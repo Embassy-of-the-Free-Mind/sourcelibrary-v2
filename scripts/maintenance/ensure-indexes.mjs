@@ -293,6 +293,7 @@ export const INDEXES = [
   // ── page_revisions ────────────────────────────────────────────
   { collection: 'page_revisions', key: { 'page_id': 1, 'field': 1, 'created_at': -1 }, options: { 'name': 'page_revisions_page_field_idx', 'background': true }, why: 'Lookup by page + field, newest first (revision history). Archived ensure-indexes route.' },
   { collection: 'page_revisions', key: { 'id': 1 }, options: { 'name': 'page_revisions_id_idx', 'background': true, 'unique': true }, why: 'Unique id lookup. Archived ensure-indexes route.' },
+  { collection: 'page_revisions', key: { 'run_id': 1, 'created_at': 1 }, options: { 'name': 'page_revisions_run_id_partial_idx', 'partialFilterExpression': { 'run_id': { '$exists': true } } }, why: 'revert-run.mjs: every row a run wrote through writePageText (#7058), oldest first. Without it the lookup scans ~3.1M rows. Partial: only writer rows from a run carry run_id (the writer omits it otherwise).' },
   // ── pages ─────────────────────────────────────────────────────
   { collection: 'pages', key: { 'book_id': 1, 'page_number': 1 }, options: { 'name': 'pages_book_pagenum_idx', 'background': true }, why: 'Lookup by book_id + page_number — the core reader-page query. Archived ensure-indexes route.' },
   { collection: 'pages', key: { 'id': 1 }, options: { 'name': 'pages_id_idx', 'background': true, 'unique': true }, why: 'Unique page id lookup. Archived ensure-indexes route.' },
