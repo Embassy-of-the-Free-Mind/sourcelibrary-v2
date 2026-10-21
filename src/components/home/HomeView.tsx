@@ -8,6 +8,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import { posts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
+import RecentlyTranslatedLinks from '@/components/home/RecentlyTranslatedLinks';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
 import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -288,6 +289,16 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
+      )}
+
+      {/* Plain-link shelf of the 48 newest English-readable books, in the HTML
+          without JS: the crawl path to fresh books (#3755). English page only —
+          the heading is English and the localized pages have their own shelves. */}
+      {lang === 'en' && (
+        <RecentlyTranslatedLinks
+          excludeIds={recentlyTranslated.map((b) => b.id)}
+          className="bg-white pb-16 md:pb-24 px-6 md:px-12 max-w-[1500px] mx-auto"
+        />
       )}
 
       {/* Ask the source — the librarian's front door. Placed after the
