@@ -48,18 +48,14 @@ const EDITION_PROJECTION = {
 // ISR render used to run this query twice (#7057).
 const getWorkEditions = cache(async (idOrSlug: string) => {
   const db = await getReadDb();
-  // canon slugs expand to their verified work_id set (work_id_1 index; the
-  // work_slug half of workEditionsFilter has no index and scans all ~58K
-  // visible books, ~2s measured 2026-10-20, and selects the same set, see
-  // workEditionsCountFilter). Anything else tries the indexed work_id first,
-  // and only a miss pays for the work_slug scan.
-  const canon = canonWork(idOrSlug);
-  const find = (filter: Record<string, unknown>) =>
-    db.collection('books').find(filter, { projection: EDITION_PROJECTION }).toArray();
-  let editions = canon
-    ? await find({ work_id: { $in: canon.workIds }, visible: true })
-    : await find({ work_id: idOrSlug, visible: true });
-  if (editions.length === 0 && !canon) editions = await find(workEditionsFilter(idOrSlug));
+  // canon slugs expand to their verified work_id set; anything else resolves by
+  // work_slug first, then raw work_id (back-compat). Both halves of the $or are
+  // indexed (work_id_1, work_slug_1 sparse, added 2026-10-20 for #7057: the
+  // work_slug half had scanned ~58K books, 2.4s -> 6ms).
+  const editions = await db.collection('books').find(
+    workEditionsFilter(idOrSlug),
+    { projection: EDITION_PROJECTION }
+  ).toArray();
   return byChronology(editions as unknown as WorkEdition[]);
 });
 
@@ -84,9 +80,8 @@ async function getCollectedEditions(canon: CanonWork) {
   const ids = canon.collectedWorkIds || [];
   if (ids.length === 0) return [];
   const db = await getReadDb();
-  // work_id only: the work_slug branch is unindexed (full scan, ~2s) and adds nothing
   const editions = await db.collection('books').find(
-    { work_id: { $in: ids }, visible: true },
+    { $or: [{ work_id: { $in: ids } }, { work_slug: { $in: ids } }], visible: true },
     { projection: EDITION_PROJECTION }
   ).toArray();
   return byChronology(editions as unknown as WorkEdition[]);
