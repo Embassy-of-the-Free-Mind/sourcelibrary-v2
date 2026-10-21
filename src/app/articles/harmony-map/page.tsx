@@ -425,8 +425,7 @@ export default function HarmonyMapPage() {
 
         <Quote href={Q.republic431} cite={<>Plato, <Link href={BOOK.republic}><em>Republic</em></Link> IV, 431e&ndash;432a, p. 165</>}>
           Instead, it is literally stretched through the whole, producing a chord between the weakest, the
-          strongest, and those in the middle&mdash;whether you measure them by intelligence, or by strength, or by
-          numbers, wealth, or any other such standard.
+          strongest, and those in the middle
         </Quote>
 
         <p className={p}>
@@ -660,9 +659,8 @@ export default function HarmonyMapPage() {
         </p>
 
         <Quote href={Q.iamblichus89} cite={<>Iamblichus, <em>On the Pythagorean Life</em> 26.115&ndash;118, <Link href={BOOK.iamblichusMs}>Greek manuscript</Link>, p. 89</>}>
-          he determined the difference of the sound&mdash;not from the force of those striking, nor from the shapes
-          of the hammers, nor from the shifting of the iron being worked&mdash;having accurately grasped the weights
-          and equal inclinations of the hammers
+          he determined the difference of the sound &hellip; having accurately grasped the weights and equal
+          inclinations of the hammers
         </Quote>
 
         <p className={p}>
@@ -894,7 +892,8 @@ export default function HarmonyMapPage() {
 
         <p className={p}>
           The wager is Plato&apos;s in the <em>Republic</em>: the inwardly harmonious soul is the just one, and
-          orthogonality plays the part of Thrasymachus.
+          orthogonality plays the part of Thrasymachus. In Book IV the just man is tuned like the fixed notes of a
+          scale, the lowest, the highest and the middle:
         </p>
 
         <SourceQuote
@@ -906,7 +905,7 @@ export default function HarmonyMapPage() {
           source={<>Plato, <em>Republic</em> IV, 443d&ndash;e<Short href={Q.republic443} /></>}
         >
           harmonized the three parts of his soul just as if they were the three defining notes of a musical
-          scale&mdash;the lowest, the highest, and the middle
+          scale
         </SourceQuote>
 
         <p className={p}>
