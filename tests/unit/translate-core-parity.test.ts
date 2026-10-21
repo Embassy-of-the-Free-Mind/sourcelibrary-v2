@@ -246,9 +246,19 @@ describe('OCR_LITE_ONLY Greek exception (#5575, Derek 2026-10-02): visible and n
     }
   });
 
-  it('Chinese, Tibetan, Syriac, Hebrew and Japanese stay on lite under OCR_LITE_ONLY', () => {
-    for (const language of ['Chinese', 'Classical Chinese', 'Tibetan', 'Syriac', 'Hebrew', 'Japanese', 'Judeo-Arabic']) {
+  it('Tibetan, Syriac, Hebrew and Japanese stay on lite under OCR_LITE_ONLY', () => {
+    for (const language of ['Tibetan', 'Syriac', 'Hebrew', 'Japanese', 'Japanese, Chinese', 'Judeo-Arabic']) {
       expect(ocrMjs({ language, visible: true, created_at: after }, liteOnly)).toBe(MODEL_LITE);
+    }
+  });
+
+  it('Chinese reads on flash for visible and new books, lite for the old hidden backlog (#6101, #7075)', () => {
+    const from = FLASH_OCR_FROM.zho as Date;
+    expect(from.toISOString()).toBe('2026-10-21T00:00:00.000Z');
+    for (const language of ['Chinese', 'Classical Chinese']) {
+      expect(ocrMjs({ language, visible: true, created_at: before }, liteOnly)).toBe(MODEL_FLASH);
+      expect(ocrMjs({ language, visible: false, created_at: from }, liteOnly)).toBe(MODEL_FLASH);
+      expect(ocrMjs({ language, visible: false, created_at: new Date(from.getTime() - 86_400_000) }, liteOnly)).toBe(MODEL_LITE);
     }
   });
 

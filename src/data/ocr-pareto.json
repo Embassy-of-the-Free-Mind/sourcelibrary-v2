@@ -6392,8 +6392,8 @@
   {
    "id": "chinese-print",
    "title": "Chinese print (woodblock and type)",
-   "production_engine": "gemini-3.1-flash-lite",
-   "production_label": "Gemini 3.1 Flash-Lite",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
    "caption": null,
    "stored_now": "Counted 13 October 2026 with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
    "panels": [
@@ -6424,11 +6424,7 @@
       "a transcription of the page, not a modern edition"
      ],
      "frontier": false,
-     "noise": {
-      "kind": "identical",
-      "band": null,
-      "n": 12
-     },
+     "noise": null,
      "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
@@ -6468,10 +6464,10 @@
        "route": "gpu",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": 0.018,
+        "diff": 0.003,
         "ci95": [
-         0.005,
-         0.031
+         -0.012,
+         0.016
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6505,10 +6501,10 @@
        "route": "gpu",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": 0.017,
+        "diff": 0.002,
         "ci95": [
-         0.006,
-         0.028
+         -0.006,
+         0.009
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6518,7 +6514,7 @@
       {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
-       "production": false,
+       "production": true,
        "mean_cer": 0.164,
        "accuracy": 0.836,
        "accuracy_ci95": [
@@ -6541,15 +6537,6 @@
        },
        "route": "api",
        "secs_per_page": null,
-       "vs_in_use": {
-        "diff": 0.015,
-        "ci95": [
-         0.005,
-         0.026
-        ],
-        "n_pages": 12,
-        "n_works": 11
-       },
        "on_frontier": false
       },
       {
@@ -6579,10 +6566,10 @@
        "route": "api",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": 0.013,
+        "diff": -0.002,
         "ci95": [
-         0.001,
-         0.027
+         -0.01,
+         0.006
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6616,10 +6603,10 @@
        "route": "gpu",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": 0.013,
+        "diff": -0.002,
         "ci95": [
-         0.004,
-         0.025
+         -0.012,
+         0.01
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6659,10 +6646,10 @@
         ]
        },
        "vs_in_use": {
-        "diff": 0.011,
+        "diff": -0.004,
         "ci95": [
-         0.003,
-         0.022
+         -0.009,
+         0.002
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6704,10 +6691,10 @@
         ]
        },
        "vs_in_use": {
-        "diff": 0.014,
+        "diff": -0.001,
         "ci95": [
-         0.006,
-         0.024
+         -0.007,
+         0.005
         ],
         "n_pages": 11,
         "n_works": 10
@@ -6717,7 +6704,7 @@
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
+       "production": false,
        "mean_cer": 0.179,
        "accuracy": 0.821,
        "accuracy_ci95": [
@@ -6740,6 +6727,15 @@
        },
        "route": "api",
        "secs_per_page": null,
+       "vs_in_use": {
+        "diff": -0.015,
+        "ci95": [
+         -0.026,
+         -0.005
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
        "on_frontier": false
       },
       {
@@ -6769,10 +6765,10 @@
        "route": "api",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": -0.056,
+        "diff": -0.07,
         "ci95": [
-         -0.211,
-         0.02
+         -0.226,
+         0.006
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6812,10 +6808,10 @@
         ]
        },
        "vs_in_use": {
-        "diff": -0.067,
+        "diff": -0.082,
         "ci95": [
-         -0.228,
-         0.014
+         -0.248,
+         -0.001
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6849,10 +6845,10 @@
        "route": "api",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": -0.086,
+        "diff": -0.101,
         "ci95": [
-         -0.22,
-         -0.015
+         -0.243,
+         -0.025
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6886,10 +6882,10 @@
        "route": "gpu",
        "secs_per_page": null,
        "vs_in_use": {
-        "diff": -0.329,
+        "diff": -0.344,
         "ci95": [
-         -0.561,
-         -0.137
+         -0.583,
+         -0.153
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6927,10 +6923,10 @@
        },
        "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
        "vs_in_use": {
-        "diff": 0.017,
+        "diff": 0.002,
         "ci95": [
-         0.007,
-         0.028
+         -0.007,
+         0.011
         ],
         "n_pages": 12,
         "n_works": 11

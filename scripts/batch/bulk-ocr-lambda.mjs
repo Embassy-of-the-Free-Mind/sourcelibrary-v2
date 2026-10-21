@@ -19,7 +19,7 @@ import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
-import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, apiOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 // Load .env.production.local
 try {
@@ -173,6 +173,9 @@ async function main() {
 
     if (DRY_RUN) continue;
 
+    // #7075: only flash-lite runs on the paid API (this job is read by the Lambda, which calls it).
+    const apiModel = apiOcrModelForBook(book);
+    if (!apiModel) { console.log(`  ${book.id}: routes to ${getOcrModelForBook(book)}, which reads through the agy CLI lane (scripts/batch/cli-ocr.mjs), not the API (#7075) — skipped`); continue; }
     // Create job record
     const jobId = nanoid();
     const pageIds = pages.map(p => p.id);
@@ -186,7 +189,7 @@ async function main() {
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       // The Lambda routes by book when no model is named; stamping it here makes
       // the decision visible on the job row (#4729).
-      config: { page_ids: pageIds, model: getOcrModelForBook(book), language: book.language || 'Unknown' },
+      config: { page_ids: pageIds, model: apiModel, language: book.language || 'Unknown' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),
