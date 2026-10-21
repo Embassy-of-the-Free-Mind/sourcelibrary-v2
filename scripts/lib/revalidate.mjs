@@ -84,12 +84,21 @@ export async function revalidateCollection(slug, opts = {}) {
 /** The reader route whose hidden-book 404 is cached at the LAYOUT level (#4843). */
 export const READER_PAGE_PATTERN = '/book/[id]/page/[pageId]';
 
+// Mirrors PREFIXED_LOCALES in src/lib/locale-path.ts (a script cannot import TS).
+// Each locale serves its own cached copy of /book/<x>, so evicting only the English
+// path leaves every metadata fix stale on /la /es /nl /zh (#7060).
+export const PREFIXED_LOCALES = ['la', 'es', 'nl', 'zh'];
+
 function bookPaths(books) {
   const set = new Set();
+  const add = (tail) => {
+    set.add(`/book/${tail}`);
+    for (const l of PREFIXED_LOCALES) set.add(`/${l}/book/${tail}`);
+  };
   for (const b of books || []) {
     if (!b) continue;
-    if (b.slug) set.add(`/book/${b.slug}`);
-    if (b.id) set.add(`/book/${b.id}`);
+    if (b.slug) add(b.slug);
+    if (b.id) add(b.id);
   }
   return [...set];
 }
