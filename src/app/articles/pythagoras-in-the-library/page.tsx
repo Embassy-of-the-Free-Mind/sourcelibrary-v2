@@ -5,6 +5,7 @@ import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 import PageFigure from '@/components/articles/PageFigure';
 import PythagorasIndex from './PythagorasIndex';
+import PythagorasMap from './PythagorasMap';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
@@ -104,6 +105,28 @@ export default function PythagorasInTheLibraryPage() {
             source={<>Gregor Reisch, <Link href={BOOK.reisch}><em>Margarita philosophica</em></Link> (1504), p. 210</>}
           />
         </div>
+
+        <h2 className={h2}>A map of what they said he said</h2>
+
+        <p className={p}>
+          About eleven thousand passages in the library report something Pythagoras said, taught or forbade. On this
+          map each dot is one of them, and passages that say similar things sit close together. The groups are
+          drawn by a computer from the wording alone; the names are ours, written after reading each group. Grey
+          dots did not fall clearly into any group. Slide the year to watch the stories arrive, hover a dot to read
+          it, and click a group to see its earliest passages.
+        </p>
+
+        <p className={p}>
+          Some of what the map shows is the Pythagoras every reader knows: the soul passing from body to body, the
+          music of the spheres, number as the root of things. Some is a different man altogether. To the alchemists
+          he was a speaker in the <em>Turba philosophorum</em>, the assembly of sages, saying that “clean water is
+          from sulfur alone”, and later alchemists quoted him from it as an authority. To the herbalists he was a
+          source of secret plant names: “Pythagoras calls it…” stands beside the names given by Osthanes and the
+          Memphites. Neither is the historical Pythagoras, and both are part of what he meant to the people who
+          wrote these books.
+        </p>
+
+        <PythagorasMap />
 
         <h2 className={h2}>Every book that names him</h2>
 
