@@ -389,6 +389,10 @@ const nextConfig: NextConfig = {
       // /sitemap/[__metadata_id__] route and breaks the build, so the
       // index lives at /sitemap-index and we rewrite from /sitemap.xml.
       { source: '/sitemap.xml', destination: '/sitemap-index' },
+      // The strongest pages only (hubs, collections/works/authors, books), submitted
+      // to Search Console on its own so its processing is reported separately.
+      // Google spends ~150-250 HTML fetches a day here (crawl stats, Oct 2026). #3755
+      { source: '/sitemap-core.xml', destination: '/sitemap-core' },
       // The Source Library beta launch talk (embedded video + audio-aligned
       // transcript) lives in a standalone static deployment. Proxy it on-domain
       // at /launch so the email and site link to sourcelibrary.org, not a
