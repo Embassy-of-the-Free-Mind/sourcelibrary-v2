@@ -216,7 +216,11 @@ None applies to reads at chance. Two cheap probes on the same half-leaf (t03):
 - **"Certain" is trustworthy; silence is not.** All 30 substantive differences the two models marked certain were real plants. The unplanted flags marked certain were all scribal spelling: gemination after r, anusvāra written as n, visarga as s.
 - About a third of the plants went unflagged, and 5–6 of the 36 were copied straight into the model's reading of the leaf. Agreement with the edition therefore does not show that the leaf agrees.
 - The plausible wrong form, a one-letter case ending or an a- prefix, is the weakest catch for both models: Opus 5 of 9, Fable 3 of 9.
-- No substantive unplanted difference was raised by both models, so no crop needed opening by eye. The two flags they shared (SK_5 *vacanan tu*, SK_27 *manas*) are spelling habits.
+- No substantive unplanted difference was raised by both models. The two flags they shared (SK_5 *vacanan tu*, SK_27 *manas*) are spelling habits.
+- *Single-model flags, checked by eye afterwards* (Opus 5.5 reading full-resolution crops of page 9, upper leaf; evidence type: image opened). Fable's two strongest unplanted flags, one right and one wrong:
+  - SK_52, **real variant.** The leaf reads ‹…ṅgaṃ na vinā bhāvena liṃga-…› where GRETIL has *na vinā liṅgena bhāva-nirvṛttiḥ*: the two members are transposed. *bhāvena* is clear; *liṅga-* is probable.
+  - SK_55, **false.** Fable reported the second half of the verse as omitted. It is on the leaf: the segment right of the string hole on the next row reads ‹-tram duḥkhaṃ prāpnoti ceta…›, and the row after reads ‹(tasmā)d duḥkhaṃ svabhāvena›. Fable joined the left half of one row to the right half of the row below. The text on each side of the string hole does not line up row for row.
+  - So a single-model uncertain flag is worth opening, and opening it is needed: one of the two was a manuscript reading, the other a reading-order error. The same misalignment may explain some of the plants missed on this leaf (9t: Opus caught 1 of 4, Fable 0).
 - **Caveats.**
   - The same Opus model placed the plants (its locate pass), which may favour Opus.
   - Both models missed all three plants in SK_21–22 on page 6t. Those lines may be outside the legible part of the half-leaf rather than true misses.
