@@ -9,7 +9,7 @@ import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
-import { localizedEditionFilterIndexed } from '@/lib/localized';
+import { localizedEditionFilterIndexed, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
 import { dedupeHomeSections } from '@/lib/home-dedupe';
@@ -60,6 +60,7 @@ export interface FeaturedItem {
     book_count: number;
     artwork_count: number;
     hero_image: string | null;
+    localized?: LocalizedCollectionMap | null;
   };
   books: any[];
   /** Every usable hero image, best first — dedupeHomeSections() takes the first
@@ -82,7 +83,10 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
   if (collections.length === 0) return [];
 
   const allSlugs = collections.map(c => c.slug);
-  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1 };
+  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1,
+    // Both inputs of hasLocalizedEdition, so a locale homepage links a book with
+    // no edition in its language straight to the English page (#7076).
+    language: 1, pages_translated_es: 1 };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
@@ -194,6 +198,7 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
         book_count: (collection.book_count || 0) as number,
         artwork_count: (collection.artwork_count || 0) as number,
         hero_image: (heroUrl || fallbackHero || null) as string | null,
+        localized: (collection.localized ?? null) as LocalizedCollectionMap | null,
       },
       books: JSON.parse(JSON.stringify(books)),
     };

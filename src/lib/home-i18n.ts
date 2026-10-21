@@ -73,6 +73,9 @@ export interface HomeStrings {
   showcaseSubtitle: string;
   /** "All 60 exhibitions" — the link to /curated. */
   allExhibitions: (n: number) => string;
+  /** Featured Collection band (`EditorialSpread`, #7076). */
+  featuredCollectionEyebrow: string;
+  exploreCollectionBooks: (n: number) => string;
   /** The subject index heading under the showcase. */
   bySubjectHeading: string;
   /** The stats line's lead-in: "Everything in the library:" */
@@ -202,6 +205,8 @@ const en: HomeStrings = {
   showcaseEyebrow: 'Curated exhibitions',
   showcaseSubtitle: 'Small selections with an argument to make: a few dozen books each, chosen and introduced by a curator.',
   allExhibitions: (n) => `All ${n} exhibitions`,
+  featuredCollectionEyebrow: 'Featured Collection',
+  exploreCollectionBooks: (n) => `Explore ${n} books`,
   bySubjectHeading: 'Browse by subject',
   bySubjectLead: 'The whole library:',
 
@@ -320,6 +325,8 @@ const es: HomeStrings = {
   showcaseEyebrow: 'Exposiciones comisariadas',
   showcaseSubtitle: 'Selecciones breves con una tesis: unas docenas de libros cada una, elegidos y presentados por un comisario.',
   allExhibitions: (n) => `Las ${n} exposiciones`,
+  featuredCollectionEyebrow: 'Colección destacada',
+  exploreCollectionBooks: (n) => `Explorar ${n} libros`,
   bySubjectHeading: 'Explorar por tema',
   bySubjectLead: 'Toda la biblioteca:',
 
@@ -445,6 +452,8 @@ const la: HomeStrings = {
   showcaseEyebrow: 'Expositiones curatae',
   showcaseSubtitle: 'Delectus parvi, quisque cum suo argumento: libri pauci a curatore electi et praefatione instructi.',
   allExhibitions: (n) => `Omnes expositiones (${n})`,
+  featuredCollectionEyebrow: 'Collectio insignis',
+  exploreCollectionBooks: (n) => `Omnes libri (${n})`,
   bySubjectHeading: 'Per argumenta perlustra',
   bySubjectLead: 'Tota bibliotheca:',
 
@@ -569,6 +578,8 @@ const nl: HomeStrings = {
   showcaseEyebrow: 'Samengestelde tentoonstellingen',
   showcaseSubtitle: 'Kleine selecties met een eigen betoog: elk enkele tientallen boeken, gekozen en ingeleid door een curator.',
   allExhibitions: (n) => `Alle ${n} tentoonstellingen`,
+  featuredCollectionEyebrow: 'Uitgelichte collectie',
+  exploreCollectionBooks: (n) => `Bekijk ${n} boeken`,
   bySubjectHeading: 'Bladeren per onderwerp',
   bySubjectLead: 'De hele bibliotheek:',
 
@@ -694,6 +705,8 @@ const zh: HomeStrings = {
   showcaseEyebrow: '策展',
   showcaseSubtitle: '每个策展都是一次有观点的小型精选：由策展人挑选并导读的几十部书。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
+  featuredCollectionEyebrow: '精选专题',
+  exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
   bySubjectHeading: '按主题浏览',
   bySubjectLead: '全部馆藏：',
 
