@@ -128,7 +128,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
-    const quotable = resolveQuoteText(page, book.id);
+    const quotable = resolveQuoteText(page, book.id, 'en', { book });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -214,7 +214,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       // sentence spanning the leaf break be quoted whole (#3939).
       const neighbour = (p: unknown) => {
         const pg = p as Page | null;
-        return pg ? resolveQuoteText(pg, resolvedBookId)?.text : undefined;
+        return pg ? resolveQuoteText(pg, resolvedBookId, 'en', { book })?.text : undefined;
       };
       response.context = {
         previous_page: neighbour(prevPage),

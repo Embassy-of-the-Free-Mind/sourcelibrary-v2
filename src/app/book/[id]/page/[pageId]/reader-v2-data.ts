@@ -5,6 +5,7 @@ import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
 import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 
 // Shared server loader for the v2 reader design previews (/v2a, /v2c).
 // Mirrors the (reader)/page.tsx fetch: current page + book + nav page list.
@@ -14,7 +15,7 @@ import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
-  visible: 1,
+  visible: 1, 'translation_state.english_original': 1,
 };
 
 export interface ReaderV2Data {
@@ -58,7 +59,8 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
 
   return {
     book,
-    page: JSON.parse(JSON.stringify(currentPage)) as Page,
+    // English edition, English leaf: the transcription is the text (#7100).
+    page: serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book),
     pageList: JSON.parse(JSON.stringify(navPages)) as Page[],
   };
 }

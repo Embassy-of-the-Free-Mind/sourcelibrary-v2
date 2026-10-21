@@ -90,7 +90,7 @@ export async function embedBookPages({ db, pg, book, apiKey, force = false }) {
   let skipped = 0;
   for (const page of pages) {
     if (present.has(page.id)) continue;
-    const input = pageEmbeddingInput(page);
+    const input = pageEmbeddingInput(page, { book });
     if (!input) { skipped++; continue; }   // blank leaf, or nothing transcribed yet
     work.push({ page, ...input });
   }

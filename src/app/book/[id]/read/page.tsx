@@ -46,6 +46,7 @@ import { markForExport } from '@/lib/provenance';
 import { markdownToHtml } from '@/lib/export-markdown-html';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { isRTLLanguage } from '@/lib/types';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 
 // Gating depends on who is asking (session, bot, tenant), so this cannot be ISR.
 export const dynamic = 'force-dynamic';
@@ -75,6 +76,7 @@ interface BookDoc {
   author?: string;
   published?: string | number;
   language?: string;
+  translation_state?: { english_original?: boolean | null } | null;
   pages_count?: number;
   chapters?: Array<{ title?: string; titleEn?: string; pageNumber?: number; level?: number; confidence?: string }>;
 }
@@ -91,6 +93,7 @@ interface PageDoc {
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
   language: 1, pages_count: 1, chapters: 1, visible: 1, hidden_reason: 1,
+  'translation_state.english_original': 1,
 };
 
 const PAGE_PROJECTION = {
@@ -173,7 +176,11 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     .sort({ page_number: 1 })
     .toArray() as unknown as PageDoc[];
   // The same page set the reader walks — no digitiser inserts, no unsplit spreads.
-  const pages = pagesRaw.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread');
+  // English edition, English leaf: the transcription is the text; the stored
+  // English-to-English rewording is never shown as a translation (#7100).
+  const pages = pagesRaw
+    .filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread')
+    .map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
   if (pages.length === 0) notFound();
 
   const partCount = Math.max(1, Math.ceil(pages.length / PART_SIZE));

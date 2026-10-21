@@ -34,6 +34,7 @@ import { stripProvenanceMarks } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { stripAiAnnotations } from '@/lib/notes-off';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { passageWindow } from '@/lib/search/librarian-search';
 import { checkRateLimitShared } from '@/lib/rate-limit';
 import { logAiUsage } from '@/lib/log-ai-usage';
@@ -266,7 +267,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
   const books = new Map(
     (bookIds.length ? await db.collection('books').find(
       { id: { $in: bookIds }, visible: true, pages_count: { $gt: 0 }, hidden: { $ne: true }, tenantId: { $in: [null, undefined] } },
-      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1 } },
+      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, 'translation_state.english_original': 1 } },
     ).toArray() : []).map(b => [b.id as string, b]),
   );
   const kept = order.filter(c => books.has(c.book_id));
@@ -277,9 +278,12 @@ export async function questionSearch(question: string, opts: { feature?: string 
       { $or: chunk.map(c => ({ book_id: c.book_id, page_number: c.page_number })) },
       { projection: { _id: 0, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } },
     ).toArray();
-    for (const r of rows) {
-      const c = byKey.get(key(r.book_id, r.page_number));
+    for (const row of rows) {
+      const c = byKey.get(key(row.book_id, row.page_number));
       if (!c) continue;
+      // An English edition's stored "translation" of an English leaf is a
+      // rewording, never the author's words (#7100): read the OCR instead.
+      const r = serveEnglishOriginalPage(row, books.get(c.book_id), { modernized: false });
       const tr = clean(r.translation?.data || '');
       const ocr = typeof r.ocr?.data === 'string' ? r.ocr.data : '';
       const englishBook = /^english$/i.test(String(books.get(c.book_id)?.language || ''));

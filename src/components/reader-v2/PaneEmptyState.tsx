@@ -11,7 +11,7 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
 import { CapsLabel } from './ReaderV2Bits';
-import { formatPageTypeLabel } from '@/components/reader/NotesRenderer';
+import NotesRenderer, { formatPageTypeLabel } from '@/components/reader/NotesRenderer';
 
 // Restores the distinct empty states the old TranslationEditor pane had
 // (src/components/pipeline/TranslationEditor.tsx, ~L2104-2239) that the v2
@@ -90,6 +90,35 @@ export function NoTextPageLine({ pageType }: { pageType: string }) {
 }
 
 /**
+ * The "Modernized spelling" view of an English page (#7100): the stored
+ * light edit of the transcription, set apart under its own label and a line
+ * saying whose words these are not. Opened on request only; the transcription
+ * beside it stays the reading and citing text.
+ */
+function ModernizedSpelling({ text, label, note, page }: { text: string; label: string; note: string; page: Page }) {
+  return (
+    <section className="mt-6 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }} aria-label={label}>
+      <CapsLabel className="block mb-1.5" style={{ color: 'var(--text-muted)' }}>
+        {label}
+      </CapsLabel>
+      <p className="font-sans text-[12.5px] mb-4" style={{ color: 'var(--text-faint)' }}>
+        {note}
+      </p>
+      <div className="prose-manuscript" style={{ color: 'var(--text-secondary)' }}>
+        <NotesRenderer
+          text={text}
+          showMetadata={false}
+          showNotes={false}
+          language="English"
+          columns={page.columns}
+          pageType={page.page_type}
+        />
+      </div>
+    </section>
+  );
+}
+
+/**
  * Empty-state content for one reader pane (OCR or translation) when that
  * pane has no text. Renders in place of ReaderProse's plain italic line.
  *
@@ -105,6 +134,9 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
   const [requested, setRequested] = useState(false);
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
+  // #7100: the stored light spelling edit of an English page stays closed
+  // until the reader asks for it.
+  const [showModernized, setShowModernized] = useState(false);
 
   const sessionEmail = (sessionData?.user as { email?: string } | undefined)?.email || null;
   const ocrText = page.ocr?.data || '';
@@ -176,11 +208,30 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
   // this branch renders the same for every role. `translationPaneEmptyState`
   // owns the decision so the copy here cannot drift from it.
   const englishState = translationPaneEmptyState(book);
-  if (englishState === 'english-reading-text') {
-    return <EmptyPane label={t.englishReadingText} body={t.englishReadingTextBody} />;
-  }
-  if (englishState === 'english-not-modernized') {
-    return <EmptyPane label={t.notModernized} body={t.notModernizedBody} />;
+  if (englishState === 'english-reading-text' || englishState === 'english-not-modernized') {
+    const [label, body] = englishState === 'english-reading-text'
+      ? [t.englishReadingText, t.englishReadingTextBody]
+      : [t.notModernized, t.notModernizedBody];
+    return (
+      <>
+        <EmptyPane label={label} body={body}>
+          {page.modernized_spelling?.data && (
+            <button
+              type="button"
+              onClick={() => setShowModernized((v) => !v)}
+              aria-expanded={showModernized}
+              className="font-sans text-[12.5px] underline underline-offset-2"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              {showModernized ? t.hideModernizedSpelling : t.showModernizedSpelling}
+            </button>
+          )}
+        </EmptyPane>
+        {showModernized && page.modernized_spelling?.data && (
+          <ModernizedSpelling text={page.modernized_spelling.data} label={t.modernizedSpelling} note={t.modernizedSpellingNote} page={page} />
+        )}
+      </>
+    );
   }
 
   // OCR done, translation missing. shouldShowTranslationRequestCta owns

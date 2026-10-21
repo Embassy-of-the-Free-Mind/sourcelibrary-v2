@@ -22,6 +22,7 @@ import { getBookIndex } from '@/lib/book-index';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import { servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import {
   fetchAndCompressImage,
   pageExportImageUrl,
@@ -2496,6 +2497,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // translation rather than dropping out: an export with holes in it is
     // worse than one that is mostly Spanish, and `lang_coverage` in the
     // response header says how many of each there are.
+    // English edition, English leaf (#7100): the stored English "translation"
+    // is a model's rewording, not the author's words, and leaves the export
+    // here, before any edition is substituted in — so a Spanish edition of an
+    // English leaf still exports. The transcription stays: the `ocr` formats
+    // carry the author's text.
+    for (const p of pages) {
+      if (servesTranscriptionInsteadOfTranslation(p, book)) delete p.translation;
+    }
+
     const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
     const exportLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
     let localizedPages = 0;

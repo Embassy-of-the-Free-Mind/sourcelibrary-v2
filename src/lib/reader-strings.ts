@@ -445,6 +445,11 @@ export interface ReaderStrings {
     /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
     notModernized: string;
     notModernizedBody: string;
+    /** #7100: a stored light spelling edit of an English page, offered off by default — never a translation, never cited. */
+    modernizedSpelling: string;
+    modernizedSpellingNote: string;
+    showModernizedSpelling: string;
+    hideModernizedSpelling: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -1012,6 +1017,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
       notModernized: 'Not yet modernized',
       notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
+      modernizedSpelling: 'Modernized spelling',
+      modernizedSpellingNote: 'Machine-edited for modern spelling and punctuation. Not the author\'s text: quote and cite the transcription.',
+      showModernizedSpelling: 'Show modernized spelling',
+      hideModernizedSpelling: 'Hide modernized spelling',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1492,6 +1501,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
       notModernized: 'Aún sin modernizar',
       notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
+      modernizedSpelling: 'Ortografía modernizada',
+      modernizedSpellingNote: 'Editada automáticamente con ortografía y puntuación modernas. No es el texto del autor: cite la transcripción.',
+      showModernizedSpelling: 'Mostrar ortografía modernizada',
+      hideModernizedSpelling: 'Ocultar ortografía modernizada',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
@@ -1999,6 +2012,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Hic liber Anglice scriptus est: transcriptio ipsa legenda est. Nihil est quod convertatur.',
       notModernized: 'Nondum sermone hodierno reddita',
       notModernizedBody: 'Hic liber Anglice prisco scriptus est. Sermone hodierno nondum redditus est; transcriptio ipsa legenda est.',
+      modernizedSpelling: 'Orthographia hodierna',
+      modernizedSpellingNote: 'Machina ad orthographiam hodiernam redactum. Non sunt verba auctoris: transcriptionem cita.',
+      showModernizedSpelling: 'Orthographiam hodiernam ostende',
+      hideModernizedSpelling: 'Orthographiam hodiernam cela',
       signInToRequest: 'Intra, ut conversionem petas',
       requestTranslation: 'Conversionem pete',
       requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
@@ -2479,6 +2496,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Dit boek is in het Engels: de transcriptie is de leestekst. Er is niets te vertalen.',
       notModernized: 'Nog niet gemoderniseerd',
       notModernizedBody: 'Dit boek is in vroegmodern Engels. Er is nog geen gemoderniseerde versie; de transcriptie is de leestekst.',
+      modernizedSpelling: 'Gemoderniseerde spelling',
+      modernizedSpellingNote: 'Automatisch bewerkt naar moderne spelling en interpunctie. Niet de tekst van de auteur: citeer de transcriptie.',
+      showModernizedSpelling: 'Toon gemoderniseerde spelling',
+      hideModernizedSpelling: 'Verberg gemoderniseerde spelling',
       signInToRequest: 'Log in om een vertaling aan te vragen',
       requestTranslation: 'Vertaling aanvragen',
       requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
@@ -2960,6 +2981,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: '本书以英文写成，转录文本就是阅读文本，无需翻译。',
       notModernized: '尚未现代化',
       notModernizedBody: '本书以早期现代英语写成，尚未制作现代英语读本；转录文本就是阅读文本。',
+      modernizedSpelling: '现代拼写',
+      modernizedSpellingNote: '机器按现代拼写和标点编辑，并非作者原文：引用时请使用转录文本。',
+      showModernizedSpelling: '显示现代拼写',
+      hideModernizedSpelling: '隐藏现代拼写',
       signInToRequest: '登录后申请翻译',
       requestTranslation: '申请翻译',
       requestFailed: '申请未能提交，请稍后再试。',
