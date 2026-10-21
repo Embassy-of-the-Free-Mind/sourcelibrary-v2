@@ -4,8 +4,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 import PageFigure from '@/components/articles/PageFigure';
-import PythagorasIndex from './PythagorasIndex';
-import PythagorasMap from './PythagorasMap';
+import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
+import FigureMap from '@/components/articles/figure-reception/FigureMap';
+import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
+import StoryTree from '@/components/articles/figure-reception/StoryTree';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
@@ -42,6 +44,15 @@ export const metadata: Metadata = withArticleMeta(SLUG, {
 const BOOK = {
   macrobius: '/book/integer-nitidus-macrobius',
   reisch: '/book/margarita-philosophica-reisch-1',
+};
+
+const DATA = '/articles/pythagoras-in-the-library';
+const ERA_INTROS = {
+  antiquity: 'Works written before 600: Aristotle on the Pythagoreans, Euclid, Maximus of Tyre.',
+  '600': 'Arabic alchemy and music theory, Carolingian copies of Boethius and Macrobius, Byzantine manuscripts.',
+  '1200': 'Scholastic and late-medieval manuscripts.',
+  '1450': 'The first printed books.',
+  undated: 'Books with no date in the catalogue.',
 };
 
 const p = 'text-secondary leading-relaxed mb-6 font-body';
@@ -102,7 +113,7 @@ export default function PythagorasInTheLibraryPage() {
             src="https://images.sourcelibrary.org/archived/69dbcb8c1040d1d5e20b7a3c/210.jpg"
             alt="Woodcut titled Typus Musice: a crowned woman holding a sheet of music among players of lute, harp, organ and flute; at the right a bearded man weighs hammers on a balance."
             href={`${BOOK.reisch}?page=210`}
-            source={<>Gregor Reisch, <Link href={BOOK.reisch}><em>Margarita philosophica</em></Link> (1504), p. 210</>}
+            source={<>Gregor Reisch, <em>Margarita philosophica</em> (1504), p. 210</>}
           />
         </div>
 
@@ -126,7 +137,29 @@ export default function PythagorasInTheLibraryPage() {
           wrote these books.
         </p>
 
-        <PythagorasMap />
+        <FigureMap dataUrl={`${DATA}/map.json`} figure="Pythagoras" />
+
+        <h2 className={h2}>Which stories, when</h2>
+
+        <p className={p}>
+          The same passages, counted by period. Each band is one of the groups on the map, and its height is that
+          group’s share of what was written in those years. Grey dots from the map are left out, and the number
+          under each period is how many passages it holds, so the thin early periods can be read with care.
+        </p>
+
+        <ThemeRiver dataUrl={`${DATA}/map.json`} />
+
+        <h2 className={h2}>How a story was passed on</h2>
+
+        <p className={p}>
+          Pick a story and every dated telling of it appears at its year. A line joins each telling to the earlier
+          one, from a different book, whose wording is closest to it, when the two are close enough. Where nothing
+          earlier comes near, the telling starts a line of its own. This measures how alike two passages read, not
+          whether one author had the other’s book open: two writers copying the same lost source look the same as
+          one copying the other. Click a dot to read it and follow its line back.
+        </p>
+
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['hammers', 't16', 't32', 't33']} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -137,7 +170,8 @@ export default function PythagorasInTheLibraryPage() {
           the original beside the translation.
         </p>
 
-        <PythagorasIndex />
+        <FigureIndex dataUrl={`${DATA}/passages.json`} namePrefix="Pythagor" eraIntros={ERA_INTROS}
+          placeholder="Filter: beans, monochord, Samos, transmigration, Ficino…" />
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
           How the list was made: a search of the library’s English translations for every word beginning

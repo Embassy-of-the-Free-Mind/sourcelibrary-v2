@@ -1,0 +1,13 @@
+{
+  "_comment": "PRIOR ART: scripts/analysis/cluster-books.py — clusters whole books, not passages about one person. One entry per figure: prefix = the full-text prefix searched in pages_en (prefix*); name = the regex that names him in a sentence; out = where the page data is published; minCluster/minSamples = HDBSCAN settings for the theme map (about passages/250, floor 10). setAside = passages whose book title matches `titles` and text matches `text` (both default to anything), and whose text does not match `unless`, are given a fixed theme before clustering: they name someone else, or the figure as a fictional speaker.",
+  "pythagoras": { "prefix": "pythagor", "name": "pythagoras|pythagoreans?", "out": "public/articles/pythagoras-in-the-library", "minCluster": 45, "minSamples": 10 },
+  "philolaus": { "prefix": "philola", "name": "philolaus|philolaos", "out": "public/articles/philolaus-in-the-library", "minCluster": 20, "minSamples": 5,
+    "setAside": [
+      { "theme": 1000, "why": "Philolaus as a speaker in Reuchlin's dialogue De arte cabalistica (1517), reprinted with Galatinus and Pico", "titles": "cabal|kabbal|catholic truth|pico della mirandola", "unless": "\\[(says|said|thought)|Philolaus the Pythagorean|opinion of Philolaus|bought|purchas" },
+      { "theme": 1001, "why": "Philolaus, a companion of Apollonius in Philostratus, not the Pythagorean", "titles": "apollonius of tyana", "unless": "^$" }
+    ] },
+  "archytas": { "prefix": "archyt", "name": "archytas", "out": "public/articles/archytas-in-the-library", "minCluster": 15, "minSamples": 5,
+    "setAside": [
+      { "theme": 1000, "why": "Archytas of Amphissa, the poet Athenaeus quotes on apples", "text": "Euphorion or Archytas|Euphronius or Archytas" }
+    ] }
+}

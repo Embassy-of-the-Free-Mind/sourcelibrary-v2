@@ -1,47 +1,35 @@
 'use client';
 
-// A map of what the books say Pythagoras said or taught. Each dot is one passage (the ~11,000 passages that
-// report a saying or teaching, exact repeats collapsed); passages that say similar things sit close together.
-// Built 2026-10-20: passages embedded locally with nomic-embed-text, laid out in two dimensions with UMAP,
-// grouped with HDBSCAN into 45 themes; theme names were written by reading each theme's sample passages.
-// Dots the clustering left unassigned stay grey. Data: public/articles/pythagoras-in-the-library/map.json.
+// A map of what the books say a figure said or taught. Each dot is one passage (the passages that report a
+// saying or teaching, exact repeats collapsed); passages that say similar things sit close together.
+// Built by scripts/eval/figure-reception/map.py + prep-map.py (#7073): passages embedded locally with
+// nomic-embed-text, laid out in two dimensions with UMAP, grouped with HDBSCAN into themes; theme names were
+// written by reading each theme's sample passages. Dots the clustering left unassigned stay grey.
 //
 // Row shape: [x, y, theme (-1 = unassigned), year, book id, page, passage, title]
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FAMILY_COLOR, fmtYear, useFigureJson, type MapData, type Row } from './data';
 
-type Row = [number, number, number, number | null, string, number, string, string];
-type Theme = { c: number; name: string; family: string; n: number; earliest: number | null; median: number | null };
-type MapData = { families: { key: string; name: string }[]; themes: Theme[]; rows: Row[] };
-
-const DATA_URL = '/articles/pythagoras-in-the-library/map.json';
-// One colour per family; no reds (article rule), each readable on the cream ground.
-const FAMILY_COLOR: Record<string, string> = {
-  soul: '#7b4f8c', cosmos: '#2f6f8f', number: '#b07d1a', music: '#2a8a73',
-  life: '#6b7a2a', legend: '#8a5a33', pseudo: '#4a4fa0',
-};
 const GREY = 'rgba(120,113,108,0.18)';
 const YEAR_MIN = 800;
 const YEAR_MAX = 1950;
 
-const fmtYear = (y: number | null) => (y == null ? 'n.d.' : y < 0 ? `${-y} BCE` : String(y));
+type Props = {
+  /** URL of the map.json that prep-map.py wrote. */
+  dataUrl: string;
+  /** Short name for the canvas label, e.g. "Pythagoras". */
+  figure: string;
+};
 
-export default function PythagorasMap() {
-  const [data, setData] = useState<MapData | null>(null);
-  const [failed, setFailed] = useState(false);
+export default function FigureMap({ dataUrl, figure }: Props) {
+  const { data, failed } = useFigureJson<MapData>(dataUrl);
   const [theme, setTheme] = useState<number | null>(null);
   const [until, setUntil] = useState(YEAR_MAX);
   const [hover, setHover] = useState<{ r: Row; x: number; y: number } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(720);
-
-  useEffect(() => {
-    fetch(DATA_URL)
-      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((d: MapData) => setData(d))
-      .catch(() => setFailed(true));
-  }, []);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -135,8 +123,8 @@ export default function PythagorasMap() {
   return (
     <div className="not-prose flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3 text-sm text-secondary">
-        <label htmlFor="pyth-until" className="font-mono text-xs text-muted">Written by</label>
-        <input id="pyth-until" type="range" min={YEAR_MIN} max={YEAR_MAX} step={10} value={until}
+        <label htmlFor={`${figure}-until`} className="font-mono text-xs text-muted">Written by</label>
+        <input id={`${figure}-until`} type="range" min={YEAR_MIN} max={YEAR_MAX} step={10} value={until}
           onChange={(e) => setUntil(Number(e.target.value))} className="flex-1 min-w-[10rem] accent-[#b07d1a]" />
         <span className="font-mono text-sm tabular-nums text-primary w-14">{until === YEAR_MAX ? 'all' : until}</span>
         <span className="basis-full font-mono text-xs text-muted">{shown.toLocaleString()} passages shown{sel ? ` · ${sel.name}` : ''}</span>
@@ -146,7 +134,7 @@ export default function PythagorasMap() {
         <canvas ref={canvasRef} style={{ width, height }} className="block cursor-crosshair"
           onMouseMove={(e) => setHover(nearest(e))} onMouseLeave={() => setHover(null)}
           onClick={(e) => { const h = nearest(e); if (h) { if (theme == null && h.r[2] >= 0) setTheme(h.r[2]); else window.open(`/book/${h.r[4]}?page=${h.r[5]}`, '_blank'); } }}
-          role="img" aria-label="Map of passages about Pythagoras, grouped by theme" />
+          role="img" aria-label={`Map of passages about ${figure}, grouped by theme`} />
         {hover && (
           <div className="pointer-events-none absolute z-10 max-w-xs rounded border border-stone-300 bg-white/95 p-2.5 text-xs shadow-sm"
             style={{ left: Math.min(hover.x + 12, width - 300), top: Math.min(hover.y + 12, height - 120) }}>
