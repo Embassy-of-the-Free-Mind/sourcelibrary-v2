@@ -164,6 +164,18 @@ describe('the Sonnet fallback (#7118)', () => {
     expect(t.claudeCalls).toBeUndefined();
   });
 
+  it('does not check a join with an Opus-translated page', async () => {
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-opus-'));
+    const opus = (n: number) => { const p = pg(n); return { ...p, id: `o${n}`, translation: { ...p.translation, model: 'claude-opus-5-5', data: p.translation.data + ' Opus.' } }; };
+    const rows = [pg(4), opus(5), pg(6)];
+    const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: {} }) } : { find: () => ({ toArray: async () => rows }) } };
+    const t = await seamGuardAfterWrite(d, { page: rows[1], mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn: gemini, geminiFn: gemini, agyOpenFn: () => false });
+    expect(t.error).toBeUndefined();
+    expect(t.joins).toBe(0);
+    expect(t.opusTranslation).toBe(2);
+    expect(guardReport({ out }).joinSkips).toEqual({ 'opus-translation': 2 });
+  });
+
   it('treats a spent Claude account as a skip, not a check', async () => {
     out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-ul-'));
     const page = { ...pg(5), id: 'p5-ul' };

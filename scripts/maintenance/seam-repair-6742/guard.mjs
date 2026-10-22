@@ -31,7 +31,7 @@
  * weekly meter at SEAM_GUARD_MAX_WEEKLY or unknown, the join is skipped and the skip recorded. Every proposal (a join
  * labelled defective, placed or not) goes to proposals.jsonl with its windows, so a dry run can be judged blind later
  * (`sample`). A join already checked in this process with the same two texts is not checked again (a block write of
- * pages N..M asks about each inner join twice).
+ * pages N..M asks about each inner join twice). A join with an Opus-translated page is not checked (OUTRANKS_REPAIRER).
  *
  * It never blocks or undoes the translation write: it runs after the commit, every error is caught, an agy lockout or a
  * quota reply skips the check (fail open), and the whole check is bounded by a timeout. A write it makes itself carries
@@ -89,6 +89,15 @@ async function sonnetOne(it) {
   return { byId: new Map(j ? [[it.id, j]] : []), r };
 }
 
+/**
+ * The guard does not edit an Opus translation (#7118): its repairers (Gemini Flash, Sonnet) are weaker than the model
+ * whose text they would change. On 91 dry Sonnet proposals replayed over 80 books' recent writes, the blind Opus judge
+ * preferred the repair in both orders on 68/75 joins Gemini had translated, and on 7/16 joins with an Opus page (2/8 and
+ * 5/8 in two independent batches). Such a join is recorded as skipped, not checked.
+ */
+export const OUTRANKS_REPAIRER = /claude-opus/i;
+export const outranksRepairer = (it) => OUTRANKS_REPAIRER.test(it.modelA || '') || OUTRANKS_REPAIRER.test(it.modelB || '');
+
 // Joins this process has already checked, by join and the two texts (a block write asks about each inner join twice).
 const CHECKED = new Set();
 const checkedKey = (it) => `${it.id}:${it.hashA}:${it.hashB}`;
@@ -140,7 +149,10 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
       const pn = Number(page.page_number ?? (await db.collection('pages').findOne({ id: page.id }, { projection: { page_number: 1 } }))?.page_number);
       const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: pn - 2, $lte: pn + 2 } }, { projection: PROJ }).toArray();
       const all = joinsToCheck(rows, pn, asOf).map(([ra, rb, r0, r1]) => joinItem(b, ra, rb, r0, r1)).filter(Boolean);
-      const items = all.filter(it => !CHECKED.has(checkedKey(it)));
+      const fresh = all.filter(it => !CHECKED.has(checkedKey(it)));
+      for (const it of fresh.filter(outranksRepairer)) append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: 'opus-translation', models: [it.modelA, it.modelB] });
+      const items = fresh.filter(it => !outranksRepairer(it));
+      if (items.length < fresh.length) tally.opusTranslation = fresh.length - items.length;
       tally.joins = items.length;
       if (items.length < all.length) tally.alreadyChecked = all.length - items.length;
       const accepted = [];
