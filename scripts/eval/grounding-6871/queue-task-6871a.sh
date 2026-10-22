@@ -12,8 +12,13 @@
 set -uo pipefail
 J=/root/jobs/grounding-6871; A=/root/jobs/grounding-6871a; PY=/root/bench/vl/bin/python; BR=job-grounding-6871a
 mkdir -p "$A/code" "$A/img"
-git -C /root/sourcelibrary fetch -q origin "$BR" && git -C /root/sourcelibrary archive FETCH_HEAD scripts/eval/grounding-6871 | tar -x -C "$A/code" --strip-components=3
-git -C /root/sourcelibrary rev-parse FETCH_HEAD > "$A/code/COMMIT"
+if git -C /root/sourcelibrary fetch -q origin "$BR"; then
+  git -C /root/sourcelibrary archive FETCH_HEAD scripts/eval/grounding-6871 | tar -x -C "$A/code" --strip-components=3
+  git -C /root/sourcelibrary rev-parse FETCH_HEAD > "$A/code/COMMIT"
+else
+  echo "git fetch failed: using the code already placed in $A/code ($(cat "$A/code/COMMIT" 2>/dev/null))"
+fi
+[ -s "$A/code/results/items-6871a.jsonl.gz" ] || { echo "no code in $A/code: stopping before the GPU"; exit 3; }
 zcat "$A/code/results/items-6871a.jsonl.gz" > "$A/code/items.jsonl"
 echo "code at $(cat "$A/code/COMMIT"), $(wc -l < "$A/code/items.jsonl") items"
 # 0. the 2026-10-18 remainder, only if 50-grounding-6871 never produced its results (ll-score resumes, so a repeat is cheap)
