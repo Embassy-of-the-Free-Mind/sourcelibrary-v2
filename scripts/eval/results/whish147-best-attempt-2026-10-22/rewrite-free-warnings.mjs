@@ -1,6 +1,6 @@
 // Rewrite the free-read warnings already written (#7119 inbox, parent session 2026-10-22 21:07): the at-chance
 // figure was a scoring artifact. Only the <warning> changes: the new warning (from the same leaf methods) is spliced
-// onto the STORED body, which is kept byte for byte. OCR first (revision saved, new content_hash), then the translation's opening <warning> is
+// onto the STORED body, which is kept byte for byte. OCR first, through writePageText (#7058: revision row, compare-and-set; new content_hash), then the translation's opening <warning> is
 // replaced the same way, so translation.updated_at stays after ocr.updated_at. Edition-anchored-only pages untouched.
 //   node --env-file=/root/sourcelibrary/.env.production.local rewrite-free-warnings.mjs [--apply]
 import fs from 'node:fs';
@@ -9,7 +9,7 @@ import { MongoClient } from 'mongodb';
 import { HERE, BOOK } from './lib.mjs';
 import { assemble, loadLocate } from './assemble.mjs';
 import { translationWarning } from './translate-plan.mjs';
-import { saveRevisionBeforeOverwrite } from '../../../lib/page-revisions.mjs';
+import { writePageText } from '../../../lib/page-text-writer.mjs';
 import { contentHash } from '../../../lib/write-provenance.mjs';
 import { recordSweepAction } from '../../../lib/sweep-log.mjs';
 
@@ -33,14 +33,15 @@ for (const p of ps) {
   if (!APPLY) { done.push(p.page_number); continue; }
   fs.writeFileSync(path.join(HERE, 'pages', `${p.page_number}.json`), JSON.stringify({ ...P, text: newText }, null, 1));
   await recordSweepAction(db, { sweep: 'whish147-best-attempt', book_id: BOOK, action: 'free-read-warning-rewrite', detail: { page_id: p.id, page_number: p.page_number, issue: 7119, why: 'free-read figure corrected (row-by-row re-score, CER 0.51 on 7 leaves)' } });
+  const opts = { by: 'scripts/eval/results/whish147-best-attempt-2026-10-22/rewrite-free-warnings.mjs', reason: 'free-read warning corrected (#7119)', run_id: `whish147-warning-rewrite-${new Date().toISOString().slice(0, 10)}` };
   if (ocrOld) {
-    await saveRevisionBeforeOverwrite(db, p.id, 'ocr', { reason: 'whish147-warning-rewrite' });
-    const r = await db.collection('pages').updateOne({ id: p.id, 'ocr.content_hash': p.ocr.content_hash }, { $set: { 'ocr.data': newText, 'ocr.content_hash': contentHash(newText), 'ocr.updated_at': new Date(), updated_at: new Date() } });
-    if (r.modifiedCount !== 1) { skipped.push({ n: p.page_number, why: 'OCR changed during rewrite' }); continue; }
+    const r = await writePageText(db, p.id, 'ocr', { ...p.ocr, data: newText, content_hash: contentHash(newText), updated_at: new Date() }, opts);
+    if (r.status !== 'written') { skipped.push({ n: p.page_number, why: `OCR: ${r.status}` }); continue; }
   }
   if (newTr && trOld) {
-    await saveRevisionBeforeOverwrite(db, p.id, 'translation', { reason: 'whish147-warning-rewrite' });
-    await db.collection('pages').updateOne({ id: p.id }, { $set: { 'translation.data': newTr, 'translation.content_hash': contentHash(newTr), 'translation.updated_at': new Date() } });
+    const cur = await db.collection('pages').findOne({ id: p.id }, { projection: { translation: 1 } });
+    const r = await writePageText(db, p.id, 'translation', { ...cur.translation, data: newTr, content_hash: contentHash(newTr), updated_at: new Date() }, opts);
+    if (r.status !== 'written') { skipped.push({ n: p.page_number, why: `translation: ${r.status}` }); continue; }
   }
   done.push(p.page_number);
 }

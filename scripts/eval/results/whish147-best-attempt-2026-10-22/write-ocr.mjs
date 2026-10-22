@@ -2,7 +2,7 @@
 // PRIOR ART: scripts/batch/cli-ocr.mjs apply — the writer for one CLI read per page on the live OCR prompt; it refuses
 // a text without the prompt's <page-type> header and hashes ONE prompt per page. These pages are composed from a
 // locate call, a collation (or two free reads) and an edition excerpt, so this mirrors its fields instead:
-// revision snapshot, `ocr` with an anthropic engine block (api 'cli'), ocrProvenance (content_hash), a sweep_log row
+// writePageText (revision row + compare-and-set), `ocr` with an anthropic engine block (api 'cli'), ocrProvenance (content_hash), a sweep_log row
 // per page (written BEFORE the page), recountBook, one book_events row. `ocr.pipeline` = LANE marks every page for
 // a later re-read; `engine.input.whish147` names the method ('edition-anchored' | 'free-read') per leaf.
 // Never overwrites: the update filter requires the page to have no OCR text.
@@ -12,7 +12,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { HERE, BOOK, hash16 } from './lib.mjs';
-import { saveRevisionBeforeOverwrite } from '../../../lib/page-revisions.mjs';
+import { writePageText } from '../../../lib/page-text-writer.mjs';
 import { geminiEngine, engineNameForCli, imageInput, ocrProvenance, notRecorded, codeVersion, host, NOT_RECORDED } from '../../../lib/write-provenance.mjs';
 import { liftOcrTags } from '../../../lib/ocr-result-parse.mjs';
 import { recountBook } from '../../../lib/page-counts.mjs';
@@ -53,13 +53,10 @@ for (let n = a; n <= b; n++) {
   console.log(`${APPLY ? 'WRITE' : 'would write'} p.${n} ${P.methods.join('+')} ${P.text.length} chars (${models.join('+')})`);
   if (!APPLY) { written.push(n); continue; }
   await recordSweepAction(db, { sweep: LANE, book_id: BOOK, action: 'ocr-best-attempt-write', detail: { page_id: page.id, page_number: n, methods: P.methods, models, run: runId, text_hash: hash16(P.text), reason: REASON } });
-  await saveRevisionBeforeOverwrite(db, page.id, 'ocr', { reason: LANE });
-  const r = await db.collection('pages').updateOne({ id: page.id, ...NO_OCR }, { $set: {
-    ocr: { data: P.text, language: 'Sanskrit', model: models.join('+'), updated_at: new Date(), source: 'ai', pipeline: LANE, ...ocrProvenance(P.text, engine) },
-    ...liftOcrTags(P.text),
-    updated_at: new Date(),
-  } });
-  if (r.modifiedCount !== 1) { skipped.push({ n, why: 'page gained OCR between check and write' }); continue; }
+  // writePageText (#7058): revision row with the whole prior field, compare-and-set on the prior (absent) text.
+  const r = await writePageText(db, page.id, 'ocr', { data: P.text, language: 'Sanskrit', model: models.join('+'), updated_at: new Date(), source: 'ai', pipeline: LANE, ...ocrProvenance(P.text, engine) }, { by: CALL_SITE, reason: REASON, run_id: runId });
+  if (r.status !== 'written') { skipped.push({ n, why: `page text writer: ${r.status}` }); continue; }
+  await db.collection('pages').updateOne({ id: page.id }, { $set: { ...liftOcrTags(P.text), updated_at: new Date() } });
   written.push(n);
 }
 if (APPLY && written.length) {
