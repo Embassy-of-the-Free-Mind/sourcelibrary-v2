@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * latin-gpu25-5924/score.mjs — score the GPU reads of task 85-latin-gpu25 against the stored OCR (#5924) and decide,
+ * latin-gpu25-5924/score.mjs — score the GPU reads of task 79-latin-gpu25 against the stored OCR (#5924) and decide,
  * per book, whether it can go to GPU OCR; then ask whether the 25-spread verdict matches the whole-book verdict.
  *
  * PRIOR ART: scripts/eval/latin-bakeoff-5924/score.mjs (views / lev / the order-tolerant N view, IMPORTED unchanged, with

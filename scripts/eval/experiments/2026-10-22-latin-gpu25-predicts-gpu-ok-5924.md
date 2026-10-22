@@ -27,7 +27,7 @@ whole book?
   is 10,274 pages, every page with stored OCR.
 - **Images.** `getPageSource` (scripts/lib/page-image-url.mjs), the leaf the stored OCR read. All 11,622 are on
   images.sourcelibrary.org. Long side is capped at 2,400 px, as in #6912 (`fetch-chunk.py`).
-- **Arms** (one gpu-queue task, `85-latin-gpu25`, on gex45):
+- **Arms** (one gpu-queue task, `79-latin-gpu25`, on gex45):
   - **GS.** Stock GLM-OCR 0.9B on the spread pages, with #6912 arm G's flags (MTP speculative decoding, 6,000 tokens).
   - **DS.** The distilled GLM-OCR (#6871 `run/merged`) on the same pages.
   - **GW.** Stock GLM-OCR on the 20 whole books.
@@ -57,4 +57,4 @@ whole book?
 - **By eye.** An Opus reader looks at 6 high-disagreement pages, with the image and both texts, and says which engine
   is right.
 
-**Results.** Pending (queued behind gpu-queue `80-tib-gutter-full-c2`).
+**Results.** Pending (gpu-queue `79-latin-gpu25`, between the 24 h Tibetan chunks `80-tib-gutter-full-c` and `-c2`).

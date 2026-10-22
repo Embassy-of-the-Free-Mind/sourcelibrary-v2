@@ -4,15 +4,15 @@
 # PRIOR ART: scripts/eval/latin-distill-6871/70-latin-distill.sh (serve / stop by pid / read_arm, copied; the student
 # served the same way) and scripts/eval/latin-bakeoff-5924/drive.sh `glm` (stock GLM-OCR arm G's serve flags, MTP
 # speculative decoding included; read.py glm mode, 6,000 tokens, 16 clients, copied unchanged).
-# gpu-queue task 85-latin-gpu25 (#5924, GPU arm of the Latin repair census): do 25 spread pages predict whether a book
-# can go to GPU OCR? Three reads, files only, under /root/jobs/gpu-queue/85-latin-gpu25/out/:
+# gpu-queue task 79-latin-gpu25 (#5924, GPU arm of the Latin repair census): do 25 spread pages predict whether a book
+# can go to GPU OCR? Three reads, files only, under /root/jobs/gpu-queue/79-latin-gpu25/out/:
 #   GS  stock GLM-OCR   on the 1,348 spread pages (54 books x 25, two duplicate page numbers dropped)
 #   DS  distilled GLM-OCR (#6871 run/merged) on the same pages
 #   GW  stock GLM-OCR   on the 20 whole books (10,274 pages)
 # Images were fetched ahead (code/fetch-chunk.py, 2,400 px cap) into in-spread/ and in-whole/. Every server is stopped
 # by its own pid; read.py resumes, so a re-add after a timeout continues where it stopped.
 set -uo pipefail
-J=/root/jobs/gpu-queue/85-latin-gpu25; VL=/root/bench/vl
+J=/root/jobs/gpu-queue/79-latin-gpu25; VL=/root/bench/vl
 export VLLM_USE_FLASHINFER_SAMPLER=0 HF_HUB_OFFLINE=1
 cd "$J"; mkdir -p out
 log() { echo "$(date -u +%FT%TZ) $*" | tee -a "$J/task-progress.log"; }
