@@ -1,6 +1,6 @@
 ---
 stage: metadata
-measure: count
+measure: accuracy
 languages: []
 scripts: []
 canons: []
