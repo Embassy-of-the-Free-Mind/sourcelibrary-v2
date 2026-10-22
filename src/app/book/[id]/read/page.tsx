@@ -13,7 +13,15 @@
  * heading of its own so heading navigation walks the book, the translation
  * as running text, the original inside a <details> per page (hidden from the
  * accessibility tree until opened, so it is opt-in rather than read twice).
- * `?text=original` flips which is primary; `?text=both` shows both. Every
+ * `?text=original` flips which is primary; `?text=both` shows both.
+ *
+ * Continuous by default (#7118). The page is the printer's unit, not the
+ * author's: a sentence that runs over a page was cut in two by a rule and a
+ * heading. The default view runs each page's text into the next where the
+ * sentence carries on (src/lib/flow-join.ts) and marks the boundary with a
+ * small linked page number. `?view=pages` keeps the page-by-page document
+ * above — one heading per page for heading navigation, the original folded
+ * under each — and `?text=both` is always page by page. Every
  * text block carries the `lang` it is written in (#5115). Long books are cut
  * into parts of PART_SIZE pages so no single response is megabytes.
  *
@@ -47,6 +55,7 @@ import { markdownToHtml } from '@/lib/export-markdown-html';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { isRTLLanguage } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
 
 // Gating depends on who is asking (session, bot, tenant), so this cannot be ISR.
 export const dynamic = 'force-dynamic';
@@ -61,6 +70,7 @@ export const preferredRegion = 'fra1';
 const PART_SIZE = 60;
 
 type TextMode = 'translation' | 'original' | 'both';
+type ViewMode = 'flow' | 'pages';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -138,6 +148,17 @@ function pageHtml(raw: string | undefined, pageLevel: number): string | null {
   });
 }
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** The page markers inside joined HTML: small, quiet, raised — present for finding a page, never read as text. */
+const FLOW_MARKER_CLASSES = [
+  '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-super',
+  '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:px-0.5',
+  '[&_.page-marker:hover]:text-accent-rust', '[&_.page-marker]:scroll-mt-20',
+].join(' ');
+
 function Heading({ level, id, className, children }: { level: number; id?: string; className?: string; children: React.ReactNode }) {
   const Tag = (`h${Math.min(6, Math.max(1, level))}`) as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   return <Tag id={id} className={className}>{children}</Tag>;
@@ -148,6 +169,8 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const sp = await searchParams;
   const textParam = firstString(sp.text);
   const mode: TextMode = textParam === 'original' ? 'original' : textParam === 'both' ? 'both' : 'translation';
+  // Both texts at once only make sense side by side per page.
+  const view: ViewMode = firstString(sp.view) === 'pages' || mode === 'both' ? 'pages' : 'flow';
   const part = Math.max(1, parseInt(firstString(sp.part) ?? '1', 10) || 1);
 
   const ctx = await getTenantContext();
@@ -217,10 +240,11 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const originalDir = isRTLLanguage(book.language) ? 'rtl' : undefined;
   const languageLabel = book.language || 'Original';
 
-  const href = (opts: { text?: TextMode; part?: number; hash?: string }) => {
+  const href = (opts: { text?: TextMode; view?: ViewMode; part?: number; hash?: string }) => {
     const q = new URLSearchParams();
     const t = opts.text ?? mode;
     if (t !== 'translation') q.set('text', t);
+    if ((opts.view ?? view) === 'pages' && t !== 'both') q.set('view', 'pages');
     const p = opts.part ?? part;
     if (p !== 1) q.set('part', String(p));
     const qs = q.toString();
@@ -236,6 +260,32 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const open = firstGatedIdx < 0 ? slice : slice.slice(0, firstGatedIdx);
   const gateFrom = firstGatedIdx < 0 ? null : slice[firstGatedIdx].page_number;
 
+  // Continuous view: one run of pages per chapter (a chapter heading always breaks the flow).
+  const flowLevel = chapters.length > 0 ? 2 : 1;
+  const flowRuns = (list: typeof open): (typeof open)[] => {
+    const runs: (typeof open)[] = [];
+    for (const p of list) {
+      if (runs.length === 0 || chapterAt.has(p.page_number)) runs.push([]);
+      runs[runs.length - 1].push(p);
+    }
+    return runs;
+  };
+  const flowPage = (p: (typeof open)[number]): FlowPage => {
+    const n = p.page_number;
+    const pageHref = `/book/${bookPath}/page/${p.id}`;
+    const originalHtml = pageHtml(p.ocr?.data, flowLevel);
+    if (mode === 'original') return { n, html: originalHtml, href: pageHref };
+    const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
+    const translationHtml = pageHtml(translationRaw, flowLevel);
+    if (translationHtml) return { n, html: translationHtml, href: pageHref };
+    if (!originalHtml) return { n, html: null, href: pageHref };
+    // No English for this page: show its original as a set-off block, never run into the English.
+    const note = p.translation_withheld ? 'Translation withheld' : 'Not yet translated';
+    const label = `<p class="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">${note} · original (${escapeHtml(languageLabel)})</p>`;
+    const attrs = `lang="${escapeHtml(originalLang || '')}"${originalDir ? ` dir="${originalDir}"` : ''}`;
+    return { n, html: `<div class="my-4 pl-4 border-l-2" style="border-color: var(--border-light)">${label}<div ${attrs}>${originalHtml}</div></div>`, href: pageHref, block: true };
+  };
+
   return (
     <main className="max-w-[72ch] mx-auto px-4 sm:px-6 py-10 text-primary">
       <header className="mb-8">
@@ -249,7 +299,9 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </p>
         <p className="text-sm text-muted mt-3">
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
-          Each page is a heading; the {mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.
+          {view === 'flow'
+            ? ' The text runs on across pages; the small numbers mark where each page begins and open it beside the scan.'
+            : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
         </p>
       </header>
 
@@ -264,6 +316,20 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           ))}
         </ul>
       </nav>
+
+      {mode !== 'both' && (
+        <nav aria-label="Layout" className="mb-4 text-sm">
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+            {([['flow', 'Continuous'], ['pages', 'Page by page']] as [ViewMode, string][]).map(([v, label]) => (
+              <li key={v}>
+                {v === view
+                  ? <span aria-current="true" className="font-semibold">{label}</span>
+                  : <Link href={href({ view: v })} className="underline underline-offset-2 hover:text-accent-rust">{label}</Link>}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
 
       {partCount > 1 && (
         <nav aria-label="Parts" className="mb-4 text-sm">
@@ -304,7 +370,22 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
       )}
 
       <article aria-label={`${shownTitle}${partCount > 1 ? `, part ${part} of ${partCount}` : ''}`}>
-        {open.map(p => {
+        {view === 'flow' && flowRuns(open).map((run, i) => (
+          <div key={i}>
+            {chapterAt.get(run[0].page_number)?.map((c, j) => (
+              <Heading key={j} level={2} className="font-display text-2xl mt-10 mb-4">
+                {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
+              </Heading>
+            ))}
+            <div
+              className={`prose-manuscript ${FLOW_MARKER_CLASSES}`}
+              lang={mode === 'original' ? originalLang : 'en'}
+              dir={mode === 'original' ? originalDir : undefined}
+              dangerouslySetInnerHTML={{ __html: joinPagesHtml(run.map(flowPage)) }}
+            />
+          </div>
+        ))}
+        {view === 'pages' && open.map(p => {
           const n = p.page_number;
           const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
           const translationHtml = pageHtml(translationRaw, pageLevel);
