@@ -18,6 +18,7 @@ export type MapTheme = {
   level2?: boolean;
   l2Topic?: string;        // "What it says about <topic>" in the catalogue (default: the mind)
   lens?: boolean;
+  layers?: boolean;        // <slug>-layers.json: kinds, questions, lines of argument, stories, counter-texts, verdict (#7129)
   detailHint?: string;
 };
 
@@ -46,7 +47,7 @@ export const MAP_THEMES: MapTheme[] = [
     figLabels: ['works you can read in English now', 'works the library holds but you cannot read yet', 'works the library does not hold, each with a place to find it', 'editions listed below, {readable} of them readable'],
     method: 'A canon of 199 works was written by hand for this map, starting from the 105 author pages of a reader’s notes on harmony and adding the works of each tradition those notes had not reached. A script matched each work against the whole catalogue (154,301 records on 22 October 2026) by title, and one model pass (Claude) checked every matched record and dropped those that hold a different work. “Readable” means at least one held edition is public and at least 80% translated (or an English edition at least 80% transcribed). The work panel: where the reader studied the work, the panel gives those notes, condensed, with the passages the reader checked against the page. Otherwise a script took candidate pages from the best readable edition, Claude Sonnet chose two or three passages and wrote the summary, and Claude Opus re-read each passage and removed any that were not the work’s own words on harmony. Every passage was matched word for word against its page on 22 October 2026.',
     limits: 'The canon is a selection, and its weight falls where the library is strongest: Europe and China. Absences were tested by title only, so a text held inside an uncatalogued anthology may be reported as missing, and complete-works editions count as holding each work they contain. Summaries written by a model can be wrong. The passages come from the library’s machine translations (or from the English original) and link to their page, so you can check them. Editions that are held but not yet public are named without a link.',
-    level2: true, l2Topic: 'harmony',
+    level2: true, l2Topic: 'harmony', layers: true,
     detailHint: 'Click a mark, or a title in the catalogue below, to see what the work holds about harmony and where to start reading.',
   },
 ];

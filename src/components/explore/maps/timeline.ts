@@ -28,6 +28,18 @@ export type L2Work = {
 };
 export type L2Data = { generated: string; note: string; eds: Record<string, string>; works: Record<string, L2Work> };
 
+/** Opt-in layers (public/data/maps/<theme>-layers.json, atlas scripts/map-pipeline/build-layers.mjs, #7129): kinds of
+ *  the theme per work (wk: [primary, ...others]), the knowledge base's ideas as questions with each read work's stance
+ *  (s agrees, a disagrees, m both, b bears on it), lines of argument (b answers a), traced stories with how they came out
+ *  when tested, counter-texts, and the cross-tradition verdict. Keys are `${work}|||${tradition}`. */
+export type LayersData = {
+  kinds: { id: string; label: string; desc: string }[]; wk: Record<string, string[]>;
+  ideas: { n: string; q: string; t: string; works: Record<string, 's' | 'a' | 'm' | 'b'>; notes: Record<string, string> }[];
+  links: { a: string; b: string; k: 'rejects' | 'builds' | 'comments' | 'tests' | 'parallel'; n: string }[];
+  stories: { id: string; title: string; line: string; chain: string[]; tested: { result: 'true' | 'false'; by: string; how: string; b: string; p: number; pl?: string } | null }[];
+  counter: Record<string, string>; verdict: { title: string; text: string } | null;
+};
+
 export type TimelineConfig = {
   figLabels: [string, string, string, string];
   adjacentLabel?: string;
@@ -57,8 +69,9 @@ const mdInline = (s: string) => esc(s)
   .replace(/\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]*)\)/g, (_, label: string, u: string) => `<a href="${sameHost(u)}"${u.startsWith('/') ? '' : ' rel="noopener"'} target="_blank">${label}</a>`)
   .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
-export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConfig, lensData?: LensData | null, l2?: L2Data | null): () => void {
+export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConfig, lensData?: LensData | null, l2?: L2Data | null, Ly?: LayersData | null): () => void {
   const W = D.works;
+  const idxByKey = new Map(W.map((w, i) => [`${w.n}|||${w.tr}`, i]));
   // editions known to be hidden: their pages 404 for readers, so nothing links to them
   const hiddenIds = new Set(W.flatMap((w) => w.eds.filter((e) => !e.v).map((e) => e.id)));
   const linkable = (url: string) => { const id = bookIdOf(url); return !id || !hiddenIds.has(id); };
@@ -86,9 +99,13 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   })();
 
   // ---- state ----
-  const state = { st: { readable: true, held: true, absent: true } as Record<string, boolean>, adj: !hasAdj, q: '', sel: null as number | null, lens: null as LensConcept | null };
+  const state = { st: { readable: true, held: true, absent: true } as Record<string, boolean>, adj: !hasAdj, q: '', sel: null as number | null, lens: null as LensConcept | null,
+    kindMode: false, kindOnly: null as string | null, idea: null as string | null, story: null as string | null, lines: false, counter: false };
+  const kindsOf = (w: Work) => Ly?.wk[wkey(w)] ?? [];
+  const ideaOf = () => Ly?.ideas.find((x) => x.n === state.idea) ?? null;
+  const storyOf = () => Ly?.stories.find((x) => x.id === state.story) ?? null;
   const attests = (w: Work) => !!state.lens && wkey(w) in state.lens.works;
-  const visible = (w: Work) => state.st[stat(w)] && (state.adj || !w.adj) && (!state.q || (w.n + ' ' + w.tr + ' ' + w.gl + ' ' + w.eds.map((e) => e.t + ' ' + e.a).join(' ')).toLowerCase().includes(state.q));
+  const visible = (w: Work) => state.st[stat(w)] && (state.adj || !w.adj) && (!state.kindOnly || kindsOf(w).includes(state.kindOnly)) && (!state.q || (w.n + ' ' + w.tr + ' ' + w.gl + ' ' + w.eds.map((e) => e.t + ' ' + e.a).join(' ')).toLowerCase().includes(state.q));
 
   // ---- time scale (piecewise linear: antiquity compressed, modernity expanded) ----
   const LEFT = 200, RIGHT = 24, TOP = 44, ROWH = 24, REGGAP = 30;
@@ -122,9 +139,30 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     TICKS.forEach((t) => { const x = xs(t, width); const lab = t < 0 ? -t + ' BCE' : String(t); const fits = x + 3 > lastEnd + 8; if (fits) lastEnd = x + 3 + lab.length * 6.6; s += `<line class="tick" x1="${x}" x2="${x}" y1="${TOP - 8}" y2="${H - 8}"/>${fits ? `<text class="ticklab" x="${x + 3}" y="${H - 1}">${lab}</text>` : ''}`; });
     const rowY: Record<string, number> = {}, rowH: Record<string, number> = {};
     rows.forEach((r) => { if (r.region) { s += `<text class="rowlab region" x="12" y="${r.y + 4}">${esc(r.region)}</text>`; } else { rowY[r.t!] = r.y; rowH[r.t!] = r.h!; s += `<line class="rowline" x1="${LEFT}" x2="${width - RIGHT}" y1="${r.y}" y2="${r.y}"/><text class="rowlab" x="24" y="${r.y + 4}">${esc(r.t)}</text>`; } });
-    const lanes: Record<string, number[]> = {}; pts = [];
-    W.forEach((w, i) => { if (!visible(w) || rowY[w.tr] === undefined) return; const x = xs(w.d, width); const L = lanes[w.tr] || (lanes[w.tr] = []); let lane = 0; const k = (rowH[w.tr] || ROWH) / 24; const offs = [0, -7 * k, 7 * k, -13 * k, 13 * k, -4 * k, 4 * k].map((v) => Math.round(v)); for (lane = 0; lane < offs.length; lane++) { if (L[lane] === undefined || x - L[lane] >= 9) break; } if (lane >= offs.length) lane = i % offs.length; L[lane] = x; const cy = rowY[w.tr] + offs[lane]; pts.push([x, cy, i]); const st = stat(w); const r = st === 'absent' ? 3.6 : 4.4; s += `<circle class="mk ${st}${w.adj ? ' adj' : ''}${state.sel === i ? ' sel' : ''}${state.lens ? (attests(w) ? ' lens' : ' dim') : ''}" data-i="${i}" cx="${x.toFixed(1)}" cy="${cy}" r="${r}"><title>${esc(w.n)}</title></circle>`; });
-    svg.innerHTML = s;
+    const lanes: Record<string, number[]> = {}; pts = []; let marks = '';
+    W.forEach((w, i) => { if (!visible(w) || rowY[w.tr] === undefined) return; const x = xs(w.d, width); const L = lanes[w.tr] || (lanes[w.tr] = []); let lane = 0; const k = (rowH[w.tr] || ROWH) / 24; const offs = [0, -7 * k, 7 * k, -13 * k, 13 * k, -4 * k, 4 * k].map((v) => Math.round(v)); for (lane = 0; lane < offs.length; lane++) { if (L[lane] === undefined || x - L[lane] >= 9) break; } if (lane >= offs.length) lane = i % offs.length; L[lane] = x; const cy = rowY[w.tr] + offs[lane]; pts.push([x, cy, i]); const st = stat(w); const r = st === 'absent' ? 3.6 : 4.4; marks += `${layerRing(w, x, cy, r)}<circle class="mk ${st}${w.adj ? ' adj' : ''}${state.sel === i ? ' sel' : ''}${state.lens ? (attests(w) ? ' lens' : ' dim') : ''}${layerClass(w)}" data-i="${i}" cx="${x.toFixed(1)}" cy="${cy}" r="${r}"><title>${esc(w.n)}</title></circle>`; });
+    svg.innerHTML = s + layerLines() + marks;
+  }
+  // ---- opt-in layers: classes on a mark, the ring under it, and the lines between marks ----
+  function layerClass(w: Work) {
+    if (!Ly) return ''; const k = wkey(w); let c = '';
+    if (state.kindMode) c += ` k-${kindsOf(w)[0] || 'none'}`;
+    const idea = ideaOf(); if (idea) c += idea.works[k] ? ` id-${idea.works[k]}` : ' dim';
+    const story = storyOf(); if (story) c += story.chain.includes(k) ? ' story' : ' dim';
+    return c;
+  }
+  function layerRing(w: Work, x: number, cy: number, r: number) {
+    return Ly && state.counter && Ly.counter[wkey(w)] ? `<circle class="ctring" cx="${x.toFixed(1)}" cy="${cy}" r="${r + 3.2}"/>` : '';
+  }
+  const ptOf = (key: string) => { const i = idxByKey.get(key); if (i == null) return null; const p = pts.find((q) => q[2] === i); return p ? [p[0], p[1]] as [number, number] : null; };
+  function layerLines() {
+    if (!Ly) return ''; let s = '';
+    if (state.lines) for (const l of Ly.links) { const a = ptOf(l.a), b = ptOf(l.b); if (!a || !b) continue;
+      const mx = (a[0] + b[0]) / 2, my = Math.min(a[1], b[1]) - 18 - Math.abs(b[0] - a[0]) * 0.08;
+      s += `<path class="ln ln-${l.k}" d="M${a[0].toFixed(1)},${a[1]} Q${mx.toFixed(1)},${my.toFixed(1)} ${b[0].toFixed(1)},${b[1]}"><title>${esc(l.n)}</title></path>`; }
+    const story = storyOf();
+    if (story) { const ps = (story.chain.map(ptOf).filter(Boolean) as [number, number][]).sort((a, b) => a[0] - b[0]); /* date order */ if (ps.length > 1) s += `<polyline class="storyline" points="${ps.map((p) => `${p[0].toFixed(1)},${p[1]}`).join(' ')}"/>`; }
+    return s;
   }
   const onSvgClick = (e: Event) => { const i = markAt(e as MouseEvent); if (i == null) return; select(i, true); };
   const onSvgMove = (e: MouseEvent) => { const hit = markAt(e); svg.style.cursor = hit == null ? '' : 'pointer'; if (hit == null) { if (tip) { tip.remove(); tip = null; } return; } const w = W[hit]; if (!tip) { tip = document.createElement('div'); tip.className = 'tip'; box.appendChild(tip); } tip.innerHTML = `<b>${esc(w.n)}</b>${esc(w.tr)} · ${esc(w.dl || fmtY(w.d))}<br>${stat(w) === 'readable' ? 'Readable now' : stat(w) === 'held' ? 'Held, not yet readable' : 'Not held'} · ${w.eds.length} edition${w.eds.length === 1 ? '' : 's'}${state.lens && attests(w) ? `<br><i>${esc(state.lens.c)}</i> on ${state.lens.works[wkey(w)][0]} page${state.lens.works[wkey(w)][0] === 1 ? '' : 's'}: ${esc(state.lens.works[wkey(w)][3])}${state.lens.works[wkey(w)][4] ? ' (' + esc(state.lens.works[wkey(w)][4]) + ')' : ''}` : ''}`; const bx = box.getBoundingClientRect(); let x = e.clientX - bx.left + box.scrollLeft + 14; const y = e.clientY - bx.top + box.scrollTop - 10; if (x + 310 > box.scrollWidth) x -= 330; tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
@@ -155,6 +193,22 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     const qs = x.q.length ? `<div class="l2q"><b>Where to start reading</b>${x.q.map((q) => `<blockquote class="${q.c ? 'counter' : ''}"><p>${esc(q.t)}</p><a href="${pageUrl(q.b, q.p)}" target="_blank" rel="noopener">${esc(l2!.eds[q.b] || 'Read the page')}, p. ${q.p}</a>${q.v ? '<span class="qtag">checked by a reader</span>' : ''}${q.c ? '<span class="qtag ct">counter-text</span>' : ''}</blockquote>`).join('')}</div>` : '';
     return `<div class="l2">${x.a ? `<p class="about">${esc(x.a)}</p>${x.src === 'ai' ? '<p class="l2note">Summary written by a language model from the pages below.</p>' : ''}` : ''}${kbBlock(x)}${terms}${qs}<p class="l2note">${esc(l2!.note)}</p></div>`;
   }
+  const workBtn = (key: string) => { const i = idxByKey.get(key); return i == null ? '' : `<button class="wlink" data-i="${i}">${esc(W[i].n)}</button>`; };
+  const testedText = (t: NonNullable<LayersData['stories'][number]['tested']>) => `<span class="tested ${t.result}">${t.result === 'true' ? 'Tested, and it holds' : 'Tested, and it fails'}</span>`;
+  function layersBlock(w: Work, part: 'top' | 'links') {
+    if (!Ly) return ''; const k = wkey(w); let h = '';
+    if (part === 'top') {
+    const kinds = kindsOf(w).map((id) => Ly.kinds.find((x) => x.id === id)).filter(Boolean);
+    if (kinds.length) h += `<p class="kindtags">${kinds.map((x) => `<span class="kindtag k-${x!.id}">${esc(x!.label)}</span>`).join('')}</p>`;
+    if (Ly.counter[k]) h += `<p class="counternote"><b>Counter-text.</b> ${esc(Ly.counter[k])}</p>`;
+    const idea = ideaOf(); if (idea && idea.works[k]) h += `<p class="ideanote"><b>${esc(idea.q)}</b> ${mdInline(idea.notes[k] || '')}</p>`;
+    return h ? `<div class="layers-panel">${h}</div>` : ''; }
+    const ans = Ly.links.filter((l) => l.b === k), by = Ly.links.filter((l) => l.a === k);
+    if (ans.length || by.length) h += `<div class="argue"><b>Lines of argument</b><ul>${ans.map((l) => `<li>Answers ${workBtn(l.a)}: ${esc(l.n)}</li>`).join('')}${by.map((l) => `<li>Answered by ${workBtn(l.b)}: ${esc(l.n)}</li>`).join('')}</ul></div>`;
+    const sts = Ly.stories.filter((s) => s.chain.includes(k));
+    if (sts.length) h += `<div class="argue"><b>In the stories</b><ul>${sts.map((s) => `<li><button class="storybtn" data-story="${s.id}">${esc(s.title)}</button>${s.tested ? ' ' + testedText(s.tested) : ''}</li>`).join('')}</ul></div>`;
+    return h ? `<div class="layers-panel">${h}</div>` : '';
+  }
   function edsBlock(w: Work) {
     if (!w.eds.length) return ''; const eds = [...w.eds].sort((a, b) => (+b.rd - +a.rd) || (+b.v - +a.v)); const N = 6;
     const head = `<b class="edsh">${w.eds.length === 1 ? 'The edition in the library' : `${w.eds.length} editions in the library`}</b>`;
@@ -164,7 +218,9 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     state.sel = i; const w = W[i]; detail.className = 'detail'; const st = stat(w);
     detail.innerHTML = `<h3>${esc(w.n)}</h3><div class="meta"><span>${esc(w.tr)}${w.rg ? ' · ' + esc(w.rg) : ''}</span><span>${esc(w.dl || fmtY(w.d))}</span><span>${esc(w.g)}</span><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held, not yet readable' : 'Not held'}</span>${w.adj ? '<span class="pill absent">adjacent</span>' : ''}</div>
       ${w.gl ? `<p>${esc(w.gl)}</p>` : ''}
+      ${layersBlock(w, 'top')}
       ${l2Block(w)}
+      ${layersBlock(w, 'links')}
       ${ideasBlock(w)}
       ${edsBlock(w)}
       ${(st === 'absent' || st === 'held') && w.gap ? `<div class="gap" style="margin-top:10px"><b>Where to get it:</b> ${esc(w.gap)}</div>` : ''}
@@ -173,7 +229,10 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     if (scroll) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  const onDetailClick = (e: Event) => { const b = (e.target as Element).closest('.lensbtn') as HTMLElement | null; if (!b) return; setLens(b.dataset.lens || ''); const inp = root.querySelector<HTMLInputElement>('#lens'); if (inp) inp.value = b.dataset.lens || ''; box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+  const onDetailClick = (e: Event) => {
+    const wl = (e.target as Element).closest('.wlink') as HTMLElement | null; if (wl) { select(+wl.dataset.i!, true); return; }
+    const sb = (e.target as Element).closest('.storybtn') as HTMLElement | null; if (sb) { setStory(sb.dataset.story || ''); box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); return; }
+    const b = (e.target as Element).closest('.lensbtn') as HTMLElement | null; if (!b) return; setLens(b.dataset.lens || ''); const inp = root.querySelector<HTMLInputElement>('#lens'); if (inp) inp.value = b.dataset.lens || ''; box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
   detail.addEventListener('click', onDetailClick);
 
   // ---- catalogue ----
@@ -220,19 +279,53 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   let lt: ReturnType<typeof setTimeout>;
   const onLens = (e: Event) => { clearTimeout(lt); lt = setTimeout(() => setLens((e.target as HTMLInputElement).value), 120); };
   lensInput?.addEventListener('input', onLens); lensInput?.addEventListener('change', onLens);
-  function refresh() { renderMap(); renderCat(); }
+  // ---- layer controls (only when the theme ships a layers file) ----
+  const lyBox = root.querySelector<HTMLElement>('#layers'), lyNote = root.querySelector<HTMLElement>('#lynote'), verdictEl = root.querySelector<HTMLElement>('#verdict');
+  function renderNote() {
+    if (!lyNote || !Ly) return; let h = '';
+    const idea = ideaOf();
+    if (idea) { const c = { s: 0, a: 0, m: 0, b: 0 }; Object.values(idea.works).forEach((v) => c[v]++);
+      h += `<p><b>${esc(idea.q)}</b> Lit: the works a reader checked against this question. <span class="sw id-s"></span>${c.s} answer yes <span class="sw id-a"></span>${c.a} answer no <span class="sw id-m"></span>${c.m} both <span class="sw id-b"></span>${c.b} bear on it. The question comes from a reader’s notes on harmony; the full argument, with its sources, is in <a href="/articles/harmony-map">the harmony map article</a>.</p>`; }
+    const story = storyOf();
+    if (story) h += `<p><b>${esc(story.title)}.</b> ${esc(story.line)} ${story.chain.length} works on the map tell it, joined in date order.${story.tested ? ` ${testedText(story.tested)} ${esc(story.tested.how)} <a href="/book/${story.tested.b}?page=${story.tested.p}" target="_blank" rel="noopener">${esc(story.tested.pl || 'Read the page')}</a>.` : ' It was never put to a test.'}</p>`;
+    if (state.lines) h += `<p class="lnkey"><b>Lines of argument:</b> <span class="lk ln-rejects"></span>disagrees <span class="lk ln-builds"></span>builds on <span class="lk ln-comments"></span>comments on <span class="lk ln-parallel"></span>says the same independently. Each line runs from a work to the one that answers it; hover a line, or open a work, for what was said.</p>`;
+    if (state.counter) h += `<p class="lnkey"><span class="ctkey"></span><b>Counter-texts:</b> ${Object.keys(Ly.counter).length} works that answer against the usual praise of harmony, ringed in red.</p>`;
+    lyNote.innerHTML = h; lyNote.hidden = !h;
+  }
+  function setStory(id: string) { state.story = id || null; const sel = root.querySelector<HTMLSelectElement>('#lystory'); if (sel) sel.value = id; refresh(); }
+  const lyHandlers: [Element, string, EventListener][] = [];
+  const on = (el: Element | null, ev: string, fn: EventListener) => { if (!el) return; el.addEventListener(ev, fn); lyHandlers.push([el, ev, fn]); };
+  if (Ly && lyBox) {
+    lyBox.hidden = false;
+    lyBox.innerHTML = `<div class="lyrow"><label class="tog"><input type="checkbox" id="lykind"> Colour by kind of harmony</label><span class="kindchips" id="kindchips" hidden>${Ly.kinds.map((k) => `<button class="kindchip k-${k.id}" data-k="${k.id}" aria-pressed="false" title="${esc(k.desc)}"><span class="sw"></span>${esc(k.label)}</button>`).join('')}<span class="kindnone"><span class="sw"></span>not classified</span></span></div>
+      <div class="lyrow"><label class="sel">Question <select id="lyidea"><option value="">none</option>${Ly.ideas.map((x) => `<option value="${x.n}">${esc(x.q)} (${Object.keys(x.works).length})</option>`).join('')}</select></label>
+      <label class="sel">Story <select id="lystory"><option value="">none</option>${Ly.stories.map((x) => `<option value="${x.id}">${esc(x.title)}${x.tested ? (x.tested.result === 'true' ? ' · holds' : ' · fails') : ''}</option>`).join('')}</select></label>
+      <label class="tog"><input type="checkbox" id="lylines"> Lines of argument</label><label class="tog"><input type="checkbox" id="lycounter"> Counter-texts</label></div>`;
+    on(root.querySelector('#lykind'), 'change', (e) => { state.kindMode = (e.target as HTMLInputElement).checked; const c = root.querySelector<HTMLElement>('#kindchips'); if (c) c.hidden = !state.kindMode; if (!state.kindMode) { state.kindOnly = null; root.querySelectorAll('.kindchip').forEach((b) => b.setAttribute('aria-pressed', 'false')); } refresh(); });
+    on(root.querySelector('#kindchips'), 'click', (e) => { const b = (e.target as Element).closest('.kindchip') as HTMLElement | null; if (!b) return; const k = b.dataset.k!; state.kindOnly = state.kindOnly === k ? null : k; root.querySelectorAll('.kindchip').forEach((x) => x.setAttribute('aria-pressed', String((x as HTMLElement).dataset.k === state.kindOnly))); refresh(); });
+    on(root.querySelector('#lyidea'), 'change', (e) => { state.idea = (e.target as HTMLSelectElement).value || null; refresh(); });
+    on(root.querySelector('#lystory'), 'change', (e) => { setStory((e.target as HTMLSelectElement).value); });
+    on(root.querySelector('#lylines'), 'change', (e) => { state.lines = (e.target as HTMLInputElement).checked; refresh(); });
+    on(root.querySelector('#lycounter'), 'change', (e) => { state.counter = (e.target as HTMLInputElement).checked; refresh(); });
+  }
+  if (Ly?.verdict && verdictEl) { verdictEl.hidden = false; verdictEl.innerHTML = `<b>${esc(Ly.verdict.title)}</b> ${esc(Ly.verdict.text)}`; }
+  function refresh() { renderMap(); renderCat(); renderNote(); if (state.sel != null) select(state.sel, false); }
   let rt: ReturnType<typeof setTimeout>; const onResize = () => { clearTimeout(rt); rt = setTimeout(renderMap, 120); };
   window.addEventListener('resize', onResize);
   refresh();
 
   // deep link: ?w=<index> or #w<index>
   const m = location.hash.match(/^#w(\d+)$/); if (m && W[+m[1]]) select(+m[1], true);
-  const idea = new URLSearchParams(location.search).get('idea'); if (idea && lensByName.has(idea.toLowerCase())) { if (lensInput) lensInput.value = lensByName.get(idea.toLowerCase())!.c; setLens(idea); }
+  const sp = new URLSearchParams(location.search);
+  if (Ly && sp.get('story') && Ly.stories.some((x) => x.id === sp.get('story'))) setStory(sp.get('story')!);
+  if (Ly && sp.get('question') && Ly.ideas.some((x) => x.n === sp.get('question'))) { state.idea = sp.get('question'); const s2 = root.querySelector<HTMLSelectElement>('#lyidea'); if (s2) s2.value = state.idea!; refresh(); }
+  const idea = sp.get('idea'); if (idea && lensByName.has(idea.toLowerCase())) { if (lensInput) lensInput.value = lensByName.get(idea.toLowerCase())!.c; setLens(idea); }
 
   return () => {
     svg.removeEventListener('click', onSvgClick); svg.removeEventListener('mousemove', onSvgMove); svg.removeEventListener('mouseleave', onSvgLeave);
     cat.removeEventListener('click', onCatClick); chipHandlers.forEach(([b, h]) => b.removeEventListener('click', h));
     adj?.removeEventListener('change', onAdj); q?.removeEventListener('input', onQ); window.removeEventListener('resize', onResize);
     lensInput?.removeEventListener('input', onLens); lensInput?.removeEventListener('change', onLens); detail.removeEventListener('click', onDetailClick);
+    lyHandlers.forEach(([el, ev, fn]) => el.removeEventListener(ev, fn));
   };
 }
