@@ -7,6 +7,8 @@
 //   4. unmatched  — the residue, to be read by eye
 // Usage: node classify.mjs <reference.json> <figure:44|47> <orig.jsonl> <out.jsonl>
 import fs from 'node:fs';
+import { fold, makeFolded, makeShingles } from './shingle.mjs';
+export { fold };
 
 const [REF, FIG, IN, OUT] = process.argv.slice(2);
 const K = 12;
@@ -15,20 +17,12 @@ const K = 12;
 // hand keys instead need KEY_COVER of their own length.
 const MIN_COVER = 40, MIN_RUN = 24, KEY_COVER = 0.4;
 
-export const fold = (s) =>
-  s
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f\u0313\u0314\u0342\u0345]/g, '')
-    .toLowerCase()
-    .replace(/ς/g, 'σ').replace(/ſ/g, 's').replace(/æ/g, 'ae').replace(/œ/g, 'oe')
-    .replace(/v/g, 'u').replace(/j/g, 'i').replace(/ae/g, 'e').replace(/oe/g, 'e')
-    .replace(/[^a-z\u03b1-\u03c9]/g, '');
 // Names and ethnics are not evidence of a text ("Philolai Pythagorici", "Archytas Tarentinus"): cut the text at
 // them so no shingle spans one.
 const NAMES = /\S*(?:philola|archyt|pythagor|tarent|croton|φιλολα|ἀρχυτ|αρχυτ|πυθαγορ|ταραντ|κροτων)\S*/giu;
 const NAMES_FOLDED = /(philola|archyt|pythagor|tarent|croton|φιλολα|αρχυτ|πυθαγορ|ταραντ|κροτων)/;
-const folded = (s) => s.split(NAMES).map(fold).join('|');
-const shingles = (s) => { const f = folded(s), out = new Set(); for (let i = 0; i + K <= f.length; i++) { const g = f.slice(i, i + K); if (!g.includes('|') && !NAMES_FOLDED.test(g)) out.add(g); } return out; };
+const folded = makeFolded(NAMES);
+const shingles = makeShingles(folded, K, NAMES_FOLDED);
 const stripOcr = (s) => s.replace(/<(scan-quality|language|lang|script|page-type|vocab|meta|page-num|header|sig|image-desc|summary|keywords|warning|context|columns|gloss)\b[^>]*>[\s\S]*?<\/\1>/g, ' ').replace(/<\/?[a-z][a-z-]*[^>]*>/gi, ' ');
 
 const ref = JSON.parse(fs.readFileSync(REF, 'utf8')).filter((e) => e.dk == FIG || (e.ref || '').startsWith(`DK ${FIG}`) || (FIG == 47 && /Archytas/.test(e.ref || e.id)));
