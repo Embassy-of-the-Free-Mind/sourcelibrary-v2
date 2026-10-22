@@ -56,6 +56,7 @@ import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { isRTLLanguage } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
+import { galleryFilter } from '@/lib/gallery-scope';
 
 // Gating depends on who is asking (session, bot, tenant), so this cannot be ISR.
 export const dynamic = 'force-dynamic';
@@ -157,6 +158,11 @@ const FLOW_MARKER_CLASSES = [
   '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-super',
   '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:px-0.5',
   '[&_.page-marker:hover]:text-accent-rust', '[&_.page-marker]:scroll-mt-20',
+  // A page's printed footnotes, moved below the sentence that ran over the page.
+  '[&_.flow-footnote]:text-sm', '[&_.flow-footnote]:text-muted', '[&_.flow-footnote]:pl-4',
+  // Illustrations: their own block, never wider than the text, never taller than the screen.
+  '[&_.flow-figure]:my-8', '[&_.flow-figure_img]:block', '[&_.flow-figure_img]:mx-auto', '[&_.flow-figure_img]:max-w-full',
+  '[&_.flow-figure_img]:max-h-[80vh]', '[&_.flow-figure_img]:w-auto', '[&_.flow-figure_img]:h-auto',
 ].join(' ');
 
 function Heading({ level, id, className, children }: { level: number; id?: string; className?: string; children: React.ReactNode }) {
@@ -259,6 +265,26 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const firstGatedIdx = clampAt === undefined ? -1 : slice.findIndex(p => p.page_number > clampAt);
   const open = firstGatedIdx < 0 ? slice : slice.slice(0, firstGatedIdx);
   const gateFrom = firstGatedIdx < 0 ? null : slice[firstGatedIdx].page_number;
+
+  // Continuous view: the book's illustrations stand in the text at their page, so the flow is the book and not
+  // only its words (#7118). Every image the gallery materialised (>= 0.5, its floor), not only the showcase ones
+  // (0.7, the book page's row): a diagram the text describes is part of reading it. The alt text is the image's
+  // description; no visible caption, because notes are off here and the description is the model's account.
+  const figuresAt = new Map<number, string>();
+  if (view === 'flow' && open.length > 0) {
+    const imgs = await db.collection('gallery_images')
+      .find(
+        { ...galleryFilter({ bookId, minQuality: 0.5 }), page_number: { $gte: open[0].page_number, $lte: open[open.length - 1].page_number } },
+        { projection: { _id: 0, page_number: 1, extracted_url: 1, description: 1, bbox: 1, detection_index: 1 }, maxTimeMS: 5000 },
+      )
+      .toArray()
+      .catch(() => []) as unknown as Array<{ page_number: number; extracted_url: string; description?: string; bbox?: { y?: number }; detection_index?: number }>;
+    imgs.sort((a, b) => a.page_number - b.page_number || (a.bbox?.y ?? 0) - (b.bbox?.y ?? 0) || (a.detection_index ?? 0) - (b.detection_index ?? 0));
+    for (const img of imgs) {
+      const fig = `<figure class="flow-figure"><img src="${escapeHtml(img.extracted_url)}" alt="${escapeHtml((img.description || 'Illustration').slice(0, 300))}" loading="lazy" decoding="async"/></figure>`;
+      figuresAt.set(img.page_number, (figuresAt.get(img.page_number) || '') + fig);
+    }
+  }
 
   // Continuous view: one run of pages per chapter (a chapter heading always breaks the flow).
   const flowLevel = chapters.length > 0 ? 2 : 1;
@@ -381,7 +407,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
               className={`prose-manuscript ${FLOW_MARKER_CLASSES}`}
               lang={mode === 'original' ? originalLang : 'en'}
               dir={mode === 'original' ? originalDir : undefined}
-              dangerouslySetInnerHTML={{ __html: joinPagesHtml(run.map(flowPage)) }}
+              dangerouslySetInnerHTML={{ __html: joinPagesHtml(run.map(p => ({ ...flowPage(p), figures: figuresAt.get(p.page_number) }))) }}
             />
           </div>
         ))}

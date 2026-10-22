@@ -21,6 +21,9 @@ export interface FlowPage {
   /** Reader URL for this page. */
   href: string;
   block?: boolean;
+  /** The page's illustrations as ready HTML (<figure>s). They are set at the first paragraph break at or after the
+   *  page's start — never inside a sentence that runs over the page. */
+  figures?: string;
 }
 
 const escapeAttr = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -37,42 +40,77 @@ const HYPHENATED = /\p{L}[-‐]$/u;
 
 /** A paragraph that is wholly an editorial bracket ("[Blank page]", "[A woodcut of …]") is never prose to join. */
 const BRACKETED = /^\[[^\]]*\]$/;
-/** Page furniture the translation kept as a line of its own (measured on Fludd, Giorgi, Kircher, 2026-10-22):
- *  a running head at the top of a page ("PROLOGUE.", "INDEX") and a signature mark at the foot ("a iij", "b"). */
+/** Page furniture the translation kept as text (measured on 14 books in 10 languages, 2026-10-22): a running head
+ *  ("PROLOGUE.", "Concerning the Names of the Stone."), a running foot ("Dream Wanderings, Fascicle 3 24"), a
+ *  signature mark ("a iij", "b", "… nor J 2") and the page's printed footnotes. */
 const RUNNING_HEAD = /^[^\p{Ll}]*\p{Lu}[^\p{Ll}]*\p{Lu}[^\p{Ll}]*$/u;
-const SIGNATURE = /^(?:\*{1,3}|[A-Za-z]{1,3})\s?(?:\d{1,2}|[ivxj]{1,5})?$/;
+const SIGNATURE = /^(?:\*{1,3}|[A-Za-z]{1,2}|[A-Za-z]{3}(?=\s?[\divxj]))\s?(?:\d{1,2}|[ivxj]{1,5})?$/;
+const INLINE_SIGNATURE = /(\p{Ll}[,;]?)\s+[A-Z]{1,3}\s?(?:\d{1,2}|[ivxj]{1,5})$/u;
+const NOTE_RULE = /^[-_—–*\s]{3,}$/;
+const NOTE_LINE = /^(?:\d{1,2}[.)]?|[*†‡§]|\([a-z0-9]{1,2}\))\s+\S/;
+/** Closing punctuation at the top of a page belongs to the sentence before it (", it becomes an error"). */
+const PUNCT_START = /^[,;:.!?)\]»”’]+/;
 
 /** Does the text ending `prev` carry on into the text starting `next`? */
 export function continuesAcross(prev: string, next: string): boolean {
   if (!prev || !next || BRACKETED.test(prev) || BRACKETED.test(next)) return false;
   if (ELLIPSIS_END.test(prev) && ELLIPSIS_START.test(next)) return true;
+  if (/^[,;:)]/.test(next)) return true;
   // A short unpunctuated paragraph before a capital is a title or heading ("THE MARRIAGE of HEAVEN and HELL"), not prose.
   if (prev.length < SHORT_PARA && !STARTS_LOWER.test(next)) return false;
   return !SENTENCE_END.test(prev) || STARTS_LOWER.test(next);
 }
 
-/** Drop a trailing signature line from the paragraph that ends a page (only when it has text before it). */
-function trimFoot(para: string): string {
-  const lines = para.split('<br/>');
-  if (lines.length > 1 && SIGNATURE.test(textOf(lines[lines.length - 1]))) lines.pop();
-  return lines.join('<br/>');
+/** A furniture line with its numbers taken out, so "Fascicle 3 24" and "Fascicle 3 25" are the same line. */
+const norm = (line: string) => line.toLowerCase().replace(/\b[ivxlcdm]+\b|[\d\p{P}\p{S}]+/gu, ' ').replace(/\s+/g, ' ').trim();
+const linesOf = (para: string) => para.split('<br/>');
+const firstBlock = (html: string): string | null => {
+  if (!html.startsWith('<p>')) return null;
+  const end = html.indexOf('</p>');
+  return html.slice(3, end < 0 ? undefined : end);
+};
+const lastBlock = (html: string): string | null => (html.endsWith('</p>') ? html.slice(html.lastIndexOf('<p>') + 3, -4) : null);
+
+/** Lines that open (or close) three or more pages of the run are furniture; a capitals line counts at two. */
+function furniture(lines: string[]): Set<string> {
+  const seen = new Map<string, number>();
+  for (const line of lines) {
+    const k = norm(line);
+    if (line.length > 80 || k.length < 3) continue;
+    seen.set(k, (seen.get(k) || 0) + (RUNNING_HEAD.test(line) ? 1.5 : 1));
+  }
+  return new Set([...seen].filter(([, n]) => n >= 3).map(([k]) => k));
 }
-const firstLine = (html: string) => (html.startsWith('<p>') ? textOf(html.slice(3).split(/<br\/>|<\/p>/)[0]) : '');
+
+/** The paragraph that ends a page, without its foot furniture; its printed footnotes come back separately. */
+function trimFoot(para: string, foots: Set<string>): { para: string; notes: string[] } {
+  let lines = linesOf(para);
+  const last = textOf(lines[lines.length - 1]);
+  if (lines.length > 1 && (SIGNATURE.test(last) || foots.has(norm(last)))) lines.pop();
+  let notes: string[] = [];
+  const rule = lines.findIndex((l, i) => i > 0 && NOTE_RULE.test(textOf(l)));
+  if (rule > 0) {
+    notes = lines.slice(rule + 1);
+    lines = lines.slice(0, rule);
+  } else {
+    let i = lines.length;
+    while (i > 1 && NOTE_LINE.test(textOf(lines[i - 1]))) i--;
+    notes = lines.slice(i);
+    lines = lines.slice(0, i);
+  }
+  lines[lines.length - 1] = lines[lines.length - 1].trimEnd().replace(INLINE_SIGNATURE, '$1');
+  return { para: lines.join('<br/>'), notes };
+}
+
 /** Drop a leading running-head line from the paragraph that starts a page (only when it has text after it).
- *  A capitals line counts as a running head when it opens two or more pages in the run (a chapter title opens
- *  one), or when the line under it carries on in lower case ("PROLOGUE." / "truly harmonious") — no title does. */
+ *  A capitals line also counts when the line under it carries on in lower case ("PROLOGUE." / "truly harmonious"):
+ *  no title does. A chapter title opens one page and is followed by a capital, so it is kept. */
 function trimHead(para: string, heads: Set<string>): string {
-  const lines = para.split('<br/>');
+  const lines = linesOf(para);
   if (lines.length < 2) return para;
   const first = textOf(lines[0]);
-  if (heads.has(first) || (first.length <= 60 && RUNNING_HEAD.test(first) && STARTS_LOWER.test(textOf(lines[1])))) lines.shift();
+  if (heads.has(norm(first)) || (first.length <= 60 && RUNNING_HEAD.test(first) && STARTS_LOWER.test(textOf(lines[1])))) lines.shift();
   return lines.join('<br/>');
-}
-/** A running head the translation set as a paragraph of its own: drop that first block. */
-function dropHeadBlock(html: string, heads: Set<string>): string {
-  const end = html.indexOf('</p>');
-  if (!html.startsWith('<p>') || end < 0 || !heads.has(textOf(html.slice(3, end)))) return html;
-  return html.slice(end + 4).trimStart();
 }
 
 /** Trailing whitespace and line breaks off, without a `$`-anchored regex (that rescans every run of spaces). */
@@ -88,55 +126,134 @@ export function pageMarker(n: number, href: string): string {
   return `<a class="page-marker" id="p${n}" href="${escapeAttr(href)}" aria-label="Page ${n}, open with the scan">${n}</a>`;
 }
 
+/** Put `ins` after the first closed paragraph of `html` — but never after a last paragraph whose sentence runs on. */
+function placeAfterFirstBlock(html: string, ins: string): { html: string; placed: boolean } {
+  if (!ins) return { html, placed: true };
+  const close = html.indexOf('</p>');
+  if (close >= 0 && html.length > close + 4) return { html: html.slice(0, close + 4) + '\n' + ins.trimEnd() + html.slice(close + 4), placed: true };
+  if (close < 0 || SENTENCE_END.test(textOf(html.slice(-400)))) return { html: html + '\n' + ins.trimEnd(), placed: true };
+  return { html, placed: false };
+}
+/** A page without its recurring running head and foot — page furniture, which a continuous text does not have. Only
+ *  lines that recur (see `furniture`) go, and never a page's only line. */
+function cleanPage(html: string, heads: Set<string>, foots: Set<string>): string {
+  const fb = firstBlock(html);
+  if (fb !== null) {
+    const lines = linesOf(fb);
+    if (heads.has(norm(textOf(fb)))) {
+      const rest = html.slice(html.indexOf('</p>') + 4).trimStart();
+      if (rest) html = rest;
+    } else if (lines.length > 1 && heads.has(norm(textOf(lines[0])))) {
+      html = '<p>' + lines.slice(1).join('<br/>').replace(/^(?:\s|<br\/>)+/, '') + html.slice(3 + fb.length);
+    }
+  }
+  const lb = lastBlock(html);
+  if (lb !== null) {
+    const lines = linesOf(lb);
+    const start = html.lastIndexOf('<p>');
+    // A signature mark the translation set as its own paragraph ("nor" ¶ "J 2") is furniture too.
+    if (foots.has(norm(textOf(lb))) || SIGNATURE.test(textOf(lb))) {
+      const before = html.slice(0, start).trimEnd();
+      if (before) html = before;
+    } else if (lines.length > 1 && foots.has(norm(textOf(lines[lines.length - 1])))) {
+      html = html.slice(0, start) + '<p>' + trimEndBreaks(lines.slice(0, -1).join('<br/>')) + '</p>';
+    }
+  }
+  return html;
+}
+const isNoteBlock =(block: string) => { const first = textOf(linesOf(block)[0]); return NOTE_RULE.test(first) || NOTE_LINE.test(first); };
+
 export function joinPagesHtml(pages: FlowPage[]): string {
   let out = '';
   let outIsBlock = false;
   let pending = '';
-  const seen = new Map<string, number>();
-  for (const p of pages) {
-    const line = p.html ? firstLine(p.html.trim()) : '';
-    if (line && line.length <= 60 && RUNNING_HEAD.test(line)) seen.set(line, (seen.get(line) || 0) + 1);
-  }
-  const heads = new Set([...seen].filter(([, k]) => k >= 2).map(([line]) => line));
-  for (const p of pages) {
+  /** Figures and footnotes from earlier pages still waiting for a paragraph to close. */
+  let carried = '';
+  const raw = pages.map(p => p.html?.trim() || '');
+  const heads = furniture(raw.map(h => { const b = firstBlock(h); return b === null ? '' : textOf(linesOf(b)[0]); }));
+  const foots = furniture(raw.map(h => { const b = lastBlock(h); return b === null ? '' : textOf(linesOf(b).slice(-1)[0]); }));
+  const bodies = raw.map(h => (h ? cleanPage(h, heads, foots) : h));
+
+  pages.forEach((p, idx) => {
     const marker = pending + pageMarker(p.n, p.href);
     pending = '';
-    const whole = p.html?.trim();
-    if (!whole) { pending = marker; continue; }
-    // Joined, a running head set as its own paragraph goes; unjoined, the page keeps it.
-    const dropped = dropHeadBlock(whole, heads);
-    const html = dropped.startsWith('<p>') ? dropped : whole;
+    const own = p.figures || '';
+    const whole = bodies[idx];
+    if (!whole) {
+      // A plate on a page with no text: its figure stands at the boundary, unless a sentence is still open.
+      const open = out.endsWith('</p>') && !SENTENCE_END.test(textOf(out.slice(Math.max(out.lastIndexOf('<p>'), out.length - 400))));
+      if ((carried || own) && !open) { out += (out ? '\n' : '') + marker + carried + own; carried = ''; } else { pending = marker; carried += own; }
+      return;
+    }
 
-    const prevStart = out.endsWith('</p>') ? out.lastIndexOf('<p>') + 3 : -1;
+    // Everything here is tentative: furniture goes only if the page joins. Unjoined, both pages keep every line.
+    let html = whole;
+    const fb = firstBlock(html);
+    if (fb !== null && heads.has(norm(textOf(fb)))) {
+      const rest = html.slice(html.indexOf('</p>') + 4).trimStart();
+      if (rest.startsWith('<p>')) html = rest;
+    }
+    let base = out;
+    const stepBack = () => {
+      const before = base.slice(0, base.lastIndexOf('<p>')).trimEnd();
+      if (!before.endsWith('</p>')) return false;
+      base = before;
+      return true;
+    };
+    const lb = lastBlock(base);
+    if (lb !== null && foots.has(norm(textOf(lb)))) stepBack();
+    // Footnotes the translation set as paragraphs of their own after the text (Leibniz, "(a) This printing …").
+    const noteBlocks: string[] = [];
+    for (let nb = lastBlock(base); nb !== null && isNoteBlock(nb); nb = lastBlock(base)) {
+      const lines = linesOf(nb).filter(l => !NOTE_RULE.test(textOf(l)));
+      if (!stepBack()) break;
+      noteBlocks.unshift(...lines);
+    }
+
+    const prevStart = base.endsWith('</p>') ? base.lastIndexOf('<p>') + 3 : -1;
     const nextEnd = html.startsWith('<p>') ? (html.indexOf('</p>') < 0 ? html.length : html.indexOf('</p>')) : -1;
-    // Furniture is trimmed only for the join test and a join; a page that does not join keeps every line.
-    const prevPara = prevStart < 0 ? null : trimFoot(out.slice(prevStart, -4));
+    const foot = prevStart < 0 ? null : trimFoot(base.slice(prevStart, -4), foots);
     const nextPara = nextEnd < 0 ? null : trimHead(html.slice(3, nextEnd), heads);
     // Only the edges decide a join; testing whole paragraphs is quadratic on OCR's long runs of spaces.
-    const prevText = prevPara === null ? '' : textOf(prevPara.slice(-400));
+    const prevText = foot === null ? '' : textOf(foot.para.slice(-400));
     const nextText = nextPara === null ? '' : textOf(nextPara.slice(0, 400));
-    const join = !p.block && !outIsBlock && prevPara !== null && nextPara !== null && continuesAcross(prevText, nextText);
+    const join = !p.block && !outIsBlock && foot !== null && foot.para !== '' && nextPara !== null && continuesAcross(prevText, nextText);
 
-    if (join) {
-      let head = out.slice(0, prevStart) + trimEndBreaks(prevPara as string);
-      const lead = (nextPara as string).replace(/^(?:\s|<br\/>)+/, '');
-      const rest = lead.replace(ELLIPSIS_START, '') + html.slice(nextEnd);
-      const elided = rest.length !== lead.length + html.length - nextEnd;
-      if (elided) head = head.slice(0, -40) + head.slice(-40).replace(ELLIPSIS_END, '');
-      if (!elided && HYPHENATED.test(prevText) && STARTS_LOWER.test(nextText) && /[-‐]$/.test(head.slice(-1))) {
-        // "trea-" | "tise of" → "treatise" + marker, so the marker never splits a word.
-        const cut = rest.search(/[\s<]/);
-        const word = cut < 0 ? rest : rest.slice(0, cut);
-        out = head.slice(0, -1) + word + marker + (cut < 0 ? '' : rest.slice(cut));
-      } else {
-        out = head + ' ' + marker + ' ' + rest;
-      }
-    } else {
+    if (!join || foot === null || nextPara === null) {
+      // The page starts a paragraph: what was waiting stands here; the page's own figures follow its first paragraph.
       const withMarker = whole.startsWith('<p>') ? `<p>${marker}${whole.slice(3)}` : marker + whole;
-      out += (out ? '\n' : '') + withMarker;
+      const placed = placeAfterFirstBlock(withMarker, own);
+      out += (out ? '\n' : '') + carried + placed.html;
+      carried = placed.placed ? '' : own;
+      outIsBlock = !!p.block;
+      return;
     }
-    outIsBlock = !!p.block;
-  }
+
+    let head = base.slice(0, prevStart) + trimEndBreaks(foot.para);
+    const lead = nextPara.replace(/^(?:\s|<br\/>)+/, '');
+    const unelided = lead.replace(ELLIPSIS_START, '');
+    const elided = unelided.length !== lead.length;
+    if (elided) head = head.slice(0, -40) + head.slice(-40).replace(ELLIPSIS_END, '');
+    // The previous page's footnotes, then what was waiting, then this page's figures: after the joined paragraph.
+    const notes = [...foot.notes, ...noteBlocks];
+    const waiting = (notes.length ? `<p class="flow-footnote">${notes.join('<br/>')}</p>\n` : '') + carried + own;
+    const placed = placeAfterFirstBlock(unelided + html.slice(nextEnd), waiting);
+    const rest = placed.html;
+    carried = placed.placed ? '' : waiting;
+    const punct = rest.match(PUNCT_START)?.[0];
+    if (punct) {
+      out = head + punct + ' ' + marker + ' ' + rest.slice(punct.length).trimStart();
+    } else if (!elided && HYPHENATED.test(prevText) && STARTS_LOWER.test(nextText) && /[-‐]$/.test(head.slice(-1))) {
+      // "trea-" | "tise of" → "treatise" + marker, so the marker never splits a word.
+      const cut = rest.search(/[\s<]/);
+      const word = cut < 0 ? rest : rest.slice(0, cut);
+      out = head.slice(0, -1) + word + marker + (cut < 0 ? '' : rest.slice(cut));
+    } else {
+      out = head + ' ' + marker + ' ' + rest;
+    }
+    outIsBlock = false;
+  });
   if (pending) out += pending;
+  if (carried) out += '\n' + carried.trimEnd();
   return out;
 }
