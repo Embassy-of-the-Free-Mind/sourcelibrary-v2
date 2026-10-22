@@ -3,11 +3,13 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
+import PageFigure from '@/components/articles/PageFigure';
 import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
 import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
 import RareClaims from '@/components/articles/figure-reception/RareClaims';
+import { DielsThemes, OutsideDiels } from '@/components/articles/figure-reception/Diels';
 
 // The second of the figure-reception pages (#7073), built with scripts/eval/figure-reception/ from the local
 // corpus mirror on 2026-10-20: every public work whose English translation contains "Philola*", with the
@@ -44,6 +46,7 @@ const BOOK = {
   campanella: '/book/the-city-of-the-sun-campanella',
   claudianus: '/book/claudiani-mamerti-opera-csel-xi-engelbrecht',
   pythagoras: '/articles/pythagoras-in-the-library',
+  diels: '/book/die-fragmente-der-vorsokratiker-diels',
 };
 
 const DATA = '/articles/philolaus-in-the-library';
@@ -169,7 +172,54 @@ export default function PhilolausInTheLibraryPage() {
           back.
         </p>
 
-        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t2', 't0', 'claudianus', 't7', 't1000']} />
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} dielsUrl={`${DATA}/diels.json`} featured={['t2', 't0', 'claudianus', 't7', 't1000']} />
+
+        <h2 className={h2}>What Diels collected, and what he left out</h2>
+
+        <p className={p}>
+          Scholars still cite Philolaus by the numbers Hermann Diels gave his sources in{' '}
+          <Link href={`${BOOK.diels}?page=322`}><em>Die Fragmente der Vorsokratiker</em></Link>. The library holds the
+          third edition (1912), where Philolaus is chapter 32 (chapter 44 in the later Diels–Kranz). Part A gathers what
+          ancient writers said about him; part B the fragments of his own words, with those Diels doubted or thought
+          forged set apart at the end. The saying Philo quotes, that God is the leader and ruler of all, is{' '}
+          <Link href={`${BOOK.diels}?page=338`}>B 20</Link>, printed under “doubtful”.
+        </p>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6a3f0220661123baf6fe9d4e/0330.jpg"
+            alt="A page of Diels’s Fragmente der Vorsokratiker: the heading B. Fragmente, the title of Philolaus’ book On Nature in Greek, fragments 1 and 2 in Greek, and Diels’s German translation below."
+            href={`${BOOK.diels}?page=330`}
+            source={<>Hermann Diels, <em>Die Fragmente der Vorsokratiker</em>, 3rd ed. (Berlin, 1912), vol. 1, p. 309: the start of Philolaus’ fragments</>}
+          />
+        </div>
+
+        <p className={p}>
+          On this page a small grey label, such as “Diels 32 B 14”, marks a passage that retells a Diels entry; it
+          opens that entry in the scan. The labels come from comparing the sense of each passage with each entry. We
+          checked samples by reading them, and about nine in ten were right. A passage without a label may still be in
+          Diels.
+        </p>
+
+        <p className={p}>
+          About half of what the books report him saying goes back to an entry in Diels. The share differs by theme.
+          The purchase of his books by Plato is nearly all Diels. The four seats of life and the talk of unity and
+          duality are mostly not, and nor are the passages about who he was and what survives, many of them written by
+          later scholars. The bars leave out Reuchlin’s speaker.
+        </p>
+
+        <DielsThemes mapUrl={`${DATA}/map.json`} dielsUrl={`${DATA}/diels.json`} />
+
+        <p className={p + ' mt-10'}>
+          Some things that two or more authors repeat about him are not in Diels’s chapter at all. Claude read each
+          candidate against the full text of the chapter and kept those that retell no entry. For Philolaus the list
+          is short, which says that Diels caught nearly everything later writers repeated. What is left: a rule
+          Olympiodorus gives in Philolaus’ name, that on entering a temple one should not turn back; Eurytus’ story,
+          in Iamblichus’ <em>Life of Pythagoras</em>, of a shepherd who heard singing from Philolaus’ tomb; and a
+          remark of Proclus on the <em>Timaeus</em>. The claims made only once are in the next list.
+        </p>
+
+        <OutsideDiels dielsUrl={`${DATA}/diels.json`} mapUrl={`${DATA}/map.json`} />
 
         <h2 className={h2}>Told once</h2>
 
@@ -186,7 +236,7 @@ export default function PhilolausInTheLibraryPage() {
           reports something he said.
         </p>
 
-        <RareClaims dataUrl={`${DATA}/rare.json`} />
+        <RareClaims dataUrl={`${DATA}/rare.json`} dielsUrl={`${DATA}/diels.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -195,7 +245,7 @@ export default function PhilolausInTheLibraryPage() {
           Philolaus said or taught; those passages have a gold rule. Every page number opens the scan.
         </p>
 
-        <FigureIndex dataUrl={`${DATA}/passages.json`} namePrefix="Philola"
+        <FigureIndex dataUrl={`${DATA}/passages.json`} dielsUrl={`${DATA}/diels.json`} namePrefix="Philola"
           placeholder="Filter: central fire, Plato, harmony, Copernicus, Boeckh…" />
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
@@ -204,7 +254,7 @@ export default function PhilolausInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Philolaus”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern
-          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Copernicus quotation is the library’s
+          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. The Diels labels compare each passage that reports or attributes something to him with each numbered entry of his chapter in the 1912 edition, by the sense of the words; a passage that closely retells a labelled one takes its label; the thresholds were set by reading samples, and the few wrong labels found are corrected by hand. Four pages of that edition have no transcription yet (pp. 31–32 and 317, 319); their entries were read from the scans. The one-line summaries in “Outside Diels” are Claude’s, and an editor’s note printed inside an old text is dated by its edition when it names a writer who lived long after the text’s author. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Copernicus quotation is the library’s
           translation, with the Greek as the library transcribed it from the page.
         </p>
       </article>

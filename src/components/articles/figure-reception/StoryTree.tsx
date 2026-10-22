@@ -11,6 +11,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FAMILY_COLOR, fmtYear, useFigureJson, type MapData, type Row, type TreeData } from './data';
+import { DielsTag, useDiels } from './Diels';
 
 const ROW = 9;
 const MAX_HEIGHT = 560;
@@ -23,12 +24,15 @@ type Props = {
   treeUrl: string;
   /** Story keys offered as quick picks, in order; the first is shown on load. Theme stories are "t<theme id>". */
   featured: string[];
+  /** diels.json, to mark tellings that retell a Diels entry. */
+  dielsUrl?: string;
 };
 
 type Laid = { row: Row; parent: number; sim: number; depth: number; y: number; kids: number };
 
-export default function StoryTree({ mapUrl, treeUrl, featured }: Props) {
+export default function StoryTree({ mapUrl, treeUrl, featured, dielsUrl }: Props) {
   const map = useFigureJson<MapData>(mapUrl);
+  const diels = useDiels(dielsUrl);
   const tree = useFigureJson<TreeData>(treeUrl);
   const [key, setKey] = useState(featured[0]);
   const [showLone, setShowLone] = useState(false);
@@ -185,6 +189,7 @@ export default function StoryTree({ mapUrl, treeUrl, featured }: Props) {
               {i > 0 && <span className="font-mono text-[11px] mr-2">{chain[i - 1].sim}% like the one above ·</span>}
               {n.row[6]}{' '}
               <a href={`/book/${n.row[4]}?page=${n.row[5]}`} className="break-words font-mono text-xs text-muted">{n.row[7].slice(0, 44)}, p.&nbsp;{n.row[5]}&nbsp;&rarr;</a>
+              <DielsTag data={diels} id={n.row[4]} page={n.row[5]} text={n.row[6]} />
             </blockquote>
           ))}
           {chain.length > 6 && <p className="font-mono text-xs text-muted">…and {chain.length - 6} earlier tellings back to the start of this line.</p>}

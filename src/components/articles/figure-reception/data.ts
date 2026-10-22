@@ -32,6 +32,7 @@ export function useFigureJson<T>(url: string) {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     let live = true;
+    if (!url) return; // optional data the page did not ask for
     if (!cache.has(url)) {
       const p = fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
       p.catch(() => cache.delete(url)); // a failed load is retried on the next mount
@@ -42,3 +43,18 @@ export function useFigureJson<T>(url: string) {
   }, [url]);
   return { data, failed };
 }
+
+// diels.json (diels.py): which passages retell an entry of the figure's chapter in Diels, Vorsokratiker 1912.
+// entry = [label ("32 B 13"), kind, page in the Diels volume, source, gist, passages tagged, works, earliest year]
+export type DielsEntry = [string, string, number, string, string, number, number, number | null];
+// outside = [authors, map theme (-1 = none), gist, year, book id, page, passage, title, [year, book id, page, title][],
+//   edition year when the year is the author's death year (shown as "by"), else null]
+export type OutsideItem = [number, number, string, number | null, string, number, string, string, [number | null, string, number, string][], number | null];
+export type DielsData = {
+  edition: string; book: string; chapters: [number, number][];
+  entries: DielsEntry[]; tags: Record<string, [number, number]>; themes: Record<string, [number, number]>; outside: OutsideItem[];
+};
+
+// The key diels.py tags a passage by: book, page and the first 30 letters and digits of its text (passages.py).
+export const passageKey = (id: string, page: number, text: string) =>
+  `${id}:${page}:${text.toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 30)}`;

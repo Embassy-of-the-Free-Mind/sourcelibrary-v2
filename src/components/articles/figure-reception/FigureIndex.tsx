@@ -15,6 +15,8 @@
 //   E   other editions of the same work: [id, year, language, title-if-different, pages, bestPage, sentence]
 
 import { useEffect, useMemo, useState } from 'react';
+import { DielsTag, useDiels } from './Diels';
+import type { DielsData } from './data';
 
 type Passage = [number, string, 0 | 1];
 type Edition = [string, number | null, string, string, number, number, string];
@@ -55,18 +57,19 @@ function Highlighted({ text, name }: { text: string; name: RegExp }) {
   return <>{parts.map((s, i) => (i % 2 ? <strong key={i} className="font-semibold text-primary">{s}</strong> : s))}</>;
 }
 
-function PassageQuote({ id, p, name }: { id: string; p: Passage; name: RegExp }) {
+function PassageQuote({ id, p, name, diels }: { id: string; p: Passage; name: RegExp; diels: DielsData | null }) {
   return (
     <blockquote className={`border-l-2 pl-4 font-body text-secondary leading-relaxed ${p[2] ? 'border-accent-gold' : 'border-stone-300'}`}>
       <Highlighted text={p[1]} name={name} />{' '}
       <a href={pageHref(id, p[0])} className="whitespace-nowrap text-xs font-mono text-muted no-underline hover:underline">
         p.&nbsp;{p[0]}&nbsp;&rarr;
       </a>
+      <DielsTag data={diels} id={id} page={p[0]} text={p[1]} />
     </blockquote>
   );
 }
 
-function WorkCard({ w, name }: { w: Work; name: RegExp }) {
+function WorkCard({ w, name, diels }: { w: Work; name: RegExp; diels: DielsData | null }) {
   const best = w.P[0];
   const rest = w.P.slice(1);
   const pub = w.pub ? String(w.pub).trim() : '';
@@ -93,14 +96,14 @@ function WorkCard({ w, name }: { w: Work; name: RegExp }) {
           </div>
         </div>
       </div>
-      <PassageQuote id={w.id} p={best} name={name} />
+      <PassageQuote id={w.id} p={best} name={name} diels={diels} />
       {rest.length > 0 && (
         <details className="border-t border-stone-200 pt-2 group">
           <summary className="cursor-pointer font-mono text-xs text-muted hover:text-primary">
             {plural(rest.length, 'more passage')} in this book{w.np > w.P.length ? ` (of ${w.np - 1})` : ''}
           </summary>
           <div className="flex flex-col gap-3 mt-3">
-            {rest.map((p) => <PassageQuote key={p[0]} id={w.id} p={p} name={name} />)}
+            {rest.map((p) => <PassageQuote key={p[0]} id={w.id} p={p} name={name} diels={diels} />)}
             {w.np > w.P.length && (
               <a href={pageHref(w.id)} className="font-mono text-xs text-muted">
                 {plural(w.np - w.P.length, 'more page')} in the book &rarr;
@@ -123,7 +126,7 @@ function WorkCard({ w, name }: { w: Work; name: RegExp }) {
                     <a href={pageHref(e[0])}>{e[3] || 'Same work'}</a>{' '}
                     <span className="font-mono text-[11px] text-muted">· {e[2] || '?'} · {plural(e[4], 'page')}</span>
                   </div>
-                  <PassageQuote id={e[0]} p={[e[5], e[6], 0]} name={name} />
+                  <PassageQuote id={e[0]} p={[e[5], e[6], 0]} name={name} diels={diels} />
                 </div>
               </div>
             ))}
@@ -143,9 +146,12 @@ type Props = {
   placeholder: string;
   /** Optional sentence under a period heading, keyed by era key ("antiquity", "600", … "undated"). */
   eraIntros?: Record<string, string>;
+  /** diels.json, to mark passages that retell a Diels entry. */
+  dielsUrl?: string;
 };
 
-export default function FigureIndex({ dataUrl, namePrefix, placeholder, eraIntros = {} }: Props) {
+export default function FigureIndex({ dataUrl, namePrefix, placeholder, eraIntros = {}, dielsUrl }: Props) {
+  const diels = useDiels(dielsUrl);
   const name = useMemo(() => new RegExp(`(${namePrefix}\\w*)`, 'gi'), [namePrefix]);
   const [data, setData] = useState<Work[] | null>(null);
   const [failed, setFailed] = useState(false);
@@ -254,7 +260,7 @@ export default function FigureIndex({ dataUrl, namePrefix, placeholder, eraIntro
               {e.name}<span className="font-mono text-xs text-muted">{plural(ws.length, 'work')}</span>
             </h3>
             {eraIntros[e.key] && <p className="text-muted italic font-body">{eraIntros[e.key]}</p>}
-            {ws.slice(0, n).map((w) => <WorkCard key={w.id} w={w} name={name} />)}
+            {ws.slice(0, n).map((w) => <WorkCard key={w.id} w={w} name={name} diels={diels} />)}
             {ws.length > n && (
               <button type="button" onClick={() => setShown((s) => ({ ...s, [e.key]: n + BATCH * 4 }))}
                 className="rounded-md border border-dashed border-stone-300 py-2.5 font-mono text-xs text-muted hover:text-primary">

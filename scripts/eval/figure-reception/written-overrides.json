@@ -59,5 +59,9 @@
   "69b2fffee5d6d64d8e197d97": {
     "year": null,
     "why": "Augustine's City of God (Basel 1542) printed with Vives' commentary on every page; the passages naming Pythagoreans are Vives'"
+  },
+  "69c7fe736c6f3cc53c8437d3": {
+    "year": null,
+    "why": "Dacier's Bibliothèque des anciens philosophes (1771), a French anthology with Dacier's own lives and commentary, catalogued under Plato (found by diels.py, 2026-10-22)"
   }
 }

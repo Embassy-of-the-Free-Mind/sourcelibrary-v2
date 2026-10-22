@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
@@ -8,6 +9,7 @@ import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
 import RareClaims from '@/components/articles/figure-reception/RareClaims';
+import { DielsThemes, OutsideDiels } from '@/components/articles/figure-reception/Diels';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
@@ -44,6 +46,7 @@ export const metadata: Metadata = withArticleMeta(SLUG, {
 const BOOK = {
   macrobius: '/book/integer-nitidus-macrobius',
   reisch: '/book/margarita-philosophica-reisch-1',
+  diels: '/book/die-fragmente-der-vorsokratiker-diels',
 };
 
 const DATA = '/articles/pythagoras-in-the-library';
@@ -159,7 +162,54 @@ export default function PythagorasInTheLibraryPage() {
           one copying the other. Click a dot to read it and follow its line back.
         </p>
 
-        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['hammers', 't16', 't32', 't33']} />
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} dielsUrl={`${DATA}/diels.json`} featured={['hammers', 't16', 't32', 't33']} />
+
+        <h2 className={h2}>What Diels collected, and what he left out</h2>
+
+        <p className={p}>
+          Hermann Diels gathered the ancient evidence for the early Greek thinkers in{' '}
+          <Link href={`${BOOK.diels}?page=48`}><em>Die Fragmente der Vorsokratiker</em></Link>, and scholars still cite
+          it by his numbers. In the third edition (1912), which the library holds, Pythagoras has two chapters: chapter
+          4, on his life, limited to the oldest witnesses down to Aristotle’s school, and chapter 45, on the
+          Pythagorean school, with Aristotle’s reports, the oral sayings and symbols, and Aristoxenus’ precepts. In the
+          later Diels–Kranz they are chapters 14 and 58. Diels left the legends out on purpose, and he sent the reader
+          to Xenophanes, Heraclitus, Empedocles and Ion for what they said of him.
+        </p>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6a3f0220661123baf6fe9d4e/0048.jpg"
+            alt="A page of Diels’s Fragmente der Vorsokratiker: the end of the Anaximenes chapter, then the heading 4. Pythagoras, a German paragraph explaining what the chapter includes, and the first testimonies in Greek from Herodotus."
+            href={`${BOOK.diels}?page=48`}
+            source={<>Hermann Diels, <em>Die Fragmente der Vorsokratiker</em>, 3rd ed. (Berlin, 1912), vol. 1, p. 27: the start of the chapter on Pythagoras</>}
+          />
+        </div>
+
+        <p className={p}>
+          On this page a small grey label, such as “Diels 45 C 3”, marks a passage that retells a Diels entry; it
+          opens that entry in the scan. The labels come from comparing the sense of each passage with each entry,
+          checked by reading samples: about nine in ten were right. For Pythagoras the test is strict, because his
+          chapters touch almost every subject, so many retellings go unlabelled. Beans are in Diels, yet only one
+          passage in six about them carries a label. Read the bars below as floors.
+        </p>
+
+        <p className={p}>
+          What they show most clearly is the themes that never touch Diels. The alchemists’ Pythagoras, the herbs and
+          secret plant names that Pliny gives in his name, the soul set free in the pure ether at the end of the Golden
+          Verses: none of their passages retells an entry in his chapters.
+        </p>
+
+        <DielsThemes mapUrl={`${DATA}/map.json`} dielsUrl={`${DATA}/diels.json`} />
+
+        <p className={p + ' mt-10'}>
+          These are the claims about Pythagoras that two or more authors repeat and that Diels’s chapters do not
+          contain. Claude read each candidate against the full text of both chapters and kept those that retell no
+          entry; the 150 claims repeated by the most authors were read. At the top is the Pythagoras of the{' '}
+          <em>Turba philosophorum</em>, teaching the alchemists how to fix sulphur, and Pliny’s Pythagoras, who ranked mustard first among sharp
+          remedies. The smithy where he heard the hammers is further down.
+        </p>
+
+        <OutsideDiels dielsUrl={`${DATA}/diels.json`} mapUrl={`${DATA}/map.json`} />
 
         <h2 className={h2}>Told once</h2>
 
@@ -176,7 +226,7 @@ export default function PythagorasInTheLibraryPage() {
           something he said.
         </p>
 
-        <RareClaims dataUrl={`${DATA}/rare.json`} />
+        <RareClaims dataUrl={`${DATA}/rare.json`} dielsUrl={`${DATA}/diels.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -187,7 +237,7 @@ export default function PythagorasInTheLibraryPage() {
           the original beside the translation.
         </p>
 
-        <FigureIndex dataUrl={`${DATA}/passages.json`} namePrefix="Pythagor" eraIntros={ERA_INTROS}
+        <FigureIndex dataUrl={`${DATA}/passages.json`} dielsUrl={`${DATA}/diels.json`} namePrefix="Pythagor" eraIntros={ERA_INTROS}
           placeholder="Filter: beans, monochord, Samos, transmigration, Ficino…" />
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
@@ -197,7 +247,7 @@ export default function PythagorasInTheLibraryPage() {
           are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
           such as “according to Pythagoras”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern match, so it misses some and catches some it should
-          not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
+          not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. The Diels labels compare each passage that reports or attributes something to him with each numbered entry of his chapter in the 1912 edition, by the sense of the words; a passage that closely retells a labelled one takes its label; the thresholds were set by reading samples, and the few wrong labels found are corrected by hand. Four pages of that edition have no transcription yet (pp. 31–32 and 317, 319); their entries were read from the scans. The one-line summaries in “Outside Diels” are Claude’s, and an editor’s note printed inside an old text is dated by its edition when it names a writer who lived long after the text’s author. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
           on the page.
         </p>
       </article>
