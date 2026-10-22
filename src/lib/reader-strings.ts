@@ -243,6 +243,14 @@ export interface ReaderStrings {
     ungroundedLabel: string;
     /** The same page with the Notes toggle off. */
     ungroundedHidden: string;
+    /** Amber notice over a page the OCR marked handwritten or mixed (#7098):
+     *  the bold label, then the caution that follows its colon. */
+    handwrittenManuscript: string;
+    mixedManuscript: string;
+    uncertainReadings: string;
+    /** Page-number and folio chips in the Page Info bar, from the OCR's own numbering. */
+    pageNumberLabel: (n: string) => string;
+    folioLabel: (f: string) => string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -851,6 +859,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
       ungroundedLabel: 'Little or no text was transcribed on this page · written by the model',
       ungroundedHidden: 'Little or no text was transcribed on this page. Turn Notes on to read what the model wrote.',
+      handwrittenManuscript: 'Handwritten manuscript',
+      mixedManuscript: 'Mixed manuscript',
+      uncertainReadings: 'transcription may contain uncertain readings',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -1335,6 +1348,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
       ungroundedLabel: 'Se transcribió poco o ningún texto en esta página · escrito por el modelo',
       ungroundedHidden: 'Se transcribió poco o ningún texto en esta página. Activa las notas para leer lo que escribió el modelo.',
+      handwrittenManuscript: 'Manuscrito',
+      mixedManuscript: 'Manuscrito mixto',
+      uncertainReadings: 'la transcripción puede contener lecturas inciertas',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
@@ -1844,6 +1862,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
       ungroundedLabel: 'Paulum aut nihil textus ex hac pagina transcriptum · a machina scriptum',
       ungroundedHidden: 'Paulum aut nihil textus ex hac pagina transcriptum. Notas ostende, ut quae machina scripsit legas.',
+      handwrittenManuscript: 'Codex manu scriptus',
+      mixedManuscript: 'Codex mixtus',
+      uncertainReadings: 'transcriptio lectiones incertas continere potest',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
       traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
 
@@ -2329,6 +2352,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
       ungroundedLabel: 'Weinig of geen tekst getranscribeerd op deze pagina · geschreven door het model',
       ungroundedHidden: 'Weinig of geen tekst getranscribeerd op deze pagina. Zet Noten aan om te lezen wat het model schreef.',
+      handwrittenManuscript: 'Handgeschreven manuscript',
+      mixedManuscript: 'Gemengd manuscript',
+      uncertainReadings: 'de transcriptie kan onzekere lezingen bevatten',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
       traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
 
@@ -2815,6 +2843,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
       ungroundedLabel: '本页几乎未转录出文字 · 由模型撰写',
       ungroundedHidden: '本页几乎未转录出文字。打开“注释”即可阅读模型撰写的内容。',
+      handwrittenManuscript: '手写稿',
+      mixedManuscript: '手写与印刷混合稿',
+      uncertainReadings: '转录可能含有不确定的释读',
+      pageNumberLabel: (n) => `第 ${n} 页`,
+      folioLabel: (f) => `第 ${f} 叶`,
       traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
       traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
 
