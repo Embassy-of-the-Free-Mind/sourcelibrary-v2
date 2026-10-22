@@ -153,10 +153,13 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/** The page markers inside joined HTML: small, quiet, raised — present for finding a page, never read as text. */
+/** The page markers inside joined HTML: small and quiet, present for finding a page, never read as text. On the
+ *  line, behind a thin rule, as a page break is marked in an edition — NOT raised: a raised number reads as a
+ *  footnote call, and the notes are footnotes in the EPUB. */
 const FLOW_MARKER_CLASSES = [
-  '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-super',
-  '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:px-0.5',
+  '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-baseline',
+  '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:mx-1', '[&_.page-marker]:pl-1',
+  '[&_.page-marker]:border-l', '[&_.page-marker]:border-[var(--border-light)]',
   '[&_.page-marker:hover]:text-accent-rust', '[&_.page-marker]:scroll-mt-20',
   // A page's printed footnotes, moved below the sentence that ran over the page.
   '[&_.flow-footnote]:text-sm', '[&_.flow-footnote]:text-muted', '[&_.flow-footnote]:pl-4',
@@ -326,7 +329,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         <p className="text-sm text-muted mt-3">
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
           {view === 'flow'
-            ? ' The text runs on across pages; the small numbers mark where each page begins and open it beside the scan.'
+            ? ' The text runs on across pages; the small numbers after a thin rule mark where each printed page begins, and open it beside the scan.'
             : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
         </p>
       </header>
@@ -357,7 +360,35 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </nav>
       )}
 
-      {partCount > 1 && (
+      {partCount > 3 && (
+        // A long book: where you are and the next step on one line; the full list folded, so on a phone the
+        // text starts on the first screen instead of under fifteen links.
+        <nav aria-label="Parts" className="mb-4 text-sm">
+          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="font-semibold" aria-current="page">Part {part} of {partCount}, pages {first}–{last}</span>
+            {part > 1 && <Link href={href({ part: part - 1 })} className="underline underline-offset-2 hover:text-accent-rust">← Part {part - 1}</Link>}
+            {part < partCount && <Link href={href({ part: part + 1 })} className="underline underline-offset-2 hover:text-accent-rust">Part {part + 1} →</Link>}
+          </p>
+          <details className="mt-2">
+            <summary className="cursor-pointer text-muted">All {partCount} parts</summary>
+            <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+              {Array.from({ length: partCount }, (_, i) => i + 1).map(p => {
+                const a = pages[(p - 1) * PART_SIZE]?.page_number;
+                const b = pages[Math.min(pages.length, p * PART_SIZE) - 1]?.page_number;
+                return (
+                  <li key={p}>
+                    {p === part
+                      ? <span className="font-semibold">Part {p}, pages {a}–{b}</span>
+                      : <Link href={href({ part: p })} className="underline underline-offset-2 hover:text-accent-rust">Part {p}, pages {a}–{b}</Link>}
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        </nav>
+      )}
+
+      {partCount > 1 && partCount <= 3 && (
         <nav aria-label="Parts" className="mb-4 text-sm">
           <ul className="flex flex-wrap gap-x-3 gap-y-1">
             {Array.from({ length: partCount }, (_, i) => i + 1).map(p => {
