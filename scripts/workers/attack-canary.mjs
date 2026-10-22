@@ -96,6 +96,13 @@ const OTHER_HOSTS = [
   { host: 'sourcelibrary-v2.vercel.app', layer: 'proxy client-hint-gate (outside the zone)' },
 ];
 
+// Preview builds outside the zone, each running its own frozen code. The
+// Vercel firewall rule "Preview builds: no anonymous book content" (project
+// level, so it covers builds of any age) must refuse an ordinary anonymous
+// browser here, not just the fleet. Long-lived aliases, so these rows do not
+// break when old builds are deleted.
+const PREVIEW_HOSTS = ['sourcelibrary-v2-staging.vercel.app', 'sourcelibrary-episode-sources.vercel.app', 'bph-catalogue-updates.vercel.app'];
+
 function classify(res) {
   const mitigated = (res.headers.get('cf-mitigated') || '').toLowerCase();
   if (mitigated === 'challenge') return 'challenge';
@@ -125,6 +132,9 @@ async function main() {
   for (const { host, layer } of OTHER_HOSTS) {
     rows.push(await probe(host, { name: 'fake Chrome, no client hints', rule: layer, ua: UA.linux149, expect: 'block' }));
     rows.push(await probe(host, { name: 'real Chrome with hints', rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
+  }
+  for (const host of PREVIEW_HOSTS) {
+    rows.push(await probe(host, { name: 'anonymous Firefox on a preview build', rule: 'Vercel firewall (preview builds)', ua: UA.firefox, expect: 'block' }));
   }
 
   const failed = rows.filter((r) => !r.ok);
