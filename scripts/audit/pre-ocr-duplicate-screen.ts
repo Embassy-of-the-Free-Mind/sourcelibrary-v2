@@ -126,7 +126,8 @@ async function decide(db: Db, dir: string, apply: boolean) {
   for (const v of same) {
     const a = books.get(v.a), b = books.get(v.b);
     if (!a || !b) continue;
-    const pick = willHold.has(a.id) || willHold.has(b.id) ? null : chooseHold(a, b);
+    if (willHold.has(a.id) || willHold.has(b.id)) continue; // already decided through another pair
+    const pick = chooseHold(a, b);
     if (pick && !willHold.has(pick.kept.id)) {
       willHold.add(pick.hold.id);
       holds.push({ hold: brief(pick.hold), kept: brief(pick.kept), why: pick.why, median_inliers: v.median, inliers: v.inliers });
