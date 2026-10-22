@@ -18,7 +18,8 @@ const clean = (s) => s.replace(/<\/?[a-z][a-z-]*[^>]*>/gi, ' ').replace(/\^[^^\s
 const trim = (s0) => { const s = clean(s0); return s.length > 300 ? s.slice(0, 297).replace(/\s\S*$/, '') + '…' : s; };
 
 const books = d.filter((b) => b.v && b.pc > 0).map((b) => {
-  const ps = b.passages.filter((p) => !SKIP.has(p.type) && clean(p.s).length > 25);
+  // p <= 0 is a soft-hidden page (harvest.mjs); hits.json from before that rule can still hold them.
+  const ps = b.passages.filter((p) => p.p > 0 && !SKIP.has(p.type) && clean(p.s).length > 25);
   ps.sort((x, y) => (y.q - x.q) || (y.n - x.n) || (x.p - y.p));
   return { ...b, ps };
 }).filter((b) => b.ps.length);

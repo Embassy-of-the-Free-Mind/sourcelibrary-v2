@@ -17,7 +17,7 @@
 // holds hand corrections, each with its reason: author_id pointing at the subject rather than the writer (a study
 // of Philolaus filed under Philolaus), or a wrong Wikidata match.
 //
-// Output: { "<book id>": [writtenYear, "<author slug>"] } for books whose year changes; absent = edition year.
+// Output: { "<book id>": [writtenYear, "<author slug>", "<author's name, one word>"] } for books whose year changes; absent = edition year.
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
@@ -57,11 +57,17 @@ for (const [id, d] of cat) {
   // Conservative: a pseudonymous text, or a compilation of several authors, keeps its edition year, since one
   // author's death year says nothing about when the rest was written.
   const names = (d.author || '').replace(/\(.*?\)/g, '').split(/[;|/]| and | & /).filter((x) => x.trim() && !/\b(ed|eds|edited|trans|tr|transl|translated|comm|notes|introd\w*|printed)\b\.?/i.test(x));
-  const plain = names.length <= 1 && !/pseudo/i.test(d.author || '');
+  // An edition WITH someone else's commentary (Bekker's Scholia in Aristotelem, "Aratus with Commentaries", Muret's
+  // scholia on Horace) is catalogued under the author commented on, but its notes are the commentator's.
+  const title = d.display_title || d.title || '';
+  const withCommentary = /with (the |his )?\S*\s?(commentar|scholi|notes)|\((greek text with )?commentary\)|scholi(a|is|um)|commentari(is|i a)|annotation(es|s)|glosses|notis|emendat|commentary by|commentaries of/i.test(title);
+  const plain = names.length <= 1 && !/pseudo/i.test(d.author || '') && !withCommentary;
   let y = plain && d.year != null && death != null && death < d.year ? death : null;
   if (id in overrides) y = overrides[id].year;
   if (y == null) continue;
-  out[id] = [y, d.author_id];
+  // The author's own name, for dating.py: an author rarely names himself, so a passage that names him is an editor's.
+  const self = (a?.canonical_name || '').split(/[\s,]+/).find((w) => w.length >= 4 && !/^(saint|pseudo|the|of)$/i.test(w)) || '';
+  out[id] = [y, d.author_id, self];
   review.push([d.year - y, y, d.year, a?.canonical_name ?? d.author_id, d.author, d.display_title || d.title, id]);
 }
 fs.writeFileSync(path.join(HERE, 'written.json'), JSON.stringify(out, null, 0).replace(/\],"/g, '],\n"') + '\n');

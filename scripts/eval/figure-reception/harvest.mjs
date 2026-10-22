@@ -61,7 +61,9 @@ for (const [b, hs] of byBook) {
     if (!l) continue;
     let r;
     try { r = JSON.parse(l); } catch { continue; }
-    if (!types.has(r.p)) continue;
+    // A negative page number is the site's soft-hide (a duplicate or an unsplit spread whose halves are separate
+    // pages); the reader cannot open it, so it is never harvested.
+    if (!(r.p > 0) || !types.has(r.p)) continue;
     const tr = stripApparatus(r.tr || '').replace(/[#*|]+/g, ' ').replace(/\s+/g, ' ');
     const m = tr.match(SENT);
     if (!m) continue;

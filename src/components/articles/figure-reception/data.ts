@@ -13,6 +13,9 @@ export type MapData = { families: { key: string; name: string }[]; themes: Theme
 // node = [row, parent row (-1 = starts a new line), similarity %]; rows index map.json, or the story's own rows.
 export type Story = { key: string; name: string; theme: number | null; rows?: Row[]; nodes: [number, number, number][] };
 export type TreeData = { threshold: number; stories: Story[] };
+// rare.json (rare.py): [year, book id, page, passage, title, reports a saying 0|1, other works loosely similar, note index or -1]
+export type RareItem = [number | null, string, number, string, string, 0 | 1, number, number];
+export type RareData = { threshold: number; total: number; items: RareItem[]; notes: string[] };
 
 // One colour per family; no reds (article rule), each readable on the cream ground.
 export const FAMILY_COLOR: Record<string, string> = {

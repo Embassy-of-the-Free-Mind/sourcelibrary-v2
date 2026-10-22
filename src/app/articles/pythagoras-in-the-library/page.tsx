@@ -120,7 +120,7 @@ export default function PythagorasInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          About eleven thousand passages in the library report something Pythagoras said, taught or forbade. On this
+          More than ten thousand passages in the library report something Pythagoras said, taught or forbade. On this
           map each dot is one of them, and passages that say similar things sit close together. The groups are
           drawn by a computer from the wording alone; the names are ours, written after reading each group. Grey
           dots did not fall clearly into any group. Slide the year to watch the stories arrive, hover a dot to read

@@ -7,6 +7,7 @@ import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
 import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
+import RareClaims from '@/components/articles/figure-reception/RareClaims';
 
 // The second of the figure-reception pages (#7073), built with scripts/eval/figure-reception/ from the local
 // corpus mirror on 2026-10-20: every public work whose English translation contains "Philola*", with the
@@ -131,7 +132,7 @@ export default function PhilolausInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          About 770 passages in the library pair the name Philolaus with something said, taught or written. Each dot
+          About 750 passages in the library pair the name Philolaus with something said, taught or written. Each dot
           is one of them, and passages that say similar things sit close together. The groups are drawn by a computer
           from the wording; the names are ours, written after reading each group.
         </p>
@@ -169,6 +170,23 @@ export default function PhilolausInTheLibraryPage() {
         </p>
 
         <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t2', 't0', 'claudianus', 't7', 't1000']} />
+
+        <h2 className={h2}>Told once</h2>
+
+        <p className={p}>
+          The map and the tree show what was said about Philolaus again and again. This list is the other end: the
+          things said about him that no other book in the library says in similar words, at most three from any one
+          book. Some are stray facts, such as Franchino Gaffurio’s remark, in his <em>Theory of Music</em>, that after
+          the comma “Philolaus himself measured even smaller particles.” Some are attributions others doubted: Juan
+          Luis Vives, in his notes to Augustine’s <em>City of God</em>, mentions the Golden Verses of Pythagoras,
+          “which others hand down as being by Philolaus the Pythagorean.” And some are not about the ancient man at all: in 1639
+          Ismaël Boulliau gave the title <em>Philolaus</em> to his own book on the moving earth, and his opponents
+          argued with “Philolaus” for years. A note says so where a passage is not what it seems. The list keeps them
+          all, because this is where to look for what the usual story leaves out. A gold rule marks a passage that
+          reports something he said.
+        </p>
+
+        <RareClaims dataUrl={`${DATA}/rare.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 

@@ -8,6 +8,7 @@ import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
 import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
+import RareClaims from '@/components/articles/figure-reception/RareClaims';
 
 // The third of the figure-reception pages (#7073), built with scripts/eval/figure-reception/ from the local
 // corpus mirror on 2026-10-20: every public work whose English translation contains "Archyt*", with the
@@ -133,7 +134,7 @@ export default function ArchytasInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          About 560 passages in the library pair the name Archytas with something said, taught or written. Each dot is
+          About 530 passages in the library pair the name Archytas with something said, taught or written. Each dot is
           one of them, and passages that say similar things sit close together. The groups are drawn by a computer
           from the wording; the names are ours, written after reading each group. The largest group is the broadest:
           lives, letters and the treatises that circulated under his name.
@@ -160,6 +161,25 @@ export default function ArchytasInTheLibraryPage() {
         </p>
 
         <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t8', 't1', 't0', 't2']} />
+
+        <h2 className={h2}>Told once</h2>
+
+        <p className={p}>
+          The map and the tree show what was said about Archytas again and again. This list is the other end: the
+          things said about him that no other book in the library says in similar words, at most three from any one
+          book. A German manuscript of the moralised game of chess, copied in 1407, tells of “a master named
+          Archyloga” (Archytas, it seems) who said gold and silver should be valued no more than the clay that
+          cheese-moulds are made of. The preacher Meffret, in sermons
+          printed in 1488, warns against too much sleep with a line from “Archytas of Tarentum in his book On Events
+          in Nature”: “Everything that in the order of the universe is excessive and abundant quickly comes to
+          corruption and to nothing.” No book of that name survives among the writings ascribed to him. Lambert Daneau’s
+          dialogue on witches, in the English of 1575, gives him a feat that Plutarch tells of Archimedes; a note
+          marks it. The list keeps the spurious
+          and the garbled with the rest, because this is where to look for what the usual story leaves out. A gold
+          rule marks a passage that reports something he said.
+        </p>
+
+        <RareClaims dataUrl={`${DATA}/rare.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 

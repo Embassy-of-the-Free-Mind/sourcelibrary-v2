@@ -17,11 +17,12 @@ T = json.load(open(os.path.join(HERE, 'themes', KEY + '.json')))
 OUT = os.path.join(REPO, F['out'], 'map.json')
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
-pts = json.load(open(os.path.join(W, 'map-points.json')))['points']
+# A page number <= 0 is a soft-hidden duplicate the reader cannot open (harvest.mjs); tree.py drops the same rows.
+pts = [p for p in json.load(open(os.path.join(W, 'map-points.json')))['points'] if p['p'] > 0]
 # Date each passage by when it was written, not by the edition (dating.py); map-points.json keeps the edition year.
 types = page_types(json.load(open(os.path.join(W, 'hits.json'))))
 for p in pts:
-    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])))
+    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])), p['s'])
 names = {int(k): v for k, v in T['names'].items()}
 theme_family = {c: f['key'] for f in T['families'] for c in f['themes']}
 found = {p['c'] for p in pts if p['c'] >= 0}
