@@ -286,6 +286,83 @@ unchanged; changing them is a separate decision.
   large enough that a re-cut is unlikely to change the conclusion. `detect.mjs --windows=tight` exists but was not run.
 - Opus's verified count on its own repairs is self-judged, as it was in #6742.
 
+## 2026-10-22 · Is NDLOCR (modern print) worth a scored prereg as a second lane for Meiji typeset Japanese? (#5100)
+<!-- PRIOR ART: 2026-10-22-ndl-koten-full-run-eye-check-5100.md (the classical NDL lane); 2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md; scripts/workers/ndl-koten-lane.mjs compare (the agreement measure reused here). -->
+
+**Design.** This run is descriptive. It wrote nothing to Mongo and made no paid calls. It was preregistered in
+`scripts/eval/ndl-meiji-5100/PREREGISTRATION.md` (0279ae5de), with the 20-page sample (`pages.json`) frozen before any
+read. All 20 images fetched; no page was swapped.
+- **N.** NDLOCR-Lite, github.com/ndl-lab/ndlocr-lite @ `d001dad2013ceabb5736ff8d637474e443eb73c2` (CC BY 4.0), default
+  models. It ran on the GEX45 CPU on 4 cores at nice 10, with no GPU, at **9.8 s/page** wall time including model load.
+  Vertical reading order was checked by eye on 枕草子 p.529: headnote columns right to left, then the body right to
+  left, with ruby dropped.
+- **L.** The stored `ocr.data` (`gemini-3.1-flash-lite`). `content_hash` values are in `results.json`.
+- **Measures.** `score.mjs`: bigram Dice and whitespace-free edit agreement. Both are AGREEMENT measures, not accuracy.
+  Then a 5-page by-eye packet, one page per work, seed 5100.
+
+**Result** (`scripts/eval/results/ndl-meiji-5100/`)
+- Median Dice is **0.88** and median edit agreement **0.883**. Median characters: N 554, L 560. Neither arm looped
+  by `loopVerdict`.
+- **Rule 1** (Dice < 0.6 on ≥ 5 pages): **2/20**, not met. Both pages are the 1912 冠註無門関, which is kanbun with
+  kunten in a two-page commentary layout (Dice 0.13 and 0.34). The other 18 pages lie between 0.68 and 0.92.
+- **Rule 2** (L loops or is textless where N reads ≥ 100 chars, on ≥ 2 pages): **0**, not met.
+- **Rule 3** (N right where L is wrong on a ≥ 10-char span, on ≥ 2 of 5 eye pages): **1/5**, not met. The one hit is
+  冠註無門関 p.10, where L drops or paraphrases two commentary items that N reads almost right. On that same page N
+  scrambles the main text into the commentary and loops `地震` ×30. On 枕草子 p.397 it runs the other way: N drops a
+  13-character clause and duplicates another. On typeset kana-majiri pages, N was the more literal arm on 2 of 4 pages
+  (益軒 p.853, 猫 p.19). There L's errors are scattered single characters, plus ruby that is not printed. None of them
+  reaches 10 characters.
+
+**Verdict.** None of the three rules fired, so per the prereg lite stays the Meiji reader and no second lane is
+pursued. Two side observations, not decisions:
+- On clean typeset Meiji pages, N's single-character accuracy looks at least as good as lite's. This is free CPU
+  (~10 s/page). If a cheap *cross-check* lane is ever wanted, that is the place to look; a replacement lane is not.
+- `loopVerdict` did not flag N's short-period runs (`地震` ×30 on p.10; `仝`/`第` runs on p.6). If NDL output is
+  ever stored, it needs its own repetition check.
+
+## 2026-10-22 · Is the NDL full run's text the page? A by-eye check of 10 written pages (#5100)
+<!-- PRIOR ART: scripts/eval/results/ndl-koten-pilot/eye-read.md (the pilot's 10-page check, same lane, 20 other books); the #4925 comment of 2026-10-01 (the full run's counts). -->
+
+**Situation.** The brief for job `ndl-lane-5100` asked for the full run on the ~96 cursive books outside the pilot.
+Mongo says it already happened: the run of 2026-09-30/10-01 on a leased L4 (`sl-ndl-koten-full`, commit `939cbfa`,
+1.4 s/page) wrote **6,148 pages across all 96 books** (`ocr.engine.run = ndl-koten-2026-09/2026-10-01`), and all 96
+are held `ndl-koten-lane-4925`; the counts were posted on #4925 but not on #5100. A re-run would rewrite the same
+pages with the same engine, so this job did not re-run it. What #4925 left open was a by-eye check of the full run
+before any hold is released. This is that check.
+
+**Draw.** 10 of the 96 books (seed 5100), one page each with > 150 characters of NDL text, drawn at random from the
+book's pages written by the full run. Opened at full resolution against `ocr.engine.input.image_url`.
+
+| book | p. | right text? | errors seen |
+|---|---|---|---|
+| Ise monogatari (伊勢物語) | 23 | yes, dan 87 (the Nunobiki falls) | none noticed |
+| Kanze utaibon 14 (Hanagatami) | 42 | yes | 甘泉殿→処, ふるき→ぶるき; two margin glyphs read as 一十 / 元禄 |
+| Kanze utaibon 16 (Ashikari) | 12 | yes | one □□□ line, a few kana |
+| Kanze utaibon 18 (Seiganji) | 33 | yes | 和泉式部→式ア, a few kana |
+| Kanze utaibon 19 (Morihisa) | 14 | yes | none noticed |
+| Niwa no ki (庭之記, MS) | 2 | yes | the ownership seals read as 田畑 + two □□□ lines |
+| Nihon saijiki 1–2 | 15 | yes | 十五日→十九日, 三元→三才, 閩俗→国俗, 入液/出液→入瀬/出夜 (≈ 6) |
+| Nihon saijiki 6–7 | 72 | yes | first line read off the neighbouring leaf; 爆杖→杖, 焦氏筆乗→鳥業 (≈ 6) |
+| Shōni hitsuyō sodategusa 1 | 33 | yes | 巳亥→己亥, 午未→午来; furigana むまひつじ as its own line |
+| Imo hyakuchin (甘藷百珍) | 75 | yes | heading 叙→親方; 救荒→救道, 日用→御用 (≈ 7) |
+
+**Result.** 10/10 pages are the text of the page, in reading order, 0 invented (no containment needed). Running kana
+and hentaigana (Ise, the utaibon) read cleanest; the errors concentrate in kanji in the dense kanbun-mixed prose of
+the encyclopaedic books, where one in a few dozen kanji is a near-shape substitute — including a date (十五日→十九日),
+which matters to a translator. Seals and the neighbouring leaf's edge produce short spurious lines. These match the
+convention note carried on every page (`ocr.engine.conventions`).
+
+**What it does not show.** Character accuracy: no reference transcription exists for these books, so this is a
+judged right-page/wrong-page verdict with the slips noticed, not a CER. 10 pages, one per book.
+
+**What is held, and what translation would cost.** 116 books (96 full run + 20 pilot; 77 visible) held `ndl-koten-lane-4925`;
+7,133 pages carry the NDL reading; 3,573 of them (re-measured 2026-10-22) carry a translation marked `translation_stale` (made from text that
+is gone); 0 jobs queued for these books since 10-01. Re-translation is NOT in this job. #6056 found the English lane, not the OCR, failed on these books, so the
+re-translation needs its own lane decision before it is priced.
+
+**Also in this job.** The Meiji modern-print question (does NDLOCR beat lite on typeset Meiji pages?) is
+preregistered in `scripts/eval/ndl-meiji-5100/PREREGISTRATION.md`, 20 frozen pages; its read runs on the GEX45.
+
 ## 2026-10-22 · How many live books hold a scan of a different book than their record says?
 
 **Design.** `scripts/audit/scan-title-mismatch.mjs` over every live book with OCR (`visible`, `pages_count > 0`,
