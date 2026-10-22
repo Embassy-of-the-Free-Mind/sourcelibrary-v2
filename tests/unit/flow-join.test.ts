@@ -156,6 +156,17 @@ describe('joinPagesHtml', () => {
       const html = joinPagesHtml([page(1, 'It ends.'), { ...page(2, null), figures: fig }, page(3, 'Next.')]);
       expect(plain(html)).toBe('<p>|It ends.</p>\n|<figure>F</figure>\n<p>|Next.</p>');
     });
+    it('take the place of the translation\'s own account of the plate (Fludd, Temple of Music)', () => {
+      const html = joinPagesHtml([{ ...page(1, 'ON MUSIC.\n\n[An elaborate architectural engraving titled "Temple of Music"]\n\nThe towers sound.'), figures: fig }]);
+      expect(plain(html)).toBe('<p>|ON MUSIC.</p>\n<figure>F</figure>\n<p>The towers sound.</p>');
+    });
+    it('seat in order, one per account, with any extra after the last', () => {
+      const html = joinPagesHtml([{ ...page(1, 'Text.\n\n[A woodcut of a lion]\n\nMore.\n\n[A diagram of the spheres]\n\nEnd.'), figures: '<figure>A</figure><figure>B</figure><figure>C</figure>' }]);
+      expect(plain(html)).toBe('<p>|Text.</p>\n<figure>A</figure>\n<p>More.</p>\n<figure>B</figure><figure>C</figure>\n<p>End.</p>');
+    });
+    it('leave a bracketed account in place on a page with no figure', () => {
+      expect(joinPagesHtml([page(1, 'Text.\n\n[A woodcut of a lion]')])).toContain('[A woodcut of a lion]');
+    });
     it('are never lost at the end of the run', () => {
       expect(joinPagesHtml([page(1, 'The stone was'), { ...page(2, 'heated for'), figures: fig }])).toContain(fig);
     });

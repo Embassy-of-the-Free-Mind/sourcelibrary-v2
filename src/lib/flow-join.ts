@@ -126,6 +126,34 @@ export function pageMarker(n: number, href: string): string {
   return `<a class="page-marker" id="p${n}" href="${escapeAttr(href)}" aria-label="Page ${n}, open with the scan">${n}</a>`;
 }
 
+/** A paragraph that is the translation's own account of a plate: "[An elaborate architectural engraving titled …". */
+const IMAGE_ACCOUNT = /^\[(?:An?|The|Two|Three|Several)\s[^\]]{0,120}?\b(?:engraving|woodcut|illustration|diagram|drawing|figure|image|plate|emblem|portrait|map|chart|vignette|frontispiece|miniature|painting|picture|depiction)s?\b/i;
+
+/** Seat a page's figures where the page itself describes them: the i-th figure replaces the i-th image-account
+ *  paragraph, which says where the plate sits and is no longer needed once the plate is there (it is the image's
+ *  alt text). Figures left over follow the last seated one; with no account on the page, none are seated. */
+function seatFigures(html: string, figures: string): { html: string; rest: string } {
+  if (!figures) return { html, rest: '' };
+  const figs = figures.split('</figure>').filter(f => f.trim()).map(f => f + '</figure>');
+  let i = 0;
+  let lastEnd = -1;
+  let out = '';
+  let pos = 0;
+  for (const m of html.matchAll(/<p>((?:<a class="page-marker"[^>]*>\d+<\/a>)*)([\s\S]*?)<\/p>/g)) {
+    if (i >= figs.length) break;
+    if (!IMAGE_ACCOUNT.test(textOf(m[2]))) continue;
+    const at = m.index as number;
+    // A page marker opening the paragraph stays; the account goes.
+    out += html.slice(pos, at) + (m[1] ? `<p>${m[1]}</p>\n` : '') + figs[i++];
+    pos = at + m[0].length;
+    lastEnd = out.length;
+  }
+  if (lastEnd < 0) return { html, rest: figures };
+  out += html.slice(pos);
+  const left = figs.slice(i).join('');
+  return { html: left ? out.slice(0, lastEnd) + left + out.slice(lastEnd) : out, rest: '' };
+}
+
 /** Put `ins` after the first closed paragraph of `html` — but never after a last paragraph whose sentence runs on. */
 function placeAfterFirstBlock(html: string, ins: string): { html: string; placed: boolean } {
   if (!ins) return { html, placed: true };
@@ -177,8 +205,10 @@ export function joinPagesHtml(pages: FlowPage[]): string {
   pages.forEach((p, idx) => {
     const marker = pending + pageMarker(p.n, p.href);
     pending = '';
-    const own = p.figures || '';
-    const whole = bodies[idx];
+    // Figures go where the page describes them, if it does; the rest follow the page's first paragraph.
+    const seated = seatFigures(bodies[idx], p.figures || '');
+    const own = seated.rest;
+    const whole = seated.html;
     if (!whole) {
       // A plate on a page with no text: its figure stands at the boundary, unless a sentence is still open.
       const open = out.endsWith('</p>') && !SENTENCE_END.test(textOf(out.slice(Math.max(out.lastIndexOf('<p>'), out.length - 400))));
