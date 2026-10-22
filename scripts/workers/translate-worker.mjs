@@ -47,6 +47,7 @@ import {
   PAGE_BREAK_SCOPED,
   dropLeafSeamBreaches,
   isEnglishBook,
+  seamGuardOn,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
@@ -549,7 +550,19 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
+  await seamGuardPages(db, [page], book);
   return { written: true };
+}
+
+// The write-time seam guard (#7118). This worker writes through its own door, not translate-core's, so it calls the
+// guard itself, after the commit: off unless SEAM_GUARD or the box file (translate-core SEAM_GUARD_FILE) says dry|apply,
+// bounded per page, and never the write's failure. Loaded only when on.
+async function seamGuardPages(db, pages, book) {
+  if (!seamGuardOn()) return;
+  try {
+    const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
+    for (const page of pages) await runSeamGuard(db, { page, book, note: 'translate_worker' });
+  } catch { /* never the translation write's failure */ }
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -658,6 +671,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       updated_at: now,
     },
   })));
+  await seamGuardPages(db, entries.map(({ page }) => page), book);
   return { refused: unhealthy.length + empty.length };
 }
 
