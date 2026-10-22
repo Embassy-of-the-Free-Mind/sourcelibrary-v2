@@ -50,6 +50,12 @@
  * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
  * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
  *
+ * BY-EYE CHECK (#6865): `apply --by-eye=FILE` (JSONL, one row per page: {page_id, read_sha256, verdict, checked_by, at,
+ * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
+ * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
+ * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
+ * `engine.input.by_eye`.
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -241,6 +247,8 @@ if (LANE_GATE) {
   if (why) { console.error(`lane gate refused, nothing written: ${why}`); fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? 'refused' : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, lane: LANE, gate_refused: why, written: 0 }, null, 1)); await client.close(); process.exit(1); }
   console.log(`lane gate ${LANE}: PASS (${LANE_GATE.sample.better} better / ${LANE_GATE.sample.same} same / ${LANE_GATE.sample.worse} worse of ${LANE_GATE.sample.n}; controls ${LANE_GATE.controls.pass}/${LANE_GATE.controls.n}) — the 40% shared-words floor is lifted for this book`);
 }
+const BY_EYE = new Map();
+if (arg('by-eye')) for (const l of fs.readFileSync(arg('by-eye'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); BY_EYE.set(r.page_id, r); }
 const EXTRA_PATH = path.join(OUT, 'prompt-extra.txt');
 const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : '';
 const bookCache = new Map();
@@ -277,7 +285,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
-  let yat = null;
+  let yat = null, byEye = null;
   if (correct) {
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     const d = diffSyllables(page.ocr.data, text);
@@ -303,7 +311,13 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   } else if (page.ocr?.data && !LANE_GATE) {
     const was = longWords(page.ocr.data), now = longWords(text);
     const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
-    if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+    if (was.size >= 40 && shared < MIN_SHARED) {
+      const eye = BY_EYE.get(page.id);
+      if (!eye) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+      if (eye.read_sha256 !== sha256(text)) { skip(m, 'the by-eye check was made on a different read'); continue; }
+      if (eye.verdict !== 'read-matches-image') { skip(m, `by-eye verdict: ${eye.verdict}`); continue; }
+      byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
+    }
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
@@ -319,7 +333,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }),
-      ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }) },
+      ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
+      ...(byEye && { by_eye: byEye }) },
   });
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);
