@@ -9,7 +9,8 @@
  *   detectors.mjs (PR #7173) `marginStrip` — the fragment test, reused for fix (a)(i).
  *
  *   detect <img dir> <out.json>                 edge-strip verdict per image ($0)
- *   fix    <reads.jsonl.gz> <detect.json> <nbr.json> <out.jsonl>    fix (a), text only, on stored reads ($0)
+ *   fix    <reads.jsonl.gz> <detect.json> <nbr.json> <out.jsonl>    fix (a), text only, on stored reads ($0); needs
+ *          PR #7173's detectors and JOB_SCRATCH=<the census scratch dir> (its lexicon is built from corpus.jsonl.gz there)
  *   crop   <img dir> <detect.json> <out dir>    fix (b): write the cropped leaf for pages where a strip was found
  * Read only: nothing here writes to Mongo or calls a model.
  */
