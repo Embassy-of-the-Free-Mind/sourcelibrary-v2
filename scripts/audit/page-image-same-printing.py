@@ -47,6 +47,7 @@ from pymongo import MongoClient
 
 RELS = [0.12, 0.24, 0.36, 0.48, 0.60, 0.72, 0.84, 0.94]
 SAME, DIFF, MIN_SCORED = 40, 15, 4
+MIN_SPREAD = 0.08  # share of the leaf the inliers' central 80% box must cover
 UA = 'SourceLibrary page-image-same-printing (team@sourcelibrary.org)'
 
 
@@ -94,11 +95,12 @@ class Images:
             if img.std() > 12:  # blank leaves match everything; skip them
                 kp, des = self.orb.detectAndCompute(img, None)
                 if des is not None and len(kp) > 50:
-                    r = (np.float32([k.pt for k in kp]), des)
+                    r = (np.float32([k.pt for k in kp]), des, img.shape)
         self.feats[url] = r
         return r
 
 
+cv2.setNumThreads(1)  # parallelism comes from running shards; OpenCV's own pool oversubscribes a shared box
 BF = cv2.BFMatcher(cv2.NORM_HAMMING)
 
 
@@ -111,7 +113,19 @@ def inliers(fa, fb):
     src = fa[0][[g.queryIdx for g in good]].reshape(-1, 1, 2)
     dst = fb[0][[g.trainIdx for g in good]].reshape(-1, 1, 2)
     _, mask = cv2.findHomography(src, dst, cv2.RANSAC, 5.0)
-    return int(mask.sum()) if mask is not None else 0
+    if mask is None:
+        return 0
+    n = int(mask.sum())
+    # A provider watermark or colour chart stamped on every photograph matches itself across
+    # unrelated books (National Museum New Delhi: a music grid and a Persian text scored 150+).
+    # Printed text spreads its matches over the leaf; a stamp keeps them in one corner. Count
+    # inliers only when their bounding box covers a real share of the page.
+    pts = src.reshape(-1, 2)[mask.ravel() == 1]
+    # 10th-90th percentile, so a few stray inliers outside the stamp cannot stretch the box.
+    span = lambda v: float(np.percentile(v, 90) - np.percentile(v, 10)) if len(v) else 0.0
+    if n and span(pts[:, 0]) * span(pts[:, 1]) < MIN_SPREAD * fa[2][0] * fa[2][1]:
+        return 0
+    return n
 
 
 def pages_of(db, book_id):

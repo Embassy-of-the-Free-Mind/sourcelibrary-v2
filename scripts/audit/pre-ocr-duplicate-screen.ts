@@ -46,6 +46,7 @@ const STRONG: HoldingReason[] = ['same_source_object', 'same_iiif_manifest', 'sa
   'same_work_same_year', 'title_author_near_same_year', 'related_copy'];
 const IF_PAGES_AGREE: HoldingReason[] = ['same_work', 'title_author_near', 'near_title'];
 
+const MIN_PAGE_RATIO = 0.85;
 const arg = (k: string, d: string | null = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const pagesAgree = (a: number, b: number) => a > 0 && b > 0 && Math.abs(a - b) <= Math.max(4, 0.05 * Math.max(a, b));
 const STAGE: Record<string, number> = { archiving: 0, archive_complete: 1, queued: 2, ocr_queued: 3, held: 3 };
@@ -82,6 +83,13 @@ async function candidates(db: Db, dir: string) {
       const key = [b.id, c.book_id].sort().join('|');
       if (seen.has(key)) continue;
       seen.add(key);
+      // Page counts far apart: another volume or an incomplete scan, and no hold could follow (the
+      // kept copy must be >= 90% of the held one). A wide image window over such a pair costs
+      // hundreds of leaves per sample, so it is recorded here and not image-checked.
+      if (Math.min(b.pages_count, c.pages_count) < MIN_PAGE_RATIO * Math.max(b.pages_count, c.pages_count)) {
+        rows.push({ book_id: b.id, other: c.book_id, reason: c.reason, skipped: `page counts ${b.pages_count} vs ${c.pages_count}` });
+        continue;
+      }
       pairs.push(`${b.id}\t${c.book_id}`);
       rows.push({ book_id: b.id, other: c.book_id, reason: c.reason, detail: c.reason_detail, title: b.title, other_title: c.title });
     }
@@ -89,7 +97,7 @@ async function candidates(db: Db, dir: string) {
   }
   fs.writeFileSync(path.join(dir, 'pairs.tsv'), pairs.join('\n') + '\n');
   fs.writeFileSync(path.join(dir, 'candidates.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  console.log(JSON.stringify({ queued: queued.length, with_candidates: withCand, pairs: pairs.length, errors: rows.filter((r) => r.error).length }));
+  console.log(JSON.stringify({ queued: queued.length, with_candidates: withCand, pairs: pairs.length, skipped_page_counts: rows.filter((r) => r.skipped).length, errors: rows.filter((r) => r.error).length }));
 }
 
 /** Which of two same-printing copies should wait. Returns the id to hold, or null for a person to decide. */
@@ -121,20 +129,29 @@ async function decide(db: Db, dir: string, apply: boolean) {
   const ids = [...new Set(same.flatMap((v) => [v.a, v.b]))];
   const books = new Map((await db.collection('books').find({ id: { $in: ids } }, { projection: BOOK_PROJ }).toArray()).map((b) => [b.id, b]));
   const holds: Document[] = [], review: Document[] = [];
-  const willHold = new Set<string>();
+  const willHold = new Set<string>(), kept = new Set<string>(), decided = new Set<number>();
   const brief = (x: Document) => ({ id: x.id, title: String(x.title || '').slice(0, 70), year: x.year ?? x.published ?? null, pages: x.pages_count, pages_ocr: x.pages_ocr || 0, status: x.pipeline_auto?.status, visible: !!x.visible, duplicate_of: x.duplicate_of || null });
-  for (const v of same) {
-    const a = books.get(v.a), b = books.get(v.b);
-    if (!a || !b) continue;
-    if (willHold.has(a.id) || willHold.has(b.id)) continue; // already decided through another pair
-    const pick = chooseHold(a, b);
-    if (pick && !willHold.has(pick.kept.id)) {
+  // Pass 1 keeps a read or further-along copy; pass 2 settles copies that are both still queued.
+  // A book kept for one pair is never held for another, so every hold points at a copy that goes on.
+  for (const pass of [1, 2]) {
+    same.forEach((v, i) => {
+      if (decided.has(i)) return;
+      const a = books.get(v.a), b = books.get(v.b);
+      if (!a || !b) { decided.add(i); return; }
+      if (willHold.has(a.id) || willHold.has(b.id)) { decided.add(i); return; } // settled through another pair
+      const pick = chooseHold(a, b);
+      if (!pick || kept.has(pick.hold.id)) return;
+      if ((pass === 1) === pick.why.startsWith('both queued')) return;
+      decided.add(i);
       willHold.add(pick.hold.id);
+      kept.add(pick.kept.id);
       holds.push({ hold: brief(pick.hold), kept: brief(pick.kept), why: pick.why, median_inliers: v.median, inliers: v.inliers });
-    } else {
-      review.push({ a: brief(a), b: brief(b), median_inliers: v.median, inliers: v.inliers });
-    }
+    });
   }
+  same.forEach((v, i) => {
+    const a = books.get(v.a), b = books.get(v.b);
+    if (!decided.has(i) && a && b) review.push({ a: brief(a), b: brief(b), median_inliers: v.median, inliers: v.inliers });
+  });
   fs.writeFileSync(path.join(dir, 'holds.jsonl'), holds.map((r) => JSON.stringify(r)).join('\n') + '\n');
   fs.writeFileSync(path.join(dir, 'review.jsonl'), review.map((r) => JSON.stringify(r)).join('\n') + '\n');
   const pages = holds.reduce((s, h) => s + (h.hold.pages - h.hold.pages_ocr), 0);
