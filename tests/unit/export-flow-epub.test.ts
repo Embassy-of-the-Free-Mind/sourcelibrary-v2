@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildFlowEpub, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
+import { buildFlowEpub, footnotesFor, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
 
 /**
  * The continuous EPUB (#7118): one reading text in sections, not one chapter per page — on a Kindle every chapter
@@ -15,6 +15,21 @@ const db = (galleryRows = 0) => ({
 const pages = (n: number) => Array.from({ length: n }, (_, i) => ({
   id: `pg${i + 1}`, page_number: i + 1, translation: { data: i % 2 === 0 ? 'The stone was' : 'heated for days.' },
 }));
+
+describe('footnotesFor', () => {
+  it('turns notes and marginalia into EPUB 3 pop-up footnotes at the end of the section, ids unique across the book', () => {
+    const seq = { n: 4 };
+    const out = footnotesFor('<p>the anvil<span class="note">[original: "sub incude"]</span> and <span class="margin">[CHRIST.]</span></p>', seq);
+    expect(out).toContain('the anvil<a epub:type="noteref" href="#fn5" id="fnref5" class="noteref">1</a>');
+    expect(out).toContain('<aside epub:type="footnote" id="fn5" class="footnote"><p><a href="#fnref5">1.</a> original: "sub incude"</p></aside>');
+    expect(out).toContain('<em>In the margin:</em> CHRIST.');
+    expect(out).not.toContain('class="note"');
+    expect(seq.n).toBe(6);
+  });
+  it('leaves a section without notes untouched', () => {
+    expect(footnotesFor('<p>Plain.</p>', { n: 0 })).toBe('<p>Plain.</p>');
+  });
+});
 
 describe('buildFlowEpub', () => {
   it('cuts a book with no chapters into even sections, joining pages inside each', async () => {

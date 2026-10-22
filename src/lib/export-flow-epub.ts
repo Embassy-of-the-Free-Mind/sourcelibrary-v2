@@ -28,10 +28,14 @@ export const FLOW_EPUB_MAX_IMAGES = 400;
 const IMAGE_CONCURRENCY = 6;
 
 export const FLOW_EPUB_CSS = `
-.page-marker { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.6em; vertical-align: super; color: #999; text-decoration: none; padding: 0 0.15em; }
+.page-marker { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.65em; vertical-align: baseline; color: #999; text-decoration: none; padding: 0 0.2em; }
 .flow-footnote { font-size: 0.85em; color: #555; padding-left: 1em; }
 .flow-figure { margin: 1.5em 0; text-align: center; page-break-inside: avoid; }
 .flow-figure img { max-width: 100%; max-height: 90vh; height: auto; }
+.noteref { font-size: 0.7em; vertical-align: super; line-height: 0; text-decoration: none; }
+.footnotes { margin-top: 2em; border-top: 1px solid #ccc; font-size: 0.85em; }
+.footnotes h3 { font-size: 1em; }
+.footnote p { margin: 0.3em 0; text-align: left; }
 `;
 
 interface FlowBookDoc {
@@ -46,7 +50,26 @@ interface FlowPageDoc {
   ocr?: { data?: string } | null;
 }
 
-const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/**
+ * Notes become pop-up footnotes. Inline, the translator's notes (on 57% of pages, ~5 a page: "original: 'sub incude'",
+ * a date, an identification) and the printed marginalia (21%, ~3 a page) put a bracketed aside into every other
+ * sentence — measured on one page from each of 400 random books, 2026-10-22. As EPUB 3 footnotes (`noteref` →
+ * `aside epub:type="footnote"`) a Kindle shows a small number in the text and the note in a pop-up when tapped; other
+ * readers link to the note at the end of the section. Glosses and terms stay inline: a word or two, read in place.
+ * `seq` numbers notes through the whole book so every id is unique; the visible number restarts per section.
+ */
+export function footnotesFor(html: string, seq: { n: number }): string {
+  const notes: string[] = [];
+  const body = html.replace(/<span class="(note|margin)">\[([\s\S]*?)\]<\/span>/g, (_m, kind: string, text: string) => {
+    const id = ++seq.n;
+    const shown = notes.length + 1;
+    notes.push(`<aside epub:type="footnote" id="fn${id}" class="footnote"><p><a href="#fnref${id}">${shown}.</a> ${kind === 'margin' ? '<em>In the margin:</em> ' : ''}${text.trim()}</p></aside>`);
+    return `<a epub:type="noteref" href="#fn${id}" id="fnref${id}" class="noteref">${shown}</a>`;
+  });
+  return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
+}
+
+const escapeHtml =(s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export interface FlowEpub {
   chapters: { title: string; content: string }[];
@@ -124,11 +147,15 @@ export async function buildFlowEpub(
     if (sections.length === 0 || chapter || startsRun) sections.push({ title: chapter?.title || '', pages: [] });
     sections[sections.length - 1].pages.push(p);
   }
+  const seq = { n: 0 };
   const chapters = sections
     .map(s => {
       const first = s.pages[0].page_number, last = s.pages[s.pages.length - 1].page_number;
       const title = s.title || (first === last ? `Page ${first}` : `Pages ${first}–${last}`);
-      const body = joinPagesHtml(s.pages.map(flowPage));
+      // Page numbers as an edition marks a page break, "|198" on the line: e-readers ignore most CSS, and a bare
+      // raised number would read as one of the footnote calls.
+      const body = footnotesFor(joinPagesHtml(s.pages.map(flowPage)), seq)
+        .replace(/(<a class="page-marker"[^>]*>)(\d+)<\/a>/g, '$1|$2</a>');
       return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}` };
     })
     .filter(c => /<p>|<figure/.test(c.content));
