@@ -8,16 +8,18 @@
  *  - echoRepair: the doubled word is removed on the side the source does not carry it.
  *  - driftOnly / placeRun: a join whose only defect is drift is skipped (invisible in the continuous view, #7118);
  *    drift together with another defect is not.
+ *  - --majors-wide: a major the edge bound refuses is placed under MAJORS_WIDE (flagged `wide`); a minor never is, and
+ *    edgeRefusal's default bound is unchanged.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { mapOntoRaw, mapProjected } from '../../scripts/maintenance/seam-repair-6742/seam-repair.mjs';
+import { mapOntoRaw, mapProjected, edgeRefusal } from '../../scripts/maintenance/seam-repair-6742/seam-repair.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { lostWords, MAX_LOST, driftOnly, DRIFT_ONLY, placeRun } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
+import { lostWords, MAX_LOST, driftOnly, DRIFT_ONLY, placeRun, MAJORS_WIDE } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { echoRepair } from '../../scripts/maintenance/seam-repair-6742/rules.mjs';
@@ -122,6 +124,33 @@ describe('driftOnly (#7118)', () => {
     expect(refusals['skipped-drift-only']).toBe(2);
     expect(refusals['labelled-ok']).toBe(1);
     expect(refusals['no-repair']).toBe(1);   // c went on to placement
+    fs.rmSync(out, { recursive: true, force: true });
+  });
+});
+
+describe('--majors-wide (#7118)', () => {
+  const it0 = (id: string) => ({ id, enTailA: 'The king rode out at dawn. He went to the city of the', enHeadB: 'west, and there he stayed.', srcTailA: 'x', srcHeadB: 'y' });
+  const restored = 'He went to the city of the ' + Array.from({ length: 80 }, (_, i) => `word${i}`).join(' ') + '. And then';
+  const rep = { tail_old: 'He went to the city of the', tail_new: restored, head_old: '', head_new: '' };
+
+  it('the default edge bound is unchanged; the wide bound admits a two-sentence restore', () => {
+    expect(edgeRefusal(it0('a'), rep)).toBe('edit-too-large');
+    expect(edgeRefusal(it0('a'), rep, MAJORS_WIDE)).toBeNull();
+    const three = { ...rep, tail_new: 'He went to the city. One more here. Two more here. Three more here. And then' };
+    expect(edgeRefusal(it0('a'), three, MAJORS_WIDE)).toBe('restores-more-than-2-sentences');
+  });
+
+  it('placeRun places a refused major as wide only with the flag, and never a minor', () => {
+    const out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'lean-wide-'));
+    fs.writeFileSync(path.join(out, 'candidates.jsonl'), ['M', 'm'].map(id => JSON.stringify(it0(id))).join('\n') + '\n');
+    fs.writeFileSync(path.join(out, 'repairs.jsonl'), [
+      { id: 'M', run: 'R', parsed: true, label: 'omission', labels: ['omission'], severity: 'major', repair: rep },
+      { id: 'm', run: 'R', parsed: true, label: 'omission', labels: ['omission'], severity: 'minor', repair: rep },
+    ].map(r => JSON.stringify(r)).join('\n') + '\n');
+    expect(placeRun(out, 'R').placedRows).toEqual([]);
+    const { placedRows, refusals } = placeRun(out, 'R', { majorsWide: true });
+    expect(placedRows.map((r: { id: string; wide?: boolean; normalRefusal?: string }) => [r.id, r.wide, r.normalRefusal])).toEqual([['M', true, 'edit-too-large']]);
+    expect(refusals['edit-too-large']).toBe(1);
     fs.rmSync(out, { recursive: true, force: true });
   });
 });
