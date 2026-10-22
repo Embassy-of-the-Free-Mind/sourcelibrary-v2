@@ -8,7 +8,7 @@ import SourceQuote from '@/components/articles/SourceQuote';
 // against /api/books/<id>/quote on 2026-10-21. Inline <term>/<gloss> markup on those pages is shown as the term in
 // italics and the gloss in square brackets. Findings read only in an abstract or a secondary summary are reported
 // with "reports" or "argues"; findings that could not be checked are left out (#7079).
-// The ideas are Derek Lomas's research. The page sits beside the three harmony essays it links.
+// The ideas are Derek Lomas's research. The page sits beside the four harmony essays it links.
 
 const TITLE = 'Harmony: Eleven Ideas and Their Sources';
 const DESCRIPTION =
@@ -227,13 +227,15 @@ export default function HarmonyMapPage() {
           the word has been stretched too far: harmony against lock, levels of wholeness, the two harmonies of
           number, the five phenomena the word covers, and the old gap between feeling a harmony and calculating it.
           The seventh and eighth ask how the idea could become science. The last three apply it to intelligence,
-          to alignment between people and AI, and to wellbeing, peace and sustainability. Three essays tell parts
+          to alignment between people and AI, and to wellbeing, peace and sustainability. Four essays tell parts
           of the story at length:{' '}
           <Link href="/articles/nature-of-harmony">The Nature of Harmony</Link>, on the measurers of musical ratio
           from Pythagoras to Kepler;{' '}
           <Link href="/articles/show-me-the-number">Show Me the Number</Link>, on whether human&ndash;AI harmony
-          can be measured; and <Link href="/articles/harmonic-justice">Harmonic Justice</Link>, on money and fair
-          exchange as problems of proportion.
+          can be measured; <Link href="/articles/harmonic-justice">Harmonic Justice</Link>, on money and fair
+          exchange as problems of proportion; and{' '}
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>, on harmony as the fitting
+          together of unlike things, from Xenophon and Plato to Adam Smith.
         </p>
 
         <p className={p}>
