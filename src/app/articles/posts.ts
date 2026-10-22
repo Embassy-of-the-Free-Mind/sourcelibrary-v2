@@ -229,7 +229,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: 'harmony-map',
-    title: 'Harmony: Eleven Ideas and Their Sources',
+    title: 'Eleven Ideas About Harmony',
     subtitle:
       'What harmony is, where it fails, and what it would mean for people, machines and the natural world: eleven ideas from Derek Lomas’s research, each with the primary sources it rests on, its tensions and its open questions.',
     summary:
