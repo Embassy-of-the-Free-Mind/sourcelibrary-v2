@@ -1,0 +1,61 @@
+{
+ "note": "Probe sentences for the Map of Harmony semantic view (#7129): what a page would SAY when it describes each kind of harmony or resonance, written as plain descriptive or first-person sentences, not topic labels. Several avoid the words harmony and sympathy on purpose, so the retrieval can find pages that describe the thing without naming it.",
+ "dimensions": [
+  {"id": "ratio", "label": "Ratio and number", "probes": [
+   "When one string is half the length of the other, the two sound together as the same note an octave apart.",
+   "The pleasing intervals are made by the simplest numbers: two to one, three to two, four to three.",
+   "The proportions that please the ear are the same proportions found in the heavens and in the human body.",
+   "I divided the string on the monochord and measured where each consonance falls.",
+   "Numbers rule the sounds; the agreement of tones is nothing but the agreement of their measures.",
+   "The twelve pipes are generated one from another by adding and taking away a third of the length."]},
+  {"id": "opposites", "label": "Unlike things in one whole", "probes": [
+   "Things that are unlike must be bound together if they are to make one thing.",
+   "High and low, sharp and flat, opposed to each other, join into a single sound.",
+   "A good soup needs many flavours, salt and sour and bitter, each correcting the others.",
+   "If every voice sang the same note there would be no music, only a single sound.",
+   "Opposites fit together, and from things that differ comes the most beautiful order.",
+   "The ruler who only hears agreement is like someone who seasons water with water."]},
+  {"id": "order", "label": "Order and rank", "probes": [
+   "Each thing keeps its own place in the order of the world, from the highest heaven down to the earth.",
+   "The parts of the soul must be set in order, reason ruling and the passions obeying.",
+   "Heaven above and earth below each keep their station, and so the whole stands.",
+   "God disposed all things in measure, number and weight.",
+   "The planets move in their appointed circles, each at its own distance and speed.",
+   "When everything is in its proper rank, the household and the state are at peace."]},
+  {"id": "balance", "label": "Balance and temperament", "probes": [
+   "Health is the right mixture of hot and cold, wet and dry, so that none prevails over the others.",
+   "When the humours are in their proper proportion the body is well; when one exceeds, sickness follows.",
+   "The wise person keeps to the middle way, neither too tight nor too slack, like a well-tuned string.",
+   "Joy and anger, sorrow and pleasure, when they arise in due measure, the mind is at peace.",
+   "Too much effort makes the mind restless and too little makes it lazy; strike the balance.",
+   "The breath, the fire and the water in the body must be kept in equal measure."]},
+  {"id": "concord", "label": "Concord among people", "probes": [
+   "When the citizens are of one mind and share their goods, the city holds together.",
+   "Let the people agree with one another, so that the many nations live in peace.",
+   "Above all things, value peace among people and avoid quarrels and factions.",
+   "The council of many nations sits around one fire and decides with one mind.",
+   "Agreement among the churches can be restored if each side yields a little.",
+   "Different peoples with different customs can still live together under one law."]},
+  {"id": "resonance", "label": "Resonance and sympathy", "probes": [
+   "When one string is struck, another string tuned to the same note begins to sound by itself.",
+   "Things of the same kind call to one another and respond, as an echo answers a voice.",
+   "The lodestone draws iron to itself by a hidden affinity between them.",
+   "The ointment applied to the weapon heals the wound at a distance.",
+   "Two clocks hanging on the same beam soon swing together in step.",
+   "A paper figure placed on the string jumps when the matching note is played on another instrument."]},
+  {"id": "feeling", "label": "The feeling of consonance", "probes": [
+   "When I hear the two notes together I feel a sweetness, and the soul rests in it.",
+   "Some sounds pierce and grate on the ear, while others flow smoothly and delight it.",
+   "The listener is moved to tears when the melody matches the state of his heart.",
+   "Music enters the soul and changes the passions, making the angry calm and the sad joyful.",
+   "The spectator tastes the emotion as if it were his own, and his heart answers the performer's.",
+   "The ear judges at once what reason can explain only afterwards."]},
+  {"id": "spheres", "label": "The music of the heavens", "probes": [
+   "The heavens turn and their motion makes a sound that we do not hear because we have heard it since birth.",
+   "Each planet sounds its own note, and together they make a scale.",
+   "The souls before birth heard the music of the spheres and remember it when they hear song.",
+   "The world was made by music, and its parts are joined as the strings of a lyre.",
+   "The distances of the planets stand in the ratios of the musical intervals.",
+   "Pythagoras alone could hear the song of the stars."]}
+ ]
+}
