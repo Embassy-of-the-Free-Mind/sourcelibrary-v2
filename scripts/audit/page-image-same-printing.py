@@ -100,6 +100,7 @@ class Images:
         return r
 
 
+cv2.setNumThreads(1)  # parallelism comes from running shards; OpenCV's own pool oversubscribes a shared box
 BF = cv2.BFMatcher(cv2.NORM_HAMMING)
 
 
