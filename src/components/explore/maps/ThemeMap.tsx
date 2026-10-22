@@ -4,7 +4,7 @@
 // data is static JSON under /data/maps/, fetched on mount: no request-path queries.
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { mountTimeline, type ThemeData, type LensData, type L2Data } from './timeline';
+import { mountTimeline, type ThemeData, type LensData, type L2Data, type LayersData } from './timeline';
 import type { MapTheme } from '@/lib/explore-maps';
 import './theme-map.css';
 
@@ -20,11 +20,12 @@ export default function ThemeMap({ theme }: { theme: MapTheme }) {
     let dispose: (() => void) | undefined; let alive = true;
     const lens = theme.lens ? getJson<LensData>(`/data/maps/lens-${theme.slug}.json`) : Promise.resolve(null);
     const l2 = theme.level2 ? getJson<L2Data>(`/data/maps/${theme.slug}-l2.json`) : Promise.resolve(null);
+    const layers = theme.layers ? getJson<LayersData>(`/data/maps/${theme.slug}-layers.json`) : Promise.resolve(null);
     fetch(`/data/maps/${theme.slug}.json`).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(async (data: ThemeData) => {
-        const [lensData, l2Data] = await Promise.all([lens, l2]);
+        const [lensData, l2Data, layersData] = await Promise.all([lens, l2, layers]);
         if (!alive || !root.current) return;
-        dispose = mountTimeline(root.current, data, { figLabels: theme.figLabels, adjacentLabel: theme.adjacentLabel }, lensData, l2Data);
+        dispose = mountTimeline(root.current, data, { figLabels: theme.figLabels, adjacentLabel: theme.adjacentLabel, l2Topic: theme.l2Topic }, lensData, l2Data, layersData);
         setReady(true);
       })
       .catch((e) => setErr(String(e)));
@@ -40,6 +41,7 @@ export default function ThemeMap({ theme }: { theme: MapTheme }) {
         <p className="lede">{theme.lede}</p>
         {!ready && <div className="loading">{err ? `Could not load the map data (${err}).` : 'Loading the survey…'}</div>}
         <div className="figs" id="figs"></div>
+        {theme.layers && <p className="verdict" id="verdict" hidden></p>}
       </div></header>
       <div className="wrap">
         <div className="controls" role="group" aria-label="Filters">
@@ -53,6 +55,8 @@ export default function ThemeMap({ theme }: { theme: MapTheme }) {
           <label className="tog lens" id="lenswrap" hidden title="Light up the works whose pages a translator flagged with this concept; the rest fade">Idea <input list="lens-list" id="lens" placeholder="e.g. samādhi, dhikr" aria-label="Highlight works that attest a concept" /><datalist id="lens-list"></datalist></label>
           <span className="count" id="count"></span>
         </div>
+        {theme.layers && <div className="layers" id="layers" role="group" aria-label="Layers" hidden></div>}
+        {theme.layers && <div className="lynote" id="lynote" hidden></div>}
         <div className="mapbox" id="mapbox"><svg className="map" id="map" role="img" aria-label={`Timeline of ${theme.word.toLowerCase()} literature by tradition`}></svg></div>
         <div className="detail empty" id="detail">{theme.detailHint || 'Click a mark on the map, or a title in the catalogue below, to see the library’s editions of that work.'}</div>
       </div>
