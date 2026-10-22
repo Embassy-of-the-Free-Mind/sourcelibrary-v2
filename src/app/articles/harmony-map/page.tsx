@@ -254,7 +254,7 @@ export default function HarmonyMapPage() {
             two forms:
           </p>
           <ul className="list-disc pl-6 space-y-1 mb-4">
-            <li><Label>homogenization</Label>, a whole with no diversity left: unison, lock, monoculture;</li>
+            <li><Label>homogenisation</Label>, a whole with no diversity left: unison, lock, monoculture;</li>
             <li><Label>fragmentation</Label>, diversity with no whole: noise.</li>
           </ul>
           <p>Ratios, consonance and mode-locking are one way harmony happens. They are not its definition.</p>
@@ -328,7 +328,7 @@ export default function HarmonyMapPage() {
           &ldquo;in only an aggregate way.&rdquo; Tononi, Sporns and Edelman{' '}
           <Ext href={EXT.tononi}>report</Ext> (1994) a measure of neural complexity that is high only when
           segregation and integration coexist, and low for systems that are either fully independent or fully
-          synchronized.
+          synchronised.
         </p>
 
         <p className={p}>
@@ -377,10 +377,10 @@ export default function HarmonyMapPage() {
           <Ext href={EXT.resonance}>
             <em>Resonance as a Design Strategy for AI and Social Robots</em>
           </Ext>
-          , 2022). In the brain, Lomas and Xue put health in a dynamic balance of synchronization and
-          desynchronization (RP.69), with too much of either unhealthy; Uhlhaas and Singer{' '}
+          , 2022). In the brain, Lomas and Xue put health in a dynamic balance of synchronisation and
+          desynchronisation (<em>Harmony in Design</em>, p. 38), with too much of either unhealthy; Uhlhaas and Singer{' '}
           (<Ext href={EXT.uhlhaas}>2006</Ext>) report that schizophrenia, epilepsy, autism, Alzheimer&apos;s and
-          Parkinson&apos;s are associated with abnormal neural synchronization.
+          Parkinson&apos;s are associated with abnormal neural synchronisation.
         </p>
 
         <p className={p}>
@@ -570,7 +570,7 @@ export default function HarmonyMapPage() {
 
         <p className={p}>
           <Label>Open question.</Label> Is there one mathematical account in which rational lock and irrational
-          survival are two regimes of one principle: Philolaus&apos;s limit and unlimited, formalized?
+          survival are two regimes of one principle: Philolaus&apos;s limit and unlimited, formalised?
         </p>
 
         {/* 5 */}
@@ -633,7 +633,7 @@ export default function HarmonyMapPage() {
           <Label>Consonance.</Label> No single account explains it. Euler put a number on it: &ldquo;the smaller
           this number is found to be, the sweeter or easier to perceive the consonance will be&rdquo; (
           <Link href={Q.euler}><em>Tentamen novae theoriae musicae</em>, 1739, p. 59</Link>). Helmholtz is usually
-          summarized as explaining dissonance by the beating of nearby partials (
+          summarised as explaining dissonance by the beating of nearby partials (
           <Link href={Q.helmholtz}><em>On the Sensations of Tone</em>, p. 204</Link>), and Plomp and Levelt (
           <Ext href={EXT.plomp}>1965</Ext>) report that simple tones sound most dissonant at about a quarter of a
           critical bandwidth apart. McDermott and Lehr (<Ext href={EXT.mcdermott2010}>2010</Ext>) report that
@@ -786,7 +786,7 @@ export default function HarmonyMapPage() {
           Two warnings come from the tradition itself. The counter-earth (idea 4) is the move to avoid: patching
           the system after the fact to keep the number. And the hammer story (idea 5) was repeated for centuries
           without being tried. Lomas and Xue add a warning of their own: there is a danger in mistaking measures of
-          harmony for the concept of harmony, especially in computational optimization (RP.75).
+          harmony for the concept of harmony, especially in computational optimisation (<em>Harmony in Design</em>, p. 41).
         </p>
 
         <p className={p}>
@@ -819,7 +819,7 @@ export default function HarmonyMapPage() {
           <p className="mb-4">
             Resonance became a mechanism once one equation was shown to hold in every medium. For harmony the
             candidate is Smolensky&apos;s harmony function, which measures how well many soft, partly conflicting
-            constraints are satisfied at once. Pure maximization freezes, so the mechanism is harmony maximization
+            constraints are satisfied at once. Pure maximisation freezes, so the mechanism is harmony maximisation
             at a temperature above zero:
           </p>
           <p className="text-center text-xl my-4">&minus;F = H + T&middot;S</p>
@@ -834,19 +834,19 @@ export default function HarmonyMapPage() {
           Hinton and Sejnowski state the link to energy directly: &ldquo;Smolensky&apos;s harmony is equivalent to
           our energy (with a sign reversal)&rdquo; (<Ext href={EXT.hinton}>1986</Ext>). Temperature as a
           computational parameter is older than Smolensky; it is reported to come from statistical mechanics by way
-          of the Metropolis algorithm, and Kirkpatrick, Gelatt and Vecchi made it a general method of optimization
+          of the Metropolis algorithm, and Kirkpatrick, Gelatt and Vecchi made it a general method of optimisation
           by &ldquo;a detailed analogy with annealing in solids&rdquo; (<Ext href={EXT.kirkpatrick}>1983</Ext>). The
           sampling temperature of every large language model rescales its outputs before the softmax, which means
           sampling from a Boltzmann distribution (<Ext href={EXT.distilling}>Hinton, Vinyals and Dean, 2015</Ext>).
         </p>
 
         <p className={p}>
-          Friston&apos;s principle has self-organizing systems minimize a variational free energy, and &ldquo;the
+          Friston&apos;s principle has self-organising systems minimise a variational free energy, and &ldquo;the
           third formulation expresses free energy as complexity minus accuracy&rdquo; (
           <Ext href={EXT.friston}>2010</Ext>). The Helmholtz machine of Dayan, Hinton, Neal and Zemel is named for
           the same lineage: &ldquo;Following Helmholtz, we view the human perceptual system as a statistical inference
           engine&rdquo; (<Ext href={EXT.helmholtzMachine}>1995</Ext>). Lomas and Xue suggested that harmony
-          measures could serve as objective functions for AI (RP.72&ndash;73), and Lomas, Lin and colleagues that
+          measures could serve as objective functions for AI (<em>Harmony in Design</em>, p. 40), and Lomas, Lin and colleagues that
           &ldquo;the ability to measure resonance in interactions could aid AI-human interactions by enabling a
           meaningful &lsquo;objective function&rsquo; for optimization.&rdquo;
         </p>
@@ -855,7 +855,7 @@ export default function HarmonyMapPage() {
           <Label>Tensions.</Label> The proposal uses the free-energy identity, not the free-energy principle, and
           the two should be kept apart. The &ldquo;harmonic loss&rdquo; of Baek, Liu, Tyagi and Tegmark (
           <Ext href={EXT.harmonicLoss}>2025</Ext>) is named for inverse-distance weighting; the authors report better
-          interpretability, less data needed to generalize and less grokking than with cross-entropy, but the paper
+          interpretability, less data needed to generalise and less grokking than with cross-entropy, but the paper
           does not connect the name to musical or philosophical harmony, so it gives this thesis little support.
         </p>
 
@@ -865,19 +865,19 @@ export default function HarmonyMapPage() {
         </p>
 
         {/* 9 */}
-        <h2 className={h2}>9. Intelligence is harmonizing</h2>
+        <h2 className={h2}>9. Intelligence is harmonising</h2>
 
         <Statement>
           <p className="mb-4">
-            Harmonizing is what intelligence is: integrating diverse motivations into coherent action that supports
+            Harmonising is what intelligence is: integrating diverse motivations into coherent action that supports
             the whole. An intelligence that does not support wellbeing and sustainability is not so smart.
           </p>
           <p>
             This directly denies Nick Bostrom&apos;s orthogonality thesis. It can be read two ways. As a definition
-            (call only harmonizers intelligent) it is coherent, but it wins the word, not the world: the narrow
-            optimizer still runs. As a substantive claim it says harmonizing systems beat narrow optimizers over
-            long horizons, because the dissonance a narrow optimizer creates comes back to it, while over short
-            horizons the optimizer can win first. Alignment is then the problem of the short horizon: shorten the
+            (call only harmonisers intelligent) it is coherent, but it wins the word, not the world: the narrow
+            optimiser still runs. As a substantive claim it says harmonising systems beat narrow optimisers over
+            long horizons, because the dissonance a narrow optimiser creates comes back to it, while over short
+            horizons the optimiser can win first. Alignment is then the problem of the short horizon: shorten the
             loop between harm to the whole and what the system senses.
           </p>
         </Statement>
@@ -886,7 +886,7 @@ export default function HarmonyMapPage() {
           Bostrom&apos;s thesis (<Ext href={EXT.bostrom}>2012</Ext>): &ldquo;Intelligence and final goals are
           orthogonal axes along which possible agents can freely vary. In other words, more or less any level of
           intelligence could in principle be combined with more or less any final goal.&rdquo; If that is true,
-          more intelligence does not by itself make a system more harmonizing, and the claim needs an argument
+          more intelligence does not by itself make a system more harmonising, and the claim needs an argument
           that blocks it.
         </p>
 
@@ -942,7 +942,7 @@ export default function HarmonyMapPage() {
         </p>
 
         <p className={p}>
-          <Label>Open questions.</Label> Is there evidence that harmonizing agents outperform narrow ones over
+          <Label>Open questions.</Label> Is there evidence that harmonising agents outperform narrow ones over
           long horizons, in ecology, in firms or in simulations of many agents? What does shortening the loop look
           like in practice for AI systems?
         </p>
@@ -953,8 +953,8 @@ export default function HarmonyMapPage() {
         <Statement>
           Alignment between people, AI and the natural world should be designed as <em>harmonia</em>: unlike
           parties fitted into a ratio, with a remainder, around a shared reference. It should not be designed as
-          making the parties alike. Optimizing for approval at low temperature drives towards unison, which is
-          homogenization. The aim is coupling that keeps differences and resolves dissonance at the right level.
+          making the parties alike. Optimising for approval at low temperature drives towards unison, which is
+          homogenisation. The aim is coupling that keeps differences and resolves dissonance at the right level.
         </Statement>
 
         <p className={p}>
@@ -970,7 +970,7 @@ export default function HarmonyMapPage() {
 
         <p className={p}>
           <Label>The resonance trap.</Label> Lomas and Xue write that &ldquo;resonance, based on shared
-          similarities, is the counterpart to harmony; harmony can emerge from natural resonances&rdquo; (RP.7).
+          similarities, is the counterpart to harmony; harmony can emerge from natural resonances&rdquo; (<em>Harmony in Design</em>, p. 12).
           Resonance amplifies likeness, so an objective that rewards resonance alone rewards likeness, and that
           is the route to sycophancy. The thing to aim at is harmony, the fit of unlike parts. Lomas, Lin and
           colleagues already flag that robots able to build resonant rapport could persuade or manipulate people
@@ -991,7 +991,7 @@ export default function HarmonyMapPage() {
           significant reduction in diversity&rdquo; across authors&apos; essays (<Ext href={EXT.padmakumar}>2024</Ext>).
           Soudry and colleagues proved (2018) that gradient descent on the logistic loss over separable data grows
           the weights without bound while converging in direction to the max-margin solution. The hypothesis
-          drawn from this: optimizing for approval at low effective temperature homogenizes both the model&apos;s
+          drawn from this: optimising for approval at low effective temperature homogenises both the model&apos;s
           outputs and its users&apos;, and temperature and diversity are tunable parameters with an optimum in the
           interior.
         </p>
@@ -1000,7 +1000,7 @@ export default function HarmonyMapPage() {
           <Label>Coupling heuristics</Label> from the physics of oscillators:
         </p>
         <ul className={ul}>
-          <li>unison is the default attractor, so homogenization is what happens unless something prevents it;</li>
+          <li>unison is the default attractor, so homogenisation is what happens unless something prevents it;</li>
           <li>damp rather than detune: add friction, delay or disagreement rather than cutting the coupling;</li>
           <li>tune the scale to both instruments: harmony between a person and an AI needs its own scale, not one imported from human pairs;</li>
           <li>beware a companion tuned sharply to one person, which rings long: an echo chamber.</li>
@@ -1030,20 +1030,20 @@ export default function HarmonyMapPage() {
           three-question test for any system of people, AI and nature: is it more differentiated, with people,
           cultures and species keeping distinct voices? Is it more integrated, with the parts informing and
           supporting each other? Are the parts strengthened, not only the whole? Integration without
-          differentiation is homogenization; differentiation without integration is fragmentation; a strong whole
+          differentiation is homogenisation; differentiation without integration is fragmentation; a strong whole
           with weakened parts is the totalitarian failure.
         </p>
 
         <p className={p}>
-          <Label>Context and critiques.</Label> Huh and colleagues hypothesize that representations in large
+          <Label>Context and critiques.</Label> Huh and colleagues hypothesise that representations in large
           networks are converging &ldquo;toward a shared statistical model of reality, akin to Plato&apos;s concept of
-          an ideal reality&rdquo; (<Ext href={EXT.prh}>2024</Ext>). That is beautiful, and also a monoculture risk.
+          an ideal reality&rdquo; (<Ext href={EXT.prh}>2024</Ext>). It also carries a monoculture risk.
           The authors list its limits themselves: &ldquo;Our argument only holds for intelligences that are optimized
           to perform well on many tasks,&rdquo; and &ldquo;researcher bias and collective preferences within the AI
           community have shaped the trajectory of model development,&rdquo; so convergence may measure a shared
           design culture rather than a deep structure. Gröger and colleagues report (<Ext href={EXT.groger}>2026</Ext>)
           that once similarity is calibrated for model scale, global convergence mostly disappears and only shared
-          local structure survives. A harmonized agent cannot correct its partner (idea 9), and
+          local structure survives. A harmonised agent cannot correct its partner (idea 9), and
           &ldquo;harmony&rdquo; has served power (idea 1).
         </p>
 
@@ -1053,19 +1053,19 @@ export default function HarmonyMapPage() {
         <Statement>
           <p className="mb-4">The three are the same activity at different levels:</p>
           <ul className="list-disc pl-6 space-y-1 mb-4">
-            <li><Label>wellbeing</Label> is harmonizing within: motives, body, attention;</li>
-            <li><Label>peace</Label> is harmonizing between: persons, groups, nations;</li>
-            <li><Label>sustainability</Label> is harmonizing with the whole, and across time.</li>
+            <li><Label>wellbeing</Label> is harmonising within: motives, body, attention;</li>
+            <li><Label>peace</Label> is harmonising between: persons, groups, nations;</li>
+            <li><Label>sustainability</Label> is harmonising with the whole, and across time.</li>
           </ul>
           <p>
             Like tonal harmony, sustainability is held together by a centre that lasts the length of the piece. A
-            civilization that is consonant this quarter and ruinous next century is a chord that never resolves.
+            civilisation that is consonant this quarter and ruinous next century is a chord that never resolves.
           </p>
         </Statement>
 
         <p className={p}>
-          Lomas and Xue propose the harmonization of humankind and nature as a concise definition of sustainable
-          design (RP.98), on top of their nested levels from the individual to the natural world (idea 3).
+          Lomas and Xue propose the harmonisation of humankind and nature as a concise definition of sustainable
+          design (<em>Harmony in Design</em>, p. 6), on top of their nested levels from the individual to the natural world (idea 3).
         </p>
 
         <p className={p}>
