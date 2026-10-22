@@ -22,7 +22,9 @@
  * context, the exact review prompt (prompts/<hash>.txt), and `passes`: the draft and the review, which apply copies into
  * the page's provenance. A draft that failed, was cut, or is chatter is not reviewed and gets no meta (apply never sees
  * it, so the page keeps its stored English). --wait: keep polling for drafts still being read until every page has one
- * or has failed. A usage limit sleeps 10 minutes and tries again.
+ * or has failed. A usage limit stops the run (exit 3) with the reviews done so far saved, as claude-ocr.mjs and
+ * claude-translate.mjs do; re-running skips them. It never retries on a timer: a call after a limit reply spends the
+ * window the meter says is gone (Derek, 2026-10-22: wait for the meter's resets_at, then re-run).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -174,12 +176,9 @@ async function review(group, attempt) {
 }
 
 async function run(group, attempt) {
-  for (;;) {
-    const res = await review(group, attempt);
-    if (res !== 'limit') return res;
-    console.log(`  usage limit at ${new Date().toISOString()}: sleeping 10 min`);
-    await sleep(10 * 60 * 1000);
-  }
+  const res = await review(group, attempt);
+  if (res === 'limit') { console.error(`STOPPED: usage limit at ${new Date().toISOString()}; ${ids.filter(done).length} of ${ids.length} reviewed. Re-run after the reset.`); process.exit(3); }
+  return res;
 }
 
 console.log(`${ids.length} pages; review model ${MODEL}, ${PER_CALL} per call; claude ${version}`);
