@@ -132,7 +132,7 @@ export async function buildFlowEpub(
       ? (p.translation?.data ? markForExport(p.translation.data, book.id) : '')
       : (p.ocr?.data || '');
     const html = raw.trim() ? markdownToHtml(raw) : '';
-    return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}/page/${p.id}`, figures: figures.byPage.get(p.page_number) };
+    return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}?page=${p.page_number}`, figures: figures.byPage.get(p.page_number) };
   };
 
   // Sections: the book's chapters when it has them (low-confidence ones are guesses), else even runs of pages.

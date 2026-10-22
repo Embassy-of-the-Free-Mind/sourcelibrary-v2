@@ -35,7 +35,7 @@ describe('buildFlowEpub', () => {
   it('cuts a book with no chapters into even sections, joining pages inside each', async () => {
     const flow = await buildFlowEpub(db() as never, { id: 'b' }, pages(PAGES_PER_SECTION * 2 + 3), { text: 'translation', baseUrl: 'https://x', includeImages: false });
     expect(flow.chapters.map(c => c.title)).toEqual([`Pages 1–${PAGES_PER_SECTION}`, `Pages ${PAGES_PER_SECTION + 1}–${PAGES_PER_SECTION * 2}`, `Pages ${PAGES_PER_SECTION * 2 + 1}–${PAGES_PER_SECTION * 2 + 3}`]);
-    expect(flow.chapters[0].content).toContain('The stone was <a class="page-marker" id="p2" href="https://x/book/b/page/pg2"');
+    expect(flow.chapters[0].content).toContain('The stone was <a class="page-marker" id="p2" href="https://x/book/b?page=2"');
   });
 
   it('uses the book\'s own chapters when it has them, and skips low-confidence ones', async () => {
