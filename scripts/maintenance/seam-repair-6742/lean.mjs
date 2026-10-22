@@ -29,7 +29,8 @@
  * (2) tier 1 — joins whose signal Test A trusts get the rule repair, no model; (3) tier 2 — the rest go to the
  * repairer (Gemini 3.8 Flash low via agy, one join per call; or Opus, 30 per call) with tight windows: the last ~2
  * English sentences of N, the first ~2 of N+1, and the matching share of each source; (4) placement (edgeRefusal, and
- * lostWords: no more than 3 content words may vanish from the join);
+ * lostWords: no more than 3 content words may vanish from the join; a join whose only defect is drift is skipped,
+ * DRIFT_ONLY);
  * (5) a seeded 7% sample of placed repairs (≥ 20) goes to the blind Opus judge in both orders, with 2 A/A pairs. If
  * fewer than 90% of the sample are preferred in both orders, NOTHING is written and the run ends with a DECISION
  * line; (6) otherwise every placed repair not judged worse is written through writePageTranslation (source label
@@ -78,6 +79,20 @@ export function lostWords(it, rep) {
   const lost = [];
   for (const w of bag(it)) { if (m.get(w)) m.set(w, m.get(w) - 1); else if (!have.has(w)) lost.push(w); }
   return lost;
+}
+
+/**
+ * Drift (source words rendered on the wrong side of the turn) is the one defect the reader cannot see: the continuous
+ * view (/book/[id]/read, #7138) runs the two pages together, so the English reads straight across whichever page holds
+ * it. A join whose ONLY defect label is drift gets a repairs.jsonl row marked `skipped` and is never placed or written
+ * (#7118): the edit would buy the reader nothing and still carries an edit's risk. Drift with any other label (a
+ * doubled clause, a dropped sentence) is repaired as before.
+ */
+export const DRIFT_ONLY = 'drift-only (invisible in the continuous view)';
+export function driftOnly(x) {
+  if (!x || x.label === 'ok') return false;
+  const ls = new Set([x.label, ...(Array.isArray(x.labels) ? x.labels : [])].filter(l => l && l !== 'ok'));
+  return ls.size === 1 && ls.has('drift');
 }
 
 async function mongo() { const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); return { client: c, db: c.db('bookstore') }; }
@@ -280,7 +295,8 @@ async function run(out, o) {
       for (const it of pk) {
         const j = byId.get(it.id), parsed = j && LABELS.includes(j.label) ? j : null;
         if (parsed) ok++;
-        append(repFile, { id: it.id, run: runId, tier: 2, arm, parsed: !!parsed, ...(parsed || {}), repairCheck: parsed ? validRepair(it, parsed.repair) : null, model: r.model || model, cls: r.cls || undefined });
+        append(repFile, { id: it.id, run: runId, tier: 2, arm, parsed: !!parsed, ...(parsed || {}), repairCheck: parsed ? validRepair(it, parsed.repair) : null, model: r.model || model, cls: r.cls || undefined,
+          ...(driftOnly(parsed) ? { skipped: DRIFT_ONLY } : {}) });
         tally.tier2++;
       }
       return { ok: ok > 0, cls: r.cls };
@@ -299,6 +315,7 @@ async function run(out, o) {
   // placement
   const { placedRows, refusals } = placeRun(out, runId);
   tally.placed = placedRows.length; tally.placementRefused = refusals;
+  tally.skippedDriftOnly = refusals['skipped-drift-only'] || 0;
 
   // verification sample: seeded 7% (≥ 20) of placed repairs, both orders in different calls, + 2 A/A pairs
   const rand = makeRng(Number(runId.replace(/\D/g, '').slice(-9)));
@@ -346,12 +363,12 @@ async function run(out, o) {
 }
 
 /** Placement for one run's repairs: edgeRefusal + the content-conservation guard. */
-function placeRun(out, runId) {
+export function placeRun(out, runId) {
   const cands = new Map(readJsonl(path.join(out, 'candidates.jsonl')).map(c => [c.id, c]));
   const placedRows = [], refusals = {};
   for (const x of readJsonl(path.join(out, 'repairs.jsonl')).filter(r => r.run === runId)) {
     const it = cands.get(x.id);
-    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
+    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : x.skipped === DRIFT_ONLY || driftOnly(x) ? 'skipped-drift-only' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
     if (why) { refusals[why] = (refusals[why] || 0) + 1; continue; }
     placedRows.push({ id: x.id, it, x, arm: x.arm, fixed: applyRepair(it, x.repair) });
   }
