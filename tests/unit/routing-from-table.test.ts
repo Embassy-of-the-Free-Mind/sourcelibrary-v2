@@ -96,7 +96,7 @@ describe('Translation: both routers read translation-routing-table.json', () => 
   const PROBES: [string, unknown][] = [
     ['Latin', MODEL_LITE], ['German', MODEL_LITE], ['Syriac', MODEL_LITE], ['Latin; Greek', MODEL_LITE],
     ['Greek', MODEL_FLASH], ['Ancient  Greek', MODEL_FLASH], ['Greek, Latin', MODEL_FLASH], ['Classical Chinese', MODEL_FLASH],
-    ['Hebrew and Aramaic', MODEL_FLASH], ['Tibetan (script); Tibetan; Chinese', MODEL_FLASH], ['Greekish', MODEL_LITE],
+    ['Hebrew and Aramaic', MODEL_FLASH], ['Ancient Hebrew', MODEL_FLASH], ['ancient  Chinese', MODEL_FLASH], ['Ancient Egyptian', MODEL_LITE], ['Tibetan (script); Tibetan; Chinese', MODEL_FLASH], ['Greekish', MODEL_LITE],
   ];
 
   it('the table routes today as the measured rules say (#4742, #5695), in the .mjs and the TS router alike', () => {

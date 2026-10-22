@@ -103,7 +103,9 @@ def translation_engine(table, language):
         prefixes = row['match'].get('language_prefix')
         if prefixes:
             alt = '|'.join(re.escape(p.strip().lower()).replace('\\ ', r'\s+') for p in prefixes)
-            if re.match(rf'^\s*({alt})\b', language, re.I):
+            leads = row['match'].get('optional_lead') or []
+            lead = '((' + '|'.join(re.escape(w) for w in leads) + r')\s+)?' if leads else ''
+            if re.match(rf'^\s*{lead}({alt})\b', language, re.I):
                 return row['engine'], row['id']
     return table['default']['engine'], 'default'
 

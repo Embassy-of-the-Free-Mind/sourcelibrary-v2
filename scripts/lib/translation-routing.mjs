@@ -15,16 +15,22 @@
 
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-/** The regex a row's language_prefix list compiles to: /^\s*(greek|ancient\s+greek|…)\b/i. */
-export function prefixRegex(prefixes) {
-  return new RegExp(`^\\s*(${prefixes.map((p) => escape(p.trim().toLowerCase()).replace(/\s+/g, '\\s+')).join('|')})\\b`, 'i');
+const words = (list) => list.map((p) => escape(p.trim().toLowerCase()).replace(/\s+/g, '\\s+')).join('|');
+
+/**
+ * The regex a row's language_prefix list compiles to: /^\s*((ancient)\s+)?(greek|hebrew|…)\b/i. `optionalLead` is the
+ * match's `optional_lead` (words that may stand before any prefix, as "Ancient" before "Greek" or "Hebrew").
+ */
+export function prefixRegex(prefixes, optionalLead = []) {
+  const lead = optionalLead.length ? `((${words(optionalLead)})\\s+)?` : '';
+  return new RegExp(`^\\s*${lead}(${words(prefixes)})\\b`, 'i');
 }
 
 const compiled = new WeakMap();
 function compile(table) {
   let rows = compiled.get(table);
   if (!rows) {
-    rows = (table?.rows ?? []).map((row) => ({ row, re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix) : null }));
+    rows = (table?.rows ?? []).map((row) => ({ row, re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix, row.match.optional_lead ?? []) : null }));
     compiled.set(table, rows);
   }
   return rows;
