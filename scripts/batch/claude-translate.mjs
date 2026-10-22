@@ -43,6 +43,7 @@ import { PAGE_BREAK_SCOPED, buildBlockTranslationPrompt, loadTranslationPrompts,
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
+import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
 const CLI = 'claude';
@@ -87,6 +88,9 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 
 /** One sealed text-only `claude -p` call, the prompt on stdin. Resolves {text, model, usage, code, cls, err, secs}. */
 function claudeCall(prompt, model, cwd) {
+  // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
+  const blocked = claudeBlocked();
+  if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, ['-p', '--model', model, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
@@ -104,6 +108,7 @@ function claudeCall(prompt, model, cwd) {
       const resolved = models.find((m) => m.includes(String(model).replace(/^claude-/, ''))) || models[0] || null;
       const failed = j.is_error || code !== 0;
       const cls = failed && USAGE_LIMIT.test(text + out + err) ? 'usage_limit' : code === null ? 'timeout' : failed ? `exit_${code}${j.subtype ? `_${j.subtype}` : ''}` : !text ? 'empty' : null;
+      if (cls === 'usage_limit') noteLimitHit('claude', { reason: (err || text).slice(-200) });
       resolve({ text, model: resolved, usage: j.usage ? { input: j.usage.input_tokens, output: j.usage.output_tokens, cache_read: j.usage.cache_read_input_tokens, cache_creation: j.usage.cache_creation_input_tokens, turns: j.num_turns, list_cost_usd: j.total_cost_usd } : null, code, cls, err: (err || (failed ? text : '')).slice(-300), secs: (Date.now() - t0) / 1000 });
     });
   });
