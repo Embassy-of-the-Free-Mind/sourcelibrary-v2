@@ -256,11 +256,11 @@ Then come Marci, Kircher's *Magnes* and *Mundus subterraneus*, and Libavius.
 
 **Chinese 感應 / 同聲相應.** Yijing commentaries lead: Hu Guang's *Zhouyi zhuanyi daquan*, Nalan Xingde, Dong Kai.
 
-The full tables, top 25 per lane, regenerate with `rank.mjs`. *Consensus* was dropped from the sympathy terms after the first run, because Latin legal *consensus* put law tracts on top.
+The full tables are in `scripts/eval/harmony-census/out/rank.md` (top 25) and `rank.json` (top 100), and regenerate with `rank.mjs`. *Consensus* was dropped from the sympathy terms after the first run, because Latin legal *consensus* put law tracts on top.
 
 ### Concept map: share of English-lane pages naming the hub that also name the concept, by century
 
-The edge list is in `scripts/eval/harmony-census/concept-edges.csv` (term, term, century, pages, hub pages, weight).
+The edge list is in `scripts/eval/harmony-census/out/concept-edges.json` and `.csv` (term, term, century, pages, hub pages, weight). The ranking is in `out/rank.json` (top 100 per lane and topic) and `out/rank.md`. The harmony-map job reads these files.
 
 - **Harmony is steady.** About half of harmony pages name the soul, 40–54% name God, and 37–47% name city/state/peace.
 - **Its tie to number and cosmos loosens after 1700.** Number falls from 36–40% (14th–17th c.) to 24–30% (18th–20th). Cosmos falls from 35–39% to 26–27%.
@@ -295,4 +295,4 @@ Two terms are **not found** in our books: Indian *taraf* (sympathetic strings), 
 
 *Replicated?* No. The harvest is deterministic and the rules are in the scripts, but each by-eye read was done once, by one reader.
 
-**Artifacts.** The per-row classifications (`defs.jsonl`, `topoi.jsonl`), the harvests and `rank.md` stay on the job box (`/mnt/HC_Volume_105839809/jobs/harmony-census-7117/`) and regenerate from the scripts. The verified claims are in harmony-kb, in `claims/census-7117.jsonl`.
+**Artifacts.** The per-row classifications (`defs.jsonl`, `topoi.jsonl`) and the harvests stay on the job box (`/mnt/HC_Volume_105839809/jobs/harmony-census-7117/`) and regenerate from the scripts. The verified claims are in harmony-kb, in `claims/census-7117.jsonl`.

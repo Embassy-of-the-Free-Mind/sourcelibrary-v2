@@ -7,7 +7,9 @@
 //   run          longest stretch of dense pages with page numbers at most 2 apart
 //   score        dense pages of the best edition; editions of one work_id are collapsed to that edition
 //   density      dense pages / pages_count (book length from the nightly mirror)
-// Usage: node rank.mjs <harvest-dir> <out-dir>   → <out-dir>/rank.md, <out-dir>/concept-edges.csv
+// Usage: node rank.mjs <harvest-dir> <out-dir>
+//   → <out-dir>/rank.md and rank.json (top TOP works per lane and topic), concept-edges.csv and concept-edges.json.
+// The committed copies live in scripts/eval/harmony-census/out/; the harmony-map job (atlas pipeline) reads the JSON.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -40,7 +42,9 @@ function bookStats(rows, key, dense) {
   return [...works.values()].sort((a, b) => b.dense - a.dense || b.run - a.run);
 }
 
+const TOP = 100;
 const md = [];
+const rankJson = { generated: new Date().toISOString().slice(0, 10), issue: 7117, method: 'dense page = DENSE+ mentions; run = longest stretch of dense pages at most 2 apart; editions collapsed by work_id to the edition with most dense pages; density = dense pages / pages_count', lists: [] };
 const lanes = [
   ['density-ocr.jsonl.gz', 'original-language OCR (Latin, Greek, German, French, Italian, Spanish, English originals)', 3],
   ['density-tr.jsonl.gz', 'our English translations', 3],
@@ -53,6 +57,8 @@ for (const [f, label, dense] of lanes) {
     const ranked = bookStats(rows, key, dense);
     md.push(`### ${topic}: ${label}\n\nDense page = ${dense}+ mentions. ${ranked.length} works have one or more.\n`);
     md.push('| # | work (best edition) | year | lang | dense pages | longest run | dense / book pages | editions | peak page |\n|---:|---|---:|---|---:|---:|---:|---:|---|');
+    rankJson.lists.push({ lane: f.replace(/^density-|\.jsonl\.gz$/g, ''), topic, label, dense_threshold: dense, works_with_dense_pages: ranked.length,
+      top: ranked.slice(0, TOP).map((s, i) => ({ rank: i + 1, work_id: s.w, book_id: s.id, title: s.t, author: s.a, year: s.y, language: s.lang, dense_pages: s.dense, longest_run: s.run, run_start_page: s.runStart, density: +s.density.toFixed(4), editions: s.eds, mentions_on_dense_pages: s.hits, peak_page: s.peak, url: link(s.id, s.peak) })) });
     ranked.slice(0, 25).forEach((s, i) => md.push(`| ${i + 1} | ${(s.a || '').slice(0, 30)}: ${(s.t || '').slice(0, 60).replace(/\|/g, '/')} | ${s.y ?? ''} | ${s.lang || ''} | ${s.dense} | ${s.run} (from p.${s.runStart}) | ${(100 * s.density).toFixed(1)}% | ${s.eds} | [p.${s.peak}](${link(s.id, s.peak)}) |`));
     md.push('');
   }
@@ -80,6 +86,10 @@ for (const c of ORDER) {
   for (const [k, n] of [...pair].sort((a, b) => b[1] - a[1]).slice(0, 12)) { const [a, b] = k.split('|'); edges.push([a, b, c, n, hs.length, (n / hs.length).toFixed(3)]); }
 }
 fs.writeFileSync(path.join(OUT, 'concept-edges.csv'), edges.map((e) => e.join(',')).join('\n') + '\n');
+fs.writeFileSync(path.join(OUT, 'concept-edges.json'), JSON.stringify({ generated: rankJson.generated, issue: 7117,
+  method: 'English-translation pages that name the hub (harmony or sympathy); weight = share of those pages in the century that also name the concept. Concept-concept rows: top 12 pairs per century on pages naming either hub.',
+  concepts: CONCEPTS, edges: edges.slice(1).map(([source, target, century, pages, hub_pages, weight]) => ({ source, target, century, pages: +pages, hub_pages: +hub_pages, weight: +weight })) }, null, 1) + '\n');
+fs.writeFileSync(path.join(OUT, 'rank.json'), JSON.stringify(rankJson, null, 1) + '\n');
 md.push('### Concept co-occurrence (English lane): share of pages naming the hub that also name the concept\n');
 md.push(`| century | hub | pages | ${CONCEPTS.join(' | ')} |\n|---|---|---:|${CONCEPTS.map(() => '---:').join('|')}|`);
 for (const r of shareTable) md.push(`| ${r.c} | ${r.hub} | ${r.n} | ${CONCEPTS.map((k) => Math.round(100 * r[k])).join(' | ')} |`);
