@@ -1,0 +1,21 @@
+<warning>Handwritten. This is a palm leaf with incised letters in Malayalam or Grantha script, blackened with ink. The leaf is cut off at the right edge, so the end of every line is missing. The middle section is laid out as two blocks of verse on either side of a string hole, with full-width lines above and below. The letters are clear, but this script cannot be read reliably here, so the lines are marked unclear rather than guessed.</warning>
+<scan-quality>good</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Palm-leaf folio with a cord through the central binding hole. The right edge of the leaf is outside the image. Some lines are underlined with incised rules. A long ruled line runs across the leaf in the lower middle.</meta>
+
+<unclear>1 line of Malayalam/Grantha script across the full width of the leaf, beginning with an invocation sign; cut off at the right edge</unclear>
+
+<unclear>1 line of Malayalam/Grantha script across the full width, underlined; cut off at the right edge</unclear>
+
+<unclear>7 short lines of Malayalam/Grantha script in the left block, verse layout; the 6th line is underlined</unclear>
+
+<column-break/>
+
+<unclear>7 short lines of Malayalam/Grantha script in the right block, verse layout; cut off at the right edge</unclear>
+
+<unclear>2 lines of Malayalam/Grantha script across the full width below the string hole; cut off at the right edge</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Grantha script, Sanskrit</vocab>

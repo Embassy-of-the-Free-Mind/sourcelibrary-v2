@@ -1,0 +1,19 @@
+===== PAGE p01 =====
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Malayalam (Grantha-influenced) script incised on a palm leaf. The language may be Sanskrit written in Malayalam script; it could not be confirmed. The right edge of the leaf is cut off in the image, so every line in the right block is incomplete. A string passes through the binding hole in the centre, and the text stops on both sides of it. A flourish mark and scored lines sit at the top centre. All readings are tentative.</warning>
+<image-desc size="large" type="decorative" significance="low">A palm leaf with a single binding hole in the centre and a twisted cord through it. Text is written in two blocks on either side of the hole. Near the top centre, a hand-drawn flourish or section mark stands beside several horizontal scored lines.</image-desc>
+
+<unclear>ഞ്ജവചനന്തു.</unclear> <unclear>ഒ സ്വാദ്ധ്യാകന്ദ</unclear>
+<unclear>ൽക്കുന്നദവിചാരി</unclear> <unclear>ദ്യം പ ദൈനാക്കമാർ</unclear>
+<unclear>ഷ്ട്രാദിഭിലൂലു</unclear> <unclear>ദക്കാന്മാനൈന</unclear>
+<unclear>നാദന്നെടുക്കൽ</unclear> <unclear>സമാനദിക്കാ</unclear>
+<unclear>ലഭിന്ത്രാഭ</unclear> <unclear>വാൽക്കാള്ളൂക്കു</unclear>
+<unclear>കാള്ളൂലക്ഷ്മി</unclear> <unclear>ഷ്ട്രൂവ്യംവിക്രൂവ</unclear>
+<unclear>ദദാനഗൃഹാനാ</unclear> <unclear>ൽസല്ലസ്യംദേവാ</unclear>
+<unclear>ദൽകാനനാടദവ</unclear> <unclear>ക്ഷസൽക്കാള്ളൂം.</unclear>
+<unclear>നകമാഭ്രിക്കംപി.</unclear> <unclear>ം. സ്വാമ്യാബാപാ</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Grantha, binding hole</vocab>

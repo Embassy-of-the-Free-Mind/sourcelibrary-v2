@@ -1,0 +1,29 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on a palm leaf and inked. The text is written in a cursive hand, with ligatures that are hard to read in this image. Many of the readings below are tentative, and whole stretches of text have not been read. The leaf has a string hole in the middle, so the middle lines are split into two blocks around it. The right edge cuts off the ends of the lines.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+
+<unclear>[illegible — 3-4 words]</unclear> <unclear>കൊണ്ടു</unclear> <unclear>[illegible — 3 words]</unclear>
+<unclear>കൈവല്യാഖ്യപ്രവൃത്തകം</unclear> <unclear>[illegible — 2-3 words]</unclear>
+<unclear>പ്രത്യക്ഷ</unclear> <unclear>[illegible — 1-2 words]</unclear>
+<unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 2 words]</unclear>
+<unclear>സംയോഗാൽ</unclear>
+<unclear>[illegible — 2 words]</unclear>
+<unclear>കൈവല്യാഖ്യ</unclear> <unclear>[illegible — 1 word]</unclear>
+
+<column-break/>
+
+<unclear>[illegible — 2-3 words]</unclear>
+<unclear>പശ്ചാത്</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 2-3 words]</unclear>
+<unclear>ചരണ</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>പടവജ്ജാ</unclear> <unclear>[illegible — 1-2 words]</unclear>
+<unclear>മാപ്രയാണ</unclear> <unclear>[illegible — 1-2 words]</unclear>
+
+<unclear>[illegible — 2 lines running across the full width of the leaf below the string hole]</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, kaivalya, prayāṇa, saṃyoga</vocab>
