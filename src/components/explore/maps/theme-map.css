@@ -191,3 +191,4 @@
 .atlas-map .tested{font-family:var(--ui);font-size:12px;padding:1px 7px;border-radius:9px;white-space:nowrap}
 .atlas-map .tested.true{background:#e3efe4;color:var(--accent-sage-dark)} .atlas-map .tested.false{background:var(--rust-soft);color:var(--rust)}
 
+.atlas-map .detail .kbsec ol{list-style:decimal} .atlas-map .detail .kbsec ul,.atlas-map .detail .argue ul{list-style:disc}
