@@ -1,0 +1,57 @@
+{
+ "bound": {
+  "maxSentences": 5,
+  "maxOldWords": 200,
+  "maxGrowWords": 150,
+  "maxGrowSentences": 2,
+  "maxLost": 24
+ },
+ "majors": 183,
+ "refusedNormal": 120,
+ "driftOnly": 10,
+ "wideRefused": {
+  "restores-more-than-2-sentences": 19,
+  "head-old-not-at-edge": 5,
+  "touches-more-than-5-sentences": 6,
+  "drops-content-words": 12,
+  "tail-old-not-at-edge": 2,
+  "edit-too-large": 2,
+  "no-repair": 8
+ },
+ "widePlaced": 56,
+ "byNormalReason": {
+  "drops-content-words": {
+   "n": 48,
+   "placed": 38
+  },
+  "touches-more-than-3-sentences": {
+   "n": 17,
+   "placed": 6
+  },
+  "edit-too-large": {
+   "n": 30,
+   "placed": 12
+  },
+  "head-old-not-at-edge": {
+   "n": 5,
+   "placed": 0
+  },
+  "tail-old-not-at-edge": {
+   "n": 2,
+   "placed": 0
+  },
+  "no-repair": {
+   "n": 8,
+   "placed": 0
+  }
+ },
+ "store": {
+  "planned": 36,
+  "refused": {
+   "door-precheck-health:runaway": 3,
+   "tail-span-not-in-stored-text+tail-projected-edit-touches-markup": 6,
+   "tail-span-not-in-stored-text+tail-projected-span-not-found": 1,
+   "head-span-not-in-stored-text+head-projected-edit-touches-markup": 10
+  }
+ }
+}
