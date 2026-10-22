@@ -1,0 +1,18 @@
+I could not read most of this leaf reliably, so treat the placements below as rough estimates, apart from line 1 and the start of line 2.
+
+- **Lines 1–2 (moderately confident):** The first two lines match the end of SK_48 and the start of SK_49. In line 2 I can make out what looks like `ekādaś-endriya`, and the right end of line 1 looks like `…bhavaty andha-tāmisra…`.
+- **Lines 3–7 (guesses):** These have a blank stretch near the string-hole, and I couldn't make out their syllables. I placed them by assuming about one āryā verse per line.
+- **Lines 8–9 (guesses):** Line 8 seems to contain `…pravṛttiḥ` followed by something like `autsukya-`, which would be the SK_57/58 boundary. That fits the one-verse-per-line estimate, but I can't confirm it.
+- **The mark beside line 6** is probably a leaf or page number, not edition text.
+
+LINE 1 | SK_48 | mahā-mohaḥ | andha-tāmisraḥ | unsure
+LINE 2 | SK_49 | ekādaś' | a-śaktir | unsure
+LINE 3 | SK_49-SK_50 | viparyayāt | catasraḥ | unsure
+LINE 4 | SK_50-SK_51 | tuṣṭayo | duḥkha-vighātās | unsure
+LINE 5 | SK_51-SK_52 | siddheḥ | bhāva-nirvṛttiḥ | unsure
+LINE 6 | SK_53-SK_54 | daivas | sattva-viśālas | unsure
+LINE 7 | SK_55 | tatra | duḥkham | unsure
+LINE 8 | SK_57-SK_58 | puruṣa-vimokṣa-nimittaṃ | autsukya-nivṛtty-arthaṃ | unsure
+LINE 9 | SK_58 | puruṣasya | a-vyaktam | unsure
+
+FIRST_VISIBLE_VERSE=48 LAST_VISIBLE_VERSE=58

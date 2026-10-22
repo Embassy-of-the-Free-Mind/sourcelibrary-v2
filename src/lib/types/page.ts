@@ -57,6 +57,14 @@ export interface Page {
   printed_page?: PrintedPage;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
+  /**
+   * SERVED-ONLY, never stored (#7100): on an English edition's English leaf the
+   * stored `translation` is withheld and, where it is only a light spelling
+   * edit of the transcription, offered here instead — labelled "Modernized
+   * spelling", off by default, never cited or exported. Attached by
+   * `serveEnglishOriginalPage` (src/lib/english-original-text.ts).
+   */
+  modernized_spelling?: { data: string; overlap: number };
   transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts
   created_at?: Date;
   updated_at?: Date;

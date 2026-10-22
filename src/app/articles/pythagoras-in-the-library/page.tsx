@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
@@ -65,7 +64,7 @@ export default function PythagorasInTheLibraryPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="He wrote nothing that survives, and four thousand works in the library claim to know what he said"
+          subtitle="He wrote nothing that survives, and four thousand works in the library name him"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -134,7 +133,7 @@ export default function PythagorasInTheLibraryPage() {
           he was a speaker in the <em>Turba philosophorum</em>, the assembly of sages, saying that “clean water is
           from sulfur alone”, and later alchemists quoted him from it as an authority. To the herbalists he was a
           source of secret plant names: “Pythagoras calls it…” stands beside the names given by Osthanes and the
-          Memphites. Neither is the historical Pythagoras, and both are part of what he meant to the people who
+          Egyptians. Neither is the historical Pythagoras, and both are part of what he meant to the people who
           wrote these books.
         </p>
 

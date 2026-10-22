@@ -18,7 +18,7 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { randomBytes } from 'crypto';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
-import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, apiOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const SQS_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
@@ -139,6 +139,9 @@ async function run() {
       continue;
     }
 
+    // #7075: only flash-lite runs on the paid API (this job is read by the Lambda, which calls it).
+    const apiModel = apiOcrModelForBook(book);
+    if (!apiModel) { console.log(`  ${book.id}: routes to ${getOcrModelForBook(book)}, which reads through the agy CLI lane (scripts/batch/cli-ocr.mjs), not the API (#7075) — skipped`); continue; }
     // Create job record
     const jobId = nanoid();
     try {
@@ -151,7 +154,7 @@ async function run() {
         progress: { total: pageIds.length, completed: 0, failed: 0 },
         // The Lambda routes by book when no model is named; stamping it here makes
         // the decision visible on the job row (#4729).
-        config: { page_ids: pageIds, model: getOcrModelForBook(book) },
+        config: { page_ids: pageIds, model: apiModel },
         failed_page_ids: [],
         // This lane is hand-run, so it says so on every row it writes (#4336).
         initiated_by: INITIATED_BY,

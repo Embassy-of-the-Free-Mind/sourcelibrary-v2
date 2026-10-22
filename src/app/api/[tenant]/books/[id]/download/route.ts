@@ -20,6 +20,7 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import { servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import {
   fetchAndCompressImage,
   pageExportImageUrl,
@@ -2489,6 +2490,13 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .find({ book_id: id, tenantId })
       .sort({ page_number: 1 })
       .toArray();
+
+    // English edition, English leaf (#7100): the stored English "translation"
+    // is a model's rewording, not the author's words; the `ocr` formats carry
+    // the author's text. Mirrors the global twin.
+    for (const p of pages) {
+      if (servesTranscriptionInsteadOfTranslation(p, book)) delete p.translation;
+    }
 
     // Create safe filename base
     const safeTitle = (book.display_title || book.title || 'untitled')

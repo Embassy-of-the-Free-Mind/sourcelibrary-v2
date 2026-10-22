@@ -358,12 +358,16 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // fallback. The pill only renders for published-tier entities (#4321) — a
   // below-the-line entry is a noindex page listing a mention or two, and the
   // one place we deliberately keep linking the tail is nowhere.
+  // Exact, case-sensitive `name` match so the `name_1_type_1` index serves it.
+  // The previous /^name$/i regex over `name` and `aliases` had no index bounds:
+  // 434,325 entities examined, 27.3 s on a miss (explain, 2026-10-20, #7057),
+  // paid on every uncached render of an author with no linked entity.
+  // Trade-off: an entity whose name differs from the author string only by
+  // case, or that is reachable only through an alias, no longer yields the
+  // encyclopedia pill here; linked authors (`entity` above) are unaffected.
   const encyclopediaCandidate = entity || await db.collection('entities').findOne(
-    { type: 'person', $or: [
-      { name: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
-      { aliases: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
-    ]},
-    { projection: { name: 1, book_count: 1, wikidata_id: 1, description: 1 } }
+    { type: 'person', name: authorName },
+    { projection: { name: 1, book_count: 1, wikidata_id: 1, description: 1 }, maxTimeMS: 5000 }
   );
   const encyclopediaEntity =
     encyclopediaCandidate && isPublishedEntity(encyclopediaCandidate as EntityPublishFields)

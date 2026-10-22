@@ -1,0 +1,18 @@
+Here is my best placement. Lines 1, 2 and 10 are fairly secure. Lines 3–8 are written in two short blocks on either side of the string hole, and several of them are hard to read, so I've marked those unsure.
+
+LINE 1 | SK_51-SK_52 | tri-vidhaḥ | liṅgā`khyo | confident
+LINE 2 | SK_52-SK_53 | sargaḥ | tairyag-yonaś | confident
+LINE 3 | SK_53 | c' aika-vidhaḥ | sargaḥ | unsure
+LINE 4 | SK_54 | sattva-viśālas | sargaḥ | unsure
+LINE 5 | SK_54 | madhye | stamba-pary-antaḥ | unsure
+LINE 6 | SK_54-SK_55 | stamba-pary-antaḥ | prāpnoti | unsure
+LINE 7 | SK_55 | cetanaḥ | vinivṛttes | unsure
+LINE 8 | SK_55-SK_56 | tasmād | viśeṣa | unsure
+LINE 9 | SK_56-SK_57 | vatsa-vivṛddhi-nimittaṃ | kṣīrasya | unsure
+LINE 10 | SK_58 | yathā | puruṣasya | confident
+
+The anchor is line 10, which clearly reads "yathā kriyāsu pravartate lokaḥ puruṣa(sya)" (SK_58). Line 1 is also clear, with "na vinā bhāvair liṅgaṃ" (SK_52) right after the ending "-ṣaḥ" of SK_51. Line 2 begins "sargaḥ aṣṭa-vikalpo daiva…".
+
+I couldn't read every word in lines 3–9. Their placement fits the clear lines around them and the length of each line, and on line 9 I can make out "vatsa-vivṛddhi-nimittaṃ". Line 9 may begin a little earlier, at the end of SK_56.
+
+FIRST_VISIBLE_VERSE=51 LAST_VISIBLE_VERSE=58

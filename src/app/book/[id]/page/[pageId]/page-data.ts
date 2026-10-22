@@ -2,6 +2,7 @@ import { cache } from 'react';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { Book, Page } from '@/lib/types';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 
 // Shared book+page lookup for the reader segment's shells.
 //
@@ -21,6 +22,9 @@ export const BOOK_META_PROJECTION = {
   // Gates whether a LOCALIZED reader URL may exist for this book at all — see
   // the redirect in layout.tsx. Always projected, so its absence is an answer.
   pages_translated_es: 1,
+  // English edition? Its English leaves describe themselves by their own
+  // words, not a stored rewording (#7100).
+  'translation_state.english_original': 1,
 };
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
@@ -88,7 +92,7 @@ export const getPageData = cache(async function getPageData(bookId: string, page
 
     return {
       book,
-      page: page as unknown as Page | null,
+      page: page ? serveEnglishOriginalPage(page as unknown as Page, book, { modernized: false }) : null,
     };
   } catch {
     return { book: null, page: null };

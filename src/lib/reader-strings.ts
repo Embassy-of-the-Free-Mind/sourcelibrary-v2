@@ -243,6 +243,14 @@ export interface ReaderStrings {
     ungroundedLabel: string;
     /** The same page with the Notes toggle off. */
     ungroundedHidden: string;
+    /** Amber notice over a page the OCR marked handwritten or mixed (#7098):
+     *  the bold label, then the caution that follows its colon. */
+    handwrittenManuscript: string;
+    mixedManuscript: string;
+    uncertainReadings: string;
+    /** Page-number and folio chips in the Page Info bar, from the OCR's own numbering. */
+    pageNumberLabel: (n: string) => string;
+    folioLabel: (f: string) => string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -445,6 +453,11 @@ export interface ReaderStrings {
     /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
     notModernized: string;
     notModernizedBody: string;
+    /** #7100: a stored light spelling edit of an English page, offered off by default — never a translation, never cited. */
+    modernizedSpelling: string;
+    modernizedSpellingNote: string;
+    showModernizedSpelling: string;
+    hideModernizedSpelling: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -846,6 +859,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
       ungroundedLabel: 'Little or no text was transcribed on this page · written by the model',
       ungroundedHidden: 'Little or no text was transcribed on this page. Turn Notes on to read what the model wrote.',
+      handwrittenManuscript: 'Handwritten manuscript',
+      mixedManuscript: 'Mixed manuscript',
+      uncertainReadings: 'transcription may contain uncertain readings',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -1012,6 +1030,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
       notModernized: 'Not yet modernized',
       notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
+      modernizedSpelling: 'Modernized spelling',
+      modernizedSpellingNote: 'Machine-edited for modern spelling and punctuation. Not the author\'s text: quote and cite the transcription.',
+      showModernizedSpelling: 'Show modernized spelling',
+      hideModernizedSpelling: 'Hide modernized spelling',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1326,6 +1348,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
       ungroundedLabel: 'Se transcribió poco o ningún texto en esta página · escrito por el modelo',
       ungroundedHidden: 'Se transcribió poco o ningún texto en esta página. Activa las notas para leer lo que escribió el modelo.',
+      handwrittenManuscript: 'Manuscrito',
+      mixedManuscript: 'Manuscrito mixto',
+      uncertainReadings: 'la transcripción puede contener lecturas inciertas',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
@@ -1492,6 +1519,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
       notModernized: 'Aún sin modernizar',
       notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
+      modernizedSpelling: 'Ortografía modernizada',
+      modernizedSpellingNote: 'Editada automáticamente con ortografía y puntuación modernas. No es el texto del autor: cite la transcripción.',
+      showModernizedSpelling: 'Mostrar ortografía modernizada',
+      hideModernizedSpelling: 'Ocultar ortografía modernizada',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
@@ -1831,6 +1862,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
       ungroundedLabel: 'Paulum aut nihil textus ex hac pagina transcriptum · a machina scriptum',
       ungroundedHidden: 'Paulum aut nihil textus ex hac pagina transcriptum. Notas ostende, ut quae machina scripsit legas.',
+      handwrittenManuscript: 'Codex manu scriptus',
+      mixedManuscript: 'Codex mixtus',
+      uncertainReadings: 'transcriptio lectiones incertas continere potest',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
       traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
 
@@ -1999,6 +2035,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Hic liber Anglice scriptus est: transcriptio ipsa legenda est. Nihil est quod convertatur.',
       notModernized: 'Nondum sermone hodierno reddita',
       notModernizedBody: 'Hic liber Anglice prisco scriptus est. Sermone hodierno nondum redditus est; transcriptio ipsa legenda est.',
+      modernizedSpelling: 'Orthographia hodierna',
+      modernizedSpellingNote: 'Machina ad orthographiam hodiernam redactum. Non sunt verba auctoris: transcriptionem cita.',
+      showModernizedSpelling: 'Orthographiam hodiernam ostende',
+      hideModernizedSpelling: 'Orthographiam hodiernam cela',
       signInToRequest: 'Intra, ut conversionem petas',
       requestTranslation: 'Conversionem pete',
       requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
@@ -2312,6 +2352,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
       ungroundedLabel: 'Weinig of geen tekst getranscribeerd op deze pagina · geschreven door het model',
       ungroundedHidden: 'Weinig of geen tekst getranscribeerd op deze pagina. Zet Noten aan om te lezen wat het model schreef.',
+      handwrittenManuscript: 'Handgeschreven manuscript',
+      mixedManuscript: 'Gemengd manuscript',
+      uncertainReadings: 'de transcriptie kan onzekere lezingen bevatten',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
       traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
 
@@ -2479,6 +2524,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Dit boek is in het Engels: de transcriptie is de leestekst. Er is niets te vertalen.',
       notModernized: 'Nog niet gemoderniseerd',
       notModernizedBody: 'Dit boek is in vroegmodern Engels. Er is nog geen gemoderniseerde versie; de transcriptie is de leestekst.',
+      modernizedSpelling: 'Gemoderniseerde spelling',
+      modernizedSpellingNote: 'Automatisch bewerkt naar moderne spelling en interpunctie. Niet de tekst van de auteur: citeer de transcriptie.',
+      showModernizedSpelling: 'Toon gemoderniseerde spelling',
+      hideModernizedSpelling: 'Verberg gemoderniseerde spelling',
       signInToRequest: 'Log in om een vertaling aan te vragen',
       requestTranslation: 'Vertaling aanvragen',
       requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
@@ -2794,6 +2843,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
       ungroundedLabel: '本页几乎未转录出文字 · 由模型撰写',
       ungroundedHidden: '本页几乎未转录出文字。打开“注释”即可阅读模型撰写的内容。',
+      handwrittenManuscript: '手写稿',
+      mixedManuscript: '手写与印刷混合稿',
+      uncertainReadings: '转录可能含有不确定的释读',
+      pageNumberLabel: (n) => `第 ${n} 页`,
+      folioLabel: (f) => `第 ${f} 叶`,
       traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
       traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
 
@@ -2960,6 +3014,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: '本书以英文写成，转录文本就是阅读文本，无需翻译。',
       notModernized: '尚未现代化',
       notModernizedBody: '本书以早期现代英语写成，尚未制作现代英语读本；转录文本就是阅读文本。',
+      modernizedSpelling: '现代拼写',
+      modernizedSpellingNote: '机器按现代拼写和标点编辑，并非作者原文：引用时请使用转录文本。',
+      showModernizedSpelling: '显示现代拼写',
+      hideModernizedSpelling: '隐藏现代拼写',
       signInToRequest: '登录后申请翻译',
       requestTranslation: '申请翻译',
       requestFailed: '申请未能提交，请稍后再试。',

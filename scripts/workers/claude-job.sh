@@ -85,6 +85,9 @@ HEADLESS RULES (prepended by claude-job.sh; they override anything below):
 - Long work: run it in the foreground (Bash timeout up to 600000 ms), or detach it with nohup writing to a
   file and then wait in the FOREGROUND with an until-loop on that file (each call <= 10 min, repeat the call).
 $HOST_RULES
+- SOURCE LIBRARY API: send \`-H "Authorization: Bearer \$(cat /root/.sl-internal-key)"\` on every sourcelibrary.org/api call.
+  It is an internal full-tier key (no daily page budget, 300 req/min); anonymous calls stop at 500 pages/day.
+  Never print, commit or post the key. Bulk reads (thousands of pages) go to Mongo directly, not the API.
 - DISK: write every large or bulky output (reports, jsonl, images, model files, downloads) under
   \$JOB_SCRATCH ($DATA/$1), never in /root or the repo checkout. \$TMPDIR points there too. Gzip big reports.
   The root disk is small and shared; when it fills, every job on the box dies without a word (#6223).

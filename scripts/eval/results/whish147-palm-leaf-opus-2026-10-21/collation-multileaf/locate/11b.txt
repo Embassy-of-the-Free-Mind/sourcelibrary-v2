@@ -1,0 +1,13 @@
+I'm not confident in this placement. The leaf doesn't look like plain verse text. It looks like the start of a commentary on the Sāṃkhyakārikā, possibly with Malayalam gloss. Lines 3–7 are split into short pieces with a gap at the binding hole, and only a few readings actually line up with the edition's wording. Note too that the rope hole falls in the middle of this image, so the right-hand pieces of lines 3–7 are also on this half.
+
+LINE 1 | NONE (introductory commentary) | — | — | unsure. I read roughly "saṃkṣipta… sāṃkhya(?)…" and "saptatikā…", which looks like a preamble about the Saptati rather than SK_71.
+LINE 2 | NONE (introductory commentary) | — | — | unsure. I couldn't read enough to place it.
+LINE 3 | SK_1? | — | — | unsure. The left piece reads something like "ity…"; I can't match it to edition wording.
+LINE 4 | SK_1? | — | — | unsure. I read "…bhiha…"; it might belong to "abhighāta" but I can't confirm it.
+LINE 5 | SK_1 | duḥkha-trayā'bhighātāj | jijñāsā | unsure. Left: "(duḥ)khatrayābhighā(tāj)". Right of the hole: "…(tāj) jijñāsā…". This is the clearest match on the leaf.
+LINE 6 | SK_1 (commentary) | — | — | unsure. I read something like "(ā)tyantikam āyi…" and "ekāntam āyi…", which looks like a gloss on "aikānta / atyantato".
+LINE 7 | SK_1 (commentary) | — | — | unsure. I read "…dṛṣṭāntikaṃ(?)…"; it might be a gloss on "dṛṣṭe".
+LINE 8 | commentary, unplaced | — | — | unsure. I read "…vaiṣamya(?)…"
+LINE 9 | commentary, unplaced | — | — | unsure
+
+FIRST_VISIBLE_VERSE=1 LAST_VISIBLE_VERSE=1

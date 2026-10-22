@@ -1,0 +1,15 @@
+I couldn't confidently place this leaf in the edition. It appears to be commentary or a diagram, not a continuous run of the verses. My reading of the script here is only partial, so I'm unsure about every line.
+
+The leaf's layout points the same way. Lines 3–7 have a wide blank gap between a short left block and a short right block, which looks like a list or table rather than continuous verse text. The fragments I can make out are mainly common technical words, such as *kāraṇaṃ* (line 2), *guṇa-viśeṣa* (line 3, right) and *viśeṣa* (lines 6–7, right). Commentaries use these words throughout, so they can't pin down a verse. The last line seems to read something like *…(vya)ktāvyakta-jña-vijñāna…*, which would echo the end of SK_2. If so, this leaf could be commentary on SK_1–2, but that is a guess.
+
+LINE 1 | unplaceable (possibly commentary; may contain *duḥkha*?) | — | — | unsure
+LINE 2 | commentary? (*…kāraṇaṃ…* readable) | — | — | unsure
+LINE 3 | commentary / diagram (left block, then right block *…guṇa-viśeṣa…*) | — | — | unsure
+LINE 4 | commentary / diagram (split layout) | — | — | unsure
+LINE 5 | commentary / diagram (split layout; right block has *…viśiṣṭa…*?) | — | — | unsure
+LINE 6 | commentary / diagram (split layout; right block has *…viśeṣa…*) | — | — | unsure
+LINE 7 | commentary / diagram (split layout; right block has *…viśeṣa…*) | — | — | unsure
+LINE 8 | unplaceable (possibly commentary near SK_2 wording) | — | — | unsure
+LINE 9 | possibly SK_2 or commentary on it | vyaktā'-vyakta-jña? | vijñānāt? | unsure
+
+FIRST_VISIBLE_VERSE=NONE LAST_VISIBLE_VERSE=NONE (if anything, a tentative link to SK_2 from line 9)

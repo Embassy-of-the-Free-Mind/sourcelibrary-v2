@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf; the crop cuts off the left side of each line, so every line begins mid-word. The incised letters are inked unevenly and some are hard to make out, so many readings are uncertain.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Right-hand portion of a palm leaf with blank margin at right; about a quarter of the leaf is shown. Text in Malayalam script, apparently Sanskrit with possible Malayalam admixture.</meta>
+
+<unclear>ന്യാക്കണക്കാച്ചാ</unclear> പ്രയ
+ാത്മകാഃ പ്രകാശ
+<unclear>ിമിഷ്ണാവൃത്തയശ</unclear>
+<unclear>കക്ഷേലക്ഷേരജ്ജുഃ</unclear>
+<unclear>നതാവൃത്തിഃ</unclear> സ്വ
+<unclear>യാദാവാൎക്കാ</unclear>
+<unclear>സിദ്ധം സ്ഥലെട്ടാ</unclear>
+<unclear>ാനൈകമെയ്യ്വിട്ടാ</unclear>
+<unclear>ംകത്രിഗുണകസ്</unclear>
+<unclear>ഹക്കാൎസ്സ സംഖ്</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, പ്രകാശ, വൃത്തി, രജ്ജുഃ, ത്രിഗുണ</vocab>

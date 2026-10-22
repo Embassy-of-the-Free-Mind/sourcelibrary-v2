@@ -26,6 +26,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import { getTranslation } from '@/lib/page-translations';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 
 export type QuoteTextSource = 'translation' | 'ocr_original' | 'source_column';
 
@@ -47,8 +48,9 @@ export interface QuotableText {
  * than a translation of it. Spelled out because agents act on these sentences.
  */
 export const OCR_ORIGINAL_NOTE =
-  'This page needs no translation: the text printed on the leaf is already English, which is why '
-  + 'this book reports pages_translated: 0. The quotable text is served as `original` '
+  'This page needs no translation: the text printed on the leaf is already English, so the quotable '
+  + 'text is the transcription, never a translation (any English-to-English "translation" this book may '
+  + 'still count in pages_translated is a machine rewording and is not served — #7100). The quotable text is served as `original` '
   + '(text_source: "ocr_original") — an AI transcription of the scan, uncorrected, preserving period '
   + 'spelling, long-s forms and printer marks, and any passage the page itself quotes in another '
   + 'language exactly as printed. Quote it as the source\'s own words and never describe it as a '
@@ -124,8 +126,13 @@ export function resolveQuoteText(
   // `mark: false` for text that is not leaving the building as an export — the
   // Librarian's model context (#5867). The watermark belongs on what a caller
   // copies out, not on what a model reads and paraphrases.
-  { mark = true }: { mark?: boolean } = {},
+  // `book`: the book's language fields (ENGLISH_ORIGINAL_BOOK_PROJECTION).
+  // On an English edition, a stored translation of an English leaf is a model's
+  // rewording, not the author's words, and is never quotable (#7100). Every
+  // caller that has the book must pass it.
+  { mark = true, book }: { mark?: boolean; book?: object | null } = {},
 ): QuotableText | null {
+  page = serveEnglishOriginalPage(page, book, { modernized: false });
   const stamp = (text: string) => (mark ? markForExport(text, bookId) : text);
   // A non-English edition is tried FIRST and falls back to English, reporting
   // which one it served. Never the other way round, and never silently: the

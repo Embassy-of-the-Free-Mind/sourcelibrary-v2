@@ -65,9 +65,37 @@ export function assertGeminiModel(args) {
   if (!/^gemini-/.test(model)) throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
 }
 
+/**
+ * The per-job call ledger and the heavy-model daily cap (#7118). Every agy call made through here appends
+ * `at,job,model` to JOB_LEDGER/<UTC date>.csv, so the meter can say WHICH job spent the shared Google account. A job on
+ * a heavy model (argon, pro, any *-high tier) stops at AGY_HEAVY_DAILY_CAP calls per UTC day: on 2026-10-19 one
+ * argon-high re-OCR locked every model, the cheap one that seam repair and translation run on included, for 4.5 days.
+ * The refusal is cls 'quota', so every caller already treats it as "stop spending, wait". The job is AGY_JOB, else
+ * the script's file name. No ledger dir (a laptop): no ledger, no cap.
+ */
+export const JOB_LEDGER = process.env.AGY_JOB_LEDGER || '/root/agy-quota/jobs';
+export const HEAVY_MODEL = /argon|-pro|-high$/;
+export const HEAVY_DAILY_CAP = Number(process.env.AGY_HEAVY_DAILY_CAP || 300);
+export const agyJob = () => (process.env.AGY_JOB || path.basename(process.argv[1] || 'unknown').replace(/\.[cm]?js$/, '')).replace(/[^\w.-]/g, '_');
+export function jobCallsToday(job, { heavyOnly = true, dir = JOB_LEDGER, now = new Date() } = {}) {
+  let rows = [];
+  try { rows = fs.readFileSync(path.join(dir, `${now.toISOString().slice(0, 10)}.csv`), 'utf8').split('\n'); } catch { return 0; }
+  return rows.filter((l) => { const [, j, m] = l.split(','); return j === job && (!heavyOnly || HEAVY_MODEL.test(m || '')); }).length;
+}
+/** null when the call may go, else the refusal message. Records the call when it may. */
+export function ledgerGate(model, { dir = JOB_LEDGER, cap = HEAVY_DAILY_CAP, job = agyJob(), now = new Date() } = {}) {
+  if (!fs.existsSync(path.dirname(dir))) return null;
+  fs.mkdirSync(dir, { recursive: true });
+  if (HEAVY_MODEL.test(model) && jobCallsToday(job, { dir, now }) >= cap) return `agy-cli: job ${job} reached its daily cap of ${cap} calls on heavy models (${model}); set AGY_HEAVY_DAILY_CAP to change it (#7118)`;
+  fs.appendFileSync(path.join(dir, `${now.toISOString().slice(0, 10)}.csv`), `${now.toISOString()},${job},${model}\n`);
+  return null;
+}
+
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
 export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
   assertGeminiModel(args);
+  const capped = ledgerGate(String(args[args.indexOf('--model') + 1]));
+  if (capped) return Promise.resolve({ text: '', conversation: null, denied: [], code: null, cls: 'quota', err: capped, secs: 0, usage: null, capped: true });
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });

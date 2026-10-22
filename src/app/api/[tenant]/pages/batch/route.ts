@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
@@ -55,6 +56,10 @@ export async function POST(
     // like the global twin; named tenants are exempt partner reading rooms.
     // No-op unless METERED_READER=1.
     pages = await gatePagesForRequest(db, request, pages, { exempt: tenant !== 'default' });
+
+    // English edition, English leaf: serve the transcription, never the stored
+    // English-to-English rewording (#7100).
+    pages = await serveEnglishOriginalPages(db, pages);
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
     // translation (deterministic, cache-safe — mirrors the global twin).

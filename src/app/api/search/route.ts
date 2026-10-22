@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { getReadDb } from '@/lib/mongodb';
 import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
@@ -912,9 +913,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         }
       }
 
-      for (const page of pageDocs) {
-        const book = bookMap.get(page.book_id as string);
+      for (const rawPage of pageDocs) {
+        const book = bookMap.get(rawPage.book_id as string);
         if (!book) continue;
+        // English edition, English leaf: the stored English "translation" is a
+        // rewording, never a snippet of the page (#7100).
+        const page = serveEnglishOriginalPage(rawPage, book, { modernized: false });
+        const withheld = page !== rawPage;
         if ((book as any).hidden === true) continue;
         if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
@@ -922,7 +927,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // Prefer Atlas Search highlights (faster, more precise) over full-text extraction
         let snippet = '';
         let snippetType: 'translation' | 'ocr' = 'ocr';
-        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+        const highlights = (page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined)
+          ?.filter(h => !(withheld && h.path === 'translation.data'));
         if (highlights && highlights.length > 0) {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
@@ -952,7 +958,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // together, which is the place the page was ranked on. Same cleaned
         // text as extractSnippet reads, so no editorial wrapper can come back.
         const phrase = (page as { _phrase?: PassagePhrase })._phrase;
-        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN) {
+        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN && !(withheld && phrase.field === 'translation')) {
           snippet = snippetAt(phrase.text, phrase.start, phrase.end);
           snippetType = phrase.field;
         }

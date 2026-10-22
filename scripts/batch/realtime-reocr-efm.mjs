@@ -17,6 +17,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
@@ -27,6 +28,9 @@ import { isTruncatedCandidate, truncationFailReason, candidateText } from '../li
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
+// #7075: only gemini-3.1-flash-lite runs on the paid API. This script's model is Flash, so it refuses to run;
+// read these pages through the agy CLI lane instead (scripts/batch/cli-ocr.mjs).
+assertApiOcrModel(TARGET_MODEL, 'realtime-reocr-efm');
 const TARGET_PROMPT = 'v5.2026-02';
 // Provenance identity of this writer (#4613).
 const CALL_SITE = 'scripts/batch/realtime-reocr-efm.mjs';

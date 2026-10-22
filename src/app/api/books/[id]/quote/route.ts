@@ -37,6 +37,8 @@ const QUOTE_BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
   language: 1, original_language: 1, text_role: 1, text_role_source: 1, is_translation: 1,
   visible: 1, pages_count: 1, doi: 1, format: 1, publisher: 1, ustc_id: 1,
+  // resolveQuoteText's English-original test (#7100).
+  'translation_state.english_original': 1,
   content_type: 1, resource_type: 1, field_provenance: 1,
   ...IMPRINT_PLACE_PROJECTION,
   contributing_library: 1, shelfmark: 1,
@@ -241,7 +243,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
-    const quotable = resolveQuoteText(page, book.id, requestedLang);
+    const quotable = resolveQuoteText(page, book.id, requestedLang, { book });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -348,7 +350,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         run.map((p) => ({ page: p.page_number, text: text(p) }));
       const extract =
         embeddedExtract(layer((p) => (p.ocr?.data ? stripEditorialWrapperBlocks(p.ocr.data) : null)))
-        ?? embeddedExtract(layer((p) => resolveQuoteText(p, resolvedBookId, quotable.lang, { mark: false })?.text));
+        ?? embeddedExtract(layer((p) => resolveQuoteText(p, resolvedBookId, quotable.lang, { mark: false, book })?.text));
       if (extract) {
         response.quote.embedded_extract = extract;
         response.quote.embedded_extract_note = EMBEDDED_EXTRACT_NOTE;
@@ -380,7 +382,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       // two halves cannot be joined.
       const neighbour = (p: unknown) => {
         const pg = p as Page | null;
-        return pg ? resolveQuoteText(pg, resolvedBookId, quotable.lang)?.text : undefined;
+        return pg ? resolveQuoteText(pg, resolvedBookId, quotable.lang, { book })?.text : undefined;
       };
       response.context = {
         previous_page: neighbour(prevPage),

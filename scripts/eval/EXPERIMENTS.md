@@ -135,6 +135,288 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-22 · Claude tiers for seam repair: Haiku screen, Sonnet repair, Opus verify (#7118)
+
+PRIOR ART: `2026-10-15-seams-scale-opus-flashlite-6742.md` gives the 300 Opus-labelled joins and the flash-lite detect
+arms D1–D5, whose D1 question this screen copies. `2026-10-16-seam-repair-lean-6742.md` gives Test B: Gemini against
+Opus as repairer, with the blind both-orders Opus judge. `2026-10-15-seam-repair-pilot-6742.md` measured Opus at about
+0.6 weekly points per 100 joins. #7120 added `lean.mjs run --repairer=sonnet` and the `--fallback` arm. Scripts:
+`scripts/eval/seam-tiers-7118/detect.mjs` (new). Test B reuses `gemini-repair.mjs stage/score` and `seam-repair.mjs
+repair/verify` unchanged. Results: `scripts/eval/results/seam-tiers-7118/`. Every call went through the box account's
+subscription (`claude -p`, sealed). No Gemini and no agy calls were made. Nothing was written to Mongo.
+
+### 1. Screen: is this join defective? (300 joins, Opus labels as reference)
+
+Prompt: D1 packed, 10 joins per call (`p_defect` 0–100). Positives by Opus: 131 any defect, 47 major (severity major),
+39 "major4" (omission, drift, duplication or broken syntax, labelled major). Pack size on 60 joins: Haiku with 10 per
+call had κ 0.33 and major AUC 0.80; with 20 per call, κ 0.15 and major AUC 0.67. Pack 10 was kept.
+
+| arm | AUC any | AUC major | own call: agree / κ | own call: major recall | plants caught | goods flagged | list $ / 100 joins |
+|---|---|---|---|---|---|---|---|
+| Haiku 4.5, thinking on (CLI default) | 0.71 | 0.68 | 70% / 0.35 | 49% (23/47) | 18/30 | 2/30 | 1.04 |
+| Haiku 4.5, thinking off (`MAX_THINKING_TOKENS=0`) | 0.59 | 0.59 | 57% / 0.06 | 23% | 6/30 | 1/30 | 0.50 |
+| Sonnet 5.5 | 0.82 | 0.87 | 79% / 0.56 | 87% (41/47) | 30/30 | 2/30 | 1.27 |
+| *bar (#6742: agy Flash vs Opus)* | | | *91% / 0.82* | | | | |
+
+Threshold rows: "pass" is the share of joins a screen sends on to the repairer.
+
+| arm, p_defect ≥ | pass | major recall | any recall | any precision |
+|---|---|---|---|---|
+| Haiku ≥ 1 | 86% | 91% (43/47) | n/a | n/a |
+| Haiku ≥ 5 | 83% | 87% (41/47) | n/a | n/a |
+| Haiku ≥ 10 | 42% | 68% (32/47) | 60% | 63% |
+| Haiku ≥ 30 | 23% | 49% (23/47) | 41% | 78% |
+| Sonnet ≥ 10 | 54% | 94% (44/47) | 78% | 63% |
+| Sonnet ≥ 30 | 29% | 87% (41/47) | 60% | 89% |
+
+**The bar is not met.** To reach ≥ 90% major recall, Haiku has to pass 86% of joins. Haiku costs $1.04 per 100 joins
+and the Sonnet repair it would feed costs $1.04–1.43 per 100 joins, so the screen saves nothing unless it passes fewer
+than about 27% of joins. At that pass share it catches 49% of majors. Haiku's scores are bimodal: most joins get 0–5
+and almost all the rest get 65–95. Its misses are majors it calls clean, with confident reasons ("Transition flows
+naturally" on an Opus omission). Sonnet meets the recall bar at p ≥ 10, but a Sonnet screen costs about the same as
+a Sonnet repair, which labels the join anyway. Haiku with thinking off is cheaper and close to chance.
+
+### 2. Sonnet as repairer, Opus verify (Test B on the 300)
+
+Sonnet ran the opus-reference PROMPT with 30 joins per call (`seam-repair.mjs repair --model=sonnet --pack=30`). The
+blind Opus judge saw every placed repair in both orders, with 10 A/A pairs (`verify --arm=sonnet`).
+
+| repairer | labelled defective | placed | verified (preferred both orders) | worse | yield /300 | Opus majors verified | real-stratum majors verified |
+|---|---|---|---|---|---|---|---|
+| Sonnet 5.5 | 96 | 83 | 82 (98.8%) | 0 | 27.3% | 31/47 | 17/30 |
+| Opus 5.5 (self-judged ceiling) | 131 | 114 | 109 | 0 | 36.3% | 38/47 | 22/30 |
+| Gemini 3.8 Flash (agy) | 136 | 118 | 110 | 1 | 36.7% | 34/47 | 18/30 |
+
+A/A: 10/10 tie/tie. Sonnet's placed repairs are as good as Opus's. It finds fewer defects: 19 defective of 120 on the
+random stratum, where Opus found 35. This repeats the pilot (45 vs 61 repairs per 100 joins).
+
+Restricted to the joins a screen passes (`detect.mjs screened`): Sonnet behind Haiku ≥ 10 verifies 56 joins and 21/47
+majors, against 82 and 31/47 unscreened. Behind Haiku ≥ 1 it verifies 79 and 28/47.
+
+### 3. Cost
+
+List-price USD is `total_cost_usd` from each call. It is not billed: everything ran on the subscription. Weekly points
+come from the box account's `climits` poll, which has a resolution of 1 point and is shared with other jobs on the
+account.
+
+| arm | list $ / 100 joins | weekly points / 100 joins |
+|---|---|---|
+| Haiku screen, thinking on, 10/call | 1.04 | ≈ 0.36* |
+| Haiku screen, thinking on, 20/call (60 joins) | 0.69 | ≈ 0.24* |
+| Haiku screen, thinking off, 10/call | 0.50 | ≈ 0.18* |
+| Sonnet screen, 10/call | 1.27 | ≈ 0.44* |
+| Sonnet repair, Test B excerpts (1,500 chars), 30/call | 1.43 | ≈ 0.50* |
+| Sonnet repair, runner windows (`lean.mjs`), 30/call | 1.04 | **measured as a lane, below** |
+| Opus verify of every placed repair (Test B) | 1.97 | ≈ 0.69* |
+| Opus verify, the runner's 7% sample | 0.10 | ≈ 0.03* |
+| **Lane: `lean.mjs run --repairer=sonnet`, 1,000 nightly joins, run alone** | **1.14** | **0.4 (4 points: 11% → 15%, 18:05–18:30 UTC)** |
+
+\* Converted at the lane's measured 0.35 points per list dollar (4 points / $11.42). That is an upper bound: the
+account was shared, and this job's own session spent from it. The screens and Test B ran concurrently, from 17:35 to
+18:05 UTC, and moved the account from 8% to 11% weekly for $19.2 of list price. The 5-hour session meter went from 35%
+to 54% for the 1,000-join lane.
+
+### 4. The lane on 1,000 pending nightly joins (dry run, scratch dir)
+
+The 1,000 joins were the first pending candidates of `/mnt/HC_Volume_105839809/seam-lean-6742`: tranche joins in the
+24 most-read books. Sonnet labelled 725 defective (4 replies unparsed), 183 of them major. Placement kept 537. The 7% blind Opus sample
+preferred 38/38 in both orders, with A/A tie/tie. The write plan held 447 joins (606 pages); 90 were refused at the
+store. **Of the 183 majors, 48 would be written, 15 were refused at the store, and 120 were refused by placement**:
+edit-too-large 36, drops-content-words 49, touches-more-than-3-sentences 19, not-at-edge 7, no-repair 9. An omission
+that needs a missing sentence put back is often larger than the edge bound allows, and on this sample the placement
+checks reject majors more often than capacity limits them. The brief kept PREFER_FLOOR, MAX_LOST and the refusals
+unchanged; changing them is a separate decision.
+
+### 5. Throughput (box account, team@)
+
+- Other jobs used the account at about 3.5 points/day this week (0% at the 10-20 reset, 7% on 10-22 at 14:00), about
+  25 points a week. Under the runner's 60% stop, about **35 points/week** are left for seams.
+- At 0.4 points per 100 joins, that is about **8,750 joins/week, about 1,250/night**. The cron's `--max-joins=2500`
+  would hit 60% after about four nights, and the runner would then skip nights, as it is designed to.
+- That rate writes about 48 majors per 1,000 tranche joins, roughly **420 majors/week**. The ~480K major joins are out
+  of reach of this lane: Sonnet finds 66% of Opus's majors, and placement then keeps 26% of the majors it finds. A full
+  sweep of the 4.40M prose joins would take about 500 weeks on this account.
+- More accounts: per account with S spare points under 60%, about S × 250 joins/week. cloudlayer (derek@playpowerlabs)
+  went from 46% to 49% in two days this week, so it has about 10 points/week of its own use and could add about 12K
+  joins/week, which cuts any ETA by about 2.4×. l7a (derek@sourcelibrary) was at 91% (76 → 91 in one day) and adds
+  nothing under 60% at that pace.
+- For comparison, the Gemini lane spends about 0.01 Claude points per 100 joins (the 7% sample only), so its limit is
+  agy quota: about 2,500 joins a night, roughly 17.5K a week. The Claude lane is the floor for nights when agy is
+  locked. It cannot replace the Gemini lane.
+
+### Limits of this measurement
+
+- Weekly points have a resolution of 1 point on a shared account. Per-arm points are list price converted at one
+  measured ratio. Haiku may weigh differently from Sonnet against the limit.
+- The screen was measured on #6742's 1,500-character excerpts, not on the runner's tighter windows. Haiku's failure is
+  large enough that a re-cut is unlikely to change the conclusion. `detect.mjs --windows=tight` exists but was not run.
+- Opus's verified count on its own repairs is self-judged, as it was in #6742.
+
+## 2026-10-21 · Can Opus or Fable read a Malayalam-script Sanskrit palm-leaf manuscript well enough to OCR it? (#5935)
+
+**Question.** Can the Opus OCR lane (`scripts/batch/claude-ocr.mjs`, `claude -p` on the subscription) read this book well enough to queue it? The book is RAS Whish MS 147 (`6ad845ec6037414ddef152af`, IA `raswhish145-147`, Calicut 1822): the Sāṅkhyasaptati with the Jayamaṅgalā and Tattvakaumudī, then Annambhaṭṭa's Tarkasaṃgraha with Dīpikā. It is the leaf labelled "SĀNKHYA-SAPTATI or golden verses of Pythagoras". The kārikās have a standard text (GRETIL), so a read can be scored for accuracy and not merely for agreement.
+
+**Design.**
+- **Reader:** Opus via `claude-ocr.mjs` with the live OCR prompt (Standard OCR v19.1, base `34f12611ca3d77e9`), one page per call, language slot `Sanskrit`.
+  - The tile runs reuse the lane's own `claudeCall` and the exact prompt it saved, changing only the phrase that says the image is a crop.
+  - No prompt names the work, so a read cannot be filled from the model's memory of the kārikās.
+- **Pages:** 3 (the contents leaf), 5 and 6 (the start of the text). Pages 61 and 121 (commentary) were read only by eye.
+- **Images:** each scan holds two leaves, about 5,300 × 3,400 px. Page 5 was also cut into:
+  - 4 half-leaf tiles, about 2,580 px wide;
+  - 4 quarter-leaf tiles of the lower leaf, about 1,300–1,425 px wide (under the Read tool's downscale, so seen at native size).
+- **Instrument:** the Malayalam-script read is transliterated to IAST (`indic_transliteration`). Both sides are normalised: spacing, punctuation, anusvāra, and scribal gemination after r. Then the Levenshtein distance is taken to the best-matching window of the GRETIL plaintext `sa_IzvarakRSNa-sAMkhyakArikA.txt` (`score_vs_gretil.py`).
+
+**Result.**
+
+| read | Malayalam chars | `unclear` spans | CER vs GRETIL |
+|---|---|---|---|
+| page 5, whole image | 0 | — | declined: "too small at this resolution to read reliably. I have not attempted a reading, so that no text is invented … please supply … crops of each leaf" |
+| page 6, whole image | 2 | 22 | not scorable |
+| page 5, half-leaf tiles (4) | 13–351 per tile | 29–62 per tile | 0.74–0.75 (one tile too short to score) |
+| page 5, quarter-leaf tiles (4) | — | 18–50 per tile | 0.71–0.75; one tile aligned 7,000 characters away, i.e. no real match |
+| **Fable 5.1**, page 5, whole image | 0 | 4 | declined, the same way ("cannot be read reliably at this resolution") |
+| **Fable 5.1**, half-leaf tiles (lower leaf, 2) | 281–315 | 28–46 | **0.64** and 0.71, aligned at kārikās 9–12 (the right region) |
+| **Fable 5.1**, quarter-leaf tiles (4) | 148–187 | 26–38 | 0.72–0.74; two of four aligned far from the right region |
+| *noise floor:* shuffled reference letters, or a reversed real passage (12 draws, 300 chars) | — | — | **0.74–0.78** |
+
+| contrast-enhanced (CLAHE 3.0, 16×16) half-leaf t03: Opus / Fable | — | 43 / 36 | 0.71 / 0.73 (Fable aligned 6,000 characters away); no gain |
+
+**Read against the noise floor.** The best-window matcher gives 0.74–0.78 to text that contains no reading at all (`noise_floor.py`). So Opus's crops are at chance. Fable's quarter-leaf crops are at chance too. Fable's half-leaf crops, at 0.64 and 0.71, are a little above chance and sit in the right place: some real signal, nowhere near usable. A usable OCR would be under about 0.10.
+
+- **Where it does read:** fragments land in the right region of the text. For example, a tile carries "prakāśa … abhibhava … vṛttayaśca" from kārikā 12, in the leaf where kārikās 8–12 fall. But most of each line is marked unclear or is not recoverable.
+- **Caveat on the CER:** the leaves also carry Malayalam glosses that the verse-only reference lacks, which inflates the figure. That does not change the verdict: even the spans that do align to a kārikā differ from it in most letters.
+- **Contents leaf (page 3):** this one Opus reads well, because it is a large hand: the English list ("1 SĀNKHYA-SAPTATI or golden verses of Pythagoras …") and the Malayalam list beneath it, with Malayalam numerals.
+- **Fable's 0.64 tile is a mix, not uniform noise.** It contains kārikā 11 nearly verbatim: "triguṇamavivèkiviṣayassāmānyama cè … prasavadhaൎmmi vyaktaṃ tathā pradhānaṃ". "dhaൎmmi" has the Kerala scribal gemination that GRETIL does not, which points to reading rather than recall (no prompt named the work). The other lines are noise or Malayalam gloss. A per-line score, against the verse lines only, is the instrument that would separate the two.
+- **Not image size, not contrast:** quarter-leaf crops at native resolution and contrast-enhanced crops both stay at chance.
+- **Good behaviour:** on every page Opus marks what it cannot read instead of inventing it.
+- **Consistent with #5795:** Claude models can't read South Asian palm-leaf hands word for word.
+
+**Combining readers.** Prior work sets the frame:
+- Lane B (#6420) adjudicates between two reads, so it needs at least one usable read.
+- Correction (#6561, #6545) needs a usable draft.
+- Edition fitting (#5560, #5619) needs reads good enough to locate the text in the edition.
+
+None applies to reads at chance. Two cheap probes on the same half-leaf (t03):
+- *Agreement:* the runs of 6+ letters on which Opus and Fable agree are precise (70 of 88 characters match GRETIL) but cover about 6% of the leaf. That is a trust filter, not a text.
+- *Collation against the edition, with planted errors* (an image-reading variant of #5619's algorithmic fitting). Each model gets the GRETIL kārikās 7–16 carrying 4 planted errors and is asked to list where the LEAF differs from the edition, marking each difference certain or uncertain. No word index was included: a first pilot leaked the GRETIL index, Opus cited it, and that pilot is discarded.
+
+| plant | Opus | Fable |
+|---|---|---|
+| SK_11 aviveki → aviveka | caught (certain) | caught (certain) |
+| SK_11 pumān → puruṣaḥ | missed | missed |
+| SK_12 niyamā → viyamā | caught (certain) | missed (said it agrees) |
+| SK_13 laghu → guru | caught (certain) | caught (certain) |
+
+- No "certain" difference from either model was false.
+- Both models independently flagged two unplanted differences, both as uncertain: `satvaṃ` for sattvaṃ (SK_13) and `vaiśvarūpyasya` for vaiśva-rūpasya (SK_15). These are candidate real readings of this manuscript; not checked by eye.
+- Both models also report the scribe's sandhi spellings ("viṣayas sāmānyam", "pradhānan tad"). A copy of the edition would not produce those.
+- **Failure mode: copy-through.** Where a word is hard to see, a model can report agreement with the edition: 1 of 4 plants for Opus, 2 of 4 for Fable. That would put the edition's text, not the scribe's, into a transcription.
+- n = 4 plants on one half-leaf: far too few to estimate a catch rate. Before any use, the gate is a planted-error test across several leaves (enough plants for an interval) on the verse text and on the published commentaries (Jayamaṅgalā, Tattvakaumudī). It would only ever cover text that has an edition; the Malayalam glosses stay unread.
+
+**Multi-leaf collation (same day).** The gate above, run on the verse text.
+- *Design.* Fifteen left half-leaves (pages 4–11, the pilot's crop geometry) were located in GRETIL by an Opus pass that only placed each line, with no collation. Nine were placed in sequence: kārikās 1–58, pages 4–9. They were used.
+- *Skipped.* Pages 7b, 9b and 10t were placed out of sequence or not at all. Page 10b had too little verse for four plants. Pages 11t and 11b are the commentary that follows the verses.
+- *Plants.* Each leaf's excerpt (its verses ±2) got 4 seeded plants, one of each kind: near-homograph letter swap, substitution by a word from elsewhere in the text, a plausible wrong form (case ending or a- negation), and omission. That is 36 plants. Plants went only on words inside a located line's visible span.
+- *Prompt and models.* Same collation prompt as the pilot, Opus and Fable on each leaf.
+- *Scoring.* `score.py`; plants are in `plants.json`, never in a prompt. A spelling note whose leaf column is the planted word counts as copy-through, not a catch.
+
+| | Opus | Fable | either |
+|---|---|---|---|
+| plants caught | 25/36 (69%, 95% CI 53–82%) | 22/36 (61%, 45–75%) | 26/36 |
+| caught as certain / uncertain | 14 / 11 | 16 / 6 | |
+| catch restores the GRETIL word | 23 of 25 | 20 of 22 | |
+| missed: copy-through / silent | 5 / 6 | 6 / 8 | |
+| near-homograph · substitution · plausible form · omission | 8 · 6 · 5 · 6 (of 9 each) | 7 · 6 · 3 · 6 | |
+| unplanted flags: spelling habit / substantive | 8 / 5 | 16 / 6 | |
+| substantive unplanted flags marked certain | 0 | 0 | |
+
+- **"Certain" is trustworthy; silence is not.** All 30 substantive differences the two models marked certain were real plants. The unplanted flags marked certain were all scribal spelling: gemination after r, anusvāra written as n, visarga as s.
+- About a third of the plants went unflagged, and 5–6 of the 36 were copied straight into the model's reading of the leaf. Agreement with the edition therefore does not show that the leaf agrees.
+- The plausible wrong form, a one-letter case ending or an a- prefix, is the weakest catch for both models: Opus 5 of 9, Fable 3 of 9.
+- No substantive unplanted difference was raised by both models. The two flags they shared (SK_5 *vacanan tu*, SK_27 *manas*) are spelling habits.
+- *Single-model flags, checked by eye afterwards* (Opus 5.5 reading full-resolution crops of page 9, upper leaf; evidence type: image opened). Fable's two strongest unplanted flags, one right and one wrong:
+  - SK_52, **real variant.** The leaf reads ‹…ṅgaṃ na vinā bhāvena liṃga-…› where GRETIL has *na vinā liṅgena bhāva-nirvṛttiḥ*: the two members are transposed. *bhāvena* is clear; *liṅga-* is probable.
+  - SK_55, **false.** Fable reported the second half of the verse as omitted. It is on the leaf: the segment right of the string hole on the next row reads ‹-tram duḥkhaṃ prāpnoti ceta…›, and the row after reads ‹(tasmā)d duḥkhaṃ svabhāvena›. Fable joined the left half of one row to the right half of the row below. The text on each side of the string hole does not line up row for row.
+  - So a single-model uncertain flag is worth opening, and opening it is needed: one of the two was a manuscript reading, the other a reading-order error. The same misalignment may explain some of the plants missed on this leaf (9t: Opus caught 1 of 4, Fable 0).
+- **Caveats.**
+  - The same Opus model placed the plants (its locate pass), which may favour Opus.
+  - Both models missed all three plants in SK_21–22 on page 6t. Those lines may be outside the legible part of the half-leaf rather than true misses.
+- **Verdict.** Collation against an edition works as a variant finder on this manuscript: trust its certain flags, and treat the rest as unexamined. It does not certify a text, and it does not touch the commentary or the Malayalam glosses.
+
+**Found on the way: the images were shifted by two leaves.** The first read of page 3 showed the cover board. The bulk archiver had fallen back to positional mapping after a transient scandata failure (162 zip files for 159 IIIF leaves), and its dHash check passed the shift. It was repaired and pixel-verified before any read reported above. Details are on #3368.
+
+**Not run.** Gemini 3.8 Flash through `agy`: the CLI account is out of quota until about 2026-10-23, on the laptop and on Hetzner alike. A paid API arm is not allowed for this model. The translation comparison against Colebrooke & Wilson 1837 (`69925814ad311253224cc20c`) waits for a usable read.
+
+- *Replicated?* The OCR result: no, one page of one manuscript, though the whole-page refusal is categorical. The collation result: across 9 leaves of the same manuscript, not on a second manuscript.
+- *Arm added the same day:* Fable 5.1, through the same `claudeCall` and prompt, on the same images.
+- **Artifact.** `scripts/eval/results/whish147-palm-leaf-opus-2026-10-21/`
+
+## 2026-10-21 · Which Philolaus and Archytas attributions in Source Library have an ancient source behind them? (#7065)
+
+**Design.** The input is the harvest of public books with every passage where the English names Philolaus or Archytas (apparatus stripped). The candidates are the books dated before 1700 whose passage has an attribution verb or a quotation: Philolaus 913 passages in 259 books, Archytas 720 in 377. For each candidate, the **original-language OCR** of its page is read from Mongo (`fetch-originals.mjs`, read-only). It is matched against the DK entries (`build-reference.mjs` → `classify.mjs`) by 12-character shingles over folded Greek and Latin. Names and ethnics are cut out first, so "Philolai Pythagorici" cannot carry a match. A match needs at least 40 covered characters with one run of 24 or more. A hand-keyed layer holds the Latin and Greek wordings the printed tradition quotes: Cicero, Valerius Maximus, Gellius, Lactantius, Boethius, Diogenes in Traversari's Latin, and the pseudo-Archytan *On Wisdom* and *On Law*. Rows with no text match fall back to keyword rules on the English context. Then every remaining row was read, and the ones that mattered were checked against the page image.
+
+**Reference caveats.** Our 1906 (`69e8b21f…`) and 1954 vol. 3 (`69ae66d0…`) "Diels" copies are the Wortindex, not the text. In the 1912 copy, pp. 338 and 340 have no OCR (Philolaus B18–B19 are missing), and Archytas A1–A2 and A17 are not in the OCR. The Diogenes VIII 79–83 wording was keyed by hand. The genuine/spurious status follows Huffman (Philolaus 1993: B1–7, 13, 17 genuine; Archytas 2005: B1–4 genuine). That status was **entered from the literature**, because we hold neither book.
+
+**Counts** (passages; "text" = matched on the original-language OCR; "rule" = keyword rule on the English, precision not measured):
+
+| | genuine B | doubtful B | spurious B / pseudepigrapha | testimonium / anecdote | noise | unmatched |
+|---|---:|---:|---:|---:|---:|---:|
+| Philolaus (913) | 32 (11 text) | 4 (4) | 56 (27) | 302 (48) | 497 | 22 |
+| Archytas (720) | 16 (9) | 9 (0) | 124 (8) | 485 (100) | 48 | 38 |
+
+Philolaus noise is mostly one source: **Reuchlin, *De arte cabalistica* (1517)**, whose Pythagorean speaker is named Philolaus. The dialogue is reprinted with Galatino (1550, 1561, 1612, 1672), in the Basel Pico volumes (1557, 1572, 1601) and in Pistorius (1587). That accounts for 430 of the 497 noise rows, and for part of the 17 "younger Philolaus" rows that share a label with Boulliau. The rest are Philolaus of Corinth (the Theban lawgiver), Boulliau's *Philolaus* (1639), Philolaus of Citium in Philostratus, and lists of names. Archytas noise is grammar examples, Archytas of Amphissa, and lists.
+
+**The three leads.**
+1. **"Gold and silver are worth no more than clay"** (German Cessolis 1407, `69a5ee3c…` p.58). The manuscript reads **"Archyloga"**, not Archytas; the 1390 German *Schachzabelbuch* (`69f330c1…` p.79) has "Anthiloga". The Latin Cessolis (`69f33489…` p.35: *Narratur de Archaglada qui dicebat quod auro tanquam fictilibus et fictilibus tanquam auro utendum est … ego sum rex factus ex figulo*; `69a5ea0b…` p.52 *Ardinglata*) shows this is **Agathocles**, the potter's son who ate from earthenware (Ausonius, *Epigr.* 8; Plutarch, *Apophth. reg.* 176e). The saying has nothing to do with Archytas. The name was corrupted in the German and then "normalised" to Archytas by our English translation.
+2. **Porphyry on Ptolemy's *Harmonics*, c.1450** (`69938a8f…`). This is **Bodleian MS. Barocci 41**, which is **Wallis's codex D**, the manuscript he preferred for the 1699 *editio princeps* (our Wallis, `69905abe…` p.227: *Codex D, (quem reliquis praefero,) est inter Codices MSS. Baroccianos … numero 41*). Diels cites Porphyry by Wallis's pages. Jan (1895) lists it too. So it is a known witness, not a new one. It carries DK 47 **B1** in full (p.410 ff.) and in part (p.456), DK 47 **B2** (p.477), and on p.362 the spurious ***On Wisdom*** (Thesleff, ps.-Archytas Περὶ σοφίας: *τοσοῦτον διαφέρει σοφία …*). We did not check whether Düring (1932) collated it.
+3. **Boethius, *Arith.* II 32: the Philolaus sentence in three Florentine copies.** Read from the images. The 9th-c. copy (Plut. 29.20, `69b52ca2…` p.140) and the 12th-c. copy (Plut. 89 sup. 81, `69b52cc2…` p.90) both read *Philolaus uero necesse est inquit omnia quae sunt uel infinita esse uel finita*. The 13th-c. copy (Plut. 29.23, `69b52cb9…` p.48) reads *ł infinita esse ł finita*. **The quoted sentence is the same in all three.** They differ only in Boethius's gloss that follows it: *aut ex finita scilicet **esse*** (9th c.) against *aut ex finita scilicet **essentia*** (12th and 13th c.). The 12th-c. copy also has an erasure before *finita* and a superscript correction, and the 1521 print agrees with the 9th c. (*ex infinita scilicet esse, aut ex finita*). The "different readings" reported in #7065 came from our OCR (9th c.: "ex finitis … infinitis"; 13th c.: "nisi infinita essent & finita") and from the translations, not from the manuscripts.
+
+**Residue, ranked by interest** (nothing here is a new genuine fragment):
+1. **Quartan-fever amulets credited to "Architas"** (25 rows, 1478–1662). Pseudo-Albertus, *De mirabilibus mundi* (earliest of ours: the 1478 print, `69905e37…` p.72): *Et dixit architas, si accipiatur cor dum vivit et suspendatur super patientem quartanam, eradicat eam*. A second "Architas" cure follows: a dog's left-ear wax. Agrippa, *De occulta philosophia* I.42 (1531–1600, 15 of our copies; ps.-Albertus in 5) copies it as *simile est quod dicit Archytas* and so attaches it to the Pythagorean. There is no ancient source in DK or Thesleff. This is (c) a misattribution whose first appearance in our holdings is ps.-Albertus. The "Architas" is likely a corrupted name; this was not resolved.
+2. **"Archytas, *De eventibus in natura*"** (Meffret, *Hortulus reginae*, 1488, `69dbcade…` p.16, read by eye): *Omne quod in universitatis ordine nimium et abundans fuerit ad corruptionem pronius et ad nihilum ipsum venit*. The title is unknown to DK and Thesleff. It is (b/c) a medieval Latin pseudepigraph or a mis-citation, with this one witness.
+3. **Golden Verses line 3 credited to Philolaus** (Postel, *De magistratibus Atheniensium* 1551, `69c80239…` p.115, read by eye): *secundum Philolai versum, quem falso adscribunt Pythagorae: τούς τε καταχθονίους σέβου δαίμονας ἔννομα ῥέζων*. This is (c), with no earlier source found.
+4. **The Gorgias 493a leaky jar credited to "divine Archytas of Tarentum and Plato"** (Ficino, 1490 and 1497 volumes). Plato's "clever Sicilian or Italian" is the man Diels tentatively identifies with Philolaus (B14 note). Ficino names Archytas instead. This is (c).
+5. **The Pythagorean *symbolon* "entering a temple, do not turn back", credited to Philolaus** (Giraldi 1551, Hierocles ed. 1655, Stanley 1687), citing Olympiodorus *in Phaed.* It is a late-antique ascription and is not in DK 44. We did not check it against Olympiodorus.
+6. **Plato "following Philolaus" on the krater of Hephaestus** (Proclus *in Tim.*, Basel Plato 1534 p.1092). This is (d): a Proclus testimonium that is not in the DK 1912 chapter.
+7. **Smaller cases.** The ban on parallel octaves and fifths, credited to Philolaus (Bermudo 1555): an anachronism, (c). "The wise man's one disadvantage is poverty", credited to Archytas (Alciati commentary 1661): (d), no source found. Fate cannot be overcome by vows, credited to "Archytas and Heraclitus" (Arquatus 1494): (d). Archimedes' ship-hauling at Syracuse credited to Archytas (Daneau 1575): (c), a confusion of the two. Also some testimonia that are real but missing from DK 1912: Aristotle *Probl.* XVI 9 (later DK 47 A23a), Censorinus 4.3, Iamblichus *VP* 139, and Plutarch's "Need taught all things" (Stobaeus).
+
+**Not a fragment, but worth fixing:** our English translation of `69a5ee3c…` p.58 ("Archytas" for *Archyloga*/Agathocles), and the OCR of Boethius `69b52ca2…` p.140 and `69b52cb9…` p.48 at the Philolaus sentence.
+
+**Replicated?** No. The counts depend on the keyword rules for the rows not matched on text, and that precision was not measured. The three leads and the residue items above were checked by eye.
+
+**Artifacts.** The scripts are in `scripts/eval/fragment-sort/` (`term-harvest.mjs` → `fetch-originals.mjs` → `build-reference.mjs` → `classify.mjs` → `residue.mjs` / `summarize.mjs`). The per-row classifications are on the job box at `/mnt/HC_Volume_105839809/jobs/fragment-sort-7065/{phil,arch}.cls.jsonl` and `reference.json`; they are not committed.
+
+## 2026-10-21 · Can page images tell two copies of one printing from two editions, before anything is read? (#4285, pre-OCR side)
+<!-- PRIOR ART: scripts/clip-find-duplicates.mjs (CLIP over illustrations; editions share woodblocks, so it cannot separate them); scripts/lib/page-alignment.mjs dHash (tested here, rejected); scripts/README-dedup.md (9x8 dHash over-grouped text pages); #4285 page-text comparator (needs OCR on both sides). -->
+
+**Question.** Derek asked whether embeddings could find duplicates. Book embeddings are built from title, author, summary and entities; an unread book has only title and author, the same evidence the import keys already use, and the costly duplicates are the unread ones. So the screen before paid OCR has to read the page images. Does it work, and on what evidence?
+
+**Controls (25 pairs).** 11 copies claimed by `checkHoldings()` on the harmony shelf; 6 random `duplicate_of` pairs with OCR on both sides; 8 known different: Kircher *Magnes* 1643 vs 1654, Gerbert *Scriptores* vol. I vs II and I vs III (vol. III title page read from OCR), Müller *Staatskunst* Teil 1 vs 2, Cellarius *Harmonia macrocosmica* 1661 vs 1708, and three 1670s printings of Spinoza's *Tractatus theologico-politicus* (the #4285 hard negatives). Sampling: 8 interior leaves of A (12%..94%), each against a window of B (same relative leaf ±8 and same absolute leaf ±8). Cost $0; images from R2 or the provider's IIIF.
+
+**1. Whole-page dHash fails** (count). 256-bit dHash on the central crop: claimed copies 18-42 bits, known-different 19-42 bits. Only Kepler's *Prodromus* (1-5 bits) matched: the same scan stored twice. Photographs of one printing by two libraries differ in crop, lighting and skew more than two editions differ in layout.
+
+**2. Keypoint matching separates them** (count). ORB keypoints, ratio-test matches, RANSAC homography; score = inliers of the best window page; verdict on the median over samples.
+
+| group | pairs | median inliers |
+|---|---:|---|
+| different edition / printing / volume | 8 | 6, 8, 9, 9, 10, 10, 12, 16 |
+| claimed copies, `duplicate_of` copies | 15 | 56 to 1,400 |
+| low despite being recorded as copies | 4 | see 3 |
+
+Single-page outliers exist: Cellarius 1661 vs 1708 scored 265 on one leaf (a copper plate reused across editions) with a median of 6. The median is what keeps a shared plate or woodcut from deciding.
+
+**3. The four low pairs** (wide window ±(|nA-nB|+10)):
+- *Lexicon alchemiae* 1612 (584 vs 641 leaves): 42-57 with the wide window. The narrow window had missed the matching leaf; the copies differ by 57 leaves. Same printing.
+- *Philosophia Moysaica* 1638 (304 vs 338): 23, 72, 26. Unclear.
+- *Amphitheatrum sapientiae* 1609 (332 vs 337): 8-12, and the page text also does not match (5-gram containment 0-0.05). A `duplicate_of` link that is probably wrong; for review.
+- *Nosologia harmonica* 1615, two records both "Tomus primus": 9-10. **Read from the image:** the title pages are two typesettings ("QUINQUAGINTA" vs "QUIN-QUAGINTA"; "Apud Paulum Egenolphum … cIↄ Iↄ CXV" vs "Typis Pauli Egenolphi … M.DC.XV."). The metadata keys called them one edition; the images were right.
+
+**Rule** (in `scripts/audit/page-image-same-printing.py`): median ≥ 40 same printing; ≤ 15 different; otherwise unclear; fewer than 4 scorable samples unclear. Run `--wide` when page counts differ by more than ~15.
+
+**Limits.** 25 pairs, mostly Latin early-modern prints from e-rara, MDZ and IA; manuscripts, photographs of modern books and very short items are untested. "Different" at ≤ 15 can also mean the two copies are bound or scanned so differently that no sampled leaf falls in the window; it is evidence against a merge, never a reason to delete. Text containment as ground truth only existed where both sides were OCR'd (5 pairs).
+
+**Use.** A hold before paid OCR (`hold-pipeline-books.mjs --ids … --reason same-edition-copy-unread`) needs `same_printing` from this script; a merge or `duplicate_of` still needs the review the edition-identity invariant asks for.
+
 ## 2026-10-20 · An offline fixer that reads the finished answer and the whole pages (#6946, stage 1)
 
 **Who it is for.** A reader who clicks "p.323" under a Librarian answer. On live traffic about 18% of page links land on a page that does not say the thing (gauge, 2026-10-18).

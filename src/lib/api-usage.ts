@@ -87,6 +87,13 @@ async function writeLogEntry(input: LogApiUsageInput) {
     ms: input.ms,
     ip_hash: hashIp(ip),
     user_agent: (input.request.headers.get('user-agent') || '').slice(0, 200),
+    // Client hints, log-only (#4476) — same two fields /api/track records on
+    // pageviews. API callers run none of our JavaScript, so this is the only
+    // place a fake-Chrome client calling the API directly shows its hints:
+    // real Chrome sends sec-ch-ua with a quoted platform; fleets have sent
+    // none, or `Mac OS X` unquoted. null = header absent.
+    ch_ua: input.request.headers.get('sec-ch-ua')?.slice(0, 160) ?? null,
+    ch_platform: input.request.headers.get('sec-ch-ua-platform')?.slice(0, 40) ?? null,
     would_block: input.wouldBlock,
     blocked: input.blocked,
     reason: input.reason || null,

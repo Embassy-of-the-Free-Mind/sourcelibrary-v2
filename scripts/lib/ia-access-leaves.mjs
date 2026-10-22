@@ -64,25 +64,62 @@ function parseScandataXml(text) {
 
 /**
  * Fetch and parse an item's scandata.
+ *
+ * `attempts` > 1 retries the whole lookup after `backoffMs` (doubling). A
+ * transient archive.org failure is otherwise indistinguishable from an item
+ * with no scandata, and sent Whish MS 147 down the positional fallback with a
+ * two-leaf shift (#3368, 2026-10-21). Default 1 keeps existing callers as-is.
  * @returns {Promise<number[]|null>} accessLeaves[iiifN] -> zip leaf ordinal
  */
-export async function fetchAccessLeaves(iaId, { timeoutMs = 60_000, fetchImpl = fetch } = {}) {
+export async function fetchAccessLeaves(iaId, { timeoutMs = 60_000, fetchImpl = fetch, attempts = 1, backoffMs = 5_000 } = {}) {
   const candidates = [
     { url: `https://archive.org/download/${iaId}/${iaId}_scandata.xml`, parse: parseScandataXml },
     { url: `https://archive.org/download/${iaId}/scandata.json`, parse: parseScandataJson },
   ];
-  for (const { url, parse } of candidates) {
-    try {
-      const res = await fetchImpl(url, {
-        headers: { 'User-Agent': UA },
-        signal: AbortSignal.timeout(timeoutMs),
-      });
-      if (!res.ok) continue;
-      const parsed = parse(await res.text());
-      if (parsed?.length) return parsed;
-    } catch { /* try the next shape */ }
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    if (attempt > 0) await new Promise(r => setTimeout(r, backoffMs * 2 ** (attempt - 1)));
+    for (const { url, parse } of candidates) {
+      try {
+        const res = await fetchImpl(url, {
+          headers: { 'User-Agent': UA },
+          signal: AbortSignal.timeout(timeoutMs),
+        });
+        if (!res.ok) continue;
+        const parsed = parse(await res.text());
+        if (parsed?.length) return parsed;
+      } catch { /* try the next shape */ }
+    }
   }
   return null;
+}
+
+/**
+ * Without scandata the archiver can only map IIIF n -> zip file n by position,
+ * which is right only when the zip holds exactly one file per IIIF leaf. Any
+ * excluded leaf (Color Card, Delete) makes the counts differ, and an excluded
+ * leaf before a page shifts it. The perceptual-hash check cannot be relied on
+ * to catch that: on visually uniform material (palm leaves) it passed a
+ * two-leaf shift as "aligned 3/3" (#3368, Whish MS 147: 162 files, 159 leaves).
+ *
+ * The IIIF leaf count is taken from the book's own photo URLs (max nN + 1), not
+ * IA's `imagecount` metadata, which matched neither side on that item (161).
+ * A book imported from a subset of leaves also reads as a mismatch: that
+ * refuses a book positional mapping might have got right, which is the safe
+ * direction (archive-ocr archives it per page from IIIF instead).
+ *
+ * @param {number} zipFileCount jp2 files extracted from the zip
+ * @param {string[]} photoUrls the book's page photo URLs (any order)
+ * @returns {string|null} a refusal reason, or null when positional is safe
+ */
+export function positionalFallbackRefusal(zipFileCount, photoUrls) {
+  let maxLeaf = -1;
+  for (const u of photoUrls) {
+    const m = String(u || '').match(/\/page\/n(\d+)/);
+    if (m) maxLeaf = Math.max(maxLeaf, parseInt(m[1], 10));
+  }
+  if (maxLeaf < 0) return 'positional fallback: no IIIF leaf numbers on the book\'s pages';
+  const leaves = maxLeaf + 1;
+  return zipFileCount === leaves ? null : `positional fallback: zip has ${zipFileCount} files for ${leaves} IIIF leaves`;
 }
 
 /**

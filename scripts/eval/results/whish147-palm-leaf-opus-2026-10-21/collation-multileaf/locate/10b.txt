@@ -1,0 +1,13 @@
+I could read lines 1–4 with reasonable confidence. Lines 5–9 are mostly guesses. Lines 3–7 are split around the string hole, so each has a left piece and a right piece.
+
+LINE 1 | SK_71 | śiṣya (only "-ṣya" is visible; "śi-" must be on the previous leaf) | īśvara-kṛṣṇena (breaks off at "kṛ") | confident
+LINE 2 | SK_71 | īśvara-kṛṣṇena ("-ṣṇena") | ārya-matinā ("saṃkṣiptam ārya…" visible) | confident
+LINE 3 | SK_71-SK_72 | saptatyāṃ (the leaf seems to read "iha" where the edition has "kila") | kṛtsnasya (the right of the hole reads "…rthāḥ kṛtsnasya ṣa…") | unsure
+LINE 4 | SK_72 | para-vāda-vivarjitāś (the left piece ends "paravādavivarji-"; the right piece doesn't match clearly) | possibly cā 'pi / start of SK_73 | unsure
+LINE 5 | probably SK_73 | can't read reliably | can't read reliably | unsure
+LINE 6 | the left piece may be the end of SK_73; the right piece looks like a closing benediction (I read "…maṅgalāya nama…"), so not edition text | — | — | unsure
+LINE 7 | not edition text (colophon) | — | — | unsure
+LINE 8 | not edition text (colophon or other text after the work, starting "vacanaṃ vidyā…") | — | — | unsure
+LINE 9 | not edition text (colophon or other text after the work) | — | — | unsure
+
+FIRST_VISIBLE_VERSE=71 LAST_VISIBLE_VERSE=73

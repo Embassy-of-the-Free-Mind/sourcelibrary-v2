@@ -12,6 +12,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { markPageForReader } from '@/lib/provenance';
+import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
@@ -42,7 +43,7 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string
     inLanguage: book.language || undefined,
     datePublished: book.published || undefined,
     author: book.author ? { '@type': 'Person', name: book.author } : undefined,
-    translator: { '@type': 'Organization', name: 'Source Library' },
+    ...(isEnglishOriginalBook(book) ? {} : { translator: { '@type': 'Organization', name: 'Source Library' } }),
     isPartOf: {
       '@type': 'Book',
       name: bookTitle,
@@ -79,6 +80,9 @@ const BOOK_NAV_PROJECTION = {
   // redirect below. Always read from Atlas here, so it can never be absent.
   pages_translated_es: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
+  // English edition? Then an English leaf serves its transcription, not the
+  // stored English-to-English rewording (#7100).
+  'translation_state.english_original': 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
   // The copy clause of the citation panel (#4360): which library's physical
   // copy the scan shows, and its shelfmark there. Sub-paths only — the full
@@ -178,7 +182,11 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
     : await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
-  const serializedPage = JSON.parse(JSON.stringify(currentPage)) as Page;
+  // On an English edition the leaf's own words are the text: a stored
+  // "translation" of an English leaf is withheld here, once, so the reader,
+  // the JSON-LD excerpt and the flight payload all carry the transcription
+  // (#7100). A light spelling edit rides along as `modernized_spelling`.
+  const serializedPage = serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book);
   const serializedNavPages = JSON.parse(JSON.stringify(navPages)) as Page[];
 
   const bookPath = book.slug || scopedBookId;

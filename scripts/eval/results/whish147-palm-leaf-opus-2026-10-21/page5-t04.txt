@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on a palm leaf, probably Sanskrit written in Malayalam letters. The left edge of the leaf is cut off, so every line starts mid-word. A string hole and cord break up the middle lines. Many readings are uncertain.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Half of a palm leaf (right portion), with a binding cord through the string hole. Lines 4–7 leave a blank space around the string hole. The text runs on from the other half of the leaf, so the left edge of each line is cut off.</meta>
+
+<unclear>ത്രു</unclear>മചൈതനം പ്രബോധ<unclear>യിത്വാ ക്ഷണാദ്ധ്രുവ</unclear> പ്രഥ
+<unclear>ൻ പുഷ്ടിം ത്രിലിംഗിവിശാരദാന്മകാഃ</unclear> പ്രകാശ
+<unclear>ു രാഹാഭിഭവാദ്ഗ്രഹജ്ഞാനനിമിത്താവൃത്തയശ്ച</unclear>
+<unclear>ാശകമിശ്രം ഉപക്ഷ്മം. ഭ</unclear> <unclear>കക്ഷേ ലക്ഷണജ്ഞഃ</unclear>
+<unclear>ഗ്രഹിതിവവത്സാൽ</unclear> <unclear>തൈരാവൃത്തിഃ സ്വ</unclear>
+<unclear>സൂക്ഷ്മാഭിമപജ്ഞ</unclear> <unclear>യാഭാവാൽക്കാ</unclear>
+<unclear>ജ്ഞാനാവൃക്ഷമതി</unclear> <unclear>സിദ്ധം. സ്ഫുടട്ടാ</unclear>
+<unclear>ചാദ്യക്ഷാൽ ഗ്രന്ഥേ ത്രൈരാശികാദനേകവ്യവിഭാ</unclear>
+<unclear>കാദനേകസൂര്യ പ്രവൃത്തെ ഭഗണഗുണകസ്യ</unclear>
+<unclear>ൽ ഗുണിതഗുണഹാരദ്യുവിശേഷാൽ സ്വസംഖ്യ</unclear>
+
+<vocab>Malayalam script, Sanskrit, palm-leaf manuscript, ത്രൈരാശിക (trairāśika, rule of three), സ്ഫുട (sphuṭa), ഗ്രഹ (graha), ഭഗണ (bhagaṇa), ഗുണക (guṇaka)</vocab>
