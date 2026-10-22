@@ -24,7 +24,7 @@ for (const [g, langs] of Object.entries(GROUPS)) {
       { $match: { book_id: { $in: ids.slice(i, i + 200) } } },
       { $project: { s: '$ocr.source', m: '$ocr.model', e: { $cond: [{ $ifNull: ['$ocr.edited_by', false] }, 1, 0] },
         u: { $cond: [{ $ifNull: ['$ocr.unreadable', false] }, 1, 0] }, w: { $cond: [{ $ifNull: ['$translation_withheld', false] }, 1, 0] },
-        len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } } } },
+        len: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] } } },
       { $group: { _id: { s: '$s', m: '$m', short: { $lt: ['$len', 40] } }, n: { $sum: 1 }, e: { $sum: '$e' }, u: { $sum: '$u' }, w: { $sum: '$w' } } },
     ], { allowDiskUse: true });
     for await (const r of cur) {

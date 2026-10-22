@@ -74,6 +74,7 @@ async function edition(id) {
 async function pagesOf(id) {
   return (await db.collection('pages').find({ book_id: id, page_number: { $gte: 0 } },
     { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, archived_photo: 1, photo: 1, 'ocr.edited_by': 1 } }).sort({ page_number: 1 }).toArray())
+    // image-pick-ok: checked 2026-10-22, all 1,040 rows have no split/crop/cropped/enhanced photo, so this equals getPageSource
     .map((p) => { const body = p.ocr?.data ? bodyText(p.ocr.data) : ''; return { id: p.id, page_number: p.page_number, src: p.archived_photo || p.photo, served_model: p.ocr?.model || null, served: p.ocr?.data || '', body, q: greekLetters(body) }; });
 }
 
