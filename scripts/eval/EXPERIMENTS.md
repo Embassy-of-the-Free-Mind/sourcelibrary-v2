@@ -744,6 +744,27 @@ Two terms are **not found** in our books: Indian *taraf* (sympathetic strings), 
 
 **Artifacts.** The per-row classifications (`defs.jsonl`, `topoi.jsonl`) and the harvests stay on the job box (`/mnt/HC_Volume_105839809/jobs/harmony-census-7117/`) and regenerate from the scripts. The verified claims are in harmony-kb, in `claims/census-7117.jsonl`.
 
+## 2026-10-22 · Does retrieval by meaning find pages about harmony that never use the word?
+
+**Design.** 48 plain descriptive sentences, six for each of eight kinds of harmony and resonance
+(`scripts/eval/harmony-semantic/probes.json`), embedded with gemini-embedding-2 (768 dims, the page vectors' model;
+metered through `embedTexts`, under $0.01) and matched against `page_translations` with `match_semantic`
+(threshold 0.45, 50 rows) once globally and once per language for 15 languages. A page "names" harmony if its
+translation matches `harmon|sympath|concord|consonan|accord|resonan|attune|symphon`.
+
+**Result.** 28,287 matches on 19,487 distinct pages; 16,520 (58%) never name the word. By kind: ratio 37%,
+music of the spheres 48%, resonance 57%, feeling of consonance 60%, unlike things in one whole 61%, order 63%,
+concord 63%, balance and temperament 74%. Top hits are on target (the answering-string probe returns Schott 1674,
+Ens 1636 and Mersenne's Galileo first). The top 120 pages per probe (4,805) were embedded locally with
+nomic-embed-text and laid out with UMAP for the map's semantic view.
+
+**Limits.** Counts are capped (50 per slice), so "hits" is a ceiling per probe, not a census. Only translated pages
+have vectors: untranslated books are invisible. Years are edition years. The "names" test is on the English
+translation, so a translator's choice of word decides it.
+
+*Replicated?* No. **Artifact:** `$JOB_SCRATCH/semantic/run1` (hits.jsonl, report.json); published
+`public/data/maps/harmony-semantic/`.
+
 ## 2026-10-21 · Can Opus or Fable read a Malayalam-script Sanskrit palm-leaf manuscript well enough to OCR it? (#5935)
 
 **Question.** Can the Opus OCR lane (`scripts/batch/claude-ocr.mjs`, `claude -p` on the subscription) read this book well enough to queue it? The book is RAS Whish MS 147 (`6ad845ec6037414ddef152af`, IA `raswhish145-147`, Calicut 1822): the Sāṅkhyasaptati with the Jayamaṅgalā and Tattvakaumudī, then Annambhaṭṭa's Tarkasaṃgraha with Dīpikā. It is the leaf labelled "SĀNKHYA-SAPTATI or golden verses of Pythagoras". The kārikās have a standard text (GRETIL), so a read can be scored for accuracy and not merely for agreement.
