@@ -9,7 +9,8 @@
 # was set by reading pairs on 2026-10-20 (beans, five years of silence): at 0.88 and above the later passage tells
 # the story the same way, often with the same quotation; below about 0.86 it is merely the same topic. A link is
 # similarity of wording, NOT evidence that one author read the other. Editions of the same work (work_id) never
-# link to each other, and a passage only links to a strictly earlier catalogue year. Undated passages are left out.
+# link to each other, and a passage only links to a strictly earlier year — the year it was written (dating.py),
+# so an old text in a modern edition can be the root its later citers hang from. Undated passages are left out.
 #
 # A theme's passages are the map's (reported sayings only). A keyword story (themes/<figure>.json `stories`) is
 # drawn from the whole harvest instead, since a story like the smiths' hammers is usually told without a verb of
@@ -20,6 +21,7 @@
 # map.json, x/y = 0). Nodes are in date order.
 import json, os, re, sys, urllib.request
 import numpy as np
+from dating import written_year, page_types
 
 THRESHOLD = 0.88
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -32,7 +34,11 @@ T = json.load(open(os.path.join(HERE, 'themes', KEY + '.json')))
 pts = json.load(open(os.path.join(W, 'map-points.json')))['points']
 E = np.load(os.path.join(W, 'emb.npy'))
 assert len(E) == len(pts), 'emb.npy and map-points.json are out of step; re-run map.py'
-work = {b['id']: (b.get('w') or b['id']) for b in json.load(open(os.path.join(W, 'hits.json')))}
+HITS = json.load(open(os.path.join(W, 'hits.json')))
+work = {b['id']: (b.get('w') or b['id']) for b in HITS}
+types = page_types(HITS)
+for p in pts:  # by when it was written, not the edition (dating.py), as in map.json
+    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])))
 W_OF = [work.get(p['id'], p['id']) for p in pts]
 
 
@@ -67,7 +73,7 @@ SKIP = {'index', 'toc', 'errata', 'title-page', 'blank'}
 for s in T.get('stories', []):
     rx = re.compile(r'\b(' + s['match'] + r')\b', re.I)
     sp, seen = [], set()
-    for b in json.load(open(os.path.join(W, 'hits.json'))):
+    for b in HITS:
         if not b.get('v') or not b.get('pc'):
             continue
         for p in b['passages']:
@@ -76,7 +82,7 @@ for s in T.get('stories', []):
             if p.get('type') in SKIP or len(txt) < 40 or k in seen or not rx.search(txt):
                 continue
             seen.add(k)
-            sp.append({'yr': b.get('y'), 'id': b['id'], 'p': p['p'], 's': txt[:300], 't': (b.get('t') or '')[:90], 'w': b.get('w') or b['id']})
+            sp.append({'yr': written_year(b['id'], b.get('y'), p.get('type')), 'id': b['id'], 'p': p['p'], 's': txt[:300], 't': (b.get('t') or '')[:90], 'w': b.get('w') or b['id']})
     SE = np.concatenate([embed([x['s'] for x in sp[i:i + 128]]) for i in range(0, len(sp), 128)])
     nodes = tree(range(len(sp)), pts=sp, E=SE, W_OF=[x['w'] for x in sp])
     stories.append({'key': s['key'], 'name': s['name'], 'theme': None, 'rows': [[0, 0, -1, x['yr'], x['id'], x['p'], x['s'][:240], x['t'][:70]] for x in sp], 'nodes': nodes})

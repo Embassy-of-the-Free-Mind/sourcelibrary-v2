@@ -14,7 +14,8 @@ import StoryTree from '@/components/articles/figure-reception/StoryTree';
 // passages. Passages where "Philolaus" is a speaker in Reuchlin's De arte cabalistica (1517, and its reprints
 // with Galatinus and Pico), or Philostratus' Philolaus of Citium, are set aside as their own grey-blue group
 // before clustering (figures.json setAside), because they are not the Pythagorean.
-// Quotations checked 2026-10-20 with get_quote: Copernicus p. 11 (the Greek is printed on the leaf; the
+// Claudianus Mamertus p. 174 (printed 120) checked 2026-10-22 with get_quote and by eye; the Latin is the letter-spaced
+// text on the leaf. Quotations checked 2026-10-20 with get_quote: Copernicus p. 11 (the Greek is printed on the leaf; the
 // translation is the library's) and Reuchlin p. 9. The hero is Copernicus' diagram of the spheres (p. 34),
 // opened by eye: Sol at the centre, the Earth with the Moon's circle in fifth place.
 
@@ -40,6 +41,7 @@ const BOOK = {
   reuchlin: '/book/ioannis-revchlin-phorcensis-ll-doc-de-arte-cabalistica-reuchlin',
   hoogstraten: '/book/destructio-cabale-seu-cabalistice-perfidie-ab-ioanne-hoogstraten',
   campanella: '/book/the-city-of-the-sun-campanella',
+  claudianus: '/book/claudiani-mamerti-opera-csel-xi-engelbrecht',
   pythagoras: '/articles/pythagoras-in-the-library',
 };
 
@@ -102,6 +104,30 @@ export default function PhilolausInTheLibraryPage() {
           taken from them.
         </p>
 
+        <p className={p}>
+          Some of what he wrote survives only because one later reader copied it out. Claudianus Mamertus, a priest
+          of Vienne writing about 470, quotes the third of Philolaus’ books in his treatise{' '}
+          <Link href={`${BOOK.claudianus}?page=174`}><em>On the State of the Soul</em></Link>:
+        </p>
+
+        <SourceQuote
+          book="claudiani-mamerti-opera-csel-xi-engelbrecht"
+          page={174}
+          printedPage="120"
+          src="https://images.sourcelibrary.org/pages/69942bf5b2f6748db4abc741/0174.jpg"
+          pageAlt="A page of Engelbrecht’s 1885 edition of Claudianus Mamertus, chapter VII, with Philolaus’ words letter-spaced and the variant readings below."
+          source={<>Claudianus Mamertus, <em>On the State of the Soul</em>, Book 2, chapter 7 (ed. Engelbrecht, Vienna, 1885)</>}
+          original={<>anima inditur corpori per numerum et inmortalem eandemque incorporalem conuenientiam.</>}
+        >
+          The soul is placed into the body through number and an immortal and incorporeal harmony.
+        </SourceQuote>
+
+        <p className={p}>
+          Later writers knew the fragment through him: Théophile Raynaud in 1622, Louis Dutens in 1766, August Boeckh
+          in 1819. In the story tree below, under “Claudianus Mamertus’ fragment on the soul”, his page stands first
+          and theirs follow.
+        </p>
+
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
@@ -142,7 +168,7 @@ export default function PhilolausInTheLibraryPage() {
           back.
         </p>
 
-        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t2', 't0', 't7', 't1000']} />
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t2', 't0', 'claudianus', 't7', 't1000']} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -160,8 +186,7 @@ export default function PhilolausInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Philolaus”; that is a pattern
-          match, so it misses some and catches some it should not. Dates are the earliest the catalogue gives for the
-          work, which for some books is the date of the edition. The Copernicus quotation is the library’s
+          match, so it misses some and catches some it should not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Copernicus quotation is the library’s
           translation, with the Greek as the library transcribed it from the page.
         </p>
       </article>

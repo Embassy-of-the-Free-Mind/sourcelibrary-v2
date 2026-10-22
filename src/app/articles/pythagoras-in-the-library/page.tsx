@@ -15,8 +15,8 @@ import StoryTree from '@/components/articles/figure-reception/StoryTree';
 // open with a printed-footnote marker) is removed before matching, so a page where only the translator's note
 // names him does not count. Index, contents, errata and title pages are dropped; editions are grouped by work_id. A
 // passage counts as "reports his words" when a regex finds Pythagoras with a verb of saying, teaching or
-// forbidding, or a phrase like "according to Pythagoras": a pattern, not a reading. Dates are the
-// catalogue's `year`, which is sometimes the work's date and sometimes the edition's.
+// forbidding, or a phrase like "according to Pythagoras": a pattern, not a reading. Dates are when a work was
+// written (scripts/eval/figure-reception/dating.py), not the edition's year.
 // The Macrobius passage is copied from get_quote (book 699ef9feb3e659e2762a5731, p. 67) on 2026-10-20
 // and the Latin read against the page image the same day (printed "molliētes ... ī aures eius malleoꝝ
 // soni ... respondētes"; shown with the abbreviations expanded). The Reisch woodcut (p. 210) was opened by
@@ -48,10 +48,10 @@ const BOOK = {
 
 const DATA = '/articles/pythagoras-in-the-library';
 const ERA_INTROS = {
-  antiquity: 'Works written before 600: Aristotle on the Pythagoreans, Euclid, Maximus of Tyre.',
-  '600': 'Arabic alchemy and music theory, Carolingian copies of Boethius and Macrobius, Byzantine manuscripts.',
-  '1200': 'Scholastic and late-medieval manuscripts.',
-  '1450': 'The first printed books.',
+  antiquity: 'Works written before 600, most of them read here in later editions: Plato and Aristotle, Plutarch, Philostratus, Porphyry and Iamblichus on his life, Boethius.',
+  '600': 'Byzantine compilers (the Suda, Psellus, Tzetzes), Arabic alchemy, Carolingian commentators.',
+  '1200': 'Scholastics and encyclopedists: Albertus Magnus, Thomas Aquinas, Vincent of Beauvais, Dante.',
+  '1450': 'Ficino, Pico and Reuchlin, and the first printed books.',
   undated: 'Books with no date in the catalogue.',
 };
 
@@ -180,8 +180,7 @@ export default function PythagorasInTheLibraryPage() {
           are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
           such as “according to Pythagoras”; that is a pattern match, so it misses some and catches some it should
-          not. Dates are the earliest the catalogue gives for the work, which for some books is the date of the
-          edition. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
+          not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
           on the page.
         </p>
       </article>

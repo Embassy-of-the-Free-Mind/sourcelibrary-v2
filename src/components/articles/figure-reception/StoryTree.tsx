@@ -5,7 +5,8 @@
 // scripts/eval/figure-reception/tree.py; the threshold and how it was chosen are documented there). Tellings with
 // no close earlier one start a new line. The links measure similar wording, not proven copying, and the page says so.
 //
-// Layout: one row per passage, in depth-first order from each line's earliest telling, x = year. Tellings that
+// Layout: one row per passage, in depth-first order from each line's earliest telling, x = year (when it was
+// written, not the edition's year: see scripts/eval/figure-reception/dating.py). In a large story, tellings that
 // start a line and are never followed are hidden by default (they would be a long column of lone dots).
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -14,6 +15,8 @@ import { FAMILY_COLOR, fmtYear, useFigureJson, type MapData, type Row, type Tree
 const ROW = 9;
 const MAX_HEIGHT = 560;
 const AXIS = 22;
+/** Stories this small show their lone tellings from the start. */
+const SMALL = 40;
 
 type Props = {
   mapUrl: string;
@@ -69,6 +72,7 @@ export default function StoryTree({ mapUrl, treeUrl, featured }: Props) {
     return { out, rows: y, lone, linked, total: story.nodes.length, y0: Math.min(...years), y1: Math.max(...years) };
   }, [story, map.data, showLone]);
 
+  useEffect(() => setShowLone((story?.nodes.length ?? 0) <= SMALL), [story]);
   useEffect(() => setSel(null), [key, showLone]);
 
   if (map.failed || tree.failed) return <p className="text-muted italic">The tree could not be loaded. Reload the page to try again.</p>;

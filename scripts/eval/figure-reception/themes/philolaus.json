@@ -23,5 +23,11 @@
   "1000": "A speaker in Reuchlin’s Art of Kabbalah",
   "1001": "Another Philolaus, in the Life of Apollonius"
  },
- "stories": []
+ "stories": [
+  {
+   "key": "claudianus",
+   "name": "Claudianus Mamertus’ fragment on the soul",
+   "match": "claudian\\w*|mamert\\w*|incorporeal harmony"
+  }
+ ]
 }

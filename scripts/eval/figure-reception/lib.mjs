@@ -26,3 +26,14 @@ export const outDir = (key) => {
   fs.mkdirSync(d, { recursive: true });
   return d;
 };
+
+// When a passage was written: an old text in a later edition gets its author's death year (written.json, built by
+// written.mjs); preface, appendix and dedication pages keep the edition's year, since in a modern edition of an old
+// text they are the editor's. Python twin: dating.py.
+let WRITTEN = null;
+const EDITOR_PAGES = new Set(['preface', 'appendix', 'dedication']);
+export function writtenYear(bookId, editionYear, pageType) {
+  WRITTEN ??= JSON.parse(fs.readFileSync(path.join(HERE, 'written.json'), 'utf8'));
+  const w = WRITTEN[bookId];
+  return w == null || EDITOR_PAGES.has(pageType) ? editionYear : w[0];
+}

@@ -177,8 +177,7 @@ export default function ArchytasInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Archytas”; that is a pattern
-          match, so it misses some and catches some it should not. Dates are the earliest the catalogue gives for the
-          work, which for some books is the date of the edition. The Gellius quotation is the library’s translation;
+          match, so it misses some and catches some it should not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
           the Latin was read against the page, with its abbreviations expanded.
         </p>
       </article>

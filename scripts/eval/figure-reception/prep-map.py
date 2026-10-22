@@ -6,6 +6,7 @@
 #
 # Theme names are written by hand after reading clusters.txt; every theme map.py produced must have one.
 import json, os, sys, collections
+from dating import written_year, page_types
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '../../..'))
@@ -17,6 +18,10 @@ OUT = os.path.join(REPO, F['out'], 'map.json')
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
 pts = json.load(open(os.path.join(W, 'map-points.json')))['points']
+# Date each passage by when it was written, not by the edition (dating.py); map-points.json keeps the edition year.
+types = page_types(json.load(open(os.path.join(W, 'hits.json'))))
+for p in pts:
+    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])))
 names = {int(k): v for k, v in T['names'].items()}
 theme_family = {c: f['key'] for f in T['families'] for c in f['themes']}
 found = {p['c'] for p in pts if p['c'] >= 0}

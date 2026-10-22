@@ -6,7 +6,8 @@
 // It loads after the article text, so the essay above it renders at once.
 //
 // Row shape (kept terse because there are ~3,900 rows):
-//   y   earliest catalogue year of the work (negative = BCE), or null
+//   y   when the work was written (negative = BCE), or null: the earliest catalogue year of its editions, or, for an
+//       old text in a later edition, its author's death year (wb = 1; shown as "by 474")
 //   t/a/l  title, author, language of the edition shown
 //   id  book id of the edition shown; np = its pages naming the figure; q = of those, pages reporting a saying
 //   pub the edition's free-text `published` field (shown when it differs from y)
@@ -18,7 +19,7 @@ import { useEffect, useMemo, useState } from 'react';
 type Passage = [number, string, 0 | 1];
 type Edition = [string, number | null, string, string, number, number, string];
 type Work = {
-  y: number | null; t: string; a: string; l: string; id: string; np: number; q: number;
+  y: number | null; wb?: 1; t: string; a: string; l: string; id: string; np: number; q: number;
   pub?: string; P: Passage[]; E: Edition[];
 };
 type Era = { key: string; name: string; label: string; from: number | null; to: number | null };
@@ -74,7 +75,7 @@ function WorkCard({ w, name }: { w: Work; name: RegExp }) {
     <article className="rounded-md border border-stone-200 bg-white/70 p-4 sm:p-5 flex flex-col gap-3 min-w-0">
       <div className="grid grid-cols-1 sm:grid-cols-[5.5rem_1fr] gap-x-4 gap-y-1">
         <div className="font-mono text-sm text-accent-gold tabular-nums">
-          {fmtYear(w.y)}
+          {w.wb ? 'by ' : ''}{fmtYear(w.y)}
           {showPub && <span className="block text-[11px] text-muted">ed. {pub.slice(0, 18)}</span>}
         </div>
         <div className="min-w-0">
