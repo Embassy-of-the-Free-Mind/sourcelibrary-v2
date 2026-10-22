@@ -6,14 +6,18 @@
  *  - lostWords: a repair that makes content vanish from the join (a title page deleted, a dedication replaced by
  *    "[This page is blank.]") is refused; removing one copy of a doubled sentence is not.
  *  - echoRepair: the doubled word is removed on the side the source does not carry it.
+ *  - driftOnly / placeRun: a join whose only defect is drift is skipped (invisible in the continuous view, #7118);
+ *    drift together with another defect is not.
  */
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { mapOntoRaw, mapProjected } from '../../scripts/maintenance/seam-repair-6742/seam-repair.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { lostWords, MAX_LOST } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
+import { lostWords, MAX_LOST, driftOnly, DRIFT_ONLY, placeRun } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { echoRepair } from '../../scripts/maintenance/seam-repair-6742/rules.mjs';
@@ -89,5 +93,35 @@ describe('echoRepair', () => {
   it('declines when the source gives no cause for the repeat', () => {
     const r = echoRepair({ ...join, srcTailA: '…natura creauit uasa.', srcHeadB: 'Vt huiusmodi serosam humiditatem…' });
     expect(r.decline).toBe('echo-no-source-cause');
+  });
+});
+
+describe('driftOnly (#7118)', () => {
+  it('is true only when drift is the one defect label', () => {
+    expect(driftOnly({ label: 'drift', labels: ['drift'], severity: 'minor' })).toBe(true);
+    expect(driftOnly({ label: 'drift' })).toBe(true);
+    expect(driftOnly({ label: 'drift', labels: ['drift', 'duplication'] })).toBe(false);
+    expect(driftOnly({ label: 'omission', labels: ['omission', 'drift'] })).toBe(false);
+    expect(driftOnly({ label: 'ok', labels: ['ok'] })).toBe(false);
+    expect(driftOnly(null)).toBe(false);
+  });
+
+  it('placeRun refuses a drift-only join before placement, and places drift with another defect as before', () => {
+    const out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'lean-drift-'));
+    const it0 = (id: string) => ({ id, enTailA: 'He went to the city of the', enHeadB: 'king, and there he stayed.', srcTailA: 'x', srcHeadB: 'y' });
+    fs.writeFileSync(path.join(out, 'candidates.jsonl'), ['a', 'b', 'c', 'd'].map(id => JSON.stringify(it0(id))).join('\n') + '\n');
+    const rows = [
+      { id: 'a', run: 'R', parsed: true, label: 'drift', labels: ['drift'], skipped: DRIFT_ONLY, repair: { tail_old: 'the', tail_new: 'the king,', head_old: 'king, and', head_new: 'and' } },
+      { id: 'b', run: 'R', parsed: true, label: 'drift', labels: ['drift'], repair: null },   // an older row, written before the skip existed
+      { id: 'c', run: 'R', parsed: true, label: 'duplication', labels: ['duplication', 'drift'], repair: null },
+      { id: 'd', run: 'R', parsed: true, label: 'ok', labels: ['ok'], repair: null },
+    ];
+    fs.writeFileSync(path.join(out, 'repairs.jsonl'), rows.map(r => JSON.stringify(r)).join('\n') + '\n');
+    const { placedRows, refusals } = placeRun(out, 'R');
+    expect(placedRows).toEqual([]);
+    expect(refusals['skipped-drift-only']).toBe(2);
+    expect(refusals['labelled-ok']).toBe(1);
+    expect(refusals['no-repair']).toBe(1);   // c went on to placement
+    fs.rmSync(out, { recursive: true, force: true });
   });
 });
