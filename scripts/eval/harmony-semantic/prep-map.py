@@ -26,6 +26,12 @@ def window(text, probe, n=240):
     s = text[at:at + n]; return ('… ' if at else '') + s.strip() + (' …' if at + n < len(text) else '')
 idx = {p: i for i, (_, p) in enumerate(probes)}
 rows = []
+# a few far outliers would squeeze the cloud into a corner: rescale on the 1st-99th percentile and clamp
+def scale(vals):
+    v = sorted(vals); lo, hi = v[len(v) // 100], v[-len(v) // 100 - 1]
+    return lambda x: round(min(1, max(0, (x - lo) / (hi - lo))), 4)
+sx, sy = scale([q['x'] for q in pts]), scale([q['y'] for q in pts])
+for q in pts: q['x'], q['y'] = sx(q['x']), sy(q['y'])
 # each point carries its /q link; the hit it came from has the book, page, year and probe
 by_q = {r['q'].replace('https://sourcelibrary.org', ''): r for r in hits.values()}
 for q in pts:

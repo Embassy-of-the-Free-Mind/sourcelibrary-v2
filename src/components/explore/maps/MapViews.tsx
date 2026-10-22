@@ -32,7 +32,7 @@ export default function MapViews({ slug, view, layers, workLabel, onShowStory }:
             <h3>{s.title} {s.tested && <span className={`tested ${s.tested.result}`}>{s.tested.result === 'true' ? 'Tested, and it holds' : 'Tested, and it fails'}</span>}</h3>
             <p>{s.line}</p>
             {s.tested ? <p className="how">{s.tested.how} <a href={`/book/${s.tested.b}?page=${s.tested.p}`} target="_blank" rel="noopener">{s.tested.pl || 'Read the page'}</a>.</p> : <p className="how">It was never put to a test.</p>}
-            <ol className="chain">{s.chain.map((k) => { const w = workLabel(k); return w ? <li key={k}><span className="yr">{fmtY(w.d)}</span> {w.n}</li> : null; })}</ol>
+            <ol className="chain">{s.chain.map((k) => ({ k, w: workLabel(k) })).filter((x) => x.w).sort((a, b) => a.w!.d - b.w!.d).map(({ k, w }) => <li key={k}><span className="yr">{fmtY(w!.d)}</span> {w!.n}</li>)}</ol>
             <button className="more" onClick={() => onShowStory(s.id)}>Show it on the timeline</button>
           </section>
         ))}
