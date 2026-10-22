@@ -45,7 +45,8 @@ export function DielsThemes({ mapUrl, dielsUrl }: { mapUrl: string; dielsUrl: st
       .sort((a, b) => a.inD / a.n - b.inD / b.n);
   }, [map.data, diels.data]);
   if (map.failed || diels.failed) return <p className="text-muted italic">The chart could not be loaded. Reload the page to try again.</p>;
-  if (!rows.length) return <p className="text-muted italic">Loading…</p>;
+  if (!map.data || !diels.data) return <p className="text-muted italic">Loading…</p>;
+  if (!rows.length) return null;
   return (
     <div className="not-prose flex flex-col gap-2">
       {rows.map((r) => {
