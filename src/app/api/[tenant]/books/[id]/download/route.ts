@@ -20,6 +20,8 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import { buildFlowEpub, FLOW_EPUB_CSS } from '@/lib/export-flow-epub';
+import type { Db } from 'mongodb';
 import { servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import {
   fetchAndCompressImage,
@@ -332,10 +334,16 @@ p {
 async function generateEpubDownload(
   book: Book,
   pages: Page[],
-  format: 'epub-translation' | 'epub-ocr' | 'epub-both'
+  format: 'epub-translation' | 'epub-ocr' | 'epub-both',
+  flowOpts: { db: Db; includeImages: boolean },
 ): Promise<Buffer> {
   const now = new Date().toISOString().split('T')[0];
   const bookTitle = book.display_title || book.title;
+  // One text, not one chapter per page (#7118): pages run on where the sentence does, with the book's
+  // illustrations in place. "Both" stays page by page — two texts interleave per page, not per sentence.
+  const flow = format === 'epub-both' ? null : await buildFlowEpub(flowOpts.db, book as never, pages as never, {
+    text: format === 'epub-ocr' ? 'ocr' : 'translation', baseUrl: BASE_URL, includeImages: flowOpts.includeImages,
+  });
 
   // Build description
   let description = `A digitized and translated text from the Source Library collection.`;
@@ -361,6 +369,8 @@ async function generateEpubDownload(
     <p><strong>Original Language:</strong> ${book.language}</p>
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
     <p><strong>Content:</strong> ${contentLabel}</p>
+    ${flow ? '<p>The text runs on across pages; the small raised numbers mark where each printed page begins and link to it, with its scan.</p>' : ''}
+    ${flow?.imagesNote ? `<p>${flow.imagesNote}</p>` : ''}
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
@@ -369,11 +379,12 @@ async function generateEpubDownload(
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
+  if (flow) chapters.push(...flow.chapters);
 
-  // Add page content
-  for (const page of pages) {
+  // Add page content (page by page: the "both" edition)
+  for (const page of flow ? [] : pages) {
     if(!page) continue;
-    
+
     const hasTranslation = page.translation?.data;
     const hasOcr = page.ocr?.data;
 
@@ -421,18 +432,22 @@ async function generateEpubDownload(
   chapters.push({ title: 'About This Edition', content: colophon });
 
   // Generate EPUB
-  const epubBuffer = await epub({
-    title: bookTitle,
-    author: book.author,
-    publisher: 'Source Library',
-    description: description,
-    lang: format === 'epub-ocr' ? book.language : 'en',
-    tocTitle: 'Contents',
-    css: EPUB_CSS,
-    date: now,
-  }, chapters);
-
-  return epubBuffer;
+  try {
+    return await epub({
+      title: bookTitle,
+      author: book.author,
+      publisher: 'Source Library',
+      description: description,
+      lang: format === 'epub-ocr' ? book.language : 'en',
+      tocTitle: 'Contents',
+      css: EPUB_CSS + (flow ? FLOW_EPUB_CSS : ''),
+      date: now,
+      // An illustration that fails to embed must not cost the reader the book.
+      ignoreFailedDownloads: true,
+    }, chapters);
+  } finally {
+    flow?.cleanup();
+  }
 }
 
 // Reflowable parallel-text EPUB (#3284): standard reflowable EPUB, one
@@ -2660,16 +2675,21 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         filename = `${safeTitle}-${isBilingual ? 'bilingual' : 'scholarly'}.epub`;
       } else {
         // Generate standard EPUB
+        // The continuous edition carries the book's illustrations only when its scans may be redistributed.
+        const includeImages = format !== 'epub-both' && (await classifyImageAccess(id)) === 'open';
         epubBuffer = await generateEpubDownload(
           book as unknown as Book,
           pages as unknown as Page[],
-          format as 'epub-translation' | 'epub-ocr' | 'epub-both'
+          format as 'epub-translation' | 'epub-ocr' | 'epub-both',
+          { db, includeImages },
         );
         const formatSuffix = format.replace('epub-', '');
         filename = `${safeTitle}-${formatSuffix}.epub`;
       }
 
-      return new Response(new Uint8Array(epubBuffer), {
+      // Streamed, not buffered: Vercel refuses a buffered function response over 4.5 MB, and an
+      // illustrated edition is larger (#7118).
+      return new Response(Readable.toWeb(Readable.from([epubBuffer])) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/epub+zip',
           'Content-Disposition': `attachment; filename="${filename}"`,
