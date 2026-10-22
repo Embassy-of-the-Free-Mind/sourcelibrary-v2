@@ -107,6 +107,18 @@
    }
   ]
  },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1920.avif",
+    "w": 1000
+   }
+  ]
+ },
  "https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg": {
   "srcset": [
    {
@@ -860,6 +872,30 @@
    {
     "src": "/articles/heroes/089f8826e202-1920.avif",
     "w": 892
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/308b2a49e881-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/308b2a49e881-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1920.avif",
+    "w": 1920
    }
   ]
  },

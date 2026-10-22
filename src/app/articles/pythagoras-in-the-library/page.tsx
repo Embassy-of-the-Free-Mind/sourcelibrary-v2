@@ -3,8 +3,11 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 import PageFigure from '@/components/articles/PageFigure';
-import PythagorasIndex from './PythagorasIndex';
-import PythagorasMap from './PythagorasMap';
+import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
+import FigureMap from '@/components/articles/figure-reception/FigureMap';
+import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
+import StoryTree from '@/components/articles/figure-reception/StoryTree';
+import RareClaims from '@/components/articles/figure-reception/RareClaims';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
@@ -12,8 +15,8 @@ import PythagorasMap from './PythagorasMap';
 // open with a printed-footnote marker) is removed before matching, so a page where only the translator's note
 // names him does not count. Index, contents, errata and title pages are dropped; editions are grouped by work_id. A
 // passage counts as "reports his words" when a regex finds Pythagoras with a verb of saying, teaching or
-// forbidding, or a phrase like "according to Pythagoras": a pattern, not a reading. Dates are the
-// catalogue's `year`, which is sometimes the work's date and sometimes the edition's.
+// forbidding, or a phrase like "according to Pythagoras": a pattern, not a reading. Dates are when a work was
+// written (scripts/eval/figure-reception/dating.py), not the edition's year.
 // The Macrobius passage is copied from get_quote (book 699ef9feb3e659e2762a5731, p. 67) on 2026-10-20
 // and the Latin read against the page image the same day (printed "molliētes ... ī aures eius malleoꝝ
 // soni ... respondētes"; shown with the abbreviations expanded). The Reisch woodcut (p. 210) was opened by
@@ -41,6 +44,15 @@ export const metadata: Metadata = withArticleMeta(SLUG, {
 const BOOK = {
   macrobius: '/book/integer-nitidus-macrobius',
   reisch: '/book/margarita-philosophica-reisch-1',
+};
+
+const DATA = '/articles/pythagoras-in-the-library';
+const ERA_INTROS = {
+  antiquity: 'Works written before 600, most of them read here in later editions: Plato and Aristotle, Plutarch, Philostratus, Porphyry and Iamblichus on his life, Boethius.',
+  '600': 'Byzantine compilers (the Suda, Psellus, Tzetzes), Arabic alchemy, Carolingian commentators.',
+  '1200': 'Scholastics and encyclopedists: Albertus Magnus, Thomas Aquinas, Vincent of Beauvais, Dante.',
+  '1450': 'Ficino, Pico and Reuchlin, and the first printed books.',
+  undated: 'Books with no date in the catalogue.',
 };
 
 const p = 'text-secondary leading-relaxed mb-6 font-body';
@@ -108,7 +120,7 @@ export default function PythagorasInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          About eleven thousand passages in the library report something Pythagoras said, taught or forbade. On this
+          About twelve thousand passages in the library report something Pythagoras said, taught or forbade. On this
           map each dot is one of them, and passages that say similar things sit close together. The groups are
           drawn by a computer from the wording alone; the names are ours, written after reading each group. Grey
           dots did not fall clearly into any group. Slide the year to watch the stories arrive, hover a dot to read
@@ -125,7 +137,46 @@ export default function PythagorasInTheLibraryPage() {
           wrote these books.
         </p>
 
-        <PythagorasMap />
+        <FigureMap dataUrl={`${DATA}/map.json`} figure="Pythagoras" />
+
+        <h2 className={h2}>Which stories, when</h2>
+
+        <p className={p}>
+          The same passages, counted by period. Each band is one of the groups on the map, and its height is that
+          group’s share of what was written in those years. Grey dots from the map are left out, and the number
+          under each period is how many passages it holds, so the thin early periods can be read with care.
+        </p>
+
+        <ThemeRiver dataUrl={`${DATA}/map.json`} />
+
+        <h2 className={h2}>How a story was passed on</h2>
+
+        <p className={p}>
+          Pick a story and every dated telling of it appears at its year. A line joins each telling to the earlier
+          one, from a different book, whose wording is closest to it, when the two are close enough. Where nothing
+          earlier comes near, the telling starts a line of its own. This measures how alike two passages read, not
+          whether one author had the other’s book open: two writers copying the same lost source look the same as
+          one copying the other. Click a dot to read it and follow its line back.
+        </p>
+
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['hammers', 't16', 't32', 't33']} />
+
+        <h2 className={h2}>Told once</h2>
+
+        <p className={p}>
+          The map and the tree show what was said about Pythagoras again and again. This list is the other end: the
+          things said about him that no other book in the library says in similar words, at most three from any one
+          author. The alchemists made him one of their masters: a Viennese guide of 1751 notes that in the{' '}
+          <em>Turba</em> “Pythagoras himself everywhere and always called our dewy subject a spittle of the moon.”
+          The fortune-tellers sold him: an 1889 handbook of cartomancy names a chapbook of “Pythagoras’s Wheel of
+          Fortune.” And in the papers of the Bavarian Illuminati, printed in 1787, “Pythagoras” is a member’s code
+          name, sending in an essay on how he means to stop spending too much. The list keeps the spurious, the
+          garbled and the borrowed names with the rest, with a note where a passage is not what it seems, because
+          this is where to look for what the usual story leaves out. A gold rule marks a passage that reports
+          something he said.
+        </p>
+
+        <RareClaims dataUrl={`${DATA}/rare.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -136,7 +187,8 @@ export default function PythagorasInTheLibraryPage() {
           the original beside the translation.
         </p>
 
-        <PythagorasIndex />
+        <FigureIndex dataUrl={`${DATA}/passages.json`} namePrefix="Pythagor" eraIntros={ERA_INTROS}
+          placeholder="Filter: beans, monochord, Samos, transmigration, Ficino…" />
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
           How the list was made: a search of the library’s English translations for every word beginning
@@ -144,9 +196,8 @@ export default function PythagorasInTheLibraryPage() {
           book itself names him, not when only a translator’s note or summary does. Index, contents and errata pages
           are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
-          such as “according to Pythagoras”; that is a pattern match, so it misses some and catches some it should
-          not. Dates are the earliest the catalogue gives for the work, which for some books is the date of the
-          edition. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
+          such as “according to Pythagoras”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern match, so it misses some and catches some it should
+          not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
           on the page.
         </p>
       </article>

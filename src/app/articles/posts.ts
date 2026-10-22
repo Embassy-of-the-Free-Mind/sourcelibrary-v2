@@ -273,6 +273,36 @@ export const posts: BlogPost[] = [
       'Raphael’s drawing for the School of Athens: a bearded Pythagoras bent over a book on his knee, students leaning in around him.',
   },
   {
+    slug: 'philolaus-in-the-library',
+    title: 'Philolaus in the Library',
+    subtitle:
+      'The first Pythagorean to write a book, and the name Copernicus found when he looked for someone who had moved the earth.',
+    summary:
+      'Every work in the library that names Philolaus: the moving earth Copernicus found in Plutarch, the books Plato bought, and Reuchlin’s Pythagorean.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Copernicus' diagram of the spheres, De revolutionibus (1543), reader page 34, opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg',
+    imageAlt:
+      'Copernicus’ diagram of the universe from De revolutionibus (1543): seven nested circles around the Sun, with the Earth and the Moon’s small circle in the fifth.',
+  },
+  {
+    slug: 'archytas-in-the-library',
+    title: 'Archytas in the Library',
+    subtitle:
+      'Plato’s friend, a general seven times over, the geometer who doubled the cube, and the maker of a wooden dove that flew.',
+    summary:
+      'Every work in the library that names Archytas of Tarentum: the flying wooden dove, doubling the cube, his anger at a farm manager, and a fever cure.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Kircher, Magnes (1641), reader page 446: the plate "Columba Architae", opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg',
+    imageAlt:
+      'Engraving from Kircher’s Magnes (1641) titled “Columba Architae”: a dove on a line flies beneath a great dial held out of the clouds, while a man on a hill holds the line.',
+  },
+  {
     slug: 'preserved-by-enemies',
     title: 'Preserved by Their Enemies',
     subtitle:

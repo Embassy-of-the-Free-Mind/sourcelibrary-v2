@@ -1,0 +1,33 @@
+{
+ "_comment": "Theme names were written by reading each theme's keywords and sample passages in clusters.txt (map.py), 2026-10-20. 1000 and 1001 are set aside before clustering (figures.json setAside).",
+ "families": [
+  {"key": "cosmos", "name": "The central fire and the cosmos", "themes": [2, 1, 3]},
+  {"key": "number", "name": "Number, limit and the unlimited", "themes": [8, 9, 10, 6]},
+  {"key": "music", "name": "Harmony and music", "themes": [5]},
+  {"key": "soul", "name": "The soul", "themes": [7]},
+  {"key": "legend", "name": "The man and his books", "themes": [4, 0]},
+  {"key": "pseudo", "name": "Not the Pythagorean", "themes": [1000, 1001]}
+ ],
+ "names": {
+  "2": "The central fire and the moving earth",
+  "1": "The sun as a glass that gathers light",
+  "3": "The world’s two destructions, by fire and by water",
+  "8": "Number, the bond that holds the world together",
+  "9": "All things are limited or unlimited",
+  "10": "The world harmonised out of opposites",
+  "6": "Unity, duality, the decad and the four seats of life",
+  "5": "Tones, semitones and the diesis",
+  "7": "The soul as harmony, buried in the body",
+  "4": "Who he was and what survives of his books",
+  "0": "Plato bought his books",
+  "1000": "A speaker in Reuchlin’s Art of Kabbalah",
+  "1001": "Another Philolaus, in the Life of Apollonius"
+ },
+ "stories": [
+  {
+   "key": "claudianus",
+   "name": "Claudianus Mamertus’ fragment on the soul",
+   "match": "claudian\\w*|mamert\\w*|incorporeal harmony"
+  }
+ ]
+}
