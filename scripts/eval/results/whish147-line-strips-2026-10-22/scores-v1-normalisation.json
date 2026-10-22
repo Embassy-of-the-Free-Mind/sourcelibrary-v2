@@ -1,0 +1,650 @@
+{
+ "fable-half|4b": {
+  "arm": "fable-half",
+  "leaf": "4b",
+  "verses": [
+   1,
+   5
+  ],
+  "rows": 9,
+  "chars": 259,
+  "row_cer": 0.583,
+  "floor_shuffled": 0.71,
+  "floor_reversed": 0.737,
+  "whole_cer": 0.707,
+  "whole_chars": 259,
+  "_d": 151,
+  "_fd": 184,
+  "_rd": 191
+ },
+ "fable-half|5b": {
+  "arm": "fable-half",
+  "leaf": "5b",
+  "verses": [
+   11,
+   16
+  ],
+  "rows": 10,
+  "chars": 304,
+  "row_cer": 0.52,
+  "floor_shuffled": 0.711,
+  "floor_reversed": 0.711,
+  "whole_cer": 0.737,
+  "whole_chars": 304,
+  "_d": 158,
+  "_fd": 216,
+  "_rd": 216
+ },
+ "fable-half|5t": {
+  "arm": "fable-half",
+  "leaf": "5t",
+  "verses": [
+   5,
+   10
+  ],
+  "rows": 10,
+  "chars": 275,
+  "row_cer": 0.447,
+  "floor_shuffled": 0.716,
+  "floor_reversed": 0.684,
+  "whole_cer": 0.724,
+  "whole_chars": 275,
+  "_d": 123,
+  "_fd": 197,
+  "_rd": 188
+ },
+ "fable-half|6b": {
+  "arm": "fable-half",
+  "leaf": "6b",
+  "verses": [
+   23,
+   28
+  ],
+  "rows": 10,
+  "chars": 297,
+  "row_cer": 0.502,
+  "floor_shuffled": 0.724,
+  "floor_reversed": 0.704,
+  "whole_cer": 0.737,
+  "whole_chars": 297,
+  "_d": 149,
+  "_fd": 215,
+  "_rd": 209
+ },
+ "fable-half|6t": {
+  "arm": "fable-half",
+  "leaf": "6t",
+  "verses": [
+   17,
+   22
+  ],
+  "rows": 16,
+  "chars": 323,
+  "row_cer": 0.539,
+  "floor_shuffled": 0.681,
+  "floor_reversed": 0.666,
+  "whole_cer": 0.743,
+  "whole_chars": 323,
+  "_d": 174,
+  "_fd": 220,
+  "_rd": 215
+ },
+ "fable-half|7t": {
+  "arm": "fable-half",
+  "leaf": "7t",
+  "verses": [
+   28,
+   34
+  ],
+  "rows": 0,
+  "chars": 0,
+  "row_cer": null,
+  "floor_shuffled": null,
+  "floor_reversed": null,
+  "whole_cer": null,
+  "whole_chars": 0,
+  "_d": 0,
+  "_fd": 0,
+  "_rd": 0
+ },
+ "fable-half|8b": {
+  "arm": "fable-half",
+  "leaf": "8b",
+  "verses": [
+   45,
+   51
+  ],
+  "rows": 10,
+  "chars": 309,
+  "row_cer": 0.524,
+  "floor_shuffled": 0.731,
+  "floor_reversed": 0.722,
+  "whole_cer": 0.758,
+  "whole_chars": 310,
+  "_d": 162,
+  "_fd": 226,
+  "_rd": 223
+ },
+ "fable-half|8t": {
+  "arm": "fable-half",
+  "leaf": "8t",
+  "verses": [
+   40,
+   45
+  ],
+  "rows": 0,
+  "chars": 0,
+  "row_cer": null,
+  "floor_shuffled": null,
+  "floor_reversed": null,
+  "whole_cer": null,
+  "whole_chars": 0,
+  "_d": 0,
+  "_fd": 0,
+  "_rd": 0
+ },
+ "fable-half|9t": {
+  "arm": "fable-half",
+  "leaf": "9t",
+  "verses": [
+   51,
+   58
+  ],
+  "rows": 16,
+  "chars": 316,
+  "row_cer": 0.522,
+  "floor_shuffled": 0.687,
+  "floor_reversed": 0.674,
+  "whole_cer": 0.763,
+  "whole_chars": 316,
+  "_d": 165,
+  "_fd": 217,
+  "_rd": 213
+ },
+ "fable-strip|4b": {
+  "arm": "fable-strip",
+  "leaf": "4b",
+  "verses": [
+   1,
+   5
+  ],
+  "rows": 9,
+  "chars": 241,
+  "row_cer": 0.61,
+  "floor_shuffled": 0.726,
+  "floor_reversed": 0.722,
+  "whole_cer": 0.718,
+  "whole_chars": 241,
+  "_d": 147,
+  "_fd": 175,
+  "_rd": 174
+ },
+ "fable-strip|5b": {
+  "arm": "fable-strip",
+  "leaf": "5b",
+  "verses": [
+   11,
+   16
+  ],
+  "rows": 10,
+  "chars": 331,
+  "row_cer": 0.556,
+  "floor_shuffled": 0.704,
+  "floor_reversed": 0.701,
+  "whole_cer": 0.728,
+  "whole_chars": 331,
+  "_d": 184,
+  "_fd": 233,
+  "_rd": 232
+ },
+ "fable-strip|5t": {
+  "arm": "fable-strip",
+  "leaf": "5t",
+  "verses": [
+   5,
+   10
+  ],
+  "rows": 9,
+  "chars": 257,
+  "row_cer": 0.482,
+  "floor_shuffled": 0.689,
+  "floor_reversed": 0.685,
+  "whole_cer": 0.72,
+  "whole_chars": 257,
+  "_d": 124,
+  "_fd": 177,
+  "_rd": 176
+ },
+ "fable-strip|6b": {
+  "arm": "fable-strip",
+  "leaf": "6b",
+  "verses": [
+   23,
+   28
+  ],
+  "rows": 9,
+  "chars": 302,
+  "row_cer": 0.596,
+  "floor_shuffled": 0.709,
+  "floor_reversed": 0.709,
+  "whole_cer": 0.755,
+  "whole_chars": 302,
+  "_d": 180,
+  "_fd": 214,
+  "_rd": 214
+ },
+ "fable-strip|6t": {
+  "arm": "fable-strip",
+  "leaf": "6t",
+  "verses": [
+   17,
+   22
+  ],
+  "rows": 10,
+  "chars": 343,
+  "row_cer": 0.618,
+  "floor_shuffled": 0.732,
+  "floor_reversed": 0.706,
+  "whole_cer": 0.738,
+  "whole_chars": 343,
+  "_d": 212,
+  "_fd": 251,
+  "_rd": 242
+ },
+ "fable-strip|7t": {
+  "arm": "fable-strip",
+  "leaf": "7t",
+  "verses": [
+   28,
+   34
+  ],
+  "rows": 9,
+  "chars": 323,
+  "row_cer": 0.598,
+  "floor_shuffled": 0.728,
+  "floor_reversed": 0.703,
+  "whole_cer": 0.728,
+  "whole_chars": 323,
+  "_d": 193,
+  "_fd": 235,
+  "_rd": 227
+ },
+ "fable-strip|8b": {
+  "arm": "fable-strip",
+  "leaf": "8b",
+  "verses": [
+   45,
+   51
+  ],
+  "rows": 10,
+  "chars": 356,
+  "row_cer": 0.593,
+  "floor_shuffled": 0.728,
+  "floor_reversed": 0.733,
+  "whole_cer": 0.742,
+  "whole_chars": 356,
+  "_d": 211,
+  "_fd": 259,
+  "_rd": 261
+ },
+ "fable-strip|8t": {
+  "arm": "fable-strip",
+  "leaf": "8t",
+  "verses": [
+   40,
+   45
+  ],
+  "rows": 9,
+  "chars": 283,
+  "row_cer": 0.661,
+  "floor_shuffled": 0.714,
+  "floor_reversed": 0.696,
+  "whole_cer": 0.767,
+  "whole_chars": 283,
+  "_d": 187,
+  "_fd": 202,
+  "_rd": 197
+ },
+ "fable-strip|9t": {
+  "arm": "fable-strip",
+  "leaf": "9t",
+  "verses": [
+   51,
+   58
+  ],
+  "rows": 10,
+  "chars": 304,
+  "row_cer": 0.671,
+  "floor_shuffled": 0.724,
+  "floor_reversed": 0.704,
+  "whole_cer": 0.776,
+  "whole_chars": 304,
+  "_d": 204,
+  "_fd": 220,
+  "_rd": 214
+ },
+ "opus-half|4b": {
+  "arm": "opus-half",
+  "leaf": "4b",
+  "verses": [
+   1,
+   5
+  ],
+  "rows": 10,
+  "chars": 284,
+  "row_cer": 0.542,
+  "floor_shuffled": 0.715,
+  "floor_reversed": 0.697,
+  "whole_cer": 0.731,
+  "whole_chars": 286,
+  "_d": 154,
+  "_fd": 203,
+  "_rd": 198
+ },
+ "opus-half|5b": {
+  "arm": "opus-half",
+  "leaf": "5b",
+  "verses": [
+   11,
+   16
+  ],
+  "rows": 16,
+  "chars": 282,
+  "row_cer": 0.44,
+  "floor_shuffled": 0.656,
+  "floor_reversed": 0.656,
+  "whole_cer": 0.745,
+  "whole_chars": 282,
+  "_d": 124,
+  "_fd": 185,
+  "_rd": 185
+ },
+ "opus-half|5t": {
+  "arm": "opus-half",
+  "leaf": "5t",
+  "verses": [
+   5,
+   10
+  ],
+  "rows": 9,
+  "chars": 239,
+  "row_cer": 0.603,
+  "floor_shuffled": 0.695,
+  "floor_reversed": 0.674,
+  "whole_cer": 0.77,
+  "whole_chars": 239,
+  "_d": 144,
+  "_fd": 166,
+  "_rd": 161
+ },
+ "opus-half|6b": {
+  "arm": "opus-half",
+  "leaf": "6b",
+  "verses": [
+   23,
+   28
+  ],
+  "rows": 9,
+  "chars": 269,
+  "row_cer": 0.546,
+  "floor_shuffled": 0.717,
+  "floor_reversed": 0.695,
+  "whole_cer": 0.76,
+  "whole_chars": 271,
+  "_d": 147,
+  "_fd": 193,
+  "_rd": 187
+ },
+ "opus-half|6t": {
+  "arm": "opus-half",
+  "leaf": "6t",
+  "verses": [
+   17,
+   22
+  ],
+  "rows": 6,
+  "chars": 70,
+  "row_cer": 0.357,
+  "floor_shuffled": 0.614,
+  "floor_reversed": 0.571,
+  "whole_cer": 0.69,
+  "whole_chars": 87,
+  "_d": 25,
+  "_fd": 43,
+  "_rd": 40
+ },
+ "opus-half|7t": {
+  "arm": "opus-half",
+  "leaf": "7t",
+  "verses": [
+   28,
+   34
+  ],
+  "rows": 1,
+  "chars": 11,
+  "row_cer": 0.455,
+  "floor_shuffled": 0.727,
+  "floor_reversed": 0.545,
+  "whole_cer": null,
+  "whole_chars": 11,
+  "_d": 5,
+  "_fd": 8,
+  "_rd": 6
+ },
+ "opus-half|8b": {
+  "arm": "opus-half",
+  "leaf": "8b",
+  "verses": [
+   45,
+   51
+  ],
+  "rows": 11,
+  "chars": 363,
+  "row_cer": 0.631,
+  "floor_shuffled": 0.719,
+  "floor_reversed": 0.708,
+  "whole_cer": 0.769,
+  "whole_chars": 363,
+  "_d": 229,
+  "_fd": 261,
+  "_rd": 257
+ },
+ "opus-half|8t": {
+  "arm": "opus-half",
+  "leaf": "8t",
+  "verses": [
+   40,
+   45
+  ],
+  "rows": 0,
+  "chars": 0,
+  "row_cer": null,
+  "floor_shuffled": null,
+  "floor_reversed": null,
+  "whole_cer": null,
+  "whole_chars": 0,
+  "_d": 0,
+  "_fd": 0,
+  "_rd": 0
+ },
+ "opus-half|9t": {
+  "arm": "opus-half",
+  "leaf": "9t",
+  "verses": [
+   51,
+   58
+  ],
+  "rows": 0,
+  "chars": 0,
+  "row_cer": null,
+  "floor_shuffled": null,
+  "floor_reversed": null,
+  "whole_cer": null,
+  "whole_chars": 0,
+  "_d": 0,
+  "_fd": 0,
+  "_rd": 0
+ },
+ "opus-strip|4b": {
+  "arm": "opus-strip",
+  "leaf": "4b",
+  "verses": [
+   1,
+   5
+  ],
+  "rows": 9,
+  "chars": 292,
+  "row_cer": 0.627,
+  "floor_shuffled": 0.733,
+  "floor_reversed": 0.709,
+  "whole_cer": 0.743,
+  "whole_chars": 292,
+  "_d": 183,
+  "_fd": 214,
+  "_rd": 207
+ },
+ "opus-strip|5b": {
+  "arm": "opus-strip",
+  "leaf": "5b",
+  "verses": [
+   11,
+   16
+  ],
+  "rows": 10,
+  "chars": 317,
+  "row_cer": 0.625,
+  "floor_shuffled": 0.735,
+  "floor_reversed": 0.697,
+  "whole_cer": 0.76,
+  "whole_chars": 317,
+  "_d": 198,
+  "_fd": 233,
+  "_rd": 221
+ },
+ "opus-strip|5t": {
+  "arm": "opus-strip",
+  "leaf": "5t",
+  "verses": [
+   5,
+   10
+  ],
+  "rows": 9,
+  "chars": 270,
+  "row_cer": 0.67,
+  "floor_shuffled": 0.685,
+  "floor_reversed": 0.693,
+  "whole_cer": 0.763,
+  "whole_chars": 270,
+  "_d": 181,
+  "_fd": 185,
+  "_rd": 187
+ },
+ "opus-strip|6b": {
+  "arm": "opus-strip",
+  "leaf": "6b",
+  "verses": [
+   23,
+   28
+  ],
+  "rows": 9,
+  "chars": 305,
+  "row_cer": 0.613,
+  "floor_shuffled": 0.734,
+  "floor_reversed": 0.692,
+  "whole_cer": 0.761,
+  "whole_chars": 305,
+  "_d": 187,
+  "_fd": 224,
+  "_rd": 211
+ },
+ "opus-strip|6t": {
+  "arm": "opus-strip",
+  "leaf": "6t",
+  "verses": [
+   17,
+   22
+  ],
+  "rows": 10,
+  "chars": 322,
+  "row_cer": 0.661,
+  "floor_shuffled": 0.714,
+  "floor_reversed": 0.711,
+  "whole_cer": 0.755,
+  "whole_chars": 322,
+  "_d": 213,
+  "_fd": 230,
+  "_rd": 229
+ },
+ "opus-strip|7t": {
+  "arm": "opus-strip",
+  "leaf": "7t",
+  "verses": [
+   28,
+   34
+  ],
+  "rows": 9,
+  "chars": 326,
+  "row_cer": 0.687,
+  "floor_shuffled": 0.709,
+  "floor_reversed": 0.702,
+  "whole_cer": 0.788,
+  "whole_chars": 326,
+  "_d": 224,
+  "_fd": 231,
+  "_rd": 229
+ },
+ "opus-strip|8b": {
+  "arm": "opus-strip",
+  "leaf": "8b",
+  "verses": [
+   45,
+   51
+  ],
+  "rows": 10,
+  "chars": 357,
+  "row_cer": 0.639,
+  "floor_shuffled": 0.737,
+  "floor_reversed": 0.717,
+  "whole_cer": 0.773,
+  "whole_chars": 357,
+  "_d": 228,
+  "_fd": 263,
+  "_rd": 256
+ },
+ "opus-strip|8t": {
+  "arm": "opus-strip",
+  "leaf": "8t",
+  "verses": [
+   40,
+   45
+  ],
+  "rows": 9,
+  "chars": 321,
+  "row_cer": 0.645,
+  "floor_shuffled": 0.726,
+  "floor_reversed": 0.72,
+  "whole_cer": 0.766,
+  "whole_chars": 321,
+  "_d": 207,
+  "_fd": 233,
+  "_rd": 231
+ },
+ "opus-strip|9t": {
+  "arm": "opus-strip",
+  "leaf": "9t",
+  "verses": [
+   51,
+   58
+  ],
+  "rows": 10,
+  "chars": 376,
+  "row_cer": 0.668,
+  "floor_shuffled": 0.737,
+  "floor_reversed": 0.726,
+  "whole_cer": 0.763,
+  "whole_chars": 376,
+  "_d": 251,
+  "_fd": 277,
+  "_rd": 273
+ }
+}

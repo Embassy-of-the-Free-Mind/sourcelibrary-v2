@@ -1,0 +1,34 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on an incised palm leaf (Sanskrit text in Malayalam script, not Devanagari); old-style letterforms with many conjuncts make the reading tentative throughout. The leaf is cut off at the right edge of the image, so line ends are lost. A string hole with cord splits lines 3–8 into two blocks.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Palm-leaf folio, single side; no visible folio number. Lines 1–2 and 9–10 run the full width; lines 3–8 are interrupted by the binding hole and are given below as left block, then right block.</meta>
+
+ശ്രീ ഖം <unclear>നവിന്ദാഭാവെന</unclear> ലിംഗ <unclear>തല്ലിരാഃ</unclear> ലിംഗാ <unclear>ഉ</unclear>
+
+സ്ഥലഃ <unclear>ആസ്പതല്ലു</unclear> വികല്പോ ദൈവ <unclear>ഐതുതി ഉ</unclear>
+
+<unclear>കവിധ</unclear> സമാസ
+<unclear>വികാലന്തൂ</unclear> മൂലത
+<unclear>ആരആ ഇനോമരള</unclear>
+<unclear>വിവൃഖത്തന്റെ ന്ധാ</unclear>
+<unclear>വിവിമൊ കുതുതല</unclear>
+<unclear>ഖാ</unclear> ആരംഭഃ <unclear>സ്വവ</unclear>
+
+<column-break/>
+
+<unclear>കൊഡൈ ദ്വാകസ്ത്ര</unclear>
+<unclear>ഇന്ധ</unclear> സ്ത്രീഃ <unclear>മതു ദ്വെതാ എ</unclear>
+<unclear>ഹ്രതം ട്ടശേം ലാ</unclear>
+<unclear>ജ്ദ്ധഃ യോ ന്ധ</unclear> ഭാവെ
+<unclear>ഇ ആഃ</unclear> പ്രതി <unclear>ധ ആരുഷ്വ</unclear>
+<unclear>സ വിവിൃതിരി ഇ</unclear>
+
+<unclear>ന്ദവവിമൊക്കാനാനി ആന്താ ാത്ര ൃആം ൂഇ</unclear>
+
+<unclear>ധാക്കിലാ ൈല്ലല ൃൈ ൈ</unclear> ലൊകഃ <unclear>ൃആ ൈാ</unclear>
+
+<vocab>liṅga, samāsa, vikalpa, daiva, strī, bhāva, loka, palm-leaf manuscript, Malayalam script, Sanskrit grammar</vocab>

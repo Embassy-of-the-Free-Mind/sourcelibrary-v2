@@ -1,0 +1,25 @@
+{
+ "arm": "opus-strip",
+ "leaf": "6b",
+ "model_requested": "claude-opus-5-5",
+ "model": "claude-opus-5-5",
+ "n_images": 18,
+ "markers_ok": true,
+ "cls": null,
+ "secs": 51.479,
+ "usage": {
+  "input": 5,
+  "output": 5600,
+  "cache_read": 16137,
+  "cache_creation": 6645,
+  "turns": 19,
+  "list_cost_usd": 0.16840739999999998
+ },
+ "prompt_sha256": "e4888f37d13fce70a2819ff5c945be0faf564426f73494d7e0674df24004b65e",
+ "prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ }
+}

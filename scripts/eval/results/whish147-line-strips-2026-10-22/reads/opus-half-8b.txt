@@ -1,0 +1,33 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam (Grantha-derived) script incised on a palm leaf and inked. The right edge of the leaf is cut off in the image, so every line is incomplete on the right. A binding cord runs through the string hole in the centre. Lines 3–7 are split into left and right blocks around the hole. Most readings are tentative.</warning>
+<warning>The book is said to be in Sanskrit, but the script here is Malayalam. The language of this leaf (Sanskrit in Malayalam script, or Malayalam) could not be confirmed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>൧</page-num>
+<meta>Palm-leaf folio with a numeral in the left margin (probably ൧, "1"). Text continues past the right edge of the image. Some lines have faint interlinear underlining.</meta>
+
+<unclear>ശിവശ്ശാസ്തഃ കൃ' എന്നെ പ്രത്യഭിജ്ഞാ വിപശ്ച</unclear> <unclear>[cut off at right edge]</unclear>
+
+<unclear>മൈത്രാരഭൃദ്രാണ്യ ... പാകൽ ബ്രഹ്മപക്ഷ</unclear> <unclear>[cut off at right edge]</unclear>
+
+<unclear>വൈവക്കഌാർക്കൽ</unclear> <unclear>ഖ്യാതിംശങ്കിതെ ദ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ദ്വന്ദ്വമമസൊസ്യ</unclear> <unclear>ശിവയാതൊമാഹ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ചമിദ്രൊഗ്യാ ഷ്യാദ്ധ</unclear> <unclear>യാതെ പാദപത്രസ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>യാസ്സഹാഭക്തിവര</unclear> <unclear>ധെഭഗണിത ഗുർദ്ദേശ്യ</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ഞാക്ഷുത്തുമിന്ദ്രി</unclear> <unclear>ശിഗാംഗത്വ്യാക്</unclear> <unclear>[cut off]</unclear>
+
+<unclear>ചല ഭാഗ്യാഖ്യാഃ സൊഹ്യാമിചയെ യാപരമ</unclear> <unclear>[cut off at right edge]</unclear>
+
+<unclear>ഫലമെന്ത്രാദ്ധ്യയനം ദ്വിഖെമിഷ്യാതസ്യ</unclear> <unclear>[cut off at right edge]</unclear>
+
+<unclear>ദ്വാരഞ്ചെൽഷിക്കിയൊരാശൈത്യ ഫിനെസ്കൃതൈ</unclear> <unclear>[cut off at right edge]</unclear>
+
+<image-desc size="small" type="decorative" significance="low">A twisted fibre binding cord threaded through the string hole in the centre of the palm leaf.</image-desc>
+
+<vocab>palm-leaf manuscript, Malayalam script, Grantha, ശിവ, പ്രത്യഭിജ്ഞാ, ഭാഗ്യ, അദ്ധ്യയനം</vocab>
