@@ -50,6 +50,51 @@ describe('joinPagesHtml', () => {
     expect(plain(html)).toBe('<p>|The stone was || heated.</p>');
   });
 
+  it('never runs editorial placeholders together', () => {
+    const html = joinPagesHtml([page(1, '[Blank page — no translatable content]'), page(2, '[Blank page — no translatable content]')]);
+    expect(plain(html)).toBe('<p>|[Blank page — no translatable content]</p>\n<p>|[Blank page — no translatable content]</p>');
+  });
+
+  it('drops a repeating running head and a signature mark at a join (Giorgi, 2026-10-22)', () => {
+    const html = joinPagesHtml([
+      page(1, 'PROEM.\nin that supramundane wheel\na iij'),
+      page(2, 'PROEM.\nit possesses the middle, as John says.'),
+    ]);
+    expect(plain(html)).toBe('<p>|PROEM.<br/>in that supramundane wheel | it possesses the middle, as John says.</p>');
+  });
+
+  it('drops a running head set as its own paragraph, only when the page joins', () => {
+    const joined = joinPagesHtml([page(1, 'PROEM.\n\nthe proportions of numbers, and'), page(2, 'PROEM.\n\nin Davidic hymns.')]);
+    expect(plain(joined)).toBe('<p>|PROEM.</p>\n<p>the proportions of numbers, and | in Davidic hymns.</p>');
+    const unjoined = joinPagesHtml([page(1, 'PROEM.\n\nIt ends.'), page(2, 'PROEM.\n\nThe next begins.')]);
+    expect(plain(unjoined)).toBe('<p>|PROEM.</p>\n<p>It ends.</p>\n<p>|PROEM.</p>\n<p>The next begins.</p>');
+  });
+
+  it('drops a single capitals line when the text under it carries on in lower case', () => {
+    const html = joinPagesHtml([page(1, 'we have deemed to'), page(2, 'PROLOGUE.\ntruly harmonious')]);
+    expect(plain(html)).toBe('<p>|we have deemed to | truly harmonious</p>');
+  });
+
+  it('closes up the translation\'s continuation ellipses at a join', () => {
+    const html = joinPagesHtml([page(1, 'so that we may be led...'), page(2, '...we may reach the goal.')]);
+    expect(plain(html)).toBe('<p>|so that we may be led | we may reach the goal.</p>');
+  });
+
+  it('does not close up a hyphen across a continuation ellipsis (Giorgi p26)', () => {
+    const html = joinPagesHtml([page(1, 'so that to it one may be led-'), page(2, '...we may reach the goal.')]);
+    expect(plain(html)).toBe('<p>|so that to it one may be led- | we may reach the goal.</p>');
+  });
+
+  it('does not run a title line into the next page (Blake, The Marriage of Heaven and Hell)', () => {
+    const html = joinPagesHtml([page(1, 'THE MARRIAGE of HEAVEN and HELL'), page(2, 'The Argument.')]);
+    expect(plain(html)).toBe('<p>|THE MARRIAGE of HEAVEN and HELL</p>\n<p>|The Argument.</p>');
+  });
+
+  it('keeps a capitals line that opens only one page: a chapter title, not a running head', () => {
+    const html = joinPagesHtml([page(1, 'and so the stone was'), page(2, 'CHAPTER TWO\nOn the heating of the stone.')]);
+    expect(plain(html)).toContain('CHAPTER TWO');
+  });
+
   it('does not join a paragraph into a heading', () => {
     const html = joinPagesHtml([page(1, 'the stone was'), page(2, '# Chapter Two\n\nIt begins.')]);
     expect(html).toContain('<h1>Chapter Two</h1>');
