@@ -16,6 +16,7 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
 import { isTrustedByUserAgent } from '@/lib/bot-gate';
@@ -710,6 +711,20 @@ export async function proxy(request: NextRequest) {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
         'X-Robots-Tag': 'noindex, nofollow',
+      },
+    });
+  }
+
+  // Fake desktop Chrome (client hints missing or malformed) on reader paths.
+  // Cloudflare rule cb7dfe4b blocks the same thing on sourcelibrary.org; this
+  // covers every other hostname. See src/lib/client-hint-gate.ts (#4476).
+  if (isForgedChrome(pathname, request.headers)) {
+    return new NextResponse(FORGED_CHROME_RESPONSE, {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+        'Cache-Control': 'no-store',
       },
     });
   }
