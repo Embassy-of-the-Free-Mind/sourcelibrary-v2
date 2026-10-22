@@ -135,6 +135,40 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-22 · Does reading Whish 147 one text row at a time beat the half-leaf read? (#7119)
+
+**Question.** Claude's Read tool downscales an image to about 1,568 px, so a 2,560 px half-leaf loses about 40% of its resolution before the model sees it, and the rows either side of the string hole do not line up (the false omission in #7109). Cutting each row into its own full-resolution image, split at the hole, removes both problems. Does it make the free read (no edition shown) more accurate?
+
+**Design.**
+- *Leaves.* The 9 left half-leaves of the verse text that the multi-leaf collation run located in GRETIL (pages 4–9: 4b, 5t, 5b, 6t, 6b, 7t, 8t, 8b, 9t; kārikās 1–58).
+- *Strips.* Automatic segmentation (ink projection profile, then a fitted line grid) failed on these leaves: the leaf grain, the scored ruling lines and pale ink put row boundaries mid-line. So the row layout was set by eye from a labelled grid of each leaf (`rows-by-eye.json`: hole x, first and last row centre, row count per side), rows evenly spaced and nudged to the local ink maximum (±12 px), each strip ±66 px around its centre. Every leaf's strips were stacked and checked by eye: one row per strip on all 9 leaves. 162 strips in all, 1,139–1,280 px wide (nothing downscaled), in reading order row by row, left of the hole then right.
+- *Arms.* Opus 5.5 and Fable 5.1, each on (a) the 9 strip sets, one call per leaf with its 18–20 strips as p01…pNN, and (b) the 9 half-leaf crops, one call per leaf. All 36 calls ran on the subscription through `claudeCall` (`scripts/batch/claude-ocr.mjs`), sealed folder, live OCR prompt "Standard OCR v19.1" with the Sanskrit language slot. The half-leaf arm uses the lane's own per-call instruction unchanged. The strip arm replaces it with a strip instruction: one row per image, transcribe the middle row only, no carry-over, never from memory, transcription only (`run-arms.mjs`).
+- *Score.* `score-lines.py`. Each row of a read (a strip pair, or one line of a half-leaf read) is matched on its own to its best window inside the leaf's located verse span (±1 verse), and CER is pooled over rows of at least 8 characters. The noise floor is built the same way, with the same row lengths and the same span: shuffled letters of a random GRETIL slice, and a reversed real passage. The old whole-read figure (one string against one window, the 2026-10-21 instrument) is kept as `wholeCER` for continuity. The normalisation also maps the dot reph ൎ and the chillu letters to consonant + virama, and the old single e/o signs to e/o. Without that, *dhaൎmmi* stays untransliterated and short *è/ò* count as errors (`scores-v1-normalisation.txt` has the old normalisation; it changes each pooled figure by under 0.01).
+
+**Result** (per-row CER; lower is better, noise floor ≈ 0.70):
+
+| arm | leaves scored | chars | pooled CER | by-leaf range | floor (shuffled / reversed) | whole-read CER, median |
+|---|---|---|---|---|---|---|
+| Fable 5.1, half-leaf | 7 of 9 (declined 7t, 8t) | 2,080 | **0.51** | 0.45–0.58 | 0.71 / 0.70 | 0.73 |
+| Opus 5.5, half-leaf | 7 of 9, two of them under 75 chars (declined 8t, 9t) | 1,516 | 0.54 | 0.36–0.62 | 0.70 / 0.68 | 0.76 |
+| Fable 5.1, single-row strips | 9 of 9 | 2,740 | 0.60 | 0.48–0.66 | 0.72 / 0.71 | 0.74 |
+| Opus 5.5, single-row strips | 9 of 9 | 2,882 | 0.65 | 0.60–0.68 | 0.72 / 0.71 | 0.76 |
+
+- **Strips are worse, not better.** Pooled, both models lose about 0.08–0.11 of CER going from the half-leaf to single rows. Paired by leaf, the strip read is worse on every leaf both arms scored: Fable 7 of 7 (by +0.03 to +0.14), Opus 5 of 5 (by +0.02 to +0.19). The strips do remove declines: neither model declined a strip set, while each declined two half-leaves. But what they read on strips is mostly guessed: Opus's strip reads are almost entirely `<unclear>` akṣaras. A reading model seems to need the whole leaf's context (the run of the verse, recurring letter shapes) more than it needs the pixels.
+- **The half-leaf reads are above chance, not at it.** Scored row by row, every half-leaf read of at least 75 characters sits below its floor: Fable by 0.13–0.24, Opus by 0.07–0.22. The 2026-10-21 file put them at chance, but its whole-read scorer compares a read of a half-leaf (each row only the first part of a leaf line, the rest on the other half) with one contiguous stretch of the edition, so even a perfect read scores badly. The whole-read column above stays at 0.73–0.76 for every arm, near its floor, whatever the read is like. Row by row, the reads still differ from the published text in about half of all characters: rough guides to the words, not transcriptions.
+- **Unstable across reads.** Yesterday's Fable read of the 5b crop (`rescore-2026-10-21/`) scores **0.09** per row. Its meta named the text ("Sāṅkhyakārikā verses 11–16"), and its rows read almost word for word as the edition. Today's Fable read of the identical crop, same prompt, scores **0.52**, and no read today named the passage. So one read in two on that leaf recognised a famous text and probably wrote it partly from memory. That is useful where the text is known, and risky on the commentary pages, where a remembered text could replace the leaf. Opus on the same crop: 0.56 yesterday, 0.43 today.
+
+**Not run.** The optional third arm (strips plus a glyph key cut from verified rows of another leaf): with strips behind the half-leaf on both models, it would not change the decision. Gemini: its CLI quota resets about 2026-10-23.
+
+**What it changed.** The best-attempt job for this book (Hetzner `whish147-best`, #7119) keeps its half-leaf crops. It got two notes during the run:
+- The first corrected the "at chance (CER 0.64–0.75)" sentence in its free-read warning, from the single 0.09 read.
+- The second superseded that with the 9-leaf figure above (about half of all characters differ, 7 leaves), once the fresh read showed the 0.09 did not repeat.
+
+That second note is the wording readers see.
+
+- *Replicated?* One manuscript, 9 leaves, one read per arm per leaf; the 5b leaf has two Fable reads (0.09, 0.52) and two Opus reads (0.56, 0.43). The instability itself is the replicated finding.
+- **Artifact.** `scripts/eval/results/whish147-line-strips-2026-10-22/` holds `rows-by-eye.json`, `cut-strips.py`, `strips.json`, `run-arms.mjs`, `score-lines.py`, all 36 reads with their meta (model, prompt hash, timing), `scores.json`, `scores.txt`, and `rescore-2026-10-21/` (the two 2026-10-21 reads of 5b, re-scored the same way).
+
 ## 2026-10-22 · Claude tiers for seam repair: Haiku screen, Sonnet repair, Opus verify (#7118)
 
 PRIOR ART: `2026-10-15-seams-scale-opus-flashlite-6742.md` gives the 300 Opus-labelled joins and the flash-lite detect
@@ -565,6 +599,8 @@ Two terms are **not found** in our books: Indian *taraf* (sympathetic strings), 
 | contrast-enhanced (CLAHE 3.0, 16×16) half-leaf t03: Opus / Fable | — | 43 / 36 | 0.71 / 0.73 (Fable aligned 6,000 characters away); no gain |
 
 **Read against the noise floor.** The best-window matcher gives 0.74–0.78 to text that contains no reading at all (`noise_floor.py`). So Opus's crops are at chance. Fable's quarter-leaf crops are at chance too. Fable's half-leaf crops, at 0.64 and 0.71, are a little above chance and sit in the right place: some real signal, nowhere near usable. A usable OCR would be under about 0.10.
+
+*Correction, 2026-10-22 (`2026-10-22-whish147-line-strips.md`).* This whole-read scorer under-rates any read of a half-leaf, because each row is only the first part of a leaf line and the read is compared with one contiguous stretch of the edition. Re-scored row by row inside the leaf's verse span (floor 0.70), the half-leaf free reads of 9 verse leaves pool at CER 0.51 (Fable, 7 leaves) and 0.54 (Opus): above chance, but about half of all characters differ. The Fable read of this page's lower leaf (`fable-page5-t03.txt`) scores 0.09 row by row, but it named the passage and a fresh read of the same crop scored 0.52.
 
 - **Where it does read:** fragments land in the right region of the text. For example, a tile carries "prakāśa … abhibhava … vṛttayaśca" from kārikā 12, in the leaf where kārikās 8–12 fall. But most of each line is marked unclear or is not recoverable.
 - **Caveat on the CER:** the leaves also carry Malayalam glosses that the verse-only reference lacks, which inflates the figure. That does not change the verdict: even the spans that do align to a kārikā differ from it in most letters.
