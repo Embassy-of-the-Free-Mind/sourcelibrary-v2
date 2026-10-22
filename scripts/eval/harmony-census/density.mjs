@@ -53,9 +53,11 @@ for (const [id, L] of Object.entries(LANES)) {
   const file = path.join(H, `density-${id}.jsonl.gz`), done = file + '.done';
   if (fs.existsSync(done)) { console.log(id, 'done already'); continue; }
   const t0 = Date.now();
-  const src = { $ifNull: ['$' + L.field, ''] };
+  // Some pages carry a non-string ocr.data / translation.data (#4272): $strLenCP and the regex operators throw on it.
+  const src = { $cond: [{ $eq: [{ $type: '$' + L.field }, 'string'] }, '$' + L.field, ''] };
   const opts = L.opts ?? 'i';
   const proj = {
+    // strlen-safe: src is the $type-guarded $cond above
     _id: 0, book_id: 1, page_number: 1, len: { $strLenCP: src },
     h: { $size: { $regexFindAll: { input: src, regex: L.H, options: opts } } },
     s: { $size: { $regexFindAll: { input: src, regex: L.S, options: opts } } },

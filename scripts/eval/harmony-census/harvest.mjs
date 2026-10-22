@@ -48,9 +48,11 @@ for (const lane of lanes) {
   const f = '$' + lane.field;
   const pipeline = [
     { $search: { index: 'pages_search', ...lane.search } },
-    { $project: { _id: 0, book_id: 1, page_number: 1, src: { $ifNull: [f, ''] } } },
+    // Some pages carry a non-string ocr.data / translation.data (#4272); every operator below needs a string.
+    { $project: { _id: 0, book_id: 1, page_number: 1, src: { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] } } },
     { $project: { book_id: 1, page_number: 1, src: 1, m: { $slice: [{ $regexFindAll: { input: '$src', regex: lane.regex, options: lane.opts ?? 'i' } }, MAX_MATCHES] } } },
     { $match: { 'm.0': { $exists: true } } },
+    // strlen-safe: src is a string by construction (the $cond on $type two stages up)
     { $project: { book_id: 1, page_number: 1, len: { $strLenCP: '$src' },
       w: { $map: { input: '$m', as: 'x', in: { idx: '$$x.idx', match: '$$x.match',
         win: { $substrCP: ['$src', { $max: [0, { $subtract: ['$$x.idx', BEFORE] }] }, BEFORE + AFTER] },
