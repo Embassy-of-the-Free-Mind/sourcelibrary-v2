@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
@@ -53,7 +52,7 @@ export default function PythagorasInTheLibraryPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="He wrote nothing that survives, and four thousand works in the library claim to know what he said"
+          subtitle="He wrote nothing that survives, and four thousand works in the library name him"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -102,7 +101,7 @@ export default function PythagorasInTheLibraryPage() {
             src="https://images.sourcelibrary.org/archived/69dbcb8c1040d1d5e20b7a3c/210.jpg"
             alt="Woodcut titled Typus Musice: a crowned woman holding a sheet of music among players of lute, harp, organ and flute; at the right a bearded man weighs hammers on a balance."
             href={`${BOOK.reisch}?page=210`}
-            source={<>Gregor Reisch, <Link href={BOOK.reisch}><em>Margarita philosophica</em></Link> (1504), p. 210</>}
+            source={<>Gregor Reisch, <em>Margarita philosophica</em> (1504), p. 210</>}
           />
         </div>
 
@@ -122,7 +121,7 @@ export default function PythagorasInTheLibraryPage() {
           he was a speaker in the <em>Turba philosophorum</em>, the assembly of sages, saying that “clean water is
           from sulfur alone”, and later alchemists quoted him from it as an authority. To the herbalists he was a
           source of secret plant names: “Pythagoras calls it…” stands beside the names given by Osthanes and the
-          Memphites. Neither is the historical Pythagoras, and both are part of what he meant to the people who
+          Egyptians. Neither is the historical Pythagoras, and both are part of what he meant to the people who
           wrote these books.
         </p>
 
