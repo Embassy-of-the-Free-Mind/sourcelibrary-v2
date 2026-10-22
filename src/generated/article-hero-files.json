@@ -623,6 +623,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/7860e991aaf3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/7860e991aaf3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg": {
   "srcset": [
    {

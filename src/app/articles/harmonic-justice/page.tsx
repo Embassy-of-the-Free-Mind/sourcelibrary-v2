@@ -1085,6 +1085,13 @@ export default function HarmonicJusticePage() {
           ask which ratios are fair in the same breath as which ones are stable.
         </p>
 
+        <p className={p}>
+          A second part,{' '}
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>, follows the older sense of the
+          word, the fitting together of unlike things, through a Chinese minister&apos;s soup, Miskawayh, Hume and
+          Smith on sympathy, Spinoza&apos;s refusal of the music of the spheres, and Wallace&apos;s governor.
+        </p>
+
         <p className="text-sm text-muted leading-relaxed">
           Quotations are the library&apos;s English translations, or for English books (Malynes, Misselden, Davis,
           Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
