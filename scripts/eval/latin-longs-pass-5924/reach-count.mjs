@@ -29,7 +29,7 @@ try {
   for (let i = 0; i < ids.length; i += 200) {
     const agg = await db.collection('pages').aggregate([
       { $match: { book_id: { $in: ids.slice(i, i + 200) } } },
-      { $project: { book_id: 1, m: '$ocr.model', has: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] } } },
+      { $project: { book_id: 1, m: '$ocr.model', has: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: '$ocr.data' }, 0] }] } } },
       { $group: { _id: { b: '$book_id', m: '$m', has: '$has' }, n: { $sum: 1 } } }]).toArray();
     for (const a of agg) {
       const m = String(a._id.m || '');
