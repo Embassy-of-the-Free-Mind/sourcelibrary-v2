@@ -21,6 +21,8 @@ export type RareData = { threshold: number; total: number; items: RareItem[]; no
 export const FAMILY_COLOR: Record<string, string> = {
   soul: '#7b4f8c', cosmos: '#2f6f8f', number: '#b07d1a', music: '#2a8a73',
   life: '#6b7a2a', legend: '#8a5a33', pseudo: '#4a4fa0', other: '#57534e',
+  // the Map of Harmony's kinds (#7129), the same values the timeline's kind colours take from the site tokens
+  ratio: '#8d6f35', opposites: '#9e4a3a', order: '#7c5db5', balance: '#8b9a7d', concord: '#3e7a6e', resonance: '#496da3', feeling: '#8a5a33', spheres: '#57534e',
 };
 
 export const fmtYear = (y: number | null) => (y == null ? 'n.d.' : y < 0 ? `${-y} BCE` : String(y));

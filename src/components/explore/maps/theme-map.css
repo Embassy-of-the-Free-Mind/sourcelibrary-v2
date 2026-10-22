@@ -192,3 +192,15 @@
 .atlas-map .tested.true{background:#e3efe4;color:var(--accent-sage-dark)} .atlas-map .tested.false{background:var(--rust-soft);color:var(--rust)}
 
 .atlas-map .detail .kbsec ol{list-style:decimal} .atlas-map .detail .kbsec ul,.atlas-map .detail .argue ul{list-style:disc}
+/* views (#7129): Timeline | Stories | Semantic map | Theme river */
+.atlas-map .viewtabs{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 10px;font-family:var(--ui)}
+.atlas-map .viewtab{font:inherit;font-size:14px;padding:5px 14px;border:1px solid var(--line-2);border-radius:16px;background:var(--panel);color:var(--ink-2);cursor:pointer}
+.atlas-map .viewtab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.atlas-map .views{margin:4px 0 40px}
+.atlas-map .views .sub{font-family:var(--ui);font-size:14px;color:var(--ink-2);max-width:80ch;margin:0 0 10px}
+.atlas-map .views .story{border-top:1px solid var(--line);padding:16px 0}
+.atlas-map .views .story h3{font-family:var(--display);font-size:24px;font-weight:600;margin:0 0 6px}
+.atlas-map .views .story p{max-width:75ch;margin:0 0 6px}
+.atlas-map .views .story .how{font-size:15.5px;color:var(--ink-2)}
+.atlas-map .views .story .chain{font-family:var(--ui);font-size:13.5px;columns:2 260px;margin:8px 0;padding-left:20px;list-style:decimal}
+.atlas-map .views .story .chain .yr{color:var(--muted);display:inline-block;min-width:68px}
