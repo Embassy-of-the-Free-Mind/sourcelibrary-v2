@@ -164,6 +164,18 @@ describe('the Sonnet fallback (#7118)', () => {
     expect(t.claudeCalls).toBeUndefined();
   });
 
+  it('treats a spent Claude account as a skip, not a check', async () => {
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-ul-'));
+    const page = { ...pg(5), id: 'p5-ul' };
+    const rows = [pg(4), { ...page, translation: { ...page.translation, data: page.translation.data + ' Spent.' } }, pg(6)];
+    const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: {} }) } : { find: () => ({ toArray: async () => rows }) } };
+    const sonnetFn = async () => ({ byId: new Map(), r: { cls: 'usage_limit', secs: 0 } });
+    const t = await seamGuardAfterWrite(d, { page: rows[1], mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn, geminiFn: gemini, agyOpenFn: () => false });
+    expect(t.skipped).toBe('agy-locked+claude-usage-limit');
+    expect(t.refused).toEqual({});
+    expect(guardReport({ out }).joinsChecked).toBe(0);
+  });
+
   it('records a held book as a write seen, and checks nothing', async () => {
     out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-held-'));
     const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: { hold: { reason: 'x' } } }) } : { find: () => { throw new Error('no page read for a held book'); } } };

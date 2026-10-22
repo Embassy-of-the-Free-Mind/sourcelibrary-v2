@@ -160,6 +160,8 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
           arm = 'sonnet'; bumpClaude(out);
           res = await sonnetFn(it);
           tally.claudeCalls = (tally.claudeCalls || 0) + 1;
+          // a spent account is a skip, not a check: the join stays unchecked for the next write
+          if (res.r.cls === 'usage_limit') { tally.skipped = `${agyShut}+claude-usage-limit`; append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: tally.skipped }); break; }
         }
         const { byId, r } = res;
         CHECKED.add(checkedKey(it)); if (CHECKED.size > 5000) CHECKED.delete(CHECKED.values().next().value);
