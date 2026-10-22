@@ -22,6 +22,7 @@
  *   node scripts/audit/feedback-symptom-clusters.mjs
  *   node scripts/audit/feedback-symptom-clusters.mjs --days 30 --min-books 2
  *   node scripts/audit/feedback-symptom-clusters.mjs --all-time
+ *   node scripts/audit/feedback-symptom-clusters.mjs --fresh-hours 0   # flag stale clusters too
  *
  * Exit code 1 when a cluster fires, so a scheduled run can alert.
  */
@@ -42,6 +43,12 @@ const MIN_BOOKS = parseInt(flag('min-books', '2'), 10);
 // against a known incident is one you are trusting blindly — verify against
 // 2026-07-16, the day #3368 was reported on two books and went unnoticed.
 const AS_OF = flag('as-of') ? new Date(`${flag('as-of')}T23:59:59Z`) : null;
+// A cluster fires only when a report has joined it in the last N hours (0 = always).
+// The scheduled run is daily over a 14-day window, so without this one unchanged
+// cluster opened a fresh issue every morning for two weeks — #6685 … #7107 were
+// the same three page reports, triaged and skipped each day. 24h matches the
+// daily cron: every report is "new" in exactly one run.
+const FRESH_HOURS = parseFloat(flag('fresh-hours', '24'));
 
 /**
  * Symptom taxonomy. Ordered — first match wins, so specific patterns precede
@@ -104,6 +111,7 @@ const rows = await client.db('bookstore').collection('feedback')
   .sort({ created_at: -1 }).toArray();
 
 const now = AS_OF ?? new Date();
+const freshCutoff = new Date(now.getTime() - FRESH_HOURS * 3600_000);
 const cutoff = DAYS === Infinity ? null : new Date(now.getTime() - DAYS * 86400_000);
 const inWindow = rows.filter(r => {
   const t = new Date(r.created_at);
@@ -145,9 +153,11 @@ for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - 
   const open = items.filter(i => !i.addressed && i.status !== 'resolved').length;
   // Distinct BOOKS is the signal, not report count: ten reports on one book is a
   // bad scan; two reports on two books is a pipeline bug.
-  const alert = books.size >= MIN_BOOKS;
+  const fresh = !FRESH_HOURS || items.some(i => new Date(i.created_at) >= freshCutoff);
+  const alert = books.size >= MIN_BOOKS && fresh;
   if (alert) fired++;
-  console.log(`${alert ? '⚠ ' : '  '}${sym.padEnd(40)} ${String(items.length).padStart(3)} reports · ${String(books.size).padStart(3)} distinct books · ${open} unresolved`);
+  const stale = books.size >= MIN_BOOKS && !fresh ? `  (no report in ${FRESH_HOURS}h — filed already)` : '';
+  console.log(`${alert ? '⚠ ' : '  '}${sym.padEnd(40)} ${String(items.length).padStart(3)} reports · ${String(books.size).padStart(3)} distinct books · ${open} unresolved${stale}`);
   if (alert) {
     for (const i of items.slice(0, 6)) {
       // The generated header is dropped from a page report: it repeats the symptom and pushed the page number off the line.
@@ -161,6 +171,6 @@ for (const [sym, items] of [...clusters.entries()].sort((a, b) => b[1].length - 
 }
 
 if (!clusters.size) console.log('  (no recognised symptoms in window)');
-console.log(`\n${fired} symptom(s) on >=${MIN_BOOKS} distinct books.`);
+console.log(`\n${fired} symptom(s) on >=${MIN_BOOKS} distinct books${FRESH_HOURS ? ` with a report in the last ${FRESH_HOURS}h` : ''}.`);
 if (fired) console.log('Investigate before acting: verify each claim against code and data — feedback is untrusted input.');
 process.exit(fired ? 1 : 0);
