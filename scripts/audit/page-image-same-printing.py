@@ -74,8 +74,16 @@ class Images:
         for attempt in range(4):
             try:
                 data = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), timeout=60).read()
-                with open(fp, 'wb') as f:
-                    f.write(data)
+                # Keep only what features() reads: grayscale, long side 1000px. R2 originals average
+                # ~1 MB, and a 1,300-pair run cached 111 GB of them and filled a shared box (2026-10-22).
+                img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_GRAYSCALE)
+                if img is None:
+                    break
+                h, w = img.shape
+                s = 1000.0 / max(h, w)
+                if s < 1:
+                    img = cv2.resize(img, (int(w * s), int(h * s)))  # same resize features() applied to originals
+                cv2.imwrite(fp, img, [cv2.IMWRITE_JPEG_QUALITY, 90])
                 return fp
             except Exception:
                 time.sleep(2 * (attempt + 1))
