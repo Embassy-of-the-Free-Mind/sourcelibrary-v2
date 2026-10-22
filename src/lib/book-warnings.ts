@@ -18,8 +18,8 @@ import { CHECK_METHODS } from './check-methods';
 /** What is wrong, in the order a reader should hear it (most consequential first). */
 export const WARNING_KINDS = [
   'wrong_page', 'english_other_page', 'invented_transcription', 'model_notes', 'garble_translated', 'meaning_reversed',
-  'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english', 'number_misread', 'repeated_text',
-  'serious_transcription', 'serious_english', 'serious_other',
+  'transcription_unsettled', 'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english',
+  'number_misread', 'repeated_text', 'transcription_misread', 'serious_transcription', 'serious_english', 'serious_other',
 ] as const;
 export type WarningKind = (typeof WARNING_KINDS)[number];
 
@@ -37,6 +37,10 @@ const KIND_OF_CLASS: Record<string, WarningKind> = {
   T1: 'missing_english', T9: 'missing_english',
   O7: 'number_misread',
   O4: 'repeated_text',
+  // ocr-convergence (scripts/batch/ocr-convergence/driver.mjs) writes its own classes, not taxonomy codes (#7082).
+  'ocr-wrong-leaf': 'wrong_page',
+  'ocr-unsettled': 'transcription_unsettled',
+  'ocr-misread': 'transcription_misread',
 };
 const KIND_OF_STAGE = { ocr: 'serious_transcription', translation: 'serious_english', other: 'serious_other' } as const;
 
@@ -45,7 +49,7 @@ export function kindsOfFinding(f: PageFinding): WarningKind[] {
   const found = new Set<WarningKind>();
   if (f.wrong_page) found.add('wrong_page');
   for (const e of f.errors) {
-    const cls = e.class?.match(/^[OTI]\d+/)?.[0];
+    const cls = e.class && (KIND_OF_CLASS[e.class] ? e.class : e.class.match(/^[OTI]\d+/)?.[0]);
     found.add((cls && KIND_OF_CLASS[cls]) || KIND_OF_STAGE[e.stage] || 'serious_other');
   }
   return WARNING_KINDS.filter((k) => found.has(k));
@@ -77,6 +81,8 @@ export interface BookWarning extends WarningSource {
   pagesRead: number;
   /** Of those, pages with a serious finding. Null when the check kept no per-page record. */
   pagesSerious: number | null;
+  /** What those pages have wrong: each kind with the number of pages carrying it, most consequential first (#7082). */
+  kinds: { kind: WarningKind; pages: number }[];
 }
 
 export interface QualityWarnings {
@@ -162,10 +168,16 @@ export function deriveWarnings(rows: BookCheck[], stamps: Map<number, PageTextSt
     const pages = live.get(r)!;
     if (!pages.length) continue;
     if (r.page_findings) {
-      const serious = pages.filter((n) => r.page_findings!.some((f) => f.page_number === n) && decided.get(n)).length;
-      if (serious > 0) { book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: serious }; break; }
+      const serious = pages.filter((n) => r.page_findings!.some((f) => f.page_number === n) && decided.get(n));
+      if (serious.length > 0) {
+        const count = new Map<WarningKind, number>();
+        for (const n of serious) for (const k of kindsOfFinding(r.page_findings.find((f) => f.page_number === n)!)) count.set(k, (count.get(k) ?? 0) + 1);
+        const kinds = WARNING_KINDS.filter((k) => count.has(k)).map((kind) => ({ kind, pages: count.get(kind)! }));
+        book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: serious.length, kinds };
+        break;
+      }
     } else if (r.verdict === 'fix') {
-      book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: null };
+      book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: null, kinds: [] };
       break;
     }
   }

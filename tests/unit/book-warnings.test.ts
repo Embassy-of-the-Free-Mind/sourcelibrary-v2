@@ -32,6 +32,12 @@ describe('kindsOfFinding', () => {
     expect(kindsOfFinding(row().page_findings![1])).toEqual(['wrong_page', 'meaning_reversed', 'serious_english']);
     expect(kindsOfFinding({ page_number: 1, errors: [{ stage: 'other', class: 'other:canonical-text-substitution (cf. O3)' }] })).toEqual(['serious_other']);
   });
+
+  it('names the ocr-convergence classes instead of falling back to "a serious error" (#7082)', () => {
+    expect(kindsOfFinding({ page_number: 1, errors: [{ stage: 'ocr', class: 'ocr-misread' }] })).toEqual(['transcription_misread']);
+    expect(kindsOfFinding({ page_number: 1, errors: [{ stage: 'ocr', class: 'ocr-unsettled' }] })).toEqual(['transcription_unsettled']);
+    expect(kindsOfFinding({ page_number: 1, wrong_page: true, errors: [{ stage: 'ocr', class: 'ocr-wrong-leaf' }] })).toEqual(['wrong_page']);
+  });
 });
 
 describe('deriveWarnings', () => {
@@ -40,6 +46,9 @@ describe('deriveWarnings', () => {
     expect(Object.keys(w.pages).map(Number)).toEqual([7, 9]);
     expect(w.pages[7]).toMatchObject({ level: 'review', kinds: ['invented_transcription'], reader: 'model', imageOpened: true, anchor: pageAnchor(row(), 7) });
     expect(w.book).toMatchObject({ pagesRead: 4, pagesSerious: 2, anchor: checkAnchor(row()) });
+    expect(w.book!.kinds).toEqual([
+      { kind: 'wrong_page', pages: 1 }, { kind: 'invented_transcription', pages: 1 }, { kind: 'meaning_reversed', pages: 1 }, { kind: 'serious_english', pages: 1 },
+    ]);
   });
 
   it('drops a page whose text was rewritten after the check, from the warning and from both counts', () => {
@@ -76,7 +85,7 @@ describe('deriveWarnings', () => {
     const r = row({ method_id: 'curation-check', page_findings: undefined, pages_read: [40, 41], text_provenance: [40, 41].map((n) => ({ page_number: n, ocr_model: 'm', translation_model: 'm' })) });
     const w = deriveWarnings([r], untouched([40, 41]));
     expect(w.pages).toEqual({});
-    expect(w.book).toMatchObject({ pagesRead: 2, pagesSerious: null });
+    expect(w.book).toMatchObject({ pagesRead: 2, pagesSerious: null, kinds: [] });
   });
 
   it('gives no book warning for a caveat or show verdict without serious pages', () => {
@@ -106,6 +115,27 @@ describe('copy and registry stay in step', () => {
   it('has wording for every warning kind in every reader language', () => {
     for (const lang of Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[]) {
       for (const k of WARNING_KINDS) expect(READER_UI_STRINGS[lang].info.qualityKinds[k], `${lang}.${k}`).toBeTruthy();
+    }
+  });
+
+  it('says on the book line what was found, what "serious" means, and what to do (#7082)', () => {
+    const en = READER_UI_STRINGS.en.info;
+    const line = en.qualityBook({ ai: true, image: true, read: 10, serious: 4, date: '13 Oct 2026',
+      kinds: [{ text: en.qualityKinds.transcription_misread, pages: 4 }] });
+    expect(line).toBe('A check by an AI reviewer read 10 pages of this book against the scans on 13 Oct 2026 and found serious errors on 4 of them; the other 6 had none. '
+      + 'It found that the transcription misreads a word or passage (4 pages). '
+      + 'Serious means an error that changes what the text says, such as a wrong word, name or number, or a missing or invented passage, not a spelling slip. '
+      + 'Before you quote a passage, compare it with the scan, which is the original.');
+    const three = en.qualityBook({ ai: false, image: false, read: 2, serious: 2, date: 'd',
+      kinds: [{ text: 'a', pages: 2 }, { text: 'b', pages: 1 }, { text: 'c', pages: 1 }] });
+    expect(three).toContain('found serious errors on 2 of them. It found that a (2 pages), and that b (1 page), among other serious errors.');
+    for (const lang of Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[]) {
+      const t = READER_UI_STRINGS[lang].info;
+      for (const serious of [null, 1, 3]) {
+        const s = t.qualityBook({ ai: true, image: true, read: 3, serious, date: 'D', kinds: serious ? [{ text: t.qualityKinds.number_misread, pages: 1 }] : [] });
+        expect(s, `${lang} ${serious}`).not.toMatch(/\b(undefined|NaN|null)\b/);
+        if (serious) expect(s, lang).toContain(t.qualityKinds.number_misread);
+      }
     }
   });
 

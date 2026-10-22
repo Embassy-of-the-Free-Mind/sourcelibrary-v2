@@ -126,6 +126,11 @@ export default async function BookChecksPage({ params }: PageProps) {
           whole book. Most reviewers are AI models; each record says who read.
         </p>
         <p className="font-sans text-[15px] leading-relaxed mt-3" style={{ color: 'var(--text-secondary)' }}>
+          A serious error is one that changes what the text says: a wrong word, name or number, or a passage that is
+          missing, invented or from another page. Spelling slips are not counted. The scan is the original; before
+          quoting a passage named below, compare it with the scan.
+        </p>
+        <p className="font-sans text-[15px] leading-relaxed mt-3" style={{ color: 'var(--text-secondary)' }}>
           A finding describes the text as it was when the check read it. When a page’s text has since been replaced,
           the finding is marked as no longer current and the reader stops showing its warning.
         </p>

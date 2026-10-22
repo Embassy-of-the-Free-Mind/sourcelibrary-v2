@@ -214,7 +214,7 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
     text = t.qualityPageDetector(qualityDate(page.date, locale));
     href = page.issue ? issueUrl(page.issue) : `${checks}#${page.anchor}`; link = t.qualityDetectorLink;
   } else {
-    text = t.qualityBook({ ai: book!.reader !== 'human', image: book!.imageOpened, read: book!.pagesRead, serious: book!.pagesSerious, date: qualityDate(book!.date, locale) });
+    text = t.qualityBook({ ai: book!.reader !== 'human', image: book!.imageOpened, read: book!.pagesRead, serious: book!.pagesSerious, kinds: book!.kinds.map((k) => ({ text: t.qualityKinds[k.kind], pages: k.pages })), date: qualityDate(book!.date, locale) });
     href = `${checks}#${book!.anchor}`; link = t.qualitySeeReview;
   }
   const external = href.startsWith('http');
