@@ -12,7 +12,7 @@ decision: "The 159 pages were written with per-page warnings (#7119). For dense-
 superseded_by: null
 issue: 7119
 ---
-PRIOR ART: 2026-10-21-whish147-malayalam-palm-leaf-opus.md — it measured collation against an edition (25/36 planted differences found) and free reads (at chance) on 9 leaves, and placed 15 left half-leaves; it did not try to place a whole manuscript leaf by leaf, nor the commentaries.
+PRIOR ART: 2026-10-21-whish147-malayalam-palm-leaf-opus.md — it measured collation against an edition (25/36 planted differences found) and free reads (reported at chance there; see the correction below) on 9 leaves, and placed 15 left half-leaves; it did not try to place a whole manuscript leaf by leaf, nor the commentaries.
 
 ## 2026-10-22 · How far does locate-then-collate reach across a whole palm-leaf manuscript? (#7119)
 
@@ -31,5 +31,6 @@ PRIOR ART: 2026-10-21-whish147-malayalam-palm-leaf-opus.md — it measured colla
 - Where the scan order of the Tattvakaumudī lies is still open. The colophon probe saw a Tattvakaumudī-like colophon and the scribe's closing verse at 66b–67t, and no opening invocation in 67–111.
 - **Translation.** 151 of 159 pages carry an English translation with its warning. The translation write door refused 8 free-read pages (66, 67, 95, 100, 106–109) as `collapsed`: a long OCR attempt with almost no English, which is the right English for those reads.
 
+- **Correction to the free-read figure (parent session, #7119, 2026-10-22).** The 2026-10-21 at-chance CER (0.64–0.75) scored a whole half-leaf read against one contiguous window of GRETIL, which a half-leaf row cannot match. Re-scored row by row inside each leaf's verse span (noise floor 0.70), Fable 5.1 half-leaf free reads pool at CER 0.51 (7 leaves, 0.45–0.58; 2 of 9 declined), Opus 0.54. The free-read page warnings were rewritten to that figure (52 pages). 8 pages whose free read is long and fluent also say the model may be supplying a remembered text.
 - *Replicated?* One manuscript.
 - *Not measured:* how accurate the collated text is beyond the verses. The 25/36 planted-difference figure covers kārikā leaves only, and the page warnings say so.

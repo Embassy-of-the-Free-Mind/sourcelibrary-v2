@@ -9,7 +9,10 @@ import { WORKS } from './locate.mjs';
 
 // ── the reader-facing method statements. Numbers: scripts/eval/experiments/2026-10-21-whish147-malayalam-palm-leaf-opus.md
 const ANCHOR_RATE = 'In a test on the verse text of 9 leaves of this manuscript (Oct 2026), AI reviewers found 25 of 36 planted differences between leaf and edition (69%, 95% CI 53–82%) and marked none falsely as certain; a third went unflagged, so where nothing is marked the leaf may still differ. The commentaries were not part of that test.';
-const FREE_RATE = 'In tests on this manuscript (Oct 2026), AI reads of this script made without an edition matched the published text no better than chance (character error rate 0.64–0.75; text with no reading at all scores 0.74–0.78). Treat it as a guess.';
+// Corrected by the parent session's row-by-row re-score (#7119 inbox, 2026-10-22 21:07): the 2026-10-21 at-chance CER
+// was a scoring artifact; Fable half-leaf free reads pool at CER 0.51 (7 leaves, range 0.45–0.58).
+const FREE_RATE = 'Where a published text exists, such reads of this manuscript differed from it in about half of all characters (7 leaves, Oct 2026), so read this as a rough guide to the words, not a transcription.';
+const FLUENT = (which) => `The reading of the ${which.length > 1 ? 'upper and lower leaves is' : `${which[0]} is`} long and fluent; on a commentary leaf the model may be supplying a remembered text rather than reading the leaf.`;
 const LAYOUT = 'Each leaf is given as its left and right halves; rows do not line up across the string holes (‖), so read each half’s rows on their own.';
 const TAIL = 'Not checked by a scholar; report errors with the feedback button.';
 const LABEL = {
@@ -33,7 +36,9 @@ export function warningFor(leaves) {
   }
   if (free.length) {
     const which = anchored.length ? `The ${Object.entries(leaves).filter(([, l]) => l.method === 'free-read').map(([k]) => name[k] || k).join(' and ')}: best-effort` : 'Best-effort';
-    parts.push(`${which} machine reading (Claude Fable 5.1, Oct 2026), not anchored to any edition, in IAST transliteration. ${FREE_RATE}`);
+    parts.push(`${which} machine reading by Claude Fable 5.1 (Oct 2026), in IAST transliteration, with no published text to check against. ${FREE_RATE}`);
+    const fluent = Object.entries(leaves).filter(([, l]) => l.method === 'free-read' && l.fluent).map(([k]) => name[k] || k);
+    if (fluent.length) parts.push(FLUENT(fluent));
   }
   const blank = Object.entries(leaves).filter(([, l]) => l.method === 'no-text').map(([k]) => name[k] || k);
   if (blank.length) parts.push(`The ${blank.join(' and ')}: no writing found by the machine check.`);
@@ -69,10 +74,11 @@ const tidy = (t) => t.replace(/\b(left|right) (of|side of) (the )?(string[- ])?h
  * bracketed notes are removed (68-tL came back as "[illegible] ca [illegible] ca …" on all 11 rows). Such a half is
  * shown as one [illegible] line; the syllable guesses stay in reads/free/ for the record.
  */
-export function noConnectedText(rows) {
+export function distinctWords(rows) {
   const toks = rows.map((r) => r.text).join(' ').replace(/\[[^\]]*\]|\([^)]*\)/g, ' ').split(/[\s|‖/·.,;:—–-]+/).filter((t) => [...t.normalize('NFC')].filter((c) => /\p{L}/u.test(c)).length >= 4);
-  return new Set(toks).size < 5;
+  return new Set(toks).size;
 }
+export function noConnectedText(rows) { return distinctWords(rows) < 5; }
 const NO_TEXT_LINE = '[illegible: the machine reading found no connected words on this half]';
 const freeRows = (reply) => reply.split('\n').map((l) => l.match(/^ROW\s+(\d+)\s*\|\s*(.*)$/)).filter(Boolean).map((m) => ({ n: Number(m[1]), text: m[2].trim() }));
 
@@ -124,6 +130,7 @@ export function assemble(n, loc) {
       const rows = halves.map((h) => freeRows(h.text));
       leaves[leaf] = { method: 'free-read', works: [], locate: loc_r ? key : null, free: [`${key}L`, `${key}R`], located: false, locate_why: l?.why ?? l?.status ?? null, model: halves[0].meta.model, notes: halves.map((h) => (h.text.match(/^NOTE\s*\|\s*(.*)$/m) || [])[1] || '') };
       const show = rows.map((rs) => (noConnectedText(rs) ? NO_TEXT_LINE : rs.map((r) => `${r.n}. ${tidy(r.text)}`).join('\n')));
+      leaves[leaf].fluent = distinctWords(rows.flat()) >= 40;
       leaves[leaf].collapsed_halves = rows.map((rs, i) => (noConnectedText(rs) ? ['L', 'R'][i] : null)).filter(Boolean);
       blocks.push(`**${lab}, left half**\n\n${show[0]}\n\n**${lab}, right half**\n\n${show[1]}`);
     }

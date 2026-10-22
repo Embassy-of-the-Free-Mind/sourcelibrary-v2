@@ -10,7 +10,7 @@ import { HERE, BOOK } from './lib.mjs';
 
 const TW = {
   'edition-anchored': 'the Sanskrit it translates is a machine transcription anchored to a published edition, which can miss places where the leaf differs (see the note on the transcription)',
-  'free-read': 'the Sanskrit is a best-effort machine reading that, in tests on this manuscript (Oct 2026), matched the published text no better than chance; only what was read is translated',
+  'free-read': 'the Sanskrit is a rough best-effort machine reading with no published text to check against, so expect wrong words; only what was read is translated',
 };
 export function translationWarning(P) {
   if (P.methods.includes('contents-leaf-read')) return 'English translation (Claude Opus 5.5, Oct 2026) of the contents leaf, whose transcription is a machine reading: the English list is kept as written and the Malayalam list is translated. Not checked by a scholar.';
