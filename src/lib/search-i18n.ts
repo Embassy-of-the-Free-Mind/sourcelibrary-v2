@@ -2,7 +2,7 @@ import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 /**
  * Strings for the search page (`src/app/search/page.tsx`), which renders under
- * both `/search` and `/es/search` taking a `lang` prop — the same "one page,
+ * `/search`, `/es/search`, `/la/search` and `/zh/search` taking a `lang` prop — the same "one page,
  * two URLs" shape as the book page (#4082 phase 2, `.claude/docs/i18n.md`).
  *
  * There is no authored prose here: every entry is chrome. What is NOT chrome —
@@ -218,8 +218,9 @@ export interface SearchStrings {
  */
 export const EXAMPLE_QUERY_PROPER_NOUNS = ['Hermes', 'Paracelsus', 'Kabbalah', 'rasayana', 'Ficino'] as const;
 
-// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
-// never rendered under a Latin URL. See `withEnglishFallback`.
+// Latin and Chinese have their own (#7175). Dutch has no `/nl/search` twin and
+// reads the English copy, which is never rendered under a Dutch URL. See
+// `withEnglishFallback`.
 export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback({
   en: {
     numberLocale: 'en-US',
@@ -508,6 +509,299 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
 
     imagesEnglishNote: 'Las descripciones de las ilustraciones están indexadas en inglés, así que la búsqueda de imágenes usa palabras inglesas. Las imágenes se pueden explorar en cualquier idioma.',
   },
+
+  // Latin (#7175). An original-text locale: the results are books written in
+  // Latin and the excerpts are their own text, so the chrome says "Latin
+  // books", not "translations". Plain Latin: no macrons, no Roman numerals.
+  la: {
+    numberLocale: 'en-US',
+
+    searchPlaceholder: 'Quaere verbum in libris Latinis...',
+    searchFailed: 'Quaestio non successit. Iterum tempta.',
+
+    sortRelevance: 'Congruentia',
+    sortYearNewest: 'Annus (recentissimi)',
+    sortYearOldest: 'Annus (antiquissimi)',
+    sortTitleAz: 'Titulus A-Z',
+
+    browseRecentTranslation: 'Nuper conversi',
+    browseRecent: 'Nuper additi',
+    browseOldestFirst: 'Antiquissimi primi',
+    browseNewestFirst: 'Recentissimi primi',
+    browseTitleAsc: 'Titulus A-Z',
+    browseTitleDesc: 'Titulus Z-A',
+
+    tabAll: 'Omnia',
+    tabBooks: 'Libri',
+    tabIndex: 'Index',
+    tabImages: 'Imagines',
+
+    indexAllTypes: 'Omnia genera',
+    indexConcepts: 'Notiones',
+    indexPeople: 'Homines',
+    indexPlaces: 'Loca',
+    indexQuotes: 'Sententiae',
+    indexKeywords: 'Verba praecipua',
+    indexVocabulary: 'Vocabula',
+
+    filters: 'Filtra',
+    clear: 'Dele',
+    clearAll: 'Omnia dele',
+    done: 'Factum',
+    filterLanguage: 'Lingua',
+    filterSubject: 'Argumentum',
+    filterCollection: 'Collectio',
+    filterLibrary: 'Bibliotheca',
+    filterPublishedAfter: 'Editum post annum',
+    filterPublishedBefore: 'Editum ante annum',
+    filterWrittenIn: 'Opus scriptum',
+    anyTime: 'Quolibet tempore',
+    writtenInNote: (period) => `Opera scripta: ${period}. Annus in quaque tabella est annus huius exemplaris.`,
+    browseByCentury: 'Opera per saecula',
+    allLanguages: 'Omnes linguae',
+    allCategories: 'Omnia argumenta',
+    allCollections: 'Omnes collectiones',
+    allLibraries: 'Omnes bibliothecae',
+    yearFromPlaceholder: 'ex. gr. 1500',
+    yearToPlaceholder: 'ex. gr. 1700',
+    hasTranslation: 'Conversionem habet',
+    firstTranslation: 'Prima conversio',
+    hasDoi: 'DOI habet',
+
+    signInHeading: 'Nomen tuum inscribe ut quaerere pergas',
+    signInBody: 'Quaestiones gratuitas in praesens consumpsisti. Nomen tuum inscribe (gratis est) ut plus quam decem milia fontium perscruteris.',
+    signInCta: 'Gratis inscribe',
+
+    show: 'Ostende',
+    perPage: 'in pagina',
+    showingRange: (from, to) => `(${from}–${to} ostenduntur)`,
+    imagesCount: (n) => `${n} imagines`,
+    booksCount: (n) => `${n} libri`,
+    inCollection: 'in',
+    browseFullCatalog: 'Totum catalogum percurre',
+    allBooks: 'Omnes libri',
+    andNMore: (n) => `+${n} alii`,
+
+    noImagesFound: 'Nullae imagines inventae',
+    noImagesBody: 'Tempta rem, figuram vel signum quaerere.',
+    somethingWentWrong: 'Aliquid erravit',
+    couldNotLoadLibrary: 'Bibliothecam nunc aperire non potuimus.',
+    tryAgain: 'Iterum tempta',
+    noBooksFound: 'Nulli libri inventi',
+    adjustFilters: 'Filtra mutare tempta.',
+    noResultsFound: 'Nihil inventum',
+    didYouMean: 'An voluisti',
+    corpusBlurb: 'Milia librorum Latine scriptorum: alchemia, Hermetica, Cabbala, philosophia naturalis, medicina, astronomia. Loci ex ipso textu Latino afferuntur.',
+    browseAllBooks: 'Omnes libros percurre',
+
+    kindReadingRoom: 'Conclave lectionis',
+    kindLibrary: 'Bibliotheca socia',
+    kindFeature: 'Instrumentum',
+    kindCollection: 'Collectio',
+
+    whichName: (surname) => `Quis ${surname}?`,
+    whichNameBody: 'Plures in bibliotheca hoc nomen habent.',
+    namedInBooks: (n) => (n === 1 ? 'in uno libro nominatur' : `in ${n.toLocaleString('en-US')} libris nominatur`),
+    whichNameAuthor: 'Pagina auctoris',
+
+    illustrations: 'Imagines',
+    seeAllImages: 'Omnes imagines vide',
+    semanticDegraded: 'Eventus cognati nunc afferri non potuerunt, itaque fortasse pauciora vides quam habemus. Mox iterum tempta.',
+    weakMatchTitle: (q) => `Nihil plane congruit cum “${q}”`,
+    weakMatchBody: 'Nihil in bibliotheca omnia verba tua continet. Quae infra sunt, partim tantum congruunt.',
+    conceptualMatches: 'Sententia congruentes',
+    textMatches: 'In textu inventa',
+    seeAllResults: (n) => `Omnes ${n} eventus vide`,
+    passages: 'Loci',
+    searchingPageContent: 'In paginis quaeritur...',
+    catalogMatches: 'In catalogo inventa',
+    fromTheSite: 'Ex hoc situ',
+    sitePageType: (type) => (type === 'blog' ? 'Commentarius' : type === 'collection' ? 'Collectio' : type === 'feature' ? 'Instrumentum' : type === 'author' ? 'Auctor' : 'Pagina'),
+    works: (n) => (n === 1 ? 'opus' : 'opera'),
+    searchingCatalog: 'In catalogo quaeritur...',
+    openAllCatalogueMatches: (n) => `Omnia ${n} in catalogo inventa aperi`,
+    relatedFromAi: 'Cognata ab intellegentia artificiosa inventa:',
+    relatedInLibrary: 'Cognata in bibliotheca',
+
+    foundBooksAndPages: (n, q) => `${n} libri et paginae pro “${q}”`,
+    foundIndexEntries: (n, q) => `${n} lemmata indicis pro “${q}”`,
+    foundImages: (n, q) => `${n} imagines pro “${q}”`,
+
+    askLibrarian: 'Bibliothecarium interroga',
+    askLibrarianBody: (scope) => `Altius inquirere vis? Bibliothecarius in ${scope} quaeret, fontes inter se conferet et commentarium conficiet quod exportare potes.`,
+    askLibrarianScopeResults: (n) => `his ${n} eventibus`,
+    askLibrarianScopeCollection: 'collectione',
+
+    editedByAbbrev: 'ed.',
+    pageAbbrev: (n) => `p. ${n}`,
+    pagesCount: (n) => `${n} paginae`,
+    translatedCount: (n) => `${n} Anglice conversae`,
+    workEditionsLink: (n) => `${n} editiones et exemplaria huius operis`,
+    translatedEditionLink: (title, published) => `Editio conversa: ${title}${published ? `, ${published}` : ''}`,
+    findPassages: 'Locos quaere',
+    hidePassages: 'Locos cela',
+    searchingEllipsis: 'Quaeritur...',
+    searchingPages: 'In paginis quaeritur...',
+    noMatchingPassages: 'Nulli loci congruentes in hoc libro inventi.',
+    untitled: '(sine titulo)',
+    imageFromBook: (title) => `ex ${title}`,
+    digitized: 'Photographice descriptus',
+    catalogOnly: 'In catalogo tantum',
+    collectionBooks: (n) => `${n} libri`,
+    illustrationFromCollection: (name) => `Imago ex collectione ${name}`,
+
+    previous: 'Prior',
+    next: 'Sequens',
+    pageXofY: (x, y) => `Pagina ${x} ex ${y}`,
+
+    imagesEnglishNote: 'Imagines Anglice describuntur, itaque quaestio imaginum verbis Anglicis utitur. Imagines tamen quavis lingua percurri possunt.',
+  },
+
+  // Chinese (#7175), simplified script like the rest of the /zh chrome. The
+  // results are books written in Chinese, quoted in their own text.
+  zh: {
+    numberLocale: 'zh-CN',
+
+    searchPlaceholder: '在中文古籍中搜索字词……',
+    searchFailed: '搜索失败，请重试。',
+
+    sortRelevance: '相关度',
+    sortYearNewest: '年份（由新到旧）',
+    sortYearOldest: '年份（由旧到新）',
+    sortTitleAz: '书名排序',
+
+    browseRecentTranslation: '最近翻译',
+    browseRecent: '最近添加',
+    browseOldestFirst: '最早的在前',
+    browseNewestFirst: '最新的在前',
+    browseTitleAsc: '书名（正序）',
+    browseTitleDesc: '书名（倒序）',
+
+    tabAll: '全部',
+    tabBooks: '书籍',
+    tabIndex: '索引',
+    tabImages: '图像',
+
+    indexAllTypes: '全部类型',
+    indexConcepts: '概念',
+    indexPeople: '人物',
+    indexPlaces: '地点',
+    indexQuotes: '引文',
+    indexKeywords: '关键词',
+    indexVocabulary: '词汇',
+
+    filters: '筛选',
+    clear: '清除',
+    clearAll: '全部清除',
+    done: '完成',
+    filterLanguage: '语言',
+    filterSubject: '主题',
+    filterCollection: '专题',
+    filterLibrary: '藏书机构',
+    filterPublishedAfter: '出版晚于',
+    filterPublishedBefore: '出版早于',
+    filterWrittenIn: '成书年代',
+    anyTime: '不限',
+    writtenInNote: (period) => `成书年代：${period}。每张卡片上的年份是该版本的刊印年份。`,
+    browseByCentury: '按世纪浏览',
+    allLanguages: '全部语言',
+    allCategories: '全部主题',
+    allCollections: '全部专题',
+    allLibraries: '全部藏书机构',
+    yearFromPlaceholder: '如 1500',
+    yearToPlaceholder: '如 1700',
+    hasTranslation: '有译文',
+    firstTranslation: '首次翻译',
+    hasDoi: '有 DOI',
+
+    signInHeading: '登录后继续搜索',
+    signInBody: '您暂时已用完免费搜索次数。登录（免费）即可继续浏览一万多部原始文献。',
+    signInCta: '免费登录',
+
+    show: '每页显示',
+    perPage: '条',
+    showingRange: (from, to) => `（显示第 ${from}–${to} 条）`,
+    imagesCount: (n) => `${n} 幅图像`,
+    booksCount: (n) => `${n} 部书`,
+    inCollection: '· 专题',
+    browseFullCatalog: '浏览完整目录',
+    allBooks: '全部书籍',
+    andNMore: (n) => `另有 ${n} 项`,
+
+    noImagesFound: '未找到图像',
+    noImagesBody: '试试搜索某个主题、人物或符号。',
+    somethingWentWrong: '出错了',
+    couldNotLoadLibrary: '暂时无法加载书库。',
+    tryAgain: '重试',
+    noBooksFound: '未找到书籍',
+    adjustFilters: '请尝试调整筛选条件。',
+    noResultsFound: '未找到结果',
+    didYouMean: '您是不是要找',
+    corpusBlurb: '以中文写成的古籍：医学、本草、易学、天文、道教、炼丹等。摘录取自原书文字。',
+    browseAllBooks: '浏览全部书籍',
+
+    kindReadingRoom: '阅览室',
+    kindLibrary: '合作图书馆',
+    kindFeature: '工具',
+    kindCollection: '专题',
+
+    whichName: (surname) => `哪一位${surname}？`,
+    whichNameBody: '书库中有不止一人使用这个名字。',
+    namedInBooks: (n) => `见于 ${n.toLocaleString('zh-CN')} 部书`,
+    whichNameAuthor: '作者页面',
+
+    illustrations: '插图',
+    seeAllImages: '查看全部图像',
+    semanticDegraded: '相关结果暂时无法加载，您看到的结果可能少于实际馆藏。请稍后再试。',
+    weakMatchTitle: (q) => `没有与“${q}”完全匹配的结果`,
+    weakMatchBody: '书库中没有同时包含所有搜索词的内容。以下结果仅部分匹配。',
+    conceptualMatches: '语义相关',
+    textMatches: '文本匹配',
+    seeAllResults: (n) => `查看全部 ${n} 条结果`,
+    passages: '段落',
+    searchingPageContent: '正在搜索页面内容……',
+    catalogMatches: '目录匹配',
+    fromTheSite: '本站内容',
+    sitePageType: (type) => (type === 'blog' ? '文章' : type === 'collection' ? '专题' : type === 'feature' ? '工具' : type === 'author' ? '作者' : '页面'),
+    works: () => '部作品',
+    searchingCatalog: '正在搜索目录……',
+    openAllCatalogueMatches: (n) => `打开全部 ${n} 条目录匹配`,
+    relatedFromAi: 'AI 扩展搜索的相关结果：',
+    relatedInLibrary: '书库中的相关内容',
+
+    foundBooksAndPages: (n, q) => `找到 ${n} 条与“${q}”相关的书籍和页面`,
+    foundIndexEntries: (n, q) => `找到 ${n} 条与“${q}”相关的索引条目`,
+    foundImages: (n, q) => `找到 ${n} 幅与“${q}”相关的图像`,
+
+    askLibrarian: '询问图书馆员',
+    askLibrarianBody: (scope) => `想深入研究？图书馆员会在${scope}中检索、对照各种来源，并整理成可导出的研究笔记。`,
+    askLibrarianScopeResults: (n) => `这 ${n} 条结果`,
+    askLibrarianScopeCollection: '该专题',
+
+    editedByAbbrev: '编',
+    pageAbbrev: (n) => `第 ${n} 页`,
+    pagesCount: (n) => `${n} 页`,
+    translatedCount: (n) => `已译 ${n} 页`,
+    workEditionsLink: (n) => `此作品的 ${n} 个版本与副本`,
+    translatedEditionLink: (title, published) => `译本：${title}${published ? `，${published}` : ''}`,
+    findPassages: '查找段落',
+    hidePassages: '收起段落',
+    searchingEllipsis: '正在搜索……',
+    searchingPages: '正在搜索页面……',
+    noMatchingPassages: '本书中未找到匹配的段落。',
+    untitled: '（无题）',
+    imageFromBook: (title) => `出自 ${title}`,
+    digitized: '已数字化',
+    catalogOnly: '仅有目录',
+    collectionBooks: (n) => `${n} 部书`,
+    illustrationFromCollection: (name) => `${name}中的插图`,
+
+    previous: '上一页',
+    next: '下一页',
+    pageXofY: (x, y) => `第 ${x} 页，共 ${y} 页`,
+
+    imagesEnglishNote: '插图说明以英文编入索引，因此图像搜索使用英文词语。图像本身可以用任何语言浏览。',
+  },
 });
 
 /**
@@ -517,4 +811,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
 export const EXAMPLE_QUERIES: Record<Locale, string[]> = withEnglishFallback({
   en: ['alchemy', ...EXAMPLE_QUERY_PROPER_NOUNS],
   es: ['alquimia', ...EXAMPLE_QUERY_PROPER_NOUNS],
+  // An original-text locale searches books written in its language, so its
+  // examples are words those books print (#7175), not the English list's names.
+  la: ['alchemia', 'lapis philosophorum', 'anima mundi', 'Hermes', 'Paracelsus'],
+  zh: ['陰陽', '五行', '本草', '周易', '丹'],
 });
