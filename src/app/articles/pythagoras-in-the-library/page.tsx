@@ -121,7 +121,7 @@ export default function PythagorasInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          More than ten thousand passages in the library report something Pythagoras said, taught or forbade. On this
+          About twelve thousand passages in the library report something Pythagoras said, taught or forbade. On this
           map each dot is one of them, and passages that say similar things sit close together. The groups are
           drawn by a computer from the wording alone; the names are ours, written after reading each group. Grey
           dots did not fall clearly into any group. Slide the year to watch the stories arrive, hover a dot to read
@@ -197,7 +197,7 @@ export default function PythagorasInTheLibraryPage() {
           book itself names him, not when only a translator’s note or summary does. Index, contents and errata pages
           are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
-          such as “according to Pythagoras”; that is a pattern match, so it misses some and catches some it should
+          such as “according to Pythagoras”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern match, so it misses some and catches some it should
           not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
           on the page.
         </p>

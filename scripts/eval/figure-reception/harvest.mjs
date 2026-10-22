@@ -31,7 +31,10 @@ const stripApparatus = (s) => {
   return s.replace(/<\/?[a-z][a-z-]*[^>]*>/gi, ' ');
 };
 
-const VERBS = 'said|says|saying|sayeth|saith|taught|teaches|teach|held|holds|thought|believed|maintained|affirmed|affirms|declared|declares|asserted|bade|bids|commanded|commands|forbade|forbids|forbidding|enjoined|wrote|writes|written|used to say|would say|answered|replied|called|calls|defined|defines|named|argued|argues|demonstrated|showed|shows|proved|advised|advises|admonish\\w*|precept\\w*|counsel\\w*|prohibited';
+const VERBS = 'said|says|saying|sayeth|saith|taught|teaches|teach|held|holds|thought|believed|maintained|affirmed|affirms|declared|declares|asserted|asserts|bade|bids|commanded|commands|forbade|forbids|forbidding|enjoined|wrote|writes|written|used to say|would say|answered|replied|called|calls|defined|defines|named|argued|argues|demonstrated|showed|shows|proved|advised|advises|admonish\\w*|precept\\w*|counsel\\w*|prohibited|speaks|spoke|spoken|testifies|testified|states|stated|relates|related|tells|told|explains|explained|expresses|expressed|utters|uttered|pronounced|exclaimed|warns|warned|urges|urged|recommends|recommended|prescribes|prescribed';
+// A verb of saying that INTRODUCES a quotation ("speaks thus:", "testifies in these words:") counts however far it
+// stands from the name in the same sentence: Claudianus Mamertus names Philolaus, then a book title, then "speaks thus".
+const INTRO = new RegExp(`\\b(${F.name})\\b[^.;]{0,220}?\\b(${VERBS})\\b[^.;:]{0,40}?(:|["“«])`, 'i');
 const QUOTE = new RegExp(
   `\\b(${F.name})\\b[^.;:]{0,40}?\\b(${VERBS})\\b|(according to|in the words of|saying of|sayings of|precepts? of|symbols? of|maxims? of|doctrine of|teaching of|opinion of|verses of|fragments? of|books? of|treatise of|as) (the )?(divine |great |wise |old |ancient |philosopher |pythagorean )*(${F.name})`,
   'i',
@@ -72,7 +75,7 @@ for (const [b, hs] of byBook) {
       const i = s.toLowerCase().indexOf(F.prefix);
       s = (i > 200 ? '…' : '') + s.slice(Math.max(0, i - 200), i + 220) + '…';
     }
-    passages.push({ p: r.p, s, n: (tr.match(NAME_G) || []).length, q: QUOTE.test(s), type: types.get(r.p) });
+    passages.push({ p: r.p, s, n: (tr.match(NAME_G) || []).length, q: QUOTE.test(s) || INTRO.test(s), type: types.get(r.p) });
   }
   if (!passages.length) continue;
   passages.sort((x, y) => x.p - y.p);

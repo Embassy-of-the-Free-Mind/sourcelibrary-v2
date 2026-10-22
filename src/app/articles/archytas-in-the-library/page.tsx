@@ -134,7 +134,7 @@ export default function ArchytasInTheLibraryPage() {
         <h2 className={h2}>A map of what they said he said</h2>
 
         <p className={p}>
-          About 530 passages in the library pair the name Archytas with something said, taught or written. Each dot is
+          About 650 passages in the library pair the name Archytas with something said, taught or written. Each dot is
           one of them, and passages that say similar things sit close together. The groups are drawn by a computer
           from the wording; the names are ours, written after reading each group. The largest group is the broadest:
           lives, letters and the treatises that circulated under his name.
@@ -196,7 +196,7 @@ export default function ArchytasInTheLibraryPage() {
           “Archyt-” across the public books on 20 October 2026. A page counts only when the book itself names him,
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
-          with a verb of saying or teaching, or with a phrase such as “according to Archytas”; that is a pattern
+          with a verb of saying or teaching, or with a phrase such as “according to Archytas”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern
           match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
           the Latin was read against the page, with its abbreviations expanded.
         </p>
