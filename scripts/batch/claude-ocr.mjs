@@ -11,11 +11,14 @@
  * pages). READ stage only; `cli-ocr.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F)
- *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME]
+ *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME] [--reread]
  *   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *
  * --books-file: book ids, one per line; reads every page of each that has NO OCR yet (a page with text is never
- * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped.
+ * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped
+ * unless --reread is given (page-ids mode only: a re-read is chosen page by page, never a whole book). Each page's meta
+ * then records `reread: true` and the OCR model it was read over (`replaces_model`); `cli-ocr.mjs apply` still holds
+ * a re-read to its guards (human edits, the 40% shared-words floor or a lane gate, the OCR timestamp).
  * --language: the CONTENT language for the prompt's language slot, overriding `books.language` for every book in the
  * run — for a dictionary or grammar catalogued under its front-matter language (Spanish, French…) whose pages are
  * mostly Maya. `books.language` is the edition's language and is not changed (language-fields.md); each page's meta
@@ -136,6 +139,8 @@ async function main() {
   const JOB = arg('job') || 'claude-ocr';
   const LANGUAGE = arg('language');
   if (LANGUAGE) slotLanguage(null, LANGUAGE);   // refuse an unknown override before touching anything
+  const REREAD = process.argv.includes('--reread');
+  if (REREAD && !arg('page-ids-file')) { console.error('--reread needs --page-ids-file: a re-read names its pages'); process.exit(2); }
   if (!OUT || !(arg('books-file') || arg('page-ids-file'))) { console.error('usage: claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F) (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -146,10 +151,10 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
-  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 };
+  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.model': 1 };
   const filter = arg('books-file')
     ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...NO_OCR }
-    : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...NO_OCR };
+    : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...(!REREAD && NO_OCR) };
   const pages = await db.collection('pages').find(filter, { projection: PAGE_FIELDS }).sort({ book_id: 1, page_number: 1 }).toArray();
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { id: 1, language: 1, title: 1 } }).toArray()).map((b) => [b.id, b]));
   const { base, ref } = await liveOcrPrompt(db);   // the auto-detect base, for the log line; each book's slot is filled here
@@ -171,7 +176,7 @@ async function main() {
     const last = calls[calls.length - 1];
     if (last && last[0].book_id === p.book_id && last.length < PER_CALL) last.push(p); else calls.push([p]);
   }
-  console.log(`${pages.length} pages without OCR in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})${LANGUAGE ? `; language slot ${LANGUAGE} (override)` : ''}`);
+  console.log(`${pages.length} pages ${REREAD ? 'to re-read (--reread)' : 'without OCR'} in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})${LANGUAGE ? `; language slot ${LANGUAGE} (override)` : ''}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'claude-ocr-sealed', path.basename(OUT));
   const callLog = path.join(OUT, 'calls.jsonl');
@@ -190,7 +195,7 @@ async function main() {
   };
   const writePage = (p, text, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, chars: text.length, chatter: text ? ocrReadProblem(text) : null }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(REREAD && { reread: true, replaces_model: p.ocr?.model ?? null }), ...meta, chars: text.length, chatter: text ? ocrReadProblem(text) : null }, null, 1));
   };
 
   /** Read a group of pages in one sealed call. Returns 'ok' | 'mismatch' | 'failed'. */
