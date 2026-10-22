@@ -68,17 +68,27 @@ export interface FeaturedItem {
   heroCandidates?: string[];
 }
 
-async function getFeaturedCollections(): Promise<FeaturedItem[]> {
+// A locale homepage features a collection with at least this many books
+// readable in its language, when one exists (#7098).
+const FEATURED_LOCALIZED_MIN = 3;
+
+async function getFeaturedCollections(preferSlugs: string[] = []): Promise<FeaturedItem[]> {
   const db = await getReadDb();
 
   // Pick 1 random collection with enough books for the editorial spread.
   // homepage_exclude opts a collection out of this random rotation without
   // hiding its /collections page — set on sensitive collections (e.g. erotica)
   // that shouldn't front the site.
-  const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, collection_type: { $ne: 'visual_art' }, visible: true, homepage_exclude: { $ne: true } } },
+  const eligible = { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, collection_type: { $ne: 'visual_art' }, visible: true, homepage_exclude: { $ne: true } };
+  const sampleOne = (match: Record<string, unknown>) => db.collection('collections').aggregate([
+    { $match: match },
     { $sample: { size: 1 } },
   ]).toArray();
+  // On a locale homepage, draw from the collections that hold editions in the
+  // page's language first: an /es band of eight English-only books sends every
+  // click to an English page (#7098). Falls back to the whole rotation.
+  let collections = preferSlugs.length > 0 ? await sampleOne({ ...eligible, slug: { $in: preferSlugs } }) : [];
+  if (collections.length === 0) collections = await sampleOne(eligible);
 
   if (collections.length === 0) return [];
 
@@ -960,8 +970,15 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
   const nativeFirst = NATIVE_FIRST_LANGS.has(lang) ? NATIVE_SHELF_LANGUAGE[lang] : undefined;
   const subjectConfig = nativeFirst ? NATIVE_SUBJECT_SHELVES[lang]?.shelves ?? [] : [];
+  // Shared: the grid's "N in <language>" lines, and the featured band's draw.
+  const localizedCountsPromise = lang === 'en'
+    ? Promise.resolve({} as Record<string, number>)
+    : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>);
   const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks] = await Promise.all([
-    nativeFirst ? Promise.resolve([] as FeaturedItem[]) : withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
+    nativeFirst
+      ? Promise.resolve([] as FeaturedItem[])
+      : withTimeout(localizedCountsPromise.then((c) => getFeaturedCollections(
+          Object.keys(c).filter((slug) => c[slug] >= FEATURED_LOCALIZED_MIN))), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(nativeFirst), 20000, [] as CatalogBook[]),
     nativeFirst ? Promise.resolve([] as LikedBook[]) : withTimeout(getMostLiked(), 8000, [] as LikedBook[]),
@@ -970,9 +987,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getCuratedShowcase(lang), 8000, emptyShowcase),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
-    lang === 'en'
-      ? Promise.resolve({} as Record<string, number>)
-      : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
+    localizedCountsPromise,
     NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
