@@ -16,7 +16,7 @@ PRIOR ART: 2026-10-21-whish147-malayalam-palm-leaf-opus.md — same manuscript, 
 
 ## 2026-10-22 · Does reading Whish 147 one text row at a time beat the half-leaf read? (#7119)
 
-**Question.** Claude's Read tool downscales an image to about 1,568 px, so a 2,560 px half-leaf loses about 40% of its resolution before the model sees it, and the rows either side of the string hole do not line up (the false omission in #7109). Cutting each row into its own full-resolution image, split at the hole, removes both problems. Does it make the free read (no edition shown) more accurate?
+**Question.** Claude's Read tool downscales an image to about 1,568 px, so a 2,560 px half-leaf loses about 40% of its resolution before the model sees it, and the model can pair segments from different rows across the string hole (the false omission in #7109; each leaf has two holes, and the rows do line up across them, as checked by eye on 2026-10-22). Cutting each row into its own full-resolution image, split at the hole, removes both problems. Does it make the free read (no edition shown) more accurate?
 
 **Design.**
 - *Leaves.* The 9 left half-leaves of the verse text that the multi-leaf collation run located in GRETIL (pages 4–9: 4b, 5t, 5b, 6t, 6b, 7t, 8t, 8b, 9t; kārikās 1–58).
