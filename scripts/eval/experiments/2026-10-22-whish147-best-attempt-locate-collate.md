@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: [coverage]
+measure: [none]
 languages: [sa]
 scripts: [Mlym]
 canons: [sanskrit]
