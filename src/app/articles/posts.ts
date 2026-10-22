@@ -257,6 +257,22 @@ export const posts: BlogPost[] = [
       'A Venus page of the Dresden Codex: columns of day signs and bar-and-dot numbers beside three painted panels, the top one a seated god on a blue ground.',
   },
   {
+    slug: 'pythagoras-in-the-library',
+    title: 'Pythagoras in the Library',
+    subtitle:
+      'He wrote nothing that survives, and four thousand works in the library name him. Every one, in date order, with the passage and the page.',
+    summary:
+      'Every work in the library that names Pythagoras, from Aristotle and Euclid to the 20th century: beans, silence, the smiths’ hammers, each with its page.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Raphael's study for the School of Athens (public domain), mirrored in the artwork collection.
+    image:
+      'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg',
+    imageAlt:
+      'Raphael’s drawing for the School of Athens: a bearded Pythagoras bent over a book on his knee, students leaning in around him.',
+  },
+  {
     slug: 'preserved-by-enemies',
     title: 'Preserved by Their Enemies',
     subtitle:
