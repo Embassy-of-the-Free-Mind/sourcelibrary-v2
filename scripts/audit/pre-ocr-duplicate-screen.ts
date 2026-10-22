@@ -100,8 +100,20 @@ async function candidates(db: Db, dir: string) {
   console.log(JSON.stringify({ queued: queued.length, with_candidates: withCand, pairs: pairs.length, skipped_page_counts: rows.filter((r) => r.skipped).length, errors: rows.filter((r) => r.error).length }));
 }
 
+/** `year`, else the first plausible imprint year in the free-text `published` (never parseInt the whole string). */
+function imprintYear(x: Document): number | null {
+  if (typeof x.year === 'number' && x.year > 1400 && x.year < 2100) return x.year;
+  const m = String(x.published ?? '').match(/\b(1[4-9]\d\d|20\d\d)\b/);
+  return m ? Number(m[1]) : null;
+}
+
 /** Which of two same-printing copies should wait. Returns the id to hold, or null for a person to decide. */
 function chooseHold(a: Document, b: Document): { hold: Document; kept: Document; why: string } | null {
+  // Same sheets under two dates is a reissue or a page-for-page reprint, not a second copy: the 2026-10-22
+  // by-eye sample found both of its false holds here (Melanchthon 1546/1544, Oracula magica 1599/1607,
+  // medians 42-43). A person decides those.
+  const ya = imprintYear(a), yb = imprintYear(b);
+  if (ya != null && yb != null && ya !== yb) return null;
   const read = (x: Document) => (x.pages_ocr || 0) >= 0.8 * (x.pages_count || 1);
   const entering = (x: Document) => ENTERING_OCR.includes(x.pipeline_auto?.status) && !read(x);
   for (const [q, c] of [[a, b], [b, a]] as const) {
