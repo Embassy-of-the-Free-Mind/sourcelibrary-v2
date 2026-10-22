@@ -11,7 +11,9 @@ import PageFigure from '@/components/articles/PageFigure';
 // quoted in their printed English; Greek, Latin and Arabic books in the library's translation. The
 // Wallace governor sentence (1858) and the cosmology are cited from outside the library; the Wallace
 // sentence was checked against the transcription linked below. Wallace's Contributions (1870) and Darwin's
-// Descent of Man are imported but still hidden, so they are not linked.
+// Descent of Man are imported but still hidden, so they are not linked. The Guoyu and Han shu passages
+// (Siku quanshu edition, all four volumes still hidden, so quoted without links) were transcribed from the
+// page images and translated for this essay on 2026-10-22; leaves and page ids are on issue #7037.
 
 const SLUG = 'concords-not-unisons';
 const TITLE = 'Concords, Not Unisons';
@@ -97,6 +99,19 @@ function Quote({ href, cite, children }: { href: string; cite: React.ReactNode; 
   );
 }
 
+// A quotation from a book that is not yet public: the original and an English version, cited without a link.
+function Cited({ original, cite, children }: { original: string; cite: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <blockquote className="border-l-2 border-accent-gold/60 pl-6 my-8">
+      <p className="text-secondary leading-relaxed font-body mb-3" lang="zh-Hant">
+        {original}
+      </p>
+      <div className="text-secondary leading-relaxed italic font-body">{children}</div>
+      <p className="text-xs text-muted mt-2 not-italic">{cite}</p>
+    </blockquote>
+  );
+}
+
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
@@ -115,7 +130,7 @@ export default function ConcordsNotUnisonsPage() {
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">22 October 2026 &middot; 15 min read</p>
+          <p className="text-stone-400 text-sm mt-4">22 October 2026 &middot; 18 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -272,7 +287,124 @@ export default function ConcordsNotUnisonsPage() {
         </p>
 
         <p className={p}>
-          Fifteen centuries later, at the courts of Rayy and Isfahan, the philosopher Miskawayh (d. 1030) set Aristotle&apos;s
+          Yan Ying was not the first to draw the line. The <em>Guoyu</em>, the &ldquo;Discourses of the
+          States&rdquo;, puts it two and a half centuries earlier in the mouth of Shi Bo, the historian, advising
+          Duke Huan of Zheng as the Western Zhou fell apart. The king, he says, has turned from the able and kept
+          the dull close to him:
+        </p>
+
+        <Cited
+          original="去和而取同。夫和實生物，同則不繼。以它平它謂之和，故能豐長而物生之；若以同裨同，盡乃棄矣。……於是乎先王聘后於異姓，求財於有方，擇臣取諫工而講以多物，務和同也。聲一無聽，物一無文，味一無果，物一不講。"
+          cite={<><em>Guoyu</em>, &ldquo;Zheng yu&rdquo; (juan 16), Siku quanshu edition</>}
+        >
+          He has put away harmony and taken sameness. Harmony truly begets things; sameness does not carry on. To
+          set one thing against another and bring them level is called harmony, and so things flourish and grow
+          and creatures come to them. Add the same to the same and, when it is used up, it is thrown away. &hellip;
+          So the former kings took their queens from other clans, sought wealth from every region, and chose
+          ministers who would remonstrate and weigh many matters, working to bring the like into harmony. One sound alone
+          is nothing to listen to; one thing alone has no pattern; one flavour alone is no feast; one thing alone
+          cannot be weighed against anything.
+        </Cited>
+
+        <p className={p}>
+          &ldquo;Sought wealth from every region&rdquo; sits in the same list as marriage outside the clan and
+          ministers who argue back. Shi Bo&apos;s harmony already includes trade: a state that draws only on itself
+          is water flavoured with water.
+        </p>
+
+        <h2 className={h2}>Coins, bells and the pitch pipe</h2>
+
+        <p className={p}>
+          The same book records the Chinese case for just proportion in money, at the court of the Zhou in 524 BC,
+          two years before Yan Ying&apos;s soup. King Jing planned to cast large coins. Lord Mu of Shan objected
+          that the light and the heavy coin should be valued against each other, the &ldquo;mother&rdquo; against
+          the &ldquo;child&rdquo;, and that neither should be abolished:
+        </p>
+
+        <Cited
+          original="景王二十一年，將鑄大錢。單穆公曰：不可。古者天災降戾，於是乎量資幣，權輕重，以振救民。民患輕，則為之作重幣以行之，於是乎有母權子而行，民皆得焉。若不堪重，則多作輕而行之，亦不廢重，於是乎有子權母而行，小大利之。今王廢輕而作重，民失其資，能無匱乎？若匱，王用將有所乏，乏則將厚取于民。"
+          cite={<><em>Guoyu</em>, &ldquo;Zhou yu&rdquo; III (juan 3), Siku quanshu edition</>}
+        >
+          In his twenty-first year King Jing was about to cast large coins. Lord Mu of Shan said: &ldquo;It may not
+          be done. In ancient times, when heaven sent down disaster, the kings measured goods and coin and weighed
+          the light against the heavy to relieve the people. If the people suffered because the coin was light, a
+          heavy coin was made for them and put into circulation; then the mother was weighed against the child and
+          both circulated, and the people all got what they needed. If they could not bear the heavy coin, more
+          light coin was made and circulated, without abolishing the heavy; then the child was weighed against the
+          mother and both circulated, and small and great profited alike. Now Your Majesty abolishes the light and
+          makes the heavy. The people will lose their means: how can they not be in want? And if they are in want,
+          Your Majesty&apos;s own revenue will fall short, and when it falls short you will take heavily from the
+          people.&rdquo;
+        </Cited>
+
+        <p className={p}>
+          The king did not listen and cast the large coins. Two years later he wanted a great bell, and Lord Mu objected again, this time
+          from the ear. A bell, he argues, is the source of the kingdom&apos;s measures, so a bell too large to
+          hear properly corrupts them:
+        </p>
+
+        <Cited
+          original="耳之察和也，在清濁之間；其察清濁也，不過一人之所勝。是故先王之制鍾也，大不出鈞，重不過石。律度量衡於是乎生，小大器用於是乎出，故聖人慎之。今王作鍾也，聽之弗及，比之不度，鍾聲不可以知和，制度不可以出節，無益於樂而鮮民財，將焉用之？"
+          cite={<><em>Guoyu</em>, &ldquo;Zhou yu&rdquo; III (juan 3), Siku quanshu edition</>}
+        >
+          The ear discerns harmony between the clear and the turbid, the high and the low, and its discernment of
+          clear and turbid goes no further than one man can bear. So when the former kings made bells, the size
+          did not exceed a <em>jun</em> nor the weight a <em>shi</em>. The pitch pipes and the measures of length,
+          capacity and weight arose from this, and vessels of every size came out of it; and so the sages were
+          careful with it. Now Your Majesty is making a bell the ear cannot take in and that does not agree with
+          the measures. A bell whose sound cannot be known as harmony, a standard that cannot give out the
+          measures, adds nothing to music and drains the people&apos;s wealth. What use is it?
+        </Cited>
+
+        <p className={p}>
+          Money, music and measure are one system in this speech. The heavy and light coins are kept in proportion
+          the way notes are, and the bell is not an ornament: it is the standard from which the state&apos;s
+          lengths and weights descend. Six centuries later the <em>Han shu</em>, the history of the Former Han by
+          Ban Gu, made the descent exact. Its treatise on the pitch pipes derives all three kinds of measure from
+          the pipe that sounds the fundamental note, the <em>huangzhong</em> or &ldquo;yellow bell&rdquo;:
+        </p>
+
+        <Cited
+          original="度者，分、寸、尺、丈、引也，所以度長短也。本起黃鐘之長。……量者，龠、合、升、斗、斛也，所以量多少也。本起於黃鐘之龠，用度數審其容。……權者，銖、兩、斤、鈞、石也，所以稱物平施，知輕重也。本起於黃鐘之重。"
+          cite={<>Ban Gu, <em>Han shu</em> 21A, &ldquo;Treatise on the Pitch Pipes and the Calendar&rdquo;, Siku quanshu edition</>}
+        >
+          Length is the <em>fen</em>, <em>cun</em>, <em>chi</em>, <em>zhang</em> and <em>yin</em>, by which long
+          and short are measured. It originates in the length of the yellow bell. &hellip; Capacity is the{' '}
+          <em>yue</em>, <em>ge</em>, <em>sheng</em>, <em>dou</em> and <em>hu</em>, by which much and little are
+          measured. It originates in the <em>yue</em> of the yellow bell, its volume fixed by the measures of
+          length. &hellip; Weight is the <em>zhu</em>, <em>liang</em>, <em>jin</em>, <em>jun</em> and{' '}
+          <em>shi</em>, by which things are weighed so that they are distributed evenly and light and heavy are
+          known. It originates in the weight of the yellow bell.
+        </Cited>
+
+        <p className={p}>
+          The method is concrete. Ninety grains of black millet of middling size, laid side by side, give the
+          length of the pipe; twelve hundred of the same grains fill it, levelled off with well water; and those
+          twelve hundred grains weigh twelve <em>zhu</em>. A ruler, a grain measure and a balance in any market
+          could in principle be checked against one note. The same history opens its treatise on the economy, the
+          &ldquo;Treatise on Food and Money&rdquo; (<em>Han shu</em> 24A), with a definition that names the
+          purpose:
+        </p>
+
+        <Cited
+          original="洪範八政，一曰食，二曰貨。食謂農殖嘉穀可食之物，貨謂布帛可衣，及金刀龜貝，所以分財布利通有無者也。二者，生民之本。"
+          cite={<>Ban Gu, <em>Han shu</em> 24A, &ldquo;Treatise on Food and Money&rdquo;, Siku quanshu edition</>}
+        >
+          Of the eight concerns of government in the &ldquo;Great Plan&rdquo;, the first is food and the second is
+          goods. Food is the good grain that farmers grow, the things that can be eaten. Goods are cloth and silk
+          that can be worn, and metal, knife money, tortoise shell and cowries, by which wealth is shared out,
+          profit spread, and what one has is exchanged for what one lacks. These two are the root of the
+          people&apos;s life.
+        </Cited>
+
+        <p className={p}>
+          A few lines on, the market at noon draws in the people and the goods of the whole realm, and they
+          &ldquo;exchange and go home, each having got what he came for&rdquo;. The measure that made such an
+          exchange fair was, in this tradition, a pitch.
+        </p>
+
+        <p className={p}>
+          Fifteen centuries after Yan Ying, at the courts of Rayy and Isfahan, the philosopher Miskawayh (d. 1030) set Aristotle&apos;s
           account of money into an Arabic book on character, the <em>Tahdh&#299;b al-akhl&#257;q</em>. His example is
           close to Aristotle&apos;s, two craftsmen exchanging their work, and his conclusion goes further:
         </p>
