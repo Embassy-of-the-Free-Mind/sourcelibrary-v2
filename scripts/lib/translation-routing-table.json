@@ -1,0 +1,29 @@
+{
+  "_doc": "PRIOR ART: scripts/lib/ocr-routing-table.json (the OCR side, by page kind, #6688; its `route` fields are read by ocr-routing.mjs since #7170). Before #7170 the translation policy lived only as two regexes in scripts/lib/translate-core.mjs and their TS twin in src/lib/types/ai-models.ts. This file is that policy, READ by both routers (getTranslateModelForBook): the first row whose `match` fits the book gives the engine, else `default`. A `language_prefix` matches the FIRST language label, case-insensitively, as a whole word, with any run of spaces for a space (\"greek\" matches \"Greek, Latin\" and not \"Latin; Greek\"). The routers can run only the two Batch models (gemini-3.1-flash-lite, gemini-3-flash-preview); a row naming any other engine fails the test. Changes are proposed by scripts/eval/estimator/routing/derive_routes.py and land as a reviewed edit of this file with the evidence that justifies them. tests/unit/translate-core-parity.test.ts pins the two routers to each other and to this file.",
+  "as_of": "2026-10-22",
+  "issue": 7170,
+  "default": {
+    "engine": "gemini-3.1-flash-lite",
+    "why": "#4759: translation reads text, not images; the only A/B on record (#467) favoured lite and the observational read of the lite era found no faithfulness gap."
+  },
+  "rows": [
+    {
+      "id": "bph",
+      "match": { "provider": "bph" },
+      "engine": "gemini-3-flash-preview",
+      "evidence": [{ "issue": 1726, "n": "BPH manuscripts and prints, policy", "date": "2026-05-12" }]
+    },
+    {
+      "id": "tibetan",
+      "match": { "language_prefix": ["tibetan"] },
+      "engine": "gemini-3-flash-preview",
+      "evidence": [{ "issue": 4742, "n": "21 Kanjur pages judged blind against the 84000 English", "date": "2026-09-25" }]
+    },
+    {
+      "id": "flash-measured",
+      "match": { "language_prefix": ["greek", "ancient greek", "hebrew", "heb", "aramaic", "arabic", "persian", "sanskrit", "pali", "chinese", "classical chinese"] },
+      "engine": "gemini-3-flash-preview",
+      "evidence": [{ "issue": 5695, "n": "191 pages judged against published human translations (Greek 75, Hebrew/Aramaic/Arabic/Persian 52, Sanskrit/Pali/Chinese 64)", "date": "2026-10-03" }]
+    }
+  ]
+}
