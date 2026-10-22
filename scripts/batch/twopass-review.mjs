@@ -5,7 +5,7 @@
 // script's recipe, unchanged: Opus, 5 leaves per call, page image + OCR + draft, the same instruction.
 /**
  * Second pass of a two-pass translation (#6865): Opus reviews a draft read made by `cli-translate.mjs read` (Gemini
- * through agy) against the page IMAGE and the OCR, and writes a read directory that `cli-translate.mjs apply` writes
+ * through agy) or `claude-translate.mjs read` (Opus, when the agy quota is out) against the page IMAGE and the OCR, and writes a read directory that `cli-translate.mjs apply` writes
  * like any other. Writes NOTHING to the database.
  *
  *   node --env-file=.env.production.local scripts/batch/twopass-review.mjs --page-ids-file=F --draft=DIR --out=DIR
@@ -165,7 +165,7 @@ async function review(group, attempt) {
       prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage,
       chars: text.length, draft_chars: g.d.text.length, chatter: cliChatterReason(text),
       passes: [
-        { pass: 'draft', cli: `${dm.cli} ${dm.cli_version}`, model: dm.model, read_site: 'scripts/batch/cli-translate.mjs', started_at: dm.started_at, finished_at: dm.finished_at, prompt_sent_hash: dm.prompt_sent_hash, prompt_sent_chars: dm.prompt_sent_chars, instruction: dm.instruction ?? null },
+        { pass: 'draft', cli: `${dm.cli} ${dm.cli_version}`, model: dm.model, read_site: dm.read_site || 'scripts/batch/cli-translate.mjs', ...(dm.call_id && { call_id: dm.call_id }), started_at: dm.started_at, finished_at: dm.finished_at, prompt_sent_hash: dm.prompt_sent_hash, prompt_sent_chars: dm.prompt_sent_chars, instruction: dm.instruction ?? null },
         { pass: 'review', cli: `claude ${version}`, model: r.model || MODEL, read_site: READ_SITE, prompt_variant: PROMPT_VARIANT, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_hash: sentHash, image_url: g.image_url, kept_from_draft: ['summary', 'keywords'] },
       ],
     }, null, 1));
