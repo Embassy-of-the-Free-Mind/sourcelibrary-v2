@@ -33,6 +33,13 @@ const CARDS: Card[] = [
     figures: `${fmt(summary.consciousness.readable)} of ${fmt(summary.consciousness.works)} works readable now · ${fmt(summary.consciousness.absent)} not held · checked ${day(summary.consciousness.generated)}`,
   },
   {
+    href: '/explore/maps/harmony',
+    lead: 'A Map of', word: 'Harmony',
+    kind: 'Timeline map',
+    blurb: 'What people across traditions took harmony and resonance to be: ratio and consonance, unlike things joined in one whole, balance, concord, and strings that answer each other, from the Ṛgveda and Yanzi’s soup to Kepler, Zhu Zaiyu and Helmholtz. Most works open with a reader’s notes and passages checked against the page.',
+    figures: `${fmt(summary.harmony.readable)} of ${fmt(summary.harmony.works)} works readable now · ${fmt(summary.harmony.absent)} not held · checked ${day(summary.harmony.generated)}`,
+  },
+  {
     href: '/explore/maps/ritual',
     lead: 'A Map of', word: 'Ritual',
     kind: 'Survey',

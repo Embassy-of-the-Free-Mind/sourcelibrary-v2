@@ -24,7 +24,7 @@ export default function ThemeMap({ theme }: { theme: MapTheme }) {
       .then(async (data: ThemeData) => {
         const [lensData, l2Data] = await Promise.all([lens, l2]);
         if (!alive || !root.current) return;
-        dispose = mountTimeline(root.current, data, { figLabels: theme.figLabels, adjacentLabel: theme.adjacentLabel }, lensData, l2Data);
+        dispose = mountTimeline(root.current, data, { figLabels: theme.figLabels, adjacentLabel: theme.adjacentLabel, l2Topic: theme.l2Topic }, lensData, l2Data);
         setReady(true);
       })
       .catch((e) => setErr(String(e)));

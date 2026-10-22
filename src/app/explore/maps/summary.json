@@ -12,5 +12,12 @@
   "readable": 466,
   "absent": 103,
   "editions": 2712
+ },
+ "harmony": {
+  "generated": "2026-10-22",
+  "works": 199,
+  "readable": 164,
+  "absent": 19,
+  "editions": 1387
  }
 }

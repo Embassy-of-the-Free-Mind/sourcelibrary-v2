@@ -18,14 +18,20 @@ export type ThemeData = { works: Work[]; anth?: unknown[] };
 export type LensRow = [number, 'v' | 'e' | 'b', string, string, string | null];
 export type LensConcept = { c: string; s: string; tr: string; gen: boolean; ab: number; works: Record<string, LensRow> };
 export type LensData = { generated: string; theme: string; concepts: LensConcept[] };
-/** Level 2 (public/data/<theme>-l2.json, scripts/consciousness-l2): per work, what it holds about the mind (a), its key
- *  terms from the page-terms index (k: term, gloss, book, page), and 2–3 passages quoted word for word (q). */
-export type L2Work = { a: string; k: { t: string; g: string; b: string; p: number }[]; q: { b: string; p: number; t: string }[] };
+/** Level 2 (public/data/<theme>-l2.json, atlas scripts/map-l2): per work, what it holds about the theme (a, written by a
+ *  model), its key terms from the page-terms index (k: term, gloss, book, page), and passages quoted word for word (q;
+ *  v = checked against the page by a reader, c = a counter-text). src 'kb': a reader studied the work, and kb carries those
+ *  notes condensed (t title, th thesis, h what they held, tr does the word translate, an who answered, nh not held). */
+export type L2Work = {
+  a: string; src?: 'kb' | 'ai'; k: { t: string; g: string; b: string; p: number }[]; q: { b: string; p: number; t: string; v?: 1; c?: 1 }[];
+  kb?: { t: string; th: string; h: string[]; tr: string[]; an: string[]; nh: string[] };
+};
 export type L2Data = { generated: string; note: string; eds: Record<string, string>; works: Record<string, L2Work> };
 
 export type TimelineConfig = {
   figLabels: [string, string, string, string];
   adjacentLabel?: string;
+  l2Topic?: string;
 };
 
 export const REGIONS: [string, string[]][] = [
@@ -45,6 +51,11 @@ const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&
 /** The artifacts carry absolute sourcelibrary.org URLs; on this site they stay on the reader's host. */
 const sameHost = (url: string) => url.replace(/^https:\/\/sourcelibrary\.org(?=\/)/, '');
 const bookIdOf = (url: string) => url.match(/\/book\/([0-9a-f]{24})/)?.[1] ?? null;
+/** The reader's notes carry a little markdown: [label](url), **bold**, *italic*. Escaped first; only same-host and https
+ *  links survive, and library links stay on the reader's host. */
+const mdInline = (s: string) => esc(s)
+  .replace(/\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]*)\)/g, (_, label: string, u: string) => `<a href="${sameHost(u)}"${u.startsWith('/') ? '' : ' rel="noopener"'} target="_blank">${label}</a>`)
+  .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConfig, lensData?: LensData | null, l2?: L2Data | null): () => void {
   const W = D.works;
@@ -133,11 +144,16 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     return `<div class="ideas"><b>Ideas on its pages</b><span class="sub">${ideas.length} concept${ideas.length === 1 ? '' : 's'} a translator flagged on a held edition; common words in grey</span><ul>${li}</ul></div>`;
   }
   const pageUrl = (b: string, p: number) => `/book/${b}?page=${p}`;
+  function kbBlock(x: L2Work) {
+    const k = x.kb; if (!k) return '';
+    const list = (head: string, items: string[], tag = 'ul') => items.length ? `<div class="kbsec"><b>${head}</b><${tag}>${items.map((i) => `<li>${mdInline(i)}</li>`).join('')}</${tag}></div>` : '';
+    return `<div class="kb"><p class="kbby">A reader’s notes on ${esc(k.t)}</p>${k.th ? `<p class="about">${mdInline(k.th)}</p>` : ''}${list('What they held', k.h, 'ol')}${list('Does the word translate?', k.tr)}${list('Who answered them', k.an)}${list('Not in the library', k.nh)}</div>`;
+  }
   function l2Block(w: Work) {
-    const x = l2?.works[wkey(w)]; if (!x || (!x.a && !x.q.length && !x.k.length)) return '';
+    const x = l2?.works[wkey(w)]; if (!x || (!x.a && !x.q.length && !x.k.length && !x.kb)) return '';
     const terms = x.k.length ? `<div class="l2terms"><b>Key terms</b><ul>${x.k.map((k) => `<li><a href="${pageUrl(k.b, k.p)}" target="_blank" rel="noopener" class="term">${esc(k.t)}</a> <span>${esc(k.g)}</span></li>`).join('')}</ul></div>` : '';
-    const qs = x.q.length ? `<div class="l2q"><b>Where to start reading</b>${x.q.map((q) => `<blockquote><p>${esc(q.t)}</p><a href="${pageUrl(q.b, q.p)}" target="_blank" rel="noopener">${esc(l2!.eds[q.b] || 'Read the page')}, p. ${q.p}</a></blockquote>`).join('')}</div>` : '';
-    return `<div class="l2">${x.a ? `<p class="about">${esc(x.a)}</p>` : ''}${terms}${qs}<p class="l2note">${esc(l2!.note)}</p></div>`;
+    const qs = x.q.length ? `<div class="l2q"><b>Where to start reading</b>${x.q.map((q) => `<blockquote class="${q.c ? 'counter' : ''}"><p>${esc(q.t)}</p><a href="${pageUrl(q.b, q.p)}" target="_blank" rel="noopener">${esc(l2!.eds[q.b] || 'Read the page')}, p. ${q.p}</a>${q.v ? '<span class="qtag">checked by a reader</span>' : ''}${q.c ? '<span class="qtag ct">counter-text</span>' : ''}</blockquote>`).join('')}</div>` : '';
+    return `<div class="l2">${x.a ? `<p class="about">${esc(x.a)}</p>${x.src === 'ai' ? '<p class="l2note">Summary written by a language model from the pages below.</p>' : ''}` : ''}${kbBlock(x)}${terms}${qs}<p class="l2note">${esc(l2!.note)}</p></div>`;
   }
   function edsBlock(w: Work) {
     if (!w.eds.length) return ''; const eds = [...w.eds].sort((a, b) => (+b.rd - +a.rd) || (+b.v - +a.v)); const N = 6;
@@ -170,7 +186,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
         block += `<div class="trad"><h3>${esc(t)} <small>${cr} readable · ${ch} held · ${ca} not held</small></h3>`;
         ws.forEach(([w, i]) => {
           shown++; const st = stat(w); const eds = w.eds; const showN = 6; const rest = eds.length - showN;
-          block += `<div class="work${w.adj ? ' adj' : ''}" id="w${i}"><div class="date">${esc(w.dl && w.dl.length < 28 ? w.dl : fmtY(w.d))}</div><div><div class="name"><a href="#w${i}" data-i="${i}" class="wl">${esc(w.n)}</a><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held' : 'Not held'}</span>${w.adj ? '<span class="adjtag">adjacent</span>' : ''}</div>${w.gl ? `<p class="gloss">${esc(w.gl)}</p>` : ''}${l2?.works[wkey(w)]?.q.length ? `<button class="more l2more" data-i="${i}">What it says about the mind, with ${l2.works[wkey(w)].q.length} passage${l2.works[wkey(w)].q.length === 1 ? '' : 's'}</button>` : ''}
+          block += `<div class="work${w.adj ? ' adj' : ''}" id="w${i}"><div class="date">${esc(w.dl && w.dl.length < 28 ? w.dl : fmtY(w.d))}</div><div><div class="name"><a href="#w${i}" data-i="${i}" class="wl">${esc(w.n)}</a><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held' : 'Not held'}</span>${w.adj ? '<span class="adjtag">adjacent</span>' : ''}</div>${w.gl ? `<p class="gloss">${esc(w.gl)}</p>` : ''}${l2?.works[wkey(w)]?.q.length ? `<button class="more l2more" data-i="${i}">What it says about ${esc(cfg.l2Topic || 'the mind')}, with ${l2.works[wkey(w)].q.length} passage${l2.works[wkey(w)].q.length === 1 ? '' : 's'}</button>` : ''}
             ${eds.length ? `<ul class="eds">${eds.slice(0, showN).map(edRow).join('')}${rest > 0 ? `<li><span></span><button class="more" data-i="${i}">and ${rest} more edition${rest === 1 ? '' : 's'}</button></li>` : ''}</ul>` : ''}
             ${st !== 'readable' && w.gap ? `<div class="gap"><b>${st === 'absent' ? 'Source:' : 'Also:'}</b> ${esc(w.gap)}</div>` : ''}</div></div>`;
         });
