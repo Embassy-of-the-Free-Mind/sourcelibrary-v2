@@ -213,6 +213,21 @@ export const posts: BlogPost[] = [
       'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
   },
   {
+    slug: 'concords-not-unisons',
+    title: 'Concords, Not Unisons',
+    subtitle:
+      'Harmony as the fitting together of unlike things: a Greek armourer, a Chinese minister’s soup, Miskawayh’s silent dinar, Hume’s strings and Smith’s concords, Spinoza’s refusal of the music of the spheres, Wallace’s governor, and the sound waves of the early universe.',
+    summary:
+      'Harmony as the fitting of unlike things: Xenophon’s armourer, Yan Ying’s soup, Miskawayh’s silent dinar, Hume, Smith’s concords, Spinoza, Wallace.',
+    date: '22 October 2026',
+    readTime: '15 min read',
+    kind: 'stories',
+    // A Palace Concert, anonymous, Tang style, National Palace Museum, Taipei (public domain, via Commons).
+    image: 'https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg',
+    imageAlt:
+      'Chinese painting on silk: court women around a long table drink and play a lute, pipes and a flute while one keeps time with clappers.',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
