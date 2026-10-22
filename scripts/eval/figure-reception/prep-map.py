@@ -22,7 +22,7 @@ pts = [p for p in json.load(open(os.path.join(W, 'map-points.json')))['points'] 
 # Date each passage by when it was written, not by the edition (dating.py); map-points.json keeps the edition year.
 types = page_types(json.load(open(os.path.join(W, 'hits.json'))))
 for p in pts:
-    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])), p['s'])
+    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])), p['s'], p['p'])
 names = {int(k): v for k, v in T['names'].items()}
 theme_family = {c: f['key'] for f in T['families'] for c in f['themes']}
 found = {p['c'] for p in pts if p['c'] >= 0}

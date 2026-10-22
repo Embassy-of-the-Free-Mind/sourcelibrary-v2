@@ -5,7 +5,8 @@
 # dedication pages keep the edition's year: in a modern edition of an old text those pages are the editor's. So does
 # a passage that reads like the editor's note (EDITORIAL: a modern scholar named, or apparatus wording), since
 # editions print their notes on the same pages as the text, and a passage that names the book's own author
-# (Jowett's introductions in a Plato, an editor's "compare Plato" in a Phaedo).
+# (Jowett's introductions in a Plato, an editor's "compare Plato" in a Phaedo). In an edition printed after 1800 the
+# first tenth of the book is taken to be the editor's introduction (D'Ooge's Nicomachus, 1926).
 import json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -16,9 +17,11 @@ EDITORIAL = re.compile(r'\b(Boeckh|Böckh|Diels|Zeller|Stallbaum|Mullach|Bekker|
                        r'^\W*\d+[,.] ?\d+\b|before Christ|\bB\. ?C\.|\bcentur(y|ies)\b|\b(cf|edd?|sc|viz)\.|variant|omitted in|see fragment|\bfragment \d+|\bfr\. ?\d+|\(\d+\) see\b', re.I)
 
 
-def written_year(book_id, edition_year, page_type=None, text=None):
+def written_year(book_id, edition_year, page_type=None, text=None, page=None):
     w = _W.get(book_id)
     if w is None or page_type in EDITOR_PAGES:
+        return edition_year
+    if page is not None and len(w) > 4 and w[3] and w[3] >= 1800 and w[4] and page <= 0.1 * w[4]:
         return edition_year
     if text and (EDITORIAL.search(text) or (len(w) > 2 and w[2] and re.search(r'\b' + re.escape(w[2]) + r'\b', text))):
         return edition_year

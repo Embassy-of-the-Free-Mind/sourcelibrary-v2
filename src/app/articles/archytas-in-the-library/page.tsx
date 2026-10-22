@@ -167,7 +167,7 @@ export default function ArchytasInTheLibraryPage() {
         <p className={p}>
           The map and the tree show what was said about Archytas again and again. This list is the other end: the
           things said about him that no other book in the library says in similar words, at most three from any one
-          book. A German manuscript of the moralised game of chess, copied in 1407, tells of “a master named
+          author. A German manuscript of the moralised game of chess, copied in 1407, tells of “a master named
           Archyloga” (Archytas, it seems) who said gold and silver should be valued no more than the clay that
           cheese-moulds are made of. The preacher Meffret, in sermons
           printed in 1488, warns against too much sleep with a line from “Archytas of Tarentum in his book On Events
@@ -197,7 +197,7 @@ export default function ArchytasInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Archytas”; that is a pattern
-          match, so it misses some and catches some it should not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
+          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
           the Latin was read against the page, with its abbreviations expanded.
         </p>
       </article>

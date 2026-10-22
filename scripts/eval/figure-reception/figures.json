@@ -5,7 +5,16 @@
     "name": "pythagoras|pythagoreans?",
     "out": "public/articles/pythagoras-in-the-library",
     "minCluster": 45,
-    "minSamples": 10
+    "minSamples": 10,
+    "rare": {
+      "skipText": "rhegi|statue of|sculpt|\\bnero\\b",
+      "notes": [
+        {
+          "match": "further original|originalschriften|illuminatenorden",
+          "note": "In the papers of the Bavarian Illuminati members wrote under classical code names; this Pythagoras is one of them, not the philosopher."
+        }
+      ]
+    }
   },
   "philolaus": {
     "prefix": "philola",

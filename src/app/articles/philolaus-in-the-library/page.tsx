@@ -176,7 +176,7 @@ export default function PhilolausInTheLibraryPage() {
         <p className={p}>
           The map and the tree show what was said about Philolaus again and again. This list is the other end: the
           things said about him that no other book in the library says in similar words, at most three from any one
-          book. Some are stray facts, such as Franchino Gaffurio’s remark, in his <em>Theory of Music</em>, that after
+          author. Some are stray facts, such as Franchino Gaffurio’s remark, in his <em>Theory of Music</em>, that after
           the comma “Philolaus himself measured even smaller particles.” Some are attributions others doubted: Juan
           Luis Vives, in his notes to Augustine’s <em>City of God</em>, mentions the Golden Verses of Pythagoras,
           “which others hand down as being by Philolaus the Pythagorean.” And some are not about the ancient man at all: in 1639
@@ -204,7 +204,7 @@ export default function PhilolausInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Philolaus”; that is a pattern
-          match, so it misses some and catches some it should not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Copernicus quotation is the library’s
+          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Copernicus quotation is the library’s
           translation, with the Greek as the library transcribed it from the page.
         </p>
       </article>

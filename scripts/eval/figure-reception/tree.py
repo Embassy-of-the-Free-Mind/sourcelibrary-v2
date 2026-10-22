@@ -40,7 +40,7 @@ HITS = json.load(open(os.path.join(W, 'hits.json')))
 work = {b['id']: (b.get('w') or b['id']) for b in HITS}
 types = page_types(HITS)
 for p in pts:  # by when it was written, not the edition (dating.py), as in map.json
-    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])), p['s'])
+    p['yr'] = written_year(p['id'], p['yr'], types.get((p['id'], p['p'])), p['s'], p['p'])
 W_OF = [work.get(p['id'], p['id']) for p in pts]
 
 
@@ -84,7 +84,7 @@ for s in T.get('stories', []):
             if p['p'] <= 0 or p.get('type') in SKIP or len(txt) < 40 or k in seen or not rx.search(txt):
                 continue
             seen.add(k)
-            sp.append({'yr': written_year(b['id'], b.get('y'), p.get('type'), txt), 'id': b['id'], 'p': p['p'], 's': txt[:300], 't': (b.get('t') or '')[:90], 'w': b.get('w') or b['id']})
+            sp.append({'yr': written_year(b['id'], b.get('y'), p.get('type'), txt, p['p']), 'id': b['id'], 'p': p['p'], 's': txt[:300], 't': (b.get('t') or '')[:90], 'w': b.get('w') or b['id']})
     SE = np.concatenate([embed([x['s'] for x in sp[i:i + 128]]) for i in range(0, len(sp), 128)])
     nodes = tree(range(len(sp)), pts=sp, E=SE, W_OF=[x['w'] for x in sp])
     stories.append({'key': s['key'], 'name': s['name'], 'theme': None, 'rows': [[0, 0, -1, x['yr'], x['id'], x['p'], x['s'][:240], x['t'][:70]] for x in sp], 'nodes': nodes})

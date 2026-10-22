@@ -7,8 +7,9 @@
 # out-of-the-mainstream material sits — a legend told once, a spurious fragment, a book that borrowed his name.
 # Spurious and legendary claims are kept on purpose; the list says what a book claims, not whether it is true.
 #
-# Rarity of a passage = its highest cosine similarity (nomic-embed-text, local ollama, free) to any passage in a
-# DIFFERENT work (work_id), so reprints and editions of one work do not vouch for each other. A passage is listed
+# Rarity of a passage = its highest cosine similarity (nomic-embed-text, local ollama, free) to any passage by a
+# DIFFERENT author (author_id, else work_id), so reprints, editions and translations of one author do not vouch
+# for each other. A passage is listed
 # when that is below RARE (0.84, set by reading the Philolaus list on 2026-10-22: above it the closest passage
 # elsewhere makes the same claim; below it, it rarely does) and it is a claim about him: a reported saying (q), or
 # his name near a verb of attributing (CLAIM); at most three from any one work. Dropped first: index and apparatus lines (citation numbers), the
@@ -49,6 +50,13 @@ skip_x = re.compile(R.get('skipText', '^$'), re.I)
 aside = [tuple(re.compile(a.get(k, d), re.I) for k, d in (('titles', ''), ('unless', '^$'), ('text', ''))) for a in F.get('setAside', [])]
 notes = [(re.compile(n['match'], re.I), n['note']) for n in R.get('notes', [])]  # match: the title, or the passage
 
+# Rarity is judged against other AUTHORS, not just other works: two translations of one Vitruvius sentence are
+# catalogued as different works but are not two witnesses.
+AUTHOR = {}
+for l in open(os.path.expanduser('~/sl-corpus/catalog.jsonl')):
+    d = json.loads(l)
+    if d.get('author_id'):
+        AUTHOR[d['id']] = d['author_id']
 rows, seen = [], set()
 for b in json.load(open(os.path.join(W, 'hits.json'))):
     if not b.get('v') or not b.get('pc') or skip_t.search(b.get('t') or ''):
@@ -58,7 +66,7 @@ for b in json.load(open(os.path.join(W, 'hits.json'))):
             continue
         s = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', p['s'])).strip(' …')
         m = NAME.search(s)
-        if len(s) < 60 or not m or not m.group(0)[0].isupper() or APPARATUS.search(s) or len(re.findall(r'\d+', s)) >= 8:
+        if len(s) < 60 or not m or not m.group(0)[0].isupper() or APPARATUS.search(s) or len(re.findall(r'\d+', s)) >= 8 or s.count(' / ') >= 4 or s.count('[') >= 6:  # the last two: a garbled page
             continue
         if skip_x.search(s) or any(t.search(b.get('t') or '') and x.search(s) and not u.search(s) for t, u, x in aside):
             continue
@@ -67,8 +75,8 @@ for b in json.load(open(os.path.join(W, 'hits.json'))):
             continue
         seen.add(k)
         note = next((i for i, (x, _) in enumerate(notes) if x.search(b.get('t') or '') or x.search(s)), -1)
-        rows.append({'id': b['id'], 'p': p['p'], 's': s[:400], 'y': written_year(b['id'], b.get('y'), p.get('type'), s),
-                     't': b.get('t') or '', 'w': b.get('w') or b['id'], 'q': 1 if p['q'] else 0, 'claim': bool(p['q'] or CLAIM.search(s)), 'note': note})
+        rows.append({'id': b['id'], 'p': p['p'], 's': s[:400], 'y': written_year(b['id'], b.get('y'), p.get('type'), s, p['p']),
+                     't': b.get('t') or '', 'w': b.get('w') or b['id'], 'a': AUTHOR.get(b['id']) or b.get('w') or b['id'], 'q': 1 if p['q'] else 0, 'claim': bool(p['q'] or CLAIM.search(s)), 'note': note})
 print('passages', len(rows), file=sys.stderr)
 
 
@@ -93,7 +101,7 @@ if todo:
     json.dump(keys, open(kfile, 'w'))
 
 # Nearest passage in another work, in blocks so the largest figure (~50K passages) fits in memory.
-wid = np.array([hash(r['w']) for r in rows])
+wid = np.array([hash(r['a']) for r in rows])
 best = np.zeros(len(rows), np.float32)
 close = np.zeros(len(rows), np.int32)
 for i in range(0, len(rows), 2048):
@@ -104,12 +112,13 @@ for i in range(0, len(rows), 2048):
     for j in range(S.shape[0]):
         close[i + j] = len(set(wid[S[j] >= CLOSE]))
 
-# At most PER_WORK from any one work, the rarest first, so one long commentary cannot fill the list.
+# At most PER_WORK from any one author, the rarest first, so one long commentary cannot fill the list,
 PER_WORK = 3
 pick, per = [], {}
 for i in sorted((i for i, r in enumerate(rows) if r['claim'] and best[i] < RARE), key=lambda i: best[i]):
-    if per.get(rows[i]['w'], 0) < PER_WORK:
-        per[rows[i]['w']] = per.get(rows[i]['w'], 0) + 1
+    # and one telling of each claim: another edition or translation of the same sentence is skipped
+    if per.get(rows[i]['a'], 0) < PER_WORK and not any(E[i] @ E[j] >= CLOSE for j in pick):
+        per[rows[i]['a']] = per.get(rows[i]['a'], 0) + 1
         pick.append(i)
 pick.sort(key=lambda i: (rows[i]['y'] is None, rows[i]['y'] or 0, rows[i]['id'], rows[i]['p']))
 items = [[rows[i]['y'], rows[i]['id'], rows[i]['p'], rows[i]['s'][:320], rows[i]['t'][:80], rows[i]['q'], int(close[i]), rows[i]['note']] for i in pick]

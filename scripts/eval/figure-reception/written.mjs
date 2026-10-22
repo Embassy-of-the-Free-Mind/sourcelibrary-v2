@@ -17,7 +17,7 @@
 // holds hand corrections, each with its reason: author_id pointing at the subject rather than the writer (a study
 // of Philolaus filed under Philolaus), or a wrong Wikidata match.
 //
-// Output: { "<book id>": [writtenYear, "<author slug>", "<author's name, one word>"] } for books whose year changes; absent = edition year.
+// Output: { "<book id>": [writtenYear, "<author slug>", "<author's name, one word>", editionYear, pages] } for books whose year changes; absent = edition year.
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
@@ -67,7 +67,7 @@ for (const [id, d] of cat) {
   if (y == null) continue;
   // The author's own name, for dating.py: an author rarely names himself, so a passage that names him is an editor's.
   const self = (a?.canonical_name || '').split(/[\s,]+/).find((w) => w.length >= 4 && !/^(saint|pseudo|the|of)$/i.test(w)) || '';
-  out[id] = [y, d.author_id, self];
+  out[id] = [y, d.author_id, self, d.year, d.pages_count || 0];
   review.push([d.year - y, y, d.year, a?.canonical_name ?? d.author_id, d.author, d.display_title || d.title, id]);
 }
 fs.writeFileSync(path.join(HERE, 'written.json'), JSON.stringify(out, null, 0).replace(/\],"/g, '],\n"') + '\n');

@@ -8,6 +8,7 @@ import FigureIndex from '@/components/articles/figure-reception/FigureIndex';
 import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
+import RareClaims from '@/components/articles/figure-reception/RareClaims';
 
 // The list below the essay is every public work whose English translation contains "Pythagor*",
 // built from the local corpus mirror on 2026-10-20 (full-text index over translations, 71,946 matching
@@ -161,6 +162,23 @@ export default function PythagorasInTheLibraryPage() {
 
         <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['hammers', 't16', 't32', 't33']} />
 
+        <h2 className={h2}>Told once</h2>
+
+        <p className={p}>
+          The map and the tree show what was said about Pythagoras again and again. This list is the other end: the
+          things said about him that no other book in the library says in similar words, at most three from any one
+          author. The alchemists made him one of their masters: a Viennese guide of 1751 notes that in the{' '}
+          <em>Turba</em> “Pythagoras himself everywhere and always called our dewy subject a spittle of the moon.”
+          The fortune-tellers sold him: an 1889 handbook of cartomancy names a chapbook of “Pythagoras’s Wheel of
+          Fortune.” And in the papers of the Bavarian Illuminati, printed in 1787, “Pythagoras” is a member’s code
+          name, sending in an essay on how he means to stop spending too much. The list keeps the spurious, the
+          garbled and the borrowed names with the rest, with a note where a passage is not what it seems, because
+          this is where to look for what the usual story leaves out. A gold rule marks a passage that reports
+          something he said.
+        </p>
+
+        <RareClaims dataUrl={`${DATA}/rare.json`} />
+
         <h2 className={h2}>Every book that names him</h2>
 
         <p className={p}>
@@ -180,7 +198,7 @@ export default function PythagorasInTheLibraryPage() {
           are left out, and editions of the same work are grouped. A passage is marked as
           reporting his words when it pairs his name with a verb of saying, teaching or forbidding, or with a phrase
           such as “according to Pythagoras”; that is a pattern match, so it misses some and catches some it should
-          not. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
+          not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The passages are the library’s translations; the Macrobius quotation is checked against the Latin
           on the page.
         </p>
       </article>
