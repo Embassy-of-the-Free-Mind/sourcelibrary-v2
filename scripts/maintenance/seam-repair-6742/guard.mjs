@@ -135,53 +135,55 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
     if (!mode || !page?.id || !bookId) return { ...tally, skipped: 'off' };
     // the caller's book object may lack language or the hold (translate-worker's does): read the two fields fresh
     const b = book?.id && 'language' in book && 'pipeline_auto' in book ? book : await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, id: 1, language: 1, pipeline_auto: 1 } });
-    if (!b || b.pipeline_auto?.hold) return { ...tally, skipped: 'book-held-or-missing' };
-    const pn = Number(page.page_number ?? (await db.collection('pages').findOne({ id: page.id }, { projection: { page_number: 1 } }))?.page_number);
-    const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: pn - 2, $lte: pn + 2 } }, { projection: PROJ }).toArray();
-    const all = joinsToCheck(rows, pn, asOf).map(([ra, rb, r0, r1]) => joinItem(b, ra, rb, r0, r1)).filter(Boolean);
-    const items = all.filter(it => !CHECKED.has(checkedKey(it)));
-    tally.joins = items.length;
-    if (items.length < all.length) tally.alreadyChecked = all.length - items.length;
-    const accepted = [];
-    const cap = Number(env.SEAM_GUARD_CLAUDE_DAILY || CLAUDE_DAILY), maxWeekly = Number(env.SEAM_GUARD_MAX_WEEKLY || CLAUDE_MAX_WEEKLY);
-    let agyShut = !agyOpenFn(GEMINI) ? 'agy-locked' : null;
-    for (const it of items) {
-      // Gemini while agy is open; the join a lock or a quota reply leaves goes to Sonnet, inside the cap and the meter.
-      let arm = 'gemini', res = null;
-      if (!agyShut) {
-        res = await geminiFn([it], GEMINI);
-        tally.calls += res.r.calls || 1;
-        if (res.r.cls === 'quota') { agyShut = 'agy-quota'; res = null; }
+    if (!b || b.pipeline_auto?.hold) tally.skipped = 'book-held-or-missing';   // recorded below, as a write seen
+    else {
+      const pn = Number(page.page_number ?? (await db.collection('pages').findOne({ id: page.id }, { projection: { page_number: 1 } }))?.page_number);
+      const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: pn - 2, $lte: pn + 2 } }, { projection: PROJ }).toArray();
+      const all = joinsToCheck(rows, pn, asOf).map(([ra, rb, r0, r1]) => joinItem(b, ra, rb, r0, r1)).filter(Boolean);
+      const items = all.filter(it => !CHECKED.has(checkedKey(it)));
+      tally.joins = items.length;
+      if (items.length < all.length) tally.alreadyChecked = all.length - items.length;
+      const accepted = [];
+      const cap = Number(env.SEAM_GUARD_CLAUDE_DAILY || CLAUDE_DAILY), maxWeekly = Number(env.SEAM_GUARD_MAX_WEEKLY || CLAUDE_MAX_WEEKLY);
+      let agyShut = !agyOpenFn(GEMINI) ? 'agy-locked' : null;
+      for (const it of items) {
+        // Gemini while agy is open; the join a lock or a quota reply leaves goes to Sonnet, inside the cap and the meter.
+        let arm = 'gemini', res = null;
+        if (!agyShut) {
+          res = await geminiFn([it], GEMINI);
+          tally.calls += res.r.calls || 1;
+          if (res.r.cls === 'quota') { agyShut = 'agy-quota'; res = null; }
+        }
+        if (!res) {
+          const gate = claudeGate({ count: claudeCountToday(out), cap, usage: usageFn(), maxWeekly });
+          if (gate) { tally.skipped = `${agyShut}+${gate}`; append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: tally.skipped }); break; }
+          arm = 'sonnet'; bumpClaude(out);
+          res = await sonnetFn(it);
+          tally.claudeCalls = (tally.claudeCalls || 0) + 1;
+        }
+        const { byId, r } = res;
+        CHECKED.add(checkedKey(it)); if (CHECKED.size > 5000) CHECKED.delete(CHECKED.values().next().value);
+        const model = arm === 'gemini' ? GEMINI : CLAUDE_MODEL.sonnet;
+        const j = byId.get(it.id), x = j && LABELS.includes(j.label) ? j : null;
+        const why = !x ? `reply-not-parsed${r.cls ? `:${r.cls}` : ''}` : x.label === 'ok' ? null : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
+        if (x?.label === 'ok') tally.labelledOk++;
+        else if (why) tally.refused[why] = (tally.refused[why] || 0) + 1;
+        else accepted.push({ id: it.id, it, x: { ...x, model }, arm, fixed: applyRepair(it, x.repair), verdict: { sampled: false, guard: true } });
+        (tally.arms ||= {})[arm] = (tally.arms[arm] || 0) + 1;
+        const row = { at: new Date().toISOString(), mode, arm, trigger: page.id, book: b.id, join: it.id, p: it.p, label: x?.label ?? null, labels: x?.labels ?? null, severity: x?.severity ?? null,
+          refused: x?.label === 'ok' ? null : why, accepted: !why && x?.label !== 'ok', repair: x?.repair ?? null, secs: Math.round(r.secs || 0), cls: r.cls || null, ...(arm === 'sonnet' ? { usage: usageOf(r) } : {}) };
+        append(log, row);
+        if (x && x.label !== 'ok') append(path.join(out, 'proposals.jsonl'), { ...row, it, x: { ...x, model } });
       }
-      if (!res) {
-        const gate = claudeGate({ count: claudeCountToday(out), cap, usage: usageFn(), maxWeekly });
-        if (gate) { tally.skipped = `${agyShut}+${gate}`; append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: tally.skipped }); break; }
-        arm = 'sonnet'; bumpClaude(out);
-        res = await sonnetFn(it);
-        tally.claudeCalls = (tally.claudeCalls || 0) + 1;
+      tally.accepted = accepted.length;
+      // One write per arm, so each repair carries its own repairer's provenance.
+      for (const arm of [...new Set(accepted.map(a => a.arm))]) {
+        const rows = accepted.filter(a => a.arm === arm), claude = arm !== 'gemini', model = claude ? CLAUDE_MODEL[arm] : GEMINI;
+        const w = await writeRepairs(db, rows, { out, doApply: mode === 'apply', cli: claude ? 'claude' : 'agy', model, allowHidden: true, throwOnStop: true, callSite: `${TAG}:write-guard`,
+          promptName: `seam-repair-6742 write-time guard: label+minimal edge repair (opus-reference PROMPT, tight windows, ${arm})`, sentHash: sha(`guard:${model}`),
+          accepted: 'placement-checked at write time (edgeRefusal + lostWords); no per-join Opus check' });
+        tally.write = tally.write ? { ...tally.write, written: tally.write.written + w.written, pagesWritten: tally.write.pagesWritten + w.pagesWritten, refused: { ...tally.write.refused, ...w.refused } } : w;
       }
-      const { byId, r } = res;
-      CHECKED.add(checkedKey(it)); if (CHECKED.size > 5000) CHECKED.delete(CHECKED.values().next().value);
-      const model = arm === 'gemini' ? GEMINI : CLAUDE_MODEL.sonnet;
-      const j = byId.get(it.id), x = j && LABELS.includes(j.label) ? j : null;
-      const why = !x ? `reply-not-parsed${r.cls ? `:${r.cls}` : ''}` : x.label === 'ok' ? null : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
-      if (x?.label === 'ok') tally.labelledOk++;
-      else if (why) tally.refused[why] = (tally.refused[why] || 0) + 1;
-      else accepted.push({ id: it.id, it, x: { ...x, model }, arm, fixed: applyRepair(it, x.repair), verdict: { sampled: false, guard: true } });
-      (tally.arms ||= {})[arm] = (tally.arms[arm] || 0) + 1;
-      const row = { at: new Date().toISOString(), mode, arm, trigger: page.id, book: b.id, join: it.id, p: it.p, label: x?.label ?? null, labels: x?.labels ?? null, severity: x?.severity ?? null,
-        refused: x?.label === 'ok' ? null : why, accepted: !why && x?.label !== 'ok', repair: x?.repair ?? null, secs: Math.round(r.secs || 0), cls: r.cls || null, ...(arm === 'sonnet' ? { usage: usageOf(r) } : {}) };
-      append(log, row);
-      if (x && x.label !== 'ok') append(path.join(out, 'proposals.jsonl'), { ...row, it, x: { ...x, model } });
-    }
-    tally.accepted = accepted.length;
-    // One write per arm, so each repair carries its own repairer's provenance.
-    for (const arm of [...new Set(accepted.map(a => a.arm))]) {
-      const rows = accepted.filter(a => a.arm === arm), claude = arm !== 'gemini', model = claude ? CLAUDE_MODEL[arm] : GEMINI;
-      const w = await writeRepairs(db, rows, { out, doApply: mode === 'apply', cli: claude ? 'claude' : 'agy', model, allowHidden: true, throwOnStop: true, callSite: `${TAG}:write-guard`,
-        promptName: `seam-repair-6742 write-time guard: label+minimal edge repair (opus-reference PROMPT, tight windows, ${arm})`, sentHash: sha(`guard:${model}`),
-        accepted: 'placement-checked at write time (edgeRefusal + lostWords); no per-join Opus check' });
-      tally.write = tally.write ? { ...tally.write, written: tally.write.written + w.written, pagesWritten: tally.write.pagesWritten + w.pagesWritten, refused: { ...tally.write.refused, ...w.refused } } : w;
     }
   } catch (e) {
     tally.error = String(e?.message || e).slice(0, 300);

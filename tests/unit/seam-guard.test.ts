@@ -29,16 +29,17 @@ describe('guardMode / runSeamGuard', () => {
   afterEach(() => { if (saved === undefined) delete process.env.SEAM_GUARD; else process.env.SEAM_GUARD = saved; });
 
   it('is off unless SEAM_GUARD is dry or apply', () => {
-    expect(guardMode({})).toBeNull();
-    expect(guardMode({ SEAM_GUARD: '1' })).toBeNull();
-    expect(guardMode({ SEAM_GUARD: 'true' })).toBeNull();
-    expect(guardMode({ SEAM_GUARD: 'dry' })).toBe('dry');
-    expect(guardMode({ SEAM_GUARD: 'apply' })).toBe('apply');
+    const none = '/nonexistent/seam-guard';   // not the box file: a box running the guard has one
+    expect(guardMode({}, none)).toBeNull();
+    expect(guardMode({ SEAM_GUARD: '1' }, none)).toBeNull();
+    expect(guardMode({ SEAM_GUARD: 'true' }, none)).toBeNull();
+    expect(guardMode({ SEAM_GUARD: 'dry' }, none)).toBe('dry');
+    expect(guardMode({ SEAM_GUARD: 'apply' }, none)).toBe('apply');
   });
 
   it('does nothing when off, and never for its own writes', async () => {
     const db = { collection: () => { throw new Error('the guard must not touch the database'); } };
-    delete process.env.SEAM_GUARD;
+    process.env.SEAM_GUARD = 'off';   // off whatever the box file says
     expect(await runSeamGuard(db, { page: page(5), note: 'retranslate_stale' })).toBeNull();
     process.env.SEAM_GUARD = 'apply';
     expect(await runSeamGuard(db, { page: page(5), note: 'seam-repair-6742' })).toBeNull();
@@ -161,6 +162,15 @@ describe('the Sonnet fallback (#7118)', () => {
     expect(t.error).toBeUndefined();
     expect(t.skipped).toBe('agy-locked+claude-daily-cap:0');
     expect(t.claudeCalls).toBeUndefined();
+  });
+
+  it('records a held book as a write seen, and checks nothing', async () => {
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-held-'));
+    const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: { hold: { reason: 'x' } } }) } : { find: () => { throw new Error('no page read for a held book'); } } };
+    const t = await seamGuardAfterWrite(d, { page: pg(5), mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn: gemini, geminiFn: gemini, agyOpenFn: () => false });
+    expect(t.skipped).toBe('book-held-or-missing');
+    expect(t.error).toBeUndefined();
+    expect(guardReport({ out }).writeSkips).toEqual({ 'book-held-or-missing': 1 });
   });
 
   it('falls to Sonnet when agy answers with a quota reply mid-check', async () => {
