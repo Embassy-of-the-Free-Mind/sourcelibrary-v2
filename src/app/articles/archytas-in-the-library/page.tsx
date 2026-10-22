@@ -9,6 +9,7 @@ import FigureMap from '@/components/articles/figure-reception/FigureMap';
 import ThemeRiver from '@/components/articles/figure-reception/ThemeRiver';
 import StoryTree from '@/components/articles/figure-reception/StoryTree';
 import RareClaims from '@/components/articles/figure-reception/RareClaims';
+import { DielsThemes, OutsideDiels } from '@/components/articles/figure-reception/Diels';
 
 // The third of the figure-reception pages (#7073), built with scripts/eval/figure-reception/ from the local
 // corpus mirror on 2026-10-20: every public work whose English translation contains "Archyt*", with the
@@ -46,6 +47,8 @@ const BOOK = {
   horace: '/book/horatii-flacci-opera-horace',
   pythagoras: '/articles/pythagoras-in-the-library',
   philolaus: '/articles/philolaus-in-the-library',
+  diels: '/book/die-fragmente-der-vorsokratiker-diels',
+  cessolis: '/book/de-morbius-et-officys-vivendi-manuscript-between-1450-and-jacobus',
 };
 
 const DATA = '/articles/archytas-in-the-library';
@@ -160,16 +163,65 @@ export default function ArchytasInTheLibraryPage() {
           back.
         </p>
 
-        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} featured={['t8', 't1', 't0', 't2']} />
+        <StoryTree mapUrl={`${DATA}/map.json`} treeUrl={`${DATA}/tree.json`} dielsUrl={`${DATA}/diels.json`} featured={['t8', 't1', 't0', 't2']} />
+
+        <h2 className={h2}>What Diels collected, and what he left out</h2>
+
+        <p className={p}>
+          Scholars cite Archytas by the numbers Hermann Diels gave his sources in{' '}
+          <Link href={`${BOOK.diels}?page=343`}><em>Die Fragmente der Vorsokratiker</em></Link>. In the third edition
+          (1912), which the library holds, he is chapter 35 (chapter 47 in the later Diels–Kranz). Part A gathers what
+          ancient writers said about him; part B the fragments Diels took to be his, beginning with the opening of
+          his <em>Harmonics</em>, and after them a short list of the writings he judged doubtful or forged.
+        </p>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6a3f0220661123baf6fe9d4e/0351.jpg"
+            alt="A page of Diels’s Fragmente der Vorsokratiker: the last testimonies on Archytas, then the heading B. Echte Fragmente and the first fragment of his Harmonics in Greek, with Diels’s German translation below."
+            href={`${BOOK.diels}?page=351`}
+            source={<>Hermann Diels, <em>Die Fragmente der Vorsokratiker</em>, 3rd ed. (Berlin, 1912), vol. 1, p. 330: “B. Genuine fragments”</>}
+          />
+        </div>
+
+        <p className={p}>
+          On this page a small grey label, such as “Diels 35 A 10a”, marks a passage that retells a Diels entry; it
+          opens that entry in the scan. The labels come from comparing the sense of each passage with each entry. We
+          checked samples by reading them, and about nine in ten were right. A passage without a label may still be in
+          Diels.
+        </p>
+
+        <p className={p}>
+          The stories everyone knows are in Diels: the angry steward, the dove, the rescue of Plato, the doubling of
+          the cube. What is not is most of the philosophy written under his name. Of the treatises he judged forged,
+          Diels printed only the titles, and the theme of the books under his name is three-quarters outside his
+          chapter. So is the cure
+          for quartan fever.
+        </p>
+
+        <DielsThemes mapUrl={`${DATA}/map.json`} dielsUrl={`${DATA}/diels.json`} />
+
+        <p className={p + ' mt-10'}>
+          These are the claims that two or more authors repeat and that Diels’s chapter does not contain. Claude read
+          each candidate against the full text of the chapter and kept those that retell no entry. Most come from the
+          Pythagorean treatises that circulated as his and that Simplicius quotes in his commentary on Aristotle’s
+          Categories: time as the interval of the nature of the whole, the ten categories before Aristotle, the reason quality admits more and less. Some
+          are sayings that only later collections give him, such as the fish without bones in Aelian. One is a remedy:
+          the heart of a live animal hung over a patient with quartan fever.
+        </p>
+
+        <OutsideDiels dielsUrl={`${DATA}/diels.json`} mapUrl={`${DATA}/map.json`} />
 
         <h2 className={h2}>Told once</h2>
 
         <p className={p}>
           The map and the tree show what was said about Archytas again and again. This list is the other end: the
           things said about him that no other book in the library says in similar words, at most three from any one
-          author. A German manuscript of the moralised game of chess, copied in 1407, tells of “a master named
-          Archyloga” (Archytas, it seems) who said gold and silver should be valued no more than the clay that
-          cheese-moulds are made of. The preacher Meffret, in sermons
+          author. Some are not what they seem. A German manuscript of the moralised game of chess, copied in 1407,
+          tells of “a master named Archyloga” who said gold and silver should be valued no more than the clay that
+          cheese-moulds are made of, and the library’s translation calls him Archytas. But in the{' '}
+          <Link href={`${BOOK.cessolis}?page=35`}>Latin of Cessolis</Link> it comes from, “Archaglada” dines off
+          earthenware because he is king of Sicily and his father was a potter: he is Agathocles. The preacher Meffret, in sermons
           printed in 1488, warns against too much sleep with a line from “Archytas of Tarentum in his book On Events
           in Nature”: “Everything that in the order of the universe is excessive and abundant quickly comes to
           corruption and to nothing.” No book of that name survives among the writings ascribed to him. Lambert Daneau’s
@@ -179,7 +231,7 @@ export default function ArchytasInTheLibraryPage() {
           rule marks a passage that reports something he said.
         </p>
 
-        <RareClaims dataUrl={`${DATA}/rare.json`} />
+        <RareClaims dataUrl={`${DATA}/rare.json`} dielsUrl={`${DATA}/diels.json`} />
 
         <h2 className={h2}>Every book that names him</h2>
 
@@ -188,7 +240,7 @@ export default function ArchytasInTheLibraryPage() {
           Archytas said or taught; those passages have a gold rule. Every page number opens the scan.
         </p>
 
-        <FigureIndex dataUrl={`${DATA}/passages.json`} namePrefix="Archyt"
+        <FigureIndex dataUrl={`${DATA}/passages.json`} dielsUrl={`${DATA}/diels.json`} namePrefix="Archyt"
           placeholder="Filter: dove, Plato, Horace, angry, cube, Tarentum…" />
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
@@ -197,7 +249,7 @@ export default function ArchytasInTheLibraryPage() {
           not when only a translator’s note or summary does. Index, contents and errata pages are left out, and
           editions of the same work are grouped. A passage is marked as reporting his words when it pairs his name
           with a verb of saying or teaching, or with a phrase such as “according to Archytas”, or with a verb that introduces a quotation of him (“speaks thus:”); passages found that way after the map was drawn are placed beside their nearest neighbours on it; that is a pattern
-          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
+          match, so it misses some and catches some it should not. The “Told once” list compares every passage that names him, by the sense of its words, with every passage by other authors, and keeps the claims with nothing close; soft-hidden duplicate pages are left out everywhere. The Diels labels compare each passage that reports or attributes something to him with each numbered entry of his chapter in the 1912 edition, by the sense of the words; a passage that closely retells a labelled one takes its label; the thresholds were set by reading samples, and the few wrong labels found are corrected by hand. Four pages of that edition have no transcription yet (pp. 31–32 and 317, 319); their entries were read from the scans. The one-line summaries in “Outside Diels” are Claude’s, and an editor’s note printed inside an old text is dated by its edition when it names a writer who lived long after the text’s author. A work is dated by when it was written. An ancient or medieval text read in a later edition takes its author’s death year, shown as “by”, with the edition’s year under it; its preface and appendices keep the edition’s year, since they are the editor’s. Pseudonymous texts and compilations of several authors keep the edition’s year. The Gellius quotation is the library’s translation;
           the Latin was read against the page, with its abbreviations expanded.
         </p>
       </article>

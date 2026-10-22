@@ -7,11 +7,13 @@
 
 import { useMemo, useState } from 'react';
 import { fmtYear, useFigureJson, type RareData } from './data';
+import { DielsTag, useDiels } from './Diels';
 
 const FIRST = 20;
 
-export default function RareClaims({ dataUrl }: { dataUrl: string }) {
+export default function RareClaims({ dataUrl, dielsUrl }: { dataUrl: string; dielsUrl?: string }) {
   const { data, failed } = useFigureJson<RareData>(dataUrl);
+  const diels = useDiels(dielsUrl);
   const [q, setQ] = useState('');
   const [all, setAll] = useState(false);
 
@@ -39,6 +41,7 @@ export default function RareClaims({ dataUrl }: { dataUrl: string }) {
               <a href={`/book/${it[1]}?page=${it[2]}`} className="break-words font-mono text-xs text-muted hover:text-primary">
                 {it[4].slice(0, 60)}, p.&nbsp;{it[2]}&nbsp;&rarr;
               </a>
+              <DielsTag data={diels} id={it[1]} page={it[2]} text={it[3]} />
               {it[7] >= 0 && <p className="mt-1 text-xs italic text-muted">{data.notes[it[7]]}</p>}
             </div>
           </li>
