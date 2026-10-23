@@ -137,7 +137,7 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 ## 2026-10-22 · Does reading Whish 147 one text row at a time beat the half-leaf read? (#7119)
 
-**Question.** Claude's Read tool downscales an image to about 1,568 px, so a 2,560 px half-leaf loses about 40% of its resolution before the model sees it, and the rows either side of the string hole do not line up (the false omission in #7109). Cutting each row into its own full-resolution image, split at the hole, removes both problems. Does it make the free read (no edition shown) more accurate?
+**Question.** Claude's Read tool downscales an image to about 1,568 px, so a 2,560 px half-leaf loses about 40% of its resolution before the model sees it, and the model can pair segments from different rows across the string hole (the false omission in #7109; each leaf has two holes, and the rows do line up across them, as checked by eye on 2026-10-22). Cutting each row into its own full-resolution image, split at the hole, removes both problems. Does it make the free read (no edition shown) more accurate?
 
 **Design.**
 - *Leaves.* The 9 left half-leaves of the verse text that the multi-leaf collation run located in GRETIL (pages 4–9: 4b, 5t, 5b, 6t, 6b, 7t, 8t, 8b, 9t; kārikās 1–58).
@@ -1139,7 +1139,7 @@ None applies to reads at chance. Two cheap probes on the same half-leaf (t03):
 - No substantive unplanted difference was raised by both models. The two flags they shared (SK_5 *vacanan tu*, SK_27 *manas*) are spelling habits.
 - *Single-model flags, checked by eye afterwards* (Opus 5.5 reading full-resolution crops of page 9, upper leaf; evidence type: image opened). Fable's two strongest unplanted flags, one right and one wrong:
   - SK_52, **real variant.** The leaf reads ‹…ṅgaṃ na vinā bhāvena liṃga-…› where GRETIL has *na vinā liṅgena bhāva-nirvṛttiḥ*: the two members are transposed. *bhāvena* is clear; *liṅga-* is probable.
-  - SK_55, **false.** Fable reported the second half of the verse as omitted. It is on the leaf: the segment right of the string hole on the next row reads ‹-tram duḥkhaṃ prāpnoti ceta…›, and the row after reads ‹(tasmā)d duḥkhaṃ svabhāvena›. Fable joined the left half of one row to the right half of the row below. The text on each side of the string hole does not line up row for row.
+  - SK_55, **false.** Fable reported the second half of the verse as omitted. It is on the leaf: the segment right of the string hole on the next row reads ‹-tram duḥkhaṃ prāpnoti ceta…›, and the row after reads ‹(tasmā)d duḥkhaṃ svabhāvena›. Fable joined the left segment of one row to the middle segment of the row below. *Corrected 2026-10-22, by eye on page 5:* each leaf has two string holes, and every physical row reads straight across both (lower leaf of page 5, row 3: *pravṛttiniyamā | rthāḥ anyonyābhibhavāśraya | jananamithunavṛttayaś ca*, SK 12). The rows do line up; the error was the model pairing segments from different rows. A half-leaf crop contains one of the two holes.
   - So a single-model uncertain flag is worth opening, and opening it is needed: one of the two was a manuscript reading, the other a reading-order error. The same misalignment may explain some of the plants missed on this leaf (9t: Opus caught 1 of 4, Fable 0).
 - **Caveats.**
   - The same Opus model placed the plants (its locate pass), which may favour Opus.
