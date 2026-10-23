@@ -36,6 +36,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { makeRng } from '../lib/paired-stats.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const STAGE = process.argv[2];
@@ -192,7 +193,7 @@ function score() {
     }
     const mean = diffs.reduce((a, b) => a + b, 0) / (diffs.length || 1);
     // Bootstrap 95% interval of the paired mean, seeded.
-    let seed = 7075; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+    const rnd = makeRng(7075);
     const boots = Array.from({ length: 4000 }, () => { let s = 0; for (let i = 0; i < diffs.length; i++) s += diffs[Math.floor(rnd() * diffs.length)]; return s / diffs.length; }).sort((a, b) => a - b);
     report.judges[who] = { n: diffs.length, controls_passed: `${controls.filter(Boolean).length}/${controls.length}`, wins, mean_new_minus_old: +mean.toFixed(2), ci95: [+boots[100].toFixed(2), +boots[3899].toFixed(2)], pages: per };
   }
