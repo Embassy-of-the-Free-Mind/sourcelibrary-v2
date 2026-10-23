@@ -2570,10 +2570,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
   // for (#6254). An English edition opens the same way: its transcription is
-  // the English (#4958), so the English pane starts off (#5154). Everywhere
-  // else all three panes start on.
+  // the English (#4958), so the English pane starts off (#5154). On a
+  // translated book in another language the reader came for the English
+  // beside the scan, so the transcription starts off and is one switch away
+  // ("By default we shouldn't show the ocr", Derek 2026-10-23, #7189). It
+  // stays on where it IS the reading text: an English book, or a book with
+  // nothing translated yet.
+  const ocrByDefault = readsOriginal(siteLocale)
+    || isEnglishBookFn(initialBook.language)
+    || !(initialPage.translation?.data || (initialBook.pages_translated ?? 0) > 0);
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, {
-    scan: true, ocr: true, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
+    scan: true, ocr: ocrByDefault, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
   });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
@@ -2825,9 +2832,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
    * time. Turning a page from inside a pane now keeps you in that pane.
    */
   const mobileAnchor = useRef<string | null>(null);
-  // A swipe is "carry on reading" and keeps your pane. Every other way of
-  // changing page — the pager, the filmstrip, Contents, a typed page number —
-  // is a deliberate move, and lands at the top of the reader.
+  // A swipe is "carry on reading" and keeps your pane, and so does the
+  // Previous / Next pager at the foot of the column: it is what you reach for
+  // when you finish the English, and "if you next page, it keeps you on the
+  // mode that you were on — English to top of English" (Derek, 2026-10-03,
+  // #7189). Every other way of changing page — the filmstrip, Contents, a
+  // typed page number — is a deliberate move, and lands at the top.
   const keepPaneOnTurn = useRef(false);
   // Which way the last turn went, so the new page can arrive from that side.
   // Taken from the index rather than from the swipe, so the pager, the
@@ -4476,7 +4486,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           >
             <button
               type="button"
-              onClick={r.goPrev}
+              onClick={() => { keepPaneOnTurn.current = true; r.goPrev(); }}
               disabled={!prevPage}
               aria-label={t.toolbar.previousPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
@@ -4491,7 +4501,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             )}
             <button
               type="button"
-              onClick={r.goNext}
+              onClick={() => { keepPaneOnTurn.current = true; r.goNext(); }}
               disabled={!nextPage}
               aria-label={t.toolbar.nextPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
