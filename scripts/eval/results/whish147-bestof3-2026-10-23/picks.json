@@ -8256,5 +8256,3039 @@
    "C": "opus-1"
   },
   "error": null
+ },
+ "71-t": {
+  "n": 140,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 32,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "71-b": {
+  "n": 141,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "72-t": {
+  "n": 142,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 37,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "72-b": {
+  "n": 143,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 36,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 32,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "73-t": {
+  "n": 144,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 39,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "73-b": {
+  "n": 145,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "74-t": {
+  "n": 146,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "75-t": {
+  "n": 148,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "74-b": {
+  "n": 147,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 34,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 33,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "75-b": {
+  "n": 149,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "76-t": {
+  "n": 150,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "76-b": {
+  "n": 151,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 48,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 22,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "77-t": {
+  "n": 152,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 39,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 44,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "77-b": {
+  "n": 153,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 31,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "78-t": {
+  "n": 154,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "78-b": {
+  "n": 155,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "79-b": {
+  "n": 157,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "79-t": {
+  "n": 156,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 34,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "80-b": {
+  "n": 159,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "80-t": {
+  "n": 158,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "81-t": {
+  "n": 160,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "81-b": {
+  "n": 161,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 22,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "82-b": {
+  "n": 163,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 18,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 20,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "82-t": {
+  "n": 162,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "83-b": {
+  "n": 165,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 38,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 33,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "84-t": {
+  "n": 166,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 40,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "83-t": {
+  "n": 164,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 36,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 42,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "84-b": {
+  "n": 167,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "85-t": {
+  "n": 168,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 36,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "85-b": {
+  "n": 169,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 48,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "87-t": {
+  "n": 172,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "86-b": {
+  "n": 171,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "86-t": {
+  "n": 170,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 58,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "87-b": {
+  "n": 173,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "88-b": {
+  "n": 175,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 34,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "88-t": {
+  "n": 174,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 41,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 38,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "89-t": {
+  "n": 176,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 40,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 18,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "89-b": {
+  "n": 177,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "90-t": {
+  "n": 178,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 20,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 39,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "90-b": {
+  "n": 179,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "91-t": {
+  "n": 180,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "91-b": {
+  "n": 181,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "92-b": {
+  "n": 183,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "92-t": {
+  "n": 182,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 41,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 38,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "93-t": {
+  "n": 184,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "93-b": {
+  "n": 185,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 32,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "94-b": {
+  "n": 187,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 17,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "94-t": {
+  "n": 186,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "95-b": {
+  "n": 189,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "96-t": {
+  "n": 190,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "95-t": {
+  "n": 188,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 36,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 44,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "96-b": {
+  "n": 191,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 23,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "97-t": {
+  "n": 192,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 29,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "97-b": {
+  "n": 193,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "98-t": {
+  "n": 194,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 42,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "98-b": {
+  "n": 195,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 36,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "99-t": {
+  "n": 196,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 28,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 26,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "99-b": {
+  "n": 197,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "100-b": {
+  "n": 199,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 39,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 32,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "100-t": {
+  "n": 198,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 31,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 47,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "101-t": {
+  "n": 200,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 24,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 44,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "101-b": {
+  "n": 201,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 27,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "102-t": {
+  "n": 202,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 33,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "102-b": {
+  "n": 203,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 35,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 25,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "103-b": {
+  "n": 205,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 22,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 21,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "103-t": {
+  "n": 204,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 31,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 31,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "104-b": {
+  "n": 207,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 20,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 20,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "105-t": {
+  "n": 208,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 17,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 15,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "104-t": {
+  "n": 206,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 37,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 47,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "105-b": {
+  "n": 209,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 19,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 20,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "106-t": {
+  "n": 210,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 22,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 30,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "106-b": {
+  "n": 211,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 66,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 56,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "107-b": {
+  "n": 213,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 60,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 57,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "107-t": {
+  "n": 212,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 82,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 61,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "108-b": {
+  "n": 215,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 48,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 55,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "109-b": {
+  "n": 217,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 38,
+    "cached": true
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 42,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  },
+  "error": null
+ },
+ "108-t": {
+  "n": 214,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 156,
+    "cached": true
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 70,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "109-t": {
+  "n": 216,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 118,
+    "cached": true
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 104,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "110-t": {
+  "n": 218,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 85,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 81,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "110-b": {
+  "n": 219,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 146,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 97,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  },
+  "error": null
+ },
+ "111-t": {
+  "n": 220,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 69,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 156,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
+ },
+ "111-b": {
+  "n": 221,
+  "hand": "B",
+  "stored": {
+   "ok": true,
+   "same_crops": true,
+   "same_prompt": true
+  },
+  "reads": {
+   "opus-2": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 89,
+    "cached": false
+   },
+   "opus-3": {
+    "ok": true,
+    "err": null,
+    "model": "claude-opus-5-5",
+    "secs": 98,
+    "cached": false
+   }
+  },
+  "candidates": [
+   "opus-1",
+   "opus-2",
+   "opus-3"
+  ],
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  },
+  "error": null
  }
 }

@@ -39,7 +39,7 @@ export function describe(cands, metaOf) {
   const nO = models.filter((m) => /opus/.test(m)).length, nF = models.filter((m) => /fable/.test(m)).length;
   const pool = nF ? 'opus3fable1' : 'opus3', g = POOL[pool];
   const who = [nO && `${word(nO)} by Claude Opus 5.5`, nF && `${word(nF)} by Claude Fable 5.1`].filter(Boolean).join(', ');
-  const method = `${word(cands.length)[0].toUpperCase()}${word(cands.length).slice(1)} independent readings of the leaf were made (${who}) and a Claude Opus judge, shown neither the image nor any edition, kept the one that reads most like real text`;
+  const method = `${word(cands.length)[0].toUpperCase()}${word(cands.length).slice(1)} independent readings of the leaf were made (${nF ? who : `all by Claude Opus 5.5`}) and a Claude Opus judge, shown neither the image nor any edition, kept the one that reads most like real text`;
   const gate = `On 9 verse leaves of this manuscript where a published text exists, the reading kept this way (from ${nF ? 'three Opus readings and one Fable reading' : 'three Opus readings'}) differed from it in ${g.pct} of characters (row-by-row CER ${g.cer.toFixed(2)}, Oct 2026), against 34% for a single reading; on 2 of the 9 leaves none of the readings was close (${g.worst}). Commentary leaves and the smaller second hand (pages 131–221) were not part of that test, and a judge that favours fluent text may keep a passage the model remembers over what the leaf shows.`;
   const short = `best of ${cands.length} (${[nO && `Claude Opus 5.5 ×${nO}`, nF && `Claude Fable 5.1 ×${nF}`].filter(Boolean).join(', ')})`;
   return { pool, g, method, gate, short };

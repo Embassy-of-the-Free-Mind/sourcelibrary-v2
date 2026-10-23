@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three are almost entirely illegible, but A keeps a few readable fragments that fit a Sāṅkhyakārikā context ("…ndri…bhyaḥ", perhaps indriyebhyaḥ; "tanmātra"; "deva"), while B's fragments ("śra", "ḥla") don't form words and its row 10 has an extra string hole, and C contains no text at all.

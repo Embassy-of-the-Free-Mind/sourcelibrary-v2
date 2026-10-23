@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | None of the three gives readable Sanskrit or Malayalam; A's fragments are repeated filler syllables ("gra", "ya", "ra") that look made up, and its string holes appear in only four rows, while B and C honestly mark everything illegible with consistent hole placement (C edges out B, whose row 4 has a stray doubled [illegible]).

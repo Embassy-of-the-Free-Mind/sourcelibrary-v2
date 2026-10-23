@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three gives continuous text: A has one clean, plausible word ("hetu", common in Sāṅkhya and Tarka) and no invented strings; C has a few plausible pieces ("bhikṣām", "śeṣa") mixed with nonsense syllables like "ggeṃ" and "trādeta"; and B has only stray visargas.

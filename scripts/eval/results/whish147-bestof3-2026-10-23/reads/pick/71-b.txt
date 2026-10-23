@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three has any readable text: A and C are identical and entirely [illegible], while B adds only two stray visargas (ḥ) that don't form words and are probably noise, so B ranks last and the order of A and C is an arbitrary tie.

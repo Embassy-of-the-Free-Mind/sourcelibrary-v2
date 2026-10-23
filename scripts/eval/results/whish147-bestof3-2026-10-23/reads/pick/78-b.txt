@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three has any readable text: A and B are entirely [illegible], and C's only extra content is a lone "ḥ" with no context, so the order is basically arbitrary (A and B tie, and C is last only by a hair because the stray "ḥ" may be noise).

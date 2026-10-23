@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | I can't tell them apart: in all three transcriptions every row is entirely [illegible], so none contains any readable Sanskrit or Malayalam, and this ranking is just alphabetical order, not a judgment of quality.

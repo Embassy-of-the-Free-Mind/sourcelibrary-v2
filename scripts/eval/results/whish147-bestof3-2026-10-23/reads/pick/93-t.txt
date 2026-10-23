@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three gives readable Sanskrit or Malayalam, so A ranks first: it keeps the leaf's row-and-string-hole layout and makes no up false syllables. B's repeated "tru" and C's repeated "trasa", along with C's string holes that come and go between rows, look like noise rather than real text, even if C's "matra" might hint at tanmātra.
