@@ -3,7 +3,7 @@ stage: translation
 measure: judged_vs_reference
 languages: [lzh]
 scripts: [Hani]
-canons: [chinese-classics, chinese-buddhist, siku-quanshu]
+canons: [chinese-classics, chinese-buddhist, kanripo]
 n_books: 64
 n_pages: 64
 verdict: "The cheap cascade fails all three preregistered conditions: cascade − Flash −0.31 [−0.48, −0.17] fidelity, 12.5 vs 4.7 reversals per 100 pages, $0.00131 a page against a $0.00107 limit, with 53 % of pages routed. No cheaper arm matches Flash. DeepSeek scores 3.11, Qwen 2.95, Lite 3.56, Flash (3.8, via agy) 4.29."
