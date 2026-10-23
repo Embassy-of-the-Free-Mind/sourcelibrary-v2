@@ -103,9 +103,30 @@ const OTHER_HOSTS = [
 // break when old builds are deleted.
 const PREVIEW_HOSTS = ['sourcelibrary-v2-staging.vercel.app', 'sourcelibrary-episode-sources.vercel.app', 'bph-catalogue-updates.vercel.app'];
 
+/**
+ * The newest production build's own address, read the way an outsider would:
+ * from GitHub's public deployments API, no token. Every build address sits
+ * behind Vercel Deployment Protection (#7155); a fake Authorization header
+ * used to get whole books out of them.
+ */
+async function newestProductionBuildHost() {
+  const api = 'https://api.github.com/repos/Embassy-of-the-Free-Mind/sourcelibrary-v2/deployments';
+  const deps = await (await fetch(`${api}?environment=Production&per_page=5`)).json();
+  for (const d of Array.isArray(deps) ? deps : []) {
+    const statuses = await (await fetch(`${api}/${d.id}/statuses`)).json();
+    const url = (Array.isArray(statuses) ? statuses : []).find((s) => s.environment_url)?.environment_url;
+    if (url) return new URL(url).host;
+  }
+  return null;
+}
+
 function classify(res) {
   const mitigated = (res.headers.get('cf-mitigated') || '').toLowerCase();
   if (mitigated === 'challenge') return 'challenge';
+  // Vercel Deployment Protection answers with a redirect to its login.
+  const location = res.headers.get('location') || '';
+  if (res.status >= 300 && res.status < 400 && /^https:\/\/vercel\.com\//.test(location)) return 'login';
+  if (res.status === 401) return 'login';
   if (res.status === 403) return 'block';
   if (res.status < 400 || res.status === 404) return 'pass';
   return `http ${res.status}`;
@@ -134,7 +155,13 @@ async function main() {
     rows.push(await probe(host, { name: 'real Chrome with hints', rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
   }
   for (const host of PREVIEW_HOSTS) {
-    rows.push(await probe(host, { name: 'anonymous Firefox on a preview build', rule: 'Vercel firewall (preview builds)', ua: UA.firefox, expect: 'block' }));
+    rows.push(await probe(host, { name: 'anonymous Firefox on a preview build', rule: 'Vercel Deployment Protection', ua: UA.firefox, expect: 'login' }));
+  }
+  const prodBuild = await newestProductionBuildHost().catch(() => null);
+  if (prodBuild) {
+    rows.push(await probe(prodBuild, { name: 'fake auth header on a production build', rule: 'Vercel Deployment Protection', ua: UA.firefox, headers: { authorization: 'Bearer x' }, expect: 'login' }));
+  } else {
+    rows.push({ host: 'github deployments', name: 'find newest production build', rule: 'canary input', expect: 'found', got: 'none', ok: false });
   }
 
   const failed = rows.filter((r) => !r.ok);
