@@ -1,0 +1,11 @@
+ROW 1 | ദ്വിപക്ഷ്യാസ്ഃഅത്ര'ഏതെ ‖ പ്രത്യക്ഷസ്ത്വാദ്വിഷയ്യയാഗ്രഹിതുമ്മിസ്വി[illegible] ‖ ത്രാഖ്യഃഗുണൈവൈഷമ്യാദ്വി
+ROW 2 | മൊൎത്ത്രകൎയ്യപ്പെട്ടദാസൂ[illegible] ‖ പക്ഷഗാൽഭവനപക്ഷവിപക്ഷയൊട്ടട ‖ ടവത്രഗങ്കിഭാകരണ
+ROW 3 | ഒരൊവകശ്രാൽഓ ‖ ഋാവിംശതികെഭേദാത്ത്രച്ചൂന്തുവയ ‖ യ[illegible]ഷ്ടായാസിദ്ധിഃ।ശത്രു'ര
+ROW 4 | ഋദഞ്ജമരെസാഷ്ട ‖ ഷ്ഠിഭൈയാകൈമാഹസ്യൂചടഗഷിഭ ‖ യാമഹാരൈമാഹാ്കേ
+ROW 5 | ാമിപ്രൈത്രൂാഷ്ട്രാടശ്ര ‖ യാജമാഭവത്രൂസുരാമിസ്ര്ഃക്ഷു ‖ എകാദഗെശ്രിഭവ
+ROW 6 | ധാസ്സൂഹചെദ്ധിവര ‖ ഭധനഗമിനുഭേദ്ര്ജൂാപ്പൂടങ്കയ ‖ ാലക്ഷൃകൊച്ചിപക്ഷ്
+ROW 7 | ഞാഗ്ഗൂത്ത്രഭ്വിസി ‖ ങ്ങിനാംശൂദൃാമിക്രാക്ഷസ്രസ്ഃ ‖ പ്രകൃത്യുപാദാനകെ
+ROW 8 | ാലഭാഗ്രാഭ്യാഃഭൊാ[illegible] ‖ ാഹ്യാവിച്ചൈയാചരൗമാൽപക്ഷാവത്രു ‖ ച്ചൊരോഭിഭിതാഃഇത്യൂ
+ROW 9 | ഛാടഗൈജ്ജൊത്രൂയനാം ‖ ാംദ്വൈബിജ്ഞാരാസ്രൂയഃദ്വൈബിജ്ഞാര ‖ രാസ്രൂഷണ്ണഹൽപ്രാപ്തേഃ
+ROW 10 | ദാരെഖ്യെസിദ്ധ്ലൈരൊ ‖ ാരെക്ഷ്ണ്ണൂഗ്രവിടെള്ളാംകൊഗസ്രൂവിയഃ। ‖ ദൃഷ്ടാനവിനാഭാവൈ
+NOTE | I found 10 rows and gave a reading for every one, but most of it is a low-confidence guess at individual strokes: many of the akṣaras, the conjuncts and the vowel signs are uncertain, and the words may not form real Sanskrit. Treat it as a rough draft that needs checking against the leaf, not a reliable transcription. The only parts I'm fairly sure of are a few short stretches in the right column (e.g. rows 1, 7, 9 and 10).

@@ -1,0 +1,224 @@
+{
+ "stage": "rows",
+ "id": "9-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:59:51.326Z",
+ "finished_at": "2026-10-23T08:01:15.328Z",
+ "secs": 84,
+ "prompt_hash": "0b40aebe592dfbc1",
+ "prompt_file": "reads/prompts/0b40aebe592dfbc1.txt",
+ "images": [
+  {
+   "crop": "9-t-1.jpg",
+   "bytes": 45823,
+   "sha256": "82b9d8cbc8329c04ac062eb9876f37b45f8d760747fd8a4523d1f4b46c3f76ec"
+  },
+  {
+   "crop": "9-t-2.jpg",
+   "bytes": 34038,
+   "sha256": "bfdd6c3cdb67062a4b60a3b6fa5f20787e5ce751cba5c37791f1a5493f02fbbb"
+  },
+  {
+   "crop": "9-t-3.jpg",
+   "bytes": 30793,
+   "sha256": "a916b5545af218de3f8f34774fc68f0845ee04126e7bf8b77e054a7584331c09"
+  },
+  {
+   "crop": "9-t-4.jpg",
+   "bytes": 46259,
+   "sha256": "4d2a04212aea7bedbe3592035547be716eb4dcb482f567bf96246dfca243f9bf"
+  },
+  {
+   "crop": "9-t-5.jpg",
+   "bytes": 46028,
+   "sha256": "a3423ce7c332f8654c7eb6dacfc7a8eee2d619a23f2c9a34fadda7f70476ed8f"
+  },
+  {
+   "crop": "9-t-6.jpg",
+   "bytes": 34613,
+   "sha256": "8733252a8f3c4ef434a6536cdd67bb6c080918b026211b7a7c2c22d736e1a104"
+  },
+  {
+   "crop": "9-t-7.jpg",
+   "bytes": 31954,
+   "sha256": "6bd9bc1d3c77650100ce2ba08597e3704f9c49dd04d9b35e6bf522d472fad07d"
+  },
+  {
+   "crop": "9-t-8.jpg",
+   "bytes": 48313,
+   "sha256": "dde5892dcbcb6ffc0178a95bd1b085450a4d326d1ce9ffb170114a89dac4e304"
+  },
+  {
+   "crop": "9-t-9.jpg",
+   "bytes": 44193,
+   "sha256": "81054b230691e69fd1d69b3483ca298b4075ce0c7207cf2c8bf9c4350d95ac57"
+  },
+  {
+   "crop": "9-t-10.jpg",
+   "bytes": 30945,
+   "sha256": "5aac665bce9b1fa823fd36cd23fa19f90923f43f72cb990fc77ade8ae0edf55a"
+  },
+  {
+   "crop": "9-t-11.jpg",
+   "bytes": 32517,
+   "sha256": "462bfb63aebad090d911779444a17d3f8400218184c3261c6d1d65fcc79d39de"
+  },
+  {
+   "crop": "9-t-12.jpg",
+   "bytes": 43254,
+   "sha256": "af18ae47ba2af3a5d965321828cff55af46d9303eb32eb982bd451efe14123fd"
+  },
+  {
+   "crop": "9-t-13.jpg",
+   "bytes": 45668,
+   "sha256": "53aa89cf3459cea1866e3047cf8b82220a74c3065a692eb2b3aa1b8b4a555046"
+  },
+  {
+   "crop": "9-t-14.jpg",
+   "bytes": 30054,
+   "sha256": "b8a4e1b6cb6ee4117562f15458d1ea29b444c424830dcaf8673624041e3e355d"
+  },
+  {
+   "crop": "9-t-15.jpg",
+   "bytes": 33714,
+   "sha256": "60196c1654f3f20f1f8892b95fbab0a80326c3e2f80ed685a4cf4fb02da11d2b"
+  },
+  {
+   "crop": "9-t-16.jpg",
+   "bytes": 45327,
+   "sha256": "f1dcbb230e9f6305d50b25c9e520865e4aa9ee5ef01e993b5efb948ac60b0c92"
+  },
+  {
+   "crop": "9-t-17.jpg",
+   "bytes": 48373,
+   "sha256": "b1860207b0fc95ebcdc9b1a3ada72992c6da7b2dfe1775f35c0a18f55410e0f9"
+  },
+  {
+   "crop": "9-t-18.jpg",
+   "bytes": 29411,
+   "sha256": "29d32a37ffc432c6cea77b537874549baeb9a10a2674ea0bf9754388656e54e6"
+  },
+  {
+   "crop": "9-t-19.jpg",
+   "bytes": 28666,
+   "sha256": "b84bbd4ed2ef5961f45226c2659a1d2cb5edd36cd120ca1874d88ce91329980c"
+  },
+  {
+   "crop": "9-t-20.jpg",
+   "bytes": 42271,
+   "sha256": "940a9feaea9a1d2472fc8526d4f1c6533ad2993f1e1a027bbbc58c7b51d1fdb2"
+  },
+  {
+   "crop": "9-t-21.jpg",
+   "bytes": 47374,
+   "sha256": "20cd54900dc76911db77af245e08623b54f2929f5acab5a2b55af1b411fa6ea8"
+  },
+  {
+   "crop": "9-t-22.jpg",
+   "bytes": 32776,
+   "sha256": "08a4b256d96efbd769d7d04c6a3f56ac099f361f1750f8b4fd4567129dca3b90"
+  },
+  {
+   "crop": "9-t-23.jpg",
+   "bytes": 33970,
+   "sha256": "36e6a549a97b829306c8d7f64e7650d17c175b54d750d798111352f83c88ed1d"
+  },
+  {
+   "crop": "9-t-24.jpg",
+   "bytes": 43435,
+   "sha256": "4d60d9a5f0a986068a628e12a500f19dfacc23696ae3e25f7b5541ed5cb847cc"
+  },
+  {
+   "crop": "9-t-25.jpg",
+   "bytes": 47548,
+   "sha256": "aa2c9d2c05f063adb4616952062d8e3b175c065446e1ecdf4b20907add16e12c"
+  },
+  {
+   "crop": "9-t-26.jpg",
+   "bytes": 33343,
+   "sha256": "c2f0798917ff057d4a1d19cc2d538aaf2e1aa244e129a421e24d92fb69a9da5e"
+  },
+  {
+   "crop": "9-t-27.jpg",
+   "bytes": 32864,
+   "sha256": "5cb8009447df936862e5ca31db2376cbccb58259c2cbb930f875cf56cc6e2546"
+  },
+  {
+   "crop": "9-t-28.jpg",
+   "bytes": 42582,
+   "sha256": "e5f77208fca05c226a7389b3b2d4f6f3506dd0fc2e9bb36b5f9b5c19c798e913"
+  },
+  {
+   "crop": "9-t-29.jpg",
+   "bytes": 49553,
+   "sha256": "17551578af92ad2f7ac53d53f73690d032e3f0ee10d5d3514f5ea1e1992ee923"
+  },
+  {
+   "crop": "9-t-30.jpg",
+   "bytes": 32619,
+   "sha256": "0716b6c9367800c30a82154f720b5e8af58153e9c93d6bc573929f61f61e05cc"
+  },
+  {
+   "crop": "9-t-31.jpg",
+   "bytes": 31040,
+   "sha256": "f07af53167a96389e0d0952e37fe76dc22e54460e011bda5bdc5f9e9a65e58dc"
+  },
+  {
+   "crop": "9-t-32.jpg",
+   "bytes": 41241,
+   "sha256": "bf01f1635a92836670e4e93e6cc1925fb9fee1f84728bcfd5bf8b252aceeb922"
+  },
+  {
+   "crop": "9-t-33.jpg",
+   "bytes": 47654,
+   "sha256": "2bb8652951ecb1a3cb12a261f8200145582bbe034998eea4acc4e0e7ca27c90c"
+  },
+  {
+   "crop": "9-t-34.jpg",
+   "bytes": 31525,
+   "sha256": "3283c34809349f1a07ecaf36d7e0c1505640810af461e63642f71844bc93b815"
+  },
+  {
+   "crop": "9-t-35.jpg",
+   "bytes": 30018,
+   "sha256": "fc7d885398b8bc8782b3db8b5a91eaf1924422ea20752acfd3b0f473e015db97"
+  },
+  {
+   "crop": "9-t-36.jpg",
+   "bytes": 42800,
+   "sha256": "52254a96f570882a0fb971fef51839102de8fef9b71ad4f418ac13f84c49ac99"
+  },
+  {
+   "crop": "9-t-37.jpg",
+   "bytes": 46707,
+   "sha256": "1bcd4f7f3b9ac89991aa461b6b73838f831bd6617f31fe7e9608c74e284d7a3c"
+  },
+  {
+   "crop": "9-t-38.jpg",
+   "bytes": 31957,
+   "sha256": "f090b4291589bcdde578076fb015b33b1a0188e4c05139b8055a25e860d0a548"
+  },
+  {
+   "crop": "9-t-39.jpg",
+   "bytes": 31132,
+   "sha256": "a958c9fc3286ee735d4fc7d1568dfb2d192f4255baf686c6cf830f2050c221a4"
+  },
+  {
+   "crop": "9-t-40.jpg",
+   "bytes": 43215,
+   "sha256": "906daaa05c5e1e378002b0c6a53a5da8c6ecf38888fa2125299a2fbb98da28a1"
+  }
+ ],
+ "usage": {
+  "input": 22,
+  "output": 7705,
+  "cache_read": 106552,
+  "cache_creation": 15344,
+  "turns": 41,
+  "list_cost_usd": 0.2982504
+ }
+}
