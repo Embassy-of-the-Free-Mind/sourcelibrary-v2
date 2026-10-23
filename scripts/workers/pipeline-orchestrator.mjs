@@ -29,7 +29,7 @@ import {
 } from '../lib/image-extraction-request.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
@@ -1505,6 +1505,40 @@ async function routeBookToCliOcrLane(db, book, model) {
     detail: { routed_model: model, unread_pages: unread, language: book.language ?? null },
   });
   console.log(`    CLI lane (${model}, #7075): ${label} — ${unread} unread pages, hold ${r.outcome}`);
+  return r;
+}
+
+/**
+ * The translation twin of routeBookToCliOcrLane (#7075). A book whose translation-routing-table row is
+ * `channel: "cli"` (Opus through `claude -p`, Gemini 3.8 Flash through `agy -p`) is held by CLI_TRANSLATE_HOLD and
+ * waits for scripts/batch/cli-translate-lane.mjs; it is never dispatched to the chained or realtime API lanes.
+ * Only UNTRANSLATED pages are the lane's: retranslating a page whose stored English predates its OCR is a separate
+ * decision (#7075), so a book with only such pages is not held, and is advanced as the no-pages case would be.
+ */
+async function routeBookToCliTranslateLane(db, book, lane) {
+  const label = (book.title || '').substring(0, 50);
+  const untranslated = await db.collection('pages').countDocuments({
+    book_id: book.id,
+    page_number: { $gt: 0 },
+    'ocr.data': { $exists: true, $nin: [null, ''] },
+    page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+    'translation.health_blocked': { $exists: false },
+    $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }],
+  });
+  if (untranslated === 0) {
+    console.log(`  CLI lane (${lane.engine}, #7075): only stale translations left, retranslation not decided — not held: ${label}`);
+    return { outcome: 'only_stale' };
+  }
+  if (DRY_RUN) {
+    console.log(`  Would hold for the CLI translation lane (${lane.engine}, row ${lane.row.id}, #7075): ${label} — ${untranslated} untranslated pages`);
+    return { outcome: 'dry_run' };
+  }
+  const r = await holdBook(db, book.id, {
+    ...CLI_TRANSLATE_HOLD,
+    source: 'pipeline-orchestrator',
+    detail: { routed_engine: lane.engine, row: lane.row.id, untranslated_pages: untranslated, language: book.language ?? null },
+  });
+  console.log(`  CLI translation lane (${lane.engine}, #7075): ${label} — ${untranslated} untranslated pages, hold ${r.outcome}`);
   return r;
 }
 
@@ -5045,6 +5079,19 @@ Rules:
             const trust = await ocrTrustGate(db, book, { lane: 'orchestrator-phase4', record: !DRY_RUN });
             if (!trust.ok) {
               console.log(`  Not dispatched (${trust.reason}): ${label}`);
+              continue;
+            }
+
+            // THE CHANNEL RULE for translation (#7075): a book the table routes to a subscription CLI reader is held
+            // for that lane here, before either API lane can take it.
+            const translateLane = translateLaneForBook(book);
+            if (translateLane.channel === 'cli') {
+              const held = await routeBookToCliTranslateLane(db, book, translateLane);
+              // A fresh book (ocr_complete) would otherwise be selected again every tick; a gap-fill book stays put.
+              if (held.outcome === 'only_stale' && !DRY_RUN && freshBooks.includes(book)) {
+                await setPipelineStatus(db, book.id, 'translate_complete');
+                log.translate_advanced++;
+              }
               continue;
             }
 

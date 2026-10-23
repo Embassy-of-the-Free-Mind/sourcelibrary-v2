@@ -1,0 +1,153 @@
+{
+ "lang": "pali",
+ "old": "gemini-3-flash-preview",
+ "n": 20,
+ "drawn_at": "2026-10-23T07:41:34.517Z",
+ "frame": {
+  "books": 26,
+  "eligible_pages": 781,
+  "books_with_eligible": 8
+ },
+ "pages": [
+  {
+   "page_id": "69b99ec16ed9e0490990a70d",
+   "book_id": "69b99ec16ed9e0490990a6f2",
+   "page_number": 27,
+   "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+   "ocr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "69b99ec16ed9e0490990a725",
+   "book_id": "69b99ec16ed9e0490990a6f2",
+   "page_number": 51,
+   "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+   "ocr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "69b99ec16ed9e0490990a805",
+   "book_id": "69b99ec16ed9e0490990a6f2",
+   "page_number": 275,
+   "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+   "ocr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "69d5ae284dc55b8478de0f9f",
+   "book_id": "69d5ae284dc55b8478de0f7a",
+   "page_number": 37,
+   "title": "Patthanapakarana",
+   "ocr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6a09ff0029abf62080bbd974",
+   "book_id": "6a09ff0029abf62080bbd95f",
+   "page_number": 21,
+   "title": "Vibhaṅga (Book of Analysis) — PTS Pali edition",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff0029abf62080bbd975",
+   "book_id": "6a09ff0029abf62080bbd95f",
+   "page_number": 22,
+   "title": "Vibhaṅga (Book of Analysis) — PTS Pali edition",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff0029abf62080bbd976",
+   "book_id": "6a09ff0029abf62080bbd95f",
+   "page_number": 23,
+   "title": "Vibhaṅga (Book of Analysis) — PTS Pali edition",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff0429abf62080bbdb5f",
+   "book_id": "6a09ff0429abf62080bbdb55",
+   "page_number": 10,
+   "title": "Tikapaṭṭhāna of the Abhidhamma Piṭaka, Vol. 1 (PTS Pali)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff0429abf62080bbdb64",
+   "book_id": "6a09ff0429abf62080bbdb55",
+   "page_number": 15,
+   "title": "Tikapaṭṭhāna of the Abhidhamma Piṭaka, Vol. 1 (PTS Pali)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff0429abf62080bbdb6d",
+   "book_id": "6a09ff0429abf62080bbdb55",
+   "page_number": 24,
+   "title": "Tikapaṭṭhāna of the Abhidhamma Piṭaka, Vol. 1 (PTS Pali)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff1629abf62080bbdc56",
+   "book_id": "6a09ff1629abf62080bbdbb6",
+   "page_number": 160,
+   "title": "Dukapaṭṭhāna (PTS Pali edition)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff1629abf62080bbdc78",
+   "book_id": "6a09ff1629abf62080bbdbb6",
+   "page_number": 194,
+   "title": "Dukapaṭṭhāna (PTS Pali edition)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff1629abf62080bbdcc2",
+   "book_id": "6a09ff1629abf62080bbdbb6",
+   "page_number": 268,
+   "title": "Dukapaṭṭhāna (PTS Pali edition)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff1dfa20006dbaba89ab",
+   "book_id": "6a09ff1dfa20006dbaba89aa",
+   "page_number": 1,
+   "title": "Dhātukathā Prakaraṇa with Commentary (PTS Pali)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff65fa20006dbaba93cc",
+   "book_id": "6a09ff65fa20006dbaba93c1",
+   "page_number": 11,
+   "title": "Aṅguttara Nikāya, Vol. VI: Indexes, PTS Pali",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff65fa20006dbaba93d5",
+   "book_id": "6a09ff65fa20006dbaba93c1",
+   "page_number": 20,
+   "title": "Aṅguttara Nikāya, Vol. VI: Indexes, PTS Pali",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a09ff65fa20006dbaba93d9",
+   "book_id": "6a09ff65fa20006dbaba93c1",
+   "page_number": 24,
+   "title": "Aṅguttara Nikāya, Vol. VI: Indexes, PTS Pali",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a31c8b74400787ae5a9d7bb",
+   "book_id": "6a31c8b74400787ae5a9d7a7",
+   "page_number": 20,
+   "title": "Dhammapada (Pali text with aṭṭhakathā references)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a31c8b74400787ae5a9d7bc",
+   "book_id": "6a31c8b74400787ae5a9d7a7",
+   "page_number": 21,
+   "title": "Dhammapada (Pali text with aṭṭhakathā references)",
+   "ocr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a31c8b74400787ae5a9d7bf",
+   "book_id": "6a31c8b74400787ae5a9d7a7",
+   "page_number": 24,
+   "title": "Dhammapada (Pali text with aṭṭhakathā references)",
+   "ocr_model": "gemini-3-flash-preview"
+  }
+ ]
+}
