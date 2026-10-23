@@ -383,7 +383,8 @@ async function apply() {
   const totals = { books: 0, written: 0, conflicts: 0, textless: 0, rejected: 0, kept_now: 0, human_edited: 0, not_held: 0, stale_marked: 0, why: {} };
   if (!ready.length) { log(`APPLY ${JSON.stringify(totals)}`); return totals; }
   const { name: runName, box } = latestRun();
-  const runId = `${LANE}/${runName}`;
+  // --apply-tag names one apply pass inside a GPU run, so revert-run can undo that pass alone
+  const runId = `${LANE}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pages: prepped } of ready) {
