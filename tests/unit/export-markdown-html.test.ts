@@ -157,6 +157,13 @@ describe('markdownToHtml — no markup printed as text (#7118 EPUB probe)', () =
     const html = markdownToHtml('| Midpoint <br> ω | Equal |\n|---|---|\n| 6 | 51 |');
     expect(html).toContain('<th>Midpoint <br/> ω</th>');
   });
+  it('makes a block of bullet lines a list, and leaves a lone dash line as text (Ptolemy, horizons)', () => {
+    expect(markdownToHtml('* SOUTH\n* SOUTH-WEST\n* WEST')).toBe('<ul><li>SOUTH</li><li>SOUTH-WEST</li><li>WEST</li></ul>');
+    expect(markdownToHtml('- Alas! said he.')).toBe('<p>- Alas! said he.</p>');
+    expect(markdownToHtml('Landmasses and Regions:\n*   GREENLAND\n*   Baffins Bay\nThen the sea.'))
+      .toBe('<p>Landmasses and Regions:</p>\n<ul><li>GREENLAND</li><li>Baffins Bay</li></ul>\n<p>Then the sea.</p>');
+    expect(markdownToHtml('Be blessed.\n+ JEAN BAPTISTE')).toBe('<p>Be blessed.<br/>+ JEAN BAPTISTE</p>');
+  });
   it('drops a heading marker typed into a table cell', () => {
     expect(markdownToHtml('| # Fifth Sound | x |\n|---|---|\n| a | b |')).toContain('<th>Fifth Sound</th>');
   });

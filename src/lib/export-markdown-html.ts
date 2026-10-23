@@ -158,12 +158,30 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
     if (block.startsWith('<h')) {
       return block;
     }
+    const para = (s: string) => (s.trim() ? `<p>${s.trim().replace(/\n/g, '<br/>')}</p>` : '');
     // GFM pipe tables become real tables, not pipe-soup inside a <p> — also when the table shares its block with a
-    // caption line above or below it (Ptolemy's Handy Tables: 86 pipe rows printed as text).
+    // caption line above or below it (Ptolemy's Handy Tables: 86 pipe rows printed as text; split further down).
     const table = pipeTableToHtml(block);
     if (table) return table;
+    // A bullet list ("* SOUTH" / "* SOUTH-WEST" in Ptolemy's horizon tables; "Landmasses and Regions:" over
+    // "* GREENLAND" in Goos's atlas) is a list, not starred lines: any run of two or more bullet lines, with the
+    // lines around it staying text. A lone "- " (dialogue) or "+ " (a printed cross) stays text.
+    const lines = block.split('\n').filter(l => l.trim());
+    const BULLET = /^[ \t]*[*\-+•][ \t]+(?=\S)/;
+    if (lines.filter(l => BULLET.test(l)).length >= 2) {
+      const out: string[] = [];
+      for (let i = 0; i < lines.length;) {
+        let j = i;
+        while (j < lines.length && BULLET.test(lines[j])) j++;
+        if (j - i >= 2) { out.push(`<ul>${lines.slice(i, j).map(l => `<li>${l.replace(BULLET, '').trim()}</li>`).join('')}</ul>`); i = j; continue; }
+        let k = Math.max(j, i + 1);
+        while (k < lines.length && !(BULLET.test(lines[k]) && k + 1 < lines.length && BULLET.test(lines[k + 1]))) k++;
+        out.push(para(lines.slice(i, k).join('\n')));
+        i = k;
+      }
+      return out.filter(Boolean).join('\n');
+    }
     const split = splitTableBlock(block);
-    const para = (s: string) => (s.trim() ? `<p>${s.trim().replace(/\n/g, '<br/>')}</p>` : '');
     if (split) return split.map(part => ('table' in part ? part.table : para(part.text))).filter(Boolean).join('\n');
     // Replace single newlines with breaks within paragraphs
     return para(block);

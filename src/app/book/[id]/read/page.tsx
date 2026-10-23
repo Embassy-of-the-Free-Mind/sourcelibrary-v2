@@ -426,7 +426,12 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </nav>
       )}
 
-      <article aria-label={`${shownTitle}${partCount > 1 ? `, part ${part} of ${partCount}` : ''}`}>
+      {/* A wide table (Ptolemy's Handy Tables run to 2,400px) scrolls inside its own box; it must never widen
+          the page, which on a phone turns every line of the book into a sideways scroll. */}
+      <article
+        aria-label={`${shownTitle}${partCount > 1 ? `, part ${part} of ${partCount}` : ''}`}
+        className="[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-3 [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_table]:my-4 [&_table]:text-sm [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:align-top [&_td]:px-2 [&_td]:py-1 [&_td]:align-top"
+      >
         {view === 'flow' && flowRuns(open).map((run, i) => (
           <div key={i}>
             {chapterAt.get(run[0].page_number)?.map((c, j) => (
