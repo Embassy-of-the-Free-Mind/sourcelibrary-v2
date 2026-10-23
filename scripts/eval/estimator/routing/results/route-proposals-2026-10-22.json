@@ -1,0 +1,538 @@
+{
+ "date": "2026-10-22",
+ "issue": 7170,
+ "plan": "scripts/eval/estimator/planner/results/plan-v0-2026-10-15.json",
+ "ocr_estimator": "scripts/eval/estimator/ocr/results/ocr-v0.json",
+ "tables": [
+  "scripts/lib/ocr-routing-table.json",
+  "scripts/lib/translation-routing-table.json"
+ ],
+ "rows": [
+  {
+   "stage": "translation",
+   "decision": "translate Latin",
+   "table_row": "default",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 0.823,
+   "p_not_best": 0.823,
+   "el_per_page": 0.03897,
+   "pages": 561246,
+   "p_best": {
+    "3 Flash": 0.823,
+    "Flash-Lite 3.1": 0.177
+   },
+   "leader": "gemini-3-flash-preview",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "TEST",
+   "why": "the planner's evidence does not decide (P(leader beats routed) 0.82, P(routed not best) 0.82); its test: Flash-Lite 3.1, 3 Flash, n=20"
+  },
+  {
+   "stage": "translation",
+   "decision": "translate German",
+   "table_row": "default",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.12826,
+   "pages": 146146,
+   "p_best": {
+    "3.8 Flash CLI": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "gemini-3.8-flash+agy-cli",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/cli-translate.mjs; about 1.0 weeks of that subscription's capacity for 146,146 pages",
+   "weeks_to_drain": 1.0
+  },
+  {
+   "stage": "ocr",
+   "decision": "read latin (latin-script-print)",
+   "table_row": "latin-script-print",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.07369,
+   "pages": 342892,
+   "p_best": {
+    "gemini-3-flash-preview": 0.809,
+    "claude-sonnet-5-5": 0.171,
+    "gemini-3.8-flash-high+antigravity-cli": 0.011,
+    "gemini-3.8-flash+antigravity-cli": 0.005
+   },
+   "leader": "gemini-3-flash-preview",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/cli-ocr.mjs (CLI_FLASH_OCR_HOLD); about 2.3 weeks of that subscription's capacity for 342,892 pages",
+   "weeks_to_drain": 2.3
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Tibetan",
+   "table_row": "tibetan",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.08215,
+   "pages": 68250,
+   "p_best": {
+    "3.8 Flash CLI": 0.985,
+    "Sonnet 5.5": 0.015,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "gemini-3.8-flash+agy-cli",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/cli-translate.mjs; about 0.5 weeks of that subscription's capacity for 68,250 pages",
+   "weeks_to_drain": 0.5
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Greek",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.18248,
+   "pages": 58107,
+   "p_best": {
+    "Opus 5.5": 0.997,
+    "Sonnet 5.5": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 1.4 weeks of that subscription's capacity for 58,107 pages",
+   "weeks_to_drain": 1.4
+  },
+  {
+   "stage": "translation",
+   "decision": "translate French",
+   "table_row": "default",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.09256,
+   "pages": 84363,
+   "p_best": {
+    "Opus 5.5": 0.997,
+    "3.8 Flash CLI": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 2.0 weeks of that subscription's capacity for 84,363 pages",
+   "weeks_to_drain": 2.0
+  },
+  {
+   "stage": "ocr",
+   "decision": "read latin-script-other (latin-script-print)",
+   "table_row": "latin-script-print",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 0.939,
+   "p_not_best": 0.946,
+   "el_per_page": 0.02004,
+   "pages": 150435,
+   "p_best": {
+    "gemini-3-flash-preview": 0.891,
+    "gemini-3.1-flash-lite": 0.054,
+    "gemini-3.8-flash+antigravity-cli": 0.035,
+    "claude-sonnet-5-5": 0.021
+   },
+   "leader": "gemini-3-flash-preview",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "TEST",
+   "why": "the planner's evidence does not decide (P(leader beats routed) 0.94, P(routed not best) 0.95); its test: gemini-3.1-flash-lite, gemini-3-flash-preview, n=20"
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Italian",
+   "table_row": "default",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.1871,
+   "pages": 26062,
+   "p_best": {
+    "Opus 5.5": 0.992,
+    "3.8 Flash CLI": 0.008,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 0.6 weeks of that subscription's capacity for 26,062 pages",
+   "weeks_to_drain": 0.6
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Hebrew",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.14932,
+   "pages": 26906,
+   "p_best": {
+    "Opus 5.5": 0.999,
+    "Sonnet 5.5": 0.001,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 0.6 weeks of that subscription's capacity for 26,906 pages",
+   "weeks_to_drain": 0.6
+  },
+  {
+   "stage": "ocr",
+   "decision": "read english (latin-script-print)",
+   "table_row": "latin-script-print",
+   "table_engine": "gemini-3.1-flash-lite",
+   "p_leader_beats_incumbent": 0.756,
+   "p_not_best": 0.971,
+   "el_per_page": 0.04003,
+   "pages": 59082,
+   "p_best": {
+    "chandra-ocr-2": 0.186,
+    "gemini-3.8-flash-high+antigravity-cli": 0.165,
+    "claude-sonnet-5-5": 0.163,
+    "gemini-3-flash-preview": 0.144
+   },
+   "leader": "chandra-ocr-2",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "TEST",
+   "why": "the planner's evidence does not decide (P(leader beats routed) 0.76, P(routed not best) 0.97); its test: gemini-3.1-flash-lite, chandra-ocr-2, gemini-3.8-flash-high+antigravity-cli, n=20"
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Arabic",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.18668,
+   "pages": 13297,
+   "p_best": {
+    "Opus 5.5": 0.998,
+    "3.8 Flash CLI": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 0.3 weeks of that subscription's capacity for 13,297 pages",
+   "weeks_to_drain": 0.3
+  },
+  {
+   "stage": "ocr",
+   "decision": "read chinese-print (chinese-print)",
+   "table_row": "chinese-print",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 0.733,
+   "p_not_best": 0.968,
+   "el_per_page": 0.08566,
+   "pages": 21019,
+   "p_best": {
+    "chandra-ocr-2": 0.198,
+    "gemini-4-argon-low+antigravity-cli": 0.198,
+    "gemini-3.8-flash+antigravity-cli": 0.149,
+    "claude-opus-5-5": 0.148
+   },
+   "leader": "chandra-ocr-2",
+   "planner_incumbent": "gemini-3.1-flash-lite",
+   "verdict": "STALE",
+   "why": "the planner assumed gemini-3.1-flash-lite; the table routes gemini-3-flash-preview. Re-run the planner before acting."
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Sanskrit",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.24746,
+   "pages": 5943,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 0.1 weeks of that subscription's capacity for 5,943 pages",
+   "weeks_to_drain": 0.1
+  },
+  {
+   "stage": "ocr",
+   "decision": "read chinese-manuscript (chinese-siku-manuscript)",
+   "table_row": "chinese-siku-manuscript",
+   "table_engine": null,
+   "p_leader_beats_incumbent": 0.579,
+   "p_not_best": 0.779,
+   "el_per_page": 0.01673,
+   "pages": 84075,
+   "p_best": {
+    "gemini-4-argon-low+antigravity-cli": 0.365,
+    "claude-opus-5-5": 0.247,
+    "paddleocr-vl-1.6": 0.221,
+    "dots-mocr": 0.133
+   },
+   "leader": "gemini-4-argon-low+antigravity-cli",
+   "planner_incumbent": "paddleocr-vl-1.6",
+   "verdict": "TEST",
+   "why": "the planner's evidence does not decide (P(leader beats routed) 0.58, P(routed not best) 0.78); its test: paddleocr-vl-1.6, gemini-4-argon-low+antigravity-cli, claude-opus-5-5, n=20"
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Persian",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.23854,
+   "pages": 2420,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs; about 0.1 weeks of that subscription's capacity for 2,420 pages",
+   "weeks_to_drain": 0.1
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Pali",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "p_not_best": 1.0,
+   "el_per_page": 0.20036,
+   "pages": 258,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "leader": "claude-opus-5-5",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "LANE",
+   "why": "subscription lane scripts/batch/claude-translate.mjs",
+   "weeks_to_drain": 0.0
+  },
+  {
+   "stage": "translation",
+   "decision": "translate Chinese",
+   "table_row": "flash-measured",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 0.0,
+   "p_not_best": 0.023,
+   "el_per_page": 0.00048,
+   "pages": 492501,
+   "p_best": {
+    "3 Flash": 0.977,
+    "Flash-Lite 3.1": 0.023
+   },
+   "leader": "gemini-3-flash-preview",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "KEEP",
+   "why": "the routed engine leads"
+  },
+  {
+   "stage": "correction",
+   "decision": "correct chinese specialist drafts",
+   "table_row": null,
+   "table_engine": null,
+   "p_leader_beats_incumbent": 0.0,
+   "p_not_best": 0.249,
+   "el_per_page": 0.00526,
+   "pages": 4379,
+   "p_best": {
+    "Opus corrects a specialist draft": 0.751,
+    "Gemini 3.8 Flash high corrects a specialist draft": 0.249,
+    "Gemini 3.1 Pro corrects a specialist draft": 0.0,
+    "Haiku corrects a specialist draft": 0.0
+   },
+   "verdict": "KEEP",
+   "why": "correction lanes are not routed by a table",
+   "leader": "Opus corrects a specialist draft"
+  },
+  {
+   "stage": "correction",
+   "decision": "correct tibetan specialist drafts",
+   "table_row": null,
+   "table_engine": null,
+   "p_leader_beats_incumbent": 0.0,
+   "p_not_best": 0.428,
+   "el_per_page": 0.00577,
+   "pages": 5755,
+   "p_best": {
+    "Gemini 3.8 Flash low corrects a specialist draft": 0.572,
+    "Opus corrects a specialist draft": 0.221,
+    "Sonnet corrects a specialist draft": 0.178,
+    "Gemini 3.8 Flash high corrects a specialist draft": 0.029
+   },
+   "verdict": "KEEP",
+   "why": "correction lanes are not routed by a table",
+   "leader": "Gemini 3.8 Flash low corrects a specialist draft"
+  },
+  {
+   "stage": "ocr",
+   "decision": "read syriac-print (syriac)",
+   "table_row": "syriac",
+   "table_engine": null,
+   "p_leader_beats_incumbent": 0.0,
+   "p_not_best": 0.607,
+   "el_per_page": 0.02101,
+   "pages": 25,
+   "p_best": {
+    "omnisyr": 0.393,
+    "omnisyr-nosplit": 0.343,
+    "qoruyo-estrangela": 0.135,
+    "qoruyo-eastern": 0.13
+   },
+   "leader": "omnisyr",
+   "planner_incumbent": "omnisyr",
+   "verdict": "TEST",
+   "why": "the planner's evidence does not decide (P(leader beats routed) 0.00, P(routed not best) 0.61); its test: omnisyr, omnisyr-nosplit, qoruyo-estrangela, n=20"
+  },
+  {
+   "stage": "ocr",
+   "decision": "read greek (greek-print)",
+   "table_row": "greek-print",
+   "table_engine": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 0.0,
+   "p_not_best": 0.041,
+   "el_per_page": 0.0003,
+   "pages": 24558,
+   "p_best": {
+    "gemini-3-flash-preview": 0.959,
+    "gemini-4-argon-low+antigravity-cli": 0.025,
+    "claude-opus-5-5": 0.01,
+    "dots-mocr": 0.006
+   },
+   "leader": "gemini-3-flash-preview",
+   "planner_incumbent": "gemini-3-flash-preview",
+   "verdict": "KEEP",
+   "why": "the routed engine leads"
+  }
+ ],
+ "refusal_fallbacks": [
+  {
+   "chart": "armenian",
+   "engine": "claude-sonnet-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs --model=sonnet",
+   "accuracy_median": 0.4423,
+   "p_best_marginal": 0.0,
+   "pages": 5,
+   "runner_up": null,
+   "basis": "measured"
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "paddleocr-vl-1.6",
+   "lane": "scripts/workers/paddle-zh-guarded-lane.mjs",
+   "accuracy_median": 0.7349,
+   "p_best_marginal": 0.205,
+   "pages": 498,
+   "runner_up": "claude-opus-5-5",
+   "basis": "measured"
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "claude-opus-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs",
+   "accuracy_median": 0.7273,
+   "p_best_marginal": 0.128,
+   "pages": 12,
+   "runner_up": "paddleocr-vl-1.6",
+   "basis": "measured"
+  },
+  {
+   "chart": "english",
+   "engine": "claude-sonnet-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs --model=sonnet",
+   "accuracy_median": 0.8371,
+   "p_best_marginal": 0.136,
+   "pages": 49,
+   "runner_up": "paddleocr-vl-1.6",
+   "basis": "measured"
+  },
+  {
+   "chart": "greek",
+   "engine": "claude-opus-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs",
+   "accuracy_median": 0.7994,
+   "p_best_marginal": 0.009,
+   "pages": 54,
+   "runner_up": "paddleocr-vl-1.6",
+   "basis": "measured"
+  },
+  {
+   "chart": "hebrew",
+   "engine": "claude-opus-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs",
+   "accuracy_median": 0.8086,
+   "p_best_marginal": 0.983,
+   "pages": 10,
+   "runner_up": null,
+   "basis": "measured"
+  },
+  {
+   "chart": "latin",
+   "engine": "claude-sonnet-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs --model=sonnet",
+   "accuracy_median": 0.8286,
+   "p_best_marginal": 0.169,
+   "pages": 155,
+   "runner_up": "paddleocr-vl-1.6",
+   "basis": "measured"
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "claude-sonnet-5-5",
+   "lane": "scripts/batch/claude-ocr.mjs --model=sonnet",
+   "accuracy_median": 0.9333,
+   "p_best_marginal": 0.021,
+   "pages": 23,
+   "runner_up": "paddleocr-vl-1.6",
+   "basis": "measured"
+  },
+  {
+   "chart": "syriac",
+   "engine": "sophro-defaultseg",
+   "lane": "scripts/lib/syriac-kraken-lane.mjs",
+   "accuracy_median": 0.7334,
+   "p_best_marginal": 1.0,
+   "pages": 40,
+   "runner_up": "omnisyr",
+   "basis": "measured"
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "omnisyr",
+   "lane": "scripts/lib/syriac-kraken-lane.mjs",
+   "accuracy_median": 0.7956,
+   "p_best_marginal": 0.393,
+   "pages": 20,
+   "runner_up": null,
+   "basis": "measured"
+  }
+ ]
+}

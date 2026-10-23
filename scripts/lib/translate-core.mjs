@@ -33,6 +33,8 @@ import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-scr
 import { guardTranslationText } from './translation-write-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
+import { createRequire } from 'node:module';
+import { translateEngineFor, tableRowFor, validateTranslationTable } from './translation-routing.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource, refusableReasoningLeak, REASONING_LEAK_REASON } from './page-integrity.mjs';
 export { REASONING_LEAK_REASON };
@@ -125,12 +127,18 @@ export function isLatinScriptLanguage(language) {
  * Mar 27 – May 12 2026 lite era (scripts/eval/results/translation-model-obs-*)
  * found no faithfulness gap. Worth ~$12K over 5.4M untranslated pages.
  * Do not "fix" this back into parity with OCR without new evidence.
+ *
+ * READ FROM THE TABLE (#7170): the rules above are the rows of translation-routing-table.json
+ * (bph, tibetan, flash-measured; default lite), which the TS twin reads too. A routing change is a
+ * reviewed edit of that file, proposed by scripts/eval/estimator/routing/derive_routes.py; the
+ * evidence comments here and on the helpers below stay as the history of why each row exists.
  */
+export const TRANSLATION_ROUTING_TABLE = Object.freeze(
+  validateTranslationTable(createRequire(import.meta.url)('./translation-routing-table.json'), [MODEL_FLASH, MODEL_LITE]),
+);
+
 export function getTranslateModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  if (isTibetanBook(book)) return MODEL_FLASH;
-  if (isFlashMeasuredLanguage(book)) return MODEL_FLASH;
-  return MODEL_LITE;
+  return translateEngineFor(TRANSLATION_ROUTING_TABLE, book);
 }
 
 /**
@@ -145,10 +153,8 @@ export function getTranslateModelForBook(book) {
  * Matches the book's FIRST language label, so "Greek-Latin" and
  * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
  */
-const FLASH_MEASURED_LANGUAGE = /^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i;
-
 export function isFlashMeasuredLanguage(book) {
-  return FLASH_MEASURED_LANGUAGE.test(String(book?.language ?? ''));
+  return tableRowFor(TRANSLATION_ROUTING_TABLE, { language: book?.language })?.id === 'flash-measured';
 }
 
 /**
