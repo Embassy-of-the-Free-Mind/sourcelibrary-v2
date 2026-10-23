@@ -119,8 +119,14 @@ async function main() {
     .slice(0, MAX);
   const reason = `#7170 refusal lane: page Gemini refused (stamp), next reader from ocr-routing-table refused-pages route`;
   const job = `refused-${new Date().toISOString().slice(0, 10)}`;
-  for (const engine of [...new Set(todo.map((r) => r.reader.engine))]) {
-    const mine = todo.filter((r) => r.reader.engine === engine);
+  // The table's reader first; a page it fails (Claude's own output filter, a reply without the page markers) goes to
+  // the row's `otherwise` reader, Opus. First run, 2026-10-23: Sonnet read 2 of 6 such pages, Opus 8 of 8.
+  const ESCALATE = 'claude-opus-5-5';
+  const groups = new Map();
+  for (const r of todo) groups.set(r.reader.engine, [...(groups.get(r.reader.engine) ?? []), r]);
+  const order = [...groups.keys()].sort((a, b) => (a === ESCALATE) - (b === ESCALATE));   // Opus last, so it takes the escalations
+  for (const engine of order) {
+    const mine = groups.get(engine);
     const dir = path.join(OUT, CLAUDE_MODEL[engine]);
     fs.mkdirSync(dir, { recursive: true });
     const ids = path.join(dir, 'page-ids.json');
@@ -128,10 +134,22 @@ async function main() {
     console.log(`\n${engine}: ${mine.length} pages from ${new Set(mine.map((r) => r.page.book_id)).size} books`);
     const read = run(path.join(HERE, 'claude-ocr.mjs'), [`--out=${dir}/ocr`, `--page-ids-file=${ids}`, `--model=${CLAUDE_MODEL[engine]}`, '--per-call=1', '--concurrency=2', `--job=${job}`]);
     if (read === 3) { console.log('usage limit reached: stopping; the next run resumes'); process.exit(3); }
+    if (engine !== ESCALATE) {
+      const failed = mine.filter((r) => {
+        const meta = path.join(dir, 'ocr', `${r.page.id}.meta.json`);
+        return !fs.existsSync(meta) || JSON.parse(fs.readFileSync(meta, 'utf8')).exit !== 0;
+      });
+      if (failed.length) {
+        console.log(`  ${failed.length} of ${mine.length} failed on ${engine}: escalated to ${ESCALATE}`);
+        if (!groups.has(ESCALATE)) order.push(ESCALATE);
+        groups.set(ESCALATE, [...(groups.get(ESCALATE) ?? []), ...failed]);
+      }
+    }
     const applied = run(path.join(HERE, 'cli-ocr.mjs'), ['apply', `--out=${dir}/ocr`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])]);
     if (applied !== 0 || !APPLY) continue;
     // Translate what was just written, in books that already carry translations (else gap-fill would pick them up).
-    const tr = mine.filter((r) => (r.book.pages_translated ?? 0) > 0).map((r) => r.page.id);
+    const readOk = (r) => { const m = path.join(dir, 'ocr', `${r.page.id}.meta.json`); return fs.existsSync(m) && JSON.parse(fs.readFileSync(m, 'utf8')).exit === 0; };
+    const tr = mine.filter((r) => readOk(r) && (r.book.pages_translated ?? 0) > 0).map((r) => r.page.id);
     if (!tr.length) continue;
     const trIds = path.join(dir, 'translate-ids.json');
     fs.writeFileSync(trIds, JSON.stringify(tr));
