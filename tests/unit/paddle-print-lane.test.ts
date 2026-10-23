@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -181,5 +181,16 @@ describe('lite margin commentary must survive (final by-eye draw, 2026-10-23)', 
     // lite writes the commentary as plain lines too (p.118): the same rule
     const plain = '以此試秀\n才其術最\n善特恐更\n有俗者誰\n' + B + B;
     expect(coversLite(liteTextCount(B + B), plain, B + B)).toMatchObject({ ok: false, why: 'lite_lines_missing' });
+  });
+});
+
+describe('Japanese editions inside the Chinese frame (first frame chunk, 2026-10-23)', () => {
+  it('a book whose text is ≥ 10 % kana is out; kunten-glossed Chinese stays in', () => {
+    expect(kanaShare(['鹿三笠山雪', 'ニテアリトイフハコレナリ'])).toBeGreaterThan(MAX_KANA_SHARE);
+    expect(kanaShare([fx('text-leaf-R.txt') + 'レ'])).toBeLessThan(MAX_KANA_SHARE);
+  });
+  it('a dense typeset page is not rejected for length alone', () => {
+    const dense = fx('text-leaf-R.txt').repeat(1).split('\n').map((l, i) => l + '其' + i).join('\n');
+    expect(leafLoop(dense.repeat(1)).loop).toBe(false);
   });
 });
