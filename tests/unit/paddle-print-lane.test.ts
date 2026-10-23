@@ -170,3 +170,13 @@ describe('short leaves need a stable second read (third by-eye draw, 2026-10-23)
     expect(SHORT_LEAF).toBe(60);
   });
 });
+
+describe('lite margin commentary must survive (final by-eye draw, 2026-10-23)', () => {
+  const B = '置不顧而金是取是乞兒相也何可耐哉狐子可兒雅態可想世說桓溫經王敦墓望之曰可兒乞兒相摭言薛逢晚年嘗乘嬴馬赴朝値新進士綴行而出團所輩見逢行李蕭然前曰廻避新郎君逢遺一介曰報莫貧相阿婆三年少年時也曾東塗西抹來';
+  const lite = '<margin>以此試秀才其術最善特恐更有俗者並金巾而內之奈何</margin>\n' + B + B + '長袖拂榻相將坐衣輭無聲少間一美人起以白綾巾展几上上有草書三四行亦未審其何辭一美人置白金鋌可三四兩許秀才掇內袖中美人取巾握手笑出曰俗不可耐';
+  const body = B + B + '長袖拂榻相將坐衣輭無聲少間一美人起以白綾巾展几上上有草書三四行亦未審其何辭一美人置白金鋌可三四兩許秀才掇內袖中美人取巾握手笑出曰俗不可耐';
+  it('keeps lite when Paddle left the margin out, even above 90 % of its length', () => {
+    expect(coversLite(liteTextCount(body), lite, body)).toMatchObject({ ok: false, why: 'lite_margin_missing' });
+    expect(coversLite(liteTextCount(lite), lite, '以此試秀才其術最善特恐更有俗者並金巾而內之奈何\n' + body).ok).toBe(true);
+  });
+});

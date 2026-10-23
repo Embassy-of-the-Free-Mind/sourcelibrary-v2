@@ -465,8 +465,8 @@ async function apply() {
           totals.rejected++; totals.why[a.reason] = (totals.why[a.reason] || 0) + 1; continue;
         }
         if (pol.why === 'flash_lite') {
-          const c = coversLite(a.han, p.ocr.data);
-          if (!c.ok) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'shorter_than_lite', paddle: c.paddle, lite: c.lite }); totals.shorter_than_lite = (totals.shorter_than_lite || 0) + 1; continue; }
+          const c = coversLite(a.han, p.ocr.data, a.body);
+          if (!c.ok) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: c.why, paddle: c.paddle, lite: c.lite, margin_recall: c.margin_recall }); totals[c.why] = (totals[c.why] || 0) + 1; continue; }
         }
         const text = envelope(a.body, language);
         const field = ocrField(text, {

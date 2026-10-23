@@ -239,9 +239,18 @@ export function liteTextCount(data) {
  * (canary by eye, 聊齋志異 p.132: Paddle read the body and left out the red upper-margin commentary lite had).
  */
 export const LITE_COVERAGE = 0.9;
-export function coversLite(paddleCount, liteData) {
+export function coversLite(paddleCount, liteData, paddleBody = null) {
   const lite = liteTextCount(liteData);
-  return { ok: !lite || paddleCount >= LITE_COVERAGE * lite, lite, paddle: paddleCount };
+  if (lite && paddleCount < LITE_COVERAGE * lite) return { ok: false, why: 'shorter_than_lite', lite, paddle: paddleCount };
+  // the same omission when the commentary is under 10 % of the page (final by-eye draw, 聊齋志異 p.118): lite's
+  // <margin> blocks must be in Paddle's text — at least half their character bigrams
+  const margin = hanOf([...String(liteData || '').matchAll(/<margin[^>]*>([\s\S]*?)<\/margin>/gi)].map((m) => m[1]).join(''));
+  if (paddleBody != null && margin.length >= 8) {
+    const have = new Set(); const b = hanOf(paddleBody); for (let i = 0; i + 1 < b.length; i++) have.add(b.slice(i, i + 2));
+    let hit = 0, n = 0; for (let i = 0; i + 1 < margin.length; i++) { n++; if (have.has(margin.slice(i, i + 2))) hit++; }
+    if (hit / n < 0.5) return { ok: false, why: 'lite_margin_missing', lite, paddle: paddleCount, margin_recall: +(hit / n).toFixed(2) };
+  }
+  return { ok: true, lite, paddle: paddleCount };
 }
 
 /**
