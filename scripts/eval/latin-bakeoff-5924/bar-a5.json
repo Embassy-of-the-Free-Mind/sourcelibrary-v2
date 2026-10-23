@@ -1,0 +1,709 @@
+{
+ "prereg": "PREREGISTRATION-open-engine-print-5660.md Amendment 5",
+ "view_N": "preregistered",
+ "margin": 0.002,
+ "cells": {
+  "1600s": {
+   "n": 59,
+   "comps": {
+    "L": {
+     "median_N": 0.0421,
+     "catastrophic": 0
+    },
+    "LP": {
+     "median_N": 0.0066,
+     "catastrophic": 0
+    }
+   },
+   "engines": {
+    "P0": {
+     "run1": {
+      "arm": "P0",
+      "median_N": 0.0852,
+      "catastrophic": 5,
+      "vs": {
+       "L": {
+        "d_median": 0.0431,
+        "ci": [
+         0.03,
+         0.0613
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0786,
+        "ci": [
+         0.0665,
+         0.0945
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "P0r",
+      "median_N": 0.0852,
+      "catastrophic": 6,
+      "vs": {
+       "L": {
+        "d_median": 0.0431,
+        "ci": [
+         0.0288,
+         0.0663
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0786,
+        "ci": [
+         0.0653,
+         0.0986
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0008,
+      "catastrophic_differ": 1
+     },
+     "adoptable": false
+    },
+    "P1": {
+     "run1": {
+      "arm": "P1",
+      "median_N": 0.0783,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": 0.0362,
+        "ci": [
+         0.0262,
+         0.0473
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0717,
+        "ci": [
+         0.0637,
+         0.0788
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "P1r",
+      "median_N": 0.0786,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": 0.0365,
+        "ci": [
+         0.0264,
+         0.0478
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.072,
+        "ci": [
+         0.0637,
+         0.079
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0007,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    },
+    "M": {
+     "run1": {
+      "arm": "M",
+      "median_N": 0.0641,
+      "catastrophic": 0,
+      "vs": {
+       "L": {
+        "d_median": 0.022,
+        "ci": [
+         0.0114,
+         0.0341
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0575,
+        "ci": [
+         0.0471,
+         0.0663
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Mr",
+      "median_N": 0.0653,
+      "catastrophic": 0,
+      "vs": {
+       "L": {
+        "d_median": 0.0232,
+        "ci": [
+         0.0114,
+         0.0342
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0587,
+        "ci": [
+         0.0474,
+         0.0664
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0004,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    },
+    "G": {
+     "run1": {
+      "arm": "G",
+      "median_N": 0.0279,
+      "catastrophic": 4,
+      "vs": {
+       "L": {
+        "d_median": -0.0142,
+        "ci": [
+         -0.0215,
+         -0.0036
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0213,
+        "ci": [
+         0.0158,
+         0.0269
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Gr",
+      "median_N": 0.0279,
+      "catastrophic": 4,
+      "vs": {
+       "L": {
+        "d_median": -0.0142,
+        "ci": [
+         -0.0214,
+         -0.0041
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0213,
+        "ci": [
+         0.0164,
+         0.0267
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0,
+      "catastrophic_differ": 2
+     },
+     "adoptable": false
+    },
+    "O": {
+     "run1": {
+      "arm": "O",
+      "median_N": 0.0307,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": -0.0114,
+        "ci": [
+         -0.0188,
+         -0.0004
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0241,
+        "ci": [
+         0.0182,
+         0.0328
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Or",
+      "median_N": 0.0312,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": -0.0109,
+        "ci": [
+         -0.0218,
+         -0.0011
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0246,
+        "ci": [
+         0.0157,
+         0.0319
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0008,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    }
+   },
+   "adoptable": []
+  },
+  "1500s": {
+   "n": 40,
+   "comps": {
+    "L": {
+     "median_N": 0.056,
+     "catastrophic": 0
+    },
+    "LP": {
+     "median_N": 0.0149,
+     "catastrophic": 0
+    }
+   },
+   "engines": {
+    "P0": {
+     "run1": {
+      "arm": "P0",
+      "median_N": 0.1085,
+      "catastrophic": 3,
+      "vs": {
+       "L": {
+        "d_median": 0.0525,
+        "ci": [
+         0.0349,
+         0.0756
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0936,
+        "ci": [
+         0.0737,
+         0.1133
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "P0r",
+      "median_N": 0.1076,
+      "catastrophic": 3,
+      "vs": {
+       "L": {
+        "d_median": 0.0516,
+        "ci": [
+         0.0335,
+         0.0691
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0927,
+        "ci": [
+         0.0714,
+         0.1084
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0006,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    },
+    "P1": {
+     "run1": {
+      "arm": "P1",
+      "median_N": 0.0842,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": 0.0282,
+        "ci": [
+         0.0212,
+         0.0496
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0693,
+        "ci": [
+         0.0578,
+         0.0876
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "P1r",
+      "median_N": 0.0855,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": 0.0295,
+        "ci": [
+         0.0216,
+         0.049
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0706,
+        "ci": [
+         0.058,
+         0.0869
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    },
+    "M": {
+     "run1": {
+      "arm": "M",
+      "median_N": 0.0685,
+      "catastrophic": 0,
+      "vs": {
+       "L": {
+        "d_median": 0.0125,
+        "ci": [
+         0.0026,
+         0.0266
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0536,
+        "ci": [
+         0.0398,
+         0.0649
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Mr",
+      "median_N": 0.0693,
+      "catastrophic": 0,
+      "vs": {
+       "L": {
+        "d_median": 0.0133,
+        "ci": [
+         0.0007,
+         0.0267
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0544,
+        "ci": [
+         0.039,
+         0.0648
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": true,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0004,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    },
+    "G": {
+     "run1": {
+      "arm": "G",
+      "median_N": 0.0312,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": -0.0248,
+        "ci": [
+         -0.0311,
+         -0.0063
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0164,
+        "ci": [
+         0.0046,
+         0.0326
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Gr",
+      "median_N": 0.0312,
+      "catastrophic": 2,
+      "vs": {
+       "L": {
+        "d_median": -0.0248,
+        "ci": [
+         -0.031,
+         -0.0055
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0164,
+        "ci": [
+         0.0049,
+         0.0337
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0,
+      "catastrophic_differ": 1
+     },
+     "adoptable": false
+    },
+    "O": {
+     "run1": {
+      "arm": "O",
+      "median_N": 0.0457,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": -0.0103,
+        "ci": [
+         -0.0246,
+         0.0012
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0309,
+        "ci": [
+         0.0138,
+         0.0411
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "run2": {
+      "arm": "Or",
+      "median_N": 0.0476,
+      "catastrophic": 1,
+      "vs": {
+       "L": {
+        "d_median": -0.0084,
+        "ci": [
+         -0.021,
+         0.0003
+        ],
+        "ci_upper_within": true,
+        "median_ok": true,
+        "catastrophic_ok": false,
+        "passes": false
+       },
+       "LP": {
+        "d_median": 0.0327,
+        "ci": [
+         0.017,
+         0.0402
+        ],
+        "ci_upper_within": false,
+        "median_ok": false,
+        "catastrophic_ok": false,
+        "passes": false
+       }
+      },
+      "passes_both": false
+     },
+     "agreement": {
+      "median_abs_d": 0.0018,
+      "catastrophic_differ": 0
+     },
+     "adoptable": false
+    }
+   },
+   "adoptable": []
+  }
+ }
+}

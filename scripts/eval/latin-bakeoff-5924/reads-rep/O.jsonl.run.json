@@ -1,0 +1,12 @@
+{
+ "mode": "olmocr",
+ "model": "m",
+ "pages_this_pass": 99,
+ "clients": 16,
+ "wall_secs": 267.7,
+ "pages_per_hour": 1331,
+ "errors": 0,
+ "hit_cap": 1,
+ "out_tok": 75503,
+ "in_tok": 156648
+}
