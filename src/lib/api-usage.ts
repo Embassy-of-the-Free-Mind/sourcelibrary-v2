@@ -83,6 +83,10 @@ async function writeLogEntry(input: LogApiUsageInput) {
     route: input.route,
     method: input.request.method,
     path: input.request.nextUrl.pathname,
+    // Which door the call came through (#7155). Deployment and alias hosts
+    // reach Vercel without Cloudflare, so a read through one of them is
+    // invisible to the edge logs; without this field it was invisible here too.
+    host: (input.request.headers.get('host') || '').slice(0, 120) || null,
     status: input.status,
     ms: input.ms,
     ip_hash: hashIp(ip),
