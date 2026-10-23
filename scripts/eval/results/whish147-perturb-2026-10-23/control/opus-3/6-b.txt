@@ -1,0 +1,10 @@
+ROW 1 | ബുദ്ധിൎധൎമ്മൊജ്ഞാനംവി‖രാഗഐശ്വൎയ്യംസാത്വികമെതദ്രൂപംതാ‖മസമസ്മാദ്വിപൎയ്യസ്തം।
+ROW 2 | അഭിമാനൊഹം‖കാരസ്തസ്മാദ്വിവിധഃപ്രവൎത്തതെസൎഗ്ഗഃ‖ഏകാദശകശ്ചഗണസ്തന്മാ
+ROW 3 | ത്രപഞ്ചകശ്ചൈ‖വ।൨൪।സാത്വികഏകാദശകഃ‖പ്രവൎത്തതെവൈ
+ROW 4 | കൃതാദഹംകാരാ‖ദ്ഭൂതാദെസ്തന്മാത്രസ്സതാമസ‖സ്തൈജസാദുഭ
+ROW 5 | യം।൨൫।ബുദ്ധി‖ന്ദ്രിയാണിചക്ഷുശ്ശ്രൊത്രഘ്രാണ‖രസനത്വഗാഖ്യാ
+ROW 6 | നിവാക്പാണി‖[illegible]പാദപായൂപസ്ഥാൻകൎമ്മെ‖ന്ദ്രിയാണ്യാഹുഃ।൨൬
+ROW 7 | ഉഭയാത്മകമ‖ത്രമനസ്സംകല്പകമിന്ദ്രിയഞ്ചസാ‖ധൎമ്മ്യാൽഗുണപരി
+ROW 8 | ണാമവിശെഷാ‖ന്നാനാത്വംബാഹ്യഭെദാശ്ച।൨൭।രൂ‖പാദിഷുപഞ്ചാ
+ROW 9 | നാമാലൊചന‖മാത്രമിഷ്യതെവൃത്തിഃവചനാദാനവിഹ‖രണൊത്സൎഗ്ഗാനന്ദാശ്ച
+NOTE | Most of the leaf is readable, but these parts are uncertain: the first glyphs of rows 1, 3 and 6, the kārikā numbers with their danda marks (shown as ।), and where exactly the ‖ falls in the full-width rows 1, 2, 8 and 9. In row 5 I read the strokes as ത്വഗാഖ്യാ, not സ്പൎശകാ. Recognising the passage helped me split words, but the readings are only what the strokes show.

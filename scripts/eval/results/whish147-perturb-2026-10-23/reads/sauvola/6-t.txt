@@ -1,0 +1,12 @@
+ROW 1 | [illegible]കൈവല്യ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | കൈവല്യാൎത്ഥപ്ര[illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]കൈവല്യാ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I could read almost none of this leaf, roughly under 5%. The scans are heavily binarised, with broken strokes, speckle and blur at the holes, and I can't tell most aksharas apart with any confidence. The only parts I'm reasonably sure of are the "കൈവല്യാ…" sequences at the start of left rows 2 and 8. I left everything else as [illegible] rather than guess or fill it in from the known text. The layout is clear: 10 rows, with p01 as the left column, p02 and p03 together as the middle column, and p04 as the right column. A greyscale or higher-resolution scan would be needed to transcribe it properly.
