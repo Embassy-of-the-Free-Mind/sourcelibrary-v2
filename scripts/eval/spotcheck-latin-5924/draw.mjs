@@ -47,7 +47,7 @@ for (const b of frame) {
   const run = [];
   for (let i = start; i < start + 3; i++) {
     const p = pages[i], slug = `${b.book_id}-p${p.page_number}`;
-    const src = getPageSource(p), served = p.display_photo || null;
+    const src = getPageSource(p), served = p.display_photo || null;  // image-pick-ok: by-eye check opens the SERVED display_photo beside the OCR source on purpose (5699)
     fs.writeFileSync(path.join(OUT, `${slug}.ocr.txt`), p.ocr?.data || '');
     fs.writeFileSync(path.join(OUT, `${slug}.en.txt`), p.translation?.data || '');
     for (const [d, q] of [['prev', pages[i - 1]], ['next', pages[i + 1]]]) fs.writeFileSync(path.join(OUT, `${slug}.${d}.ocr.txt`), q?.ocr?.data || '');
