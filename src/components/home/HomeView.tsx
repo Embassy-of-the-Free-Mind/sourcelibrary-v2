@@ -108,7 +108,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.nativeShelfHeading}
               </h2>
               <Link
-                href={`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`}
+                href={lp(`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.nativeShelfAll} &rarr;
