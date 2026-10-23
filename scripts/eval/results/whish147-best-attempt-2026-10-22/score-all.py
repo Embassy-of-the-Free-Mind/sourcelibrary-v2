@@ -22,4 +22,4 @@ for lf, iast in anch.items():
     out[lf] = dict(fresh_cer=fc, fresh_chars=fn, anchored_cer=ac, anchored_chars=an)
 json.dump(out, open(f'{HERE}/fresh-vs-anchored.json', 'w'), indent=0)
 v = [x for x in out.values() if x['fresh_cer'] is not None]
-print(len(out), 'anchored leaves;', len(v), 'with a fresh read;', sum(1 for x in v if x['fresh_cer'] < x['anchored_cer']), 'where the fresh read scores better')
+print(len(out), 'anchored leaves;', len(v), 'with a fresh read;', sum(1 for x in v if x['anchored_cer'] is not None and x['fresh_cer'] < x['anchored_cer']), 'where the fresh read scores better')

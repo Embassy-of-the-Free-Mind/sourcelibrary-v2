@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: [none]
+measure: [accuracy, stability]
 languages: [sa]
 scripts: [Mlym]
 canons: [sanskrit]
@@ -32,5 +32,9 @@ PRIOR ART: 2026-10-21-whish147-malayalam-palm-leaf-opus.md — it measured colla
 - **Translation.** 151 of 159 pages carry an English translation with its warning. The translation write door refused 8 free-read pages (66, 67, 95, 100, 106–109) as `collapsed`: a long OCR attempt with almost no English, which is the right English for those reads.
 
 - **Correction to the free-read figure (parent session, #7119, 2026-10-22).** The 2026-10-21 at-chance CER (0.64–0.75) scored a whole half-leaf read against one contiguous window of GRETIL, which a half-leaf row cannot match. Re-scored row by row inside each leaf's verse span (noise floor 0.70), Fable 5.1 half-leaf free reads pool at CER 0.51 (7 leaves, 0.45–0.58; 2 of 9 declined), Opus 0.54. The free-read page warnings were rewritten to that figure (52 pages). 8 pages whose free read is long and fluent also say the model may be supplying a remembered text.
+- **Fresh direct Opus read from column crops (2026-10-23, Derek's request).** After the one-leaf-per-page split, each leaf was cut at its two string holes into column pieces (each ≤ 1,600 px, nothing downscaled) and read by Opus 5.5 in one call, in Malayalam script, with no edition shown (`fresh.mjs`). Scored per row with #7148's instrument (`score-fresh.py`):
+  - On the 9 verse leaves the pooled CER is 0.37 (floor 0.75), better than the half-leaf reads (0.51 Fable / 0.54 Opus), but bimodal: 0.04–0.17 on five leaves and 0.48–0.63 on four. On 8t Opus wrote that recognising kārikās 40–45 "shaped what I wrote". A second read of 6t went from 0.09 to 0.40; 5b stayed at 0.04–0.05. The low scores are partly memory of the verses.
+  - Across all 209 placed leaves, commentaries included, the fresh read differs from the edition excerpt at CER 0.53 pooled (median 0.55; under 0.2 on 6 leaves), against the anchored text's own excerpt (low by construction).
+  - Kept as the page OCR on 108 leaves (unplaced, blank and boards) and as a labelled note under the anchored text on 206 leaves. On 3 leaves the fresh read scored below the anchored text and became the OCR: two verse leaves at 0.03–0.04, one Tarkasaṃgraha leaf at 0.20.
 - *Replicated?* One manuscript.
 - *Not measured:* how accurate the collated text is beyond the verses. The 25/36 planted-difference figure covers kārikā leaves only, and the page warnings say so.
