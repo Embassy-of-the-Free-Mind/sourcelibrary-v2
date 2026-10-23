@@ -7,14 +7,14 @@ import './partners.css';
 // Static on purpose: the numbers are a dated snapshot, stated as such on the page.
 
 export const metadata: Metadata = {
-  title: 'For AI Partners | Source Library',
+  title: 'AI Partners | Source Library',
   description:
     'A digital archive of 129,000 books in more than fifty languages, over 20,000 of them translated into English, each translation set beside its original page.',
-  alternates: { canonical: '/partners' },
+  alternates: { canonical: '/ai-partners' },
   robots: { index: false, follow: true },
 };
 
-export default function PartnersPage() {
+export default function AiPartnersPage() {
   return (
     <>
       <SiteHeader variant="light" />
@@ -22,12 +22,12 @@ export default function PartnersPage() {
       <section className="hero">
         <div className="wrap">
           <div>
-            <p className="eyebrow">A Wisdom Frontiers project</p>
+            <p className="eyebrow">AI Partners · A Wisdom Frontiers project</p>
             <h1>The world's <em>wisdom</em>, translated beside the original page</h1>
             <p>A digital archive of 129,000 books in more than fifty languages, over 20,000 of them transcribed and translated into English, with every translation set opposite the page from which it was made, so that any line may be verified at its source.</p>
           </div>
           <figure>
-            <img src="/partners/ottoman-celestial.jpg" alt="Ottoman celestial map, 1583: the zodiac and planetary spheres held by angels" />
+            <img src="/ai-partners/ottoman-celestial.jpg" alt="Ottoman celestial map, 1583: the zodiac and planetary spheres held by angels" />
             <figcaption><a href="/book/art-ottoman-celestial-map">Ottoman celestial map, 1583 · Source Library</a></figcaption>
           </figure>
         </div>
@@ -56,7 +56,7 @@ export default function PartnersPage() {
 
           </div>
           <figure style={{ margin: '0' }}>
-            <div className="frame"><img src="/partners/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola" /></div>
+            <div className="frame"><img src="/ai-partners/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola" /></div>
             <figcaption className="cap" style={{ color: 'var(--night-muted)' }}>An early printed page naming Marsilio Ficino and Giovanni Pico della Mirandola.</figcaption>
           </figure>
         </div>
@@ -114,8 +114,8 @@ export default function PartnersPage() {
             <p className="lede">The most demanding material is reviewed by scholars; the Mayanist David Stuart has recently examined our Yucatec Maya readings. A further 1,465 volunteers correct pages, and readers report what they find.</p>
             <p>Translations are tested against published human translations in fourteen languages, and error rates are published.</p>
             <div className="photos">
-              <img src="/partners/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam" />
-              <img src="/partners/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica" />
+              <img src="/ai-partners/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam" />
+              <img src="/ai-partners/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica" />
             </div>
             <p className="cap">The Embassy of the Free Mind, Amsterdam, home of the Ritman Library.</p>
           </div>
