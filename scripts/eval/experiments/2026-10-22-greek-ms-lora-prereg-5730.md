@@ -7,9 +7,9 @@ canons: []
 n_books: 4
 n_pages: 1040
 verdict: "Preregistration only, no result: training burst 2 trains GLM-OCR + LoRA on 619 Grec 1839 pages labelled from the Schneider edition fit, and is decided on 307 pages of two alchemical codices from other libraries (Marcianus gr. 299, Ars sacra) against served text and flash-lite. Queued on gex45."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: 2026-10-23-greek-ms-lora-score-5730.md
 issue: [5730, 6871]
 ---
 ## 2026-10-22 · Burst 2: can a reader trained on one Greek manuscript read others? (#5730, prereg)
