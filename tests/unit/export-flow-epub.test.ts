@@ -26,6 +26,12 @@ describe('footnotesFor', () => {
     expect(out).not.toContain('class="note"');
     expect(seq.n).toBe(6);
   });
+  it('moves a footnote number stranded on its own line or paragraph to the end of the text before it', () => {
+    const line = footnotesFor('<p>the way to them?<br/><span class="margin">[a]</span><br/>For enemies</p>', { n: 0 });
+    expect(line).toContain('the way to them? <a epub:type="noteref"');
+    const para = footnotesFor('<p>the way to them?</p>\n<p><span class="margin">[a]</span> <span class="margin">[b]</span></p>\n<p>Next.</p>', { n: 0 });
+    expect(para).toMatch(/the way to them\? <a epub:type="noteref"[^>]*>1<\/a> <a epub:type="noteref"[^>]*>2<\/a>\s*<\/p>\n<p>Next\.<\/p>/);
+  });
   it('leaves a section without notes untouched', () => {
     expect(footnotesFor('<p>Plain.</p>', { n: 0 })).toBe('<p>Plain.</p>');
   });

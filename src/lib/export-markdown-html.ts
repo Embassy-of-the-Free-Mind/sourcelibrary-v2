@@ -92,6 +92,10 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+  // An annotation tag still here has no partner (every paired one became a placeholder above): a stray
+  // `</margin>` in the stored text. Escaped, it reads as literal "</margin>" in the book (Hariri, Kindle EPUB,
+  // 2026-10-22). It carries no words, so it goes.
+  html = html.replace(/&lt;\/?(?:note|margin|gloss|term|unclear|lacuna|image-desc|insert)(?:\s[^&]*?)?\/?&gt;/gi, '');
 
   // Convert placeholders to inline styled elements. `[\s\S]` because a note or
   // an image description can run several lines — `.` stopped at the first

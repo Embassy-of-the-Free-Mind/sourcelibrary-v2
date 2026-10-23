@@ -133,6 +133,22 @@ describe('joinPagesHtml', () => {
     expect(plain(joinPagesHtml([page(1, 'He said:\n\nYes'), page(2, 'The next.')]))).toContain('Yes');
   });
 
+  it('joins across a translator\'s note that closes the page (Albigensians, EPUB with notes on)', () => {
+    const html = joinPagesHtml([
+      { n: 1, html: '<p>the lords had to appear before <span class="note">[The Inquisition of Toulouse.]</span></p>', href: '/p/1' },
+      { n: 2, html: '<p>the terrible tribunal.</p>', href: '/p/2' },
+    ]);
+    expect(plain(html)).toBe('<p>|the lords had to appear before <span class="note">[The Inquisition of Toulouse.]</span> | the terrible tribunal.</p>');
+  });
+
+  it('carries a notes-only paragraph closing the page onto the sentence, which then runs on (Albigensians p43)', () => {
+    const html = joinPagesHtml([
+      { n: 43, html: '<p>the lords had to appear before</p>\n<p><span class="note">[1. Art. Laurac. 2. Du Mège, Hist. de Toul.]</span></p>', href: '/p/43' },
+      { n: 44, html: '<p>the terrible tribunal.</p>', href: '/p/44' },
+    ]);
+    expect(plain(html)).toBe('<p>|the lords had to appear before <span class="note">[1. Art. Laurac. 2. Du Mège, Hist. de Toul.]</span> | the terrible tribunal.</p>');
+  });
+
   it('keeps closing punctuation at the top of a page with the sentence before it', () => {
     const html = joinPagesHtml([page(1, 'as soon as a single thought arises'), page(2, ', it becomes an error.')]);
     expect(plain(html)).toBe('<p>|as soon as a single thought arises, | it becomes an error.</p>');

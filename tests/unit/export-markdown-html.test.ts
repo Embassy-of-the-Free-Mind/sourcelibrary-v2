@@ -119,3 +119,12 @@ describe('stripEditorialWrapperBlocks — the canonical list, without the plain-
     expect(full).not.toContain('# ');
   });
 });
+
+describe('markdownToHtml — an unpaired annotation tag is dropped, not printed (#7118)', () => {
+  it('drops a stray closing </margin> but keeps the text around it and paired tags', () => {
+    const html = markdownToHtml('The lamps of my house.\n</margin>\nAnd he recited <margin>a gloss</margin>.', { stripNotes: false });
+    expect(html).not.toContain('&lt;/margin&gt;');
+    expect(html).toContain('The lamps of my house.');
+    expect(html).toContain('<span class="margin">[a gloss]</span>');
+  });
+});
