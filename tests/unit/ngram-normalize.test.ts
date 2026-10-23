@@ -30,6 +30,9 @@ const TOKENIZE_FIXTURES = [
 ];
 
 const STRIP_FIXTURES = [
+  // Layout HTML (#7118): <br>, <center>, <italic>, a stray closer, and a <br> inside a table row.
+  'Hour of <br> Meridian <center>P.</center> called <italic>laas</italic> for the students.</t> <note>kept</note>',
+  '| Midpoint <br> ω | Equal |\n|---|---|\n| 6 | 51 |',
   '<meta>This page continues the discussion of mercury from page 88.</meta>\nReal body text here.',
   'Note: The text in the image is in French, not Latin. I have transcribed it exactly as it appears.\n\nLe vrai texte commence ici.',
   '<summary>About alchemy</summary><language>Latin</language>Corpus text <note>a gloss</note> continues.',
