@@ -77,6 +77,14 @@ describe('buildFlowEpub', () => {
     expect(c).toContain('Pages 2–3 are not yet translated; the original is at <a href="https://x/book/b?page=2">');
   });
 
+  it('keeps a section whose pages are all untranslated, as its note — never drops it', async () => {
+    const book = { id: 'b', chapters: [{ title: 'Liber I', pageNumber: 1 }, { title: 'Liber II', pageNumber: 2 }] };
+    const ps = [{ id: 'a', page_number: 1, translation: { data: 'Done.' } }, { id: 'c', page_number: 2, ocr: { data: 'Latina' } }];
+    const flow = await buildFlowEpub(db() as never, book, ps, { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    expect(flow.chapters.map(c => c.title)).toEqual(['Liber I', 'Liber II']);
+    expect(flow.chapters[1].content).toContain('Page 2 is not yet translated');
+  });
+
   it('says nothing about illustrations when the book has none', async () => {
     const flow = await buildFlowEpub(db(0) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: true });
     expect(flow.imagesNote).toBeNull();

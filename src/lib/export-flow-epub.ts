@@ -103,14 +103,14 @@ export interface FlowEpub {
 }
 
 /** Fetch, recompress and stage the book's illustrations as files the EPUB builder embeds. */
-async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): Promise<{ byPage: Map<number, string>; total: number; included: number; dir: string | null }> {
+async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): Promise<{ byPage: Map<number, string>; total: number; included: number; dir: string | null; best: string | null }> {
   const rows = await db.collection('gallery_images')
     .find(galleryFilter({ bookId, minQuality: 0.5 }), { projection: { _id: 0, page_number: 1, extracted_url: 1, description: 1, bbox: 1, detection_index: 1, gallery_quality: 1 }, maxTimeMS: 10000 })
     .toArray()
     .catch(() => []) as unknown as Array<{ page_number: number; extracted_url: string; description?: string; bbox?: { y?: number }; detection_index?: number; gallery_quality?: number }>;
   const imgs = rows.filter(r => pageNumbers.has(r.page_number));
   const byPage = new Map<number, string>();
-  if (imgs.length === 0) return { byPage, total: 0, included: 0, dir: null };
+  if (imgs.length === 0) return { byPage, total: 0, included: 0, dir: null, best: null };
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), `flow-epub-${bookId}-`));
   // Over the cap, the best illustrations across the whole book, not the first N (which would strip every plate
   // from the book's later parts); then back into reading order.
@@ -128,13 +128,15 @@ async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): P
     }
   }));
   let included = 0;
+  let best: { file: string; q: number } | null = null;
   wanted.forEach((img, i) => {
     if (!files[i]) return;
     included++;
+    if (!best || (img.gallery_quality ?? 0) > best.q) best = { file: files[i] as string, q: img.gallery_quality ?? 0 };
     const alt = escapeHtml((img.description || 'Illustration').slice(0, 300));
     byPage.set(img.page_number, (byPage.get(img.page_number) || '') + `<figure class="flow-figure"><img src="file://${files[i]}" alt="${alt}"/></figure>`);
   });
-  return { byPage, total: imgs.length, included, dir };
+  return { byPage, total: imgs.length, included, dir, best: (best as { file: string } | null)?.file ?? null };
 }
 
 export async function buildFlowEpub(
@@ -146,7 +148,7 @@ export async function buildFlowEpub(
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
   const figures = opts.includeImages
     ? await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)))
-    : { byPage: new Map<number, string>(), total: await db.collection('gallery_images').countDocuments(galleryFilter({ bookId: book.id, minQuality: 0.5 }), { maxTimeMS: 5000 }).catch(() => 0), included: 0, dir: null };
+    : { byPage: new Map<number, string>(), total: await db.collection('gallery_images').countDocuments(galleryFilter({ bookId: book.id, minQuality: 0.5 }), { maxTimeMS: 5000 }).catch(() => 0), included: 0, dir: null, best: null };
 
   const flowPage = (p: FlowPageDoc): FlowPage => {
     const raw = opts.text === 'translation'
@@ -195,7 +197,8 @@ export async function buildFlowEpub(
         .replace(/(<a class="page-marker"[^>]*>)(\d+)<\/a>/g, '$1|$2</a>');
       return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}` };
     })
-    .filter(c => /<p>|<figure/.test(c.content));
+    // Any content at all — a section of untranslated pages is its "not yet translated" note, not nothing.
+    .filter(c => /<p[\s>]|<figure|<table|<ul/.test(c.content));
 
   // The cover: the book's own image, recompressed to a JPEG within Kindle's recommended 1600×2560 (the stored
   // thumbnail may be AVIF, which no e-reader reads). Only when the scans may be redistributed.
@@ -208,6 +211,9 @@ export async function buildFlowEpub(
       fs.writeFileSync(coverFile, buf);
     }
   }
+  // The stored cover could not be fetched (Gallica answers 403 to a server): the book's best illustration stands in,
+  // one of its own plates rather than a grey placeholder. It is already staged; cleanup removes it with the rest.
+  const cover = coverFile ?? figures.best;
 
   const imagesNote = figures.total === 0 ? null
     : !opts.includeImages ? `This edition carries the text only: the scans of this book are not released for redistribution, so its ${figures.total} illustrations are not included. They can be seen at ${opts.baseUrl}/book/${book.id}.`
@@ -219,7 +225,7 @@ export async function buildFlowEpub(
     imagesTotal: figures.total,
     imagesIncluded: figures.included,
     imagesNote,
-    cover: coverFile ? `file://${coverFile}` : null,
+    cover: cover ? `file://${cover}` : null,
     cleanup: () => {
       if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true });
       if (coverFile) fs.rmSync(coverFile, { force: true });
