@@ -478,8 +478,9 @@ const NATIVE_SHELF_COUNT = 15;
 /**
  * The most-read books WRITTEN in the page's language, for the band under the
  * hero: the one section of that page whose books are in the visitor's
- * language. Transcribed books only — a shelf of scans nobody can read as text
- * would break the promise the heading makes. Real covers, one card per work.
+ * language. Scans-only books count: a reader of Latin or Chinese reads the
+ * page image, and serving those readers is why these sites exist (Derek,
+ * 2026-10-22; #7176 published ~16K such books). Real covers, one card per work.
  */
 async function getNativeShelf(language: string): Promise<CatalogBook[]> {
   const { books } = await browseBooks({ language, sort: 'popular', limit: 200, skipCount: true });
@@ -487,7 +488,6 @@ async function getNativeShelf(language: string): Promise<CatalogBook[]> {
   const out: CatalogBook[] = [];
   for (const b of books) {
     if (!hasRenderableCover(b)) continue;
-    if (!b.pages_ocr) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -506,14 +506,14 @@ const SUBJECT_SHELF_MIN = 6;
 /**
  * One collection's most-read books WRITTEN in the page's language, for the
  * "分类书架" band on `/zh` (NATIVE_SUBJECT_SHELVES in home-i18n.ts). Same rules as
- * the native shelf: transcribed, real cover, one card per work.
+ * the native shelf: scans-only books count, real cover, one card per work.
  */
 async function getSubjectShelf(slug: string, language: string): Promise<CatalogBook[]> {
   const { books } = await browseBooks({ collection: slug, language, sort: 'popular', limit: 200, skipCount: true });
   const seen = new Set<string>();
   const out: CatalogBook[] = [];
   for (const b of books) {
-    if (!hasRenderableCover(b) || !b.pages_ocr) continue;
+    if (!hasRenderableCover(b)) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
     seen.add(key);
