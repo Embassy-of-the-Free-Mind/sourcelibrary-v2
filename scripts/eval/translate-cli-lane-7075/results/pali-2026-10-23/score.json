@@ -1,0 +1,121 @@
+{
+ "judges": {
+  "opus": {
+   "n": 16,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 15,
+    "old": 1,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1.06,
+   "ci95": [
+    0.56,
+    1.56
+   ],
+   "pages": {
+    "69b99ec16ed9e0490990a805": {
+     "new": 4,
+     "old": 1,
+     "better": "new",
+     "reason": "X renders the whole page, including its footnotes, accurately, and flags the garbled passages and its own added notes; Y translates only the header and a fragment of the first sentence, and mistranslates even that ('great affliction of the gods', 'those of little merit')."
+    },
+    "69d5ae284dc55b8478de0f9f": {
+     "new": 4,
+     "old": 1,
+     "better": "new",
+     "reason": "X invents connected content, such as the root condition with non-greed glosses, sampayutta, presence and non-disappearance, and Mahā-pakaraṇa, that the corrupt OCR does not support, while Y honestly states that the page is unreadable, offers only tentative word-shapes like purejāta, pacchājāta and anupāla that do appear in the source, and adds nothing else."
+    },
+    "69b99ec16ed9e0490990a725": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X garbles the commentary on 'avasāye': it treats being unbound from sense pleasures as the reason she is called 'one who flows upward', instead of the commentary's reasoning that 'avasāya' means completion of the ascetic's task because those phrases follow; X also drops the verse numbers and all footnotes and adds an unsourced gloss ('her former husband'). Y renders the argument correctly and keeps the numbering and apparatus, though it translates the Pali variant readings into English and adds an editorial meta note."
+    },
+    "6a31c8b74400787ae5a9d7bc": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X turns the garbled volume page numbers '2,0' and '2,6' into the invented '270' and '276', mistranslates Bahuputtikā as 'Many-Daughters', and drops the variant-reading footnotes; Y reproduces the numbers as found, names the nun correctly, and translates the footnotes."
+    },
+    "6a09ff65fa20006dbaba93d9": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y keeps the source's entry structure and renders items like 'adhammo ca' ('what is not the teaching') accurately, whereas X rebuilds the headword 'Adhimuttakatā' as 'Nānādhimuttakatā', mistranslates 'adhammo ca' as 'with the lack of teaching', and has a summary that wrongly says the page runs from Adhicitta."
+    },
+    "6a31c8b74400787ae5a9d7bb": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y renders the verses accurately, including 108's 'respectful greeting to the upright is better' and nearly all the apparatus variants. X blurs verse 108, drops most of the variant readings (106 ce, 109 sīlassa, 113 udayabbayaṃ), and adds a summary and keywords that are not on the page."
+    },
+    "69b99ec16ed9e0490990a70d": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "X keeps the editor's English text intact and puts its additions (including an unsourced 'cook testing rice' explanation and the 'No. 67' meta claim) in marked notes, whereas Y changes the body text itself by prefixing 'The name' to the continuation fragment and replacing 'dispensation' with 'current era'."
+    },
+    "6a09ff0429abf62080bbdb64": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X drops the statement '17 is a mode of 2', turns 'not a little redundancy' into 'a lot of redundancy', and replaces x/y with 'cause or effect', while Y keeps the full text and only adds marked glosses and an editorial note."
+    },
+    "6a09ff1dfa20006dbaba89ab": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X reproduces the title text exactly and keeps its additions in clearly separated notes, while Y inserts glosses into the title lines themselves and adds an editor name (E. R. Gooneratne) that does not appear on the page; both add an unsupported 1892 PTS edition claim."
+    },
+    "6a09ff1629abf62080bbdcc2": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Both mistranslate the first 'novigate' as 'not/non-non-disappearance', so they are close; Y edges ahead because it keeps the page number and footnote markers faithfully, while X drops the page number and inserts invented section headings ('Negative Method', 'Positive Method with Negative') that are not in the source. Y's added summary and keywords are clearly marked as metadata."
+    },
+    "6a31c8b74400787ae5a9d7bf": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X leaves out the parallel-passage references and footnotes 3, 10, 11 and 12, misassigns footnote 7, and adds a story number '7.' that the source does not have, while Y renders all apparatus completely and its only flaws are a minor name misspelling ('Kuṇḍadhāna') and clearly marked explanatory notes."
+    },
+    "6a09ff65fa20006dbaba93d5": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X keeps every headword, sub-entry and reference with accurate glosses, adding only one explanatory note on the four agati; Y adds an unsupported claim that the page continues from a table of contents and mistranslates several sub-entries, such as paccaŋsa as 'opposite shoulder' (it means 'share') and pareti as 'dedicated to'."
+    },
+    "6a09ff0029abf62080bbd974": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "X drops the opening fragment, the Siamese variant reading and footnote 1, and invents a continuation of footnote 2 (Dharmasarīra-sūtra, Dr. Stönner, 1904) that is not on the page; Y renders everything on the page but adds its own explanatory notes on Vedānta and the thirty-seven factors, plus a guessed previous-page phrase."
+    },
+    "6a09ff1629abf62080bbdc78": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Y keeps all three variant-reading footnotes (B anāsavo, S cūḷakaduke, B inserts ekaṃ) and renders the abbreviation instruction as part of the text, while X drops footnotes 2 and 3 and turns the source's own parenthetical instruction into an editorial note."
+    },
+    "6a09ff1629abf62080bbdc56": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Both render the doctrinal statements correctly, but Y adds content not on the page (a meta claim that the brackets mark an editorial supply, a summary naming the Dukapaṭṭhāna, and keywords including the Pali Text Society), while X stays close to the source apart from small expansions such as supplying 'aggregate' in §6."
+    },
+    "6a09ff0429abf62080bbdb6d": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y keeps the source's ellipses and the 'each preceding/each succeeding' distribution, and adds its extra content only in clearly marked notes and summary, whereas X fills in elided phrases as if they were printed and misidentifies the 'B.' witness as the 'Siamese edition'."
+    }
+   }
+  }
+ },
+ "rule": {
+  "controls": false,
+  "non_inferior": false,
+  "by_eye": "recorded separately (rule 3)"
+ }
+}
