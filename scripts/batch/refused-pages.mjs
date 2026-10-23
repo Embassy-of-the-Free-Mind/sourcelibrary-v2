@@ -38,6 +38,7 @@ import { MongoClient } from 'mongodb';
 import { ocrRefusalFallback } from '../lib/ocr-routing.mjs';
 import { LATIN_SCRIPT_LANGUAGES } from '../lib/translate-core.mjs';
 import { toLanguageCodes, codeFamily } from '../lib/language-normalize.mjs';
+import { bookHand, loadOcrProfile } from '../lib/ocr-trust-gate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
@@ -91,6 +92,17 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const rows = await selectPages(client.db('bookstore'));
+  if (mode === 'run') {
+    // The estimator charts are print. A manuscript (most typed pages handwritten, the trust gate's rule) goes to the
+    // manuscripts row's reader instead, Opus: on the first run Sonnet under-read a Catalan manuscript filed as print.
+    const hands = new Map();
+    for (const id of new Set(rows.filter((r) => r.eligible).map((r) => r.page.book_id))) {
+      hands.set(id, bookHand(await loadOcrProfile(client.db('bookstore'), id)));
+    }
+    for (const r of rows) {
+      if (hands.get(r.page.book_id) === 'manuscript') { r.chart = 'manuscript'; r.reader = ocrRefusalFallback('manuscript'); }
+    }
+  }
   await client.close();
 
   const tally = {};
