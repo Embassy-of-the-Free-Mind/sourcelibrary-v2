@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# timeout: 12h
+# timeout: 14h
 # issue: 5924
 # PRIOR ART: scripts/eval/latin-distill-6871/70-latin-distill.sh (serve / stop by pid / read_arm, copied; the student
 # served the same way) and scripts/eval/latin-bakeoff-5924/drive.sh `glm` (stock GLM-OCR arm G's serve flags, MTP
@@ -11,7 +11,10 @@
 #   GW  stock GLM-OCR   on the 20 whole books (10,274 pages)
 # Images were fetched ahead (code/fetch-chunk.py, 2,400 px cap) into in-spread/ and in-whole/. Every server is stopped
 # by its own pid; read.py resumes, so a re-add after a timeout continues where it stopped.
+# RESUME (queued as 6441-latin-gpu25-gw): the GW read stopped at its 27,000 s slice inside task 644, on books that loop to
+# the 6,000-token cap; this re-serves stock GLM-OCR with the same flags and reads only the GW pages not yet in out/GW.jsonl.
 set -uo pipefail
+RESUME_GW=${RESUME_GW:-0}
 J=/root/jobs/gpu-queue/79-latin-gpu25; VL=/root/bench/vl
 export VLLM_USE_FLASHINFER_SAMPLER=0 HF_HUB_OFFLINE=1
 cd "$J"; mkdir -p out
@@ -38,8 +41,13 @@ read_arm() {  # read_arm <arm> <img dir> <timeout s>
 }
 trap stop EXIT
 log "start; GPU $(gpu_mib) MiB; images spread $(ls in-spread | grep -c jpg) whole $(ls in-whole | grep -c jpg)"
-serve zai-org/GLM-OCR stock --speculative-config '{"method":"mtp","num_speculative_tokens":1}' && { read_arm GS in-spread 5400; read_arm GW in-whole 27000; }
-stop
-serve /root/jobs/latin-distill-6871/run/merged student && read_arm DS in-spread 5400
-stop
+if [ "${RESUME_GW:-0}" = 1 ]; then
+  serve zai-org/GLM-OCR stock --speculative-config '{"method":"mtp","num_speculative_tokens":1}' && read_arm GW in-whole 48000
+  stop
+else
+  serve zai-org/GLM-OCR stock --speculative-config '{"method":"mtp","num_speculative_tokens":1}' && { read_arm GS in-spread 5400; read_arm GW in-whole 27000; }
+  stop
+  serve /root/jobs/latin-distill-6871/run/merged student && read_arm DS in-spread 5400
+  stop
+fi
 log "done; GPU $(gpu_mib) MiB"
