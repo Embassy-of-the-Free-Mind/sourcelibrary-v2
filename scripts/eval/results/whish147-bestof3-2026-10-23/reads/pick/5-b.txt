@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A, D
+WHY | C reads as correct, continuous text of Sāṅkhyakārikā 11–16, including "avivekyādeḥ siddhis" and the Malayalam-numeral verse numbers ൰1–൰6; B wrongly has "siddhaḥ", A has doubled syllables ("jajanana", "cappumān", "āśrayaya"), and D has "siddhaṃ" plus a repeated "sa" at the start of row 10.

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three reads as real language in most rows, but B's opening rows contain genuine Sanskrit that fits this commentary ("kimātmakā ityāha", "ucyate prathama kapila", "mahātmane", "jñāna lakṣaṇa"); A covers every row but is mostly invented syllable strings, and C is nearly all illegible, with only a few fragments that match A.

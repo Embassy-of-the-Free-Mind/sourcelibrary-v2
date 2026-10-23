@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ānāstikanenna [illegible] buddhi [illegible] tvaṃ ‖ nanvīśvarasadbhāvekiṃpramāṇaṃ nanuna tā ‖ valpratyakṣaṃ [illegible] bāhyama
+2. ātantraṃpādānādyaḥ [illegible] ‖ [illegible] tvālnā [illegible] ḥsukhādivyatirikta ‖ tvālnāpyanumānaṃli
+3. ṃśādrūpāditicenna ‖ pāṃkṣityādikaṃsakarttṛkaṃkāryyatvālgha ‖ ṭavadityanumānapramā
+4. ṇatvālupādāna ‖ gocarāparokṣajñānacikī ‖ rṣākṛtimatvaṃupā
+5. dānaṃsamavāyikāra ‖ ṇaṃsakalaparamāṇvādi [illegible] ‖ [illegible] tvaṃupā
+6. tvaṃyasya [illegible] vṛttira ‖ [illegible] gamo [illegible] trapramāṇaṃ [illegible] ‖ ṣṭa [illegible] tvālsarvvajña
+7. [illegible] tvinuvādikaṃ ‖ jīvalakṣaṇaṃnana [illegible] ‖ [illegible] ṇohamityāde [illegible] sarvva
+8. trāhapratyeka [illegible] śarīra ‖ raṃcenna [illegible] niṣkriyā [illegible] lśarīrameva ‖ ākṣame [illegible] cenaśarīratva
+
+TRANSCRIPTION B
+1. ānāstikanennucamidhyānantvaṃ ‖ nanuīśvarasalbhāvekiṃpramāṇaṃ nata ‖ āvalpratyakṣaṃtadbhibāhyama
+2. āñcantuṃpānādyaḥśśṛpi ‖ dvṛtvālnānuḥśśṛnyakhādivṛttiri ‖ kkatvālnāpyanumānaṃli
+3. ṃgādyabhāvāditicennā ‖ gāṃonādikkaṃkarttṛjñaīṃkāryatvālu ‖ padityanumānapramā
+4. ṇatvālupādāname ‖ gācanāpanenākṣajñānacikka ‖ rākubhimatvaṃupā
+5. [illegible] dānāṃsamavāyikā ‖ naṇaṃsakalaparamāṇvādikṛ ‖ ṣṭaditvālsarvvajña
+6. tvaṃyasyasyavṛttida ‖ tyāgamomitantravramāṇeppikki ‖ vastulakṣaṇamāvā
+7. jjīcetinyacādikaṃjjīvalakṣaṇaṃ ‖ nanamananeṣṇādhiññova ‖ phalaṇophamityādaiyasvar
+8. tvādiḥpratyayaśāstrarenyū ‖ vamikṣakṣatvālśāstramevā ‖ ākkamiticenāśatirañña
+
+TRANSCRIPTION C
+1. ānāstika [illegible] cāṃnanuīśvarasalbhā ‖ vekiṃpramāṇaṃnatā ‖ lpratyakṣaṃta [illegible] ma
+2. ā [illegible] pānātra [illegible] pi ‖ dvyatvālnānu [illegible] jñenṛṣābhūvyatiri ‖ kkatvālnāpyanumānaṃli
+3. ṃśādṛvābhrāmikacenna [illegible] ‖ āṃkanābhikkaṃkatṛjña [illegible] ṃkāryyatvālgha ‖ ṭavadityanumānasyapramā
+4. ṇatvālupādāna ‖ gocarāparokṣajñānaciki ‖ rṣākṛtimatvaṃupā
+5. dānāṃsamavāyikā ‖ raṇaṃsakalaparamāṇvādidra ‖ ṣṭṛtvālsarvvajña
+6. tvaṃyasya [illegible] ‖ trāgamo [illegible] ‖ vasyalakṣaṇamāha
+7. jñicetanyacādikaṃ ‖ jīvalakṣaṇaṃnanamanane [illegible] tro ‖ pa [illegible] hamityādenusva [illegible]
+8. trāhapratyeyaśāsira ‖ śirainyavaṣikṣā ‖ ṣālśattiramevā ‖ kṣetracanāśariratra
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

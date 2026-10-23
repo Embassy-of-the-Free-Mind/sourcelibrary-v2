@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C's readable words (triguṇa, viṣayaḥ, cetanaṃ, dharmmi) follow the real wording of Sāṅkhyakārikā 11 (triguṇam aviveki viṣayaḥ sāmānyam acetanaṃ prasavadharmi), while B reads nothing at all, and A's lone "vyakta" sits in the same spot in every column, which looks like a machine artifact rather than real text.

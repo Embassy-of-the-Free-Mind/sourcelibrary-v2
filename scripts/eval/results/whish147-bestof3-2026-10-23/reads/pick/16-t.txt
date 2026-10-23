@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | Transcription A keeps the most continuous text that fits the context: it has the Sāṅkhyakārikā 3 phrases "naprakṛtirnavikṛtiḥ puruṣaḥ" and "naiva prakṛtiḥ", and Malayalam commentary forms such as "-kaḻuṭe", "uḻḻa" and "ceppa"; B has some of the same phrases but breaks up into fragments, and C is mostly [illegible].

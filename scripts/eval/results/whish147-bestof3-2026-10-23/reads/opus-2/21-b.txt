@@ -1,0 +1,11 @@
+ROW 1 | ഉഖക്താപ്രക്ഷി[illegible]ാന‖ാഉഗൃാൈത്ര്യക്ഷേ‖പൃക്താകരൈദാവി‖ട്ടനപലക്ഷ്യഃ[illegible]
+ROW 2 | ണനപലഭൂമാണാനൽ‖ങ്ങിൽഞ്ഞയത്ര്യംഒകപ്രകാരേണ‖ണാതൊനവിപ്രയാനപ്പുര
+ROW 3 | ക്ഷൈയാത്രിത്രനപല‖ജ്ഞബിത്രാബാ[illegible]ക്ഷ്ത്രാക്കഭഡനഫ‖ലക്ഷിബത്രാദിര്യകര
+ROW 4 | ഖങ്കൾഭാവാൽ.‖ക്കൂന്ക്കുക്കൂബാൎ[illegible]ൽസൈകാബവ്വിത‖ജൈാനനപലങ്ക്ഷേഃ
+ROW 5 | നബടാക്ഷ്ക്ഷക്കെപാം‖ദവക്കങ്കുാദന[illegible]നപലങ്ക്ഷ്മഭവ‖ത്രയമാക്ഷടന്ത്രാ
+ROW 6 | ക്കപരങ്ങഃപ്രാൿ‖ഭ്രൽഗബദ്ര[illegible]ക്ഷ്യഃക്രസ്മ്രല്ലഭ്യോം‖സാടാവാൽഗവിവ്
+ROW 7 | ാഖബഭൂാൈഖ‖വാൈഗാത്രന്ത്യതൈനനടാ‖വാൽവന്ത്യാന്ത്രക
+ROW 8 | ഘൃവാത്രൃങ്കാഭാവാ‖ദ്രത്യാാഗ-നാടാഖവാദ്രത്രിഃചത്രിക്ഷയ‖ാദിത്രങ്ങ്ഃയഒദ്രവാംക
+ROW 9 | മൈകഒക്ഷജ്ഞഒഗത്രൈ‖തത്രാൿഃകാശ്രൂകങ്കദുവലരജ്ജുബിക്രി‖ശദ്ധപൂഃത്രാഭയംപ്രൂ
+
+NOTE | This is a rough first attempt and confidence is low throughout. The layout is likely right: 9 rows, with rows 1–2 and 8–9 running the full width and rows 3–7 in columns at the holes. The individual letters are not: most conjuncts, vowel signs and the dot-reph are uncertain at this resolution, and a lot of the text is probably misread rather than just marked illegible. Check every row against the leaf at higher magnification before using any of it.

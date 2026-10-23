@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most like the actual Tarkasaṃgraha/Dīpikā passage on inference for others, with "vyāptigraha", "vyabhicāra", "parārthānumānamāha", "upanaya/nigamana" and the five-member definitions "sādhyavacanaṃ pratijñā" and "liṅgapratipādakaṃ hetuḥ"; A gets some terms right ("vyāptigrahaṇa", "pratijñā") but is broken elsewhere, and B is mostly fragments between [illegible] marks.

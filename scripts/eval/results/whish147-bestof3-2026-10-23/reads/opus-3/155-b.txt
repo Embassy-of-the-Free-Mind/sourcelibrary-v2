@@ -1,0 +1,10 @@
+ROW 1 | ദൃഷ്ട്യക്കമിത്യദപ ‖ നാത്തതമെവാവത്തിൎഷ്ണതെതാപക്ഷത ‖ രിതെഘ്രാഃസ്ഥവക്ഷപാവക്ഷ
+ROW 2 | വിഭെറ്ഗുണാഗുണിനൊാ ‖ ക്രിയാക്രിയാവഭെ[illegible]ന്റുഭക്ഷാത്രിവ്യക്ഷെവ് ‖ ശെഷമിത്യാദൃവ്യചെത്തിഃ
+ROW 3 | ഷ്ടനാദഭിസ്താതഃപ്രാാ ‖ ടാവഃഉൽപതെകതകഃദൃഷ്ടഃബ്ദ്ധംകാ൨൫൭ ‖ [illegible]ഷ്ടുസാധനാന്തഃ
+ROW 4 | പ്രധാനംസഃഉൽവ ‖ ത്രാണാനംഖ്യാ[illegible]പാദ്ധ്യൈന്യാതൈകാ ‖ തിക്ഷംസസ്ഥാപക്ഷി
+ROW 5 | ണപ്രകൃതിശ്ചെയാഢ ‖ കൃദകാദ്യൻന്ത്രതാഭാവയ്യോശ്ര ‖ ദ്ഭൂതലെഘണെടാ
+ROW 6 | നാഥ്ലിക്കിതദ ‖ ദാത്ര്യസംഖാപഞ്ചാദ്ദിനപ്ര ‖ ത്രിഖെയാഗിത്വാക്കൊ
+ROW 7 | ഞ്ഞാാഇത്യാദ്ദാവഃ ‖ യപാക്ഷ൫ഃവപനൈാനദചക്ഷി ‖ തിസ്വഭ്യഷ്യാംപദാൽ
+ROW 8 | ാക്കിംയഥായഥാപ്ര ‖ ഷ്ടെക്കല്പതദ്ദോാവപാൎസ്വെക്കെവപ ‖ പദാസ്ഥാഇത്രസിദ്ധംകാ
+ROW 9 | ണാദത്ത്യഥാമക്കെ ‖ ഭെയാൎദ്ധാലബ്ധൽവലഭ്യസിദ്ധൈലൈറ് ‖ ജ്ഞാനംഭെദനസിദ്ധെഷു
+NOTE | I count nine rows and ordered the files p01 (left) | p02 and p03 (middle, two pieces) | p04 (right). Only about half the glyphs are confident: many conjuncts and vowel signs are tentative guesses, the readings are not cross-checked against any known text, and this transcription should not be relied on without a manual check.

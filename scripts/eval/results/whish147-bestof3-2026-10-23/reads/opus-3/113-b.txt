@@ -1,0 +1,19 @@
+ROW 1 | ത്രാഹസ്യഖരബോധാര[illegible] ‖ [illegible]ഷിന്യഖനന്നന്നാര്യാദസനഖബോധഃ ‖ ചത[illegible]ന്ത്രാഉത്ര[illegible]ഷ്ടഃന
+
+ROW 2 | നബെഹൃജ്ജരക്ക്ഗ്രമെ[illegible] ‖ [illegible]ജ്ജിമർമൃക്കൃവ്ഷ്ഗ്രന്ഥഃക്രിയതളത്രു ‖ തന്തുവിഃബാലാനാമി
+
+ROW 3 | ത്തിഃഒത്രക്ഷ്യാമക്കമി[illegible] ‖ ത[illegible]ത്ര്യ്ബാലാനാരംഒബാരധ്യാനാഭവ[illegible] ‖ ത്രുത്തഃഗ്രഹണധാരണപ
+
+ROW 4 | ട്ടഞ്ജ്രാലഃനത്രസ്സ ‖ ന്ധയഃക്കിംപ്ര[illegible]ംകൃത്വാക്രിയതളത്രു[illegible] ‖ കക്കുഹാരണധാരെദ്യത്തി
+
+ROW 5 | ഷിഖെബ്ബശ്ബാനംജ്ഞ ‖ ഗന്ധിഖന്താനംസ്വാംബൊഗിലംന്റു ‖ ദിബിയായന്തിത്തരാര
+
+ROW 6 | ഹ്രാപഷിമത്യാ ‖ ത്ഃസദാരമൃാനപരനാദ്രൊര ‖ ത്രുൿടുവദാക്ഷാഷ്വി
+
+ROW 7 | ഭജ്ജരതന്ദ്രൈവ്യാത്വിപ ‖ ദന്യാത്ഭുപദാക്ഷ്ജത്തിവ്യൽപതൃാന ‖ ഭിരെധയത്ബാംപദാക്ഷ്
+
+ROW 8 | ബാരമാത്രൂലക്ഷ്മണം ‖ നൽമിഭാരാഗാരെദൈവസങ്കതാലക്ഷ്മ ‖ രക്ഷ്മഷ്പസക്ഷ്മഗ്രഹണാംഃ
+
+ROW 9 | ല്ലക്ഷ്മമരക്കെചന്നഃന ‖ നായികസംഖ്യാവ്യഖരഷ്ടദാത്ത്ബ്വാര ‖ ൽ।നനഞത്രിരിക്കഃപെട
+
+NOTE | This is a low-confidence reading. I'm fairly sure of the overall layout: 9 rows, with p02 and p03 as two halves of the middle column, and rows 4–6 shortened beside the holes, where the leaf is blank. The letter-by-letter text is often a guess, especially conjuncts, the ൎ/ർ forms and the stretches hidden behind the string. Only short pieces are reasonably secure, such as ഗ്രഹണധാരണപ in row 3. It needs checking against a higher-resolution image.

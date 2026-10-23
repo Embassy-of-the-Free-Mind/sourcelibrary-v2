@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A gives the most complete text that agrees with C, and it keeps recognisable Sāṅkhya guṇa wording (prakāśaka, upaṣṭambhayati, cala, gurutvāni, udāharaṇa); B has some clearer words like "bhavanti" but drifts into strings that don't parse, and C is mostly [illegible].

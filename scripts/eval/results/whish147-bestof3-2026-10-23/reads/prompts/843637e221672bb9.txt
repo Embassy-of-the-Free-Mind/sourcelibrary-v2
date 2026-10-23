@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. viśeṣaṇe pañcapratya ‖ sthānajñānibandhasagaka [illegible] ddhiguravo ‖ rantalāntaveṣa [illegible] trisā
+2. [illegible] ṣṭasāyanā [illegible] dā ‖ [illegible] nyalabdhi [illegible] kādhārāprayatnā [illegible] kā ‖ yālnālampante [illegible] sa
+3. [illegible] yāṭāvādapravṛtti ‖ prasāgaḥ [illegible] mipratyu [illegible] yā [illegible] hānyā ‖ [illegible] pāpakṣayasyacaphalaba
+4. kā [illegible] nāl [illegible] ttu ‖ [illegible] so [illegible] ṣṭasāyanatvamevalīnā ‖ [illegible] drālaḥ [illegible] jñātime
+5. [illegible] menasaḻkāde ‖ māya [illegible] tanyutta [illegible] dīnasa ‖ ḻsādhanakāddhyaṃ
+6. prakṛtiyetyāganyā ‖ [illegible] vināśinaḥkālattenaṭāvi ‖ [illegible] sādhanatvāda
+7. yāgyatāl [illegible] yāg ‖ [illegible] ghaṭādi [illegible] kāddhyamallu [illegible] mevahaṃ ‖ datḥ [illegible] ddhyaṃ [illegible]
+8. sādhyaṃtaretassvikāra ‖ [illegible] lasānviṣayā [illegible] kāṃ [illegible] yāṃ [illegible] ‖ [illegible] gāviṣayatvanāda
+9. nā [illegible] kkālatvaṃkānyakādyu ‖ [illegible] tite [illegible] jñākā [illegible] yāṃsāḻ ‖ ḻkāmapaṭaṃ [illegible] meyājña
+10. panatayāto [illegible] ḻa [illegible] ‖ [illegible] tevāyanameya [illegible] jñai [illegible] jñā [illegible] ‖ [illegible] jñānāmakayā
+
+TRANSCRIPTION B
+1. viśeṣaṇaipañcapratyail ‖ ḍapanajñatvasvarūpasagakādikṣugranthala [illegible] ‖ raṇapalaraṇyarapraṇḍatribhā
+2. dyaiṣṭasāyanakkājñāda ‖ dainyalatikṣikkāḍādrāprayatnajñānakāra [illegible] ‖ yālnacaritaidyauppana
+3. daynayāṭāvādrapravṛtti ‖ prasādaḥtraivilapratutyāyālyavaṇihāraṇyā ‖ pāpakṣayasyacaphalatva
+4. kājñanālśedātma ‖ ttasādaiyaṣṭasādhanatvamevaplī [illegible] ‖ drābhaḥnabhijñātai
+5. ṣṭadamenanmaḻkkāde ‖ māyadīkṣatentyatubiṃdānaḥ ‖ ḻsādhanakāraṣṇa
+6. prakriyaratayāganyā ‖ uḻḻavināśinaḥkālakṛtaṭāvi ‖ ṣaḻsādhanatvāda
+7. yāgryatvālyogra ‖ ḥḍūdikādṛṣṭamadṛṣṭamevacaṃ ‖ dataḥkāraṣṇaṃiti
+8. sādṛśyaṃtatsvikkara ‖ ṣalayālniṣayādikāṃkṣādayāṃyāde ‖ goviṣayatvāda
+9. nātmakāmajñaḥkānyakādaṣṭa ‖ ṣṭatittameyājñākāṃkṣādayāṃsāḻ ‖ ḻkāmavaṭaṃbhaveyājña
+10. paratayātejñamadṛ ‖ āṣṭamevāpanameyājñānasyamejñāte ‖ tejñasthāmanāmakayā
+
+TRANSCRIPTION C
+1. viśeṣeṇapañcarapratyal ‖ ḍānajñātvāsvāsagakkāditriguṇappe ‖ rantalānmaveṣakrisā
+2. dvyūṣṭasāyanārtthājñāna ‖ naitralabdhikkābārāprayatnajīvakārya ‖ yālnācatidaityaittasa
+3. cśratvādāvābhipravṛtti ‖ prasādaḥgauravamilapratyuyyākhyavaṇihārantṛpa ‖ āpāpakṣayasyacaphalatva
+4. kājjanāltentāltu ‖ traisādvyaṣṭasādhanatvamevalīnā ‖ draൗmyaḥnavijñāttame
+5. ṣṭamennaṣaḻkāre ‖ māyamijñatetvantvattiṃbhāṣa ‖ ḻsādhanakāraṇḍvaṃ
+6. prakṛtiyetayāgantra ‖ ujjvināvinaḥkālattataṭāvi ‖ buḻsādhanatvāra
+7. yāgratbalyāgra ‖ [illegible] bbādikāraṇḍamapratthamevattaṃ ‖ datḥkāraṇḍaiti
+8. sādṛśyaṃguṇetalvika ‖ layanālviṣayādikāṃkṣāyāṃyāra ‖ gairāviṣayetyanāra
+9. nātmakādīṣṭhaṃkāmyakāraṇḍa ‖ ṣṭhitattenayāṣṭrākāṃkṣāyāṃsāgda ‖ ḻkāmakhaṭaṃghayayāṣṭra
+10. paratayātentatalākṣa ‖ ākṣyavaidhāmpatiyaṣṭāleṅkanteṣṭrātte ‖ ttekṣṣṭhamanāmakayā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

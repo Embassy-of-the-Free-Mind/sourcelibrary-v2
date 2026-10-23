@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most real text for Sāṅkhyakārikā 34–36, such as "ṣaḍjādayo", "pradīpakalpāḥ", "vilakṣaṇāḥ", "pariṇatāḥ śrotrādi", "avagāhanaṃ", "ahaṃkārādayo" and "prakṛtyādi" with Malayalam glosses; B has only scattered real phrases like "viṣayān gṛhṇāti" between garbled stretches, and A is mostly fragments broken up by [illegible] marks.

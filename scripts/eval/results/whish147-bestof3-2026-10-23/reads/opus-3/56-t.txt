@@ -1,0 +1,11 @@
+ROW 1 | ജ്ഞാനപ്രാപ്തിവിഷ്ടം.കുശഃതൃജ്ഞിതവ്യം.കുശഃ[illegible]ദാപ്രകൃത്യുപാദാനകാലഭാഗ്യാഖ്യാ[illegible]പാഖ്യ
+ROW 2 | ഉദിതിവിമൎശയാപന[illegible]മക്കളെത്രകാലമാത്രാദ്യുപദേശാത്മക[illegible]ഷ്ടാനജ്ഞാനംച[illegible]
+ROW 3 | [illegible]യാദാ.ഉപചയെഷ്ഠതി[illegible]താദാനംകെശ[illegible]ഉത്ഭ്രത്ഃഏഷപ്രത്യയസൎഗ്ഗഭേദാഃപഞ്ചാശ
+ROW 4 | ൽപദാൎത്ഥാഃന്ന ‖ ക്ഷാദയശ്ചദശഭേദശാനന്യ[illegible] ‖ ാമെവസംജ്ഞാക്രി
+ROW 5 | [illegible]ഃകെഷാഹാ ‖ ഹാസംഗ്രഹിസാരഃ[illegible]ന്തിതപമെക ‖ ബമഷാൎത്ഥപ്രബംപ
+ROW 6 | ാരാൎത്ഥമദ്രവ ‖ മകാൎത്ഥദാവഃ[illegible]ഃശയാഗാവിശെ ‖ ാഗൊബഹിവഃപ്രം.മ[illegible]
+ROW 7 | ഃസന[illegible]പ്പമി ‖ ന്ത്യഃബഹു[illegible]പൃക്കിൽ[illegible] ‖ ഏകൈകമൎത്ഥപ്രബംപ
+ROW 8 | ദരാഷ്ടു[illegible]കൈ ‖ പ്രയാനമധികൃതെങ്ങാ[illegible]ംശെഭ ‖ ബമക്ത്രബം.ബഹു
+ROW 9 | ഝരൈരതിമൃശര[illegible]കളുന്ന[illegible]ബഹ്വാഗൈവിയൊ[illegible]രംബഹ്വിവെടയമധികൃത്യ
+ROW 10 | ന്മഹിതിക്കുലാഭൃഷ്ണമദികൃത്വപക്ഷ[illegible]തിക്ഷതിസംഖ്യാ[illegible]ബദാദ്ധിക്കമകതൎക്കൃ
+NOTE | Low confidence: I could read only about 40–50% of the strokes reliably. ROW 1 (…പ്രകൃത്യുപാദാനകാലഭാഗ്യാഖ്യാ) and ROW 3 (ഏഷപ്രത്യയസൎഗ്ഗഭേദാഃപഞ്ചാശ) are the most secure. Most of the rest is a stroke-by-stroke guess, may not form real words, and should be checked against the original images at higher magnification. I could not place the holes with certainty in rows 1–3 and 9–10, so those rows have no ‖.

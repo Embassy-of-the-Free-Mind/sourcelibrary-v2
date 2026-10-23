@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most Sāṅkhyakārikā 47–50 content in context (andha/badhira as forms of aśakti, aṣṭāviṃśati, prakṛtis tuṣṭayaś catasraḥ, avidyā, aṣṭaguṇa), though all three are heavily garbled; A is similar but has more nonsense strings, and B is almost entirely illegible.

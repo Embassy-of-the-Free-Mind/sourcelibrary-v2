@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B's readable parts are correct Sanskrit that matches the commentary on Sāṅkhyakārikā 11 ("vyaktaṃ viṣayaḥ", "pradhānamapi sāmānyaṃ", "acetanaṃ vyaktaṃ", "prasavadharmmi", "vairūpyaṃ"), and although rows 6–9 are mostly illegible it never invents words; A follows the same passage over more rows but has corrupt forms like "pradhānamakhi" and "cālgrāhyatva", and C is mostly meaningless syllables.

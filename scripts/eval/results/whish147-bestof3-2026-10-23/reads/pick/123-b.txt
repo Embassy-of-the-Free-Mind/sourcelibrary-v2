@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B gives the most real Dīpikā wording, such as "ghaṭapaṭaśabda… abhidheya", "abhiprāyeṇa", "lakṣaṇamāha" and "pratyakṣapramāṇa"; A is readable in places but garbled elsewhere ("śakteḥ bheddābhidedana"), and C is mostly syllable strings that only look like words.

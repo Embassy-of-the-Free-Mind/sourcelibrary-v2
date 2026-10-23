@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ghapyatiretitteddratrayamāl ‖ nsakalakatiṣṭhitiṣṭhatiniṃljñānakāraṇamlūvigrahāta ‖ tvapramāṇāgatajñānasumal
+2. lakṣaṇāvyaktavyaṃpramāṇāya ‖ rṇākāraṇaṃdṛṣṭaṃpratyakṣapramāsādhāraṇakāraṇa ‖ ṇamentāmmtatrapratyakṣa
+3. ṣitaśakṣaṇepattime ‖ ccasannikarṣaiāgrahaṇālsannitaൗvyāpaka ‖ pakapakṣipravyajñānamapa
+4. miteññayaṣārtthaṃsa ‖ ādṛśyajñānaṃśābdajñānamayama ‖ ālol̤igratājñāna
+5. namitrādṛśyaviṣayaṃ ‖ pparopakinṟaprakārabhedāpa ‖ svamanapadyavasāna
+6. tayānāmevasthita ‖ khyādapramāṇaṃparatamevagra ‖ hyateititaddite
+7. ekājñasupādulle ‖ tettāpapatennuktaṃnanusadṛjña ‖ ānānāmayaṣārttha
+8. jñānamevatattvatinaca ‖ caśukkāvidaṃnajñatamittijñānālpravṛ ‖ pravṛttilnādanyaṣāpya
+9. ātibiddhititvetiva ‖ cārccuṃnajñatvappūtittipṛnarāvattijñāna ‖ nennādyādevapravṛtti
+
+TRANSCRIPTION B
+1. ṣapratibhetitṛstraśmār ‖ ṣibhākakaṣītikriṣṇatiḥjñānakaundriyavigraha [illegible] ‖ tapramāyāguṇājñanyadharmmāl
+2. lakṣaṇavyaktatvaṃpradhānākhya ‖ tmakāraṇaṃujjetraguṇapradhānasādhāraṇakāraṇa ‖ [illegible] ṇaivadātmatatrapratyakṣa
+3. ṣitalakṣaṇamevatridha ‖ cchasitakamaitrāguṇaḥbhedasiddhaൗvyāpa ‖ dyapaktivyāpyajñānarūpa
+4. mitenaiyadhārmmaṃsa ‖ āddaśajñānāṃśākhyajñānanayama ‖ ārtthagrahaṇājñā
+5. namityādivyavahāraṃ ‖ ppaināvaktiniprakārabhadāva ‖ syālpapravarttātma
+6. bhaināḥvyavasthita ‖ khādapramāṇaṃparatantramavaga ‖ gṛhitavittādide
+7. ākkajanmapāddaḻḻe ‖ ttanāpapadāndyaṃnanastrojja ‖ ānanāmayadhār
+8. jñānamevatthanattinaca ‖ catuṣkāvidaṃbhajñāttamittijñānālpravṛ ‖ ttirulnādanyāṣāppa
+9. ātibhiddhitittutiva ‖ āvācyabhajñāntṛtivyapadeśavattijñāna ‖ nāndyāmevapravṛtti
+
+TRANSCRIPTION C
+1. ghapyatiretitārtthapramekāl ‖ kṣiṇakakṣitiṣṭhatiḥkṣetānakṣeścyāvigrahyati ‖ tapramāyāguṇāṃkṣanyatvartthal
+2. lakṣaṇāvyaktaṃpramāsādha ‖ [illegible] ṇākāraṇāṃubhetrūpramāsādhāraṇākāraṇe ‖ raṇairantāmmretūpratṛteṇṇa
+3. ṣitaiśamaṇaivatritai ‖ ñcasattvakairgguṇaiḥñjasamitaൗvyāpa ‖ pakṣapaktivyāvyajñanāmapa
+4. miterayadhārtthaṃsa ‖ ādiśyakṣemanāṃśābhddakṣeranayama ‖ ārtthamaiggṛtākṣe
+5. gamitrādyūhaviṣaṃ ‖ pparaiāvaktintprakārabhedāva ‖ svāmapavravasāśa
+6. maigaൗpavasthira ‖ ṣādapramāṇaṃparataravagra ‖ haitavittādride
+7. ākṣajñūtvādṛṣṭa ‖ aitaൗpapattaiḥnannasarvvajña ‖ ānānāmadhārttha
+8. kṣānamevannāntritaca ‖ śukkāvidaṃbhajñatamitijñamānālprapū ‖ pṛvṛttibheḻnādanyatāpya
+9. ātividhititvātiva ‖ cāracyraṃbhajñavṛṣṭitidṛkharovaktijñamāna ‖ ṟanenyānyābhimavapravṛtti
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

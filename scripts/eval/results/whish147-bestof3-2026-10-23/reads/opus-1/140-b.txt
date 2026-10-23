@@ -1,0 +1,19 @@
+ROW 1 | ാക്ഷിപ്രസംഗപ്രത്തിഢ്യാതാ‖ജ്ഞാനജ്ഞത്തസാധ്യപ്രയനഔഷധാ‖ാദിഭിർഭേഷജ്യത്രവല
+
+ROW 2 | ജ്ഞിനനവലങ്കികാരണമിത്ര്യാന്ത്ര്യാകാശ്യ‖സമാജ്ഞാതാശ്യയൊഭ‖ാഖരൻജാഗ്യഹതമ്മ
+
+ROW 3 | ദുഖസ്ഥാനംപ്രതിജ്ഞാഹാര്യഃപ്രതിജ്ഞാന‖ാസ്ഥനംപ്രതിജ്ഞാമിഖ‖ഖാധഃപ്രതിജ്ഞാസന്ന
+
+ROW 4 | െസ്വാഭാവ്യകരമ‖ത്താദനംനിരന്ത്ര‖ന്ത്രകമഗിജ്ഞാക‖ാൎക്കംചതവാത്മക
+
+ROW 5 | മപ്രാജ്ഞകാലം‖ജ്ഞനമധികംച‖ചപ്രത്യക്ഷംതന‖നടാഖണഞ്ഞജ്ഞാന
+
+ROW 6 | മപ്രത്തദൂാവിഷ്ട‖ഹപാമത്താനവം‖വശ്യന്നബൊജ്ജാ‖ദൊഷിണാണജ്ജന്നനെ
+
+ROW 7 | ഷാജ്ജാർദ്ദയാഗവനി‖ദ്ധാൎക്കാൎഭിത്ത്യാ‖ാദൃഷ്ടസാധനഗ്രഹണ‖ഷ്ണാനാന്തിനഷ്ടംസ്ംഗ
+
+ROW 8 | ദംനന്തരത്തലാനലനസംവെദ്യാഹസത്ര‖വിപ്രതിബാധകക്കസ‖സത്തടഃഹാനൽലരക്കഃ
+
+ROW 9 | ശക്കംവടദശ്ഥാനരത്തമിത്രവചനം।പ്രത്യ‖ബബാഹ്യകരടാപന്നാകാ‖കാന്ത്യമാശ്രകാരണ്ണരബ്ധാ
+
+NOTE | The whole leaf is a low-confidence guess with no [illegible] marks, so treat any of it as possibly wrong. There are 9 rows. Rows 4–6 are short around the holes, and the ‖ positions there and in rows 2 and 8 are approximate. Almost every akṣara could be misread: the conjuncts (ജ്ഞ/ജ്ജ, ത്ത/ത്ര, ശ്യ/ധ്യ), the circled ligatures and the vowel signs are the least certain. The only readings I'm fairly sure of are scattered words: പ്രസംഗ, ഔഷധ, പ്രതിജ്ഞാ, പ്രത്യക്ഷം, ദൃഷ്ടസാധന, വചനം।. A careful re-read, ideally from higher-resolution images, is needed before this can be used.

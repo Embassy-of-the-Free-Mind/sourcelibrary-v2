@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. nyaktiddhavasthābhitātvālkkaitalaṃvibhāga [illegible] tvātvaṣānavapara ‖ [illegible] ‖ [illegible] vibhāgādvaiśvarūpya
+2. onyaktinaviddharati [illegible] ragārenyatraviṭṭāgaḥ [illegible] vibhaktāddhitṛṣṭā ‖ [illegible] ‖ [illegible] kastramailaiśvarūpyavaiśva
+3. palārejñattimibhegapa [illegible] upādelānarakarmmākhibhakkāredakkantvādiṣṭhi ‖ [illegible] ‖ rddhrākranyathāṇikehraḻavaiśva
+4. śakkanādireva ‖ śvarūpyannānā [illegible] banmadatvāratakarai ‖ ekāntrāl [illegible] ṭṭṛddhāddegi
+5. mannūṟavantita ‖ ṣutupadiraivaśvarūpyamupalabddhera ‖ avamāntrotmikoṭanyaṃ
+6. yohyābhākṣe ‖ raivaśvarūpyaṃekasmāde [illegible] mami ‖ ṭaṣaikairaikānṛvita
+7. cchitisāmānya ‖ ratāddhviṃḥ [illegible] nyasyāhaḥnimibha ‖ āgādvaiśvarūpyavaiśva
+8. ttiṣvavibhāgā ‖ layaḥraivaśvarūpyājñegalnānārūpa ‖ [illegible] pakṣālpraḻayakālelaṇaivaśva
+9. traigryaṃcalīyatetaṅṅaḻḻaṣittryauyājñegatajjñānāleṣaivarela ‖ [illegible] ‖ tralayanaṃsaṃṭavaktinyaṇḍa
+10. jananādyupagamālkarmmādehyamāsvapatryājñikaṭakāmmite ‖ [illegible] ‖ bhitathācābhuhveyānnadāntū
+
+TRANSCRIPTION B
+1. ndrakattiddravasthāvitā ‖ ntyālkṣaitābalaṃviṭṭāgaṇṭatvantyaprāsavaparai ‖ [illegible] ñavibhāgādvaiśvarūpya
+2. aisyattanāviddraretti ‖ ṭāgāsyatvaviṭṭāgaḥ [illegible] vibhakkāddhattval ‖ ntyadvaiśvarūpyasya [illegible]
+3. palārejjattitviregapha ‖ upāleppālakṣaṇākhibhakkāṭekandrābhriṣṭadra ‖ drādranaphāṇikekuḻavabba
+4. gakkanādrabhaiva ‖ śvarūpyānārakhanṭṭaśvarekai ‖ ekāndrāddeṭṭaddhāddi
+5. mandrūnavantita ‖ nyantyaddirevabbaśvarūpyamūpaladdhare ‖ evamādrauttikkārantyaṃ
+6. lohyāvākka ‖ vaivaśvarūpyakandrāṭephaemakki ‖ ṭakaikkakaikanaddita
+7. cchattikasāmānya ‖ raiddakṣuṃñanyandhāpāttibha ‖ āgākaikkavaśvarūpyanya
+8. ttikavibhāgādā ‖ layaḥvaivaśvarūpyajñagalnānādrūpa ‖ kālpradayakkāmalavaibba
+9. ttvyaṃkṣaliyatekkaṝkṣattieuyājjagatajjatranaṭeśvanela ‖ yanaṃsṭavakkintya [illegible]
+10. trairakhanāddrūvagamālkandrādanyaśaivanaparantyājñataṭakkāmmita ‖ [illegible] eācāhyeyānnamaddāndra
+
+TRANSCRIPTION C
+1. ndyaktiḻavasthāvitāndyālkṣetralaṃvibhā ‖ gajñyanyaprānavapare ‖ lttavibhāgāldvaktandya
+2. ondyattinaviḻvareti ‖ ṭāogārandyatvaviṭṭāgaḥttavibhaktāditvā ‖ ṣṭākandyādedvaikṣyartthandyāddva
+3. palārejñattilogapāṭa ‖ upārelaṃokkarakṣibhakkāredakandyādijñāda ‖ dyādranapāṇiteṣkṣaṃtta
+4. gakkādiraiva ‖ śrutvṛndyāvāraesthāṭṭiśrutvarekare ‖ pakandyālṭṭīṭṭustrāddhiḥ
+5. mandūnavatira ‖ ndyutvadvitelavaśvatruprāmupalabdhare ‖ avamāddyāttidāndyaṃ
+6. ḍondyādāṅke ‖ daivaśatruṣyāṣakandyādeṣmāmami ‖ ṭakkaratekarābhivita
+7. ślidinandāmandya ‖ darāddveśandyāndyāthāḥndivida ‖ āregareteśatruryandyā
+8. bhitavibhāroda ‖ layaḥdaivaśatrulyājñegalnānātrupa ‖ śvālprauyaktādelabhavaivaśa
+9. truddhyaṃkṣalīyaretajñaṣattitruuyājñe ‖ gatajñināleśalare ‖ layanaṃsaṭavaktirendyānājña
+10. ñārekhanāddhyavagamālkasmādendyāmāva ‖ paripattyājñikaṭakāmite ‖ ratamācāndreyānamaddāndya
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

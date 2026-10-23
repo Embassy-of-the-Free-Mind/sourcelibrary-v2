@@ -1,0 +1,11 @@
+ROW 1 | ശ്രോത്രാദിവൃത്തി[illegible]ത്ഥഃ ‖ യഃ[illegible]ത്ത്വ[illegible]ന[illegible]നസ്വനകഃസംകല്പാഭി ‖ മാനാദ്ധ്യവസായാഭവന്തി[illegible]
+ROW 2 | [illegible]കഷ്ടരൂ[illegible]യംതാൽ ‖ ക്കിം[illegible]ഗവൽ[illegible]പഞ്ച[illegible]ന[illegible]സ്വവ്യപെക്ഷാം[illegible] ‖ ംസ്വാംസ്വാംവൃത്തിംപ്രതിപദ്യ
+ROW 3 | കെകിംവാനി[illegible]പെക്ഷ ‖ മിത്യാഹ സ്വാംസ്വാമിത്യാദി।ഇന്ദ്രിയാ ‖ ണാമാത്മീയാംവൃത്തിം[illegible]
+ROW 4 | ാക്രൂതഹെതുക്കമി ‖ തിപരസ്പരസ്യ[illegible]യദാക്രൂതം[illegible]വൃത്തിം ‖ [illegible]ഭൊഗ[illegible]ദവഹെതുഃ[illegible]
+ROW 5 | ക്രൂതംപരസ്പരാക്രൂ ‖ തഹെതുക്കംവൃത്തിംചത്വാരിക ‖ രണാനിപ്രതിപദ്യ[illegible]
+ROW 6 | [illegible]ചക്ഷുഃ[illegible] ‖ [illegible]ദിത്രയസ്യാക്രൂതംജ്ഞാത്വാ ‖ [illegible]കാരണംപ്രതിപദ്യ
+ROW 7 | [illegible]വംബുദ്ധി ‖ രഹംകാരാമനശ്ചത്രയാണാ ‖ മാക്രൂതംജ്ഞാത്വാദ്ധ്യ
+ROW 8 | വസായമഭിമാന ‖ ം[illegible]കല്പനംചപ്രതിപദ്യന്തെ ‖ ക്രമശശ്ചപരസ്പരാക്രൂ
+ROW 9 | തഹെതുക്കംകി[illegible] ‖ [illegible]ദൃഷ്ട[illegible]ഹെതുക്കി[illegible]യഥാകാല ‖ [illegible]പന്തിമ[illegible]ണം[illegible]
+ROW 10 | [illegible]വൃത്തി ‖ [illegible]ജ്ഞാത്വാ[illegible]ദ്ധിശ്ചമ[illegible]യാദ്ധ്യവസിത[illegible] ‖ [illegible]ക്കിംജ്ഞാത്വാസാംകാ[illegible]
+NOTE | I could read about half the leaf, and confidence is low. Strings like സ്വാംസ്വാം, പരസ്പരാക്രൂതഹെതുക്കം, ക്രമശശ്ച and ജ്ഞാത്വാ are reasonably clear. The rest is tentative, and the joins in rows 1–2 and 9–10 are uncertain.

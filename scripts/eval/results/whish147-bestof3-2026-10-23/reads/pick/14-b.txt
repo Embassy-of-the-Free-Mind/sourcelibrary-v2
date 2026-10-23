@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B best matches the Sāṅkhyakārikā 2 commentary in most rows (*dṛṣṭānuśravikābhyāṃ*, *kaivalyaprāpakatvāt*, *śreyān*, *dvyaktāvyaktajña*, *vyaktaṃ pradhānaṃ*, *puruṣaḥ*), while A garbles key phrases and C is mostly illegible beyond a few correct fragments.

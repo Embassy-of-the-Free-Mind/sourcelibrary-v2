@@ -1,0 +1,9 @@
+ROW 1 | ദ്വിവിധകോഷ്ടജ്ഞസ്സംയോഗ ‖ ജ്ഞശ്ചഃ[illegible]ദ്രൈവാഹങ്ക്രിയയാ[illegible]കസ്സം ‖ യോഗഃ[illegible]ക്രിയഃകോ[illegible]ക്ക
+ROW 2 | സംയോഗഃ[illegible]പ്രാപ്ര ‖ [illegible]ക്ഷേ[illegible]സ്സംയോഗഃ[illegible]ത്ര[illegible]ഭാവസ്മാ ‖ ന്നാധികാരണാം[illegible]
+ROW 3 | പ്ര[illegible]ത്വംവിഭാഗം ‖ ലക്ഷണ[illegible]ഃസം[illegible]ഗ[illegible]ഃക്കാരല ‖ ഃഭാപ[illegible]ചാരണാ
+ROW 4 | യ[illegible]പാ ‖ ദ്രായ[illegible]പാരണായ[illegible] ‖ യോഘനാശക[illegible]
+ROW 5 | ഭാഗോ[illegible]ക്ഷ ‖ [illegible]ഭാഗജ്ഞശ്ചഃ[illegible]ദ്രാഹ ‖ [illegible]ഭാഗഃ[illegible]
+ROW 6 | [illegible]യഃകാരലപൃഷ്ട ‖ കവിഭാഗഃ[illegible] ‖ [illegible]ക്ഷണമാവാഃപരാ
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]കാരണമ[illegible]മിത്യാത്ഃ[illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]ജ്ഞിഃകാരല[illegible]
+NOTE | Low confidence. I read all four images and they give 8 rows in the expected layout (rows 1–2 and 7–8 run the full width, rows 3–6 sit in three columns), but I could only read short stretches. Old forms like ഭ (drawn close to ട), the conjuncts and the dot-reph were often ambiguous, so I marked any uncertain stretch [illegible] rather than guess. On the full-width rows, ‖ marks where the strings cross. The text is only partial and needs checking against the leaf.

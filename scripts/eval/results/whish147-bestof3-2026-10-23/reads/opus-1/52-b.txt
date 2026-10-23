@@ -1,0 +1,10 @@
+ROW 1 | ഗ്ഗിന്ദ്രിയാണിചക്ഷുഃശ്രോ[illegible] ‖ ാചാമുക്ഷ്മത്വംക്ഷിഷാ[illegible]ാഖ്യാജ്ഞാഖ്യാംമനസഉ[illegible] ‖ ാദഃപാ[illegible]പാദപായൂപസ്ഥാനാ[illegible]
+ROW 2 | കന്നൎയേഷാംഹസ്തൈരൈണ്ണാബ്ര[illegible] ‖ ഞ്ചേന്ദ്രിയസ്യങ്ക്ഷ്ഃപാദൈഃഗതുദാവ[illegible] ‖ ൿഇതിബോധബുദ്ധ്യമ[illegible]ശ്വാനാരെ
+ROW 3 | ത്വചൎക്ഷൂഷികനാജിഹ്വാസിനാ[illegible] ‖ നപാദൌഃഹുപദൈകന്നൊ[illegible]ന്നാഭിജ്ഞാനിക്കുക[illegible] ‖ ാദാവത്ൿപാഃഗതേഇതിക്രാ
+ROW 4 | ൈരിന്ദ്രിയവായുജൈഷ ‖ ക്കിരുപഭുക്തോ[illegible]ാസ്വാദ്യോഖാരൈ[illegible] ‖ സഹാബുദ്ധിവചനൈയതി
+ROW 5 | ക്ഷാജൈണ്ടിരവിവയാ ‖ ണാഗ്ഗകൃതുപ[illegible]ദിക്ഷ്ടപ്പ്ടാാന്തിക്കി ‖ യതൊഇത്രാഗസവ്വ
+ROW 6 | ദുരയായുചക്ഷുഃഷൊ ‖ ജ്ഞീപദ്ധ്യാന്ദു[illegible]ഷ്ഠജ്ഞിസ്ഥിദ്ധിനാമിക്കി ‖ ത്രുക്താശോഭവഃസില
+ROW 7 | ഷശ്യാമൈഷ്ഷിതപക്ഷാമാ ‖ ജ്ഞാഃടസാംജൈ[illegible]ശബ്ദിപദ്ധ്യൎശ്ചാൈസ്കസ ‖ ൿദശവിധാച്ചൈരേഞ
+ROW 8 | ജ്ഞ്ഞയാഃഷവമശക്കിരഷേ ‖ ജ്ജാമിംശബ്ദേഡദായലയാമൂസ്വശൈകമാടവ ‖ തിനസ്വപ്രത്യക്ഷൻഉ
+ROW 9 | ത്രുക്ഷംനൊദകിളിയവധഃ ‖ പ്രത്യയസൃഷ്ടഃകിഞ്ചിദഹാഷാദുഞ്ഞ്സ്ഥഉതി ‖ ഞ്ചിസത്രുജഞ്ചഹാംകാരസ്സ്വ
+NOTE | Confidence is low. I read all nine rows across the four pieces, but many glyph readings are uncertain guesses at this image resolution, and the ‖ joins at the holes are approximate. The left margin also has a small note, roughly "ശ്ര / ൻ", that sits outside the rows and isn't included above.

@@ -1,0 +1,10 @@
+ROW 1 | ാശെഷാണിതുപഞ്ചവി‖ഷയാണി൩൪ഃ|സാന്തഃകരണാബുദ്ധിഃസൎവ്വ‖വിഷയമവഗാഹതെയ
+ROW 2 | സ്മാൽതസ്മാത്രിവിധം‖കരണംദ്വാരിദ്വാരാണിശെവിശെഷാണിഃ‖൩൫ഃഏതെപ്രദീപകല്പാഃ
+ROW 3 | പരസ്പരവിലക്ഷ‖ണാഗുണവിശെഷാഃകൃത്സ്നംപുരു‖ഷസ്യാൎത്ഥംപ്രകാശ്യ
+ROW 4 | ബുദ്ധൌപ്രയച്ഛ‖ന്തിഃ൩൬ഃസൎവ്വംപ്രത്യുപഭൊഗം‖യസ്മാൽപുരുഷസ്യ
+ROW 5 | സാധയതിബുദ്ധി‖സൈവചവിശിനഷ്ടിപുനഃപ്രധാ‖നപുരുഷാന്തരംസൂ
+ROW 6 | ക്ഷ്മം|൩൭ഃതന്മാ‖ത്രാണ്യവിശെഷാസ്തെഭ്യൊ‖ഭൂതാനിപഞ്ചപ
+ROW 7 | ഞ്ചഭ്യഃഏതെസ്മൃതാ‖വിശെഷാഃശാന്താഘൊ‖രാശ്ചമൂഢാശ്ചസൂ
+ROW 8 | ക്ഷ്മാമാതാപിതൃജാ‖സ്സഹപ്രഭൂതൈസ്ത്രിധാവിശെഷാസ്യുഃ‖സൂക്ഷ്മാസ്തെഷാംനി
+ROW 9 | യതാമാതാപിതൃജാ‖നിവൎത്തന്തെ൩൯ഃപൂൎവ്വൊൽപന്നമസ‖ക്തംനിയതംമഹദാദി
+NOTE | All 9 rows read (p01 = left column, p02+p03 = middle column, p04 = right column); least certain are the opening of row 1 (ശെഷാ looks like ശൈഖാ, and the dash after it), the apparent dittography ശെവിശെഷാണി in row 2, the end of row 1 (ഗാഹതെയ), the kārikā numerals (൩൪…൩൯, read from shape and position), and whether the scribe wrote visarga or doubled സ at ജാസ്സഹ / വിശെഷാസ്യുഃ; a detached letter ര stands in the left margin beside row 6.

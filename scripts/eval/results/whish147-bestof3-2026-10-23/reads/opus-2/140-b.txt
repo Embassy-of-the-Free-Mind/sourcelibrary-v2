@@ -1,0 +1,10 @@
+ROW 1 | ാക്ഷിപ്രസംഗപ്രതിദ്രഷ്ടാരാജ്ഞനഷ്ടിസാശ ‖ ശ്യപ്രയന്തൌവെധ്യൎാ ‖ ാലദ്ധിവിശേഷേണ്ഠാവല
+ROW 2 | ഷ്ടിന്നവലഭികാറ ‖ ഔമിത്ര്യാന്ത്ര്യകാദ്യസമാജ്ഞാതാഷ്യേവാ ‖ ഭേദെനൈവജീാഭ്യവെവിത്ര[illegible]
+ROW 3 | ഗഖഘടനംപ്രതിജ്ഞാ ‖ ാഹാഭിഃപ്രതിജ്ഞാനാണ്മനംപ്രതിജ്ഞാമിവൈ ‖ ദായഃപ്രതിജ്ഞാസന്ത്ര
+ROW 4 | സ്വാഭാഖ്യതകനമ ‖ ത്ഥാൎക്കനംത്രിരത്രൾക്കമമിജ്ഞാക ‖ ാൎകാംശവാൎക്ക
+ROW 5 | മപ്രാക്കാലം ‖ ത്ഥനമധികംപഊൎക്കംഞന ‖ നടാക്ഷണാൺജ്ഞാഞ
+ROW 6 | മപ്രതിദാവിഷേക്ഷ ‖ ബലാമതാനവലജ്ഞനൊാജ്ഞാ ‖ വൊധിണൊ[illegible]ന്നരെ
+ROW 7 | യാജ്ഞാൽദയാഗവ്നി ‖ നിദ്ധാരെക്കാഭെഹിത്ര്യാമാദ്രാസാധ്യപ്രഗ്രഹാന്ത്യ ‖ [illegible]ാനാതിഭെദതോസ്ംഗ
+ROW 8 | മ്മദനസകരതലാനലന ‖ ലസംഭയാശൈസത്ര്യവിാവിപ്രതിബാന്ധയക്കാസ ‖ സതിദഃപാന്യത്പലക്കഃ
+ROW 9 | ഗക്ഷിഃപടടരൎാനരമ ‖ ടമിതൈചന്നഃപ്രതിബാന്ധക്കാടാവപന്യക്കാ ‖ കാാദൃമാഭ്രകാൻജ്ഞഭ[illegible]
+NOTE | All 9 rows can be seen, but this is a low-confidence reading done glyph by glyph. Many aksharas are guesses, especially conjuncts, vowel signs and chillus, and are not verified readings. I did not try to make the text into sense or to match it to the Kārikā or a commentary. The middle text is on two pieces (p02 and p03) with no hole between them, so I joined them without ‖. I left out a marginal note on the left edge next to row 5, roughly "ധ്യ / ന്റ". Every row needs checking against the original.

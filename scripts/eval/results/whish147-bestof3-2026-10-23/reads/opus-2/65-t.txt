@@ -1,0 +1,9 @@
+ROW 1 | ാഞ്ഞൈവാന്തക്കിംസക്കൈതൃത്തിന്ധ്യശാസ്ത്ര‖കനരെപ്രഞയൊജ്ഞനമാ‖ഃശിഷ്യത്രബ്യംചൈത്രാ
+ROW 2 | ഭൂയനന്നാസ്യഷിനാസുരൈനരഃപഞ്ചശിഖ‖ക്കഫാധക്കൈഗൗരമപ്രട‖ഭൻതാമതംഗ്രൃഹനാ
+ROW 3 | ശ്വരക്രുഷ്ണനാമാനാംപ്രിപ്രജ്ഞകമത്രാ‖നഖ്യാഷ്ടത്രാപനൈപന‖ക്ഷാഉത്രജ്ഞാനമപ്രൂ
+ROW 4 | പൈണ്ണാഗജ്ജംന്വിള‖ാക്ഷംഷിപ്ത്രുാന്ത്രുമിങ്കാ‖ഷസംക്ഷിപ്തംഷതി
+ROW 5 | തന്ത്രംപഞ്ചവിം‖ശത്തിതനാച്ചുംജ്ഞാനമിത്യാൎ‖ഃആര്യമതിഃബുദ്ധി
+ROW 6 | ഗതജ്ഞാനതത്വ‖തഖാഷ്ടമത്തിഃആര്യാഭിരതെ‖സിദ്ധൈതൎത്ഥേദ്ദഃ
+ROW 7 | ഷത്രയഫഭിക്കാത്രാ[illegible]ദതൽപവിത്രമിത്യിസക്കത്രാഭിഹി‖ഷംബത്രഷ്ടിതൈത്രാബാധാ
+ROW 8 | വൈഷാസ്കൈത്ര[illegible]ാക്കാാദത്രത്രാഡസക്കത്രാമിത്രാഭിക‖പ്രത്രബാസൈശ്ശാവിപ
+NOTE | I read the four pieces as left column = p01, middle column = p02+p03, right column = p04. Rows 1–3 and 7–8 run the full width. This is a low-confidence reading: I'm fairly sure of a few words (ശ്വരക്രുഷ്ണ, പഞ്ചശിഖ, ശിഷ്യ, സംക്ഷിപ്ത, ആര്യ, പവിത്ര, ജ്ഞാന), but many glyphs are guesses. In particular, I'm not sure where the joins and holes fall in rows 7–8, and the vowel signs and conjuncts throughout need checking against the original.

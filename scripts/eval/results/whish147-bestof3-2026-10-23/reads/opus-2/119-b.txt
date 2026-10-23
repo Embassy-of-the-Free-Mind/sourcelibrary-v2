@@ -1,0 +1,9 @@
+ROW 1 | ാനാസ്തികനെന്നുചമിധ്യാനന്ത്വം ‖ നനുഈശ്വരസൽഭാവെകിംപ്രമാണം നത ‖ ാവൽപ്രത്യക്ഷംതദ്ഭിബാഹ്യമ
+ROW 2 | ാഞ്ചന്തുംപാനാദ്യഃശ്ശൃപി ‖ ദ്വൃത്വാൽ;നാനുഃശ്ശൃന്യഖാദിവൃത്തിരി ‖ ക്കത്വാൽനാപ്യനുമാനംലി
+ROW 3 | ംഗാദ്യഭാവാദിതിചെന്നാ ‖ ഗാംഒനാദിക്കംകർത്തൃജ്ഞഈംകാര്യത്വാൽഉ ‖ പദിത്യനുമാനപ്രമാ
+ROW 4 | ണത്വാൽഉപാദാനമെ ‖ ഗാചനാപനെനാക്ഷജ്ഞാനചിക്ക ‖ ൎാകുഭിമത്വംഉപാ
+ROW 5 | [margin: എ] ദാനാംസമവായികാ ‖ നണംസകലപരമാണ്വാദികൃ ‖ ഷ്ടദിത്വാൽസൎവ്വജ്ഞ
+ROW 6 | ത്വംയസ്യസ്യവൃത്തിദ ‖ ത്യാഗമൊമിതന്ത്രവ്രമാണെപ്പിക്കി ‖ വസ്തുലക്ഷണമാവാ।
+ROW 7 | ജ്ജീചെതിന്യചാദികംജ്ജീവലക്ഷണം। ‖ നനമനനെഷ്ണാധിഞ്ഞൊവ ‖ ഫലണൊഫമിത്യാദൈ്യസ്വൎ
+ROW 8 | ത്വാദിഃപ്രത്യയശാസ്ത്രരെന്യൂ ‖ വമിക്ഷക്ഷത്വാൽശാസ്ത്രമെവാ ‖ ാക്കമിതിചെനാശതിരഞ്ഞ
+NOTE | I could make out roughly 50–60% of the strokes with any confidence; the vowel signs, conjuncts and dot-rephs are especially doubtful. Where pieces overlap I joined them by eye, and the ‖ marks are only approximate positions for the holes. Rows 1–3 and 7–8 run across the full leaf. Rows 4–6 are shorter lines inside each column, with the holes at row 5. There is a marginal sign that looks like "എ" at the left of row 5, probably a leaf number.

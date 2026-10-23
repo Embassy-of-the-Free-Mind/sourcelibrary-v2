@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has recognizable Sāṅkhya terms and Malayalam commentary in context (prakṛtipuruṣājñāna, kaivalyam itinnu, duḥkhaṃ, ādhyātmika, prakṛtiḥ, vibhakti), while B is mostly fluent-looking syllable strings with no sense and A is mostly [illegible].

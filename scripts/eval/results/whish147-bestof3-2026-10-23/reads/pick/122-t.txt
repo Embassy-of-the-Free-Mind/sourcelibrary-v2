@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most consistently as a Malayalam gloss on the Tarkasaṃgraha's list of qualities (udbhūta/pratyakṣa, ekaikatti parimāṇam, guṇaṅṅaḻ, pṛthagitti, saṃyogalakṣayatti, lakṣaṇaṅṅaḻ sarvatra) across nearly every row, A has a few correct phrases but is mostly fragments and gaps, and B garbles key terms (anarddṛtam, urddṛtatvam) throughout.

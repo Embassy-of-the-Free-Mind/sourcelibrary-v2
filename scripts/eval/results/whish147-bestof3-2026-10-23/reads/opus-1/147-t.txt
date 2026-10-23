@@ -1,0 +1,8 @@
+ROW 1 | ഗ്ര[illegible]ങ്ങൾക്കു[illegible] പൃഥ[illegible]‖ഷ്യാഖ്യാനമിദമെണ്ടം പൃഥക്കാംസദ്ഗുരു‖പ്രവൃത്തിക്കാസംയുക്താപ്രവ
+ROW 2 | [illegible]ോദദധാത്രൂണ്ണംമല്യ‖ായഃഭവദ്രൂപ്യപൃക്കിഃസംഭൂഢാഗന്ധ‖ഭക്കിത്രഗുണാഭിവിഭ്രഷ്യഃ
+ROW 3 | [illegible]വദ്രൂപ്യപൃക്കൈഃ‖വഞ്ചവദ്ര്വ്ഗാനക്കാനത്ത‖ണാപഭകാരവൻകൊ
+ROW 4 | ഒരത്രിവിധായ।‖ദ്യുക്ഷ്മൈക്കാരലക്ഷണൈശ്ചദൃഢ‖ഒനാദിക്ഷണാംപവകൈ
+ROW 5 | ംസിദ്ധിമകമാദ്ര‖ക്ഷുകമപദബ്ധ്വംമൈത്ര്യാസ്ത്രീണാ‖ലക്ഷ്മം.വാലഭാം.ക്ക
+ROW 6 | [illegible]ൈഷ്ണക്കുാലക്ഷണ[illegible]‖വങ്കാണ്ഡ്രൂപദേഹശരൂസമപാവികാ‖ാരഭെം.ഹൃദയം.പ്രകൃതി
+ROW 7 | ജീലവൃക്കിങ്ങു[illegible]‖സ്യൂദത്താസമവാളവികാരനാം.ശ്രേ[illegible]‖കോം.പ്ലക്ഷവൃക്ഷേജീവ
+NOTE | I found 7 rows and every row has text in all three columns. This is a low-confidence, character-by-character attempt. Many individual letters are uncertain, especially in rows 2–6, so read it as provisional, not as a checked transcription. I used no remembered text.

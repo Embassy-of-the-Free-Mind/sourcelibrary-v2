@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is sparse, but nearly every fragment it gives is a real word that fits Sāṅkhyakārikā 10–11 (viparītamavyaktaṃ, triguṇam, aviveki, avivekita, hetutvāt); A reads well in places but also has garbled strings like "āljabicekki" and "mānamṛmaro", and C starts with a plausible duḥkha passage but falls apart into forms like "viṣayitamapyukkaṃ" and "vādamiṣekitama".

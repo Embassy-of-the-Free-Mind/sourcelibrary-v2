@@ -1,0 +1,10 @@
+ROW 1 | ായകങ്ങൾക്കുകന്നുമിലെ[illegible]ബംങ്ങൾസാധൎമ്മ്യാത്‌വ്യാവ[illegible]ൎക്കഒപ്യൂലക്ഷണ[illegible]ങ്ങൾതാവ്യാപത്താദിഭിൎയുക്താ
+ROW 2 | ദൗന്നതിവ്യാപ്തിപാരണായ[illegible]ങ്ങൾഭിന്നത്വ.ശുദ്ധികളെ[illegible]ശക്തിന്നംഗഞ്ഞംവ്യാ[illegible]പ്പിരവ്യാവിലക്ഷണപ്രകൃതിയാജ്ഞ
+ROW 3 | നങ്ങെതന്നെദൃശ്യം:വ്യാവൃത്തെഅന്വിവ്യവഹാരസാധ്യതാൽനനുഉ[illegible]രവിതന്നുവ്യലക്ഷണത്തെ
+ROW 4 | ത്രാങ്ങൾഉള്ളന്നുമിന ‖ ഒക്കുചരംവലവ്യാഒക്കിവിക്കിലലന്നു ‖ ഗുണസാമാനാധികരണ
+ROW 5 | ലക്ഷാഭിന്നജ്ഞാതിക ‖ തന്നുക്തിപക്ഷിതബത്വാൽനനംഒവമി ‖ ങ്ങങ്ങൾപാരതന്ത്ര്യച
+ROW 6 | മിഥ്യാവ്യവഹാരങ്ങൾവാ ‖ ദാവഷിദ്വ്യാദ്ദിതിഭിഃചവ്യക്താൽബദ്ധ ‖ ാവ്യാചെവത്തിര്വൃ
+ROW 7 | കഥാരഗവപാരഞ്ഞുഗൃ ‖ ണ്ണുഗുണാന്നംശിക്കാരരാൽഗുണാൻമിടങ്ങഭരാ ‖ രങ്ങപെതത്ത്‌വൃദ്ധിനാമൂൎഖന
+ROW 8 | ലതിസമിസാമൂനുവ ‖ ഗുണേഗുണാസജ്ജാത്രിദേവാനാനംചവ്വതവ്യ ‖ ജ്ഞചകലതന്താദിനാംബിദ്യാമ
+ROW 9 | നന്താരൽക്കപലകാഴൂമിം ‖ തിഗുണാഗുണിതചലനാലവൃത്തന്ദ്രഗുണകൊ ‖ ാദാകൃതവ്വാൽക്കുട്ടിതകതി
+NOTE | This is a low-confidence reading of 9 rows: I'm only fairly sure of a few words (for example ഗുണസാമാനാധികരണ, ഗുണ, വ്യാപ്തി, ലക്ഷണ), so expect many letter-level errors and treat it as a draft for checking against the leaf. I took rows 1–3 as running the full width and placed the holes at rows 4–9. Text may be missing or wrongly joined where the pieces overlap and at the edges of the holes.

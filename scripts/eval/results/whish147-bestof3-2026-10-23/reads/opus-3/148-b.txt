@@ -1,0 +1,10 @@
+ROW 1 | കാരണ[illegible]യെ[illegible]ന്തുസംയൊ ‖ ഗഃപടസ്യ[illegible]രൂപംപടഗതരൂപസ്യ ‖ [illegible]യഭിന്നകാരണംനിമിത്തക
+ROW 2 | ാരണംയഥാതുരീവെമ ‖ ാദികംപടസ്യതദെവതന്തുവായകാരണ ‖ ത്രയ[illegible]സാധാരണക
+ROW 3 | ാ[illegible]കദെവകാരണംത ‖ ത്രപ്രത്യക്ഷജ്ഞാനകരണംപ്രത്യക്ഷംഇ ‖ ന്ദ്രിയാൎഥസന്നികൎഷജന്യം
+ROW 4 | ജ്ഞാനംപ്രത്യക്ഷം। ‖ തദ്വിവിധംനിൎവ്വികല്പംസവിക ‖ ല്പകഞ്ചെതിതത്രനിഷ്പ്രകാര
+ROW 5 | കംജ്ഞാനംനിൎവ്വി ‖ കല്പകം।സപ്രകാരകംജ്ഞാ ‖ നംസവികല്പകംയഥാ
+ROW 6 | ഡിത്ഥൊയം[illegible] ‖ [illegible]മിതിപ്രത്യക്ഷ ‖ ജ്ഞാനഹെതുരിന്ദ്രിയ
+ROW 7 | [illegible]ൎഥ ‖ സന്നികൎഷഷ്ഷഡ്വിധഃസം ‖ യൊഗസ്സംയുക്തസമ
+ROW 8 | [illegible]വായസ്സംയുക്ത ‖ സമവെതസമവായസ്സമവെതസ ‖ മവായൊവിശെഷണ
+ROW 9 | വിശെഷ്യഭാവശ്ചെ ‖ തി।ചക്ഷുഷാഘടപ്രത്യക്ഷജനനെ ‖ സംയൊഗസ്സന്നികൎഷഃഘ
+NOTE | All 9 rows read with confidence only in about 60–70% of places, so treat this as a draft, not a checked transcription. Rows 3–9 are fairly secure. Rows 1–2, the middle of row 6, and the left part of row 7 (damaged by the split) are doubtful. Some readings in rows 1–2 (തന്തുസംയൊഗ, തുരീവെമാദികം, നിമിത്തക, തന്തുവായ) are my guesses at unclear strokes and should be checked against the image. Words mentioned below are only to show the topic; none were used to fill gaps. The text isn't the Sāṅkhyakārikā: it is a Nyāya passage on pratyakṣa and the six kinds of sannikarṣa (saṃyoga … viśeṣaṇaviśeṣyabhāva). In row 8 the strokes show no separate standalone "samavāya" between the compounds; that is reported as seen. The final glyph of row 9 (ഘ) is uncertain.

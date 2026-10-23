@@ -1,0 +1,4 @@
+PICK | B
+RANK | B, A, C
+
+WHY | B gets the Kārikā 5 lemma and its gloss right ("prativiṣayādhyavasāya ityādi, viṣayaṃ viṣayaṃ prati prativiṣayaṃ…") and keeps the most connected wording; A's fluent pieces wrongly read "prakṛtivikṛta" and are cut up by many [illegible] gaps, and C is mostly syllable-salad apart from "dṛṣṭamanumāna".

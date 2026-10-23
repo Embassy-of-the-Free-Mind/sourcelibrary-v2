@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śiṣyahitaṃuktaṃu ‖ tasareṣuvantāmekāntrā ṣṭādikatvāl ‖ ñodhyaśira
+2. pṛtaval pramaśabdarama ‖ nekaḥpṛtakkuruvanekkappa ‖ ṅānaḥ pṛtakṣaḥ tāndrāda
+3. śārivaṣiṅkūmi ‖ prakṛtinapṛtammāḥ jjamirddamā ‖ tādṛṣṭina [illegible] āntavaraginaḥ
+4. brahmāghañjanana ‖ mandākataṇṭānāmitrādikana ‖ ṇaṃcakṣurādibhi
+5. yāṭairaigati ‖ eṭedakhambhānantyāḻḻatiḥjha ‖ ṣaṭgraminābheṣu
+6. tamedāgāl ‖ catamityūṣmananamanakaṇṭanmi ‖ mūsadhāmaimrovata
+7. ḍatadbhṛtṛṣa ‖ trakhatanasthabhūdhakaḥ kṣumatānma ‖ ttol tadyadai
+8. uktaḥpṛtakṣa ‖ ntrāl takkodakkattin jñāyamā ‖ nekṣiyamābhevāsa
+9. meṣṣāḥ jñananamana ‖ ntyādatāṃtamaipramakattiṃphacṛṣṇame ‖ madādavativāsameṣṇada
+10. ebādhitasthavātatmā ‖ dūḥ namaicavaṅṅanānaditāṃpratiniḍa ‖ ḍināl kandrādannādhāsvā
+
+TRANSCRIPTION B
+1. bhilaññabittaṃ ekatra utaseccupanarānekānto [illegible] stārggakatvāl bhaiṣaśabira
+2. pṛthak pratiśarīramanekaḥ puruṣaḥ ubhayavariṇabhava [illegible] ñcānaḥ pṛthakkonvāda
+3. śarīvaṣiṇṇami ‖ prakṛtina puruṣāḥ itaddromā ‖ ṅkāḻḻati u [illegible] āmayebhinnaḥ
+4. ntrāghaṇḍanā ‖ maraṇakaraṇānāmityādikana ‖ [illegible] ṇāṃ cakṣurādibhi
+5. yāṃṭebhedā ‖ etaidasamiṇṇānasyāḻḻaṣma ‖ darśśanādivaibhava
+6. tatraidāl ‖ catrindriyamevabhaൗmi ‖ busthānaiśyābhiva
+7. ghaṭaṃpṛtti ‖ trayenasābdādibhogacāttāṇi ‖ ṇṭāl bhaktye
+8. uktāḥ pṛtti ‖ svāl raivādakajñin jñādayamā ‖ bhaniyamādāvāsa
+9. ṣṣāṃjñananamaraṇesyākāraṃ bhavaiṣakattiṃ vyavraṣṭāre ‖ aiśrādravarttipāsaraṇṇaḥ
+10. daivartthatuvālmālliṭahajacevāññanābhavantāṃ pratiniya ‖ yuṭṭālkanvādanudhātava
+
+TRANSCRIPTION C
+1. bhilaññunitaṃulatrautasalauṣṭhupaṇatālanakāratthā ‖ [illegible] ṣṭā ‖ ārukatvālñauḍhaśabhira
+2. vṛddhavalprakṛtisthiramanākkaḥpṛtthakkuḻuvaranṇeṅkilava ‖ [illegible] ‖ ñānaḥpṛtthakkaḥtāntrāda
+3. orutivapiḻḻi ‖ prakṛtitaṃpṛtthamāḥññasiddhamo ‖ ātāddikka [illegible] ātavalabhinaḥ
+4. strīkārañjanā ‖ mantokkanaṇñānāmitrāddikkana ‖ [illegible] ṇacaṇḍaraṇādiddri
+5. yaḥoṭalaśiṣṭale ‖ eṭeṭalaviññānaresyāḻḻakkippa ‖ lakṣaṇināreppana
+6. talettāṭāl ‖ catukkusvajñanānamelaṇitimi ‖ brasadhāreṣṭrebha
+7. batadbhṛtāka ‖ jñaletanasvaḥbhyobhṛtaḥkkalatāta ‖ jñibāltattvara
+8. ukkaḥpṛtthakka ‖ svālkkaneṭe [illegible] āṭakkattinjñāgamā ‖ orummiyamāraṇevāsa
+9. oṣṭhatāḥjñananamarana ‖ ndānasyākkāṃkkarebha [illegible] ākakkiṃbāppblīkaruma ‖ mrātravanipāsaleṣṭhāṇa
+10. oreḍitatvānakamoḻḻu ‖ ḥelaicavāḻḻana [illegible] āhaṭaññināpratīkke ‖ cāttālkandrāṭaṣṭamāsva
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

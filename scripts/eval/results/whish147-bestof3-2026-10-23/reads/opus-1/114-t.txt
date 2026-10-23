@@ -1,0 +1,11 @@
+ROW 1 | ാഷ്ടഃശ്രുമിതൊപാനവാനാദ്ദ്യഃശ്രുമിത്യ[illegible]ന്ദിഷ്ടയാമൊനാഗാൽനാന്ത്യഃ[illegible]തിമൊഗി[illegible]
+ROW 2 | മിത്ഥംവിനാനിമൈഷയാനപനന്ത[illegible]മെചനഃവടാ[illegible]ശ്രുപ്രാദി[illegible]ക്കാത്യന്തമബ്ദ്യ
+ROW 3 | ാഭ്രമിത്തിദ്വാപ[illegible]ദാത്ഥവാൽതമെഗവി[illegible]ദൃഷ്ടവ്യം[illegible]വിദൃജ്ഞ[illegible]ത്രമിത്ര
+ROW 4 | ഉദ്യാദിമമദ്ധ്യൂദ ‖ ദ്യ്രാണിന[illegible]പത്രൗനിഞാഃകാരെ ‖ നാനിത്യത്വാദ്യാവൃ
+ROW 5 | മഷീത്യാദി।നന ‖ തമെസാദ[illegible]മദൃഷ്ട്യ[illegible]ദ്ധമ ‖ ാനന്ത്യാൽകഥനവ
+ROW 6 | ഉദ്യാനി।തമൃ ‖ ഹിനിലതമമ്മ[illegible]ലക്ഷിത്യൂബാഗി ‖ ഗ്രകൃതിബലാൽനി
+ROW 7 | ഭിഷ്ട്വാപായാനതയാ ‖ തിഷായാനന്തായാ[illegible]ഗ്രൂത്വന്നാപഞ്ചദ്ധ ‖ ।തത്രതമമൈസാനാകാ
+ROW 8 | ശേദിപഞ്ചഗാക[illegible] ‖ ഃശ്രവിത്വാൽന്തത്വപരാപാ[illegible] ‖ ഭിസദാഗതിമഭൊടാവ
+ROW 9 | ാദ്ദ।നാപിമൈജ്ഞ[illegible] ‖ ഗ്ഗടയവ[illegible]ഭയവാൻഉ[illegible]ാദ ‖ ാഭ്ദൃപാദ്ദ।നാഭിജ്ഞലെശി
+
+NOTE | I have low confidence in this reading. The images are too low-resolution for the conjuncts, the dot-reph (ൎ) and the vowel signs, so many syllables are best guesses and the joins where pieces overlap are uncertain. There are 9 rows: rows 1–3 and 7–9 run across both holes, rows 4–6 are written in three columns, and I kept ‖ at each hole for every row as you asked. I estimate roughly half the leaf is reliably read; higher-resolution scans would be needed to verify it.

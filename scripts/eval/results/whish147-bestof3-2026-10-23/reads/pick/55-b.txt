@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most consistently as the commentary on Sāṅkhyakārikā 51, with recognisable phrases across most rows: "hetukāraṇasiddhiḥ", "buddhidoṣa", "aṣṭāvasiddhayo", "siddheḥ… aṅkuśas trividha", "śakti-tuṣṭyā", "aṅkuśaḥ uktaḥ" and "viparyaya"; A garbles key terms (for example "hetukānta"), and B is mostly illegible.

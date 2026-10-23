@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śabdekkiḥnṟpṛthamṛ ‖ ṣyāvāraṇaṅṅaḻe0pṛthakkāṃsaddravya ‖ vṛttiḥsaṃyuktāvyapa
+2. lamādakadhāraṅṅaḻ0kalya ‖ lyāyaḥbhavakkapṛvṛkkiḥsaṃyogānāga ‖ gamakoguṇaivibhāgaḥ
+3. ñavapravṛttiḥ ‖ vanāyandyavālgānakāraṇai ‖ ṇāparakārapareko
+4. okadvividhā ‖ dikṣekakālattebheddana ‖ aisādikkāṃparake
+5. ṃsiddhivakamedra ‖ kṣṛtamaparabdāṃpratyakṣo ‖ labhyakaṃ0vanattāṃ0ka
+6. itmaṣṭakādalityakoma ‖ vaśitvaṃpaddannāsamāvikkā ‖ āreṃ0guṇaṃ0pṛthvi
+7. jñalavṛkṣaṅṅanṟasya ‖ syadrāsamavāyikāraṇaṃ0ude ‖ kaṃ0pṛṣṭhavṛḻejjiā
+
+TRANSCRIPTION B
+1. grahaṇa [illegible] ḥ [illegible] vṛ [illegible] ṣṭyākhyā [illegible] ṇānāṃ vṛtti [illegible] kkāṃ sadrūpyavṛttikkāṃ saṃ [illegible] ktāvyapa
+2. vacanādāna [illegible] ṇāṃ [illegible] dhibhavargga [illegible] pṛkki [illegible] sthaṃ [illegible] kkānāṃ [illegible] guṇānāṃ vibhāgaḥ
+3. [illegible] vadra [illegible] vyavṛ [illegible] kkāḥ ‖ vanāvana [illegible] vgāna [illegible] kkāraṇai ‖ ṇāpana [illegible] kāryavanmai
+4. bheka [illegible] vindhyā ‖ [illegible] kṣu [illegible] kkāla [illegible] kṣma [illegible] bhaca [illegible] ‖ [illegible] nādi [illegible] kṣu [illegible] ṃpavakha
+5. [illegible] strī [illegible] ka [illegible] ‖ [illegible] tamapabhaba [illegible] āṃ [illegible] tra [illegible] majña [illegible] ‖ lakṣmakaṃ [illegible] ṇāṃ [illegible]
+6. [illegible] ñcai [illegible] kkālakṣma [illegible] labhikkāntra [illegible] pai [illegible] rāsamapāddhi [illegible] kā [illegible] bhaṃ [illegible] guṇāṃ pṛṣṭhi
+7. [illegible] lavṛkṣi [illegible] sya [illegible] samapāddhi [illegible] kāra [illegible] ṃ [illegible] kāṃ pṛṣṭhavya [illegible] ṣṭā
+
+TRANSCRIPTION C
+1. gra [illegible] ṅṅaḻkku [illegible] pṛtha [illegible] ‖ ṣyākhyānamidameṇṭaṃ pṛthakkāṃsadguru ‖ pravṛttikkāsaṃyuktāprava
+2. [illegible] odadadhātrūṇṇaṃmalya ‖ āyaḥbhavadrūpyapṛkkiḥsaṃbhūḍhāgandha ‖ bhakkitraguṇābhivibhraṣyaḥ
+3. [illegible] vadrūpyapṛkkaiḥ ‖ vañcavadrvgānakkānatta ‖ ṇāpabhakāravanko
+4. oratrividhāya ‖ dyukṣmaikkāralakṣaṇaiścadṛḍha ‖ onādikṣaṇāṃpavakai
+5. ṃsiddhimakamādra ‖ kṣukamapadabdhvaṃmaitryāstrīṇā ‖ lakṣmaṃvālabhāṃkka
+6. [illegible] aiṣṇakkuālakṣaṇa [illegible] ‖ vaṅkāṇḍrūpadehaśarūsamapāvikā ‖ ārabheṃhṛdayaṃprakṛti
+7. jīlavṛkkiṅṅu [illegible] ‖ syūdattāsamavāḻavikāranāṃśre [illegible] ‖ koṃplakṣavṛkṣejīva
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

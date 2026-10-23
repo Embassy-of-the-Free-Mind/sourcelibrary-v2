@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most connected and grammatical text, such as "śarīrendriyaviṣayabhedāl", "pṛthiviyāḥ" and "indriyaṃ", which fits the Tarkasaṃgraha passage on the threefold division of earth and the other elements. C corrupts key words ("śarīrandriyaviva") and breaks up more often, and A is almost entirely illegible.

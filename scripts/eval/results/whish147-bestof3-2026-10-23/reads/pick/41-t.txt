@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B gives the most connected, grammatical commentary on Sāṅkhyakārikā 29 across most rows (e.g. "kāryavṛttiḥ saiṣā bhavaty asāmānyā", "ṣaṣṭhyarthaḥ śrotrasya śabda", "prāṇādyā vāyavaḥ pañceti", "prāṇāpānasamānodānavyānāś ceti", "calati sa samānaḥ"); A is accurate where readable but mostly gaps, and C has many invented syllable strings that are not real words.
