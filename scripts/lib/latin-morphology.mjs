@@ -65,6 +65,10 @@ export function foldAccents(s) {
  * Returns the repaired form, or null when nothing changed — callers should try
  * BOTH the original and the repair rather than replacing one with the other,
  * since "f" is also just "f".
+ *
+ * A MATCHING fold (every f → s, recall-first), never a text repair: to put ſ back
+ * into stored page text use scripts/lib/longs-orthography.mjs (#5924), which
+ * decides per f from a lexicon and writes only where the f-reading is not a word.
  */
 export function foldLongS(token) {
   const repaired = String(token ?? '').replace(/f/g, 's');

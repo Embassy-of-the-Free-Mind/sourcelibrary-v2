@@ -4,7 +4,9 @@
  * #7058 — its row shape, compare-and-set and human-edit filter are reused here); scripts/maintenance/dehyphenate-ia-ocr.mjs
  * and repair-number-word-joins-4784.mjs (rewrite stored text, but stamp ocr.updated_at, so their pages go stale — the
  * thing this module exists not to do); scripts/lib/language-content-classify.mjs (classifies a whole page's language,
- * not a line inside a Latin page, and has no German-with-long-s-as-f forms).
+ * not a line inside a Latin page, and has no German-with-long-s-as-f forms); scripts/lib/latin-morphology.mjs foldLongS
+ * (a recall-first MATCHING fold for names — every f → s, callers try both spellings; it cannot decide which f is a
+ * misread ſ, so it cannot write text. Its header now points here for text repair).
  *
  * longs-orthography.mjs — put the long s (ſ) back into stored Latin OCR WITHOUT making its translation stale (#5924).
  *
@@ -203,14 +205,15 @@ export function isAttestedF(model, fToken, sToken) {
  * keeps its f (fi. and fig. for figura, fol.). Both rules came from the by-eye gate (#5924): on 20 flash pages the
  * pass alone was right on 747 of 756 changes, and all 8 wrong ones were `fit → ſit` (×2) or `fi.` → `ſi.` (×6).
  * `habit` (pageHabit) is reported, not used: it did not separate those errors (both fit errors were on habit pages).
- * Never before r, nor word-initially before l (no Latin sr / initial sl).
- * Returns { text, kept, habit, reverted: { protected, capitalised, cluster, vernacular_line, attested, abbreviation } }.
+ * Never before r, nor word-initially before l (no Latin sr / initial sl); never a ≤ 3-letter word ending a line that the
+ * next line continues in lower case (fe|stiue: half a word broken without a hyphen).
+ * Returns { text, kept, habit, reverted: { protected, capitalised, cluster, vernacular_line, attested, abbreviation, line_fragment } }.
  */
 export function applyLongS(text, model) {
   const src = String(text || '');
   const raw = rawPass(src, model).text;
   const habit = pageHabit(src);
-  const empty = { protected: 0, capitalised: 0, cluster: 0, vernacular_line: 0, attested: 0, abbreviation: 0 };
+  const empty = { protected: 0, capitalised: 0, cluster: 0, vernacular_line: 0, attested: 0, abbreviation: 0, line_fragment: 0 };
   if (raw === src) return { text: src, kept: 0, habit, reverted: empty };
   const mask = protectedMask(src);
   // line verdicts: a line keeps its f if it carries two vernacular markers, or it and its neighbours carry two or more
@@ -224,6 +227,7 @@ export function applyLongS(text, model) {
   const lineOf = new Int32Array(src.length); { let ln = 0; for (let i = 0; i < src.length; i++) { lineOf[i] = ln; if (src[i] === '\n') ln++; } }
   // tokens, hyphen-joined across a line end the way the pass joins them: per index, the token's verdict
   //   1 capitalised · 2 the f-form is a real word · 3 an f-form seen ≥ ATTESTED_MIN times, before '.' (an abbreviation)
+  //   4 a ≤ 3-letter word at a line end, continued in lower case (maybe half a word)
   const tokVerdict = new Uint8Array(src.length);
   { const spans = []; const re = /[\p{L}\p{M}]+/gu; let m; while ((m = re.exec(src))) spans.push([m.index, m.index + m[0].length]);
     for (let i = 0; i < spans.length; i++) {
@@ -233,13 +237,17 @@ export function applyLongS(text, model) {
       const end = parts[parts.length - 1][1];
       const outTok = parts.map(([a, b]) => raw.slice(a, b)).join('');
       if (outTok === rawTok) continue;
+      // a short word ending a line, the next line going on in lower case, is as likely the first half of a word broken
+      // with no hyphen (fe|stiue, gate round 3) as a word: its f is not judged
+      const brk = src.slice(end).match(/^[ \t]*\n\s*(\p{L})/u);
       const v = /^\p{Lu}/u.test(rawTok) ? 1
         : src[end] === '.' && model.count(fold(rawTok)) >= ATTESTED_MIN ? 3
-        : isAttestedF(model, rawTok, outTok) ? 2 : 0;
+        : isAttestedF(model, rawTok, outTok) ? 2
+        : brk && /\p{Ll}/u.test(brk[1]) && [...rawTok].length <= 3 ? 4 : 0;
       if (v) for (const [a, b] of parts) for (let k = a; k < b; k++) tokVerdict[k] = v;
     } }
   const out = raw.split(''); const rev = { ...empty }; let kept = 0;
-  const why = [null, 'capitalised', 'attested', 'abbreviation'];
+  const why = [null, 'capitalised', 'attested', 'abbreviation', 'line_fragment'];
   for (let i = 0; i < src.length; i++) {
     if (out[i] === src[i]) continue;
     if (mask[i]) { out[i] = src[i]; rev.protected++; continue; }

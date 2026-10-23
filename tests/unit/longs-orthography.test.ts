@@ -189,6 +189,12 @@ describe('applyLongS — what the pass may touch', () => {
     const o = L.applyLongS(t, m2);
     expect(o.text).toContain('infectatur'); expect(o.text).toContain('flante'); expect(o.text).toContain('fragmenta'); expect(o.text).toContain('niſi');
   });
+  it('a short word ending a line, continued in lower case, is not judged (fe|stiue)', () => {
+    const m3 = new L.Model({ uni: [...uni, ['se', 5000]], N: 40000, bi: [], ambig: [], lm: undefined });
+    const t = 'Hoc est quod sit, et sed est ipse, nifi fe\nstiue dixit; sed fe\nNam ipse est.';
+    const o = L.applyLongS(t, m3);
+    expect(o.text).toContain('fe\nstiue'); expect(o.text).toContain('ſe\nNam'); expect(o.text).toContain('niſi');
+  });
   it('page gates: German text and gothic script are refused', () => {
     expect(L.pageLatinVerdict('Daß ift fich auff dem Feld fo gefunden, und nicht anders, der Herr ist mit dem Volck und den Leuten.').ok).toBe(false);
     expect(L.pageScriptVerdict('<script>gothic</script>\nfoo').ok).toBe(false);
