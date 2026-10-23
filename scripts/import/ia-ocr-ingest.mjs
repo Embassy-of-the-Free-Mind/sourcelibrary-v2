@@ -536,5 +536,11 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
 }
 
 function bookId(b) { return b.id || String(b._id); }
-/** The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit). */
-const carriesNumbers = (text) => pageNumberCounts(text).size > 0;
+/**
+ * The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit).
+ * A function DECLARATION, not a `const`: it is defined below the top-level `await withMongo(...)`
+ * that calls it, and a `const` there is still in its temporal dead zone — every run that reached an
+ * accepted book with unreliable digits died with "Cannot access 'carriesNumbers' before
+ * initialization" (2026-10-13 → 2026-10-23).
+ */
+function carriesNumbers(text) { return pageNumberCounts(text).size > 0; }
