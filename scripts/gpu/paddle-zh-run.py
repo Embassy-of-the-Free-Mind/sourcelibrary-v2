@@ -13,7 +13,9 @@ server (arm a: vLLM batches the VLM across runners). paddle-vl-run.py is kept un
       --deadline <epoch> [--page-timeout 90] [--max-side 0] [--layout 1] [--backend native|server] \
       [--server-url http://127.0.0.1:8118/v1] [--prefetch 4]
 
-manifest.tsv: <bid>\t<pn>\t<image URL or path relative to --root>. Writes <root>/out/<bid>/<pn>.txt (the
+manifest.tsv: <bid>\t<pn>\t<image URL or path relative to --root>[\t<x0>,<y0>,<x1>,<y1>]. The optional fourth
+column is a crop box in the original image's pixels (the #6101 print lane: one leaf of a spread, NDL label strip
+cut off), applied before the width cap; <pn> is then the leaf's name (e.g. 12-R). Writes <root>/out/<bid>/<pn>.txt (the
 pipeline's parsing blocks in its reading order, one per line) or <pn>.err (fetch failure / timeout /
 exception — never an empty .txt, so the lane can tell "read, no text" from "not read"), and one JSON
 line per page to <root>/timings-<worker>.jsonl (secs = recognition, fetch_secs, w×h fed to the model).
@@ -33,7 +35,7 @@ a = ap.parse_args()
 
 from PIL import Image  # noqa: E402
 
-rows = [l.rstrip('\n').split('\t') for l in open(a.manifest) if l.strip()]
+rows = [(l.rstrip('\n').split('\t') + [''])[:4] for l in open(a.manifest) if l.strip()]
 mine = [r for i, r in enumerate(rows) if i % a.workers == a.worker]
 out = lambda bid, pn, ext: os.path.join(a.root, 'out', bid, f'{pn}.{ext}')
 todo = [r for r in mine if not (os.path.exists(out(r[0], r[1], 'txt')) or os.path.exists(out(r[0], r[1], 'err')))]
@@ -57,9 +59,10 @@ def fetch(src):
         except Exception as e:  # noqa: BLE001
             last = e; time.sleep(2 * (t + 1))
     raise last
-def prep(buf, dst):
+def prep(buf, dst, box=''):
     im = Image.open(io.BytesIO(buf)); im.load()
     if im.mode not in ('RGB', 'L'): im = im.convert('RGB')
+    if box: im = im.crop(tuple(int(v) for v in box.split(',')))
     w, h = im.size
     s = min(1.0, a.max_width / w if a.max_width else 1.0, a.max_side / max(w, h) if a.max_side else 1.0)
     if s < 1.0: im = im.resize((max(1, round(w * s)), max(1, round(h * s))), Image.LANCZOS)
@@ -67,10 +70,10 @@ def prep(buf, dst):
     return im.size
 def fetcher():
     while True:
-        try: bid, pn, src = jobs.get_nowait()
+        try: bid, pn, src, box = jobs.get_nowait()
         except queue.Empty: return
         s = time.time(); dst = os.path.join(tmp, f'{bid}_{pn}.jpg')
-        try: size = prep(fetch(src), dst); ready.put((bid, pn, src, dst, size, round(time.time() - s, 2), None))
+        try: size = prep(fetch(src), dst, box); ready.put((bid, pn, src, dst, size, round(time.time() - s, 2), None))
         except Exception as e:  # noqa: BLE001 — a page that cannot be fetched is a result
             ready.put((bid, pn, src, None, None, round(time.time() - s, 2), f'fetch: {str(e)[:160]}'))
 threads = [threading.Thread(target=fetcher, daemon=True) for _ in range(max(1, a.prefetch))]
