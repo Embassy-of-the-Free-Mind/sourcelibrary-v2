@@ -1,0 +1,4 @@
+A | P, P, S, P, S, P, P, P | overall: P
+B | P, P, G, P, P, G, G, G | overall: G
+C | P, P, G, G, P, G, G, G | overall: G
+COMMENT | Only A has readable Dīpikā prose, for example "anvayavyāptiḥ … tadabhāvayor vyāptir vyatirekavyāptiḥ" and "atyantābhāvāpratiyogitvaṃ kevalānvayitvam"; B and C keep a few key words (liṅga, lakṣayati, kevala-, abhāva) but most of their text is garbled, often looking like Malayalam-script letters were misread (ñña, ṇṭa, kka, ḻ).

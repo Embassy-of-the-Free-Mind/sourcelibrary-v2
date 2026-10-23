@@ -1,0 +1,10 @@
+ROW 1 | ശെഷാണാംയപുനസ്ഥാ ‖ ലക്ഷണംപൃഥ്വ്യന്ത്രഖന്യൈനെഷാടപഞ്ചാ ‖ ന്മാത്രാണാമാത്രകമ
+ROW 2 | ശപ്യഇഃപ്രാണാദ്യാവ ‖ വായവാലെഖാ।ഡ്ഡുഹൃഗവച്ഛത്തുള്ളയന്യത്തുത്തൂ ‖ ൃക്കിഃക്രമശശകന്യതി[illegible]
+ROW 3 | ച്ഛാദഇണ്ണകഷാപ്യ ‖ ടൊത്തഷ്ഠക്രബഹുകൈകഹൃഷ്ഠകാ ‖ പ്രക്കിഃ।ന്ഥന്ഥാംന്ഥാംക്ര
+ROW 4 | ന്ധിഇച്ഛയുന്തപവ ‖ ജരാത്രുകംഒഹെത്രുകംഹത്തം ‖ പ്രത്തഷാത്തക്കലവ
+ROW 5 | ഗഇന്തൈകനതി ‖ ക്കാണ്ണകൈകക്കംരണഗര।സ്തു।ക ‖ നഖംആകൊദശവി
+ROW 6 | ധഃകടാഗരണ ‖ കരണപ്രകാശകരംകാത്ത ‖ ഖതന്യാദശധാഹാ
+ROW 7 | ള്ളംധാക്കുംപ്രക ‖ ഇഇഖാന്നഃ।കന്ദഃകരണക്കു ‖ വിധംദശാഖാഹു
+ROW 8 | ത്തുയന്യാതികയായും ‖ സസ്സാംപ്രതകാലഭക്കാവ്യംക്രകാള്ള ‖ ഉന്തരംകരണൗംസ്സുള്ള
+ROW 9 | ടിത്തുയാണിതെഖാം ‖ പഖവിഷെഖാവിശൈകവിഷയാണാ ‖ ഗ്രടവക്രശള്ളവിഷല
+NOTE | All nine rows are physically present and were read across all four pieces, but the hand is cursive and many conjuncts are ambiguous at this resolution, so roughly a third of the akṣaras above are best-effort stroke readings rather than secure ones; the end of row 2 (right column) could not be resolved at all.

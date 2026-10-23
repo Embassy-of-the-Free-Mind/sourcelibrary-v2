@@ -1,0 +1,5 @@
+A | P,G,P,G,G,G,G,G | overall: G
+B | P,P,P,P,G,P,G,P | overall: P
+C | P,G,G,G,G,G,G,G | overall: G
+
+COMMENT | B is the only one with real Sanskrit in it: it repeatedly has "anupalabdhi(mātreṇa)", "nopalabdhiḥ", "bhedena" and "prakāra", which fits the Sāṅkhya non-perception argument (SK 7–8). A and C are mostly syllable strings with a Malayalam look ("-ṅṅaḻ", "palaṅṅ-") and only a stray word here and there.
