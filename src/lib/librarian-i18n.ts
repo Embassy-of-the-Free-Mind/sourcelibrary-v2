@@ -193,9 +193,9 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     dateLocale: 'en-US',
   },
   es: {
-    metaTitle: 'Pregunta a la fuente: El Bibliotecario | Source Library',
+    metaTitle: 'El Bibliotecario | Source Library',
     metaDescription: 'Pregunta al Bibliotecario sobre cualquier texto de la colección. Alquimia, Hermetismo, Cábala, astrología, filosofía natural: miles de libros raros, y una edición en español que crece.',
-    title: 'Pregunta a la fuente',
+    title: 'El Bibliotecario',
     intro: 'El Bibliotecario es tu agente de investigación sobre más de 10.000 libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.',
     emptyLead: 'El Bibliotecario busca en la colección, en Wikipedia y por semejanza de sentido para encontrar respuestas en más de 10.000 libros raros.',
     emptyDisclaimer: 'Las respuestas pueden contener errores: comprueba siempre la página de origen.',
