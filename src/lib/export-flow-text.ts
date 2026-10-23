@@ -33,6 +33,7 @@ export function flowHtmlToText(html: string): string {
       notes.set(n, inline(body));
       return '';
     })
+    .replace(/<section class="footnotes">\s*<h3>Notes<\/h3>/g, '')
     .replace(/<a epub:type="noteref"[^>]*>(\d+)<\/a>/g, '\u0001$1\u0002')
     .replace(/<a class="page-marker"[^>]*>\|?(\d+)<\/a>/g, ' [p. $1] ')
     // A plain-text edition carries no images.

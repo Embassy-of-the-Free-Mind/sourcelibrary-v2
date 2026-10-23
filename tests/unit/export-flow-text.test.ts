@@ -13,6 +13,7 @@ describe('pageToText', () => {
   it('leaves no markdown or tags, and puts each note after the paragraph that calls it', () => {
     const out = pageToText('## On Venus\n\nThe **star** of the morning<note>original: "Lucifer"</note> rises.\n\nNext paragraph.', { n: 0 });
     expect(out).not.toMatch(/[*#<>]/);
+    expect(out).not.toContain('Notes');
     expect(out).toContain('On Venus\n========');
     expect(out).toContain('The star of the morning[1] rises.\n    [1] original: "Lucifer"\n\nNext paragraph.');
   });
