@@ -38,7 +38,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -207,6 +207,9 @@ async function plan() {
       const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1 } });
       if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
       if (isHeld(book) && book.pipeline_auto.hold.reason !== HOLD_REASON) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
+      // canary by eye 2026-10-23: on kanji-katakana print Paddle reads katakana as look-alike kanji (ヲ→之, ス→入)
+      // and invented a garbled near-repeat line; #7184 measured Chinese only. Japanese stays out of this lane.
+      if (laneLanguage(book.language) === 'Japanese') { tally.skipped_books.push({ bid, why: 'japanese' }); continue; }
       const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 } }, { projection: {
         id: 1, page_number: 1, image_width: 1, image_height: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1,
         photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
@@ -390,6 +393,7 @@ async function apply() {
       // the hold is the lane's guarantee that no paid re-translation follows the write
       if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
       const language = laneLanguage(book.language);
+      if (language === 'Japanese') { log(`${bid} is Japanese — out of this lane (canary 2026-10-23), not written`); continue; }
       const workTitle = workTitleOf(book.title);
       const live = new Map((await P.find({ id: { $in: prepped.map((p) => p.pid) } }, { projection: { id: 1, page_number: 1, book_id: 1, ocr: 1, image_width: 1, image_height: 1 } }).toArray()).map((p) => [p.id, p]));
       const writes = [];
@@ -420,6 +424,10 @@ async function apply() {
             }
           }
           totals.rejected++; totals.why[a.reason] = (totals.why[a.reason] || 0) + 1; continue;
+        }
+        if (pol.why === 'flash_lite') {
+          const c = coversLite(a.han, p.ocr.data);
+          if (!c.ok) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'shorter_than_lite', paddle: c.paddle, lite: c.lite }); totals.shorter_than_lite = (totals.shorter_than_lite || 0) + 1; continue; }
         }
         const text = envelope(a.body, language);
         const field = ocrField(text, {

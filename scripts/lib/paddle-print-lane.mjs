@@ -150,6 +150,35 @@ export function leafLoop(body) {
   return { loop: false };
 }
 
+const hanOf = (s) => [...String(s || '')].filter((c) => /[\p{Script=Han}぀-ヿ]/u.test(c)).join('');
+function similar(a, b) {
+  const x = hanOf(a), y = hanOf(b);
+  if (!x.length || !y.length) return false;
+  let prev = [...Array(y.length + 1).keys()];
+  for (let i = 1; i <= x.length; i++) { const cur = [i]; for (let j = 1; j <= y.length; j++) cur.push(Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] !== y[j - 1]))); prev = cur; }
+  return 1 - prev[y.length] / Math.max(x.length, y.length) >= 0.75;
+}
+
+/**
+ * Drop a line or block of up to 3 lines that repeats the block right before it (canary by eye, 2026-10-23: Paddle
+ * re-reads one or two columns back to back on 3 of 8 Chinese pages — 第十題 / 第十題, a two-column block twice
+ * with 巳/已 and 半/牛 variants — and the 3 % gutter overlap puts the facing leaf's inner column in both leaves).
+ * The first copy is kept. A block counts only with ≥ 2 Han + kana in every line and ≥ 4 in all, so a dosage
+ * table's bare `兩` / `一` lines are never touched. Returns `{ lines, dropped }`.
+ */
+export function dropRepeats(lines) {
+  const out = [...lines];
+  let dropped = 0;
+  for (let i = 1; i < out.length; i++) {
+    for (let k = Math.min(3, i, out.length - i); k >= 1; k--) {
+      const a = out.slice(i - k, i), b = out.slice(i, i + k);
+      if (b.some((l) => hanOf(l).length < 2) || hanOf(b.join('')).length < 4) continue;
+      if (a.every((l, j) => similar(l, b[j]))) { out.splice(i, k); dropped += k; i--; break; }
+    }
+  }
+  return { lines: out, dropped };
+}
+
 /**
  * One page from its leaves. `leaves`: `[{ side: 'R'|'L'|'S', blank: bool, raw: string|null, err: string|null }]` in
  * reading order (right leaf, then left; or the single leaf). Returns
@@ -170,10 +199,31 @@ export function assemblePage(leaves, { workTitle = null } = {}) {
     for (const k of ['label_lines_dropped', 'header_lines', 'page_num_lines', 'img_dropped', 'tables_flattened', 'non_han_lines_dropped']) stats[k] += s[k] || 0;
     if (body.trim()) bodies.push(body.trim());
   }
-  const body = bodies.join('\n');
+  const { lines, dropped } = dropRepeats(bodies.join('\n').split('\n'));
+  stats.repeated_lines_dropped = dropped;
+  const body = lines.join('\n');
   const han = bodyCharCount(body);
   if (han < MIN_HAN) return { verdict: 'textless', han };
   return { verdict: 'write', body, stats, han };
+}
+
+/**
+ * Han + kana a stored flash-lite read carries as page text: its body and its <margin> blocks, without the
+ * apparatus (<vocab>, <warning>, <header>, <page-num>, <image-desc> …).
+ */
+export function liteTextCount(data) {
+  const s = String(data || '').replace(/<(vocab|warning|header|page-num|image-desc|scan-quality|quality|language|script|page-type|meta|sig|catchword|columns)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  return [...s].filter((c) => /[\p{Script=Han}぀-ヿ]/u.test(c)).length;
+}
+
+/**
+ * May a Paddle page replace this flash-lite read? Only if it carries at least LITE_COVERAGE of lite's text
+ * (canary by eye, 聊齋志異 p.132: Paddle read the body and left out the red upper-margin commentary lite had).
+ */
+export const LITE_COVERAGE = 0.9;
+export function coversLite(paddleCount, liteData) {
+  const lite = liteTextCount(liteData);
+  return { ok: !lite || paddleCount >= LITE_COVERAGE * lite, lite, paddle: paddleCount };
 }
 
 export function envelope(body, language) {
