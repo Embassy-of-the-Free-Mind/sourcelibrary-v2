@@ -38,8 +38,11 @@ const costOfRow = (a, r) => {
   if (!r) return null;
   if (a.startsWith('lite')) return r.usd_batch;
   if (a === 'deepseek' || a === 'qwen') return r.cost_reported ?? 0;
-  // flash ran on agy ($0); its Batch-equivalent price is agy's own token counts at gemini-3.8-flash list × Batch
-  return r.usage ? costOf('gemini-3.8-flash', r.usage.input_tokens || 0, (r.usage.output_tokens || 0) + (r.usage.thinking_tokens || 0)) * BATCH_MULTIPLIER : null;
+  // flash ran on agy ($0). Its Batch-equivalent price: the prompt's Gemini input tokens (Lite's count of the same prompt;
+  // agy's own input count carries ~15K tokens of agent preamble, measured 2026-10-23 on "Say OK.") plus agy's output and
+  // thinking tokens, at gemini-3.8-flash list × Batch.
+  const lin = costRows.lite.get(r.uid)?.in;
+  return r.usage && lin != null ? costOf('gemini-3.8-flash', lin, (r.usage.output_tokens || 0) + (r.usage.thinking_tokens || 0)) * BATCH_MULTIPLIER : null;
 };
 const costPerPage = (a, ids) => { const xs = ids.map((id) => costOfRow(a, costRows[a].get(id))).filter((x) => x != null); return xs.length ? mean(xs) : null; };
 // The OpenRouter total includes calls a provider cut and the resends (billed $0 when cut): charge everything to the arm.
