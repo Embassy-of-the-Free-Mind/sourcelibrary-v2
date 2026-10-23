@@ -15,6 +15,7 @@ import fs from 'fs';
 import path from 'path';
 import { buildTranslationPrompt, translationPromptHeader, PAGE_BREAK_SCOPED } from '../../lib/translate-core.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const P1 = arg('p1'); const OUT = arg('out');
@@ -39,7 +40,7 @@ const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { cons
 
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const db = c.db('bookstore');
-const PROJ = { book_id: 1, page_number: 1, ocr: 1, translation: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1 };
+const PROJ = { book_id: 1, page_number: 1, ocr: 1, translation: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1 };
 const okA = p => p?.translation?.model === 'gemini-3-flash-preview' && p.translation.source === 'ai' && (p.translation.data || '').length >= 200
   && (!p.ocr?.updated_at || !p.translation.updated_at || new Date(p.ocr.updated_at) <= new Date(p.translation.updated_at));
 const promptCache = new Map();
@@ -63,7 +64,9 @@ async function item(stratum, page, slug, p1) {
   const builtP1 = p1 ? buildTranslationPrompt({ ...ctx, ocrText: p1 }) : null;
   return {
     id: slug, stratum, book_id: page.book_id, page_number: page.page_number, title: book?.title, language: book?.language, published: book?.published,
-    image_url: page.archived_photo || page.photo_original || page.photo || null,
+    // getPageSource is split-aware. The set judged on 2026-10-23 was drawn with a hand-rolled pick; it differed on one
+    // page only (ja-3b194c-p83, a split spread, not in the pilot) — see the experiment record.
+    image_url: getPageSource(page),
     source_text: page.ocr.data, ocr_source: page.ocr.source, ocr_model: page.ocr.model,
     p1_text: p1 || null,
     prompt: built.prompt, prompt_p1: builtP1?.prompt || null, prompt_ref: prompts.translation.ref,

@@ -109,6 +109,7 @@ Every one of these GPU-days would be taken from the Paddle print lane and the La
 ### Threats and limits
 - **n = 10 pages in the pilot**, 7 of them zh. The STOP rule judged the pooled result; zh alone was closer, though it still fired the error clause. A 57-page round could narrow the zh gap, but would be unlikely to close a +1.7 errors/page difference whose CI excludes 0.
 - **A is a stored translation from 2026-10-06, and A has no replicate**, so the Flash-vs-Flash noise floor is unknown. The judge's own stability (α 0.93) is not the arm's stability.
+- **One Japanese image was the whole spread.** The set was drawn with a hand-rolled image pick. CI's page-image-pick check later moved `draw.mjs` to `getPageSource`. Of the 17 ja pages, only ja-3b194c-p83 (a split spread) differs. It is not in the pilot, so no judged item changed.
 - **The judge is a Claude model.** It may prefer Gemini's English style, but the deciding measure is counted accuracy spans with quotes, and the spot-checks above confirm them.
 - **4-bit community quant of Qwen3.6-27B, thinking off.** Thinking on would cost ~5× the output tokens (#6742: 1,395 vs 232 tokens per item) on a card that already manages only 293 pages/h.
 - **The prompt is Gemini's production prompt, unchanged.** A prompt tuned for Qwen, for example one without the pelican example, might remove one failure mode. It would not remove the reversals or the name errors.
