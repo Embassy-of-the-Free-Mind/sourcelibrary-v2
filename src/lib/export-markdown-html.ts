@@ -106,7 +106,11 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   html = html.replace(/&lt;(sup|sub|i|b|em|strong|s|u|small)&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/\1&gt;/gi, (_m, tag: string, s: string) => `<${tag.toLowerCase()}>${s}</${tag.toLowerCase()}>`);
   html = html.replace(/&lt;(foreign|italic)(?:\s[^&]{0,80})?&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/\1&gt;/gi, '<i>$2</i>');
   html = html.replace(/&lt;bold&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/bold&gt;/gi, '<b>$1</b>');
-  html = html.replace(/&lt;\/?(?:center|foreign|italic|bold|div|span|p|font|i|b|em|strong|s|u|sup|sub|small|big|ins|del|mark|q|cite|abbr)(?:\s[^&]{0,80})?\/?&gt;/gi, '');
+  // Attributes up to 300 characters: a drop cap arrives as `<span style="font-size: 200%; float: left; …">` (Giorgi).
+  // `<red>` and `<rotate value="90">` are the OCR's notes on ink and orientation (Hariri), not the book's words.
+  html = html.replace(/&lt;\/?(?:center|foreign|italic|bold|div|span|p|font|i|b|em|strong|s|u|sup|sub|small|big|ins|del|mark|q|cite|abbr|red|rotate)(?:\s[^&]{0,300})?\/?&gt;/gi, '');
+  // A literal <hr/> on its own line is a rule, as `---` is.
+  html = html.replace(/^[ \t]*&lt;hr\s*\/?&gt;[ \t]*$/gim, '---');
   // A closing tag of any name that is still here closed nothing ("…for the students.</t>"): a closing tag is never
   // the book's words.
   html = html.replace(/&lt;\/[a-z][\w-]{0,15}&gt;/gi, '');

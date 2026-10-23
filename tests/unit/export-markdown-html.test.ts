@@ -172,3 +172,19 @@ describe('markdownToHtml — no markup printed as text (#7118 EPUB probe)', () =
     expect(html).toBe('<p>Table of lunar eclipses</p>\n<table class="page-table"><thead><tr><th>Hour</th><th>Mean</th></tr></thead><tbody><tr><td>6</td><td>51</td></tr></tbody></table>');
   });
 });
+
+describe('markdownToHtml — OCR layout tags with long attributes, ink and orientation notes, a literal rule (#7118)', () => {
+  it('drops a drop-cap span whose style runs past 80 characters, keeping the letter', () => {
+    const html = markdownToHtml(`<span style="font-size: 200%; float: left; margin-right: 0.2em; line-height: 0.8em; font-family: 'Times New Roman', serif;">N</span>or would it`);
+    expect(html).not.toContain('&lt;');
+    expect(html).toContain('Nor would it');
+  });
+  it('drops <red> and <rotate value="90">', () => {
+    const html = markdownToHtml('<red>Chapter</red> one <rotate value="90">side text</rotate>');
+    expect(html).not.toContain('&lt;');
+    expect(html).toContain('Chapter one side text');
+  });
+  it('reads a literal <hr/> on its own line as a rule', () => {
+    expect(markdownToHtml('Before.\n\n<hr/>\n\nAfter.')).toMatch(/<p>Before\.<\/p>\s*<hr\/>\s*<p>After\.<\/p>/);
+  });
+});
