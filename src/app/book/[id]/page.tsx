@@ -17,7 +17,7 @@ import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush, Eye } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -945,6 +945,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // Use book-level cached counts (not page array, which is truncated to first 100 pages)
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
+  const humanReads = Number((book as unknown as { human_read_count?: number }).human_read_count) || 0;
   const totalPages = book.pages_count || pages.length;
   /**
    * Does this book have page IMAGES at all, or only text?
@@ -2237,6 +2238,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <FileText className="w-4 h-4" />
                   {hasScans ? `${totalPages} scans` : t.pagesOfText(totalPages)}
                 </div>
+                {/* human_read_count (#5048): reading visits by people, with pooled
+                    proxies and crawlers removed, rebuilt nightly. NOT read_count,
+                    the legacy counter inflated by proxy pools. Counting began
+                    2026-07-29, so the figure is "since then" and undercounts
+                    earlier reading; hidden at zero rather than showing "0 reads". */}
+                {humanReads > 0 && (
+                  <div
+                    className="flex items-center gap-2"
+                    title="Reading visits by people since 29 July 2026; crawlers and proxy traffic excluded."
+                  >
+                    <Eye className="w-4 h-4" />
+                    {humanReads.toLocaleString('en-US')} {humanReads === 1 ? 'read' : 'reads'}
+                  </div>
+                )}
                 {imageCount > 0 && (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
