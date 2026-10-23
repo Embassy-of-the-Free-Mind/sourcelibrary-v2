@@ -30,8 +30,12 @@ lock = threading.Lock(); out = open(a.out, 'a')
 
 def one(r):
     msgs = [{'role': 'user', 'content': r['prompt']}]
-    n = post('/tokenize', {'model': 'm', 'messages': msgs, 'add_generation_prompt': True,
-                           'chat_template_kwargs': {'enable_thinking': False}})['count']
+    try:
+        n = post('/tokenize', {'model': 'm', 'messages': msgs, 'add_generation_prompt': True,
+                               'chat_template_kwargs': {'enable_thinking': False}})['count']
+    except Exception:
+        n = len(r['prompt']) // 2 + 64   # conservative: CJK ≈ 1 char/token, English ≈ 4
+
     mt = min(a.max_tokens, a.max_model_len - n - 16)
     t0 = time.time()
     try:
