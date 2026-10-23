@@ -166,7 +166,7 @@ export function assemblePage(leaves, { workTitle = null } = {}) {
     if (lf.err || lf.raw == null) return { verdict: 'reject', reason: 'leaf_error', side: lf.side, err: String(lf.err || 'missing').slice(0, 80) };
     const { body, stats: s } = convertLeaf(lf.raw, { workTitle });
     const l = leafLoop(body);
-    if (l.loop) return { verdict: 'reject', reason: `leaf_loop:${l.reason}`, side: lf.side, ...l };
+    if (l.loop) return { ...l, verdict: 'reject', reason: `leaf_loop:${l.reason}`, side: lf.side };
     for (const k of ['label_lines_dropped', 'header_lines', 'page_num_lines', 'img_dropped', 'tables_flattened', 'non_han_lines_dropped']) stats[k] += s[k] || 0;
     if (body.trim()) bodies.push(body.trim());
   }

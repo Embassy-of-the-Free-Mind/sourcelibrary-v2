@@ -98,7 +98,7 @@ describe('assemblePage: leaves → one page', () => {
     expect(a.stats.blank_leaves).toBe(1);
   });
   it('a looping leaf with ink rejects the whole page; an errored leaf too', () => {
-    expect(assemblePage([{ side: 'R', blank: false, raw: fx('blank-leaf-loop-R.txt') }, { side: 'L', blank: false, raw: L }])).toMatchObject({ verdict: 'reject', side: 'R' });
+    expect(assemblePage([{ side: 'R', blank: false, raw: fx('blank-leaf-loop-R.txt') }, { side: 'L', blank: false, raw: L }])).toMatchObject({ verdict: 'reject', side: 'R', reason: expect.stringMatching(/^leaf_loop:/) });
     expect(assemblePage([{ side: 'R', blank: false, raw: null, err: 'timeout 90s' }, { side: 'L', blank: false, raw: L }])).toMatchObject({ verdict: 'reject', reason: 'leaf_error' });
   });
   it('two blank leaves are textless, never an empty write', () => {
