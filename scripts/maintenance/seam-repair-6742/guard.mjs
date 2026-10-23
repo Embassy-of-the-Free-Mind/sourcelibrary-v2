@@ -16,6 +16,7 @@
  *   SEAM_GUARD_OUT     the guard's log + manifest dir (default /mnt/HC_Volume_105839809/seam-guard-6742)
  *   SEAM_GUARD_CLAUDE_DAILY      joins the Sonnet fallback may check per UTC day, box-wide (default 1500)
  *   SEAM_GUARD_MAX_WEEKLY        no Claude call when the box account's weekly meter is at or over this % (default 50)
+ *   SEAM_GUARD_APPLY=major       in apply mode, write only repairs labelled severity major; plan the rest as dry
  *
  * translate-core's writePageTranslation calls runSeamGuard() after a translation is committed. For the page just written
  * it checks the join BEFORE it (the previous page) and the join AFTER it (the next page), when the neighbour holds an
@@ -63,6 +64,9 @@ import { geminiPack, agyOpen, DEFAULT_MODEL as GEMINI } from './gemini-repair.mj
 export const GUARD_TIMEOUT_MS = 8 * 60e3;
 export const DEFAULT_OUT = '/mnt/HC_Volume_105839809/seam-guard-6742';
 export const CLAUDE_DAILY = 1500, CLAUDE_MAX_WEEKLY = 50;
+/** SEAM_GUARD_APPLY: which accepted repairs `apply` mode writes — `all` (default) or `major` (#7118: on 88 blind-judged
+ *  Gemini-translated proposals, majors were 28/28 preferred with 0 worse; minors had the only 2 worse). */
+export const applyScope = (env = process.env) => (env.SEAM_GUARD_APPLY === 'major' ? 'major' : 'all');
 const MODES = ['dry', 'apply'];
 const modeFromFile = (file) => { try { return fs.readFileSync(file, 'utf8').trim(); } catch { return null; } };
 /** 'dry' | 'apply' | null: SEAM_GUARD when set (any other value, e.g. `off`, is off), else the box file. */
@@ -191,11 +195,14 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
       }
       tally.accepted = accepted.length;
       // One write per arm, so each repair carries its own repairer's provenance.
-      for (const arm of [...new Set(accepted.map(a => a.arm))]) {
-        const rows = accepted.filter(a => a.arm === arm), claude = arm !== 'gemini', model = claude ? CLAUDE_MODEL[arm] : GEMINI;
-        const w = await writeRepairs(db, rows, { out, doApply: mode === 'apply', cli: claude ? 'claude' : 'agy', model, allowHidden: true, throwOnStop: true, callSite: `${TAG}:write-guard`,
+      // In apply mode with SEAM_GUARD_APPLY=major, only majors are written; the rest are planned as in dry mode.
+      const applies = (a) => mode === 'apply' && (applyScope(env) === 'all' || a.x.severity === 'major');
+      for (const [arm, doApply] of [...new Set(accepted.map(a => `${a.arm}|${applies(a)}`))].map(k => k.split('|')).map(([a, d]) => [a, d === 'true'])) {
+        const rows = accepted.filter(a => a.arm === arm && applies(a) === doApply), claude = arm !== 'gemini', model = claude ? CLAUDE_MODEL[arm] : GEMINI;
+        const w = await writeRepairs(db, rows, { out, doApply, cli: claude ? 'claude' : 'agy', model, allowHidden: true, throwOnStop: true, callSite: `${TAG}:write-guard`,
           promptName: `seam-repair-6742 write-time guard: label+minimal edge repair (opus-reference PROMPT, tight windows, ${arm})`, sentHash: sha(`guard:${model}`),
           accepted: 'placement-checked at write time (edgeRefusal + lostWords); no per-join Opus check' });
+        if (!doApply && mode === 'apply') tally.plannedNotApplied = (tally.plannedNotApplied || 0) + w.written;
         tally.write = tally.write ? { ...tally.write, written: tally.write.written + w.written, pagesWritten: tally.write.pagesWritten + w.pagesWritten, refused: { ...tally.write.refused, ...w.refused } } : w;
       }
     }

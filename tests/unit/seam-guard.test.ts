@@ -12,7 +12,7 @@ import path from 'node:path';
 import { describe, it, expect, afterEach } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { guardMode, runSeamGuard, seamGuardAfterWrite, joinsToCheck, claudeGate, claudeCountToday, guardReport } from '../../scripts/maintenance/seam-repair-6742/guard.mjs';
+import { guardMode, runSeamGuard, seamGuardAfterWrite, joinsToCheck, claudeGate, claudeCountToday, guardReport, applyScope } from '../../scripts/maintenance/seam-repair-6742/guard.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { seamGuardOn } from '../../scripts/lib/translate-core.mjs';
@@ -174,6 +174,23 @@ describe('the Sonnet fallback (#7118)', () => {
     expect(t.joins).toBe(0);
     expect(t.opusTranslation).toBe(2);
     expect(guardReport({ out }).joinSkips).toEqual({ 'opus-translation': 2 });
+  });
+
+  it('SEAM_GUARD_APPLY=major: in apply mode a minor repair is only planned, never written', async () => {
+    expect(applyScope({})).toBe('all');
+    expect(applyScope({ SEAM_GUARD_APPLY: 'major' })).toBe('major');
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-maj-'));
+    const page = { ...pg(5), id: 'p5-maj' };
+    const rows = [pg(4), { ...page, translation: { ...page.translation, data: page.translation.data + ' Minor.' } }, pg(6)];
+    const updates: unknown[] = [];
+    const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: {}, visible: true, pages_count: 9 }) }
+      : { find: (q: { id?: { $in: string[] } }) => ({ toArray: async () => q.id ? rows.filter(r => q.id!.$in.includes(r.id)) : rows }), updateOne: async (...a: unknown[]) => { updates.push(a); } } };
+    const sonnetFn = async (it: { id: string; p: number }) => ({ byId: new Map([[it.id, it.p === 4 ? { label: 'ok' } : { label: 'catchword', labels: ['catchword'], severity: 'minor', repair: { tail_old: 'Minor.', tail_new: '', head_old: '', head_new: '' } }]]), r: { secs: 1, cls: null } });
+    const t = await seamGuardAfterWrite(d, { page: rows[1], mode: 'apply', out, env: { SEAM_GUARD_APPLY: 'major' }, usageFn: okUsage, sonnetFn, geminiFn: gemini, agyOpenFn: () => false });
+    expect(t.error).toBeUndefined();
+    expect(t.accepted).toBe(1);
+    expect(t.plannedNotApplied).toBe(1);
+    expect(updates).toEqual([]);
   });
 
   it('treats a spent Claude account as a skip, not a check', async () => {
