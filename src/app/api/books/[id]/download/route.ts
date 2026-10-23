@@ -134,7 +134,7 @@ async function generateTxtDownload(db: Db, book: Book, pages: Page[], format: 't
     const flow = await buildFlowText(db, book as never, pages as never, { text: format, baseUrl: BASE_URL });
     if (flow.imagesTotal > 0) {
       lines.push('');
-      lines.push(`This plain-text edition carries no images; the book's ${flow.imagesTotal} illustrations can be seen at ${BASE_URL}/book/${book.id}.`);
+      lines.push(`Illustrations: plain text cannot carry pictures, so each of the book's ${flow.imagesTotal} is marked [Illustration, p. N] where it stands, with what it shows and a link to its page.`);
     }
     lines.push('');
     lines.push('');

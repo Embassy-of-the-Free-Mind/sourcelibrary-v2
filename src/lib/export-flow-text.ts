@@ -8,9 +8,10 @@
  * The .txt download used to print each page's STORED text between rules: markdown (`**`, `####`, pipe tables), the
  * prompts' tags (`<note>`, `<margin>`, `<center>`) and a running head at every page top. This renders the continuous
  * edition's HTML instead, so the text reads as the /read view and the Kindle edition do: pages run together where the
- * sentence does, a page break is marked `[p. 12]` (citable, and distinct from a footnote call), and notes become
- * numbered footnotes. Plain text has no pop-up, so each note follows the paragraph that calls it, indented, rather
- * than waiting at the end of a forty-page section.
+ * sentence does, a page break is marked `[p. 12]` (citable, and distinct from a footnote call), notes become numbered
+ * footnotes, and each illustration is marked where it stands with what it shows and a link to its page. Plain text
+ * has no pop-up, so each note follows the paragraph that calls it, indented, rather than waiting at the end of a
+ * forty-page section.
  */
 import type { Db } from 'mongodb';
 import { buildFlowEpub, footnotesFor } from '@/lib/export-flow-epub';
@@ -36,7 +37,10 @@ export function flowHtmlToText(html: string): string {
     .replace(/<section class="footnotes">\s*<h3>Notes<\/h3>/g, '')
     .replace(/<a epub:type="noteref"[^>]*>(\d+)<\/a>/g, '\u0001$1\u0002')
     .replace(/<a class="page-marker"[^>]*>\|?(\d+)<\/a>/g, ' [p. $1] ')
-    // A plain-text edition carries no images.
+    // A plain-text edition cannot carry a picture, so it says where one stands, what it shows, and where to see it
+    // (the Project Gutenberg convention, with a link). Any other figure — an embedded image — has nothing to say.
+    .replace(/<figure class="flow-figure" data-page="(\d+)" data-href="([^"]*)"><figcaption>([\s\S]*?)<\/figcaption><\/figure>/g,
+      (_, n, href, caption) => `\n\n[Illustration, p. ${n}${inline(caption) ? `: ${inline(caption)}` : ''} — ${decode(href)}]\n\n`)
     .replace(/<figure[\s\S]*?<\/figure>/g, '')
     .replace(/<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/g, (_, level, s) => {
       const head = inline(s);
@@ -78,7 +82,7 @@ export async function buildFlowText(
   pages: Parameters<typeof buildFlowEpub>[2],
   opts: { text: 'translation' | 'ocr'; baseUrl: string },
 ): Promise<{ body: string; imagesTotal: number }> {
-  const flow = await buildFlowEpub(db, book, pages, { ...opts, includeImages: false });
+  const flow = await buildFlowEpub(db, book, pages, { ...opts, includeImages: false, figureCaptions: true });
   flow.cleanup();
   const body = flow.chapters.map(ch => {
     const text = flowHtmlToText(ch.content);

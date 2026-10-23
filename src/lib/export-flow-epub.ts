@@ -139,15 +139,37 @@ async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): P
   return { byPage, total: imgs.length, included, dir, best: (best as { file: string } | null)?.file ?? null };
 }
 
+/**
+ * The book's illustrations as captions only, no image fetched: for the plain-text edition, which cannot carry a
+ * picture but can say where one stands and what it shows. Linking to the page is fine whatever the scan licence.
+ */
+async function figureCaptions(db: Db, bookId: string, pageNumbers: Set<number>, baseUrl: string): Promise<{ byPage: Map<number, string>; total: number; included: number; dir: null; best: null }> {
+  const rows = await db.collection('gallery_images')
+    .find(galleryFilter({ bookId, minQuality: 0.5 }), { projection: { _id: 0, page_number: 1, description: 1, bbox: 1, detection_index: 1 }, maxTimeMS: 10000 })
+    .toArray()
+    .catch(() => []) as unknown as Array<{ page_number: number; description?: string; bbox?: { y?: number }; detection_index?: number }>;
+  const imgs = rows.filter(r => pageNumbers.has(r.page_number))
+    .sort((a, b) => a.page_number - b.page_number || (a.bbox?.y ?? 0) - (b.bbox?.y ?? 0) || (a.detection_index ?? 0) - (b.detection_index ?? 0));
+  const byPage = new Map<number, string>();
+  for (const img of imgs) {
+    const caption = escapeHtml((img.description || '').replace(/\s+/g, ' ').trim().slice(0, 300));
+    byPage.set(img.page_number, (byPage.get(img.page_number) || '')
+      + `<figure class="flow-figure" data-page="${img.page_number}" data-href="${escapeHtml(`${baseUrl}/book/${bookId}?page=${img.page_number}`)}"><figcaption>${caption}</figcaption></figure>`);
+  }
+  return { byPage, total: imgs.length, included: imgs.length, dir: null, best: null };
+}
+
 export async function buildFlowEpub(
   db: Db,
   book: FlowBookDoc,
   pages: FlowPageDoc[],
-  opts: { text: 'translation' | 'ocr'; baseUrl: string; includeImages: boolean },
+  opts: { text: 'translation' | 'ocr'; baseUrl: string; includeImages: boolean; figureCaptions?: boolean },
 ): Promise<FlowEpub> {
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
   const figures = opts.includeImages
     ? await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)))
+    : opts.figureCaptions
+    ? await figureCaptions(db, book.id, new Set(readable.map(p => p.page_number)), opts.baseUrl)
     : { byPage: new Map<number, string>(), total: await db.collection('gallery_images').countDocuments(galleryFilter({ bookId: book.id, minQuality: 0.5 }), { maxTimeMS: 5000 }).catch(() => 0), included: 0, dir: null, best: null };
 
   const flowPage = (p: FlowPageDoc): FlowPage => {

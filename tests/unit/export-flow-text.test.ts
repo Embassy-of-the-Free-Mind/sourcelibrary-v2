@@ -6,7 +6,10 @@ import { buildFlowText, flowHtmlToText, pageToText } from '@/lib/export-flow-tex
  * page's stored text — `**`, `####`, pipe tables, `<note>` tags — between rules.
  */
 const db = {
-  collection: () => ({ find: () => ({ toArray: async () => [] }), countDocuments: async () => 3 }),
+  collection: () => ({
+    find: () => ({ toArray: async () => [{ page_number: 2, description: 'A woodcut of a furnace & bellows.' }] }),
+    countDocuments: async () => 1,
+  }),
 };
 
 describe('pageToText', () => {
@@ -29,11 +32,12 @@ describe('pageToText', () => {
 });
 
 describe('buildFlowText', () => {
-  it('runs the pages together with a citable page mark, and names the illustrations it leaves out', async () => {
-    const pages = [1, 2].map(n => ({ id: `p${n}`, page_number: n, translation: { data: n === 1 ? 'The stone was' : 'heated for days.' } }));
+  it('runs the pages together with a citable page mark, and marks each picture where it stands', async () => {
+    const pages = [1, 2].map(n => ({ id: `p${n}`, page_number: n, translation: { data: n === 1 ? 'The stone was' : 'heated for days.\n\nThen cooled.' } }));
     const flow = await buildFlowText(db as never, { id: 'b' }, pages, { text: 'translation', baseUrl: 'https://x' });
     expect(flow.body).toContain('Pages 1–2\n---------');
     expect(flow.body).toContain('The stone was [p. 2] heated for days.');
-    expect(flow.imagesTotal).toBe(3);
+    expect(flow.body).toContain('\n\n[Illustration, p. 2: A woodcut of a furnace & bellows. — https://x/book/b?page=2]\n\n');
+    expect(flow.imagesTotal).toBe(1);
   });
 });
