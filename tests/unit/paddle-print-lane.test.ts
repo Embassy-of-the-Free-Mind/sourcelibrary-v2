@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -117,5 +117,26 @@ describe('the written field', () => {
     expect(f.engine.input.leaves).toHaveLength(1);
     expect(missingProvenance('ocr', f).missing).toEqual([]);
     expect(HOLD_REASON).toBe('paddle-print-6101');
+  });
+});
+
+describe('repeats and flash-lite coverage (canary by eye, 2026-10-23)', () => {
+  it('drops a line or a two-line block that repeats the one right before it, keeping the first copy', () => {
+    const a = ['者一而巳本是瀟湘一釣客自東自西自南北只把', '孤舟爲屋宅無寬窄暮天席地人難則頃聞四海停', '者一而已本是瀟湘一釣客自東自西自南北只把', '孤舟爲屋宅無寬窄慕天席地人難測頃聞四海停', '戈革金門嬾去投書策時向灘頭歌月白眞高格浮'];
+    expect(dropRepeats(a)).toEqual({ lines: [a[0], a[1], a[4]], dropped: 2 });
+    expect(dropRepeats(['生墨一丸立與可竹一枝', '餘無所有', '餘無所有', '范堯夫謫居永州']).dropped).toBe(1);
+    // below 4 characters a repeat is left (a recipe's 各一兩 lines can repeat for real): 第十題 twice stays
+    expect(dropRepeats(['第十題', '第十題', '有三角形二']).dropped).toBe(0);
+  });
+  it('never touches bare one-character table lines or different columns', () => {
+    expect(dropRepeats(['各一', '兩', '兩', '草烏']).dropped).toBe(0);
+    expect(dropRepeats([fx('text-leaf-R.txt'), fx('text-leaf-L.txt')].join('\n').split('\n')).dropped).toBe(0);
+  });
+  it('a Paddle page that carries under 90 % of lite\'s text (margins included) does not replace it', () => {
+    const lite = '<language>Chinese</language>\n<margin>橫占人物據為已有</margin>\n復造狀藏懷中期以必告\n<vocab>李, 劉</vocab>';
+    expect(liteTextCount(lite)).toBe(18);
+    expect(coversLite(10, lite).ok).toBe(false);
+    expect(coversLite(17, lite).ok).toBe(true);
+    expect(coversLite(5, '').ok).toBe(true);
   });
 });
