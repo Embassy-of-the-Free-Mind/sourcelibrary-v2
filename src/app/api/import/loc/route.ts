@@ -10,6 +10,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
 
 export const maxDuration = 300;
 
@@ -330,6 +331,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
       method: 'GET',
+      headers: selfCallHeaders(baseUrl),
     }).catch(() => {
       console.log(`[LOC Import] Split check queued for ${bookIdStr}`);
     });
@@ -337,7 +339,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Kick off image archiving (non-blocking)
     fetch(`${baseUrl}/api/books/${bookIdStr}/archive-images`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) },
       body: JSON.stringify({ limit: 50 }),
     }).catch(() => {
       console.log(`[LOC Import] Archive kick-off queued for ${bookIdStr}`);
