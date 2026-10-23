@@ -4,6 +4,9 @@
 # PRIOR ART: scripts/gpu/gex45-bench-6871/card.sh (vLLM serve → timed pass → stop, peak VRAM sampling, under /root/gpu.lock)
 # — copied in shape; this serves three Qwen text models and keeps their translations for the #6101 judge.
 # Queue with: gpu-queue.sh add gpu-task.sh 63-qwen-translate-6101  (the runner holds /root/gpu.lock and cds to its out dir)
+# Run 1 (07:01Z): 14B ran; 32B/27B did not start — `hf download --revision` writes no refs/main, so HF_HUB_OFFLINE
+# finds no snapshot (fixed by writing refs/main), and the hybrid 27B OOMed in vLLM's cudagraph profile sized for
+# 256 sequences (--max-num-seqs 16, the client's concurrency, and the estimate off). The rerun skips arms with DONE.
 # Inputs in /root/jobs/qwen-translate-6101: eval.jsonl (57 stored-source prompts), thru.jsonl (40 P1s prompts × 3 seeds).
 set -u
 J=/root/jobs/qwen-translate-6101; VL=/root/bench/vl
@@ -38,7 +41,7 @@ run_arm() {  # $1 tag, $2 model, rest: extra flags
   stop
 }
 run_arm q2-qwen3-14b-awq Qwen/Qwen3-14B-AWQ
-run_arm q1-qwen3-32b-awq Qwen/Qwen3-32B-AWQ
-run_arm q3-qwen3.6-27b-awq Alennnndy/Qwen3.6-27B-AWQ-4bit --limit-mm-per-prompt '{"image":0,"video":0}'
+run_arm q1-qwen3-32b-awq Qwen/Qwen3-32B-AWQ --max-num-seqs 16
+VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0 run_arm q3-qwen3.6-27b-awq Alennnndy/Qwen3.6-27B-AWQ-4bit --max-num-seqs 16 --limit-mm-per-prompt '{"image":0,"video":0}'
 echo "$(date -u +%FT%TZ) end" >> $LOG
 nvidia-smi --query-gpu=memory.used --format=csv,noheader

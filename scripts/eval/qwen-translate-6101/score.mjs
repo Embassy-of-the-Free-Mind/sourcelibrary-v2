@@ -12,10 +12,10 @@ import { cliChatterReason } from '../../lib/cli-chatter.mjs';
 import { ARMS, loadArm, clean } from './packets.mjs';
 
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
-const DIR = arg('dir'); const ROUND = Number(arg('round', '1')); const BEST = arg('best');
+const DIR = arg('dir'); const RARG = arg('round', '1'); const ROUND = RARG === 'pilot' ? 1 : Number(RARG); const BEST = arg('best');
 const set = new Map(JSON.parse(fs.readFileSync(path.join(DIR, 'set', 'set.json'), 'utf8')).items.map(s => [s.id, s]));
-const key = JSON.parse(fs.readFileSync(path.join(DIR, 'judge', `key-r${ROUND}.json`), 'utf8'));
-const jd = path.join(DIR, 'judge', `r${ROUND}`);
+const key = JSON.parse(fs.readFileSync(path.join(DIR, 'judge', `key-r${RARG}.json`), 'utf8'));
+const jd = path.join(DIR, 'judge', `r${RARG}`);
 const verdicts = new Map();   // `J|id` -> parsed line
 for (const f of fs.readdirSync(jd).filter(f => /^out-J\d-\d+\.jsonl$/.test(f))) {
   const pass = f.slice(4, 6);
@@ -51,7 +51,7 @@ const r3 = x => x == null ? null : +x.toFixed(3);
 
 // mechanical failures (no judge), on the raw outputs
 const raw = {};
-if (ROUND === 1) for (const [n, tag] of Object.entries(ARMS)) raw[n] = loadArm(path.join(DIR), tag);
+if (ROUND === 1) for (const [n, tag] of Object.entries(ARMS)) if (names.includes(n)) raw[n] = loadArm(path.join(DIR), tag);
 const cjkShare = t => { const s = String(t).replace(/<(term|gloss|note|meta|warning)>[\s\S]*?<\/\1>/g, ''); const L = [...s].filter(c => /\p{L}/u.test(c)); return L.length ? L.filter(c => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(c)).length / L.length : 0; };
 function mech(name, id) {
   const s = set.get(id);
@@ -115,6 +115,6 @@ if (ROUND === 2) {   // Qbest_p1 vs Qbest (same model, the lane's source vs the 
 }
 // classes tally
 report.classes = Object.fromEntries(names.map(n => [n, per.flatMap(p => [...p.J1[n].classes, ...p.J2[n].classes]).reduce((o, k) => (o[k] = (o[k] || 0) + 1, o), {})]));
-const outF = arg('out', path.join(DIR, `report-r${ROUND}.json`));
+const outF = arg('out', path.join(DIR, `report-r${RARG}.json`));
 fs.writeFileSync(outF, JSON.stringify(report, null, 1));
 console.log(JSON.stringify(report, null, 1));

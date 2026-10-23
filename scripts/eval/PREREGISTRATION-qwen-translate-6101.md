@@ -92,3 +92,21 @@ by a CI that excludes 50 %.
 - The zh source text is CBETA (punctuated, edited), cleaner than any lane read. The P1-source round shows what the
   lane would actually see.
 - 4-bit quantisation; one sample per page; the 27B is a community quant.
+
+## Amendment 1 — a gated 10-page pilot first (2026-10-23 ~07:45Z, before any judging)
+Steered by Derek's session through the job inbox (06:55Z): the 2026-09-14 zh A/B ranked hosted qwen3.8-flash last, and
+the #5793 Qwen3-8B student reversed meaning on 27 % of pages, so a 24 GB local Qwen is likely weaker. Written after
+the GPU outputs for Q2 and Q3 existed but before any judge call; no output has been read for quality beyond the
+mechanical checks (cap hits, errors).
+- **Pilot:** 10 pages, seeded (Mulberry32 61010) from the 57: 7 zh + 3 ja, listed in `pilot-ids.json`
+  (1de632-p53, e24f00-p53, 559462-p58, 55963c-p58, 1de682-p3, 1de5d3-p57, be006b-p110, ja c586a4-p159, b790a0-p10,
+  c5960a-p24). Candidates **A vs Q3 (Qwen3.6-27B)** only — Q3 is named the best local arm on priors (newest
+  generation; it serves, 32B had not yet), not on any score. Same judge prompt, J1 + J2.
+- **STOP rule (pilot):** stop, comment on #6101, and skip round 1 if Q3's pairwise vs A < 35 %, OR Q3 carries a
+  reversal on ≥ 3 more pilot pages than A (either pass), OR Q3's accuracy spans per page exceed A's by more than
+  2× and by ≥ 1.0. Otherwise expand to the full round 1 as registered above.
+- **Primary measure is the meaning-error count** (accuracy spans and reversals), as registered; pairwise is reported
+  with its J1/J2 test-retest beside it and is not trusted alone.
+- **Pages:** the pilot uses this set (the brief's woodblock frame, the lane's own material), not the 2026-09-14 樂舞
+  pages: those pages' stored arms are lite / Flash-preview translations without continuity context, and the lane
+  this decides is the #6101 print frame.

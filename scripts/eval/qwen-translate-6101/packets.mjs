@@ -15,6 +15,7 @@ import { makeRng } from '../lib/paired-stats.mjs';
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const DIR = arg('dir'); const ROUND = Number(arg('round', '1')); const BEST = arg('best');
 const PER = 3;
+const PILOT = process.argv.includes('--pilot');   // Amendment 1: A vs Q3 on pilot-ids.json
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 export const ARMS = { Q1: 'q1-qwen3-32b-awq', Q2: 'q2-qwen3-14b-awq', Q3: 'q3-qwen3.6-27b-awq' };
 
@@ -34,15 +35,18 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   let cands;   // name -> Map(id -> text)
   if (ROUND === 1) {
     cands = { A: new Map(set.map(s => [s.id, s.A.text])) };
-    for (const [k, tag] of Object.entries(ARMS)) cands[k] = new Map([...loadArm(DIR, tag)].map(([id, r]) => [id, r.text != null ? clean(r.text) : '']));
+    for (const [k, tag] of Object.entries(ARMS)) if (fs.existsSync(path.join(DIR, 'gpu', `out-${tag}`, 'eval.jsonl'))) cands[k] = new Map([...loadArm(DIR, tag)].map(([id, r]) => [id, r.text != null ? clean(r.text) : '']));
   } else {
     if (!BEST) throw new Error('--best=<arm tag> required for round 2');
     cands = { A: new Map(set.map(s => [s.id, s.A.text])),
       Qbest: new Map([...loadArm(DIR, BEST)].map(([id, r]) => [id, clean(r.text)])),
       Qbest_p1: new Map([...loadArm(DIR, BEST, 'thru.jsonl')].map(([id, r]) => [id, clean(r.text)])) };
   }
-  const items = ROUND === 1 ? set : set.filter(s => s.stratum === 'zh');
-  const out = path.join(DIR, 'judge', `r${ROUND}`); fs.mkdirSync(out, { recursive: true });
+  if (PILOT) cands = { A: cands.A, Q3: cands.Q3 };
+  const pilotIds = PILOT ? new Set(JSON.parse(fs.readFileSync(path.join(DIR, 'set', 'pilot-ids.json'), 'utf8'))) : null;
+  const items = PILOT ? set.filter(s => pilotIds.has(s.id)) : ROUND === 1 ? set : set.filter(s => s.stratum === 'zh');
+  const R = PILOT ? 'pilot' : ROUND;
+  const out = path.join(DIR, 'judge', `r${R}`); fs.mkdirSync(out, { recursive: true });
   fs.copyFileSync(path.join(HERE, 'JUDGE-PROMPT.md'), path.join(out, 'PROMPT.md'));
   const key = {};
   for (const pass of [1, 2]) {
@@ -58,6 +62,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     for (let i = 0; i * PER < lines.length; i++)
       fs.writeFileSync(path.join(out, `in-J${pass}-${String(i).padStart(2, '0')}.jsonl`), lines.slice(i * PER, (i + 1) * PER).join('\n') + '\n');
   }
-  fs.writeFileSync(path.join(DIR, 'judge', `key-r${ROUND}.json`), JSON.stringify(key));
-  console.log(`round ${ROUND}: ${items.length} pages × 2 passes, ${Object.keys(cands).length} candidates, parts ${fs.readdirSync(out).filter(f => f.startsWith('in-')).length}; empty candidates ${Object.values(cands).reduce((n, m) => n + items.filter(s => !m.get(s.id)).length, 0)}`);
+  fs.writeFileSync(path.join(DIR, 'judge', `key-r${R}.json`), JSON.stringify(key));
+  console.log(`round ${R}: ${items.length} pages × 2 passes, ${Object.keys(cands).length} candidates, parts ${fs.readdirSync(out).filter(f => f.startsWith('in-')).length}; empty candidates ${Object.values(cands).reduce((n, m) => n + items.filter(s => !m.get(s.id)).length, 0)}`);
 }
