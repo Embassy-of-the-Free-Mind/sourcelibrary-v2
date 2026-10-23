@@ -40,7 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -476,6 +476,12 @@ async function apply() {
         writes.push({ pg, p, text, field, why: pol.why, han: a.han });
       }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
+      const ks = kanaShare(writes.map((w) => w.text));
+      if (ks >= MAX_KANA_SHARE) {
+        log(`${bid} is ${(ks * 100).toFixed(0)} % kana — a Japanese edition, out of this lane; nothing written | ${String(book.title || '').slice(0, 40)}`);
+        if (APPLY) append(F.skipped, { bid, pn: null, why: 'japanese_content', kana_share: +ks.toFixed(3), pages: writes.length });
+        totals.japanese_content = (totals.japanese_content || 0) + 1; continue;
+      }
       if (!APPLY) { log(`${bid} would write ${writes.length}/${prepped.length} pages (${Object.entries(writes.reduce((m, w) => ({ ...m, [w.why]: (m[w.why] || 0) + 1 }), {})).map(([k, v]) => `${k} ${v}`).join(', ')}) | ${String(book.title || '').slice(0, 40)}`); totals.written += writes.length; continue; }
       // a sweep logs before it writes: if the run dies mid-book, sweep_log says what it set out to do
       await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'retranscribe-started', detail: { issue: LANE_ISSUE, engine: PADDLE.model, pages: writes.length, run: runId } });

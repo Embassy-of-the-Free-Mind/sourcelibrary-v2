@@ -56,8 +56,22 @@ export const INK_BLANK = 0.02;
 export const INK_FAINT = 0.07;
 /** deflate(bytes)/bytes below this on a long leaf = a recited, non-periodic loop. */
 export const MAX_DEFLATE = 0.15;
-/** A woodblock half-folio holds ~200–360 Han (#7184 p50–p99); 1,500 is beyond any leaf. */
-export const MAX_LEAF_HAN = 1500;
+/**
+ * Beyond any leaf: a woodblock half-folio holds ~200–360 Han (#7184 p50–p99), but a dense typeset single page holds
+ * 2,000+ (first frame chunk, 2026-10-23), so the cap is only a backstop; the deflate check is what catches loops.
+ */
+export const MAX_LEAF_HAN = 5000;
+/**
+ * A book whose Paddle text is at least this share kana is a Japanese edition (Meiji typeset, kundoku) whatever its
+ * language field says: out of this lane, like Japanese books (canary by eye; 益軒全集 and two 韓非子 sit in the
+ * Chinese frame with 11–57 % kana in their stored text). Kunten-glossed Chinese stays under it (5–9 %).
+ */
+export const MAX_KANA_SHARE = 0.10;
+export function kanaShare(texts) {
+  let han = 0, kana = 0;
+  for (const t of texts) for (const c of String(t || '')) { if (/\p{Script=Han}/u.test(c)) han++; else if (/[぀-ヿ]/u.test(c)) kana++; }
+  return han + kana ? kana / (han + kana) : 0;
+}
 /** Width / height at or above which an image is a two-leaf spread. NDL spreads ≈ 1.3–1.5, single leaves ≈ 0.6–0.8. */
 export const SPREAD_ASPECT = 1.0;
 /** The split overlap split-book.mjs uses (#1491 lesson 6: 1 % clipped tight gutters). */
