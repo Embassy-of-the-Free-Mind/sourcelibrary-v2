@@ -13,7 +13,9 @@ const ANCHOR_RATE = 'In a test on the verse text of 9 leaves of this manuscript 
 // was a scoring artifact; Fable half-leaf free reads pool at CER 0.51 (7 leaves, range 0.45–0.58).
 const FREE_RATE = 'Where a published text exists, such reads of this manuscript differed from it in about half of all characters (7 leaves, Oct 2026), so read this as a rough guide to the words, not a transcription.';
 const FLUENT = (which) => `The reading of the ${which.length > 1 ? 'upper and lower leaves is' : `${which[0]} is`} long and fluent; on a commentary leaf the model may be supplying a remembered text rather than reading the leaf.`;
-const LAYOUT = 'Each leaf is given as its left and right halves; rows do not line up across the string holes (‖), so read each half’s rows on their own.';
+// Physical-row layout (#7119 inbox, 23:13): each row reads straight across both string holes.
+export const LAYOUT = 'The leaf has two string holes; each numbered row reads straight across both of them (‖ marks a hole).';
+export const LAYOUT_HALVES = 'Each leaf is given as its left and right halves; rows do not line up across the string holes (‖), so read each half’s rows on their own.';
 const TAIL = 'Not checked by a scholar; report errors with the feedback button.';
 const LABEL = {
   sk: 'the Sāṅkhyakārikā (GRETIL e-text)',
