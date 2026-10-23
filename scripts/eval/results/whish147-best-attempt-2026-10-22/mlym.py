@@ -7,14 +7,38 @@ they are. Kerala spellings applied, all mechanical and all seen on this leaf (De
   - ḥ before s/ś/ṣ -> the sibilant doubled (viṣayaḥ sāmānya -> വിഷയസ്സാമാന്യ);
   - ṃ (or word-final m) before a stop -> the nasal of that stop (vyaktaṃ tathā -> വ്യക്തന്തഥാ);
   - word-final m -> ം; word-final n, r, l, ḷ, ṇ -> chillu;
-  - words within a row run together (scriptio continua).
-No other scribal habit is imitated.
+  - word-final t -> the chillu ൽ, as this scribe writes it (…ത്വാൽത്രിഗുണ; spot check of 2026-10-23, #7119);
+  - words within a row run together (scriptio continua), except vowel + vowel, which keeps the independent vowel.
+No other scribal habit is imitated. Never transliterated: [bracketed marks], the hole marker (‖hole‖ -> ‖), and the
+edition's quotation marks around a pratīka ('rūpaiḥ'; -> ‘രൂപൈഃ’;), which IAST would otherwise read as avagraha.
+Tests: test_mlym.py (python test_mlym.py with the job venv).
 Reads JSON {key: text} on stdin, writes JSON {key: malayalam_text} on stdout. Run with the job venv.
 """
 import json, re, sys
 from indic_transliteration import sanscript
 
-PROTECT = re.compile(r'(\[[^\]]*\]|<[^>]+>|‖|\*\*[^*]+\*\*|\.\.\.|…|\?)')
+PROTECT = re.compile(r'(\[[^\]]*\]|<[^>]+>|‖|‘|’|\*\*[^*]+\*\*|\.\.\.|…|\?)')
+# The hole marker: an earlier page shape wrote the string hole as ‖hole‖, and transliterating it gave ‖ഹോലേ‖ (#7119).
+HOLE = re.compile(r'\s*‖\s*hole\s*‖\s*|\s*‖\s*hole\b\s*|\s*\bhole\s*‖\s*', re.I)
+
+
+def unhole(s):
+    """‖hole‖ (and a half-written ‖hole) -> a bare ‖ with a space either side."""
+    return HOLE.sub(' ‖ ', s)
+
+
+def quotes(s):
+    """The edition quotes its pratīkas as 'rūpaiḥ'; — an apostrophe that IAST would read as avagraha. A closing quote
+    is an apostrophe after a letter and before a non-letter (an avagraha always comes before a letter); its opener is
+    the nearest earlier apostrophe that starts a word. Both become ‘ ’ and are kept out of the transliteration."""
+    cs = list(s)
+    for i, ch in enumerate(cs):
+        if ch == "'" and i > 0 and cs[i - 1].isalpha() and (i + 1 == len(cs) or not cs[i + 1].isalpha()):
+            for j in range(i - 1, -1, -1):
+                if cs[j] == "'" and (j == 0 or not cs[j - 1].isalpha()) and j + 1 < len(cs) and cs[j + 1].isalpha():
+                    cs[j], cs[i] = '‘', '’'
+                    break
+    return ''.join(cs)
 CONS = 'ക-ഹ'
 # IAST consonants, digraphs first
 CONSONANTS = ['kh', 'gh', 'ch', 'jh', 'ṭh', 'ḍh', 'th', 'dh', 'ph', 'bh', 'k', 'g', 'ṅ', 'c', 'j', 'ñ', 'ṭ', 'ḍ', 'ṇ', 't', 'd', 'n', 'p', 'b', 'm', 'y', 'r', 'l', 'v', 'ś', 'ṣ', 's', 'h', 'ḷ']
@@ -75,6 +99,34 @@ def conv_word(w):
     for k, v in CHILLU.items():
         if out.endswith(k):
             out = out[: -len(k)] + v
+    return out.replace(T_FINAL, 'ൽ')
+
+
+T_FINAL = '\ue000'   # stands for a word-final t until after transliteration, then becomes the chillu ൽ
+
+
+def runs(ws):
+    """Split a row's words into the stretches written as one Malayalam word. Words join (scriptio continua) except
+    where a vowel ends one word and a vowel begins the next: joined in IAST, a + i would read as the diphthong ai
+    (puruṣa ityarthaḥ must not become puruṣaityarthaḥ), so there the independent vowel is kept."""
+    out, cur = [], []
+    for i, w in enumerate(ws):
+        if cur and cur[-1][-1:] in VOWELS and w[:1] in VOWELS:
+            out.append(cur)
+            cur = []
+        cur.append(w)
+    if cur:
+        out.append(cur)
+    return out
+
+
+def final_t(ws):
+    """A word-final t is written as the chillu ൽ (the leaf: ...ത്വാൽത്രിഗുണ), except before a vowel, where it
+    joins the next word's first syllable."""
+    out = []
+    for i, w in enumerate(ws):
+        nxt = ws[i + 1] if i + 1 < len(ws) else ''
+        out.append(w[:-1] + T_FINAL if w.endswith('t') and nxt[:1] not in VOWELS else w)
     return out
 
 
@@ -82,19 +134,27 @@ def conv(seg):
     seg = seg.replace('||', ' ॥ ').replace('//', ' ॥ ').replace('/', ' । ').replace('|', ' । ')
     lead = ' ' if seg[:1].isspace() else ''
     trail = ' ' if seg[-1:].isspace() else ''
-    # trailing punctuation is its own token, so a word-final m / ḥ is still seen as final
+    # trailing punctuation is its own token, so a word-final m / ḥ / t is still seen as final
     toks = re.sub(r'(?<=\w)([.,;:]+)(?=\s|$)', r' \1', seg.lower()).split()
     out, run = [], []
     def flush():
-        # The whole run is written as one word, so a nasal or consonant at a word end joins the next word's cluster;
-        # chillu and anusvāra apply only at the end of the run.
+        # A run of words is written without spaces; chillu and anusvāra apply at the end of each written word.
         if run:
-            out.append(conv_word(''.join(sandhi_words(run))))
+            # a t before a dash (cet-na, śeṣavat- śeṣaṃ) is word-final too; a t before a hyphen that ends the row or
+            # the segment before a hole is a word broken there, and stays ത്
+            ws = final_t(sandhi_words(run))
+            ws = [re.sub(r't-(?=\w)', T_FINAL + '-', w) if i == len(ws) - 1 else re.sub(r't-(?=\w|$)', T_FINAL + '-', w)
+                  for i, w in enumerate(ws)]
+            out.append(''.join(conv_word(''.join(r)) for r in runs(ws)))
             run.clear()
     for t in toks:
         if t in ('।', '॥') or re.fullmatch(r'[\d\-–—,;:.]+', t):
             flush()
-            out.append(sanscript.transliterate(t, sanscript.IAST, sanscript.MALAYALAM) if t.isdigit() else t)
+            t = sanscript.transliterate(t, sanscript.IAST, sanscript.MALAYALAM) if t.isdigit() else t
+            if re.fullmatch(r'[.,;:]+', t) and out:
+                out[-1] += t      # a full stop or comma sits on the word before it
+            else:
+                out.append(t)
         else:
             run.append(t)
     flush()
@@ -107,6 +167,7 @@ def line(l):
         return l
     m = re.match(r'^(\s*\d+\.\s+)(.*)$', l)
     head, body = (m.group(1), m.group(2)) if m else ('', l)
+    body = quotes(unhole(body))
     return head + ''.join(p if PROTECT.fullmatch(p) else conv(p) for p in PROTECT.split(body))
 
 
