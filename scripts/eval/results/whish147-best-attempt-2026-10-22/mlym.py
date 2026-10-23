@@ -22,8 +22,21 @@ PROTECT = re.compile(r'(\[[^\]]*\]|<[^>]+>|‖|‘|’|\*\*[^*]+\*\*|\.\.\.|…|
 HOLE = re.compile(r'\s*‖\s*hole\s*‖\s*|\s*‖\s*hole\b\s*|\s*\bhole\s*‖\s*', re.I)
 
 
+# The other forms the half-leaf reads used (fix-spotcheck.mjs HOLE_FORMS has the same list).
+HOLE_FORMS = [
+    (re.compile(r'\s*\b(?:left|right) of hole:\s*', re.I), ' '),
+    (re.compile(r'\s*\[hole\]\s*', re.I), ' ‖ '),
+    (re.compile(r'\s*⟨hole⟩\s*', re.I), ' ‖ '),
+    (re.compile(r'\s*/\s*hole\s*/\s*', re.I), ' ‖ '),
+    (re.compile(r'\s*‖\s*cut\s*‖\s*$', re.I), ''),
+    (re.compile(r'\s*‖\s*cut:\s*([^‖]*?)\s*‖\s*$', re.I), r' \1'),
+]
+
+
 def unhole(s):
-    """‖hole‖ (and a half-written ‖hole) -> a bare ‖ with a space either side."""
+    """‖hole‖, ⟨hole⟩, [hole], / hole /, "left of hole:", "‖ cut ‖" -> a bare ‖ (or nothing at the mid-leaf cut)."""
+    for rx, to in HOLE_FORMS:
+        s = rx.sub(to, s)
     return HOLE.sub(' ‖ ', s)
 
 
@@ -122,11 +135,11 @@ def runs(ws):
 
 def final_t(ws):
     """A word-final t is written as the chillu ൽ (the leaf: ...ത്വാൽത്രിഗുണ), except before a vowel, where it
-    joins the next word's first syllable."""
+    joins the next word's first syllable, and after r, where the dot-reph cluster is kept (kart ‖ -> കൎത്ത്)."""
     out = []
     for i, w in enumerate(ws):
         nxt = ws[i + 1] if i + 1 < len(ws) else ''
-        out.append(w[:-1] + T_FINAL if w.endswith('t') and nxt[:1] not in VOWELS else w)
+        out.append(w[:-1] + T_FINAL if w.endswith('t') and not w.endswith('rt') and nxt[:1] not in VOWELS else w)
     return out
 
 

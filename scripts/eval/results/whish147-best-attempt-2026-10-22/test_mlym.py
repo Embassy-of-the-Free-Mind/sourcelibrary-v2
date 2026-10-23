@@ -8,6 +8,11 @@ CASES = [
     ('3. -ṣṭā dṛṣṭe tathā py a- ‖hole‖ dṛṣṭe tra-', 'ഹോലേ', False),
     ('3. -ṣṭā dṛṣṭe tathā py a- ‖hole‖ dṛṣṭe tra-', ' ‖ ', True),
     ('7. -ryaṃ dhāryam pra- ‖hole', 'ഹോ', False),
+    ('3. left of hole: nyamānassaṃsara ‖ right of hole: nnāste', 'ഹോ', False),
+    ('3. left of hole: nyamānassaṃsara ‖ right of hole: nnāste', 'ലേf', False),
+    ('4. bāhyā brahmādistam ⟨hole⟩ baparyantāśca', ' ‖ ', True),
+    ('4. -nyavṛttaya iti / vṛtti / hole / -ḥ sukhādirūpeṇa ‖ cut ‖', 'ചുൽ', False),
+    ('4. -nyavṛttaya iti / vṛtti / hole / -ḥ sukhādirūpeṇa ‖ cut ‖', 'ഹോ', False),
     # bracketed marks pass through untouched
     ('5. draṣṭṛtvam [leaf: draṣṭṛtvam?] akartṛbhāvaś', '[leaf: draṣṭṛtvam?]', True),
     ('1. [illegible] nāsti', '[illegible]', True),
@@ -19,6 +24,8 @@ CASES = [
     ('2. ayugapat-', 'യുഗപത്-', True),
     ('2. śeṣavat- śeṣaṃ li', 'ശേഷവൽ-', True),
     ('2. vartt- ‖ -tate', 'വൎത്ത്-', True),
+    ('7. ca tathā kart ‖ eva', 'കൎത്ത്', True),
+    ('7. ca tathā kart ‖ eva', 'ര്ൽ', False),
     # word-final t before a vowel joins the vowel (tat eva -> തതേവ)
     ('1. tat eva', 'തതേവ', True),
     # dot-reph with the consonant after it doubled

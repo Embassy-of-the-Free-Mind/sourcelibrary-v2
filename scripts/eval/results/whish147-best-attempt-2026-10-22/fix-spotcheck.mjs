@@ -32,13 +32,31 @@ export const LAYOUT_SEGMENTS = 'The leaf has two string holes (‖). On this lea
 export const ROWS = '**Rows of this leaf**';
 const HALF = (h) => `**Rows of this leaf, ${h} half (half-leaf segments)**`;
 const HOLE = /\s*‖\s*hole\s*‖\s*|\s*‖\s*hole\b\s*|\s*\bhole\s*‖\s*/gi;   // same as mlym.py HOLE
+// The other ways the half-leaf reads marked a hole or the mid-leaf cut (pages 21, 36, 54, 58): "left of hole: X ‖
+// right of hole: Y", "… [hole] …", "⟨hole⟩", "/ hole /", and "‖ cut ‖" / "‖ cut: X ‖" where a half ends at the cut.
+const HOLE_FORMS = [
+  [/\s*\b(?:left|right) of hole:\s*/gi, ' '],
+  [/\s*\[hole\]\s*/gi, ' ‖ '],
+  [/\s*⟨hole⟩\s*/gi, ' ‖ '],
+  [/\s*\/\s*hole\s*\/\s*/gi, ' ‖ '],
+  [/\s*‖\s*cut\s*‖\s*$/i, ''],
+  [/\s*‖\s*cut:\s*([^‖]*?)\s*‖\s*$/i, ' $1'],
+];
 
 export function relabel(block) {
   return block
     .replace(/\*\*(?:Upper|Lower) leaf, (left|right) half\*\*/g, (_, h) => HALF(h))
     .replace(/\*\*(?:Upper|Lower) leaf\*\*/g, ROWS);
 }
-const unhole = (s) => s.split('\n').map((l) => l.replace(HOLE, ' ‖ ').replace(/ +$/, '')).join('\n');
+export function unhole(s) {
+  const cut = /‖\s*cut\b/i.test(s);
+  return s.split('\n').map((l) => {
+    let x = l;
+    for (const [re, to] of HOLE_FORMS) x = x.replace(re, to);
+    if (cut) x = x.replace(/^(\s*\d+\.\s+)‖\s*/, '$1');   // a right half's rows began at the cut
+    return x.replace(HOLE, ' ‖ ').replace(/(\S) {2,}/g, '$1 ').replace(/^(\s*\d+\.) +/, '$1 ').replace(/ +$/, '');
+  }).join('\n');
+}
 
 /** Rule audit over a generated Malayalam block; returns a list of problems (empty = all rules hold). */
 export function checkMalayalam(ml) {
@@ -46,9 +64,9 @@ export function checkMalayalam(ml) {
   const rows = ml.split('\n').filter((l) => /^\s*\d+\.\s/.test(l)).map((l) => l.replace(/^\s*\d+\.\s+/, '').replace(/\[[^\]]*\]|‘|’|[…?]|\.\.\./g, '|'));
   for (const r of rows) {
     if (/[ഀ-ൿ] +[ഀ-ൿ]/.test(r.replace(/\s*[।॥‖|;,.:\-–]+\s*/g, '|').replace(/\|\s*[൦-൯]+\s*\|/g, '|'))) bad.push(`word space: ${r.slice(0, 60)}`);
-    if (/ത്(?=$|[\s।॥‖.,;:]|-(?=[ഀ-ൿ]))/.test(r)) bad.push(`final ത്: ${r.slice(0, 60)}`);
+    if (/(?<!ൎത്)ത്(?=$|[\s।॥‖.,;:]|-(?=[ഀ-ൿ]))/.test(r)) bad.push(`final ത്: ${r.slice(0, 60)}`);
     if (/[a-zāīūṛṃḥśṣṇṭḍñṅ]{2,}/i.test(r)) bad.push(`latin left: ${r.match(/[a-zāīūṛṃḥśṣṇṭḍñṅ]{2,}/i)[0]}`);
-    if (/ര്(?=[ക-ഹ])|ർ(?=[ക-ഹ])/.test(r)) bad.push(`r cluster not dot-reph: ${r.slice(0, 60)}`);
+    if (/ര്(?=[ക-ഹൺ-ൿ])|ർ(?=[ക-ഹ])/.test(r)) bad.push(`r cluster not dot-reph: ${r.slice(0, 60)}`);
     for (const m of r.matchAll(/ൎ([ക-ഹ])(്?)([ക-ഹ]?)/g)) {
       const [, c, vir, next] = m;
       const noDouble = 'ശഷസഹരയ'.includes(c);   // sibilants, h, r; y is doubled (ൎയ്യ) by the rule below
@@ -99,7 +117,7 @@ async function main() {
     const pr = p._pr;
     if (!pr) continue;
     let { warning, ml, iast } = pr;
-    const had = { hole: /‖\s*hole|hole\s*‖|ഹോലേ/i.test(`${ml}\n${iast}`), heads: /\*\*(?:Upper|Lower) leaf/.test(`${ml}\n${iast}`), halves: warning.includes(LAYOUT_HALVES) };
+    const had = { hole: /‖\s*hole|hole\s*‖|ഹോലേ|of hole:|\[hole\]|⟨hole⟩|\/\s*hole\s*\/|‖\s*cut\b/i.test(`${ml}\n${iast}`), heads: /\*\*(?:Upper|Lower) leaf/.test(`${ml}\n${iast}`), halves: warning.includes(LAYOUT_HALVES) };
     iast = relabel(unhole(iast));
     if (p.page_number in mlOut) {
       const newMl = mlOut[p.page_number];
