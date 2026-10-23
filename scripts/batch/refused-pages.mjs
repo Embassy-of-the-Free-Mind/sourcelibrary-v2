@@ -65,7 +65,7 @@ export function eligibleBook(book) {
 }
 
 async function selectPages(db) {
-  const pages = await db.collection('pages').find({ ...BLOCKED, ...NO_OCR }, { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.recitation_blocked': 1, 'ocr.fail_blocked': 1 } }).toArray();
+  const pages = await db.collection('pages').find({ $and: [BLOCKED, NO_OCR] }, { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.recitation_blocked': 1, 'ocr.fail_blocked': 1 } }).toArray();
   const bookIds = [...new Set(pages.map((p) => p.book_id))];
   const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, language: 1, visible: 1, 'pipeline_auto.hold': 1, labels: 1, pages_translated: 1 } }).toArray()).map((b) => [b.id, b]));
   const rows = [];
@@ -111,8 +111,11 @@ async function main() {
   if (!OUT) { console.error('run needs --out=DIR'); process.exit(2); }
   const MAX = Number(arg('max-pages') || 40);
   const APPLY = process.argv.includes('--apply');
+  const PER_CHART = Number(arg('per-chart') || Infinity);   // a sample across scripts, for a by-eye check
+  const seen = {};
   const todo = rows.filter((r) => r.eligible && CLAUDE_MODEL[r.reader.engine])
     .sort((a, b) => (a.book.visible === b.book.visible ? 0 : a.book.visible ? -1 : 1) || a.page.book_id.localeCompare(b.page.book_id) || a.page.page_number - b.page.page_number)
+    .filter((r) => (seen[r.chart] = (seen[r.chart] ?? 0) + 1) <= PER_CHART)
     .slice(0, MAX);
   const reason = `#7170 refusal lane: page Gemini refused (stamp), next reader from ocr-routing-table refused-pages route`;
   const job = `refused-${new Date().toISOString().slice(0, 10)}`;
