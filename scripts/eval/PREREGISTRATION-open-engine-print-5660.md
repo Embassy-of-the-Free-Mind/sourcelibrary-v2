@@ -379,3 +379,51 @@ fetching the leaf images and checking their hashes. No engine has read them.
   logged by `gemini-script-client.mjs` and stated in the result.
 - No Claude model goes through agy. Nothing is written to `pages`, `books` or any production store. Outputs go to gex45
   `/root/jobs/latin-bakeoff-5924/` and to the repo as packed JSONL.
+
+## Amendment 5 — the brief's per-century adoption bar, on a fresh replication read (job gpu-latin-5924, #5924 / #6871 row 2; written 2026-10-23 before any replication read exists)
+
+**Why an amendment.** Derek's 2026-10-23 brief asks a different question from Amendment 4's. Amendment 4 asked whether an
+open engine reads *better* than flash-lite (CI of the paired Δ below 0). The brief asks whether one is good enough to
+*replace* it, a non-inferiority question, with its own bar. The bar below is the brief's, copied, not chosen by this job.
+
+**What was already known when this was written (disclosed, because it is not blind).** Every arm in Amendment 4 was
+read on 2026-10-18. MinerU (M) and olmOCR-2 (O) ran later that day, in gpu-queue task `20-latin-mineru-olmocr`, and
+their scores sat unposted on gex45 (`/root/jobs/latin-bakeoff-5924/results.txt`). This job read that table before writing
+this. So the 10-18 reads are **run 1, seen**. The binding read is **run 2**: the same four engines, the same fed images,
+the same flags, read again after this commit and scored only by the code committed with it.
+
+### Engines (the brief's four), run 2
+`P0` / `P1` PaddleOCR-VL-1.6 (layout off / on), `M` MinerU2.5-Pro-2605-1.2B, `G` GLM-OCR 0.9B, `O` olmOCR-2-7B-1025-FP8.
+Each exactly as Amendment 4 (`latin-bakeoff-5924/drive.sh`, `read.py` unchanged, temperature 0, 6,000 tokens, 16 clients,
+util 0.6 / olmOCR 0.85 on the 1,288 px images), one model at a time under the gpu-queue's `/root/gpu.lock`, every
+model stopped before the lock is released. Outputs `P0r P1r Mr Gr Or`. Kraken (`K`) is CPU, not one of the brief's
+engines: reported from run 1, never adoptable here.
+
+### Comparators (no new Gemini calls)
+- `L`: the stored flash-lite reads of Amendment 4 (`reads/L.jsonl.gz`, gemini-3.1-flash-lite, T 0). The brief's comparator.
+- `LP`: `L` after the long-s pass (`latin-longs-pass-5924/reads/LP.jsonl.gz`, PR on #5924, 2026-10-22). Job
+  `longs-apply-5924` is applying that pass to stored Latin, so LP is the flash-lite lane as it will be served.
+
+### Metric
+Page CER against the Opus reference, view N, order-tolerant, exactly as Amendment 4 (`score.mjs` unchanged).
+Catastrophic page: N CER > 0.5, or output more than twice the reference's letters (a loop), as Amendment 4.
+
+### The bar (the brief's), per century, per comparator C ∈ {L, LP}
+An engine **passes against C** in a century iff both hold:
+1. **Median within 0.2 points:** median N CER(engine) − median N CER(C) ≤ +0.002, on the same pages.
+2. **No catastrophic failures above C's rate:** catastrophic pages(engine) ≤ catastrophic pages(C) (same n, so count = rate).
+
+An engine is **ADOPTABLE for a century** iff it passes against **both** L and LP **in run 2**, and the same holds in
+run 1 (a verdict that flips between two temperature-0 reads of the same images is not a lane). Otherwise NOT ADOPTABLE.
+If several are adoptable in one century, they are listed by run-2 median.
+
+### Reported, not deciding
+- The difference of medians with a 95% paired percentile bootstrap CI (10,000 resamples of pages, seed 5924), and whether the
+  CI's upper end is also ≤ +0.2 points (a stricter reading of the bar).
+- The post hoc `--fold-f` view (Amendment 4's sensitivity view), the D view, ſ counts, run-1 vs run-2 agreement (median
+  |Δ CER| per page, catastrophic pages that differ), and throughput (pages/h, peak VRAM) in run 2 beside run 1's.
+
+### Code and writes
+`latin-bakeoff-5924/bar-a5.mjs` (the bar above, over `score.mjs --out` JSON) and `latin-bakeoff-5924/rep-task.sh` (the
+gpu-queue task) are committed with this amendment. $0: no paid calls, the owned GPU only. No production write, and no
+production lane changes whatever the verdict; adopting one is Derek's call.
