@@ -75,7 +75,7 @@ function summarise(pages, label) {
       fid_mean: r3(mean(fidPages.map(x => mean(x)))), meaning_defects_mean: r3(mean(pages.map(p => avg(p, n, 'meaning_defects')))),
       fill_pages: pages.filter(p => p.J1[n].fill + p.J2[n].fill > 0).length, added_fact_mean: r3(mean(pages.map(p => avg(p, n, 'added')))),
       reversal_pages: pages.filter(p => p.J1[n].reversal + p.J2[n].reversal > 0).length,
-      omission_pages: pages.filter(p => p.J1[n].omission && p.J2[n].omission).length,
+      omission_pages: pages.filter(p => p.J1[n].omission || p.J2[n].omission).length,   // either pass, as reversal_pages and fill_pages
       top_rank_share: r3(mean(pages.map(p => ((p.J1[n].rank === 0) + (p.J2[n].rank === 0)) / 2))) };
     if (n === 'A') continue;
     const d = pages.map(p => avg(p, n, 'acc') - avg(p, 'A', 'acc'));

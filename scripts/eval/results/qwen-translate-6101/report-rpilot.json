@@ -20,7 +20,7 @@
     "fill_pages": 2,
     "added_fact_mean": 0.95,
     "reversal_pages": 2,
-    "omission_pages": 2,
+    "omission_pages": 3,
     "top_rank_share": 0.35,
     "acc_diff_vs_A": 2.3,
     "acc_diff_ci": [
@@ -59,7 +59,7 @@
     "fill_pages": 0,
     "added_fact_mean": 1.05,
     "reversal_pages": 0,
-    "omission_pages": 1,
+    "omission_pages": 3,
     "top_rank_share": 0.85,
     "mech_fail": 0,
     "production_guard_refusals": []
@@ -113,7 +113,7 @@
     "fill_pages": 0,
     "added_fact_mean": 1.5,
     "reversal_pages": 0,
-    "omission_pages": 0,
+    "omission_pages": 2,
     "top_rank_share": 0.786,
     "mech_fail": 0,
     "production_guard_refusals": []
@@ -132,7 +132,7 @@
     "fill_pages": 2,
     "added_fact_mean": 1.333,
     "reversal_pages": 1,
-    "omission_pages": 2,
+    "omission_pages": 3,
     "top_rank_share": 0,
     "acc_diff_vs_A": 3.667,
     "acc_diff_ci": [
