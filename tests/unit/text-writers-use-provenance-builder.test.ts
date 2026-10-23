@@ -26,6 +26,7 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': "f → ſ in the page's own stored transcription (assertOrthographicOnly), no model call; keeps the engine block, recomputes content_hash, page_revisions row first (#5924)",
   'scripts/maintenance/withhold-paddle-table-pages-6388.mjs': "--undo moves the page's own earlier transcription back from its page_revisions snapshot; the engine block it was written with never left the page (#6388); nothing is read from a model",
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
