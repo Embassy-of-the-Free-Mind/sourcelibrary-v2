@@ -14,6 +14,7 @@
 # Nothing here writes to Mongo: `paddle-print-lane.mjs apply` does, on the CPU side.
 set -uo pipefail
 J=${LANE_DIR:-/root/jobs/paddle-print-6101}
+MANIFEST=${MANIFEST:-$J/manifest.tsv}   # the canary sets its own subset
 NAME=${GPU_TASK_NAME:-$(basename "$PWD")}
 W=${CLIENTS:-4}
 DEADLINE=$(( $(date +%s) + ${DEADLINE_H:-22} * 3600 ))
@@ -26,7 +27,7 @@ stop_server() {
   echo "$(date -u +%FT%TZ) server stopped, GPU $(gpu_mib) MiB"
 }
 trap stop_server EXIT
-[ -s "$J/manifest.tsv" ] || { echo "no manifest at $J/manifest.tsv"; exit 1; }
+[ -s "$MANIFEST" ] || { echo "no manifest at $MANIFEST"; exit 1; }
 [ -f "$J/code/paddle-zh-run.py" ] || { echo "no runner at $J/code/paddle-zh-run.py (copy scripts/gpu/paddle-zh-run.py there)"; exit 1; }
 mkdir -p "$J/runs" "$J/gpu/$NAME"
 
@@ -39,18 +40,18 @@ cat > "$J/runs/$NAME.json" <<EOF
  "backend": "server", "workers": $W, "layout": 0, "vllm_version": "$VV",
  "paddle_version": "$PV", "paddleocr_version": "$POV", "paddlex_version": "$PXV",
  "weights_files": ["PaddleOCR-VL-1.6/model.safetensors"], "weights_sha256": "$(sha256sum "$WF" | cut -d' ' -f1)",
- "started_at": "$(date -u +%FT%TZ)", "manifest_lines": $(wc -l < "$J/manifest.tsv")}
+ "started_at": "$(date -u +%FT%TZ)", "manifest": "$MANIFEST", "manifest_lines": $(wc -l < "$MANIFEST")}
 EOF
 
 PATH=/root/pz/srv/bin:$PATH nohup /root/pz/srv/bin/paddlex_genai_server --model_name PaddleOCR-VL-1.6-0.9B --backend vllm --port 8118 > "$J/gpu/$NAME/serve.log" 2>&1 < /dev/null &
 SP=$!
 for i in $(seq 1 120); do curl -sf http://127.0.0.1:8118/v1/models >/dev/null 2>&1 && break; sleep 5; done
 curl -sf http://127.0.0.1:8118/v1/models >/dev/null || { echo "genai server did not come up"; tail -20 "$J/gpu/$NAME/serve.log"; exit 1; }
-echo "$(date -u +%FT%TZ) server up, GPU $(gpu_mib) MiB; $(wc -l < "$J/manifest.tsv") leaves in the manifest, $W clients"
+echo "$(date -u +%FT%TZ) server up, GPU $(gpu_mib) MiB; $(wc -l < "$MANIFEST") leaves in the manifest, $W clients"
 s=$(date +%s)
 pids=(); for w in $(seq 0 $((W - 1))); do
   ( while :; do
-      /root/pz/venv/bin/python "$J/code/paddle-zh-run.py" --manifest "$J/manifest.tsv" --root "$J" --worker $w --workers $W \
+      /root/pz/venv/bin/python "$J/code/paddle-zh-run.py" --manifest "$MANIFEST" --root "$J" --worker $w --workers $W \
         --page-timeout 90 --layout 0 --backend server --prefetch 3 --deadline "$DEADLINE" >> "$J/gpu/$NAME/worker-$w.log" 2>&1
       rc=$?; echo "$(date -u +%FT%TZ) worker $w rc=$rc" >> "$J/gpu/$NAME/restarts.log"; [ $rc -eq 3 ] || break
     done ) & pids+=($!)

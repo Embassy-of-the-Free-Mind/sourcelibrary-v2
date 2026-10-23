@@ -310,18 +310,25 @@ async function prep() {
   let books = fs.existsSync(F.planDir) ? fs.readdirSync(F.planDir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)) : [];
   if (BOOK) books = books.filter((b) => b === BOOK);
   if (arg('--books', null)) { const want = new Set(fs.readFileSync(arg('--books'), 'utf8').split('\n').map((s) => s.trim())); books = books.filter((b) => want.has(b)); }
-  books = books.filter((b) => !fs.existsSync(prepFile(b))).sort();
+  // --retry-failed: re-fetch only the pages an earlier prep could not fetch, in books already prepped
+  const RETRY = flag('--retry-failed');
+  books = books.filter((b) => (RETRY ? fs.existsSync(prepFile(b)) && readJson(prepFile(b)).pages.some((p) => p.error) : !fs.existsSync(prepFile(b)))).sort();
+  // --shard i/n: run n prep processes side by side, each on every n-th book
+  const [si, sn] = String(arg('--shard', '0/1')).split('/').map(Number);
+  books = books.filter((_, i) => i % sn === si);
   if (LIMIT) books = books.slice(0, LIMIT);
-  log(`${books.length} book(s) to prep, ${conc} at a time`);
+  log(`${books.length} book(s) to ${RETRY ? 're-fetch failed pages of' : 'prep'}, ${conc} at a time${sn > 1 ? `, shard ${si}/${sn}` : ''}`);
   const t = { books: 0, pages: 0, leaves: 0, blank: 0, failed: 0, spreads: 0, ruler: 0, centre: 0 };
   for (const bid of books) {
     const pl = readJson(planFile(bid));
     const ndl = NDL_PROVIDERS.test(pl.provider || '');
-    const res = new Array(pl.pages.length);
+    const prior = RETRY ? readJson(prepFile(bid)).pages : null;
+    const todo = RETRY ? prior.filter((p) => p.error) : pl.pages;
+    const res = new Array(todo.length);
     let next = 0;
     await Promise.all(Array.from({ length: conc }, async () => {
-      while (next < pl.pages.length) {
-        const i = next++; const p = pl.pages[i];
+      while (next < todo.length) {
+        const i = next++; const p = todo[i];
         try { res[i] = { pn: p.pn, pid: p.pid, src: p.src, ...(await prepPage(await fetchBuf(p.src), { ndl })) }; }
         catch (e) { res[i] = { pn: p.pn, pid: p.pid, src: p.src, error: String(e.message || e).slice(0, 160) }; }
       }
@@ -338,7 +345,8 @@ async function prep() {
     // the prep file is the book's checkpoint: written after the manifest lines, so a crash re-preps the whole book
     // and the runner skips leaves already read (its output file is its checkpoint)
     if (man.length) fs.appendFileSync(F.manifest, man.join('\n') + '\n');
-    fs.writeFileSync(prepFile(bid), JSON.stringify({ bid, ndl, prepped_at: new Date().toISOString(), pages: res }));
+    const pages = RETRY ? prior.map((p) => (p.error ? res.find((r) => r.pn === p.pn) : p)) : res;
+    fs.writeFileSync(prepFile(bid), JSON.stringify({ bid, ndl, prepped_at: new Date().toISOString(), pages }));
     t.books++;
     if (t.books % 10 === 0 || t.books === books.length) log(`prepped ${t.books}/${books.length} books: ${JSON.stringify(t)}`);
   }
