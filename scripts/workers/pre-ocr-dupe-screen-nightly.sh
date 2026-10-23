@@ -20,7 +20,7 @@ set -u
 export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin
 cd "$(dirname "$0")/../.." || exit 1
 STATE=${PRE_OCR_SCREEN_STATE:-/mnt/HC_Volume_105839809/pre-ocr-screen}
-MAX_NEW=${PRE_OCR_SCREEN_MAX_NEW:-400}
+MAX_NEW=${PRE_OCR_SCREEN_MAX_NEW:-150}  # ~2 min a pair at 4 workers on the main box (image fetches dominate)
 WORKERS=${PRE_OCR_SCREEN_WORKERS:-4}
 APPLY=${PRE_OCR_SCREEN_APPLY:-1}
 MAX_DISK_PCT=${PRE_OCR_SCREEN_MAX_DISK_PCT:-90}
@@ -30,12 +30,12 @@ RUN=$STATE/runs/$(date -u +%F)
 CACHE=$STATE/cache
 SCREEN="npx tsx --env-file=.env.production.local scripts/audit/pre-ocr-duplicate-screen.ts"
 
-fail() {
-  echo "$(date -u +%FT%TZ) FAILED: $1"
-  curl -s -m 20 -H "Title: pre-OCR duplicate screen failed" -H "Priority: high" \
+note() {
+  echo "$(date -u +%FT%TZ) PAGED: $1"
+  curl -s -m 20 -H "Title: pre-OCR duplicate screen" -H "Priority: high" \
     -d "$1. Log: /var/log/sourcelibrary/pre-ocr-dupe-screen.log (#4285)" "$TOPIC" > /dev/null
-  exit 1
 }
+fail() { note "FAILED: $1"; exit 1; }
 trap 'rm -rf "$CACHE"' EXIT
 
 mkdir -p "$RUN" || fail "cannot create $RUN"
@@ -49,10 +49,14 @@ echo "new pairs: $(wc -l < "$RUN/pairs-new.tsv"), checking $(wc -l < "$RUN/pairs
 
 if [ -s "$RUN/pairs-check.tsv" ]; then
   timeout 4h "$UV" run -q --env-file .env.production.local scripts/audit/page-image-same-printing.py \
-    --pairs "$RUN/pairs-check.tsv" --out "$RUN/new-verdicts.jsonl" --wide --cache "$CACHE" --workers "$WORKERS" \
-    || fail "image check failed or timed out"
+    --pairs "$RUN/pairs-check.tsv" --out "$RUN/new-verdicts.jsonl" --wide --cache "$CACHE" --workers "$WORKERS"
+  rc=$?
+  # The checker writes one line per finished pair, so a timeout still leaves usable verdicts: keep them
+  # (the unfinished pairs come back tomorrow) and go on to decide.
+  touch "$RUN/new-verdicts.jsonl"
   cat "$RUN/new-verdicts.jsonl" >> "$STATE/verdicts.jsonl"
   cat "$RUN/new-verdicts.jsonl" >> "$RUN/verdicts.jsonl"
+  [ "$rc" = 0 ] || note "image check exited $rc after $(wc -l < "$RUN/new-verdicts.jsonl") of $(wc -l < "$RUN/pairs-check.tsv") pairs; kept those, deciding on them"
 fi
 
 if [ "$APPLY" = 1 ]; then
