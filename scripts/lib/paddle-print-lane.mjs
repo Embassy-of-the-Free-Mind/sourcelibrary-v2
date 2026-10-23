@@ -47,6 +47,13 @@ export const BOOK_EVENT = 'paddle_print_ocr';
 
 /** Inner-leaf ink below this = a blank leaf (calibrated above). */
 export const INK_BLANK = 0.02;
+/**
+ * Inner-leaf ink below this (and above INK_BLANK) = a FAINT leaf: a near-blank leaf whose show-through Paddle reads as
+ * text. Canary by eye 2026-10-23: of ~20 such leaves on 310 pages, several were invented lines (晉熙書經卷…,
+ * 曾廷考應類附錄卷之四 on a blank NDL leaf); in #7184 only 3 of 3,766 real text leaves fall below it. A page with a
+ * faint leaf is not written (the stored text stays; an empty page waits for the Flash lane).
+ */
+export const INK_FAINT = 0.07;
 /** deflate(bytes)/bytes below this on a long leaf = a recited, non-periodic loop. */
 export const MAX_DEFLATE = 0.15;
 /** A woodblock half-folio holds ~200–360 Han (#7184 p50–p99); 1,500 is beyond any leaf. */
@@ -175,13 +182,16 @@ export function dropRepeats(lines) {
       if (b.some((l) => hanOf(l).length < 2) || hanOf(b.join('')).length < 4) continue;
       if (a.every((l, j) => similar(l, b[j]))) { out.splice(i, k); dropped += k; i--; break; }
     }
+    // a long line (≥ 10) repeating one of the 2–4 lines before it, with interlinear note lines between the copies
+    // (canary 2026-10-23, 圜容較義 p.20: 巳乙豈不大於丁庚乎… / 以甲丙原大 / 于丙戊故 / 巳乙豈不大於丁庚乎…于丙戊故)
+    if (i < out.length && hanOf(out[i]).length >= 10 && [2, 3, 4].some((d) => i - d >= 0 && hanOf(out[i - d]).length >= 10 && similar(out[i - d], out[i]))) { out.splice(i, 1); dropped++; i--; }
   }
   return { lines: out, dropped };
 }
 
 /**
  * One page from its leaves. `leaves`: `[{ side: 'R'|'L'|'S', blank: bool, raw: string|null, err: string|null }]` in
- * reading order (right leaf, then left; or the single leaf). Returns
+ * reading order (right leaf, then left; or the single leaf); `ink` (innerInk) when measured. Returns
  *   { verdict: 'write', body, stats, han }   — the page text (leaves joined, one line break between them: on a
  *                                               thread-bound spread the text runs on across the fold)
  *   { verdict: 'textless', han }              — the leaves carry fewer than MIN_HAN Han + kana outside the margin marks
@@ -192,6 +202,7 @@ export function assemblePage(leaves, { workTitle = null } = {}) {
   const stats = { leaves: leaves.length, blank_leaves: 0, label_lines_dropped: 0, header_lines: 0, page_num_lines: 0, img_dropped: 0, tables_flattened: 0, non_han_lines_dropped: 0 };
   for (const lf of leaves) {
     if (lf.blank) { stats.blank_leaves++; continue; }
+    if (lf.ink != null && lf.ink < INK_FAINT) return { verdict: 'reject', reason: 'faint_leaf', side: lf.side, ink: lf.ink };
     if (lf.err || lf.raw == null) return { verdict: 'reject', reason: 'leaf_error', side: lf.side, err: String(lf.err || 'missing').slice(0, 80) };
     const { body, stats: s } = convertLeaf(lf.raw, { workTitle });
     const l = leafLoop(body);

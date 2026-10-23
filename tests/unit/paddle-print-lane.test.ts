@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -138,5 +138,18 @@ describe('repeats and flash-lite coverage (canary by eye, 2026-10-23)', () => {
     expect(coversLite(10, lite).ok).toBe(false);
     expect(coversLite(17, lite).ok).toBe(true);
     expect(coversLite(5, '').ok).toBe(true);
+  });
+});
+
+describe('faint leaves and spaced repeats (second by-eye draw, 2026-10-23)', () => {
+  it('a page with a faint leaf (show-through on a near-blank leaf) is not written', () => {
+    const L = fx('text-leaf-L.txt');
+    expect(assemblePage([{ side: 'R', blank: false, ink: 0.05, raw: '松源和耑銘卷之下\n曾廷考應類附錄卷之四' }, { side: 'L', blank: false, ink: 0.15, raw: L }])).toMatchObject({ verdict: 'reject', reason: 'faint_leaf', side: 'R' });
+    expect(assemblePage([{ side: 'R', blank: false, ink: INK_FAINT, raw: L }]).verdict).toBe('write');
+  });
+  it('drops a long line repeated after interlinear note lines', () => {
+    const r = dropRepeats(['巳乙豈不大於丁庚乎壬丙原大於丙辛', '以甲丙原大', '于丙戊故', '巳乙豈不大於丁庚乎壬丙原大於丙辛于丙戊故', '則巳乙與壬丙矩內直角形大于丁']);
+    expect(r.dropped).toBe(1);
+    expect(r.lines).toHaveLength(4);
   });
 });

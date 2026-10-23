@@ -405,7 +405,7 @@ async function apply() {
         const pol = storedPolicy(p.ocr, { spread: pg.spread });
         if (pol.action !== 'read') { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: `now_keep:${pol.why}` }); totals.kept_now++; continue; }
         const leaves = pg.leaves.map((lf) => ({
-          side: lf.side, blank: lf.blank,
+          side: lf.side, blank: lf.blank, ink: lf.ink,
           raw: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'txt')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'txt'), 'utf8') : null),
           err: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'err')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'err'), 'utf8') : null),
         }));
