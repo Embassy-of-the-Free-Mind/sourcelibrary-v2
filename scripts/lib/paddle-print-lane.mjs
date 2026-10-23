@@ -242,13 +242,20 @@ export const LITE_COVERAGE = 0.9;
 export function coversLite(paddleCount, liteData, paddleBody = null) {
   const lite = liteTextCount(liteData);
   if (lite && paddleCount < LITE_COVERAGE * lite) return { ok: false, why: 'shorter_than_lite', lite, paddle: paddleCount };
-  // the same omission when the commentary is under 10 % of the page (final by-eye draw, 聊齋志異 p.118): lite's
-  // <margin> blocks must be in Paddle's text — at least half their character bigrams
-  const margin = hanOf([...String(liteData || '').matchAll(/<margin[^>]*>([\s\S]*?)<\/margin>/gi)].map((m) => m[1]).join(''));
-  if (paddleBody != null && margin.length >= 8) {
+  // the same omission when the commentary is under 10 % of the page (final by-eye draw, 聊齋志異 p.118, where lite
+  // wrote the red margin commentary as plain lines): every lite line of ≥ 4 Han + kana must be in Paddle's text
+  // (at least a third of its character bigrams); lines that are not, if they hold ≥ 8 characters, keep lite
+  if (paddleBody != null) {
     const have = new Set(); const b = hanOf(paddleBody); for (let i = 0; i + 1 < b.length; i++) have.add(b.slice(i, i + 2));
-    let hit = 0, n = 0; for (let i = 0; i + 1 < margin.length; i++) { n++; if (have.has(margin.slice(i, i + 2))) hit++; }
-    if (hit / n < 0.5) return { ok: false, why: 'lite_margin_missing', lite, paddle: paddleCount, margin_recall: +(hit / n).toFixed(2) };
+    const body = String(liteData || '').replace(/<(vocab|warning|header|page-num|image-desc|scan-quality|quality|language|script|page-type|meta|sig|catchword|columns)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+    const missing = [];
+    for (const line of body.split(/\n/)) {
+      const h = hanOf(line); if (h.length < 4) continue;
+      let hit = 0; for (let i = 0; i + 1 < h.length; i++) if (have.has(h.slice(i, i + 2))) hit++;
+      if (hit / (h.length - 1) < 1 / 3) missing.push(h);
+    }
+    const n = missing.reduce((t, h) => t + h.length, 0);
+    if (n >= 8) return { ok: false, why: 'lite_lines_missing', lite, paddle: paddleCount, missing_chars: n, missing: missing.slice(0, 3) };
   }
   return { ok: true, lite, paddle: paddleCount };
 }

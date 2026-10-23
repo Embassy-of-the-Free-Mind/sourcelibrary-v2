@@ -176,7 +176,10 @@ describe('lite margin commentary must survive (final by-eye draw, 2026-10-23)', 
   const lite = '<margin>以此試秀才其術最善特恐更有俗者並金巾而內之奈何</margin>\n' + B + B + '長袖拂榻相將坐衣輭無聲少間一美人起以白綾巾展几上上有草書三四行亦未審其何辭一美人置白金鋌可三四兩許秀才掇內袖中美人取巾握手笑出曰俗不可耐';
   const body = B + B + '長袖拂榻相將坐衣輭無聲少間一美人起以白綾巾展几上上有草書三四行亦未審其何辭一美人置白金鋌可三四兩許秀才掇內袖中美人取巾握手笑出曰俗不可耐';
   it('keeps lite when Paddle left the margin out, even above 90 % of its length', () => {
-    expect(coversLite(liteTextCount(body), lite, body)).toMatchObject({ ok: false, why: 'lite_margin_missing' });
+    expect(coversLite(liteTextCount(body), lite, body)).toMatchObject({ ok: false, why: 'lite_lines_missing' });
     expect(coversLite(liteTextCount(lite), lite, '以此試秀才其術最善特恐更有俗者並金巾而內之奈何\n' + body).ok).toBe(true);
+    // lite writes the commentary as plain lines too (p.118): the same rule
+    const plain = '以此試秀\n才其術最\n善特恐更\n有俗者誰\n' + B + B;
+    expect(coversLite(liteTextCount(B + B), plain, B + B)).toMatchObject({ ok: false, why: 'lite_lines_missing' });
   });
 });
