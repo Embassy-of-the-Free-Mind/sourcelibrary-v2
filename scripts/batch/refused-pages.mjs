@@ -65,6 +65,22 @@ export function eligibleBook(book) {
   return !/contain/i.test(`${hold.reason ?? ''} ${(book.labels ?? []).join(' ')}`);
 }
 
+/**
+ * This box's Claude account's weekly percent from the climits meter, as claude-job.sh weekly_pct reads it (the meter
+ * is pushed to every box; the account is the box's own login). null when the meter is absent, stale or unreadable.
+ */
+export function weeklyPct(meterFile = '/root/.claude-limits/latest.json', loginFile = '/root/.claude.json') {
+  try {
+    if (Date.now() - fs.statSync(meterFile).mtimeMs > 30 * 60 * 1000) return null;
+    const d = JSON.parse(fs.readFileSync(meterFile, 'utf8'));
+    let me = d.claude_code_account;
+    try { me = JSON.parse(fs.readFileSync(loginFile, 'utf8')).oauthAccount.emailAddress || me; } catch { /* the meter's account */ }
+    const acct = (d.accounts ?? []).find((a) => a.email === me && a.ok);
+    const l = acct?.limits?.find((x) => x.key === 'weekly_all:all');
+    return l ? Math.round(Number(l.percent) || 0) : null;
+  } catch { return null; }
+}
+
 async function selectPages(db) {
   const pages = await db.collection('pages').find({ $and: [BLOCKED, NO_OCR] }, { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.recitation_blocked': 1, 'ocr.fail_blocked': 1 } }).toArray();
   const bookIds = [...new Set(pages.map((p) => p.book_id))];
@@ -88,7 +104,13 @@ function run(cmd, args) {
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-  if (!['count', 'run'].includes(mode)) { console.error('usage: refused-pages.mjs count | run --out=DIR [--max-pages=N] [--apply]'); process.exit(2); }
+  if (!['count', 'run'].includes(mode)) { console.error('usage: refused-pages.mjs count | run --out=DIR [--max-pages=N] [--apply] [--max-weekly-pct=70]'); process.exit(2); }
+  if (mode === 'run') {
+    // A cron spends the box account's subscription; stop well short of its week so sessions keep their headroom.
+    const cap = Number(arg('max-weekly-pct') || 70);
+    const wk = weeklyPct();
+    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%)`); return; }
+  }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const rows = await selectPages(client.db('bookstore'));
