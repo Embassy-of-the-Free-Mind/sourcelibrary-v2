@@ -19,6 +19,8 @@
  *   prep     per planned book: fetch each page image, crop NDL's ruler + label strip (NDL books only), split a spread
  *            at the gutter, measure each leaf's ink; blank leaves are recorded and not sent. Writes prep/<bid>.json
  *            and appends the leaves to manifest.tsv (<bid>\t<pn>-<side>\t<url>\t<x0,y0,x1,y1>). No Mongo writes.
+ *   recheck  list the read leaves with < 60 Han + kana (SHORT_LEAF) → recheck/manifest.tsv; the GPU task reads them
+ *            again at a 1,200 px long side (ROOT=$J/recheck MAX_SIDE=1200) and apply writes a page only if they agree.
  *   apply    per book whose every non-blank leaf is back from the box (out/<bid>/<pn>-<side>.txt|.err): assemble each
  *            page (leaf guards), re-check the stored reading and the hold, write through writePageText (revision row
  *            with the whole prior field, CAS, human-edit guard), mark English stale, recount, sweep_log before and
@@ -38,7 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -63,12 +65,14 @@ const F = {
   census: path.join(DIR, 'census.json'), frame: path.join(DIR, 'frame-books.json'),
   planDir: path.join(DIR, 'plan'), prepDir: path.join(DIR, 'prep'), outDir: path.join(DIR, 'out'),
   manifest: path.join(DIR, 'manifest.tsv'), log: path.join(DIR, 'lane.log'),
+  recheckDir: path.join(DIR, 'recheck'), recheckManifest: path.join(DIR, 'recheck', 'manifest.tsv'),
   applied: path.join(DIR, 'applied.jsonl'), skipped: path.join(DIR, 'skipped.jsonl'), rejected: path.join(DIR, 'rejected.jsonl'),
   bookLog: path.join(DIR, 'applied-books.jsonl'), runs: path.join(DIR, 'runs'),
 };
 const planFile = (bid) => path.join(F.planDir, `${bid}.json`);
 const prepFile = (bid) => path.join(F.prepDir, `${bid}.json`);
 const leafOut = (bid, pn, side, ext) => path.join(F.outDir, bid, `${pn}-${side}.${ext}`);
+const recheckOut = (bid, pn, side, ext) => path.join(F.recheckDir, 'out', bid, `${pn}-${side}.${ext}`);
 function log(msg) {
   const line = `${new Date().toISOString()} [${CMD}] ${msg}`;
   console.log(line);
@@ -356,13 +360,43 @@ async function prep() {
   log(`PREP ${JSON.stringify(t)}`);
 }
 
+// ── recheck: list the short leaves for a second read at a smaller scale ─────────────────
+
+function recheck() {
+  fs.mkdirSync(F.recheckDir, { recursive: true });
+  const listed = new Set(fs.existsSync(F.recheckManifest) ? fs.readFileSync(F.recheckManifest, 'utf8').split('\n').filter(Boolean).map((l) => l.split('\t').slice(0, 2).join('/')) : []);
+  const preps = fs.existsSync(F.prepDir) ? fs.readdirSync(F.prepDir).filter((f) => f.endsWith('.json')) : [];
+  const man = []; let short = 0, leaves = 0;
+  for (const f of preps) {
+    const pr = readJson(path.join(F.prepDir, f));
+    for (const p of pr.pages) {
+      if (p.error) continue;
+      for (const lf of p.leaves) {
+        if (lf.blank) continue;
+        const t = leafOut(pr.bid, p.pn, lf.side, 'txt');
+        if (!fs.existsSync(t)) continue;
+        leaves++;
+        const n = leafChars(fs.readFileSync(t, 'utf8'));
+        if (!(n > 0 && n < SHORT_LEAF)) continue;
+        short++;
+        if (listed.has(`${pr.bid}/${p.pn}-${lf.side}`)) continue;
+        man.push(`${pr.bid}\t${p.pn}-${lf.side}\t${p.src}\t${lf.box.join(',')}`);
+      }
+    }
+  }
+  if (man.length) fs.appendFileSync(F.recheckManifest, man.join('\n') + '\n');
+  log(`RECHECK read leaves ${leaves}, short (< ${SHORT_LEAF}) ${short}, newly listed ${man.length} → ${F.recheckManifest}`);
+}
+
 // ── apply ──────────────────────────────────────────────────────────────────────────────
 
 /** The newest run.json a GPU task left (engine versions, weights hash, serving). */
 function latestRun() {
   if (!fs.existsSync(F.runs)) return { name: 'unknown-run', box: {} };
-  const f = fs.readdirSync(F.runs).filter((x) => x.endsWith('.json')).sort().at(-1);
-  return f ? { name: f.slice(0, -5), box: readJson(path.join(F.runs, f), {}) } : { name: 'unknown-run', box: {} };
+  // the newest READ run (a recheck run reads short leaves again at a smaller scale; it is not the text's run)
+  const runs = fs.readdirSync(F.runs).filter((x) => x.endsWith('.json')).map((x) => ({ name: x.slice(0, -5), box: readJson(path.join(F.runs, x), {}) }))
+    .filter((r) => !r.box.max_side).sort((a, b) => String(a.box.started_at).localeCompare(String(b.box.started_at)));
+  return runs.at(-1) || { name: 'unknown-run', box: {} };
 }
 
 async function apply() {
@@ -370,7 +404,10 @@ async function apply() {
   let books = fs.existsSync(F.prepDir) ? fs.readdirSync(F.prepDir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)) : [];
   if (BOOK) books = books.filter((b) => b === BOOK);
   if (arg('--books', null)) { const want = new Set(fs.readFileSync(arg('--books'), 'utf8').split('\n').map((s) => s.trim())); books = books.filter((b) => want.has(b)); }
-  const back = (bid, pn, lf) => lf.blank || fs.existsSync(leafOut(bid, pn, lf.side, 'txt')) || fs.existsSync(leafOut(bid, pn, lf.side, 'err'));
+  const isShort = (bid, pn, lf) => { const f = leafOut(bid, pn, lf.side, 'txt'); if (!fs.existsSync(f)) return false; const n = leafChars(fs.readFileSync(f, 'utf8')); return n > 0 && n < SHORT_LEAF; };
+  const rechecked = (bid, pn, lf) => fs.existsSync(recheckOut(bid, pn, lf.side, 'txt')) || fs.existsSync(recheckOut(bid, pn, lf.side, 'err'));
+  // a page is ready when every leaf is back, and every SHORT leaf is back from its recheck too
+  const back = (bid, pn, lf) => lf.blank || fs.existsSync(leafOut(bid, pn, lf.side, 'err')) || (fs.existsSync(leafOut(bid, pn, lf.side, 'txt')) && (!isShort(bid, pn, lf) || rechecked(bid, pn, lf)));
   const ready = [];
   for (const bid of books.sort()) {
     const pr = readJson(prepFile(bid));
@@ -409,6 +446,7 @@ async function apply() {
           side: lf.side, blank: lf.blank, ink: lf.ink,
           raw: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'txt')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'txt'), 'utf8') : null),
           err: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'err')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'err'), 'utf8') : null),
+          recheck: !lf.blank && fs.existsSync(recheckOut(bid, pg.pn, lf.side, 'txt')) ? fs.readFileSync(recheckOut(bid, pg.pn, lf.side, 'txt'), 'utf8') : null,
         }));
         const a = assemblePage(leaves, { workTitle });
         if (a.verdict === 'textless') {
@@ -497,7 +535,7 @@ function status() {
   }, null, 1));
 }
 
-const CMDS = { census, plan, prep, apply, status };
+const CMDS = { census, plan, prep, recheck, apply, status };
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
 if (isMain) {
   if (!CMDS[CMD]) { console.error(`usage: paddle-print-lane.mjs ${Object.keys(CMDS).join('|')} [options]`); process.exit(1); }

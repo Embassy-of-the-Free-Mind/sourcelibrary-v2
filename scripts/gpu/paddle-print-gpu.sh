@@ -15,6 +15,8 @@
 set -uo pipefail
 J=${LANE_DIR:-/root/jobs/paddle-print-6101}
 MANIFEST=${MANIFEST:-$J/manifest.tsv}   # the canary sets its own subset
+ROOT=${ROOT:-$J}                       # the short-leaf recheck reads into $J/recheck
+MAX_SIDE=${MAX_SIDE:-0}                # the recheck reads at 1200
 NAME=${GPU_TASK_NAME:-$(basename "$PWD")}
 W=${CLIENTS:-4}
 DEADLINE=$(( $(date +%s) + ${DEADLINE_H:-22} * 3600 ))
@@ -40,7 +42,7 @@ cat > "$J/runs/$NAME.json" <<EOF
  "backend": "server", "workers": $W, "layout": 0, "vllm_version": "$VV",
  "paddle_version": "$PV", "paddleocr_version": "$POV", "paddlex_version": "$PXV",
  "weights_files": ["PaddleOCR-VL-1.6/model.safetensors"], "weights_sha256": "$(sha256sum "$WF" | cut -d' ' -f1)",
- "started_at": "$(date -u +%FT%TZ)", "manifest": "$MANIFEST", "manifest_lines": $(wc -l < "$MANIFEST")}
+ "started_at": "$(date -u +%FT%TZ)", "root": "$ROOT", "max_side": $MAX_SIDE, "manifest": "$MANIFEST", "manifest_lines": $(wc -l < "$MANIFEST")}
 EOF
 
 PATH=/root/pz/srv/bin:$PATH nohup /root/pz/srv/bin/paddlex_genai_server --model_name PaddleOCR-VL-1.6-0.9B --backend vllm --port 8118 > "$J/gpu/$NAME/serve.log" 2>&1 < /dev/null &
@@ -51,10 +53,10 @@ echo "$(date -u +%FT%TZ) server up, GPU $(gpu_mib) MiB; $(wc -l < "$MANIFEST") l
 s=$(date +%s)
 pids=(); for w in $(seq 0 $((W - 1))); do
   ( while :; do
-      /root/pz/venv/bin/python "$J/code/paddle-zh-run.py" --manifest "$MANIFEST" --root "$J" --worker $w --workers $W \
+      /root/pz/venv/bin/python "$J/code/paddle-zh-run.py" --manifest "$MANIFEST" --root "$ROOT" --max-side "$MAX_SIDE" --worker $w --workers $W \
         --page-timeout 90 --layout 0 --backend server --prefetch 3 --deadline "$DEADLINE" >> "$J/gpu/$NAME/worker-$w.log" 2>&1
       rc=$?; echo "$(date -u +%FT%TZ) worker $w rc=$rc" >> "$J/gpu/$NAME/restarts.log"; [ $rc -eq 3 ] || break
     done ) & pids+=($!)
 done
 wait "${pids[@]}"   # NOT a bare wait: the genai server is also a child of this shell (#7184 066 hung there)
-echo "$(date -u +%FT%TZ) done in $(( $(date +%s) - s ))s: $(find "$J/out" -name '*.txt' | wc -l) txt, $(find "$J/out" -name '*.err' | wc -l) err in all runs; GPU $(gpu_mib) MiB"
+echo "$(date -u +%FT%TZ) done in $(( $(date +%s) - s ))s: $(find "$ROOT/out" -name '*.txt' | wc -l) txt, $(find "$ROOT/out" -name '*.err' | wc -l) err in all runs; GPU $(gpu_mib) MiB"

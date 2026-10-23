@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -151,5 +151,22 @@ describe('faint leaves and spaced repeats (second by-eye draw, 2026-10-23)', () 
     const r = dropRepeats(['巳乙豈不大於丁庚乎壬丙原大於丙辛', '以甲丙原大', '于丙戊故', '巳乙豈不大於丁庚乎壬丙原大於丙辛于丙戊故', '則巳乙與壬丙矩內直角形大于丁']);
     expect(r.dropped).toBe(1);
     expect(r.lines).toHaveLength(4);
+  });
+});
+
+describe('short leaves need a stable second read (third by-eye draw, 2026-10-23)', () => {
+  const L = fx('text-leaf-L.txt');
+  const invented = '松源和耑銘卷之下\n曾廷考應類附錄卷之四';
+  it('a short leaf without its recheck is not written; an unstable one rejects the page; a stable one passes', () => {
+    expect(assemblePage([{ side: 'R', blank: false, ink: 0.23, raw: invented }, { side: 'L', blank: false, ink: 0.12, raw: L }])).toMatchObject({ verdict: 'reject', reason: 'short_leaf_unchecked' });
+    expect(assemblePage([{ side: 'R', blank: false, ink: 0.23, raw: invented, recheck: '松源和尚錄卷之下\n東坡居士文集卷四十' }, { side: 'L', blank: false, ink: 0.12, raw: L }])).toMatchObject({ verdict: 'reject', reason: 'short_leaf_unstable' });
+    const ok = assemblePage([{ side: 'R', blank: false, ink: 0.2, raw: '虎丘語錄終', recheck: '虎丘語錄終' }, { side: 'L', blank: false, ink: 0.12, raw: L }]);
+    expect(ok.verdict).toBe('write');
+    expect(ok.stats.short_leaves_stable).toBe(1);
+  });
+  it('stableRead compares Han + kana only', () => {
+    expect(stableRead('虎丘語錄終', '虎丘語錄終 |').ok).toBe(true);
+    expect(stableRead('曾廷考應類附錄卷之四', '東坡居士文集卷四十').ok).toBe(false);
+    expect(SHORT_LEAF).toBe(60);
   });
 });

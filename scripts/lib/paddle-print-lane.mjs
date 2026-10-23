@@ -191,7 +191,8 @@ export function dropRepeats(lines) {
 
 /**
  * One page from its leaves. `leaves`: `[{ side: 'R'|'L'|'S', blank: bool, raw: string|null, err: string|null }]` in
- * reading order (right leaf, then left; or the single leaf); `ink` (innerInk) when measured. Returns
+ * reading order (right leaf, then left; or the single leaf); `ink` (innerInk) when measured; `recheck` = the
+ * leaf's second read at RECHECK_MAX_SIDE (required below SHORT_LEAF). Returns
  *   { verdict: 'write', body, stats, han }   — the page text (leaves joined, one line break between them: on a
  *                                               thread-bound spread the text runs on across the fold)
  *   { verdict: 'textless', han }              — the leaves carry fewer than MIN_HAN Han + kana outside the margin marks
@@ -205,6 +206,12 @@ export function assemblePage(leaves, { workTitle = null } = {}) {
     if (lf.ink != null && lf.ink < INK_FAINT) return { verdict: 'reject', reason: 'faint_leaf', side: lf.side, ink: lf.ink };
     if (lf.err || lf.raw == null) return { verdict: 'reject', reason: 'leaf_error', side: lf.side, err: String(lf.err || 'missing').slice(0, 80) };
     const { body, stats: s } = convertLeaf(lf.raw, { workTitle });
+    if (hanOf(body).length < SHORT_LEAF && hanOf(body).length > 0) {
+      if (lf.recheck == null) return { verdict: 'reject', reason: 'short_leaf_unchecked', side: lf.side };
+      const st = stableRead(lf.raw, lf.recheck);
+      if (!st.ok) return { verdict: 'reject', reason: 'short_leaf_unstable', side: lf.side, sim: st.sim };
+      stats.short_leaves_stable = (stats.short_leaves_stable || 0) + 1;
+    }
     const l = leafLoop(body);
     if (l.loop) return { ...l, verdict: 'reject', reason: `leaf_loop:${l.reason}`, side: lf.side };
     for (const k of ['label_lines_dropped', 'header_lines', 'page_num_lines', 'img_dropped', 'tables_flattened', 'non_han_lines_dropped']) stats[k] += s[k] || 0;
@@ -235,6 +242,27 @@ export const LITE_COVERAGE = 0.9;
 export function coversLite(paddleCount, liteData) {
   const lite = liteTextCount(liteData);
   return { ok: !lite || paddleCount >= LITE_COVERAGE * lite, lite, paddle: paddleCount };
+}
+
+/**
+ * SHORT leaves are re-read once at a smaller scale and must read the same (canary by eye 2026-10-23): on a blank NDL
+ * leaf with show-through Paddle wrote 曾廷考應類附錄卷之四, a line that is nowhere on the leaf, and no image statistic
+ * separates such leaves from faint real title leaves. A reading of real ink is stable under rescaling; a reading of
+ * show-through is not. Below SHORT_LEAF Han + kana a leaf needs a recheck that agrees (STABLE_SIM, Han+kana
+ * Levenshtein ratio) or its page is not written.
+ */
+export const SHORT_LEAF = 60;
+export const STABLE_SIM = 0.6;
+export const RECHECK_MAX_SIDE = 1200;
+export function leafChars(raw) { return hanOf(convertLeaf(raw).body).length; }
+export function stableRead(a, b) {
+  const x = hanOf(convertLeaf(a).body), y = hanOf(convertLeaf(b).body);
+  if (!x.length && !y.length) return { ok: true, sim: 1 };
+  if (!x.length || !y.length) return { ok: false, sim: 0 };
+  let prev = [...Array(y.length + 1).keys()];
+  for (let i = 1; i <= x.length; i++) { const cur = [i]; for (let j = 1; j <= y.length; j++) cur.push(Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] !== y[j - 1]))); prev = cur; }
+  const sim = 1 - prev[y.length] / Math.max(x.length, y.length);
+  return { ok: sim >= STABLE_SIM, sim: +sim.toFixed(3) };
 }
 
 export function envelope(body, language) {
