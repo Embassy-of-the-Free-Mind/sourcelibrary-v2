@@ -23,3 +23,13 @@ Pipeline, all Claude through the subscription CLI (`claude -p`, sealed folder ho
 `reads.tar.gz` holds `reads/` (every prompt, reply and meta: image sha256, model, usage), `pages/` (assembled page
 texts and per-leaf method) and `translate/reads/`. Unpack it here before re-running any stage; calls are cached by
 prompt hash, so a re-run makes no new call for a read already done.
+
+Spot-check fixes and the manuscript map (#7119, job whish147-fix, 2026-10-23):
+- `fix-spotcheck.mjs` — hole marker (‖hole‖ and its other forms) -> bare ‖; single-leaf headings ("Rows of this leaf",
+  or "… left/right half (half-leaf segments)" where the re-layout failed) and the matching warning; the generated
+  Malayalam rebuilt from the IAST with `mlym.py` (now also word-final t -> ൽ; tests: `test_mlym.py`). No model call.
+  Results per run: `fix-spotcheck-result-run{1,2,3}.json`.
+- `classify-script.mjs` -> `classify-script.json` — one Opus call per page: script, rows, hand.
+- `identify-work.mjs` -> `identify-work.json` — top rows of 12 dense-hand leaves at full resolution: formula, kārikā.
+- `manuscript-map.mjs` -> `manuscript-map.json` — page ranges -> hand -> script -> work; writes `languages` and the
+  book note.
