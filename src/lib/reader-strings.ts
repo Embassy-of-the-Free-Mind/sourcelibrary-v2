@@ -527,6 +527,17 @@ export interface ReaderStrings {
     removeImage: string;
   };
 
+  /** One line beside the page-report control on a machine transcription: says
+   *  a machine made it and how accurate the engine we use measured, linking to
+   *  the chart on /quality (#6278 item 5). The numbers come from
+   *  `ocrMeasure()` (src/lib/ocr-measure.ts), never from this file. Null where
+   *  the line is not shown. */
+  ocrMeasure: {
+    /** `percent`, `low`, `high` are whole percentages; `date` is ISO (YYYY-MM-DD). */
+    line: (m: { percent: number; low: number; high: number; pages: number; date: string }) => string;
+    link: string;
+  } | null;
+
   /** One quiet line above a translation whose source page was hard to read
    *  (`pageReadCaution`, src/lib/transcription-reliability.ts). */
   readCaution: {
@@ -1088,6 +1099,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'That image could not be uploaded. Try a smaller one.',
       removeImage: 'Remove image',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `This page was hard to read: about ${Math.round(share * 100)}% of the transcription is marked uncertain, and the English there is a best guess.`,
       damage: 'This page is damaged or faded in places, and parts of the English may rest on uncertain readings.',
@@ -1577,6 +1589,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'No se pudo subir esa imagen. Prueba con una más pequeña.',
       removeImage: 'Quitar imagen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Esta página era difícil de leer: alrededor del ${Math.round(share * 100)} % de la transcripción está marcado como dudoso, y la traducción de esas partes es una conjetura.`,
       damage: 'Esta página está dañada o desvaída en algunas partes, y parte de la traducción puede basarse en lecturas dudosas.',
@@ -2093,6 +2106,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'Ea imago mitti non potuit. Minorem tempta.',
       removeImage: 'Imaginem remove',
     },
+    ocrMeasure: {
+      line: ({ percent, low, high, pages, date }) => {
+        const [y, m, d] = date.split('-').map(Number);
+        const months = ['Ianuarii', 'Februarii', 'Martii', 'Aprilis', 'Maii', 'Iunii', 'Iulii', 'Augusti', 'Septembris', 'Octobris', 'Novembris', 'Decembris'];
+        return `Hunc textum machina transcripsit. Machina qua nunc utimur, cum ${pages} paginis typis impressis a Vicifonte emendatis collata (die ${d} ${months[m - 1]} ${y}), ${percent} litteras e centum recte legit (inter ${low} et ${high}).`;
+      },
+      link: 'Mensuras vide',
+    },
     readCaution: {
       unclear: (share) => `Haec pagina aegre lecta est: circiter ${Math.round(share * 100)}% transcriptionis incerta notantur, et conversio Anglica ibi coniectura est.`,
       damage: 'Haec pagina locis quibusdam laesa vel evanida est, et partes conversionis Anglicae lectionibus incertis niti possunt.',
@@ -2582,6 +2603,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'Die afbeelding kon niet worden geüpload. Probeer een kleinere.',
       removeImage: 'Afbeelding verwijderen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Deze pagina was moeilijk te lezen: ongeveer ${Math.round(share * 100)}% van de transcriptie is als onzeker gemarkeerd, en het Engels is daar een beste gok.`,
       damage: 'Deze pagina is hier en daar beschadigd of vervaagd, en delen van het Engels kunnen op onzekere lezingen berusten.',
@@ -3072,6 +3094,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: '这张图片无法上传，请换一张小一点的。',
       removeImage: '移除图片',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `本页较难识读：约 ${Math.round(share * 100)}% 的转录被标为不确定，这些地方的英文是尽力推测的结果。`,
       damage: '本页有些地方受损或褪色，英文的部分内容可能基于不确定的读法。',

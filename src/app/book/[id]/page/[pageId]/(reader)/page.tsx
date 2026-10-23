@@ -22,6 +22,7 @@ import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
+import { ocrMeasure } from '@/lib/ocr-measure';
 import { getSplitLeafId, isArchivedSplit } from '../page-data';
 
 // Schema.org structured data for a translated page, so it surfaces as a
@@ -255,6 +256,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
             initialPageList={serializedNavPages}
             qualityWarnings={qualityWarnings}
             scanGaps={scanGaps}
+            ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
           />
         )}
       </div>
