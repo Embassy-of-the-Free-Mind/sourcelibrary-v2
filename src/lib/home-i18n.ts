@@ -100,6 +100,10 @@ export interface HomeStrings {
   /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
   beginnerShelfHeading: string;
   beginnerShelfSubtitle: string;
+  /** The `/la` "Nondum conversi" band (#6278): Latin books not readable in English. Rendered on `/la` only. */
+  untranslatedShelfHeading: string;
+  /** `n` is the live count, measured when the page is rendered. */
+  untranslatedShelfSubtitle: (n: number) => string;
   spanishSubtitle: string;
 
   // Gallery masonry (homepage)
@@ -220,6 +224,8 @@ const en: HomeStrings = {
   nativeShelfAll: 'All Latin books',
   beginnerShelfHeading: 'For beginners',
   beginnerShelfSubtitle: 'Easier Latin: the schoolbooks, dialogues, fables and short histories that generations of pupils learned from.',
+  untranslatedShelfHeading: 'Not yet translated',
+  untranslatedShelfSubtitle: (n) => `Here are ${n.toLocaleString('en-US')} Latin books we have not yet translated into English, the most read first. Each opens on its page scans, and on its Latin text where that has been transcribed.`,
   spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
@@ -340,6 +346,8 @@ const es: HomeStrings = {
   nativeShelfAll: 'Todos los libros en latín',
   beginnerShelfHeading: 'Para principiantes',
   beginnerShelfSubtitle: 'Latín más fácil: los manuales, diálogos, fábulas e historias breves con que aprendieron generaciones de alumnos.',
+  untranslatedShelfHeading: 'Aún sin traducir',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('es-ES')} libros en latín que aún no hemos traducido al inglés, primero los más leídos.`,
   spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
@@ -467,6 +475,8 @@ const la: HomeStrings = {
   nativeShelfAll: 'Omnes libri Latini',
   beginnerShelfHeading: 'Tironibus',
   beginnerShelfSubtitle: 'Libri faciliores, e quibus discipuli olim linguam Latinam discebant: libelli scholastici, colloquia, fabulae, historiae breves.',
+  untranslatedShelfHeading: 'Nondum conversi',
+  untranslatedShelfSubtitle: (n) => `Hic sunt ${n.toLocaleString('en-US')} libri Latini quos nondum Anglice convertimus. Primi stant qui plurimum leguntur. Quisque in imaginibus paginarum aperitur, et in textu Latino ubi iam transcriptus est.`,
   spanishSubtitle: 'Opera quae iam editionem Hispanicam habent, paginatim iuxta textum primigenium.',
   galleryHeading: 'Pinacotheca',
   gallerySubtitle: 'Tabulae, figurae, imagines aere incisae ex libris raris totius bibliothecae.',
@@ -593,6 +603,8 @@ const nl: HomeStrings = {
   nativeShelfAll: 'Alle Nederlandstalige boeken',
   beginnerShelfHeading: 'Om mee te beginnen',
   beginnerShelfSubtitle: 'Toegankelijk ouder Nederlands: de schoolboeken, samenspraken, fabels en korte geschiedenissen waaruit generaties leerlingen leerden lezen.',
+  untranslatedShelfHeading: 'Nog niet vertaald',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('nl-NL')} Latijnse boeken die we nog niet in het Engels hebben vertaald, de meest gelezen eerst.`,
   spanishSubtitle: 'De werken in de bibliotheek die al een Spaanse editie hebben, pagina voor pagina naast het origineel.',
   galleryHeading: 'Galerij',
   gallerySubtitle: 'Platen, figuren en gravures uit zeldzame boeken in de hele bibliotheek.',
@@ -720,6 +732,8 @@ const zh: HomeStrings = {
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
+  untranslatedShelfHeading: '尚未翻译',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('zh-CN')} 部拉丁文书籍，我们尚未译成英文，按阅读量排列。`,
   spanishSubtitle: '馆内已有西班牙文版的作品，与原文逐页对照。',
   galleryHeading: '图库',
   gallerySubtitle: '中文古籍中的木刻插图与图版。',

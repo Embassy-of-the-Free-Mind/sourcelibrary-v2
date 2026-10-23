@@ -29,6 +29,17 @@ export const READABLE_IN_ENGLISH_OR =
   `and(english_original.is.true,translation_rung.in.(${ENGLISH_ORIGINAL_READABLE_RUNGS.join(',')}))`;
 
 /**
+ * The complement of `READABLE_IN_ENGLISH_OR`: a book NOT in `readable_in_english`
+ * (the /la "Nondum conversi" band, #6278). Built from the same rung lists, so
+ * the two cannot drift. A book not yet stamped (`translation_rung` null, e.g. a
+ * scans-only book published today) is not readable in English, so it is in.
+ */
+export const NOT_READABLE_IN_ENGLISH_OR =
+  `translation_rung.is.null,` +
+  `and(translation_rung.not.in.(${READABLE_RUNGS.join(',')}),` +
+  `or(english_original.is.null,english_original.is.false,translation_rung.not.in.(${ENGLISH_ORIGINAL_READABLE_RUNGS.join(',')})))`;
+
+/**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
  * The curated category ids (LIBRARY_CATEGORIES) are all canonical, but the
  * AI-assigned `categories` array historically drifted into mixed casings/forms
@@ -237,6 +248,8 @@ export async function browseBooks(opts: {
   holder?: string;
   firstTranslation?: boolean;
   hasTranslation?: boolean;
+  /** Only books NOT readable in English (`NOT_READABLE_IN_ENGLISH_OR`). */
+  notReadableInEnglish?: boolean;
   hasPages?: boolean;
   /** Only return items with resource_type set (artworks) */
   hasResourceType?: boolean;
@@ -278,6 +291,7 @@ export async function browseBooks(opts: {
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
   if (opts.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
+  else if (opts.notReadableInEnglish) query = query.or(NOT_READABLE_IN_ENGLISH_OR);
   if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
