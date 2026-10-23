@@ -111,11 +111,123 @@
      "reason": "Y keeps the source's ellipses and the 'each preceding/each succeeding' distribution, and adds its extra content only in clearly marked notes and summary, whereas X fills in elided phrases as if they were printed and misidentifies the 'B.' witness as the 'Siamese edition'."
     }
    }
+  },
+  "gemini": {
+   "n": 16,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 13,
+    "old": 3,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1.13,
+   "ci95": [
+    0.38,
+    1.81
+   ],
+   "pages": {
+    "69b99ec16ed9e0490990a805": {
+     "new": 5,
+     "old": 1,
+     "better": "new",
+     "reason": "Translation X faithfully and completely translates the entire page including variant readings and footnotes, whereas Translation Y cuts off mid-sentence after only a few words."
+    },
+    "69d5ae284dc55b8478de0f9f": {
+     "new": 1,
+     "old": 1,
+     "better": "new",
+     "reason": "Translation Y correctly identifies the OCR transcription as unreadable and avoids fabricating content, whereas Translation X hallucinates an entire translation not present in the source."
+    },
+    "69b99ec16ed9e0490990a725": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y translates all elements on the page including the verse numbers, the abbreviation marker, and all ten critical apparatus footnotes, whereas X omits the apparatus and numbers entirely while adding extratextual information."
+    },
+    "6a31c8b74400787ae5a9d7bc": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y faithfully includes the textual variant apparatus and preserves source markup and readings, whereas Translation X omits the footnotes entirely and adds extraneous commentary."
+    },
+    "6a09ff65fa20006dbaba93d9": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y faithfully preserves all index headwords and subentry terms such as kim°, atītaŋ, anāgataŋ, and Adhimuttakatā, whereas X omits or conflates several source terms."
+    },
+    "6a31c8b74400787ae5a9d7bb": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y faithfully translates the entire critical apparatus and preserves proper names without adding unoriginal content, whereas X omits most textual variants and adds fabricated summary and keyword sections."
+    },
+    "69b99ec16ed9e0490990a70d": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "X correctly preserves the footnote structure at the bottom of the page and retains the source vocabulary ('dispensation'), whereas Y inappropriately embeds the footnote into the middle of a sentence as a margin note and substitutes 'current era' for 'dispensation' in the body text."
+    },
+    "6a09ff0429abf62080bbdb64": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Translation Y includes the clause stating that 17 is a mode of 2, which Translation X completely omits."
+    },
+    "6a09ff1dfa20006dbaba89ab": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Y preserves and translates both the vocabulary list and watermark metadata from the source, whereas X completely omits the vocabulary section."
+    },
+    "6a09ff1629abf62080bbdcc2": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Translation X adheres more closely to the source page, whereas Translation Y introduces substantial extraneous content not present in the original, including an overview meta tag, a summary, and a keywords section."
+    },
+    "6a31c8b74400787ae5a9d7bf": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y translates all twelve textual variants and the parallel passage citations at the bottom of the page, whereas Translation X omits multiple variants and the entire parallel citations section."
+    },
+    "6a09ff65fa20006dbaba93d5": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X accurately preserves the Pali headwords with correct glosses, whereas Y invents an erroneous metadata tag and mistranslates 'pacc°' (paccaŋsa) as 'opposite shoulder' instead of an individual share or portion."
+    },
+    "6a09ff0029abf62080bbd974": {
+     "new": 5,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation Y translates the entire page, whereas Translation X completely omits the opening paragraph and the first footnote."
+    },
+    "6a09ff1629abf62080bbdc78": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y accurately translates the core term sāsava as 'with taints' and includes all critical apparatus footnotes, whereas X mistranslates sāsava as 'taint-with-object' and omits footnotes 2 and 3."
+    },
+    "6a09ff1629abf62080bbdc56": {
+     "new": 4,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation X is more faithful because it translates the text directly without adding extraneous metadata, commentary, and summaries, and correctly interprets the second apparatus note."
+    },
+    "6a09ff0429abf62080bbdb6d": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y faithfully preserves the text structure, ellipses, and page cutoff while correctly identifying the Burmese edition and emending the OCR error, whereas X misidentifies the edition as Siamese and introduces omissions and fabricated text."
+    }
+   }
   }
  },
  "rule": {
-  "controls": false,
-  "non_inferior": false,
+  "controls": true,
+  "non_inferior": true,
   "by_eye": "recorded separately (rule 3)"
  }
 }

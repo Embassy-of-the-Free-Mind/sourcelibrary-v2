@@ -6,9 +6,9 @@ scripts: [Latn]
 canons: []
 n_books: 8
 n_pages: 16
-verdict: "Opus judge: Opus beats the stored 3 Flash English on 15 of 16 Pali pages, +1.06 fidelity points (1-5) [0.56, 1.56], both wrong-page controls passed; by eye 3 of 3 Opus reads faithful. The rule also needs the Gemini judge, which waits for the agy quota reset (2026-10-23 ~22:00 UTC). Pali stays on 3 Flash until then."
-status: undecided
-decision: null
+verdict: "Opus beats the stored 3 Flash English on Pali under both judges: Opus judge 15 of 16 pages, +1.06 fidelity points (1-5) [0.56, 1.56]; Gemini 3.8 Flash high judge 13 of 16, +1.13 [0.38, 1.81]; both judges passed both wrong-page controls; by eye 3 of 3 Opus reads faithful. The rule passes and Pali moves to the Opus CLI lane (row pali-cli-opus)."
+status: adopted
+decision: "pali-cli-opus row added to scripts/lib/translation-routing-table.json (#7075)"
 superseded_by: null
 issue: [7075, 7170]
 ---
@@ -27,15 +27,19 @@ asks for a 20-page blind sample against the old reader before a row goes live.
 - **Judging:** blind X/Y with a seeded side, fidelity 1-5, plus 2 wrong-page controls.
 - **Judges:** Opus (`claude -p`) and Gemini 3.8 Flash high (`agy -p`).
 
-**Result so far (Opus judge).**
+**Result.**
 
 | judge | n | controls | new wins / old / tie | new − old (1-5) | 95% CI |
 |---|---|---|---|---|---|
 | Opus | 16 | 2/2 | 15 / 1 / 0 | +1.06 | [0.56, 1.56] |
-| Gemini 3.8 high | — | — | — | — | waits for the agy reset |
+| Gemini 3.8 high | 16 | 2/2 | 13 / 3 / 0 | +1.13 | [0.38, 1.81] |
 
 - Two of the old reader's pages were scored 1. On one it invented connected Paṭṭhāna content. On the other it translated only the header.
-- The one old win: Opus added an unsupported meta claim about the brackets.
+- The one old win under the Opus judge: Opus added an unsupported meta claim about the brackets.
+- Gemini's three old wins:
+  - Two penalise Opus's added `<summary>`/`<keywords>`/meta blocks. Those blocks are the production prompt's output format, not page text.
+  - The third (*Dhātukathā* title page, 6a09ff1d…89ab) says Opus "omits the vocabulary section". That "section" is the OCR's own `<vocab>` metadata tag, not printed text. Opus was right to leave it out, and the old read turned the tag into body text. This is a judge error, and the by-eye check below stands.
+- Two-judge mean: +1.10. That beats the planner's prediction of ≥ 0.3.
 
 **By eye (rule 3), three Opus reads against the source:**
 - Title page, *Dhātukathā* (6a09ff1d…89ab): exact.
@@ -44,11 +48,12 @@ asks for a 20-page blind sample against the old reader before a row goes live.
 
 No invented passage in the Opus reads.
 
-**Self-preference caveat.** Opus is judging Opus here. That is why the rule needs the Gemini judge too, and the row does
-not go live without it.
+**Self-preference caveat.** Opus judged Opus, so the rule also needs the Gemini judge. The Gemini judge (other family,
+run 2026-10-23 ~22:45 UTC) agrees on direction and size, so the result is not just self-preference.
 
-**Next.** After the reset:
-1. Run `sample.mjs judge --judge=gemini`, then `score`.
-2. If the rule passes, add the `pali-cli-opus` row to `translation-routing-table.json`, citing this file.
+**Decision.** All three rules pass. The `pali-cli-opus` row (`channel: "cli"`, `claude-opus-5-5`, replaces
+`gemini-3-flash-preview`) is now the first row of `scripts/lib/translation-routing-table.json`. 60 of the 61 books with
+"pali" in their language label route to it, and Batch callers still see 3 Flash underneath. The first live
+`cli-translate-lane.mjs --apply` run and its by-eye check belong to the session that owns #7075.
 
 Results: `scripts/eval/translate-cli-lane-7075/results/pali-2026-10-23/`.
