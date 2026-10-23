@@ -8,8 +8,10 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/longs-pass-5924.mjs \
  *     --model <model.json.gz> --out <dir> [--engines lite|lite,flash] [--books-file ids.txt] [--max-books N]
- *     [--max-pages-per-book N] [--max-write-per-book N] [--shard i/n] [--apply]
+ *     [--max-pages-per-book N] [--max-write-per-book N] [--skip-file f.tsv] [--concurrency 8] [--shard i/n] [--apply]
  *
+ * --skip-file: book ids (first column; a header line is fine) never written, e.g. the latin-lang-relabel list of books that
+ * are no longer Latin, mixed, or under 50% Latin on a sample (#5924).
  * Dry unless --apply. Resumable: <out>/checkpoint.jsonl holds one line per finished book and is skipped on restart.
  *
  * Frame (books): language Latin (the reach-count regex), pages_count > 0, not a duplicate, NOT held (pipeline-hold.mjs),
@@ -50,7 +52,9 @@ const ENGINES = new Set(String(opt('engines', 'lite')).split(','));
 const MAX_BOOKS = +opt('max-books', Infinity); const MAX_PAGES = +opt('max-pages-per-book', Infinity);
 const MAX_WRITE = +opt('max-write-per-book', Infinity); // canary: cap the pages written per book
 const [SHARD, NSHARD] = String(opt('shard', '0/1')).split('/').map(Number);
+const SKIP = new Map(opt('skip-file') ? fs.readFileSync(opt('skip-file'), 'utf8').split('\n').map((l) => l.split('\t')).filter((c) => c[0] && c[0] !== 'book_id').map((c) => [c[0].trim(), (c[1] || 'listed').trim()]) : []);
 const CHUNK = 200;
+const CONCURRENCY = +opt('concurrency', 8); // pages in flight per process (the cluster serves readers too)
 const BY = 'scripts/maintenance/longs-pass-5924.mjs';
 
 const engineOf = (m) => (/flash-lite/.test(String(m)) ? 'lite' : m === 'gemini-3-flash-preview' ? 'flash' : null);
@@ -89,12 +93,13 @@ try {
   }
   const openRuns = new Set(await db.collection(RUNS_COLLECTION).distinct('book_id', { phase: { $nin: [...new Set([...SEAM_TERMINAL, ...CHAINED_TERMINAL])] } }));
   books = books.map((b) => ({ ...b, bid: String(b.id ?? b._id) })).filter((b) => shardOf(b.bid) === SHARD).sort((a, b) => a.bid.localeCompare(b.bid));
-  console.log(`${books.length} books in frame (shard), ${openRuns.size} with an open translate_batch_run`);
+  console.log(`${books.length} books in frame (shard); ${openRuns.size} books corpus-wide have an open translate_batch_run; ${SKIP.size} on the skip list`);
   let nb = 0;
   for (const b of books) {
     if (nb >= MAX_BOOKS) break;
     if (done.has(b.bid)) { inc('books_already_done'); continue; }
     const skipBook = (reason, extra = {}) => { inc(`book_skip_${reason}`); fs.appendFileSync(CK, JSON.stringify({ book_id: b.bid, skipped: reason, ...extra }) + '\n'); };
+    if (SKIP.has(b.bid)) { skipBook(`skip_file_${SKIP.get(b.bid).split('-')[0]}`); continue; }
     if (b.pipeline_auto?.hold || b.pipeline_auto?.status === 'held') { skipBook('held'); continue; }
     if (b.duplicate_of) { skipBook('duplicate'); continue; }
     if (!/latin|^lat$|^la$/i.test(String(b.language || ''))) { skipBook('language_field'); continue; }
@@ -135,7 +140,7 @@ try {
     const before = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: STALE_PROJ }).toArray()).map((p) => [p.id, staleState(p)]));
     const res = { written: 0, conflict: 0, prior_changed: 0, refused_human_edit: 0, not_found: 0 };
     for (let i = 0; i < items.length; i += CHUNK) {
-      const r = await writeOrthographicOcr(db, items.slice(i, i + CHUNK), { by: BY, run_id: RUN_ID });
+      const r = await writeOrthographicOcr(db, items.slice(i, i + CHUNK), { by: BY, run_id: RUN_ID, concurrency: CONCURRENCY });
       for (const k of Object.keys(res)) res[k] += r[k] || 0;
     }
     const after = await db.collection('pages').find({ id: { $in: ids } }, { projection: STALE_PROJ }).toArray();
