@@ -80,6 +80,13 @@ export function footnotesFor(html: string, seq: { n: number }): string {
   return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
 }
 
+/** A page's heading levels mapped, in order of depth, onto h3, h4, … (h6 at most): no level skipped. */
+export function rankHeadings(html: string): string {
+  const levels = [...new Set([...html.matchAll(/<h([1-6])>/g)].map(m => Number(m[1])))].sort((a, b) => a - b);
+  const rank = new Map(levels.map((l, i) => [l, Math.min(6, 3 + i)]));
+  return html.replace(/<(\/?)h([1-6])>/g, (_m, sl: string, n: string) => `<${sl}h${rank.get(Number(n)) ?? 6}>`);
+}
+
 const escapeHtml =(s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export interface FlowEpub {
@@ -145,9 +152,25 @@ export async function buildFlowEpub(
     const raw = opts.text === 'translation'
       ? (p.translation?.data ? markForExport(p.translation.data, book.id) : '')
       : (p.ocr?.data || '');
-    const html = raw.trim() ? markdownToHtml(raw) : '';
+    // A page's own headings sit below the section's <h2>, ranked in the order the page uses them (h3, h4, …):
+    // translators pick #-levels freely ("#" then "###"), and a heading that skips a level breaks the heading
+    // navigation e-readers and screen readers rely on (the probe found 143 skips in 12 books).
+    const html = raw.trim() ? rankHeadings(markdownToHtml(raw)) : '';
     return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}?page=${p.page_number}`, figures: figures.byPage.get(p.page_number) };
   };
+  // A transcribed page with no translation yet says so, once per run ("Pages 45–52 are not yet translated"),
+  // instead of vanishing: the reader would otherwise take the gap for the book (no silent skips). It stands as
+  // its own block, so no sentence runs across it.
+  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !p.translation?.data && !!p.ocr?.data?.trim();
+  const flowPages = (list: FlowPageDoc[]): FlowPage[] => list.map((p, i) => {
+    const fp = flowPage(p);
+    if (!untranslated(p) || (i > 0 && untranslated(list[i - 1]))) return fp;
+    let j = i;
+    while (j + 1 < list.length && untranslated(list[j + 1])) j++;
+    const a = p.page_number, b = list[j].page_number;
+    const what = a === b ? `Page ${a} is` : `Pages ${a}–${b} are`;
+    return { ...fp, block: true, html: `<p class="untranslated"><em>${what} not yet translated; the original is at <a href="${opts.baseUrl}/book/${book.id}?page=${a}">${opts.baseUrl}/book/${book.id}?page=${a}</a>.</em></p>` };
+  });
 
   // Sections: the book's chapters when it has them (low-confidence ones are guesses), else even runs of pages.
   const starts = (book.chapters || [])
@@ -168,7 +191,7 @@ export async function buildFlowEpub(
       const title = s.title || (first === last ? `Page ${first}` : `Pages ${first}–${last}`);
       // Page numbers as an edition marks a page break, "|198" on the line: e-readers ignore most CSS, and a bare
       // raised number would read as one of the footnote calls.
-      const body = footnotesFor(joinPagesHtml(s.pages.map(flowPage)), seq)
+      const body = footnotesFor(joinPagesHtml(flowPages(s.pages)), seq)
         .replace(/(<a class="page-marker"[^>]*>)(\d+)<\/a>/g, '$1|$2</a>');
       return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}` };
     })

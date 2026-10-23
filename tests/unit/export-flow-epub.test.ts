@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildFlowEpub, footnotesFor, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
+import { buildFlowEpub, footnotesFor, rankHeadings, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
 
 /**
  * The continuous EPUB (#7118): one reading text in sections, not one chapter per page — on a Kindle every chapter
@@ -15,6 +15,13 @@ const db = (galleryRows = 0) => ({
 const pages = (n: number) => Array.from({ length: n }, (_, i) => ({
   id: `pg${i + 1}`, page_number: i + 1, translation: { data: i % 2 === 0 ? 'The stone was' : 'heated for days.' },
 }));
+
+describe('rankHeadings', () => {
+  it('maps a page\'s heading levels onto h3, h4, … in order, so none skips a level under the section h2', () => {
+    expect(rankHeadings('<h1>Book</h1><p>x</p><h3>Chapter</h3>')).toBe('<h3>Book</h3><p>x</p><h4>Chapter</h4>');
+    expect(rankHeadings('<h4>Only</h4>')).toBe('<h3>Only</h3>');
+  });
+});
 
 describe('footnotesFor', () => {
   it('turns notes and marginalia into EPUB 3 pop-up footnotes at the end of the section, ids unique across the book', () => {
@@ -55,6 +62,19 @@ describe('buildFlowEpub', () => {
     const flow = await buildFlowEpub(db(12) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: false });
     expect(flow.imagesIncluded).toBe(0);
     expect(flow.imagesNote).toMatch(/text only.*12 illustrations are not included.*https:\/\/x\/book\/b/);
+  });
+
+  it('says once per run that transcribed pages are not yet translated, instead of skipping them silently', async () => {
+    const ps = [
+      { id: 'a', page_number: 1, translation: { data: 'It begins.' } },
+      { id: 'b', page_number: 2, ocr: { data: 'Latina' } },
+      { id: 'c', page_number: 3, ocr: { data: 'Latina' } },
+      { id: 'd', page_number: 4, translation: { data: 'It goes on.' } },
+    ];
+    const flow = await buildFlowEpub(db() as never, { id: 'b' }, ps, { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    const c = flow.chapters[0].content;
+    expect(c.match(/not yet translated/g)).toHaveLength(1);
+    expect(c).toContain('Pages 2–3 are not yet translated; the original is at <a href="https://x/book/b?page=2">');
   });
 
   it('says nothing about illustrations when the book has none', async () => {

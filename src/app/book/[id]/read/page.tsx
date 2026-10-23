@@ -143,7 +143,7 @@ function pageHtml(raw: string | undefined, pageLevel: number): string | null {
   if (!raw || !raw.trim()) return null;
   const html = markdownToHtml(raw, { stripNotes: true });
   if (!html || html === '<p></p>') return null;
-  return html.replace(/<(\/?)h([1-3])>/g, (_m, slash: string, n: string) => {
+  return html.replace(/<(\/?)h([1-6])>/g, (_m, slash: string, n: string) => {
     const level = Math.min(6, pageLevel + Number(n));
     return `<${slash}h${level}>`;
   });
