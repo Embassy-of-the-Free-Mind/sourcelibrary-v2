@@ -67,6 +67,47 @@ committed before the binding read existed.
 - Catastrophic pages that differ between runs: G 2 + 1 (p406 and p600 loop in run 2, p9 in run 1 only), P0 1, the rest 0.
   So GLM's loops come and go, while its count stays above lite's 0.
 
+### The market comparison: the holding library's own free OCR (Amendment 5a, descriptive, Derek's inbox note 08:21Z)
+
+The leaf is scored against the same Opus reference with the same scorer, as arm X. The mapping rule was committed before
+any text was fetched (d9429d156): the text is tied to the fed leaf by identifier, and leaves k ± 1 are a check only.
+- **Coverage.** 78 of 99 leaves have a published per-leaf text: Archive 30/30, MDZ 19/19, e-rara 29/47, Heidelberg 0/3.
+  Archive's text is the hOCR derivative where one exists and the older DjVu XML otherwise.
+- **Dropped.** 3 leaves, all Archive, where the next leaf's text matches the reference far better: an off-by-one leaf map in
+  those items. That leaves **75 leaves, 1600s 50 and 1500s 25**.
+
+**Median view-N CER % [95% CI] (catastrophic pages), the same 75 leaves for every arm:**
+
+| arm | 1600s (n = 50) | 1500s (n = 25) | 1600s, ſ-as-f folded | 1500s, folded |
+|---|---|---|---|---|
+| **X legacy library OCR** | **9.2** [6.3, 12.1] (3) | **15.9** [11.6, 20.1] (1) | 6.9 | 13.0 |
+| L flash-lite | 4.3 [3.4, 4.7] (0) | 5.3 [3.9, 5.9] (0) | 0.4 | 1.2 |
+| **LP lite + long-s pass (served)** | **0.5** [0.2, 0.9] (0) | **1.2** [0.6, 3.9] (0) | 0.4 | 1.2 |
+| F Gemini 3.8 Flash | 0.4 (0) | 1.0 (1) | 0.3 | 0.8 |
+| G GLM-OCR | 2.5 (2) | 3.0 (2) | 2.3 | 2.7 |
+| O olmOCR-2 | 2.9 (0) | 4.4 (1) | 2.7 | 4.2 |
+| M MinerU2.5-Pro | 6.4 (0) | 6.4 (0) | 2.7 | 3.6 |
+
+**By source (median view N):**
+
+| source | 1600s | 1500s |
+|---|---|---|
+| Archive (n 16 / 11) | X **21.8** vs LP 0.7 | X **18.4** vs LP 1.0 |
+| e-rara (n 23 / 6) | X 7.0 vs LP 0.4 | X 15.9 vs LP 1.4 |
+| MDZ (n 11 / 8) | X **4.5** vs L 4.0, LP 2.7 | X 6.1 vs L 6.0, LP 2.3 |
+
+- **The served lane is a step change over the free text.** In the 1600s the median page is 0.5% off where the library's
+  own OCR is 9.2% off, roughly 18× fewer letter errors. In the 1500s it is 1.2% against 15.9%, about 13×. Even raw
+  lite, ſ habit included, is 2–3× better than the free text.
+- **The free texts differ a lot by library.**
+  - **Archive** is the weakest: 18–22% CER. Four of its 30 leaves came out in Cyrillic (`УКСІРІТ ГЕЫ.` for *INCIPIT
+    FELI-*), because the OCR ran with the wrong language.
+  - **MDZ** reads about as well as raw lite (4.5 vs 4.0 in the 1600s). LP still beats it, by 1.8 and 3.8 points at the
+    medians, on 11 and 8 pages with wide CIs.
+- **This is descriptive and was added after the bar.** The texts are what each library serves today, and
+  "legacy" covers OCR of different engines and vintages. The 21 leaves with no free text
+  (e-rara 18, Heidelberg 3) are a market fact too: those readers get no text at all.
+
 ### Throughput on the card (run 2; run 1 in brackets) and the backlog
 
 Each engine ran alone on the card at util 0.6 (olmOCR 0.85), with 16 clients (8 Paddle runners) and the model already loaded.
@@ -100,5 +141,7 @@ Paddle's runners are CPU-bound, so its run-2 rate is low for that reason. The GP
 - `results-a5.json.gz` and `results-a5-posthoc-fold-f.json.gz`: every arm's per-page scores.
 - `bar-a5.json` and `bar-a5-posthoc-fold-f.json`: the bar's output.
 - `bar-a5.mjs` and `rep-task.sh`.
+- Legacy column: `legacy-ocr-fetch.py` (run on gex45, because e-rara 403s the ARM hosts), `legacy-table.mjs`,
+  `reads-legacy/` (X = leaf k, with Xm1 / Xp1 and `legacy-log.jsonl`), `legacy-a5a.json` and `results-a5a-legacy.json.gz`.
 
 No write to `pages`, `books` or any production store, and no lane changed.
