@@ -101,7 +101,8 @@ async function candidates(db: Db, dir: string) {
   fs.writeFileSync(path.join(dir, 'candidates.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   // --known: a file of earlier verdicts (the nightly run keeps one). Pairs it already answers are copied
   // into this run's verdicts.jsonl; only the rest go to pairs-new.tsv for the image check. An `unclear`
-  // is reused too: re-checking 54 of them on 2026-10-22 settled only 7.
+  // is reused too (re-checking 54 of them on 2026-10-22 settled only 7), unless images failed to load:
+  // that is the host, not the books, and is tried again the next night.
   const knownFile = arg('--known');
   let reused = 0;
   if (knownFile) {
@@ -109,7 +110,8 @@ async function candidates(db: Db, dir: string) {
     if (fs.existsSync(knownFile)) {
       for (const l of fs.readFileSync(knownFile, 'utf8').split('\n').filter(Boolean)) {
         const v = JSON.parse(l);
-        prior.set([v.a, v.b].sort().join('|'), l);
+        const key = [v.a, v.b].sort().join('|');
+        if (!(v.verdict === 'unclear' && v.fetch_failures > 0)) prior.set(key, l);
       }
     }
     const pairKey = (p: string) => p.split('\t').sort().join('|');
