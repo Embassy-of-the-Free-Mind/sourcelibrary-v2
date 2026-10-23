@@ -480,7 +480,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     foundIndexEntries: (n, q) => `${n} entradas del índice para «${q}»`,
     foundImages: (n, q) => `${n} imágenes para «${q}»`,
 
-    askLibrarian: 'Pregunta a la fuente',
+    askLibrarian: 'Pregunta al Bibliotecario',
     askLibrarianBody: (scope) => `¿Quieres un análisis más profundo? El Bibliotecario buscará en ${scope}, contrastará las fuentes y armará un cuaderno de investigación que podrás exportar.`,
     askLibrarianScopeResults: (n) => `estos ${n} resultados`,
     askLibrarianScopeCollection: 'la colección',
