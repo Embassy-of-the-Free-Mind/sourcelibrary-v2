@@ -16,13 +16,14 @@
 import type { Db } from 'mongodb';
 import { buildFlowEpub, footnotesFor } from '@/lib/export-flow-epub';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import { stripMarkupTags } from '@/lib/strip-markup-tags';
 
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
 const decode = (s: string) => s
   .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
   .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
   .replace(/&([a-z]+);/gi, (m, name) => ENTITIES[name.toLowerCase()] ?? m);
-const inline = (s: string) => decode(s.replace(/<[^>]+>/g, '')).replace(/[ \t]+/g, ' ').trim();
+const inline = (s: string) => decode(stripMarkupTags(s, '')).replace(/[ \t]+/g, ' ').trim();
 
 /** One section of the continuous edition's HTML as plain text. */
 export function flowHtmlToText(html: string): string {
@@ -53,9 +54,8 @@ export function flowHtmlToText(html: string): string {
     .replace(/<li[^>]*>([\s\S]*?)<\/li>/g, (_, s) => `• ${inline(s.replace(/<br\/?>/g, ' '))}\n`)
     .replace(/<\/ul>|<\/ol>/g, '\n\n')
     .replace(/<br\s*\/?>/g, '\n')
-    .replace(/<\/p>/g, '\n\n')
-    .replace(/<[^>]+>/g, '');
-  return decode(t)
+    .replace(/<\/p>/g, '\n\n');
+  return decode(stripMarkupTags(t, ''))
     .split('\n').map(l => l.replace(/[ \t]+/g, ' ').trim()).join('\n')
     .split(/\n{2,}/)
     .filter(Boolean)
