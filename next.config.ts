@@ -411,6 +411,7 @@ const nextConfig: NextConfig = {
       // otherwise catch them and land on a 404 under the old slug. The prose
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
+      { source: '/partners', destination: '/ai-partners', permanent: true },
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       // Choreia renamed to its main idea (2026-10-19).
