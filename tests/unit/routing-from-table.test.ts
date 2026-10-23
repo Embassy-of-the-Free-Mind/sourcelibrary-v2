@@ -116,11 +116,13 @@ describe('Translation: both routers read translation-routing-table.json', () => 
   });
 
   it('a row the Batch routers cannot run, or a malformed match, throws', () => {
+    // The first BATCH row: a cli row may name a subscription reader, so rows[0] is not the one to corrupt (#7075).
+    const firstBatch = (x: typeof TRANSLATION_ROUTING_TABLE) => x.rows.find((r: { channel?: string }) => (r.channel ?? 'batch') === 'batch')!;
     const t = clone(TRANSLATION_ROUTING_TABLE);
-    t.rows[0].engine = 'claude-opus-5-5';
+    firstBatch(t).engine = 'claude-opus-5-5';
     expect(() => validateTranslationTable(t, [MODEL_FLASH, MODEL_LITE])).toThrow(/run only/);
     const u = clone(TRANSLATION_ROUTING_TABLE);
-    u.rows[0].match = {};
+    firstBatch(u).match = {};
     expect(() => validateTranslationTable(u, [MODEL_FLASH, MODEL_LITE])).toThrow(/exactly one/);
   });
 
