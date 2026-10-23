@@ -10,6 +10,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
 
 export const maxDuration = 300;
 
@@ -280,6 +281,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
       method: 'GET',
+      headers: selfCallHeaders(baseUrl),
     }).catch(() => {
       console.log(`[MDZ Import] Split check queued for ${bookIdStr}`);
     });
