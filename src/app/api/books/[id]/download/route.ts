@@ -22,7 +22,8 @@ import { getBookIndex } from '@/lib/book-index';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
-import { buildFlowEpub, FLOW_EPUB_CSS } from '@/lib/export-flow-epub';
+import { buildFlowEpub, renderFlowEpub, FLOW_EPUB_CSS } from '@/lib/export-flow-epub';
+import { languageToBcp47 } from '@/lib/language-code';
 import type { Db } from 'mongodb';
 import { servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import {
@@ -438,19 +439,24 @@ async function generateEpubDownload(
   chapters.push({ title: 'About This Edition', content: colophon });
 
   // Generate EPUB
+  const epubOptions = {
+    title: bookTitle,
+    author: book.author,
+    publisher: 'Source Library',
+    description: description,
+    // A language CODE: dc:language "Latin" is invalid metadata (EPUBCheck), and readers pick hyphenation by it.
+    lang: format === 'epub-ocr' ? (languageToBcp47(book.language) || 'und') : 'en',
+    tocTitle: 'Contents',
+    css: EPUB_CSS + (flow ? FLOW_EPUB_CSS : ''),
+    date: now,
+    cover: flow?.cover ?? undefined,
+    // An illustration that fails to embed must not cost the reader the book.
+    ignoreFailedDownloads: true,
+  };
   try {
-    return await epub({
-      title: bookTitle,
-      author: book.author,
-      publisher: 'Source Library',
-      description: description,
-      lang: format === 'epub-ocr' ? book.language : 'en',
-      tocTitle: 'Contents',
-      css: EPUB_CSS + (flow ? FLOW_EPUB_CSS : ''),
-      date: now,
-      // An illustration that fails to embed must not cost the reader the book.
-      ignoreFailedDownloads: true,
-    }, chapters);
+    return flow
+      ? await renderFlowEpub(epubOptions, chapters, { hasImages: flow.imagesIncluded > 0, sourceUrl: `${BASE_URL}/book/${book.id}` })
+      : await epub(epubOptions, chapters);
   } finally {
     flow?.cleanup();
   }

@@ -29,6 +29,16 @@ export interface FlowPage {
 const escapeAttr = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const textOf = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
 
+/** The text at one edge of a paragraph, without notes and marginalia: a translator's note closing a page ends in
+ *  "…]", which would read as a finished sentence and break a sentence that runs on (Albigensians, Kindle EPUB:
+ *  "had to appear before [note] | the terrible tribunal"). The window is wide enough that a note cut by it lies far
+ *  from the edge being read. */
+function edgeText(html: string, side: 'start' | 'end'): string {
+  const window = side === 'end' ? html.slice(-2000) : html.slice(0, 2000);
+  const text = textOf(window.replace(/<span class="(?:note|margin)">[\s\S]*?<\/span>/g, ''));
+  return side === 'end' ? text.slice(-400) : text.slice(0, 400);
+}
+
 /** Ends a sentence: terminal punctuation, optionally closed by quotes or brackets. */
 const SENTENCE_END = /[.!?…:;][\s"'”’»)\]]*$/u;
 const STARTS_LOWER = /^[\s"'“‘«(\[]*(?:\.\.\.|…)?\s*\p{Ll}/u;
@@ -190,6 +200,9 @@ function cleanPage(html: string, heads: Set<string>, foots: Set<string>): string
   return html;
 }
 const isNoteBlock =(block: string) => { const first = textOf(linesOf(block)[0]); return NOTE_RULE.test(first) || NOTE_LINE.test(first); };
+/** A paragraph that is nothing but notes or marginalia — the page's printed footnotes, wrapped by the translator as
+ *  one <note> (Albigensians: "[1. Art. Laurac. 2. Du Mège, Hist. de Toul. …]"). */
+const NOTES_ONLY = /^\s*(?:<span class="(?:note|margin)">[\s\S]*?<\/span>\s*)+$/;
 
 export function joinPagesHtml(pages: FlowPage[]): string {
   let out = '';
@@ -234,10 +247,13 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     if (lb !== null && foots.has(norm(textOf(lb)))) stepBack();
     // Footnotes the translation set as paragraphs of their own after the text (Leibniz, "(a) This printing …").
     const noteBlocks: string[] = [];
-    for (let nb = lastBlock(base); nb !== null && isNoteBlock(nb); nb = lastBlock(base)) {
-      const lines = linesOf(nb).filter(l => !NOTE_RULE.test(textOf(l)));
+    // A notes-only paragraph closing the page rides on the end of the sentence before it, where the page's notes
+    // belong; as its own paragraph it would cut that sentence in two.
+    let trailingNotes = '';
+    for (let nb = lastBlock(base); nb !== null && (isNoteBlock(nb) || NOTES_ONLY.test(nb)); nb = lastBlock(base)) {
       if (!stepBack()) break;
-      noteBlocks.unshift(...lines);
+      if (NOTES_ONLY.test(nb)) trailingNotes = nb.trim() + (trailingNotes ? ' ' + trailingNotes : '');
+      else noteBlocks.unshift(...linesOf(nb).filter(l => !NOTE_RULE.test(textOf(l))));
     }
 
     const prevStart = base.endsWith('</p>') ? base.lastIndexOf('<p>') + 3 : -1;
@@ -245,8 +261,8 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     const foot = prevStart < 0 ? null : trimFoot(base.slice(prevStart, -4), foots);
     const nextPara = nextEnd < 0 ? null : trimHead(html.slice(3, nextEnd), heads);
     // Only the edges decide a join; testing whole paragraphs is quadratic on OCR's long runs of spaces.
-    const prevText = foot === null ? '' : textOf(foot.para.slice(-400));
-    const nextText = nextPara === null ? '' : textOf(nextPara.slice(0, 400));
+    const prevText = foot === null ? '' : edgeText(foot.para, 'end');
+    const nextText = nextPara === null ? '' : edgeText(nextPara, 'start');
     const join = !p.block && !outIsBlock && foot !== null && foot.para !== '' && nextPara !== null && continuesAcross(prevText, nextText);
 
     if (!join || foot === null || nextPara === null) {
@@ -259,7 +275,7 @@ export function joinPagesHtml(pages: FlowPage[]): string {
       return;
     }
 
-    let head = base.slice(0, prevStart) + trimEndBreaks(foot.para);
+    let head = base.slice(0, prevStart) + trimEndBreaks(foot.para) + (trailingNotes ? ' ' + trailingNotes : '');
     const lead = nextPara.replace(/^(?:\s|<br\/>)+/, '');
     const unelided = lead.replace(ELLIPSIS_START, '');
     const elided = unelided.length !== lead.length;

@@ -7,7 +7,8 @@
  * Pages run on where the sentence does (flow-join), with a small linked page number at every
  * boundary. Chapters are the book's own (when it has them), else runs of PAGES_PER_SECTION pages,
  * so the reader's table of contents stays usable. Illustrations stand in the text at their page,
- * as small grayscale JPEGs (the export's own recompressor: 600×900, the size of an e-ink screen),
+ * as colour JPEGs within 800×1200 (the export's own recompressor; e-ink readers grey them themselves, a tablet
+ * or the Kindle app keeps a coloured miniature coloured),
  * and ONLY when the book's scans may be redistributed (`classifyImageAccess` is 'open'): a crop is
  * part of the scan. When images are left out, or capped, the EPUB says so in its own front matter.
  */
@@ -20,6 +21,8 @@ import { markdownToHtml } from '@/lib/export-markdown-html';
 import { markForExport } from '@/lib/provenance';
 import { galleryFilter } from '@/lib/gallery-scope';
 import { fetchAndCompressImage } from '@/lib/export-page-images';
+import { EPub, type Options } from 'epub-gen-memory';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const PAGES_PER_SECTION = 40;
 /** At ~40 KB each, 400 illustrations (Fludd's Utriusque cosmi has 402) keep the EPUB near 16 MB: inside Send to
@@ -31,7 +34,7 @@ export const FLOW_EPUB_CSS = `
 .page-marker { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.65em; vertical-align: baseline; color: #999; text-decoration: none; padding: 0 0.2em; }
 .flow-footnote { font-size: 0.85em; color: #555; padding-left: 1em; }
 .flow-figure { margin: 1.5em 0; text-align: center; page-break-inside: avoid; }
-.flow-figure img { max-width: 100%; max-height: 90vh; height: auto; }
+.flow-figure img { max-width: 100%; height: auto; }
 .noteref { font-size: 0.7em; vertical-align: super; line-height: 0; text-decoration: none; }
 .footnotes { margin-top: 2em; border-top: 1px solid #ccc; font-size: 0.85em; }
 .footnotes h3 { font-size: 1em; }
@@ -41,6 +44,10 @@ export const FLOW_EPUB_CSS = `
 interface FlowBookDoc {
   id: string;
   chapters?: Array<{ title?: string; titleEn?: string; pageNumber?: number; confidence?: string }>;
+  thumbnail?: string | null;
+  thumbnail_blob?: string | null;
+  image_display?: string | null;
+  image_thumb?: string | null;
 }
 interface FlowPageDoc {
   id: string;
@@ -65,7 +72,11 @@ export function footnotesFor(html: string, seq: { n: number }): string {
     const shown = notes.length + 1;
     notes.push(`<aside epub:type="footnote" id="fn${id}" class="footnote"><p><a href="#fnref${id}">${shown}.</a> ${kind === 'margin' ? '<em>In the margin:</em> ' : ''}${text.trim()}</p></aside>`);
     return `<a epub:type="noteref" href="#fn${id}" id="fnref${id}" class="noteref">${shown}</a>`;
-  });
+  })
+    // A marginal note set on a line or paragraph of its own leaves its number stranded there; it belongs at the end
+    // of the text it sat beside (Hariri, 2026-10-22: "^11 ^12" alone between paragraphs).
+    .replace(/(?:<br\/>\s*)+((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)(?=<br\/>|<\/p>)/g, ' $1')
+    .replace(/<\/p>\s*<p>\s*((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>/g, ' $1</p>');
   return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
 }
 
@@ -77,6 +88,9 @@ export interface FlowEpub {
   imagesIncluded: number;
   /** One sentence for the front matter when the illustrations are not all there; null when they are. */
   imagesNote: string | null;
+  /** The book's own cover as a local JPEG for the EPUB builder (`file://…`), or null: only when the scans may be
+   *  redistributed, like the illustrations. Without one a Kindle library shows a grey placeholder. */
+  cover: string | null;
   /** Removes the temporary image files. Call after the EPUB is built. */
   cleanup: () => void;
 }
@@ -99,7 +113,7 @@ async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): P
   let next = 0;
   await Promise.all(Array.from({ length: IMAGE_CONCURRENCY }, async () => {
     for (let i = next++; i < wanted.length; i = next++) {
-      const buf = await fetchAndCompressImage(wanted[i].extracted_url);
+      const buf = await fetchAndCompressImage(wanted[i].extracted_url, { colour: true, width: 800, height: 1200 });
       if (!buf) continue;
       const file = path.join(dir, `fig-${i}.jpg`);
       fs.writeFileSync(file, buf);
@@ -160,6 +174,18 @@ export async function buildFlowEpub(
     })
     .filter(c => /<p>|<figure/.test(c.content));
 
+  // The cover: the book's own image, recompressed to a JPEG within Kindle's recommended 1600×2560 (the stored
+  // thumbnail may be AVIF, which no e-reader reads). Only when the scans may be redistributed.
+  let coverFile: string | null = null;
+  const coverUrl = opts.includeImages ? getBookThumbnailUrl(book, 'display') : null;
+  if (coverUrl) {
+    const buf = await fetchAndCompressImage(coverUrl, { colour: true, width: 1600, height: 2560 });
+    if (buf) {
+      coverFile = path.join(os.tmpdir(), `flow-epub-cover-${book.id}-${process.pid}.jpg`);
+      fs.writeFileSync(coverFile, buf);
+    }
+  }
+
   const imagesNote = figures.total === 0 ? null
     : !opts.includeImages ? `This edition carries the text only: the scans of this book are not released for redistribution, so its ${figures.total} illustrations are not included. They can be seen at ${opts.baseUrl}/book/${book.id}.`
     : figures.included < figures.total ? `${figures.included} of this book's ${figures.total} illustrations are included${figures.total > FLOW_EPUB_MAX_IMAGES ? ` (an e-book carries at most ${FLOW_EPUB_MAX_IMAGES})` : ''}; all of them can be seen at ${opts.baseUrl}/book/${book.id}.`
@@ -170,6 +196,67 @@ export async function buildFlowEpub(
     imagesTotal: figures.total,
     imagesIncluded: figures.included,
     imagesNote,
-    cleanup: () => { if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true }); },
+    cover: coverFile ? `file://${coverFile}` : null,
+    cleanup: () => {
+      if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true });
+      if (coverFile) fs.rmSync(coverFile, { force: true });
+    },
   };
+}
+
+type ZipFile = { async(kind: 'string'): Promise<string> };
+type EpubZip = { file(path: string): ZipFile | null; file(path: string, data: string): unknown; generateAsync(o: object): Promise<Buffer> };
+const escapeXml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/**
+ * Build the EPUB, then add what epub-gen-memory does not write and the Kindle publishing guidelines and EPUB
+ * Accessibility 1.1 ask for (checked with EPUBCheck 5.1, 2026-10-22):
+ *  - landmarks: where the text starts (a Kindle's "Go to Beginning") and the contents;
+ *  - a page list: the book's page numbers (the '|198' markers), for "go to page" and real page numbers;
+ *  - the pagination source (dc:source + source-of), which EPUBCheck requires beside a page list;
+ *  - accessibility metadata: access modes, features (alt text, contents, page navigation), hazards, a summary.
+ * Chapter titles are not prepended (each titled section already opens with its heading; an untitled one would
+ * get a "Pages 1–40" heading in the middle of the text) and the contents are not numbered.
+ */
+export async function renderFlowEpub(
+  options: Options,
+  chapters: { title: string; content: string }[],
+  meta: { hasImages: boolean; sourceUrl: string },
+): Promise<Buffer> {
+  const book = new EPub({ ...options, prependChapterTitles: false, numberChaptersInTOC: false }, chapters);
+  await book.render();
+  const inner = book as unknown as { zip: EpubZip; content: Array<{ filename: string; content: string }> };
+  const zip = inner.zip;
+
+  const pages: { n: string; href: string }[] = [];
+  for (const ch of inner.content) {
+    for (const m of ch.content.matchAll(/<a class="page-marker" id="p(\d+)"/g)) pages.push({ n: m[1], href: `${ch.filename}#p${m[1]}` });
+  }
+  const start = (inner.content[1] ?? inner.content[0]).filename;
+  const nav = [
+    '<nav epub:type="landmarks" id="landmarks" hidden="hidden"><h2>Guide</h2><ol>',
+    '<li><a epub:type="toc" href="toc.xhtml">Contents</a></li>',
+    `<li><a epub:type="bodymatter" href="${start}">Start of the text</a></li>`,
+    '</ol></nav>',
+    pages.length ? `<nav epub:type="page-list" id="page-list" hidden="hidden"><h2>Pages</h2><ol>${pages.map(p => `<li><a href="${p.href}">${p.n}</a></li>`).join('')}</ol></nav>` : '',
+  ].join('\n');
+  const toc = await zip.file('OEBPS/toc.xhtml')?.async('string');
+  if (toc) zip.file('OEBPS/toc.xhtml', toc.replace('</body>', `${nav}\n</body>`));
+
+  const feature = (f: string) => `<meta property="schema:accessibilityFeature">${f}</meta>`;
+  const a11y = [
+    pages.length ? `<dc:source id="pagination-source">${escapeXml(meta.sourceUrl)}</dc:source>\n<meta refines="#pagination-source" property="source-of">pagination</meta>` : '',
+    '<meta property="schema:accessMode">textual</meta>',
+    meta.hasImages ? '<meta property="schema:accessMode">visual</meta>' : '',
+    '<meta property="schema:accessModeSufficient">textual</meta>',
+    meta.hasImages ? feature('alternativeText') : '',
+    feature('tableOfContents'), feature('readingOrder'), feature('displayTransformability'),
+    pages.length ? `${feature('pageNavigation')}\n${feature('pageBreakMarkers')}` : '',
+    '<meta property="schema:accessibilityHazard">none</meta>',
+    `<meta property="schema:accessibilitySummary">${escapeXml(`Reflowable text in reading order, with a table of contents${pages.length ? ' and the page numbers of the scanned book' : ''}. Notes are linked footnotes.${meta.hasImages ? ' Every illustration carries a text description.' : ''}`)}</meta>`,
+  ].filter(Boolean).join('\n');
+  const opf = await zip.file('OEBPS/content.opf')?.async('string');
+  if (opf) zip.file('OEBPS/content.opf', opf.replace('</metadata>', `${a11y}\n</metadata>`));
+
+  return zip.generateAsync({ type: 'nodebuffer', mimeType: 'application/epub+zip', compression: 'DEFLATE', compressionOptions: { level: 9 } });
 }
