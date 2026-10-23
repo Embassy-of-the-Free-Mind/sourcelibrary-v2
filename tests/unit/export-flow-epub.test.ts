@@ -6,9 +6,9 @@ import { buildFlowEpub, footnotesFor, rankHeadings, PAGES_PER_SECTION } from '@/
  * is a page break. Images are covered where they are decided: the scan licence gate (no images unless 'open', and
  * the edition then says so) — the fetch/recompress path is the export's shared, separately tested helper.
  */
-const db = (galleryRows = 0) => ({
+const db = (galleryRows = 0, rows: unknown[] = []) => ({
   collection: () => ({
-    find: () => ({ toArray: async () => [] }),
+    find: () => ({ toArray: async () => rows }),
     countDocuments: async () => galleryRows,
   }),
 });
@@ -58,10 +58,15 @@ describe('buildFlowEpub', () => {
     expect(flow.chapters[1].content.startsWith('<h2>Book II</h2>')).toBe(true);
   });
 
-  it('says inside the edition when the scans may not be redistributed, so the illustrations are left out', async () => {
-    const flow = await buildFlowEpub(db(12) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: false });
+  it('marks each illustration where it stands, with a link, when the scans may not be redistributed', async () => {
+    const rows = [{ page_number: 2, description: 'A furnace & bellows.' }, { page_number: 1, description: '' }];
+    const flow = await buildFlowEpub(db(0, rows) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: false });
     expect(flow.imagesIncluded).toBe(0);
-    expect(flow.imagesNote).toMatch(/text only.*12 illustrations are not included.*https:\/\/x\/book\/b/);
+    expect(flow.imagesNote).toMatch(/not released for redistribution, so its 2 illustrations are not reproduced here: each is marked where it stands.*https:\/\/x\/book\/b/);
+    const c = flow.chapters[0].content;
+    expect(c).toContain('<figcaption><a href="https://x/book/b?page=2">Illustration, p. 2</a>: A furnace &amp; bellows.</figcaption>');
+    expect(c).toContain('<figcaption><a href="https://x/book/b?page=1">Illustration, p. 1</a></figcaption>');
+    expect(c).not.toContain('<img');
   });
 
   it('says once per run that transcribed pages are not yet translated, instead of skipping them silently', async () => {

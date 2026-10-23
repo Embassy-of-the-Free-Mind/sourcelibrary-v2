@@ -40,7 +40,7 @@ export function flowHtmlToText(html: string): string {
     .replace(/<a class="page-marker"[^>]*>\|?(\d+)<\/a>/g, ' [p. $1] ')
     // A plain-text edition cannot carry a picture, so it says where one stands, what it shows, and where to see it
     // (the Project Gutenberg convention, with a link). Any other figure — an embedded image — has nothing to say.
-    .replace(/<figure class="flow-figure" data-page="(\d+)" data-href="([^"]*)"><figcaption>([\s\S]*?)<\/figcaption><\/figure>/g,
+    .replace(/<figure class="flow-figure flow-figure-link" data-page="(\d+)"><figcaption><a href="([^"]*)">[^<]*<\/a>(?:: )?([\s\S]*?)<\/figcaption><\/figure>/g,
       (_, n, href, caption) => `\n\n[Illustration, p. ${n}${inline(caption) ? `: ${inline(caption)}` : ''} — ${decode(href)}]\n\n`)
     .replace(/<figure[\s\S]*?<\/figure>/g, '')
     .replace(/<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/g, (_, level, s) => {
@@ -82,7 +82,7 @@ export async function buildFlowText(
   pages: Parameters<typeof buildFlowEpub>[2],
   opts: { text: 'translation' | 'ocr'; baseUrl: string },
 ): Promise<{ body: string; imagesTotal: number }> {
-  const flow = await buildFlowEpub(db, book, pages, { ...opts, includeImages: false, figureCaptions: true });
+  const flow = await buildFlowEpub(db, book, pages, { ...opts, includeImages: false });
   flow.cleanup();
   const body = flow.chapters.map(ch => {
     const text = flowHtmlToText(ch.content);
