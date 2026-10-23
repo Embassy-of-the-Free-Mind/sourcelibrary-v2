@@ -10,7 +10,7 @@
  *
  * Sends `prompt_or` (the v13 prompt + gates.mjs RESIDUE_RULE), temperature 1, reasoning { enabled: false },
  * max_tokens = the unit's max_out (≤ 8192), usage.include so the reply carries the charge. Every row records OpenRouter's
- * reported cost and the provider that served it, and is appended to <work>/ledger.jsonl, which the Lite runner's cap
+ * reported cost and the provider that served it (the LAST row per page wins; --retry-cut resends cut replies), and is appended to <work>/ledger.jsonl, which the Lite runner's cap
  * check reads too. Refuses to send once the ledger reaches --cap-usd. A page already written is skipped on restart.
  */
 import fs from 'node:fs';
@@ -56,7 +56,10 @@ async function call(prompt, maxTokens) {
   return { error: 'retries exhausted' };
 }
 
-const done = new Set(jl(OUT).filter((r) => r.text).map((r) => r.uid));
+// --retry-cut: send again the pages whose LAST row ended with finish 'error' (a stream the provider cut mid-reply; it is
+// billed $0 and is not a translation). The last row per page is the arm's text.
+const last = new Map(jl(OUT).map((r) => [r.uid, r]));
+const done = new Set([...last.values()].filter((r) => r.text && !(args.includes('--retry-cut') && r.finish === 'error')).map((r) => r.uid));
 const queue = jl(path.join(W, 'units.jsonl')).filter((u) => !done.has(u.uid));
 console.log(`${ARM} (${MODEL}): ${queue.length} to send; ledger $${spent().toFixed(4)} of cap $${CAP}`);
 let stop = false, n = 0, usd = 0;
