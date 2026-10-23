@@ -146,8 +146,13 @@ async function main() {
   const MAX = Number(arg('max-pages') || 40);
   const APPLY = process.argv.includes('--apply');
   const PER_CHART = Number(arg('per-chart') || Infinity);   // a sample across scripts, for a by-eye check
+  // Pages Opus also failed (Claude's own output filter refused two Magnalia pages on the first run). Without this a
+  // scheduled run would re-read them every time and, sorted first, they could fill the whole page budget. One JSON
+  // line per page, beside the per-day output folders; delete a line to try that page again.
+  const LEDGER = arg('ledger') || path.join(path.dirname(OUT), 'claude-refused.jsonl');
+  const refused = new Set(fs.existsSync(LEDGER) ? fs.readFileSync(LEDGER, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
   const seen = {};
-  const todo = rows.filter((r) => r.eligible && CLAUDE_MODEL[r.reader.engine])
+  const todo = rows.filter((r) => r.eligible && CLAUDE_MODEL[r.reader.engine] && !refused.has(r.page.id))
     .sort((a, b) => (a.book.visible === b.book.visible ? 0 : a.book.visible ? -1 : 1) || a.page.book_id.localeCompare(b.page.book_id) || a.page.page_number - b.page.page_number)
     .filter((r) => (seen[r.chart] = (seen[r.chart] ?? 0) + 1) <= PER_CHART)
     .slice(0, MAX);
@@ -168,6 +173,18 @@ async function main() {
     console.log(`\n${engine}: ${mine.length} pages from ${new Set(mine.map((r) => r.page.book_id)).size} books`);
     const read = run(path.join(HERE, 'claude-ocr.mjs'), [`--out=${dir}/ocr`, `--page-ids-file=${ids}`, `--model=${CLAUDE_MODEL[engine]}`, '--per-call=1', '--concurrency=2', `--job=${job}`]);
     if (read === 3) { console.log('usage limit reached: stopping; the next run resumes'); process.exit(3); }
+    if (engine === ESCALATE) {
+      fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+      for (const r of mine) {
+        const meta = path.join(dir, 'ocr', `${r.page.id}.meta.json`);
+        const m = fs.existsSync(meta) ? JSON.parse(fs.readFileSync(meta, 'utf8')) : null;
+        if (m && m.exit !== 0 && !refused.has(r.page.id)) {
+          refused.add(r.page.id);
+          fs.appendFileSync(LEDGER, JSON.stringify({ page_id: r.page.id, book_id: r.page.book_id, page_number: r.page.page_number, error_class: m.error_class, stderr_tail: m.stderr_tail ?? null, at: new Date().toISOString() }) + '\n');
+          console.log(`  ledger: p.${r.page.page_number} of ${r.page.book_id} failed on Opus too (${m.error_class}); not retried`);
+        }
+      }
+    }
     if (engine !== ESCALATE) {
       const failed = mine.filter((r) => {
         const meta = path.join(dir, 'ocr', `${r.page.id}.meta.json`);
