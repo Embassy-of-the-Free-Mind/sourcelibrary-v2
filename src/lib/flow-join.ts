@@ -250,7 +250,10 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     }
     let base = out;
     const stepBack = () => {
-      const before = base.slice(0, base.lastIndexOf('<p>')).trimEnd();
+      let before = base.slice(0, base.lastIndexOf('<p>')).trimEnd();
+      // The rule a translator set above the page's footnotes ("---", now an <hr/>) goes with them.
+      const rule = before.match(/<hr[^>]*\/>$/);
+      if (rule) before = before.slice(0, -rule[0].length).trimEnd();
       if (!before.endsWith('</p>')) return false;
       base = before;
       return true;

@@ -1,4 +1,4 @@
-import { pipeTableToHtml } from '@/lib/markdown-table-html';
+import { pipeTableToHtml, splitTableBlock } from '@/lib/markdown-table-html';
 import { applyNotesOff } from '@/lib/notes-off';
 import { separateTermDefinitions } from '@/lib/term-definitions';
 import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
@@ -96,29 +96,55 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   // `</margin>` in the stored text. Escaped, it reads as literal "</margin>" in the book (Hariri, Kindle EPUB,
   // 2026-10-22). It carries no words, so it goes.
   html = html.replace(/&lt;\/?(?:note|margin|gloss|term|unclear|lacuna|image-desc|insert)(?:\s[^&]*?)?\/?&gt;/gi, '');
+  // Plain HTML the transcription or translation carries as text (#7118, a probe of 12 random books' EPUBs found
+  // 242 such tags printed with their brackets): `<br>` is a line break; a PAIRED inline tag inside one block becomes
+  // the real element (`<s>the metal?</s>`; `<foreign>laas</foreign>` reads as italic); any other HTML-ish tag left
+  // — an unpaired one, or `<center>`, an OCR layout hint — goes, keeping its words. Only named tags: "a < b" stays.
+  // Inside a pipe-table row a <br> is a line break within the cell; anywhere else it ends the line. (Turned into a
+  // newline inside a row, it cut each row of Ptolemy's Handy Tables in two and the table was lost.)
+  html = html.split('\n').map(line => line.replace(/&lt;br\s*\/?&gt;/gi, /^[ \t]*\|.*\|[ \t]*$/.test(line) ? '<br/>' : '\n')).join('\n');
+  html = html.replace(/&lt;(sup|sub|i|b|em|strong|s|u|small)&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/\1&gt;/gi, (_m, tag: string, s: string) => `<${tag.toLowerCase()}>${s}</${tag.toLowerCase()}>`);
+  html = html.replace(/&lt;(foreign|italic)(?:\s[^&]{0,80})?&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/\1&gt;/gi, '<i>$2</i>');
+  html = html.replace(/&lt;bold&gt;((?:(?!\n\n)[\s\S])*?)&lt;\/bold&gt;/gi, '<b>$1</b>');
+  // Attributes up to 300 characters: a drop cap arrives as `<span style="font-size: 200%; float: left; …">` (Giorgi).
+  // `<red>` and `<rotate value="90">` are the OCR's notes on ink and orientation (Hariri), not the book's words.
+  html = html.replace(/&lt;\/?(?:center|foreign|italic|bold|div|span|p|font|i|b|em|strong|s|u|sup|sub|small|big|ins|del|mark|q|cite|abbr|red|rotate)(?:\s[^&]{0,300})?\/?&gt;/gi, '');
+  // A literal <hr/> on its own line is a rule, as `---` is.
+  html = html.replace(/^[ \t]*&lt;hr\s*\/?&gt;[ \t]*$/gim, '---');
+  // A closing tag of any name that is still here closed nothing ("…for the students.</t>"): a closing tag is never
+  // the book's words.
+  html = html.replace(/&lt;\/[a-z][\w-]{0,15}&gt;/gi, '');
 
   // Convert placeholders to inline styled elements. `[\s\S]` because a note or
   // an image description can run several lines — `.` stopped at the first
   // newline and left the placeholder itself in the book; the span's inner
   // newlines are collapsed so the paragraph split below cannot cut it in half.
+  // INNER ones first: a gloss inside a note is `[[NOTE_PLACEHOLDER: … [[GLOSS_PLACEHOLDER:x]] … ]]`, and the
+  // note's lazy match stopped at the gloss's `]]`, printing the rest of the note as placeholder text (Man'yōshū:
+  // 36 times in one volume). Converted first, the gloss is a <span> by the time the note is matched.
   const inline = (s: string) => s.replace(/\s*\n\s*/g, ' ').trim();
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="note">[${inline(s)}]</span>`);
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="margin">[${inline(s)}]</span>`);
   html = html.replace(/\[\[GLOSS_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="gloss">${inline(s)}</span>`);
   html = html.replace(/\[\[TERM_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<em class="term">${inline(s)}</em>`);
   html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="unclear">${inline(s)}?</span>`);
   html = html.replace(/\[\[IMAGE_DESC_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="image-desc">[Image description: ${inline(s)}]</span>`);
   html = html.replace(/\[\[LACUNA_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="lacuna">[Not transcribed: ${inline(s)}]</span>`);
+  html = html.replace(/\[\[NOTE_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="note">[${inline(s)}]</span>`);
+  html = html.replace(/\[\[MARGIN_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="margin">[${inline(s)}]</span>`);
   // Its own block: the paragraph split below leaves a block that starts with `<h` unwrapped.
   html = html.replace(/\[\[LEAF_BREAK_PLACEHOLDER\]\]/g, '<hr class="leaf-break" title="next folio"/>');
 
   // Convert legacy [[notes: ...]] to inline
   html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
 
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
+  // A line that is only `---` / `***` / `___` is the translator's separator (283 printed as text in 12 books):
+  // a rule, as its own block. Before emphasis, which would eat `***`; table separators carry pipes and are not hit.
+  // A line may open with the export's invisible provenance mark (zero-width characters, markForExport), which hid
+  // `# …` and `---` lines from these rules; the mark is kept (moved to the next block for a rule), never dropped.
+  const ZW = '[\\u200B-\\u200D\\u2060\\uFEFF]*';
+  html = html.replace(new RegExp(`^(${ZW})[ \\t]*(?:-{3,}|\\*{3,}|_{3,})[ \\t\\r]*(${ZW})[ \\t\\r]*$`, 'gm'), '\n\n<hr/>\n\n$1$2');
+
+  // Convert headers (must be done before paragraph wrapping). Four to six #s were printed as text.
+  html = html.replace(new RegExp(`^(${ZW})(#{1,6}) (.+)$`, 'gm'), (_m, mark: string, hashes: string, s: string) => `\n<h${hashes.length}>${mark}${s}</h${hashes.length}>\n`);
 
   // Convert bold and italic
   html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
@@ -136,12 +162,33 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
     if (block.startsWith('<h')) {
       return block;
     }
-    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
+    const para = (s: string) => (s.trim() ? `<p>${s.trim().replace(/\n/g, '<br/>')}</p>` : '');
+    // GFM pipe tables become real tables, not pipe-soup inside a <p> — also when the table shares its block with a
+    // caption line above or below it (Ptolemy's Handy Tables: 86 pipe rows printed as text; split further down).
     const table = pipeTableToHtml(block);
     if (table) return table;
+    // A bullet list ("* SOUTH" / "* SOUTH-WEST" in Ptolemy's horizon tables; "Landmasses and Regions:" over
+    // "* GREENLAND" in Goos's atlas) is a list, not starred lines: any run of two or more bullet lines, with the
+    // lines around it staying text. A lone "- " (dialogue) or "+ " (a printed cross) stays text.
+    const lines = block.split('\n').filter(l => l.trim());
+    const BULLET = /^[ \t]*[*\-+•][ \t]+(?=\S)/;
+    if (lines.filter(l => BULLET.test(l)).length >= 2) {
+      const out: string[] = [];
+      for (let i = 0; i < lines.length;) {
+        let j = i;
+        while (j < lines.length && BULLET.test(lines[j])) j++;
+        if (j - i >= 2) { out.push(`<ul>${lines.slice(i, j).map(l => `<li>${l.replace(BULLET, '').trim()}</li>`).join('')}</ul>`); i = j; continue; }
+        let k = Math.max(j, i + 1);
+        while (k < lines.length && !(BULLET.test(lines[k]) && k + 1 < lines.length && BULLET.test(lines[k + 1]))) k++;
+        out.push(para(lines.slice(i, k).join('\n')));
+        i = k;
+      }
+      return out.filter(Boolean).join('\n');
+    }
+    const split = splitTableBlock(block);
+    if (split) return split.map(part => ('table' in part ? part.table : para(part.text))).filter(Boolean).join('\n');
     // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
+    return para(block);
   }).filter(b => b).join('\n');
 
   // Clean up empty paragraphs and whitespace issues

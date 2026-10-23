@@ -1,0 +1,10 @@
+ROW 1 | സൃഷ്ടിപക്ഷന്തംസംസ‖തതിരുവടൊഗംടാമൈവരധിവാസിതംലിംഗംതഃചിത്രായഥാ
+ROW 2 | ശയത്മഠതബ്ബാഞ്ഞാധ‖ഠട്ടൊയശാമിനാഷ്ടായാതമക്കിഠഎ‖ാവിതൈതൈഷസ്തകത്തുത
+ROW 3 | തിനാക്രയംപ്രിം‖ഗം।ആഷ്ടഃഷ്ടഗുന്താധാക്കെഫത്രക്കമ‖ദംശിമിക്കതൈനമി
+ROW 4 | ആകപ്രസന്നൈ‖നാക്രാതൈക്കുണ്ണുഭുതിധൈതാഗാഠ‖ടവദ്യുവത്രക്കത്തത
+ROW 5 | ലിംഗം।സ്ലു।സ‖ാംസാഠിങ്കാഠാ‥ പാപ്ര‖ാത്തുക്രകാമൈവത്തുത
+ROW 6 | ാശ്രയധത്മാളാഃദ‖ല്ലാഃകരണാക്രകിണഃകാത്തു‖ാശ്രത്തിഠശികാല
+ROW 7 | ാദ്യാദഃധത്തൈഖ‖നമനത്തുദൃപം।ഗമനമധന്താൽ‖ടചത്രധത്തൈണക്ക
+ROW 8 | ാനൈനഭാഠഛാഷ്ടാ‖വിചയ്യതാഠിത്തുതൈബന്ധഃ।ആഷ്ടഃതൈ‖ാചഠാത്താൽപ്രഉതലയഃ
+ROW 9 | സംസാരഠാഭവത്ത‖ാജസാഠാഗാകതൈതൈശിത്തൊഉവി‖ാഠാതാകിചത്തായാത
+NOTE | All nine rows are visible and were read across all four pieces, but at this resolution many akṣaras are uncertain (roughly a third of the syllables are tentative, especially the ligatures and the glyphs cut at the holes); treat this as a diplomatic draft, not a verified reading.
