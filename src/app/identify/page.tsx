@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { Camera, Upload, Loader2, ExternalLink, Check } from 'lucide-react';
+import { Camera, Upload, Loader2, ExternalLink, Check, BookOpen } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { bookUrl } from '@/lib/slugify';
 
@@ -618,6 +618,15 @@ export default function IdentifyPage() {
                   <span className="text-xs font-semibold uppercase tracking-wider text-accent-rust">Found in the library</span>
                   <span className="text-[10px] text-green-700 bg-green-50 rounded px-1.5 py-0.5">confirmed by visual comparison</span>
                 </div>
+                <div className="px-5 pt-5">
+                  <Link
+                    href={c.read_url}
+                    className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-accent-rust text-white text-base font-medium hover:bg-accent-rust/85 transition-colors"
+                  >
+                    <BookOpen className="w-5 h-5" aria-hidden />
+                    {pageLocated ? 'Go to Source' : 'Open the book (page not located)'}
+                  </Link>
+                </div>
                 <div className="flex gap-4 p-5">
                   {/* self-start keeps the thumb box hugging the image instead of
                       stretching to row height and leaving a gray dead zone */}
@@ -653,14 +662,6 @@ export default function IdentifyPage() {
                         <p className="text-sm text-secondary line-clamp-3 mt-1">{c.description}</p>
                       </div>
                     )}
-                    <div className="pt-2">
-                      <Link
-                        href={c.read_url}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
-                      >
-                        {pageLocated ? 'Go to the source' : 'Open the book (page not located)'}
-                      </Link>
-                    </div>
                     <div className="flex flex-wrap gap-2 pt-1">
                       {c.gallery_url && (
                         <Link href={c.gallery_url} className={secondaryBtn}>View in gallery</Link>
@@ -714,6 +715,17 @@ export default function IdentifyPage() {
               </div>
               );
             })()}
+
+            {/* No visual confirmation: still one big way to the best-matching held page (Feedback 6ac67f6a83a555b22ac48c46, #7081) */}
+            {!result.confirmed && result.matches[0]?.page_number != null && (
+              <Link
+                href={`${bookUrl({ slug: result.matches[0].slug, id: result.matches[0].id })}/page-number/${result.matches[0].page_number}`}
+                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-lg bg-accent-rust text-white text-base font-medium hover:bg-accent-rust/85 transition-colors"
+              >
+                <BookOpen className="w-5 h-5" aria-hidden />
+                Go to Source
+              </Link>
+            )}
 
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">

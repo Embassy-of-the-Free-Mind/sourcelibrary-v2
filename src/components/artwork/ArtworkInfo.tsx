@@ -133,6 +133,23 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
 
   return (
     <>
+      {/* The one way to the source: the book page this picture is on (Feedback 6ac6baab5f6316c3983cb860, #7081). */}
+      {sourceBook && (
+        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pt-4 pb-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <Link
+            href={sourceBook.page_id ? `/book/${sourceBook.slug}/page/${sourceBook.page_id}` : sourceBook.page_number != null ? `/book/${sourceBook.slug}/page-number/${sourceBook.page_number}` : `/book/${sourceBook.slug}`}
+            className="btn-primary justify-center w-full sm:w-auto"
+          >
+            <BookOpen className="w-4 h-4" />
+            Go to Source
+          </Link>
+          <p className="text-sm truncate" style={{ color: 'var(--text-muted)' }}>
+            {sourceBook.page_number != null ? `Page ${sourceBook.page_number} of ` : 'From '}
+            <span style={{ color: 'var(--text-secondary)' }}>{sourceBook.title}</span>
+          </p>
+        </div>
+      )}
+
       {/* Hero image with magnifier */}
       {displayImage && (
         <ArtworkHero
@@ -369,34 +386,6 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
               ))}
             </div>
           </div>
-        )}
-
-        {/* Source Manuscript — links artwork to its parent codex/book */}
-        {sourceBook && (
-          <Link
-            href={sourceBook.page_id ? `/book/${sourceBook.slug}/page/${sourceBook.page_id}` : sourceBook.page_number != null ? `/book/${sourceBook.slug}/page-number/${sourceBook.page_number}` : `/book/${sourceBook.slug}`}
-            className="card p-6 sm:p-8 flex items-center gap-4 group hover:border-accent-rust/30 transition-colors"
-            style={{ borderColor: 'var(--border-light)' }}
-          >
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: 'var(--accent-rust)', opacity: 0.9 }}>
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>
-                {/* 496 of the 502 linked sources are printed books (#4037 Phase 1, 2026-09-14);
-                    a shelfmark-style slug is the tell for a codex. */}
-                {/^(zurich-|harley-|marcianus-|bl-|ms-|cod-)/.test(sourceBook.slug) || /\bms\b|manuscript|codex/i.test(sourceBook.title)
-                  ? 'From this manuscript' : 'From this book'}
-              </p>
-              <p className="text-sm font-medium mt-0.5 group-hover:text-accent-rust transition-colors truncate" style={{ color: 'var(--text-primary)' }}>
-                {sourceBook.title}
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                {sourceBook.page_number != null ? `Open scan page ${sourceBook.page_number} with translation →` : 'Read the full text with translation →'}
-              </p>
-            </div>
-          </Link>
         )}
 
         {/* Related books by this artist */}
