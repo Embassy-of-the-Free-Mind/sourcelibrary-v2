@@ -4,10 +4,11 @@ import Link from 'next/link';
 import MarkedPage, { type Mark } from './MarkedPage';
 
 /**
- * Two pages of Ficino's preface in the library's 1472 Pimander (BSB Munich),
- * with the Latin marked as it comes into view. Line positions measured from
- * the scans' darkness profile: 2.6% line pitch, text column 15–85.5% (preface
- * page) and 25.6–83% (chain page).
+ * Pages from books in the library with the Latin marked as they come into
+ * view: Ficino's preface to Cosimo in the 1472 Pimander (BSB Munich), and the
+ * contents of the 1497 Aldine De Mysteriis. Line positions measured from the
+ * scans (darkness profile and a percentage grid): 2.6% line pitch, text column
+ * 15–85.5% on the preface page.
  */
 
 const PIMANDER = '/book/hermes-trismegistus-pimander-1472-editio-princeps-trans';
@@ -48,44 +49,36 @@ export function PrefaceFigure() {
   );
 }
 
-const CHAIN: { name: string; mark: Mark }[] = [
-  { name: 'Hermes', mark: { x: 25.4, y: 60.4, w: 11.6, h: H } },
-  { name: 'Orpheus', mark: { x: 75.6, y: 42.2, w: 7.8, h: H } },
-  { name: 'Aglaophemus', mark: { x: 36.1, y: 47.4, w: 19.2, h: H } },
-  { name: 'Pythagoras', mark: { x: 41.3, y: 50.0, w: 11.6, h: H } },
-  { name: 'Philolaus', mark: { x: 61.2, y: 50.0, w: 10.4, h: H } },
-  { name: 'Plato', mark: { x: 34.8, y: 52.7, w: 10.2, h: H } },
-];
-const CHAIN_MARKS = CHAIN.map((c) => c.mark);
+const COMPENDIUM = '/book/iamblichus-de-mysteriis-1497-aldine-ficino';
+const COMPENDIUM_CONTENTS = `${COMPENDIUM}/page/6959afa11dfc1806c080bc8a`;
+const DE_VOLUPTATE = '/book/de-voluptate-ficino';
 
-export function ChainFigure() {
+export function CompendiumFigure() {
   return (
     <MarkedPage
-      src="/about/pimander-1472-chain.jpg"
-      w={767}
-      h={1000}
-      alt="The page of the 1472 Pimander that names the ancient theologians"
-      href={PIMANDER}
-      marks={CHAIN_MARKS}
+      src="/about/de-mysteriis-1497.jpg"
+      w={760}
+      h={1046}
+      alt="The contents page of the 1497 Aldine De Mysteriis, ending with Ficino's book on pleasure"
+      href={COMPENDIUM_CONTENTS}
+      marks={[{ x: 23, y: 61.8, w: 28.5, h: 2.2 }]}
       aside={(lit) => (
-        <ol className="space-y-1">
-          {CHAIN.map((c, k) => (
-            <li
-              key={c.name}
-              className="mp-q flex items-baseline gap-4 font-serif text-3xl md:text-4xl text-primary leading-tight"
-              style={{ opacity: k < lit ? 1 : 0.15 }}
-            >
-              <span className="w-6 text-base font-sans text-muted tabular-nums">{k + 1}</span>
-              {c.name}
-            </li>
-          ))}
+        <div>
+          <p className="font-serif text-3xl md:text-4xl text-primary leading-tight">
+            <span className="mp-q" style={{ opacity: lit > 0 ? 1 : 0.25 }}>Marsilii Ficini liber de voluptate</span>
+          </p>
+          <p className="mt-3 text-lg text-secondary">Marsilio Ficino&apos;s book on pleasure</p>
+          <p className="mt-8 text-lg text-secondary leading-relaxed">
+            The last entry in the contents of the 1497 compendium <em>De Mysteriis</em>, printed by Aldus Manutius in Venice. We could find no earlier English translation.{' '}
+            <Link href={DE_VOLUPTATE} className={link}>Read it in English</Link>
+          </p>
           <style>{`.mp-q { transition: opacity .6s ease; }`}</style>
-        </ol>
+        </div>
       )}
       caption={
         <>
-          One page earlier, Ficino names the six teachers of the ancient theology, from Hermes to Plato.{' '}
-          <Link href={PIMANDER} className={link}>Read the whole book in English</Link>
+          <em>De Mysteriis</em>, Venice 1497.{' '}
+          <Link href={COMPENDIUM} className={link}>Read the whole compendium</Link>
         </>
       }
     />
