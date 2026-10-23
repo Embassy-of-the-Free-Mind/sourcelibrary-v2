@@ -16,8 +16,9 @@ export const metadata: Metadata = {
 
 export default function PartnersPage() {
   return (
-    <div className="slp">
+    <>
       <SiteHeader variant="light" />
+      <div className="slp">
       <section className="hero">
         <div className="wrap">
           <div>
@@ -180,6 +181,7 @@ export default function PartnersPage() {
           <span><a href="https://sourcelibrary.org">sourcelibrary.org</a> · <a href="https://wisdomfrontiers.org">wisdomfrontiers.org</a></span>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
