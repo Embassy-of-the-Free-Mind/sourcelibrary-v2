@@ -427,3 +427,20 @@ If several are adoptable in one century, they are listed by run-2 median.
 `latin-bakeoff-5924/bar-a5.mjs` (the bar above, over `score.mjs --out` JSON) and `latin-bakeoff-5924/rep-task.sh` (the
 gpu-queue task) are committed with this amendment. $0: no paid calls, the owned GPU only. No production write, and no
 production lane changes whatever the verdict; adopting one is Derek's call.
+
+### Amendment 5a — the holding library's free legacy OCR as a descriptive column (Derek's inbox note, 2026-10-23 08:21Z; written before any legacy text is fetched)
+Derek asked for the market comparison: the free OCR text the holding library already publishes for the same leaf, scored
+against the same Opus reference. It is **descriptive: no bar, no verdict**. It only says whether our transcription is a
+step change over what readers can already get for free.
+- **Sources**, all $0 and with no model calls:
+  - **Archive** (`archive.org/download/<id>/page/n<k>` leaves): `<id>_hocr_searchtext.txt.gz` cut by `<id>_hocr_pageindex.json.gz` at leaf k.
+  - **MDZ / BSB**: the hOCR named by the IIIF canvas's `seeAlso`, on the canvas whose image is the fed leaf (`bsb…_<n>`).
+  - **e-rara / Heidelberg**: the METS `FULLTEXT` file group or the canvas `seeAlso`, when one exists.
+  - No Gallica leaves are in the gate.
+- **Mapping.** A text is used only when it is tied to the fed leaf by identifier: Archive leaf index, MDZ image id, or METS file id.
+  Leaf k is always the one scored. As a mapping check only, the neighbouring leaves k − 1 and k + 1 are also scored. If either
+  is better than k by more than 30 points of CER, the page counts as *mapping uncertain* and is dropped. The drop is counted,
+  never swapped for the neighbour.
+- **Counts reported:** leaves with a legacy text, with none published, and dropped as uncertain, by source and century.
+- **Scoring.** `score.mjs` unchanged, as arm `X`. The table gives X beside L, LP and the run-2 engines **on the same subset**
+  of pages: median view-N CER with CI, catastrophic pages, and the `--fold-f` view.
