@@ -1,0 +1,1927 @@
+{
+ "prior_art": "none — the #7174 by-eye checks (byeye-pages.json) were 6 lite pages; this is the apply gate on flash pages",
+ "issue": 5924,
+ "method": "20 flash pages per round from the latin-repair-census books, seeded draw (gate-draw seeds 5924023, 7174, 1022, 31415), half habit / half no-habit pages; 4 independent Opus readers per round, zoomed crops of the R2 image (getPageSource); every change checked on pages <= 40 changes, else >= 3 per token type and all risky types",
+ "rounds": [
+  {
+   "round": "gate",
+   "rule": "pass + tags/caps/vernacular cut, attested>=20 & >=2% only on no-habit pages",
+   "pages": [
+    {
+     "slug": "69b30230-p261",
+     "id": "69b30230c22956d8a0de5d5a",
+     "book_id": "69b30230c22956d8a0de5c55",
+     "title": "Introductio in Universam Geographiam",
+     "published": "1629",
+     "habit": true,
+     "changes": 10,
+     "img": "69b30230-p261.jpg"
+    },
+    {
+     "slug": "69af0f77-p172",
+     "id": "69af0f77a940055c46680f37",
+     "book_id": "69af0f77a940055c46680e8b",
+     "title": "Astronomica Veterum Scripta Isagogica",
+     "published": "1589",
+     "habit": true,
+     "changes": 33,
+     "img": "69af0f77-p172.jpg"
+    },
+    {
+     "slug": "69af10ef-p281",
+     "id": "69af10ef06b10527be56638e",
+     "book_id": "69af10ef06b10527be566275",
+     "title": "De Fractura Cranii Liber Aureus",
+     "published": "1715",
+     "habit": true,
+     "changes": 26,
+     "img": "69af10ef-p281.jpg"
+    },
+    {
+     "slug": "69a95708-p547",
+     "id": "69a9570865ddd05bbcd3dd11",
+     "book_id": "69a9570865ddd05bbcd3daee",
+     "title": "Rerum Gestarum libri qui supersunt (Res Gestae)",
+     "published": "1600",
+     "habit": true,
+     "changes": 62,
+     "img": "69a95708-p547.jpg"
+    },
+    {
+     "slug": "69b2ff6a-p582",
+     "id": "69b2ff6a5545150b61b48386",
+     "book_id": "69b2ff6a5545150b61b48140",
+     "title": "Opera Omnia Vol. 5",
+     "published": "1529",
+     "habit": true,
+     "changes": 169,
+     "img": "69b2ff6a-p582.jpg"
+    },
+    {
+     "slug": "6990616c-p410",
+     "id": "6990616cef12272ffdc8db1a",
+     "book_id": "6990616cef12272ffdc8d980",
+     "title": "De Abstinentia ab Esu Animalium Libri Quatuor",
+     "published": "1767",
+     "habit": true,
+     "changes": 51,
+     "img": "6990616c-p410.jpg"
+    },
+    {
+     "slug": "69af106e-p213",
+     "id": "69af106e266659b71a322205",
+     "book_id": "69af106e266659b71a32212f",
+     "title": "De Statica Medicina",
+     "published": "1701",
+     "habit": true,
+     "changes": 25,
+     "img": "69af106e-p213.jpg"
+    },
+    {
+     "slug": "6ff1a28b-p411",
+     "id": "695004d8f426a210d1099fdf",
+     "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+     "title": "De Humani Corporis Fabrica",
+     "published": "1555",
+     "habit": true,
+     "changes": 133,
+     "img": "6ff1a28b-p411.jpg"
+    },
+    {
+     "slug": "6952d054-p216",
+     "id": "6952d05477f38f6761bc51f6",
+     "book_id": "6952d05477f38f6761bc511e",
+     "title": "Basilica chymica",
+     "published": "1609",
+     "habit": true,
+     "changes": 30,
+     "img": "6952d054-p216.jpg"
+    },
+    {
+     "slug": "69c82de6-p-70",
+     "id": "69c82e326c6f3cc53c84d5a4",
+     "book_id": "69c82de66c6f3cc53c84d4bf",
+     "title": "Specimen philologicum de veterum gentilium et judaeorum theologia mythica",
+     "published": "1728",
+     "habit": true,
+     "changes": 91,
+     "img": "69c82de6-p-70.jpg"
+    },
+    {
+     "slug": "6ff1a28b-p671",
+     "id": "695004d8f426a210d109a0e3",
+     "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+     "title": "De Humani Corporis Fabrica",
+     "published": "1555",
+     "habit": false,
+     "changes": 3,
+     "img": "6ff1a28b-p671.jpg"
+    },
+    {
+     "slug": "6a08551d-p75",
+     "id": "6a08551d15c643eb1af54d91",
+     "book_id": "6a08551d15c643eb1af54d46",
+     "title": "De vitis sanctorum ab Aloysio Lipomano, episcopo Veronae, ... olim conscriptis nunc primùm à F. Laurentio Surio Carthusiano emendati, & auctis, Tomus primus sextus. ..",
+     "published": "1581",
+     "habit": false,
+     "changes": 2,
+     "img": "6a08551d-p75.jpg"
+    },
+    {
+     "slug": "6955da01-p485",
+     "id": "6955da028407b7c9ae2137ff",
+     "book_id": "6955da018407b7c9ae21361a",
+     "title": "Opera Medicinalia",
+     "published": "1566",
+     "habit": false,
+     "changes": 4,
+     "img": "6955da01-p485.jpg"
+    },
+    {
+     "slug": "6990616c-p227",
+     "id": "6990616cef12272ffdc8da63",
+     "book_id": "6990616cef12272ffdc8d980",
+     "title": "De Abstinentia ab Esu Animalium Libri Quatuor",
+     "published": "1767",
+     "habit": false,
+     "changes": 3,
+     "img": "6990616c-p227.jpg"
+    },
+    {
+     "slug": "69b62f86-p270",
+     "id": "69b62f861c1c21a3737f6b91",
+     "book_id": "69b62f861c1c21a3737f6a83",
+     "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos Dominus Ecclesiae suae diversis in locis dedit, excerpta et diligenter concinnata, sive Bibliotheca expositionum Novi Testamenti, id est, Expositio ex probatis theologis collecta, et in unum corpus singularis artificio conflata : quae instar bibliotheca multis expositoribus referta esse possit. Authore Augustino Marlorato, verbi Dei ministro, diu multumque in theologia versato. Editio quinta. Cum indice locupletissimo variarum rerum ad christianam religionem pertinentium, quae quidem in hac catholica expositione ecclesiastica tractantur.",
+     "published": "1593",
+     "habit": false,
+     "changes": 74,
+     "img": "69b62f86-p270.jpg"
+    },
+    {
+     "slug": "69b2ff6a-p309",
+     "id": "69b2ff6a5545150b61b48275",
+     "book_id": "69b2ff6a5545150b61b48140",
+     "title": "Opera Omnia Vol. 5",
+     "published": "1529",
+     "habit": false,
+     "changes": 3,
+     "img": "69b2ff6a-p309.jpg"
+    },
+    {
+     "slug": "69a95708-p38",
+     "id": "69a9570865ddd05bbcd3db14",
+     "book_id": "69a9570865ddd05bbcd3daee",
+     "title": "Rerum Gestarum libri qui supersunt (Res Gestae)",
+     "published": "1600",
+     "habit": false,
+     "changes": 8,
+     "img": "69a95708-p38.jpg"
+    },
+    {
+     "slug": "69af10ef-p296",
+     "id": "69af10ef06b10527be56639d",
+     "book_id": "69af10ef06b10527be566275",
+     "title": "De Fractura Cranii Liber Aureus",
+     "published": "1715",
+     "habit": false,
+     "changes": 4,
+     "img": "69af10ef-p296.jpg"
+    },
+    {
+     "slug": "69b51e51-p22",
+     "id": "69b51e5147b06ecd5818dead",
+     "book_id": "69b51e5147b06ecd5818de97",
+     "title": "Danielis Georgi[i] Morhofi[i] Polyhistor : In Tres Tomos, Literarium, (Cujus soli Tres Libri Priores hactenus prodiere, nunc autem Quatuor reliqvi, a Viro in Acad. Lipsiensi Erudito revisi atqve aucti, e Mss. accedunt,) Philosophicum Et Practicum, (nunc demum editos, Primoqve adjunctos) divisus. Opus Posthumum, ut multorum Votis satisfieret, Accurate revisum, emendatum, ex Autoris Annotationibus .... Tomi Tertii, Polyhistoris Tomi Tertii, Sive Polyhistoris Practici, Liber ...",
+     "published": "1708",
+     "habit": false,
+     "changes": 3,
+     "img": "69b51e51-p22.jpg"
+    },
+    {
+     "slug": "69af106e-p133",
+     "id": "69af106e266659b71a3221b5",
+     "book_id": "69af106e266659b71a32212f",
+     "title": "De Statica Medicina",
+     "published": "1701",
+     "habit": false,
+     "changes": 22,
+     "img": "69af106e-p133.jpg"
+    }
+   ],
+   "verdicts": [
+    {
+     "slug": "69b30230-p261",
+     "changes_total": 10,
+     "checked": 10,
+     "right": 10,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean 1629 roman type. Every changed word (fonteſque, univerſa, poſterius, ipſa, occaſu x2, eſt, ipſo, diſtinguitur, clariſſimi) shows a long s with no crossbar to the right of the stem. Proper names (Patiſſus, Boryſthenes, Iſter, Tranſſilvani, Mœſia, Caucaſum, Aſia) also print ſ, but the pass left them as f, so nothing was altered; it under-corrects there."
+    },
+    {
+     "slug": "69b2ff6a-p582",
+     "changes_total": 169,
+     "checked": 169,
+     "right": 169,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Low-resolution scan (1266x1984) but the 1529 roman is legible line by line. I read all 13 bands plus the margin notes; every changed letter is ſ in print. Risky cases: L15 margin 'Quòd deus ſit, & quid ſit' is an italic ſ with no bar (right); L12 'fas → ſas' is the second half of 'cau/ſas' split at the line end, not the word fas (right); 'fui → ſui', 'fi → ſi', 'fol → ſol', 'fex → ſex' are all ſ in print. True f's (differt, efficitur, fatuus) were left alone."
+    },
+    {
+     "slug": "6952d054-p216",
+     "changes_total": 30,
+     "checked": 30,
+     "right": 30,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1609 roman and italic. All 30 changes confirmed in zoomed crops: italic ſecundum, ſorbili, iuſculo, generoſo, poſſunt; roman ſal, menſtrua, ſolutionem, eſt, magiſterij, obſeruetur, ſpiritum, ſpagyricum, ſuppoſitus, eſſet, ſed, ſubinde, inſtar, ſpumæ, craſſa, deſtilla. In all of them the bar sits only to the left of the stem (ſ)."
+    },
+    {
+     "slug": "6955da01-p485",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Print has laceſſit (ſſ ligature), ſeſe, iſtiuſ-, iſtiuſmodi, so each changed letter is ſ. The results are mixed forms (lacesſit, istiuſ): the OCR had already normalised the other long s's to s. That is not an error of the pass."
+    },
+    {
+     "slug": "69a95708-p38",
+     "changes_total": 8,
+     "checked": 8,
+     "right": 8,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1600 Ammianus. Crops confirm diſſimulata, inſaniente (italic margin note '...modum in-ſaniente?'), reſtitiſſet, perfuſorum, popoſcerat, intromiſſa, inſidias, obſcuriſſimis. All are ſ in print."
+    },
+    {
+     "slug": "69af0f77-p172",
+     "changes_total": 33,
+     "checked": 33,
+     "right": 33,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1589 italic verse (Aratea). Every changed letter is a clear italic long s with no right crossbar (paſſis, ſubſequitur, ſpecie, ſtellarum, ſoliti, ſimili, eſt, eſſe, ſerpunt...). Unchanged f's are true f's (fultum, forma, flamen, fulgore). Proper names Cynofura/Caffiepeia were left untouched, though the print has ſ there, so those are misses, not wrong changes."
+    },
+    {
+     "slug": "6990616c-p410",
+     "changes_total": 51,
+     "checked": 51,
+     "right": 51,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "18th-c. roman/italic Porphyry commentary. Every real-word-risk change was read in the crops and all are ſ: fine→ſine (L30, 'ſine dubio'), fit→ſit (L49, L58), fe→ſe (L37, L42, L63), fed→ſed, fuo→ſuo, folis/folo→ſolis/ſolo. True f's left alone (fendi, feritas, ferventes, infoecundi). Misses, not errors: Refpiciunt, Expreffit and the name Beklenfes stayed unchanged."
+    },
+    {
+     "slug": "69c82de6-p-70",
+     "changes_total": 91,
+     "checked": 91,
+     "right": 91,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Two-page spread, 18th-c. roman type (Zohar preface). I read every changed line on both pages and in the footnotes. All are long s, including the real-word risks fatis→ſatis ×2, fit→ſit, fi→ſi, fe→ſe ×2, fed, fint, fui, fuis, fub, femper, fibi, fqq/fq. Where the print has a round s inside ſſ (generoſisſimus, ſerenisſimus, arcesſiuerint), the letter is still s, never f. True f's are untouched: fuit, ferreis, fatendum, the folio 'f.' in the notes. Proper names (Chrifti, Mofis, Rofenroth, Auguftus, Francifcus, Meffia) were left unchanged."
+    },
+    {
+     "slug": "6990616c-p227",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "All 3 (aſſidentem, ſa-[lutem], ceſſerunt) clearly show long s in the print. The page is habit:false: the rest of the OCR uses round s, so the output now mixes ſ and s. The letters are right, but the orthography is inconsistent."
+    },
+    {
+     "slug": "69af10ef-p296",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "All 4 are læſio-/læſione forms, and the roman long s is clear (nick on the left only). The page is habit:false: the rest of the OCR is normalised to round s (si, est, sine), so the result mixes ſ and s."
+    },
+    {
+     "slug": "69af10ef-p281",
+     "changes_total": 26,
+     "checked": 26,
+     "right": 26,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean 1715 roman with crisp long s. 'ſine vulnere' (L7) shows the left-only nick; 'in fine' (L11) has a true f and was correctly left. Italic 'eſt mirum ſi' is ſ. Missed by the pass, not a wrong change: 'ferventur' (print ſerventur) is still f."
+    },
+    {
+     "slug": "69af106e-p213",
+     "changes_total": 25,
+     "checked": 25,
+     "right": 24,
+     "wrong": 1,
+     "cannot_tell": 0,
+     "meaning_changes": [
+      {
+       "line": "L10",
+       "change": "fit → ſit",
+       "why": "print 'cum fit minor' uses the fi ligature with its crossbar running into the i (same glyph as 'fiunt' in L14), not the bare ſ of 'ſi diu'; fit = becomes"
+      }
+     ],
+     "wrong_details": [
+      {
+       "line": "L10",
+       "change": "fit → ſit",
+       "print_shows": "fit (fi ligature, full crossbar)"
+      }
+     ],
+     "non_latin_touched": [],
+     "notes": "High-contrast 1701 microfilm, easy to read. Every other change is a clear ſ. The one wrong change is the ambiguous word 'fit', where the pass picked ſit and the print has f."
+    },
+    {
+     "slug": "6ff1a28b-p671",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 1,
+     "wrong": 2,
+     "cannot_tell": 0,
+     "meaning_changes": [
+      {
+       "line": "L22",
+       "change": "fi. → ſi. (margin 'o 22, 23 fi.')",
+       "why": "marginal abbreviation of fi(gura), as in the neighbouring 'fig.' notes; print has the italic fi ligature"
+      },
+      {
+       "line": "L23",
+       "change": "fi. → ſi. (margin 'p 1, 2, 3, 4 fi. ca. 49')",
+       "why": "abbreviation fi(gura); zoomed print shows an italic f whose crossbar joins the i"
+      }
+     ],
+     "wrong_details": [
+      {
+       "line": "L22",
+       "change": "fi → ſi",
+       "print_shows": "italic 'fi.' = figura abbreviation (tiny glyph; context and the matching L23 glyph decide)"
+      },
+      {
+       "line": "L23",
+       "change": "fi → ſi",
+       "print_shows": "italic f with crossbar ('fi.ca.49 li.')"
+      }
+     ],
+     "non_latin_touched": [
+      "margin figure-reference abbreviations (fi. = figura), not running Latin prose"
+     ],
+     "notes": "Vesalius 1555. 'ſeminique' (L16) is clearly ſ, so that change is right. Both 'fi' changes hit the figure-reference abbreviation in the italic margin notes. Separately, the OCR's 'feminis' (×4, really ſeminis) was left unchanged."
+    },
+    {
+     "slug": "69b62f86-p270",
+     "changes_total": 74,
+     "checked": 74,
+     "right": 74,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Low-res scan (1000px, two columns), but the long s still reads at 1600px crops. All checked words read ſ in the print, including every ſi/ſe/ſiquis/ſed/ſumma/ſuo/ſua/niſi/abuſi/auſi and fuiſſe. 'vt fit author' was left as f (correct; print 'ſit' is unclear, but it was not changed)."
+    },
+    {
+     "slug": "69b51e51-p22",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1690s roman. The print shows 'ſcripſere', 'ſcripſit' and 'aſſeverabit' with long s. The proper name 'Eggefeldio' and the German Fraktur line were not touched."
+    },
+    {
+     "slug": "69a95708-p547",
+     "changes_total": 62,
+     "checked": 62,
+     "right": 61,
+     "wrong": 0,
+     "cannot_tell": 1,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Low-res scan (548x834) but long s is clearly distinguishable from crossbarred f (e.g. Fabricius, facinus, forfitan->forſitan initial f kept). All checked tokens show ſ in print, incl. ſi x2, ſe, ſed, ſunt x2, ſolus, ſuorum and the margin italics (excuſatio, repoſcēs, reſponſum). L52 femina->ſemina: the initial letter is obscured by an ink blot ('·emina'); context 'semina discordiarum' supports ſ but the letter itself cannot be read."
+    },
+    {
+     "slug": "6ff1a28b-p411",
+     "changes_total": 133,
+     "checked": 133,
+     "right": 128,
+     "wrong": 5,
+     "cannot_tell": 0,
+     "meaning_changes": [
+      {
+       "line": "L32",
+       "change": "fit → ſit (2nd instance: 'quod cōtractione fit, fungeretur')",
+       "why": "print has crossbarred f (fi ligature, same as 'fungeretur'); 'fit' = 'comes about by contraction', ſit changes the verb"
+      },
+      {
+       "line": "L9",
+       "change": "fi. → ſi. ('a 4. fi. cap. 49 Q.')",
+       "why": "margin reference abbreviation fi. = figura (fig. 4 of ch. 49); print glyph matches the italic f of the adjacent 'fig.'; 'ſi.' reads as 'si'"
+      },
+      {
+       "line": "L13",
+       "change": "fi. → ſi. ('e 25 fi. lib. 5 β.')",
+       "why": "fi. = figura (25th figure of book 5); print f"
+      },
+      {
+       "line": "L16",
+       "change": "fi. → ſi. ('h 27 fi. lib. 5 L.')",
+       "why": "fi. = figura; print f, same shape as neighbouring 'fig.'"
+      },
+      {
+       "line": "L27",
+       "change": "fi. → ſi. ('l 25 fi. lib. 5 γ, d, ε.')",
+       "why": "fi. = figura; same margin-reference pattern"
+      }
+     ],
+     "wrong_details": [
+      {
+       "line": "L9",
+       "change": "fi. → ſi.",
+       "print_shows": "italic 'fi.' abbreviation of figura, f-shape identical to 'fig.' in the same margin column"
+      },
+      {
+       "line": "L13",
+       "change": "fi. → ſi.",
+       "print_shows": "italic 'fi.lib.' = figura"
+      },
+      {
+       "line": "L16",
+       "change": "fi. → ſi.",
+       "print_shows": "italic 'fi.lib.' = figura"
+      },
+      {
+       "line": "L27",
+       "change": "fi. → ſi.",
+       "print_shows": "italic 'fi.lib.' = figura (bottom margin)"
+      },
+      {
+       "line": "L32",
+       "change": "fit → ſit (contractione fit)",
+       "print_shows": "roman 'fit' with crossbar crossing the stem (fi ligature), unlike the earlier 'ipſius ſit uſus' which correctly shows ſ"
+      }
+     ],
+     "non_latin_touched": [],
+     "notes": "Vesalius Fabrica 1555: crisp roman with clear ſ vs f. All body-text changes in L21 and L32 show ſ (incl. ſi x2, ſe, ſed, ſua, ſic, ſecus, and the first ſit \"ipſius ſit uſus\"). Wrong (5): the four margin figure references \"N fi. cap./lib.\" (fi. = figura, glyph identical to the margin \"fig.\") and the second fit (\"quod cōtractione fit, fungeretur\"), which has a full crossbar."
+    },
+    {
+     "slug": "6a08551d-p75",
+     "changes_total": 2,
+     "checked": 2,
+     "right": 2,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Both recefferunt → receſſerunt: print shows the ſſ ligature ('receſſerũt' in left col, 'receſſerunt' in right col)."
+    },
+    {
+     "slug": "69b2ff6a-p309",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1529 Basel roman: manſerit x2 and ſubmerſi all clearly long s (no right-side crossbar) in the image."
+    },
+    {
+     "slug": "69af106e-p133",
+     "changes_total": 22,
+     "checked": 22,
+     "right": 22,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1701 small-format roman, high contrast: every changed token (perſpir- x9, ſuillæ x2, ſimul, ingeſta, uſu, ſolito, conſuetæ, ſudorem, faceſſere, ſolet, fortaſſè, ſenſibiliter, ſentitur) shows ſ; genuine f (ficus, faceſſere, fortaſſè initial) left untouched."
+    }
+   ]
+  },
+  {
+   "round": "gate2",
+   "rule": "+ attested on every page, abbreviation before '.'",
+   "pages": [
+    {
+     "slug": "69b4cd08-p90",
+     "id": "69b4cd08d5b6c3815e1a38da",
+     "book_id": "69b4cd08d5b6c3815e1a3880",
+     "title": "Speculum orbis terrae",
+     "published": "1578",
+     "habit": true,
+     "changes": 73,
+     "img": "69b4cd08-p90.jpg"
+    },
+    {
+     "slug": "6952dac6-p496",
+     "id": "6952dac677f38f6761bc6a2a",
+     "book_id": "6952dac677f38f6761bc683a",
+     "title": "Utriusque Cosmi Historia Vol. 1",
+     "published": "1617",
+     "habit": true,
+     "changes": 14,
+     "img": "6952dac6-p496.jpg"
+    },
+    {
+     "slug": "69c84629-p-24",
+     "id": "69c8465a6c6f3cc53c851730",
+     "book_id": "69c846296c6f3cc53c8516d9",
+     "title": "Pimander. Asclepius. Crater Hermetis",
+     "published": "1522",
+     "habit": true,
+     "changes": 87,
+     "img": "69c84629-p-24.jpg"
+    },
+    {
+     "slug": "69b21c3c-p313",
+     "id": "69b21c3c429e087c6f8645c7",
+     "book_id": "69b21c3c429e087c6f86448e",
+     "title": "Italia Antiqua",
+     "published": "1624",
+     "habit": true,
+     "changes": 60,
+     "img": "69b21c3c-p313.jpg"
+    },
+    {
+     "slug": "69aeabe7-p95",
+     "id": "69aeabe767e6731bc13671f2",
+     "book_id": "69aeabe767e6731bc1367193",
+     "title": "De christiana religione",
+     "published": "1518",
+     "habit": true,
+     "changes": 50,
+     "img": "69aeabe7-p95.jpg"
+    },
+    {
+     "slug": "698255ee-p101",
+     "id": "69826a3fc9dec6d1f4d129a6",
+     "book_id": "698255eec7e5d26b8a0eb612",
+     "title": "[Greek: Misopogon kai epistolai] Misopogon et epistolae",
+     "published": "1566",
+     "habit": true,
+     "changes": 19,
+     "img": "698255ee-p101.jpg"
+    },
+    {
+     "slug": "69540d5d-p200",
+     "id": "69540d5e790862145d7de8cd",
+     "book_id": "69540d5d790862145d7de805",
+     "title": "Iamblichus, De Mysteriis Aegyptiorum (Aldine, 1497), incl. Ficino, De Voluptate",
+     "published": "1497",
+     "habit": true,
+     "changes": 77,
+     "img": "69540d5d-p200.jpg"
+    },
+    {
+     "slug": "6a08525b-p397",
+     "id": "6a08525b49638a50931ba258",
+     "book_id": "6a08525b49638a50931ba0cb",
+     "title": "Terentius, a m. Antonio Mureto locis prope innumerabilibus emendatus. Eiusdem Mureti argumenta in singulas comoedias, & annotationes, quibus tum correctionum, magna ex parte, ratio redditur, tum loci obscuriores explicantur.",
+     "published": "1560",
+     "habit": true,
+     "changes": 29,
+     "img": "6a08525b-p397.jpg"
+    },
+    {
+     "slug": "69593413-p180",
+     "id": "69593413b282844d7b277b63",
+     "book_id": "69593413b282844d7b277aaf",
+     "title": "Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)",
+     "published": "1617",
+     "habit": true,
+     "changes": 81,
+     "img": "69593413-p180.jpg"
+    },
+    {
+     "slug": "6a10092f-p434",
+     "id": "6a10092ff71729295096826b",
+     "book_id": "6a10092ff7172929509680b9",
+     "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 2",
+     "published": "1744",
+     "habit": true,
+     "changes": 15,
+     "img": "6a10092f-p434.jpg"
+    },
+    {
+     "slug": "69b4cd08-p203",
+     "id": "69b4cd08d5b6c3815e1a394b",
+     "book_id": "69b4cd08d5b6c3815e1a3880",
+     "title": "Speculum orbis terrae",
+     "published": "1578",
+     "habit": false,
+     "changes": 3,
+     "img": "69b4cd08-p203.jpg"
+    },
+    {
+     "slug": "69540d5d-p72",
+     "id": "69540d5e790862145d7de84d",
+     "book_id": "69540d5d790862145d7de805",
+     "title": "Iamblichus, De Mysteriis Aegyptiorum (Aldine, 1497), incl. Ficino, De Voluptate",
+     "published": "1497",
+     "habit": false,
+     "changes": 5,
+     "img": "69540d5d-p72.jpg"
+    },
+    {
+     "slug": "69aeabe7-p154",
+     "id": "69aeabe767e6731bc136722d",
+     "book_id": "69aeabe767e6731bc1367193",
+     "title": "De christiana religione",
+     "published": "1518",
+     "habit": false,
+     "changes": 9,
+     "img": "69aeabe7-p154.jpg"
+    },
+    {
+     "slug": "69906327-p576",
+     "id": "69906328ef12272ffdc8fbed",
+     "book_id": "69906327ef12272ffdc8f9ac",
+     "title": "Somniorum Synesiorum Libri IV",
+     "published": "1585",
+     "habit": false,
+     "changes": 3,
+     "img": "69906327-p576.jpg"
+    },
+    {
+     "slug": "69b21c3c-p145",
+     "id": "69b21c3c429e087c6f86451f",
+     "book_id": "69b21c3c429e087c6f86448e",
+     "title": "Italia Antiqua",
+     "published": "1624",
+     "habit": false,
+     "changes": 4,
+     "img": "69b21c3c-p145.jpg"
+    },
+    {
+     "slug": "69c84629-p-32",
+     "id": "69c846646c6f3cc53c851742",
+     "book_id": "69c846296c6f3cc53c8516d9",
+     "title": "Pimander. Asclepius. Crater Hermetis",
+     "published": "1522",
+     "habit": false,
+     "changes": 3,
+     "img": "69c84629-p-32.jpg"
+    },
+    {
+     "slug": "6a06d3b7-p152",
+     "id": "6a06d3b79a48d513999638a6",
+     "book_id": "6a06d3b79a48d5139996380e",
+     "title": "Valerius Maximus nuper editus index copiosissimus rerum omnium, & personarum, de quibus in his libris agitur.",
+     "published": "1534",
+     "habit": false,
+     "changes": 3,
+     "img": "6a06d3b7-p152.jpg"
+    },
+    {
+     "slug": "698255ee-p318",
+     "id": "698298065f3985e80a8d8c90",
+     "book_id": "698255eec7e5d26b8a0eb612",
+     "title": "[Greek: Misopogon kai epistolai] Misopogon et epistolae",
+     "published": "1566",
+     "habit": false,
+     "changes": 2,
+     "img": "698255ee-p318.jpg"
+    },
+    {
+     "slug": "6952dac6-p524",
+     "id": "6952dac677f38f6761bc6a46",
+     "book_id": "6952dac677f38f6761bc683a",
+     "title": "Utriusque Cosmi Historia Vol. 1",
+     "published": "1617",
+     "habit": false,
+     "changes": 4,
+     "img": "6952dac6-p524.jpg"
+    },
+    {
+     "slug": "6a08525b-p304",
+     "id": "6a08525b49638a50931ba1fb",
+     "book_id": "6a08525b49638a50931ba0cb",
+     "title": "Terentius, a m. Antonio Mureto locis prope innumerabilibus emendatus. Eiusdem Mureti argumenta in singulas comoedias, & annotationes, quibus tum correctionum, magna ex parte, ratio redditur, tum loci obscuriores explicantur.",
+     "published": "1560",
+     "habit": false,
+     "changes": 3,
+     "img": "6a08525b-p304.jpg"
+    }
+   ],
+   "verdicts": [
+    {
+     "slug": "69b4cd08-p90",
+     "changes_total": 73,
+     "checked": 73,
+     "right": 73,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean roman type (Ortelius 1578), read at high zoom in 8 bands: every changed letter is a long s with left-only nick, including the proper name luſitaniæ (L12) and abbreviation-free tokens. Many f-for-ſ errors remain unchanged (Lufus, Lufitania, Infignis, Rhodienfium, Cœpiffe, Vlyfsipona), so the pass under-corrects but does no harm."
+    },
+    {
+     "slug": "69aeabe7-p95",
+     "changes_total": 50,
+     "checked": 50,
+     "right": 50,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1518 rotunda, legible: all 50 changes show ſ in print (iſaias, iſrael, meſſiā etc.). Real f kept correctly in fuiſſe; 'fit meffias' and the 'f.' (ſ. = scilicet) were left unchanged though the print shows ſ."
+    },
+    {
+     "slug": "69593413-p180",
+     "changes_total": 81,
+     "checked": 81,
+     "right": 80,
+     "wrong": 0,
+     "cannot_tell": 1,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1617 Fludd, small roman+italic; checked every change in 13 zoomed bands, all ſ, with real f correctly kept in ſuperfluæ and flatuoſum. One cannot_tell: L17 'generationes diverſas' where an ink blot covers the letter (context says s)."
+    },
+    {
+     "slug": "69aeabe7-p154",
+     "changes_total": 9,
+     "checked": 9,
+     "right": 9,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Same 1518 rotunda; all 9 show ſ in print. In feciſti only the inner f was changed (initial f of fecisti correctly kept); L13 ſerue (servant) is ſ in print, not ferue."
+    },
+    {
+     "slug": "6a06d3b7-p152",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Aldine italic (1534 Valerius Maximus); nobiliſſimi, præſto, promptiſſimus all clearly long-s ligatures in print."
+    },
+    {
+     "slug": "6952dac6-p496",
+     "changes_total": 14,
+     "checked": 14,
+     "right": 14,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Roman text in Prop. V and the italic enunciation of Prop. VI both print long s at every changed spot (ſequenti, propoſitionem, neceſſe, eſt, conſideretur, ſuperficies, dimenſio, conſequens; ſub, exiſtentes, ſunt, baſin). The pass missed one: 'fit' in L11 is ſit in the print and was left as f."
+    },
+    {
+     "slug": "698255ee-p101",
+     "changes_total": 19,
+     "checked": 19,
+     "right": 19,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean roman Latin (Julian, Misopogon); every changed letter is a long s (or ſſ ligature) in the print. Real f's nearby (feliciores, afficitis, faciendi, facultate, fruimini) were correctly left alone."
+    },
+    {
+     "slug": "6a10092f-p434",
+     "changes_total": 15,
+     "checked": 15,
+     "right": 15,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "French-catalogued book, but this page is an italic Latin quotation (Philalethes), so every changed token is Latin. All 15 show italic ſ; real f in fuit, profiteor and fratrem was left unchanged. The pass missed 'Cofmopolitam' (the print has Coſmopolitam)."
+    },
+    {
+     "slug": "69906327-p576",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Dark italic print, but legible at zoom: iuſ-(sit), religaſ-(se), reuiuiſcere all show italic long s."
+    },
+    {
+     "slug": "698255ee-p318",
+     "changes_total": 2,
+     "checked": 2,
+     "right": 2,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "'aſſidué' is a roman ſſ ligature, and the italic marginal note reads 'quaſ-dā' with long s. Both changes are right."
+    },
+    {
+     "slug": "69c84629-p-24",
+     "changes_total": 87,
+     "checked": 87,
+     "right": 87,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean 1522 roman print; every changed word read in zoomed strips over both columns. Every changed f is a long s (left-only nick), including seruit, sane, si, se, semp (abbrev.), ideſt. Real f in the print (fili, feliciter, fruit, formam, factus) was not touched."
+    },
+    {
+     "slug": "69540d5d-p200",
+     "changes_total": 77,
+     "checked": 77,
+     "right": 77,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Bitonal 1497 Aldine scan, still legible at zoom. Every changed token reads long s, including the risky 'fui' (= sen-|ſui, dative of sensus), si, sic, se, sed, sane. True f words (facit, familiaria, fit, fiue, profecto) were correctly left alone."
+    },
+    {
+     "slug": "69b4cd08-p203",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 1,
+     "wrong": 2,
+     "cannot_tell": 0,
+     "meaning_changes": [
+      {
+       "line": "L6",
+       "change": "infectatur → inſectatur",
+       "why": "Print has a true f with a crossbar through the stem: 'infectatur' (is infected by marsh exhalation). The change makes 'insectatur' (pursues), a different real word."
+      },
+      {
+       "line": "L6",
+       "change": "flāte → ſlāte",
+       "why": "Print has the fl ligature, f crossbar visible: 'Choro flante' (when the north-west wind blows). 'slante' is not a word, and the verb is lost."
+      }
+     ],
+     "wrong_details": [
+      {
+       "line": "L6",
+       "change": "infectatur → inſectatur",
+       "print_shows": "infectatur (true f, crossbar on both sides of the stem)"
+      },
+      {
+       "line": "L6",
+       "change": "flāte → ſlāte",
+       "print_shows": "flāte (fl ligature with a true f)"
+      }
+     ],
+     "non_latin_touched": [],
+     "notes": "The habit check reads f:0 s:28 for this page (the OCR already gave ſ correctly), yet the pass still ran. Both f-words it changed were real f. Only inſertas is right (print shows ſ)."
+    },
+    {
+     "slug": "69b21c3c-p145",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "All four are ſſ ligatures in the 1624 roman (tetigiſſe, descendiſſe, fortaſſis, deflexiſſe). The OCR had read them as ff. All right."
+    },
+    {
+     "slug": "6952dac6-p524",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Fludd 1617: ſunt (diagram), ſimilitudinibus, ſimilitudine and luminoſo all show long s in the print. All right."
+    },
+    {
+     "slug": "69b21c3c-p313",
+     "changes_total": 60,
+     "checked": 60,
+     "right": 60,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Cluverius 1624, roman text plus italic Livy quotations. Every changed word shows a clear long s (no right-hand crossbar) in the image, including fi->ſi, fe->ſe, fint->ſint, funt->ſunt, faltu/faltus/faltum, fuiffe->fuiſſe. The Italian 'Rocca di monte Dragone' was not touched. Many f-for-ſ errors were left unchanged (fatis, Sinueffa, Teanenfes, Vefcinum, Maffici, Hierofolymitano, fit), so the page is still in mixed orthography after the pass."
+    },
+    {
+     "slug": "6a08525b-p397",
+     "changes_total": 29,
+     "checked": 29,
+     "right": 29,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Muretus's notes on Terence (1560), large clean italic. Every changed word has a long s in print, including the two sed->ſed and si->ſi. In conuiuifque the print abbreviates as 'cõuiuijsq.' with a short round s, so the letter is s and the change counts as right. Missed by the pass: fine (ſine), confideret, Sponfalia, Craffipedi."
+    },
+    {
+     "slug": "69540d5d-p72",
+     "changes_total": 5,
+     "checked": 5,
+     "right": 5,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Aldine Iamblichus (1497), binarized roman image. ſeruant (x2), cõſeruant, emphaſim and inſinuationis all have a long s in print. The real f in 'feruntur' on the same lines was correctly left alone."
+    },
+    {
+     "slug": "69c84629-p-32",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Pimander (1522), two-page spread in roman. vniuerſi, vniuerſa and vniuerſis all have a long s in print. The rest of the OCR already writes every long s as round s (habit false), so these three ſ are now inconsistent with the rest of the page, though the letter itself is correct."
+    },
+    {
+     "slug": "6a08525b-p304",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Terence, Phormio V.6 (1560), italic verse. oneraſtis, exoneraſtis and ceſſo all have a long s (ſt ligature and ſſ) in print. The rest of the OCR writes round s (habit false), so the page now mixes ſ and s, though the letters are correct."
+    }
+   ]
+  },
+  {
+   "round": "gate3",
+   "rule": "+ attested>=2 (lexicon), no f before r / initial l",
+   "pages": [
+    {
+     "slug": "69bd9dc4-p50",
+     "id": "69bd9dc46120d54bd0379672",
+     "book_id": "69bd9dc46120d54bd0379640",
+     "title": "Oracula magica Zoroastris cum scholiis Plethonis et Pselli nunc primum editi ...",
+     "published": "1607",
+     "habit": true,
+     "changes": 30,
+     "img": "69bd9dc4-p50.jpg"
+    },
+    {
+     "slug": "2950c384-p48",
+     "id": "695004cbf426a210d1098f04",
+     "book_id": "2950c384-e5de-44c2-bbb5-a486556d6a93",
+     "title": "Miscellaneorum Centuria Prima",
+     "published": "1489",
+     "habit": true,
+     "changes": 46,
+     "img": "2950c384-p48.jpg"
+    },
+    {
+     "slug": "69de992d-p9",
+     "id": "69de992d1b234a773e43a4ad",
+     "book_id": "69de992d1b234a773e43a4a4",
+     "title": "Opera Hrosvite (1501, with Dürer woodcuts)",
+     "published": "1501",
+     "habit": true,
+     "changes": 26,
+     "img": "69de992d-p9.jpg"
+    },
+    {
+     "slug": "69e747a4-p21",
+     "id": "69e747a485f786e884a492db",
+     "book_id": "69e747a485f786e884a492c6",
+     "title": "De Rerum Natura",
+     "published": "1486",
+     "habit": true,
+     "changes": 36,
+     "img": "69e747a4-p21.jpg"
+    },
+    {
+     "slug": "6990616c-p363",
+     "id": "6990616cef12272ffdc8daeb",
+     "book_id": "6990616cef12272ffdc8d980",
+     "title": "De Abstinentia ab Esu Animalium Libri Quatuor",
+     "published": "1767",
+     "habit": true,
+     "changes": 47,
+     "img": "6990616c-p363.jpg"
+    },
+    {
+     "slug": "69b2ff6a-p534",
+     "id": "69b2ff6a5545150b61b48356",
+     "book_id": "69b2ff6a5545150b61b48140",
+     "title": "Opera Omnia Vol. 5",
+     "published": "1529",
+     "habit": true,
+     "changes": 119,
+     "img": "69b2ff6a-p534.jpg"
+    },
+    {
+     "slug": "69a95708-p510",
+     "id": "69a9570865ddd05bbcd3dcec",
+     "book_id": "69a9570865ddd05bbcd3daee",
+     "title": "Rerum Gestarum libri qui supersunt (Res Gestae)",
+     "published": "1600",
+     "habit": true,
+     "changes": 37,
+     "img": "69a95708-p510.jpg"
+    },
+    {
+     "slug": "69af10ef-p278",
+     "id": "69af10ef06b10527be56638b",
+     "book_id": "69af10ef06b10527be566275",
+     "title": "De Fractura Cranii Liber Aureus",
+     "published": "1715",
+     "habit": true,
+     "changes": 23,
+     "img": "69af10ef-p278.jpg"
+    },
+    {
+     "slug": "69b62f86-p96",
+     "id": "69b62f861c1c21a3737f6ae3",
+     "book_id": "69b62f861c1c21a3737f6a83",
+     "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos Dominus Ecclesiae suae diversis in locis dedit, excerpta et diligenter concinnata, sive Bibliotheca expositionum Novi Testamenti, id est, Expositio ex probatis theologis collecta, et in unum corpus singularis artificio conflata : quae instar bibliotheca multis expositoribus referta esse possit. Authore Augustino Marlorato, verbi Dei ministro, diu multumque in theologia versato. Editio quinta. Cum indice locupletissimo variarum rerum ad christianam religionem pertinentium, quae quidem in hac catholica expositione ecclesiastica tractantur.",
+     "published": "1593",
+     "habit": true,
+     "changes": 303,
+     "img": "69b62f86-p96.jpg"
+    },
+    {
+     "slug": "6952d054-p255",
+     "id": "6952d05477f38f6761bc521d",
+     "book_id": "6952d05477f38f6761bc511e",
+     "title": "Basilica chymica",
+     "published": "1609",
+     "habit": true,
+     "changes": 32,
+     "img": "6952d054-p255.jpg"
+    },
+    {
+     "slug": "69e747a4-p9",
+     "id": "69e747a485f786e884a492cf",
+     "book_id": "69e747a485f786e884a492c6",
+     "title": "De Rerum Natura",
+     "published": "1486",
+     "habit": false,
+     "changes": 5,
+     "img": "69e747a4-p9.jpg"
+    },
+    {
+     "slug": "2950c384-p138",
+     "id": "695004cbf426a210d1098f5e",
+     "book_id": "2950c384-e5de-44c2-bbb5-a486556d6a93",
+     "title": "Miscellaneorum Centuria Prima",
+     "published": "1489",
+     "habit": false,
+     "changes": 6,
+     "img": "2950c384-p138.jpg"
+    },
+    {
+     "slug": "6988a5a1-p13",
+     "id": "6988a7150fa905e883635e7d",
+     "book_id": "6988a5a159f3a9c9513f9f17",
+     "title": "Rosarium mysticum animae fidelis",
+     "published": "1531",
+     "habit": false,
+     "changes": 2,
+     "img": "6988a5a1-p13.jpg"
+    },
+    {
+     "slug": "6955da01-p421",
+     "id": "6955da028407b7c9ae2137bf",
+     "book_id": "6955da018407b7c9ae21361a",
+     "title": "Opera Medicinalia",
+     "published": "1566",
+     "habit": false,
+     "changes": 3,
+     "img": "6955da01-p421.jpg"
+    },
+    {
+     "slug": "69b62f86-p500",
+     "id": "69b62f861c1c21a3737f6c77",
+     "book_id": "69b62f861c1c21a3737f6a83",
+     "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos Dominus Ecclesiae suae diversis in locis dedit, excerpta et diligenter concinnata, sive Bibliotheca expositionum Novi Testamenti, id est, Expositio ex probatis theologis collecta, et in unum corpus singularis artificio conflata : quae instar bibliotheca multis expositoribus referta esse possit. Authore Augustino Marlorato, verbi Dei ministro, diu multumque in theologia versato. Editio quinta. Cum indice locupletissimo variarum rerum ad christianam religionem pertinentium, quae quidem in hac catholica expositione ecclesiastica tractantur.",
+     "published": "1593",
+     "habit": false,
+     "changes": 10,
+     "img": "69b62f86-p500.jpg"
+    },
+    {
+     "slug": "69b4cd08-p8",
+     "id": "69b4cd08d5b6c3815e1a3888",
+     "book_id": "69b4cd08d5b6c3815e1a3880",
+     "title": "Speculum orbis terrae",
+     "published": "1578",
+     "habit": false,
+     "changes": 24,
+     "img": "69b4cd08-p8.jpg"
+    },
+    {
+     "slug": "6a08551d-p303",
+     "id": "6a08551d15c643eb1af54e75",
+     "book_id": "6a08551d15c643eb1af54d46",
+     "title": "De vitis sanctorum ab Aloysio Lipomano, episcopo Veronae, ... olim conscriptis nunc primùm à F. Laurentio Surio Carthusiano emendati, & auctis, Tomus primus sextus. ..",
+     "published": "1581",
+     "habit": false,
+     "changes": 5,
+     "img": "6a08551d-p303.jpg"
+    },
+    {
+     "slug": "6ff1a28b-p776",
+     "id": "695004d8f426a210d109a14c",
+     "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+     "title": "De Humani Corporis Fabrica",
+     "published": "1555",
+     "habit": false,
+     "changes": 2,
+     "img": "6ff1a28b-p776.jpg"
+    },
+    {
+     "slug": "69540d5d-p286",
+     "id": "69540d5e790862145d7de923",
+     "book_id": "69540d5d790862145d7de805",
+     "title": "Iamblichus, De Mysteriis Aegyptiorum (Aldine, 1497), incl. Ficino, De Voluptate",
+     "published": "1497",
+     "habit": false,
+     "changes": 21,
+     "img": "69540d5d-p286.jpg"
+    },
+    {
+     "slug": "69906327-p592",
+     "id": "69906328ef12272ffdc8fbfd",
+     "book_id": "69906327ef12272ffdc8f9ac",
+     "title": "Somniorum Synesiorum Libri IV",
+     "published": "1585",
+     "habit": false,
+     "changes": 53,
+     "img": "69906327-p592.jpg"
+    }
+   ],
+   "verdicts": [
+    {
+     "slug": "69bd9dc4-p50",
+     "changes_total": 30,
+     "checked": 30,
+     "right": 30,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean italic 1607 print with long s throughout (Cognoſce, ſub, ſunt, eſt, ſummus, aſſiduum ligature, eſſe); every changed token shows ſ in the image. The pass left some f-for-ſ errors in place (Cognofce, efse, Eft, Ipfe, proficifcitur, fit), but no wrong edits."
+    },
+    {
+     "slug": "6990616c-p363",
+     "changes_total": 47,
+     "checked": 47,
+     "right": 47,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1767 roman print with long s everywhere; all 47 changes (deteſtabitur, maſculi, ſexus, ſemen, ſcholion, fuiſſe, coepiſſe etc.) match the image. Greek lemmata and the proper name Weſſeling were left untouched. Some errors remain unfixed (fit, fol, Nofter, Eufeb), and 'fimum' is correctly left as f."
+    },
+    {
+     "slug": "69b62f86-p96",
+     "changes_total": 303,
+     "checked": 303,
+     "right": 303,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1593 two-column roman print with ſ used throughout. I read every line in zoomed strips, including all the tilde abbreviations (ſentētia, quibuſcū, deſtruā, ſolidū, abſconditū, cōſentiat, cōuerſio, cōſtituendę, accēſa); all show ſ at the changed letter. 'infuiſitas' (print: inſulſitas) and 'inſtit' (print: inſit) are earlier OCR misreads; in both, the letter the pass changed is ſ in the print."
+    },
+    {
+     "slug": "6988a5a1-p13",
+     "changes_total": 2,
+     "checked": 2,
+     "right": 2,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Small roman prayer-book page. 'dulciſſi' shows the ſſ ligature and 'croſanctum' a clear ſ. 'Amabiliffime' on the same line was not converted (print has ſſ)."
+    },
+    {
+     "slug": "6a08551d-p303",
+     "changes_total": 5,
+     "checked": 5,
+     "right": 5,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "The OCR is mostly normalised to round s already; the 5 changes fix leftovers, and the image shows ſ in each (ſigno, permoleſtum, eſcas, ꝑſoluti, deterſis). Remaining leftovers such as 'facculum' and 'effer' were not touched."
+    },
+    {
+     "slug": "2950c384-p48",
+     "changes_total": 46,
+     "checked": 46,
+     "right": 45,
+     "wrong": 1,
+     "cannot_tell": 0,
+     "meaning_changes": [
+      {
+       "line": "L10",
+       "change": "fe → ſe",
+       "why": "Line-end fragment of 'fe-|stiue' (festiue, 'wittily') broken across L10/L11; the print has a true f with full crossbar. The pass turns the word into 'ſe-ſtiue' (sestiue), and the bare token reads as the real word 'se'."
+      }
+     ],
+     "wrong_details": [
+      {
+       "line": "L10",
+       "change": "fe → ſe",
+       "print_shows": "f (full crossbar through the stem), start of 'festiue' hyphenated over the line break; the following 'ſtiue' on L11 does have ſ"
+      }
+     ],
+     "non_latin_touched": [],
+     "notes": "1489 roman incunable printed with ſ throughout. Every other change matches a printed ſ (ſint, ſunt, ſcalpit, noſtris, forſitan, ſup, etc.); the only error is the f of the hyphenated 'festiue' at the end of L10."
+    },
+    {
+     "slug": "69b2ff6a-p534",
+     "changes_total": 119,
+     "checked": 119,
+     "right": 119,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1529 roman/italic page, ſ used in every non-final position, including the margin note 'Quòd ſalus noſtra ex deo eſt'. I read the whole page in zoomed bands. Every changed token shows ſ; true initial f's (feciſti, feſtina, faſtidiuit, ferienti) were correctly kept."
+    },
+    {
+     "slug": "6952d054-p255",
+     "changes_total": 32,
+     "checked": 32,
+     "right": 32,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1609 roman print with ſ throughout; all 32 changed tokens show ſ in the image. Not part of the verdict: L12 'falem', 'fulphure' and 'Eft' were left unchanged, but the print has ſalem, ſulphure, Eſt, so they are misses, not errors."
+    },
+    {
+     "slug": "6955da01-p421",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "All three show printed ſ (ſępe at L34, ſæpe at L48, inſi-|gnem at L49), so each letter is right. This page's OCR otherwise writes round s, so these three ſ are inconsistent with the rest of the page (habit=false). 'infixus' was correctly left alone."
+    },
+    {
+     "slug": "6ff1a28b-p776",
+     "changes_total": 2,
+     "checked": 2,
+     "right": 2,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Vesalius 1555 roman: 'commiſſum' and 'tãtiſper' clearly show ſſ / ſ, so both are right. The rest of the OCR normalizes to round s (habit=false), so the two ſ are typographically inconsistent with the page."
+    },
+    {
+     "slug": "69de992d-p9",
+     "changes_total": 26,
+     "checked": 26,
+     "right": 26,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean, high-resolution 1501 roman type. Every changed spot shows a long s with no right-hand crossbar (epiſtola, proſpere, noſtræ, poſſidetis, ſubii, ſua, eſt, ſacrilegiiq, uetuſtos, religioſiſſimis, co̅ſpexerint, poſtlimi, chriſtiana, geſta, noſtraciis, etc.); true f (fines, fundatis, fœlicitate) has a crossbar on both sides."
+    },
+    {
+     "slug": "69a95708-p510",
+     "changes_total": 37,
+     "checked": 37,
+     "right": 35,
+     "wrong": 0,
+     "cannot_tell": 2,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "The image is only 600px wide, so the letters are blurry, but the body-text long s is still clearly different from f (futuro, feritas, facis, formidine have full crossbars). Two cannot_tell: L8 margin 'poft→poſt' (tiny italic marginal note) and L9 'humilibúfque→humilibúſque' (smudged). All f-forms were non-words, and in context all are certainly s."
+    },
+    {
+     "slug": "69e747a4-p9",
+     "changes_total": 5,
+     "checked": 5,
+     "right": 5,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1486 Lucretius roman type, clear. uiciſſim, ſceleris, ſcelerosa and both ſimul show long s. Untouched 'in fula' on L31 also reads 'in ſula' (infula) in print, which is a remaining OCR error but not one of these changes."
+    },
+    {
+     "slug": "69b62f86-p500",
+     "changes_total": 10,
+     "checked": 10,
+     "right": 10,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1593 two-column page, 1000px wide but legible. Print uses ſ throughout (ſer-uandæ, ſaltem, probroſis, ſæpe, ſæuiſſimos, neſciat, ſolebat, ſuum, ſalua, ſalutis). The OCR otherwise modernised ſ to s (79 s vs 1 f), so these 10 ſ are now inconsistent with the rest of the page, but every one is correct against the print."
+    },
+    {
+     "slug": "69540d5d-p286",
+     "changes_total": 21,
+     "checked": 21,
+     "right": 21,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1497 Aldine page in a black-and-white (bilevel) scan, with heavy ink smearing in the lower half. Even so, each changed spot shows long s (iſoſchieles, uniuerſi, ipſe, aſſumpſit, ueſtigiis, concuſſionem, pulſatiōis, uiciſſim, diſperſam, agnoſcitur, phyſico, ſic, sensiſſe, praeceſſerit). 'ſic' and 'eſſentiam' are smudged, but long s is still the best reading. Untouched f-for-ſ errors remain (fimiliter, Icofaedri, Ifofceles, diffimilo/diffimili, abfq)."
+    },
+    {
+     "slug": "69e747a4-p21",
+     "changes_total": 36,
+     "checked": 36,
+     "right": 36,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1486 roman incunable (Lucretius). Every changed letter is clearly long s in the print: there is no right-hand crossbar, unlike f in forent/finem/refici. parafset → paraſset is right at the changed letter, but the print has paraſſet, so the second s is still a pre-existing OCR error. Unchanged poffint (L12, L28) and Diffolui, Effe are also ſ in print but were left alone."
+    },
+    {
+     "slug": "69af10ef-p278",
+     "changes_total": 23,
+     "checked": 23,
+     "right": 23,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1715 roman type. All 23 are ſ in the print (uſitatum, iſtis, ſic, roſatum, ſanies, abſconſiones, etc.). Real f words fit and fundum were correctly left alone. Unchanged Poft (L7) and fuccedit (L9) are also ſ in the print and were missed."
+    },
+    {
+     "slug": "2950c384-p138",
+     "changes_total": 6,
+     "checked": 6,
+     "right": 6,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1489 roman. uerſiculus, ſeruus, mirumeſt, uitiatiſq, cōſeruum and ſignificare all show long s with no right crossbar. Unchanged 'fit ipsum' (L35) and 'quod fit lusciosus' read ſit in context. Those were missed because fit is a real word, which is correct caution."
+    },
+    {
+     "slug": "69b4cd08-p8",
+     "changes_total": 24,
+     "checked": 24,
+     "right": 23,
+     "wrong": 1,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [
+      {
+       "line": "L5",
+       "change": "authoritafiué → authoritaſiué",
+       "print_shows": "authoritatiſuè: the OCR token was already garbled, its 'f' stands where the print has 't', and the print's ſ was dropped. Both forms are non-words, so meaning is not changed."
+      }
+     ],
+     "non_latin_touched": [],
+     "notes": "Very low-resolution image (1000x1401), small roman type, but still readable at zoom. The print uses ſ throughout, while the OCR had normalised most s to round s. The 23 other changes are all ſ in the print, so the page now mixes s and ſ. The pass missed 'loquacula fiquidem', which is ſiquidem in the print."
+    },
+    {
+     "slug": "69906327-p592",
+     "changes_total": 53,
+     "checked": 53,
+     "right": 53,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1585 italic. All 53 checked line by line. Every change is ſ / ſſ / ſſ-ligature in the print, including the riskier ones: pref-/ſurus, ſulto (con-ſulto), eiuſ= and ſe/ſeu. In ſuperfuit only the first letter changed, and the print's real f in fuit was correctly kept. Unchanged femine, fit (L23), Perfæ, Ephefi and Heroftrato are ſ in the print and were missed (names were skipped, as intended)."
+    }
+   ]
+  },
+  {
+   "round": "gate4",
+   "rule": "+ short unhyphenated line-end fragments (final rule)",
+   "pages": [
+    {
+     "slug": "6955da01-p336",
+     "id": "6955da028407b7c9ae21376a",
+     "book_id": "6955da018407b7c9ae21361a",
+     "title": "Opera Medicinalia",
+     "published": "1566",
+     "habit": true,
+     "changes": 75,
+     "img": "6955da01-p336.jpg"
+    },
+    {
+     "slug": "69af10ef-p79",
+     "id": "69af10ef06b10527be5662c4",
+     "book_id": "69af10ef06b10527be566275",
+     "title": "De Fractura Cranii Liber Aureus",
+     "published": "1715",
+     "habit": true,
+     "changes": 44,
+     "img": "69af10ef-p79.jpg"
+    },
+    {
+     "slug": "69593413-p79",
+     "id": "69593413b282844d7b277afe",
+     "book_id": "69593413b282844d7b277aaf",
+     "title": "Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)",
+     "published": "1617",
+     "habit": true,
+     "changes": 11,
+     "img": "69593413-p79.jpg"
+    },
+    {
+     "slug": "69b21c3c-p421",
+     "id": "69b21c3c429e087c6f864633",
+     "book_id": "69b21c3c429e087c6f86448e",
+     "title": "Italia Antiqua",
+     "published": "1624",
+     "habit": true,
+     "changes": 62,
+     "img": "69b21c3c-p421.jpg"
+    },
+    {
+     "slug": "69b62f86-p277",
+     "id": "69b62f861c1c21a3737f6b98",
+     "book_id": "69b62f861c1c21a3737f6a83",
+     "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos Dominus Ecclesiae suae diversis in locis dedit, excerpta et diligenter concinnata, sive Bibliotheca expositionum Novi Testamenti, id est, Expositio ex probatis theologis collecta, et in unum corpus singularis artificio conflata : quae instar bibliotheca multis expositoribus referta esse possit. Authore Augustino Marlorato, verbi Dei ministro, diu multumque in theologia versato. Editio quinta. Cum indice locupletissimo variarum rerum ad christianam religionem pertinentium, quae quidem in hac catholica expositione ecclesiastica tractantur.",
+     "published": "1593",
+     "habit": true,
+     "changes": 290,
+     "img": "69b62f86-p277.jpg"
+    },
+    {
+     "slug": "6952d054-p475",
+     "id": "6952d05477f38f6761bc52f9",
+     "book_id": "6952d05477f38f6761bc511e",
+     "title": "Basilica chymica",
+     "published": "1609",
+     "habit": true,
+     "changes": 48,
+     "img": "6952d054-p475.jpg"
+    },
+    {
+     "slug": "69b2ff6a-p570",
+     "id": "69b2ff6a5545150b61b4837a",
+     "book_id": "69b2ff6a5545150b61b48140",
+     "title": "Opera Omnia Vol. 5",
+     "published": "1529",
+     "habit": true,
+     "changes": 107,
+     "img": "69b2ff6a-p570.jpg"
+    },
+    {
+     "slug": "69b30230-p107",
+     "id": "69b30230c22956d8a0de5cc0",
+     "book_id": "69b30230c22956d8a0de5c55",
+     "title": "Introductio in Universam Geographiam",
+     "published": "1629",
+     "habit": true,
+     "changes": 4,
+     "img": "69b30230-p107.jpg"
+    },
+    {
+     "slug": "69af0f77-p449",
+     "id": "69af0f77a940055c4668104c",
+     "book_id": "69af0f77a940055c46680e8b",
+     "title": "Astronomica Veterum Scripta Isagogica",
+     "published": "1589",
+     "habit": true,
+     "changes": 55,
+     "img": "69af0f77-p449.jpg"
+    },
+    {
+     "slug": "6952dac6-p29",
+     "id": "6952dac677f38f6761bc6857",
+     "book_id": "6952dac677f38f6761bc683a",
+     "title": "Utriusque Cosmi Historia Vol. 1",
+     "published": "1617",
+     "habit": true,
+     "changes": 41,
+     "img": "6952dac6-p29.jpg"
+    },
+    {
+     "slug": "6a08551d-p489",
+     "id": "6a08551d15c643eb1af54f2f",
+     "book_id": "6a08551d15c643eb1af54d46",
+     "title": "De vitis sanctorum ab Aloysio Lipomano, episcopo Veronae, ... olim conscriptis nunc primùm à F. Laurentio Surio Carthusiano emendati, & auctis, Tomus primus sextus. ..",
+     "published": "1581",
+     "habit": false,
+     "changes": 4,
+     "img": "6a08551d-p489.jpg"
+    },
+    {
+     "slug": "69b62f86-p314",
+     "id": "69b62f861c1c21a3737f6bbd",
+     "book_id": "69b62f861c1c21a3737f6a83",
+     "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos Dominus Ecclesiae suae diversis in locis dedit, excerpta et diligenter concinnata, sive Bibliotheca expositionum Novi Testamenti, id est, Expositio ex probatis theologis collecta, et in unum corpus singularis artificio conflata : quae instar bibliotheca multis expositoribus referta esse possit. Authore Augustino Marlorato, verbi Dei ministro, diu multumque in theologia versato. Editio quinta. Cum indice locupletissimo variarum rerum ad christianam religionem pertinentium, quae quidem in hac catholica expositione ecclesiastica tractantur.",
+     "published": "1593",
+     "habit": false,
+     "changes": 4,
+     "img": "69b62f86-p314.jpg"
+    },
+    {
+     "slug": "69b21c3c-p265",
+     "id": "69b21c3c429e087c6f864597",
+     "book_id": "69b21c3c429e087c6f86448e",
+     "title": "Italia Antiqua",
+     "published": "1624",
+     "habit": false,
+     "changes": 4,
+     "img": "69b21c3c-p265.jpg"
+    },
+    {
+     "slug": "69906327-p460",
+     "id": "69906328ef12272ffdc8fb79",
+     "book_id": "69906327ef12272ffdc8f9ac",
+     "title": "Somniorum Synesiorum Libri IV",
+     "published": "1585",
+     "habit": false,
+     "changes": 16,
+     "img": "69906327-p460.jpg"
+    },
+    {
+     "slug": "69a95708-p208",
+     "id": "69a9570865ddd05bbcd3dbbe",
+     "book_id": "69a9570865ddd05bbcd3daee",
+     "title": "Rerum Gestarum libri qui supersunt (Res Gestae)",
+     "published": "1600",
+     "habit": false,
+     "changes": 3,
+     "img": "69a95708-p208.jpg"
+    },
+    {
+     "slug": "69c84629-p-42",
+     "id": "69c846736c6f3cc53c851763",
+     "book_id": "69c846296c6f3cc53c8516d9",
+     "title": "Pimander. Asclepius. Crater Hermetis",
+     "published": "1522",
+     "habit": false,
+     "changes": 3,
+     "img": "69c84629-p-42.jpg"
+    },
+    {
+     "slug": "6955da01-p60",
+     "id": "6955da028407b7c9ae213656",
+     "book_id": "6955da018407b7c9ae21361a",
+     "title": "Opera Medicinalia",
+     "published": "1566",
+     "habit": false,
+     "changes": 4,
+     "img": "6955da01-p60.jpg"
+    },
+    {
+     "slug": "69540d5d-p24",
+     "id": "69540d5e790862145d7de81d",
+     "book_id": "69540d5d790862145d7de805",
+     "title": "Iamblichus, De Mysteriis Aegyptiorum (Aldine, 1497), incl. Ficino, De Voluptate",
+     "published": "1497",
+     "habit": false,
+     "changes": 3,
+     "img": "69540d5d-p24.jpg"
+    },
+    {
+     "slug": "6952dac6-p305",
+     "id": "6952dac677f38f6761bc696b",
+     "book_id": "6952dac677f38f6761bc683a",
+     "title": "Utriusque Cosmi Historia Vol. 1",
+     "published": "1617",
+     "habit": false,
+     "changes": 4,
+     "img": "6952dac6-p305.jpg"
+    },
+    {
+     "slug": "6952d054-p107",
+     "id": "6952d05477f38f6761bc5189",
+     "book_id": "6952d05477f38f6761bc511e",
+     "title": "Basilica chymica",
+     "published": "1609",
+     "habit": false,
+     "changes": 5,
+     "img": "6952d054-p107.jpg"
+    }
+   ],
+   "verdicts": [
+    {
+     "slug": "6955da01-p336",
+     "changes_total": 75,
+     "checked": 75,
+     "right": 75,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1566 roman text, read all lines in 11 zoomed bands; every changed letter is a long s (incl. line-end fragments 'ſu-' L21 and 'ceſ-/ſans' L34). L29 'ſe' prints as a damaged ſ that looks like 'le' but is not an f."
+    },
+    {
+     "slug": "69b62f86-p277",
+     "changes_total": 290,
+     "checked": 290,
+     "right": 290,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Low-res scan (1000px wide, two columns) read in 32 bands; every changed word shows ſ in print, while true f-words (fidere, ferunt, fuerit, fingunt, figuli, facere) are f and were left alone. 'fenture'->'ſenture' is right at the letter, but the print reads 'ſentire', so a separate OCR error remains; 'vſum' is split across a line end ('in v-/ſum')."
+    },
+    {
+     "slug": "69af0f77-p449",
+     "changes_total": 55,
+     "checked": 55,
+     "right": 55,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Large clear italic-free roman type (Hyginus); every changed token clearly ſ in print, f-words (fieri, feruntur, figurata, fecerit, definire) untouched."
+    },
+    {
+     "slug": "69b21c3c-p265",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Print shows 'disſitam' (round s + long s) twice, 'adſignat', 'diſertiùs' — all right. Page also carries Greek (OCR'd as modern Greek), untouched."
+    },
+    {
+     "slug": "6955da01-p60",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "ſecundum, aſſi-/det (ſſi ligature across line break), ipſo, ſua all clearly long s in print."
+    },
+    {
+     "slug": "69af10ef-p79",
+     "changes_total": 44,
+     "checked": 44,
+     "right": 44,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Clean 1715 roman with a clear long s throughout (apoſtema, eſt, ſanies, fiſſura, ſi, oſſis, ſunt, ſicca, ſentit), so all 44 changes match the print. The pass left some real misses that the print shows with ſ: faniem, fignis, offe, the 'fit' tokens (= ſit) and the final fanie on L8."
+    },
+    {
+     "slug": "6952d054-p475",
+     "changes_total": 48,
+     "checked": 48,
+     "right": 48,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1609 roman. Every changed token, including the word fragments at line starts (ſtillatam, ſtinatum, ſitum, ſtilla, ſubli-), shows long s in the print. Real f's (fæcibus, futura, fundo, fac) were rightly left alone. Misses that the print shows with ſ: fal (L6), ferua, Pofteaquam, Cryftalli, deftillatum (L26)."
+    },
+    {
+     "slug": "6952dac6-p29",
+     "changes_total": 41,
+     "checked": 41,
+     "right": 41,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Fludd 1617, crisp roman. All 41 changes show long s (eſſentia, ſpeculo, ſuam, ſic, ſeipſum split as ſei-|pſum, and the rest). Misses: 'fit' (twice; the print has ſit), Defcripfimus, and the italic Triſmegiſtus/teſte forms, which the OCR had already normalised."
+    },
+    {
+     "slug": "69906327-p460",
+     "changes_total": 16,
+     "checked": 16,
+     "right": 16,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Cardano's De libris propriis in italic. All 16 changes show italic long s, including the fragment riſmorum and the gloss (ſucceßit. Left unchanged although the print shows ſ: Noſtra, Ariſtotelis, Auguſti, Gefnerus, ufu, Metopoſcopiæ."
+    },
+    {
+     "slug": "69540d5d-p24",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Aldine 1497 roman, high-contrast scan. All three sacerdot- tokens (L23, L28, L40) show long s; facultate and frigefacere next to them have real f and were rightly left alone."
+    },
+    {
+     "slug": "69593413-p79",
+     "changes_total": 11,
+     "checked": 11,
+     "right": 11,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1617 roman type, clear scan. Every changed letter is a long s (extenſione, poſſumus, ſtigare, operoſum, noſtras, diſtinctiones, poſitiones, demonſtrationes, ſed, ipſa, eſſe). 'frivolas' was correctly left with f."
+    },
+    {
+     "slug": "69b2ff6a-p570",
+     "changes_total": 107,
+     "checked": 107,
+     "right": 107,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1529 roman type, clear. I checked all 107 changes in zoomed bands, including the line-end fragments (ſuperci, ſpi, ſubſequen), the line-start ſtianus, the short words ſi/ſe, rituſſancti and the margin notes. The print has ſ at every change. The pass left some real ſ as f (Ipfe, fui, fede, federe, fine=ſine, fatis, Chrifti, fpe, fit, fe/culi, afpiciunt, ecclefia), which are misses, not wrong changes."
+    },
+    {
+     "slug": "6a08551d-p489",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1581 roman, two columns. The print has ſ in vtenſilibus, ſaltem, aſſem and peruerſitatis. The rest of this OCR is normalised to round s (habit s:30), so the pass leaves ſ mixed into s-normalised text. The OCR also rewrites the text in other ways: it has 'infectus est' where the print reads 'insecutus est', which the pass did not touch."
+    },
+    {
+     "slug": "69a95708-p208",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1600 roman, low-resolution image (537x834) but readable. fabuloſius and introrſus are clearly ſ. The italic margin 'ſpecioſo' is blurry but shows the ſ form; I judged it right. The OCR already mixes s and ſ."
+    },
+    {
+     "slug": "6952dac6-p305",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "1617 roman/italic, crisp. diviſor, diviſione, reſiduum and the line-start ſubſequente all show ſ in the print. The surrounding OCR already uses ſ."
+    },
+    {
+     "slug": "69b21c3c-p421",
+     "changes_total": 62,
+     "checked": 62,
+     "right": 62,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Cluverius, Italia Antiqua, 1624: clean roman and italic type with consistent long s. Every change on L7-L35 shows ſ in the print, including paſſim, which is broken across a line as paſ-|ſim. The pass also missed some f-for-ſ readings, which are not errors it made: Brundufium, Sueffam/Sueffa/Sueffano/Sueffulam/Sueffanum, pofuit, Ipfe (L14), fumis (L23, print ſumis), expofuimus, Confimiliter, five, Sequefter, Prifciano."
+    },
+    {
+     "slug": "69b30230-p107",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Cluverius, Introductio, 1629, small octavo. univerſis, eſt and diviſa clearly have ſ. In ſunt only 'ſu' is visible before the gutter, and its ſ is clear. Other f-for-ſ errors remain in names and words the pass did not touch (Bafel, Schafhaufen, Gymnafia, Laufannæ, Eft, Vallefiorum, Epifcopale)."
+    },
+    {
+     "slug": "69b62f86-p314",
+     "changes_total": 4,
+     "checked": 4,
+     "right": 4,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Marlorat, 1593: the image is only 1000px wide, but the ſ is still readable in ſanatus, emiſiſſe (the changed first s), ſynagogę and ſuos. The rest of this OCR writes the print's ſ as round s (habit s:55), so these four edits leave the page with a mix of ſ and s. The letters are right; the page is just inconsistent."
+    },
+    {
+     "slug": "69c84629-p-42",
+     "changes_total": 3,
+     "checked": 3,
+     "right": 3,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Pimander, 1522: large, clear roman type. aduerſis, viuiſcūt and vſq; all show ſ in the print. The rest of the OCR uses round s for the print's ſ, so the three edits leave the page with mixed ſ/s."
+    },
+    {
+     "slug": "6952d054-p107",
+     "changes_total": 5,
+     "checked": 5,
+     "right": 5,
+     "wrong": 0,
+     "cannot_tell": 0,
+     "meaning_changes": [],
+     "wrong_details": [],
+     "non_latin_touched": [],
+     "notes": "Basilica chymica, 1609: low-resolution image (1000px), but the ſ is clear in poſtea, ſæpius, fuſumque (the second letter; the first f is a real f), exſiccato and ſicca. The pass left 'fal tartari' (print ſal) and the margin is a handwritten note; neither was touched."
+    }
+   ]
+  }
+ ]
+}
