@@ -328,3 +328,6 @@
 # Pre-OCR duplicate screen nightly (#4285): holds queued books whose page images match a copy already read or further
 # along (reason same-edition-copy-unread); never merges or hides. Approved 2026-10-22 (Derek); installed by hand on main.
 40 2 * * * flock -n /tmp/sl-pre-ocr-dupe-screen.lock /root/sourcelibrary/scripts/workers/pre-ocr-dupe-screen-nightly.sh >> /var/log/sourcelibrary/pre-ocr-dupe-screen.log 2>&1
+# Same-scan duplicate detector daily (#4285): reads only; pages ntfy when unreviewed same-object groups grow day on day.
+# Approved 2026-10-23 (Derek); installed by hand on main.
+20 6 * * * flock -n /tmp/sl-duplicate-detector.lock /root/sourcelibrary/scripts/workers/duplicate-detector-daily.sh >> /var/log/sourcelibrary/duplicate-detector.log 2>&1
