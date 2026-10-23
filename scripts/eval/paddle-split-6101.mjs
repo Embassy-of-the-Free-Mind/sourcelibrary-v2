@@ -159,7 +159,7 @@ function clusterCI(rows, stat, seed = SEED, B = 2000) {   // cbeta-ref-6101.mjs,
 }
 
 function report() {
-  const ARMS = { P0: 'paddleocr-vl-1.6', L: 'gemini-3.1-flash-lite', F: 'gemini-3-flash-preview', P1: 'paddle-split-p1', P2: 'paddle-split-p2', P1d: 'paddle-split-p1-dedup' };
+  const ARMS = { P0: 'paddleocr-vl-1.6', L: 'gemini-3.1-flash-lite', F: 'gemini-3-flash-preview', P1: 'paddle-split-p1', P2: 'paddle-split-p2', P1d: 'paddle-split-p1-dedup', P1s: 'paddle-split-p1-server' };
   const frame = readJson(path.join(DIR, 'frame.json')); const bookOf = new Map(frame.pages.map(p => [p.slug, p.book_id]));
   const d = latest(path.join(DIR, 'scored-split'), STRATUM);
   const shared = new Set(sharedSlugs());
@@ -223,7 +223,7 @@ function failreport() {
  */
 function framereport() {
   const d = latest(path.join(DIR, 'scored-all-split'), `${STRATUM}-all`); const by = new Map(d.pages.map(p => [p.slug, p]));
-  const P1 = 'paddle-split-p1';
+  const P1 = argOf('arm', 'paddle-split-p1');
   const rows = p0Rows().filter(r => r.class === 'woodblock').map(r => { const p = by.get(r.slug.replace(`${STRATUM}-`, `${STRATUM}-all-`)); const e = p?.engines[P1]; return { slug: r.slug, book: r.book, p0_fail: !!isFail(r), p0_cer: r.cer, has_ref: r.has_ref, ref_chars: r.ref_chars, p1_cer: e ? (e.cer ?? 1) : null, p1_chars: e?.n_content ?? 0, p1_loop: !!e?.loop, read: !!e }; });
   const read = rows.filter(r => r.read);
   const p1Fail = r => (r.p1_cer == null || r.p1_cer > 0.5) || (r.ref_chars >= 30 && r.p1_chars < 30);
