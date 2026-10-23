@@ -215,6 +215,7 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
     href = page.issue ? issueUrl(page.issue) : `${checks}#${page.anchor}`; link = t.qualityDetectorLink;
   } else {
     text = t.qualityBook({ ai: book!.reader !== 'human', image: book!.imageOpened, read: book!.pagesRead, serious: book!.pagesSerious, date: qualityDate(book!.date, locale) });
+    if (book!.commonKinds.length) text += ' ' + t.qualityBookKinds(book!.commonKinds.map((k) => t.qualityKinds[k]));
     href = `${checks}#${book!.anchor}`; link = t.qualitySeeReview;
   }
   const external = href.startsWith('http');

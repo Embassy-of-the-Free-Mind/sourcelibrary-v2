@@ -1890,6 +1890,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
                     serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
                   })}{' '}
+                  {bookWarning.commonKinds.length > 0 && <>{qualityStrings.qualityBookKinds(bookWarning.commonKinds.map((k) => qualityStrings.qualityKinds[k]))}{' '}</>}
                   <Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link>
                 </p>
               )}

@@ -10,7 +10,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { BookCheck, PageTextStamp } from '@/lib/book-checks';
-import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, WARNING_KINDS } from '@/lib/book-warnings';
+import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, commonKinds, WARNING_KINDS } from '@/lib/book-warnings';
 import { CHECK_METHODS } from '@/lib/check-methods';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 
@@ -121,5 +121,30 @@ describe('copy and registry stay in step', () => {
         expect(issues, `${id}: detector issue ${info.issue} is not in the registry header`).toContain(info.issue);
       }
     }
+  });
+});
+
+describe('commonKinds — what the book banner names after its count', () => {
+  it('counts each kind once per page and names the commonest first, at most two', () => {
+    expect(commonKinds([
+      ['misread_meaning', 'misread_meaning'], ['misread_meaning', 'number_misread'], ['missing_english'], ['number_misread'], ['misread_meaning'],
+    ])).toEqual(['misread_meaning', 'number_misread']);
+  });
+  it('breaks a tie in WARNING_KINDS order, so the banner does not change between renders', () => {
+    expect(commonKinds([['number_misread'], ['wrong_page']])).toEqual(['wrong_page', 'number_misread']);
+  });
+  it('names nothing when no page has a kind', () => {
+    expect(commonKinds([])).toEqual([]);
+  });
+});
+
+describe('kindsOfFinding — named classes', () => {
+  const f = (cls: string, stage: 'ocr' | 'translation' = 'ocr') => ({ page_number: 1, errors: [{ stage, class: cls }] }) as never;
+  it('a single misread word is named as such, not as "a serious error" (ocr-misread is the commonest finding)', () => {
+    expect(kindsOfFinding(f('ocr-misread'))).toEqual(['word_misread']);
+  });
+  it('wrong-leaf and not-of-page names map to the wrong-page kinds', () => {
+    expect(kindsOfFinding(f('ocr-wrong-leaf'))).toEqual(['wrong_page']);
+    expect(kindsOfFinding(f('other:translation-not-of-page', 'translation'))).toEqual(['english_other_page']);
   });
 });
