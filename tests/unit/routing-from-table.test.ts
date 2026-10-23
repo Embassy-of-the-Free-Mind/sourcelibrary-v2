@@ -20,7 +20,7 @@ import {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-core.mjs';
-import { translateEngineFor, validateTranslationTable, prefixRegex } from '../../scripts/lib/translation-routing.mjs';
+import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
 import { getTranslateModelForBook as getTranslateModelForBookTs } from '../../src/lib/types/ai-models';
 
 type Route = { engine: string; default?: boolean; families?: Record<string, { from: string; hidden?: boolean }> };
@@ -122,6 +122,49 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     const u = clone(TRANSLATION_ROUTING_TABLE);
     u.rows[0].match = {};
     expect(() => validateTranslationTable(u, [MODEL_FLASH, MODEL_LITE])).toThrow(/exactly one/);
+  });
+
+  // #7075: a `channel: "cli"` row overlays the batch rows. The orchestrator holds its books; Batch callers never see it.
+  const cliRow = (over: Record<string, unknown> = {}) => ({
+    id: 'pali-test', channel: 'cli', match: { language_prefix: ['pali'] }, engine: 'claude-opus-5-5',
+    adoption: { sample: 'test', replaces: MODEL_FLASH }, evidence: [{ issue: 1 }], ...over,
+  });
+  const withCli = (row: Record<string, unknown>) => { const t = clone(TRANSLATION_ROUTING_TABLE); t.rows.unshift(row); return t; };
+
+  it('a cli row sends its books to the CLI channel, and the Batch engine underneath stays what Batch callers get', () => {
+    const t = validateTranslationTable(withCli(cliRow()), [MODEL_FLASH, MODEL_LITE]);
+    const lane = translateLaneForBook(t, { language: 'Pali' });
+    expect([lane.channel, lane.engine, lane.reader, lane.row.id]).toEqual(['cli', 'claude-opus-5-5', 'scripts/batch/claude-translate.mjs', 'pali-test']);
+    expect(translateEngineFor(t, { language: 'Pali' })).toBe(MODEL_FLASH);
+    expect(tableRowFor(t, { language: 'Pali' })?.id).toBe('flash-measured');
+    expect(translateLaneForBook(t, { language: 'Greek' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
+    expect(translateLaneForBook(t, { language: 'Latin' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
+  });
+
+  it('a cli row must name a CLI reader and carry its blind sample; a batch row may not name one', () => {
+    const v = (row: Record<string, unknown>) => () => validateTranslationTable(withCli(row), [MODEL_FLASH, MODEL_LITE]);
+    expect(v(cliRow({ engine: MODEL_FLASH }))).toThrow(/a cli lane runs only/);
+    expect(v(cliRow({ adoption: undefined }))).toThrow(/adoption\.sample/);
+    expect(v(cliRow({ channel: 'api' }))).toThrow(/"batch" or "cli"/);
+    expect(v(cliRow({ channel: undefined }))).toThrow(/run only/);
+  });
+
+  it('every CLI reader the table may name exists, and the live table\'s cli rows are well-formed', () => {
+    for (const [engine, l] of Object.entries(CLI_TRANSLATE_LANES as Record<string, { reader: string }>)) {
+      expect([engine, fs.existsSync(path.join(ROOT, l.reader))]).toEqual([engine, true]);
+    }
+    for (const row of (TRANSLATION_ROUTING_TABLE.rows as { id: string; channel?: string; adoption?: { sample?: string } }[]).filter((r) => r.channel === 'cli')) {
+      expect([row.id, !!row.adoption?.sample]).toEqual([row.id, true]);
+    }
+  });
+
+  it('the orchestrator asks for the channel before either API lane in Phase 4, and holds a cli book', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/workers/pipeline-orchestrator.mjs'), 'utf8');
+    const ask = src.indexOf('const translateLane = translateLaneForBook(book);');
+    expect(ask).toBeGreaterThan(0);
+    expect(ask).toBeLessThan(src.indexOf("if (phase4Lane(book) === 'chained') {"));
+    expect(ask).toBeLessThan(src.indexOf("type: 'translation',"));
+    expect(src).toMatch(/holdBook\(db, book\.id, \{\s*\.\.\.CLI_TRANSLATE_HOLD/);
   });
 
   it('a prefix is a whole word at the start of the label', () => {

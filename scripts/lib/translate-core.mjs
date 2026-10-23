@@ -34,7 +34,9 @@ import { guardTranslationText } from './translation-write-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { createRequire } from 'node:module';
-import { translateEngineFor, tableRowFor, validateTranslationTable } from './translation-routing.mjs';
+import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
+
+export { CLI_TRANSLATE_HOLD };
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource, refusableReasoningLeak, REASONING_LEAK_REASON } from './page-integrity.mjs';
 export { REASONING_LEAK_REASON };
@@ -139,6 +141,16 @@ export const TRANSLATION_ROUTING_TABLE = Object.freeze(
 
 export function getTranslateModelForBook(book) {
   return translateEngineFor(TRANSLATION_ROUTING_TABLE, book);
+}
+
+/**
+ * The CHANNEL for this book (#7075): { channel: 'cli', engine, reader, model, row } when a `channel: "cli"` row of the
+ * table fits, else { channel: 'batch', engine, row }. getTranslateModelForBook stays the Batch engine (a cli row is
+ * invisible to it); the pipeline orchestrator asks this first and holds a cli book (CLI_TRANSLATE_HOLD) instead of
+ * dispatching it to the API.
+ */
+export function translateLaneForBook(book) {
+  return laneFromTable(TRANSLATION_ROUTING_TABLE, book);
 }
 
 /**
