@@ -169,6 +169,301 @@ const BOOKS = [
       'No Brinton ex libris; transferred with the Brinton Library from the Penn Museum Library.',
     ],
   },
+
+  // ── Wave 2 (2026-10-24): the remaining Maya-language Ms. Coll. 700 items with
+  // images, from scripts/import/maya-sources-survey-6559.md. `language` is Penn's
+  // TEI mainLang, as for 42 and 241; the Mayan language it names goes in
+  // `languages[]`. Not listed: Item 1 (the three-volume Motul copy) — its download
+  // never started (TEI and all 2,602 images missing), so its volume split is
+  // unknown; Item 243 has no images on OPenn.
+  {
+    item: 187,
+    title: 'Chilam Balam de Chumayel ; Chilam Balam de Tizimin (copy of Berendt\'s facsimiles)',
+    display_title: "Chilam Balam de Chumayel and de Tizimín: a later copy of Berendt's facsimiles, with Ixil, Kaua and the Cuaderno de Teabo, 1870–1942",
+    author: 'Unidentified copyist, after C. Hermann Berendt',
+    language: 'Yucatec Maya',
+    languages: ['Yucatec Maya', 'Spanish'],
+    published: '1870-1942',
+    notes: [
+      'A copy in an unidentified hand of Berendt\'s manuscript facsimiles of the Books of Chilam Balam (Ms. Coll. 700 Item 49, Mérida 1868–1870): mainly Chumayel and Tizimín, with sections from Ixil and Kaua and what Berendt called the Cuaderno de Teabo. Chumayel is given here as one continuous text, where Berendt\'s copy has it in two sections; otherwise it follows his order, leaving out most of his drawings, diagrams, title pages and notes. His Tizimín title page (Mérida, 1870) is kept (f. 90r).',
+      'This is a copy of a copy, not a colonial witness. Penn dates it between 1870 and its accession in 1942; it carries no Brinton ex libris and is not in Brinton\'s 1900 list of the Berendt collection.',
+    ],
+  },
+  {
+    item: 231,
+    title: 'Extracts from the Chilam Balam of Mani and the Chilam Balam of Oxkutzcab',
+    display_title: "Extracts from the Chilam Balam of Maní and of Oxkutzcab: a later copy of Berendt's Códice Pérez extracts, 1868–1938",
+    author: 'Unidentified copyist, after C. Hermann Berendt and Juan Pío Pérez',
+    language: 'Yucatec Maya',
+    languages: ['Yucatec Maya', 'Spanish', 'English'],
+    published: '1868-1938',
+    notes: [
+      'A late 19th- or early 20th-century copy, in an unidentified hand, of extracts from the Chilam Balam of Maní and of Oxkutzcab, following Berendt\'s 1868 copy from the Códice Pérez (Ms. Coll. 700 Item 43, pp. 156–240). A fragment labelled "Book No. II", it begins at "No. 7 continued" (p. 143), with No. 8 (p. 178) and No. 9 (p. 226), and ends with notes on the Chilam Balam of Maní of 1689 in the Pío Pérez collection (pp. 242–243).',
+      'Most of Berendt\'s drawn symbols are reduced to a single sketch and ditto marks; pencilled margin references follow Berendt\'s pagination. Penn dates the copy between 1868 and 1938. No Brinton ex libris.',
+    ],
+  },
+  {
+    item: 248,
+    title: 'Notes and drafts on Chilam Balam books',
+    display_title: "Notes and drafts on the Books of Chilam Balam: Berendt's working papers, ca. 1868–1871",
+    author: 'C. Hermann Berendt',
+    language: 'Spanish',
+    languages: ['Spanish', 'Yucatec Maya'],
+    published: '1868-1871',
+    notes: [
+      'Berendt\'s loose notes and drafts on the Books of Chilam Balam, including a 24-page draft preface and table of contents titled "Chilam Balam: articulos y fragmentos de MSS antiguos en lengua maya, colectados por C. H. Berendt, M.D., Merida, 1868", which corresponds to his facsimile volumes (Ms. Coll. 700 Items 49 and 50).',
+      'The notes describe individual books of Chilam Balam (Maní, 1697, with reference to Father Zúñiga; Kaua, 1789, Balthasar Ferrais; Chumayel, 1782, Juan Josef Hoil), a Pío Pérez manuscript on the Maya calendar, and include a two-page comparative chart. Penn records it as predominantly Spanish.',
+    ],
+  },
+  {
+    item: 2,
+    title: 'Diccionario español-maya de Ticul, 1690',
+    display_title: "Diccionario español-maya de Ticul (1690), with Pío Pérez's Maya-Spanish dictionary: Berendt's copy, Mérida 1870",
+    author: 'Juan Pío Pérez; C. Hermann Berendt (copyist)',
+    language: 'Spanish',
+    languages: ['Spanish', 'Yucatec Maya'],
+    published: '1870',
+    notes: [
+      'A third-generation copy of a lost 17th-century Spanish–Maya dictionary found in the parish archive of Ticul in 1836, copied by Juan Pío Pérez in 1836 and 1847 and from Pérez\'s 1847 copy by Berendt in Mérida in 1870. It includes lists of Maya kinship terms (p. 259) and of Maya words alike in sound but different in meaning (p. 262), and is followed in the same volume by the corresponding Maya–Spanish dictionary compiled by Pérez in 1847.',
+    ],
+  },
+  {
+    item: 228,
+    title: 'Apuntes para un diccionario de la lengua maya',
+    display_title: "Apuntes para un diccionario de la lengua maya: Berendt's partial copy of Juan Pío Pérez's dictionary notes, Mérida 1870",
+    author: 'Juan Pío Pérez; C. Hermann Berendt (copyist)',
+    language: 'Spanish',
+    languages: ['Spanish', 'Yucatec Maya'],
+    published: '1870',
+    notes: [
+      'Berendt\'s partial copy, made in Mérida in 1870, of Juan Pío Pérez\'s notes for a dictionary of the Maya language, lent to him by Pérez\'s niece Nicolasa Peón y Escalante (Pérez\'s original is Ms. Coll. 700 Item 5). After Pérez\'s prologue (pp. V–X) come two parts, each alphabetised by the Maya word; in Part 2 Berendt marks many entries with an asterisk or a cross, and he adds pencilled notes throughout.',
+    ],
+  },
+  {
+    item: 8,
+    title: 'Arte de lengua maya',
+    display_title: "Arte de lengua maya: Berendt's copy of Gabriel de San Buenaventura's 1684 grammar, Mérida 1868",
+    author: 'Gabriel de San Buenaventura; C. Hermann Berendt (copyist)',
+    language: 'Spanish',
+    languages: ['Spanish', 'Yucatec Maya'],
+    published: '1868',
+    notes: [
+      'Berendt\'s fair copy, made in Mérida in 1868, of Gabriel de San Buenaventura\'s Arte de la lengua maya (Mexico, 1684), the first printed grammar of Maya, with a facsimile title page and the Spanish front matter. Berendt adds his own index to the grammar (pp. 159–163).',
+    ],
+  },
+  {
+    item: 179,
+    title: 'Miscellanea maya',
+    display_title: "Miscellanea maya: Brinton's scrapbook of C. Hermann Berendt's notes, manuscripts and clippings on Maya language and ethnography, 1864–1873",
+    author: 'C. Hermann Berendt; Daniel Garrison Brinton (compiler)',
+    language: 'Spanish',
+    languages: ['Spanish', 'English', 'German', 'Yucatec Maya', 'Kaqchikel', "K'iche' Maya", 'Huastec', 'Tzeltal', 'Nahuatl', 'Otomi'],
+    published: '1864-1873',
+    notes: [
+      'A 365-leaf scrapbook assembled by Daniel Garrison Brinton from Berendt\'s loose papers, the first of three (Items 179–181). Berendt\'s Spanish table of contents (f. 3) has 29 headings in three sections: grammar (ff. 4–53), including comparative alphabets of Mayan and other Mexican languages; vocabulary (ff. 54–74), with comparative vocabularies of Maya, Nahuatl, Otomi, Kaqchikel, K\'iche\', Chontal, Huastec, Mam, Poqomchi\' and Tzeltal, and a fold-out chart of counting words; and ethnology (ff. 75–98): the character, customs and superstitions of the Maya of Yucatán, calendars, hieroglyphs, antiquities and an ethnological map.',
+      'Penn records it as predominantly Spanish, with English and German. Its contributors include Brasseur de Bourbourg, George Gibbs, Florentino Jimeno, José T. Cervera and Juan Pío Pérez.',
+    ],
+  },
+  {
+    item: 21,
+    title: 'Novena de Christo crucificado',
+    display_title: "Novena de Christo crucificado and the Maya texts of the Declaración de la doctrina christiana: Berendt's copy of Beltrán de Santa Rosa, Mérida 1868",
+    author: 'Pedro Beltrán de Santa Rosa; C. Hermann Berendt (copyist)',
+    language: 'Spanish',
+    languages: ['Spanish', 'Yucatec Maya'],
+    published: '1868',
+    notes: [
+      'Berendt\'s copy, made in Mérida in 1868 from a printed copy owned by Pedro Regil y Peón, of Pedro Beltrán de Santa Rosa\'s 1740 Novena: prayers in Maya and a dialogue or catechism in Maya with a facing Spanish translation, after long Spanish front matter. It is followed by the Maya texts of the second edition (1757) of Beltrán\'s Declaración de la doctrina christiana en el idioma yucateco: the Lord\'s Prayer, Ave Maria, Creed, commandments, sacraments, articles of faith and catechetical dialogues. Berendt notes (p. [86]) that he left out the Spanish discussion of pp. 2–22 of the print.',
+    ],
+  },
+  {
+    item: 203,
+    title: 'Lengua mayá de Yucatan',
+    display_title: "Lengua mayá de Yucatán: Berendt's notes on Itzá, Lacandon and Yucatec Maya, with Maya song texts, ca. 1866–1868",
+    author: 'C. Hermann Berendt',
+    language: 'Yucatec Maya',
+    languages: ['Yucatec Maya', 'Itzá', 'Lacandon', 'Spanish', 'German'],
+    published: '1866-1868',
+    notes: [
+      'Berendt\'s notes on Maya as spoken in Yucatán, with particular reference to the Itzá (Petén) and Lacandon dialects of Guatemala, followed by a collection of song texts in Maya written down in Mérida in 1868. Probably written in the Petén and Mérida between 1866 and 1868. Seven loose leaves, among them a sheet of music once pasted inside the back cover, are shelved separately at Penn.',
+    ],
+  },
+  {
+    item: 234,
+    title: 'La literatura de la lengua maya',
+    display_title: "La literatura de la lengua maya: Berendt's draft bibliography of the Maya language, with correspondence, 1864–1872",
+    author: 'C. Hermann Berendt',
+    language: 'Spanish',
+    languages: ['Spanish', 'English', 'German'],
+    published: '1864-1872',
+    notes: [
+      'Berendt\'s draft bibliography of the Maya language, written mainly in Providence, R.I., in 1864–1865, covering works from 1565 to 1865, with notes on contents, editions, manuscript locations and authors, among them Gabriel de San Buenaventura, Diego de Rivas, Alonso Solana, Bernardino de Valladolid, Luis de Villalpando and Juan Pío Pérez. He includes a short autobiographical entry (f. 4r) and a pencilled timeline of his residences, 1848–1870.',
+      'With it are 44 loose items: notes of about 1864–1871 and correspondence of 1868–1872 with G. J. Adler, J. C. E. Buschmann, George Gibbs, Simón Sarlat and the American Bible Society. This is secondary literature about Maya, not a Maya text.',
+    ],
+  },
+  {
+    item: 235,
+    title: 'Literatura de la lengua maya',
+    display_title: "Literatura de la lengua maya: Berendt's unfinished fair copy of his Maya bibliography, 1871–1876",
+    author: 'C. Hermann Berendt',
+    language: 'Spanish',
+    languages: ['Spanish', 'English'],
+    published: '1871-1876',
+    notes: [
+      'An unfinished, cleanly written revision of the draft bibliography in Ms. Coll. 700 Item 234. Entries run roughly chronologically from 16th-century authors, with anonymous works at the back (pp. 73–76) and an index of 53 names (pp. 101–102), but only ten entries were filled in: Luis de Villalpando, Diego de Landa, Alonso de la Solana, Francisco Torralva, Frédéric de Waldeck, B. M. Norman, Henri Ternaux, Mr. Tromback of Belize, Francisco Pimentel and Berendt himself (p. 71). Written in or after 1871, with notes possibly as late as 1876. This is secondary literature about Maya, not a Maya text.',
+    ],
+  },
+  {
+    item: 197,
+    title: 'Theologia indorum',
+    display_title: "Theologia indorum: an excerpt from Domingo de Vico's 1553 treatise in Tz'utujil, with two sermons in Achi, 18th century?",
+    author: 'Domingo de Vico',
+    language: "Tz'utujil",
+    languages: ["Tz'utujil", 'Achi', 'Spanish', 'Latin'],
+    published: '17--',
+    notes: [
+      'A copy of an excerpt from Domingo de Vico\'s Theologia Indorum (1553), followed by a sermon on Matthew 11:28 and a probably incomplete sermon on Luke 10:3 (its title names Mark). Penn gives the language as Tz\'utujil, and the spine says the sermons are in Achi; titles are in Spanish and Latin, with Latin Bible references. The last two leaves seem out of order and the end is probably lost. Penn dates it "17--?", probably Guatemala.',
+      'Earlier owners: Brasseur de Bourbourg, Alphonse Pinart (Série E.3, No. 101) and Eugène Boban (bookplates and label), then Brinton. Not a Berendt copy.',
+    ],
+  },
+  {
+    item: 56,
+    title: 'Zaccicoxol, ó baile de Cortés en kiché y castellano',
+    display_title: "Zaccicoxol, ó baile de Cortés: a K'iche' and Spanish dance-drama of the conquest of Mexico, Cobán 1875",
+    author: 'Anonymous',
+    language: "K'iche' Maya",
+    languages: ["K'iche' Maya", 'Spanish'],
+    published: '1875',
+    notes: [
+      'A dance-drama in K\'iche\' and Spanish on the conquest of Mexico, with Moctezuma and Cortés among the characters; the title is the name of another character. Copied in Cobán, Guatemala, in 1875. The third letter of the title is a Parra letter, later written as a double c.',
+      'Brinton called it "a modern drama written by a native, in Kiche and Spanish, the plot based on the conquest of Mexico… one of the few correct specimens of the native drama which have been preserved".',
+    ],
+  },
+  {
+    item: '236_237_238',
+    title: 'Calendario de los indios de Guatemala',
+    display_title: "Calendario de los indios de Guatemala: copies of the Kaqchikel calendar of 1685, Hernández Spina's K'iche' calendar of Ixtlavacan (1854) and the K'iche' calendar of 1722, ca. 1884",
+    author: 'Daniel Garrison Brinton (compiler); Vicente Hernández Spina',
+    language: 'English',
+    languages: ['English', "K'iche' Maya", 'Kaqchikel', 'Spanish'],
+    published: '1884',
+    notes: [
+      'Three works on the calendars of the Maya of Guatemala (Ms. Coll. 700 Items 236, 237 and 238), copied by or for Daniel Garrison Brinton, probably from other copies, and bound together: ff. 1–20, the calendar of the Kaqchikel, 1685; ff. 21–34, a partial copy of the calendar kept by the "priests of the sun" of Santa Catarina Ixtlavacan, a K\'iche\' town, found by the priest Vicente Hernández Spina in 1854, with an English translation of its introduction on the history and religion of the town; ff. 35–52, the calendar of the K\'iche\', 1722.',
+      'These are 19th-century copies, not the colonial calendars. The title pages of Items 236 and 238 are typed on the back of an 1884 form letter of Brinton\'s as professor at the Academy of Natural Sciences, Philadelphia. Penn gives English as the main language.',
+    ],
+  },
+  {
+    item: 226,
+    title: 'Miscelanea en lengua yndia-kiché',
+    display_title: "Miscelanea en lengua yndia-kiché: Ramón María Posada's K'iche' doctrine, prayers and lessons, with notes on the calendar of Santa Catarina Ixtlavacan, ca. 1861",
+    author: 'Ramón María Posada',
+    language: 'Spanish',
+    languages: ['Spanish', "K'iche' Maya", 'Latin'],
+    published: '1861',
+    notes: [
+      'Catholic doctrine, prayers and lessons in K\'iche\' composed by the Jesuit missionary Ramón María Posada for his mission work (foreword, p. ii). Pp. 1–17 have Spanish titles (Creed, Lord\'s Prayer, Ave Maria, general confession, acts of contrition, articles of faith, works of mercy, Beatitudes, lists of sacraments, sins and virtues); pp. 19–67 are entirely in K\'iche\', apparently dialogues between priest and congregant.',
+      'At the back are Spanish descriptions of the town of Santa Catarina Ixtlavacan (Ixtahuacán?, p. 250) and the beliefs of its K\'iche\' people, mainly on the calendar, with a sample calendar for 1854 (p. 253), and short K\'iche\' texts for marriage, proclamations and remembrances of the mission, one citing 1861 (p. 263). Penn records Spanish as the main language.',
+    ],
+  },
+  {
+    item: 54,
+    title: 'Arte de lengua cakchiquel',
+    display_title: "Arte de lengua cakchiquel: a 19th-century copy of Estevan Torresano's 1754 Kaqchikel grammar, with a K'iche'–Kaqchikel–Tz'utujil comparison",
+    author: 'Estevan Torresano',
+    language: 'Spanish',
+    languages: ['Spanish', 'Kaqchikel', "K'iche' Maya", "Tz'utujil"],
+    published: '1850-1875',
+    notes: [
+      'A 19th-century copy of Estevan Torresano\'s 1754 grammar of Kaqchikel, based on Flores\'s Arte de la lengua metropolitana del reyno cakchiquel (1753), taken from a copy made by or for E. G. Squier of the original in the Bibliothèque Nationale. It includes counting in Kaqchikel (pp. 109–126); a "Parallelo de las lenguas Kiche, Cakchiquel y Tzutuhil" with a four-column comparative vocabulary (pp. 127–148); an orthography with the Parra letters for the six sounds peculiar to these languages (pp. 149–155); and petitions and prayers in Spanish with Kaqchikel translations (pp. 159–179). Penn dates the copy between 1850 and 1875, perhaps made in the United States.',
+    ],
+  },
+  {
+    item: 55,
+    title: 'Arte de lengua kiché',
+    display_title: "Arte de lengua kiché: a 19th-century copy of Bartolomé de Anleo's 17th-century K'iche' grammar",
+    author: 'Bartolomé de Anleo',
+    language: 'Spanish',
+    languages: ['Spanish', "K'iche' Maya"],
+    published: '1850-1875',
+    notes: [
+      'A 19th-century copy of Bartolomé de Anleo\'s 17th-century grammar of K\'iche\', with sections on orthography and numerals, taken from a copy made by or for E. G. Squier of a Bibliothèque Nationale copy made by Fr. Antonio Ramírez de Utrilla in 1744. The first letter of "kiché" in the title is a Parra letter. Two notes on K\'iche\' are laid inside the front cover. Penn dates the copy between 1850 and 1875, probably made in the United States.',
+    ],
+  },
+  {
+    item: 68,
+    title: 'Libro en pocomchi y kekchi',
+    display_title: "Libro en pocomchi y kekchi: original 18th-century sermons, doctrines and a Q'eqchi' grammar from the parish archive of Cobán, Verapaz",
+    author: 'Hippolito de Aguilera and others',
+    language: "Q'eqchi'",
+    languages: ["Q'eqchi'", "Poqomchi'", 'Latin', 'Spanish'],
+    published: '17--',
+    notes: [
+      'Original documents from the parish archive of Cobán, Verapaz, given to Berendt in 1875 by Manuel González, priest and vicar of Cobán: sermons, catechisms and other religious texts in Q\'eqchi\' and Poqomchi\', a Q\'eqchi\' grammar (ff. 97r–131v) and phrase lists in the two languages, with a little Latin chant notation (f. 59v). The dated documents are of the late 1730s and early 1740s. Berendt added a table of contents and a title page, "Varios escritos en pocomchi y kekchi del Archivo Parroquial de Coban, Vera Paz" (f. ii).',
+      'Among them is the original of Hippolito de Aguilera\'s Doctrina christiana (copied as Ms. Coll. 700 Item 62), with sermons by Aguilera; the grammar is the original of Berendt\'s fair copy, Item 69. These are colonial manuscripts, not Berendt copies.',
+    ],
+  },
+  {
+    item: 61,
+    title: 'Diccionario pocomchi-castellano y castellano-pocomchi de S. Cristobal Cahcoh',
+    display_title: "Diccionario pocomchi-castellano y castellano-pocomchi de San Cristóbal Cahcoh: fragments of a 16th-century Poqomchi' dictionary",
+    author: 'Anonymous (attributed to Francisco de Viana or Dionisio de Zúñiga)',
+    language: 'Spanish',
+    languages: ['Spanish', "Poqomchi'"],
+    published: '15--',
+    notes: [
+      'Fragments of a 16th-century Poqomchi\'–Spanish and Spanish–Poqomchi\' dictionary, rebound in the 19th century. Berendt received it in 1875 from Luis Rojas of San Cristóbal, Chiapas, a former Dominican and parish priest of San Cristóbal Cahcoh (f. 5r), and gave it its title page. He suggested the author might be Fray Francisco de Viana, in Verapaz 1575–1608; a photostat at Tulane with the same title is attributed to Dionisio de Zúñiga. Penn dates it "15--" after Brinton.',
+      'Many pages are repaired and the first and last remain fragile. Four leaves laid in at the end hold Berendt\'s draft table of contents and notes on the manuscript.',
+    ],
+  },
+  {
+    item: 184,
+    title: 'Vocabulario en lengua tzeldal iuxta ussum oppidii de Copanabastla',
+    display_title: "Vocabulario en lengua tzeldal según el uso de Copanabastla: Alonso de Guzmán's 1620 revision of Domingo de Ara's Tzeltal dictionary",
+    author: 'Alonso de Guzmán; after Domingo de Ara',
+    language: 'Spanish',
+    languages: ['Spanish', 'Tzeltal'],
+    published: '1620',
+    notes: [
+      'An early 17th-century revision of Domingo de Ara\'s 16th-century Spanish–Tzeltal dictionary for the usage of Copanabastla (Copanaguastla), Chiapas. A note on f. 1r says Fray Alonso de Guzmán copied the vocabulary in 1620 in the Tzeltal province, in the town of Taquinvitz. An Ara manuscript, its model, is Ms. Coll. 700 Item 185.',
+      'A note in Item 185 suggests both passed through the collections of Brasseur de Bourbourg, Alphonse Pinart and Eugène Boban before Brinton. A colonial manuscript, not a Berendt copy.',
+    ],
+  },
+  {
+    item: 185,
+    title: 'Vocabulario de la lengua española y tzeldal',
+    display_title: "Vocabulario de la lengua española y tzeldal: a 17th-century copy of Domingo de Ara's Spanish–Tzeltal dictionary",
+    author: 'Domingo de Ara',
+    language: 'Spanish',
+    languages: ['Spanish', 'Tzeltal'],
+    published: '16--',
+    notes: [
+      'A copy, probably of the 17th century, of Domingo de Ara\'s alphabetical list of Spanish names, words and phrases with their Tzeltal equivalents. Brasseur de Bourbourg\'s bookplate is inside the front cover; a 1922 letter from Adela Breton to G. B. Gordon suggests it was not part of the Berendt collection. Extensive worm damage on ff. 83–106 and minor damage throughout. A colonial manuscript, not a Berendt copy.',
+    ],
+  },
+  {
+    item: 83,
+    title: 'Diccionario español-huasteco',
+    display_title: "Diccionario español-huasteco: Berendt's draft Spanish–Huastec dictionary, after Tapia Zenteno, with Marcelo Alejandre's word list and a map of the Huasteca, 1867–1873",
+    author: 'C. Hermann Berendt; Carlos de Tapia Zenteno; Marcelo Alejandre; Daniel Garrison Brinton',
+    language: 'Spanish',
+    languages: ['Spanish', 'Huastec'],
+    published: '1867-1873',
+    notes: [
+      'Berendt\'s rough draft of a Spanish–Huastec dictionary of about 2,750 words on mixed papers, with many corrections in black and red ink, probably meant as a partner to Carlos de Tapia Zenteno\'s 18th-century Huastec–Spanish dictionary, which Berendt copied in New York in 1867. The entries (pp. 1–84) are followed by notes and pasted-in documents, including a list of Spanish words translated into Huastec signed by Marcelo Alejandre, 1872 (pp. 87–90); names of Huastec towns (pp. 93–96); a letter from Alejandre to Berendt, 1872 (pp. 109–114); memoranda by D. G. Brinton (pp. 117–121); and Berendt\'s "Mapa de la huaxteca", 1867 (p. 125).',
+    ],
+  },
+  {
+    item: 93,
+    title: 'Modo de administrar los sacramentos en castellano y tzendal, 1707',
+    display_title: "Modo de administrar los sacramentos en castellano y tzendal (1707): Berendt's copy, Tuxtla Gutiérrez 1870",
+    author: 'Anonymous; C. Hermann Berendt (copyist)',
+    language: 'Spanish',
+    languages: ['Spanish', 'Tzeltal', 'Latin'],
+    published: '1870',
+    notes: [
+      'Berendt\'s copy, made in Tuxtla Gutiérrez, Chiapas, in 1870, of a 1707 manual for administering baptism, viaticum, extreme unction and marriage in Spanish and Tzeltal, from the original then owned by José Hilario Aguilar, a priest in Chiapas (note, f. 4r; Berendt\'s signature, p. 44).',
+    ],
+  },
 ];
 
 // ── TEI ────────────────────────────────────────────────────────────────
@@ -363,7 +658,8 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
   } else {
     const bookId = new ObjectId();
     bookIdStr = bookId.toHexString();
-    const base = `penn-mscoll700-item${spec.item}`;
+    // Item 236_237_238 is three items bound as one; OPenn keeps the underscores.
+    const base = `penn-mscoll700-item${String(spec.item).replace(/_/g, '-')}`;
     slug = base;
     for (let i = 2; await db.collection('books').findOne({ slug }, { projection: { _id: 1 } }); i++) slug = `${base}-${i}`;
     const shelfmark = `University of Pennsylvania, Kislak Center (Rare Book & Manuscript Library), ${tei.call}`;
