@@ -77,3 +77,23 @@ An engine E is **within Flash's error** in a cell when all three hold, on the sh
 - an engine passing the print gate earns a **confirmation run** (≥ 50 print books, decision grade) before it reads the
   295K-page backlog, not the backlog itself.
 Throughput (pages/h on the GEX45, from the GPU task) is reported with every engine; it does not enter the gate.
+
+## Amendment 1 (2026-10-24 ~03:15Z, after the references were frozen at 10cff95dd; before any engine output was scored or opened)
+
+**Exclusions found while referencing (rule: mark, promote the first unused Devanagari candidate of the same group in draw
+order).** `sa-0f19d805-p339` is Śāradā (both readers), replaced by `sa-1697d8cb-p58`; `sa-82c808a7-p10` is a Newar
+(Nepālākṣara) hand, R1–R2 disagreement 56%, replaced by `sa-5744775b-p139`. The draw's script share is corrected in
+`candidates-observed.json`.
+
+**Reference error, measured.** Median R1–R2 CER (view N): print 0.30%, manuscript 6.96%. The four BORI Mahābhārata
+references match the GRETIL e-text of the same edition exactly (0 edits in 3,125 letters, starred apparatus passages
+excluded; `gretil-check.json`).
+
+**Severity (Derek's note of 02:50Z; #6740).** Every scored page of every arm also gets a severity grade for its worst
+error: 0 cosmetic, 1 recoverable word, 2 meaning changed, 3 structural (lost or repeated lines, seams, loops, column
+merged out of order), 4 misleading (recited, invented, wrong leaf). "Did not read" (empty, refusal, filter block) is kept
+apart, not graded. Grader: an Opus subagent per page, shown the image tiles, the frozen reference and every arm's text
+under shuffled blind labels, with the scorer's diff spans as a guide; it does not see arm names or CER. Reported beside
+CER: counts per grade per arm and cell, and the share of pages at severity ≥ 2. Severity does not enter the gate (the
+gate stays as preregistered); an expected loss with the example weights 0, 1, 3, 3, 10 is shown as illustration only,
+since the weights are Derek's call (#6740).
