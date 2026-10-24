@@ -29,12 +29,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
-import { ocrReadProblem, cliChatterReason } from '../lib/cli-chatter.mjs';
+import { BUCKET, PREFIX, candidateKey, pagePrefix, promptKey, textProblem } from '../lib/candidate-reads.mjs';
 
-export const BUCKET = 'sl-corpus-snapshots';
-export const PREFIX = 'candidate-reads';
+export { BUCKET, PREFIX, candidateKey, pagePrefix, textProblem };
 export const SWEEP = 'archive-candidate-reads-7075';
 const SKIP_DIRS = new Set(['node_modules', '.git', 'prompts', 'raw', 'stored']);
 const HEX24 = /^[0-9a-f]{24}$/;
@@ -67,16 +65,6 @@ export function classifyRead(meta) {
   return { unknown: site || meta?.cli || meta?.api ? `unclassified ${site || meta.cli || meta.api}` : 'no read site, cli or prompt_ref' };
 }
 
-/** Why a text is not a read worth keeping, or null. */
-export function textProblem(text, field) {
-  const t = String(text || '').trim();
-  if (!t) return 'empty';
-  if (field === 'translation') return cliChatterReason(t);
-  // header: false — a correct-mode reply (cli-ocr --correct, correct.mjs) is plain text by design (#6560), and a
-  // missing <page-type> tag is a format slip, not chatter; plan notes, refusals, restarts and openers still fail.
-  return ocrReadProblem(t, { header: false });
-}
-
 /** Hashes a text is "already kept" under: exact (trimmed) and whitespace-collapsed. */
 export function keptHashes(text) {
   const t = String(text || '').trim();
@@ -86,22 +74,6 @@ export function keptHashes(text) {
 /** True when the read equals the current field or any revision of it. `kept` is a Set of keptHashes() values. */
 export function alreadyKept(text, kept) {
   return keptHashes(text).some((h) => kept.has(h));
-}
-
-/** The object key for one read. Throws unless book-scoped (#3362). */
-export function candidateKey(bookId, pageId, field, hash) {
-  if (field !== 'ocr' && field !== 'translation') throw new Error(`bad field ${JSON.stringify(field)}`);
-  if (!/^[0-9a-f]{16}$/.test(String(hash))) throw new Error(`bad content hash ${JSON.stringify(hash)}`);
-  if (!pageId || /[/\s]/.test(pageId)) throw new Error(`bad page id ${JSON.stringify(pageId)}`);
-  const key = `${PREFIX}/${bookId}/${pageId}/${field}/${hash}.json`;
-  assertBookScopedKey(key, bookId, 'archive-candidate-reads');
-  return key;
-}
-
-export function pagePrefix(bookId, pageId) {
-  const p = `${PREFIX}/${bookId}/${pageId}`;
-  assertBookScopedKey(p, bookId, 'archive-candidate-reads list');   // checked without the trailing '/' (an empty segment)
-  return `${p}/`;
 }
 
 const modelOf = (m) => m.model || m.models?.[0] || m.adjudication?.model || m.model_requested || null;
@@ -205,11 +177,6 @@ export function* walkReads(roots) {
 function bump(o, k, n = 1) { o[k] = (o[k] || 0) + n; }
 
 async function scan({ roots, apply, checkpoint, manifestsDir }) {
-  const { MongoClient, ObjectId } = await import('mongodb');
-  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
-  await client.connect();
-  const db = client.db('bookstore');
-
   const tally = { metas: 0, skip: {}, unknown: {}, byJobFieldModel: {}, bytes: 0, candidates: 0 };
   const dirCache = new Map();
   // 1. classify and hash (no text held in memory)
@@ -228,6 +195,12 @@ async function scan({ roots, apply, checkpoint, manifestsDir }) {
     if (problem) { bump(tally.skip, problem === 'empty' ? 'empty' : `chatter: ${problem}`); continue; }
     reads.push({ ...r, pageId, field, hash: contentHash(text), kept: keptHashes(text), bytes: Buffer.byteLength(text), model: modelOf(meta) || '?' });
   }
+
+  if (!reads.length) { report(tally); return tally; }   // nothing to resolve: no Mongo connection (claude-job.sh runs this at every DONE)
+  const { MongoClient, ObjectId } = await import('mongodb');
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
 
   // 2. resolve pages and what is already kept, in batches
   const pageIds = [...new Set(reads.map((r) => r.pageId))];
@@ -290,13 +263,13 @@ async function scan({ roots, apply, checkpoint, manifestsDir }) {
   const { S3Client, PutObjectCommand, HeadObjectCommand } = await import('@aws-sdk/client-s3');
   const s3 = r2Client(S3Client);
   const out = fs.openSync(checkpoint, 'a');
-  const res = { written: 0, existed: 0, failed: 0 };
+  const res = { written: 0, existed: 0, failed: 0, prompts: 0, promptSeen: new Set() };
   const queue = [...todo];
   await Promise.all(Array.from({ length: 16 }, async () => {
     while (queue.length) {
       const [key, { read, page, sources }] = queue.shift();
       try {
-        try { await s3.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key })); res.existed++; fs.writeSync(out, JSON.stringify({ key, existed: true }) + '\n'); continue; }
+        try { await s3.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key })); res.existed++; fs.writeSync(out, JSON.stringify({ key, existed: true }) + '\n'); await keepPrompt(s3, PutObjectCommand, page.book_id, read.dir, readJson(read.metaPath) || {}, res); continue; }
         catch (e) { if (e?.$metadata?.httpStatus !== 404 && e?.name !== 'NotFound') throw e; }
         const text = fs.readFileSync(read.txtPath, 'utf8').trim();
         if (contentHash(text) !== read.hash) throw new Error(`text changed since the scan: ${read.txtPath}`);
@@ -306,6 +279,7 @@ async function scan({ roots, apply, checkpoint, manifestsDir }) {
         candidateKey(page.book_id, page.id, read.field, read.hash);   // re-assert at the write boundary
         await s3.send(new PutObjectCommand({ Bucket: BUCKET, Key: key, Body: JSON.stringify(body), ContentType: 'application/json', IfNoneMatch: '*' }));
         res.written++; fs.writeSync(out, JSON.stringify({ key }) + '\n');
+        await keepPrompt(s3, PutObjectCommand, page.book_id, read.dir, meta, res);
       } catch (e) {
         if (e?.$metadata?.httpStatus === 412) { res.existed++; fs.writeSync(out, JSON.stringify({ key, existed: true }) + '\n'); continue; }
         res.failed++; console.error(`  FAILED ${key}: ${e.message}`);
@@ -315,8 +289,27 @@ async function scan({ roots, apply, checkpoint, manifestsDir }) {
     }
   }));
   fs.closeSync(out);
-  console.log(`\napply ${runId}: ${res.written} written, ${res.existed} already there, ${res.failed} failed (of ${todo.length}; ${objects.size - todo.length} in the checkpoint)`);
+  console.log(`\napply ${runId}: ${res.written} written, ${res.existed} already there, ${res.failed} failed (of ${todo.length}; ${objects.size - todo.length} in the checkpoint); ${res.prompts} prompt files kept`);
   return { ...tally, ...res };
+}
+
+/**
+ * Keep the exact prompt a read's meta names (`prompt_sent_file`, relative to its read dir: claude-ocr, claude-translate,
+ * correct.mjs, cli-ocr correct mode), at candidate-reads/<book>/_prompts/<hash>.txt, so a reader that reuses the read
+ * can hand the applier the same evidence (scripts/lib/candidate-reads.mjs reuseInto). Only when the file still hashes
+ * to the meta's prompt_sent_hash. Once per book and hash.
+ */
+async function keepPrompt(s3, PutObjectCommand, bookId, dir, meta, res) {
+  const pf = meta.prompt_sent_file, h = meta.prompt_sent_hash;
+  if (!pf || !h || path.isAbsolute(pf) || pf.split(/[\\/]/).includes('..')) return;
+  const k = `${bookId}|${h}`;
+  if (res.promptSeen.has(k)) return;
+  res.promptSeen.add(k);
+  let text;
+  try { text = fs.readFileSync(path.join(dir, pf), 'utf8'); } catch { return; }
+  if (contentHash(text) !== h) return;
+  try { await s3.send(new PutObjectCommand({ Bucket: BUCKET, Key: promptKey(bookId, h), Body: text, ContentType: 'text/plain; charset=utf-8', IfNoneMatch: '*' })); res.prompts++; }
+  catch (e) { if (e?.$metadata?.httpStatus !== 412) throw e; }
 }
 
 function report(t) {

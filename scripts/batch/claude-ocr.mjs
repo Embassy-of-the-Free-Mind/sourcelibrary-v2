@@ -32,6 +32,11 @@
  * is retried once, then each of its pages is read alone. The exact prompt sent is saved under DIR/prompts/<hash>.txt
  * and each page's meta points at it, so `apply` hashes the text that was sent rather than rebuilding it.
  *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable page read is copied to R2 candidate-reads/
+ * (with the exact prompt its call sent) when it is made. Before the calls, each page asks for a kept read by the same
+ * --model on the same book prompt (live prompt + language slot) and per-call instruction, of the same image bytes,
+ * and uses it instead of calling (meta `reused_from`). `--fresh` always calls: a repeat-noise eval needs fresh reads.
+ *
  * HOW IT FAILS. A usage-limit reply stops the run (exit 3) with the pages done so far saved; re-running skips them.
  * Any other failed page gets an empty .txt and a non-zero `exit` in its meta, which `apply` skips and counts.
  */
@@ -47,6 +52,7 @@ import { ocrReadProblem } from '../lib/cli-chatter.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-ocr.mjs';
 const CLI = 'claude';
@@ -198,6 +204,9 @@ async function main() {
     imgCache.set(p.id, v);
     return v;
   };
+  // The reuse key (#7075): the book's prompt, the per-call instruction's template, the image bytes.
+  const FRESH = wantsFresh();
+  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(promptFor[p.book_id]), input: imageSha, variant: contentHash(callInstruction(1)) });
   const writePage = (p, text, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
     fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(REREAD && { reread: true, replaces_model: p.ocr?.model ?? null }), ...meta, chars: text.length, chatter: text ? ocrReadProblem(text) : null }, null, 1));
@@ -233,12 +242,32 @@ async function main() {
       return r.cls ? 'failed' : 'mismatch';
     }
     group.forEach((p, i) => writePage(p, texts[i], { ...common, call_position: i + 1, exit: 0, error_class: null, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha }));
+    // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
+    for (const [i, p] of group.entries()) {
+      const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text: texts[i], model: MODEL, prompt_hash: reuseKeyOf(p, imgs[i].sha), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
     const bad = texts.filter((t) => ocrReadProblem(t)).length;
     console.log(`  ${group[0].book_id} p.${group[0].page_number}-${group[group.length - 1].page_number}: ok ${texts.map((t) => t.length).join('/')} chars${bad ? `, ${bad} fail the chatter guard` : ''} (${Math.round(r.secs)}s)`);
     return 'ok';
   };
 
-  const queue = [...calls];
+  // A kept read of the same page, model, book prompt and image bytes is used instead of a call (#7075).
+  let reused = 0;
+  const reusedIds = new Set();
+  if (FRESH) console.log('--fresh: kept reads are not looked up');
+  else {
+    const keptBooks = new Set();
+    for (const b of new Set(todo.map((p) => p.book_id))) if (await hasKeptReads(b)) keptBooks.add(b);
+    for (const p of todo.filter((q) => keptBooks.has(q.book_id))) {
+      const im = await fetchImage(p);
+      if (im.error) continue;
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKeyOf(p, im.sha) });
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); }
+      imgCache.delete(p.id);   // fetched again when its call comes: a whole book's images are not held for the lookup
+    }
+  }
+  const queue = calls.map((g) => g.filter((p) => !reusedIds.has(p.id))).filter((g) => g.length);
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (queue.length && !stop) {
       const group = queue.shift();
@@ -255,7 +284,7 @@ async function main() {
     }
   }));
   const metas = todo.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
-  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached`);
+  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached; reused ${reused} kept read(s) instead of calling`);
   if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
 }
 
