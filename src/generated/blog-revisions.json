@@ -2,583 +2,595 @@
   "10000-books": {
     "path": "src/app/articles/10000-books/page.tsx",
     "published": "2026-04-14T03:13:12+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "2000-first-translations": {
     "path": "src/app/articles/2000-first-translations/page.tsx",
     "published": "2026-03-08T21:26:46+01:00",
-    "revised": "2026-10-18T00:22:08+02:00",
-    "revisions": 19
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 17
   },
   "[category]/page/[n]": {
     "path": "src/app/articles/[category]/page/[n]/page.tsx",
-    "published": "2026-10-18T00:06:39+02:00",
-    "revised": "2026-10-18T00:06:39+02:00",
+    "published": "2026-10-18T18:50:56+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 1
   },
   "[category]": {
     "path": "src/app/articles/[category]/page.tsx",
-    "published": "2026-10-17T22:50:34+02:00",
-    "revised": "2026-10-18T00:06:39+02:00",
-    "revisions": 2
+    "published": "2026-10-18T18:50:56+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 1
   },
   "aldine-roman": {
     "path": "src/app/articles/aldine-roman/page.tsx",
     "published": "2026-08-20T07:35:14-06:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 10
   },
   "archive-ocr-against-proofread-pages": {
     "path": "src/app/articles/archive-ocr-against-proofread-pages/page.tsx",
     "published": "2026-09-28T15:18:00+02:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "astrological-diagrams": {
     "path": "src/app/articles/astrological-diagrams/page.tsx",
     "published": "2026-02-21T12:13:37+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 16
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 12
   },
   "atlas-of-lost-instruments": {
     "path": "src/app/articles/atlas-of-lost-instruments/page.tsx",
     "published": "2026-09-11T10:40:07+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "autonomous-agents": {
     "path": "src/app/articles/autonomous-agents/page.tsx",
     "published": "2026-03-09T19:39:23+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 13
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 10
   },
   "beeckman-on-drebbel": {
     "path": "src/app/articles/beeckman-on-drebbel/page.tsx",
     "published": "2026-10-06T15:18:26+02:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 3
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "by-the-numbers": {
     "path": "src/app/articles/by-the-numbers/page.tsx",
     "published": "2026-05-10T21:54:35+02:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
   },
   "cannabis-bangue": {
     "path": "src/app/articles/cannabis-bangue/page.tsx",
     "published": "2026-06-19T22:36:43+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "carbon-ledger/methodology": {
     "path": "src/app/articles/carbon-ledger/methodology/page.tsx",
     "published": "2026-05-26T03:06:57+02:00",
-    "revised": "2026-10-17T22:50:34+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 3
   },
   "carbon-ledger": {
     "path": "src/app/articles/carbon-ledger/page.tsx",
     "published": "2026-05-26T03:06:57+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "cellulae": {
     "path": "src/app/articles/cellulae/page.tsx",
     "published": "2026-04-16T20:33:21-07:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 8
   },
   "chakra-tradition": {
     "path": "src/app/articles/chakra-tradition/page.tsx",
     "published": "2026-02-15T16:23:31+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 18
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 14
+  },
+  "choreia-the-dance-of-the-cosmos": {
+    "path": "src/app/articles/choreia-the-dance-of-the-cosmos/page.tsx",
+    "published": "2026-10-18T11:57:33-07:00",
+    "revised": "2026-10-19T10:34:30-06:00",
+    "revisions": 6
   },
   "clustering": {
     "path": "src/app/articles/clustering/page.tsx",
     "published": "2026-03-14T12:43:15+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "confident-hallucinator": {
     "path": "src/app/articles/confident-hallucinator/page.tsx",
     "published": "2026-04-23T18:54:36+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 16
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 13
   },
   "counting-first-translations": {
     "path": "src/app/articles/counting-first-translations/page.tsx",
     "published": "2026-06-26T11:49:33+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "counting-the-gap": {
     "path": "src/app/articles/counting-the-gap/page.tsx",
     "published": "2026-03-15T15:09:55+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 13
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 10
   },
   "cuneiform-ocr": {
     "path": "src/app/articles/cuneiform-ocr/page.tsx",
     "published": "2026-03-06T20:30:14+03:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 19
+    "revised": "2026-10-18T19:26:22-07:00",
+    "revisions": 17
   },
   "demonology": {
     "path": "src/app/articles/demonology/page.tsx",
     "published": "2026-02-21T12:47:54+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 17
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 13
   },
   "did-an-ai-write-the-encyclical": {
     "path": "src/app/articles/did-an-ai-write-the-encyclical/page.tsx",
     "published": "2026-05-30T13:09:28+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "did-the-ai-read-this": {
     "path": "src/app/articles/did-the-ai-read-this/page.tsx",
     "published": "2026-05-18T19:44:24+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
   },
   "does-ai-get-religion": {
     "path": "src/app/articles/does-ai-get-religion/page.tsx",
     "published": "2026-05-30T14:44:20+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "drebbel": {
     "path": "src/app/articles/drebbel/page.tsx",
     "published": "2026-10-06T21:51:00+02:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "fechner-bohme": {
     "path": "src/app/articles/fechner-bohme/page.tsx",
     "published": "2026-02-16T09:19:04+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 16
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 12
   },
   "fire-horse": {
     "path": "src/app/articles/fire-horse/page.tsx",
     "published": "2026-02-16T10:22:16+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 17
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 13
   },
   "first-translation-methodology": {
     "path": "src/app/articles/first-translation-methodology/page.tsx",
     "published": "2026-02-23T23:41:21+04:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 22
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 19
   },
   "first-translations": {
     "path": "src/app/articles/first-translations/page.tsx",
     "published": "2026-02-21T12:13:37+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 23
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 19
   },
   "fish-voiced-priest": {
     "path": "src/app/articles/fish-voiced-priest/page.tsx",
     "published": "2026-07-02T15:04:52+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "four-commentaries-on-nothing": {
     "path": "src/app/articles/four-commentaries-on-nothing/page.tsx",
     "published": "2026-10-07T07:53:49+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "free-reading": {
     "path": "src/app/articles/free-reading/page.tsx",
     "published": "2026-09-12T23:15:56+02:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "greek-lemma-table": {
     "path": "src/app/articles/greek-lemma-table/page.tsx",
     "published": "2026-08-12T00:36:58-06:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "harmonic-justice": {
     "path": "src/app/articles/harmonic-justice/page.tsx",
     "published": "2026-10-16T09:47:33-07:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "hidden-engineers": {
     "path": "src/app/articles/hidden-engineers/page.tsx",
     "published": "2026-02-27T19:06:59+04:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 11
   },
   "hieroglyph-ocr": {
     "path": "src/app/articles/hieroglyph-ocr/page.tsx",
     "published": "2026-03-14T14:21:37+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
   },
   "history-of-astrology": {
     "path": "src/app/articles/history-of-astrology/page.tsx",
     "published": "2026-02-23T23:41:21+04:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 17
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 13
   },
   "history-of-classification": {
     "path": "src/app/articles/history-of-classification/page.tsx",
     "published": "2026-03-16T10:17:23+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 11
   },
   "hogwarts-library": {
     "path": "src/app/articles/hogwarts-library/page.tsx",
     "published": "2026-05-17T19:24:18+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 13
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "how-big-is-the-library": {
     "path": "src/app/articles/how-big-is-the-library/page.tsx",
     "published": "2026-06-01T13:41:11+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "how-long-to-translate": {
     "path": "src/app/articles/how-long-to-translate/page.tsx",
     "published": "2026-05-31T12:36:30+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "how-these-are-made": {
     "path": "src/app/articles/how-these-are-made/page.tsx",
     "published": "2026-07-16T01:06:36+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "how-we-measure-ocr-quality": {
     "path": "src/app/articles/how-we-measure-ocr-quality/page.tsx",
     "published": "2026-09-21T07:53:24+02:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "hyperborea": {
     "path": "src/app/articles/hyperborea/page.tsx",
     "published": "2026-10-16T07:00:09-07:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "iiif": {
     "path": "src/app/articles/iiif/page.tsx",
     "published": "2026-06-02T10:16:29+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 11
   },
   "in-memoriam": {
     "path": "src/app/articles/in-memoriam/page.tsx",
-    "published": "2026-10-18T15:35:15+02:00",
-    "revised": "2026-10-18T15:35:15+02:00",
+    "published": "2026-10-18T18:50:56+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 1
   },
   "incunabula-knowledge-graph": {
     "path": "src/app/articles/incunabula-knowledge-graph/page.tsx",
     "published": "2026-04-22T15:30:26+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "indigenous-traditions": {
     "path": "src/app/articles/indigenous-traditions/page.tsx",
     "published": "2026-02-16T09:34:08+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 16
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 12
   },
   "interlinear-experiment": {
     "path": "src/app/articles/interlinear-experiment/page.tsx",
     "published": "2026-04-20T20:20:12+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "invisible-hand": {
     "path": "src/app/articles/invisible-hand/page.tsx",
     "published": "2026-02-15T16:12:48+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 18
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 14
   },
   "man-his-own-maker": {
     "path": "src/app/articles/man-his-own-maker/page.tsx",
     "published": "2026-05-31T09:16:01+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
+  },
+  "maya-mathematics": {
+    "path": "src/app/articles/maya-mathematics/page.tsx",
+    "published": "2026-10-18T11:55:01-07:00",
+    "revised": "2026-10-18T22:10:02-07:00",
+    "revisions": 8
   },
   "maya-ritual-in-the-colonial-dictionaries": {
     "path": "src/app/articles/maya-ritual-in-the-colonial-dictionaries/page.tsx",
     "published": "2026-10-16T07:58:00-07:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "mcp-server": {
     "path": "src/app/articles/mcp-server/page.tsx",
     "published": "2026-02-18T01:28:28+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 21
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 17
   },
   "naked-philosophers": {
     "path": "src/app/articles/naked-philosophers/page.tsx",
     "published": "2026-06-21T23:24:48+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "nature-of-harmony": {
     "path": "src/app/articles/nature-of-harmony/page.tsx",
     "published": "2026-07-15T08:32:30-07:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "ngram-viewer": {
     "path": "src/app/articles/ngram-viewer/page.tsx",
     "published": "2026-07-19T03:50:50+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "nine-models-forty-pages": {
     "path": "src/app/articles/nine-models-forty-pages/page.tsx",
     "published": "2026-07-23T16:28:52+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "nobody-knows-what-has-been-scanned": {
     "path": "src/app/articles/nobody-knows-what-has-been-scanned/page.tsx",
     "published": "2026-08-09T09:17:24-07:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "ocr-consistency": {
     "path": "src/app/articles/ocr-consistency/page.tsx",
     "published": "2026-03-07T10:39:44+03:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 8
   },
   "one-sentence-of-hermes": {
     "path": "src/app/articles/one-sentence-of-hermes/page.tsx",
     "published": "2026-10-08T12:50:47+02:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "origin-story": {
     "path": "src/app/articles/origin-story/page.tsx",
     "published": "2026-03-15T00:21:22+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 11
   },
   "page/[n]": {
     "path": "src/app/articles/page/[n]/page.tsx",
-    "published": "2026-10-18T00:06:39+02:00",
-    "revised": "2026-10-18T00:06:39+02:00",
+    "published": "2026-10-18T18:50:56+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 1
   },
   "philosophers-stone": {
     "path": "src/app/articles/philosophers-stone/page.tsx",
     "published": "2026-02-27T12:23:50+04:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 10
   },
   "playable-page": {
     "path": "src/app/articles/playable-page/page.tsx",
     "published": "2026-07-19T04:19:58+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "preserved-by-enemies": {
     "path": "src/app/articles/preserved-by-enemies/page.tsx",
     "published": "2026-10-16T07:51:21-07:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "progress-studies": {
     "path": "src/app/articles/progress-studies/page.tsx",
     "published": "2026-03-08T13:52:21+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 20
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 16
   },
   "rashi-ocr": {
     "path": "src/app/articles/rashi-ocr/page.tsx",
     "published": "2026-03-24T13:23:03+01:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 8
   },
   "reading-classical-chinese": {
     "path": "src/app/articles/reading-classical-chinese/page.tsx",
     "published": "2026-06-25T11:05:42+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "reciting-not-reading": {
     "path": "src/app/articles/reciting-not-reading/page.tsx",
     "published": "2026-07-30T11:13:19+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "rithmomachia": {
     "path": "src/app/articles/rithmomachia/page.tsx",
     "published": "2026-03-02T11:34:13+04:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 15
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 12
   },
   "search-by-meaning": {
     "path": "src/app/articles/search-by-meaning/page.tsx",
     "published": "2026-10-08T00:27:44+02:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 3
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "shipwrecks-and-buried-treasure": {
     "path": "src/app/articles/shipwrecks-and-buried-treasure/page.tsx",
     "published": "2026-10-15T23:12:20-07:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "show-me-the-number": {
     "path": "src/app/articles/show-me-the-number/page.tsx",
     "published": "2026-07-15T08:32:30-07:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "singularity-1486": {
     "path": "src/app/articles/singularity-1486/page.tsx",
     "published": "2026-04-18T15:10:12-07:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 10
   },
   "sound-laboratory": {
     "path": "src/app/articles/sound-laboratory/page.tsx",
     "published": "2026-07-16T18:28:33+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 8
   },
   "suda-benchmark": {
     "path": "src/app/articles/suda-benchmark/page.tsx",
     "published": "2026-08-11T17:43:16-06:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 8
   },
   "technique-is-local": {
     "path": "src/app/articles/technique-is-local/page.tsx",
     "published": "2026-09-22T21:03:28+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "techniques-of-the-body": {
     "path": "src/app/articles/techniques-of-the-body/page.tsx",
     "published": "2026-09-23T17:40:56+02:00",
-    "revised": "2026-10-18T00:11:21+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "the-deletion": {
     "path": "src/app/articles/the-deletion/page.tsx",
     "published": "2026-05-15T12:54:48+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "the-giants-werent-translated": {
     "path": "src/app/articles/the-giants-werent-translated/page.tsx",
     "published": "2026-06-21T15:55:26+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "tibetan-ocr": {
     "path": "src/app/articles/tibetan-ocr/page.tsx",
     "published": "2026-04-23T17:33:46+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
   },
   "tibetan-reocr": {
     "path": "src/app/articles/tibetan-reocr/page.tsx",
     "published": "2026-09-29T00:14:01+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 4
   },
   "training-our-own-models": {
     "path": "src/app/articles/training-our-own-models/page.tsx",
     "published": "2026-10-04T17:53:33+02:00",
-    "revised": "2026-10-18T02:03:31+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "translation-collapse": {
     "path": "src/app/articles/translation-collapse/page.tsx",
     "published": "2026-06-18T09:36:33+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "translation-rate": {
     "path": "src/app/articles/translation-rate/page.tsx",
     "published": "2026-03-21T21:58:41+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 12
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 9
   },
   "translations-across-civilizations": {
     "path": "src/app/articles/translations-across-civilizations/page.tsx",
     "published": "2026-04-18T16:38:31-07:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "trees-of-life": {
     "path": "src/app/articles/trees-of-life/page.tsx",
     "published": "2026-10-15T16:41:46-07:00",
-    "revised": "2026-10-18T16:06:16+02:00",
-    "revisions": 11
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "two-copies-two-languages": {
     "path": "src/app/articles/two-copies-two-languages/page.tsx",
     "published": "2026-09-22T20:49:28+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 3
   },
   "untranslated-renaissance": {
     "path": "src/app/articles/untranslated-renaissance/page.tsx",
     "published": "2026-03-15T01:03:43+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 15
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 12
   },
   "vision": {
     "path": "src/app/articles/vision/page.tsx",
     "published": "2026-06-19T15:17:47+02:00",
-    "revised": "2026-10-18T15:35:15+02:00",
+    "revised": "2026-10-18T18:50:56+02:00",
     "revisions": 12
   },
   "visualizing-classification": {
     "path": "src/app/articles/visualizing-classification/page.tsx",
     "published": "2026-03-16T15:22:24+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 7
   },
   "what-makes-a-good-scan": {
     "path": "src/app/articles/what-makes-a-good-scan/page.tsx",
     "published": "2026-05-17T01:18:37+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 8
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 5
   },
   "what-the-models-cannot-name": {
     "path": "src/app/articles/what-the-models-cannot-name/page.tsx",
     "published": "2026-10-07T01:08:08+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 2
   },
   "why-terminals-cant-edit": {
     "path": "src/app/articles/why-terminals-cant-edit/page.tsx",
     "published": "2026-03-02T11:45:40+04:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 9
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 6
   },
   "word-alignment": {
     "path": "src/app/articles/word-alignment/page.tsx",
     "published": "2026-04-13T02:35:12+02:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 14
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 11
   },
   "worlds-largest-collection": {
     "path": "src/app/articles/worlds-largest-collection/page.tsx",
     "published": "2026-03-12T15:17:17+01:00",
-    "revised": "2026-10-18T00:33:26+02:00",
-    "revisions": 18
+    "revised": "2026-10-18T18:50:56+02:00",
+    "revisions": 15
   }
 }

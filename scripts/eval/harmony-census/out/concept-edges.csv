@@ -1,0 +1,343 @@
+source,target,century,pages,hub_pages,weight
+harmony,number,before 1300,1280,3455,0.370
+harmony,music,before 1300,1062,3455,0.307
+harmony,love,before 1300,708,3455,0.205
+harmony,concord_social,before 1300,1297,3455,0.375
+harmony,soul,before 1300,1591,3455,0.460
+harmony,temperament_health,before 1300,527,3455,0.153
+harmony,magnet,before 1300,91,3455,0.026
+harmony,antipathy,before 1300,271,3455,0.078
+harmony,cosmos,before 1300,1085,3455,0.314
+harmony,god,before 1300,1453,3455,0.421
+harmony,opposites,before 1300,931,3455,0.269
+harmony,order,before 1300,1062,3455,0.307
+harmony,body,before 1300,1323,3455,0.383
+sympathy,number,before 1300,199,957,0.208
+sympathy,music,before 1300,205,957,0.214
+sympathy,love,before 1300,207,957,0.216
+sympathy,concord_social,before 1300,302,957,0.316
+sympathy,soul,before 1300,456,957,0.476
+sympathy,temperament_health,before 1300,263,957,0.275
+sympathy,magnet,before 1300,59,957,0.062
+sympathy,antipathy,before 1300,116,957,0.121
+sympathy,cosmos,before 1300,258,957,0.270
+sympathy,god,before 1300,357,957,0.373
+sympathy,opposites,before 1300,216,957,0.226
+sympathy,order,before 1300,204,957,0.213
+sympathy,body,before 1300,393,957,0.411
+soul,god,before 1300,1167,4259,0.274
+soul,body,before 1300,1026,4259,0.241
+concord_social,soul,before 1300,888,4259,0.208
+god,body,before 1300,830,4259,0.195
+concord_social,god,before 1300,795,4259,0.187
+soul,cosmos,before 1300,697,4259,0.164
+concord_social,body,before 1300,687,4259,0.161
+soul,order,before 1300,665,4259,0.156
+god,order,before 1300,665,4259,0.156
+number,music,before 1300,621,4259,0.146
+cosmos,god,before 1300,614,4259,0.144
+cosmos,body,before 1300,597,4259,0.140
+harmony,number,14th c.,661,1991,0.332
+harmony,music,14th c.,438,1991,0.220
+harmony,love,14th c.,454,1991,0.228
+harmony,concord_social,14th c.,832,1991,0.418
+harmony,soul,14th c.,1105,1991,0.555
+harmony,temperament_health,14th c.,300,1991,0.151
+harmony,magnet,14th c.,34,1991,0.017
+harmony,antipathy,14th c.,150,1991,0.075
+harmony,cosmos,14th c.,781,1991,0.392
+harmony,god,14th c.,1034,1991,0.519
+harmony,opposites,14th c.,590,1991,0.296
+harmony,order,14th c.,732,1991,0.368
+harmony,body,14th c.,839,1991,0.421
+sympathy,number,14th c.,106,531,0.200
+sympathy,music,14th c.,73,531,0.137
+sympathy,love,14th c.,129,531,0.243
+sympathy,concord_social,14th c.,207,531,0.390
+sympathy,soul,14th c.,293,531,0.552
+sympathy,temperament_health,14th c.,175,531,0.330
+sympathy,magnet,14th c.,18,531,0.034
+sympathy,antipathy,14th c.,36,531,0.068
+sympathy,cosmos,14th c.,148,531,0.279
+sympathy,god,14th c.,227,531,0.427
+sympathy,opposites,14th c.,132,531,0.249
+sympathy,order,14th c.,132,531,0.249
+sympathy,body,14th c.,289,531,0.544
+soul,god,14th c.,865,2438,0.355
+soul,body,14th c.,720,2438,0.295
+concord_social,soul,14th c.,609,2438,0.250
+concord_social,god,14th c.,582,2438,0.239
+cosmos,god,14th c.,575,2438,0.236
+god,body,14th c.,568,2438,0.233
+soul,cosmos,14th c.,564,2438,0.231
+soul,order,14th c.,547,2438,0.224
+god,order,14th c.,525,2438,0.215
+number,soul,14th c.,459,2438,0.188
+concord_social,body,14th c.,444,2438,0.182
+cosmos,body,14th c.,434,2438,0.178
+harmony,number,15th c.,5699,14326,0.398
+harmony,music,15th c.,4178,14326,0.292
+harmony,love,15th c.,4331,14326,0.302
+harmony,concord_social,15th c.,6767,14326,0.472
+harmony,soul,15th c.,8377,14326,0.585
+harmony,temperament_health,15th c.,2978,14326,0.208
+harmony,magnet,15th c.,686,14326,0.048
+harmony,antipathy,15th c.,1931,14326,0.135
+harmony,cosmos,15th c.,5523,14326,0.386
+harmony,god,15th c.,7295,14326,0.509
+harmony,opposites,15th c.,5686,14326,0.397
+harmony,order,15th c.,5061,14326,0.353
+harmony,body,15th c.,6745,14326,0.471
+sympathy,number,15th c.,743,3021,0.246
+sympathy,music,15th c.,643,3021,0.213
+sympathy,love,15th c.,809,3021,0.268
+sympathy,concord_social,15th c.,1167,3021,0.386
+sympathy,soul,15th c.,1645,3021,0.545
+sympathy,temperament_health,15th c.,929,3021,0.308
+sympathy,magnet,15th c.,323,3021,0.107
+sympathy,antipathy,15th c.,326,3021,0.108
+sympathy,cosmos,15th c.,1032,3021,0.342
+sympathy,god,15th c.,1292,3021,0.428
+sympathy,opposites,15th c.,933,3021,0.309
+sympathy,order,15th c.,800,3021,0.265
+sympathy,body,15th c.,1471,3021,0.487
+soul,god,15th c.,6100,16800,0.363
+soul,body,15th c.,5750,16800,0.342
+concord_social,soul,15th c.,4900,16800,0.292
+god,body,15th c.,4513,16800,0.269
+concord_social,god,15th c.,4438,16800,0.264
+soul,cosmos,15th c.,4246,16800,0.253
+cosmos,god,15th c.,4013,16800,0.239
+cosmos,body,15th c.,3768,16800,0.224
+concord_social,body,15th c.,3758,16800,0.224
+soul,opposites,15th c.,3709,16800,0.221
+soul,order,15th c.,3620,16800,0.215
+opposites,body,15th c.,3479,16800,0.207
+harmony,number,16th c.,13627,37555,0.363
+harmony,music,16th c.,10334,37555,0.275
+harmony,love,16th c.,10983,37555,0.292
+harmony,concord_social,16th c.,16939,37555,0.451
+harmony,soul,16th c.,21832,37555,0.581
+harmony,temperament_health,16th c.,7364,37555,0.196
+harmony,magnet,16th c.,1503,37555,0.040
+harmony,antipathy,16th c.,4772,37555,0.127
+harmony,cosmos,16th c.,13463,37555,0.358
+harmony,god,16th c.,20165,37555,0.537
+harmony,opposites,16th c.,13937,37555,0.371
+harmony,order,16th c.,12234,37555,0.326
+harmony,body,16th c.,15670,37555,0.417
+sympathy,number,16th c.,1991,9382,0.212
+sympathy,music,16th c.,2168,9382,0.231
+sympathy,love,16th c.,2404,9382,0.256
+sympathy,concord_social,16th c.,3089,9382,0.329
+sympathy,soul,16th c.,4586,9382,0.489
+sympathy,temperament_health,16th c.,2650,9382,0.282
+sympathy,magnet,16th c.,1042,9382,0.111
+sympathy,antipathy,16th c.,1636,9382,0.174
+sympathy,cosmos,16th c.,3070,9382,0.327
+sympathy,god,16th c.,3689,9382,0.393
+sympathy,opposites,16th c.,2807,9382,0.299
+sympathy,order,16th c.,2059,9382,0.219
+sympathy,body,16th c.,4059,9382,0.433
+soul,god,16th c.,16521,45326,0.364
+soul,body,16th c.,13390,45326,0.295
+concord_social,soul,16th c.,12116,45326,0.267
+concord_social,god,16th c.,11010,45326,0.243
+god,body,16th c.,10989,45326,0.242
+soul,cosmos,16th c.,10659,45326,0.235
+cosmos,god,16th c.,10591,45326,0.234
+soul,opposites,16th c.,9743,45326,0.215
+soul,order,16th c.,8808,45326,0.194
+love,soul,16th c.,8747,45326,0.193
+god,opposites,16th c.,8668,45326,0.191
+god,order,16th c.,8511,45326,0.188
+harmony,number,17th c.,14828,37948,0.391
+harmony,music,17th c.,12811,37948,0.338
+harmony,love,17th c.,8148,37948,0.215
+harmony,concord_social,17th c.,14048,37948,0.370
+harmony,soul,17th c.,19010,37948,0.501
+harmony,temperament_health,17th c.,7617,37948,0.201
+harmony,magnet,17th c.,2385,37948,0.063
+harmony,antipathy,17th c.,3809,37948,0.100
+harmony,cosmos,17th c.,13193,37948,0.348
+harmony,god,17th c.,18537,37948,0.488
+harmony,opposites,17th c.,13127,37948,0.346
+harmony,order,17th c.,10095,37948,0.266
+harmony,body,17th c.,14884,37948,0.392
+sympathy,number,17th c.,3357,13745,0.244
+sympathy,music,17th c.,2662,13745,0.194
+sympathy,love,17th c.,2801,13745,0.204
+sympathy,concord_social,17th c.,3704,13745,0.269
+sympathy,soul,17th c.,7076,13745,0.515
+sympathy,temperament_health,17th c.,5196,13745,0.378
+sympathy,magnet,17th c.,3264,13745,0.237
+sympathy,antipathy,17th c.,3331,13745,0.242
+sympathy,cosmos,17th c.,4810,13745,0.350
+sympathy,god,17th c.,5318,13745,0.387
+sympathy,opposites,17th c.,4804,13745,0.350
+sympathy,order,17th c.,2427,13745,0.177
+sympathy,body,17th c.,7081,13745,0.515
+soul,god,17th c.,15094,49149,0.307
+soul,body,17th c.,12720,49149,0.259
+cosmos,god,17th c.,10351,49149,0.211
+soul,cosmos,17th c.,10351,49149,0.211
+concord_social,soul,17th c.,9972,49149,0.203
+concord_social,god,17th c.,9943,49149,0.202
+god,body,17th c.,9923,49149,0.202
+soul,opposites,17th c.,8765,49149,0.178
+cosmos,body,17th c.,8523,49149,0.173
+number,music,17th c.,8237,49149,0.168
+opposites,body,17th c.,8229,49149,0.167
+number,soul,17th c.,8089,49149,0.165
+harmony,number,18th c.,8035,30338,0.265
+harmony,music,18th c.,6630,30338,0.219
+harmony,love,18th c.,7518,30338,0.248
+harmony,concord_social,18th c.,12557,30338,0.414
+harmony,soul,18th c.,16357,30338,0.539
+harmony,temperament_health,18th c.,3928,30338,0.129
+harmony,magnet,18th c.,1367,30338,0.045
+harmony,antipathy,18th c.,2659,30338,0.088
+harmony,cosmos,18th c.,8187,30338,0.270
+harmony,god,18th c.,15173,30338,0.500
+harmony,opposites,18th c.,8415,30338,0.277
+harmony,order,18th c.,7547,30338,0.249
+harmony,body,18th c.,10892,30338,0.359
+sympathy,number,18th c.,1672,9240,0.181
+sympathy,music,18th c.,2036,9240,0.220
+sympathy,love,18th c.,2144,9240,0.232
+sympathy,concord_social,18th c.,3451,9240,0.373
+sympathy,soul,18th c.,5225,9240,0.565
+sympathy,temperament_health,18th c.,1850,9240,0.200
+sympathy,magnet,18th c.,1323,9240,0.143
+sympathy,antipathy,18th c.,1431,9240,0.155
+sympathy,cosmos,18th c.,2763,9240,0.299
+sympathy,god,18th c.,3779,9240,0.409
+sympathy,opposites,18th c.,1824,9240,0.197
+sympathy,order,18th c.,1431,9240,0.155
+sympathy,body,18th c.,3982,9240,0.431
+soul,god,18th c.,12785,38456,0.332
+soul,body,18th c.,10406,38456,0.271
+concord_social,soul,18th c.,10064,38456,0.262
+concord_social,god,18th c.,9004,38456,0.234
+god,body,18th c.,7588,38456,0.197
+soul,cosmos,18th c.,6832,38456,0.178
+concord_social,body,18th c.,6534,38456,0.170
+love,soul,18th c.,6515,38456,0.169
+love,god,18th c.,6348,38456,0.165
+cosmos,god,18th c.,6317,38456,0.164
+soul,opposites,18th c.,5422,38456,0.141
+god,opposites,18th c.,5296,38456,0.138
+harmony,number,19th c.,9392,31249,0.301
+harmony,music,19th c.,8727,31249,0.279
+harmony,love,19th c.,6538,31249,0.209
+harmony,concord_social,19th c.,12698,31249,0.406
+harmony,soul,19th c.,14538,31249,0.465
+harmony,temperament_health,19th c.,3753,31249,0.120
+harmony,magnet,19th c.,1313,31249,0.042
+harmony,antipathy,19th c.,2243,31249,0.072
+harmony,cosmos,19th c.,8301,31249,0.266
+harmony,god,19th c.,12590,31249,0.403
+harmony,opposites,19th c.,9573,31249,0.306
+harmony,order,19th c.,9081,31249,0.291
+harmony,body,19th c.,9007,31249,0.288
+sympathy,number,19th c.,2313,12451,0.186
+sympathy,music,19th c.,2735,12451,0.220
+sympathy,love,19th c.,2765,12451,0.222
+sympathy,concord_social,19th c.,4720,12451,0.379
+sympathy,soul,19th c.,5189,12451,0.417
+sympathy,temperament_health,19th c.,1840,12451,0.148
+sympathy,magnet,19th c.,1291,12451,0.104
+sympathy,antipathy,19th c.,1268,12451,0.102
+sympathy,cosmos,19th c.,2450,12451,0.197
+sympathy,god,19th c.,3634,12451,0.292
+sympathy,opposites,19th c.,3271,12451,0.263
+sympathy,order,19th c.,2490,12451,0.200
+sympathy,body,19th c.,3647,12451,0.293
+soul,god,19th c.,9988,41927,0.238
+concord_social,soul,19th c.,8671,41927,0.207
+soul,body,19th c.,7404,41927,0.177
+concord_social,god,19th c.,7093,41927,0.169
+soul,opposites,19th c.,5880,41927,0.140
+soul,cosmos,19th c.,5830,41927,0.139
+cosmos,god,19th c.,5623,41927,0.134
+soul,order,19th c.,5529,41927,0.132
+god,body,19th c.,5411,41927,0.129
+love,soul,19th c.,5339,41927,0.127
+concord_social,body,19th c.,5205,41927,0.124
+concord_social,order,19th c.,5197,41927,0.124
+harmony,number,20th c.,3843,15918,0.241
+harmony,music,20th c.,3801,15918,0.239
+harmony,love,20th c.,3098,15918,0.195
+harmony,concord_social,20th c.,6132,15918,0.385
+harmony,soul,20th c.,7881,15918,0.495
+harmony,temperament_health,20th c.,1933,15918,0.121
+harmony,magnet,20th c.,426,15918,0.027
+harmony,antipathy,20th c.,1137,15918,0.071
+harmony,cosmos,20th c.,4150,15918,0.261
+harmony,god,20th c.,5621,15918,0.353
+harmony,opposites,20th c.,4491,15918,0.282
+harmony,order,20th c.,3790,15918,0.238
+harmony,body,20th c.,4963,15918,0.312
+sympathy,number,20th c.,1261,8679,0.145
+sympathy,music,20th c.,1592,8679,0.183
+sympathy,love,20th c.,2075,8679,0.239
+sympathy,concord_social,20th c.,3163,8679,0.364
+sympathy,soul,20th c.,4223,8679,0.487
+sympathy,temperament_health,20th c.,1191,8679,0.137
+sympathy,magnet,20th c.,483,8679,0.056
+sympathy,antipathy,20th c.,730,8679,0.084
+sympathy,cosmos,20th c.,1643,8679,0.189
+sympathy,god,20th c.,2821,8679,0.325
+sympathy,opposites,20th c.,1858,8679,0.214
+sympathy,order,20th c.,1467,8679,0.169
+sympathy,body,20th c.,2787,8679,0.321
+soul,god,20th c.,5205,23682,0.220
+concord_social,soul,20th c.,4797,23682,0.203
+soul,body,20th c.,4703,23682,0.199
+concord_social,god,20th c.,3323,23682,0.140
+soul,cosmos,20th c.,3322,23682,0.140
+love,soul,20th c.,3053,23682,0.129
+god,body,20th c.,3022,23682,0.128
+soul,opposites,20th c.,3015,23682,0.127
+cosmos,god,20th c.,2895,23682,0.122
+concord_social,body,20th c.,2893,23682,0.122
+soul,order,20th c.,2670,23682,0.113
+love,god,20th c.,2369,23682,0.100
+harmony,number,undated,2595,18179,0.143
+harmony,music,undated,11696,18179,0.643
+harmony,love,undated,2554,18179,0.140
+harmony,concord_social,undated,9370,18179,0.515
+harmony,soul,undated,6678,18179,0.367
+harmony,temperament_health,undated,2000,18179,0.110
+harmony,magnet,undated,619,18179,0.034
+harmony,antipathy,undated,290,18179,0.016
+harmony,cosmos,undated,8458,18179,0.465
+harmony,god,undated,3654,18179,0.201
+harmony,opposites,undated,2824,18179,0.155
+harmony,order,undated,5726,18179,0.315
+harmony,body,undated,3290,18179,0.181
+sympathy,number,undated,402,3085,0.130
+sympathy,music,undated,2070,3085,0.671
+sympathy,love,undated,378,3085,0.123
+sympathy,concord_social,undated,1317,3085,0.427
+sympathy,soul,undated,1224,3085,0.397
+sympathy,temperament_health,undated,270,3085,0.088
+sympathy,magnet,undated,177,3085,0.057
+sympathy,antipathy,undated,60,3085,0.019
+sympathy,cosmos,undated,1315,3085,0.426
+sympathy,god,undated,713,3085,0.231
+sympathy,opposites,undated,466,3085,0.151
+sympathy,order,undated,703,3085,0.228
+sympathy,body,undated,538,3085,0.174
+music,concord_social,undated,6916,20379,0.339
+music,cosmos,undated,6291,20379,0.309
+concord_social,cosmos,undated,5071,20379,0.249
+music,soul,undated,4935,20379,0.242
+music,order,undated,4208,20379,0.206
+soul,cosmos,undated,3860,20379,0.189
+concord_social,soul,undated,3859,20379,0.189
+concord_social,order,undated,3574,20379,0.175
+cosmos,order,undated,3035,20379,0.149
+music,god,undated,2794,20379,0.137
+cosmos,god,undated,2434,20379,0.119
+soul,order,undated,2248,20379,0.110

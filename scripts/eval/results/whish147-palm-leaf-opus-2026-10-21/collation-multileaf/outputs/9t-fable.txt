@@ -1,0 +1,31 @@
+**Collation of leaf.jpg (left half) against the edition**
+
+All nine visible lines carry verse text (SK_52 to SK_58); I did not identify commentary on this half. The string hole interrupts lines 3 to 7, so each of those lines has a short segment before the hole and a segment after it. Square brackets mark text hidden under the hole or on the missing right half, restored only to show context, not read.
+
+| Line | Verse | Reading of the leaf (IAST) |
+|---|---|---|
+| 1 | SK_52 | liṅgaṃ na vinā bhāvena liṅga-nirvṛttiḥ liṅgā[khyo …] |
+| 2 | SK_52–53 | sargaḥ ‖ ta(t)pūrvikā daivas tairyagyo[naś ca …] |
+| 3 | SK_53 | …kavidha(ḥ) samāsa [hole] to bhautikas sarga[ḥ …] |
+| 4 | SK_54 | viśālas tamo-viśālaś [hole: ca mūlataḥ sar]gaḥ madhye rajo[viśālo …] |
+| 5 | SK_55 | [ta]tra jarā-maraṇa [hole: kṛtaṃ] duḥkha(ṃ) svabhāvena … |
+| 6 | SK_56 | …di viśeṣa-bhūta [hole: paryan]taḥ pratipuruṣa[…] |
+| 7 | SK_56–57 | …rtha ārambhaḥ ‖ vat [hole] sa-viv(ṛ)ddhi-nimitta(ṃ) […] |
+| 8 | SK_57 | …(ṣa)-vimokṣa-nimittaṃ tathā pravṛttiḥ pradhāna[sya …] |
+| 9 | SK_58 | …thā kriyāsu pravartate lokaḥ puruṣa[sya …] |
+
+Notes on the readings:
+
+- **Line 1, SK_52.** After "na vinā" the leaf clearly has bhāvena (ഭാവെന), not liṅgena. The following akṣaras run liṅga- then three or four signs ending in a visarga, then liṅgā begins again. I read this as liṅga-nirvṛttiḥ, i.e. the two members are transposed relative to the edition, but the akṣaras between liṅga and the visarga are not fully legible.
+- **Line 2, SK_53.** The first akṣara after the verse-divider is a conjunct I read as tat-, but it is not clear.
+- **Line 3, SK_53.** The leaf writes the sandhi as bhautikas sargaḥ with doubled sa, where the edition has bhautikaḥ sargaḥ. I could not confirm a visarga after kavidha.
+- **Line 5, SK_55.** Immediately after the hole the leaf reads duḥkha svabhāvena. Only about two akṣaras fit under the hole after jarāmaraṇa, and the right half of line 5 plus line 6 cannot hold the full second half of SK_55 before "-di viśeṣa-bhūta" begins line 6. The leaf therefore appears to have skipped from the first duḥkhaṃ to the second (prāpnoti cetanaḥ puruṣaḥ aliṅgasyāvinivṛttes tasmād duḥkhaṃ). I cannot see the hidden portion, so the omission is inferred from the visible text and the line length. The anusvāra on duḥkha is not clearly visible.
+- **Line 7, SK_57.** The vocalic ṛ in vivṛddhi is not clearly distinguishable from i.
+- **Line 8, SK_57.** The first akṣara of the line is unclear; it should be -ṣa of puruṣa but I cannot confirm it.
+- **Line 9, SK_58.** The leaf plainly has lokaḥ with ka. The edition's logaḥ is an edition error.
+
+DIFFERENCES:
+SK_52 | liṅgena bhāva-nirvṛttiḥ | bhāvena liṅga-nirvṛttiḥ | bhāvena certain, liṅga-nirvṛttiḥ uncertain
+SK_53 | bhautikaḥ sargaḥ | bhautikas sargaḥ | uncertain
+SK_55 | duḥkham prāpnoti cetanaḥ puruṣaḥ a-liṅgasyā vinivṛttes tasmād duḥkhaṃ | omitted (leaf reads jarāmaraṇa[kṛtaṃ] duḥkha svabhāvena) | uncertain
+SK_58 | logaḥ | lokaḥ | certain

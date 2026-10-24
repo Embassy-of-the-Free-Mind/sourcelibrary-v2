@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B has the most recognisable Sanskrit and Malayalam pieces across rows ("pātrārtthajñaṃ", "pūrvvamevavācyaṃ", "laukika", "sādhana", "lokappul", "vidhāna", "pradeśa"); A reads well only in row 1 and breaks down after that, and C is mostly [illegible] with only scattered syllables.

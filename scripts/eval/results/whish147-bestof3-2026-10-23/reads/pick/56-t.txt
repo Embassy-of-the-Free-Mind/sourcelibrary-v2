@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A has the most stretches of real Sāṅkhya wording that fit the context, such as "prakṛtyupādānakālabhāgyākhyā", "pratyayasarggabhedāḥ pañcāśa[t]", "ekaikamarthaprabandha" and "…madhikṛtya", while B is readable only in places and C is mostly made-up syllables.

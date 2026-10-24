@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. surirapipañcaśikhā ‖ yatenacabahudhākṛtaṃtantraṃśiṣyapa ‖ raṃparayāgatamīśvara
+2. kṛṣṇenacaitadā ‖ ryyābhiḥsaṃkṣiptamāryyamatināsamyagvi ‖ jñāyasiddhāntaṃ [illegible] sa
+3. ptatyāṃkilayertthā ‖ stertthāḥkṛtsnasyaṣaṣṭitantrasyaā ‖ khyāyikāvirahitāḥ
+4. paravādavivarjji ‖ tāścāpi [illegible] itisāṃkhyakārikā ‖ samāptāhariḥśrī
+5. śarāsaṃkhyara ‖ [illegible] rararebbāntyagābhisañjārava ‖ namo [illegible] pāyanā
+6. [illegible] śiṃgajñi ‖ kṛmāṃgalyāyana [illegible] bhamaśliṣṭarāḻḻi ‖ vālayāyāñjaca
+7. [illegible] ślūṇaṇārā ‖ [illegible] dyūṣṭuraramama [illegible] vānyabharārabhra ‖ ḥrabbākhānaṃpra
+8. vacanaṃvidrākṣṇa [illegible] ‖ ññāṣyācehitta [illegible] śayandānaśuryyadragrājña ‖ [illegible] syālmandraḥkollatra
+9. rānaṣṭiṃdanasakhā ‖ namaijñakāranamāṣṭiṅkṛbhicya ‖ ra [illegible] racaittakorapamantra
+
+TRANSCRIPTION B
+1. nyaviracipañcaśikha ‖ yvetanbehudhākṛtaṃtantraṃñcāśiṣya ‖ paraṃparayāgatamīśvara
+2. kṛṣṇenacaitada ‖ ryyābhiḥ saṃkṣiptamāryyamatināsamyagvi ‖ jñāyasiddhāntaṃ [illegible] sa
+3. ptyāṃkilayertthā ‖ stertthāḥkṛtsnasyaṣaṣṭitantrasyā ‖ khyāyikāvirahitāḥ
+4. paravādavivarjji ‖ tāścāpiiti [illegible] sāṃkhya [illegible] ‖ samāptaḥ [illegible]
+5. śakābdasaṃkhya ‖ ākṣaraikoṇṭu [illegible] gārddhabhasākṣāva ‖ nameṇṭabhapāyana
+6. ādoddhakiṃgacci ‖ kamaṃgalūrāyana [illegible] maśśinivāyasthi ‖ vālayayāḻuca
+7. [illegible] ṣṭāṇaṇadā ‖ drunnūṭeṅkavāsṛtanāthanaḻi ‖ ḥtakhoṃbhānāṃpre
+8. vacanaṃvidyārtthi ‖ tthistopahitadhanānandanāmo ‖ āsyālmandaḥkollyata
+9. nānandasaṃghā ‖ namantra [illegible] kā [illegible] ādanamātma [illegible] cṛbhai ‖ [illegible] keṭa [illegible] kkāsipamau
+
+TRANSCRIPTION C
+1. nyabhirapipakṣaibhikhai ‖ [illegible] caitanvaihyayābhra [illegible] raṃkandravaṇṇadvittyapa ‖ naṃparayāṃhakamikṣon
+2. kraiṇṇanaiceraṭa ‖ [illegible] lyābhiḥsaṃkṣittakā [illegible] matināsāmyagi ‖ jñāyabiṭā [illegible] rāṃṭṭusa
+3. ṣṭraḷāmihāyairbā ‖ [illegible] kṣabbāḥkrūnna [illegible] nyaṣaṇṇitadrunyāhu ‖ ḷyāmikkāmitamitāḥ
+4. parapādavipaṣṭhi ‖ taidvaṣyavakleu [illegible] krūsaṃkhyātatvakka ‖ samāsyāḥhilkri
+5. śaraൗsaṃghḻira ‖ ājararaibyanta [illegible] ntvagādrusajñāpa ‖ nabañjādapāyanaൗ
+6. ādaൗbhūmiṃgami ‖ kramaṃgacchāyana [illegible] yanāmaṣṭivirāṣṭi ‖ vācchayāññuca
+7. ākhyānaṇavā ‖ dyubhūrābhādaikkava [illegible] āvānyattarāntva ‖ ḥrabbābānaṃpra
+8. vacanaṃbidrākṣi ‖ trajñabāpahiātaga [illegible] tayandānabdannātmāu ‖ ānyālmandraḥkaiāccanta
+9. nānandiḥbenasaḍā ‖ namaśrejñā [illegible] ānadānijñakraṭṭiprao ‖ baracaonyakṣobipamatra
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

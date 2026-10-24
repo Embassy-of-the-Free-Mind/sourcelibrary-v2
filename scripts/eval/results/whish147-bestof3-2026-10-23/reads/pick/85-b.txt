@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three is readable text, but B's "dṛṣṭava…ḥ" matches the Sāṅkhyakārikā's "dṛṣṭavad ānuśravikaḥ" (kārikā 2); A has more syllables but they are scattered fragments, and C has almost nothing but visarga and anusvāra marks.

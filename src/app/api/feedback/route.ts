@@ -10,6 +10,7 @@ import { sanitizeFeedbackImages } from '@/lib/feedback-images';
 import { parsePageReport, pageReportMessage } from '@/lib/page-report';
 import { resolveTenantFromRequest } from '@/proxy';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { sisterSite, sisterCorsHeaders } from '@/lib/sister-sites';
 
 /**
  * One constant, shared with the `submit_feedback` tool schema that advertises it.
@@ -55,8 +56,20 @@ async function resolveFeedbackTenant(
   return { tenant_slug: null, tenant_id: null, tenant_source: 'none' };
 }
 
-// POST /api/feedback — save feedback
+// POST /api/feedback — save feedback. A sister site's widget (src/lib/sister-sites.ts)
+// posts here cross-origin, so every response, the 429 and 400s included, carries
+// its CORS headers; for any other caller the headers are empty.
 export async function POST(request: NextRequest) {
+  const response = await saveFeedback(request);
+  for (const [k, v] of Object.entries(sisterCorsHeaders(request))) response.headers.set(k, v);
+  return response;
+}
+
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, { status: 204, headers: sisterCorsHeaders(request) });
+}
+
+async function saveFeedback(request: NextRequest): Promise<NextResponse> {
   try {
     const limited = await guardPublicSubmission(request, 'feedback');
     if (limited) return limited;
@@ -114,16 +127,21 @@ export async function POST(request: NextRequest) {
     // than rejected, so a stale attachment never costs the reader their message.
     const images = sanitizeFeedbackImages(rawImages);
     const tenant = await resolveFeedbackTenant(request);
+    // A sister site's page is stored as a full URL, so the admin inbox link opens
+    // the page the reader was on rather than the same path on this site.
+    const sister = sisterSite(request);
+    const pageValue = page && sister && typeof page === 'string' && page.startsWith('/') ? `${sister.origin}${page}` : page || null;
 
     const doc = {
       message: message.trim(),
-      page: page || null,
+      page: pageValue,
       name: name?.trim() || null,
       email: trimmedEmail,
       ip_hash: ipHash,
       user_agent: userAgent,
       channel,
       ...tenant,
+      ...(sister ? { site: sister.site } : {}),
       created_at: new Date(),
       read: false,
       wants_to_help: wantsHelp,
@@ -155,7 +173,7 @@ export async function POST(request: NextRequest) {
             signals: {
               type: 'feedback',
               message: message.trim(),
-              page: page || null,
+              page: pageValue,
               at: new Date(),
             },
           },

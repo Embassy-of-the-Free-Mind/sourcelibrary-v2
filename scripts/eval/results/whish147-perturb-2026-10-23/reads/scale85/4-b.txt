@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപത[illegible] ‖ യെനമഃഅവിഘ്നമന്തു[illegible]ഃ[illegible]യാദി ‖ ഷ്വാരാജ്ഞജ്ഞാസാര
+ROW 2 | ദഭ്രിബ്യാതകക്കെ[illegible] ‖ ഒത്രദ്ദലെച്ഛസാഘ്രാഭ്രാചെചെഞ്ച ‖ [illegible]രകാരഭാക്താദ്രൂതെരാ
+ROW 3 | ടേയാൽഹാഃദ്ദ ‖ ഷ്ടപാദാന്ത്രുവികാൻഹ്യവിത്ര ‖ ത്രിഷ്ണോദിഗയ്യ
+ROW 4 | ജ്ജഃഒളിപരി ‖ കൈശ്രയാൻപ്യക്തപ്യക്തങ്ങളെ[illegible] ‖ വിജ്ഞാനനാത്ഥക്തല
+ROW 5 | പ്രക്യതികവിദ്ദു ‖ ക്തിഷ്ഠപാദാദ്രൃഃപ്രകൃതിവി ‖ കൃതയാണ്ണക്ഷേയാ
+ROW 6 | ഡനകിഭകി ‖ കിഴയെഡാന്ത്രകൃതിന്ത്തിതു ‖ കിഃപക്യഭിഃസാക്ഷി
+ROW 7 | മനമാനമി ‖ ക്ഷ്വപചണക്ഷസക്ഷുപ്രമാണ ‖ സിദ്ധ്യാൽപ്രവി
+ROW 8 | യംപ്രമാണമിഷ്ടന ‖ ന്ദ്രപ്രമേയസിദ്ധിഃ।ന്ദ്രപ്രകൃതിവിവ ‖ യോര്യവസായെയാദ്ര
+ROW 9 | ഷ്ടമ്രിവായമ[illegible] ‖ നമന്ദ്വമാന്മ്യാതംതദ്ദ്വിംഗഭിം ‖ ഗിഷ്ഠക്രമാഷ്ണക്രി
+ROW 10 | [illegible] ‖ [illegible]ത്ര[illegible]മാണാദ്ദി[illegible] ‖ [illegible]
+NOTE | Low confidence. I can make out the stroke shapes, but most aksharas and conjuncts are guesses, so many sequences don't form real words; treat this only as a rough guide to the glyphs. Row 1 probably opens with a ഹരിഃശ്രീ… invocation. In row 8, പ്രമേയസിദ്ധിഃ। is fairly clear. Row 10 is very faint, appears only in the middle column, and may be ink showing through from another leaf. The "9" in the left margin is not included.

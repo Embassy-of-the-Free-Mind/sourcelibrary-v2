@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { serveEnglishOriginalPage, servesTranscriptionInsteadOfTranslation, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { expandPersonNames } from '@/lib/search/name-variants';
@@ -8,8 +9,9 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBookReadable } from '@/lib/book-access';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { frontMatterVerdict } from '@/lib/front-matter';
-import { scorePages } from '@/lib/passage-score';
+import { scorePages, phraseMatch, tokenize } from '@/lib/passage-score';
 import { semanticCoverage, type SemanticCoverage } from '@/lib/semantic-coverage';
+import { keywordSearchMode, serveKeywordPages } from '@/lib/keyword-search';
 
 /**
  * How many pages to pull before scoring. The cap must be applied AFTER ranking,
@@ -28,12 +30,18 @@ interface SearchResult {
   pageNumber: number;
   matches: SearchMatch[];
   /**
-   * Relevance in 0-1, normalised within its own leg. Surfaced because
-   * search_concept documents its 0.70/0.55 calibration and this tool did not,
-   * so a caller had no way to tell a real hit at rank 20 from noise
+   * How well this page answers the query, 0-1 on an ABSOLUTE scale (#3699):
+   * the higher of `similarity` and `phrase_match`, or 1 for a one-word query
+   * the page prints. It is not stretched against the book's best hit, so a
+   * query the book cannot answer scores low everywhere. Surfaced because
+   * search_concept documents its 0.70/0.55 calibration and this tool did not
    * (#3653 follow-up #4, item 1c).
    */
   score?: number;
+  /** Raw cosine similarity from the semantic leg — the same scale search_concept calibrates. */
+  similarity?: number;
+  /** 0-1: how much of a multi-word query the page prints in order at one place (passage-score.ts). */
+  phrase_match?: number;
   /** Which leg found this page. Both, when they agree — a strong signal. */
   found_by?: 'keyword' | 'semantic' | 'both';
   /** Introduction / preface / contents rather than the body — see src/lib/front-matter.ts. */
@@ -130,7 +138,7 @@ export async function GET(
     // doc is found we preserve prior behavior (just search pages) rather than 404.
     const gateBook = await db.collection('books').findOne(
       { $or: [{ id: bookId }, { slug: bookId }] },
-      { projection: { id: 1, visible: 1, pages_translated: 1 } }
+      { projection: { id: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -144,6 +152,9 @@ export async function GET(
     const rawKeywordScore = new Map<string, number>();
     /** Semantic relevance — cosine similarity, already 0-1. */
     const rawSemanticScore = new Map<string, number>();
+
+    /** Whether the keyword page service answered the keyword leg (logged with the search). */
+    let keywordLane: 'served' | 'fallback' | undefined;
 
     // Run keyword search and semantic search in parallel
     const [keywordResults, semanticResults] = await Promise.all([
@@ -190,13 +201,50 @@ export async function GET(
           }
         }
 
-        let pages: Record<string, unknown>[];
+        let pages: Record<string, unknown>[] = [];
         let usedAtlas = false;
 
         try {
           // Other spellings of a person the query names (Drebbel → Drebelius); [] otherwise (#5888).
           const nameVariants = await expandPersonNames(trimmedQuery);
-          pages = await db.collection('pages').aggregate([
+          // The keyword page service (#6852, #2049), when it serves /api/search:
+          // the same BM25 over the same two fields, from RAM on Hetzner. A cold
+          // book-filtered Atlas $search took 0.3–5.7 s (p90 4.2 s) on 30 real
+          // calls, almost all of it before the first document came back; the
+          // service answers in tens of ms and the pages are then read by id.
+          // Only for a LIVE book: the service holds no other, and this route
+          // admits a hidden one for an editor. Not on a tenant host. On any
+          // error or timeout, Atlas below, as before.
+          const live = !!gateBook && gateBook.visible === true && Number(gateBook.pages_count) > 0 && gateBook.hidden !== true;
+          if (live && !tenantContext.id && keywordSearchMode() === 'serve') {
+            try {
+              const { r, docs } = await serveKeywordPages(db, {
+                query: trimmedQuery,
+                // A margin for the non-content pages hydration drops, which the
+                // Atlas pool filters before its $limit.
+                k: CANDIDATE_POOL + 50,
+                bookIds: [gateBook.id as string],
+                // The Atlas leg ORs the variants into its one query; the service
+                // asks them as a second list (pages printing a variant), which
+                // follows the main list here as it does in /api/search.
+                variants: nameVariants,
+                variantK: CANDIDATE_POOL,
+                rollup: null,
+              }, { query: matchQuery, variants: nameVariants });
+              const seen = new Set(r.main.map((x) => x.page_id));
+              const order = new Map([...r.main, ...r.variants.filter((x) => !seen.has(x.page_id))].map((x, i) => [x.page_id, i]));
+              pages = docs
+                .filter((d) => order.has(d.id as string))
+                .sort((a, b) => order.get(a.id as string)! - order.get(b.id as string)!)
+                .slice(0, CANDIDATE_POOL);
+              usedAtlas = true; // same shape: searchScore + highlights (synthesized)
+              keywordLane = 'served';
+            } catch (err) {
+              console.warn('[book-search] keyword service failed, using Atlas:', err instanceof Error ? err.message : String(err));
+              keywordLane = 'fallback';
+            }
+          }
+          if (!usedAtlas) pages = await db.collection('pages').aggregate([
             buildPageSearchStage(trimmedQuery, bookId, { nameVariants }),
             { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             // NO { $sort: { page_number: 1 } }, { $limit: 50 }. Atlas returns in
@@ -257,7 +305,11 @@ export async function GET(
         }
 
         const results: SearchResult[] = [];
-        for (const page of pages) {
+        for (const rawPage of pages) {
+          // English edition, English leaf: a hit that lives only in the stored
+          // English-to-English rewording is not on the page and is not served
+          // as a snippet (#7100).
+          const page = serveEnglishOriginalPage(rawPage, gateBook, { modernized: false });
           const matches: SearchMatch[] = [];
 
           if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
@@ -355,16 +407,22 @@ export async function GET(
             scoreText.set(p.page_id, cleanText(ocrById.get(p.page_id) || p.snippet));
             rawSemanticScore.set(p.page_id, p.score ?? 0);
           }
-          return kept.map(p => ({
-            pageId: p.page_id,
-            pageNumber: p.page_number,
-            matches: [{
-              field: 'translation' as const,
-              snippet: p.snippet,
-              position: 0,
-            }],
-            ...frontMatterVerdict(ocrById.get(p.page_id)),
-          }));
+          return kept.map(p => {
+            // The lane's snippet is `page_translations.translation`; on an
+            // English edition's English leaf that is the stored rewording, so
+            // the snippet comes from the transcription instead (#7100).
+            const ocr = ocrById.get(p.page_id);
+            const fromOcr = servesTranscriptionInsteadOfTranslation({ ocr: { data: ocr }, translation: { data: p.snippet } }, gateBook);
+            const match: SearchMatch = fromOcr
+              ? { field: 'ocr', snippet: cleanText(ocr || '').slice(0, p.snippet.length), position: 0 }
+              : { field: 'translation', snippet: p.snippet, position: 0 };
+            return {
+              pageId: p.page_id,
+              pageNumber: p.page_number,
+              matches: [match],
+              ...frontMatterVerdict(ocr),
+            };
+          });
         } catch {
           return [];
         }
@@ -397,14 +455,40 @@ export async function GET(
     }
     const results = [...byPage.values()];
 
+    // Two numbers per page, kept apart on purpose (#3699).
+    //
+    // `rank` orders the list: each leg normalised against its own best hit, as
+    // above. It is only ever compared within this one response, and is never
+    // returned.
+    //
+    // `score` is what the caller reads, and it must be able to say "nothing
+    // here". Normalising it within the book could not: the best of a bad lot
+    // was always 1.0, so "zebra pancake velocipede submarine trombone" scored
+    // 1.0 on Taylor's Metaphysics exactly as the sentence on p.264 did. So it
+    // is built only from absolute measures — the raw cosine, and how much of
+    // the query the page prints together.
+    const rank = new Map<SearchResult, number>();
     const maxKeyword = Math.max(0, ...rawKeywordScore.values());
     const maxSemantic = Math.max(0, ...rawSemanticScore.values());
-    for (const r of results) {
+    const oneWord = tokenize(matchQuery).length < 2;
+    const phrase = phraseMatch(matchQuery, results.map((r) => scoreText.get(r.pageId) ?? ''));
+    results.forEach((r, i) => {
       const kw = maxKeyword > 0 ? (rawKeywordScore.get(r.pageId) ?? 0) / maxKeyword : 0;
       const sem = maxSemantic > 0 ? (rawSemanticScore.get(r.pageId) ?? 0) / maxSemantic : 0;
-      r.score = Math.round(Math.max(kw, sem) * 1000) / 1000;
+      rank.set(r, Math.max(kw, sem));
       if (!r.found_by) r.found_by = rawSemanticScore.has(r.pageId) && !rawKeywordScore.has(r.pageId) ? 'semantic' : 'keyword';
-    }
+
+      const lexical = r.found_by !== 'semantic';
+      if (rawSemanticScore.has(r.pageId)) r.similarity = Math.round(rawSemanticScore.get(r.pageId)! * 1000) / 1000;
+      // A page found by meaning alone has no claim to print the words, and
+      // search_translations omits phrase_match for it too.
+      if (lexical && phrase.length) r.phrase_match = Math.round(phrase[i].match * 100) / 100;
+      // A one-word query has no order to match: a keyword hit prints the word
+      // (the snippet is cut around it, or the page is dropped), which is the
+      // whole query.
+      const printed = lexical ? (oneWord ? 1 : r.phrase_match ?? 0) : 0;
+      r.score = Math.round(Math.max(printed, r.similarity ?? 0) * 1000) / 1000;
+    });
 
     // ---- Rank ----
     //
@@ -422,7 +506,7 @@ export async function GET(
     // was never the scorer — it was the $sort that threw the scorer's answer
     // away. Rescoring here would be re-introducing it in a subtler form.
     const byScore = (a: SearchResult, b: SearchResult) =>
-      (b.score ?? 0) - (a.score ?? 0) || a.pageNumber - b.pageNumber;
+      (rank.get(b) ?? 0) - (rank.get(a) ?? 0) || a.pageNumber - b.pageNumber;
     const ranked = [
       ...results.filter((r) => !r.is_front_matter).sort(byScore),
       ...results.filter((r) => r.is_front_matter).sort(byScore),
@@ -462,7 +546,7 @@ export async function GET(
     logSearchEvent({
       request, db, query: trimmedQuery, resultsCount: results.length, source: 'book_search',
       tenantId: tenantContext.id || null,
-      filters: { book_id: bookId, lang: textLang },
+      filters: { book_id: bookId, lang: textLang, ...(keywordLane ? { keyword_lane: keywordLane } : {}) },
     });
 
     return NextResponse.json({

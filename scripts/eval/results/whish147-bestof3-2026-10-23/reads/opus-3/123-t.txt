@@ -1,0 +1,9 @@
+ROW 1 | ഉദാഹരന്തി[illegible]ഷ്ടണഭിഃ ഗുണഭാലക്ഷണ[illegible]യുക്തി[illegible]ദ്രൌ[illegible]ക്കിഭിയാ[illegible]ൎക്കൾ ഓപരന്ത്ര[illegible]രസ്മ
+ROW 2 | പായികാരണത്താൽ [illegible]ഭേദമി[illegible]ദ്ധ്യാ[illegible]പാദണാനാ[illegible]ക്കിൽ പ[illegible]ത്വം. ലക്ഷണത്തിന്ന[illegible]
+ROW 3 | ഃതെ[illegible]സ്സ്ഥം. മഡാ ‖ ഗൃഹ്യം. മൈന്ദ്രി[illegible]ത്തങ്ങൾ ഭ്രാ ‖ ന്നം. സാംസിദ്ധികം. പ്ര[illegible]
+ROW 4 | ല്പാമൈനാമിങ്ങിക ‖ മദാഗന[illegible]ത്രൂതാദാദി[illegible]ഭെജ്ഞ ‖ ന്നതഭാന്ത്യവങ്ങദാവി
+ROW 5 | ത്തിഃ ഒന്നിവാം. ലക്ഷ്മ ‖ യത്തിക്ക[illegible]ങ്ങൾത്തിക്കാലദാദാചത്തി ‖ പ്രാക്തിപാദനായഗുണ
+ROW 6 | ഉത്തി[illegible]പാദാവ ‖ ത്ത്യാക്ക്യപാദനണാ[illegible]വിഞ്ഞിടാഒ ‖ [illegible]ഗാങ്ങം. ലക്ഷ്മയത്തിഃ ഒത്താ
+ROW 7 | ഒത്തിരുന്നതെ[illegible] ‖ പ്രാക്തിപാദണൈരയുണ്ണത്തിരുപാദാവ ‖ [illegible]പത്തിപാദനായ ഒത്താ[illegible]
+ROW 8 | ശബ്ദജ്ഞാവിധിഃ സം[illegible] ‖ യാഗമജ്ഞാപ്പിടാഗങ്ങം. ശബ്ദശാസ്ത്ര[illegible] ‖ [illegible]ത്രാദ്യാഭെദ[illegible]ദണ്ഡസം[illegible]
+NOTE | Each glyph is a best guess from the plain-resolution images, so maybe 40–50% is secure. Rows 1–2 and 7–8 run the full width. Rows 3–5 (and possibly 6) are written in separate columns, so I put a ‖ in every row 3–8 for the two hole positions. Several conjuncts, the dot-reph and the chillus are uncertain. A small mark below row 8 in p03 (possibly a folio number) is left out.

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | All three transcriptions are identical and entirely [illegible], so there is no text to compare; the ranking is arbitrary and A is picked only as a placeholder.

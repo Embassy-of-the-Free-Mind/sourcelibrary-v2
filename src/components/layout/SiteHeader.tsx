@@ -8,11 +8,12 @@ import UserMenu from './UserMenu';
 import LanguageMenu, { HEADER_LANGUAGE_NAME } from './LanguageMenu';
 import SiteMenuPanel from './SiteMenuPanel';
 import { Search, X } from 'lucide-react';
-import { useLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
+import { useChromeLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { trackEvent } from '@/lib/track-event';
+import { adminMenuLinks } from '@/lib/admin-links';
 
 interface NavLink {
   key: keyof NavStrings;
@@ -103,7 +104,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const searchInputRef = useRef<HTMLInputElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-  const pathnameLocale = useLocale();
+  const pathnameLocale = useChromeLocale();
   // Prefer the homepage's explicit locale (server-known) over the pathname-
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
@@ -250,9 +251,16 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     image: session.user?.image,
     initials: (session.user?.name?.split(' ').map((n) => n[0]).join('') || session.user?.email?.[0] || '?').toUpperCase().slice(0, 2),
   } : undefined;
+  // Admins get the avatar dropdown's admin links inside the phone menu too;
+  // without them the menu's Account button was their only way in, and /account
+  // has none. Readers keep the plain Account button.
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const adminLinks = role === 'admin' || role === 'superadmin'
+    ? adminMenuLinks({ role }).map((l) => ({ href: l.href, label: l.label }))
+    : undefined;
 
   return (
-    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-30 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
+    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-40 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
       <header
         data-site-header=""
         className={`${barBg} text-white ${position}`}
@@ -382,7 +390,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           label: HEADER_LANGUAGE_NAME[l],
           current: l === locale,
         }))}
-        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar }}
+        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar, adminLinks }}
         support={showSupport ? { href: '/give', label: t.support, onClick: onSupportClick } : null}
         instant={closeInstantly}
       />

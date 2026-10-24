@@ -657,6 +657,7 @@ function processChildren(children: ReactNode, showNotes: boolean): ReactNode {
 
 // Metadata panel component (collapsible)
 function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
+  const strings = getReaderStrings(useLocale()).panes;
   const [isOpen, setIsOpen] = useState(false);
   // The OCR's <warning> is usually a note on the object's condition (yellowing,
   // tears, a stain over the text) and used to render as a red banner on every
@@ -689,8 +690,8 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
         <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
           <span className="font-bold">✍</span>
           <span>
-            <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
-            {': transcription may contain uncertain readings'}
+            <span className="font-medium">{metadata.scriptType === 'handwritten' ? strings.handwrittenManuscript : strings.mixedManuscript}</span>
+            {`: ${strings.uncertainReadings}`}
           </span>
         </div>
       )}
@@ -753,7 +754,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
         )}
         {(metadata.pageNumber || metadata.folio) && (
           <span className="px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
-            {metadata.folio ? `f. ${metadata.folio}` : `p. ${metadata.pageNumber}`}
+            {metadata.folio ? strings.folioLabel(metadata.folio) : strings.pageNumberLabel(metadata.pageNumber ?? '')}
           </span>
         )}
         {metadata.signature && (
@@ -1151,8 +1152,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
               <span className="font-bold flex-shrink-0">✍</span>
               <span>
-                <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
-                {': transcription may contain uncertain readings'}
+                <span className="font-medium">{metadata.scriptType === 'handwritten' ? readerStrings.handwrittenManuscript : readerStrings.mixedManuscript}</span>
+                {`: ${readerStrings.uncertainReadings}`}
               </span>
             </div>
           )}

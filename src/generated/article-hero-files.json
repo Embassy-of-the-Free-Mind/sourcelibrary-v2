@@ -107,6 +107,18 @@
    }
   ]
  },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1920.avif",
+    "w": 1000
+   }
+  ]
+ },
  "https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg": {
   "srcset": [
    {
@@ -359,6 +371,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1920.avif",
+    "w": 1571
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg": {
   "srcset": [
    {
@@ -539,6 +563,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg": {
   "srcset": [
    {
@@ -623,6 +659,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/7860e991aaf3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/7860e991aaf3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg": {
   "srcset": [
    {
@@ -679,6 +727,30 @@
    },
    {
     "src": "/articles/heroes/f33be1ffbbe5-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/b262481ab30c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/b262481ab30c-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1920.avif",
     "w": 1920
    }
   ]
@@ -824,6 +896,30 @@
    {
     "src": "/articles/heroes/089f8826e202-1920.avif",
     "w": 892
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/308b2a49e881-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/308b2a49e881-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1920.avif",
+    "w": 1920
    }
   ]
  },

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three has any readable text, since every row is [illegible], so the ranking is almost arbitrary; I put B and C above A only because they agree that rows 1–4 have no string-hole breaks, and B and C are otherwise identical.

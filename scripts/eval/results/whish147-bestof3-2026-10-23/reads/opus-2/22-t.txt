@@ -1,0 +1,11 @@
+ROW 1 | ഉകംക്രാപിതജ്ജേദ്ദേനപ്രയാനന്ദൂത്ര[illegible]‖െതപ്രയാനന്യ്[illegible]‖ന്നൂത്വപ്രതിപത്തിഃകാൎയ്യ
+ROW 2 | ദഉത്ര[illegible]ഃപുരുഷന്ത്രാാന്ത്രപ്രത്രപൈത്ത‖ാൗൈഹകംയക്ഷ്യകി‖കിം[illegible]ാണ്ഡിന്ത്രാഹ
+ROW 3 | ലവാദാദിതജ്ജക‖ാജ്ഞമിക്കമവാൾചെക്തിക്ഷ്യദ്ദ്യ‖ന്ത്രതേവാദാദ്വിവർ
+ROW 4 | തെനിഷ്ഠമക്കിത‖കപ്രയാനം[illegible]െന്ത്രദമവാദ്ദദ്ദ[illegible]‖ലാർ്യംന്ദ്രാഭിം[illegible]
+ROW 5 | കഥനസ്യകാദ‖ശ്യന്ത്രാദിക്ഷേദദദർപ്രകൃതിവിഭ്ര‖പംന്ധ്യരൂപന്തോമി
+ROW 6 | തദ്യത്തിപ്രതിക്ര‖കഃപ്രയാനന്ത്രാസട്ടയമദ്ദര‖ലശത്രുതഃസിദ്ധ
+ROW 7 | കനത്രവൈതാങ്കവി‖ജ്ഞകൈതൽകാദേഷ്ടംകാരണാദ‖ദ്വിതീയമരനാം[illegible]
+ROW 8 | സിദ്ധിദ്ധമക്ക[illegible]‖സർവ്വംചാസദ്ധസടസ[illegible]ക്കികക്കിക‖[illegible]വിക്കയക്ഷ്മദ്ദൂരാതി
+ROW 9 | തദ്ധാൾസ്ദാൻ[illegible]‖ണാലമദ്രകെക്ഷ[illegible]ഭവശക്കദ്ദകെതെ‖[illegible]ഷ്ണിക്കാദ്യ[illegible]ക്കിദ്ദൃഷ്ടിനേ
+
+NOTE | I read the stroke shapes for all 9 rows across the 3 columns, but the result is unreliable. Many conjuncts and vowel signs are guesses, and some signs will be in the wrong place because the vowel marks are written before the consonant. Where the pieces overlap (p02→p03, p03→p04) the joins are uncertain. Rows 1, 2 and 9 are especially weak. I did not fill in anything from the Sāṅkhyakārikā, so this should not be cited without checking it against the leaf.

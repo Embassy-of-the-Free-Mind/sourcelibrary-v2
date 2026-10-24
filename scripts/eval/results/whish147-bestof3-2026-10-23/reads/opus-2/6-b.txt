@@ -1,0 +1,10 @@
+ROW 1 | ബുദ്ധിൎദ്ധൎമ്മൊജ്ഞാനം.വിരാ‖ഗഐശ്വൎയ്യം.സാത്വികമെതദ്രൂപം.താമ‖സമസ്മാദ്വിപൎയ്യസ്തം॥[illegible]॥
+ROW 2 | ഭിമാനൊഹംകാര‖സ്തസ്മാദ്ദ്വിവിധഃപ്രവൎത്തതെസൎഗ്ഗഃഏ‖കാദശകശ്ചഗണസ്തന്മാ
+ROW 3 | ത്രപഞ്ചകശ്ചൈവ‖[illegible]സാത്വികഏകാദശകഃ‖പ്രവൎത്തതെവൈ
+ROW 4 | കൃതാദഹംകാരാ‖ൽഭൂതാദെസ്തന്മാത്രസ്സതാമസ‖സ്തൈജസാദുഭ
+ROW 5 | യം[illegible]ബുദ്ധീന്ദ്രി‖യാണിചക്ഷുശ്ശ്രൊത്രഘ്രാണ‖രസനത്വഗാഖ്യാ
+ROW 6 | നിവാക്പാണി‖പാദപായൂപസ്ഥാൻകൎമ്മേ‖ന്ദ്രിയാണ്യാഹു[illegible]
+ROW 7 | ഉഭയാത്മകമ‖ത്രമനസ്സംകല്പകമിന്ദ്രിയഞ്ചസാ‖ധൎമ്മ്യാൽഗുണപരി
+ROW 8 | ണാമവിശെഷാന്നാ‖നാത്വംബാഹ്യഭെദാശ്ച[illegible]‖രൂപാദിഷുപഞ്ചാ
+ROW 9 | നാമാലൊചനമാ‖ത്രമിഷ്യതെവൃത്തിഃവചനാദാനവി‖ഹരണൊത്സൎഗ്ഗാനന്ദാശ്
+NOTE | All 9 rows have ink; the leaf covers kārikās 23–28. The [illegible] spots are verse numbers or dandas, read as "ചെഷ്ടു!" in row 1, "ഡ്യൂഃ" in row 3, two marks like "ഃ" in row 5, and a squiggle after "ശ്ച" in rows 6/8. Many glyphs were ambiguous (especially in rows 1–4). Once I recognised the passage, it guided how I resolved them, so treat individual akṣaras, chillus and vowel signs as lower confidence than the overall text.

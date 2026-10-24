@@ -351,6 +351,23 @@ await restoreRevision(revisionId, 'admin@sourcelibrary.org');
 // Saves current content as new revision first, then restores old content
 ```
 
+### The one writer, and undoing a whole run (#7058)
+
+`writePageText(db, pageId, field, next, { by, reason, run_id })` —
+`scripts/lib/page-text-writer.mjs`, TS twin `src/lib/page-text-writer.ts` — is the writer every
+page-text write is moving to. Each call appends a revision carrying the WHOLE prior field (`data`
+plus every other key under `meta`, `prior_state`), `by`, `reason`, `run_id`, `prior_hash`,
+`next_hash` and `writer: 'page-text-writer/1'`, then sets the field compare-and-set on the prior
+text (a race marks the row `aborted: 'conflict'`). `next = null` is an edit to empty: still a
+revision, and the field is `$unset`. Human-edited fields are refused unless `overrideHumanEdit`.
+`priorFieldFromRevision(row)` rebuilds the exact prior value.
+
+`scripts/maintenance/revert-run.mjs --run-id X [--apply]` undoes every write a run made, only on
+pages that still hold what the run wrote, then `recountBook()`s. First adopter:
+`reset-book-ocr.mjs`, which prints its run id. `tests/unit/text-writers-use-provenance-builder.test.ts`
+fails any new file that writes or clears page text without the writer; today's writers are
+grandfathered in `tests/unit/fixtures/page-text-writers-grandfathered.json`, a list that only shrinks.
+
 ### Querying history
 
 ```javascript
@@ -360,6 +377,8 @@ db.page_revisions.find({ page_id: pageId, field: 'ocr' }).sort({ created_at: -1 
 // All revisions for a page's translation
 db.page_revisions.find({ page_id: pageId, field: 'translation' }).sort({ created_at: -1 })
 ```
+
+**Reads that were never written** (eval arms, failed gates, pilot reads) are not in `page_revisions`. They are in the private R2 bucket `sl-corpus-snapshots` under `candidate-reads/<book_id>/<page_id>/<ocr|translation>/<content_hash>.json` (text + the job's meta), kept the moment they are made by the read stages of `claude-ocr.mjs`, `cli-ocr.mjs`, `cli-translate.mjs`, `claude-translate.mjs` and `ocr-convergence/correct.mjs` (`scripts/lib/candidate-reads.mjs`), and swept from job folders by `scripts/maintenance/archive-candidate-reads.mjs` (also at every `claude-job.sh` DONE). Those readers reuse a kept read of the same page, model, prompt and input instead of calling, unless `--fresh`. List a page's reads with `archive-candidate-reads.mjs list --page=<id> [--text]` (#7075).
 
 ## 3. Book Revisions — What Was on This Book Before?
 

@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] rtthatvāltri ‖ guṇādiviparyyayādadhiṣṭhānālpuruṣa ‖ ṣostibhoktṛbhāvāl [illegible]
+2. kaivalyārtthapravṛtte [illegible] ‖ [illegible] jjananama [illegible] nabhekaṇanonāṃpra ‖ [illegible] ttibamādṛśyakṣagavalpra
+3. [illegible] ttarakāryya ‖ [illegible] viddhāretraiguṇyāvi ‖ pakṣa [illegible] vaṃ
+4. [illegible] [illegible] vi ‖ pakṣābālniṣṭhāsākṣikama ‖ [illegible] pṛthaktvādeka
+5. [illegible] ṃmātra [illegible] ‖ [illegible] ka [illegible] ‖ [illegible] [illegible] l
+6. saṃyogādda ‖ caka [illegible] nāparipaki ‖ ṃgaṃguṇe [illegible]
+7. [illegible] ‖ paṭa [illegible] ni [illegible] ‖ [illegible] ṃo
+8. kaivalyārttha ‖ māprayānasyā [illegible] ‖ [illegible]
+9. [illegible] ḻukta [illegible] [illegible] ‖ [illegible] ‖ [illegible] loyānavisaṃyoga
+10. [illegible] ‖ [illegible] lpa [illegible] ‖ [illegible]
+
+TRANSCRIPTION B
+1. ghātaparārtthatvāltriguṇādiviparyyayādadhiṣṭhānālpuruṣostibhoktṛbhāvālkai
+2. valyārtthaṃpravṛtteśca [illegible] jananamaraṇakaraṇānāṃpratiniyamādayugapalpra
+3. vṛtteścapu ‖ ruṣabahutvaṃsiddhaṃ ‖ traiguṇyaviparyyayāccaiva
+4. [illegible] 18 [illegible] ccavi ‖ paryyāsālsiddhaṃsākṣitvama ‖ syapuruṣasyakai
+5. valyaṃmāddhyasthya ‖ ṃdraṣṭṛtvamakarttṛbhāva ‖ śca19tasmāl
+6. tsaṃyogāda ‖ cetanaṃcetanāvadivali ‖ ṃgaṃguṇakarttṛtve
+7. catathākartte ‖ vabhavatyudāsīnaḥ20puruṣa ‖ syadarśanārtthaṃ
+8. kaivalyārtthaṃ ‖ tathāpradhānasyapaṃgvandhavadubha ‖ yorapisaṃyoga
+9. stalkṛtaḥsarggaḥ21prakṛtermmahāṃstatohaṅkārastasmādgaṇaścaṣoḍa
+10. śakaḥ [illegible] ādapiṣoḍaśakālpañcabhyaḥpañcabhūtāni22addhyavasāyo
+
+TRANSCRIPTION C
+1. ghātaparārtthāltriguṇādiviparyayādadhiṣṭhānālpuruṣostibhoktṛbhāvālkai
+2. valyārtthaṃpravṛtteśca [illegible] jananamaraṇakaraṇānāṃpratiniyamādayugapalpra
+3. vṛtteśca ‖ [illegible] bahutvaṃsiddhaṃtraiguṇyavi ‖ paryayāccaiva
+4. [illegible] tasmāccavi ‖ paryāsālsiddhaṃsākṣitvama ‖ syapuruṣasyakai
+5. valyaṃmāddhyasthya ‖ [illegible] draṣṭṛtvamakarttṛbhāva ‖ śca [illegible] tasmāl
+6. tsaṃyogāda ‖ cetanaṃcetanāvadivali ‖ ṃgaṃguṇakarttṛtve
+7. catathākartta ‖ [illegible] bhavatītyudāsīnaḥ [illegible] puruṣa ‖ syadarśanārtthaṃ
+8. kaivalyārttha ‖ [illegible] thāpradhānasyapaṃgvandhavadubha ‖ yorapisaṃyoga
+9. stalkṛtassarggaḥ [illegible] termmahāṃsta [illegible] haṃkārastasmālgaṇaścaṣoḍa
+10. śakaḥtasmādapiṣoḍaśakālpañcabhyaḥpañcabhūtāni [illegible] dhyavasāyo
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

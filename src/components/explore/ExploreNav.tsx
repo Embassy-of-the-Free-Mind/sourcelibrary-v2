@@ -76,6 +76,22 @@ const VIZ_CARDS: VizCard[] = [
     available: false,
   },
   {
+    href: '/explore/maps',
+    title: 'Theme maps',
+    description: 'What the library holds on a theme (ritual, the body, the mind), what you can read now, and what is missing.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+        <line x1="3" y1="20" x2="21" y2="20" />
+        <circle cx="6" cy="8" r="1.8" fill="currentColor" />
+        <circle cx="11" cy="13" r="1.8" />
+        <circle cx="15" cy="7" r="1.8" fill="currentColor" />
+        <circle cx="19" cy="14" r="1.8" strokeDasharray="1.5 1.2" />
+      </svg>
+    ),
+    color: 'var(--accent-rust)',
+    available: true,
+  },
+  {
     href: '/ngrams',
     title: 'Ngrams',
     description: 'How often words and phrases appear across five centuries of sources. Click any trend to read the pages behind it.',

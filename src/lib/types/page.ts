@@ -57,6 +57,14 @@ export interface Page {
   printed_page?: PrintedPage;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
+  /**
+   * SERVED-ONLY, never stored (#7100): on an English edition's English leaf the
+   * stored `translation` is withheld and, where it is only a light spelling
+   * edit of the transcription, offered here instead — labelled "Modernized
+   * spelling", off by default, never cited or exported. Attached by
+   * `serveEnglishOriginalPage` (src/lib/english-original-text.ts).
+   */
+  modernized_spelling?: { data: string; overlap: number };
   transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts
   created_at?: Date;
   updated_at?: Date;
@@ -257,6 +265,19 @@ export interface OcrData extends ProcessingMetadata {
     item_url: string;
     /** Which run of scripts/import/ia-ocr-ingest.mjs copied it (#4613): `ia-ocr-ingest/<ISO>/<host>@<sha>`. */
     ingest_run?: string;
+    /** Rights of the text (`iaTextLicence` in scripts/lib/ia-ocr-meta.mjs). The `ia_*` fields are what the item says. */
+    licence?: {
+      rule: 'ia-text-licence/1';
+      status: 'publicdomain' | 'not_recorded';
+      licence_url: string | null;
+      basis: string;
+      jurisdiction: 'US';
+      publication_year: number | null;
+      ia_rights: string | null;
+      ia_licenseurl: string | null;
+      ia_copyright_status: string | null;
+      ia_access_restricted: boolean;
+    };
   };
   agreement_ref?: {
     median: number; n: number; min_agreement: number; offset?: number; offset_share?: number;

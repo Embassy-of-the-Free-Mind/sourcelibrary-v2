@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śruyantrādhira tthiṃ ‖ [illegible] taśruyābhibhi2ṣṭāntaśrutikābhya ‖ ṃ [illegible] yogamapi [illegible] kapa
+2. jñānasyasāṃśru [illegible] ‖ ālkasyacaikavalyaprāpakatvāl ‖ tadai [illegible] kāntātyanta
+3. haibhāvāddṛṣṭā ‖ aidṛṣṭaśyānna [illegible] navādināditvādu ‖ [illegible] phalaprakṛtihā
+4. nādakṣayaphala ‖ jñanaratvalabdhāddhe [illegible] tiśaya ‖ phalaityānandavi
+5. kkālvaiśruyān ‖ skandhaprāpta [illegible] vyaktamuktāvi ‖ dyākkāvyaktami
+6. jñānāditthiba ‖ nityamaite [illegible] vacatiṃśru ‖ tatrāṇikagrai
+7. nnakarttumahatā ‖ bhadrakamaṣkatvaitraitādi ‖ ṃguṇaprakāraṃdya
+8. kkamucyatetetvabhrā ‖ jñaveṇṇapradhānasyavyaktatvālsavya ‖ vyaktaṃpradhānaṃtona
+9. siddhaiṣaiñāvyaktara ‖ ānālñjortthikrāṃśrūtānittajñānāki ‖ kiṅṅapuruṣabhaiti
+
+TRANSCRIPTION B
+1. śrayantritūma [illegible] āddiṃbha ‖ bhitaiśvaryādibhiḥdṛṣṭānuśravikābhyā ‖ bhyāṃyo [illegible] paṣitaḥkapa
+2. jñānasyasāṃśra ‖ ālkantyaikaivalyaprāpakatvāl ‖ ltadvai [illegible] kāra [illegible] nta
+3. ṣobhāvāddṛṣṭā ‖ śreyāngaḍiravi [illegible] bhikta ‖ ṣaphalaḥpratubhihā
+4. nādakṣayaphalaḥ ‖ ttanaryabandhayāguṇa [illegible] ‖ phalaityānśruvi
+5. kālvaśrayān ‖ sakṣaphaṃprāptakatvāha ‖ dvyaktāvyaktajña
+6. jñānāddikkiva ‖ bhitraijñānavakaiññaṃdha [illegible] ‖ kajñānakahṛe
+7. naśtramadādā ‖ bhiddakamejñatraipodi ‖ ṃgribhaprakāraṃvya
+8. kkamacyerarainabhra ‖ jraivaññuprayādanyavyaktatvāltadvya ‖ vyaktaṃpradhānaṃoekana
+9. ddidracaibādyakka ‖ ākādaljñelrvikkāṃśrū [illegible] nmaṇṭaṣaḍanigrikke ‖ kkaḥpuruṣaḥoeṟaṣṭi
+
+TRANSCRIPTION C
+1. śuddhantrāḍaratthiṃ ‖ bhitaśreyādibhiḥ dṛṣṭānuśravikābhyāṃ ‖ gho [illegible] khapabhitaḥkaṣa
+2. jñāna [illegible] saṃśre ‖ [illegible] ālkanyakaivalya [illegible] āpakarāl ‖ tai [illegible] kārā [illegible]
+3. [illegible] bhāvāddu [illegible] ‖ śreyān [illegible] ‖ [illegible] phalaḥprakṛti [illegible]
+4. nārakakṣayaphalaḥ ‖ [illegible] ‖ phala [illegible] tyā [illegible] vi
+5. kālvai [illegible] yān ‖ sa [illegible] ṃprā [illegible] ‖ [illegible]
+6. jñāna [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ ṃ [illegible] prakāra [illegible]
+8. kka [illegible] cya [illegible] ‖ [illegible] prayāna [illegible] vyakta [illegible] ‖ [illegible] ktaṃprayānaṃ [illegible]
+9. [illegible] ‖ [illegible] kāl [illegible] ‖ [illegible] jñaḥpuruṣaḥ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

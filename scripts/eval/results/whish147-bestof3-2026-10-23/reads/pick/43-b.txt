@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | Only B consistently follows the commentary on Sāṅkhyakārikā 33: "antaḥkaraṇaṃ trividhaṃ buddhirahaṃkāra…", "daśadhā bāhyam", "pañca buddhīndriyāṇi pañca karmendriyāṇi", "trayasya viṣayākhyam", "kālatrayasya"; C and A make sense only in scattered pieces like "karaṇaṃ dvividhaṃ bāhyam āntara".

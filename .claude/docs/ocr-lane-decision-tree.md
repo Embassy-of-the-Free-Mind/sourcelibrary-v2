@@ -26,8 +26,14 @@ you are about to pick `--model`, an engine, or a free lane by hand.
    that is in the **writer registry below as GAP** is not run until the gap is closed, however
    cheap the text is (the 47 Keely/Tesla residue pages stayed empty on 2026-09-30 until the
    MinerU gap closed the same day).
-2. **Batch API by default** for any Gemini read (`bulk-reocr-local.mjs`; #5244). Realtime is
-   for a reader waiting or a handful of pages, and needs `--realtime`.
+2. **The model fixes the channel (#7075).** gemini-3.1-flash-lite is the only Gemini model sent
+   to the paid API, Batch by default (`bulk-reocr-local.mjs`; #5244; realtime is for a reader
+   waiting or a handful of pages, and needs `--realtime`). Every other Gemini model (3 Flash,
+   3.x Flash, Pro) reads through the **agy CLI** on the subscription (`cli-ocr.mjs`), never the
+   API. Claude reads through `claude -p` (`claude-ocr.mjs`, `claude-ocr-two-read.mjs`), never via
+   agy. When a CLI lane has no quota the book **waits**; it never falls through to the API.
+   Enforced by `assertApiOcrModel` in `scripts/lib/ocr-routing.mjs` at every OCR submitter and
+   `tests/unit/ocr-api-channel-guard.test.ts`.
 3. **No Tesseract**, as an engine or as a free reference (Derek). Never Gemini below v3.
 4. **Split spreads before any read** (`needs_splitting` / `split_completed`, Phase 3.1); a
    two-leaf page is two discontinuous halves (#5260 `<leaf-break/>`).
@@ -36,6 +42,37 @@ you are about to pick `--model`, an engine, or a free lane by hand.
 6. **Cost is decided where the writer is dispatched**, not where the text lands: a held book
    pays nothing; a released book pays the dial for every downstream phase (`spend-controls.md`,
    `pipeline-status-truth.md` #4523). Quote the batch price before submitting.
+
+## The routing table (#7075): the evals choose the model, the model fixes the channel
+
+| model | channel | cost |
+|---|---|---|
+| gemini-3.1-flash-lite | paid Gemini **Batch** API | ~$1/1K pp measured (#6968) |
+| any other Gemini model (3 Flash, 3.x Flash, Pro) | **agy CLI** on the subscription (`cli-ocr.mjs`), never the API | $0, quota-bound |
+| Claude Opus | `claude -p` on the subscription (`claude-ocr.mjs`), never via agy | $0, quota-bound |
+| Kraken / Yigdzin / Paddle / MinerU | Hetzner or GPU lanes | $0 marginal |
+
+| script / material | OCR reader | evidence | in code |
+|---|---|---|---|
+| Latin-script print (la, fr, de, it, nl, en …) | flash-lite, Batch | default since 2026-09-11 (`OCR_LITE_ONLY`) | `getOcrModelForBook` → lite |
+| Greek | 3 Flash via agy | CER 6.6% flash vs 11% lite, 176 referenced books (#5575) | `FLASH_OCR_FROM.grc` |
+| Persian, Sanskrit, Pali, Arabic | 3 Flash via agy | flash re-read lifts judged translation fidelity +1.00 / +0.75 / +0.58 / +0.39 (#5700, PR #5760) | `FLASH_OCR_FROM` |
+| Ge'ez | in the Flash list on agreement only; the issue marks it "not Flash" — open | #4729 agreement 0.47, 9/20 catastrophic | `FLASH_OCR_FROM.gez` |
+| Chinese print (woodblock) | 3 Flash via agy | median CER 5.2%, 0/198 catastrophic; lite 3/198; PaddleOCR-VL fails ~1 spread in 7 (#6101) | `FLASH_OCR_FROM.zho` (from 2026-10-21) |
+| Chinese / Japanese print outside the Siku, cursive and Meiji-typeset cohorts (woodblock, movable type, Chinese typeset) | **Paddle split-leaf lane** on gex45 for pages with no text, a flash-lite read or a whole-spread Paddle read; a stored Flash / Pro / Claude / typed / human read is kept | P1 median CER 0.061 vs lite 0.067, catastrophic 3/198 each; Flash 0.052 stays the better reader (PR #7184); blank-leaf + loop guard per leaf | `scripts/workers/paddle-print-lane.mjs`, books held `paddle-print-6101` |
+| Chinese manuscript | Paddle lane where the book is held for it; otherwise 3 Flash via agy until #4743 has a writer | #4743 | holds + `FLASH_OCR_FROM.zho` |
+| Syriac | Kraken; never Gemini | #4883 | own lane, books held |
+| Tibetan | BDRC/Yigdzin per-leaf; lite unusable | #4523, #5250 | own lane, books held |
+| German Kurrent manuscript | Opus two-read (`claude-ocr-two-read.mjs`) | #6780 | hand-run |
+| Recitation-refused pages | lite → 3 Flash via agy → Opus (`claude-ocr.mjs`) | #6968 ladder | branch 3 below |
+
+How a Flash book reaches the CLI lane: Phase 1.5/2 of the orchestrator and every pooled submit
+check the model; a non-lite one is never uploaded. The book is held with `CLI_FLASH_OCR_HOLD`
+(reason `ocr-flash-cli-7075`, `pipeline_auto.hold.detail.routed_model`), which takes it out of
+every lane. A person or job runs `cli-ocr.mjs read --page-ids-file=… --out=DIR` on the book's
+unread pages, then `apply --apply`, then `hold-pipeline-books.mjs --release-held --reason
+ocr-flash-cli-7075 --book <id> --apply`; Phase 2 then finds nothing unread and advances it. A
+scheduled runner for this queue does not exist yet (follow-up on #7075).
 
 ## The tree
 
@@ -61,10 +98,18 @@ A page (or book) needs text
 │     │                      lite is unusable as a reader (#4523). Crop helps, Otsu       │
 │     │                      hurts (#5250).                                              │
 │     ├─ Chinese MS ──────── PaddleOCR-VL cost lane ADOPTED by rule 2026-09-18, Derek's  │
-│     │                      application unverified (#4743) → until then, flash.         │
-│     ├─ Greek, Japanese kuzushiji, Hebrew Rashi, Sanskrit, Arabic … ── flash (non-Latin  │
-│     │                      default); Kraken passes on Greek 1450–1699 but no lane      │
-│     │                      exists; NDL for Japanese unjudged (0 references).           │
+│     │                      application unverified (#4743) → until then, 3 Flash via    │
+│     │                      the agy CLI. Books held for the Paddle lane keep the hold.  │
+│     ├─ Chinese print ───── 3 Flash via the agy CLI (#6101: median CER 5.2%, 0/198      │
+│     │                      catastrophic; lite 3/198; Paddle ~1 spread in 7). #7075.    │
+│     │                      The frame of print books outside Siku/cursive/Meiji (#6101 │
+│     │                      census) is read by the Paddle split-leaf lane instead, onto │
+│     │                      empty / lite / whole-spread-Paddle pages only (PR #7184).   │
+│     ├─ Greek, Persian, Sanskrit, Pali, Arabic ── 3 Flash via the agy CLI              │
+│     │                      (FLASH_OCR_FROM; #5575, #5700). Ge'ez is in the same list   │
+│     │                      on agreement only (#4729). Kraken passes on Greek 1450–1699 │
+│     │                      but no lane exists; Japanese kuzushiji (NDL unjudged) and   │
+│     │                      Hebrew stay lite.                                           │
 │     ├─ BPH manuscripts ─── flash by policy.                                            │
 │     ├─ German Kurrent MS ─ two-read Opus lane (`claude-ocr-two-read.mjs`, #6780) ✓:    │
 │     │                      two independent Opus reads from native-res strips, a diff,   │
@@ -75,9 +120,11 @@ A page (or book) needs text
 │     │                      lite UNJUDGED (agreement only, #5090); English 1800–1930    │
 │     │                      DECIDED lite (flash fixes nothing, #5182).                  │
 │     └─ Unknown / empty language ── flash (safer default) — but fix the field first.   │
-│     NOTE: `OCR_LITE_ONLY` (default ON since 2026-09-11, $5/day dial) forces lite for   │
-│     every Gemini read and collapses ladder tier 2 to a lite re-run. Check it before   │
-│     believing the branch above ran flash.                                             │
+│     NOTE: `OCR_LITE_ONLY` (default ON since 2026-09-11) forces lite for every Gemini  │
+│     read except the families in `FLASH_OCR_FROM`, and collapses ladder tier 2 to a    │
+│     lite re-run. A "flash" answer from the router is NOT an API read: the orchestrator│
+│     holds the book (`ocr-flash-cli-7075`) for the agy CLI lane and it waits there;    │
+│     `bulk-reocr-local.mjs` lists those pages for `cli-ocr.mjs` instead of submitting. │
 │                                                                                       │
 ├─ 2. Submit, then read the result at the write boundary (all in the collector):        │
 │     blank-page guard #4149 (`blank-page-guard.mjs`), loop guard (`ocr-loop-guard`),   │
@@ -88,13 +135,15 @@ A page (or book) needs text
 │     ├─ RECITATION (the model recognises the text) or MAX_TOKENS (lite looping on a    │
 │     │    formula- or table-dense page) → the ladder, in order, each step Batch:        │
 │     │    tier 1  lite again        (book flag `recitation_retry`)                      │
-│     │    tier 2  flash             (`recitation_retry_lite`; = lite under LITE_ONLY)   │
+│     │    tier 2  flash, agy CLI    (`recitation_retry_lite`; = lite under LITE_ONLY;   │
+│     │            a flash tier is held for the CLI lane, never sent to the API, #7075)  │
 │     │    tier 3  MinerU + grounded correction (`mineru-ocr-worker.mjs` → `ocr-correct-  │
 │     │            grounded.mjs`, #3389). Provenance ✓ since PR #5280 (2026-09-30).       │
 │     │            MEASURED on the 114-book English reference (PR #5298): reads every    │
 │     │            page Gemini refuses (16/16 at median CER 0.21%), median 0.66% overall │
 │     │            vs lite 0.20%; 1820+ only — before 1820 it reads ſ as f (median 4.6%).│
 │     │            Its worst pages dropped footnotes → fixed in PR #5299.                │
+│     │    A page with a COMPLETE draft: correct it, don't re-read it (§ below).         │
 │     │    tier 3' the Archive's text for THAT leaf, under an accepted by-eye verdict   ─┘
 │     │            (branch 0) — the free refusal fallback DECISIONS.md still calls open.
 │     │    tier 4  read it by eye (Claude on the subscription, never an API call), or
@@ -113,6 +162,29 @@ A page (or book) needs text
       Hold first if retranslation needs approval; release with an explicit `--to`.
 ```
 
+## A page that already has a complete draft: correct it, don't re-read it
+
+Experiment files are in `scripts/eval/experiments/`. When a page has a complete transcription and the
+alternative reader is a generalist that drops or invents lines, correct the draft against the image
+(`scripts/batch/ocr-convergence/correct.mjs`, Opus) instead of re-reading it.
+- **Wins:** #6694, preferred to Gemini read + adjudication 158–6 (Opus judge) / 148–21 (Gemini), adopted
+  (`2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md`). Paddle tables, median CER 4.0% vs Paddle 6.4% vs Opus
+  redo 5.8% (`2026-10-12-paddle-zh-correct-vs-redo-6561.md`). Tibetan: redo 0.70 vs draft 0.945; correct +0.015
+  (`2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md`). Florentine (#6865 comments, 2026-10-24): the re-read
+  gate went 29/1, failing on a dropped half-line; the correction gate went 30/0/0, Getty Nahuatl CER
+  0.571 → 0.069, 130 pages written.
+- **Loses:** near-perfect drafts whose "errors" are variant forms, 12–15% made worse
+  (`2026-10-15-stale-siku-opus-correct-pilot-6561.md`); weaker correctors
+  (`2026-10-13-sonnet-haiku-correct-vs-opus-6667.md`); the corrector is chosen per language (Tibetan: 3.8 Flash
+  low beats Opus, `2026-10-13-tibetan-flash38-correct-6560.md`; Argon NO-GO,
+  `2026-10-15-tibetan-g4l-pass-gate-6560.md`); translation, where correcting stored English helps less than an
+  Opus retranslation (`2026-10-12-pro-opus-correction-hardest-languages-6545.md`).
+- **Conditions:** screen first and correct only weak pages; run a blind made-worse gate on held-out pages before
+  writing. A correction costs about a read in quota (the image still goes in): it buys accuracy, not savings.
+- **Known gap (open):** `cli-ocr.mjs apply` takes `correct.mjs` output as a plain read (no `mode: 'correct'`),
+  so the correction-mode 25%-changed cap does not run (Florentine job, 2026-10-24).
+- **Pending:** the Latin lite arm (job opus-correct-latin-5924, #5924).
+
 ## Writer registry — what each lane stamps (checked 2026-09-30)
 
 "✓" = imports the provenance builder and passes the writer-guard test; "GAP" = listed in
@@ -122,7 +194,8 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Lane | Writer | `ocr.source` | Provenance |
 |---|---|---|---|
 | Gemini batch (orchestrator, `bulk-reocr-local.mjs`) | `scripts/workers/batch-collector.mjs`, `scripts/batch/collect-batch-results.mjs` | `batch_api` | ✓ `gemini-engine/1` |
-| Gemini realtime, hand-run | `scripts/batch/realtime-ocr.mjs` (`--realtime`) | `ai` | ✓ |
+| Gemini realtime, hand-run | `scripts/batch/realtime-ocr.mjs` (`--realtime`, `--model=lite` only since #7075) | `ai` | ✓ |
+| Gemini CLI (agy, subscription): 3 Flash for the `FLASH_OCR_FROM` scripts and the ladder's flash tier | `scripts/batch/cli-ocr.mjs read` then `apply` | `ai` | ✓ `gemini-engine/1` (api `cli`, CLI name and version, prompt, image) |
 | Gemini realtime, Lambda / Vercel | `src/workers/ocr-processor-logic.ts`, `/api/books/[id]/batch-ocr-async` | `ai` / `batch_api` | ✓ (collect stamps `updated_at` as a string, #5228) |
 | Archive free text | `scripts/import/ia-ocr-ingest.mjs` | `ia_djvu` | ✓ `ia` block + `agreement_ref` (measured or `by_eye`) + ingest run |
 | Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |
@@ -131,6 +204,8 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Opus two-read (German Kurrent MS, #6780) | `scripts/batch/claude-ocr-two-read.mjs apply` (`ocr.pipeline: claude-two-read-6780`) | `ai` | ✓ `anthropic` engine block (api `cli`); `input.two_read` = both reads' hashes, folded agreement, every dispute with its ruling; revisions, human-edit guard, sweep_log + book_events. The 40% overlap guard is lifted only for a stored flash-lite read on a book in `--replace-lite-books`. |
 | Opus one-read (Nahuatl / Maya, #6559) | `scripts/batch/claude-ocr.mjs` reads, `scripts/batch/cli-ocr.mjs apply` writes | `ai` | ✓ `anthropic` engine block (api `cli`) |
 | Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
+| Chinese guarded Paddle (held table + mixed residue, #6871 row 3) | `scripts/workers/paddle-zh-guarded-lane.mjs` (dry-run tested 2026-10-18; not applied) | `paddle`; `ai` on the Flash route | ✓ Paddle engine block (weights sha256, stack, serving, run, image sha256) or `gemini-engine/1` CLI block; `ocr.verdict` = the guard's verdict; first reads only, human-edit guard, revisions, sweep_log + book_events. Books stay held: their release is what queues paid translation |
+| Paddle split-leaf print (Chinese / Japanese, #6101) | `scripts/workers/paddle-print-lane.mjs apply` (`ocr.pipeline: paddle-print-2026-10`) | `paddle` | ✓ Paddle engine block (weights sha256, stack, serving, run) + `input.leaves` (crop box, ink, blank per leaf) + `replaced` (no_text / flash_lite / paddle_whole_spread); through `writePageText` (revision row with the whole prior field, `reason: reocr_paddle_print_6101`, `run_id`), human-edit guard, leaf blank/loop guards, sweep_log before and after, book_events. Books held `paddle-print-6101` before the first write |
 | Greek Kraken, Japanese NDL | eval only | — | — |
 | Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
 
@@ -142,9 +217,10 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 2. Free first (branch 0): accepted by-eye books fill for $0; unverdicted books get a two-leaf
    pack and a read — a verdict is per BOOK, but the ingest fills only empty pages, so a late
    verdict on a mostly-model book is cheap and safe.
-3. Ladder tiers 1–2 on the Batch API, priced by `bulk-reocr-local.mjs --dry-run` (126 pages
-   on flash = $0.23 quoted, $0.16 measured). Expect flash to refuse most of what lite refused:
-   53/126 filled.
+3. Ladder tier 1 on the Batch API (lite), priced by `bulk-reocr-local.mjs --dry-run`; tier 2
+   (flash) through the agy CLI (`cli-ocr.mjs`), $0 and quota-bound (#7075; on 2026-09-30, before
+   the channel rule, 126 pages on Batch flash cost $0.16). Expect flash to refuse most of what
+   lite refused: 53/126 filled.
 4. What is left is stamped, and that stamp is the "recorded reason" the definition of done
    asks for. Do not reach for a writer in the GAP row to close the last 1%.
 5. Say in the report what reads each write: released books are actuated, held books are not.

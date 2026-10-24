@@ -206,7 +206,7 @@ export default function HogwartsLibraryPage() {
             (1677) and you find fifteen engravings with no text at all, the Stone communicated
             entirely in pictures. Open Michael Maier&rsquo;s{' '}
             <Link
-              href="/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier"
+              href="/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3"
               className="text-accent-rust hover:underline"
             >
               <em>Atalanta Fugiens</em>
@@ -358,7 +358,7 @@ export default function HogwartsLibraryPage() {
             serpent of the Chamber of Secrets, has its full natural history in Ulisse
             Aldrovandi&rsquo;s{' '}
             <Link
-              href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi"
+              href="/book/serpentum-et-draconum-historiae-aldrovandi"
               className="text-accent-rust hover:underline"
             >
               <em>Serpentum et Draconum Historiae</em>
@@ -425,7 +425,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi">
+            <Link href="/book/serpentum-et-draconum-historiae-aldrovandi">
               <div className="max-w-md mx-auto">
                 <ArticleImage
                   src="https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg"
@@ -436,7 +436,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes; the line between zoology and fantastic beasts was thinner than ours.{' '}
-              <Link href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/serpentum-et-draconum-historiae-aldrovandi" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -637,7 +637,7 @@ export default function HogwartsLibraryPage() {
               <em>Sphera Mundi</em>
             </Link>
             , Galileo&rsquo;s{' '}
-            <Link href="/book/starry-messenger-galilei" className="text-accent-rust hover:underline">
+            <Link href="/book/sidereus-nuncius-1610-venice-galilei" className="text-accent-rust hover:underline">
               <em>Sidereus Nuncius</em>
             </Link>
             , Kepler&rsquo;s{' '}
@@ -912,7 +912,7 @@ export default function HogwartsLibraryPage() {
               { href: '/book/flamel-book-of-hieroglyphic-figures-abraham-le-juif-flamel', title: 'Nicolas Flamel, Hieroglyphic Figures', detail: '1750 (text from 1612): the legend in his own attributed voice' },
               { href: '/book/mutus-liber-the-silent-book-saulat', title: 'Mutus Liber', detail: '1677: fifteen wordless engravings of the Philosopher\'s Stone' },
               { href: '/book/aureum-vellus-oder-guldin-schatz-und-kunstkammer-1-1-solis', title: 'Splendor Solis', detail: '1598: 22 illuminated miniatures of the Great Work' },
-              { href: '/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier', title: 'Michael Maier, Atalanta Fugiens', detail: '1617: alchemy as emblems, epigrams, and three-voice fugues' },
+              { href: '/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3', title: 'Michael Maier, Atalanta Fugiens', detail: '1617: alchemy as emblems, epigrams, and three-voice fugues' },
               { href: '/book/bodleian-library-ms-bodl-rolls-1-attributed', title: 'The Ripley Scroll', detail: 'c. 1450: a 6-metre illustrated alchemical manuscript' },
               { href: '/book/hortus-sanitatis-meydenbach', title: 'Hortus Sanitatis', detail: '1491: the proto-bestiary and herbal in one volume' },
               { href: '/book/harley-ms-4751-anonymous', title: 'British Library Harley MS 4751', detail: '13th c.: illuminated bestiary with basilisks, phoenixes, unicorns' },

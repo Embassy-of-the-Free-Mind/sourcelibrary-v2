@@ -1,0 +1,3 @@
+PICK | C
+RANK | C A D B
+WHY | C reads cleanly as Sāṅkhyakārikā 11–16 with correct joins such as "avivekyādessiddhis" and "triguṇatassa|mudayāc", while A has a small gap at "āde‖siddhis", D introduces errors ("siddhaṃtraiguṇyāt", a doubled "sa" in "samudayāc"), and B is mostly gibberish.

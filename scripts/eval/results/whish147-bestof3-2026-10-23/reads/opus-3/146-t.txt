@@ -1,0 +1,9 @@
+ROW 1 | ാദ്യധികാരണത്വാത്മാ സ ‖ ദ്ധിവിധഃ ഫലമഭൂതമാജ്ജീവാത്മാ ചൈക[illegible] ‖ [illegible]ത്രം നാത്മജ്ഞസ്ത്രീകഃ പര
+ROW 2 | മാത്രാഃ ഏതാവം ജീവാ ‖ വാത്മാ ഇത്യൊതിതിനഃ ഭിന്നഃ വിഭക്തിത്വാഖ ‖ ഖ്യപരാത്മ്യലക്ഷ്മിസ്വായ
+ROW 3 | നമിത്യർത്ഥഃ ത ‖ ഷ്ഠല ഉപദ്ധാനത്തെ[illegible]ലൊകങ്ങാദ്യാദികം ‖ പരമാത്മത്വപം ശ്രൗ
+ROW 4 | ബൊദ്ധഃ ചാക്ഷുഷ്ട്ര ‖ ഗുണസ്വാഗുണസ്വാ[illegible]ത്രുക്കം ശബ്ദ ‖ ജ്ഞിലക്ഷികതകി[illegible]ഫ
+ROW 5 | തൈക്കിവിശേഷിത്വ ‖ ട്ടെദാൽ സക്ഷ[illegible]ക്ഷവിയംവ്യഷ്ടി ‖ ജ്ഞലാതൈതജ്ജ്ഞപ്തി[illegible]
+ROW 6 | ക്രൂത പ്രവൃത്തി ‖ സ്യക്ഷ[illegible]യം[illegible]ട ദ്രഷ്ടാനെ ലക്ഷ്മി ‖ ജ്ഞൊലം[illegible]ഭ്രാന്തിര[illegible]
+ROW 7 | ജ്ഞാനെന ജ്ഞസ്വാഭാസ്വാ ‖ ഗുണഹ്യാഗുണാ[illegible]ാമണസ്ഥസാമപ്യ[illegible] ‖ [illegible]ാകില വണൊക്കുക്ഷമാക[illegible]
+ROW 8 | കളദ്ദോൽ ഭവതിം യ ‖ യഃ പ്രകൃതിജ്ഞലപ്പ[illegible]ക്കിഃ । തത്ത്വപുമല്യാ ‖ [illegible]ാം ഭാവ്യിസ്ഥ ജ്ഞലവപ്രവ
+NOTE | This is a low-confidence reading, a draft rather than a dependable transcription; maybe 40–50% of the characters are probably right. Many ligatures are guessed and so is where each hole falls in the text. Rows 1–2 and 7–8 run the full width; rows 3–6 stop at both holes. I put ‖ at the cuts in every row. The overlaps between pieces (e.g. "മാ" in row 1) were dropped as duplicates by eye. A strip of the leaf underneath shows above row 1 and was ignored.

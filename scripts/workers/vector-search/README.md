@@ -50,6 +50,13 @@ the RPC on any error or `complete: false`. Default off. The app reaches it at
   The response says `text_ms` and `text_missing`. A row the store lacks comes back without those three
   keys, and the app hydrates only that row from Supabase. Title and author are kept per row, as the RPC
   returns them, not per book. Shadow calls do not ask for text: they compare page ids.
+- **`book_ids`** (≤ 50, #2049) is `match_pages_in_books`' question: `path: "books"`, an exact float32 scan
+  of exactly those books' live rows, ANDed with any other filter. The keys come from a book index (CSR
+  over the row store, built at startup and after each save; keys a delta sets in between are checked on
+  every query). Each row is scored from the float32 shards, or from its int8 override if a delta changed
+  it since the build. Without the shards it answers `complete: false` and the app asks the RPC. On 30
+  real search_within_book calls: 10 ms server-side p50, the RPC's top 10 up to ties
+  (`scripts/eval/experiments/2026-10-18-within-book-vector-books-2049.md`).
 - `GET /health` → `{size, live_rows, book_map_size, built_at, last_delta_at, checkpoint, generation, text_store, …}`.
 - `k` ≤ 1000. Bodies over 256 KB are refused.
 

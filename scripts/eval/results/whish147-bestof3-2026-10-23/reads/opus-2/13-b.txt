@@ -1,0 +1,10 @@
+ROW 1 | ഘ്യഖമസ്ത്രിഭസോമമ ‖ പാമഭൊമാംഷിതവത്തൊവയംഭൈ ‖ ഭാമ്മഭാബ്ദ്രമധ്യവഗഭമ്മ
+ROW 2 | ത്രൈവാജ്ഞാരഃ[illegible] ‖ ഛൈജ്ഞാതിവികിജ്ഞാ[illegible]ഷ്ടായ ‖ ഹം.പ്രാക്ഷാവഷ്യം.ഭവിദ
+ROW 3 | രമദൈവാദിഭിഉ ‖ യകൈദൈവാണമക്ഷിൽഹഷ്കുളു ‖ ഭജ്ഞാഭവന്തഃക്ഷാ
+ROW 4 | വമാഫ്ലാജലൈ ‖ ഹമിത്രഭ്ഷഃഭിഞ്ഞുനമജ്ഞാൽഇണ ‖ വഭികിഇണ്ടവൽമ്മജു
+ROW 5 | ആച്ചാരരത്സ്ഥ ‖ ാക്കസൊമവാനാൽഭിമ്മശ്യഃക ‖ ഭിജ്ഞതണബാത്ര
+ROW 6 | (margin: സ) ച്ചാഡിഃ.സൊ ‖ ഭവിയുക്കള്ളനാബാഭിചാ ‖ ഷ്ടാഡം.ഭം.കബ
+ROW 7 | ജ്ജുഭിത്തമ്മത ‖ മത്ത്യൈന്യാകിതജ്ഞാൽഭസാ ‖ മയാനാട്ടുകൈയാ
+ROW 8 | ഖശമൈവാഉബസ്ത്ര ‖ ങ്ങത്ത്യത്ഥിൽമ്ലച്ച്യപൈക്കടഷ്ടഖടാണശ്ര ‖ തികളുത്താദിഞനജ്ഞ
+ROW 9 | യൈകപാബംചക ‖ ശ്ലുഞ്ഞുത്ത്ബശ്രൈവാമൈദശ്ര ‖ ദദജ്ഞടാനച്ചഭത്രുടൌ
+NOTE | I could see the whole leaf (9 rows, with p02+p03 forming the middle column), but this reading is unreliable. Many akṣaras, especially conjuncts and vowel signs, are guesses, and the sequences above mostly don't make sense as Sanskrit, so treat this as a rough first pass that needs checking against the images.

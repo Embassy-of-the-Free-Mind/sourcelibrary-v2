@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] grāhyarū [illegible] ‖ [illegible] gandhaḥ sa ca trivi [illegible] dhaḥ [illegible] ‖ [illegible] ḥ pṛthvīmātravṛtti [illegible]
+2. gandha [illegible] mātra [illegible] grāhya [illegible] ‖ [illegible] ḻḥ sa [illegible] dhaḥ [illegible] ‖ [illegible] dāl pṛthvyā [illegible]
+3. [illegible] ‖ [illegible] ‖ [illegible] ḥ pṛthivīvā [illegible]
+4. [illegible] pādicatuṣṭayaṃ ‖ pṛthi [illegible] ṃ pākaja [illegible] ‖ [illegible] pākaja [illegible]
+5. [illegible] ‖ [illegible] [illegible] ‖ [illegible] ṃ ekā [illegible]
+6. [illegible] ‖ [illegible] vṛttiḥ [illegible] ‖ [illegible]
+7. [illegible] ṃ [illegible] ‖ [illegible] ṃ [illegible] ‖ [illegible] sa [illegible] meva
+8. [illegible] ‖ [illegible] ṃ [illegible] vṛtti [illegible] ‖ [illegible] [illegible]
+
+TRANSCRIPTION B
+1. ghrāṇenagrāhyo [illegible] ‖ [illegible] gandhaḥsaca [illegible] viṣayaḥ [illegible] ‖ [illegible] ḥpṛthivīmātravṛttiḥ [illegible]
+2. [illegible] mātragrāhyā [illegible] ‖ [illegible] ḥsa [illegible] ‖ [illegible] dālpṛ [illegible]
+3. [illegible] vādya [illegible] ḥ [illegible] ‖ [illegible] ‖ [illegible] ḥpṛthivī [illegible]
+4. rūpādicatuṣṭayaṃ ‖ pṛthivyāṃpākaja [illegible] ‖ [illegible] pākajaṃ [illegible]
+5. [illegible] ‖ [illegible] tvā [illegible] ‖ [illegible] tyaṃeka [illegible]
+6. [illegible] ‖ [illegible] vṛ [illegible] ḥekā [illegible] ‖ [illegible]
+7. [illegible] guṇaṃ [illegible] ‖ [illegible] tvaṃ [illegible] ‖ [illegible] meva
+8. [illegible] ‖ [illegible] mānaṃna [illegible] ‖ [illegible] tvaṃ [illegible]
+
+TRANSCRIPTION C
+1. [illegible] grāhya [illegible] ‖ [illegible] gandhaḥsacaviṣayaḥ [illegible] śabda [illegible] ‖ [illegible] pṛ [illegible] mātravṛtti [illegible]
+2. indriyamātragrāhya ‖ [illegible] ṅṅaḻḥsūkṣma [illegible] mātra [illegible] ‖ [illegible] lpṛ [illegible]
+3. [illegible] vā [illegible] ḥ [illegible] ‖ [illegible] uṣṇa [illegible] uṣṇa [illegible] ‖ [illegible] ṣṇāśītaḥpṛthivīvā [illegible]
+4. rūpādicatuṣṭayaṃ ‖ pṛthivyāṃpākaja [illegible] ‖ [illegible] trāpākajaṃ [illegible]
+5. [illegible] ‖ [illegible] tvaṃ [illegible] ‖ [illegible] tvaṃeka [illegible]
+6. pa [illegible] tvaṃ ‖ [illegible] vṛttiḥ [illegible] ‖ [illegible]
+7. [illegible] tvaṃ [illegible] tva [illegible] mahattvaṃdvitvādi ‖ [illegible] ‖ [illegible]
+8. [illegible] vyavahārakāraṇa [illegible] ṇaṃ [illegible] ‖ [illegible] vṛtti [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

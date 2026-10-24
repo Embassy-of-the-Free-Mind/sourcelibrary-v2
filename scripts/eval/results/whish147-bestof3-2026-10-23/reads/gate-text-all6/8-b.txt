@@ -1,0 +1,3 @@
+PICK | E
+RANK | E B A D F C
+WHY | E reads as continuous, correct Sanskrit of Sāṅkhyakārikā 46–51 (it even has the verse numbers) — "pratyayasargo viparyayāśaktituṣṭisiddhyākhyaḥ", "pañca viparyayabhedā bhavanty aśaktiś ca karaṇavaikalyāt", "ūhaḥ śabdo 'dhyayanaṃ duḥkhavighātās trayaḥ" — while B and A only partly match the text and D, F and C are mostly broken syllables.

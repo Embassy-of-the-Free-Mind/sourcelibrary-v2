@@ -12,7 +12,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset | Source Library',
   description:
-    'Structured parallel-text training data from 19,000+ historical texts in 200+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
+    'Structured parallel-text training data from 19,000+ historical texts in more than 50 languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
@@ -104,21 +104,21 @@ export default async function DatasetPage() {
       <section className="mb-24">
         <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-2xl">
           {formatNumber(stats.totalBooks)} texts. {formatNumber(stats.pagesTranslated)} pages
-          translated into English. {stats.languages.length} languages, from Sumerian to Renaissance Latin.
-          Available via streaming API.
+          translated into English. More than fifty languages, from Sumerian to Renaissance Latin.
+          Available through a streaming API.
         </p>
       </section>
 
       {/* ── The problem, in prose ── */}
       <section className="mb-24 max-w-2xl">
         <p className="text-[#444] leading-[1.75] mb-6">
-          Millions of pages of pre-modern text have been digitized by the world&apos;s great libraries.
-          But a scan of a 16th-century Latin treatise is not training data. It requires OCR,
-          translation, page-level alignment, classification, and quality verification.
+          The world&apos;s great libraries have digitized millions of pages of pre-modern text, but
+          most of it has never been transcribed, and very little has been translated or aligned
+          with the original page.
         </p>
         <p className="text-[#444] leading-[1.75]">
-          We have done that work for {formatNumber(stats.totalBooks)} texts
-          across {stats.languages.length} languages, and the dataset grows every week.
+          Source Library has done that work for {formatNumber(stats.totalBooks)} texts in more
+          than fifty languages, and the collection grows every week.
         </p>
       </section>
 
@@ -145,7 +145,7 @@ export default async function DatasetPage() {
       {/* ── Languages ── */}
       <section className="mb-24">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">
-          {stats.languages.length} languages
+          Languages
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-4">
           {stats.languages.slice(0, 21).map((l) => (
@@ -157,11 +157,7 @@ export default async function DatasetPage() {
             </div>
           ))}
         </div>
-        {stats.languages.length > 21 && (
-          <p className="text-[#999] text-sm mt-4">
-            and {stats.languages.length - 21} more
-          </p>
-        )}
+        <p className="text-[#999] text-sm mt-4">and others, more than fifty in all</p>
       </section>
 
       {/* ── What the data looks like ── */}

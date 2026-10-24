@@ -25,6 +25,8 @@
  * ```
  */
 
+import { selfCallHeaders } from '@/lib/self-call';
+
 // Polite User-Agent for external library servers
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
@@ -72,7 +74,7 @@ async function fetchBuffer(
   try {
     const response = await fetch(url, {
       signal: controller.signal,
-      headers: { 'User-Agent': USER_AGENT },
+      headers: { 'User-Agent': USER_AGENT, ...selfCallHeaders(url) },
     });
 
     clearTimeout(timeoutId);
@@ -129,7 +131,7 @@ async function fetchBase64(
   try {
     const response = await fetch(url, {
       signal: controller.signal,
-      headers: { 'User-Agent': USER_AGENT },
+      headers: { 'User-Agent': USER_AGENT, ...selfCallHeaders(url) },
     });
 
     clearTimeout(timeoutId);
@@ -196,7 +198,7 @@ async function testAccessibility(url: string, timeout = 10000): Promise<boolean>
       method: 'HEAD',
       redirect: 'follow',
       signal: controller.signal,
-      headers: { 'User-Agent': USER_AGENT },
+      headers: { 'User-Agent': USER_AGENT, ...selfCallHeaders(url) },
     });
 
     clearTimeout(timeoutId);
@@ -231,7 +233,7 @@ const ia = {
     const url = `https://archive.org/metadata/${identifier}`;
 
     const response = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+      headers: { 'User-Agent': USER_AGENT, ...selfCallHeaders(url) },
     });
 
     if (!response.ok) {
@@ -270,7 +272,7 @@ const ia = {
 
     const url = `https://archive.org/download/${identifier}/${scandataFile.name}`;
     const response = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+      headers: { 'User-Agent': USER_AGENT, ...selfCallHeaders(url) },
     });
 
     if (!response.ok) {

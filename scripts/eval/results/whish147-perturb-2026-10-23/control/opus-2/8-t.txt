@@ -1,0 +1,10 @@
+ROW 1 | സൂക്ഷ്മപൎയ്യന്തംസംസരതി ‖ നിരുപഭൊഗംഭാവൈരധിവാസിതം ‖ ലിംഗം[illegible]।ചിത്രംയഥാ
+ROW 2 | ശ്രയമൃതെസ്ഥാണ്വാദി ‖ ഭ്യൊ[illegible]ഥാച്ഛായാതദ്വദ്വിനാ ‖ വിശെഷൈൎന്നതിഷ്ഠതി
+ROW 3 | നിരാശ്രയംലിം ‖ ഗം।൪൧।പുരുഷാൎത്ഥഹെതുകമി ‖ ദംനിമിത്തനൈമി
+ROW 4 | ത്തികപ്രസംഗെ ‖ നപ്രകൃതെൎവ്വിഭുത്വയൊഗാന്ന ‖ ടവദ്വ്യവതിഷ്ഠതെ
+ROW 5 | ലിംഗം।൪൨।സാ ‖ ംസിദ്ധികാശ്ചഭാവാഃ പ്രാ ‖ കൃതികാവൈകൃതാ
+ROW 6 | ശ്ചധൎമ്മാദ്യാഃദൃ ‖ ഷ്ടാഃകരണാശ്രയിണഃകാൎയ്യാ ‖ ശ്രയിണശ്ചകലലാ
+ROW 7 | ദ്യാഃ।൪൩।ധൎമ്മെ ‖ ണഗമനമൂൎദ്ധ്വംഗമനമധസ്താൽ ‖ ഭവത്യധൎമ്മെണ[illegible]
+ROW 8 | [illegible]നെനചാപവൎഗ്ഗൊ ‖ വിപൎയ്യയാദിഷ്യതെബന്ധഃ।൪൪।വൈ ‖ രാഗ്യാൽപ്രകൃതിലയഃ
+ROW 9 | സംസാരൊഭവതിരാ ‖ ജസാദ്രാഗാൽഐശ്വൎയ്യാദവി ‖ ഘാതൊവിപൎയ്യയാത്ത
+NOTE | All 9 rows are mostly readable. Some letters were ambiguous and I chose a reading from neighbouring letters, so they aren't sure; these are mainly the verse numbers (൪൧–൪൪, which could also be ligatures), ൎന്ന/ൎവ്വ, ഭ versus ട at the start of right-hand row 7, and the gap the scribe left in row 5.

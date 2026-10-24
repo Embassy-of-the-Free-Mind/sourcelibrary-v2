@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, E, B, A, F, D
+WHY | C and E both give Sāṅkhyakārikā 6–10 as continuous, grammatical Sanskrit, but C's row breaks (row 8 starting "āl", row 9 starting "naka") match what the other transcriptions show, and it has the correct "tadupalabdheḥ" and "pratītir anumānāt", while B is only fragmentary and A, F, D are mostly syllable strings that only look like words.

@@ -24,6 +24,12 @@
  * then each page alone. A corrected text that fails the chatter guard is no answer too. meta.outcome is one of
  * corrected | unchanged | contain | no-answer; only `corrected` has exit 0 (so `cli-ocr.mjs apply` can only ever
  * write a correction). A usage-limit reply stops the run (exit 3); re-running skips pages already answered.
+ *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every `corrected` text is copied to R2 candidate-reads/
+ * (with the exact prompt its call sent) when it is made. Before the calls, each page asks for a kept correction by
+ * the same --model on the same live prompt and instruction, of the same image bytes and the same stored draft, and
+ * uses it instead of calling (meta `reused_from`). UNCHANGED and CONTAIN answers carry no text and are not kept.
+ * `--fresh` always calls: a repeat-noise eval needs fresh reads.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,6 +42,7 @@ import { ocrReadProblem } from '../../lib/cli-chatter.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
 import { splitPages } from '../claude-ocr.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/ocr-convergence/correct.mjs';
 const CLI = 'claude';
@@ -150,6 +157,9 @@ async function main() {
     imgs.set(p.id, v);
     return v;
   };
+  // The reuse key (#7075): the live prompt, the instruction's template, the image bytes and the draft corrected.
+  const FRESH = wantsFresh();
+  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1)) });
   const writePage = (p, ans, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), ans.outcome === 'corrected' ? ans.text : '');
     fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(p.ocr?.data || '') }, null, 1));
@@ -180,20 +190,41 @@ async function main() {
     if (!answers) { console.log(`  ${group[0].book_id} p.${group[0].page_number}+${group.length}: ${r.cls || 'markers do not match'} (${Math.round(r.secs)}s)`); return group; }
     const left = [];
     const common = { model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage };
-    const tally = {};
+    const tally = {}, keep = [];
     group.forEach((p, i) => {
       // An answer the model gave without opening this page's image and draft is no answer.
       if (!r.opened.has(`${pageName(i)}.jpg`) || !r.opened.has(`${draftName(i)}.txt`)) { left.push(p); tally['not-opened'] = (tally['not-opened'] || 0) + 1; return; }
       const ans = parseAnswer(answers[i]);
       if (ans.outcome === 'no-answer') { left.push(p); tally[ans.reason] = (tally[ans.reason] || 0) + 1; return; }
       writePage(p, ans, { ...common, call_position: i + 1, image_url: im[i].src, image_bytes: im[i].buf.length, image_sha256: im[i].sha });
+      if (ans.outcome === 'corrected') keep.push([p, ans.text, im[i].sha]);
       tally[ans.outcome] = (tally[ans.outcome] || 0) + 1;
     });
+    // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
+    for (const [p, text, sha] of keep) {
+      const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKeyOf(p, sha), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
     console.log(`  ${group[0].book_id} p.${group[0].page_number}+${group.length}: ${JSON.stringify(tally)} (${Math.round(r.secs)}s)`);
     return left;
   };
 
-  const queue = [...calls];
+  // A kept correction of the same page, model, prompt, image and draft is used instead of a call (#7075).
+  let reused = 0;
+  const reusedIds = new Set();
+  if (FRESH) console.log('--fresh: kept reads are not looked up');
+  else {
+    const keptBooks = new Set();
+    for (const b of new Set(todo.map((p) => p.book_id))) if (await hasKeptReads(b)) keptBooks.add(b);
+    for (const p of todo.filter((q) => keptBooks.has(q.book_id))) {
+      const v = await fetchImage(p);
+      if (v.error) continue;
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKeyOf(p, v.sha) });
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), p.ocr?.data || ''); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept correction (${hit.body.job ?? '?'}): no call`); }
+      imgs.delete(p.id);   // fetched again when its call comes: a whole set's images are not held for the lookup
+    }
+  }
+  const queue = calls.map((g) => g.filter((p) => !reusedIds.has(p.id))).filter((g) => g.length);
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (queue.length && !stop) {
       const group = queue.shift();
@@ -205,7 +236,7 @@ async function main() {
   }));
   const metas = pages.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
   const t = {}; for (const m of metas) t[m.outcome] = (t[m.outcome] || 0) + 1;
-  console.log(`\n${JSON.stringify(t)}; ${pages.length - metas.length} not reached; ${nCalls} calls this run`);
+  console.log(`\n${JSON.stringify(t)}; ${pages.length - metas.length} not reached; ${nCalls} calls this run; reused ${reused} kept correction(s) instead of calling`);
   if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
 }
 

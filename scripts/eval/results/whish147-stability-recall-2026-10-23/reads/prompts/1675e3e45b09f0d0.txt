@@ -1,0 +1,45 @@
+Below are three machine transcriptions (A, B, C) of the same palm leaf of a Sanskrit manuscript, converted to IAST. The leaf is from a Kerala manuscript holding the Sāṅkhyakārikā with commentaries (Jayamaṅgalā, Tattvakaumudī) and Annambhaṭṭa's Tarkasaṃgraha with Dīpikā. Each row is one physical row of the leaf; ‖ marks a string hole, and a row continues straight across it. Words often run together (the scribe leaves no spaces), and a row may begin or end mid-word.
+
+You see no image and no edition. Judge only the language: for each row of each transcription, is it grammatical Sanskrit that makes sense in context as Sāṅkhya or Nyāya text? Use: S = sensible (readable Sanskrit, plausible in this text), P = partly (some real words or phrases, but broken), G = gibberish (syllables that do not form Sanskrit). Do not reward a row for being a passage you recognise; judge whether it reads as Sanskrit.
+
+TRANSCRIPTION A
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasava ‖ dharmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān11prītyaprītivi ‖ ṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśraya ‖ jananamithunavṛttayaśca
+4. guṇāḥ12satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ13
+6. avivekyādeḥ ‖ siddhistraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ14bhedā
+8. nāṃparimāṇā ‖ tsamanvayācchaktitaḥpravṛtte ‖ ścakāraṇakāryyavibhā
+9. gādavibhāgādvai ‖ śvarūpyasya15kāraṇamastyavyaktaṃpra ‖ varttatetriguṇatassa
+10. mudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣāl16saṃghā
+
+TRANSCRIPTION B
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasava ‖ dharmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān prītyaprītivi ‖ ṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśrayaja ‖ nanamithunavṛttayaśca
+4. guṇāḥ satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ
+6. avivekyāde ‖ ssiddhistraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasya kāraṇamastyavyaktaṃprava ‖ rttatetriguṇatassa
+10. mudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣālsaṃ
+
+TRANSCRIPTION C
+1. triguṇamaviveki ‖ viṣayassāmānyama ‖ macetanaṃprasava ‖ vṛkṣakā praya
+2. ertta cavika ‖ ḍhācakṣa ron ‖ pratyayavikha ‖ dātmakāḥprakāśa
+3. prakṛtiriyamau ‖ rāḥ trā ‖ āprābhadavāgraya ‖ jñānamiṣṭaṇāpratyayañca
+4. guṇāḥssva ṃ ‖ la prakā ‖ kamiṣṭaprapañcaṃ ‖ kaṣelakovajñaḥ
+5. guṅṅavakṣa kai ‖ mavakamaḥ ḻ ‖ iddipavacchāka ‖ to vṛrkkiḥsva
+6. mika vākhyā ‖ sddu tru ‖ uṇṭāe dipaḻa ‖ yābhāvālkā
+7. guṇātmaka ‖ kāl ḻḻusa ‖ trār kkami ‖ siddhaṃssa ddhā
+8. eāṃpatimāṇā ‖ ḥsamavayā ‖ ka trū ka ‖ śrakāṇa ka vibhā
+9. gādapibhāga kha ‖ kha trūpra kkraḥ ‖ ttṛ ddṛ ka ‖ vṛ triguṇakasa
+10. dma ḻa vaka ‖ āma sa lavan ‖ tritruguṇātraya ‖ viḥ kkātsnasaṃ
+
+Answer only, one line per transcription, then one line of comment:
+A | <S/P/G per row, comma-separated> | overall: <S/P/G>
+B | ...
+C | ...
+COMMENT | <one sentence>

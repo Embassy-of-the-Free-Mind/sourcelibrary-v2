@@ -1,0 +1,10 @@
+ROW 1 | ഘടമസ്തിതസൈദ്ധമമ‖പാമനോമംഷിതവന്ദാവയംരര‖രാമരാണ്ഡമഖ്യാവഗരമ്മ
+ROW 2 | ത്വവൈാജ്ഞാരാഃബ്യ‖മജ്ഞാത്രിവിക്രിജ്ഞാത്രിജ്ഞത്വാക്ഷായ‖പരം.പ്രാജ്ഞാപയം.അവിദ
+ROW 3 | രമദേവാത്രിക്രിഉ‖യന്താദേവാണക്കിൽന്ധക്ഷഉ‖ത്തഃകാതവനഃക്ഷാ
+ROW 4 | ബമാഹ്ലാഖരാ‖ബിത്രൈങ്ങഃക്രിത്യനമങ്ങാൽത്രണ‖ബഭികിത്രണ്വവൽമ്മത്ര
+ROW 5 | ജച്ചരരത്തന്ത‖ാക്കസമവാനാൽബ്രിമ്മശ്യഃക‖ബിജ്ഞെതണനാത്രി
+ROW 6 | ഗ്ലാാധിഃ.സൈാ‖ഥചിധ്യക്കിളിങ്ങനാസാക്കിചാ‖ന്ദ്യാഭിം.ക്ഷേ.കമ്പ
+ROW 7 | ജ്ഞരത്രമ്യര‖മന്ത്വൈന്ദ്യാക്കിതെങ്ങാൽസൈാ‖മയാന്ദാദ്ദൌഖാ
+ROW 8 | ലശമൈവിത്രബസ്ഥത്യങ്ങിൽഗ്ലച്ഛപൈ‖ക്കദ്ദേഷ്ടഫാദാശ്രു‖തികജ്ഞ്യാളിബന്ധു
+ROW 9 | ഝൈരപാനംഛരാഷ്ണുൈണ്ഡ്യന്ദ്രഗ്ര‖ൈഷാാൈഷദേശ്രുദ‖ദജ്ഞൈടാനച്ചരത്രടൈത്ര
+NOTE | This is a low-confidence reading of the strokes, letter by letter. Much of it is probably wrong. I couldn't reliably read the conjuncts, dot-reph or vowel signs, so treat every row as a rough draft that needs checking against the leaf. The leaf has 9 rows. Rows 1–2 and 8–9 run the full width; rows 3–7 are in the columns. The left margin has a stray "സ" by row 6.

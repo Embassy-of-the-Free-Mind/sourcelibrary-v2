@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf reads "ാപ്ത(ക്ത-form)വചനന്തു: + ‖ ൫സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രസിദ്ധിരനുമാനാ". A matches this. B is close but has "പ്രതീതി" where the leaf has "പ്രസിദ്ധി". E gets the middle and end right but loses the start. C, D and F do not match: they have letters like "ഉസാമാന്യകന്തു", "സാമൎത്ഥ്യ" and "സാമഗ്ര്യ", which are not on the leaf.
+
+CHECK | row 3: The leaf reads "മീപ്യാദിന്ദ്രിയഘാ ‖ താന്മനോനവസ്ഥാനാൽ ‖ സൌക്ഷ്മ്യാദ്വ്യവധാ". A and B both match it; they differ only in where they put the hole break inside "ഘാ". C ("ക്കല്ലാദഭിയത") and D ("ക്കില്ലാടലില്ലയത") are wrong. E is mostly [illegible]. F ("ഭ്യാദദിയന") is wrong.
+
+CHECK | row 9: The leaf reads "നകമാശ്രിതംലിം ‖ ഗംസാവയവംപരതന്ത്രംവ്യക്തം ‖ വിപരീതമവ്യക്തം॥൧൦॥". A matches. B matches the text but splits the row in the wrong places and misreads the closing numeral as "൦൰൦". C, D, E and F do not match: they have "മാത്രകം", "പരൎത്താല്ലക്കം" and "ചി·ം·സാമാന്യം", and F marks the end [not visible].
+
+PICK | A
+
+RANK | A, B, E, C, D, F
+
+WHY | A is the only transcription that follows the strokes on the leaf letter by letter in all three rows I checked (Sāṅkhyakārikā verses 5–10). B has wrong readings and misplaced hole breaks, E leaves readable text [illegible], and C, D and F write letters that are not on the leaf.

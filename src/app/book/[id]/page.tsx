@@ -10,13 +10,14 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
+import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush, Eye } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -90,7 +91,7 @@ import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
-import { localePath, type Locale } from '@/lib/locale-path';
+import { localePath, PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
@@ -99,6 +100,7 @@ import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { markPageForReader } from '@/lib/provenance';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { resolvePageIdsByNumber, pageNumberHref } from '@/lib/page-number-resolve';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
@@ -893,7 +895,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
-      .map((p) => markPageForReader(p, book.id));
+      // English edition, English leaf: the transcription is the text (#7100).
+      .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));
     return <TextReader book={book as any} pages={markedTextPages as any} collections={bookCollections} />;
   }
 
@@ -942,6 +945,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // Use book-level cached counts (not page array, which is truncated to first 100 pages)
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
+  const humanReads = Number((book as unknown as { human_read_count?: number }).human_read_count) || 0;
   const totalPages = book.pages_count || pages.length;
   /**
    * Does this book have page IMAGES at all, or only text?
@@ -982,7 +986,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const translationState = (book as unknown as TranslationStateSource).translation_state;
   const verdict = translationVerdict({ translation_state: translationState });
   const translationRung = storedRung({ translation_state: translationState });
-  // English editions: the stored "translation" is the OCR, and a first English
+  // English editions: no English translation is served (an English leaf's
+  // stored "translation" is withheld at every door, #7100), and a first English
   // translation can't be true (#3524). Main site only; embed/tenant views are
   // unchanged until BPH approves.
   const englishOriginalHere = !isEmbedded && !tenantSlug && !!translationState?.english_original;
@@ -1055,7 +1060,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // Prose links go only to published-tier entity pages (#4321) — linking every
   // index term is how one-book vocabulary like "Axis" earned sitewide links.
   // On lookup failure, degrade to unlinked prose rather than linking unvetted.
-  const summaryEntities = await (async () => {
+  // Started here, awaited with the other independent lookups below (render-profile, #7057).
+  const summaryEntitiesP = (async () => {
     const all = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
     if (all.length === 0) return all;
     try {
@@ -1073,7 +1079,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // ============================================================================
   if (!isEmbedded) {
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
-    const bookWarning = (await getQualityWarnings(await getReadDb(), [book.id])).book;
+    // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
+    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id])).then(w => w.book);
     const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
@@ -1180,8 +1187,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const relatedYear = Number(String(book.published ?? '').match(/\d{3,4}/)?.[0])
       || (book as unknown as { year?: number }).year
       || null;
-    const tagRelated: CatalogBook[] = embedPolicy.showBookRelatedBooks
-      ? await getRelatedBooks({
+    const tagRelatedP: Promise<CatalogBook[]> = embedPolicy.showBookRelatedBooks
+      ? getRelatedBooks({
           id: book.id,
           author: book.author,
           categories: book.categories,
@@ -1190,15 +1197,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           year: relatedYear,
           place: resolveImprintPlace(book)?.display, // family resolver, #4043
         }, renderableCover, 12).catch(() => [] as CatalogBook[])
-      : [] as CatalogBook[];
-    const hasRelated = tagRelated.length > 0;
+      : Promise.resolve([] as CatalogBook[]);
 
     // Provenance section: who holds the original, who digitised it, what Source
     // Library did, and where the scans came from (src/lib/book-provenance.ts).
     // Keyed on the HOLDER, never the platform: "From the collection of
     // Internet Archive" credited the wrong party (#6503). With no holder on
     // record it says where the scans are from instead. Skipped in embed/tenant views.
-    const librarySection: LibrarySectionData | null = await (async () => {
+    const librarySectionP: Promise<LibrarySectionData | null> = (async () => {
       if (!embedPolicy.showBookRelatedBooks) return null;
       const src = (book as unknown as { image_source?: ProvenanceSource }).image_source;
       const prov = resolveBookProvenance(src);
@@ -1259,6 +1265,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       };
     })();
 
+    // The four lookups above are independent (entity terms, quality warning,
+    // related books, holder shelf): run them concurrently instead of one after
+    // another. Only synchronous code sits between their creation and this await.
+    const [summaryEntities, bookWarning, tagRelated, librarySection] = await Promise.all([
+      summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP,
+    ]);
+    const hasRelated = tagRelated.length > 0;
+
     // Publisher / place only — the DATE is surfaced separately as a labelled
     // chip (heroDate) so it's clear, not buried at the end of the impressum.
     const impressum = (() => {
@@ -1281,8 +1295,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
     const heroDate = (() => {
       const pub = book.published ? String(book.published).trim() : '';
-      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: pub };
-      if (compDateDisplay) return { label: t.written, value: compDateDisplay };
+      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: localizePublished(pub, lang) };
+      if (compDateDisplay) return { label: t.written, value: localizeDateDisplay(compDateDisplay, lang) };
       return null;
     })();
     // Meta line: publisher/place, plus the source-work line ONLY when its author
@@ -1295,9 +1309,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
       if (comp) {
         const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
-        if (!sameAuthor) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+        if (!sameAuthor) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
       } else if (trans) {
-        parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+        parts.push(`${trans.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(trans.date_display, lang)}`.trim());
       }
       return parts.filter(Boolean).join(' · ');
     })();
@@ -1372,7 +1386,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = (compDate || (book.published ? String(book.published) : '')).trim();
+    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (book.published ? String(book.published) : '')).trim();
     const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
     if (histInformative) {
       // Publisher/place only make sense for a printed impressum, not an ancient
@@ -1769,9 +1783,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
-                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
+                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
                     </Link>
-                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />)}
                   {/* The name stays clickable and searchable — a byline is how a
                       reader REACHES a book, and for the Bhutanese manuscript
                       volumes the monastery is the only handle they have. What
@@ -1877,6 +1891,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
                     serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
                   })}{' '}
+                  {bookWarning.commonKinds.length > 0 && <>{qualityStrings.qualityBookKinds(bookWarning.commonKinds.map((k) => qualityStrings.qualityKinds[k]))}{' '}</>}
+                  {qualityStrings.qualitySeriousMeans}{' '}
                   <Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link>
                 </p>
               )}
@@ -2050,6 +2066,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     );
   }
 
+  const summaryEntities = await summaryEntitiesP;
+
   return (
     <>
       <EmbedNavigationReporter book={book.slug || book.id} />
@@ -2111,14 +2129,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                         <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
-                          <AuthorName author={book.author} />
+                          <AuthorName author={book.author} lang={lang} />
                         </Link>
-                      ) : <AuthorName author={book.author} />
+                      ) : <AuthorName author={book.author} lang={lang} />
                     ) : heroByline.role === 'editor' ? (
-                      <span>edited by <AuthorName author={heroByline.editor} /></span>
-                    ) : <AuthorName author={book.author} />}
+                      <span>edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
+                    ) : <AuthorName author={book.author} lang={lang} />}
                     {heroByline.role === 'author' && heroByline.editor && (
-                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} /></span>
+                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
                     )}
                   </p>
                 );
@@ -2196,13 +2214,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <Calendar className="w-4 h-4" />
                     <span>
                       {book.source_work_dates.find(l => l.type === 'composition')
-                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
+                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'composition')!.date_display, lang)}`.trim()
                         : ''}
                       {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                        ? <span className="text-stone-500"> · published {book.published}</span>
+                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(String(book.published), lang)}</span>
                         : ''}
                       {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
-                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
+                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'translation')!.date_display, lang)}`.trim()
                         : ''}
                     </span>
                   </div>
@@ -2222,6 +2240,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <FileText className="w-4 h-4" />
                   {hasScans ? `${totalPages} scans` : t.pagesOfText(totalPages)}
                 </div>
+                {/* human_read_count (#5048): reading visits by people, with pooled
+                    proxies and crawlers removed, rebuilt nightly. NOT read_count,
+                    the legacy counter inflated by proxy pools. Counting began
+                    2026-07-29, so the figure is "since then" and undercounts
+                    earlier reading; hidden at zero rather than showing "0 reads". */}
+                {humanReads > 0 && (
+                  <div
+                    className="flex items-center gap-2"
+                    title="Reading visits by people since 29 July 2026; crawlers and proxy traffic excluded."
+                  >
+                    <Eye className="w-4 h-4" />
+                    {humanReads.toLocaleString('en-US')} {humanReads === 1 ? 'read' : 'reads'}
+                  </div>
+                )}
                 {imageCount > 0 && (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
@@ -2271,6 +2303,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     originalEditionId={(book as any).original_edition_id ?? null}
                     originalInScan={(book as any).original_in_scan ?? false}
                     originalLanguage={(book as any).original_language ?? null}
+                    language={(book as any).language ?? null}
                     year={Number((book as any).year || book.published) || null}
                     showCrossLink={embedPolicy.showRelatedEditions}
                   />
@@ -2477,6 +2510,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {embedPolicy.showAuthorCrossReference && (book as any).author_cross_ref && (
                 <AuthorCrossReference
                   author={book.author}
+                  authorId={book.author_id}
                   crossRef={(book as any).author_cross_ref}
                   context="book"
                 />
@@ -2780,7 +2814,8 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       // unknown. Getting this backwards makes the gate silently never fire.
       hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
     }
-    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}`);
+    // `?lang=` keeps the header in the reader's language on the English page (#6938).
+    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
 
     // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
     // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
@@ -2828,10 +2863,15 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
 
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
-      {/* Migrates a legacy `?lang=es` link to the `/es` twin and sweeps the
-          retired reading-language localStorage key. The language of a page is
-          its URL prefix; nothing is recorded. See src/lib/reading-language.ts. */}
-      {lang === 'en' && <ReadingLanguagePreference />}
+      {/* Sends a carried `?lang=xx` on to the `/xx` edition when this book has
+          one, and sweeps the retired reading-language localStorage key. The
+          language of a page is in its URL; nothing is recorded. See
+          src/lib/reading-language.ts. */}
+      {lang === 'en' && (
+        <ReadingLanguagePreference
+          editions={PREFIXED_LOCALES.filter((l) => hasLocalizedEdition(earlyBook as unknown as Record<string, unknown>, l) === true)}
+        />
+      )}
       {!isEmbedded && <ConditionalSiteHeader variant="dark" />}
 
       {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb

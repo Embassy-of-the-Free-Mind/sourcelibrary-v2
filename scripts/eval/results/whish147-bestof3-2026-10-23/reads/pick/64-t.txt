@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most coherent Sāṅkhya phrasing across rows: "pradhānamiti … viṃśatitatvamiti", "bhūtānāṃ … indriyāhaṃkāra … viśeṣamiti", "jijñāsā", "kapilasū[tra]" and "mahāmunes". B has fewer real phrases ("viṃśatitatvamiti", "sākṣitvāt", "viparītamiti"), and A is mostly broken fragments and [illegible] gaps.

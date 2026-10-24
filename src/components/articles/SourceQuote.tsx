@@ -18,7 +18,8 @@ import ArticleImage from './ArticleImage';
  *
  * `children` is the quotation as the article gives it (usually the library's
  * English); `original` is the source-language text when the article shows it.
- * On a phone the page sits under the quote.
+ * On a phone the page sits under the quote as a 12rem thumbnail, so a run of tall scans
+ * does not fill screen after screen.
  */
 export default function SourceQuote({
   book,
@@ -28,6 +29,7 @@ export default function SourceQuote({
   source,
   original,
   pageAlt,
+  linkToPage = false,
   children,
 }: {
   book: string;
@@ -38,6 +40,8 @@ export default function SourceQuote({
   source: ReactNode;
   original?: ReactNode;
   pageAlt?: string;
+  /** Clicking the page image opens the page in the reader instead of the lightbox. */
+  linkToPage?: boolean;
   children: ReactNode;
 }) {
   const href = `/book/${book}?page=${page}`;
@@ -50,9 +54,15 @@ export default function SourceQuote({
           {source}, <Link href={href}>p. {printedPage ?? page}</Link>
         </figcaption>
       </blockquote>
-      <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
-        <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
-      </div>
+      {linkToPage ? (
+        <Link href={href} className="block w-full max-w-[12rem] mx-auto md:max-w-none">
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
+        </Link>
+      ) : (
+        <div className="w-full max-w-[12rem] mx-auto md:max-w-none" data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 192px, 256px" />
+        </div>
+      )}
     </figure>
   );
 }

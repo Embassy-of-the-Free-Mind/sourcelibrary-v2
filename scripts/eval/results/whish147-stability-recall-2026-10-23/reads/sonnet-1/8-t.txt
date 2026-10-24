@@ -1,0 +1,11 @@
+ROW 1 | ൎക്കിപഞ്ചതം സംസ[illegible] ‖ [illegible]തിതൃപവടൊഹാംടാടൈവരധിവാസിത്ര ‖ തംലിംഗംകുമിത്രംയഥാ
+ROW 2 | [illegible]ഖൂതെകസ്ഥാപാഭ ‖ [illegible]ടൊഹയമാവിഎ[illegible]ക്ഷിഎതലത്തിഎ ‖ [illegible]വിതെനടൈമിസ്കകത്തു
+ROW 3 | ഞനമത്രയൊംബിം ‖ ഹാംകൂസ്പ്രതെഅ[illegible] ‖ ദൊമിമിതകടനമി
+ROW 4 | ത്തകുസത്രൈ ‖ നപ്രകതെതെക്ഷ്മ[illegible] ‖ [illegible]ഭൂതഇണ്ണുനായ്ണ്ണ ‖ ദവുതുക്കൊക
+ROW 5 | ബിംപംഃതല്ഃസെ ‖ യ[illegible]സിബികാനത[illegible] ‖ [illegible]കാഃ[illegible]ചാപ്ര ‖ ഇതികാദ്ദെഖുതത
+ROW 6 | ദഖെയത്ഥ്രാദ്രാഃദ ‖ ക്ലോഃകൊനഎണ[illegible] ‖ [illegible]ഹുബിണഃകാഹ്ഹ് ‖ ദ്രബീശുക്കാലല
+ROW 7 | ദ്രാഃയത്ഥ്രെ ‖ മനനത്ഥുഭുംഹ് ‖ [illegible]ംഹാമനമധന്ക്കാൽ ‖ ഛതയയമ്ഷെണ[illegible]
+ROW 8 | ഹെനെനചാ[illegible]ഥ്രു ‖ വിചത്രയഇണ്ണുതെ[illegible] ‖ [illegible]തൊതെബെഃക്ലഃഎ ‖ [illegible]ചഎഹ്രാൽഫലിലലഃ
+ROW 9 | ബം[illegible]സാ[illegible]ടവത്ഥെ ‖ ഉഇക്കസാത്രാഹാതൽ[illegible] ‖ [illegible]കെമെഖ്യത്ഥ[illegible]ദവി ‖ [illegible]ഥ്ഥാകത[illegible]ചത്രയോഎക
+
+NOTE | Low confidence throughout: the script is a cursive hand and I could only partly resolve it. Row alignment and the hole joins are reasonably sure, but many letters are guesses and the overlaps are not de-duplicated with certainty.

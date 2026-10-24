@@ -1,0 +1,9 @@
+ROW 1 | ദ്ര്യമപരിമാണത്വാന്തരിളു‖ഷ്ക്രസംഹാരഭിത്വാൽ.നന്മമെന്നാമിരുള്ള‖നഖിതത്താൽഉല്പ്രചാൽക്കു
+ROW 2 | ക്കാശവദിത്വെചന്നാമന‖സാവിഭുത്വെന്ത്മമനസ്സംയൊഗസ്യ‖സമവായികാരണത്വാദ്ദ
+ROW 3 | രവത്ത്ജ്ഞാനാനാൽ‖പഞ്ചിഭ്രസംഹാരാൽനാചവിഭൂദ്ധയസ്യ‖സംയൊഗഹാനിത്വാ
+ROW 4 | ച്ചാകൽസംയൊഗ‖സ്യഭിത്വാത്വസ്യക്കുക്ത്യഭാവശ്ര‖സംഹാൽ.പരിതച്ഛ്രഭി
+ROW 5 | ദികരണ്ണക്ഷലദൈശാ‖ത്മമനസ്സംയൊഗസ്യസവ്യൂദാ‖ഭിദ്രമാനത്വാൽതത്തെ
+ROW 6 | ത്വത്ര്യദാരമനപ്യദി‖ത്തിപ്രമിശഭിത്ദാസ്യത്ഭി‖ഷ്ഠദാനിസ്തരത്തിദ
+ROW 7 | ാജ്ഞൈനൈനാക്ഷിത്തിരിതിന‖ന്തണ്ണചരിജ്ഞ:ഷ്ട:രൂപം.ലക്ഷ്യതിച‖ക്ഷുരിതിസംഖ്യാദയവിത്രി
+ROW 8 | ഛ്രരഞ്ഞിവരനരാഗമാ‖ത്രപദം.ത്രപത്വെനത്തിവ്യാപിക്ഷപാ‖രണാരഖ്യുന്നപടഹനാനിദ
+NOTE | Low confidence throughout. The leaf has 8 rows. The left column is p01, the middle is p02 and p03, and the right is p04. I could make out the outlines of most glyphs, but many conjuncts and vowel signs are uncertain guesses, especially near the strings and in rows 5–8. Treat this as a rough draft that needs checking against the leaf, not a reliable reading. There is also an unread mark in the left margin of row 5 that I left out.

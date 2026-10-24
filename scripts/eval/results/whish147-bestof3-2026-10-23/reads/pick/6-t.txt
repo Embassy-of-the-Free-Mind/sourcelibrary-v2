@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, D, C, A
+WHY | B reads most faithfully as Sāṅkhyakārikā 17–22, with "-ghātaparārtthatvāl", "puruṣabahutvaṃ siddhaṃ", "karttevabhavatyudāsīnaḥ" and "prakṛtermmahāṃstatohaṃkāras"; D is nearly as good but drops or garbles several words, while C and A are mostly syllable strings that don't form sense.

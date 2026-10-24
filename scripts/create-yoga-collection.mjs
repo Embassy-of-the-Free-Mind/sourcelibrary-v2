@@ -317,7 +317,7 @@ async function main() {
   if (!DRY_RUN) {
     const r = await db.collection('books').updateMany(
       { _id: { $in: books.map(b => b._id) } },
-      { $addToSet: { collections: SLUG } },
+      { $addToSet: { collections: SLUG }, $currentDate: { updated_at: true } },
     );
     console.log(`  ✓ Tagged ${r.modifiedCount} books with collections:'${SLUG}'`);
   }

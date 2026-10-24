@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. trāhasyakhakhabādhāra [illegible] ‖ [illegible] kinyakhanannanāyyāresanakhabodha ‖ catātthanantāutratthna
+2. sabehajjarakkgrai [illegible] ‖ jjikkimartthamṛkkavvagranthakriyataitṛ ‖ tanṛvibālānāmi
+3. ttiorukkaiāmakkimpi [illegible] ‖ takṣyarbbālānāṃoñcāodhānābhavan ‖ tbhratthgrahaṇadhāraṇapa
+4. ṭṭañjālaḥnatrajja ‖ ndhayaḥkkiṃutbhākriyataitya [illegible] ‖ kakṣahitayāreyti
+5. jñimaiśvaśvataṃjja ‖ gasrikhantānaṃsāṃbadhilaṃsya ‖ drandhayāyantatā
+6. ggopakhimatthya ‖ tthsaddādrahyānapamobhramecca ‖ tratthddvapadātthrāṣṭhi
+7. bhajjaitaddraivyatthipa ‖ danyātthdvapadātthjñivyalpatrāna ‖ bhrimedhayatthaṃpadātth
+8. khyāmājjālakṣaṇaṃ ‖ nalmpibhadrāgāṭevasajjaitralakṣa ‖ kṣaikṣjjavajjagrahaṇaṃ
+9. llartthamatthaṃcannana ‖ sikkasaṃkhyākhyakhakhajjadratthtthāra ‖ lnanañattitikkapeda
+
+TRANSCRIPTION B
+1. traൗhisyakhakabādhāme ‖ trinyakhanannannāൗyyāmesanakhabādhaḥ ‖ catārttanūāutrtthyana
+2. sabehūjñarakkgrame ‖ jñikrimartthamatṛrkkavyagranthaḥkriyataitṛ ‖ tantuvābālānāmi
+3. ttiḥkhatrakṣyāmatannitra ‖ tatyyarbbālānāṃmebbāradhānābhaval ‖ trūtḥgrahaṇadhāraṇapa
+4. ṭūñjālaḥnatrasla ‖ ndhayaḥkkiṃgrakṛtvākriyataitṛ ‖ kaṅṅrahāryyadhārameyatri
+5. śimeśvaścaraṃjña ‖ gantrikhantānanaṃsāṃbedhilaṃsū ‖ draniyāyanitantā
+6. hḍhāpayimetbhṛ ‖ tḥsadāmatrṛānapamanādrabe ‖ truttbhavadātthāṣi
+7. dajjamatadraityaikhapadanyātbhūvadārtth ‖ itivyalkhatrāna ‖ ānibhimedhayatvāṃpadārttha
+8. lāmānālakṣaṇaṃnantibhūgāme ‖ ṭevasaṅkalakṣa ‖ mekṣejñavaṅgrahaṇaṃ
+9. ccarkkamarkkaṃcantyaḥnadhikkasaṃkhyāvya ‖ khamajñadārtthāra ‖ ālnannaññatirikkaḥpada
+
+TRANSCRIPTION C
+1. trāhasyakharabodhāra [illegible] ‖ [illegible] ṣinyakhanannannāryādasanakhabodhaḥ ‖ cata [illegible] ntrāutra [illegible] ṣṭaḥna
+2. nabehṛjjarakkgrame [illegible] ‖ [illegible] jjimarmṛkkṛvṣgranthaḥkriyataḻatru ‖ tantuviḥbālānāmi
+3. ttiḥotrakṣyāmakkami [illegible] ‖ ta [illegible] trybālānāraṃobāradhyānābhava [illegible] ‖ truttaḥgrahaṇadhāraṇapa
+4. ṭṭañjrālaḥnatrassa ‖ ndhayaḥkkiṃpra [illegible] ṃkṛtvākriyataḻatru [illegible] ‖ kakkuhāraṇadhāredyatti
+5. ṣikhebbaśbānaṃjña ‖ gandhikhantānaṃsvāṃbogilaṃnṟu ‖ dibiyāyantittarāra
+6. hrāpaṣimatyā ‖ tḥsadāramṛānaparanādrora ‖ truൿṭuvadākṣāṣvi
+7. bhajjaratandraivyātvipa ‖ danyātbhupadākṣjattivyalpatṛāna ‖ bhiredhayatbāṃpadākṣ
+8. bāramātrūlakṣmaṇaṃ ‖ nalmibhārāgāredaivasaṅkatālakṣma ‖ rakṣmaṣpasakṣmagrahaṇāṃḥ
+9. llakṣmamarakkecannaḥna ‖ nāyikasaṃkhyāvyakharaṣṭadāttbvāra ‖ lnanañatririkkaḥpeṭa
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

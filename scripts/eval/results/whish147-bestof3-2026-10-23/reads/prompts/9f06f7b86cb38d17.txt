@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. dupalabdhermmahadādibhyaḥ ‖ kāryyamityanenaivasiddhatvāda [illegible] na ‖ nna [illegible] vyākhyā [illegible] yaṭṭaṃva
+2. kārākitalkāraṇaṃbha ‖ edivakṣiya [illegible] talkāryya [illegible] ‖ [illegible] gāl upakāra [illegible]
+3. [illegible] ṭāvāditya [illegible] ḥ [illegible] kā ‖ ryyā [illegible] śarīra [illegible] ‖ [illegible] sāya [illegible] [illegible]
+4. kāra [illegible] ‖ [illegible] kāra [illegible] cavṛtti [illegible] ‖ [illegible]
+5. [illegible] kā [illegible] ‖ [illegible] kā [illegible] ‖ [illegible] saṃgra [illegible]
+6. [illegible] vakā [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] tāpakā [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible] māna [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] ‖ [illegible]
+
+TRANSCRIPTION B
+1. dravyalakṣaṇa [illegible] hādādikṣa ‖ kāryyamityanolenova ‖ vasiddhyatvādanyonyathāvyākhyāne [illegible] yaddhaṃ
+2. kārākilkāraṇāṃ [illegible] ‖ buddhivakkiya te ‖ talkāryyatayopyiṭṭāgāl upakāre na
+3. kaṭṭāvāditryaṣṭaḥkṛkā ‖ kāryyā vyāptiviśa ‖ śarīrasyānvathānasa sāyana va bhedamer
+4. kāraṇānādhyavakiśca ‖ [illegible] kāraṇātma ‖ cavṛddhikkikasāha lahārapaḍiṣālakai
+5. ṣannāmpakāṇḍaṃ ‖ bāhyāntakkā ‖ [illegible] ntappravidhā gṛhisaṃgrahavakkiṣṛ
+6. hanāvakāśa ‖ dvāmeṇaḥvontu ‖ namyapaṅkavṛkkiḥ kapālailavamār
+7. ṣekṣamaghṛryya ‖ bāhyavanddaha ‖ ttāpakāriṣita trakailaivaṃśvāthākā
+8. laṃśimetākṣṇapākava ‖ maḥmāndameme ‖ tarttṛṣṇānmājyuvamenātimānaśiṣyyāyā
+9. gandhatilimaidravaṃta [illegible] ‖ pākṣitaiṭṭe ‖ kameryyametṛ [illegible] gṛhatṛpakārairūriṣā
+10. dyārttikiraṇānāṃbodhya ‖ yānālebodhavakāmer ‖ ṣavakāmerkiṭāle [illegible] vāyetirutaḻavamṛnyatetada
+
+TRANSCRIPTION C
+1. dṛvallañja [illegible] hadāddhikaccha ‖ kācchitryanaikainavasiddhyabhādarairyandra ‖ thāvyākhyāñcairayyūpa
+2. kainādikaḻkānnaṇotta ‖ āptikaivakiya ttalkāryyattekoṇṭiṭṭa ‖ āgālupakāre āna
+3. bheṭṭāvābhetyubhūḥtadrukā ‖ rāccvā llyāditiśarīrasthānisthānasa ‖ āyana vabhedakaiḥ
+4. kāraṇairapyakil ‖ trikāraṇairiccavṛddhikaḻkasāke ‖ nāhāropapipālanai
+5. ṣaṇṇāṃcakāṇḍvāmi ‖ bāhyānticakā ntyaṣṭhiprā ‖ pṛthisaṃgrahāvakiccu
+6. hanāvakāśa ‖ dārainaḥponassannṛcabhavykkiḥ ‖ tthālaidevamāna
+7. bhakṣameyyāgai ‖ ānandiparasyabhetāpakāriṇīta ‖ taidevaṃyathāgakā
+8. laṃśritaiddyapādakava ‖ ddhaḥdānandairaitayyogyāhātmavari ‖ rainarimānanijñādyā
+9. gandhatibhiraiścavaṃnaṣṭha ‖ pādyaṣṭaiṭeṣṭamaituḻdhāraitaddhru ‖ tryāhayavakkārairadhimā
+10. trāntikkampravaṃboddhya ‖ ānāraibodhakāratvāhakāratvīṭāre ‖ nāghakṣitevarūdyakarṣa
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

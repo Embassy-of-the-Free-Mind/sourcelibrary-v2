@@ -30,7 +30,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
-import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
+import { fetchAccessLeaves, indexJp2FilesByLeaf, positionalFallbackRefusal } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { makeOwnedScratchDir, sweepLeakedScratchDirs, freeBytes } from './lib/scratch-dirs.mjs';
@@ -410,16 +410,42 @@ async function processBook(book, db) {
     // page its neighbour's scan on affected items (#3368). Resolve the real
     // mapping from the item's scandata; null means unknown, and the alignment
     // verification below is what keeps an unknown mapping from being written.
+    // Refuse the whole book rather than write a possibly shifted sequence.
+    const failBookAlignment = async (reason) => {
+      console.log(`    [FAIL-BOOK] ${reason}`);
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.bulk_unsuitable': true,
+          'archive_metadata.bulk_unsuitable_at': new Date(),
+          'archive_metadata.bulk_unsuitable_reason': reason,
+          'archive_metadata.bulk_align_failed': true,
+          updated_at: new Date(),
+        }}
+      );
+      stats.booksFailed++;
+    };
+
     let accessLeaves = null;
     let byLeaf = null;
     if (download.format === 'jp2') {
-      accessLeaves = await fetchAccessLeaves(iaId);
+      // Retried: a transient failure here is what sent Whish MS 147 down the
+      // positional fallback with a two-leaf shift (#3368, 2026-10-21).
+      accessLeaves = await fetchAccessLeaves(iaId, { attempts: 3 });
       byLeaf = indexJp2FilesByLeaf(pageFiles);
       if (accessLeaves) {
         const skipped = pageFiles.length - accessLeaves.length;
         if (skipped > 0) console.log(`    [LEAFMAP] scandata: ${accessLeaves.length} access leaves of ${pageFiles.length} files (${skipped} excluded)`);
       } else {
-        console.log(`    [LEAFMAP] no parseable scandata — falling back to positional mapping, will verify before writing`);
+        // Positional mapping is right only when the zip has exactly one file per
+        // IIIF leaf. Checked by count, not left to the hash check below, which
+        // passes shifted sequences on visually uniform material.
+        const refusal = positionalFallbackRefusal(pageFiles.length, allPages.map(p => p.photo_original || p.photo));
+        if (refusal) {
+          await failBookAlignment(`no parseable scandata; ${refusal} — refusing to write a positional mapping`);
+          return;
+        }
+        console.log(`    [LEAFMAP] no parseable scandata — zip and IIIF counts agree (${pageFiles.length}); positional mapping, will verify before writing`);
       }
     }
 
@@ -510,18 +536,7 @@ async function processBook(book, db) {
         const reason = unverifiableGuess
           ? `no scandata and mapping unverifiable (${verdict.detail}) — refusing to write an unchecked sequence`
           : `leaf mapping failed verification (${verdict.detail}) — refusing to write a possibly shifted sequence`;
-        console.log(`    [FAIL-BOOK] ${reason}`);
-        await db.collection(booksCol).updateOne(
-          { id: book.id },
-          { $set: {
-            'archive_metadata.bulk_unsuitable': true,
-            'archive_metadata.bulk_unsuitable_at': new Date(),
-            'archive_metadata.bulk_unsuitable_reason': reason,
-            'archive_metadata.bulk_align_failed': true,
-            updated_at: new Date(),
-          }}
-        );
-        stats.booksFailed++;
+        await failBookAlignment(reason);
         return;
       }
       console.log(`    [ALIGN] ${verdict.detail}`);

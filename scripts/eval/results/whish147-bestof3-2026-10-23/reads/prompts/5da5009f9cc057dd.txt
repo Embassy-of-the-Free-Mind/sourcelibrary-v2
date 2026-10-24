@@ -1,0 +1,56 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. khyākaparātthakhālā ‖ uṇāmivipakhyakhyādadhakkānālpuruka ‖ ṣāndiṭokkubhāvālka
+2. kaivalyākhyaprappakkai ‖ kakhassjñānamanakhakaraṇānāṃprakṛ ‖ tiniyamādayyakkaśavalpra
+3. ākkataikkaḻuru ‖ khaballakhāṃssaudākreuññavi ‖ pañcayākkaiṣṇavā
+4. ntvātarantācavi ‖ paññāsālsidāṃsāṇikhama ‖ gyaparuṣasyakaie
+5. valyāṃmātrussya ‖ ḻḻaḻkaṃṭhūuḻḻatarakaññabhāvā ‖ kharanātantākkal
+6. saṃyogādaṃ ‖ catanakakkokanāpauvei ‖ gauṇakantyakhe
+7. vitamāḻakal ‖ paṭavaññṛdāsintudhyāpraru ‖ khatyādaḻnākhaṃe
+8. kaivalyākhyaka ‖ dāpradhānantapāgakhgapaṭaṭabha ‖ khayāravisaṃyoga
+9. īlkratassaikkaḥൿn ‖ kakratataihāṃntakakohākānanta ‖ ṭalgaṇatraṣodha
+10. śakaḥtantādavi ‖ ṭhodhaḻkālpakhaibhākhoṅṅakraikāta ‖ dhyāllyapanāyo
+
+TRANSCRIPTION B
+1. ghātaparārtthatvāltriguṇādiviparyyayādadhiṣṭhānālpuruṣostibhoktṛbhāvāl [illegible]
+2. kaivalyārtthaṃpravṛtteśca [illegible] jananamaraṇakaraṇānāṃpratiniyamādayugapalpra
+3. vṛtteścapuruṣa ‖ bahutvaṃsiddhaṃtraiguṇyavi ‖ paryyayāccaiva
+4. [illegible] tasmāccavi ‖ paryyāsālsiddhaṃsākṣitvama ‖ syapuruṣasyakai
+5. valyaṃmāddhyasthyaṃ ‖ draṣṭṛtvamakarttṛbhāva ‖ śca [illegible] tasmāl
+6. tsaṃyogāda ‖ cetanaṃcetanāvadivali ‖ ṃgaṃguṇakarttṛtve
+7. catathākartte ‖ vabhavatyudāsīnaḥ [illegible] puruṣa ‖ syadarśanārtthaṃ [illegible]
+8. kaivalyārtthaṃ ‖ tathāpradhānasyapaṃgvandhavadubha ‖ yorapisaṃyoga
+9. stalkṛtassarggaḥprakṛtermmahāṃstatohaṃkārastasmālgaṇaścaṣoḍaśa
+10. kaḥtasmādapiṣoḍaśakālpañcabhyaḥpañcabhūtāni [illegible] addhyavasāyo
+
+TRANSCRIPTION C
+1. jñānakarmmattāltri ‖ guṇādiviparyyāsādayikkunnālpuru ‖ ṣa [illegible] kkuṭa [illegible] yārkke
+2. kaivalyārtthaṃpravṛtta ‖ kaikaba [illegible] jjananamanabhekanaṇānāṃpra ‖ kṛti [illegible] mādanya [illegible] gavalpra
+3. uttarattekkāṭṭu ‖ [illegible] bahubāṃnviddha [illegible] ujñāvi ‖ paśyāvaiśiṣṭyaṃ
+4. ṇṭā [illegible] ccavi ‖ paścāttālsiddhāṃsābhikama ‖ [illegible] prakṛ [illegible] stryavaika
+5. valyaṃmāntyātya ‖ jja [illegible] ddajñabaikakantyadādā ‖ kṣe [illegible] bhajñākkal
+6. saṃyogāddai ‖ caraṇabhakkaikai [illegible] nāpadaivavi ‖ ṃgaṃguṇekkura [illegible]
+7. vinairāgyaikka ‖ paṭaval̤vuddāsvī [illegible] ddhyapporu ‖ [illegible] dal [illegible] ṃe
+8. aikavalyāddhya ‖ dāpradhānasyācaṃgāsthyapaṭuma ‖ [illegible]
+9. kṣilkramaṇasiddha [illegible] ‖ [illegible] tmāṃgkkai [illegible] nāhāṃkoānaṅṅa ‖ ṅṅilgata [illegible] mairava
+10. gakabhajñādavi ‖ rāghaskkālpakkādrupekkādrekā ‖ reṣubibbyapasādaidhā
+
+TRANSCRIPTION D
+1. ghātaparārtthāltriguṇādiviparyayādadhiṣṭhānālpuruṣostibhoktṛbhāvālkai
+2. valyārtthaṃpravṛtteśca [illegible] jananamaraṇakaraṇānāṃpratiniyamādayugapalpra
+3. vṛtteśca ‖ [illegible] bahutvaṃsiddhaṃtraiguṇyavi ‖ paryayāccaiva
+4. [illegible] tasmāccavi ‖ paryāsālsiddhaṃsākṣitvama ‖ syapuruṣasyakai
+5. valyaṃmāddhyasthya ‖ [illegible] draṣṭṛtvamakarttṛbhāva ‖ śca [illegible] tasmāl
+6. tsaṃyogāda ‖ cetanaṃcetanāvadivali ‖ ṃgaṃguṇakarttṛtve
+7. catathākartta ‖ [illegible] bhavatītyudāsīnaḥ [illegible] puruṣa ‖ syadarśanārtthaṃ
+8. kaivalyārttha ‖ [illegible] thāpradhānasyapaṃgvandhavadubha ‖ yorapisaṃyoga
+9. stalkṛtassarggaḥ [illegible] termmahāṃsta [illegible] haṃkārastasmālgaṇaścaṣoḍa
+10. śakaḥtasmādapiṣoḍaśakālpañcabhyaḥpañcabhūtāni [illegible] dhyavasāyo
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

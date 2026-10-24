@@ -1,0 +1,10 @@
+ROW 1 | വിതൎക്കയുക്തിൎദ്ദിനാമകാര ‖ രണാല്പ്രാപ്തിനകാരണാമകാരണാനന്ത്യാക്ക ‖ ക്കാരണപ്രാ[illegible]ഏ[illegible]
+ROW 2 | ജ്ഞാദ്ഭവതിസത്വാൽജ്ഞാന ‖ നാധിഗമാ[illegible]ക്ഷാംയുക്തിൎദ്ദിനാമഭി[illegible] ‖ [illegible]ജ്ഞവദശകത്വാ[illegible]
+ROW 3 | ാന്തരസ്വം[illegible]വ്യാദ ‖ ാദൃതാശരീരംപ്രമാ[illegible]കാ[illegible]ദ്മ ‖ ദമവൻ[illegible]ലാ[illegible]
+ROW 4 | ഷ[illegible]ഷത്തവിഷവശ ‖ [illegible]ശാൽ[illegible]സമവികാലല[illegible]ക്കൂ ‖ മ[illegible]ശി
+ROW 5 | ദമഷിത്ര[illegible]ദാ ‖ സ[illegible]ക്ഷാദി[illegible]ഭവതി[illegible]പ്രാ ‖ [illegible]ശി[illegible]
+ROW 6 | ഉത്രാ[illegible]ലിംഗടെ ‖ [illegible]കശരി[illegible]പ്പ[illegible]കൈ ‖ ഷാസ്ം[illegible]ലൊ[illegible]
+ROW 7 | [illegible]തെ[illegible] ‖ ചരി[illegible]ാൽ[illegible]ധാനമി[illegible] ‖ [illegible]വി[illegible]പ്രധാനംലിംഗ
+ROW 8 | ദു[illegible]പരിണെത[illegible] ‖ [illegible]വൽ[illegible]ത്യ[illegible]ദുഃഖം[illegible]കെവല ‖ [illegible]മാ[illegible]മാത്ര[illegible]ക
+ROW 9 | മാത്ര[illegible]ക[illegible] ‖ [illegible]ജ്ഞ[illegible]ാൻ[illegible]ദവ[illegible] ‖ [illegible]ടാവി[illegible]കൈവല്യ[illegible]ഇത്യു
+NOTE | I could read only part of this leaf, and even the parts I've given are low-confidence: the leaf has 9 rows (rows 1–3 and 8–9 run the full width, rows 4–7 sit between the holes), the hand is small and loops into itself, I couldn't tell several conjuncts and dot-rephs apart reliably, and I've marked every unclear stretch as [illegible] instead of filling it from the known text.

@@ -1,0 +1,12 @@
+4-b pitch 104 rows 10 K None deskew -0.5
+5-b pitch 99 rows 10 K None deskew 0.0
+5-t pitch 102 rows 10 K None deskew -0.5
+6-b pitch 102 rows 9 K None deskew -1.0
+6-t pitch 98 rows 10 K None deskew -0.25
+7-t pitch 100 rows 9 K None deskew -0.25
+8-b pitch 97 rows 11 K None deskew -0.75
+8-t pitch 104 rows 9 K None deskew 0.0
+9-t pitch 99 rows 9 K None deskew -0.25
+108-t pitch 83 rows 11 K None deskew 1.0
+86-t pitch 82 rows 12 K None deskew 0.25
+96-t pitch 74 rows 13 K None deskew 0.0

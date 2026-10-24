@@ -1,0 +1,107 @@
+{
+ "label": "read-from-image",
+ "reader": "Opus subagents, 2026-10-22",
+ "gains": [
+  {
+   "page": "p774",
+   "changes": 128,
+   "right": 128,
+   "wrong": 0,
+   "cant_tell": 0,
+   "not_located": 0,
+   "wrong_examples": [],
+   "missed_count": 2,
+   "missed_examples": [
+    "ef (line-end 'intelligenda ef-|ſet') -> print eſ",
+    "impof (line-end 'impof-|ſibilis') -> print impoſ"
+   ],
+   "note": "Both misses are line-final hyphen fragments whose partner half was changed; remaining in-word f (fuit, fore, infinita, freno, fontem, defecerut, deflerent, profluxum) are true f in print. Margin notes present; no missing lines."
+  },
+  {
+   "page": "p263",
+   "changes": 170,
+   "right": 170,
+   "wrong": 0,
+   "cant_tell": 0,
+   "not_located": 0,
+   "wrong_examples": [],
+   "missed_count": 0,
+   "missed_examples": [],
+   "note": "Roman type, all changed letters are ſ (incl. ſt/ſſ ligatures). Remaining f (fiat, filius, fundamentum, formaliter, effectus, refert) are true f. OCR misreads out of scope: 'fciequam' for print 'ſcientiam', 'itacim' for 'ſtatim', 'rextus' for 'textus', 'Arift, de illa' drops 're', 'solum modo' for 'solummodo'."
+  },
+  {
+   "page": "p162",
+   "changes": 52,
+   "right": 52,
+   "wrong": 0,
+   "cant_tell": 0,
+   "not_located": 0,
+   "wrong_examples": [],
+   "missed_count": 0,
+   "missed_examples": [],
+   "note": "Mostly italic; all changes are ſ in print. No f left where print has ſ, but OCR wrote plain 'ss' where print has ſſ/ß ligature (Nouissimè, emisse, poſſessionis x5) and capital 'Si' for print 'ſi' (line 1) - not f, so outside the pass."
+  }
+ ],
+ "losses": [
+  {
+   "page": "p104",
+   "changes": 11,
+   "right": 3,
+   "wrong": 8,
+   "cant_tell": 0,
+   "not_located": 0,
+   "wrong_examples": [
+    "Offa→Oſſa (x5): print shows ff with crossbars; King Offa, a proper name, and 'ossa' (bones) is common Latin",
+    "Harpesfildus→Harpesſildus: print shows fi ligature; English surname Harpsfield, no Latin frequency signal",
+    "Ceuulfo→Ceuulſo: print shows f; Anglo-Saxon name Ceolwulf",
+    "Bedafidem→Bedaſidem: print shows f (Bedæ fi-dem = 'Bedae fidem', split by a hyphen and joined by OCR); the merged token is unknown to the model, so it picked the 's' variant"
+   ],
+   "right_examples": [
+    "Piekfeldenfis→Piekfeldenſis",
+    "Legiceftrienfi→Legiceſtrienſi",
+    "Antifiodorenfi→Antiſiodorenſi"
+   ],
+   "missed_count": 1,
+   "missed_examples": [
+    "Lindifensi (print Lindiſenſi)"
+   ],
+   "note": "Italic page whose OCR already normalised almost every ſ to s; the pass's only scope was proper names, and it guessed wrong on 8 of 11 (Offa x5 alone is the loss)."
+  },
+  {
+   "page": "p29",
+   "changes": 6,
+   "right": 1,
+   "wrong": 3,
+   "cant_tell": 2,
+   "not_located": 0,
+   "wrong_examples": [
+    "ferues→ſerues: print 'Ferueo ferues feruesco' shows f; 'serues' is a real Latin form (serv-), and the paradigm context is lost on a word-frequency model",
+    "fio→ſio: print shows gothic f ('fio fias'); OCR-damaged context ('Piet fio fias')",
+    "facea→ſacea: print shows 'facere' with crossbarred f (facing-page fragment, OCR truncated); truncated token gives no real frequency signal"
+   ],
+   "right_examples": [
+    "fcriptide→ſcriptide"
+   ],
+   "cant_tell_examples": [
+    "fit→ſit and fic→ſic: both in facing-page gutter fragment ('ma fitt', 'gtō:ſie'), too small and blurred to see a crossbar"
+   ],
+   "missed_count": 0,
+   "missed_examples": [],
+   "note": "Blackletter page with heavy OCR garbage; changes 4-6 fall in the OCR'd fragment of the facing page in the gutter, not the main text block."
+  },
+  {
+   "page": "p106",
+   "changes": 2,
+   "right": 0,
+   "wrong": 2,
+   "cant_tell": 0,
+   "not_located": 0,
+   "wrong_examples": [
+    "finē→ſinē (x2, 'in bonū finē' and 'in bonū finē cadat'): print shows f with crossbar (finem, abbreviated); 'sine' is a very frequent Latin word and the macron hides the -em ending. The pass also left the third 'in malū finē' unchanged, so it was inconsistent"
+   ],
+   "missed_count": 0,
+   "missed_examples": [],
+   "note": "Gothic page; OCR had already normalised ſ to s throughout, so the only f-words left were genuine f, and the pass could only do harm."
+  }
+ ]
+}

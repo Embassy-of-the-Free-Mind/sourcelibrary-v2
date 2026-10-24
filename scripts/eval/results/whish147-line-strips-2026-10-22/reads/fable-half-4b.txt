@@ -1,0 +1,30 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on a palm leaf; the leaf is pierced by a stringing hole with cord that obscures parts of lines 2–5 at centre. Text appears to be in Malayalam script (Malayalam language with Sanskrit invocation), not Sanskrit in Devanagari as expected. Readings are tentative throughout.</warning>
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio; a cord passes through the binding hole at centre. A small isolated mark (possibly a leaf number or symbol) appears in the left margin beside line 5. Faint marks at the lower right edge.</meta>
+
+ഹരിഃ ശ്രീ ഗണപതയേ നമഃ അവിഘ്നമസ്തു
+
+<unclear>ദ്ലി</unclear>ഖ്യാതക്കൈക്കൊ <unclear>യ</unclear> ക<unclear>എ</unclear>ന്റെ സാധ<unclear>ഭ</unclear>
+
+ദേവാല<unclear>പഃ ട്ട</unclear> <unclear>ഞ്ഞു</unclear> പദവനശ്ര<unclear>യഠ</unclear>
+
+<unclear>ഞ്ഞഃ തമ്മിഡ്ഡ</unclear> <unclear>കക്ര</unclear>ഷയാൽ <unclear>ല്യാ</unclear>
+
+<margin><unclear>[single mark — illegible]</unclear></margin>
+പ്ര<unclear>ഉ</unclear>കതയിത്ര <unclear>ത്തൂ</unclear>ഷാ<unclear>ഠ</unclear>ദാ<unclear>ഠ</unclear>
+
+<unclear>ഡ</unclear>ശകശ<unclear>ശ</unclear>വി കാ<unclear>ഠ</unclear>നൊന്പ്ര<unclear>ഉ</unclear>
+
+മനൊകാനമു<unclear>ു</unclear> <unclear>ങ്ക</unclear>വമനങ്കെ<unclear>ല</unclear>
+
+<unclear>ുാ</unclear>പ്രമാണമില്ല <unclear>ഹ</unclear>പ്രമെയനിദ്ധി<unclear>ത്തെൻ</unclear>
+
+<unclear>ത്തുത്രട്ടി</unclear>ധമ നമൊനമൊ<unclear>ല്ല്യാ</unclear>ത<unclear>[illegible — 1-2 words]</unclear>
+
+<unclear>[illegible — 2 characters at lower right edge]</unclear>
+
+<vocab>Hariḥ Śrī Gaṇapataye namaḥ, avighnam astu, Malayalam palm-leaf manuscript, pramāṇam, prameyam</vocab>

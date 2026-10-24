@@ -1,0 +1,21 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on a palm leaf, incised with stylus; a binding cord and the string hole obscure the centre of lines 1–7, splitting them into left and right segments. The hand is archaic and the readings below are tentative; many aksharas marked unclear.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>ഉ</page-num>
+<meta>Single palm leaf (ola) from a bound bundle; leaf number written in the left margin; text runs continuously across the string hole on lines 1–2 and 8–10, while lines 3–7 are broken into left and right blocks around the hole.</meta>
+
+<unclear>തിലഘ്രാസഃ ആ</unclear> അ<unclear>യ</unclear> <unclear>പ്രതുലസ</unclear> ശോ വിപഘ്ര<unclear>ഖ</unclear>
+<unclear>മെത്തനരഘ്രകദാസ്സ</unclear> പഖ<unclear>ഗാല്‍</unclear> സന്ന പപേ
+വൈകല്യാത്ത <unclear>[gap at string hole]</unclear> ഘ്രാവിംശതിഭ
+<unclear>ട്ടടത്തമസൊാഘ്ര</unclear> <unclear>[gap at string hole]</unclear> വിധോാമൊ<unclear>ന</unclear>
+<unclear>ാമിക്രൊാഘ്രാദശ</unclear> <unclear>[gap at string hole]</unclear> ധാരോാഭവത്താ<unclear>സ</unclear>
+ധാസ്സഹ<unclear>സ്സഡിവര</unclear> <unclear>[gap at string hole]</unclear> ധെ<unclear>ന്‍ശക്കുദ്ര</unclear>
+<unclear>രാത്ത ആഘ്രനി</unclear> <unclear>[gap at string hole]</unclear> തിനാം<unclear>ഘ്രൂഘ്രാ</unclear>
+ാല ഭാഗ്രാ ഖ്രാഃ ഖോഹ്രാവിഞ<unclear>യൊ ചരമാ</unclear>
+<unclear>ഥശൈഞ്ഞൊാത്യ</unclear> യനം <unclear>ദുഖെതിഖാതാന്ത്യുയ</unclear>
+<unclear>ദാരഖെന്‍ന്ത്രു</unclear> ലെ ാ<unclear>ക്ഷൊ</unclear>ഹി ലൈ<unclear>ള്ളെ</unclear> ഷൈാ
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, viṃśati, sahasra, bhāgya</vocab>

@@ -135,6 +135,9 @@ for (const ids of components.values()) {
     race: spreadMs != null && spreadMs <= 5000,
     spread_ms: spreadMs,
     any_visible: members.some((m) => m.visible),
+    /** At most one member lacks `duplicate_of`: someone already decided this
+     *  group (#4285 — 1,051 of 1,060 "new" groups on 2026-10-23 were this). */
+    resolved: members.filter((m) => !m.duplicate_of).length <= 1,
     members,
   });
 }
@@ -148,6 +151,7 @@ const stats = {
   cross_form_only: groups.filter((g) => !g.caught_by_scalar).length,
   concurrency_races: groups.filter((g) => g.race).length,
   groups_with_a_visible_member: groups.filter((g) => g.any_visible).length,
+  resolved_by_duplicate_of: groups.filter((g) => g.resolved).length,
 };
 
 // ---- detector mode --------------------------------------------------------
@@ -166,13 +170,17 @@ if (DETECT || UPDATE) {
     process.exit(2);
   }
   const known = new Set(JSON.parse(fs.readFileSync(BASELINE, 'utf8')).groups);
-  const fresh = current.filter((g) => !known.has(g));
+  const byMembers = new Map(groups.map((g) => [g.members.map((m) => m.id).sort().join('+'), g]));
+  // A group already settled by duplicate_of is not unreviewed, baselined or not.
+  const fresh = current.filter((g) => !known.has(g) && !byMembers.get(g).resolved);
   console.log(JSON.stringify(stats));
   if (fresh.length > 0) {
     console.error(`NEW same-fingerprint group(s) since the baseline: ${fresh.length}`);
+    // "gate-miss" only means "not a 5-second race"; the creation dates say whether the gate was live.
+    if (fresh.length > 25) console.error(`  (first 25 of ${fresh.length} shown)`);
     for (const g of fresh.slice(0, 25)) {
-      const grp = groups.find((x) => x.members.map((m) => m.id).sort().join('+') === g);
-      console.error(`  ${grp.key}  [${grp.race ? 'RACE' : 'gate-miss'}]  ${grp.members.map((m) => `${m.id} "${String(m.title).slice(0, 45)}"`).join(' | ')}`);
+      const grp = byMembers.get(g);
+      console.error(`  ${grp.key}  [${grp.race ? 'RACE' : 'gate-miss'}]  ${grp.members.map((m) => `${m.id} ${m.created_at ? new Date(m.created_at).toISOString().slice(0, 10) : '?'} "${String(m.title).slice(0, 45)}"`).join(' | ')}`);
     }
     console.error('These were NOT merged or hidden — a human decides. Re-baseline with --update-baseline once reviewed.');
     await mc.close();

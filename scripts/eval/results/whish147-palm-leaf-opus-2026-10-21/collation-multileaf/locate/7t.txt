@@ -1,0 +1,18 @@
+The leaf runs from the end of SK_28 to SK_34.
+
+LINE 1 | SK_28-SK_29 | pañcānām | trayasya | unsure
+LINE 2 | SK_29-SK_30 | vṛttiḥ (sāmānya-karaṇa-vṛttiḥ) | yugapac | confident
+LINE 3 | SK_30 | dṛṣṭe | trayasya | confident
+LINE 4 | SK_30-SK_31 | vṛttiḥ | hetukāṃ (paras-parā`kūta-hetukāṃ) | unsure
+LINE 5 | SK_31 | puruṣā'rtha | karaṇam | unsure
+LINE 6 | SK_32 | trayodaśa-vidhaṃ | daśadhā | unsure
+LINE 7 | SK_32-SK_33 | hāryaṃ | daśadhā | unsure
+LINE 8 | SK_33 | bāhyaṃ | bāhyaṃ (sāmprata-kālam bāhyaṃ) | confident
+LINE 9 | SK_33-SK_34 | ābhy-antaraṃ | viśeṣā'-viśeṣa-viṣayāṇi | confident
+
+Notes:
+- **Line 1:** "svālakṣaṇyaṃ" (SK_29) is clearly readable. The text before it probably ends SK_28, but I couldn't read the start of the line.
+- **Lines 3–7:** The string hole splits these lines into a left and a right block. The clearest readings were in the right blocks: "adṛṣṭe trayasya" (line 3), "parasparākūtahetukāṃ" (line 4), "kāryate karaṇam" (line 5) and "tasya daśadhā" (line 6). The first words of lines 4–7 are less certain.
+- **Line 9:** "viśeṣā'-viśeṣa" is cut off at the right edge.
+
+FIRST_VISIBLE_VERSE=28 LAST_VISIBLE_VERSE=34

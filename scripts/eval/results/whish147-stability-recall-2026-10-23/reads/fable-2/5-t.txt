@@ -1,0 +1,11 @@
+ROW 1 | ാപ്തവചനതു. ‖ ൫സാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രതീതിരനുമാനാ
+ROW 2 | ൽതസ്മാദപിചാസി ‖ ദ്ധംപരൊക്ഷമാപ്താഗമാൽസിദ്ധം ‖ ൬അതിദൂരാൽസാ
+ROW 3 | മീപ്യാദിന്ദ്രിയഘാ ‖ താന്മനൊനവസ്ഥാനാൽ ‖ സൌക്ഷ്മ്യാദ്വ്യവധാ
+ROW 4 | നാദഭിഭവാൽ ‖ സമാനാഭിഹാരാച്ച൭സൌ ‖ ക്ഷ്മ്യാത്തദനുപ
+ROW 5 | ലബ്ധിൎന്നാഭാ ‖ വാൽകാൎയ്യതസ്തദുപലബ്ധെ ‖ ഃമഹദാദിതച്ച
+ROW 6 | കാൎയ്യംപ്രകൃ ‖ തിവിരൂപംസരൂപംച൮അ ‖ സദകരണാദുപ
+ROW 7 | ാദാനഗ്രഹണാ ‖ ൽസൎവ്വസംഭവാഭാവാൽശ ‖ ക്തസ്യശക്യകരണ
+ROW 8 | ാൽകാരണഭാവാ ‖ ച്ചസൽകാൎയ്യം൯ഹെതുമദനി ‖ ത്യമവ്യാപിസക്രിയമനെ
+ROW 9 | നകമാശ്രിതംലി ‖ ംഗംസാവയവംപരതന്ത്രംവ്യക്തംവി ‖ പരീതമവ്യക്തം൦൰൦।
+
+NOTE | All 9 rows read with reasonable confidence; the scribe numbers each verse with Malayalam numerals (൫ ൬ ൭ ൮ ൯ ൰) at its end. Uncertain spots: the first glyph of row 1 (ാ/ൊ), the ligature read തിവി at the start of the middle column in row 6, the encircled ഭി in row 4 (a scribal insertion), a stray ര-like glyph with a long upstroke after നാൽ in row 3 (left out), a small cross mark after ൯ in row 8, and the final marks after വ്യക്തം in row 9 (read as ൦൰൦।). Row 8 ends മനെ and row 9 begins ന as written, so the ന appears twice.

@@ -1,0 +1,594 @@
+{
+ "@context": "http://iiif.io/api/presentation/2/context.json",
+ "@type": "sc:Manifest",
+ "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/manifest",
+ "label": "Huineng 638-713: Liuzu da shi fa bao tan jing",
+ "navDate": "1695-01-01T00:00:00Z",
+ "sequences": [
+  {
+   "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/sequence/normal",
+   "@type": "sc:Sequence",
+   "canvases": [
+    {
+     "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/canvas/1",
+     "@type": "sc:Canvas",
+     "label": "(0001)",
+     "images": [
+      {
+       "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/anno/1-1",
+       "@type": "oa:Annotation",
+       "motivation": "sc:painting",
+       "resource": {
+        "@id": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11021950_00001/full/full/0/default.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+         "@context": "http://iiif.io/api/image/2/context.json",
+         "@id": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11021950_00001",
+         "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "width": 2121,
+        "height": 3314
+       },
+       "on": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/canvas/1"
+      }
+     ],
+     "width": 2121,
+     "height": 3314,
+     "seeAlso": {
+      "@id": "https://api.digitale-sammlungen.de/ocr/bsb11021950/1",
+      "label": "OCR",
+      "format": "text/vnd.hocr+html",
+      "profile": "http://kba.github.io/hocr-spec/1.2/"
+     }
+    },
+    {
+     "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/canvas/2",
+     "@type": "sc:Canvas",
+     "label": "(0002)",
+     "images": [
+      {
+       "@id": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/anno/2-1",
+       "@type": "oa:Annotation",
+       "motivation": "sc:painting",
+       "resource": {
+        "@id": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11021950_00002/full/full/0/default.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+         "@context": "http://iiif.io/api/image/2/context.json",
+         "@id": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11021950_00002",
+         "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "width": 1934,
+        "height": 3187
+       },
+       "on": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb11021950/canvas/2"
+      }
+     ],
+     "width": 1934,
+     "height": 3187,
+     "seeAlso": {
+      "@id": "https://api.digitale-sammlungen.de/ocr/bsb11021950/2",
+      "label": "OCR",
+      "format": "text/vnd.hocr+html",
+      "profile": "http://kba.github.io/hocr-spec/1.2/"
+     }
+    }
+   ]
+  }
+ ],
+ "metadata": [
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Title"
+    },
+    {
+     "@language": "de",
+     "@value": "Titel"
+    },
+    {
+     "@language": "zh",
+     "@value": "題名"
+    }
+   ],
+   "value": "Liuzu da shi fa bao tan jing"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "By"
+    },
+    {
+     "@language": "de",
+     "@value": "Von"
+    },
+    {
+     "@language": "zh",
+     "@value": "作者"
+    }
+   ],
+   "value": "Huineng ; Fahai bian"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Creator"
+    },
+    {
+     "@language": "de",
+     "@value": "Urheber"
+    },
+    {
+     "@language": "zh",
+     "@value": "創作者"
+    }
+   ],
+   "value": "Huineng 638-713"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Creator"
+    },
+    {
+     "@language": "de",
+     "@value": "Urheber"
+    },
+    {
+     "@language": "zh",
+     "@value": "創作者"
+    }
+   ],
+   "value": "Fahai"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Published"
+    },
+    {
+     "@language": "de",
+     "@value": "Erschienen"
+    },
+    {
+     "@language": "zh",
+     "@value": "出版資訊"
+    }
+   ],
+   "value": "Guangzhou : Hai tong si"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Date"
+    },
+    {
+     "@language": "de",
+     "@value": "Zeit"
+    },
+    {
+     "@language": "zh",
+     "@value": "時間"
+    }
+   ],
+   "value": "[1695]"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Extent"
+    },
+    {
+     "@language": "de",
+     "@value": "Umfang"
+    },
+    {
+     "@language": "zh",
+     "@value": "數量"
+    }
+   ],
+   "value": "1 ce"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Language"
+    },
+    {
+     "@language": "de",
+     "@value": "Sprache"
+    },
+    {
+     "@language": "zh",
+     "@value": "作品語文"
+    }
+   ],
+   "value": [
+    {
+     "@language": "en",
+     "@value": "Chinese"
+    },
+    {
+     "@language": "de",
+     "@value": "Chinesisch"
+    },
+    {
+     "@language": "zh",
+     "@value": "中文"
+    }
+   ]
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Note"
+    },
+    {
+     "@language": "de",
+     "@value": "Anmerkung"
+    },
+    {
+     "@language": "zh",
+     "@value": "註記"
+    }
+   ],
+   "value": "[Sutra d. Sechsten Patriarchen, chin.]"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Media type"
+    },
+    {
+     "@language": "de",
+     "@value": "Medienart"
+    },
+    {
+     "@language": "zh",
+     "@value": "媒體類型"
+    }
+   ],
+   "value": [
+    {
+     "@language": "en",
+     "@value": "Book"
+    },
+    {
+     "@language": "de",
+     "@value": "Buch"
+    },
+    {
+     "@language": "zh",
+     "@value": "圖書"
+    }
+   ]
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Identifier"
+    },
+    {
+     "@language": "de",
+     "@value": "Identifikator"
+    },
+    {
+     "@language": "zh",
+     "@value": "識別碼"
+    }
+   ],
+   "value": "BSB-ID 991030945849707356"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Identifier"
+    },
+    {
+     "@language": "de",
+     "@value": "Identifikator"
+    },
+    {
+     "@language": "zh",
+     "@value": "識別碼"
+    }
+   ],
+   "value": "BV036921610"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Identifier"
+    },
+    {
+     "@language": "de",
+     "@value": "Identifikator"
+    },
+    {
+     "@language": "zh",
+     "@value": "識別碼"
+    }
+   ],
+   "value": "<span><a href='https://search.worldcat.org/title/608117114'>WorldCat: 608117114</a></span>"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Holding institution"
+    },
+    {
+     "@language": "de",
+     "@value": "Besitzende Institution"
+    },
+    {
+     "@language": "zh",
+     "@value": "典藏機構"
+    }
+   ],
+   "value": "München, Bayerische Staatsbibliothek"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Call number"
+    },
+    {
+     "@language": "de",
+     "@value": "Signatur"
+    },
+    {
+     "@language": "zh",
+     "@value": "索書號"
+    }
+   ],
+   "value": "4 L.sin. C 163"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Subject"
+    },
+    {
+     "@language": "de",
+     "@value": "Thema"
+    },
+    {
+     "@language": "zh",
+     "@value": "主題"
+    }
+   ],
+   "value": "Huineng, 638-713: Liu zu da shi fa bao tan jing"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Subject"
+    },
+    {
+     "@language": "de",
+     "@value": "Thema"
+    },
+    {
+     "@language": "zh",
+     "@value": "主題"
+    }
+   ],
+   "value": "Huineng, 638-713"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Subject"
+    },
+    {
+     "@language": "de",
+     "@value": "Thema"
+    },
+    {
+     "@language": "zh",
+     "@value": "主題"
+    }
+   ],
+   "value": "Quelle"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Subject"
+    },
+    {
+     "@language": "de",
+     "@value": "Thema"
+    },
+    {
+     "@language": "zh",
+     "@value": "主題"
+    }
+   ],
+   "value": "Zen-Buddhismus"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Subject"
+    },
+    {
+     "@language": "de",
+     "@value": "Thema"
+    },
+    {
+     "@language": "zh",
+     "@value": "主題"
+    }
+   ],
+   "value": "Biografie"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "URN"
+    },
+    {
+     "@language": "de",
+     "@value": "URN"
+    },
+    {
+     "@language": "zh",
+     "@value": "URN (統一資源名稱)"
+    }
+   ],
+   "value": "<a href=\"https://mdz-nbn-resolving.de/urn:nbn:de:bvb:12-bsb11021950-8\">urn:nbn:de:bvb:12-bsb11021950-8</a>"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Digital Object Identifier"
+    },
+    {
+     "@language": "de",
+     "@value": "Identifikator des digitalen Objekts"
+    },
+    {
+     "@language": "zh",
+     "@value": "數位物件識別碼"
+    }
+   ],
+   "value": "bsb11021950"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Title"
+    },
+    {
+     "@language": "de",
+     "@value": "Titel"
+    },
+    {
+     "@language": "zh",
+     "@value": "題名"
+    }
+   ],
+   "value": "六祖大師法寶壇經"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "By"
+    },
+    {
+     "@language": "de",
+     "@value": "Von"
+    },
+    {
+     "@language": "zh",
+     "@value": "作者"
+    }
+   ],
+   "value": "慧能 ; 法海編"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Creator"
+    },
+    {
+     "@language": "de",
+     "@value": "Urheber"
+    },
+    {
+     "@language": "zh",
+     "@value": "創作者"
+    }
+   ],
+   "value": "慧能, 638-713"
+  },
+  {
+   "label": [
+    {
+     "@language": "en",
+     "@value": "Creator"
+    },
+    {
+     "@language": "de",
+     "@value": "Urheber"
+    },
+    {
+     "@language": "zh",
+     "@value": "創作者"
+    }
+   ],
+   "value": "法海"
+  }
+ ],
+ "attribution": [
+  {
+   "@language": "en",
+   "@value": "München, Bayerische Staatsbibliothek"
+  },
+  {
+   "@language": "en",
+   "@value": "Bayerische Staatsbibliothek"
+  },
+  {
+   "@language": "de",
+   "@value": "München, Bayerische Staatsbibliothek"
+  },
+  {
+   "@language": "de",
+   "@value": "Bayerische Staatsbibliothek"
+  },
+  {
+   "@language": "zh",
+   "@value": "München, Bayerische Staatsbibliothek"
+  },
+  {
+   "@language": "zh",
+   "@value": "Bayerische Staatsbibliothek"
+  }
+ ],
+ "license": "https://rightsstatements.org/vocab/NoC-NC/1.0/",
+ "seeAlso": [
+  {
+   "@id": "https://opacplus.bsb-muenchen.de/title/BV036921610?format=marc",
+   "label": "MARCXML",
+   "format": "application/marcxml+xml",
+   "profile": "http://www.loc.gov/standards/marcxml/"
+  },
+  {
+   "@id": "https://opacplus.bsb-muenchen.de/title/BV036921610?format=rdf",
+   "label": "RDF",
+   "format": "application/rdf+xml",
+   "profile": "https://lod.b3kat.de/doc"
+  }
+ ],
+ "viewingDirection": "left-to-right",
+ "viewingHint": "paged"
+}

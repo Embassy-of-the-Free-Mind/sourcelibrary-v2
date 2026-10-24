@@ -17,6 +17,10 @@ import {
   type GroundingReport,
 } from '@/lib/embassy/grounding';
 import { mergeNotebookClaimEdits, notebookClaimEdits } from '@/lib/embassy/notebook-claims';
+import { checkCitationPages, type CitationPassReport, type RoutedClaims } from '@/lib/embassy/citation-pages';
+import { flashLiteCitationRouter } from '@/lib/embassy/citation-router';
+import { CitationRoutingStream } from '@/lib/embassy/citation-routing';
+import { CiteIds, CiteIdStream, type CiteIdStats } from '@/lib/embassy/cite-ids';
 import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
 import { semanticSiteSearch } from '@/lib/semantic-search';
 import { esCollectionSlugs } from '@/lib/es-collections';
@@ -39,6 +43,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import collectionRedirects from '@/lib/collection-redirects.json';
+import { quotedFindings } from '@/lib/embassy/notebook-autosave';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -51,6 +56,8 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - search: Hybrid keyword + semantic via RRF (replaces the prior
  *             search_collection and search_semantic; both old names accepted
  *             as aliases for one release)
+ *   - find_passages: pages that answer a question-shaped request, re-ranked
+ *             against the reader's question by Jev (#6875)
  *   - search_site: the site's own writing — essays, collection intros, tools (site_pages)
  *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
@@ -61,7 +68,12 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - present_choices: Offer branching options (rarely used)
  */
 
-const MODEL = 'gemini-3-flash-preview';
+/**
+ * The answer model. LIBRARIAN_MODEL overrides it. #6946 measured gemini-3.8-flash
+ * (with cite IDs): more wrong-page links than 3-flash and time to done p50
+ * 21.1 s vs 11.7 s at 2.3× the cost per turn, so the default stays.
+ */
+const MODEL = process.env.LIBRARIAN_MODEL || 'gemini-3-flash-preview';
 const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
 
@@ -75,6 +87,32 @@ const TEMPERATURE = 0.7;
  * LIBRARIAN_FAST_TOOL_ROUNDS=0 turns it off.
  */
 const FAST_TOOL_ROUNDS_DEFAULT = process.env.LIBRARIAN_FAST_TOOL_ROUNDS !== '0';
+/**
+ * Citation prompt (#6946): the closing Formatting lines rewritten so a page
+ * link goes only where that page states the claim (CITE_PAGES_LINES). Off
+ * unless LIBRARIAN_CITE_PAGES=1. Blind A/B on 40 readers' questions
+ * (scripts/eval/experiments/2026-10-18-librarian-cite-prompt-6946.md):
+ * wrong-page links 26 → 30 (two Opus judges, the gauge's instrument), so the
+ * registered gate failed and the default prompt is unchanged.
+ */
+const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
+/**
+ * Cite by ID (#6946): every page in a tool result carries an ID (`[P7]`), the
+ * model cites the ID, and the server writes the page link while the text
+ * streams (cite-ids.ts). The top search hits are also shown whole instead of a
+ * 1,200-character window. Off unless LIBRARIAN_CITE_IDS=1. Blind A/B on 40
+ * readers' questions (scripts/eval/experiments/2026-10-19-librarian-cite-ids-
+ * 6946.md): the model cited 2.7× as many pages and wrong-page links rose
+ * 25 → 115 (11% → 19% of links; IDs mixed up instead of page numbers), so the
+ * registered gate failed, though the judges preferred its answers 24 to 15.
+ */
+const CITE_IDS_DEFAULT = process.env.LIBRARIAN_CITE_IDS === '1';
+/** With cite IDs: this many top hits of each search are shown whole… */
+const WHOLE_PAGE_TOP_K = 6;
+/** …up to this many characters; the rest keep the search window. */
+const WHOLE_PAGE_CHARS = 8000;
+/** With cite IDs: characters of each neighbouring or nearby page shown to the model. */
+const CITE_IDS_NEIGHBOUR_CHARS = 3000;
 /** Broken slugs we attempt to repair in one turn; the rest are disclaimed. */
 const MAX_REPAIR_SLUGS = 12;
 /** Wall-clock ceiling on the whole repair loop, guarding the turn's deadline. */
@@ -87,6 +125,23 @@ const NEIGHBOUR_CHARS = 700;
 const GROUNDING_MAX_PAGES = 150;
 /** Wall-clock ceiling on loading that support text; past it the pass judges nothing. */
 const GROUNDING_BUDGET_MS = 4000;
+/**
+ * The citation router (#6946) routes claims paragraph by paragraph while the
+ * answer streams; once the support is in, the last batch is waited for at most
+ * this long. Budget: +800 ms p90 after the last text chunk, with the
+ * deterministic passes inside it. A claim with no verdict in time keeps its link.
+ */
+const CITATION_ROUTER_WAIT_MS = 600;
+/** Hard ceiling on one router call. */
+const CITATION_ROUTER_TIMEOUT_MS = 4000;
+/**
+ * The flash-lite router is OFF unless LIBRARIAN_CITATION_ROUTER=1. On the
+ * #6904 replay it cut wrong-page links 25 → 18 / 24 → 21 (two Opus judges)
+ * but 3 of its 10 moves landed on a page that supports the claim less than the
+ * one it left, failing the zero-new-errors gate (#6946). The deterministic
+ * quote and caption checks run either way.
+ */
+const CITATION_ROUTER_ON = process.env.LIBRARIAN_CITATION_ROUTER === '1';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -171,6 +226,8 @@ export interface TurnUsage {
   outputTokens: number;
   thinkingTokens: number;
   cachedTokens: number;
+  /** Cite-by-ID accounting (#6946): pages given an ID, IDs rendered as links, unknown IDs dropped. */
+  citeIds?: CiteIdStats & { pages: number };
 }
 
 interface ConversationMessage {
@@ -197,6 +254,42 @@ async function saveNotebookFinding(threadId: string, finding: NotebookFinding, t
     { upsert: true, returnDocument: 'after' },
   );
   return result?.findings?.length || 1;
+}
+
+/** Save this answer's grounded quotations as findings; returns one notebook_update step per save. */
+async function autosaveQuotes(threadId: string, text: string, pages: GroundingPage[]): Promise<LibrarianStep[]> {
+  const existing = await loadNotebook(threadId);
+  const found = quotedFindings(text, pages, (existing?.findings ?? []).map(f => f.quote));
+  if (found.length === 0) return [];
+  const db = await getDb();
+  const authors = new Map(
+    (await db.collection('books')
+      .find({ id: { $in: [...new Set(found.map(f => f.bookId))] } })
+      .project({ id: 1, author: 1 })
+      .maxTimeMS(2000)
+      .toArray()).map(b => [b.id as string, (b.author as string) || '']),
+  );
+  const steps: LibrarianStep[] = [];
+  for (const f of found) {
+    const finding: NotebookFinding = {
+      quote: f.quote,
+      note: '',
+      source: { bookId: f.bookId, bookTitle: f.bookTitle, bookAuthor: authors.get(f.bookId) ?? '', bookSlug: f.bookSlug, pageNumber: f.page },
+      addedAt: new Date(),
+    };
+    const count = await saveNotebookFinding(threadId, finding);
+    steps.push({
+      type: 'notebook_update', name: 'autosave', summary: `Saved finding #${count}`,
+      notebook: {
+        findingCount: count,
+        finding: {
+          quote: finding.quote, note: '', bookId: f.bookId, bookTitle: f.bookTitle,
+          bookAuthor: finding.source.bookAuthor, bookSlug: f.bookSlug, pageNumber: f.page,
+        },
+      },
+    });
+  }
+  return steps;
 }
 
 function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
@@ -229,6 +322,17 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         collection: { type: Type.STRING, description: 'Optional. A collection slug from the "Collections" list in your instructions to FOCUS the search on. Results are weighted toward that collection but still include strong matches from the rest of the library — it is a lean, not a filter. Set this whenever the user\'s question is clearly about one collection\'s subject (e.g. a question about fungi or mushrooms → "mycology"; about tarot or planetary seals → "astrology"). Pick the single most relevant slug; if unsure or the topic spans the whole library, omit it.' },
       },
       required: ['query'],
+    },
+  },
+  {
+    name: 'find_passages',
+    description: 'Find the pages that answer a request for a KIND of passage: "a passage where someone describes leaving their body", "an account of a dream that foretold the future", "instructions for making a talisman at a planetary hour", "does any author describe a cure by sympathy?". It reads about 300 pages that keyword and meaning search turn up and scores each against the whole request, so it finds the page that does what was asked, where `search` finds pages that share its words. Returns the 10 best pages (at most 2 a book), each with its link and its own words, plus a separate short list of pages with no English translation yet. Slower than `search` (a few seconds more), so use it for these requests and use `search` for names, terms, quotations and topics. It ranks: it cannot count or list everything (that is browse_catalog).',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        question: { type: Type.STRING, description: 'The request as a full plain-English sentence, in the reader\'s own terms ("a passage where someone describes leaving their body"), not keywords. Translate a request written in another language into English.' },
+      },
+      required: ['question'],
     },
   },
   {
@@ -552,7 +656,7 @@ async function executeGetBookPage(bookRef: string, pageNumber: number, lang: Loc
   };
 }
 
-async function executeReadNearbyPages(bookRef: string, centerPage: number, range = 2, lang: Locale = 'en'): Promise<{
+async function executeReadNearbyPages(bookRef: string, centerPage: number, range = 2, lang: Locale = 'en', chars = 1000): Promise<{
   bookId?: string; pages: Array<{ page_number: number; text: string; textLang: Locale }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
 }> {
   const book = await resolveBookRef(bookRef);
@@ -572,7 +676,7 @@ async function executeReadNearbyPages(bookRef: string, centerPage: number, range
     bookId,
     pages: pages.map(p => {
       const local = localized.get(`${bookId}:${p.page_number}`);
-      return { page_number: p.page_number, text: (local ?? p.translation?.data ?? '').slice(0, 1000), textLang: (local ? lang : 'en') as Locale };
+      return { page_number: p.page_number, text: (local ?? p.translation?.data ?? '').slice(0, chars), textLang: (local ? lang : 'en') as Locale };
     }),
     bookTitle: book.display_title || book.title || 'Unknown',
     bookAuthor: book.author || 'Unknown',
@@ -616,6 +720,40 @@ async function loadNeighbourPages(
     }))
     .filter(r => r.text.trim())
     .sort((a, b) => a.book_id.localeCompare(b.book_id) || a.page_number - b.page_number);
+}
+
+/**
+ * The top search hits shown whole, for cite-by-ID (#6946): search hands over a
+ * 1,200-character window of each page, the judges read the whole page, and the
+ * model filled the rest in from memory. Same text the window came from (the
+ * reader's edition, else the translation, else the page's own words), cleaned
+ * the way question search cleans it. A page that fails to load keeps its window.
+ */
+async function loadWholePages(
+  passages: Array<{ book_id: string; page_number: number; untranslated?: boolean }>,
+  lang: Locale,
+): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (passages.length === 0) return out;
+  const { cleanPassageText } = await import('@/lib/search/question-search');
+  const db = await getDb();
+  const [rows, localized] = await Promise.all([
+    db.collection('pages')
+      .find({ $or: passages.map(p => ({ book_id: p.book_id, page_number: p.page_number })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 })
+      .maxTimeMS(3000)
+      .toArray()
+      .catch(() => [] as Document[]),
+    loadLocalizedTexts(lang, passages).catch(() => new Map<string, string>()),
+  ]);
+  const original = new Set(passages.filter(p => p.untranslated).map(p => `${p.book_id}:${p.page_number}`));
+  for (const r of rows) {
+    const k = `${r.book_id}:${r.page_number}`;
+    const raw = localized.get(k) ?? (original.has(k) ? r.ocr?.data : (r.translation?.data || r.ocr?.data));
+    const text = typeof raw === 'string' ? cleanPassageText(raw) : '';
+    if (text) out.set(k, text.length > WHOLE_PAGE_CHARS ? `${text.slice(0, WHOLE_PAGE_CHARS)}…` : text);
+  }
+  return out;
 }
 
 // Terms that appear in virtually every gallery row (every entry IS an
@@ -1051,6 +1189,8 @@ async function executeTool(
   threadId?: string,
   collectionContext?: string | null,
   lang: Locale = 'en',
+  /** Cite by ID (#6946): when set, every page shown gets an ID and the top hits are shown whole. */
+  cite?: CiteIds,
 ): Promise<{
   result: unknown;
   step: LibrarianStep;
@@ -1099,8 +1239,9 @@ async function executeTool(
           context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — ${base}/book/${b.slug || b.id}\n`;
         }
       }
+      const whole = cite ? await loadWholePages(data.passages.slice(0, WHOLE_PAGE_TOP_K), lang) : null;
       if (data.passages.length > 0) {
-        context += '\nPassages found:\n';
+        context += cite ? '\nPassages found (cite a page by its ID in square brackets):\n' : '\nPassages found:\n';
         for (const p of data.passages) {
           const url = `${base}/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
           const langTag = lang === 'en'
@@ -1119,6 +1260,12 @@ async function executeTool(
             ? ` [untranslated: the text below is the original ${p.language || 'language'}, not an English translation. Quote it only in the original; any English you give is your own paraphrase and must be labelled as such]`
             : '';
           const traditionTag = p.tradition?.length ? ` [tradition: ${p.tradition.join(', ')}]` : '';
+          if (cite) {
+            const id = cite.tag({ bookId: p.book_id, slug: p.bookSlug || p.book_id, title: p.bookTitle, page: p.page_number });
+            const text = whole?.get(`${p.book_id}:${p.page_number}`) ?? p.text;
+            context += `\n--- ${id} ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, page ${p.page_number} — book: ${base}/book/${p.bookSlug || p.book_id}${langTag}${traditionTag}${untranslatedTag} ---\n${text}\n`;
+            continue;
+          }
           context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag}${traditionTag}${untranslatedTag} ---\n${p.text}\n`;
         }
       }
@@ -1130,6 +1277,12 @@ async function executeTool(
         context += '\nNeighbouring pages of the top passages (same books — read these before concluding a page lacks something):\n';
         for (const n of neighbours) {
           const m = meta.get(n.book_id);
+          if (cite) {
+            const id = cite.tag({ bookId: n.book_id, slug: m?.bookSlug || n.book_id, title: m?.bookTitle ?? '', page: n.page_number });
+            const t = (await import('@/lib/search/question-search')).cleanPassageText(n.text);
+            context += `\n--- ${id} ${m?.bookTitle ?? 'Same book'}, page ${n.page_number} ---\n${t.length > CITE_IDS_NEIGHBOUR_CHARS ? `${t.slice(0, CITE_IDS_NEIGHBOUR_CHARS)}…` : t}\n`;
+            continue;
+          }
           const url = `${base}/book/${m?.bookSlug || n.book_id}/page-number/${n.page_number}`;
           const text = n.text.length > NEIGHBOUR_CHARS ? `${n.text.slice(0, NEIGHBOUR_CHARS)}…` : n.text;
           context += `\n--- ${m?.bookTitle ?? 'Same book'}, Page ${n.page_number} (${url}) ---\n${text}\n`;
@@ -1149,6 +1302,65 @@ async function executeTool(
           summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books${focusNote}` : `No results${focusNote}` },
         sources,
         retrievedPages: neighbours.map(n => ({ bookId: n.book_id, page: n.page_number })),
+      };
+    }
+
+    case 'find_passages': {
+      const question = String(args.question || args.query || '').trim();
+      if (!question) {
+        return {
+          result: { found: 0, context: 'find_passages needs the reader\'s request as a sentence in `question`. Nothing was searched.' },
+          step: { type: 'tool_result', name: 'find_passages', query: '', found: 0, summary: 'No question given' },
+        };
+      }
+      const { questionSearch } = await import('@/lib/search/question-search');
+      const data = await questionSearch(question);
+      const all = [...data.passages, ...data.untranslated];
+      const localized = await loadLocalizedTexts(lang, all.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
+      const whole = cite ? await loadWholePages(data.passages.slice(0, WHOLE_PAGE_TOP_K), lang) : null;
+      const header = (p: (typeof all)[number], extra: string) => {
+        if (cite) {
+          const id = cite.tag({ bookId: p.book_id, slug: p.bookSlug || p.book_id, title: p.bookTitle, page: p.page_number });
+          const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
+          return `\n--- ${id} ${p.bookTitle}${editionTag(p)} by ${author}, page ${p.page_number} — book: ${base}/book/${p.bookSlug || p.book_id}${extra} ---\n`;
+        }
+        const url = `${base}/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
+        // The author's link, not the name alone: given a name, the model builds
+        // an /author/ slug of its own and it 404s (agent-tool-results.md).
+        const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
+        return `\n--- ${p.bookTitle}${editionTag(p)} by ${author}, Page ${p.page_number} (${url})${extra} ---\n`;
+      };
+      let context = '';
+      if (data.note) context += `Note: ${data.note}. Tell the reader in one plain clause if it matters to the answer.\n`;
+      if (data.passages.length > 0) {
+        const linkRule = cite ? 'Cite a page by its ID in square brackets; link a book or author with EXACTLY the URL given.' : 'Link a page with EXACTLY the URL given.';
+        context += data.reranked
+          ? `The ${data.passages.length} pages that best answer "${question}", best first, out of ${data.candidates} read. A high score means the page itself presents what was asked; still read the text before you quote it. ${linkRule}\n`
+          : `${data.passages.length} pages from search for "${question}", in search order (not ranked against the question). Read each before you rely on it. ${linkRule}\n`;
+        for (const p of data.passages) {
+          const k = `${p.book_id}:${p.page_number}`;
+          const t = localized.get(k);
+          const langTag = lang === 'en' ? '' : (t ? ` [text: ${LANG_NAMES[lang]} edition]` : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
+          context += header(p, `${p.score !== undefined ? ` [score ${p.score}]` : ''}${langTag}`) + (whole?.get(k) ?? (t ? t.slice(0, 1200) : p.text)) + '\n';
+        }
+      }
+      if (data.untranslated.length > 0) {
+        context += `\nPages with NO English translation yet that may also answer it (found by meaning across languages, not scored against the question). The text below is the original language: quote it only in the original, label any English you give as your own paraphrase, and say the page is untranslated.\n`;
+        for (const p of data.untranslated) context += header(p, ` [untranslated: ${p.language || 'original language'}]`) + p.text.slice(0, 800) + '\n';
+      }
+      if (all.length === 0) {
+        context = `No pages found for "${question}"${data.note ? ` (${data.note})` : ''}. Do not write a page link for it; say the library search found nothing and try \`search\` with the key terms.`;
+      }
+      const sources: SourceCard[] = all.map(p => ({
+        book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
+        pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
+      }));
+      return {
+        result: { found: all.length, context },
+        step: { type: 'tool_result', name: 'find_passages', query: question, found: all.length,
+          summary: all.length === 0 ? 'No pages found'
+            : `${data.passages.length} pages${data.reranked ? ' ranked against the question' : ' (not re-ranked)'}${data.untranslated.length ? `, ${data.untranslated.length} untranslated` : ''}` },
+        sources,
       };
     }
 
@@ -1219,7 +1431,7 @@ async function executeTool(
       const pageNumber = args.page_number as number;
       const result = await executeGetBookPage(bookId, pageNumber, lang);
       return {
-        result: result ? { found: 1, text: result.text, textLanguage: LANG_NAMES[result.textLang], originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
+        result: result ? { found: 1, ...(cite ? { cite: `Cite this page as ${cite.tag({ bookId: result.bookId, slug: result.bookSlug || result.bookId, title: result.bookTitle, page: Number(pageNumber) })}` } : {}), text: result.text, textLanguage: LANG_NAMES[result.textLang], originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
         step: { type: 'tool_result', name: 'get_book_page', query: `p.${pageNumber}`, found: result ? 1 : 0,
           summary: result ? `Read page ${pageNumber} of ${result.bookTitle}` : 'Page not found' },
         retrievedPages: result ? [{ bookId: result.bookId, page: Number(pageNumber) }] : [],
@@ -1230,11 +1442,12 @@ async function executeTool(
       const bookId = args.book_id as string;
       const centerPage = args.center_page as number;
       const range = (args.range as number) || 2;
-      const result = await executeReadNearbyPages(bookId, centerPage, range, lang);
+      const result = await executeReadNearbyPages(bookId, centerPage, range, lang, cite ? CITE_IDS_NEIGHBOUR_CHARS : 1000);
       let context = `Pages from ${result.bookTitle}:\n`;
       for (const p of result.pages) {
         const langTag = lang === 'en' ? '' : ` [text: ${p.textLang === 'en' ? 'English only' : `${LANG_NAMES[lang]} edition`}]`;
-        context += `\n--- Page ${p.page_number}${langTag} ---\n${p.text}\n`;
+        const id = cite && result.bookId ? `${cite.tag({ bookId: result.bookId, slug: result.bookSlug || result.bookId, title: result.bookTitle, page: p.page_number })} ` : '';
+        context += `\n--- ${id}Page ${p.page_number}${langTag} ---\n${p.text}\n`;
       }
       return {
         result: { found: result.pages.length, context, bookTitle: result.bookTitle },
@@ -1258,7 +1471,9 @@ async function executeTool(
           context += `\n- **${img.type || 'Image'}** from *${img.bookTitle}* by ${img.bookAuthor}, Page ${img.pageNumber}\n`;
           context += `  Description: ${img.description.slice(0, 300)}\n`;
           // The picture's OWN book and page — the only book its caption may link.
-          if (book) context += `  Its book: ${base}/book/${book} — its page: ${base}/book/${book}/page-number/${img.pageNumber}\n`;
+          if (book && cite && img.bookId) {
+            context += `  Its book: ${base}/book/${book} — its page: ${cite.tag({ bookId: img.bookId, slug: book, title: img.bookTitle, page: img.pageNumber })}\n`;
+          } else if (book) context += `  Its book: ${base}/book/${book} — its page: ${base}/book/${book}/page-number/${img.pageNumber}\n`;
           context += `  Gallery: ${url}\n`;
           context += `  Image: ${img.imageUrl}\n`;
         }
@@ -1417,6 +1632,8 @@ function buildSystemPrompt(
   collectionOpts?: { catalog?: string; collectionContext?: string | null },
   lang: Locale = 'en',
   fastToolRounds = false,
+  citePages = false,
+  citeIds = false,
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -1435,7 +1652,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages, citeIds);
 }
 
 /**
@@ -1445,7 +1662,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
  * beats improvising a translation of the English. The tool results carry a
  * `[text: …]` tag per passage for exactly this.
  */
-function languageSection(lang: Locale): string {
+function languageSection(lang: Locale, citeIds = false): string {
   if (lang === 'en') return '';
   const name = LANG_NAMES[lang];
   const base = siteBase(lang);
@@ -1459,12 +1676,12 @@ Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or
 
 What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
 
-Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).
+Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). ${citeIds ? 'Pages are cited by their ID ([P7]); the server writes the page link in the right prefix.' : `Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).`}
 
 `;
 }
 
-function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false): string {
+export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false, citeIds = false): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -1498,6 +1715,8 @@ For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, p
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
+**Requests for a kind of passage go to find_passages.** "A passage where someone describes leaving their body", "an account of a dream that came true", "instructions for making a talisman", "does anyone describe curing a wound by treating the weapon?" ask for a page that does something, not a page that uses certain words. Call **find_passages** with the reader's request as a full sentence; it reads a few hundred candidate pages and ranks them against the request. Quote from the pages it returns and link them, and their authors, with the URLs it gives; an author it gives no link for is plain text. Use \`search\` beside it when the request also names a person, a book or a term.
+
 **Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
 **Step 5: Save and cite with links.**
@@ -1505,7 +1724,7 @@ Use add_to_notebook for quotes directly relevant to the research question. The n
 
 **Only speak of the notebook in a turn where add_to_notebook succeeded, and then say exactly where it is:** "Saved to your research notebook — the *Research notebook* button under the message box on this page opens it." Never describe an icon, a sidebar, or a menu for it (there is none), and never tell the reader to look for it on any other page: it exists only on the Librarian page, for this thread. If you did not save anything, do not mention the notebook at all — a reader once went looking for a button that was not there.
 
-Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-SLUG), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
+${citeIds ? CITE_IDS_LINE : 'Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-SLUG), [Page N](https://sourcelibrary.org/book/SLUG?page=N).'}
 
 Every mention of a book should link to it. Every mention of an author should link to their author page WHEN the tool results give you that author's link. Use the URLs from tool results verbatim — they contain the correct slugs, including the pre-built author link in each "Books found" line. **NEVER construct an author URL yourself by slugifying or translating a name.** The author's name in our catalog is often a different form than the one you'd write in prose (e.g. "Robert Bellarmine" is stored as "Bellarmino, Roberto, S.J"; "Bartholomaeus Fumus" as "Bartolomeo Fumo"), and a hand-built /author/... link will 404. If a tool result has no author link for someone, write their name as plain text — do not invent a link.
 
@@ -1539,9 +1758,9 @@ In your FIRST round, write your opening sentences (Step 1) and then issue every 
 - Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
 - read_nearby_pages is for deepening a promising find, not for fishing. Only use it after you've found something specific worth expanding.
 
-${languageSection(lang)}## The collection
+${languageSection(lang, citeIds)}## The collection
 
-Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
+Source Library holds tens of thousands of rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
 ${collectionSection}## Formatting
 
@@ -1550,15 +1769,34 @@ ${collectionSection}## Formatting
 - Use blockquotes (>) for important quotations from primary sources — always with page citation
 - Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
-- Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
+- Cite 2-4 key passages rather than dumping everything. ${citeIds ? 'Every passage needs its page ID' : 'Every passage needs a page number and link'}
 - Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
 - Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)* — slug copied exactly from a tool result this turn, never built from the title
-- Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
-- Make clear when speaking from general knowledge vs. specific texts
+${citeIds ? '- Cite quotes by the page ID, [P7], and never write a page link or a page number link yourself' : '- Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)'}
+${citePages ? CITE_PAGES_LINES : `- Make clear when speaking from general knowledge vs. specific texts
 - Every paragraph or list item that reports what a book says ends with the link to the page it came from. A reader cannot tell a cited claim from an uncited one unless the link is there.
 - Quotation marks and numbers are claims about a page. Put words in quotation marks only if you read them on a page this turn, and give a measure, sum or count ("280 pounds", "twenty times an hour") only if a page or tool result gave it to you — otherwise paraphrase without quotation marks and leave the number out. Answers are checked against the pages you read after you write them; an unsupported quote loses its quotation marks and an unsupported number loses its sentence.
-- Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`;
+- Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`}`;
 }
+
+/**
+ * Arm B of the citation-prompt A/B (#6946): the four closing Formatting lines,
+ * rewritten against the failure kinds the per-link judges found (a link to the
+ * book's first hit instead of the page that says it, background dressed as a
+ * page's claim, blockquotes stitched from several pages, captions that add to
+ * the image record). Same slot, same count of lines as the text it replaces.
+ */
+const CITE_PAGES_LINES = `- A page link tells the reader "this page says this". Put one on a sentence or list item only when the text of that page, as you read it this turn, states the claim, and link the page where those words are, not the first page you found in the book. When a paragraph mixes what a page says with background, the link goes on the part the page says.
+- Background you did not read on a page this turn is stated plainly ("historians generally date it to…") with no page link. Never present it as what a book says.
+- Quotation marks and numbers are claims about a page. Quote only words that appear in a tool result this turn, and give a measure, sum or count only if a page or tool result gave it — otherwise paraphrase without quotation marks and leave the number out. A blockquote comes from one page, and its link is that page.
+- Under every embedded image, write one italic caption line: what the tool's record says the image is, and its own book and page. Describe only what the record says: no figure number, name, date or meaning it does not give, and never present it as illustrating another book.`;
+
+/**
+ * Cite by ID (#6946): replaces the "Cite with page-level links" line. The
+ * server turns each ID into the page link (cite-ids.ts), so the model never
+ * copies a page number by hand.
+ */
+const CITE_IDS_LINE = `Cite pages by ID. Every page in a tool result carries an ID in square brackets, like [P7]. Write that ID where the page link goes, right after the quotation, sentence or list item that page states: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-SLUG), [P7]. The server turns each ID into a link to exactly that page. Use the ID of the page whose text you read the words on, not another page of the same book; two pages for one claim are [P3][P4]. Never write a page link, a \`?page=\` or \`/page-number/\` URL, or a page number link yourself, and never make up an ID: an ID no tool gave you this turn is deleted.`;
 
 // ── Agentic Streaming ─────────────────────────────────────────────────
 
@@ -1571,11 +1809,16 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean },
+  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean; citeIds?: boolean; model?: string },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   const lang: Locale = options?.lang ?? 'en';
   const fastToolRounds = options?.fastToolRounds ?? FAST_TOOL_ROUNDS_DEFAULT;
+  const citePages = options?.citePages ?? CITE_PAGES_DEFAULT;
+  const model = options?.model ?? MODEL;
+  // Cite by ID (#6946): the turn's page IDs, and the rewrite of IDs to links in the text the reader gets.
+  const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : 'Page') : undefined;
+  const citeStream = cite ? new CiteIdStream(cite) : null;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const _t0 = Date.now();
@@ -1598,7 +1841,7 @@ export async function* streamAgenticResponse(
     resolveCollectionSlug(options?.collection),
   ]);
   const notebookContext = formatNotebookForPrompt(notebook);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds);
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages, !!cite);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
@@ -1656,6 +1899,18 @@ export async function* streamAgenticResponse(
   // and quote checks (#5904).
   const groundingImages = new Map<string, GroundingImage>();
   const toolSupportText: string[] = [];
+  // Page-linked claims routed to the page that states them while the answer
+  // streams (#6946); the pass at the end applies the verdicts.
+  const citationRouting = !CITATION_ROUTER_ON ? null : new CitationRoutingStream({
+    router: flashLiteCitationRouter({ timeoutMs: CITATION_ROUTER_TIMEOUT_MS }),
+    loadPages: keys => loadSupportPages(keys, lang).catch(() => []),
+    resolveSlugs: slugs => resolveBookIds(slugs, allSources).catch(() => new Map()),
+    retrievedKeys: () => [...retrievedPageKeys],
+    ground: (unit, pages) => applyGroundingEdits(unit, groundAnswer({
+      text: unit, pages, supportLoaded: true, extraSupport: toolSupportText.join('\n'), images: [],
+      question: userMessage, siteBase: siteBase(lang),
+    }).edits),
+  });
   // Every image URL any tool returned this turn, plus every embed that survived
   // an earlier answer in this thread (see priorTurnImageUrls). The model may
   // embed these and nothing else; anything else in an `![](...)` is fabricated.
@@ -1676,7 +1931,7 @@ export async function* streamAgenticResponse(
   // The last finishReason Gemini reported (SAFETY, RECITATION, MAX_TOKENS,
   // STOP…). Only read when the turn ends with no visible text, to say why.
   let lastFinishReason: string | undefined;
-  const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
+  const usage: TurnUsage = { model, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   // Harvest every URL a tool handed back, wherever it sits in the payload
   // (search_images `imageUrl`, search_artworks `thumbnail`, the prose
@@ -1707,7 +1962,7 @@ export async function* streamAgenticResponse(
 
   for (let round = 0; round < MAX_ROUNDS; round++) {
     const stream = streamWithRetry({
-      model: MODEL,
+      model,
       contents,
       config: {
         tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
@@ -1736,10 +1991,19 @@ export async function* streamAgenticResponse(
         if (p.functionCall) {
           functionCalls.push(p);
         } else if (p.text) {
-          generatedChunks.push(p.text);
-          yield { type: 'text', text: p.text };
+          // The model's own record (allParts) keeps its IDs; the reader gets links.
+          const text = citeStream ? citeStream.push(p.text) : p.text;
+          if (!text) continue;
+          generatedChunks.push(text);
+          yield { type: 'text', text };
+          if (citationRouting && text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
         }
       }
+    }
+    const tail = citeStream?.flush();
+    if (tail) {
+      generatedChunks.push(tail);
+      yield { type: 'text', text: tail };
     }
 
     usage.rounds++;
@@ -1758,7 +2022,7 @@ export async function* streamAgenticResponse(
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
       const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-      yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
+      yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.question as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
     }
 
     // Execute all tools in parallel — catch individual failures so one broken tool doesn't crash everything
@@ -1766,7 +2030,7 @@ export async function* streamAgenticResponse(
       functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
         try {
-          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext, lang);
+          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext, lang, cite);
         } catch (err) {
           console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
           return {
@@ -1828,7 +2092,7 @@ export async function* streamAgenticResponse(
 
     try {
       const finalStream = streamWithRetry({
-        model: MODEL,
+        model,
         // No tools in the config → the model cannot search and must answer.
         contents,
         config: { temperature: TEMPERATURE },
@@ -1847,10 +2111,18 @@ export async function* streamAgenticResponse(
           const p = part as any;
           if (p.text) {
             finalParts.push(p);
-            generatedChunks.push(p.text);
-            yield { type: 'text', text: p.text };
+            const text = citeStream ? citeStream.push(p.text) : p.text;
+            if (!text) continue;
+            generatedChunks.push(text);
+            yield { type: 'text', text };
+            if (citationRouting && text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
           }
         }
+      }
+      const finalTail = citeStream?.flush();
+      if (finalTail) {
+        generatedChunks.push(finalTail);
+        yield { type: 'text', text: finalTail };
       }
 
       usage.rounds++;
@@ -1903,29 +2175,12 @@ export async function* streamAgenticResponse(
   // clients apply events in arrival order. Fails open: if the support text
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
-  const support = await withTimeout(
-    loadGroundingSupport(rawText, history, retrievedPageKeys, [...groundingImages.values()], lang).catch(err => {
-      console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
-      return null;
-    }),
-    GROUNDING_BUDGET_MS,
-    null,
-  );
-  const grounding = groundAnswer({
-    text: rawText,
-    pages: support?.pages ?? [],
-    supportLoaded: support !== null,
-    extraSupport: toolSupportText.join('\n'),
-    images: support?.images ?? [...groundingImages.values()],
-    question: userMessage,
-    siteBase: siteBase(lang),
+  citationRouting?.finish(rawText);
+  const { edits, report: groundingReport, citations, pages: supportPages } = await groundTurn({
+    rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
+    toolSupportText, userMessage, notebookSaved, routing: citationRouting,
   });
-  // The prompt forbids claiming a save that did not happen; the model claims
-  // one anyway about three times in four (#6255). Strip the claim when no
-  // add_to_notebook succeeded this turn — same event, same apply order.
-  const edits: GroundingEdit[] = notebookSaved
-    ? grounding.edits
-    : mergeNotebookClaimEdits(grounding.edits, notebookClaimEdits(rawText));
+  const grounding = { edits, report: groundingReport };
   if (edits.length > 0) {
     yield { type: 'grounding_edits', edits, report: grounding.report };
   }
@@ -1934,6 +2189,16 @@ export async function* streamAgenticResponse(
   // turn, as the reader now sees it. Scanning the whole `contents` array would
   // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
   const fullText = applyGroundingEdits(rawText, edits);
+
+  // Every quotation that survived grounding goes into the notebook (#7253):
+  // the model's own add_to_notebook calls left most notebooks empty.
+  if (threadId) {
+    try {
+      for (const step of await autosaveQuotes(threadId, fullText, supportPages)) yield step;
+    } catch (err) {
+      console.warn('[Librarian] notebook autosave failed:', err instanceof Error ? err.message : err);
+    }
+  }
 
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
@@ -2033,13 +2298,14 @@ export async function* streamAgenticResponse(
   }
 
   if (grounding.edits.length > 0) {
-    console.warn('[Librarian] grounding edits', grounding.report);
+    console.warn('[Librarian] grounding edits', grounding.report, citations);
     try {
       const db = await getDb();
       await db.collection('embassy_errors').insertOne({
         kind: 'grounding',
         threadId: threadId ?? null,
         report: grounding.report,
+        citations,
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
@@ -2057,7 +2323,156 @@ export async function* streamAgenticResponse(
     ok: true,
   });
 
+  if (cite && citeStream) usage.citeIds = { pages: cite.size, ...citeStream.stats };
   yield { type: 'usage', usage };
+}
+
+export interface GroundTurnInput {
+  rawText: string;
+  history: ConversationMessage[];
+  retrievedPageKeys: Set<string>;
+  images: GroundingImage[];
+  lang: Locale;
+  toolSupportText: string[];
+  userMessage: string;
+  notebookSaved: boolean;
+  /** The citation router's verdicts, routed while the answer streamed (#6946); null turns routing off. */
+  routing: Pick<CitationRoutingStream, 'settled' | 'verdicts'> | null;
+}
+
+/**
+ * Everything that runs on a finished answer before the reader sees it settle:
+ * the grounding pass (#5904), the notebook-claim strip (#6255) and the
+ * citation-page pass (#6946), returned as one list of edits in document order.
+ *
+ * Timing: the citation router has been routing claims paragraph by paragraph
+ * while the answer streamed (CitationRoutingStream); once the support is
+ * loaded, its last batch is waited for at most CITATION_ROUTER_WAIT_MS.
+ * Exported for the replay harness (scripts/eval/librarian-citations-6946).
+ */
+export async function groundTurn(input: GroundTurnInput): Promise<{
+  edits: GroundingEdit[];
+  report: GroundingReport;
+  citations: CitationPassReport;
+  /** The pages grounding read: what notebook autosave places quotes on. */
+  pages: GroundingPage[];
+  /** The router's verdicts as they stood when the pass ran (null: routing off). */
+  verdicts: RoutedClaims | null;
+  timings: { supportMs: number; totalMs: number };
+}> {
+  const t0 = Date.now();
+  const { rawText, lang } = input;
+  const extraSupport = input.toolSupportText.join('\n');
+  const support = await withTimeout(
+    loadGroundingSupport(rawText, input.history, input.retrievedPageKeys, input.images, lang).catch(err => {
+      console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
+      return null;
+    }),
+    GROUNDING_BUDGET_MS,
+    null,
+  );
+  const supportMs = Date.now() - t0;
+  const grounding = groundAnswer({
+    text: rawText,
+    pages: support?.pages ?? [],
+    supportLoaded: support !== null,
+    extraSupport,
+    images: support?.images ?? input.images,
+    question: input.userMessage,
+    siteBase: siteBase(lang),
+  });
+  // The prompt forbids claiming a save that did not happen; the model claims
+  // one anyway about three times in four (#6255). Strip the claim when no
+  // add_to_notebook succeeded this turn — same event, same apply order.
+  const merged: GroundingEdit[] = input.notebookSaved
+    ? grounding.edits
+    : mergeNotebookClaimEdits(grounding.edits, notebookClaimEdits(rawText)) as GroundingEdit[];
+  // Page links point at the page that says it (#6946): quotations re-pointed
+  // deterministically, paraphrases by the router's verdicts (waited for at most
+  // CITATION_ROUTER_WAIT_MS from here), figure numbers in captions checked
+  // against the image's record.
+  let verdicts: RoutedClaims | null = null;
+  if (input.routing) {
+    await withTimeout(input.routing.settled(), Math.max(0, CITATION_ROUTER_WAIT_MS - (Date.now() - t0 - supportMs)), null);
+    verdicts = new Map(input.routing.verdicts);
+  }
+  const citation = await checkCitationPages({
+    text: rawText,
+    edits: merged,
+    pages: support?.pages ?? [],
+    supportLoaded: support !== null,
+    images: support?.images ?? input.images,
+    routed: verdicts ? Promise.resolve(verdicts) : undefined,
+    routedWaitMs: 0,
+  });
+  return {
+    edits: citation.edits,
+    report: grounding.report,
+    citations: citation.report,
+    pages: support?.pages ?? [],
+    verdicts,
+    timings: { supportMs, totalMs: Date.now() - t0 },
+  };
+}
+
+/** Book ids for cited slugs: the source cards first, then `books` by slug, alias or id. */
+export async function resolveBookIds(slugs: string[], sources: SourceCard[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  for (const s of sources) if (s.bookSlug && slugs.includes(s.bookSlug)) out.set(s.bookSlug, s.book_id);
+  const rest = slugs.filter(s => !out.has(s));
+  if (rest.length === 0) return out;
+  const db = await getDb();
+  const rows = await db.collection('books')
+    .find({ $or: [{ slug: { $in: rest } }, { slug_aliases: { $in: rest } }, { id: { $in: rest } }] })
+    .project({ id: 1, slug: 1, slug_aliases: 1 })
+    .maxTimeMS(3000)
+    .toArray();
+  for (const b of rows) {
+    for (const k of [b.slug, b.id, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])]) {
+      if (typeof k === 'string' && rest.includes(k)) out.set(k, b.id as string);
+    }
+  }
+  return out;
+}
+
+/** Grounding pages for `${bookId}:${page}` keys: translation + original (+ localized), with live slugs and titles. */
+export async function loadSupportPages(keys: string[], lang: Locale): Promise<GroundingPage[]> {
+  const byBook = new Map<string, number[]>();
+  for (const key of keys.slice(0, GROUNDING_MAX_PAGES)) {
+    const at = key.lastIndexOf(':');
+    const page = Number(key.slice(at + 1));
+    if (!Number.isFinite(page)) continue;
+    const bookId = key.slice(0, at);
+    byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
+  }
+  if (byBook.size === 0) return [];
+  const db = await getDb();
+  const localField = lang === 'en' ? null : `translations.${lang}.data`;
+  const [pages, books] = await Promise.all([
+    db.collection('pages')
+      .find({ $or: [...byBook].map(([book_id, ps]) => ({ book_id, page_number: { $in: ps } })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, ...(localField ? { [localField]: 1 } : {}) })
+      .maxTimeMS(3000)
+      .toArray(),
+    db.collection('books')
+      .find({ id: { $in: [...byBook.keys()] } })
+      .project({ id: 1, slug: 1, slug_aliases: 1, title: 1, display_title: 1 })
+      .maxTimeMS(3000)
+      .toArray(),
+  ]);
+  const meta = new Map(books.map(b => [b.id as string, b]));
+  return pages.map(p => {
+    const b = meta.get(p.book_id);
+    const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
+    return {
+      bookId: p.book_id as string,
+      bookSlug: (b?.slug || p.book_id) as string,
+      bookTitle: (b?.display_title || b?.title || '') as string,
+      page: p.page_number as number,
+      text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
+      parts: [p.translation?.data, p.ocr?.data, local].map(t => (typeof t === 'string' ? t : '')),
+    };
+  });
 }
 
 /**
@@ -2105,28 +2520,12 @@ async function loadGroundingSupport(
   for (const img of images) if (img.bookId && img.page) keys.add(`${img.bookId}:${img.page}`);
   for (const c of citedIds) for (const n of [c.page - 1, c.page + 1]) if (n >= 1) keys.add(`${c.id}:${n}`);
 
-  const byBook = new Map<string, number[]>();
-  for (const key of [...keys].slice(0, GROUNDING_MAX_PAGES)) {
-    const at = key.lastIndexOf(':');
-    const page = Number(key.slice(at + 1));
-    if (!Number.isFinite(page)) continue;
-    const bookId = key.slice(0, at);
-    byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
-  }
-  if (byBook.size === 0) return { pages: [], images };
-
-  const localField = lang === 'en' ? null : `translations.${lang}.data`;
-  const [pages, books] = await Promise.all([
-    db.collection('pages')
-      .find({ $or: [...byBook].map(([book_id, ps]) => ({ book_id, page_number: { $in: ps } })) })
-      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, ...(localField ? { [localField]: 1 } : {}) })
-      .maxTimeMS(3000)
-      .toArray(),
-    db.collection('books')
-      .find({ id: { $in: [...byBook.keys()] } })
-      .project({ id: 1, slug: 1, slug_aliases: 1, title: 1, display_title: 1 })
-      .maxTimeMS(3000)
-      .toArray(),
+  const imageBookIds = [...new Set(images.map(img => img.bookId).filter((x): x is string => !!x))];
+  const [supportPages, books] = await Promise.all([
+    loadSupportPages([...keys], lang),
+    imageBookIds.length
+      ? db.collection('books').find({ id: { $in: imageBookIds } }).project({ id: 1, slug: 1, slug_aliases: 1 }).maxTimeMS(3000).toArray()
+      : Promise.resolve([]),
   ]);
   const meta = new Map(books.map(b => [b.id as string, b]));
   const groundedImages = images.map(img => {
@@ -2136,18 +2535,6 @@ async function loadGroundingSupport(
       ...img,
       bookSlug: (b.slug as string | undefined) || img.bookSlug,
       bookAliases: [img.bookSlug, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])].filter((x): x is string => typeof x === 'string' && !!x),
-    };
-  });
-  const supportPages = pages.map(p => {
-    const b = meta.get(p.book_id);
-    const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
-    return {
-      bookId: p.book_id as string,
-      bookSlug: (b?.slug || p.book_id) as string,
-      bookTitle: (b?.display_title || b?.title || '') as string,
-      page: p.page_number as number,
-      text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
-      parts: [p.translation?.data, p.ocr?.data, local].map(t => (typeof t === 'string' ? t : '')),
     };
   });
   return { pages: supportPages, images: groundedImages };

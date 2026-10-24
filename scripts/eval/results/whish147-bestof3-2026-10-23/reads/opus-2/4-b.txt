@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപത ‖ യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി ‖ ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദപഘാതകെഹെ ‖ തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ ‖ കാന്താത്യന്തതൊ
+ROW 3 | ഭാവാൽദൃ ‖ ഷ്ടവദാനുശ്രവികസ്സഹ്യവിശു ‖ ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ ‖ തശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ ‖ വിജ്ഞാനാൽമൂല
+ROW 5 | പ്രകൃതിരവികൃ ‖ തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി ‖ കൃതയസ്സപ്തഷൊ
+ROW 6 | ഡശകസ്തുവി ‖ കാരൊനപ്രകൃതിൎന്നവികൃ ‖ തിഃപുരുഷഃദൃഷ്ട
+ROW 7 | മനുമാനമാ ‖ പ്തവചനഞ്ചസൎവ്വപ്രമാണ ‖ സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം ‖ പ്രമെയസിദ്ധിഃപ്രതിവിഷ ‖ യാദ്ധ്യവസായൊദൃ
+ROW 9 | ഷ്ടത്രിവിധമ ‖ നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി ‖ പൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | [blank] ‖ പ്രമാണാദ്ധി। ‖ [blank]
+NOTE | The whole leaf is legible but faint and cramped, so some readings are uncertain: row 1 between അവിഘ്ന and ഭി, the second letter of row 2, row 3 (ദൃ, ക്ക/സ്സ), whether the visarga/anusvara is there in rows 4 and 9, and row 5 right (കൃതയസ്സ). Knowing the text (kārikās 1–5) helped me tell apart letters that look alike, but I did not add anything the strokes don't show. Row 10 sits only under the middle column and looks like the scribe's added correction: small marks in row 8 near പ്രമെയ / സിദ്ധിഃ seem to show where it belongs. Large blank left margin; folio number "൧"? at the left edge.

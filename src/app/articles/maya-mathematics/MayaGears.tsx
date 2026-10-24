@@ -70,7 +70,7 @@ type Preset = { key: string; title: string; layout: 'mesh' | 'row'; gears: GearD
 export const GEAR_PRESETS: Preset[] = [
   {
     key: 'round', title: 'Calendar Round', layout: 'mesh', gears: [G20, G13, G365],
-    note: 'Thirteen numbers and twenty names make the 260-day count; the 365-day year turns beside them. The three marks meet again after 18,980 days, 52 years. Here the gears really mesh: the same tooth spacing on all three, so the year gear is too big to show whole.',
+    note: 'Thirteen numbers and twenty names make the 260-day count; the 365-day year turns beside them. The three marks meet again after 18,980 days, 52 years. These three gears mesh and share one tooth spacing, so the year gear is too big to show whole.',
   },
   {
     key: 'venus', title: 'Venus, the year and the 260 days', layout: 'row', gears: [ROW260, ROW365, ROWVENUS],
@@ -85,7 +85,7 @@ export const GEAR_PRESETS: Preset[] = [
 const FONT = 'var(--font-sans, sans-serif)';
 
 /** One gear in its own frame: teeth, labels, bands and the gold start mark. Tooth v sits at angle dir·v·step. */
-function GearBody({ g, r, toothH, dir, half }: { g: GearDef; r: number; toothH: number; dir: 1 | -1; half: boolean }) {
+function GearBody({ g, r, toothH, dir, half, fontScale = 1 }: { g: GearDef; r: number; toothH: number; dir: 1 | -1; half: boolean; fontScale?: number }) {
   const step = 360 / g.teeth;
   const d = useMemo(() => {
     const w = step * 0.28;
@@ -120,7 +120,7 @@ function GearBody({ g, r, toothH, dir, half }: { g: GearDef; r: number; toothH: 
             <polyline points={pts.map((p) => p.join(',')).join(' ')} fill="none" strokeWidth={7}
               stroke={i % 2 ? 'var(--color-border-medium)' : 'var(--color-accent-sage)'} />
             {b.text && (
-              <text x={tx} y={ty} fontSize={8} textAnchor="middle" dominantBaseline="middle" fill="var(--color-secondary)" fontFamily={FONT}
+              <text x={tx} y={ty} fontSize={8 * fontScale} textAnchor="middle" dominantBaseline="middle" fill="var(--color-secondary)" fontFamily={FONT}
                 transform={`rotate(${mid + 90} ${tx} ${ty})`}>{b.text}</text>
             )}
           </g>
@@ -134,7 +134,7 @@ function GearBody({ g, r, toothH, dir, half }: { g: GearDef; r: number; toothH: 
         const radial = text.length > 3;
         const [x, y] = polar(radial ? r - toothH / 2 - 3 : r - toothH - 9, a);
         return (
-          <text key={v} x={x} y={y} fontSize={fine ? 8 : radial ? 8 : 10} textAnchor={radial ? 'end' : 'middle'} dominantBaseline="middle"
+          <text key={v} x={x} y={y} fontSize={(fine ? 8 : radial ? 8 : 10) * fontScale} textAnchor={radial ? 'end' : 'middle'} dominantBaseline="middle"
             transform={`rotate(${radial ? a : a + 90} ${x} ${y})`} fill="var(--color-primary)" fontFamily={FONT}>
             {text}
           </text>
@@ -150,11 +150,24 @@ function GearBody({ g, r, toothH, dir, half }: { g: GearDef; r: number; toothH: 
 
 type Placed = { g: GearDef; cx: number; cy: number; r: number; toothH: number; dir: 1 | -1; half: boolean; read: number };
 
-function layout(p: Preset): { placed: Placed[]; lines: [number, number, number, number][]; box: { x0: number; y0: number; w: number; h: number } } {
+type Layout = { placed: Placed[]; lines: [number, number, number, number][]; box: { x0: number; y0: number; w: number; h: number } };
+
+/** `compact` (phones): the row's three gears as a triangle, two above and one below, so each is drawn larger. */
+function layout(p: Preset, compact = false): Layout {
   if (p.layout === 'row') {
     const gap = 30;
-    const placed = p.gears.map((g, i): Placed => ({ g, cx: i * (2 * ROW_R + gap), cy: 0, r: ROW_R, toothH: 5, dir: 1, half: false, read: -90 }));
-    const lines = placed.map((q): [number, number, number, number] => [q.cx, -ROW_R - 18, q.cx, -ROW_R + 2]);
+    const spot = (i: number): [number, number] => compact
+      ? (i < 2 ? [(i === 0 ? -1 : 1) * (ROW_R + gap / 2), 0] : [0, 2 * ROW_R + gap + 20])
+      : [i * (2 * ROW_R + gap), 0];
+    const placed = p.gears.map((g, i): Placed => {
+      const [cx, cy] = spot(i);
+      return { g, cx, cy, r: ROW_R, toothH: 5, dir: 1, half: false, read: -90 };
+    });
+    const lines = placed.map((q): [number, number, number, number] => [q.cx, q.cy - ROW_R - 18, q.cx, q.cy - ROW_R + 2]);
+    if (compact) {
+      const half = 2 * ROW_R + gap / 2 + 10;
+      return { placed, lines, box: { x0: -half, y0: -ROW_R - 24, w: 2 * half, h: 4 * ROW_R + gap + 20 + 52 } };
+    }
     const w = (p.gears.length - 1) * (2 * ROW_R + gap) + 2 * ROW_R + 20;
     return { placed, lines, box: { x0: -ROW_R - 10, y0: -ROW_R - 24, w, h: 2 * ROW_R + 50 } };
   }
@@ -181,7 +194,6 @@ export function GearTrain({ initial = 'round' }: { initial?: string }) {
   const preset = GEAR_PRESETS.find((p) => p.key === presetKey) ?? GEAR_PRESETS[0];
   const { gears } = preset;
   const L = gears.reduce((a, g) => lcm(a, g.teeth), 1);
-  const { placed, lines, box } = layout(preset);
 
   // Days counted, and each gear's turn in teeth. A turn moves by (step mod teeth), so a jump of
   // thousands of days turns each gear the short way instead of spinning it.
@@ -201,6 +213,28 @@ export function GearTrain({ initial = 'round' }: { initial?: string }) {
     return () => { if (timer.current) clearInterval(timer.current); };
   }, [playing, speed, presetKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const renderGears = (lay: Layout, className = '', fontScale = 1) => (
+    <svg viewBox={`${lay.box.x0} ${lay.box.y0} ${lay.box.w} ${lay.box.h}`} className={`w-full h-auto max-h-[440px] ${className}`} role="img"
+      aria-label={`${preset.title}: gears of ${gears.map((g) => g.teeth).join(', ')} teeth`}>
+      {lay.placed.map((q, i) => {
+        const rot = q.read - q.dir * (q.g.start + state.turns[i]) * (360 / q.g.teeth);
+        return (
+          <g key={`${presetKey}-${i}`} transform={`translate(${q.cx} ${q.cy})`}>
+            <g style={{ transition: 'transform 180ms linear', transform: `rotate(${rot}deg)` }}>
+              <GearBody g={q.g} r={q.r} toothH={q.toothH} dir={q.dir} half={q.half} fontScale={fontScale} />
+            </g>
+            {preset.layout === 'row' && (
+              <text y={q.r + 18} textAnchor="middle" fontSize={11 * fontScale} fill="var(--color-muted)" fontFamily={FONT}>{q.g.name}</text>
+            )}
+          </g>
+        );
+      })}
+      {lay.lines.map(([x1, y1, x2, y2], i) => (
+        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-accent-gold-dark)" strokeWidth={1.4} strokeDasharray="3 2" />
+      ))}
+    </svg>
+  );
+
   const fmt = (x: number) => x.toLocaleString('en-GB');
   const sinceMeet = state.k % L;
   const btn = 'px-3 py-1.5 rounded-full border border-border-medium text-sm text-primary hover:bg-warm transition-colors';
@@ -213,25 +247,14 @@ export function GearTrain({ initial = 'round' }: { initial?: string }) {
         <div className="flex flex-wrap gap-2 mb-4">
           {GEAR_PRESETS.map((p) => <button key={p.key} className={p.key === presetKey ? btnOn : btn} onClick={() => choose(p)}>{p.title}</button>)}
         </div>
-        <svg viewBox={`${box.x0} ${box.y0} ${box.w} ${box.h}`} className="w-full h-auto max-h-[440px]" role="img"
-          aria-label={`${preset.title}: gears of ${gears.map((g) => g.teeth).join(', ')} teeth`}>
-          {placed.map((q, i) => {
-            const rot = q.read - q.dir * (q.g.start + state.turns[i]) * (360 / q.g.teeth);
-            return (
-              <g key={`${presetKey}-${i}`} transform={`translate(${q.cx} ${q.cy})`}>
-                <g style={{ transition: 'transform 180ms linear', transform: `rotate(${rot}deg)` }}>
-                  <GearBody g={q.g} r={q.r} toothH={q.toothH} dir={q.dir} half={q.half} />
-                </g>
-                {preset.layout === 'row' && (
-                  <text y={q.r + 18} textAnchor="middle" fontSize={11} fill="var(--color-muted)" fontFamily={FONT}>{q.g.name}</text>
-                )}
-              </g>
-            );
-          })}
-          {lines.map(([x1, y1, x2, y2], i) => (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-accent-gold-dark)" strokeWidth={1.4} strokeDasharray="3 2" />
-          ))}
-        </svg>
+        {preset.layout === 'row' ? (
+          <>
+            {renderGears(layout(preset), 'hidden sm:block')}
+            {renderGears(layout(preset, true), 'sm:hidden', 1.35)}
+          </>
+        ) : (
+          renderGears(layout(preset))
+        )}
 
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm mt-4">
           {gears.map((g, i) => (

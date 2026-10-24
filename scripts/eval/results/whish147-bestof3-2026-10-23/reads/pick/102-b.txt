@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A is mostly broken syllable strings like "bhebhe" and "mamama", but it is the only one with any real Sanskrit pieces ("tattvapravṛttiḥ", "sāmānya", "lakṣaṇābheda", "anukrama", "tantra"), while B has only scattered single syllables and C has nothing but [illegible] marks.

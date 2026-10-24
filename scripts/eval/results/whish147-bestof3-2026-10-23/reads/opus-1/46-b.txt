@@ -1,0 +1,12 @@
+ROW 1 | നങ്ങിപ്രധാനപുരുഷയോ[illegible] ‖ ഭാഗംകരോതീത്യ[illegible]ൽപ്രധാനം ‖ [illegible]പുരുഷ[illegible]ം
+ROW 2 | ന്വാംസാരികജ്ഞാനപ്രവൃത്തിഷ ‖ ബത്വാൽവിശേഷാഭി[illegible]ത്രൃച ‖ ാഃതത്രകേചിദ്വിശേഷാഃകെ
+ROW 3 | ചിശേഷാദിത്യുക്രാഹഃക ‖ മാത്രാണീത്യാദിസൂക്ഷ്മവിഷയകമാത്രാ ‖ ദിത്യുച്യതെതെൻക[illegible]
+ROW 4 | ന്വിശേഷജ്ഞമകഃഇത്യ ‖ വിശേഷാ[illegible]പ്രാ[illegible]സൂക്ഷ്മരൂപാ ‖ ഗ്രാവ[illegible]തയെതയെ
+ROW 5 | ാനലക്ഷ്യമതനച ‖ ഇക്കേൽപ്രകാരാശയ[illegible]തചുരത ‖ ദ്രുവിശേഷാഃതെ[illegible]
+ROW 6 | ൠ ാഭൂതാനിപഞ്ചപഞ്ച ‖ ഭൂത[illegible]മാദിത്യ[illegible]ഞ്ചേമദി ‖ ാഭൂതാ[illegible]ൽപത്യന്തെ
+ROW 7 | എതത്സ്ഥതാവിരെ ‖ ഭൂതാദിശബ്ദ[illegible]തന്മാത്രാദികാഴ ‖ ണമാകാശ[illegible]ദ്രു
+ROW 8 | കഃ[illegible]ൾാരിതുഭ്രൂ ‖ ാത്രാൽ[illegible]ചതുഃപ[illegible]ഗ്നാഭവാഗു[illegible] ‖ യഉഷ്ണ[illegible]
+ROW 9 | ജാത്രാ[illegible]വിശേഷത[illegible] ‖ ഇതിവിശേഷാഃ[illegible]തഥ[illegible]സ്വ[illegible]യാണ ‖ [illegible]ശാന്താ[illegible]
+ROW 10 | ശബ്ദസ്പർശാ[illegible]ാനാഗ്ന ‖ സ്വഖപ്രദാഃ[illegible]ാദ്രുഃ[illegible]ദാഃമൂഢാ ‖ [illegible]മോഹപ്രദാ[illegible]
+
+NOTE | Not reliable: much of this is guesswork from looking at the letter shapes, and it should be checked against the leaf. I counted 10 rows. Rows 1–3 and 8–10 run the full width; rows 4–7 are set in short blocks between the holes. The ‖ marks in rows 2–10 may be in the wrong places, and I didn't de-duplicate the overlaps fully. Maybe 40–50% of the text is read with any confidence, and the right column is the weakest. I didn't make a reliable attempt to distinguish dot-reph ൎ, chillus and visarga.

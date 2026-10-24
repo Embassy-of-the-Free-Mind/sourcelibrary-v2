@@ -131,7 +131,7 @@ describe('the scanner does not flag what is not a terminal write to batch_jobs (
 
 describe('batch_jobs terminal statuses are written only by endBatchJob (#6276)', () => {
   it('no tracked file outside the helper writes cancelled/failed/expired to batch_jobs directly', () => {
-    const files = execFileSync('git', ['ls-files', 'scripts', 'src'], { encoding: 'utf8' })
+    const files = execFileSync('git', ['ls-files', 'scripts', 'src'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
       .trim().split('\n').filter((f) => /\.(m?js|cjs|ts|tsx)$/.test(f) && f !== HELPER);
     const offenders: string[] = [];
     let scanned = 0;

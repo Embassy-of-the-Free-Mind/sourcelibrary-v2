@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ondriśrāṭṭāvālnnanni [illegible] ‖ trupāytvācchnnāccippmipyrāṃ0gandhādrā ‖ cālṣgaḻophitabāccha
+2. tāntrārakkeṣādraśamaddrūmi ‖ kiḻecennākramasaiśeṅkeṅṅādrāvandhra ‖ ttrūvatvālkramānnitai
+3. ṛāṣanagrapavaddhyaṃ0o [illegible] ‖ lokāsyūrucakṣuśryāsyatvāl [illegible] ‖ tra [illegible] lokādrauvacaltrma
+4. cākṣupramāyāmā ‖ lokavyāvikāraṇatvālkṣṣa ‖ āloprañākhaprakāśakā
+5. bhaiṣjyamāndyāddā ‖ vyakṣureniddhraṃ0lakṣaṇaṃ0lā ‖ okṣukādadrāgāvṛtti
+6. bānnavyākṣiyagra ‖ gaigāklamilatvanilakṣyavṛtti ‖ bā0ṇamivyākṣiba
+7. phāhagāgyūṃ0gitvaṃlakṣya ‖ lakṣyamātrāvṛttitvaṃ0tvaṃsaṃ0dravyaṣāde ‖ poārokagiṣekṣaiba0kka
+8. kṣṭañcatraśravanityadhai ‖ laiailakṣaṇye0sakṣkṣivāsādhāraṇa ‖ nayaṣṭhuuḻḻccatailakṣyāka
+
+TRANSCRIPTION B
+1. ujjśāṭṭāvālnandi ‖ truptyatvācchandrāvippaviprāṃgandhābhā ‖ vāljñaḻraśautvāccu
+2. tāntrārakkareṣāddaśamadruḻā ‖ mikkiñcennaḥtamassendrakkejñāddāvantra ‖ [illegible] trūpatvāltamomitai
+3. bhākhinagrupavakryūṃ ‖ [illegible] lokāsvṛttacakṣugrāhyatvāltrai ‖ [illegible] lokāddavavalkrūmi
+4. cākṣuṣallamāyāmāḥ ‖ lokasyāvikāraṇatvāltanma ‖ āllaghuprakāśakā
+5. taijjassyamāndyāddā ‖ vastamukkarasiddhaṃlakṣaṇaṃlara ‖ kṣyakāradaśāvṛtti
+6. boḥnāvyākṣipoyagra ‖ āregāḥkamilampatvāḥnilakṣyavṛtti ‖ baṃnandivyākṣiḥba
+7. phārogāḥśruṃśitvaṃlakṣa ‖ yamātrāvṛttitvaṃnāsvaṃṭivaśyeṣāre ‖ ogorāmkkāśiṣekkatvaṃkra
+8. kaḷśśaṇaññrakharamitudharai ‖ laigalakṣaṇyoḥsakṣṣivāsādhāraṇaśa ‖ nnadharmmajjaccandralakṣyākka
+
+TRANSCRIPTION C
+1. kṣurddhāṭāvālnandi [illegible] truptyartthāccunnācchivṛṣṭyāṃgandhādrā ‖ [illegible] ‖ cālśśulvaitapāccu
+2. tāntrākkoṭoddaśamaddū [illegible] mikiṃcennaḥtamaso [illegible] ṅkaṅṅoṭovaṣka ‖ [illegible] ‖ trvapatvāltamobhito
+3. māhinatrupavarddhyaṃ [illegible] lokāsvabhāvacama [illegible] pakṣśrāhyabhavāl ‖ [illegible] ‖ lokāddūravāltumi
+4. cākkutālumāyāmaḥ ‖ lokavyāpikāraṇatvāltajja ‖ llauḍaprakāśakā
+5. ṅkeṅkāmānyādda ‖ vastumaḻārddiddaṃlakṣaṇaṃlakṣa ‖ lakkārddhaśāvṛtti
+6. bāḥnāvyābhliḥyaśa ‖ meśāmaḥkapilatvaḥbhilakṣyavṛtti ‖ bhaṃgatvavyābhliḥbha
+7. śārāgāḥbhṛṃśitvapalakṣyamātrāvṛttitāṃnāsaṃbhavaglaiśāge ‖ [illegible] ‖ paurolkapiṣekkabaṃbha
+8. kūññāṇatvaparamitṛdhame ‖ mlolakṣaṇeḥsakṣivāsādhāraṇa ‖ nayakkaujjaśūnyolakṣya
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

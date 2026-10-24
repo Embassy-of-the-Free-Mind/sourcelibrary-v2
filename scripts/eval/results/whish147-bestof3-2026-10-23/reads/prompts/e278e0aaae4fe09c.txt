@@ -1,0 +1,79 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 6 machine transcriptions (A, B, C, D, E, F) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. സൂക്ഷ്മപൎയ്യന്തംസംസ‖രതിനിരുപഭോഗംഭാവൈരധിവാസി‖തംലിംഗം।൪൦।ചിത്രംയഥാ
+2. ശ്രയമൃതേസ്ഥാണ്വാ‖ദിഭ്യോവിനായഥാഛായാതദ്വദ്വി‖നാവിശേഷൈൎന്നതിഷ്ഠ
+3. തിനിരാശ്രയംലിം‖ഗം।൪൧॥പുരുഷാൎത്ഥഹേതുകമി‖ദംനിമിത്തനൈമി
+4. ത്തികപ്രസംഗേ‖നപ്രകൃതേൎവ്വിഭുത്വയോഗാന്നട‖വദ്വ്യവതിഷ്ഠതേ
+5. ലിംഗം।൪൨।സ‖ാംസിദ്ധികാശ്ചഭാവാഃ [illegible/blank] പ്ര‖ാകൃതികാവൈകൃത
+6. ികാശ്ചധൎമ്മാദ്യാഃദൃ‖ഷ്ടാഃകരണാശ്രയിണഃകാൎയ്യ‖ാശ്രയിണശ്ചകലലാ
+7. ദ്യാഃ॥൪൩॥ധൎമ്മേ‖ണഗമനമൂൎദ്ധ്വംഗമനമധസ്താ‖ദ്ഭവത്യധൎമ്മേണ
+8. ജ്ഞാനേനചാപവൎഗ്ഗോ‖വിപൎയ്യയാദിഷ്യതേബന്ധഃ॥൪൪॥വൈ‖രാഗ്യാൽപ്രകൃതിലയഃ
+9. സംസാരോഭവതിരാ‖ജസാദ്രാഗാദൈശ്വൎയ്യാദവി‖ഘാതോവിപൎയ്യയാത്ത
+
+TRANSCRIPTION B
+1. ആക്ഷിപക്ഷ്യന്തംസൎസത‖ത്തിതിരുവടൊഗംഭടാവൈവരധീവാസിത‖ംലിംഗംത്സഃചിത്രംയഥാ
+2. ശയദ്രമതൈബ്ബാാബാാഉ‖കെട്ടായമാമിമ്മാക്ഷായാതമക്കിമഠ‖ാവിതൈതൈഖിൎക്കക്ഷഉ
+3. തനാക്കുയംലിം‖ഗം।ആഃഐആബ്ബാക്കൽൈപഉക്കമി‖ദംഗിമിത്തതൈനമി
+4. ആകിക്കനനൈ‖നക്രക്കതൈക്ഷദ്രുത്വൊയാഗാന്ന‖ടവദ്ധുവക്കക്ഷൈത
+5. വിംഗം।ത്സ്ല।സ‖ാംസാണ്ടികാാതാഖാ: പാപ്ര‖ത്രകകാാവൈത്രക
+6. ാആയധക്കാളാഃഭ‖ഷ്ടാഃകരണാക്രുതിണഃകാഞ്ഞ‖ാശ്രതിഞശാകാല
+7. ാദ്യാാഃധക്ക്രബ‖രമരക്കദ്യം।ഗമനമധന്താൽ‖ടചത്യധമൈണഭ്ര
+8. ാഒരഞചാരചാക്കു‖വിചങ്ങയാആഞ്ഞാതൈബന്ധഃ।ആഃതൈ‖ാകാരാത്ഥാൽപ്രഉആലയഃ
+9. സംസൊാരരാഭവആം‖ജസാദ്ധാഗാൽഒൈശാന്താഉവി‖ാാകതാകിപന്നായാത
+
+TRANSCRIPTION C
+1. സൂക്ഷ്മപൎയ്യന്തംസംസരതി ‖ നിരുപഭൊഗംഭാവൈരധിവാസിതം ‖ ലിംഗം[illegible]।ചിത്രംയഥാ
+2. ശ്രയമൃതെസ്ഥാണ്വാദി ‖ ഭ്യൊ[illegible]ഥാച്ഛായാതദ്വദ്വിനാ ‖ വിശെഷൈൎന്നതിഷ്ഠതി
+3. നിരാശ്രയംലിം ‖ ഗം।൪൧।പുരുഷാൎത്ഥഹെതുകമി ‖ ദംനിമിത്തനൈമി
+4. ത്തികപ്രസംഗെ ‖ നപ്രകൃതെൎവ്വിഭുത്വയൊഗാന്ന ‖ ടവദ്വ്യവതിഷ്ഠതെ
+5. ലിംഗം।൪൨।സാ ‖ ംസിദ്ധികാശ്ചഭാവാഃ പ്രാ ‖ കൃതികാവൈകൃതാ
+6. ശ്ചധൎമ്മാദ്യാഃദൃ ‖ ഷ്ടാഃകരണാശ്രയിണഃകാൎയ്യാ ‖ ശ്രയിണശ്ചകലലാ
+7. ദ്യാഃ।൪൩।ധൎമ്മെ ‖ ണഗമനമൂൎദ്ധ്വംഗമനമധസ്താൽ ‖ ഭവത്യധൎമ്മെണ[illegible]
+8. [illegible]നെനചാപവൎഗ്ഗൊ ‖ വിപൎയ്യയാദിഷ്യതെബന്ധഃ।൪൪।വൈ ‖ രാഗ്യാൽപ്രകൃതിലയഃ
+9. സംസാരൊഭവതിരാ ‖ ജസാദ്രാഗാൽഐശ്വൎയ്യാദവി ‖ ഘാതൊവിപൎയ്യയാത്ത
+
+TRANSCRIPTION D
+1. സൃഷ്ടിപക്ഷന്തംസംസ‖തതിരുവടൊഗംടാമൈവരധിവാസിതംലിംഗംതഃചിത്രായഥാ
+2. ശയത്മഠതബ്ബാഞ്ഞാധ‖ഠട്ടൊയശാമിനാഷ്ടായാതമക്കിഠഎ‖ാവിതൈതൈഷസ്തകത്തുത
+3. തിനാക്രയംപ്രിം‖ഗം।ആഷ്ടഃഷ്ടഗുന്താധാക്കെഫത്രക്കമ‖ദംശിമിക്കതൈനമി
+4. ആകപ്രസന്നൈ‖നാക്രാതൈക്കുണ്ണുഭുതിധൈതാഗാഠ‖ടവദ്യുവത്രക്കത്തത
+5. ലിംഗം।സ്ലു।സ‖ാംസാഠിങ്കാഠാ‥ പാപ്ര‖ാത്തുക്രകാമൈവത്തുത
+6. ാശ്രയധത്മാളാഃദ‖ല്ലാഃകരണാക്രകിണഃകാത്തു‖ാശ്രത്തിഠശികാല
+7. ാദ്യാദഃധത്തൈഖ‖നമനത്തുദൃപം।ഗമനമധന്താൽ‖ടചത്രധത്തൈണക്ക
+8. ാനൈനഭാഠഛാഷ്ടാ‖വിചയ്യതാഠിത്തുതൈബന്ധഃ।ആഷ്ടഃതൈ‖ാചഠാത്താൽപ്രഉതലയഃ
+9. സംസാരഠാഭവത്ത‖ാജസാഠാഗാകതൈതൈശിത്തൊഉവി‖ാഠാതാകിചത്തായാത
+
+TRANSCRIPTION E
+1. ഗ്രുക്ഷിപക്ഷന്തംസംസത ‖ ന്തതിരുവഒട്ടാഗംട ടാൈവരധിവാനിത ‖ തംലിംഗംസഃചിത്രായഥാ
+2. ശയ്യമതൈബ്ബാബ്ബാഉ ‖ ഒട്ടായശാഹിഠാ ാജ്ജായാരമടിഠഭ ‖ ാവിൈരൈഷൎതക്ഷര
+3. തോദാക്കയംഹിം ‖ ഗം।ആല്ല।ച്ചഘബാ ാൽകഫദ്രകതമ ‖ ദംന്തമിന്തനനൈമി
+4. ആകാശനനൈ ‖ നദ്രക്രൈരക്ക ത്തുദുതൈയാഗാച്ച ‖ ടവദ്യാവതിഘ്നൈക
+5. തിംഗം।ന്ല।സ ‖ ാംസീടികാര ായാ  പാപ്ര ‖ ാദ്ധകാൈവത്തുത
+6. ാന്തഥദ്മാളാഃദൂ ‖ ള്ളാഃകരണാ ാക്രുളിണഃകാള്ള ‖ ാശ്രുതിണശാകാല
+7. ാദ്യാഃധഥൈബ ‖ നമനദ്ധദ്ധാം। ംഗമനമധന്താൽ ‖ ടചത്യധൈണക്ക
+8. ാനനഠാാചാക്ഷ ‖ വിചയ്യയാഇഞ്ഞാ ാതൈബന്ധഃ।ആഃഒൈ ‖ ാനാൽപ്രഉതിലയഃ
+9. സംസോാനരാഭവഗ്രു ‖ ാജസാട്ടാഗാൽ ൽഒൈശാഞ്ഞാദുവി ‖ ാൈകാകിചത്തായാത
+
+TRANSCRIPTION F
+1. സൂക്ഷ്മപൎയ്യന്തംസംസര‖തിനിരുപഭോഗംഭാവൈരധിവാസി‖തംലിംഗം[illegible]
+2. [illegible]‖[illegible]‖[illegible]
+3. [illegible]‖[illegible]‖[illegible]
+4. [illegible]‖[illegible]‖[illegible]
+5. [illegible]‖[illegible]സിദ്ധി[illegible]‖[illegible]
+6. [illegible]‖[illegible]‖[illegible]
+7. [illegible]‖[illegible]‖[illegible]
+8. [illegible]‖[illegible]‖[illegible]
+9. [illegible]‖[illegible]‖[illegible]
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

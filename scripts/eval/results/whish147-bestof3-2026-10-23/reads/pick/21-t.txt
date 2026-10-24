@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B's first row is real, correct Sanskrit (Sāṅkhyakārikā 15, "bhedānāṃ parimāṇāt samanvayāt śaktitaḥ…"), though it leaves most rows unread; C has only scattered fragments and A, despite being complete, is unbroken nonsense in every row.

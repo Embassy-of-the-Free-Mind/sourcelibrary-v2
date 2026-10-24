@@ -5,6 +5,7 @@
  * Run: npx playwright test crawl-all-pages --reporter=list
  */
 import { test, expect } from '@playwright/test';
+import { isEdgeChallenge } from './edge-challenge';
 
 // All static (non-dynamic) page routes derived from src/app
 const STATIC_PAGES = [
@@ -276,6 +277,8 @@ interface PageResult {
   status: number | null;
   error: string | null;
   loadTimeMs: number;
+  /** Cloudflare challenged the request (#6485): neither passed nor broken. */
+  challenged?: boolean;
 }
 
 // Shared helper: check a single URL and return the result
@@ -291,6 +294,10 @@ async function checkPage(
     const elapsed = Date.now() - start;
 
     let error: string | null = null;
+
+    if (isEdgeChallenge(response)) {
+      return { path, status, error, loadTimeMs: elapsed, challenged: true };
+    }
 
     if (isAuth) {
       if (status >= 500) {
@@ -323,10 +330,20 @@ async function checkPage(
   }
 }
 
+function expectMostlyUnchallenged(results: PageResult[]) {
+  const challenged = results.filter(r => r.challenged).length;
+  expect(
+    challenged,
+    `${challenged} of ${results.length} requests were challenged by Cloudflare — the suite is no longer reaching the site (#6485)`
+  ).toBeLessThan(results.length / 2);
+}
+
 function printResults(results: PageResult[], broken: PageResult[], label: string) {
   console.log(`\n========== ${label} ==========`);
   console.log(`Total pages tested: ${results.length}`);
-  console.log(`Passed: ${results.length - broken.length}`);
+  const challenged = results.filter(r => r.challenged);
+  console.log(`Passed: ${results.length - broken.length - challenged.length}`);
+  console.log(`Challenged at the edge (not checked, #6485): ${challenged.length}`);
   console.log(`Broken: ${broken.length}`);
 
   if (broken.length > 0) {
@@ -372,6 +389,10 @@ test.describe('Full site crawl', () => {
     }
 
     printResults(results, broken, 'CRAWL RESULTS');
+
+    // A challenged page is not checked. If the edge rule ever widens to most
+    // of the site, this suite would pass while measuring nothing — fail then.
+    expectMostlyUnchallenged(results);
 
     // Strip out known-broken pages tracked elsewhere — they print above but
     // do not fail the test. Real regressions still fail.
@@ -478,6 +499,10 @@ test.describe('Link follower', () => {
     }
 
     printResults(results, broken, 'LINK FOLLOWER RESULTS');
+
+    // A challenged page is not checked. If the edge rule ever widens to most
+    // of the site, this suite would pass while measuring nothing — fail then.
+    expectMostlyUnchallenged(results);
 
     const unexpectedBroken = broken.filter(b => !isExpectedBroken(b.path));
     if (broken.length !== unexpectedBroken.length) {

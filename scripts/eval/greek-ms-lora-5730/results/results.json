@@ -1,0 +1,395 @@
+{
+ "at": "2026-10-23T06:40:36.896Z",
+ "arms": [
+  "F",
+  "G",
+  "S",
+  "L"
+ ],
+ "runs": {
+  "F": {
+   "mode": "glm",
+   "model": "m",
+   "pages_this_pass": 388,
+   "clients": 16,
+   "wall_secs": 2998.8,
+   "pages_per_hour": 466,
+   "errors": 0,
+   "hit_cap": 260,
+   "out_tok": 1657530,
+   "in_tok": 1820834
+  }
+ },
+ "rule": {
+  "noise_pts": 0.5,
+  "catastrophic_cer": 0.5,
+  "B": 10000,
+  "seed": 5730
+ },
+ "dropped": 108,
+ "sets": {
+  "T2": {
+   "all": {
+    "n": 199,
+    "F": {
+     "median_N": 1,
+     "ci_N": [
+      1,
+      3.4431
+     ],
+     "median_A": 1,
+     "catastrophic": 189
+    },
+    "G": {
+     "median_N": 1,
+     "ci_N": [
+      1,
+      3.6481
+     ],
+     "median_A": 2.3087,
+     "catastrophic": 199
+    },
+    "S": {
+     "median_N": 0.2864,
+     "ci_N": [
+      0.2686,
+      0.3014
+     ],
+     "median_A": 0.3441,
+     "catastrophic": 5
+    },
+    "L": {
+     "median_N": 0.357,
+     "ci_N": [
+      0.3452,
+      0.3779
+     ],
+     "median_A": 0.4404,
+     "catastrophic": 9
+    },
+    "F-S": {
+     "median_d": 0.7721,
+     "ci": [
+      0.6816,
+      3.0603
+     ],
+     "wins": 0,
+     "losses": 199
+    },
+    "F-L": {
+     "median_d": 0.7025,
+     "ci": [
+      0.6168,
+      3
+     ],
+     "wins": 1,
+     "losses": 198
+    },
+    "F-G": {
+     "median_d": -0.1829,
+     "ci": [
+      -0.3687,
+      0
+     ],
+     "wins": 108,
+     "losses": 63
+    },
+    "G-S": {
+     "median_d": 0.8,
+     "ci": [
+      0.7608,
+      3.3317
+     ],
+     "wins": 0,
+     "losses": 199
+    },
+    "G-L": {
+     "median_d": 0.7139,
+     "ci": [
+      0.6713,
+      3.2244
+     ],
+     "wins": 1,
+     "losses": 198
+    }
+   },
+   "by_book": {
+    "Ars sacra (Laurenziana)": {
+     "n": 199,
+     "F": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       3.4431
+      ],
+      "median_A": 1,
+      "catastrophic": 189
+     },
+     "G": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       3.6481
+      ],
+      "median_A": 2.3087,
+      "catastrophic": 199
+     },
+     "S": {
+      "median_N": 0.2864,
+      "ci_N": [
+       0.2686,
+       0.3014
+      ],
+      "median_A": 0.3441,
+      "catastrophic": 5
+     },
+     "L": {
+      "median_N": 0.357,
+      "ci_N": [
+       0.3452,
+       0.3779
+      ],
+      "median_A": 0.4404,
+      "catastrophic": 9
+     },
+     "F-S": {
+      "median_d": 0.7721,
+      "ci": [
+       0.6816,
+       3.0603
+      ],
+      "wins": 0,
+      "losses": 199
+     },
+     "F-L": {
+      "median_d": 0.7025,
+      "ci": [
+       0.6168,
+       3
+      ],
+      "wins": 1,
+      "losses": 198
+     },
+     "F-G": {
+      "median_d": -0.1829,
+      "ci": [
+       -0.3687,
+       0
+      ],
+      "wins": 108,
+      "losses": 63
+     },
+     "G-S": {
+      "median_d": 0.8,
+      "ci": [
+       0.7608,
+       3.3317
+      ],
+      "wins": 0,
+      "losses": 199
+     },
+     "G-L": {
+      "median_d": 0.7139,
+      "ci": [
+       0.6713,
+       3.2244
+      ],
+      "wins": 1,
+      "losses": 198
+     }
+    }
+   },
+   "verdict": {
+    "pass": false,
+    "checks": {
+     "F beats S (CI < 0, |Δ| ≥ 0.5 pt)": false,
+     "F beats L (CI < 0, |Δ| ≥ 0.5 pt)": false,
+     "F catastrophic ≤ S + 1": false,
+     "F median < G median": false
+    }
+   }
+  },
+  "T1": {
+   "all": {
+    "n": 81,
+    "F": {
+     "median_N": 1,
+     "ci_N": [
+      1,
+      1
+     ],
+     "median_A": 1,
+     "catastrophic": 81
+    },
+    "G": {
+     "median_N": 1,
+     "ci_N": [
+      1,
+      1
+     ],
+     "median_A": 1,
+     "catastrophic": 81
+    },
+    "S": {
+     "median_N": 0.3272,
+     "ci_N": [
+      0.317,
+      0.3448
+     ],
+     "median_A": 0.3805,
+     "catastrophic": 4
+    },
+    "L": {
+     "median_N": 2.0517,
+     "ci_N": [
+      1.9376,
+      2.295
+     ],
+     "median_A": 2.1422,
+     "catastrophic": 74
+    },
+    "F-S": {
+     "median_d": 0.6695,
+     "ci": [
+      0.6445,
+      0.6811
+     ],
+     "wins": 0,
+     "losses": 81
+    },
+    "F-L": {
+     "median_d": -1.0866,
+     "ci": [
+      -1.295,
+      -0.9628
+     ],
+     "wins": 62,
+     "losses": 17
+    },
+    "F-G": {
+     "median_d": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "wins": 14,
+     "losses": 14
+    },
+    "G-S": {
+     "median_d": 0.6697,
+     "ci": [
+      0.6413,
+      0.6833
+     ],
+     "wins": 0,
+     "losses": 81
+    },
+    "G-L": {
+     "median_d": -1.0483,
+     "ci": [
+      -1.2608,
+      -0.9321
+     ],
+     "wins": 62,
+     "losses": 17
+    }
+   },
+   "by_book": {
+    "Grec 1841": {
+     "n": 81,
+     "F": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       1
+      ],
+      "median_A": 1,
+      "catastrophic": 81
+     },
+     "G": {
+      "median_N": 1,
+      "ci_N": [
+       1,
+       1
+      ],
+      "median_A": 1,
+      "catastrophic": 81
+     },
+     "S": {
+      "median_N": 0.3272,
+      "ci_N": [
+       0.317,
+       0.3448
+      ],
+      "median_A": 0.3805,
+      "catastrophic": 4
+     },
+     "L": {
+      "median_N": 2.0517,
+      "ci_N": [
+       1.9376,
+       2.295
+      ],
+      "median_A": 2.1422,
+      "catastrophic": 74
+     },
+     "F-S": {
+      "median_d": 0.6695,
+      "ci": [
+       0.6445,
+       0.6811
+      ],
+      "wins": 0,
+      "losses": 81
+     },
+     "F-L": {
+      "median_d": -1.0866,
+      "ci": [
+       -1.295,
+       -0.9628
+      ],
+      "wins": 62,
+      "losses": 17
+     },
+     "F-G": {
+      "median_d": 0,
+      "ci": [
+       0,
+       0
+      ],
+      "wins": 14,
+      "losses": 14
+     },
+     "G-S": {
+      "median_d": 0.6697,
+      "ci": [
+       0.6413,
+       0.6833
+      ],
+      "wins": 0,
+      "losses": 81
+     },
+     "G-L": {
+      "median_d": -1.0483,
+      "ci": [
+       -1.2608,
+       -0.9321
+      ],
+      "wins": 62,
+      "losses": 17
+     }
+    }
+   },
+   "verdict": {
+    "pass": false,
+    "checks": {
+     "F beats S (CI < 0, |Δ| ≥ 0.5 pt)": false,
+     "F beats L (CI < 0, |Δ| ≥ 0.5 pt)": true,
+     "F catastrophic ≤ S + 1": false,
+     "F median < G median": false
+    }
+   }
+  }
+ },
+ "overall": "FAIL"
+}

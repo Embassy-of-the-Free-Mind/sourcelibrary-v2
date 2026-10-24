@@ -1,0 +1,41 @@
+arm          leaf  rows chars  rowCER  floorSh floorRev  wholeCER
+fable-half   4b      9   259  0.583   0.71   0.737    0.707
+fable-half   5b     10   304  0.52   0.711   0.711    0.737
+fable-half   5t     10   275  0.447   0.716   0.684    0.724
+fable-half   6b     10   297  0.502   0.724   0.704    0.737
+fable-half   6t     16   323  0.539   0.681   0.666    0.743
+fable-half   7t      0     0  None   None   None    None
+fable-half   8b     10   309  0.524   0.731   0.722    0.758
+fable-half   8t      0     0  None   None   None    None
+fable-half   9t     16   316  0.522   0.687   0.674    0.763
+fable-strip  4b      9   241  0.61   0.726   0.722    0.718
+fable-strip  5b     10   331  0.556   0.704   0.701    0.728
+fable-strip  5t      9   257  0.482   0.689   0.685    0.72
+fable-strip  6b      9   302  0.596   0.709   0.709    0.755
+fable-strip  6t     10   343  0.618   0.732   0.706    0.738
+fable-strip  7t      9   323  0.598   0.728   0.703    0.728
+fable-strip  8b     10   356  0.593   0.728   0.733    0.742
+fable-strip  8t      9   283  0.661   0.714   0.696    0.767
+fable-strip  9t     10   304  0.671   0.724   0.704    0.776
+opus-half    4b     10   284  0.542   0.715   0.697    0.731
+opus-half    5b     16   282  0.44   0.656   0.656    0.745
+opus-half    5t      9   239  0.603   0.695   0.674    0.77
+opus-half    6b      9   269  0.546   0.717   0.695    0.76
+opus-half    6t      6    70  0.357   0.614   0.571    0.69
+opus-half    7t      1    11  0.455   0.727   0.545    None
+opus-half    8b     11   363  0.631   0.719   0.708    0.769
+opus-half    8t      0     0  None   None   None    None
+opus-half    9t      0     0  None   None   None    None
+opus-strip   4b      9   292  0.627   0.733   0.709    0.743
+opus-strip   5b     10   317  0.625   0.735   0.697    0.76
+opus-strip   5t      9   270  0.67   0.685   0.693    0.763
+opus-strip   6b      9   305  0.613   0.734   0.692    0.761
+opus-strip   6t     10   322  0.661   0.714   0.711    0.755
+opus-strip   7t      9   326  0.687   0.709   0.702    0.788
+opus-strip   8b     10   357  0.639   0.737   0.717    0.773
+opus-strip   8t      9   321  0.645   0.726   0.72    0.766
+opus-strip   9t     10   376  0.668   0.737   0.726    0.763
+POOLED fable-half   leaves 7 chars 2083 rowCER 0.519 (leaf range 0.447–0.583, median 0.522)  floor shuffled 0.708 reversed 0.699  wholeCER median 0.737 range 0.707–0.763
+POOLED fable-strip  leaves 9 chars 2740 rowCER 0.599 (leaf range 0.482–0.671, median 0.598)  floor shuffled 0.718 reversed 0.707  wholeCER median 0.738 range 0.718–0.776
+POOLED opus-half    leaves 7 chars 1518 rowCER 0.545 (leaf range 0.357–0.631, median 0.542)  floor shuffled 0.698 reversed 0.681  wholeCER median 0.76 range 0.69–0.77
+POOLED opus-strip   leaves 9 chars 2886 rowCER 0.649 (leaf range 0.613–0.687, median 0.645)  floor shuffled 0.724 reversed 0.708  wholeCER median 0.763 range 0.743–0.788

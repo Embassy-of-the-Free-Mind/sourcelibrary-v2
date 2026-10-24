@@ -1,0 +1,668 @@
+{
+ "4b": [
+  {
+   "line": 2,
+   "from": "duḥkha-trayā'bhighātāj",
+   "to": "tad-apa1ghātake",
+   "verses": [
+    1
+   ]
+  },
+  {
+   "line": 3,
+   "from": ".a-bhāvāt.",
+   "to": "ānuśravikaḥ",
+   "verses": [
+    1,
+    2
+   ]
+  },
+  {
+   "line": 4,
+   "from": "ānuśravikaḥ",
+   "to": "vyaktā'-vyakta-jña-vijñānāt.",
+   "verses": [
+    2
+   ]
+  },
+  {
+   "line": 5,
+   "from": "mūla-prakṛtir",
+   "to": "prakṛti-vikṛtayaḥ",
+   "verses": [
+    3
+   ]
+  },
+  {
+   "line": 6,
+   "from": "ṣoḍaśakas",
+   "to": "prakṛtir",
+   "verses": [
+    3
+   ]
+  },
+  {
+   "line": 7,
+   "from": "dṛṣṭam",
+   "to": "sarva-pramāṇa-siddhatvāt",
+   "verses": [
+    4
+   ]
+  },
+  {
+   "line": 8,
+   "from": "tri-vidhaṃ",
+   "to": "pramāṇād",
+   "verses": [
+    4
+   ]
+  },
+  {
+   "line": 9,
+   "from": "dṛṣṭaṃ",
+   "to": "tal",
+   "verses": [
+    5
+   ]
+  }
+ ],
+ "5t": [
+  {
+   "line": 1,
+   "from": "āpta-vacanaṃ",
+   "to": "sāmānyatas",
+   "verses": [
+    5,
+    6
+   ]
+  },
+  {
+   "line": 2,
+   "from": "api",
+   "to": "ati-dūrāt",
+   "verses": [
+    6,
+    7
+   ]
+  },
+  {
+   "line": 3,
+   "from": "indriya-ghātān",
+   "to": "mano.an-avasthānāt",
+   "verses": [
+    7
+   ]
+  },
+  {
+   "line": 4,
+   "from": "vyavadhānād",
+   "to": "samānā'bhihārāc",
+   "verses": [
+    7
+   ]
+  },
+  {
+   "line": 5,
+   "from": "tad-an-upalabdhir",
+   "to": "kāryatas",
+   "verses": [
+    8
+   ]
+  },
+  {
+   "line": 6,
+   "from": "kāryam",
+   "to": "sa-rūpaṃ3",
+   "verses": [
+    8
+   ]
+  },
+  {
+   "line": 7,
+   "from": "upādāna-grahaṇāt",
+   "to": "sarva-sambhavā'-bhāvāt",
+   "verses": [
+    9
+   ]
+  },
+  {
+   "line": 8,
+   "from": "kāraṇa-bhāvāc",
+   "to": "sat-kāryam.",
+   "verses": [
+    9
+   ]
+  },
+  {
+   "line": 9,
+   "from": "an-ekam",
+   "to": "para-tantraṃ",
+   "verses": [
+    10
+   ]
+  }
+ ],
+ "5b": [
+  {
+   "line": 1,
+   "from": "tri-guṇam",
+   "to": "a-cetanaṃ",
+   "verses": [
+    11
+   ]
+  },
+  {
+   "line": 2,
+   "from": "pradhānaṃ",
+   "to": "prīty-a-prīti-viṣādā`tmakāḥ",
+   "verses": [
+    11,
+    12
+   ]
+  },
+  {
+   "line": 3,
+   "from": "prakāśa-pravṛtti1-niyamā'rthāḥ",
+   "to": "anyo.anyā'bhibhavā`śraya-",
+   "verses": [
+    12
+   ]
+  },
+  {
+   "line": 4,
+   "from": "guṇāḥ.",
+   "to": "iṣṭam",
+   "verses": [
+    12,
+    13
+   ]
+  },
+  {
+   "line": 5,
+   "from": "guru",
+   "to": "pradīpavac",
+   "verses": [
+    13
+   ]
+  },
+  {
+   "line": 6,
+   "from": "a-viveky-ādi",
+   "to": "traiguṇyāt",
+   "verses": [
+    14
+   ]
+  },
+  {
+   "line": 8,
+   "from": "bhedānāṃ",
+   "to": "chaktitaḥ",
+   "verses": [
+    15
+   ]
+  },
+  {
+   "line": 9,
+   "from": "kāraṇa-kārya-vibhāgād",
+   "to": "kāraṇam",
+   "verses": [
+    15,
+    16
+   ]
+  },
+  {
+   "line": 10,
+   "from": "samudayāc1",
+   "to": "prati-prati3-guṇā`śraya4-viśeṣāt.",
+   "verses": [
+    16
+   ]
+  }
+ ],
+ "6t": [
+  {
+   "line": 1,
+   "from": "saṃghāta-parā'rthatvāt",
+   "to": "adhiṣṭhānāt",
+   "verses": [
+    17
+   ]
+  },
+  {
+   "line": 2,
+   "from": "kaivalyā'rthaṃ1",
+   "to": "janana1-maraṇa-karaṇānāṃ",
+   "verses": [
+    17,
+    18
+   ]
+  },
+  {
+   "line": 3,
+   "from": "prati-niyamād",
+   "to": "siddhaṃ",
+   "verses": [
+    18
+   ]
+  },
+  {
+   "line": 4,
+   "from": "trai-guṇya2-viparyayāc",
+   "to": "sākṣitvam",
+   "verses": [
+    18,
+    19
+   ]
+  },
+  {
+   "line": 7,
+   "from": "liṅgaṃ",
+   "to": "udāsīnaḥ4.",
+   "verses": [
+    20
+   ]
+  },
+  {
+   "line": 8,
+   "from": "kaivalyā'rthaṃ1",
+   "to": "pradhānasya",
+   "verses": [
+    21
+   ]
+  },
+  {
+   "line": 9,
+   "from": "paṅgv-andhavad",
+   "to": "saṃyogas",
+   "verses": [
+    21
+   ]
+  },
+  {
+   "line": 10,
+   "from": "sargaḥ.",
+   "to": ".ahaṃ-",
+   "verses": [
+    21,
+    22
+   ]
+  }
+ ],
+ "6b": [
+  {
+   "line": 1,
+   "from": "buddhir",
+   "to": "sāttvikam",
+   "verses": [
+    23
+   ]
+  },
+  {
+   "line": 2,
+   "from": "abhimāno",
+   "to": "pravartate",
+   "verses": [
+    24
+   ]
+  },
+  {
+   "line": 3,
+   "from": "sargaḥ",
+   "to": "ekādaśakaś",
+   "verses": [
+    24
+   ]
+  },
+  {
+   "line": 4,
+   "from": "vaikṛtād",
+   "to": "tan1-mātraḥ",
+   "verses": [
+    25
+   ]
+  },
+  {
+   "line": 5,
+   "from": "tāmasas",
+   "to": "śrotra-ghrāṇa-rasana2-tvag-ākhyāni3",
+   "verses": [
+    25,
+    26
+   ]
+  },
+  {
+   "line": 7,
+   "from": "ubhayā`tmakam",
+   "to": "saṃkalpakam",
+   "verses": [
+    27
+   ]
+  },
+  {
+   "line": 8,
+   "from": "guṇa-pariṇāma-viśeṣān",
+   "to": "bāhya2-bhedāc3",
+   "verses": [
+    27
+   ]
+  },
+  {
+   "line": 9,
+   "from": "pañcānām",
+   "to": "vacanā`dāna-viharaṇ'otsargā`nandāś",
+   "verses": [
+    28
+   ]
+  }
+ ],
+ "7t": [
+  {
+   "line": 2,
+   "from": "vṛttis",
+   "to": "yugapac",
+   "verses": [
+    29,
+    30
+   ]
+  },
+  {
+   "line": 3,
+   "from": "dṛṣṭe",
+   "to": "trayasya",
+   "verses": [
+    30
+   ]
+  },
+  {
+   "line": 5,
+   "from": "puruṣā'rtha",
+   "to": "karaṇam.",
+   "verses": [
+    31
+   ]
+  },
+  {
+   "line": 6,
+   "from": "trayodaśa-vidhaṃ",
+   "to": "daśadhā",
+   "verses": [
+    32
+   ]
+  },
+  {
+   "line": 7,
+   "from": "*hāryaṃ,",
+   "to": "daśadhā",
+   "verses": [
+    32,
+    33
+   ]
+  },
+  {
+   "line": 8,
+   "from": "bāhyaṃ",
+   "to": "bāhyaṃ",
+   "verses": [
+    33
+   ]
+  },
+  {
+   "line": 9,
+   "from": "ābhy1-antaraṃ",
+   "to": "viśeṣā'-viśeṣa-viṣayāṇi1",
+   "verses": [
+    33,
+    34
+   ]
+  }
+ ],
+ "8t": [
+  {
+   "line": 1,
+   "from": "sūkṣma-pary-antam",
+   "to": "bhāvair",
+   "verses": [
+    40
+   ]
+  },
+  {
+   "line": 2,
+   "from": "*śrayam",
+   "to": "tadvad",
+   "verses": [
+    41
+   ]
+  },
+  {
+   "line": 3,
+   "from": "nir-āśrayaṃ",
+   "to": "puruṣā'rtha-hetukam",
+   "verses": [
+    41,
+    42
+   ]
+  },
+  {
+   "line": 4,
+   "from": "nimitta-naimittika-prasaṅgena",
+   "to": "vibhutva-yogān",
+   "verses": [
+    42
+   ]
+  },
+  {
+   "line": 5,
+   "from": "liṅgam.",
+   "to": "bhāvāḥ",
+   "verses": [
+    42,
+    43
+   ]
+  },
+  {
+   "line": 6,
+   "from": "dharmā`dyāḥ",
+   "to": "karaṇā`śrayiṇaḥ",
+   "verses": [
+    43
+   ]
+  },
+  {
+   "line": 7,
+   "from": "kalalā`dyāḥ.",
+   "to": "gamanam",
+   "verses": [
+    43,
+    44
+   ]
+  },
+  {
+   "line": 8,
+   "from": "jñānena",
+   "to": "bandhaḥ.",
+   "verses": [
+    44
+   ]
+  },
+  {
+   "line": 9,
+   "from": "saṃsāro",
+   "to": "aiśvaryād",
+   "verses": [
+    45
+   ]
+  }
+ ],
+ "8b": [
+  {
+   "line": 1,
+   "from": "tad-viparyāsaḥ.",
+   "to": "viparyayā'-śakti-tuṣṭi-siddhy-ākhyaḥ",
+   "verses": [
+    45,
+    46
+   ]
+  },
+  {
+   "line": 2,
+   "from": "guṇa-vaiṣamya1-vimardāt2",
+   "to": "viparyaya-bhedā",
+   "verses": [
+    46,
+    47
+   ]
+  },
+  {
+   "line": 3,
+   "from": "karaṇa-vaikalyāt",
+   "to": "aṣṭāviṃśati-bhedās2",
+   "verses": [
+    47
+   ]
+  },
+  {
+   "line": 4,
+   "from": "siddhiḥ.",
+   "to": "mohasya",
+   "verses": [
+    47,
+    48
+   ]
+  },
+  {
+   "line": 5,
+   "from": "tāmisro1",
+   "to": "andha-tāmisraḥ1.",
+   "verses": [
+    48
+   ]
+  },
+  {
+   "line": 6,
+   "from": "endriya-vadhāḥ1",
+   "to": "uddiṣṭā2",
+   "verses": [
+    49
+   ]
+  },
+  {
+   "line": 7,
+   "from": "tuṣṭi-siddhīnām.",
+   "to": "ādhy-ātmikāś1",
+   "verses": [
+    49,
+    50
+   ]
+  },
+  {
+   "line": 8,
+   "from": "prakṛty-upādāna-kāla-bhāgyā2`khyāḥ",
+   "to": "viṣay'oparamāc",
+   "verses": [
+    50
+   ]
+  },
+  {
+   "line": 9,
+   "from": "ūhaḥ",
+   "to": "trayaḥ1",
+   "verses": [
+    51
+   ]
+  },
+  {
+   "line": 10,
+   "from": "dānaṃ",
+   "to": "pūrvo",
+   "verses": [
+    51
+   ]
+  }
+ ],
+ "9t": [
+  {
+   "line": 1,
+   "from": "tri-vidhaḥ",
+   "to": "liṅgā`khyo",
+   "verses": [
+    51,
+    52
+   ]
+  },
+  {
+   "line": 2,
+   "from": "sargaḥ.)",
+   "to": "tairyag-yonaś2",
+   "verses": [
+    52,
+    53
+   ]
+  },
+  {
+   "line": 3,
+   "from": "ca3",
+   "to": "sargaḥ.",
+   "verses": [
+    53
+   ]
+  },
+  {
+   "line": 4,
+   "from": "sattva-viśālas",
+   "to": "sargaḥ",
+   "verses": [
+    54
+   ]
+  },
+  {
+   "line": 5,
+   "from": "madhye",
+   "to": "stamba-pary-antaḥ3.",
+   "verses": [
+    54
+   ]
+  },
+  {
+   "line": 6,
+   "from": "stamba-pary-antaḥ3.",
+   "to": "prāpnoti",
+   "verses": [
+    54,
+    55
+   ]
+  },
+  {
+   "line": 7,
+   "from": "cetanaḥ",
+   "to": "vi3nivṛttes",
+   "verses": [
+    55
+   ]
+  },
+  {
+   "line": 8,
+   "from": "tasmād",
+   "to": "mahad-ādi-viśeṣa2-bhūta-pary-antaḥ3",
+   "verses": [
+    55,
+    56
+   ]
+  },
+  {
+   "line": 9,
+   "from": "vatsa-vivṛddhi-nimittaṃ",
+   "to": "kṣīrasya",
+   "verses": [
+    57
+   ]
+  },
+  {
+   "line": 10,
+   "from": "yathā",
+   "to": "puruṣasya",
+   "verses": [
+    58
+   ]
+  }
+ ]
+}

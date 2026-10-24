@@ -1,15 +1,17 @@
 /**
- * The 3D bookcase for /prototype/shelf (#6855). Imported dynamically by
+ * The 3D library hall for /prototype/shelf (#6855). Imported dynamically by
  * ShelfViewer, so three.js loads only on this route.
  *
- * One collection is laid out as a wooden case: books in date order, left to
- * right and top to bottom, with a brass plaque wherever the century changes.
- * Spines are canvas textures (title, author, date). Clicking a spine pulls the
- * book out and turns it to show its title page; the HTML card is the viewer's
- * job, the scene only reports which book was picked.
+ * One collection becomes a hall lined with bookcases: one bay per century,
+ * oldest at the entrance, newest at the far end, alternating left and right
+ * walls, with a brass sign on top of each case. A century that outgrows its
+ * case gets another, so no shelf ever overflows. Spines are canvas textures
+ * (title, author). Clicking a book brings it to the reader and turns its
+ * tooled cover toward them; the HTML card is the viewer's job, the scene only
+ * reports which book was picked.
  *
- * Camera is a constrained pan/zoom rig, not an orbit: the reader stands in
- * front of the case and moves along it, the way you would at a real shelf.
+ * The reader walks: WASD or arrows, the wheel, or a click on the floor (the
+ * phone path); dragging looks around. One unit is roughly 30 cm.
  */
 import * as THREE from 'three';
 
@@ -26,10 +28,8 @@ export interface ShelfBook {
 export interface ShelfScene {
   canvas: HTMLCanvasElement;
   resize(width: number, height: number): void;
-  /** Pull a book out (or put the current one back with null). */
+  /** Bring a book to the reader (or put the current one back with null). */
   select(id: string | null): void;
-  /** Move the camera along the case: dx/dy in case units. */
-  pan(dx: number, dy: number): void;
   dispose(): void;
 }
 
@@ -38,12 +38,18 @@ interface Callbacks {
   onHover(book: ShelfBook | null, x: number, y: number): void;
 }
 
+/**
+ * 'stacked' lays books flat in piles, spine out, as libraries kept them before
+ * upright shelving became usual (roughly the 16th century); the spine titles
+ * then read horizontally. 'upright' is the modern shelf.
+ */
+export type ShelfLayout = 'stacked' | 'upright';
+
 const SHELF_H = 1.45;        // height of one shelf bay
 const BOARD = 0.06;          // shelf board thickness
 const SIDE = 0.12;           // case side panel thickness
 const CASE_DEPTH = 1.05;
 const GAP = 0.006;           // air between neighbouring books
-const PLAQUE_W = 0.34;
 
 // Leather by language: the colour tells you, at a glance, where on the shelf the Arabic or the German is.
 const LANGUAGE_LEATHER: Record<string, string> = {
@@ -254,11 +260,103 @@ function woodTexture(): THREE.CanvasTexture {
   return tex;
 }
 
-type Slot =
-  | { kind: 'book'; book: ShelfBook; w: number }
-  | { kind: 'plaque'; label: string; w: number };
 
-export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene {
+type Slot = { books: ShelfBook[]; w: number };
+interface RowSpec { label: string; slots: Slot[] }
+interface CaseSpec { rows: RowSpec[] }
+
+/** "13th c." for one century, "9th–13th c." when sparse centuries share a case. */
+function caseLabel(spec: CaseSpec): string {
+  const labels = [...new Set(spec.rows.map(r => r.label))];
+  if (labels.length === 1) return labels[0];
+  return `${labels[0].replace(' c.', '')}–${labels[labels.length - 1]}`;
+}
+
+const ROWS = 4;
+const INNER_W = 4.4;
+const CASE_W = INNER_W + SIDE * 2;
+const CASE_H = ROWS * SHELF_H + BOARD;
+const HALL_W = 9.5;          // wall to wall
+const BAY_GAP = 0.5;         // between neighbouring cases on one wall
+const EYE = 4.9;             // eye height, about 1.5 m
+const ENTRANCE_Z = 5;
+const WALK_SPEED = 7;
+const PILE_MAX = 7;
+const PILE_GAP = 0.07;
+
+function plankTexture(): THREE.CanvasTexture {
+  const c = document.createElement('canvas');
+  c.width = 256; c.height = 256;
+  const ctx = c.getContext('2d')!;
+  for (let i = 0; i < 8; i++) {
+    const shade = 34 + Math.floor(Math.random() * 14);
+    ctx.fillStyle = `rgb(${shade + 22},${shade + 8},${shade - 6})`;
+    ctx.fillRect(0, i * 32, 256, 32);
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillRect(0, i * 32, 256, 2);
+    ctx.fillRect(Math.random() * 256, i * 32, 2, 32);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}
+
+/** Group books into cases: a bay per century (undated last), piles or upright, wrapped so nothing overflows. */
+function planCases(books: ShelfBook[], layout: ShelfLayout): CaseSpec[] {
+  const byCentury = new Map<string, ShelfBook[]>();
+  for (const b of books) {
+    const c = centuryOf(b.year);
+    const key = c === null ? 'Undated' : centuryLabel(c);
+    if (!byCentury.has(key)) byCentury.set(key, []);
+    byCentury.get(key)!.push(b);
+  }
+  // Undated books go to the far end rather than wherever the API sorted them.
+  const keys = [...byCentury.keys()].filter(k => k !== 'Undated');
+  if (byCentury.has('Undated')) keys.push('Undated');
+
+  const clearance = SHELF_H - BOARD - 0.12;
+  const usable = INNER_W - 0.2;
+  const cases: CaseSpec[] = [];
+  for (const label of keys) {
+    const slots: Slot[] = [];
+    let pile: Slot | null = null;
+    let pileH = 0;
+    for (const b of byCentury.get(label)!) {
+      const size = sizeOf(b);
+      if (layout === 'upright') { slots.push({ books: [b], w: size.t + GAP }); continue; }
+      if (!pile || pile.books.length >= PILE_MAX || pileH + size.t > clearance) {
+        pile = { books: [], w: 0 };
+        pileH = 0;
+        slots.push(pile);
+      }
+      pile.books.push(b);
+      pileH += size.t;
+      pile.w = Math.max(pile.w, size.h + PILE_GAP);
+    }
+    // A sparse century takes the next free shelf of the case before it rather than a whole case of
+    // its own, so the early, thin centuries don't greet the reader with empty furniture.
+    let cur: CaseSpec | null = cases[cases.length - 1] ?? null;
+    if (cur && (cur.rows.length >= ROWS || label === 'Undated')) cur = null;
+    if (cur) cur.rows.push({ label, slots: [] });
+    let rowW = 0;
+    for (const slot of slots) {
+      if (!cur || (rowW + slot.w > usable && cur.rows.length >= ROWS)) {
+        cur = { rows: [{ label, slots: [] }] };
+        cases.push(cur);
+        rowW = 0;
+      } else if (rowW + slot.w > usable) {
+        cur.rows.push({ label, slots: [] });
+        rowW = 0;
+      }
+      cur.rows[cur.rows.length - 1].slots.push(slot);
+      rowW += slot.w;
+    }
+  }
+  return cases;
+}
+
+export function createShelfScene(books: ShelfBook[], cb: Callbacks, layout: ShelfLayout = 'stacked'): ShelfScene {
   const disposables: { dispose(): void }[] = [];
   const keep = <T extends { dispose(): void }>(x: T) => { disposables.push(x); return x; };
 
@@ -266,124 +364,192 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.2;
   const canvas = renderer.domElement;
   canvas.style.touchAction = 'none';
   canvas.style.display = 'block';
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#1a120c');
-  scene.fog = new THREE.Fog('#1a120c', 9, 22);
+  scene.background = new THREE.Color('#140d08');
+  scene.fog = new THREE.Fog('#140d08', 14, 55);
 
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
+  const camera = new THREE.PerspectiveCamera(62, 1, 0.05, 120);
+  camera.rotation.order = 'YXZ';
 
-  // Lighting: a warm reading lamp that follows the camera, plus fill.
-  scene.add(new THREE.HemisphereLight('#ffe7c4', '#2a1a10', 0.9));
-  const key = new THREE.DirectionalLight('#fff1d8', 1.4);
-  key.position.set(-3, 6, 8);
+  scene.add(new THREE.HemisphereLight('#ffe7c4', '#3a2616', 1.7));
+  const key = new THREE.DirectionalLight('#fff1d8', 1.1);
+  key.position.set(2, 12, 6);
   scene.add(key);
-  const lamp = new THREE.PointLight('#ffcf8a', 14, 7, 1.6);
+  // A reading lamp carried by the reader: whatever you walk up to is lit.
+  const lamp = new THREE.PointLight('#ffcf8a', 45, 18, 1.3);
   scene.add(lamp);
 
-  // ── Layout ────────────────────────────────────────────────────────────
-  const slots: Slot[] = [];
-  let lastCentury: number | null = null;
-  for (const b of books) {
-    const c = centuryOf(b.year);
-    if (c !== null && c !== lastCentury) { slots.push({ kind: 'plaque', label: centuryLabel(c), w: PLAQUE_W }); lastCentury = c; }
-    slots.push({ kind: 'book', book: b, w: sizeOf(b).t + GAP });
+  const cases = planCases(books, layout);
+  const pairs = Math.ceil(cases.length / 2);
+  const hallLen = Math.max(1, pairs) * (CASE_W + BAY_GAP);
+  // Hanging lamps down the middle of the hall, one per pair of cases (capped: each costs every pixel).
+  for (let k = 0; k < Math.min(pairs, 6); k++) {
+    const hanging = new THREE.PointLight('#ffd49a', 30, 12, 1.5);
+    const step = pairs / Math.min(pairs, 6);
+    hanging.position.set(0, 9, ENTRANCE_Z - 2 - (k + 0.5) * step * (CASE_W + BAY_GAP));
+    scene.add(hanging);
   }
-  const total = slots.reduce((s, x) => s + x.w, 0);
-  // Wide rather than tall: the reader pans sideways, the way you walk a shelf.
-  const rows = Math.max(1, Math.min(6, Math.round(Math.sqrt(total / 4))));
-  const innerW = Math.max(3, total / rows + 0.4);
-  const caseW = innerW + SIDE * 2;
-  const caseH = rows * SHELF_H + BOARD;
+
+  // ── The room ──────────────────────────────────────────────────────────
+  const planks = keep(plankTexture());
+  planks.repeat.set(HALL_W / 3, (hallLen + 12) / 3);
+  const floor = new THREE.Mesh(
+    keep(new THREE.PlaneGeometry(HALL_W, hallLen + 12)),
+    keep(new THREE.MeshStandardMaterial({ map: planks, roughness: 0.85 })),
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.set(0, 0, ENTRANCE_Z + 3 - (hallLen + 12) / 2);
+  scene.add(floor);
+  const plaster = keep(new THREE.MeshStandardMaterial({ color: '#5a4430', roughness: 1 }));
+  const wallGeo = keep(new THREE.PlaneGeometry(hallLen + 12, 12));
+  for (const side of [-1, 1]) {
+    const wall = new THREE.Mesh(wallGeo, plaster);
+    wall.rotation.y = -side * Math.PI / 2;
+    wall.position.set(side * HALL_W / 2, 6, floor.position.z);
+    scene.add(wall);
+  }
+  const endWall = new THREE.Mesh(keep(new THREE.PlaneGeometry(HALL_W, 12)), plaster);
+  endWall.position.set(0, 6, -hallLen - 3);
+  scene.add(endWall);
+  const ceiling = new THREE.Mesh(keep(new THREE.PlaneGeometry(HALL_W, hallLen + 12)), keep(new THREE.MeshStandardMaterial({ color: '#1e140d', roughness: 1 })));
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.set(0, 11, floor.position.z);
+  scene.add(ceiling);
 
   const wood = keep(woodTexture());
-  const woodMat = keep(new THREE.MeshStandardMaterial({ map: wood, color: '#8a5a36', roughness: 0.75 }));
+  const woodMat = keep(new THREE.MeshStandardMaterial({ map: wood, color: '#b07a4c', roughness: 0.7 }));
   const backMat = keep(new THREE.MeshStandardMaterial({ color: '#2a1a10', roughness: 0.95 }));
-  const addBox = (w: number, h: number, d: number, x: number, y: number, z: number, mat: THREE.Material) => {
-    const m = new THREE.Mesh(keep(new THREE.BoxGeometry(w, h, d)), mat);
-    m.position.set(x, y, z);
-    scene.add(m);
-    return m;
-  };
-  // Carcass: back, sides, top, shelves. Origin = bottom-left-front of the inner space.
-  addBox(caseW, caseH + 0.2, 0.04, innerW / 2, caseH / 2, -CASE_DEPTH, backMat);
-  addBox(SIDE, caseH + 0.2, CASE_DEPTH + 0.06, -SIDE / 2, caseH / 2, -CASE_DEPTH / 2, woodMat);
-  addBox(SIDE, caseH + 0.2, CASE_DEPTH + 0.06, innerW + SIDE / 2, caseH / 2, -CASE_DEPTH / 2, woodMat);
-  addBox(caseW + 0.12, 0.14, CASE_DEPTH + 0.14, innerW / 2, caseH + 0.13, -CASE_DEPTH / 2, woodMat);
-  for (let r = 0; r <= rows; r++) addBox(innerW, BOARD, CASE_DEPTH, innerW / 2, r * SHELF_H + BOARD / 2, -CASE_DEPTH / 2, woodMat);
-  // Floor.
-  const floor = new THREE.Mesh(keep(new THREE.PlaneGeometry(80, 40)), keep(new THREE.MeshStandardMaterial({ color: '#24170e', roughness: 1 })));
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.set(innerW / 2, -0.01, 0);
-  scene.add(floor);
-
-  const pageMat = keep(new THREE.MeshStandardMaterial({ color: '#e9dcc0', roughness: 0.9 }));
-  const plaqueGeo = keep(new THREE.BoxGeometry(PLAQUE_W - 0.04, 0.13, 0.02));
-
-  interface BookObj { book: ShelfBook; mesh: THREE.Mesh; home: THREE.Vector3; size: { h: number; t: number; d: number }; coverMat: THREE.MeshStandardMaterial; coverLoaded: boolean }
-  const bookObjs: BookObj[] = [];
-  const byId = new Map<string, BookObj>();
-
-  const rowWidth = innerW - 0.2;
-  let row = 0, x = 0.1;
-  for (const s of slots) {
-    if (x + s.w > rowWidth + 0.1 && row < rows - 1) { row++; x = 0.1; }
-    // Top shelf first, like reading a page.
-    const baseY = (rows - 1 - row) * SHELF_H + BOARD;
-    if (s.kind === 'plaque') {
-      const tex = keep(plaqueTexture(s.label));
-      const m = new THREE.Mesh(plaqueGeo, keep(new THREE.MeshStandardMaterial({ map: tex, metalness: 0.6, roughness: 0.35 })));
-      m.position.set(x + s.w / 2, baseY - BOARD / 2, 0.012);
-      scene.add(m);
-      // A bookend so the plaque reads as a divider, not a gap.
-      addBox(0.03, 0.5, 0.45, x + s.w / 2, baseY + 0.25, -0.35, woodMat);
-    } else {
-      const size = sizeOf(s.book);
-      const leather = leatherFor(s.book);
-      const leatherMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
-      const spine = keep(spineTexture(s.book, leather, size.h, size.t));
-      const spineMat = keep(new THREE.MeshStandardMaterial({ map: spine, roughness: 0.6, metalness: 0.05 }));
-      const coverMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
-      // Faces: +x front cover, -x back cover, +y/-y page block, +z spine, -z fore-edge.
-      const mesh = new THREE.Mesh(keep(new THREE.BoxGeometry(size.t, size.h, size.d)), [coverMat, leatherMat, pageMat, pageMat, spineMat, pageMat]);
-      // Spines sit flush-ish with the shelf front, with a little jitter so the row looks handled.
-      const jitter = (hash(s.book.id + 'z') - 0.5) * 0.05;
-      const home = new THREE.Vector3(x + size.t / 2, baseY + size.h / 2, -size.d / 2 + jitter);
-      mesh.position.copy(home);
-      mesh.userData.id = s.book.id;
-      scene.add(mesh);
-      const obj = { book: s.book, mesh, home, size, coverMat, coverLoaded: false };
-      bookObjs.push(obj);
-      byId.set(s.book.id, obj);
-    }
-    x += s.w;
+  for (let z = ENTRANCE_Z; z > -hallLen - 3; z -= 4) {
+    const beam = new THREE.Mesh(keep(new THREE.BoxGeometry(HALL_W, 0.35, 0.4)), woodMat);
+    beam.position.set(0, 10.8, z);
+    scene.add(beam);
   }
 
-  // ── Camera rig ────────────────────────────────────────────────────────
-  // target = the point on the case face we look at; dist = how far we stand back.
-  const target = new THREE.Vector3(Math.min(innerW / 2, 2.2), caseH - SHELF_H * 0.9, 0);
-  let dist = 4.2;
-  const goal = { target: target.clone(), dist };
+  const pageMat = keep(new THREE.MeshStandardMaterial({ color: '#e9dcc0', roughness: 0.9 }));
+  const signGeo = keep(new THREE.BoxGeometry(1.5, 0.5, 0.05));
+  const tagGeo = keep(new THREE.BoxGeometry(0.42, 0.14, 0.02));
+
+  interface BookObj {
+    book: ShelfBook; mesh: THREE.Mesh; size: { h: number; t: number; d: number };
+    home: THREE.Vector3; homeQuat: THREE.Quaternion; outDir: THREE.Vector3;
+    coverMat: THREE.MeshStandardMaterial; coverLoaded: boolean;
+  }
+  const bookObjs: BookObj[] = [];
+  const byId = new Map<string, BookObj>();
+  const walkable: THREE.Object3D[] = [floor];
+
+  cases.forEach((spec, i) => {
+    const left = i % 2 === 0;
+    const zNear = ENTRANCE_Z - 2 - Math.floor(i / 2) * (CASE_W + BAY_GAP);
+    // Case-local frame: x along the shelves, y up, +z out of the case toward the reader.
+    const g = new THREE.Group();
+    if (left) {
+      g.rotation.y = Math.PI / 2;
+      g.position.set(-HALL_W / 2 + CASE_DEPTH + 0.05, 0, zNear - SIDE);
+    } else {
+      g.rotation.y = -Math.PI / 2;
+      g.position.set(HALL_W / 2 - CASE_DEPTH - 0.05, 0, zNear - CASE_W + SIDE);
+    }
+    scene.add(g);
+    g.updateMatrixWorld(true);
+    walkable.push(g);
+
+    const box = (w: number, h: number, d: number, x: number, y: number, z: number, mat: THREE.Material) => {
+      const m = new THREE.Mesh(keep(new THREE.BoxGeometry(w, h, d)), mat);
+      m.position.set(x, y, z);
+      g.add(m);
+    };
+    box(CASE_W, CASE_H + 0.2, 0.04, INNER_W / 2, CASE_H / 2, -CASE_DEPTH, backMat);
+    box(SIDE, CASE_H + 0.2, CASE_DEPTH + 0.06, -SIDE / 2, CASE_H / 2, -CASE_DEPTH / 2, woodMat);
+    box(SIDE, CASE_H + 0.2, CASE_DEPTH + 0.06, INNER_W + SIDE / 2, CASE_H / 2, -CASE_DEPTH / 2, woodMat);
+    box(CASE_W + 0.12, 0.16, CASE_DEPTH + 0.14, INNER_W / 2, CASE_H + 0.14, -CASE_DEPTH / 2, woodMat);
+    for (let r = 0; r <= ROWS; r++) box(INNER_W, BOARD, CASE_DEPTH, INNER_W / 2, r * SHELF_H + BOARD / 2, -CASE_DEPTH / 2, woodMat);
+    const sign = new THREE.Mesh(signGeo, keep(new THREE.MeshStandardMaterial({ map: keep(plaqueTexture(caseLabel(spec))), metalness: 0.6, roughness: 0.35 })));
+    sign.position.set(INNER_W / 2, CASE_H + 0.55, 0.05);
+    g.add(sign);
+    g.updateMatrixWorld(true);
+
+    const outDir = new THREE.Vector3(0, 0, 1).applyQuaternion(g.quaternion);
+    const shared = new Set(spec.rows.map(r => r.label)).size > 1;
+    spec.rows.forEach((row, r) => {
+      // Top shelf first: at this scale it sits at eye level, so a sparse century is still easy to read.
+      const baseY = (ROWS - 1 - r) * SHELF_H + BOARD;
+      if (shared && (r === 0 || spec.rows[r - 1].label !== row.label)) {
+        // Where centuries share a case, each one's first shelf carries its own small plaque.
+        const tag = new THREE.Mesh(tagGeo, keep(new THREE.MeshStandardMaterial({ map: keep(plaqueTexture(row.label)), metalness: 0.6, roughness: 0.35 })));
+        tag.position.set(0.3, baseY - BOARD / 2, 0.012);
+        g.add(tag);
+      }
+      // A shelf that isn't full keeps its books in the middle rather than huddled at one end.
+      const rowW = row.slots.reduce((sum, sl) => sum + sl.w, 0);
+      let x = 0.1 + Math.max(0, (INNER_W - 0.2 - rowW) / 2);
+      for (const slot of row.slots) {
+        // Heaviest at the bottom of a pile, as anyone stacking books would.
+        const ordered = layout === 'stacked' ? [...slot.books].sort((a, b) => sizeOf(b).h - sizeOf(a).h) : slot.books;
+        let y = baseY;
+        for (const book of ordered) {
+          const size = sizeOf(book);
+          const leather = leatherFor(book);
+          const leatherMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
+          const spineMat = keep(new THREE.MeshStandardMaterial({ map: keep(spineTexture(book, leather, size.h, size.t)), roughness: 0.6, metalness: 0.05 }));
+          const coverMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
+          // Faces: +x front cover, -x back cover, +y/-y page block, +z spine, -z fore-edge.
+          const mesh = new THREE.Mesh(keep(new THREE.BoxGeometry(size.t, size.h, size.d)), [coverMat, leatherMat, pageMat, pageMat, spineMat, pageMat]);
+          const jz = (hash(book.id + 'z') - 0.5) * 0.05;
+          const local = new THREE.Vector3();
+          const rot = new THREE.Euler();
+          if (layout === 'stacked') {
+            // Lying on its back cover, head to the left, so the spine title reads left to right.
+            const jx = (hash(book.id + 'x') - 0.5) * 0.06;
+            local.set(x + slot.w / 2 + jx, y + size.t / 2, -size.d / 2 + jz);
+            rot.set(0, (hash(book.id + 'r') - 0.5) * 0.08, Math.PI / 2);
+            y += size.t + 0.002;
+          } else {
+            local.set(x + size.t / 2, baseY + size.h / 2, -size.d / 2 + jz);
+          }
+          const home = local.applyMatrix4(g.matrixWorld);
+          const homeQuat = g.quaternion.clone().multiply(new THREE.Quaternion().setFromEuler(rot));
+          mesh.position.copy(home);
+          mesh.quaternion.copy(homeQuat);
+          mesh.userData.id = book.id;
+          scene.add(mesh);
+          const obj: BookObj = { book, mesh, size, home, homeQuat, outDir, coverMat, coverLoaded: false };
+          bookObjs.push(obj);
+          byId.set(book.id, obj);
+        }
+        x += slot.w;
+      }
+    });
+  });
+
+  // ── The reader ────────────────────────────────────────────────────────
+  const xLimit = HALL_W / 2 - CASE_DEPTH - 1.2;
+  const zMin = -hallLen + 1;
+  const zMax = ENTRANCE_Z + 1;
+  const pos = new THREE.Vector3(0, EYE, ENTRANCE_Z);
+  const goal = pos.clone();
+  let yaw = 0;
+  let pitch = -0.06;
   let aspect = 1;
-  const minDist = 1.1;
-  const maxDist = () => Math.max(4, Math.max(caseH, innerW / aspect) * 1.5);
   const clampGoal = () => {
-    goal.dist = Math.min(maxDist(), Math.max(minDist, goal.dist));
-    goal.target.x = Math.min(innerW, Math.max(0, goal.target.x));
-    goal.target.y = Math.min(caseH, Math.max(0.5, goal.target.y));
+    goal.x = Math.min(xLimit, Math.max(-xLimit, goal.x));
+    goal.z = Math.min(zMax, Math.max(zMin, goal.z));
   };
+  const forward = () => new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+  const rightward = () => new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
 
   // ── Selection ─────────────────────────────────────────────────────────
   let selected: BookObj | null = null;
   let hovered: BookObj | null = null;
-  const anim = new Map<BookObj, { pos: THREE.Vector3; rotY: number }>();
-  let savedView: { target: THREE.Vector3; dist: number } | null = null;
+  const anim = new Map<BookObj, { pos: THREE.Vector3; quat: THREE.Quaternion }>();
+  const coverTurn = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -Math.PI / 2 + 0.2, 0));
+
   // Covers are drawn on first pull rather than up front: most books are never taken off the shelf.
-  // (The title page itself is shown in the HTML card; the image host's CORS would block it as a texture off sourcelibrary.org.)
   function loadCover(o: BookObj) {
     if (o.coverLoaded) return;
     o.coverLoaded = true;
@@ -395,104 +561,99 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   function select(id: string | null) {
     const next = id ? byId.get(id) ?? null : null;
     if (next === selected) return;
-    if (selected) anim.set(selected, { pos: selected.home.clone(), rotY: 0 });
+    if (selected) anim.set(selected, { pos: selected.home.clone(), quat: selected.homeQuat });
     selected = next;
-    if (next) {
-      if (!savedView) savedView = { target: goal.target.clone(), dist: goal.dist };
-      loadCover(next);
-      // Pull it clear of the shelf, lift it a little, and turn the front cover to the reader.
-      const out = next.home.clone();
-      out.z = next.size.d * 0.5 + 0.35;
-      out.y = next.home.y + 0.05;
-      anim.set(next, { pos: out, rotY: -Math.PI / 2 + 0.25 });
-      // Portrait screens need more distance for the book to fit above the bottom card.
-      goal.dist = Math.max(minDist + 0.6, next.size.h * (aspect < 1 ? 4.2 : 2.4));
-      // On a wide screen the card sits on the right, so frame the book left of centre.
-      const shift = aspect > 1.2 ? goal.dist * 0.22 : 0;
-      goal.target.set(out.x + shift, out.y - (aspect > 1.2 ? 0 : next.size.h * 0.55), out.z);
-    } else if (savedView) {
-      goal.target.copy(savedView.target);
-      goal.dist = savedView.dist;
-      savedView = null;
-    }
-    clampGoal();
+    if (!next) return;
+    loadCover(next);
+    // Bring it to the reader: in front of the eyes, upright, front cover turned toward them.
+    // On a wide screen the card sits on the right, so the book hangs left of centre.
+    goal.copy(pos);
+    const look = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+    const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+    const camUp = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+    const out = pos.clone()
+      .addScaledVector(look, aspect < 1 ? 3.4 : 2.6)
+      .addScaledVector(camRight, aspect > 1.2 ? -0.7 : 0)
+      .addScaledVector(camUp, aspect < 1 ? 0.55 : 0);
+    anim.set(next, { pos: out, quat: camera.quaternion.clone().multiply(coverTurn) });
   }
 
   // ── Input ─────────────────────────────────────────────────────────────
   const ray = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
-  const pickAt = (cx: number, cy: number): BookObj | null => {
+  const aim = (cx: number, cy: number) => {
     const r = canvas.getBoundingClientRect();
     ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(ndc, camera);
+  };
+  const pickBook = (cx: number, cy: number): BookObj | null => {
+    aim(cx, cy);
     const hit = ray.intersectObjects(bookObjs.map(o => o.mesh), false)[0];
     return hit ? byId.get(hit.object.userData.id) ?? null : null;
   };
-  const unitsPerPixel = () => (2 * dist * Math.tan((camera.fov * Math.PI) / 360)) / canvas.clientHeight;
+  /** Click on the floor or a case: walk to (just in front of) that spot. */
+  const walkTo = (cx: number, cy: number) => {
+    aim(cx, cy);
+    const hit = ray.intersectObjects(walkable, true)[0];
+    if (!hit) return;
+    goal.set(hit.point.x, EYE, hit.point.z);
+    clampGoal();
+  };
+
+  const keys = new Set<string>();
+  const onKeyDown = (e: KeyboardEvent) => {
+    if ((e.target as HTMLElement)?.tagName === 'SELECT') return;
+    const k = e.key.toLowerCase();
+    if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) {
+      keys.add(k);
+      e.preventDefault();
+    }
+  };
+  const onKeyUp = (e: KeyboardEvent) => keys.delete(e.key.toLowerCase());
 
   const pointers = new Map<number, { x: number; y: number }>();
-  let downAt: { x: number; y: number } | null = null;
   let moved = 0;
-  let pinchStart = 0;
-
   const onDown = (e: PointerEvent) => {
     canvas.setPointerCapture(e.pointerId);
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (pointers.size === 1) { downAt = { x: e.clientX, y: e.clientY }; moved = 0; }
-    if (pointers.size === 2) {
-      const [a, b] = [...pointers.values()];
-      pinchStart = Math.hypot(a.x - b.x, a.y - b.y);
-    }
+    if (pointers.size === 1) moved = 0;
   };
   const onMove = (e: PointerEvent) => {
     const prev = pointers.get(e.pointerId);
     if (!prev) {
       if (e.pointerType === 'mouse') {
-        const o = pickAt(e.clientX, e.clientY);
+        const o = pickBook(e.clientX, e.clientY);
         if (o !== hovered) { hovered = o; canvas.style.cursor = o ? 'pointer' : 'grab'; }
         cb.onHover(o && o !== selected ? o.book : null, e.clientX, e.clientY);
       }
       return;
     }
-    const cur = { x: e.clientX, y: e.clientY };
-    if (pointers.size === 2) {
-      pointers.set(e.pointerId, cur);
-      const [a, b] = [...pointers.values()];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (pinchStart > 0) { goal.dist *= pinchStart / d; pinchStart = d; clampGoal(); }
-      moved += 10;
-      return;
-    }
-    const dx = cur.x - prev.x, dy = cur.y - prev.y;
-    pointers.set(e.pointerId, cur);
+    const dx = e.clientX - prev.x, dy = e.clientY - prev.y;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     moved += Math.abs(dx) + Math.abs(dy);
     if (moved > 6) {
-      const u = unitsPerPixel();
-      goal.target.x -= dx * u;
-      goal.target.y += dy * u;
-      clampGoal();
+      // Grab the world: dragging right turns you left, as if pulling the room past you.
+      yaw += dx * 0.0042;
+      pitch = Math.min(0.9, Math.max(-1.1, pitch + dy * 0.0035));
       canvas.style.cursor = 'grabbing';
       cb.onHover(null, 0, 0);
     }
   };
   const onUp = (e: PointerEvent) => {
     pointers.delete(e.pointerId);
-    if (pointers.size === 0 && downAt && moved <= 6) {
-      const o = pickAt(e.clientX, e.clientY);
-      cb.onPick(o && o !== selected ? o.book.id : null);
+    if (pointers.size === 0 && moved <= 6) {
+      const o = pickBook(e.clientX, e.clientY);
+      if (o && o !== selected) cb.onPick(o.book.id);
+      else if (selected) cb.onPick(null);
+      else walkTo(e.clientX, e.clientY);
     }
-    if (pointers.size === 0) { downAt = null; canvas.style.cursor = hovered ? 'pointer' : 'grab'; }
-    pinchStart = 0;
+    if (pointers.size === 0) canvas.style.cursor = hovered ? 'pointer' : 'grab';
   };
   const onWheel = (e: WheelEvent) => {
     e.preventDefault();
-    if (e.ctrlKey || Math.abs(e.deltaY) > Math.abs(e.deltaX) * 1.5 && !e.shiftKey) {
-      // Pinch-to-zoom on a trackpad arrives as ctrl+wheel; a plain vertical wheel also zooms.
-      goal.dist *= Math.exp(e.deltaY * (e.ctrlKey ? 0.01 : 0.0015));
-    } else {
-      const u = unitsPerPixel();
-      goal.target.x += (e.shiftKey ? e.deltaY : e.deltaX) * u;
-    }
+    if (selected) cb.onPick(null);
+    goal.addScaledVector(forward(), -e.deltaY * 0.012);
+    goal.addScaledVector(rightward(), e.deltaX * 0.012);
     clampGoal();
   };
   const onLeave = () => cb.onHover(null, 0, 0);
@@ -502,33 +663,47 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   canvas.addEventListener('pointercancel', onUp);
   canvas.addEventListener('pointerleave', onLeave);
   canvas.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
   canvas.style.cursor = 'grab';
 
   // ── Loop ──────────────────────────────────────────────────────────────
   let raf = 0;
   let last = performance.now();
-  const hoverOut = new THREE.Vector3();
+  const tipped = new THREE.Vector3();
   const tick = (now: number) => {
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
-    const k = 1 - Math.exp(-dt * 7);
-    target.lerp(goal.target, k);
-    dist += (goal.dist - dist) * k;
-    camera.position.set(target.x, target.y + dist * 0.06, target.z + dist);
-    camera.lookAt(target);
-    lamp.position.set(target.x + 0.6, target.y + 1.2, target.z + Math.min(dist, 3));
+
+    const ahead = (keys.has('w') || keys.has('arrowup') ? 1 : 0) - (keys.has('s') || keys.has('arrowdown') ? 1 : 0);
+    const side = (keys.has('d') ? 1 : 0) - (keys.has('a') ? 1 : 0);
+    const turn = (keys.has('arrowleft') ? 1 : 0) - (keys.has('arrowright') ? 1 : 0);
+    if (ahead || side) {
+      if (selected) cb.onPick(null);
+      goal.addScaledVector(forward(), ahead * WALK_SPEED * dt);
+      goal.addScaledVector(rightward(), side * WALK_SPEED * dt);
+      clampGoal();
+    }
+    yaw += turn * 1.6 * dt;
+
+    pos.lerp(goal, 1 - Math.exp(-dt * 5));
+    camera.position.copy(pos);
+    camera.rotation.set(pitch, yaw, 0);
+    lamp.position.copy(pos).addScaledVector(forward(), 1.5).add(new THREE.Vector3(0, 1.2, 0));
 
     for (const [o, a] of anim) {
-      o.mesh.position.lerp(a.pos, 1 - Math.exp(-dt * 9));
-      o.mesh.rotation.y += (a.rotY - o.mesh.rotation.y) * (1 - Math.exp(-dt * 8));
-      if (o.mesh.position.distanceTo(a.pos) < 0.001 && Math.abs(a.rotY - o.mesh.rotation.y) < 0.001) anim.delete(o);
+      o.mesh.position.lerp(a.pos, 1 - Math.exp(-dt * 8));
+      o.mesh.quaternion.slerp(a.quat, 1 - Math.exp(-dt * 8));
+      if (o.mesh.position.distanceTo(a.pos) < 0.001 && o.mesh.quaternion.angleTo(a.quat) < 0.001) anim.delete(o);
     }
-    // Hovered spine tips out slightly, like a finger hooked over the headcap.
+    // A hovered book slides toward you a little, like a finger hooked over the headcap.
+    if (hovered && hovered !== selected && !anim.has(hovered)) {
+      tipped.copy(hovered.home).addScaledVector(hovered.outDir, 0.1);
+      hovered.mesh.position.lerp(tipped, 1 - Math.exp(-dt * 12));
+    }
     for (const o of bookObjs) {
-      if (o === selected || anim.has(o)) continue;
-      hoverOut.copy(o.home);
-      if (o === hovered) hoverOut.z += 0.08;
-      o.mesh.position.lerp(hoverOut, 1 - Math.exp(-dt * 12));
+      if (o === hovered || o === selected || anim.has(o)) continue;
+      if (o.mesh.position.distanceToSquared(o.home) > 1e-8) o.mesh.position.lerp(o.home, 1 - Math.exp(-dt * 12));
     }
     renderer.render(scene, camera);
     raf = requestAnimationFrame(tick);
@@ -543,11 +718,11 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       camera.aspect = aspect;
+      // Phones get a wider view so a shelf still fits across the screen.
+      camera.fov = aspect < 1 ? 75 : 62;
       camera.updateProjectionMatrix();
-      clampGoal();
     },
     select,
-    pan(dx, dy) { goal.target.x += dx; goal.target.y += dy; clampGoal(); },
     dispose() {
       cancelAnimationFrame(raf);
       canvas.removeEventListener('pointerdown', onDown);
@@ -556,6 +731,8 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
       canvas.removeEventListener('pointercancel', onUp);
       canvas.removeEventListener('pointerleave', onLeave);
       canvas.removeEventListener('wheel', onWheel);
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
       disposables.forEach(x => x.dispose());
       renderer.dispose();
     },

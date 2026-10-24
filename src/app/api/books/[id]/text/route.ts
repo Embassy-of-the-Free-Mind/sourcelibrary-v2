@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
@@ -10,8 +11,10 @@ import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
+import { poolRefFor } from '@/lib/suspected-pool';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
+import { serveEnglishOriginalPage, isEnglishOriginalBook, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -31,6 +34,15 @@ function cleanText(text: string | undefined | null): string {
 }
 
 export const maxDuration = 30;
+
+/**
+ * Said once per English-edition response (#7100): the reading text is the
+ * transcription, and a page with no `translation` is not missing one.
+ */
+const ENGLISH_EDITION_TEXT_NOTE =
+  'English edition: the text printed on its English leaves is the reading text, served as `ocr` '
+  + '(an AI transcription of the scan, period spelling kept). Those leaves carry no `translation`; '
+  + 'quote the `ocr` text as the author\'s own words. Leaves in another language keep their translation.';
 
 /**
  * GET /api/books/[id]/text
@@ -97,15 +109,18 @@ export const GET = withApiAuth(async (
 
     const db = await getDb();
 
-    // Find book by id or _id
+    // Find book by id or _id. `translation_state.english_original`: on an
+    // English edition an English leaf serves its transcription, never a stored
+    // English-to-English rewording (#7100).
+    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
     let book = await db.collection('books').findOne(
       { id: bookId },
-      { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1, visible: 1 } }
+      { projection: TEXT_BOOK_PROJECTION }
     );
     if (!book && ObjectId.isValid(bookId)) {
       book = await db.collection('books').findOne(
         { _id: new ObjectId(bookId) },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1, visible: 1 } }
+        { projection: TEXT_BOOK_PROJECTION }
       );
     }
     if (!book) {
@@ -119,6 +134,7 @@ export const GET = withApiAuth(async (
     }
 
     const resolvedBookId = book.id || bookId;
+    const englishEdition = isEnglishOriginalBook(book);
 
     // Bot gating: non-trusted bots get the first 20% of pages from any book.
     // When METERED_READER=1 the same clamp applies to anonymous humans
@@ -127,6 +143,17 @@ export const GET = withApiAuth(async (
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const meteredAnon = !isBotRequest && (await isMeteredAnonRequest(request));
     const botPageLimit = isBotRequest || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
+    if (isBot(request)) {
+      // Chapter mode resolves its span later; the log keeps the requested span,
+      // and an unbounded request is clamped whenever the book exceeds the ceiling.
+      const requestedTo = toPage ?? (book.pages_count || 0);
+      logBotRead(request, {
+        route: 'text', book: resolvedBookId, trusted: !isBotRequest,
+        pageFrom: fromPage ?? 1, pageTo: requestedTo,
+        maxPage: isBotRequest ? botPageLimit : undefined,
+        clamped: isBotRequest && botPageLimit !== undefined && requestedTo > botPageLimit,
+      });
+    }
 
     // Provenance. Two layers, deliberately different in reach:
     //   - the INVISIBLE imprimatur goes on every page of every response (this
@@ -145,9 +172,17 @@ export const GET = withApiAuth(async (
     //     colophon — identity upgrades the marking, it never adds visible
     //     marks. Any response carrying a ref is served private/no-store
     //     below, so one caller's ref can never be shared-cached to another.
+    //   - a flagged residential proxy pool (classified human, rotating its
+    //     address per request) gets a per-pool ref keyed on its user-agent
+    //     string (#6950). Invisible only: the string is byte-identical to a
+    //     real browser, so a real reader sharing it must not see a notice.
+    const pool = !isBotRequest && !(identity.kind === 'apikey' && identity.apiKeyId)
+      ? await poolRefFor(request) : undefined;
     const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date())
       : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
-      : undefined;
+      : pool;
+    // Visible notice: unchanged for bots and key holders; never for a pool.
+    const noticeRef = pool ? undefined : ref;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
@@ -177,8 +212,13 @@ export const GET = withApiAuth(async (
     // therefore resolve the chapter to its PAGE RANGE and serve those pages in
     // the requested language, rather than handing back English under a `lang=es`
     // request or refusing outright.
+    //
+    // An English edition takes the same page-range route (#7100): its
+    // materialized chapter text was stitched from `translation.data`, which on
+    // an English leaf is a model's rewording, so the chapter is served from its
+    // pages, each resolved to the transcription.
     let localizedChapterRange: { from: number; to: number; title?: string } | null = null;
-    if (chapterParam !== null && isLocalized) {
+    if (chapterParam !== null && (isLocalized || englishEdition)) {
       const chapterIndex = parseInt(chapterParam);
       const withChapters = await db.collection('books').findOne(
         { id: resolvedBookId }, { projection: { chapters: 1 } });
@@ -248,7 +288,7 @@ export const GET = withApiAuth(async (
           `# Pages ${ct.pageStart}–${ct.pageEnd}`,
           `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
           '',
-          ...(ref ? [attributionBlock(ref, bookSubject)] : []),
+          ...(noticeRef ? [attributionBlock(noticeRef, bookSubject)] : []),
           mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
         ].join('\n');
 
@@ -281,7 +321,7 @@ export const GET = withApiAuth(async (
           text: mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
           ...(content === 'both' && ct.ocr_text ? { ocr_text: mark(cleanText(ct.ocr_text)) } : {}),
         },
-        ...(ref ? { attribution: attributionMeta(ref) } : {}),
+        ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       }, {
         headers: {
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
@@ -345,12 +385,16 @@ export const GET = withApiAuth(async (
       projection.page_type = 1;
       projection.columns = 1;
     }
+    // The per-page English-original test reads the OCR, so a translation-only
+    // export of an English edition still needs it (it is not emitted).
+    if (englishEdition) projection['ocr.data'] = 1;
 
-    const pages = await db.collection('pages')
+    const pages = (await db.collection('pages')
       .find(pageFilter)
       .project(projection)
       .sort({ page_number: 1 })
-      .toArray();
+      .toArray())
+      .map((p) => serveEnglishOriginalPage(p, book, { modernized: false }));
 
     // Plain text format — concatenated text with page markers
     if (format === 'plain') {
@@ -358,6 +402,7 @@ export const GET = withApiAuth(async (
       lines.push(`# ${book.display_title || book.title}`);
       lines.push(`# ${book.author} (${book.published || 'n.d.'})`);
       lines.push(`# Language: ${book.language}`);
+      if (englishEdition) lines.push(`# ${ENGLISH_EDITION_TEXT_NOTE}`);
       if (isLocalized) lines.push(`# Translation edition requested: ${requestedLang} (pages without one are marked [Translation — en])`);
       if (localizedChapterRange) lines.push(`# Chapter: ${localizedChapterRange.title ?? chapterParam} (pages ${localizedChapterRange.from}–${localizedChapterRange.to})`);
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
@@ -366,7 +411,7 @@ export const GET = withApiAuth(async (
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.
-      if (ref) lines.push(attributionBlock(ref, bookSubject));
+      if (noticeRef) lines.push(attributionBlock(noticeRef, bookSubject));
 
       for (const page of pages) {
         const ocr = mark(cleanText(page.ocr?.data));
@@ -439,8 +484,9 @@ export const GET = withApiAuth(async (
       // this payload is unmodified apart from the invisible imprimatur — the
       // notice is a sibling field rather than injected prose precisely so a
       // consumer quoting `pages[].ocr` never picks up words we wrote.
-      ...(ref ? { attribution: attributionMeta(ref) } : {}),
+      ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       content_type: content,
+      ...(englishEdition ? { english_edition_note: ENGLISH_EDITION_TEXT_NOTE } : {}),
       // What was asked for, and what the pages actually carry. A caller that
       // requested `es` and got 40 English pages back must be able to see it
       // without diffing the text.
@@ -457,7 +503,9 @@ export const GET = withApiAuth(async (
           title: localizedChapterRange.title,
           pageStart: localizedChapterRange.from,
           pageEnd: localizedChapterRange.to,
-          note: `Chapter text is materialized in English only; this "${requestedLang}" response is assembled from the chapter's page range.`,
+          note: isLocalized
+            ? `Chapter text is materialized in English only; this "${requestedLang}" response is assembled from the chapter's page range.`
+            : 'English edition: this chapter is assembled from its pages\' transcriptions, not the materialized chapter text.',
         },
       } : {}),
       total_pages: book.pages_count || pages.length,
