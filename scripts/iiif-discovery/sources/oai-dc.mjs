@@ -143,7 +143,7 @@ await withMongo(async (db) => {
   let url = args['resume-token']
     ? `${repo.base}?verb=ListRecords&resumptionToken=${encodeURIComponent(args['resume-token'])}`
     : `${repo.base}?verb=ListRecords&metadataPrefix=${repo.prefix}${SET ? `&set=${SET}` : ''}`;
-  let seen = 0, inserted = 0, batch = 0, lastError = null, sameErrors = 0;
+  let seen = 0, inserted = 0, batch = 0, lastError = null, sameErrors = 0, failures = 0;
   const langs = {}, decades = {};
   console.log(`=== OAI-DC harvest: ${repo.source}${SET ? ` set=${SET}` : ''}${DRY_RUN ? ' (dry run)' : ''} ===`);
   while (url && seen < MAX_RECORDS) {
@@ -155,12 +155,13 @@ await withMongo(async (db) => {
       xml = await res.text();
       const err = xml.match(/<error code="([^"]+)">([^<]*)/);
       if (err && err[1] !== 'noRecordsMatch') throw new Error(`OAI ${err[1]}: ${err[2]}`);
-      sameErrors = 0; lastError = null;
+      sameErrors = 0; lastError = null; failures = 0;
     } catch (e) {
       sameErrors = e.message === lastError ? sameErrors + 1 : 1;
       lastError = e.message;
       console.error(`batch ${batch}: ${e.message}`);
-      if (sameErrors >= 2) { console.error(`STOP: same failure twice — record ${repo.source} as blocked at this token.`); break; }
+      // Two identical failures, or five of any kind in a row, ends the run.
+      if (sameErrors >= 2 || ++failures >= 5) { console.error(`STOP: repeated failures — record ${repo.source} as blocked at this token.`); break; }
       await sleep(15000);
       continue;
     }

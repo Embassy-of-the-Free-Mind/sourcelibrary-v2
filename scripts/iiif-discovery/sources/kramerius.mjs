@@ -94,13 +94,16 @@ async function page(cursor, start) {
 
 await withMongo(async (db) => {
   if (!DRY_RUN) await ensureIndexes(db);
-  let cursor = '*', seen = 0, inserted = 0, total = null;
+  let cursor = '*', seen = 0, offset = 0, inserted = 0, total = null;
   const langs = {};
   console.log(`=== Kramerius harvest: ${site.source} (before ${BEFORE})${DRY_RUN ? ' (dry run)' : ''} ===`);
   while (seen < MAX_RECORDS) {
-    const j = await page(cursor, seen);
+    // `offset` counts docs RETURNED, not rows kept — a doc dropped by the filter
+    // below must still advance start= paging, or the next page skips records.
+    const j = await page(cursor, offset);
     if (total == null) { total = j.response.numFound; console.log(`numFound ${total.toLocaleString()}`); }
     const docs = j.response.docs || [];
+    offset += docs.length;
     const records = docs.map(site.map).filter(r => r.id && r.title).map(r => ({
       source: site.source,
       source_id: r.id,
@@ -121,7 +124,7 @@ await withMongo(async (db) => {
     for (const r of records) langs[r.language] = (langs[r.language] || 0) + 1;
     if (!DRY_RUN && records.length) inserted += (await upsertCandidates(db, records)).inserted;
     console.log(`  ${seen.toLocaleString()}/${total.toLocaleString()} seen, ${inserted.toLocaleString()} new`);
-    if (docs.length === 0 || seen >= total) break;
+    if (docs.length === 0 || offset >= total) break;
     if (site.paging !== 'start' && (!j.nextCursorMark || j.nextCursorMark === cursor)) break;
     cursor = j.nextCursorMark;
     await sleep(DELAY);
