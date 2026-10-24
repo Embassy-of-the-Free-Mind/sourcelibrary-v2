@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -31,6 +32,18 @@ async function getCollections(): Promise<{ value: string; label: string }[]> {
   }
 }
 
+// The page reads its filters from the URL, so it renders per request and the
+// `revalidate` above never applies; uncached, every visit re-ran the list query
+// (#6942). An hour-old book list is fine here; the band's numbers are cached
+// the same way inside catalogStats. The error fallback below sits OUTSIDE the
+// cached function, so a failed query is never stored as an empty catalogue.
+const getList = (...args: Parameters<typeof browseCatalog>) =>
+  unstable_cache(
+    () => browseCatalog(...args),
+    ['library-list-v1', JSON.stringify(args[0], Object.keys(args[0]).sort()), ...args.slice(1).map(String)],
+    { revalidate: 3600 },
+  )();
+
 export default async function CatalogPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const raw = await searchParams;
   const sp = new URLSearchParams();
@@ -43,7 +56,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
 
   const [list, stats, library, collections] = await Promise.all([
     listed
-      ? browseCatalog(filters, state.sort, state.page, CATALOG_PAGE_SIZE).catch((err) => {
+      ? getList(filters, state.sort, state.page, CATALOG_PAGE_SIZE).catch((err) => {
         console.error('[catalog] list failed:', err?.message || err);
         return { books: [], total: 0 };
       })
