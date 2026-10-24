@@ -1,0 +1,414 @@
+[
+ {
+  "slot": 1,
+  "book_id": "6991eac32f801130a473e514",
+  "book_url": "https://sourcelibrary.org/book/6991eac32f801130a473e514",
+  "tradition": null,
+  "book": {
+   "id": "6991eac32f801130a473e514",
+   "title": "Del moto e misura dell'acqua",
+   "display_title": "On the Motion and Measurement of Water",
+   "author": "Leonardo da Vinci",
+   "language": "Italian",
+   "published": "1828",
+   "ia_identifier": "delmotoemisurad00leongoog",
+   "pages_count": 304,
+   "pages_ocr": 304,
+   "pages_translated": 232,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "americana"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 304,
+   "distinct_page_numbers": 304,
+   "duplicate_records": 0,
+   "pages_with_ocr": 304,
+   "pages_translated": 304,
+   "with_printed_number": 185,
+   "printed_backsteps": 19,
+   "printed_repeats": 6,
+   "pages_count_field": 304,
+   "pages_ocr_field": 304,
+   "pages_translated_field": 232
+  },
+  "run": [
+   89,
+   90,
+   91
+  ],
+  "pages": [
+   {
+    "page_number": 89,
+    "page_id": "6991eac32f801130a473e56d",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eac32f801130a473e514/89.jpg",
+    "image_status": 200,
+    "ocr": "<lang>Italian</lang>\n<page-type>text</page-type>\n<page-num>346</page-num>\n<header>LEONARDO DA VINCI</header>\n\nonde per lo peso acquistato, moltiplica in potenza, e fa impeto contro l' acqua, che prima la superava in modo, che la linea de' retrosi si piega in contrario sito, e dove prima era convessa essa si fa concava; e così la minor acqua è spesso sospinta dalla maggiore, e la maggiore è sospinta dalla minore, quando essa si trova di minor potenza.\n\n->### CAPITOLO XVI.<-\n\n->*Delli retrosi fatti per la percussione dell' acqua negli obbietti dell' argine.*<-\n\nSempre infra l' onda colonnale, e l' argine dove tale onda è cres\nsi generano retrosi. Provasi, perchè cade l' acque dal colmo dell' onda colonnale, verso l' accrescimento della corrente, ma dalla potenza di essa corrente viene sospinta, e tirata al comun corso dell' acqua; cade medesimamente l' acqua dal colmo dell' onda verso l' argine (fig. 69. tav. 13), ma quivi perchè la corrente resta impedita e ritardata dal moto trasversale della medesima onda, con maggiore impeto penetrandola discende verso l' argine, e percotendola fa un retroso.\n\n->### CAPITOLO XVII.<-\n\n->*Del medesimo.*<-\n\nIn ogni percussione d' acqua nell' argine ristretta, e nell' obbietto dell' argine si generano retrosi dalla superficie al fondo. Perchè l' acqua nella percussione s' alza per la linea dell' altezza dell' argine, o dell' obbietto, ed acquistando peso discende al piede, dove nel mezzo del discenso incontrando quella parte dell' acqua, che prima si voltò al fondo, viene risospinta alla superficie, e quivi da nuov' acqua sopraggiunta, cacciata al fondo con vari raccoglimenti viene portata dietro al corso dell' acqua.\n\n->### CAPITOLO XVIII.<-\n\n->*Del medesimo.*<-\n\nL' argine, che fia tirato indietro per dare maggiore larghezza al canale, fia causa di generare subito retroso. Provasi, perchè il fiume che acquista subita larghezza, acquista ancora subita larghezza d' acqua, e l' acqua che s' allarga ancora si viene ad abbassare di profondità;\n\n<vocab>retrosi, onda colonnale, argine, percussione, obbietto, accrescimento, corrente, acqua</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues the discussion of fluid dynamics, specifically how the \"power\" (momentum) and \"weight\" (gravity) of water interact when two flows meet or when water hits an obstacle. It transitions from the interaction of two currents to the interaction between a current and the river bank.</meta>\n\nLEONARDO DA VINCI 346\n\nwhereby, through the weight it has gained, it increases in power and strikes with force against the water that previously overcame it, so that the line of the eddies <term>retrosi</term> <note>circular or backward-flowing water patterns, such as whirlpools or eddies</note> bends in the opposite direction; where it was previously convex, it becomes concave. In this way, the smaller body of water is often pushed by the larger, and the larger is pushed by the smaller when the latter possesses less power <term>potenza</term> <note>the force, momentum, or kinetic energy of a current</note>.\n\n->### CHAPTER XVI.<-\n\n->*On the eddies formed by the impact of water against obstacles along the bank.*<-\n\nEddies are always generated between the columnar wave <term>onda colonnale</term> <note>a wave that rises in a column-like shape, often where currents meet or hit an obstacle</note> and the bank where such a wave has grown. This is proven because the water falls from the crest of the columnar wave toward the acceleration of the current, but it is pushed and pulled into the general flow of the water by the power of that current. The water likewise falls from the crest of the wave toward the bank (fig. 69, plate 13); but there, because the current is obstructed and delayed by the transverse motion of the same wave, it descends toward the bank, penetrating it with greater force, and by striking it <term>percotendola</term> <note>the act of the water hitting or \"hammering\" the bank</note>, creates an eddy.\n\n->### CHAPTER XVII.<-\n\n->*On the same.*<-\n\nIn every impact <term>percussione</term> <note>the forceful striking of water against a surface</note> of water against a narrowed bank or an obstacle in the bank, eddies are generated from the surface to the bottom. This is because, upon impact, the water rises up the height of the bank or obstacle, and gaining weight, it descends to the base. In the middle of this descent, it meets the water that had previously turned toward the bottom and is pushed back to the surface; there, overtaken by new arriving water and driven to the bottom in various swirls, it is carried along behind the main course of the water.\n\n->### CHAPTER XVIII.<-\n\n->*On the same.*<-\n\nA bank that is set back to provide greater width to the canal will cause the immediate generation of an eddy. This is proven because the river, which acquires a sudden width, also acquires a sudden breadth of water, and the water that spreads out also decreases in depth;\n\n<summary>Leonardo explains how eddies are formed by water striking obstacles or banks, describing a cycle where water rises upon impact, gains weight, and sinks to create vertical and horizontal rotations. He also notes that widening a channel creates immediate turbulence due to changes in water depth and breadth.</summary>\n\n<keywords>hydraulics, eddies, fluid dynamics, river banks, wave mechanics, Leonardo da Vinci, water velocity</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 90,
+    "page_id": "6991eac32f801130a473e56e",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eac32f801130a473e514/90.jpg",
+    "image_status": 200,
+    "ocr": "<lang>Italian</lang>\n<page-type>text</page-type>\n<page-num>347</page-num>\n<header>LEONARDO DA VINCI 347</header>\n\nadunque si genera subita corrente, la quale gettatasi a dosso all' argine allargata, la percuote e si divide in due retrosi.\n\n## CAPITOLO XIX.\n\n->Del medesimo.<-\n\nDelli due retrosi fatti dopo l' argine allargata, il primo è più potente. Come il retroso CBA (fig. 70. tav. 13.) per essere rinchiuso si getta fortemente verso il fondo, e per la quarantesimaterza di questo, che dice, che il retroso sarà più penetrabile, che avrà il labbro della sua bocca manco obliquo; questo l' avrà assai dritto ec.\n\n## CAPITOLO XX.\n\n->Del medesimo.<-\n\nSe il canale acquisterà da ogni parte subita larghezza, esso genera retrosi per ogni parte, de' quali li primi saranno più potenti (fig. 71 tav. 13). Questa è manifesta per le due passate.\n\n## CAPITOLO XXI.\n\n->Del medesimo.<-\n\nSe l' onda colonnale percuoterà li retrosi generati nell' uno degli argini allargati, allora tali retrosi rinchiusi si restringeranno, ed acquisteranno gran potenza. Questo accade, non solo perchè l' onda colonnale in tal caso alza l' acqua, ma anche perchè percotendo anch' essa nell' argine si moltiplica la forza, e li retrosi restano più dritti (fig. 72 tav. 13).\n\n## CAPITOLO XXII.\n\n->Del medesimo.<-\n\nSe nell' uno degl' argini allargati sia posto alcuno obbietto sotto l' onda colonnale di tale obbietto, li retrosi che fiano generati saranno di gran potenza. Questo accade (fig. 73. tav. 14) perchè dove l' acqua per l' obbietto maggiormente si stringe l' onda generata più s' innalza, e per questo con maggior impeto discende verso l' argine, ed ivi si creano retrosi di maggior potenza ec.\n\n<vocab>retrosi, argine, onda colonnale, larghezza, potenza, impeto</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues Leonardo’s analysis of water behavior when striking a river bank. It specifically explores what happens when a narrow channel suddenly widens or encounters an obstacle, creating complex circular currents.</meta>\n\nLEONARDO DA VINCI 347\n\ntherefore, a sudden current is generated, which, throwing itself against the widened bank <term>argine</term> <note>the side or levee of a river or canal</note>, strikes it and divides into two eddies <term>retrosi</term> <note>circular or backward-flowing water patterns, such as whirlpools or eddies</note>.\n\n## CHAPTER XIX.\n\n->On the same.<-\n\nOf the two eddies formed after the bank has widened, the first is the more powerful. Just as the eddy CBA (fig. 70. plate 13), by being enclosed, throws itself forcefully toward the bottom; and according to the forty-third [rule] of this treatise, which states that an eddy will have more penetrating force the less oblique the lip of its mouth is; this one will have it quite straight, etc. <note>Leonardo is referring back to a specific mathematical or physical proposition he established earlier in his notebook regarding the angle at which water enters a whirlpool.</note>\n\n## CHAPTER XX.\n\n->On the same.<-\n\nIf the channel should suddenly acquire width on every side, it generates eddies on every side, of which the first will be more powerful (fig. 71 plate 13). This is evident from the two previous chapters.\n\n## CHAPTER XXI.\n\n->On the same.<-\n\nIf the columnar wave <term>onda colonnale</term> <note>a wave that rises in a column-like shape, often where currents meet or hit an obstacle</note> strikes the eddies generated in one of the widened banks, then those enclosed eddies will become more constricted and will acquire great power <term>potenza</term> <note>the force, momentum, or kinetic energy of the water</note>. This happens not only because the columnar wave in such a case raises the water level, but also because by striking the bank itself, the force is multiplied, and the eddies remain more upright (fig. 72 plate 13).\n\n## CHAPTER XXII.\n\n->On the same.<-\n\nIf an object is placed in one of the widened banks beneath the columnar wave created by that object, the eddies that are generated will be of great power. This happens (fig. 73. plate 14) because where the water is most constricted by the object, the generated wave rises higher; for this reason, it descends toward the bank with greater impetus <term>impeto</term> <note>the momentum or surge of the water's movement</note>, and there eddies of greater power are created, etc.\n\n<summary>Leonardo examines how sudden changes in a river's width or the presence of obstacles create powerful eddies, noting that the height of a wave directly increases the destructive force of the water against the bank.</summary>\n<keywords>hydraulics, eddies, river banks, water power, fluid dynamics, wave height, obstacles</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 91,
+    "page_id": "6991eac32f801130a473e56f",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eac32f801130a473e514/91.jpg",
+    "image_status": 200,
+    "ocr": "<warning>Text on the right edge of the page appears to be truncated or faded in this reproduction, leading to incomplete words at line endings.</warning>\n\n<lang>Italian</lang>\n<page-type>text</page-type>\n<page-num>348</page-num>\n<header>LEONARDO DA VINCI</header>\n\n## CAPITOLO XXIII.\n### *Del medesimo.*\n\nDove in ciascuno degli argini allargato fia posto un obbietto dopo le sue onde colonnali, li retrosi che percuoteranno l'argine fiano di mag-\ngior potenza della passata (fig. 74. tav. 14). Perchè non solo s'innalza l'onda per maggior strettezza di canale, ma anche nello scontro <unclear>d</unclear>\nl'una e l'altra; onde con maggior impeto discende verso l'argine .\n\n## CAPITOLO XXIV.\n### *Del medesimo.*\n\nSe fia posto un obbietto laterale, quale occupi buona parte del\nnale, non solo nel suo argine percosso fiano li già detti retrosi, ma a\ndall'opposita riva corrono retrosi dalla superficie al fondo . Questo\naccade perchè l'acqua tanto s'alza nello stretto della bocca, che non s\nnell'uscita si slancia verso l'argine, dove si generano li soliti retros\nma anche per il peso cade su il fondo; dove nel risalto viene oppre\nda nuov'acqua cadente, e si raggira or sotto or sopra dietro la r\ndella corrente .\n\n## CAPITOLO XXV.\n### *Del medesimo.*\n\nSe fiano posti due obbietti laterali eguali, non solo dopo lo sb\ncamento dell'acqua si creano le rivoluzioni laterali negli argini, ma i\nche nel mezzo varie circulazioni dalla superficie al fondo si vanno ri\ngirando; questa è manifesta per la decimasettima e per la passata e\n\n## CAPITOLO XXVI.\n### *Delli retrosi fatti per la percussione dell'acqua negli obbietti del fondo sott'acqua.*\n\nSe lo scoglio, che divide il corso dell'acque solamente nelle pa\ndi sotto, sarà coperto dall'acque correnti, l'acqua che li passa di s\npra caderà dopo esso, e caderà ai suoi piedi; .e l'acqua che ruina\ntale bassezza, rigira revertiginosamente sotto e sopra, perchè\n\n<vocab>argini, onde colonnali, retrosi, canale, obbietto, rivoluzioni laterali, circulazioni, scoglio, acque correnti, percussione dell'acqua</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues Leonardo’s technical observations on hydraulic engineering and fluid dynamics, specifically focusing on how obstacles within a riverbed or along its banks alter the flow of water and create powerful erosive forces.</meta>\n\n<warning>Text on the right edge of the page appears to be truncated or faded in this reproduction, leading to incomplete words at line endings.</warning>\n\nLEONARDO DA VINCI 348\n\n## CHAPTER XXIII.\n### *On the same subject.*\n\nWherever an obstacle is placed in a widened bank <term>argine</term> <note>the side, levee, or embankment of a watercourse</note> following its columnar waves <term>onde colonnale</term> <note>vertical surges or column-like waves formed by converging currents</note>, the eddies <term>retrosi</term> <note>backward-flowing or circular currents, such as whirlpools or vortices</note> that strike the bank will be of greater power <term>potenza</term> <note>the force or kinetic energy of the water</note> than those that came before (fig. 74, plate 14). This is because the wave rises not only due to the narrowing of the channel, but also from the collision <unclear>of</unclear> one current with another; from this height, it descends toward the bank with greater impetus.\n\n## CHAPTER XXIV.\n### *On the same subject.*\n\nIf a side obstacle is placed that occupies a large part of the channel, not only will the aforementioned eddies strike its own bank, but eddies will also run from the surface to the bottom along the opposite bank. This happens because the water rises so high in the narrow mouth of the passage that, upon exiting, it does not only dash toward the bank—where the usual eddies are generated—but also falls to the bottom due to its own weight. There, in its rebound, it is oppressed by new falling water, and it revolves now below and now above, behind the path of the current.\n\n## CHAPTER XXV.\n### *On the same subject.*\n\nIf two equal side obstacles are placed, not only are lateral revolutions created at the banks after the water's discharge, but various circulations from the surface to the bottom also go revolving in the middle; this is manifest from the seventeenth [rule] and the previous one.\n\n## CHAPTER XXVI.\n### *On the eddies created by the impact of water against obstacles on the bottom underwater.*\n\nIf a rock <term>scoglio</term> <note>a submerged rock, reef, or large stone obstacle</note> that divides the flow of the water only in its lower parts is covered by the flowing water, the water passing over the top will fall behind it, landing at its base. The water that falls from such a depth swirls in a backward-spinning motion <note>original: \"revertiginosamente\"; Leonardo describes a complex, turbulent spiral that turns back against the main flow.</note> both below and above, because...\n\n<summary>Leonardo explains how obstacles in a river channel—whether on the banks or submerged—create powerful eddies and vertical circulations that can erode the riverbed and embankments.</summary>\n<keywords>hydraulics, eddies, river banks, water pressure, underwater obstacles, fluid dynamics, erosion, vortices</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 2,
+  "book_id": "6a3c64e339b4508b04e2ae39",
+  "book_url": "https://sourcelibrary.org/book/6a3c64e339b4508b04e2ae39",
+  "tradition": null,
+  "book": {
+   "id": "6a3c64e339b4508b04e2ae39",
+   "title": "御定佩文韻府·卷九十三之五 (vol 664)",
+   "display_title": null,
+   "author": "張玉書",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06078657.cn",
+   "pages_count": 129,
+   "pages_ocr": 128,
+   "pages_translated": 125,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 129,
+   "distinct_page_numbers": 129,
+   "duplicate_records": 0,
+   "pages_with_ocr": 128,
+   "pages_translated": 125,
+   "with_printed_number": 22,
+   "printed_backsteps": 8,
+   "printed_repeats": 10,
+   "pages_count_field": 129,
+   "pages_ocr_field": 128,
+   "pages_translated_field": 125
+  },
+  "run": [
+   39,
+   40,
+   41
+  ],
+  "pages": [
+   {
+    "page_number": 39,
+    "page_id": "6a3c64e339b4508b04e2ae60",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64e339b4508b04e2ae39/39.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n化浮海貢琛吾用汝嘉併超\n以昭忠義之勸王融獄中據荅\n表髙下之敬\n有差朱之才七夕詩瓠牛載槃何\n金梭擲\n地殊\n荒唐\n隆秩\n元史英宗紀廣海郡邑官曠\n員敦愿徃任者\n二等\n私秩\n韓非子季孫相魯子\n路為郈令魯以五月\n起衆為長溝當此之為子路以其\n粟\n為漿飯要作溝者於五父之衢而飡之\n并秩\n春秋繁露考試之\n法合其爵祿\n其\n積其日陳其\n粟秩\n說苑晉舅犯曰民有饑色而馬有\n顏延\n寔計功量罪\n之赭白馬賦處以濯龍之奧委以紅\n之\n供秩\n說苑晏子曰今謂求老弱之不\n養鰥寡之不識者論而\n卑秩\n論衡成王之才不如周\n公桓公之智不若管仲\n然成桓受尊命而周管稟\n也張九齡詩晚節從\n多秩\n謝靈\n岐路良非一歐陽修詩辛勤慙巧宦窮賤守\n運詩\n辭滿豈\n恩秩\n謝莊上搜才表或就\n加\n或入崇輝寵\n兼秩\n謝朓詩汨徂奉南\n岳\n與邦號\n東\n謝病不待年\n秩\n梁元帝課耕令時惟星鳥表年祥\n於\n春紀宿龍歌歲取於南畝\n藻秩\n江海慶正位章道樵第\n昌業廣祉盛\n攸臻\n御定師文韻府\n六",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>The text is a reference work categorizing literary phrases and historical citations organized by specific characters and themes. This section focuses on various usages of the character for rank or official salary.</meta>\n\ntransforming the sea, they offer treasures as tribute; I employ you with praise and advance your rank to demonstrate the encouragement of loyalty and righteousness. Wang Rong, while in prison, composed a response to an interrogation stating: The respect shown to those of high and low rank is different. Zhu Zhicai's poem for the Seventh Night of the Seventh Month <note>the Qixi Festival</note> says: The Gourd and the Ox <note>constellations</note> carry the trays, how can the golden shuttle be thrown to the ground? It is utterly absurd.\n\n### High Rank\nHistory of Yuan, Annals of Emperor Yingzong: In the various districts and counties of the vast coastal regions, there are many vacant official posts. Those who are honest and willing to take these positions shall be advanced two grades in rank.\n\n### Private Rank\nHan Feizi: When Jisun was the minister of Lu, Zilu served as the magistrate of Hou. The state of Lu mobilized the masses in the fifth month to dig a long trench. During this task, Zilu used his own grain to make congee and rice to feed the laborers at the crossroads of Wufu.\n\n### Combined Rank\nLuxuriant Dew of the Spring and Autumn Annals: The method of examination is to match one's title and salary <note>original: \"jue lu\"</note> with their combined rank, calculate their days of service, and display their merits.\n\n### Full Rank\nGarden of Stories <note>original: \"Shuo Yuan\"</note>: Uncle Fan of Jin said: If the people have the appearance of hunger while the horses have the appearance of fullness, the ruler cannot maintain his position. Yan Yanzhi's Rhapsody on the Red and White Horse: They are placed in the depths of the Washing Dragon Pond and entrusted with the fodder of the Red Grain Storehouse.\n\n### Supply Rank\nGarden of Stories: Yanzi said: Now we speak of seeking out the elderly and weak who are not cared for, and the widowed and orphaned who are not recognized; these are discussed as having a lowly rank.\n\n### Many Ranks\nDiscourses Weighed in the Balance <note>original: \"Lunheng\"</note>: King Cheng's talent was not equal to the Duke of Zhou; Duke Huan's wisdom was not equal to Guan Zhong. Yet Cheng and Huan received the mandate of honor, while Zhou and Guan received the mandate of rank. Zhang Jiuling's poem: In my later years, following many ranks, the fork in the road is truly not singular. Ouyang Xiu's poem: Diligent yet ashamed of clever officialdom, in poverty and lowliness I keep my many ranks.\n\n### Gracious Rank\nXie Lingyun's poem: Having completed my term, how could I expect a gracious rank? Xie Zhuang's Memorial on Seeking Talent: Some are advanced in rank on the spot, others enter into the glory and favor of the court.\n\n### Concurrent Rank\nXie Tiao's poem: Hurriedly going to serve at the Southern Peak, concurrently holding a rank with the name of the state.\n\n### Retired Rank\nXie Tiao's poem: Resigning due to illness without waiting for the usual age, keeping one's retired rank. Emperor Yuan of Liang's Decree on Encouraging Farming: At the time when the Star Bird <note>a constellation marking spring</note> appears, it signals the year's prosperity in the spring; the Resting Dragon song is heard as the harvest is taken from the southern fields.\n\n### Refined Rank\nJiang Hai's Petition on Taking the Proper Position: The path of the woodcutter follows the flourishing industry; great blessings and abundant prosperity are attained through refined rank.\n\nImperial Sanctioned Peiwen Yunfu\nVolume 664\n\n<summary>This page catalogs various historical and literary terms related to official rank and salary, citing classical sources like the Han Feizi and the History of Yuan to illustrate different classifications of bureaucratic standing.</summary>\n<keywords>official rank, salary, Han Feizi, Yuan Dynasty, Chinese poetry, bureaucracy, civil service, historical citations</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "6a3c64e339b4508b04e2ae61",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64e339b4508b04e2ae39/40.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n贝\n四\n屋\n今\n<page-num>一</page-num>\n<header>卷九十三之五</header>\n憲章\n斯飾\n濫秩\n江淹為蕭太尉上便宜\n表朱轓皁葢古無\n宗秩\n江淹齊太祖誄憬\n彼朱方亦惟\n妙秩\n沈\n約\n繡像題贊現符\n淨果來膺\n緒秩\n徐陵侯安都德政碑濮水\n盛其衣簪榮波分其\n徽秩\n隋煬帝追贈\n獨孤陁詔緬\n維先徃宜\n宗\n既秩\n唐祀九宮貴神樂章\n歌工既奏神位\n周秩\n諸亮建國判在定雖合\n於楚宮理職式乖於\n中秩\n盧照隣詩筮仕無\n歸耕有外臣\n西秩\n李嶠詩輝光射東井禁令橫\n又貢奎詩勗哉都願言繼彈\n冠\n人秩\n劉大貞房州剌史杜府君碑茂天\n爵者薄\n韜真機者庇世道\n新秩\n賈至授張顒郎中\n丘據員外制式加\n俾\n修舊政\n美秩\n賈至授李光進鴻臚卿\n制允武允文宜加\n筵秩\n杜甫詩主稱壽尊\n客宴宴北林\n尊秩\n權德輿舉韋况自代狀\n豈臣小生忽據\n真秩\n權德輿叔大理評事府君墓銘其初\n命再命宮衛賛謁雖未居\n而四\n方之嘉\n招狎至\n散秩\n權德輿代賈相公乞退表伏惟陛下覆育臨照曲成\n不遺俯矜愚衷移授\n白居易詩\n優游老閒",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Gold\nShell\nFour\nHouse\nNow\n<page-num>One</page-num>\n<header>Volume Ninety-Three, Part Five</header>\nCharter\nThis Decoration\nExcessive Rank\n\n<margin>Jiang Yan, Written for Grand Marshal Xiao, Memorial on Expedient Matters</margin> Red carriage-covers and black canopies did not exist in antiquity.\nAncestral Rank\n<margin>Jiang Yan, Eulogy for Emperor Taizu of the Qi Dynasty</margin> To the distant Zhu region, there was also only the\nMysterious Rank\n<margin>Shen Yue, Praise for Embroidered Icons</margin> Manifesting signs of pure karmic results, arriving to receive the\nSuccessive Rank\n<margin>Xu Ling, Stele for the Virtuous Government of Hou Andu</margin> The Pu River flourishes with his robes and hairpins; the Rong River shares his\nGlorious Rank\n<margin>Sui Emperor Yang, Decree for the Posthumous Promotion of Dugu Tuo</margin> Remembering the late departed, it is fitting to provide the\nAncestral Rank\n<margin>Tang Dynasty, Music for Sacrificing to the Noble Deities of the Nine Palaces</margin> The musicians having performed, the divine positions are arranged according to the\nZhou Rank <note>referring to the administrative system of the Zhou Dynasty</note>\n<margin>Zhu Liang, State-Building Judgment</margin> Although the determination fits the Chu Palace, the administrative logic deviates from the\nMiddle Rank\n<margin>Lu Zhaolin, Poem</margin> Divining for an official post without success; returning to farm, there is the\nOuter Rank <note>referring to local or provincial office</note>\n<margin>Li Qiao, Poem</margin> Radiance shoots toward the Eastern Well <note>a constellation</note>; prohibitions extend across the\nWestern Rank\n<margin>Also, Gong Kui, Poem</margin> Exert yourself! All desire to follow the official career of the\nHuman Rank\n<margin>Liu Dazhen, Stele for Lord Du, Governor of Fangzhou</margin> Those with lush heavenly nobility care little for it; those who conceal the true mechanism of nature shield the world with a \nNew Rank\n<margin>Jia Zhi, Imperial Decree Appointing Zhang Yong as Court Gentleman and Qiu Ju as Supernumerary Official</margin> Formally adding this to enable the cultivation of old policies with a\nBeautiful Rank\n<margin>Jia Zhi, Imperial Decree Appointing Li Guangjin as Minister of State Ceremonies</margin> Truly martial and truly civil, it is fitting to add a\nFeast Rank\n<margin>Du Fu, Poem</margin> The host announces a toast of longevity; the guests banquet in the Northern Forest with\nHonorable Rank\n<margin>Quan Deyu, Petition Recommending Wei Kuang as a Successor</margin> How could I, a lowly subject, suddenly occupy a\nTrue Rank\n<margin>Quan Deyu, Tomb Inscription for My Uncle, Judicial Reviewer of the Court of Judicial Supremacy</margin> At the first and second appointments, he assisted at court audiences; though he did not yet hold a \nTrue Rank\nYet the auspicious invitations from the four quarters arrived frequently.\nDispersed Rank <note>referring to a titular office without actual duties</note>\n<margin>Quan Deyu, Memorial Requesting Retirement on Behalf of Minister Jia</margin> I humbly reflect that Your Majesty nurtures and shines upon all, perfecting things without omission, pitying my foolish sincerity and transferring me to a\n<margin>Bai Juyi, Poem</margin> Wandering leisurely in an old, idle \n\n<summary>This page lists various historical and literary usages of the term Rank (zhi) in Chinese classical literature. It cites examples from the Sui, Tang, and Qi dynasties to illustrate how the word was paired with adjectives to describe official positions and honors.</summary>\n<keywords>official ranks, Jiang Yan, Du Fu, Tang poetry, administrative titles, imperial decrees, Lu Zhaolin</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 41,
+    "page_id": "6a3c64e339b4508b04e2ae62",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64e339b4508b04e2ae39/41.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n居清\n淨貧\n重秩\n薛廷珪授王堅檢校兵部尚\n書制五兵丨丨式耀賔階\n名秩\n韓愈詩丨丨後千\n品詩文齊六經\n寺\n秩\n孟郊詩丨\n丨雖未貴\n動秩\n白居易授王佖檢校户部尚書靈鹽節度\n使制進地官以崇新命極丨丨以褒舊功\n資秩\n白居易授張嘉泰延州長史制軍郡長佐丨丨不卑梁燾疏太宗\n皇帝深達此意始置崇文院建秘閣集四庫書選天下名能文學\n之士以為校讐官給以見\n俸食於太宮優其丨丨\n憲秩\n白居易授崔楚臣侍御史\n制式示寵名宜遷丨丨\n正秩\n錢\n珝\n授李繼文龍州防禦使\n制既用良材宜膺丨丨\n餘秩\n戴叔倫詩衰鬢辭\n丨丨秋風入故園\n臺秩\n羅隱詩官品\n尊丨丨山河\n擁福\n星\n六秩\n于邵漢源縣令廳壁記國家坐進此\n道至於憂勤爰增丨丨以勸能者\n奉秩\n張餘慶祀后\n土賦甸師清\n野宗伯\n丨丨\n茂秩\n鄭獬鄭國公制仍左揆\n之舊班兼東臺之丨丨\n視秩\n孫洙邢氏進號賢妃制\n矧丨丨於上公必敷求\n於淑\n哲\n寄秩\n蘇轍詩終然幸寬\n政尚許存丨丨\n京秩\n葉適詩未奏邊功明主\n惜將成丨丨故人悲\n帝秩\n趙\n秉\n十九",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "### Pure and Clean\n### Poor Rank\nXue Tinggui’s Imperial Decree appointing Wang Jian as the Acting Minister of War states: The Five Weapons <note>the five branches of the military</note> are in **Pure and Clean** order, bringing glory to the guest stairs <note>the ministerial ranks</note>.\n\n### Official Rank\nHan Yu’s poem says: After attaining **Official Rank**, he was placed among the thousand grades; his poetry and prose are equal to the Six Classics.\n\n### Temple Rank\nMeng Jiao’s poem says: Although the **Temple Rank** is not yet noble.\n\n### Moving Rank\nBai Juyi’s Imperial Decree appointing Wang Bi as Acting Minister of the Ministry of Revenue and Regional Governor of Lingyan states: We promote you to the Earth Official <note>Ministry of Revenue</note> to honor your new commission, and reach the limit of **Moving Rank** to praise your past merits.\n\n### Seniority Rank\nBai Juyi’s Imperial Decree appointing Zhang Jiatai as Vice Governor of Yanzhou states: The assistant to the military and prefecture commander holds a **Seniority Rank** that is not low. \n\nLiang Dao’s memorial states: Emperor Taizong deeply understood this intention; he first established the Chongwen Institute and built the Secret Pavilion to collect the books of the Four Treasuries. He selected the most famous literary talents in the empire to serve as collation officers. They were provided with current salaries and fed at the Great Palace, providing them with excellent **Seniority Rank**.\n\n### Censorate Rank\nBai Juyi’s Imperial Decree appointing Cui Chuchen as Palace Censor states: To demonstrate favored renown, it is fitting to transfer you to the **Censorate Rank**.\n\n### Formal Rank\nQian Xu’s Imperial Decree appointing Li Jiwen as Defense Commissioner of Longzhou states: Having employed a talented man, it is fitting that he receive a **Formal Rank**.\n\n### Remaining Rank\nDai Shulun’s poem says: With graying hair at my temples, I resign from my **Remaining Rank**; the autumn wind enters my old home garden.\n\n### Terrace Rank\nLuo Yin’s poem says: The official grade is noble in the **Terrace Rank** <note>referring to the Censorate or high office</note>; the mountains and rivers are embraced by the Lucky Star.\n\n### Sixth Rank\nYu Shao’s Record on the Wall of the Hanyuan County Magistrate’s Hall states: The state established this path through diligent worry; thus, we increase the **Sixth Rank** to encourage those with ability.\n\n### Ritual Rank\nZhang Yuqing’s Rhapsody on Sacrificing to the Sovereign Earth states: The Field Master clears the wilds; the Minister of Rites performs the **Ritual Rank** duties.\n\n### Flourishing Rank\nZheng Xie’s Decree for the Duke of Zheng State states: Maintaining the old position of the Left Chancellor, while also holding the **Flourishing Rank** of the Eastern Terrace.\n\n### Comparable Rank\nSun Zhu’s Decree granting Consort Xing the title of Worthy Consort states: Since her **Comparable Rank** is that of the High Dukes, we must seek one who is virtuous and wise.\n\n### Entrusted Rank\nSu Zhe’s poem says: Ultimately I am fortunate for the lenient administration, which still allows me to keep my **Entrusted Rank**.\n\n### Capital Rank\nYe Shi’s poem says: Before border merits could be reported, the Wise Sovereign felt regret; as the **Capital Rank** was about to be finalized, old friends felt sorrow.\n\n### Imperial Rank\nZhao Bing\nPage 19\n\n<summary>This page catalogs various historical and poetic terms related to official ranks and bureaucratic titles in imperial China, citing decrees by Bai Juyi and verses by Han Yu and Meng Jiao.</summary>\n<keywords>official ranks, bureaucracy, Bai Juyi, Han Yu, Tang Dynasty, imperial decrees, civil service, Seniority Rank, Censorate</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 3,
+  "book_id": "6a4e422f96ab5938408e6064",
+  "book_url": "https://sourcelibrary.org/book/6a4e422f96ab5938408e6064",
+  "tradition": null,
+  "book": {
+   "id": "6a4e422f96ab5938408e6064",
+   "title": "Carmen gratulatorium in natalem domini et salvatoris nostri Jesu Christi, compositum a Paulo donrspergero styro.",
+   "display_title": "Dornsperger, Paul: Carmen gratulatorium in natalem D. et S. N. Jesu Christi",
+   "author": "Dornsperger, Paul",
+   "language": "Latin",
+   "published": "1573",
+   "pages_count": 20,
+   "pages_ocr": 20,
+   "pages_translated": 15,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 20,
+   "distinct_page_numbers": 20,
+   "duplicate_records": 0,
+   "pages_with_ocr": 20,
+   "pages_translated": 15,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 20,
+   "pages_ocr_field": 20,
+   "pages_translated_field": 15
+  },
+  "run": [
+   14,
+   15,
+   16
+  ],
+  "pages": [
+   {
+    "page_number": 14,
+    "page_id": "6a4e422f96ab5938408e6147",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e422f96ab5938408e6064/14.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>catchword: Contigerat</meta>\n\nDeieci (Diuum sibi quod poscebat honorem\nMaioremque illo) vobis fuit author edendi\nCarpere quos medio vetuissem ex arbore fructus:\nMe vestrum miseret: vobis succurrere lapsis\nQuamuis immeritis lacrymae & miseratio cogunt.\nStat casus prohibere omnes: omnesque laborum\nDeclinare minas, vosque his arcere periclis.\nAccipite ergo animis & spem cognoscite vestram,\nVobis virgineum commissa piacula semen\nAbluet: innocuoque exoluet sanguine poenas.\nVnus erit tantum vestri qui criminis ergo\nOccidet: huic tota qui spe qui mente fideque\nNixus adhaerebit partam per vulnera caelum\nReddet & optata Diuorum sede beabit.\nHis ita finitis solium sublime reliquit\nRex hominum omnipotens Diuumque aeterna potestas\nConcilio excedunt omnes: Silet arduus aether.\n   Iam nouies centum ter mille recursibus annos\nAureus explerat Phoebus, terque inde vicenos\nAddiderat, lucem praebens mortalibus almam:\nEcce salutiferum, Regum expectatio, semen\nProdijt ex pura Tamneiae virginis aluo.\nIpse vicem & nostros animo patiente dolores\nSustinuítque onerique humeris insontibus unus\nSuccessit, nostrosque tulit mitissimus aestus,\nMultorum ob noxam primaeuorumque parentum\nLapsum: quo vobis deuicta morte salutem\nRedderet: vt caelorum adytus per crimina clausos\nAethereasque pijs reſeraret sanguine sedes.\nHanc quondam angelico caelestis nuncius ore\nDemissam docuit caelorum ex arce salutem.\nNamque ubi iam mediam caeli luciflua metam\n                                                                                 Contigerat\n\n<vocab>Diuum, Phoebus, Tamneiae, piacula, semen, recursibus</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "I cast down (because he demanded for himself the honor of the Gods, and greater than that of the Gods) was the author for you to pluck the fruits that I had forbidden in the middle of the tree: I pity you: tears and compassion compel me to help you, though you are undeserving, who have fallen. It is determined to prevent all the falls: and to decline all the threats of labors, and to keep you from these dangers. Accept therefore in your minds and recognize your hope: a virgin seed will wash away the committed sins for you: and will discharge the punishments with innocent blood. There will be only one who will die for the sake of your crime: he who will rely on this with all hope, with all mind, and with all faith will return the heaven gained through wounds and will bless you in the desired seat of the Gods. With these things finished, the almighty King of men and eternal power of the Gods left the sublime throne, all depart the council: the lofty ether is silent. \n   Now golden Phoebus <note>the sun</note> had completed years by nine hundred times three thousand recursions, and had added twenty from there, providing kind light to mortals: behold the salvation-bringing seed, the expectation of Kings, came forth from the pure womb of the Tamneian <note>a poetic reference to the Virgin Mary</note> virgin. He himself took up the turn and our pains with a patient mind and, alone, succeeded to the burden on innocent shoulders, and, most mild, bore our heats, because of the harm of many and our primordial parents' fall: so that, with death conquered, he might restore salvation to you: so that he might reopen, with his blood, the entrances of the heavens closed by crimes and the ethereal seats to the pious. A celestial messenger once taught this salvation, sent down with angelic mouth, from the citadel of the heavens. For when already the light-flowing middle goal of heaven",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 15,
+    "page_id": "6a4e422f96ab5938408e6148",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e422f96ab5938408e6064/15.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>B 3</sig>\n<meta>catchword: Huc</meta>\n\nContigerat niueis gaudens Latonia bigis,\nAtque per obscuram spargens sua lumina noctem\nDispulerat tenebras, hic prolis conscius æther\nEffulsit, summo nituerunt sydera cælo:\nCum volucri æthereis penna delatus ab astris\nAngelus in viridem campum: quem parua tenebant\nPastorum nocturna manus, pecorique cauentes\nExcubias noctis vario sermone leuabant.\nHos ipse accedens voce est affatus amica\n    Accipite hæc animis lætosque aduertite vultus\nPastores: supera descendo nuncius aula:\nLæta ferens vobis reparata dicta salutis,\nVobis & cunctis vario qui munere terræ\nVescimini erecto spectantes lumine cælum.\nGaudete & tristes animo secludite curas:\nVobis parta salus, primorum & amica bonorum\nCopia, qui erecto spectatis lumine cælum.\nAuxilium tandem voluenda optantibus ætas\nAttulit, aduentumque DEI, quia maximus heros\nAltisono vobis hodie processit Olympo.\nQui immortalis erat mortales induit artus,\nQui incorruptus erat corruptam assumere massam\nMaluit, amissam repararet vt ipse salutem.\nMaxima cui cælo, cui summa potentia terris\nEx pura in mundum dignatus virgine nasci\nLuminis aërias successit paruulus auras.\nGaudete ergo omnes, animoque excludite luctum\nQueis noua progenies veræ spes sola salutis\nContigit. Hæc promissa nisi post tempore longo\nVenisset proles intacta ex virgine nata\nTotæ hominum gentes Plutonis ad horrida regna\nIudicioque DEI densas agerentur ad vmbras.\n\n<vocab>Latonia, Angelus, Pastores, DEI, Olympo, Plutonis</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Had reached, and Latonia <note>the moon</note>, rejoicing in her snowy chariot, scattering her lights through the dark night, had dispersed the shadows, here the ether, conscious of the offspring, shone forth, the stars glittered in the highest heaven: when the angel, carried by winged feather from the ethereal stars, [arrived] into the green field: which a small band of shepherds was holding, and, taking care for their flock, they were alleviating the night watch with varied conversation. Approaching them, he addressed them with a friendly voice:\n    Accept these things in your minds and turn your joyful faces, shepherds: I descend as a messenger from the higher hall: bringing to you the joyful words of salvation restored, for you and for all who eat of the earth with varied gifts, looking at heaven with raised light. Rejoice and seclude the sad cares from your mind: salvation is prepared for you, and an abundance of friendly first goods, you who look at heaven with raised light. The turning age has finally brought help to those wishing for it, and the arrival of GOD, because the greatest hero has proceeded to you today from the high-sounding Olympus. He who was immortal put on mortal limbs, he who was incorrupt chose to assume corrupt matter, so that he himself might repair the lost salvation. He to whom there is the greatest power in heaven, and to whom there is the highest power in the lands, deigned to be born into the world from a pure virgin and succeeded to the aerial airs of light. Rejoice therefore all, and exclude mourning from your mind, to whom the new offspring, the only hope of true salvation, has happened. If this promise had not come after a long time, the offspring born from an untouched virgin, all the races of men would be driven to the horrible kingdoms of Pluto and to the dense shadows by the judgment of GOD.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 16,
+    "page_id": "6a4e422f96ab5938408e6149",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4e422f96ab5938408e6064/16.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>catchword: Huic</meta>\n\nHuc ubi supplicium scelerum, veterumque malorum\nÆternum luerent: primi ut meruêre parentes.\nSic quondam veterum docuêre oracula vatum,\nQuis DEVS Omnipotens animum linguamque ministrans\nAddidit, auxiliumque dedit præscire futurum:\nQualia nec falso cecinerunt ore Prophetæ.\nTempore enim elapso primam paritura Maria\nProgeniem, thalami quamuis ignara virilis,\nIn Bethlem patrias prægnans concessit ad oras.\nCæsaris huc mandata, huc sacra oracula diuûm\nImperijs egêre suis: ubi virgo Maria\nEdidit à sancto conceptam flamine prolem,\nEt teneros vili præsepi condidit artus.\nSigna etiam doceo vos condita mente tenete.\nInfantem extemplo diuos spectabitis artus\nOmnibus os formam similes mortalibus ægris.\nQui mare, qui terras, superi qui limina cæli\nCumque DEO genitore & sancto flamine fecit:\nQuem nec terræ orbis caperet, nec vastus Olympus,\nQuamuis innumeri, paruum præsepe iacentem\nContinet & cingunt tenuis sua lintea vestis.\n\nIte igitur celeres, sanctamque Dauidis ad urbem\nPergentes tanti sanctissima numina fœtus\nExcipitote pijs votis, siquidem optimus idem est\nRex hominum Omnipotens, cælestis & ipse Sacerdos.\nQui quando Sathanæ diuinis horrida telis\nLimina destrueret, raperetque in vincula Victor\nTartareos proceres, multa infernalia passam\nHumanam gentem cæcis reuocauit ab umbris,\nSeruatamque adeo cælestibus intulit astris.\nOmnis in hoc puero vestra stet meta salutis,\nMens solida atque fides in hoc affixa quiescant.\n\n<sig>Huic</sig>\n\n<vocab>Maria, Bethlem, Sathanæ, Tartareos, Sacerdos, Prophetae, Dauidis, Omnipotens</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "To this place, where they would suffer the punishment of crimes and of ancient evils for eternity: as the first parents deserved. Thus once the oracles of the ancient prophets taught, to whom God Almighty, ministering mind and tongue, added, and gave help to know the future beforehand: such things as the prophets did not sing with a false mouth. For when time had passed, Mary, about to give birth to the first offspring, although ignorant of a male chamber, went while pregnant to the ancestral shores in Bethlehem. The commands of Caesar, the sacred oracles of the gods, drove [them] here with their orders: where the virgin Mary gave birth to the offspring conceived from the holy spirit, and placed his tender limbs in a vile manger. I also teach you to hold the signs in a conceived mind. You will immediately see the divine limbs of the infant, in appearance similar to all sick mortals. He who made the sea, who made the lands, who made the thresholds of the upper heaven with God the father and the holy spirit: whom neither the orb of the earth, nor vast Olympus could contain, although countless [in power], a small manger contains him, and thin clothes of his own dress surround him.\n\nGo therefore, swift ones, and proceeding to the holy city of David, receive the holiest divine powers of such a birth with pious vows, since the same one is the best King of men, Almighty, and he himself is the celestial Priest. Who, when he would destroy the horrible thresholds of Satan with divine weapons, and, Victor, would snatch into chains the Tartarean <note>infernal</note> princes, he recalled the human race, which had suffered many infernal things, from the blind shadows, and brought the saved one to the celestial stars. Let your entire goal of salvation stand in this boy, let a solid mind and faith rest fixed in him.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 4,
+  "book_id": "695942607d14807348773a98",
+  "book_url": "https://sourcelibrary.org/book/695942607d14807348773a98",
+  "tradition": null,
+  "book": {
+   "id": "695942607d14807348773a98",
+   "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+   "display_title": null,
+   "author": "Rabbi Akiba ben Joseph (attr.)",
+   "language": "English",
+   "published": "Unknown",
+   "ia_identifier": "bookofcreation1893westcottsepheryetzirah",
+   "pages_count": 43,
+   "pages_ocr": 43,
+   "pages_translated": 43,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "opensource",
+     "community"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 97,
+   "distinct_page_numbers": 97,
+   "duplicate_records": 0,
+   "pages_with_ocr": 97,
+   "pages_translated": 97,
+   "with_printed_number": 36,
+   "printed_backsteps": 1,
+   "printed_repeats": 0,
+   "pages_count_field": 43,
+   "pages_ocr_field": 43,
+   "pages_translated_field": 43
+  },
+  "run": [
+   4,
+   5,
+   6
+  ],
+  "pages": [
+   {
+    "page_number": 4,
+    "page_id": "695942607d14807348773a9c",
+    "image_url": "https://images.sourcelibrary.org/enhanced/695942607d14807348773a98/4.jpg",
+    "image_status": 200,
+    "ocr": "<lang>English</lang>\n\n## PREFACE TO THE SECOND EDITION.\n\nIT has been at the earnest wish of many students, members of the Theosophical Society, and of my Hermetic fratres of the Order of the <term>G.D.</term>, that I have made a revised translation of the “<term>Sepher Yetzirah</term>.” In this edition I have followed most closely the Hebrew version of Joannes Stephanus Rittangelius, which was printed in 1642 at Amsterdam, and I have forsaken many of the Latinised renderings which had been adopted in the First Edition, from the works of Postellus and Pistorius.\n\nThe Notes have been extended, and it is hoped that they explain and illustrate difficult passages, and render this abstruse treatise more comprehensible than it has been hitherto found.\n\nW. W. W., F.T.S.\n\n<meta>Digitized by UNIVERSITY OF MICHIGAN; Original from UNIVERSITY OF MICHIGAN</meta>\n\n<vocab>Theosophical Society, Hermetic fratres, Order of the G.D., Sepher Yetzirah, Joannes Stephanus Rittangelius, Postellus, Pistorius, W. W. W., F.T.S.</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "## PREFACE TO THE SECOND EDITION.\n\nIt has been at the earnest wish of many students, members of the Theosophical Society, and of my Hermetic brothers <note>original: \"fratres\"</note> of the Order of the <term>G.D.</term> <note>The Hermetic Order of the Golden Dawn, a late 19th-century magical society.</note>, that I have made a revised translation of the “<term>Sepher Yetzirah</term>” <note>The \"Book of Formation,\" one of the oldest and most important books of Jewish mysticism (Kabbalah).</note>. In this edition, I have followed most closely the Hebrew version of Joannes Stephanus Rittangelius, which was printed in 1642 at Amsterdam. I have abandoned many of the Latinized renderings which had been adopted in the First Edition from the works of Postellus and Pistorius.\n\nThe Notes have been expanded, and it is hoped that they explain and illustrate difficult passages, making this complex <note>original: \"abstruse\"</note> treatise more understandable than it has been found until now.\n\n->W. W. W., F.T.S.<- <note>William Wynn Westcott, Fellow of the Theosophical Society.</note>\n\n<meta>Digitized by UNIVERSITY OF MICHIGAN; Original from UNIVERSITY OF MICHIGAN</meta>\n\n<summary>In this preface, William Wynn Westcott introduces the second edition of his translation of the Sepher Yetzirah, noting that he has updated the text to follow a specific 17th-century Hebrew version for greater accuracy.</summary>\n<keywords>Sepher Yetzirah, Kabbalah, Hermetic Order of the Golden Dawn, Theosophical Society, William Wynn Westcott, Joannes Stephanus Rittangelius, translation methodology</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 5,
+    "page_id": "695942607d14807348773a9d",
+    "image_url": "https://images.sourcelibrary.org/archived/695942607d14807348773a98/5.jpg",
+    "image_status": 200,
+    "ocr": "<lang>English</lang>\n<meta>Digitized by UNIVERSITY OF MICHIGAN; Original from UNIVERSITY OF MICHIGAN</meta>\n\n# SEPHER YETZIRAH.\n\n---\n\n## INTRODUCTION.\n\n---\n\nTHE \"Sepher Yetzirah,\" or \"Book of Formation,\" is perhaps the oldest philosophical treatise which is yet extant in the Hebrew language. The great interest which has been evinced of late years in the Hebrew Kabalah, and the modes of thought and doctrine allied to it, has induced me to translate this volume from the original Hebrew texts, and to collate with them the Latin versions of mediæval authorities. Three important books of the \"Zohar,\" or \"Splendour,\" which is the great storehouse of Kabalistic teaching, have been for the first time translated into English by that skilful and erudite Kabalist, my fellow student in occult science, Mac Gregor Mathers, and the \"Sepher Yetzirah\" in an English translation is almost a necessary companion to these even more abstruse disquisitions: the two books indeed mutually explain each other.\n\nThe \"Sepher Yetzirah\" although this name means \"The Book of Formation,\" is not in any sense a narrative of Creation, or a substitute Genesis, but it is a very ancient and instructive philosophical treatise upon one aspect of the origin of the universe and mankind; an aspect at once archaic and essentially Hebrew. The grouping of the processes of origin into an arrangement, at once alphabetic and numeral, is one only to be found in Semitic authors.\n\nAttention must be called to the essential peculiarity of Hebrew doctrines, the inextricable and necessary associa-\n\n<vocab>Sepher Yetzirah, Book of Formation, Hebrew language, Kabalah, Zohar, Splendour, Mac Gregor Mathers, Semitic</vocab>\n\n<detected-images>\n[{\"description\": \"Decorative printer's ornament/divider with central flourish\", \"type\": \"decorative\", \"bbox\": {\"x\": 0.358, \"y\": 0.258, \"width\": 0.163, \"height\": 0.015}, \"gallery_quality\": 0.3, \"museum_rationale\": \"Simple typographic divider typical of 19th-century publishing.\"}]\n</detected-images>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page introduces the \"Sepher Yetzirah,\" establishing its historical significance and its relationship to the broader body of Kabalistic literature.</meta>\n\n# THE BOOK OF FORMATION.\n\n---\n\n## INTRODUCTION.\n\n---\n\nThe \"Sepher Yetzirah,\" <note>original: \"Sepher Yetzirah,\" meaning \"Book of Formation\"</note> or \"Book of Formation,\" is perhaps the oldest philosophical treatise still in existence written in the Hebrew language. The great interest shown in recent years regarding the Hebrew Kabbalah <note>The Kabbalah is a traditional system of Jewish mysticism and self-knowledge</note> and its related schools of thought has led me to translate this volume from the original Hebrew texts, comparing them with the Latin versions produced by medieval scholars. Three important books of the \"Zohar,\" or \"Splendor\"—which serves as the primary storehouse of Kabbalistic teaching—have been translated into English for the first time by the skillful and learned Kabbalist MacGregor Mathers, my fellow student in the occult sciences. This English translation of the \"Sepher Yetzirah\" is an almost essential companion to those even more difficult and complex discussions; indeed, the two books explain one another.\n\nAlthough its name means \"The Book of Formation,\" the \"Sepher Yetzirah\" is not a narrative of Creation in the sense of a replacement for the Book of Genesis. Instead, it is a very ancient and educational philosophical treatise on one specific perspective regarding the origin of the universe and humanity—a perspective that is both ancient and characteristically Hebrew. This method of organizing the processes of origin into a system that is simultaneously alphabetical and numerical is a feature found only among Semitic authors.\n\nAttention must be called to the essential characteristic of Hebrew doctrines: the inseparable and necessary association—\n\n<summary>This introduction presents the \"Sepher Yetzirah\" as one of the oldest Hebrew philosophical works, positioning it as a foundational text for understanding the Kabbalah alongside the \"Zohar.\"</summary>\n<keywords>Sepher Yetzirah, Book of Formation, Kabbalah, Zohar, MacGregor Mathers, Hebrew philosophy, Semitic mysticism, Creation theory</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 6,
+    "page_id": "695942607d14807348773a9e",
+    "image_url": "https://images.sourcelibrary.org/archived/695942607d14807348773a98/6.jpg",
+    "image_status": 200,
+    "ocr": "<lang>English</lang>\n<page-num>6</page-num>\n<meta>Digitized by University of Michigan watermark at the bottom of the page. Some light foxing and scanning artifacts are present throughout the image.</meta>\n\ntion of numbers and letters ; every letter suggesting a number, and every group of letters having a numerical signification, as vital as its literal meaning.\n\nThe <term>Kabalistic</term> principles involved in the reversal of Hebrew letters, and their substitution by others, on definite schemes, should also be studied and borne in mind.\n\nIt is exactly on these principles that the “ groundwork idea ” of this disquisition rests ; and these principles may be traced throughout the <term>Kabalistic</term> volumes which have succeeded it in point of time, and development, and which are now associated together in one volume and known as the “ <term>Zohar</term>,” or “ **Book of Splendour**,” a collection of treaties which is in the main concerned with the essential dignities of the God-head, and with the emanations which have sprung therefrom, with the doctrine of the <term>Sephiroth</term>, and the ideals of <term>Macroprosopus</term> and <term>Microprosopus</term>.\n\nThe “ <term>Sepher Yetzirah</term>,” on the other hand is mainly concerned with our universe and with the Microcosm. The opinions of Hebrew <term>Kabalistic</term> Rabbis and of two French mystics may be fitly introduced here.\n\nThe following interesting comment is from Rabbi Moses Botarel :—\n\n> “ It was Abraham our Father—blessed be he—who wrote this book to condemn the doctrine of the sages of his time, who were incredulous of the supreme dogma of the Unity. At least, this was the opinion of Rabbi Saadiah—blessed be he—as written in the first chapter of his book ‘ The Philosopher’s Stone.’ These are his words : The sages of Babylon attacked Abraham on account of his faith ; for they were all against him although themselves separable into three sects. The First thought that the Universe was subject to the control of two opposing forces, the one existing but to destroy the other, this is dualism ; they held that there was nothing in common between the author of evil and the author of good. The Second sect admitted Three great Powers ; two of them as in the first case, and a third Power whose function was to decide between\n\n<vocab>Kabalistic, Zohar, Book of Splendour, Sephiroth, Macroprosopus, Microprosopus, Sepher Yetzirah, Rabbi Moses Botarel, Rabbi Saadiah, The Philosopher's Stone, dualism</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues the introduction to the Sepher Yetzirah, focusing on its historical origins and its relationship to the broader Kabalistic tradition.</meta>\n\n<page-num>6</page-num>\n\ntion of numbers and letters; every letter suggesting a number, and every group of letters having a numerical significance as vital as its literal meaning.\n\nThe <term>Kabalistic</term><note>original: \"Kabalistic\"; referring to Kabbalah, a school of Jewish mysticism</note> principles involved in the reversal of Hebrew letters, and their substitution by others according to definite schemes, should also be studied and borne in mind.\n\nIt is exactly on these principles that the \"groundwork idea\" of this discussion rests. These principles may be traced throughout the <term>Kabalistic</term> volumes which have succeeded it in time and development, and which are now associated together in one volume known as the <term>Zohar</term>, or **\"Book of Splendor.\"** This is a collection of treatises which is mainly concerned with the essential dignities of the Godhead, the emanations which have sprung from it, the doctrine of the <term>Sephiroth</term><note>The ten attributes or emanations in Kabbalah through which the Infinite reveals itself</note>, and the ideals of <term>Macroprosopus</term><note>original: \"Macroprosopus\"; Greek for \"Great Face,\" representing the vast, hidden aspect of the Divine</note> and <term>Microprosopus</term><note>original: \"Microprosopus\"; Greek for \"Lesser Face,\" representing the manifest aspect of the Divine</note>.\n\nThe <term>Sepher Yetzirah</term><note>The \"Book of Formation,\" one of the oldest Jewish mystical texts</note>, on the other hand, is mainly concerned with our universe and with the Microcosm <note>The human being viewed as a miniature replica of the entire universe</note>. The opinions of Hebrew <term>Kabalistic</term> Rabbis and of two French mystics may be fitly introduced here.\n\nThe following interesting comment is from Rabbi Moses Botarel:\n\n> \"It was Abraham our Father—blessed be he—who wrote this book to condemn the doctrine of the sages of his time, who were incredulous of the supreme dogma of the Unity. At least, this was the opinion of Rabbi Saadiah—blessed be he—as written in the first chapter of his book *The Philosopher's Stone*. These are his words: 'The sages of Babylon attacked Abraham on account of his faith; for they were all against him, although they were divided into three sects. The First thought that the Universe was subject to the control of two opposing forces, the one existing only to destroy the other; this is dualism. They held that there was nothing in common between the author of evil and the author of good. The Second sect admitted Three great Powers: two of them as in the first case, and a third Power whose function was to decide between...'\"\n\n<summary>This page explains the numerical and symbolic logic of the Kabbalah, distinguishing the Sepher Yetzirah's focus on the universe from the Zohar's focus on the divine nature. It also cites Rabbi Moses Botarel's claim that the patriarch Abraham authored the text to defend monotheism against Babylonian dualism.</summary>\n\n<keywords>Kabalistic principles, Sepher Yetzirah, Zohar, Sephiroth, Macroprosopus, Microprosopus, Rabbi Moses Botarel, Rabbi Saadiah, Abraham, dualism, Jewish mysticism</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   }
+  ]
+ },
+ {
+  "slot": 5,
+  "book_id": "69de13468a46d0c97eedcde1",
+  "book_url": "https://sourcelibrary.org/book/69de13468a46d0c97eedcde1",
+  "tradition": null,
+  "book": {
+   "id": "69de13468a46d0c97eedcde1",
+   "title": "The Pillow-Book of Sei Shōnagon",
+   "display_title": null,
+   "author": "Sei Shōnagon (tr. Arthur Waley)",
+   "language": "English",
+   "original_language": "ja",
+   "published": "1928",
+   "ia_identifier": "pillowbookofseis0000arth_v1i4",
+   "pages_count": 172,
+   "pages_ocr": 172,
+   "pages_translated": 171,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "internetarchivebooks"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 172,
+   "distinct_page_numbers": 172,
+   "duplicate_records": 0,
+   "pages_with_ocr": 172,
+   "pages_translated": 171,
+   "with_printed_number": 158,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 172,
+   "pages_ocr_field": 172,
+   "pages_translated_field": 171
+  },
+  "run": [
+   70,
+   71,
+   72
+  ],
+  "pages": [
+   {
+    "page_number": 70,
+    "page_id": "69de13468a46d0c97eedce27",
+    "image_url": "https://images.sourcelibrary.org/archived/69de13468a46d0c97eedcde1/70.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>65</page-num>\n<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n<sig>E</sig>\n\nanything prevents my going back to Court immediately, he will be obliged if I will send a messenger to her Majesty ‘with instructions to report what he is now about to tell me,’ and so forth. It is useless for me to point out that there are plenty of people in the Palace who would gladly give a message. He rejects one after another. Once, with the best intentions, I suggested that it is often a good thing to act according to circumstances, instead of making for oneself these hard-and-fast rules. But he said it came natural to him to live according to rule, and ‘one can’t change one’s nature.’ ‘Don’t stand on ceremony,’ I answered. He did not see the allusion,¹ and laughing in a puzzled way, he said, ‘I am afraid there has been a good deal of talk lately about our being so friendly. Well, suppose we are! I don’t see anything to be ashamed of. I think, by this time, you might uncover your face, and so on.’ ‘I daren’t,’ I answered. ‘I have heard how particular you are about the shape of people’s chins, and mine is very ugly.’ ‘Is it really?’ he asked seriously; ‘I\n\n<note>¹ To the Analects of Confucius: ‘If you are wrong, don’t stand on ceremony with yourself, but change!’ Yukinari thinks that Shōnagon is inviting him to take liberties with her.</note>\n\n<vocab>Sei Shōnagon, Court, Palace, Yukinari, Analects of Confucius, ceremony</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n<sig>E</sig>\n\nanything prevents my going back to Court immediately, he will be obliged if I will send a messenger to her Majesty ‘with instructions to report what he is now about to tell me,’ and so forth. It is useless for me to point out that there are plenty of people in the Palace who would gladly give a message. He rejects one after another. Once, with the best intentions, I suggested that it is often a good thing to act according to circumstances, instead of making for oneself these hard-and-fast rules. But he said it came natural to him to live according to rule, and ‘one can’t change one’s nature.’ ‘Don’t stand on ceremony,’ I answered. He did not see the allusion, <note>To the Analects of Confucius: ‘If you are wrong, don’t stand on ceremony with yourself, but change!’ Yukinari thinks that Shōnagon is inviting him to take liberties with her.</note> and laughing in a puzzled way, he said, ‘I am afraid there has been a good deal of talk lately about our being so friendly. Well, suppose we are! I don’t see anything to be ashamed of. I think, by this time, you might uncover your face, and so on.’ ‘I daren’t,’ I answered. ‘I have heard how particular you are about the shape of people’s chins, and mine is very ugly.’ ‘Is it really?’ he asked seriously; ‘I\n\n<summary>Sei Shōnagon discusses her playful and often misunderstood exchanges with Yukinari, where she uses literary references to deflect his insistence on formal court procedures.</summary>\n<keywords>Yukinari, Analects of Confucius, formal rules, court interactions</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 71,
+    "page_id": "69de13468a46d0c97eedce28",
+    "image_url": "https://images.sourcelibrary.org/archived/69de13468a46d0c97eedcde1/71.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>66</page-num>\n<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n\nhad no idea of that. Perhaps after all you had better not let me see you.' After this I always covered my face on any occasion when he could possibly have seen me; but I noticed that he never looked my way, and it seemed clear that he had taken what I said about my own ugliness quite seriously.\n\nOne morning Shikibu no Omoto [one of the Empress's ladies] and I lay in the side-room (where we had slept that night) till the sun was well up. Suddenly we heard someone sliding back the door that leads into the main building, and there before us stood the Emperor and Empress! We were so much surprised that we simply lay helpless, while their Majesties stood by, laughing immoderately at our confusion. Presently they came across and stood half hidden behind the pile of rugs and cloaks (for we had buried ourselves head and all under our bedding), to watch the people going to and fro between the Palace and the guard-room. Several courtiers (not, of course, having the least idea who was inside the room) came to the window and saluted us. The Emperor was much amused and begged me not to give him away.\n\n<vocab>Sei Shōnagon, Shikibu no Omoto, Emperor, Empress, Palace, courtier, Pillow-Book</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n\nhad no idea of that. Perhaps after all you had better not let me see you.' After this I always covered my face on any occasion when he could possibly have seen me; but I noticed that he never looked my way, and it seemed clear that he had taken what I said about my own ugliness quite seriously.\n\nOne morning Shikibu no Omoto <note>one of the Empress's ladies</note> and I lay in the side-room (where we had slept that night) till the sun was well up. Suddenly we heard someone sliding back the door that leads into the main building, and there before us stood the Emperor and Empress! We were so much surprised that we simply lay helpless, while their Majesties stood by, laughing immoderately at our confusion. Presently they came across and stood half hidden behind the pile of rugs and cloaks (for we had buried ourselves head and all under our bedding), to watch the people going to and fro between the Palace and the guard-room. Several courtiers (not, of course, having the least idea who was inside the room) came to the window and saluted us. The Emperor was much amused and begged me not to give him away.\n\n<summary>Following a conversation about physical appearance, Sei Shōnagon recounts a humorous and intimate morning surprise when the Emperor and Empress discovered her and Shikibu resting in a side-room.</summary>\n<keywords>Emperor, Empress, Shikibu no Omoto, court intimacy, humor</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 72,
+    "page_id": "69de13468a46d0c97eedce29",
+    "image_url": "https://images.sourcelibrary.org/archived/69de13468a46d0c97eedcde1/72.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>67</page-num>\n<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n\nWhen their Majesties went back to the main building, the Empress said, ‘Come along, both of you,’ intending us to go on duty that minute. ‘Do at least give us time to make up our faces!’ I answered, and we stayed where we were. Later on, when Shikibu and I were still talking about their Majesties’ visit, we became conscious of something swarthy which had suddenly loomed up close to the front door of our room, and was visible through a chink in our curtains, where one flap had got caught up upon the framework. We thought it was only Noritaka,¹ but on looking more closely we saw that the face was not the least like his.\n\nWith a good deal of laughing and scuffling, we began pulling the curtain back into its place; but before we had finished doing so, we realized that it was Yukinari who had been looking at us. This was very annoying, for I had made a point of his never seeing me. Shikibu was sitting with her back to him, so she came out of it all right. Stepping forward, he now said: ‘This time I have really managed to\n\n---\n\n<margin>¹ Brother-in-law of Murasaki, authoress of The Tale of Genji.</margin>\n\n67\n\n<vocab>Sei Shōnagon, Empress, Shikibu, Noritaka, Yukinari, Murasaki, The Tale of Genji, court life, Heian period</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>THE PILLOW-BOOK OF SEI SHŌNAGON</header>\n\nWhen their Majesties went back to the main building, the Empress said, ‘Come along, both of you,’ intending us to go on duty that minute. ‘Do at least give us time to make up our faces!’ I answered, and we stayed where we were. Later on, when Shikibu and I were still talking about their Majesties’ visit, we became conscious of something swarthy which had suddenly loomed up close to the front door of our room, and was visible through a chink in our curtains, where one flap had got caught up upon the framework. We thought it was only Noritaka, <note>Brother-in-law of Murasaki, authoress of The Tale of Genji.</note> but on looking more closely we saw that the face was not the least like his.\n\nWith a good deal of laughing and scuffling, we began pulling the curtain back into its place; but before we had finished doing so, we realized that it was Yukinari who had been looking at us. This was very annoying, for I had made a point of his never seeing me. Shikibu was sitting with her back to him, so she came out of it all right. Stepping forward, he now said: ‘This time I have really managed to\n\n<margin>¹ Brother-in-law of Murasaki, authoress of The Tale of Genji.</margin>\n\n67\n\n<summary>Sei Shōnagon and Shikibu attempt to compose themselves after the royal visit, only to have their privacy breached by Yukinari, who catches them unawares.</summary>\n<keywords>Yukinari, Shikibu, privacy, curtains, court life</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

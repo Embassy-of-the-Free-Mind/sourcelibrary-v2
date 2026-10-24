@@ -1,0 +1,1280 @@
+[
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83?page=3",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "In a Christian poem 'Jova' is Jehovah. 'Jove' makes the Christian God a pagan one.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83?page=3",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "The centring markup '->J.J.J.<-' leaks into both the transcription and the translation as literal arrows",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83?page=4",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Long-s 'satis' (crops) read as 'fatis' (fates). The error carries into the translation.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83?page=4",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Should read 'to trees and crops'. The translation follows the misread.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a4f450d0de5c369a2509b83",
+    "title": "Armamentarium Turcico-Diabolicum (Olaus Fielkius Crone)",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83?page=4",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The construction is wrong. It should read 'the constant DISCORD of the Earth supplies arms to Styx'. Who arms whom is changed.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 95,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=95",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The headword 邪贏 ('crooked gain') becomes 'market profits', and the cited headword loses its sense.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=96",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "The first character of 漿人 ('soup-seller') is misread as 飺. The translation then invents 'a person with a skin disease'.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=96",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "Numbers invented and the split reversed. The source says the people get ten and the ruler three; nothing mentions seven.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=96",
+    "list": "tr",
+    "class": "T6",
+    "severity": "moderate",
+    "note": "The 據 that ends the sentence carried over from p.95 ('as his authority') becomes an invented 'According to the Law'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=96",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "Zhuangzi line mistranslated: 'the soup-sellers deal only in food and broth, with a surplus of little'",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=97",
+    "list": "ocr",
+    "class": "O9",
+    "severity": "moderate",
+    "note": "Every headword on this page is read as 羸 ('lean'), while pp.95–96 read the same headword as 贏. The convention flips between adjacent pages, and the translation then calls the character 'Lei, meaning lean, thin'.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=97",
+    "list": "ocr",
+    "class": "other:column-reading-order",
+    "severity": "serious",
+    "note": "Reading order scrambled across columns. Wang Fangyi's famine-relief sentence is spliced into the Cui Cong entry, and the headword 年贏 is lost.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=97",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "Wang Fangyi's deeds are given to Cui Cong, an invented '<unclear>20 characters</unclear>' gap appears, and Cui Cong's abolition of the Yangzhou taxes is moved into the Su Ting entry. A reader is misled about who did what.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=97",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "A speculative scholarly note added by the model",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c63ecaf3c49b59c5c99ce",
+    "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce?page=97",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "An invented page description at the head of the translation, built on the 羸 misread",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=39",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'who' read as 'why'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'Sin' dropped, which reverses the point",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "Two lines are merged into one invented line",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "Line dropped",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "The lines are rewritten",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "Two lines are replaced by one invented line",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "Three lines are dropped from the left page",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "Three lines are dropped from the right page",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=40",
+    "list": "tr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "The English-to-English pass copies the OCR, so every invented line and gap reaches the reader. Fidelity to the image is poor.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=41",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "Word substituted; it breaks the rhyme with 'appear'",
+    "lane": {
+      "ocr_model": "gemini-2.5-flash",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69c8691a6c6f3cc53c8567f9",
+    "title": "The answer of the Lord (Joanna Southcott, London 1813)",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9?page=41",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "A chronological gloss invented by the model",
+    "lane": {
+      "ocr_model": "gemini-2.5-flash",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "The first line of the page is replaced by an invented line",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "The line is rewritten into something not on the page, and a speaker is added",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "Garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Chremylus's exclamation lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "Largely guessed; the transcription is low-confidence throughout",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "tr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "A translation of an invented line; the page reads 'Then what doctor is there now in the city?'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "tr",
+    "class": "T10",
+    "severity": "serious",
+    "note": "An invented line followed by an invented interpretive note",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "κράτιστόν ἐστι ('it is best') becomes 'while there is still time'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 29,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=29",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "The names are invented in the vocative; the page has the speaker mark ΧΡΕ and 'Herakles!'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "με ('me') read as ὑμᾶς ('you'), which reverses the question",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "Line garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'ἆρ’ ἐστὶν' is misread as 'ἀρτόπωλις' (bread-seller), and the error carries into the translation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "Penia asks 'Who do you think I am?'. The sense is reversed and the exchange that follows no longer makes sense.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "Should read 'And who are you? You look pale to me.'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 30,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=30",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "The model invents a scholarly identification",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "The stage direction is misread: 'fled' becomes 'appeared', and Poverty becomes 'poor'. It is also tagged as a heading.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "The speaker ΠΕ is lost, and σφῷν is read as σφοδρῶς",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=31",
+    "list": "tr",
+    "class": "O12",
+    "severity": "moderate",
+    "note": "Penia's line of verse is demoted to a margin note with no speaker, so the reader loses her self-identification",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69938a8ee07f979c72ac6590",
+    "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590?page=31",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "A speculative reading of a scholion that is largely illegible",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Greek",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 54,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=54",
+    "list": "tr",
+    "class": "other:invented-translation",
+    "severity": "serious",
+    "note": "The English is not a translation of this page. The whole Latin page (the demons' second and third 'mora', the plurality of their crimes, their progression from lesser to greater sins) is replaced by about 150 words of invented paraphrase on the fall of the angels. None of its sentences matches the transcription, which is correct.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 54,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=54",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "The reader text opens with '<meta>continues from previous page: ...fatal</meta>' and 'ral <note>original: \"fune-\"</note>': a broken catchword seam and leaked markup.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 54,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=54",
+    "list": "other",
+    "class": "E1",
+    "severity": "moderate",
+    "note": "The <summary> describes the invented English rather than the page.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 55,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=55",
+    "list": "tr",
+    "class": "T6",
+    "severity": "moderate",
+    "note": "'funesta mora' (this final, fatal delay: the third 'mora' of the argument) is rendered 'fatal fall', which loses the author's three-stage 'mora' scheme.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 55,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=55",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "'<meta>continues from previous page: fatal</meta>' and a '<sig>B 4</sig>' tag appear in the reader text.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a0853e515c643eb1af51643",
+    "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+    "page": 56,
+    "url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643?page=56",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "In context (a tenth, a ninth, a third; Rev. 12:4) this means a third of the angelic host, not the third rank or order. 'Rank' muddles the quantity argument with the orders question the author raises next.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=96",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Running title in the small margin text misread (理 to 玉)",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=96",
+    "list": "tr",
+    "class": "T9",
+    "severity": "serious",
+    "note": "A whole sentence is dropped: 'what they obtain as their nature is the will of Heaven and Earth, the commander of qi'. This is the half of Zhu Xi's gloss that explains 帥 in the Western Inscription.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=96",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The cause is wrong. The source says bodies differ as one-sided or correct, and therefore natures differ in clarity. The translation replaces this with a vague 'what they obtain is different'.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=96",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The quotation is mangled: '同胞' ('[all people are my] siblings') is turned into a conditional.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a3c6732af3c49b59c5d11ee",
+    "title": "理學類編·卷四~卷六 (vol 2)",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee?page=96",
+    "list": "other",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "Invented markdown heading '# 六' and '## Imperial Approved Complete Library of the Four Treasuries, Compendium of Neo-Confucian Studies, Volume 6', built from page furniture and shown as a title.",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 299,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=299",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "A clause is silently dropped (eye-skip on the repeated 'բուսցի'). The vineyard man's counter-curse ('May thorns and thistles grow in YOUR body, since you curse us without cause') is lost, and his words are merged into Yohan's speech. This is the cause of the bishop's thorn-affliction on the next page.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 299,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=299",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "It inherits the OCR omission, so the counter-curse is attributed to the bishop. 'տարապարտուց' (unjustly, in vain) is also mistranslated as 'with your indebtedness'. The story's logic (the man's curse comes true) is lost.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 299,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=299",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The meaning is 'Weren't you an unbaptized catechumen, not yet baptized?'. The negative question in English reads as if he WAS baptized, which blurs the joke.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 300,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=300",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "The sense is obscured: the passage says he made a jest of himself out of greed, and the rare word միհանէսք is glossed away as 'his only means'.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 301,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=301",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "The running head is misread as 'Contents' and translated as 'CONTENTS'.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69a5ead1d507939f0352ced7",
+    "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+    "page": 301,
+    "url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7?page=301",
+    "list": "tr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "The invented 'CONTENTS' header sits on a narrative page.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Armenian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "page": 389,
+    "url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6?page=389",
+    "list": "ocr",
+    "class": "O16",
+    "severity": "moderate",
+    "note": "A page number is invented for an unnumbered verso.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "page": 389,
+    "url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6?page=389",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "'il mè del mondo' = 'more than anything in the world' (mè = meglio); the English is nonsense.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "page": 389,
+    "url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6?page=389",
+    "list": "other",
+    "class": "O15",
+    "severity": "moderate",
+    "note": "The OCR pane carries model reasoning: '<meta>The page number 71 is visible on the facing page in the original binding, but this scan focuses on the verso side ... this is a continuation of a letter.</meta>'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "page": 390,
+    "url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6?page=390",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The meaning is 'tell him that [I] am as obedient a son to him as [I] am a loving brother to you'. The English garbles who is son and who is brother.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "6a06f2fbf27801273413e9c6",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "page": 391,
+    "url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6?page=391",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "The signatory's name is misspelled; this is Giuliano Gosellino.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69de98d21b234a773e439622",
+    "title": "De Prospectiva Pingendi",
+    "page": 40,
+    "url": "https://sourcelibrary.org/book/69de98d21b234a773e439622?page=40",
+    "list": "other",
+    "class": "T5",
+    "severity": "moderate",
+    "note": "The translation opens with a <meta> block that repeats the last paragraph of p.39's English in full; a reader sees it twice.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69de98d21b234a773e439622",
+    "title": "De Prospectiva Pingendi",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/69de98d21b234a773e439622?page=41",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Measurement point misread, carried into English as 'stem of the dove's head'.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-23-r4",
+    "frame": "public",
+    "book_id": "69de98d21b234a773e439622",
+    "title": "De Prospectiva Pingendi",
+    "page": 41,
+    "url": "https://sourcelibrary.org/book/69de98d21b234a773e439622?page=41",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "It inherits the OCR misreading of 'Mitte' (the middle of the dove's head), and it completes the hyphenated word at the page break as 'height' without marking the guess.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  }
+]

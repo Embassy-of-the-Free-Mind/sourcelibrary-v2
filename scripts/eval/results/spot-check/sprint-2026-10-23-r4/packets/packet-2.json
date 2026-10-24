@@ -1,0 +1,420 @@
+[
+ {
+  "slot": 6,
+  "book_id": "6a0853e515c643eb1af51643",
+  "book_url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643",
+  "tradition": null,
+  "book": {
+   "id": "6a0853e515c643eb1af51643",
+   "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+   "display_title": null,
+   "author": "Giovanni Lorenzo D'Anania",
+   "language": "Latin",
+   "published": "1581",
+   "ia_identifier": "bub_gb_MynQXp8GaqIC",
+   "pages_count": 279,
+   "pages_ocr": 279,
+   "pages_translated": 272,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 279,
+   "distinct_page_numbers": 279,
+   "duplicate_records": 0,
+   "pages_with_ocr": 279,
+   "pages_translated": 272,
+   "with_printed_number": 232,
+   "printed_backsteps": 8,
+   "printed_repeats": 32,
+   "pages_count_field": 279,
+   "pages_ocr_field": 279,
+   "pages_translated_field": 272
+  },
+  "run": [
+   54,
+   55,
+   56
+  ],
+  "pages": [
+   {
+    "page_number": 54,
+    "page_id": "6a0853e515c643eb1af51679",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/54.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>22</page-num>\n<header>Io. Laurentii Ananiae</header>\n<meta>catchword: fune-</meta>\n\npaulo postquam esset producta, manciparetur, eo maxime, quod in suis, ut Scriptura inquit, Angelis reperit mutationem. Verumtamen Daemones (libet enim inceptum ordinem prosequi) plus iusto et aequo diutius, a uoluntate sui Creatoris sese abstrahendo, usque adeo omnes, sui ipsorum amore immoderati, stulti, et ebrii, in hac secunda mora processere, ut tandem iustissimo Dei iudicio, honorem suum alteri non dantis, in ea praefracta ceruice, in odium Dei obstinati perseuerantes, ad unum omnes in tertia damnarentur mora, nulla prorsus iusta excusatione ipsos releuante: siquidem hoc iudicio et sententia non praecipitatione quadam, sed sed potius aequissima Dei longanimitate, iustitia, nempe, ipsa misericordia temperata, contra ipsos processum est. Adde, quod non unius, ut nonnulli opinantur, tantum criminis rei peracti fuerint, sed et diuersorum, quibus omnes simul, sua tamen quisque peculiari malitia, ineffabili cum cupidine agitabatur. Hi enim uariis flagitiis sceleribus impliciti a minoribus ad maiora et atrociora, semper adeo progressi sunt, ut, etsi non ex aequo cuncti, suae naturae praestantia; at uoluntatis certe imperio, frenum sceleratissimis cupiditatibus laxando, in infinitum peccauerint, adeo ut in Dei extremum contemptum et odium (horribile dictu) sic prolapsi et demersi sunt, quo inde pedem referre, retrocedereque, tandem ipsis integrum minime fuerit. Hinc factum, ut hac tandem sua postrema et fune-\n\n<vocab>Daemones, Creator, Dei iudicium, Scriptura, peccauerint, malitia</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Io. Laurentii Ananiae\n\n<meta>continues from previous page: ...fatal</meta>\nral <note>original: \"fune-\"</note> fall, they were cast down. For since they did not desire the light of grace, they remained in their own darkness, which they had chosen for themselves through their own malice. They were not dragged into this by any external force, but rather they rushed into it headlong by the force of their own corrupted wills. Therefore, because their fall was complete and their rebellion against the Creator was total, the judgment that followed was equally final. It was not a matter of a single moment of weakness, but a progression of persistent pride that led to their irreversible state of separation. Thus, they became the authors of their own misery, having rejected the order of divine love and replaced it with an insatiable hunger for their own exaltation.\n\n<summary>This passage continues the theological argument regarding the fall of the demons, asserting that their condemnation was the result of their own persistent, willful rejection of God rather than divine caprice. It emphasizes that their descent into evil was a gradual progression of pride and malice, ultimately leading to a state from which repentance was no longer possible.</summary>\n\n<keywords>demons, fall of the angels, free will, divine justice, malice, pride, theological judgment</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 55,
+    "page_id": "6a0853e515c643eb1af5167a",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/55.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>23</page-num>\n<header>De natura Daemonum Lib. I.</header>\n<sig>B 4</sig>\n<meta>catchword: lapsu</meta>\n\nfunesta mora, ipsi daemones e Caelo, non secus, ac plumbum, in aquam, Angelorum, ut dictum est, ministerio, eiecti praecipitatique fuerint, non sine summa extremaque suorum ignominia, sic interni, uermis nunquam morientis, arrosionis dolore, et ad inferna plerumque relegati; eorum enim plurimi adhuc, (Diuo Iacobo innuente) huic caliginoso frigidoque aeri inhaerent; quem quidem ipse Deus, pro sua miranda et infinita prouidentia, ut nos incautos exerceant, et ad timorem Dei somnolentos exuscitent, usque ad diem magnum Domini, ne et ipsi penitus sine causa ibi relicti uiderentur, ipsis ita concessit permisitque quibus etiam interdum in executione suae diuinae iustitiae in nos homines utitur, ut suo loco dicetur. Atque hos omnes, qui huic inclusi sunt aeri, inferiores fuisse tradunt: magnates enim ob eorum nobilitatem, propriaque uoluntatis a Deo se auertentis furorem et impetum atrocius alijs in creatorem suum peccando, iustissima Dei trutina rem examinantes, ad infima Tartara detrusi sunt, una cum eorum principe Dracone. Hic enim cum suae ipsius stolidae superbiae ueneno, plus caeteris inflatus, nobilioris suae essentiae a Deo concessis donis ad id elatus, reliquique tam turpissimae, aeternisque doloribus expiandae apostasiae, ansam praebuisset; haud iniuria qui amisit mensuram, qua summo torquetur opere, et Dei iure optimo, poenas delictis commensurantis, acerbiores quoque luit, sustinetque. Caeterum, quanta pars\n\n<vocab>daemones, Caelo, Angelorum, Diuo Iacobo, Tartara, Dracone, apostasiae, iustitia Dei</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "De natura Daemonum Lib. I.\n<sig>B 4</sig>\n\n<meta>continues from previous page: fatal</meta> fall, they were cast down. Just as lead is thrown into water, they were cast and precipitated by the ministry of the Angels, as has been said, not without the ultimate and extreme ignominy of their state. They were thus cast down, suffering the pain of the internal worm that never dies <note>a reference to Mark 9:48</note>, and for the most part relegated to the infernal regions. Many of them, however, as Saint James <note>original: \"Diuo Iacobo\"</note> intimates, still cling to this dark and cold air. God himself, in his marvelous and infinite providence, has conceded and permitted them to remain there until the great day of the Lord, so that they might exercise us in our lack of caution and rouse us from our sleepiness toward the fear of God, lest they appear to have been left there entirely without cause. God also makes use of them at times in the execution of his divine justice against us humans, as will be said in its proper place. And it is reported that all those who are confined to this air were the inferior ones. For the magnates <note>great or powerful beings</note>, on account of their nobility and the fury and impetus of their own will turning away from God, by sinning more atrociously against their Creator than the others, were thrust down to the lowest depths of Tartarus <note>the abyss of the underworld</note>, together with their prince, the Dragon <note>original: \"Dracone\"</note>, having examined the matter with the most just scales of God. For he, inflated more than the others by the poison of his own foolish pride, and raised to that state by the gifts granted to him by God for his nobler essence, provided the opportunity for the rest to join in such a shameful apostasy, which must be atoned for with eternal pains. Therefore, he who lost the measure by which he is now tormented with the highest exertion, and by the best right of God, who commensurates punishments to offenses, rightfully suffers and sustains even harsher penalties. Moreover, how great a part",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 56,
+    "page_id": "6a0853e515c643eb1af5167b",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/56.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>24</page-num>\n<header>Io. Laurentii Ananiae</header>\n<meta>catchword: in</meta>\n\n*lapsu illo ceciderit, et an ii omnes unius, uel diuersorum ordinum fuerint: non minima inter Theologos, ea de re dissensio est. Quidam enim considerantes, multo maiorem hominum turbam, ad inferos, cum diabolis ibi cruciandam detrudi, quam ad caelestia gaudia cum Angelis perfruenda, euehi: huius quiddam instar ac simile in ipsis etiam Angelis, usu uenisse, opinati sunt: qua de re, maiori eos etiam numero ad inferos detrusos, hinc colligunt. Alii uero, sanioris aliquanto hac in re (ut mea fert opinio) iudicii, oculis defixis in bonum illud, quod spiritibus, ut intellectus purioris capacibus, inerat, ideo minorem eorum partem, hoc lapsu corruisse, uoluerunt; quorum quidem opinio, ut uero magis consentanea, ita magis amplectenda, mihi uidetur. Quotus tamen quisque eorum sic praecipitatus e Coelis fuerit, a diuersis in diuersas opiniones, itum est. Nam quidam, partem decimam, huius flagitii ream peractam fuisse, referunt; alii uero, nonam his aeternis poenis destinatam. nec pauciores reperire est, numero, qui tertium duntaxat Angelorum agmen, damnatum asserunt; quorum sententiae aut opinioni, utputa D. Ioannis suffultae auctoritati, ex ipsa ueritate haec uerba depromentis: Draconem, sua ipsius cauda tertiam partem stellarum, secum traxisse, plerique tutius inhaerendum praedicant. Verum, a quotis, quibusue ordinibus, pars haec deiecta fuerit, quod non secundum gloriae statum intelligendum, cum nec etiam*\n\n<vocab>Theologos, Angelis, diabolos, lapsu, D. Ioannis, Draconem, inferos</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Io. Laurentii Ananiae\n\nfell in that <term>lapsus</term> <gloss>fall</gloss>, and whether they all belonged to one or different orders, is a subject of no small disagreement among theologians. Some, considering that a much greater crowd of men is thrust down to the infernal regions to be tortured there with the devils, than is raised to enjoy heavenly joys with the Angels, have opined that something of this same sort happened among the Angels themselves. From this, they conclude that a greater number of them were also thrust down to the infernal regions. Others, however, who in my opinion possess a somewhat sounder judgment in this matter, with their eyes fixed on that goodness which was inherent in the spirits as beings capable of a purer intellect, have maintained that a smaller part of them fell in this collapse. This opinion seems to me to be more agreeable to the truth, and thus more to be embraced. Yet, as to exactly how many of them were thus precipitated from the Heavens, various opinions have been held. For some report that a tenth part was guilty of this crime; others, however, that a ninth part was destined for these eternal punishments. And one can find no fewer who assert that only the third rank of Angels was damned. Many declare that it is safer to adhere to the opinion or view supported by the authority of Saint John <note>original: \"D. Ioannis\"</note>, who draws these words from the truth itself: that the Dragon dragged with him a third part of the stars <note>referencing Revelation 12:4</note>. Truly, from how many, or from which orders, this part was cast down—which is not to be understood according to their state of glory, since they never even stood in conditions",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "book_id": "6a3c6732af3c49b59c5d11ee",
+  "book_url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee",
+  "tradition": null,
+  "book": {
+   "id": "6a3c6732af3c49b59c5d11ee",
+   "title": "理學類編·卷四~卷六 (vol 2)",
+   "display_title": null,
+   "author": "張九韶",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06051861.cn",
+   "pages_count": 142,
+   "pages_ocr": 142,
+   "pages_translated": 141,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 142,
+   "distinct_page_numbers": 142,
+   "duplicate_records": 0,
+   "pages_with_ocr": 142,
+   "pages_translated": 141,
+   "with_printed_number": 4,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 142,
+   "pages_ocr_field": 142,
+   "pages_translated_field": 141
+  },
+  "run": [
+   95,
+   96,
+   97
+  ],
+  "pages": [
+   {
+    "page_number": 95,
+    "page_id": "6a3c6732af3c49b59c5d124d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/95.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n張子曰乾稱父坤稱母子茲藐焉乃混然中處故天地\n之塞吾其體天地之帥吾其性民吾同胞物吾與也\n朱子曰天陽也以至健而位乎上父道也地隂也\n以至順而位乎下母道也人稟氣於天賦形於地以\n藐然之身混合無間而位乎中子道也然不曰天地\n而曰乾坤者天地其形體也乾坤其性情也乾者健\n而無息之謂萬物之所以資始也坤者順而有常之\n謂萬物之所資以生者也是乃天地之所以為天地",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Master Zhang said: \"<term>Qian</term> <gloss>the Creative</gloss> is called the father, and <term>Kun</term> <gloss>the Receptive</gloss> is called the mother. I, this tiny creature, dwell blended indistinctly in their midst. Therefore, that which fills Heaven and Earth is my body, and that which directs Heaven and Earth is my nature. All people are my brothers and sisters, and all things are my companions.\"\n\nMaster Zhu said: \"Heaven is <term>yang</term> <gloss>active polarity</gloss>; through supreme vigor it occupies the place above, which is the way of the father. Earth is <term>yin</term> <gloss>receptive polarity</gloss>; through supreme compliance it occupies the place below, which is the way of the mother. Humans receive <term>qi</term> <gloss>vital energy</gloss> from Heaven and take physical form from Earth; with their tiny bodies they blend together seamlessly and occupy the position in the center, which is the way of the child. Yet the reason he speaks of <term>Qian</term> and <term>Kun</term> rather than Heaven and Earth is that Heaven and Earth are their physical forms, while <term>Qian</term> and <term>Kun</term> are their inherent natures and dispositions. <term>Qian</term> refers to vigor without rest, that upon which all things rely for their beginning. <term>Kun</term> refers to compliance with constancy, that upon which all things rely to be born. This is truly the reason why Heaven and Earth are Heaven and Earth.\"\n\n<summary>Master Zhang identifies Heaven and Earth as the universal parents of humanity, establishing cosmic kinship among all people and things. Master Zhu explains that Qian and Kun represent the active and compliant natures of Heaven and Earth, while humans occupy the harmonious center as their children.</summary>\n<keywords>Zhang Zai, Zhu Xi, Western Inscription, Qian and Kun, Heaven and Earth, yin and yang, qi, cosmic kinship, Neo-Confucian cosmology</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 96,
+    "page_id": "6a3c6732af3c49b59c5d124e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/96.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n玉學類編\n<header>卷六</header>\n而父母乎萬物者故指而言之人物並生於天地間\n其所資以為體者皆天地之氣塞乎兩間者也其所\n得以為性者皆天地之志為氣之帥者也然體有偏\n正之殊故其於性也不無明暗之異惟人也得其形\n氣之正是以其心之最靈而有以通乎性命之全體\n於並生之中又為同類而最貴焉故曰同胞則其視\n之也皆如已之兄弟矣物則得夫形氣之偏而不能\n通乎性命之全故與我不同類而不若人之貴然原",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "# 六\n## Imperial Approved Complete Library of the Four Treasuries, Compendium of Neo-Confucian Studies, Volume 6\n\n\"...and are the parents of the ten thousand things. Therefore, when pointing them out, people and things are born together between heaven and earth. What they rely on to form their bodies is all the energy of heaven and earth that fills the space between them. Because what they obtain is different, their natures do not lack differences in clarity and darkness. Only humans obtain the correctness of form and energy. Therefore, their hearts are the most spiritual and have the means to communicate with the complete body of nature and fate. Among all that is born, they are of the same kind and are the most precious. Thus it is said: 'If they are my siblings,' then when one looks at them, it is all as if they were one's own brothers. Things obtain the bias of form and energy and are unable to communicate with the totality of nature and fate. Therefore, they are not of the same kind as me and are not as precious as humans. However, the origin of...\"",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 97,
+    "page_id": "6a3c6732af3c49b59c5d124f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/97.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n其體性之所自是亦本之天地而未甞不同也故曰\n吾與則其視之也亦如巳之儕輩矣 北溪陳氏曰\n塞字是就孟子浩然之氣塞乎天地句掇一字來說\n氣帥字是就孟子志氣之帥也句掇一字來說理\n朱子曰天道流行發育萬物其所以為造化者隂陽五\n行而已而所謂隂陽五行者又必有是理而後有是\n氣及其生物則又必因是氣之聚而後有是形故人\n物之生必得是理然後有以為健順仁義禮智之性",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>their physical nature also originates from Heaven and Earth and has never been different. Therefore it is said: \"they are my companions.\" Thus, regarding them, they are also like one's own peers.\n\nMaster Chen of <term>Beixi</term> <note>Chen Chun, 1159–1223, prominent disciple of Zhu Xi</note> said: The character <term>sai</term> <gloss>filling</gloss> takes a single word from the Mencius passage, \"the flood-like <term>qi</term> <gloss>vital force</gloss> fills Heaven and Earth,\" to explain <term>qi</term>. The character <term>shuai</term> <gloss>commander</gloss> takes a single word from the Mencius passage, \"the will is the commander of <term>qi</term>,\" to explain <term>li</term> <gloss>principle</gloss>.\n\nMaster Zhu <note>Zhu Xi, 1130–1200</note> said: The Way of Heaven circulates, nourishing and bringing forth the myriad things. That which constitutes the creative transformation is simply <term>yin</term> and <term>yang</term> and the Five Elements. Yet regarding what is called <term>yin</term> and <term>yang</term> and the Five Elements, there must first be this <term>li</term> before there is this <term>qi</term>. When it comes to producing living things, it must rely on the gathering of this <term>qi</term> before there is physical form. Therefore, at the birth of humans and things, they must receive this <term>li</term>, and only then do they have that which constitutes the natures of strength, compliance, benevolence, righteousness, propriety, and wisdom.\n\n<summary>This text explores Neo-Confucian cosmology regarding the shared origin of humans and non-human beings through Heaven and Earth. It records commentary by Chen Chun on key Mencian terms and cites Zhu Xi on the priority of principle over vital force in the formation of creatures.</summary>\n<keywords>Neo-Confucianism, Zhu Xi, Chen Chun, Beixi, Mencius, li and qi, principle, vital force, yin and yang, Five Elements, Western Inscription, Zhang Zai</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "book_id": "69a5ead1d507939f0352ced7",
+  "book_url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7",
+  "tradition": null,
+  "book": {
+   "id": "69a5ead1d507939f0352ced7",
+   "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+   "display_title": "History of the Armenians",
+   "author": "P'awstos Buzand",
+   "language": "Armenian",
+   "published": "1883",
+   "ia_identifier": "PawstosiBuzandatswoyPatmutiwnHayotsIChorsDprutiwnspawstos",
+   "pages_count": 320,
+   "pages_ocr": 319,
+   "pages_translated": 306,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "robert-bedrosian-library",
+     "patron-library-collection"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 320,
+   "distinct_page_numbers": 320,
+   "duplicate_records": 0,
+   "pages_with_ocr": 319,
+   "pages_translated": 314,
+   "with_printed_number": 284,
+   "printed_backsteps": 7,
+   "printed_repeats": 12,
+   "pages_count_field": 320,
+   "pages_ocr_field": 319,
+   "pages_translated_field": 306
+  },
+  "run": [
+   299,
+   300,
+   301
+  ],
+  "pages": [
+   {
+    "page_number": 299,
+    "page_id": "69a5ead1d507939f0352d002",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/299.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>276</page-num>\n<header>ԲՈՒԶԱՆԴԱՐԱՆ</header>\n\nբռնաբար յինքն հանեալ զձին, և զայրն արձակեաց:\nԵւ այս ամենայն իրքս վասն ձիոյն եղեն:\n\nԱպա այրն թէ ոչ կամէր՝ աղեքողն արկեալ, գը-\nնայր 'ի տուն իւր, և երթեալ մտանէր 'ի մէջ ընդա-\nնեաց իւրոց, ասէ ցկին իւր և ցընդանիս. Արիք յա-\nղօթս կամք: Եւ նոքա ասեն. Մոլիս դու, զէ՞ւ ու-\nրեմն հարաւ 'ի քեզ: Իսկ նա ասէ. Արիք կամք յա-\nղօթս, վասն զի երէց եմ: Իսկ նոքա զարմացեալ,\nմերթ շիկնէին, մերթ ծիծաղէին. մինչև բազում\nանգամ յամառեալք, ապա ուրեմն հաւանեցան կալ\nյաղօթս ընդ նմա: Ապա ասէ կինն ցայրն իւր. Ո՞չ\nդու երախայ էիր, և չէիր մկրտեալ: Ասէ այրն ցկինն\nիւր. Ապշեցոյց, չետ յիշել, և ոչ ևս յիշեցի զայդ\nասել ցնա. զիս երէց արար, և զձին սանձաւ թամ-\nբաւ առ և անց: Եւ ասեն ցայրն ընդանիքն իւր.\nՅարիցես անդրէն գնասցես առ եպիսկոպոսն, և ա-\nսասցես. Մկրտեալ չէի, զի՞ արարեր զիս երէց: Իսկ\nնորա յարուցեալ գնացեալ առ եպիսկոպոսն, ասէ\nցնա. Ես մկրտեալ չէի, զի՞ արարեր զիս երէց: Եւ\nասէ Յոհան. Սափորով միով ջուր բերէք: Եւ առեալ\nզջուրն էարկ զգլխով նորա, և ասէ. Երթ, մկրտեցի\nզքեզ: Եւ արձակէր զայրն վաղվաղակի յիւրմէ:\n\n# Գ Լ Ո Ւ Խ Թ .\n\n## Յաղագս նորին Յոհաննու:\n\nԵրբեմն սոյն Յոհան անցանէր առ այգեօք ուրումն.\nև էր ժամանակն զայգիս յատելոյ: Աղաղակէր\nառ նա այր մի յայգւոյն, և ասէ. Օրհնեա, տէր\nեպիսկոպոս, զմեզ և զայգիսս: Ասէ Յոհան. Փուշ\nև տատասկ բուսցի, փոխանակ զի տարապարտուց\nանիծանես զմեզ: Եւ եղեն նշանք յաստուծոյ. զի\nիբրև չոգաւ եպիսկոպոսն 'ի վանս իւր, հասին հա-\nրուածք 'ի վերայ նորա, սկսաւ ընդ ամենայն անդամս\n\n<vocab>Յոհան, եպիսկոպոս, մկրտութիւն, երէց, Բուզանդարան</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>BUZANDARAN</header>\n\nforcibly took the horse for himself and released the man.\nAnd all these matters happened because of the horse.\n\nThen the man, whether he wanted to or not, put on the stole and went to his house, and entering among his family, he said to his wife and household, \"Arise, let us pray.\" And they said, \"Are you mad? Why did this happen to you?\" But he said, \"Arise, let us pray, for I am a priest.\" They were amazed, and at times they blushed, and at other times they laughed. After they had persisted many times, they finally agreed to stand in prayer with him. Then his wife said to her husband, \"Were you not a child, and were you not baptized?\" The husband said to his wife, \"I was stunned, it did not occur to me, and I did not think to say that to him. He made me a priest, and the horse was taken away with its bridle and saddle.\" And his family said to the husband, \"Get up and go back to the bishop, and say, 'I was not baptized; why did you make me a priest?'\" He rose and went to the bishop and said to him, \"I was not baptized; why did you make me a priest?\" And Yohan said, \"Bring water in a pitcher.\" He took the water, poured it over his head, and said, \"Go, I have baptized you.\" And he quickly dismissed the man from his presence.\n\n# CHAPTER IX.\n\n## Regarding the same Yohan.\n\nOnce, this same Yohan was passing by someone's vineyard, and it was the time for picking the grapes. A man in the vineyard shouted to him and said, \"Bless us and these vineyards, Lord Bishop.\" Yohan said, \"May thorns and thistles grow, because you curse us with your indebtedness.\" And signs from God occurred: as soon as the bishop went to his monastery, blows came upon him, and he began, in every limb\n\n<summary>The newly made priest questions his baptism, leading Yohan to perform a mocking baptism; subsequently, Yohan curses a vineyard and suffers a physical affliction.</summary>\n<keywords>Yohan, bishop, baptism, priest, Buzandaran, vineyard, blessing, curse</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 300,
+    "page_id": "69a5ead1d507939f0352d003",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/300.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>277</page-num>\n<header>ԴՊՐՈՒԹԻՒՆ Ե.</header>\n\nմարմնոյ նորա որպէս զփուշ հարկանել։ Եւ մեծապէս շտապեալ անկեալ 'ի տանջանս չարաչարս հարուածոց, և 'ի մեծ տագնապի կայր աւուրս բազումս։ Ապա յղեաց կոչեաց առ ինքն զայգորդն, աղաչեաց զնա առնել 'ի վերայ նորա աղօթս, զի փրկեսցի նա 'ի ցաւոցն։ Այգորդն ասէր. Իսկ ես ո՞վ եմ, զի կարեմ զոք օրհնել կամ անիծանել. Թող թէ զայր եպիսկոպոս։ Իսկ նա բռնադատէր զնա յայնժամ. մինչև յառնէր այգորդն կայր յաղօթս և ասէր. Տէր աստուած, դու գիտես՝ զի ես այր մեղաւոր եմ և անարժան, ոչ գիտեմ զաղմուկս՝ յորում ըմբռնեցայս. դու փրկեա զիս յայս 'ի չարէս, զի ասեն՝ թէ զայր եպիսկոպոս դու անիծեր, և ասեն՝ քո բանիւ եղև։ Զի լաւ էր ինձ մահ. քանզի չգիտեմ զայս՝ զոր ինչ զինէն ասեն։ Եւ զայս ասացեալ՝ անդէն բժշկեցաւ եպիսկոպոսն, և սկսաւ յամենայն մարմնոյն փուշն 'ի բաց թափել. և էր իբրև զփուշ խոտոց. վաղվաղակի յարուցեալ ողջացաւ յախտէն։\n\n---\n\n# ԳԼՈՒԽ Ժ.\n\n**Յաղագս նորին Յոհաննու։**\n\nՍոյն Յոհան եպիսկոպոս, որդի Փառննայ, յորժամ երթայր առ թագաւորն Հայոց, խաղակատակ լինէր նոցա. որպէս խաղալովն զանձն իւր կրթէր յագահութեան, որում ծարաւեալ պասքեալ փափաքէր, սակայն միհանէսք<note>1 Ի Պատկանեան օրինակի միահանէք։</note> այն էին նորա։ Ի չորք անկեալ յոտս և 'ի ձեռս սողէր առաջի թագաւորացն, և զուղտու զձայն ածէր կառաչելով, զօրէն ուղտու այնպէս փարելով։ Ընդ կառաչելն ապա մի մի բան խառնելով առնէր 'ի ձայն կառաչելոյն, ասելով՝ թէ ուղտ եմ, ուղտ եմ, և զարքայի զմեղս բառնամ. դիք 'ի վերայ իմ զմեղս արքայի, թող բառնամ։\n\n<vocab>Յոհան եպիսկոպոս, Փառննայ, թագաւորն Հայոց, աղօթք, բժշկութիւն, կառաչել, մեղք</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>BOOK V.</header>\n\nof his body, to be struck as if by thorns. He was in great haste, falling into terrible, painful torments, and he remained in great anguish for many days. Then he sent for the vine-grower and begged him to pray for him so that he might be saved from his pains. The vine-grower said, \"Who am I that I should be able to bless or curse anyone? Let alone a bishop.\" But he forced him at that time, until the vine-grower stood and prayed, saying, \"Lord God, you know that I am a sinful and unworthy man, and I do not know the confusion in which I have been caught. Save me from this evil, because they say that I cursed the bishop, and they say it happened by my word. For death would have been better for me, because I do not know about this thing that they say of me.\" Having said this, the bishop was immediately healed, and the thorns began to fall away from his entire body; and it was like the prickles of grass. He immediately rose and was healed of the ailment.\n\n---\n\n# CHAPTER X.\n\n**Regarding the same Yohan.**\n\nThis same Bishop Yohan, son of Pharnn, whenever he went to the King of the Armenians, would play the jester for them. By playing, he trained himself in the greed for which he thirsted and fasted with desire, yet these were his only means. He would fall onto his hands and feet and crawl before the kings, and he would make the sound of a camel by braying, imitating a camel in that manner. While braying, he would mix in words with the sound of the braying, saying, \"I am a camel, I am a camel, and I bear the sins of the King. Place the sins of the King upon me, let me bear them.\"\n\n<summary>The vine-grower's prayers heal Yohan; Yohan is also described as a greedy man who acted like a jester and a camel before the king to absolve the king's sins in exchange for land and wealth.</summary>\n<keywords>Yohan, bishop, Pharnn, King of Armenians, prayer, healing, greed, camel, sins</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 301,
+    "page_id": "69a5ead1d507939f0352d004",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/301.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>278</page-num>\n<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>\n\nԻսկ թագաւորքն զմուրհակս գիւղաց կամ զագա-\nրակաց գրեալ և կնքեալ՝ դնէին 'ի վերայ ոզինն Յո-\nհաննու փոխանակ ընդ մեղաց իւրեանց. և 'ի թա-\nգաւորէն Հայոց ստացաւ իւր գեղջս և ագարակս\nև գանձս յուղտն լինելոյ և զմեղան բառնալոյ ըստ\nբանիցն: Այսպիսի էր այլս Յոհանս ապեալ յլորժ-\nդութեան և յագահութեան զամենայն աւուրս կե-\nնաց իւրոց. զայսպիսի գործս գործէր վասն ագահու-\nթեան, որ չէր արժան:\n\n### ԳԼՈՒԽ ԺԱ.\n\n**Յաղագս Կիրակոսի եպիսկոպոսի:**\n\nԵւ էր եպիսկոպոսն Տայոց Կիրակոս, որ Շահապ\nանուն կոչէր, այր ճշմարիտ աստուածապաշտ ըստ կա-\nմացն աստուծոյ, և ուղիղ ճշմարտութեամբ առաջ-\nնորդէր ժողովրդեան իւրում. և վարէր զեպիսկոպո-\nսութիւն իւր ըստ կամացն աստուծոյ զամենայն աւ-\nուրս կենաց իւրոց:\n\n### ԳԼՈՒԽ ԺԲ.\n\n**Յաղագս Զորթուաղու եպիսկոպոսի Վանանդայ:**\n\nԵւ Զորթուաղ եպիսկոպոս Վանանդայ գաւառին,\nայր սուրբ պարկեշտ արժանի աստուծոյ, արբեալ\nՈգով սրբով. քրիստոնէութեամբ գնայր գործէր,\nառաջնորդէր իւրում ժողովրդեան ըստ կամացն\nաստուծոյ:\n\n<vocab>Կիրակոս, Զորթուաղ, Վանանդ, եպիսկոպոս, ագահութիւն, աստուածապաշտ</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>CONTENTS</header>\n\nThe kings, having written and sealed the deeds for villages or estates, would place them upon the back of Yohan instead of their sins. From the King of the Armenians, he received villages, estates, and treasures for being a \"camel\" and for \"bearing the sins,\" according to his words. Such was this Yohan, who spent all the days of his life in madness and greed. He performed such acts for the sake of greed, which was not fitting.\n\n### CHAPTER XI.\n\n**Regarding Bishop Kirakos.**\n\nThere was Kirakos, the Bishop of the Tayk region, who was called by the name Shahap. He was a true, God-fearing man according to the will of God, and he led his people with upright truth. He conducted his bishopric according to the will of God throughout all the days of his life.\n\n### CHAPTER XII.\n\n**Regarding Bishop Zortuagh of Vanand.**\n\nAnd Zortuagh, the Bishop of the district of Vanand, was a holy, modest man worthy of God, filled with the Holy Spirit. He lived and acted in Christianity, and led his people according to the will of God.\n\n<summary>Yohan continues his deceitful practices to acquire wealth, while Bishops Kirakos and Zortuagh are praised for their piety and holy conduct.</summary>\n<keywords>Yohan, Kirakos, Tayk, Zortuagh, Vanand, bishop, greed, piety</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 9,
+  "book_id": "6a06f2fbf27801273413e9c6",
+  "book_url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6",
+  "tradition": null,
+  "book": {
+   "id": "6a06f2fbf27801273413e9c6",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+   "display_title": null,
+   "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "language": "Italian",
+   "published": "1549",
+   "ia_identifier": "ita-bnc-ald-00000406-001",
+   "pages_count": 498,
+   "pages_ocr": 498,
+   "pages_translated": 479,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "early-european-books",
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 498,
+   "distinct_page_numbers": 498,
+   "duplicate_records": 0,
+   "pages_with_ocr": 498,
+   "pages_translated": 479,
+   "with_printed_number": 291,
+   "printed_backsteps": 58,
+   "printed_repeats": 162,
+   "pages_count_field": 498,
+   "pages_ocr_field": 498,
+   "pages_translated_field": 479
+  },
+  "run": [
+   389,
+   390,
+   391
+  ],
+  "pages": [
+   {
+    "page_number": 389,
+    "page_id": "6a06f2fbf27801273413eb4b",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/389.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>71</page-num>\n<meta>The page number 71 is visible on the facing page in the original binding, but this scan focuses on the verso side of the previous leaf or the recto of the current one. Based on the context of the book \"Lettere Volgari\", this is a continuation of a letter.</meta>\n\nlettere, poscia ch'io sono in Francia: & di questo m'hanno fatta ampia fede le lettere, che voi m'hauete scritte: ma io no vi ho uoluto mai scriuere per due rispetti: per il primo, accioche mi fusse ben noto, se questo uostro desiderio nasceua da uero amore, che u'inuitasse a desiderar nouelle di me, ò pure da uno appetito cosi fatto: per l'altro, à fine che conosciuta la gran dispositione mia in scriuerui, subito che m'haueste accennato, non haueste ogni di ad essermi adosso con lettere, & prometterui di me uolumi & bibbie, che non sarebbe stato punto à proposito mio, che scriuo tanto per forza di seruitu, che mi fa fuggire la uolontà di scriuere à gli amici per piacere. Nondimeno quando M. Alexandro mio fratello mi ha scritto, che uoi ui dolete di me, che non solo non ui scriua, ma ne pure ui saluti nelle lettere, ch'io scriuo à lui; & ho conosciuto, che questo uostro dolerui dipende da passione, che hauete, temendo forse, ch'io non u'habbia cosi à memoria, come merita l'amore, che uoi mi portate: ho giudicato esser' il tempo, ch'io rompa il silentio, che, tanto tempo ha, ho tenuto con uoi. & mi son risoluto, perche conosciate, che sete in amore da me ricambiato, anzi superato, d'auanzare il desiderio uostro non solamente scriuendoui, come uedete ch'io ui scriuo, ma mandandoui ancora parte delle mie coglionerie Francesche, in che ui dee esser chiara la fede che ho in uoi, che m'assicuro di communicarui ogni mia sciocchezza. Eccoui dunque fratel dolce due sonetti, che nuouamente ho composti; l'uno sopra un dolcissimo bacio donatomi da una dolcissima figlia Francese, che mi uuole il mè del mondo, & io à lei; l'altro al Conte Annibale Nuuolara à sodisfattione di Buona Valle gia Signora di lui, che m'ha pregato à far couelle in questo proposito. Il primo ui\n\n<vocab>Francia, M. Alexandro, sonetti, Conte Annibale Nuuolara, Buona Valle</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "letters, since I have been in France: and of this, the letters that you have written to me have provided ample proof: but I have never wished to write to you for two reasons: firstly, so that it might be well known to me whether this desire of yours arose from true love, which invited you to desire news of me, or rather from some such appetite; and for the other reason, to the end that, having known my great disposition to write to you, as soon as you had given me a hint, you would not have been on my back every day with letters, and promising me volumes and Bibles of myself, which would not have been at all to my purpose, as I write so much by the force of servitude that it makes me flee the will to write to friends for pleasure. Nevertheless, when Mr. Alessandro, my brother, wrote to me that you complain of me, that not only do I not write to you, but I do not even greet you in the letters that I write to him, and I have known that this grievance of yours depends on the passion that you have, perhaps fearing that I do not hold you in memory as the love that you bear me merits, I have judged it to be the time that I break the silence that I have kept with you for so long. And I have resolved, so that you may know that you are returned in love by me, nay, surpassed, to advance your desire not only by writing to you, as you see that I am writing to you, but by sending you also a part of my French <term>coglionerie</term> <gloss>foolish trifles</gloss>, in which the faith that I have in you must be clear to you, for I assure myself to communicate to you every stupidity of mine. Here you have, then, sweet brother, two sonnets that I have newly composed; one upon a sweetest kiss given to me by a sweetest French girl, who wants me as the world, and I her; the other to Count Annibale Nuvolara for the satisfaction of Buona Valle, formerly mistress of him, who has prayed me to make verses to this purpose. The first I",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 390,
+    "page_id": "6a06f2fbf27801273413eb4c",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/390.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>70</page-num>\n\nprego con buon modo à far peruenire in mano della Signora Dorothea, si ch'ella sappia, che sia mia fattura, accio che in un tempo s'aueggia, che io non ho piu quel pensiero di lei, ch'ella dubita, onde fa meco della sdegnosa, & che benach'io non habbia la gratia di lei, uiuo però, & di sorte, che non mi mancano donne, che mi trattano bene. & se ui parrà, che gouernandomi, come ho fatto con uoi nello scriuere ui, io ui habbia fatto torto, datene à lei sola la colpa, che hauendo preso in parte di costumi di lei, ho seguitate le sue uestigie. Quello, che di piu ho ha dirui, che ui prego, che m'amiate, & m'habbiate per tutto uostro, & che facciate le mie raccommandationi al Signor Guido prima, & poi à tutta la corte uostra, salutando particularmente il Pisone. & quando uedrete uostro padre, ditegli, che cosi gli è ubidiente figliuolo, come è à uoi amoreuole fratello.\n\n->Marc'Anto. Bendidio.<-\n\n---\n\n### A M. BARTOLOMEO SALA.\n\nSignor Sala mio osseruandissimo, Molte sono le gratie, ch'io ho riceuute da uostra signoria, ma due sono quelle, di che io le debbo esser maggiormente obligato, che di tutte l'altre: la prima d'hauermi fatto acquistar l'amicitia d'un tant'huomo, com'è M. Galasso Ariosto, & della quale mi reputo tanto indegno, quanto è degno esso di esser amato & osseruato da maggiori di me. è ben uero, che douerei di ciò dolermi piu tosto, che allegrarmi: per esser certo (perche mi conosco molto bene, ne m'inganno punto in questo del\n\n<vocab>Dorothea, Marc'Antonio Bendidio, Bartolomeo Sala, Galasso Ariosto, Pisone, amicitia</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "pray you in good manner to have delivered into the hand of the Lady Dorothea, so that she may know that it is my handiwork, so that at one time she may perceive that I no longer have that thought of her that she suspects, whence she makes herself disdainful with me, and that although I do not have her grace, I live nevertheless, and in such a way that I do not lack women who treat me well. And if it seems to you that, by governing myself as I have done with you in writing to you, I have done you wrong, give the blame for it to her alone, who, having taken on part of her customs, I have followed her footsteps. That which I have more to say to you is that I pray you to love me, and to have me for entirely yours, and that you make my recommendations to Mr. Guido first, and then to all your court, greeting particularly Pisone. And when you see your father, tell him that he has as obedient a son as he has a loving brother in you.\n\n->Marc'Antonio Bendidio.<-\n\n---\n\n### TO MR. BARTOLOMEO SALA.\n\nMy most observant Mr. Sala, many are the graces that I have received from your lordship, but two are those for which I must be more obligated to you than for all the others: the first, for having made me acquire the friendship of such a man as Mr. Galasso Ariosto, and of which I deem myself as unworthy as he is worthy of being loved and observed by those greater than I. It is indeed true that I should grieve for this rather than rejoice: for being certain (because I know myself very well, nor do I deceive myself at all in this",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 391,
+    "page_id": "6a06f2fbf27801273413eb4d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/391.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>The text is printed in an italic typeface characteristic of the Aldine press.</meta>\n\nconoscermi) che non potrò rispondere con fatti alla opinione, che v. s. gli ha fatto prendere di me. ma consolomi poi co'l pensar solo, che ne siete stato cagion voi, et che tutto quel biasimo, che me ne può venire, caderà sopra di voi: se ben di ciò haverei à dolermi anchor più gravemente per l'amicizia nostra. la seconda, che habbiate dato alla mala contentezza mia quel rimedio, ilquale non poteva venirmi dato se non da Dio, havendo fatto quell'ufficio per me con chi appunto bisognava, che io non seppi, ne haverei mai saputo domandare. Parvi signor Sala, che io ne habbi ragione? non voglia negarlo. io vi son molto obligato, e sarò mentre viverò: che non son queste cose da passar per alto. sopra questo obligo potrei dir di molte cose: ma perche non sodisfarei ne à me, ne alla molta affettione, laquale ho con effetti conosciuto che mi portate per bontà vostra, le taccio. dirò solamente, che io sono restituito nel pristino stato, et con favore maggiore di prima, mercè di Dio veramente, ma secondariamente del Sala. Hor non più: io ho ricevuto la risposta della lettera di quel amico mio, et ne bacio à v. s. la mano, et al signor Galasso son servitore, poi che secondo mi scrivete, è piaciuto à sua signoria di accettarmi per tale: ilquale che habbi à corrispondere alla opinione mia, non son punto in dubbio: così fussi certo d'havere à corrispondere io alla sua. Mi raccomando di cuore à v. s. allaquale scriverei qualche cosa di nuovo, se la prescia di questo corriero, che è il signor Don Garcia di Toledo, non me lo disturbasse. Da Spira, alli XIX di Marzo, M. D. XLIIII.\n\n->D. V. S.<-\n->Servitor, Giuliano Goselino.<-\n\n<vocab>Giuliano Goselino, Sala, Galasso, Don Garcia di Toledo, Spira, 1544</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "of knowing myself) that I will not be able to respond with deeds to the opinion that your lordship has made him take of me. But I console myself then with thinking only that you have been the cause of it, and that all that blame that may come to me from it will fall upon you: even if I should have to grieve for this even more gravely for the sake of our friendship. The second is that you have given to my ill-contentment that remedy which could not have been given to me except by God, having performed that office for me with whom it was precisely necessary, which I did not know how, nor would I have ever known how to ask. Does it seem to you, Mr. Sala, that I have reason for it? Do not wish to deny it. I am very obligated to you, and will be while I live: for these are not things to be passed over. Upon this obligation, I could speak of many things: but because I would not satisfy myself, nor the much affection which I have known in effects that you bear me for your goodness, I remain silent about them. I will only say that I am restored to my former state, and with greater favor than before, truly thanks to God, but secondarily to Sala. Now no more: I have received the answer to the letter of that friend of mine, and I kiss your lordship's hand for it, and to Mr. Galasso I am a servant, since, according to what you write to me, it has pleased his lordship to accept me as such: that he has to correspond to my opinion, I am not in doubt at all: I wish I were as certain of having to correspond to his. I recommend myself with heart to your lordship, to whom I would write something new if the haste of this courier, who is Mr. Don Garcia of Toledo, did not disturb me in it. From Speyer, the XIX of March, 1544.\n\n->Your Lordship's<-\n->Servant, Giuliano Goselino.<-",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "book_id": "69de98d21b234a773e439622",
+  "book_url": "https://sourcelibrary.org/book/69de98d21b234a773e439622",
+  "tradition": null,
+  "book": {
+   "id": "69de98d21b234a773e439622",
+   "title": "De Prospectiva Pingendi",
+   "display_title": null,
+   "author": "Piero della Francesca",
+   "language": "Latin",
+   "published": "1899",
+   "ia_identifier": "petruspictorburg00pier",
+   "pages_count": 278,
+   "pages_ocr": 278,
+   "pages_translated": 276,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "getty",
+     "americana"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 278,
+   "distinct_page_numbers": 278,
+   "duplicate_records": 0,
+   "pages_with_ocr": 278,
+   "pages_translated": 276,
+   "with_printed_number": 101,
+   "printed_backsteps": 9,
+   "printed_repeats": 4,
+   "pages_count_field": 278,
+   "pages_ocr_field": 278,
+   "pages_translated_field": 276
+  },
+  "run": [
+   39,
+   40,
+   41
+  ],
+  "pages": [
+   {
+    "page_number": 39,
+    "page_id": "69de98d31b234a773e439649",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/39.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>31</page-num>\n\nwie die verkürzte weibliche Gestalt in der Frauengruppe ad c: zur Abrundung der Gruppe und als Uebergang vom hellen Vordergrund des Figürlichen zum dunklen Hintergrund der Landschaft. Das möglichste Streben nach Symmetrie setzt sich weiter in den Einzelgruppen fort: Die activen Glieder beider Theile rechts und links nehmen den grössern Raum ein: Die Breite ihrer Basis verhält sich beidemal zu der, der passiven wie 3 : 2 wodurch auch formell die durch jene ausgedrückte Stimmung gegen die andern als das die Composition beherrschende sich geltend macht. Zur Vermeidung zu grosser Symmetrie oder auch als Gegengewicht gegen die unsymmetrische Umrahmung zeigen beide Figurengruppen eine leichte Verschiebung nach links. Um dabei den rechts stark fühlbaren Unterschied der Krümmung des Rahmens gegen die Verticale des Figürlichen zu verwischen, sind die letzten Figuren rechts nicht ohne einige Steifheit laufend dargestellt, derart dass ihre Rückentcontour der des Bildrahmens nahezu parallel ist. Das weitere Detail durch Alignement ergibt die Skizze.\n\nb) Tod und Bestattung Adams. Auch hier ist die Lünette der Umrahmung nicht ganz symmetrisch: die Spitze etwas nach links verschoben. Weil das Ganze zwei, der Zeit nach getrennte Vorgänge darstellt, so ist überhaupt die Symmetrie im Figürlichen nicht\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A geometric diagram showing a triangular composition with numbered points (1-19) and lines indicating the structural alignment of figures in a fresco.</image-desc>\n\nFreskencyclus von Arezzo: Tod und Bestattung Adams.\n\nI. Bestattung Adams.\n10 = rechter Absatz der äussersten Figur rechts.\n11 = rechter Schulterpunct der äussersten Figur links.\n12 = Stirnhöhe derselben.\n13 = Durchschnitt der Rückenlinie der rechts gegenüberstehenden Figur mit der verticalen Mittellinie (m).\n14 = Mitte der rechten, vordern Fussbegrenzung der vornüber gebeugten männlichen Figur am linken Ende.\n5-2 = Richtung des rechten Armes der weibl. Figur am Baumstamm.\n13-14 = Richtung des linken Armes ders. (letztere parallel zu 3-9.)\n15 = Durchschnitt des rechten Armes der Figur ad 14 mit der verticalen Mittellinie.\n16 = Ansatz des untersten Astes an der linken Stammseite.\n17 = Mitte der rechten Hand der Endfigur links.\n18 = vorderster, höchster Stirnpunct des rechts. rückwärts von der ausschreitenden männlichen Figur sichtbaren Kopfes.\n19 = Punct, wo die obere Contour des ausgestreckten rechten Armes der Figur ad 15 aus dem Aermel tritt.\n\nII. Tod Adams.\n1 = linker Fussballen des auf die Schaufel Gestützten.\n2 = vorspringendster Punct der linken Gesässcontour ad 1.\n3 = Durchschnitt der Rückenlinie Evas mit der Bildcontour.\n4 = Kopfhöhe der Eva.\n5 = rechter Absatz der Eva.\n6 = Kopfhöhe der Figur ad 1.\n7 = Kopfhöhe der hinter Adam stehenden männl. Figur.\n8 = Punct in der Beinaxe in Höhe des Kniees von Adam.\n9 = linker, unterer Absatzpunct ad 1.\n\nangestrebt, dafür aber in der Anordnung des trennenden Baums, der zum Ausgleich der Unsymmetrie des Bildrahmens um die halbe Stammdicke nach rechts verschoben ist, so dass die linke Stammcontour genau in die Mittellinie des Bildes fällt, die Contour der Krone wie Skizze andeutet, symmetrisch.\n\nDer Vorgang rechts zeigt wenig Figuren in landschaftlich reicher Umgebung, im Hintergrunde die Gruppe der drei Engel, die linke zahlreiche Figuren ohne sonstiges Beiwerk.\n\n<vocab>Freskencyclus, Arezzo, Tod und Bestattung Adams, Symmetrie, Composition, Bildrahmen, Alignement, Lünette</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "— 31 —\n\nas the foreshortened female figure in the women's group ad c: for the rounding off of the group and as a transition from the bright foreground of the figurative to the dark background of the landscape. The greatest possible striving for symmetry continues in the individual groups: The active members of both parts on the right and left occupy the greater space: The width of their base relates in both cases to that of the passive ones as 3 : 2, whereby also formally the mood expressed by the former makes itself felt against the others as the one dominating the composition. To avoid too great a symmetry or also as a counterweight against the asymmetrical framing, both figure groups show a slight shift to the left. In order to blur the difference in the curvature of the frame against the vertical of the figurative, which is strongly perceptible on the right, the last figures on the right are not depicted without some stiffness, such that their back contour is almost parallel to that of the picture frame. The further detail through alignment is yielded by the sketch.\n\nb) Death and Burial of Adam. Here, too, the lunette of the framing is not quite symmetrical: the tip shifted somewhat to the left. Because the whole depicts two processes separated in time, the symmetry in the figurative is generally not\n\n<note>A geometric diagram showing a triangular composition with numbered points (1-19) and lines indicating the structural alignment of figures in a fresco.</note>\n\nFresco cycle of Arezzo: Death and Burial of Adam.\n\nI. Burial of Adam.\n10 = Right heel of the outermost figure on the right.\n11 = Right shoulder point of the outermost figure on the left.\n12 = Forehead height of the same.\n13 = Intersection of the back line of the figure standing opposite on the right with the vertical center line (m).\n14 = Center of the right, front foot boundary of the male figure bending over at the left end.\n5-2 = Direction of the right arm of the female figure at the tree trunk.\n13-14 = Direction of the left arm of the same (the latter parallel to 3-9.)\n15 = Intersection of the right arm of the figure ad 14 with the vertical center line.\n16 = Base of the lowest branch on the left trunk side.\n17 = Center of the right hand of the end figure on the left.\n18 = Frontmost, highest forehead point of the head visible on the right behind the striding male figure.\n19 = Point where the upper contour of the extended right arm of the figure ad 15 emerges from the sleeve.\n\nII. Death of Adam.\n1 = Left ball of the foot of the person leaning on the shovel.\n2 = Most protruding point of the left buttock contour ad 1.\n3 = Intersection of the back line of Eve with the picture contour.\n4 = Head height of Eve.\n5 = Right heel of Eve.\n6 = Head height of the figure ad 1.\n7 = Head height of the male figure standing behind Adam.\n8 = Point in the leg axis at the height of Adam's knee.\n9 = Left, lower heel point ad 1.\n\nstriven for, but instead in the arrangement of the separating tree, which, to compensate for the asymmetry of the picture frame, is shifted by half the trunk thickness to the right, so that the left trunk contour falls exactly into the center line of the picture, and the contour of the crown, as the sketch indicates, is symmetrical.\n\nThe process on the right shows few figures in a landscape-rich environment, in the background the group of the three angels; the left, numerous figures without other accessories.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "69de98d31b234a773e43964a",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/40.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>32</page-num>\n\n--- 32 ---\n\nDas Ganze wird von einem, dem Bildrahmen nahezu sich anschliessenden zur Bildaxe symmetrischen Fünfseit umschlossen, dessen Spitze in der auf der Basismitte errichteten Senkrechten genau in der Bildhöhe, also in der verlängerten linken Stammcontour liegt. Trägt man die halbe Länge der in halber Bildhöhe innerhalb des Bildrahmens gezogenen horizontalen Strecke von rechts her auf der Grundlinie ab, so ergibt sich damit Punct 10: die Begrenzung der linken Gruppe. Die stetige Theilung dieser Gruppenlänge gibt als grösseren Abschnitt die Länge der rechten Gruppe. Beide Gruppen characterisiren sich durch ein die jedesmalige Hauptfigur umfassendes gleichschenkliges Dreieck.¹ Beide Dreiecke werden von den passiven Gliedern in nahezu symmetrischer Art umhüllt, doch ist die Symmetrie bezüglich der linken Gruppe durch die zwei Füllfiguren links am Rande, in der rechten Gruppe durch den Gegensatz der Figuren selber aufgehoben. Die zwei Armrichtungen 13—14 und 5—15 der weiblichen Figur am rechten Ende der linken Gruppe schneiden sich in der aus der wirklichen Lünettenspitze gedachten Verticalen zur Grundlinie. Die Höhe m—o=c—13 ergibt sich als grösserer Abschnitt der stetig getheilten halben Bildbreite. Die untern Contouren des mittlern Baums aligniren sich nahezu auf die unteren Bildecken. Das weitere Details s. Skizze.\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A geometric diagram showing the composition of a painting, with lines and numbered points overlaid on a schematic representation of figures.</image-desc>\n\n4. Auferstehung Christi.\n\n1. Perspective. Augenpunct in der Axe Christi anzunehmen, da dieser in voller rechts und links symmetrischer Vordersicht dem Beschauer gegenübersteht. Augenhöhe angenähert durch die (undeutliche) horizontale Gesimslinie des kastellartigen Bauwerkes im Mittelgrunde bestimmbar, wonach derselbe etwas oberhalb der Deckplatte des Grabes fällt. Die Augendistanz dem Deutlichkeitsgrade der vordern Figuren entsprechend mag etwa 2 Bildhöhen betragen.\n\n| | |\n|---|---|\n| A = Augenpunct. | sprung des vorn liegenden Wächters rechts. |\n| 1 = Stirnmitte Christi. | 7 = Ferseneinschnitt am linken Unterschenkel desselben. |\n| 2 = Ecke des Mantels, ad 1 in Höhe des linken Ellbogens. | 8 = rechte Fussspitze des vorderen Wächters links. |\n| 3 = r. Ellbogenspitze Christi. | 9—10 = linke resp. rechte obere Ecke der Grabplatte. |\n| 4 = Kopfhöhe des sitzenden rückwärtigen Wächters links, wo sie die Axe der Fahnenstange trifft. | 11 = vorderer rechter Zeigefingerknöchel Christi. |\n| 5 = Schläfe des sitzenden rückwärtigen Wächters rechts, wo sie die Partisanenaxe trifft. | 12 = Spitze der Partisane des rechts rückwärts sitzenden Wächters. |\n| 6 = linker Kniescheibenvor- | 13—14 = Richtung des rechten Unterschenkels Christi. |\n| | 15 = Nabel Christi. |\n\n2. Allgemeine Gruppirung. Das Ganze als Centralcomposition in einer, die Verticale kräftig betonenden Umrahmung. Die Axe Christi zeigt eine leichte Verschiebung nach links: das Contourdreieck derselben Figur ist bei entsprechender Verlängerung der schrägen Seiten bis zur Grundlinie nahezu gleichschenklig. Die Länge dieser Basis ist, nachdem die Seitenverschiebung der Axe Christi feststeht, dadurch bestimmt, dass über ihr ein gleichseitiges Dreieck errichtet wird, dessen Höhe die Bildhöhe ist und dessen Spitze im Durchschnitt jener\n\n<note>1 In der linken Gruppe weniger scharf bestimmbar, wegen der Verwaschenheit der Umrisse.</note>\n\n<vocab>Auferstehung Christi, Perspective, Augenpunct, Centralcomposition, Bildrahmen, Bildaxe, Contourdreieck, Gruppirung</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: ...as striven for, but instead in the arrangement of the separating tree, which, to compensate for the asymmetry of the picture frame, is shifted by half the trunk thickness to the right, so that the left trunk contour falls exactly into the center line of the picture, and the contour of the crown, as the sketch indicates, is symmetrical.</meta>\n\nThe whole is enclosed by a pentagon nearly adjacent to the picture frame and symmetrical to the picture axis, whose apex, situated on the vertical line erected at the center of the base, lies exactly at the height of the image, thus in the extended left trunk contour. If one marks off half the length of the horizontal segment drawn at half the image height within the picture frame from the right onto the base line, this results in Point 10: the boundary of the left group. The continuous division <note>a geometric method often called the golden ratio or extreme and mean ratio</note> of this group length provides the length of the right group as the larger section. Both groups are characterized by an isosceles triangle encompassing the respective main figure.<note>1 In the left group less sharply determinable, due to the blurriness of the outlines.</note> Both triangles are enveloped by the passive members in a nearly symmetrical manner, yet the symmetry regarding the left group is neutralized by the two filler figures on the left edge, and in the right group by the contrast of the figures themselves. The two arm directions 13—14 and 5—15 of the female figure at the right end of the left group intersect in the vertical line projected from the actual lunette apex to the base line. The height m—o=c—13 results as the larger section of the continuously divided half-image width. The lower contours of the middle tree align nearly with the lower picture corners. For further details, see the sketch.\n\n<note>A geometric diagram showing the composition of a painting, with lines and numbered points overlaid on a schematic representation of figures.</note>\n\n4. Resurrection of Christ.\n\n1. Perspective. The eye point is to be assumed on the axis of Christ, as he stands opposite the viewer in full symmetrical front view, right and left. The eye level is approximately determinable by the (indistinct) horizontal cornice line of the castle-like structure in the middle ground, according to which it falls slightly above the cover slab of the tomb. The eye distance, corresponding to the degree of clarity of the front figures, may amount to about 2 image heights.\n\n| | |\n|---|---|\n| A = Eye point. | 6 = Left kneecap protrusion of the guard lying in front on the right. |\n| 1 = Center of Christ's forehead. | 7 = Heel incision on the left lower leg of the same. |\n| 2 = Corner of the cloak, ad 1 at the height of the left elbow. | 8 = Right toe of the front guard on the left. |\n| 3 = Tip of Christ's right elbow. | 9—10 = Left and right upper corners of the tomb slab, respectively. |\n| 4 = Head height of the seated rear guard on the left, where it meets the axis of the flagpole. | 11 = Christ's front right knuckle. |\n| 5 = Temple of the seated rear guard on the right, where it meets the partisan axis. | 12 = Tip of the partisan of the guard seated at the rear right. |\n| | 13—14 = Direction of Christ's right lower leg. |\n| | 15 = Christ's navel. |\n\n2. General Grouping. The whole as a central composition within a frame that strongly emphasizes the vertical. The axis of Christ shows a slight shift to the left: the contour triangle of the same figure is nearly isosceles with a corresponding extension of the slanted sides to the base line. Once the lateral shift of Christ's axis is established, the length of this base is determined by erecting an equilateral triangle over it, whose height is the image height and whose apex is at the intersection of that\n\n<note>1 In the left group less sharply determinable, due to the blurriness of the outlines.</note>\n\n<summary>This page analyzes the geometric composition of Piero della Francesca's works, specifically focusing on the use of symmetry, isosceles triangles, and perspective in the \"Resurrection of Christ.\"</summary>\n<keywords>Piero della Francesca, Resurrection of Christ, central composition, perspective, geometry, symmetry, eye point</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 41,
+    "page_id": "69de98d31b234a773e43964b",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/41.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>33</page-num>\n\n— 33 —\n\nAxe mit dem oberen Bildrande liegt. Ein über derselben Basis construirtes gleichschenkliges Dreieck dessen Schenkel gleich der Bildhöhe, liefert als Spitze Punct 1 und die Hauptrichtungen der Composition (s. Skizze). Die Puncte 2 und 3 werden ihrerseits als Durchschnitte der Dreieckscontour Christi mit einem Dreieck gefunden, dessen Spitze die des vorerwähnten gleichseitigen dessen Basis die Länge der vordern verticalen Grabplatte, von den innern Rändern aus gemessen ist. Die zwei Halb-Diagonalen dieser Platte, von den äussern oberen Ecken aus gezogen, bestimmen die allgemeine Richtung der zwei vordern Wächter. Die Contouren der hintern bestimmen sich durch Parallelen zu denen des Hauptdreiecks. Der Verschiebung des letzteren nach links entspricht zur Herstellung des Gleichgewichts, eine ebensolche der zwei Dreieckscontouren der beiden rückwärtigen Wächter nach rechts.\n\nDie Kopfhöhe des rechten von der Grundlinie an ist nahezu gleich der Christi vom obern Rande der Grabplatte an gerechnet.\n\nAuch im Beiwerk herrscht grosse Symmetrie: Die Flaggenstange in der rechten Christi ist vom linken Rand des Baumstammes zur linken ebensoweit entfernt, wie die Axe des linken Unterschenkels Christi vom rechten Rande des rechts zunächst befindlichen Baumstammes. Sogar die Contouren der Baumkronen beiderseits schliessen sich im Allgemeinen denen des Hauptdreiecks an.\n\n5. Taufe Christi.\n\n1. Perspective. Der Augenpunct nur näherungsweise bestimmbar. Die seitliche Lage weist auf die Axe Christi hin, der in voller Vordersicht steht. Die Augenhöhe ergibt sich näherungsweise durch Schätzung der Augendistanz. Angenommen dieselbe sei gleich 2 Bildbreiten so würde darnach mittelst des Verhältnisses der natürlichen Menschenhöhe zur Höhe Christi im Bilde die Augenhöhe durch einfache Proportion sich finden. Da jedoch das Verkleinerungsverhältniss die Photographie nicht bekannt ist, so muss noch ausserdem der Abstand Christi vom Auge angenähert bestimmt werden. Schätzt man ihn auf Grund der Abtönung zu etwa 5/2 Bildbreiten so findet sich die Augenhöhe durch Proportion etwas unterhalb des Nabels Christi. Dieser relativ hohen Lage gemäss sind dann auch die Tiefenverhältnisse hier schärfer bestimmt als in den bisher betrachteten Werken, und durch die Gruppenstellung sowie Beiwerk verdeutlicht: Demgemäss ergibt sich schon hier ein gewisser in den Theillinien der Skizze angedeuteter, näherungsweise auf proportionaler Abnahme gleicher Distanzen begründeter Rhytmus (die erste Theillinie geht durch den Fuss der Engelgruppe, die zweite durch den des Entkleidenden, die dritte durch den der 3 Gestalten im Mittelgrunde, die dritte durch die letzte noch sichtbare Flusswindung).\n\nAls Mangel ist die Nichtübereinstimmung der Grössenverhältnisse mit denen der Abtönung zu bezeichnen. Die zu detaillirte Ausführung der Blätter des Baums in der Nähe, die zu scharfen, der Kleinheit nicht entsprechenden Umrisse der Bäume in grösserer Entfernung an die Bezeichnungweise älterer topographischer Karten erinnernd, stört entschieden die einheitliche Stimmung.\n\n2. Allgemeine Raumgliederung. Das Ganze als Längenbild mit oberem Bogenabschlusse, die Anordnung wesentlich Centralcomposition. Die Hauptfigur, Christus, steht mit der Basis des sie umschliessenden gleichschenkligen Dreiecks genau in der Mitte der Grundlinie. Die allzugrosse Symmetrie wird, abgesehen von dem Detail des Figürlichen, schon in den Umrisslinien dadurch aufgehoben, dass das mittlere Dreieck von dem des Täufers durchschnitten wird.\n\nMit Verrochio's Composition gleichen Inhalts verglichen ist wie schon früher bemerkt im vorliegenden Falle die allgemeine Form der Umrahmung passender. Die Gruppe der Engel steht dagegen hier zu sehr im Vordergrunde, die Mittelgruppe der Grösse nach fast coordinirt. Infolge dieses Arrangements sind rechts ihnen gegenüber mehr Figuren zur Herstellung des Gleichgewichts nöthig.\n\nSpeziell: Die Basis des Hauptdreiecks in der Grundlinie gemessen, ist gleich deren halber Länge. Die Höhe, gezählt bis zur Stamme des Taubenkopfes (1) etwa gleich 2/3 der Gesammt-\n\n<vocab>Taufe Christi, Verrochio, Perspective, Raumgliederung, Composition, Christus, Engel, Grabplatte, Wächter</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "— 33 —\n\naxis lies with the upper edge of the picture. An isosceles triangle constructed over the same base, whose sides are equal to the height of the picture, provides point 1 at the apex and the main directions of the composition (see sketch). Points 2 and 3 are found as the intersections of Christ’s triangular contour with a triangle whose apex is that of the aforementioned equilateral one, and whose base is the length of the front vertical tomb slab, measured from the inner edges. The two half-diagonals of this slab, drawn from the outer upper corners, determine the general direction of the two front guards. The contours of the rear guards are determined by parallels to those of the main triangle. The displacement of the latter to the left is countered, for the sake of balance, by a similar displacement of the two triangular contours of the two rear guards to the right.\n\nThe head height of the one on the right, measured from the baseline, is nearly equal to that of Christ, measured from the upper edge of the tomb slab.\n\nGreat symmetry also prevails in the accessories: the flagpole in Christ’s right hand is as far from the left edge of the tree trunk as the axis of Christ’s left lower leg is from the right edge of the tree trunk immediately to the right. Even the contours of the tree crowns on both sides generally follow those of the main triangle.\n\n5. Baptism of Christ.\n\n1. Perspective. The eye point is only determinable by approximation. Its lateral position points to the axis of Christ, who stands in full frontal view. The eye level is found approximately by estimating the viewing distance. Assuming this is equal to twice the picture width, the eye level could be found through simple proportion by using the ratio of natural human height to the height of Christ in the picture. However, since the reduction ratio of the photograph is unknown, the distance of Christ from the eye must also be determined approximately. If one estimates this on the basis of the shading at about 2.5 times the picture width, the eye level is found through proportion to be somewhat below Christ’s navel. Consistent with this relatively high position, the depth relations are defined more sharply here than in the previously examined works, and are clarified by the grouping and accessories. Accordingly, a certain rhythm already emerges here, indicated in the dividing lines of the sketch and based approximately on the proportional decrease of equal distances (the first dividing line passes through the foot of the angel group, the second through that of the figure undressing, the third through that of the three figures in the middle ground, the fourth through the last visible bend of the river).\n\nA defect is the lack of correspondence between the scale of proportions and that of the shading. The overly detailed execution of the leaves on the nearby tree, and the outlines of the distant trees which are too sharp and do not correspond to their small scale—reminiscent of the notation used in older topographic maps—decidedly disturb the unified atmosphere.\n\n2. General Spatial Arrangement. The whole is a horizontal picture with an upper arched finish; the arrangement is essentially a central composition. The main figure, Christ, stands with the base of the isosceles triangle that encloses him exactly in the middle of the baseline. Aside from the details of the figures, the excessive symmetry is broken in the outlines by the fact that the central triangle is intersected by that of the Baptist.\n\nCompared with Verrocchio’s composition of the same subject, it is, as previously noted, the general form of the framing that is more appropriate in this case. The group of angels, however, stands too much in the foreground here, and is almost equal in size to the central group. As a result of this arrangement, more figures are necessary on the right side to establish balance.\n\nSpecifically: the base of the main triangle, measured along the baseline, is equal to half its length. The height, measured to the stem of the dove's head (1), is about equal to 2/3 of the total height.\n\n<summary>This page analyzes the geometric composition and perspective of Piero della Francesca's works, specifically focusing on the structural symmetry of the tomb slab figures and the Baptism of Christ.</summary>\n<keywords>Baptism of Christ, Perspective, Verrocchio, Geometry, Composition, Christ, Angels</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]
