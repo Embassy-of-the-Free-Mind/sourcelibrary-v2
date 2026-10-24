@@ -38,6 +38,7 @@ import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { splitBlockReply } from './claude-translate.mjs';
+import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
 
 const READ_SITE = 'scripts/batch/twopass-review.mjs';
 const PROMPT_VARIANT = 'twopass-review-6865';
@@ -65,6 +66,9 @@ const claudeEnv = () => { const e = { ...process.env }; for (const k of Object.k
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function claudeCall(prompt, cwd) {
+  // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
+  const blocked = claudeBlocked();
+  if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   return new Promise((resolve) => {
     const t0 = Date.now();
     const ch = spawn('claude', ['-p', '--model', MODEL, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, env: claudeEnv(), stdio: ['pipe', 'pipe', 'pipe'] });
@@ -78,6 +82,7 @@ function claudeCall(prompt, cwd) {
       const models = Object.keys(j.modelUsage || {});
       const failed = j.is_error || code !== 0;
       const cls = failed && USAGE_LIMIT.test(text + out + err) ? 'usage_limit' : code === null ? 'timeout' : failed ? `exit_${code}` : !text ? 'empty' : null;
+      if (cls === 'usage_limit') noteLimitHit('claude', { reason: (err || text).slice(-200) });
       resolve({ text: failed ? '' : text, model: models.find((m) => m.includes('opus')) || models[0] || null, usage: j.usage ? { input: j.usage.input_tokens, output: j.usage.output_tokens, cache_read: j.usage.cache_read_input_tokens, turns: j.num_turns } : null, cls, err: (err || out).slice(-300), secs: (Date.now() - t0) / 1000 });
     });
   });
