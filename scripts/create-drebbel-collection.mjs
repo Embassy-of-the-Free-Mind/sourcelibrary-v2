@@ -8,8 +8,8 @@
  * Tagging mirrors src/lib/collection-tagging.ts (the $currentDate updated_at
  * bump is load-bearing: the Supabase books grid syncs on updated_at, #4399).
  *
- * The collection is written with visible:false. It is public copy, so Derek
- * reviews the prose before anyone flips it live. No book's visibility is
+ * A new collection is inserted with visible:false; a re-run never changes
+ * visibility (the collection has been live since 2026-10-21). No book's visibility is
  * touched: hidden books are tagged so they appear on their own once the
  * pipeline finishes them (Monconys I, Becher's De nova temporis, the 1608
  * German Tractat — job drebbel-oven-5811).
@@ -86,13 +86,21 @@ const B = {
   monconys1: '6a44359d0235c9147000dd12',
   becherNovaTemporis: '6a906d3f32545072610bae03',
   tractat1608: '6a9058b07f6818cc17cd5a93',
+  // The furnace witnesses, readable since job drebbel-oven-5811 (prose 2026-10-24, #5811)
+  tymme: '6ac3ade2864e04424c043050',
+  schwenter: '6a0a24020eca358f15e84edc',
+  birch1: '6ac2798b02c7f994f85066f6',
+  birch2: '6ac2798d02c7f994f8506911',
+  woodcroft: '6ac2798802c7f994f8506684',
+  boyleAir: '6ac3af023b2f03f7e59cba4e',
 };
 
 const BOOKS_TO_TAG = Object.values(B);
 
 // Slugs, read back from the books collection on 2026-10-04.
 const S = {
-  tractatusDuo: 'drebbel-tractatus-duo-1628-latin-laurembergius',
+  // The tagged copy (6836f8ee). The laurembergius slug is a second 1628 copy that is not in the collection.
+  tractatusDuo: 'two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel',
   thoroughExplanation1715: 'a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel',
   diversTraitez1672: 'divers-traitez-de-la-philosophie-naturelle-bernardus',
   basilius1624: 'fr-basilii-valentini-benedicter-ordens-offenbahrung-der-basilius',
@@ -124,6 +132,13 @@ const S = {
   rothScholtzCatalogue: 'chemical-library-or-catalogue-of-chemical-books-roth-scholtz',
   humboldt: 'kosmos-entwurf-einer-physischen-weltbeschreibung-bd-2-humboldt',
   kaartAlkmaar: 'kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel',
+  tymme: 'a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm',
+  schwenter: 'deliciae-physico-mathematicae-mathemat-und-philosophische-schwenter',
+  birch1: 'the-history-of-the-royal-society-of-london-for-improving-of-natural-kn',
+  birch2: 'the-history-of-the-royal-society-of-london-for-improving-of-natural-kn-2',
+  monconys: 'journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys',
+  woodcroft: 'appendix-to-the-reference-index-of-patents-of-invention-from-1617-to-1',
+  boyleAir: 'the-general-history-of-the-air-boyle-robert',
 };
 const link = (label, key, page) => `[${label}](/book/${S[key]}${page ? `?page=${page}` : ''})`;
 
@@ -131,13 +146,16 @@ const link = (label, key, page) => `[${label}](/book/${S[key]}${page ? `?page=${
 
 const NAME = 'Cornelis Drebbel';
 const SUBTITLE = 'The inventor from Alkmaar, as his own books and his astonished contemporaries describe him.';
+// Rewritten 2026-10-24 from the drebbel-prose-5811 draft (#5811). Every pinpoint was read
+// against the page: no page we hold names the Thames (Hernández says London), and Sorbière
+// says only that the scarlet did well for Kuffler, so neither claim is made.
 const DESCRIPTION =
-  'Cornelis Drebbel (1572–1633) built a boat that travelled under the Thames, a globe that seemed to move by itself, a furnace that held its own heat, and a scarlet dye that made his family rich. His own treatise on the elements survives in many editions; most of what we know of the machines comes from the people who saw them.';
+  "Cornelis Drebbel (1572–1633) built a boat that travelled under water in London, a perpetual motion that he presented to the king, and a furnace that kept its own heat by opening and shutting its air vent. His own book is about the elements; what we know of the machines comes from the people who saw them, in sources ranging from the Royal Society's minutes to a French traveller's journal.";
 
 const INTRO = [
-  '**An engraver from a small market town ended his life as a king\'s engineer, remembered for a boat that travelled under a river, a glass sphere that seemed to turn by its own power, and a furnace that kept its own heat. He wrote almost nothing about the machines; the people who saw them did.**',
-  `His own book is about something else: the ${link('Two Treatises on the Nature of the Elements', 'tractatusDuo')} explain wind, rain, lightning and the quintessence, and were reprinted in Dutch, German, Latin and French for a century. The machines live in other people's pages. ${link('Mersenne', 'mersenne', 309)} worked out how a ship could sink and rise again; a physician in Rome who had it from Drebbel's son-in-law counted the crew, in ${link('Hernández\'s Treasury', 'hernandez', 622)}; ${link('Becher', 'becherTripus', 99)} said the air they breathed came out of a glass. These reports are scattered through Latin chemistry, natural history and medicine, where a reader looking for Drebbel would rarely think to search.`,
-  `Set side by side, the witnesses disagree in useful ways. One counts twenty-four men and a compass under the water, another calls the whole thing vanity, and a London playwright turns it into a joke about an invisible eel sinking ships at Dunkirk, all of it about one boat that none of them describes the same way.`,
+  '**An engraver became a court inventor whose machines are known almost entirely from the people who saw them: a boat that travelled under water, and a furnace that closed its own vent when the fire ran too hot.**',
+  `His own ${link('Two Treatises', 'tractatusDuo')} explain wind, rain, lightning and the quintessence, and say nothing about machines; those live in other people's books. ${link('Thomas Tymme', 'tymme', 7)} printed an ${link('engraving', 'tymme', 69)} of the perpetual motion Drebbel presented to the king. ${link('Mersenne', 'mersenne', 309)} worked out how his boat could sink and rise again, and an annotator of ${link('Hernández\'s Treasury', 'hernandez', 622)}, who had the story from Drebbel's son-in-law, counted twenty-four men aboard, eight of them at the oars. ${link('Schwenter', 'schwenter', 291)} passed on Drebbel's own boast that, sitting in a room, he could make onlookers see him now as a king, now as a beggar. These passages are scattered through Latin natural philosophy, German recreations, medical commentary and French travel journals, where a reader looking for one man would rarely think to search.`,
+  `The furnace can be followed from witness to witness. At a Royal Society meeting Dr Goddard suggested ${link('"DREBBEL\'S method of governing a furnace by a thermometer of quicksilver"', 'birch1', 135)}, and Evelyn later proposed that Drebbel's son-in-law be asked for ${link('a description of his new oven', 'birch2', 28)}. ${link('Monconys', 'monconys', 50)} took a carriage out to Stratford-le-Bow to visit the son-in-law, ${link('described', 'monconys', 51)} a vent closed by a counterweighted plate and a tilted glass tube of quicksilver, and printed a ${link('key to his drawing', 'monconys', 52)}, adding that Drebbel had valued the secret as highly as the Great Work. The patent Drebbel's children petitioned for promised stoves whose heat could be ${link('"increased, moderated, or abated"', 'woodcroft', 21)} to any degree, and a letter ${link('Boyle', 'boyleAir', 101)} printed later was still asking whether that furnace had died with him.`,
 ];
 
 const EXPANDED_DESCRIPTION = INTRO.join('\n\n');
@@ -225,7 +243,7 @@ const SECTIONS = [
   },
   {
     title: 'Under the water',
-    description: `Around 1620 Drebbel rowed a closed boat under the Thames. Nobody who rode in it left a full account, so the boat survives as a set of reports at second hand. ${link('Mersenne', 'mersenne', 309)} took it as settled and worked out the physics; a physician who had it from Drebbel's son-in-law gave the crew and the depth in ${link('Hernández', 'hernandez', 622)}; ${link('Becher', 'becherTripus', 99)}, who had met Drebbel's daughter in London, said the air was renewed from a glass; ${link('Wilkins', 'wilkins', 511)} treated it as proven. ${link('Witsen', 'witsen', 200)} thought the whole idea vanity, and ${link('Ben Jonson', 'jonson', 152)} put it on the stage as an invisible eel.`,
+    description: `Around 1620 Drebbel rowed a closed boat under water in London. Nobody who rode in it left a full account, so the boat survives as a set of reports at second hand. ${link('Mersenne', 'mersenne', 309)} took it as settled and worked out the physics; a physician who had it from Drebbel's son-in-law gave the crew and the depth in ${link('Hernández', 'hernandez', 622)}; ${link('Becher', 'becherTripus', 99)}, who had met Drebbel's daughter in London, said the air was renewed from a glass; ${link('Wilkins', 'wilkins', 511)} treated it as proven. ${link('Witsen', 'witsen', 200)} thought the whole idea vanity, and ${link('Ben Jonson', 'jonson', 152)} put it on the stage as an invisible eel.`,
     books: [
       { id: B.mersenne, note: 'Corollary II, "on ships swimming under water": how a ship made as heavy as water could stay at any depth.' },
       { id: B.hernandez, note: 'Twenty-four men, eight at the oars, a compass, and a boat still to be seen in London, as Drebbel\'s son-in-law told it.' },
@@ -406,7 +424,6 @@ try {
         kind: 'exhibit',
         type: 'curated',
         color: 'sage',
-        visible: false,
         book_count: bookCount,
         languages,
         highlighted_books: HIGHLIGHTED_BOOKS,
@@ -415,13 +432,13 @@ try {
         hero_image: IMAGES[0].image_url,
         hero_image_attribution: 'Portrait of Cornelis Drebbel',
         curation_todo: [
-          'Derek reviews the prose, then set visible:true',
-          'Add Monconys, Birch, Evelyn vol ii, Woodcroft once job drebbel-oven-5811 makes them readable (#5811)',
+          'Add Evelyn vol ii once archived',
           'Add the Hamburg Cod. alchim. 652 and CUL MS Ll.5.8 images when the libraries reply',
         ],
         updated_at: now,
       },
-      $setOnInsert: { slug: SLUG, order: 99, created_at: now },
+      // Visibility is set on insert only: the collection went live 2026-10-21, and a re-run must not hide it.
+      $setOnInsert: { slug: SLUG, order: 99, visible: false, created_at: now },
     },
     { upsert: true },
   );
