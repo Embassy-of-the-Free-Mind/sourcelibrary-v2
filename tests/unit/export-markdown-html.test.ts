@@ -128,3 +128,63 @@ describe('markdownToHtml — an unpaired annotation tag is dropped, not printed 
     expect(html).toContain('<span class="margin">[a gloss]</span>');
   });
 });
+
+/**
+ * #7118: a probe of 12 random books' EPUBs counted markup printed as text — 283 `---`, 242 escaped HTML tags, 44
+ * leaked `[[…_PLACEHOLDER:` strings, 88 pipe-table rows, 27 `####` headings. Each case is one of those shapes.
+ */
+describe('markdownToHtml — no markup printed as text (#7118 EPUB probe)', () => {
+  it('converts a gloss inside a note without leaking the placeholder (Man\'yōshū)', () => {
+    const html = markdownToHtml('poem <note>Motoori reads <gloss>the act of holding a branch</gloss> here.</note> end', { stripNotes: false });
+    expect(html).not.toContain('PLACEHOLDER');
+    expect(html).toContain('<span class="note">[Motoori reads <span class="gloss">the act of holding a branch</span> here.]</span>');
+  });
+  it('makes a separator line a rule, not text', () => {
+    const html = markdownToHtml('Newly revised\n---\nat Amsterdam');
+    expect(html).toBe('<p>Newly revised</p>\n<hr/>\n<p>at Amsterdam</p>');
+  });
+  it('turns <br> into a line break, a paired <s> into strikethrough, <foreign> into italic, and drops <center>', () => {
+    const html = markdownToHtml('Hour of <br> Meridian; <s>the metal?</s> called <foreign lang="la">laas</foreign> <center>P.</center>');
+    expect(html).toBe('<p>Hour of <br/> Meridian; <s>the metal?</s> called <i>laas</i> P.</p>');
+  });
+  it('leaves angle brackets that are not tags alone', () => {
+    expect(markdownToHtml('if a < b and c > d')).toContain('a &lt; b and c &gt; d');
+  });
+  it('converts four- to six-hash headings', () => {
+    expect(markdownToHtml('#### Manifestations of Malignant Strike')).toBe('<h4>Manifestations of Malignant Strike</h4>');
+  });
+  it('keeps a <br> inside a table cell as a line break in the cell, so the row survives (Ptolemy)', () => {
+    const html = markdownToHtml('| Midpoint <br> ω | Equal |\n|---|---|\n| 6 | 51 |');
+    expect(html).toContain('<th>Midpoint <br/> ω</th>');
+  });
+  it('makes a block of bullet lines a list, and leaves a lone dash line as text (Ptolemy, horizons)', () => {
+    expect(markdownToHtml('* SOUTH\n* SOUTH-WEST\n* WEST')).toBe('<ul><li>SOUTH</li><li>SOUTH-WEST</li><li>WEST</li></ul>');
+    expect(markdownToHtml('- Alas! said he.')).toBe('<p>- Alas! said he.</p>');
+    expect(markdownToHtml('Landmasses and Regions:\n*   GREENLAND\n*   Baffins Bay\nThen the sea.'))
+      .toBe('<p>Landmasses and Regions:</p>\n<ul><li>GREENLAND</li><li>Baffins Bay</li></ul>\n<p>Then the sea.</p>');
+    expect(markdownToHtml('Be blessed.\n+ JEAN BAPTISTE')).toBe('<p>Be blessed.<br/>+ JEAN BAPTISTE</p>');
+  });
+  it('drops a heading marker typed into a table cell', () => {
+    expect(markdownToHtml('| # Fifth Sound | x |\n|---|---|\n| a | b |')).toContain('<th>Fifth Sound</th>');
+  });
+  it('makes a table that shares its block with a caption a real table', () => {
+    const html = markdownToHtml('Table of lunar eclipses\n| Hour | Mean |\n|---|---|\n| 6 | 51 |');
+    expect(html).toBe('<p>Table of lunar eclipses</p>\n<table class="page-table"><thead><tr><th>Hour</th><th>Mean</th></tr></thead><tbody><tr><td>6</td><td>51</td></tr></tbody></table>');
+  });
+});
+
+describe('markdownToHtml — OCR layout tags with long attributes, ink and orientation notes, a literal rule (#7118)', () => {
+  it('drops a drop-cap span whose style runs past 80 characters, keeping the letter', () => {
+    const html = markdownToHtml(`<span style="font-size: 200%; float: left; margin-right: 0.2em; line-height: 0.8em; font-family: 'Times New Roman', serif;">N</span>or would it`);
+    expect(html).not.toContain('&lt;');
+    expect(html).toContain('Nor would it');
+  });
+  it('drops <red> and <rotate value="90">', () => {
+    const html = markdownToHtml('<red>Chapter</red> one <rotate value="90">side text</rotate>');
+    expect(html).not.toContain('&lt;');
+    expect(html).toContain('Chapter one side text');
+  });
+  it('reads a literal <hr/> on its own line as a rule', () => {
+    expect(markdownToHtml('Before.\n\n<hr/>\n\nAfter.')).toMatch(/<p>Before\.<\/p>\s*<hr\/>\s*<p>After\.<\/p>/);
+  });
+});

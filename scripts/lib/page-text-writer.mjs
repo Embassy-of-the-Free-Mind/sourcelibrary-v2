@@ -100,7 +100,8 @@ export function buildTextRevision({ page, field, next, opts, now, id }) {
     book_id: page.book_id,
     field,
     data: fieldText(prior),
-    source: present ? (obj.source || 'unknown') : 'empty',
+    // revision_source: a sweep label for bulk maintenance (the prior's own source stays in meta.source)
+    source: opts.revision_source || (present ? (obj.source || 'unknown') : 'empty'),
     ...(obj.model ? { model: obj.model } : {}),
     ...(language ? { language } : {}),
     ...(obj.edited_by ? { edited_by: obj.edited_by } : {}),
@@ -160,9 +161,13 @@ export function fieldUpdate(field, value, now) {
  *   { status: 'refused_human_edit' }   — prior is a human edit and overrideHumanEdit is off
  *   { status: 'not_found' }
  *   { status: 'conflict', revision_id } — the page changed under us; nothing written, row aborted
+ *   { status: 'prior_changed' }        — expect_prior_hash given and the stored text is no longer it; nothing written
  *
- * opts: { by, reason, run_id?, overrideHumanEdit?, verbatim?, now?, id? }
+ * opts: { by, reason, run_id?, overrideHumanEdit?, verbatim?, revision_source?, expect_prior_hash?, now?, id? }
+ *   expect_prior_hash: textHash of the text the caller computed `next` FROM; for a sweep that reads, transforms and
+ *     writes later, so a page rewritten in between is refused instead of overwritten with a transform of old text.
  *   verbatim: write `next` exactly as given (no content_hash / updated_at stamping) — for restores.
+ *   revision_source: the row's `source` is this sweep label, not the superseded text's source.
  */
 export async function writePageText(db, pageId, field, next, opts) {
   validateWrite(field, next, opts);
@@ -173,6 +178,7 @@ export async function writePageText(db, pageId, field, next, opts) {
   const prior = page[field];
   if ((prior === undefined || prior === null) && next === null) return { status: 'unchanged', book_id: page.book_id };
   if (isHumanEditedField(prior) && !opts.overrideHumanEdit) return { status: 'refused_human_edit', book_id: page.book_id };
+  if (opts.expect_prior_hash !== undefined && textHash(prior) !== opts.expect_prior_hash) return { status: 'prior_changed', book_id: page.book_id };
 
   const rev = buildTextRevision({ page, field, next, opts, now, id: opts.id || randomBytes(6).toString('hex') });
   await db.collection('page_revisions').insertOne(rev);

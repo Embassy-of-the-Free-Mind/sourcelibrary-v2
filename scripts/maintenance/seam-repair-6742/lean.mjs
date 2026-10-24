@@ -15,6 +15,7 @@
  *                    pending (drawn, not yet repaired); Mongo reads
  *                    [--all-joins --top-books=N] every prose join of the N most-read books, not only the rule tranche
  *                    [--per-book=K] a seeded sample of K joins per book; [--skip-manifest=F,...] other runs' writes
+ *                    [--books=ID,ID] every prose join of the named books, readership aside (#7118; implies --all-joins)
  *   $N $S run        --out=DIR [--max-joins=N] [--repairer=gemini|opus|sonnet] [--pack=1|30] [--conc=4] [--verify-rate=0.07]
  *                    [--max-weekly=60] [--fallback=sonnet|opus|none] [--majors-wide] [--apply]   dry run (no writes) unless --apply;
  *                    --fallback (default sonnet): when agy is locked, the joins Gemini did not reach go to that Claude
@@ -146,6 +147,17 @@ async function readership(db, days) {
   return books.filter(bookLive).map(b => ({ ...b, views: (bySlug.get(b.slug) || 0) + (bySlug.get(b.id) || 0) })).sort((a, b) => b.views - a.views);
 }
 
+/** The books named by --books, in the order given, held to the same live-and-translated test as readership(). */
+async function namedBooks(db, ids) {
+  const rows = await db.collection('books').find(
+    { id: { $in: ids }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 1 } },
+    { projection: { _id: 0, id: 1, slug: 1, title: 1, language: 1, visible: 1, pages_count: 1, pipeline_auto: 1 } }).toArray();
+  const by = new Map(rows.filter(bookLive).map(b => [b.id, { ...b, views: null }]));
+  const missing = ids.filter(id => !by.has(id));
+  if (missing.length) console.error(`--books: not live and translated, skipped: ${missing.join(', ')}`);
+  return ids.filter(id => by.has(id)).map(id => by.get(id));
+}
+
 // ── tight windows ────────────────────────────────────────────────────────────
 const BOUNDARY = /(?<=[.!?。！？][»”"'’)\]]*)\s+(?=[\p{Lu}"“‘'(\[\p{Lo}])/gu;
 export const WIN = { sentences: 2, minChars: 200, maxChars: 900 };
@@ -192,7 +204,7 @@ const asPage = (r) => ({ id: r.id, p: r.page_number, type: r.page_type, ocr: r.o
 export const ALL_JOINS_SEED = 6742;
 /** The seeded per-book sample of join page numbers (N of each join N, N+1); the same book rank gives the same sample. */
 export const perBookSample = (pageNumbers, perBook, rank) => new Set(shuffle(pageNumbers, makeRng(ALL_JOINS_SEED + rank)).slice(0, perBook));
-async function candidates(out, maxJoins, days, { allJoins = false, topBooks = Infinity, perBook = Infinity, skipManifests = [] } = {}) {
+async function candidates(out, maxJoins, days, { allJoins = false, bookIds = [], topBooks = Infinity, perBook = Infinity, skipManifests = [] } = {}) {
   fs.mkdirSync(out, { recursive: true });
   const file = path.join(out, 'candidates.jsonl'), booksFile = path.join(out, 'books-done.jsonl');
   // Top up to maxJoins PENDING joins (drawn, not yet sent to a repairer). A book cut off at the cap is resumed.
@@ -206,7 +218,7 @@ async function candidates(out, maxJoins, days, { allJoins = false, topBooks = In
   const writtenJoins = new Set([...[path.join(out, 'manifest.jsonl'), ...skipManifests].flatMap(f => readJsonl(f)).filter(m => m.written).map(m => m.join),
     ...(fs.existsSync(pilotManifest) ? (await import('zlib')).gunzipSync(fs.readFileSync(pilotManifest)).toString().trim().split('\n').map(l => JSON.parse(l)).filter(m => m.written).map(m => m.join) : [])]);
   const { client, db } = await mongo();
-  const books = (await readership(db, days)).slice(0, topBooks);
+  const books = bookIds.length ? await namedBooks(db, bookIds) : (await readership(db, days)).slice(0, topBooks);
   fs.writeFileSync(path.join(out, 'readership.json'), JSON.stringify({ built_at: new Date().toISOString(), window_days: days, instrument: 'analytics_pageviews, distinct (ip, day) per book, human-filtered at write (ocr-convergence/driver.mjs frame)', books: books.length, top: books.slice(0, 20).map(b => ({ id: b.id, title: (b.title || '').slice(0, 80), views: b.views })) }, null, 1));
   console.log(`${books.length} live translated books with readers in ${days} days; top ${books[0]?.views} views`);
   let rank = 0;
@@ -454,9 +466,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (fallback && !CLAUDE_MODEL[fallback]) { console.error(`--fallback=${fallback}: ${Object.keys(CLAUDE_MODEL).join(', ')} or none`); process.exit(2); }
   const o = { maxJoins: Number(arg('max-joins', 2000)), repairer, fallback, pack: Number(arg('pack', repairer === 'gemini' ? 1 : OPUS_PACK)), conc: Number(arg('conc', 4)),
     verifyRate: Number(arg('verify-rate', VERIFY_RATE)), maxWeekly: Number(arg('max-weekly', MAX_WEEKLY)), apply: process.argv.includes('--apply'), majorsWide: process.argv.includes('--majors-wide') };
-  const allJoins = process.argv.includes('--all-joins');
-  if (allJoins && !arg('top-books')) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
-  const co = { allJoins, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
+  // --books=ID,ID (#7118): every prose join of the named books, readership aside — a book about to be featured,
+  // exported, or found broken by a spot check. Implies --all-joins.
+  const bookIds = (arg('books', '') || '').split(',').map(x => x.trim()).filter(Boolean);
+  const allJoins = process.argv.includes('--all-joins') || bookIds.length > 0;
+  if (allJoins && !arg('top-books') && !bookIds.length) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
+  const co = { allJoins, bookIds, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
   const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60)), co), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
     // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first)
     night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60)), co); return run(out, o); } }[cmd];

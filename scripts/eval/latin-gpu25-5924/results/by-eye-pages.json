@@ -1,0 +1,50 @@
+[
+ {
+  "k": 1,
+  "page_id": "69c835706c6f3cc53c84e8f6-p41",
+  "band": "mid",
+  "N": 0.0738,
+  "url": "https://images.sourcelibrary.org/pages/69c835706c6f3cc53c84e8f6/0021-full.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "k": 2,
+  "page_id": "69dbcc270f8c5edf20f46b67-p124",
+  "band": "mid",
+  "N": 0.1663,
+  "url": "https://images.sourcelibrary.org/archived/69dbcc270f8c5edf20f46b67/124.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "k": 3,
+  "page_id": "69dbc9401040d1d5e20a179d-p97",
+  "band": "mid",
+  "N": 0.1416,
+  "url": "https://images.sourcelibrary.org/archived/69dbc9401040d1d5e20a179d/97.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "k": 4,
+  "page_id": "69c82de66c6f3cc53c84d4bf-p180",
+  "band": "mid",
+  "N": 0.4072,
+  "url": "https://images.sourcelibrary.org/pages/69c82de66c6f3cc53c84d4bf/sp69f5350e67d99f24d955d2ca.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "k": 5,
+  "page_id": "69b631ba1c1c21a373809ff8-p848",
+  "band": "catastrophic",
+  "N": 0.7728,
+  "url": "https://images.sourcelibrary.org/archived/69b631ba1c1c21a373809ff8/848.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "k": 6,
+  "page_id": "69bd9e676120d54bd037cc19-p774",
+  "band": "catastrophic",
+  "N": 0.7614,
+  "url": "https://images.sourcelibrary.org/archived/69bd9e676120d54bd037cc19/774.jpg",
+  "stored_model": "gemini-3.1-flash-lite-preview"
+ }
+]

@@ -51,8 +51,8 @@ describe('joinPagesHtml', () => {
   });
 
   it('never runs editorial placeholders together', () => {
-    const html = joinPagesHtml([page(1, '[Blank page — no translatable content]'), page(2, '[Blank page — no translatable content]')]);
-    expect(plain(html)).toBe('<p>|[Blank page — no translatable content]</p>\n<p>|[Blank page — no translatable content]</p>');
+    const html = joinPagesHtml([page(1, '[This page could not be translated]'), page(2, '[This page could not be translated]')]);
+    expect(plain(html)).toBe('<p>|[This page could not be translated]</p>\n<p>|[This page could not be translated]</p>');
   });
 
   it('drops a repeating running head and a signature mark at a join (Giorgi, 2026-10-22)', () => {
@@ -192,5 +192,24 @@ describe('joinPagesHtml', () => {
     const html = joinPagesHtml([page(1, 'the stone was'), page(2, '# Chapter Two\n\nIt begins.')]);
     expect(html).toContain('<h1>Chapter Two</h1>');
     expect(plain(html).startsWith('<p>|the stone was</p>\n|<h1>')).toBe(true);
+  });
+});
+
+describe('joinPagesHtml — blank leaves', () => {
+  it('reads a whole-page "[Blank page]" notice as no text, so the sentence runs across it', () => {
+    const html = joinPagesHtml([page(1, 'the stone was'), page(2, '[Blank page — no translatable content]'), page(3, 'heated for days.')]);
+    expect(html).not.toContain('Blank page');
+    expect(plain(html)).toBe('<p>|the stone was || heated for days.</p>');
+  });
+  it('drops "[Left Column]"-style layout labels standing alone on a line, and nothing else in brackets', () => {
+    const html = joinPagesHtml([page(1, '[Left Column]\nPlato, chief of the Academics 35.11\n[Right column, continued]\nAristotle 12.4\n\n[Column 2]\n\nSee [the column of fire] above.')]);
+    expect(html).not.toMatch(/Column\]|column, continued/);
+    expect(plain(html)).toBe('<p>|Plato, chief of the Academics 35.11<br/>Aristotle 12.4</p>\n<p>See [the column of fire] above.</p>');
+    // In bold, as Giorgi's index has it.
+    expect(joinPagesHtml([page(1, '**INDEX**\n\n**[Left Column]**\n\nAngels 363.2')])).not.toContain('Column');
+  });
+  it('keeps a "could not be translated" notice: that is missing text, not a blank leaf', () => {
+    const html = joinPagesHtml([page(1, 'It ends.'), page(2, '[This page could not be translated due to content recitation]')]);
+    expect(html).toContain('could not be translated');
   });
 });

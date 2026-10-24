@@ -1,0 +1,5019 @@
+[
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p11",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "determinata multas questiones",
+    "print": "determinātia (determinantia) multas questiones",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Problemata Aristotelis",
+    "print": "Probleumata Aristotelis",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "corporum humanarum",
+    "print": "corporum humanorum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p15",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "itrat balneū lz crines planissimos",
+    "print": "itrat balneū lz hz crines planissimos",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "folt qui caloze suo zotū",
+    "print": "soli qui calore suo totum",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>a iiii.</sig>",
+    "print": "a iii.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p18",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "cuius pars caput in se quicquid sensus",
+    "print": "cū ipz caput capit in se quicqz sēsus (cum ipsum caput capit in se quicquid sensus)",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "ex fleumate in stomacho de quo possit",
+    "print": "ex fleumate i stomacho cōtēto. de quo possūt",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "qui sursum petens ipsum caput",
+    "print": "qui sursū petēs exitū ipsum caput",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "fumus immadissimus",
+    "print": "fumus immūdissimus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p22",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "virtus expulsiua et visus",
+    "print": "virtus expulsiua et visiua",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "sic virt⁹ vitius",
+    "print": "sic virt⁹ visiua",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p25",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "als beschi",
+    "print": "albescūt",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "in dētes sic deficit dētes",
+    "print": "in dētes z sic deficiūt dētes",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "naschūf",
+    "print": "nascūt",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p29",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Et hoc declaratur ex a- lio. qz animalia castrata",
+    "print": "Et hoc declarat in simili de corda remissa q̄ grauit sonat. Etiā declarat ex alio. qz aīalia castrata",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "Rur q hoc est op- dium & no naturale",
+    "print": "Rñr q hoc est op⁹ diuinū z nō naturale",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "vox mutat the pubertatis ... ipse spermatis ... the crescendi",
+    "print": "vox mutat tpe (tempore) pubertatis ... tpe spmatis ... tpe crescēdi",
+    "material": true
+   },
+   {
+    "class": "O11",
+    "quote": "<margin>Rur</margin>",
+    "print": "Rñr at start of body line (Respondetur), not a side-note",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p32",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "mulier calidioz effervito caliditate",
+    "print": "mulier calidioz esset viro caliditate",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: nigri</meta>",
+    "print": "no catchword; 'nigri' is a word in the last text line",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p36",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "illa esset decens et ineptadispō",
+    "print": "illa cēt idecēs (esset indecens) et inepta dispō",
+    "material": true
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: gi</meta>",
+    "print": "no catchword; page ends 'vt p3 p'",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "Respondetur scz Aristo.",
+    "print": "Respōdetur scōz (secundum) Aristo.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p39",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Ex quibus duobus motibus fit pullus in toto cozpoze",
+    "print": "Ex quibus duobus motibus fit pulsus in toto corpore",
+    "material": true
+   },
+   {
+    "class": "O3",
+    "quote": "Nār:qz",
+    "print": "Rñr:qz (Respondetur)",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "i libro de\ncl.",
+    "print": "signature 'c i.' below text block, read into the sentence",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p43",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "caseum comedere post prandium et post omnia fercula",
+    "print": "caseū comedere post prandium et pira post omnia fercula",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "set pz digerere no pot",
+    "print": "seipz (seipsum) digerere nō pōt",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "si fpones retur tuc ipts ... tuc iubill a ia digesta",
+    "print": "si ppone rētur tūc ipis ... tūc subtilia iā digesta",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<page-num>ciii.</page-num> <meta>catchword: ciii.</meta>",
+    "print": "signature c iii.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p46",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "R(espondetur) sc(ilicet) cost(a), q(uod) virt(us) digestiua",
+    "print": "Rñr scōz Cōstā(ntinum) qz virt⁹ digestiua",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "non pot(est) mala grossa couertere",
+    "print": "nō pōt materiā grossā cōuertere",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "sc(ilicet) Aristo(teles) i(n) loco preallegato",
+    "print": "scōz (secundum) Aristo. i loco preallegato",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Unde ex materie sicce z calide",
+    "print": "Unde ex pte materie sicce z calide",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p50",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "attrabit femen ... attractōe feminis",
+    "print": "attrabit semen ... attractōe seminis",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "fugioz fozātiua",
+    "print": "supioz forātiua",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: mestru</meta>",
+    "print": "no catchword; last line ends 'mēstruū tāqz'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p54",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "ita quod nullum valet ad generationem, et vbi impeditur sequitur destructio prolis",
+    "print": "ita q nullū valet ad generatiōnē vñ v̄s⁹ Impedit et semen aliud simul et mediante / Quo impeditur sequitur destruccio prolis",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "sicut ad cloacam fluit omnis mundicies civitatis",
+    "print": "sicut ad cloacā fluūt oēs imūdicie ciuitatis",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p57",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Quare pueri aliquando assimilant avibus et animalibus plus quam parentibus",
+    "print": "Quare pueri aliqñ assilant auis z attauis plusqz ppriis parētib⁹ (grandfathers and great-grandfathers)",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "ex epistola quod quodam temporis",
+    "print": "ex ēplū (exemplum) q quōdam tēporis",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "sicut est par et cor",
+    "print": "sicut epar et cor",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>o iiii</sig>",
+    "print": "d iiii",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p61",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Solutio problematum de partibus corporis humani",
+    "print": "Solutis z motis pbleumatib⁹ de ptib⁹ corpis hūani",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "citus ridet et tactus in alio membro",
+    "print": "citius ridet q̄ tact⁹ in alio membro",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "alia ratio est quod statim continuo motu",
+    "print": "Alia rō est qz sūt in cōtinuo motu",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p64",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "Ab e bene confortans ... Abens per quenata",
+    "print": "Me bene confortans ... Mens per que nata",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "Quem si non fractum leri per flebilis actum",
+    "print": "Quem si non fractum leti per flebilis actum",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "scilicet per hereticos cognouisset vritorem",
+    "print": "scz ꝯtra (contra) hereticos cognouisset vtiliorem",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "qui prima sui dione si ut dit in duas partes In qua prima de origine Aristotelis: et ad parentes locum",
+    "print": "qui prima sui diuisione diuidit in duas ptes In quarū pma determinat de origine Aristo: quantū ad parētes z locū",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p68",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "bona consilia praeter absentia propinquo vel in remoto absenti quod per litteras praestat vero per dura verba cum 1 doctrinae",
+    "print": "bona cōsilia p̄sēti z absēti i ppiquo vel i remoto/absēti qdē p literas/p̄sēti vero p dura v̄ba cui⁹ doctrinas",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "Quos gnaros scimus preceptores scribas primus",
+    "print": "Quos gnaros scimus preceptor scribaqz primus",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "<margin>fidei/considera</margin> placed before the prose line",
+    "print": "gloss 'dicta / illius phi / fidei / considera' belongs over the verse 'Carmina pithagore'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p71",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Nunquam peccare diuinum",
+    "print": "Nunqz peccare diuinum disce vocare",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "ut scientias ipse cete ab aliis traditas",
+    "print": "vt sciētias ipfecte (imperfecte) ab aliis traditas",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "<gloss>fabulasse</gloss> <gloss>vitatis parum</gloss>",
+    "print": "ābulasse / v̄itatis (veritatis) parum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p75",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "dicit esse praecep excellentissimum Cuius ol= cta imitatio Prisciani",
+    "print": "dicit eē princeps excellētissim⁹ Cui⁹ dicta imitat⁹ ē priscian⁹",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "quod docet bona operari et vitare",
+    "print": "q docet bonū opari z mala vitare",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<page-num>fl</page-num>",
+    "print": "signature f i",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p78",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "oratio logica lis que vel vel falsi est significativa",
+    "print": "orō logicalis q̄ veri vel falsi ē significatiua",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "propter debilem enuntiationem talium principiorum",
+    "print": "ppt debilē entitatē taliū pricipiorum",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "i. nova logica statim i. in quattuor libris (merged into prose)",
+    "print": "interlinear gloss over 'Ars noua mox sequitur'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p82",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "sicut quatuor elementa ut ignis aer aqua terra et ex his opposita",
+    "print": "sicut q̄tuor elemēta vt ignis aer aqua terra z ex his ꝯposita (composita)",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "secundum modum primi libri de celo.",
+    "print": "interlinear glosses 'i. librū de celo / ꝓ locū / ꝯtrariū / (uēs' over the first verse, merged or dropped",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "que non possunt alio sensu sensu audiri",
+    "print": "q̄ nō pcipiūt alio sēsu qz sēsu audit⁹",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p85",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "In quo autor emendare intendit Aristotelem in sua sapientia",
+    "print": "In quo autor ꝯmēdare (commendare) intendit Aristotelē in sua sapiētia",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "mores et prudentiam philisophia",
+    "print": "mores z prudētiā ꝯsilia (consilia)",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "Ars pro sumministra",
+    "print": "Ars pro summista",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p89",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "in illo cuius est et ad hoc accisum subiecto",
+    "print": "in illo cui⁹ ē tāqz accñs i subiecto",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "non consistit bonum felicitas",
+    "print": "nō ꝯsistit hoīs felicitas",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "<gloss>fore altero</gloss>",
+    "print": "fore / assero",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p92",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "Mominus inde status poterit tuus esse beatus",
+    "print": "Nō minus inde status poterit tuus esse beatus",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "<gloss>f. uirtue</gloss> <gloss>fesse</gloss>",
+    "print": "s. vite tue / felix",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "non potest habere virtutis magnificentie",
+    "print": "nō pōt hēre vsū ṽtutis magnificētie",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p96",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Ista est epistola in qua auctor deterrat",
+    "print": "Ista ē p̄s vltia (pars ultima) i qua autor determinat",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "quoniam morti euadere non possum quoniam spena mea",
+    "print": "q vim mortis euadere nō possū q̄uis (quamvis) pena mea",
+    "material": false
+   },
+   {
+    "class": "O3",
+    "quote": "Nam scio quod mortis viam capiar",
+    "print": "Nam scio q mortis vi iam capiar",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p40",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "Lib. 1. in Epist. 1. sic scribit",
+    "print": "Lib. 11. Epist. 1. sic scribit",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "Hofius Cardinalis",
+    "print": "Hosius Cardinalis",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Alphonfus de Castro",
+    "print": "Alphonsus de Castro",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "à Lutheri ita abhorruerit",
+    "print": "à Luthero ita abhorruerit",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: men ti,</meta>",
+    "print": "'men ti,' is the end of 'momenti' on the last line, not a catchword; page number 18 not recorded",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p70",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Bellarmin. d. 1.",
+    "print": "Bellarmin. d. l. (dicto loco)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p100",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p131",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Ignis Corpora facra facri Consumferat Hussi",
+    "print": "IgnIs Corpora saCra saCrI ConsVmserat HVssI (chronogram capitals)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "quem vox fumma canebat",
+    "print": "quem vox summa canebat",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Magister Johannes Oftendorpius",
+    "print": "Magister Johannes Ostendorpius",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "reformaturae essent",
+    "print": "reformaturi essent",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "(catchword omitted)",
+    "print": "catchword 'adolesc.'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p160",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<page-num>118</page-num>",
+    "print": "138",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Articuli difficiles: de cultu Sanctorum",
+    "print": "Articuli difficulter concordabiles: de cultu Sanctorum",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "apud Drefferum",
+    "print": "apud Dresserum",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: Etiamfi</meta>",
+    "print": "catchword is 'pus' (tem-pus); 'Etiamsi' begins the last line",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p190",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "fatetur tamen d. l. n. 95. Nec hujus immolationis acta extare",
+    "print": "fatetur tamen d. l. n. 95. Hæc hujus immolationis acta extare",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "quae communi hactenus confessione credita est",
+    "print": "quæ communi hactenus consensione credita est",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "recepta sit",
+    "print": "recepta fuit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p220",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Confessio eadem pagina 285.",
+    "print": "Conf. idem p. 285. (confer)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ad Euthathium",
+    "print": "ad Eustathium",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Ilorum hæresin",
+    "print": "Istorum hæresin",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p250",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Huic sese conformet Concilium & Pontifex Romanus",
+    "print": "Huic si se conformet Concilium & Pontifex Romanus",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "2. Epist. 1. verf. 2.",
+    "print": "2. Epist. 1. vers. 2.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p279",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "(page ends at 'latro crucem.')",
+    "print": "final 'Con-' and catchword 'fe' omitted",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "cum Lutheri in certamen",
+    "print": "cum Luthero in certamen",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p309",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "veltam illum illis concedere",
+    "print": "vel tantillum illis concedere",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "elucefcit",
+    "print": "elucescit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p339",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Consecrantur in ex pixis, calix, cochlear, fumendo vino",
+    "print": "Consecrantur in ea pixis, calix, cochlear, sumendo vino",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "(catchword omitted)",
+    "print": "catchword 'Abdiæ'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p369",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Noffe vos volumus ... humanis inferviant",
+    "print": "Nosse vos volumus ... humanis inserviant",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Bellarminus d. 1.",
+    "print": "Bellarminus d. l.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p399",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Si vos signa facitis, credite in eum.",
+    "print": "Si tot signa facit, credite in eum.",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "Si enim indrasset",
+    "print": "Si enim intrasset",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "quae non sunt a Romane Pontis",
+    "print": "quæ non sunt à Romano Ponti- (catchword Ponti-)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p428",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "hær. 4. 1. 13.",
+    "print": "hær. 4. l. 13.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p460",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Patrum loco non postremo numerant",
+    "print": "Patrum dicta loco non postremo numerant",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Canisii, Cofteri & Kelleri",
+    "print": "Canisii, Costeri & Kelleri",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p490",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p520",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Perefius de Tradition.",
+    "print": "Peresius de Tradition.",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "pro voto continentiae",
+    "print": "pro voto contenentiæ (printer's spelling)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p549",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "ut probent, legem perfide impleri posse",
+    "print": "ut probent, legem perfectè impleri posse",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "Bailio in Catech. controverf.",
+    "print": "Bailio in Catech. controvers.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p579",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "hoc joco nobis obtriferunt Angli",
+    "print": "hoc joco nobis obtruserunt Angli",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Tertius, qui est de castitate, eleatur ab eodem",
+    "print": "Tertius, qui est de castitate, citatur ab eodem",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "inferuit",
+    "print": "inseruit",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "Turrianus lib. 3. pro Epist.",
+    "print": "'Epist.' is the catchword, merged into the text",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p609",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O4",
+    "quote": "plenissimam potestatem et Petro et Petro et ejus Successoribus",
+    "print": "plenissimam potestatem, sic & Petro & ejus Successoribus",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<header>DE PATRIBUS 599</header>",
+    "print": "page number 599 folded into header",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p639",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "interim negat, eos, qui afferunt Reges fuisse, nisi Historia autoritate",
+    "print": "interim negat, eos, qui asserunt Reges fuisse, niti Historiæ autoritate",
+    "material": true
+   },
+   {
+    "class": "O11",
+    "quote": "ex vulnere illo laterali sanguine Christi",
+    "print": "'Christi' is the catchword",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p668",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "von der autonomia oder Frenstellung ... unter dem Schein der Frenheit des Gewissens",
+    "print": "Freystellung ... Freyheit (Fraktur y read as n)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Eigensinnigkei",
+    "print": "Eigensinnigkeit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p698",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<page-num>488</page-num>",
+    "print": "688",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "in hac Pacificatione facienda",
+    "print": "in hac Pacificatione sancienda",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "zu Desterreich unterin dato",
+    "print": "zu Oesterreich untern dato",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p728",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "balnei fervula",
+    "print": "balnei servula",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "quid statendum sit",
+    "print": "quid statuendum sit",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "sequentia dogmata Lutheri tribuit",
+    "print": "sequentia dogmata Luthero tribuit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p760",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Promptuar. Exempl. Srumii",
+    "print": "Promptuar. Exempl. Srurmii",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Georgius Schererns",
+    "print": "Georgius Schererus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p34",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "duplices esse corporum differuit",
+    "print": "duplices esse cursus animorum disseruit",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "vt si se inquirat labe inexpiabili",
+    "print": "vt si se inquinat labe inexpiabili",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "vbinam fit iste tartarus; Moyfes; Ifaias; fues",
+    "print": "sit; Moyses; Isaias; sues (long s read as f)",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "sacris sermonibus ... atque cœno iacere ... Preparata est heri",
+    "print": "sacrisq; sermonibus ... atque in cœno iacere ... Præparata est ab heri",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p52",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "in fine istius eiusdem dialogi",
+    "print": "in fine istius secundi dialogi",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "vt ipse dicit in fine dialogi",
+    "print": "vt ipse dicit in fine noni dialogi",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "Fecundus deinde; Si ergo diuinum fit",
+    "print": "secundus deinde; sit",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "sed contrario potiùs; lumen creaturis communicat",
+    "print": "sed modo contrario potiùs; lumen creaturis communicatum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p70",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "nos regionem ad virtutem penè optimam habitare",
+    "print": "nos regionem ad virtutem omnium penè optimam habitare",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "(margin 'Situs Solis' missing)",
+    "print": "Situs Solis.",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<header>Orbium Pymander Mercurij 60</header>; <columns>2</columns> with column-break",
+    "print": "side-note 'Orbium numerus' + single column",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p88",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "tanquam vita omnium naturantium",
+    "print": "tanquam vita omnium natura constantium",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "saluatantorum authoritate",
+    "print": "salua tantorum authoritate",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "VIdam contra Auerroem",
+    "print": "QVIdam contra Auerroem (decorated initial Q)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p105",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "illicò materia extruditur",
+    "print": "illicò à materia extruditur",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "non quidem ratione instantaneæ formæ, accidentionis formæ substancialis",
+    "print": "non quidem ratione instantaneæ introductionis formæ substantialis",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "fieri in instanti- via tenenda, ti",
+    "print": "fieri in instanti (side-note 'Communis via tenenda' merged into the sentence)",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Sed sed aliquis",
+    "print": "Sed dicet aliquis",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "Si in aduentu dentia accidentia corrumpantur",
+    "print": "Si in aduentu formæ, accidentia corrumpantur",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p123",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "de pluralitate formarum animalis",
+    "print": "de pluralitate formarum partium animalis",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "vt ex illis mihi fit adhærendum; per vtiq; res",
+    "print": "vt cui ex illis mihi sit adhærendum; per quam vtiq; res",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fit totius compositi forma",
+    "print": "sit (long s as f)",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Visum ... (initial rendered as 'Isum' with image-desc V)",
+    "print": "VIsum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p141",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "duæ eoræ formæ substanciales",
+    "print": "duæ ergo formæ substantiales",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "idque mutatiuæ operatione",
+    "print": "idque mutuatiuæ operatione",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "est corporeus: quod prius",
+    "print": "est corporeus: ergo quod prius",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "secundùm aliquid fui; corruptionē fui",
+    "print": "sui",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p158",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Vnum ergo, secundùm Plotinum, est ens, & vnum",
+    "print": "Vnum ergo, secundùm Plotinum, est ante ens, & vnum",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "non tamen in eo quod est, de aliis prædicatur",
+    "print": "non tamen in eo quod quid est, de alijs prædicatur",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "commune nomentis habentia",
+    "print": "commune nomen entis habentia",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "&amp; (HTML entities throughout)",
+    "print": "&",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p176",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "qua homores veras parenre dicitur",
+    "print": "qua homo res veras parere dicitur",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "iam non est natura; Meritò displicet",
+    "print": "iam non est naturæ; Meritò displicuit",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<column-break/> with side-notes after it; 'Augustinus de nimarum origine'",
+    "print": "single column; side-note 'Augustinus de animarum origine'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p194",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "qui profectò correspondent, non autem actu",
+    "print": "qui profectò correspondenter, non autem actu",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "vt formæ substantiæ eorundem",
+    "print": "vt formæ substantiales eorundem",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "aut fine ordine",
+    "print": "aut sine ordine",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<columns>2</columns> + <column-break/>",
+    "print": "single column",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p212",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "sic enim docet Mercurius, dial: 10.",
+    "print": "sic enim docet Mercurius, ad Tatium loquens, dial: 10.",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "bonus autè nunquam aliqua de re inuidia tangitur; quorum vtrumq; nefas",
+    "print": "bonus autē nulla vnquam aliqua de re inuidia tangitur; quorum vtrumq; nefarium",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "perfecti absoluté boni",
+    "print": "perfecti absolutiq; boni",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "&amp; (HTML entities)",
+    "print": "&",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p229",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O12",
+    "quote": "Sed Soluuntur ar- huiufmodi argumēta ... ſcibile, gumenta.",
+    "print": "side-note 'Soluuntur argumenta' split and spliced into the text",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "philofophi; fatis; effendi; fine dubio; fed",
+    "print": "philosophi; satis; essendi; sine dubio; sed",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "in eo quod eſt; omnia entia ſub obtentu",
+    "print": "in eo quod quid eſt; omniaq; entia ſub obtentu",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<column-break/> followed only by margin numbers",
+    "print": "single column",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p247",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "idem fit sentiendum; vt fit sensus; genus fit solùm",
+    "print": "sit",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "Distinctioni conceptus; (margin 'Plato.' missing)",
+    "print": "Distincti conceptus.; Plato.",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Voniam",
+    "print": "QVoniam (decorated initial Q)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p265",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "nam si indiuidua conferentur, quòd principia essentialia, quæ hæc materia",
+    "print": "nam si indiuidua considerentur, quoad principia essentialia, quæ sunt hæc materia",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "primarum qualitatum actiuarū, mæ & secundæ & sic sunt",
+    "print": "primarum qualitatum actiuarū, & sic sunt (side-note 'Qualitates primæ & secundæ' spliced in)",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "puta inrisibilitatis, guantur.",
+    "print": "puta inrisibilitatis (side-note fragment 'distinguantur' spliced in)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p282",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "ordinis quidem p- nitate",
+    "print": "ordinis quidem vnitate",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Contra prædicta ſic aliquis ſic arguere",
+    "print": "Contra prædicta poſſet aliquis ſic arguere",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "ſed de his plus fatu",
+    "print": "ſed de his plus ſatis",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "forma grauis ... non fit mota",
+    "print": "non ſit mota",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p300",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "quomodo fit intelligendum ipſum poſſibile",
+    "print": "quomodo ſit intelligendum",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "diſp: prima in ſolubij: 21",
+    "print": "diſp: prima in ſolu: dubij: 21",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<columns>2</columns>; header 'De poſsi-' without 'bili'",
+    "print": "single column; side-note 'De poſsibili'",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p318",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "qua ratione, superficies loci dicit: locus ergo",
+    "print": "qua ratione, superficies locus dici poteſt: locus ergo",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "in prædicamentis Aristotefecundum famosiorem",
+    "print": "in prædicamentis Ariſto: ſecundum famoſiorem",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "vt limitas est cauitas naſi",
+    "print": "vt ſimitas eſt cauitas naſi",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Habet tamen quid",
+    "print": "habet tamen locus aliquid",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "(side-notes 'Locus non est positio', 'Materia, forma, finis loci, & efficiens' missing)",
+    "print": "present in margin",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "superficies fine profunditate",
+    "print": "ſine profunditate",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p336",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "congregandi fumus; templum dei nos fumus; Domus dei nos fumus",
+    "print": "ſumus (long s read as f)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "præstò fit. Quid ergo fit locus dei",
+    "print": "præſtò ſit. Quid ergo ſit",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "In loco pascuæ ibi me collocauit, id est, ecclesia",
+    "print": "id eſt, in eccleſia",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<column-break/>",
+    "print": "single column",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p353",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "præcognitio quædam omnuræ colligitur",
+    "print": "præcognitio quædam omnium naturæ colligitur",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "in corpus quoddam iudicium migret",
+    "print": "in corpus quoddam per iudicium migret",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "Isaias clamat & Isa. audet 63.",
+    "print": "Iſaias clamat & audet 63. (side-note 'Iſa.' spliced in)",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "saltem à modò poca me",
+    "print": "ſaltem à modò voca me",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fictor noster fis; Ne irascaris domine fatis",
+    "print": "ſis; ſatis",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p371",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "(lemma lines 'MERCVRIVS.' and 'Deus est mens.' above Commentum V absent)",
+    "print": "MERCVRIVS. / Deus est mens.",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "verùm etiam antequam sonet eius cogitatione inuoluantur",
+    "print": "verùmetiam antequam sonorum eius imagines cogitatione inuoluantur",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ita planè mens paterna conceptu, parit filium",
+    "print": "ita planè mens paterna æterno conceptu, parit filium",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "iam potest videre aliquam verbi similitudinem",
+    "print": "iam poteſt videre aliquam verbi dei ſimilitudinem",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "verbum est naturalis intellectus secundum quem mouetur",
+    "print": "verbum eſt naturalis intellectus motus ſecundùm quem mouetur",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "VAMVIS",
+    "print": "QVAMVIS (decorated initial Q)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p389",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "sed materia non est propria forma",
+    "print": "ſed materiæ non ineſt propria forma",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "materiam sic consideratam",
+    "print": "materiam in ſe conſideratam",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "materia fit medium inter esse & non esse",
+    "print": "materia ſit medium",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Vi contendunt",
+    "print": "QVi contendunt (decorated initial Q)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p406",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "per quidem substantiam compositam",
+    "print": "per ſe quidem ſubſtantiam compoſitam",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "atque proportione ita se habet",
+    "print": "quæ proportione ita ſe habet",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "quae, praeexistens, &amp; (æ dissolved to ae; HTML entities)",
+    "print": "quæ, præexiſtens, &",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p424",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "hanc quidem esse non ens secundùm accidens, priuationem verò per se: materiam esse",
+    "print": "hanc quidem eſſe non ens ſecundùm accidens materiam, priuationem verò per ſe: & materiam eſſe",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "quanquidem illud fit omninò nihil",
+    "print": "quandoquidem illud ſit omninò nihil",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "praedicamenta, caecitas, Timaeo (æ dissolved)",
+    "print": "prædicamenta, cæcitas, Timæo",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p442",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Adhuc, ſinù causalitas eadem est cum causalitate efficientis",
+    "print": "Adhuc, finis cauſalitas eadem eſt cum cauſalitate efficientis",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<columns>2</columns> + <column-break/> followed only by side-notes",
+    "print": "single column",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p460",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Locus mouet vt finis. ibid: / Locus perficit locatum. ibid: / Locus habet potentiam conseruandi. 316",
+    "print": "Locus mouet vt finis. ibid: / Locus naturalis eſt finis. ibid. / Locus habet potentiam conſeruandi. 316 / Locus perficit locatum. ibid.",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "Locus perficit locatum. ibid: (placed under 315)",
+    "print": "Locus perficit locatum. ibid. (under 316)",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "Locus puncti & punctus fit naturaliter cōſideratur",
+    "print": "Locus puncti & punctus ſi naturaliter cōſideratur",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Locus Dei nos fumus; Locus occupat anima",
+    "print": "Locus Dei nos ſumus; Locum occupat anima",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p30",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "atque inter duas illas alia quadam nomine: quas omnes",
+    "print": "atq; inter duas illas alia quaedam media Neptuni, ac demu tres aliae amplissimae sine nomine: quas omnes",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ut Plato ostenderet, ex ijs quae naturalium inter se indicari uolunt",
+    "print": "ex ijs quae nunquam fuere, aliquid euenisse in mundi effectione, ipsumq; factum esse, cum antea non fuisset. Alij per bellum illud Atlantinorum, repugnantia rerum naturalium inter se indicari uolunt",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "et ex homine uice uersa fit no homo, rerum dissensionem intelligi, cum igitur hoc ita fit",
+    "print": "fit non homo, ut Aristoteles lib. 1. Physic. inquit. Cum igitur hoc ita sit",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "ita ut Athenienses sint dij, duce Minerua, Atlantinos ... compecuerunt",
+    "print": "ita ut Athenienses sint dij, qui, duce Minerua, Atlantinos ... compescuerint",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Minerua ipsam, hoc est intelligibile prodentiam",
+    "print": "Mineruam ipsam, hoc est intelligibilem prouidentiam",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p39",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Cum enim mundum denuò producere, sed informare",
+    "print": "Cum enim mundi essentiam aeternam dicat esse, Deum inquit illam non denuò producere, sed informare",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "Interim tamen, quaerendum illud est",
+    "print": "Interim tamen, cum Plato mundum aeternum esse sentiat, quaerendum illud est",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "τὸ ὄν ... τὸ μὴ ὄν",
+    "print": "τὸ ἀεὶ ὄν ... τὸ ὂν οὐδέποτε",
+    "material": true
+   },
+   {
+    "class": "O11",
+    "quote": "sunt, so nihilque",
+    "print": "line number 50 in margin",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p49",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Sed duo absque tertio",
+    "print": "Sed duo sola absque tertio",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Ex quo fit, ut mundus in se animatus est",
+    "print": "Ex quo fit, ut si mundus in se animatus est",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "ut ciſsime ut postremum",
+    "print": "uicissimque ut postremum",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "mediuque aliquod uinculum utrorumque desiderat",
+    "print": "medium aliquod uinculum utrorumque desiderant",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p58",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "παλαι γε καὶ τὸν τῶυ τριῶν πέμπτην οὐσίαν",
+    "print": "καλεῖ γε καὶ τὸν οὐρανὸν πέμπτην οὐσίαν",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "catchword: quis",
+    "print": "quit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p67",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "siquidem per impares numeros naturam eandem & indiuiduam et diuiduam",
+    "print": "siquidem per impares numeros naturam eandem & indiuiduam intelligunt Platonici, per pares naturam alteram & diuiduam",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ἕτερον, id est alterum: id est statum",
+    "print": "ἕτερον, id est alterum: στάσιν, id est statum",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "οὐλέχεται ... τειχῶς ... ἄπομον",
+    "print": "ἐνδέχεται ... τριχῶς ... εἴπομεν",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p76",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "differentia tantum concentumque faciat",
+    "print": "differentia tonum concentumque faciat",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "in triplo sumptate medietate arithmetica",
+    "print": "in triplo sumptus, medietatem arithmeticam",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "animus maximi suarum uirtutum",
+    "print": "animus maximū suarum ui-[rium]",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p86",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "exemplar aeternum esse, quia non posse, quatenus ab eodem illo procedit",
+    "print": "exemplar aeternum esse, quia primum sit: animum uero aeternitatem illam assequi non posse, quatenus ab eodem illo procedit",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "aeternitatem uero a tempore duret apud ipsum mundi opifice, quod nunquam mutetur",
+    "print": "aeternitatem uero a tempore diuersam esse, quod in perpetua quiete semper duret apud ipsum mundi opificem, quodque nunquam mutetur",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "imaginem fleure ipsum",
+    "print": "imaginem fluere ipsum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p95",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "ut antea Platoni xit",
+    "print": "ut antea Plato dixit",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Itaque; octo cœli orbes",
+    "print": "Itaq; octo tunc coeli orbes",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "unà cum illo motu",
+    "print": "unà cum illo motae",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "seu ut alij uolunt, ducentenos",
+    "print": "ducentenis",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p104",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "cur partem immortalem alligare iuniores deos",
+    "print": "cur partem immortalem mortali alligare iuniores deos",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "fidem rum nature",
+    "print": "siderum naturae",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "190 ... 191",
+    "print": "page numbers placed as body lines",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "hec mortalia animalia",
+    "print": "haec mortalia animantia",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p113",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "eosque deos esse daemonas esse",
+    "print": "eosq; deos siue daemonas esse",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "quos Plotinus dicat ad id libro",
+    "print": "quos Plotinus dicato ad id libro",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Regeremque",
+    "print": "Regerentque",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "statuque suo permanebat",
+    "print": "statuq; suo permansit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p123",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Iupiter sanguineae naturae, cupiditatem et hominis conciliat",
+    "print": "Iupiter sanguineae naturae, communitatem inter homines conciliat",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ratio, memoria, imaginatio, ceterorumque ſenſuu est neruis",
+    "print": "ratio, memoria, imaginatio, caeterorumq; sensuum radices sunt: id quod ex ipsis sensuum organis, hoc est neruis",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "quoniam adtrabilis homines",
+    "print": "quoniam atra bilis homines",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "rotunditate imitantur ... totum corpus mouetur",
+    "print": "rotunditatem imitantur ... moueatur",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p132",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "uultum reddit superiorem uerò ad superiora uertatur",
+    "print": "uultum reddit supinum: cum superior luminis pars ad inferiora, inferior uerò ad superiora uertatur",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ex interni inguit, qui est in oculis",
+    "print": "ex interni ignis, inquit, qui est in oculis",
+    "material": false
+   },
+   {
+    "class": "O4",
+    "quote": "αὐταποβαινέτων μὲν τῆς κυρτότητος ... ἀπολιθανέτων μὲν τῆς κυρτότητος",
+    "print": "ἀντανακλωμένων τῶν φώτων πρὸς τὰ μέρη τὰ ἕτερα, ἀπολισθαινόντων μὲν τῆς κυρτότητος",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "propinquius distet",
+    "print": "propinquius sit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p141",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O4",
+    "quote": "His igitur breuiter expositis, tractationem ampliori diuisione, quàm suprà, ducamus: quando hic de Deo",
+    "print": "His igitur breuiter expositis, tractationem naturalium principiorum ingrediamur: quando hic de Deo",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "quid sit ignis, & reliqua. & quæ dicturus est",
+    "print": "quid sit ignis, & reliqua.) Proponens in his Plato quae dicturus est",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "προσῦνον αὐτοῖς ... ἀπεπαθῦναι",
+    "print": "προσῆκον αὐτοῖς ... ἀπεικασθῆναι",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p151",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "multo etiam magis forme productione ab idea proficatur ad materiam",
+    "print": "multo etiam magis formae productionem ab idea promanantem accidentia consequi necesse est. indeq; fit, ut essentialis forma, quam idea procreat, non nuda, sed qualitatibus omnibus corporeis praedita, proficiscatur ad materiam",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "νόησιν, id est formam a Deo productam",
+    "print": "γένεσιν, id est formam a Deo productam",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "χώραν, id est locum, sive ut formam receptaculum",
+    "print": "χώραν, id est locum, siue materiam, ut formarum receptaculum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p160",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "pyramidis apex siue angulus solidus multo longius latus",
+    "print": "pyramidis apex siue angulus solidus multo erit maior angulis planis, ex quibus componitur: quia basis pyramidis integer aequilater est, & quasi longius latus",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "totus equilater ter sex scalenos continebit",
+    "print": "totus aequilater sex scalenos cōtinebit",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "in toto isto triangulo equilatero sex sunt scaleni, iis:",
+    "print": "sex sunt triāguli, iiq; inaequales siue scaleni",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p170",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Aquae genera duo sunt precipua. Vnum humidum, quia generibus aque paruis",
+    "print": "Aquae genera duo sunt praecipua. Vnum humidum, alterum fusile. Humidum quidem, quia generibus aquae paruis",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "ὃ μὲν καει, ὃ φῶς δὲ τοῖς ὄμμασι παρέχει, τό, τε φλογὸς ἄυ-τῶ",
+    "print": "ὃ κάει μέν, φῶς δὲ τοῖς ὄμμασιν οὐ παρέχει, τό τε φλογὸς ἀποσβεσθείσης ἐν τοῖς διαπύροις καταλειπόμενον αὐτοῦ",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "flammam nimirū, que spleat & urat",
+    "print": "quae splendeat & urat",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p179",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "ut ignem, aquam, eiusmodi: alia salem",
+    "print": "ut ignem, aquam, terram, eiusmodiq; alia: salem",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "quia terre maiori parte, quàm constane",
+    "print": "quia terrae maiori parte, quàm aquae constant",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "ex salſerestriq́ue humore",
+    "print": "ex salso terrestriq; humore",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p188",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "lingua quidem cum gustus instrumentum sit, sapores omnes discernit. Eadem enim spon-",
+    "print": "col. 1 continues ~25 more lines: 'giae similis est, ut cibi succum excipiat ... Haec igitur saporum differentiae di-' (saliva as medium, Aristotle's two chief tastes, the five derived tastes, Theophrastus' pinguis)",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "tredecim genera co- duci.",
+    "print": "tredecim genera cōnumeret, quae omnia ad septē superiora possunt reduci",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "<margin>ἐπὶ τῶτο ὁ χυμὸς ...</margin> ... 10 Sed ut ad Platonis ... 20 quamuis ... 40 differt",
+    "print": "Greek definition is in-line body text; 10/20/40/50 are margin line numbers",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "Qua in re 40 differt a Galeno, quòd hic",
+    "print": "Qua in re differt à Galeno Plato, quòd hic",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p197",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "Quibus Galenus lib. 3. de Placit. Hippocrat.",
+    "print": "Quibus Galenus lib. 8. de Placit. Hippocrat.",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "cor refrigerent",
+    "print": "cor refrigerant",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "acraque; ducitur, sed quod circa tunicam aeris instar descenderat",
+    "print": "aerq; ducitur, sed quod circa tunicam aeris instar descendat",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p207",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Nam ad oculos, olfactus organa sunt",
+    "print": "Nam ad oculos porrecti, sensum uisus excipiunt: ad nares, olfactus organa sunt",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "e radicibus palati nascens, ac ſermonis instrumentum est",
+    "print": "e radicibus palati nascens, neruis septimae coniugationis annectitur, gustusq; ac sermonis instrumentum est",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "quia flexiones non erat habiturum, ne ſulcuerut",
+    "print": "quia flexiones non erat habiturum, nō fulciuerūt",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p216",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "certe anhelitus hic circuas, expirationem et inspirationem continet",
+    "print": "certè anhelitus hic circulo quodam hinc & illinc iugiter fluctuans, expirationem & inspirationem continet",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "spiritus comminuendis, concoquendis, a calore cibis prodest",
+    "print": "spiritus comminuendis, concoquendisq; à calore cibis prodest",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Idque retiſagene compauaimus",
+    "print": "Idq; reti sagenae comparauimus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p225",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Nam cum partes illas numero, figura",
+    "print": "Nam cum partes similares numero, figura",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "post simplici morborum causas",
+    "print": "post simplicium morborum causas",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "camque ex defectu",
+    "print": "eamq; ex defectu",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p234",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Vnde melancholia magna ex parte morbo comitiali uexamur",
+    "print": "Vnde melancholici magna ex parte morbo comitiali uexantur",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "dormientibus nitore esse illum dicens",
+    "print": "dormientibus mitiorem esse illum dicens",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "pituita acida, atque item falsa",
+    "print": "pituita acida, atq; item salsa",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "catchword: stationis",
+    "print": "ctationis",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p244",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "<unclear>ὅλον</unclear> δὲ <unclear>ἐλάττον</unclear> εἶδος <unclear>ὅταν</unclear> <unclear>οὐχῇ</unclear>",
+    "print": "ἀσθενέστερον ἢ ἔλαττον εἶδος ὅταν ὀχῇ",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "nec adeo uastu ut animi functiones",
+    "print": "nec adeo uastū corpus sit, ut animi functiones",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "470 ... 471",
+    "print": "page numbers placed as body lines",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "imbecillior inferioris species",
+    "print": "imbecillior inferiorq; species",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p253",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "siquidem semen mares, frigidius foeminas efficit",
+    "print": "siquidē in foeminae ac maris generatione in utero facta, calidius semen mares, frigidius foeminas efficit",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "homines hermaphroditi, seu androgynos, quod partim foeminei inueniantur",
+    "print": "homines hermaphroditi, id est partim uirilis sexus, partim foeminei inueniantur",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "Cum rerum omnium generatione huius causa producta sit",
+    "print": "Cum rerum omnium generatio alicuius finis causa producta sit",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Atque est secunda generatio",
+    "print": "Atq; haec est secunda generatio",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p44",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "prajudiciis",
+    "print": "præjudiciis",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Supereft",
+    "print": "Supereſt",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p93",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "12 Theses Examinandæ, Revelation at first hand",
+    "print": "running head '12 THESES EXAMINANDÆ,' merged into body text, untagged",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p111",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O12",
+    "quote": "Aliæ activæ, vel in totum;",
+    "print": "Aliæ activæ, in totum;",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p130",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "esse facultatem",
+    "print": "catchword 'maxi-' after 'facultatem' dropped",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p149",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "Neque etiam si hoc lumen in nobis quidquam boni cogitare",
+    "print": "Neque etiam si hoc lumen non esset, in nobis quidquam boni cogitare",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "absque bono in nobis luminoso principio",
+    "print": "absque bono in nobis & luminoso principio",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "probatissimæ &",
+    "print": "probatissimæque &",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>I</sig>",
+    "print": "no signature printed on this page",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p168",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p186",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>mul:\nnec</margin> <margin>poſ-\nroce-</margin> ... <margin>volo,\nper-\nyolo,\necon-\ntra-</margin>",
+    "print": "these are line-ends of the facing page (p.104) visible at the left edge; this page has no side-notes",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "unde ex procedant",
+    "print": "unde eæ procedant",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p205",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "per tenerirum",
+    "print": "per tenerrimum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p224",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O12",
+    "quote": "& priori istis modis quidem modo",
+    "print": "& priori quidem modo (side-note 371 reads 'Deus quoque istis modis revelatur')",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fione ... Ipfum ... Vifio ... Moyfes",
+    "print": "ſione ... Ipſum ... Viſio ... Moyſes (long s read as f throughout)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p243",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Nunquam enim totamque aperta",
+    "print": "Nunquam enim tot tamque aperta",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p261",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "sed ut nullus ex de eorum profunditate certius judicari possit",
+    "print": "sed ut nullus extenuetur, ac de eorum profunditate certius judicari possit",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "Jac. 11, 12, 13",
+    "print": "Jac. 4: 11, 12, 13",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "proprie fit intelligendum",
+    "print": "proprie sit intelligendum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p280",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O4",
+    "quote": "<margin>atque de iis altercatur, non minus quàm ceteræ scientiæ omnes mera est Peripheria (a) ... penitus destituuntur.</margin>",
+    "print": "no such side-note; the body's first paragraph (13 lines) is duplicated and served as a margin note",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "Idea (a) § 461. namque illæ omnes non nisi nostræ Ratio- 463. nis sunt",
+    "print": "Ideæ namque illæ omnes non nisi nostræ Rationis sunt (side-note: (a) § 461. 463.)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p303",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O1",
+    "quote": "à Jesu Christo Tutore nostro integer servandus",
+    "print": "right edge of the text block is cut off by the scan; 'servandus' and other line-end completions (concessum, beatam, cognita, participes sumus) are not visible",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "caduca que tamen",
+    "print": "cad[ucaque] / que tamen (split wrongly)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p322",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin> <unclear>uä.</unclear> it, ut fu- m in mera ati divinæ mus. m futuros tth. 7:21. ... nihilo fe- </margin>",
+    "print": "24 line-ends of the facing page (p.240) visible at the left edge; this section-title page has only the title and signature Q",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p344",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "quia hoc multo fit illo melius",
+    "print": "quia hoc multo ſit illo melius",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "Sanctis, sed etiam Novi",
+    "print": "the quotation marks („) at each line start are dropped",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p362",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>DA, qualis est</margin> <margin>est. ibid.</margin> ... <margin>1.) Ocu-</margin>",
+    "print": "29 line-ends of the facing page (p.280) visible at the left, each served as a separate side-note",
+    "material": true
+   },
+   {
+    "class": "I4",
+    "quote": "<margin>munus (4.)</margin> <margin>: einnI</margin>",
+    "print": "mirror-image show-through of '(4.) Tractum Patris:' from the verso, not printed on this page",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p381",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "maximi momentio semet ipsum fallat",
+    "print": "maximi momen[ti ne]gotio semet ipsum fallat (line end cut off by the scan)",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "per VERBUM Eph. 5: 26. internuntium cet & æternum",
+    "print": "internun[...] / cet & æternum: words at the cut-off line end are dropped, leaving a broken phrase",
+    "material": false
+   },
+   {
+    "class": "O1",
+    "quote": "ab omnibus im- namentis",
+    "print": "ab omnibus [inqui]namentis (cut off; wrongly filled in)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p413",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "in hoc etiam amore puro ac pleno *ulla intermissione*",
+    "print": "the line ends cut off after 'pleno'; a word (almost certainly 'sine') falls off the scan and is silently dropped, leaving 'ulla' with no negation",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "DIxi I. Voluntatis",
+    "print": "1. DIxi 1. Voluntatis (paragraph number dropped)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p432",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>II. n à Deo quaquam multo- itur: fed novæque ... alte in r rurſus Ima.</margin>",
+    "print": "27 line-ends of the facing page (p.350) visible at the left; this page has no side-notes",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p450",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "tales potius sublaturus fit (f) ... futurumque fit ut",
+    "print": "sublaturus ſit ... futurumque ſit ut",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "<margin>SECT. VI. JUSTIFICATIONE.</margin>",
+    "print": "SECT. VI. JUSTIFICATIO.",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "Ua occasione nunc VI.",
+    "print": "50. QUa occasione (paragraph number 50 and the drop cap Q dropped from the text)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p469",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Licet enim verum fit ... fed quia ... Nemo vero fit",
+    "print": "verum ſit ... ſed quia ... Nemo vero ſit",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "lucis ex ob- illa ... major ob- tas ... Sic & idem cellus",
+    "print": "line ends are cut off by the scan; the transcription keeps the visible fragments, so some phrases are broken",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p488",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "quæ fit mera virtus ... quæ vere in ipso fit",
+    "print": "quæ ſit mera virtus ... quæ vere in ipſo ſit",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "<margin>87. quidem efficaci.</margin> ... <margin>87. Iustificatio in spe. (a) Rom. 8: 24.</margin>",
+    "print": "'& quidem efficaci.' (no number) beside the first paragraph; '87. Justificatio in spe.' and '(a) Rom. 8: 24.' are separate notes",
+    "material": false
+   },
+   {
+    "class": "O5",
+    "quote": "quo Paulus ait nos servatos esse",
+    "print": "quo Paulus ait (a) nos servatos esse (footnote marker dropped)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "vocarus ... alte fatis",
+    "print": "vocatus ... alte ſatis",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p507",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O1",
+    "quote": "sed qui facit voluntatem Pater meus",
+    "print": "ſed qui faci[t ...] / vult Pater meus (line end cut off; 'voluntatem' replaces the printed 'vult')",
+    "material": false
+   },
+   {
+    "class": "O1",
+    "quote": "eum ego comparo prudenti comparo",
+    "print": "eum ego cu[m viro] / prudenti comparo (line end cut off; a guessed 'comparo' is inserted)",
+    "material": false
+   },
+   {
+    "class": "O4",
+    "quote": "spiritu spiritu ipsius dictante",
+    "print": "[...] / ſpiritu ipſius dictante",
+    "material": false
+   },
+   {
+    "class": "O1",
+    "quote": "subjungit (a) prodeunt eos qui bona fecerint",
+    "print": "subjungit (a) [cut off] / eos qui bona fecerint; 'prodeunt' is not visible",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p525",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "quemvis qui eum meat",
+    "print": "quemvis qui eu[m ti-] / meat: the line end is cut off by the scan and 'ti' is dropped, so 'timeat' becomes 'meat'",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fine fide ... Deo fit gratus",
+    "print": "ſine fide ... Deo ſit gratus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p544",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>t. II. n factum s libere ad gitata no- ipsum & ... gloriam Pa- tris</margin>",
+    "print": "30 line-ends of the facing page (p.462) visible at the left; this page has no side-notes there",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "tum ad eos qui non suapte culpa",
+    "print": "tum solum ad eos qui non suapte culpa",
+    "material": false
+   },
+   {
+    "class": "O7",
+    "quote": "(c) §. 186.",
+    "print": "(c) §. 182. &c.",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "omnelque de eadem",
+    "print": "omneſque de eadem",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>PAR-</sig>",
+    "print": "'PAR-' is a catchword, not a signature",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p14",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "quia post triginta septem",
+    "print": "quia post triginta [catchword: septem]",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p29",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "calefcit",
+    "print": "calescit",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "sed non ab aliis.",
+    "print": "sed non ab [catchword: aliis]",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p44",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>par- alia, quod nimis m vt ti re-</margin> <margin>ecta est, eter- i,ita pore pus ...</margin>",
+    "print": "these are clipped line-ends of the facing page (p.40) visible at the left edge, not side-notes of this page",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "prater illum motorem ... prater illos",
+    "print": "præter",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: C 5</meta>",
+    "print": "C 5 is the signature; no page number 41 transcribed",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p59",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O2",
+    "quote": "Mulierem menstruosam non accesseris",
+    "print": "Mulierem menstruosam non accedas",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "cauta & astuta ... ladit ... ladi",
+    "print": "cautæ & astutæ ... lædit ... lædi",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>D4</sig>",
+    "print": "no signature printed on this page",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p75",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "per decisionem feminis",
+    "print": "per decisionem seminis",
+    "material": true
+   },
+   {
+    "class": "O2",
+    "quote": "It autem ea",
+    "print": "Vt autem ea (drop cap V)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p90",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "<page-num>37</page-num>",
+    "print": "87",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p105",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "sic modicum feminis recipitur",
+    "print": "sic modicum seminis recipitur",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "<page-num>302</page-num>",
+    "print": "102",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p120",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "circa umbilicam (twice)",
+    "print": "circa vmbilicum",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "piscium est pessima",
+    "print": "piscium est pessimæ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p135",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "pericula cuitetur",
+    "print": "pericula cuitētur (euitentur)",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "tunc euenit",
+    "print": "tunc [catchword: euenit]",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p150",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p165",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p180",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p196",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p211",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "sed prius moriuntur fame.",
+    "print": "sed prius moriuntur [catchword: fame]",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Aristoteles dixit in libro de Animalibus",
+    "print": "Arist. dixit in lib. de Animal.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p226",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "In nido pupæ est quidam lapis",
+    "print": "In nido vpupæ (hoopoe) est quidam lapis",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "suppone pellem limiæ",
+    "print": "suppone pellem simiæ (ape)",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "eunuchus fit",
+    "print": "eunuchus sit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p241",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "<page-num>138</page-num>",
+    "print": "238",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "homini viventis, tempus pacis",
+    "print": "homini viuēti. s. tēpus pacis (viventi, scilicet)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "si fit factus ratione",
+    "print": "si sit factus rōne",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p256",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O2",
+    "quote": "vnde potest eius augere requirexitum",
+    "print": "vnde potest eius augere requirit exitum",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Et si mulier fit memor",
+    "print": "Et si mulier sit memor",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>SIGN A</sig>",
+    "print": "SIGN A is the catchword (next section heading), not a signature",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p271",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O2",
+    "quote": "exit sollicitè de zenibus",
+    "print": "exit sollicitè de renibus",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "septimum mesem",
+    "print": "septimum mēsem (mensem)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p286",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "sibi repere",
+    "print": "sibi repēte (repente)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p301",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Omne animal ouas caret vesica",
+    "print": "Omne animal ouās (ovans, egg-laying) caret vesica",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "Omne animal generas habet vesicam",
+    "print": "Omne animal generās (generans, bearing live young) habet vesicam",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "cacer (twice)",
+    "print": "cācer (cancer)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p316",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O2",
+    "quote": "multum spurant",
+    "print": "multum sputant",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "multitudine capillorum est maxima defensio",
+    "print": "multitudo capillorum est maxima defensio",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p332",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O2",
+    "quote": "cadete in aquam ... capillos tegulas filate",
+    "print": "cadere in aquam ... capillos tegulas filare",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ceſuram ... caſeum",
+    "print": "cesuram ... caseum (mixed long-s rendering)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p347",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "facies versus mentum fit figurata",
+    "print": "sit figurata",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "naturaliter plicara",
+    "print": "naturaliter pli- [catchword: cata] (plicata)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p362",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>ne ma- em pef- erbum, cem, ci- torem, I I I I. annum naſci- ... tiles ex</margin>",
+    "print": "clipped line-ends of the facing page (p.358) at the left edge, not a side-note of this page",
+    "material": true
+   },
+   {
+    "class": "O6",
+    "quote": "bonæ complexionis. Si timida, pauida",
+    "print": "bonæ complexionis. s. timida, pauida (scilicet: i.e. timid)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p377",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "paudum ... fatigabilelem",
+    "print": "pauidum ... fatigabilem",
+    "material": false
+   },
+   {
+    "class": "O2",
+    "quote": "misetiam",
+    "print": "miseriam (print reads 'misetiam'-like, r)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p30",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p40",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "syntaxi nunquam studuerit",
+    "print": "syntaxi vnquam studuerit",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p49",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "racetabulata, sub roſi rila cubior",
+    "print": "race tabulata, sub rosi rilacubior",
+    "material": false
+   },
+   {
+    "class": "O10",
+    "quote": "ἐγκαυστικὴ",
+    "print": "ἐγκαυστικὴν",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p59",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O12",
+    "quote": "Trithemius ipse defendit.",
+    "print": "Trithemius ipse se defendit.",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "fui defensionem",
+    "print": "sui defensionem",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p68",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p78",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p88",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p98",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<sig>M</sig>",
+    "print": "no signature printed on this page (mirrored 'M 3' is show-through from verso)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p107",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "cocitant",
+    "print": "cōcitant (concitant)",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "aberrans",
+    "print": "oberrans",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "Nulla <margin>...</margin> ſunt eis",
+    "print": "side-note beside the line, not inside the sentence",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p117",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p126",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "accepti doctoribus",
+    "print": "accepi doctoribus",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "114 Fragmentum (as first body line)",
+    "print": "running head/page number",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p137",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "Anisi, (as recipe item)",
+    "print": "catchword 'Anisi,' beside signature R 3",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "<margin> inserted mid-paragraph",
+    "print": "side-note beside lines 1-4",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p148",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p162",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p172",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p181",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p191",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p200",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p210",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p219",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "Bartholo: Ralicium",
+    "print": "Bartholo: Rulichium",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "quod verbum Dei non fit",
+    "print": "quod verbum Dei non sit",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "Apponer ergo Deus",
+    "print": "Apponet ergo Deus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p229",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "(catchword omitted)",
+    "print": "catchword 'eam' at foot",
+    "material": false
+   },
+   {
+    "class": "O6",
+    "quote": "praeſidentiae",
+    "print": "præfidentiæ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p238",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p248",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<sig>M2</sig>",
+    "print": "no signature on this verso (faint marks are recto show-through)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p257",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "(catchword omitted)",
+    "print": "catchword 'VNDE' beside sig P 3",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p267",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "quia fit Patriarchæ tui / quia fit pactum / ipse fit depositio",
+    "print": "quia sit ... / quia sit pactum / ipse sit depositio",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p22",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<header>Origo & Fabrica Numerorum</header>",
+    "print": "no running head on this page (chapter-opening p.1); the header is show-through from the verso",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "De primana Numerorum origine",
+    "print": "De primæua Numerorum origine",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ἐπίσα",
+    "print": "ἐπίσα(ται) — Greek truncated",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p35",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "ἑξήκοντα οἱ Ῥωμαίων",
+    "print": "εὑρέθησαν οἱ τῶν Ῥωμαίων",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "χίλιοι ις ἄνδρες",
+    "print": "χίλιοι ιζ ἄνδρες (17, matching the Latin 17)",
+    "material": true
+   },
+   {
+    "class": "O12",
+    "quote": "captiuite Babylon.",
+    "print": "captiuitate Babylon.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p47",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O12",
+    "quote": "Fabrica notarum numerarum apud Veteres.",
+    "print": "Fabrica notarum numeraliū apud Veteres.",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "brachygraphias",
+    "print": "Greek βραχυγραφίας transliterated",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p60",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "M | 1000 ... X | 10000 ... IXI ... MM",
+    "print": "M̄, X̄, ĪXĪ, M̄M̄ with overbars (bars dropped)",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "| Notæ millenariorum |",
+    "print": "Notæ millenariorum Integrorum (column head shortened)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "| X | 1000 | ... | ↀ | 1000 |",
+    "print": "hourglass-shaped and circled-I symbols approximated by ordinary letters",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p73",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Patre Ferdinando satis functo",
+    "print": "Patre Ferdinando fatis functo",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "in Astro-nomia instauratione",
+    "print": "in Astronomiæ instauratione",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p85",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p99",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "A magic square of order 3 (the Lo Shu square) ... with letters b, h, g, c, d, e, f",
+    "print": "a preliminary diagonal (rhombus) arrangement of 1-9 with letters a-h; not the finished Lo Shu square, numbers not transcribed",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p116",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<page-num>8</page-num>",
+    "print": "85",
+    "material": false
+   },
+   {
+    "class": "O11",
+    "quote": "<sig>Cu</sig>",
+    "print": "Cu- is the catchword, not a signature",
+    "material": false
+   },
+   {
+    "class": "O12",
+    "quote": "Dispositio numerorum cæterorum in cellis.",
+    "print": "Dispositio numerorū cæterorū in interioribus cellis.",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p129",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "in columna r f à 6",
+    "print": "in columna r ſ à 6 (r s)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p141",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "110 (stray line in body)",
+    "print": "page number already tagged; duplicated as body text",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p153",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "18, 28, 21, 12, 26",
+    "print": "18, 28, 21, 26, 32",
+    "material": true
+   },
+   {
+    "class": "O7",
+    "quote": "36, 13, 15, 13, 30",
+    "print": "36, 13, 15, 31, 30",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "in medullio cen.",
+    "print": "in meditullio cen-",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p167",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p180",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O3",
+    "quote": "| vt | eorum | circu | nona | quae | valla | hora | in | tui | quem | ... | ra | te | do- | ... | pra- | no- | dere | inten | vt te- | & | pro | go | te | ma- |",
+    "print": "9-column cipher grid; transcription splits cells ('in tui', 'ra te', 'go te', 're ro', 'ei re') into 10 columns, shifting every cell after them",
+    "material": true
+   },
+   {
+    "class": "O1",
+    "quote": "| que | uib | id | cias |",
+    "print": "que | (empty) | (empty) | cias — 'uib' and 'id' are not printed",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "| mifra | Nil | va- | stiue | pro | tibi | benè | armis | ctis |",
+    "print": "tibi in- / armis in- / ctis quoq; ; also 'cum in-' in row 8 — continuations dropped",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p192",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O7",
+    "quote": "ז 7",
+    "print": "ד 4",
+    "material": true
+   },
+   {
+    "class": "O5",
+    "quote": "(II. Paradigma first column ends: מ 40, מ 40, א 1)",
+    "print": "מ 40, מ 40, ה 5, א 1 — the ה 5 row is dropped, so the column no longer sums to 290",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "דרך גבר במרם",
+    "print": "דרך גבר במרים",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p205",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O1",
+    "quote": "| 1 | α | | 2 | β | | 3 | γ | ... | 24 | ψ |",
+    "print": "two side columns spelling the letters of ἄρρητος σιγὴ πατὴρ ἀλήθεια and λόγος ζωὴ ἄνθρωπος ἐκκλησία (α ρ ρ η τ ο ς ... / λ ο γ ο ς ζ ω ...), illustrating that each quaternion has 24 letters",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "Ialdaboth, id est Patrem genitorem",
+    "print": "Patrum genitorem",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p217",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "nomina producunt.",
+    "print": "nomina producunt; ne (last word of the page, sentence continues 'Sa-')",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ad vsum humanæ vitæ necessarium author",
+    "print": "necessariarum author",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ΜΩΙΩΘ ΑΝΥΒΙΝ",
+    "print": "ΜΩΙΩΤ ΑΝVΒΙΝ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p229",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "nomen Angeli ΙΑΩΑΙΗΛ Iaoliel",
+    "print": "ΙΑΩΛΙΗΛ",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "(image-desc gives no amulet legends)",
+    "print": "amulet legends ΙΑΩΗΙΛ, ΩΦΙΩΝ, ΑΒΑΙ ΔΑΩ, ΙΑΩ not transcribed",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p242",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p254",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "אתה גבור לעולם אדני",
+    "print": "אתה גביר לעלם אמן (glossed 'tu benedictus in aeternum amen'); the transcription substitutes the familiar 'Adonai' formula for the printed 'amen'",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "postquam fanis precibus",
+    "print": "postquam sanis precibus",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "A vertical arrangement of the Hebrew letters Aleph, Gimel, Lamed, and Aleph",
+    "print": "side column spells the whole verse letter by letter (א ת ה ג ב י ר ל ע ל ם א מ ן) with A G L A against the initials",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p266",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<margin>Descriptio Rotæ</margin> <margin>Sphæra Biantis vti in pag. sequenti</margin>",
+    "print": "no side-notes printed on this page; 'Descriptio Rotæ' is show-through from the verso, and the second note is not on the page at all",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "(image-desc only)",
+    "print": "wheel's letters and their numbers (A 3, B 5, C 2 ...) and the Felices/Infelices number columns not transcribed",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p279",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Cum omne non Maximum sit finitum & principium",
+    "print": "sit finitum & principiatum",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p292",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p304",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p316",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p330",
+  "verdict": "sound",
+  "defects": [],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p14",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "O5",
+    "quote": "...in modū mu li, vt spõſus",
+    "print": "in modũ mu|ri & tecti. Dñs aũt stabat secus vexillũ archãge|li, vt spõsus",
+    "material": true
+   },
+   {
+    "class": "O8",
+    "quote": "gra nidā",
+    "print": "gra|uidã",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p27",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<sig>iiii</sig> / <meta>catchword: nem</meta>",
+    "print": "no signature or catchword printed on this page (only show-through 'B iii' from the recto)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "te ore eius",
+    "print": "de ore eius",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fempiternum; fororum",
+    "print": "sempiternum; sororum",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p41",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: vo</meta>",
+    "print": "no catchword; 'vo' is the last word-fragment of the text line",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "vigini",
+    "print": "virgini",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Sctis quoq Gabriel",
+    "print": "Sctũs quoq; Gabriel",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ftabat, ftate, ftati",
+    "print": "stabat, statẽ, stati",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p54",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "ITe ista nocte parasceues",
+    "print": "ITẽ i sctã nocte parasceues (Item in sancta nocte)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "recõpẽ/fare",
+    "print": "recõpẽ/sare",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "qli nullius delicti",
+    "print": "q̄si nullius delicti",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p67",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "tio (as last body line)",
+    "print": "tio = catchword",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Gogitāte",
+    "print": "Cogitãte",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p81",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "tineret sibi: hoc fōte",
+    "print": "tineret sibi ī hoc fõte",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fordes",
+    "print": "sordes",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p94",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "vt et nec tertis tam miser",
+    "print": "vt ẽt nec ĩ ter|tis tã miser (nec in terris)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Quarto salutet mei gaudio",
+    "print": "Quarto salutet me ĩ gaudio",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "q hoc coicas",
+    "print": "q hõ cõicãs (homo communicans)",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p107",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "modo visa cere",
+    "print": "modo vis fa|cere",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "vel & cogitatio nibus",
+    "print": "vel & cogitatio|nibus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p121",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "cō fortio",
+    "print": "cõ|sortio",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p134",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O6",
+    "quote": "Dominica quadā. dñi (Afpges me domine,)",
+    "print": "Dominica quadã dũ (Asp̃ges me domi|ne,) cãtaret",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "aſſerēres; Intranit",
+    "print": "afferẽtes; Intrauit",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p147",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "sicut filii fugunt matres ... ab ea fugens",
+    "print": "sicut filii sugunt matres ... ab ea sugens",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "fine humilitate",
+    "print": "sine humilitate",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p161",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "nocte dñ ex capitis dolore",
+    "print": "nocte dũ ex capitis dolore",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "in quo illorī",
+    "print": "in quo illo|rũ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p174",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "aiarū lcificationē",
+    "print": "aĩarũ scĩficationẽ (sanctificationem)",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "ſepte articulis",
+    "print": "septẽ articulis",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p187",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Quod ho christi conuersatione",
+    "print": "Quod hõ xpi cõuersationẽ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p201",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "q amor diuinus",
+    "print": "q̃ amor diuinus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p214",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Item audies catari Responsoriu",
+    "print": "ITem audiẽs cãtari Respõsoriũ",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "line-break slashes '/' inserted throughout",
+    "print": "no such marks in print",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p227",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "dulcedine fue cō ſolationis; fpū; ftudeat",
+    "print": "dulcedinẽ sue cõsolationis; spũ; studeat",
+    "material": false
+   },
+   {
+    "class": "O8",
+    "quote": "Dinitas mea",
+    "print": "Dĩnitas (Diuinitas) mea",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p241",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "preuider",
+    "print": "preuidet",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p254",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I4",
+    "quote": "<columns>2</columns> ... <column-break/> ba co be q te m p ba a da ...",
+    "print": "single-column page; these are line-initial fragments of the facing leaf in the gutter",
+    "material": true
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p267",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "Comedo ea tibi; no recusaui; ia volumus",
+    "print": "Cõmẽdo eã tibi; nõ recusaui; iã volumus",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p281",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "&amp; (throughout); replerus; pricipes facer dotū",
+    "print": "& ; repletus; pricipes sacer|dotũ",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p294",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "consiliu; asinu; puenerut",
+    "print": "consiliũ; asinũ; puenerũt",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p307",
+  "verdict": "flawed",
+  "defects": [
+   {
+    "class": "O11",
+    "quote": "<meta>catchword: reue</meta>",
+    "print": "no catchword printed; 'reue-' is the end of the last text line",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p321",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "& catau; in fexto celo",
+    "print": "& cãtaui; in sexto celo",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p334",
+  "verdict": "sound",
+  "defects": [
+   {
+    "class": "O8",
+    "quote": "fi billantia; consper ctu",
+    "print": "si|billantia; conspe|ctu",
+    "material": false
+   }
+  ],
+  "not_this_leaf": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p25",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Hac vti debebant ad producendum vitam",
+    "print": "this leaf is printed p.4 (LIGNVM VITAE), begins 'rit. DIS. Tu ergo, in quo scientiae omnes sunt infusae'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p47",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "dam, quam Phoebus, id est Sol noster interfecit",
+    "print": "this leaf is printed p.26 (LIGNVM VITAE), begins 'dicens, Corpora quae administratione rei subleuantis indigent'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p70",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "pretationem sic auspicatus es. Artus, membrum est",
+    "print": "this leaf is printed p.49, title 'IN IOANNEM BRACESCHVM GEBRI INTERPRETEM ANIMADVERSIO'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p92",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "manda essent perfectioni minus uicina",
+    "print": "this leaf is printed p.71 (ANIMADVERSIO), begins 'Saturnus, Saturnus uero quam Venus'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p115",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Iam dictis metallis: quia simile producit simile",
+    "print": "this leaf is printed p.94 (TAVLADANI), begins 'His adde Seniorem, & dicet tibi'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p137",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "stiblis & grossa, cum rebus praedictis mundatis",
+    "print": "this leaf is printed p.114 (DE INVESTIGATIONE), begins 'Mundatio aluminum. Primo de alumine glaciali'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p160",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "tis suscepit, & eradicare illud non est facile artificium",
+    "print": "this leaf is printed p.135 (PERFECTIONIS GEBERI), begins 'minera determinata', De Saturno Cap. XXXIIII",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p182",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Sumatur patella terrea, & in ea mittatur argentum uiuum",
+    "print": "this leaf is printed p.155 (PERFECTIONIS GEBERI), begins 'ingressione, quae per fusionem bonam perficitur'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p205",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "De Medicina Lunari tertij ordinis. Cap. LXXXV.",
+    "print": "this leaf is printed p.175 (PERFECTIONIS GEBERI), begins 'hoc in Solificum & Lunificum verum', Cap. LXXXIII",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p227",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "CVm Martis solutio nimium inueniatur difficilis",
+    "print": "this leaf is printed p.197 (GEBERI TERTIA PARS DE CORPORIBVS perficiendis), Cap. XIX 'Cum autem sufficienter pertractauimus'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p250",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "De uia uniuersali, sermo generalis. Cap. XVIII.",
+    "print": "this leaf is printed p.220 (CORRECTORIVM), begins 'bedinem non ratione digestionis habet'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p272",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "postea pone partem illius materiae rubeae & putrefactae",
+    "print": "this leaf is printed p.242 (LIBER SECRETORVM ALCHEMIAE), begins 'sic fuerit, & adduxeris rem o frater', Cap. XVI",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p295",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "vt supradictum est, appellatur: siue de spermate albo",
+    "print": "this leaf is printed p.21 (INCERTI AVTORIS), begins 'sum vitreum posuimus, lutauimus', side-note 'Athenatorium'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p318",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Modi verò regiminis ad inuicem conuertentes sunt quatuor",
+    "print": "this leaf is printed p.43 (ARNOLDI), 'Capita libri secundi' chapter list in two columns",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p340",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "miditas dum exit de compositione, siue lapide",
+    "print": "this leaf is printed p.65 (ARNALDI), begins 'sistis. Et sic no dubito', then title 'EPISTOLA MAGISTRI ARNALDI DE VILLA NOVA'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p363",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "bens collum, & bene linias ubique cum argilla",
+    "print": "this leaf is printed p.87 (ALBERTI MAGNI), begins 'la linias, & desiccatum pone in furno calcinationis'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p385",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "pit opus: ideo patientiam te habere oportebit",
+    "print": "this leaf is printed p.108 (APERTORIVM), begins 'miditatis quae habuit eum mortificare', side-note 'Tritio.'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p408",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "xare, hoc facies per exuberationem corporalem",
+    "print": "this leaf is printed p.131 (RAYMVNDI LVLLII), begins 'transtulimus ab arte Geometriae', 'O mensura' litany",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p430",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "ne cum ipsa tota sublimata tria pondera mercurii",
+    "print": "this leaf is printed p.153 (RAYMVNDI LVLLII), begins 'iuxta eoru colore. Et nota quod omnes hi parui Elixires', 'De aqua Mercuriali huius capituli'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p453",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Et non est obliuioni tradendum, quòd oportet vt tua materia",
+    "print": "this leaf is printed p.176 (DE MERCVRIO SOLO), begins 'aliud vas, postea cape patellam terream plumbatam'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p475",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "tiam, & in mane extrahe & dimitte infrigidari",
+    "print": "this leaf is printed p.198 (ARISTOTELES), begins 'deinde cola & congela in cinere', 'Regimen salis Atincar'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p498",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "est, & quod remansit in fundo, & pone cum aqua",
+    "print": "this leaf is printed p.221 (DE PERFECTO MAGISTERIO), begins 'desuper & exicca vt prius ad Solem'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p520",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "id est spiritus: deinde in coniunctione spiritus aqua fit corpus",
+    "print": "this leaf is printed p.242 (DE THESAVRO), begins 'coniunctione apparentes. Et sic no errabis'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p543",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "dus, cambar, aqua vitæ, auripigmentum, corpus, cinaprium",
+    "print": "this leaf is printed p.265, title 'LAPIDIS PHILOSOPHICI NOMENCLATURAE', begins 'AVrum, Sol, aes Philosophorum'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p565",
+  "verdict": "misleading",
+  "defects": [
+   {
+    "class": "I1",
+    "quote": "Et extet animi ac corporis tantis valens",
+    "print": "this leaf is printed p.287 (GERONTICON LIB. I), two columns, 'AD LEONEM X PONT. MAX.' and 'Qua non sit alia maior'",
+    "material": true
+   }
+  ],
+  "not_this_leaf": true
+ }
+]

@@ -220,6 +220,12 @@ async function archivePage(page, db) {
     // visibility into why the page is stuck (previously the worker returned
     // silently and left `archive_metadata` empty, producing infinite-retry
     // loops with no diagnostic trace — see MDZ 915-book stall, 2026-05-16).
+    //
+    // A 429/503 is the provider's quota talking, not a broken page: count it
+    // toward the 3-strike skip and BSB's daily cap retires good pages for good
+    // (11,533 pages on the #7176 books alone). Record it, but leave
+    // failure_count alone so the next run tries again.
+    const throttled = /\bHTTP (429|503)\b/.test(String(err.message || err));
     try {
       await db.collection(pagesCol).updateOne(
         { _id: page._id },
@@ -229,7 +235,7 @@ async function archivePage(page, db) {
             'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
             'archive_metadata.last_failure_source_url': sourceUrl,
           },
-          $inc: { 'archive_metadata.failure_count': 1 },
+          ...(throttled ? {} : { $inc: { 'archive_metadata.failure_count': 1 } }),
         }
       );
     } catch {/* swallow — diagnostic write must not poison the result */}

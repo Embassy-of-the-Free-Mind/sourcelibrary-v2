@@ -1,0 +1,1054 @@
+{
+ "seed": 7202,
+ "built": "2026-10-23T07:23:06.771Z",
+ "cohort": "/root/paddle-zh-5600",
+ "cohort_counts": {
+  "flagged_books": 6623,
+  "screened_books": 6819
+ },
+ "t5": 24,
+ "siku": [
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c70cb01fe4f593c1d4e1d",
+   "title": "春秋大事表·卷四十一~卷四十二之一 (vol 30)",
+   "page_number": 11,
+   "page_id": "6a3c70cb01fe4f593c1d4e9e",
+   "dice": 0.08,
+   "pb": "KR1e0114_WYG_041-2b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cbeafec254ff6cae0224d",
+   "title": "御定韻府拾遺·卷一百一~卷一百三 (vol 35)",
+   "page_number": 32,
+   "page_id": "6a3cbeafec254ff6cae0226d",
+   "dice": 0.547,
+   "pb": "KR3k0060_WYG_101-15b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c777601fe4f593c2025e0",
+   "title": "唐韻正·卷十九~卷二十 (vol 9)",
+   "page_number": 112,
+   "page_id": "6a3c777601fe4f593c2026b2",
+   "dice": 0.104,
+   "pb": "KR1j0081_WYG_014-12b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c613840c88a541d8eeec0",
+   "title": "御定駢字類編·卷一百六十一~卷一百六十二: Imperial Parallel Characters (vol 338)",
+   "page_number": 42,
+   "page_id": "6a3c613840c88a541d8eeeea",
+   "dice": 0.563,
+   "pb": "KR3k0056_WYG_161-20b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cb70d3dce6cfad7485fa7",
+   "title": "欽定周官義疏·卷三十七~卷三十八 (vol 57)",
+   "page_number": 171,
+   "page_id": "6a3cb70d3dce6cfad7486052",
+   "dice": 0.023,
+   "pb": "KR1d0018_WYG_001-3b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c74cc01fe4f593c1f2713",
+   "title": "萬姓統譜·卷六十四~卷六十六 (vol 23)",
+   "page_number": 157,
+   "page_id": "6a3c74cc01fe4f593c1f27b0",
+   "dice": 0.554,
+   "pb": "KR3k0044_WYG_067-19a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c63d2af3c49b59c5c8e16",
+   "title": "御定佩文韻府·卷二十一之六 (vol 389)",
+   "page_number": 106,
+   "page_id": "6a3c63d2af3c49b59c5c8e80",
+   "dice": 0.344,
+   "pb": "KR3k0059_WYG_193-51b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cb9aa3dce6cfad7495af1",
+   "title": "爾雅翼·卷十一~卷十四 (vol 20)",
+   "page_number": 105,
+   "page_id": "6a3cb9aa3dce6cfad7495b5a",
+   "dice": 0.597,
+   "pb": "KR1j0012_WYG_014-10b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c61a7879008ba7e15f810",
+   "title": "折獄龜鑑補(二) (vol 2)",
+   "page_number": 94,
+   "page_id": "6a3c61a7879008ba7e15f86e",
+   "dice": 0.017,
+   "pb": "KR3c0007_WYG_008-4b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cb9ae3dce6cfad7495cc1",
+   "title": "爾雅翼·卷三十~卷三十二 (vol 24)",
+   "page_number": 81,
+   "page_id": "6a3cb9ae3dce6cfad7495d13",
+   "dice": 0.588,
+   "pb": "KR1j0012_WYG_032-7a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6ff501fe4f593c1cf4a8",
+   "title": "儀禮集說·卷十一下 (vol 26)",
+   "page_number": 4,
+   "page_id": "6a3c6ff501fe4f593c1cf4ac",
+   "dice": 0.582,
+   "pb": "KR1d0035_WYG_011-56b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cbc04ec254ff6cadeceb9",
+   "title": "禮記注疏·卷十四~卷十五 (vol 72)",
+   "page_number": 143,
+   "page_id": "6a3cbc04ec254ff6cadecf48",
+   "dice": 0.045,
+   "pb": "KR1d0053_WYG_014-2b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6f0601fe4f593c1c85a6",
+   "title": "六經正誤·卷五~卷六 (vol 6)",
+   "page_number": 129,
+   "page_id": "6a3c6f0601fe4f593c1c86bb",
+   "dice": 0.562,
+   "pb": "KR1g0007_WYG_006-30b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6c9901fe4f593c1b2c94",
+   "title": "春明夢餘錄·卷三十九 (vol 46)",
+   "page_number": 198,
+   "page_id": "6a3c6c9901fe4f593c1b2d5b",
+   "dice": 0.577,
+   "pb": "KR3j0161_WYG_039-98b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c70ac39b4508b04e508d1",
+   "title": "春秋大事表·卷一 (vol 1)",
+   "page_number": 50,
+   "page_id": "6a3c70ad39b4508b04e50903",
+   "dice": 0.156,
+   "pb": "KR1e0114_WYG_003-112a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3cb99f3dce6cfad74954ba",
+   "title": "爾雅翼·卷一~卷二 (vol 9)",
+   "page_number": 80,
+   "page_id": "6a3cb99f3dce6cfad749550a",
+   "dice": 0.526,
+   "pb": "KR1j0012_WYG_001-8a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6ef201fe4f593c1c79f4",
+   "title": "經典釋文·卷二十一~卷二十二 (vol 35)",
+   "page_number": 90,
+   "page_id": "6a3c6ef201fe4f593c1c7a4e",
+   "dice": 0.516,
+   "pb": "KR1g0003_WYG_021-49b"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6aefaf3c49b59c5eb80b",
+   "title": "欽定協紀辨方書·卷十九~卷二十 (vol 16)",
+   "page_number": 52,
+   "page_id": "6a3c6aefaf3c49b59c5eb83f",
+   "dice": 0.103,
+   "pb": "KR3g0051_WYG_018-1a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6853af3c49b59c5d7ea7",
+   "title": "山堂肆考·卷二百十八~卷二百二十 (vol 96)",
+   "page_number": 16,
+   "page_id": "6a3c6853af3c49b59c5d7eb7",
+   "dice": 0.068,
+   "pb": "KR3k0052_WYG_002-1a"
+  },
+  {
+   "stratum": "flagged",
+   "book_id": "6a3c6a2639b4508b04e3f51a",
+   "title": "集韻·卷八 (vol 8)",
+   "page_number": 106,
+   "page_id": "6a3c6a2639b4508b04e3f585",
+   "dice": 0.535,
+   "pb": "KR1j0057_WYG_008-52b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c71b201fe4f593c1da00d",
+   "title": "欽定授時通考·卷四十七~卷四十八 (vol 18)",
+   "page_number": 74,
+   "page_id": "6a3c71b201fe4f593c1da057",
+   "dice": 0.924,
+   "pb": "KR3d0010_WYG_048-5b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c6e8a01fe4f593c1c3b93",
+   "title": "儀禮章句·卷十一~卷十二 (vol 4)",
+   "page_number": 138,
+   "page_id": "6a3c6e8a01fe4f593c1c3c1d",
+   "dice": 0.971,
+   "pb": "KR1d0042_WYG_012-22b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c69f339b4508b04e3e620",
+   "title": "普濟方·卷三百九十三 (vol 281)",
+   "page_number": 91,
+   "page_id": "6a3c69f339b4508b04e3e67b",
+   "dice": 0.921,
+   "pb": "KR3e0067_WYG_393-45a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3ce7760a0011cb4bc09b97",
+   "title": "詩補傳·卷二十三~卷二十四 (vol 9)",
+   "page_number": 118,
+   "page_id": "6a3ce7770a0011cb4bc09c0d",
+   "dice": 0.976,
+   "pb": "KR1c0013_WYG_024-10a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c72bc01fe4f593c1e24c0",
+   "title": "春秋或問·卷十六~卷二十,春秋五論 (vol 5)",
+   "page_number": 29,
+   "page_id": "6a3c72bc01fe4f593c1e24dd",
+   "dice": 0.911,
+   "pb": "KR1e0053_WYG_016-14b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cbb5d3dce6cfad74a30b8",
+   "title": "五禮通考·卷二百三十四 (vol 160)",
+   "page_number": 80,
+   "page_id": "6a3cbb5d3dce6cfad74a3108",
+   "dice": 0.95,
+   "pb": "KR1d0087_WYG_244-39b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cba973dce6cfad749d0bd",
+   "title": "記纂淵海·卷九十四~卷九十七 (vol 61)",
+   "page_number": 138,
+   "page_id": "6a3cba983dce6cfad749d149",
+   "dice": 0.924,
+   "pb": "KR3k0025_WYG_097-22a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c678b39b4508b04e36d03",
+   "title": "御定孝經衍義·卷九十一~卷九十三 (vol 27)",
+   "page_number": 168,
+   "page_id": "6a3c678c39b4508b04e36dab",
+   "dice": 0.883,
+   "pb": "KR3a0105_WYG_095-25a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cb8063dce6cfad748a51a",
+   "title": "詩傳通釋·卷八~卷九 (vol 6)",
+   "page_number": 74,
+   "page_id": "6a3cb8063dce6cfad748a565",
+   "dice": 0.973,
+   "pb": "KR1c0028_WYG_008-37a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c776c01fe4f593c201f9c",
+   "title": "讀易述·卷十二~卷十三 (vol 12)",
+   "page_number": 167,
+   "page_id": "6a3c776c01fe4f593c2020d8",
+   "dice": 0.979,
+   "pb": "KR1a0103_WYG_013-32b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cb8753d799518cd71b52a",
+   "title": "御定佩文齋書畫譜·卷九十九~卷一百 (vol 69)",
+   "page_number": 28,
+   "page_id": "6a3cb8753d799518cd71b547",
+   "dice": 0.964,
+   "pb": "KR3h0061_WYG_099-13b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cb5ec3dce6cfad7484149",
+   "title": "易翼述信·卷五 (vol 5)",
+   "page_number": 56,
+   "page_id": "6a3cb5ec3dce6cfad7484181",
+   "dice": 0.934,
+   "pb": "KR1a0151_WYG_005-27b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c749c39b4508b04e57a77",
+   "title": "春秋地理考實·卷一~卷二 (vol 1)",
+   "page_number": 141,
+   "page_id": "6a3c749c39b4508b04e57b04",
+   "dice": 0.89,
+   "pb": "KR1e0118_WYG_002-11b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c675caf3c49b59c5d2976",
+   "title": "呻吟語摘·卷上 (vol 1)",
+   "page_number": 126,
+   "page_id": "6a3c675caf3c49b59c5d29f4",
+   "dice": 0.951,
+   "pb": "KR3a0096_WYG_001-57b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c6dc939b4508b04e4a49b",
+   "title": "欽定詩經傳說彙纂·詩序上 (vol 22)",
+   "page_number": 17,
+   "page_id": "6a3c6dc939b4508b04e4a4ac",
+   "dice": 0.928,
+   "pb": "KR1c0044_WYG_024-8a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3ce7be0a0011cb4bc0ab93",
+   "title": "詩總聞·卷十六~卷十七 (vol 15)",
+   "page_number": 64,
+   "page_id": "6a3ce7be0a0011cb4bc0abd3",
+   "dice": 0.848,
+   "pb": "KR1c0014_WYG_016-31b"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c71d339b4508b04e5551d",
+   "title": "欽定授時通考·卷六十八~卷六十九 (vol 55)",
+   "page_number": 132,
+   "page_id": "6a3c71d339b4508b04e555a1",
+   "dice": 0.951,
+   "pb": "KR3d0010_WYG_069-31a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c6a2239b4508b04e3f381",
+   "title": "集韻·卷五 (vol 5)",
+   "page_number": 47,
+   "page_id": "6a3c6a2239b4508b04e3f3b0",
+   "dice": 0.681,
+   "pb": "KR1j0057_WYG_005-23a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3cbfe8f9474f825c16c42f",
+   "title": "六藝之一錄·卷三百六十六~卷三百六十七 (vol 160)",
+   "page_number": 119,
+   "page_id": "6a3cbfe8f9474f825c16c4a6",
+   "dice": 0.852,
+   "pb": "KR3h0070_WYG_325-25a"
+  },
+  {
+   "stratum": "clean",
+   "book_id": "6a3c75da39b4508b04e5e172",
+   "title": "三魚堂賸言·卷一~卷六 (vol 1)",
+   "page_number": 96,
+   "page_id": "6a3c75da39b4508b04e5e1d3",
+   "dice": 0.915,
+   "pb": "KR3a0116_WYG_005-8a"
+  }
+ ],
+ "rejected": [
+  {
+   "bid": "6a3c6d5901fe4f593c1ba386",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbcceec254ff6cadf351f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c642039b4508b04e247f3",
+   "pn": 139,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c690f39b4508b04e3b9d0",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6e1801fe4f593c1bfad1",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c614740c88a541d8ef7c6",
+   "pn": 139,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c6858af3c49b59c5d8265",
+   "pn": 25,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c703a01fe4f593c1d207e",
+   "pn": 135,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c72b701fe4f593c1e20b0",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbdc9ec254ff6cadfa44b",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbe60ec254ff6cadffb0a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c679b39b4508b04e376ad",
+   "pn": 126,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c754601fe4f593c1f4390",
+   "pn": 117,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c67cd39b4508b04e395ac",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c7a0639b4508b04e62409",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c62d740c88a541d8f6922",
+   "pn": 86,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c69d7af3c49b59c5e3110",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6eb001fe4f593c1c519e",
+   "pn": 85,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c799101fe4f593c210a6e",
+   "pn": 56,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c754d01fe4f593c1f4785",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbecfec254ff6cae034fe",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbcddec254ff6cadf3ec0",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c60dd40c88a541d8eb62b",
+   "pn": 141,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c682a39b4508b04e3a432",
+   "pn": 9,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3ce6790a0011cb4bc0619f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c64b639b4508b04e2969c",
+   "pn": 133,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c669039b4508b04e36363",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbc62ec254ff6cadf0484",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c7aef01fe4f593c21afb8",
+   "pn": 94,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6f6901fe4f593c1cc1db",
+   "pn": 104,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb7ac57c1f37219c52049",
+   "pn": 208,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c781139b4508b04e5fff4",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6c7501fe4f593c1b158a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cba6c3dce6cfad749b9ff",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbfd1f9474f825c16b606",
+   "pn": 76,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6ca001fe4f593c1b32c3",
+   "pn": 101,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb5283dce6cfad7481cc5",
+   "pn": 92,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6400af3c49b59c5ca3ca",
+   "pn": 113,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3cb5803dce6cfad7483914",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c78f301fe4f593c20c3e3",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c767801fe4f593c1fb3eb",
+   "pn": 42,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbaa83dce6cfad749da6f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6f6701fe4f593c1cc0c4",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6aebaf3c49b59c5eb5f1",
+   "pn": 88,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c7b5c01fe4f593c21df3b",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6ed301fe4f593c1c659a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c654eaf3c49b59c5cb5f3",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c613140c88a541d8eea5e",
+   "pn": 119,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c765f39b4508b04e5f4c0",
+   "pn": 70,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c741b01fe4f593c1ee3e9",
+   "pn": 62,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6879af3c49b59c5d96ce",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c785139b4508b04e60ba9",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c64bd39b4508b04e29a2f",
+   "pn": 3,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c6fa901fe4f593c1ce353",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6958af3c49b59c5deac9",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c791b39b4508b04e61877",
+   "pn": 3,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3ce841552d34d98411a0b6",
+   "pn": 113,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb7e03dce6cfad7488f18",
+   "pn": 108,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cba463dce6cfad749ae0d",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c60bf40c88a541d8ea2ae",
+   "pn": 141,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c715839b4508b04e53e9c",
+   "pn": 110,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c65f239b4508b04e3045b",
+   "pn": 96,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c776301fe4f593c201b1f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb8c03dce6cfad74901d2",
+   "pn": 109,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c751c39b4508b04e5b2ca",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6bc839b4508b04e4602c",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c67b239b4508b04e381f9",
+   "pn": 74,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c654439b4508b04e2d81f",
+   "pn": 60,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c797b01fe4f593c20fea5",
+   "pn": 42,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3ce82d0a0011cb4bc0c7b8",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c71c539b4508b04e54c11",
+   "pn": 73,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cba3c3dce6cfad749a98c",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c753401fe4f593c1f39a3",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb5753dce6cfad748343a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbc7bec254ff6cadf12ae",
+   "pn": 46,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c74d301fe4f593c1f2c1f",
+   "pn": 81,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3ce7d30a0011cb4bc0b2dd",
+   "pn": 122,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6a37af3c49b59c5e4cd2",
+   "pn": 96,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c63730339d4df9abcbdc0",
+   "pn": 129,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3cbed6ec254ff6cae0399e",
+   "pn": 101,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c73b201fe4f593c1ea9a7",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c5f18879008ba7e152e9c",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbf01f9474f825c164a43",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbb003d799518cd71f2e7",
+   "pn": 88,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbb553dce6cfad74a2c09",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c72d201fe4f593c1e3109",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c64b039b4508b04e29297",
+   "pn": 2,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3cbd37ec254ff6cadf70ef",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbfcff9474f825c16b4e0",
+   "pn": 46,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c71c739b4508b04e54c85",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb9723d799518cd71e21f",
+   "pn": 165,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c69cbaf3c49b59c5e2b06",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c64f339b4508b04e2b4d6",
+   "pn": 4,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c5e5840c88a541d8e12e7",
+   "pn": 61,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c76fd01fe4f593c1ff042",
+   "pn": 40,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6bf001fe4f593c1aef50",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbc68ec254ff6cadf079f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c79ba01fe4f593c211e77",
+   "pn": 54,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c74ac39b4508b04e58529",
+   "pn": 72,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6ad7af3c49b59c5eab81",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c746301fe4f593c1f0ad9",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c642839b4508b04e24a91",
+   "pn": 2,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c794a01fe4f593c20e86e",
+   "pn": 107,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbb353dce6cfad74a174a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbd13ec254ff6cadf5d03",
+   "pn": 77,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbff0f9474f825c16c8d1",
+   "pn": 86,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbebaec254ff6cae029a7",
+   "pn": 69,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c69c5af3c49b59c5e275d",
+   "pn": 91,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6bd039b4508b04e464b3",
+   "pn": 103,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c79b001fe4f593c211a00",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cba883dce6cfad749c788",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c67b939b4508b04e386a1",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c68f0af3c49b59c5ddcdc",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c769001fe4f593c1fbd66",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c645d39b4508b04e266a3",
+   "pn": 3,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c69a1af3c49b59c5e127a",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6b77af3c49b59c5ec6e3",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbabd3dce6cfad749e500",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6d6701fe4f593c1bab76",
+   "pn": 64,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cb9103dce6cfad7492416",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c788901fe4f593c208e04",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6883af3c49b59c5d9d17",
+   "pn": 38,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c661739b4508b04e31cfb",
+   "pn": 83,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3ce6840a0011cb4bc063f7",
+   "pn": 113,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c646a39b4508b04e26d92",
+   "pn": 3,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c615640c88a541d8f0108",
+   "pn": 95,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c66aeaf3c49b59c5cc628",
+   "pn": 80,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbda7f9474f825c163589",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c714339b4508b04e5321e",
+   "pn": 104,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cbb523dce6cfad74a2b0f",
+   "pn": 2,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c6f2f01fe4f593c1c9c0a",
+   "pn": 18,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3cba2b3d799518cd71e330",
+   "pn": 90,
+   "why": "< 100 Han"
+  },
+  {
+   "bid": "6a3c64cf39b4508b04e2a3a7",
+   "pn": 30,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c730639b4508b04e56cd7",
+   "pn": 65,
+   "why": "ocr.source ai"
+  },
+  {
+   "bid": "6a3c611940c88a541d8ed9e8",
+   "pn": 87,
+   "why": "already translated"
+  },
+  {
+   "bid": "6a3c6156879008ba7e15d81f",
+   "pn": 23,
+   "why": "already translated"
+  }
+ ]
+}

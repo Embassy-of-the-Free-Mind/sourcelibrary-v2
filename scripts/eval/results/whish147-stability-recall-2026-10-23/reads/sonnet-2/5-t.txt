@@ -1,0 +1,10 @@
+ROW 1 | ഒക്തവചനത്ഃ‖ഓ ണ്ടാമൃതകൃത‖ദ്ദ്വാദതിഞ്ഞായാഎ
+ROW 2 | ൽകഞ്ചാദവിഷയാൻ‖തംപെഅമാക്ഷമാ‖മാക്കാഗമാൽന്തിക്കുംഃ ൭‖ന്നക്തിട്ടെ ഒൽസാ
+ROW 3 | ഇപ്രാദ്രിയാഎ‖ഋകാഞ്ഞൈൈഎഎ‖൧ൎവങ്ങൊ൧ൎാൎക്ക‖സൗഖ്യാദ്വൈയാ
+ROW 4 | നാദ്ദ്ടടയക്ക്‖സമാനഎളഃ[illegible]‖[illegible]ഇ൧ൎവെൽ‖ഋക്ഷ്യാകെദ൬വ
+ROW 5 | ലഞ്ചിന്ത്രാടാ‖വാൽകാഞ്ഞുഒ[illegible]‖കഞ്ഞൂദ്വലഞ്ഞു‖ഃമൈവാദ്ദദ്ധകഋ
+ROW 6 | കാഞ്ഞുംലളി‖ഋഞ്ഞവംവി[illegible]‖ഞ്ഞപകൊഃയൂഞ്ഞെ‖സ്ദകനയൊദ്ദവ
+ROW 7 | ൨ദാന്ദ്രഹാണൊാ‖ൽസല്വസംദ[illegible]‖ദവാദ്ദ്രൂവിൽഗ‖കക്കൂദ്രക്കാവെ
+ROW 8 | ൨ൽകാരണെടറ്റ‖അസൽകാര്യംഎ൧ന്ന‖ന്സൊഹതഭദ്ദൊ‖മൃ൧ചിസ്ത്രിയമഎ
+ROW 9 | [illegible]‖ംസാമ്പെഞ്ഞംപ‖പ്പ്ചാദ്ധത്തുംഋക്കം‖വരിതെമൃക്കഃ൧ഃ
+NOTE | The photos are small and the strokes are ambiguous, so this is a low-confidence reading. I read only some characters reliably and guessed many of the rest from the strokes. The left piece p01 showed only 8 rows, so I left row 9 of the left column as [illegible]. Several of the overlap joins are approximate.

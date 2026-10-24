@@ -1,0 +1,44 @@
+{
+ "stage": "holes",
+ "id": "8-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:52:42.614Z",
+ "finished_at": "2026-10-23T07:54:32.632Z",
+ "secs": 110,
+ "prompt_hash": "ef836994a6f1e9ca",
+ "prompt_file": "reads/prompts/ef836994a6f1e9ca.txt",
+ "images": [
+  {
+   "crop": "8-t-1.jpg",
+   "bytes": 450583,
+   "sha256": "cedd8d50c0fa015d30ee05dea5ba799def2ae8ba435226e80ff6796ea8a1d750"
+  },
+  {
+   "crop": "8-t-2.jpg",
+   "bytes": 292963,
+   "sha256": "288203dd2f8d5ea193b65ab293e2b8926251e896694c30e4979d934f2a60dbc3"
+  },
+  {
+   "crop": "8-t-3.jpg",
+   "bytes": 287514,
+   "sha256": "c3ef67c507f2cb3f0bc6048f1cecc10ea7e753763c6581244aa64db615686636"
+  },
+  {
+   "crop": "8-t-4.jpg",
+   "bytes": 403770,
+   "sha256": "9448d517a9de65560d0dc78126b6d97f06e447f2dec071aab28538f2afe985d8"
+  }
+ ],
+ "usage": {
+  "input": 4,
+  "output": 10562,
+  "cache_read": 6405,
+  "cache_creation": 9120,
+  "turns": 5,
+  "list_cost_usd": 0.285497
+ }
+}

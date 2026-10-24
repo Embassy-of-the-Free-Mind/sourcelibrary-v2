@@ -41,6 +41,7 @@ const WINDOW = 40;
 
 /** Files that write the field but are not a change of the page's reading. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': "the ONE deliberate exception (#5924): an orthographic-only edit (f → ſ, the same letter) that must NOT stamp ocr.updated_at, or ~1M pages go stale and queue paid retranslation; assertOrthographicOnly throws on any other change, so it cannot make a changed reading look fresh (tests/unit/longs-orthography.test.ts)",
   'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself; writes only page_revisions',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',

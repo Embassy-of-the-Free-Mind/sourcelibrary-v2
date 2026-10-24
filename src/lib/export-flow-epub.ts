@@ -35,6 +35,7 @@ export const FLOW_EPUB_CSS = `
 .flow-footnote { font-size: 0.85em; color: #555; padding-left: 1em; }
 .flow-figure { margin: 1.5em 0; text-align: center; page-break-inside: avoid; }
 .flow-figure img { max-width: 100%; height: auto; }
+.flow-figure-link { text-align: left; font-size: 0.85em; color: #555; border-left: 2px solid #ccc; padding-left: 0.8em; }
 .noteref { font-size: 0.7em; vertical-align: super; line-height: 0; text-decoration: none; }
 .footnotes { margin-top: 2em; border-top: 1px solid #ccc; font-size: 0.85em; }
 .footnotes h3 { font-size: 1em; }
@@ -80,6 +81,13 @@ export function footnotesFor(html: string, seq: { n: number }): string {
   return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
 }
 
+/** A page's heading levels mapped, in order of depth, onto h3, h4, … (h6 at most): no level skipped. */
+export function rankHeadings(html: string): string {
+  const levels = [...new Set([...html.matchAll(/<h([1-6])>/g)].map(m => Number(m[1])))].sort((a, b) => a - b);
+  const rank = new Map(levels.map((l, i) => [l, Math.min(6, 3 + i)]));
+  return html.replace(/<(\/?)h([1-6])>/g, (_m, sl: string, n: string) => `<${sl}h${rank.get(Number(n)) ?? 6}>`);
+}
+
 const escapeHtml =(s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export interface FlowEpub {
@@ -95,39 +103,52 @@ export interface FlowEpub {
   cleanup: () => void;
 }
 
-/** Fetch, recompress and stage the book's illustrations as files the EPUB builder embeds. */
-async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>): Promise<{ byPage: Map<number, string>; total: number; included: number; dir: string | null }> {
+/**
+ * The book's illustrations, each placed on its page. Where the scans may be redistributed (`embed`), the best of them
+ * up to the cap are fetched, recompressed and staged as files the EPUB builder embeds. Every illustration NOT embedded
+ * — scans not released, over the cap, or a fetch that failed — still stands where it is, as a caption saying what it
+ * shows with a link to see it on its page: a picture that vanishes reads as a book without one. Linking to the page
+ * is fine whatever the scan licence. The plain-text edition takes the same captions (`embed` false).
+ */
+async function stageFigures(db: Db, bookId: string, pageNumbers: Set<number>, baseUrl: string, embed: boolean): Promise<{ byPage: Map<number, string>; total: number; included: number; dir: string | null; best: string | null }> {
   const rows = await db.collection('gallery_images')
     .find(galleryFilter({ bookId, minQuality: 0.5 }), { projection: { _id: 0, page_number: 1, extracted_url: 1, description: 1, bbox: 1, detection_index: 1, gallery_quality: 1 }, maxTimeMS: 10000 })
     .toArray()
-    .catch(() => []) as unknown as Array<{ page_number: number; extracted_url: string; description?: string; bbox?: { y?: number }; detection_index?: number; gallery_quality?: number }>;
-  const imgs = rows.filter(r => pageNumbers.has(r.page_number));
-  const byPage = new Map<number, string>();
-  if (imgs.length === 0) return { byPage, total: 0, included: 0, dir: null };
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), `flow-epub-${bookId}-`));
-  // Over the cap, the best illustrations across the whole book, not the first N (which would strip every plate
-  // from the book's later parts); then back into reading order.
-  const wanted = [...imgs].sort((a, b) => (b.gallery_quality ?? 0) - (a.gallery_quality ?? 0)).slice(0, FLOW_EPUB_MAX_IMAGES)
+    .catch(() => []) as unknown as Array<{ page_number: number; extracted_url?: string; description?: string; bbox?: { y?: number }; detection_index?: number; gallery_quality?: number }>;
+  const imgs = rows.filter(r => pageNumbers.has(r.page_number))
     .sort((a, b) => a.page_number - b.page_number || (a.bbox?.y ?? 0) - (b.bbox?.y ?? 0) || (a.detection_index ?? 0) - (b.detection_index ?? 0));
-  const files: (string | null)[] = new Array(wanted.length).fill(null);
-  let next = 0;
-  await Promise.all(Array.from({ length: IMAGE_CONCURRENCY }, async () => {
-    for (let i = next++; i < wanted.length; i = next++) {
-      const buf = await fetchAndCompressImage(wanted[i].extracted_url, { colour: true, width: 800, height: 1200 });
-      if (!buf) continue;
-      const file = path.join(dir, `fig-${i}.jpg`);
-      fs.writeFileSync(file, buf);
-      files[i] = file;
-    }
-  }));
-  let included = 0;
-  wanted.forEach((img, i) => {
-    if (!files[i]) return;
-    included++;
-    const alt = escapeHtml((img.description || 'Illustration').slice(0, 300));
-    byPage.set(img.page_number, (byPage.get(img.page_number) || '') + `<figure class="flow-figure"><img src="file://${files[i]}" alt="${alt}"/></figure>`);
-  });
-  return { byPage, total: imgs.length, included, dir };
+  const byPage = new Map<number, string>();
+  if (imgs.length === 0) return { byPage, total: 0, included: 0, dir: null, best: null };
+  const files = new Map<(typeof imgs)[number], string>();
+  let dir: string | null = null;
+  if (embed) {
+    const staging = fs.mkdtempSync(path.join(os.tmpdir(), `flow-epub-${bookId}-`));
+    dir = staging;
+    // Over the cap, the best illustrations across the whole book, not the first N (which would strip every plate
+    // from the book's later parts).
+    const wanted = imgs.filter(i => i.extracted_url).sort((a, b) => (b.gallery_quality ?? 0) - (a.gallery_quality ?? 0)).slice(0, FLOW_EPUB_MAX_IMAGES);
+    let next = 0;
+    await Promise.all(Array.from({ length: IMAGE_CONCURRENCY }, async () => {
+      for (let i = next++; i < wanted.length; i = next++) {
+        const buf = await fetchAndCompressImage(wanted[i].extracted_url as string, { colour: true, width: 800, height: 1200 });
+        if (!buf) continue;
+        const file = path.join(staging, `fig-${i}.jpg`);
+        fs.writeFileSync(file, buf);
+        files.set(wanted[i], file);
+      }
+    }));
+  }
+  let best: { file: string; q: number } | null = null;
+  for (const img of imgs) {
+    const file = files.get(img);
+    const description = (img.description || '').replace(/\s+/g, ' ').trim().slice(0, 300);
+    const href = `${baseUrl}/book/${bookId}?page=${img.page_number}`;
+    if (file && (!best || (img.gallery_quality ?? 0) > best.q)) best = { file, q: img.gallery_quality ?? 0 };
+    byPage.set(img.page_number, (byPage.get(img.page_number) || '') + (file
+      ? `<figure class="flow-figure"><img src="file://${file}" alt="${escapeHtml(description || 'Illustration')}"/></figure>`
+      : `<figure class="flow-figure flow-figure-link" data-page="${img.page_number}"><figcaption><a href="${escapeHtml(href)}">Illustration, p. ${img.page_number}</a>${description ? `: ${escapeHtml(description)}` : ''}</figcaption></figure>`));
+  }
+  return { byPage, total: imgs.length, included: files.size, dir, best: (best as { file: string } | null)?.file ?? null };
 }
 
 export async function buildFlowEpub(
@@ -137,17 +158,31 @@ export async function buildFlowEpub(
   opts: { text: 'translation' | 'ocr'; baseUrl: string; includeImages: boolean },
 ): Promise<FlowEpub> {
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
-  const figures = opts.includeImages
-    ? await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)))
-    : { byPage: new Map<number, string>(), total: await db.collection('gallery_images').countDocuments(galleryFilter({ bookId: book.id, minQuality: 0.5 }), { maxTimeMS: 5000 }).catch(() => 0), included: 0, dir: null };
+  const figures = await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)), opts.baseUrl, opts.includeImages);
 
   const flowPage = (p: FlowPageDoc): FlowPage => {
     const raw = opts.text === 'translation'
       ? (p.translation?.data ? markForExport(p.translation.data, book.id) : '')
       : (p.ocr?.data || '');
-    const html = raw.trim() ? markdownToHtml(raw) : '';
+    // A page's own headings sit below the section's <h2>, ranked in the order the page uses them (h3, h4, …):
+    // translators pick #-levels freely ("#" then "###"), and a heading that skips a level breaks the heading
+    // navigation e-readers and screen readers rely on (the probe found 143 skips in 12 books).
+    const html = raw.trim() ? rankHeadings(markdownToHtml(raw)) : '';
     return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}?page=${p.page_number}`, figures: figures.byPage.get(p.page_number) };
   };
+  // A transcribed page with no translation yet says so, once per run ("Pages 45–52 are not yet translated"),
+  // instead of vanishing: the reader would otherwise take the gap for the book (no silent skips). It stands as
+  // its own block, so no sentence runs across it.
+  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !p.translation?.data && !!p.ocr?.data?.trim();
+  const flowPages = (list: FlowPageDoc[]): FlowPage[] => list.map((p, i) => {
+    const fp = flowPage(p);
+    if (!untranslated(p) || (i > 0 && untranslated(list[i - 1]))) return fp;
+    let j = i;
+    while (j + 1 < list.length && untranslated(list[j + 1])) j++;
+    const a = p.page_number, b = list[j].page_number;
+    const what = a === b ? `Page ${a} is` : `Pages ${a}–${b} are`;
+    return { ...fp, block: true, html: `<p class="untranslated"><em>${what} not yet translated; the original is at <a href="${opts.baseUrl}/book/${book.id}?page=${a}">${opts.baseUrl}/book/${book.id}?page=${a}</a>.</em></p>` };
+  });
 
   // Sections: the book's chapters when it has them (low-confidence ones are guesses), else even runs of pages.
   const starts = (book.chapters || [])
@@ -168,11 +203,12 @@ export async function buildFlowEpub(
       const title = s.title || (first === last ? `Page ${first}` : `Pages ${first}–${last}`);
       // Page numbers as an edition marks a page break, "|198" on the line: e-readers ignore most CSS, and a bare
       // raised number would read as one of the footnote calls.
-      const body = footnotesFor(joinPagesHtml(s.pages.map(flowPage)), seq)
+      const body = footnotesFor(joinPagesHtml(flowPages(s.pages)), seq)
         .replace(/(<a class="page-marker"[^>]*>)(\d+)<\/a>/g, '$1|$2</a>');
       return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}` };
     })
-    .filter(c => /<p>|<figure/.test(c.content));
+    // Any content at all — a section of untranslated pages is its "not yet translated" note, not nothing.
+    .filter(c => /<p[\s>]|<figure|<table|<ul/.test(c.content));
 
   // The cover: the book's own image, recompressed to a JPEG within Kindle's recommended 1600×2560 (the stored
   // thumbnail may be AVIF, which no e-reader reads). Only when the scans may be redistributed.
@@ -185,10 +221,13 @@ export async function buildFlowEpub(
       fs.writeFileSync(coverFile, buf);
     }
   }
+  // The stored cover could not be fetched (Gallica answers 403 to a server): the book's best illustration stands in,
+  // one of its own plates rather than a grey placeholder. It is already staged; cleanup removes it with the rest.
+  const cover = coverFile ?? figures.best;
 
   const imagesNote = figures.total === 0 ? null
-    : !opts.includeImages ? `This edition carries the text only: the scans of this book are not released for redistribution, so its ${figures.total} illustrations are not included. They can be seen at ${opts.baseUrl}/book/${book.id}.`
-    : figures.included < figures.total ? `${figures.included} of this book's ${figures.total} illustrations are included${figures.total > FLOW_EPUB_MAX_IMAGES ? ` (an e-book carries at most ${FLOW_EPUB_MAX_IMAGES})` : ''}; all of them can be seen at ${opts.baseUrl}/book/${book.id}.`
+    : !opts.includeImages ? `The scans of this book are not released for redistribution, so its ${figures.total} illustrations are not reproduced here: each is marked where it stands, with what it shows and a link to see it at ${opts.baseUrl}/book/${book.id}.`
+    : figures.included < figures.total ? `${figures.included} of this book's ${figures.total} illustrations are reproduced${figures.total > FLOW_EPUB_MAX_IMAGES ? ` (an e-book carries at most ${FLOW_EPUB_MAX_IMAGES})` : ''}; each of the others is marked where it stands, with what it shows and a link to see it at ${opts.baseUrl}/book/${book.id}.`
     : null;
 
   return {
@@ -196,7 +235,7 @@ export async function buildFlowEpub(
     imagesTotal: figures.total,
     imagesIncluded: figures.included,
     imagesNote,
-    cover: coverFile ? `file://${coverFile}` : null,
+    cover: cover ? `file://${cover}` : null,
     cleanup: () => {
       if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true });
       if (coverFile) fs.rmSync(coverFile, { force: true });
