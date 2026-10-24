@@ -48,3 +48,8 @@
 # 4,568 pages in visible or held books (2026-10-23). Output per day under /data/scratch/sl/refused-pages/, resumable.
 # PATH carries /root/.local/bin, where claude lives on l7a: cron's bare PATH does not, and claude-ocr.mjs calls `claude`.
 20 */3 * * * export PATH=/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/batch/refused-pages.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/refused-pages.lock timeout 2h systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local $f run --out=/data/scratch/sl/refused-pages/$(date +\%F) --max-pages=80 --apply >> /data/scratch/sl/logs/refused-pages.log 2>&1  # #7170
+
+# /admin/work board (#5705): what this box's headless Claude jobs are doing, one ops_reports document per box.
+# Missing on l7a until 2026-10-24 (#7268): the board showed every box but this one, which ran most of that week's jobs.
+# Writes only ops_reports `work-board:l7a`; nothing else reads it, so it actuates nothing.
+*/10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /data/scratch/sl/sourcelibrary && node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/work-board-push.mjs --box l7a' >> /data/scratch/sl/logs/work-board.log 2>&1  # /admin/work board (#5705), added 2026-10-24 #7268
