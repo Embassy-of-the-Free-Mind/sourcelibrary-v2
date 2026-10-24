@@ -167,6 +167,13 @@ export async function POST(request: NextRequest) {
     // Detect country (basic - from IP via headers)
     const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
 
+    // Client hints, log-only (#4476). Chromium sends its real brand/version in
+    // sec-ch-ua even when the User-Agent string is overridden, so a fleet that
+    // rotates forged "Chrome/1xx" UAs should show a version mismatch, or no
+    // hints at all. null = header absent; a missing field = row predates this.
+    const chUa = request.headers.get('sec-ch-ua')?.slice(0, 160) ?? null;
+    const chPlatform = request.headers.get('sec-ch-ua-platform')?.slice(0, 40) ?? null;
+
     deferDbWrite(async () => {
       const db = await getDb();
       await Promise.all([
@@ -176,6 +183,8 @@ export async function POST(request: NextRequest) {
           country,
           host,
           userAgent: (effectiveUA || userAgent)?.substring(0, 200),
+          ch_ua: chUa,
+          ch_platform: chPlatform,
           timestamp: new Date(),
           ip,
         }),

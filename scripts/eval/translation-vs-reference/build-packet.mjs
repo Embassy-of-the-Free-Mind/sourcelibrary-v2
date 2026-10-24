@@ -86,6 +86,8 @@ const packetLine = (r, id, labels) => ({
   id, track: r.track, lang: r.lang,
   reference_title: r.reference_meta.title, reference_translator: r.reference_meta.translator, reference_year: r.reference_meta.year ?? null,
   reference_style: r.reference_meta.style,
+  // #7202: a page with no published English carries a second WITNESS of the source instead (Kanripo's WYG text)
+  ...(r.reference_meta.kind === 'source_witness' ? { reference_kind: 'source_witness' } : {}),
   ...(r.reference_meta.located ? { reference_located: r.reference_meta.located } : {}),
   ...(r.reference_meta.coverage_note ? { reference_note: r.reference_meta.coverage_note } : {}),
   ...(r.source_prev_tail ? { source_prev_tail: r.source_prev_tail } : {}),

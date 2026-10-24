@@ -1,0 +1,23 @@
+I couldn't read this leaf with confidence, so treat the placements below as rough estimates, not readings. Every line is marked unsure, and no edition word is confirmed letter by letter.
+
+The leaf seems to come from the end of the text, around SK_68 to SK_73 plus a colophon. Two clues point that way:
+- **Line 8:** the right side seems to have a sequence like "-ബിംബം" (*bimbam*), which is how SK_73 ends.
+- **Line 9:** it seems to have "ഏതത് … വിരചിത … ഗ്രന്ഥം", which looks like closing words rather than verse text.
+
+**Line 1:** it seems to start "കൈവല്യ…" (*kaivalya-*), followed by a verse-end mark. That fits the end of SK_68 (*kaivalyam āpnoti*). It doesn't fit SK_17 or SK_21, because the leaf is so near the end.
+
+**Lines 3–7:** these are short on the left, with a gap around the string hole, so less text is visible.
+
+The spacing roughly fits: about 5 verses (around 200 syllables) over 9 lines of about 25 syllables each.
+
+LINE 1 | SK_68-SK_69 | kaivalyam | puruṣā'rtha- (?) | unsure
+LINE 2 | SK_69 | (?) | samākhyātam (?) | unsure
+LINE 3 | SK_69-SK_70 | (?) | (?) | unsure
+LINE 4 | SK_70 | (?) | (?) | unsure
+LINE 5 | SK_70-SK_71 | (?) | (?) | unsure
+LINE 6 | SK_71 | (?) | (?) | unsure
+LINE 7 | SK_72 | (?) | (?) | unsure
+LINE 8 | SK_73 | (?) | bimbam (?) | unsure
+LINE 9 | colophon (not edition text) | — | — | unsure
+
+FIRST_VISIBLE_VERSE=68 LAST_VISIBLE_VERSE=73

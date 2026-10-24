@@ -1,0 +1,45 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on a palm leaf; Sanskrit text. The hand is dense and many aksharas are ambiguous; readings below are tentative and the right-hand text block runs to the leaf edge.</warning>
+<warning>A binding cord passes through a hole in the centre of the leaf, obscuring one akshara position in the middle lines.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+
+<unclear>ക്ഷഠത്രപരാമർഖാൽകിഉണഠമവിപഷ്ടഖ്യാടധി</unclear>
+
+<unclear>കൈവല്യാമപ്രഭക്കെകഖസ്തുഈഭഗമനഞ</unclear>
+
+<unclear>പ്രതകെത്കളുഇ</unclear>
+
+<unclear>ബസ്യാതങ്ങാച്ചവി</unclear>
+
+<unclear>വല്യാംമാദ്ധന്തു</unclear>
+
+<unclear>സംഖൊഗാദത</unclear>
+
+<unclear>വിതമാകത</unclear>
+
+<unclear>കൈവല്യാമേക</unclear>
+
+<column-break/>
+
+<unclear>മബഹ്യതംനിഉഠ</unclear>
+
+<unclear>പഷ്ടാസാൽസിഠാ</unclear>
+
+<unclear>ഈക്കേദഞ്ഞുതമര</unclear>
+
+<unclear>ചതനകഖതരാ</unclear>
+
+<unclear>പഭവഷ്ടുഭാസിമ</unclear>
+
+<unclear>മാപ്രധാനക്കുച</unclear>
+
+<unclear>ഈൽക്കതസ്തബ്ദഃല്ലുജ്ഞകതതസ്ഥാംങ്ങത</unclear>
+
+<unclear>ശക്കുതസ്യാദവിതഠാഖൾകാൽപഷ്ടാഠാ</unclear>
+
+<meta>Palm-leaf folio, one side; text written in two blocks either side of the central string hole, with the first two and last two lines running the full width of the leaf. No folio number visible.</meta>
+<vocab>kaivalya, pradhāna, palm-leaf manuscript, Malayalam script, Sanskrit</vocab>

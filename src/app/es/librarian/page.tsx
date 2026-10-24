@@ -1,7 +1,7 @@
 import LibrarianPage from '@/app/librarian/page';
 
 /**
- * Spanish Librarian — "Pregunta a la fuente". The SAME page as `/librarian`,
+ * Spanish Librarian — "El Bibliotecario". The SAME page as `/librarian`,
  * rendered with `lang='es'` (#4116): Spanish chrome from
  * `src/lib/librarian-i18n.ts`, `/es`-prefixed links, and `lang: 'es'` on every
  * chat request so the tools quote `pages.translations.es` where we hold it and

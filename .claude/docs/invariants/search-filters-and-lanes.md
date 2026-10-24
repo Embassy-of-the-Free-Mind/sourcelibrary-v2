@@ -33,6 +33,14 @@ filter renders as *on* while out-of-range results sit at the top.
   edition** (`pages_translated_<iso> > 0`) — its result cards link to
   `/es/book/…`, and an `/es` URL for a book with no Spanish pages 307s back to
   English, so an unfiltered hit is a result the reader cannot open.
+- **An ORIGINAL-text locale is not a `lang` (#7175).** Nothing is translated
+  into Latin or Chinese, so `pages_translated_la` is 0 everywhere and
+  `lang=la` used to answer 0 rows, silently. `/la/search` and `/zh/search` send
+  `language=<native>&text=original`; the route also reads `lang=la|zh|nl` as
+  exactly that, and refuses (400) a `language` that contradicts it.
+  `text=original` quotes every page row from its OCR (Latin matched with u/v,
+  i/j, ſ, ae folded, `src/lib/search/original-snippet.ts`), drops English book
+  summaries, and never falls back to the English translation.
 - **Vector lanes carry no metadata predicate** and their hits merge in as
   book/passage results. They must be post-filtered in JS or they leak past every
   filter. This is the one people miss.

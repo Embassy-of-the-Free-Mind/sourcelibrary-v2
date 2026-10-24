@@ -32,6 +32,7 @@
  *   node --env-file=... scripts/workers/ndl-koten-lane.mjs compare --eye 5
  *   node --env-file=... scripts/workers/ndl-koten-lane.mjs apply [--apply] [--book <id>]
  * Options: --dir <lane dir> (default ~/ndl-koten-lane)  --census <summary.json>  --run <label>
+ *          --exclude <books.json> (leave out an earlier run's books, e.g. the pilot's)
  */
 import fs from 'node:fs';
 import os from 'node:os';
@@ -58,6 +59,7 @@ const CENSUS = arg('--census', 'scripts/eval/results/cursive-census/summary.json
 const APPLY = flag('--apply');
 const BOOK = arg('--book', null);
 const PILOT = Number(arg('--pilot', 0)) || 0;
+const EXCLUDE = arg('--exclude', null);
 const EYE = Number(arg('--eye', 5)) || 5;
 const RUN = arg('--run', `${LANE}/${new Date().toISOString().slice(0, 10)}`);
 /** Below this many characters an NDL read is "textless": it replaces a loop or an empty page, never a reading. */
@@ -87,6 +89,13 @@ async function plan() {
   const census = JSON.parse(fs.readFileSync(CENSUS, 'utf8'));
   let chosen = BOOK ? census.books.filter((b) => b.book_id === BOOK) : census.books.filter((b) => routeBook(b).route);
   if (PILOT) chosen = pilotDraw(census.books, PILOT);
+  if (EXCLUDE) {
+    // an earlier run's books.json (the pilot's): those books were read and judged already (#5100 full run)
+    const prior = new Set(Object.keys(JSON.parse(fs.readFileSync(EXCLUDE, 'utf8'))));
+    const before = chosen.length;
+    chosen = chosen.filter((b) => !prior.has(b.book_id));
+    log(`--exclude ${EXCLUDE}: ${before - chosen.length} book(s) left out`);
+  }
   log(`${chosen.length} book(s) chosen from ${census.books.length} in the census (${PILOT ? `pilot draw of ${PILOT}` : 'all cursive'})${APPLY ? '' : '  [DRY RUN: no holds]'}`);
   const rows = [], booksOut = {}, tally = { books: 0, pages: 0, keep: 0, first_write: 0, old_loops: 0, no_image: 0, skipped_books: [] };
   await withMongo(async (db) => {

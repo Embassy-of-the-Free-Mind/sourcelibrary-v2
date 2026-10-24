@@ -1,0 +1,10 @@
+ROW 1 | [illegible]ച[illegible]ന[illegible]ൽ[illegible] ‖ ന[illegible]കൊ[illegible]ടു[illegible] ‖ [illegible]ലനവി[illegible]വി[illegible]ം ലിം ഗം സു[illegible]
+ROW 2 | [illegible]ഭ[illegible]ന[illegible] ‖ ര[illegible]ദ[illegible]നി[illegible] ‖ ന[illegible]ഗ[illegible]ഗി[illegible]
+ROW 3 | [illegible]ഭ[illegible]ന്ദി ‖ ന[illegible]ദ[illegible] ‖ [illegible]ന[illegible]
+ROW 4 | [illegible]ന[illegible] ‖ [illegible]ന[illegible] ‖ [illegible]ന[illegible]ന[illegible]
+ROW 5 | [illegible] ‖ [illegible]ദി[illegible] ‖ [illegible]ര[illegible]ത്ര[illegible]
+ROW 6 | [illegible]യ[illegible]ദ്ര[illegible] ‖ [illegible]ന[illegible] ‖ [illegible]ദി[illegible]
+ROW 7 | [illegible]യ[illegible] ‖ [illegible]ഗു[illegible] ‖ [illegible]ന[illegible]യ[illegible]
+ROW 8 | [illegible]ന[illegible] ‖ [illegible]ന[illegible] ‖ [illegible]ന[illegible]ൽ[illegible]ലയഃ
+ROW 9 | [illegible]ന[illegible] ‖ [illegible]ന[illegible] ‖ [illegible]ന[illegible]
+NOTE | I couldn't reliably read this leaf; well under 10% is legible. The images are heavily binarised with grain streaks, and only scattered characters are tentatively identifiable. I didn't fill any gaps from the known text, so treat every row as unverified and rescan in greyscale or colour before transcribing.

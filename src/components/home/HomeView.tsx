@@ -13,7 +13,7 @@ import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
-import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, type HomeLang, collectionName } from '@/lib/home-i18n';
+import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath, readsOriginal } from '@/lib/locale-path';
 
 // The newest twelve articles for the homepage slider (posts.ts is the one list).
@@ -31,7 +31,8 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, untranslatedShelf, subjectShelves } = data;
+  const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -107,7 +108,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.nativeShelfHeading}
               </h2>
               <Link
-                href={`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`}
+                href={lp(`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.nativeShelfAll} &rarr;
@@ -134,6 +135,24 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               {t.beginnerShelfSubtitle}
             </p>
             <BookSlider books={beginnerShelf as unknown as MiniBook[]} lang={lang} />
+          </div>
+        </section>
+      )}
+
+      {/* Nondum conversi — the Latin books not readable in English, most read
+          first, with the live count (#6278). For a neo-Latinist the list of
+          work not yet done here. Scans-only books are in: a Latinist reads the
+          scan. Only `/la` fills it. Anchor: sourcelibrary.org/la#nondum-conversi. */}
+      {untranslatedShelf && untranslatedShelf.books.length > 0 && (
+        <section id="nondum-conversi" className="bg-white pb-10 md:pb-14 scroll-mt-20">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+              {t.untranslatedShelfHeading}
+            </h2>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.untranslatedShelfSubtitle(untranslatedShelf.total)}
+            </p>
+            <BookSlider books={untranslatedShelf.books as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -294,6 +313,35 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           the breadth of the library, and so it doesn't stack a second input
           box right under the hero sign-up. */}
       <AskTheSourceBand lang={lang} />
+
+      {/* Subject shelves — native-first homepages only (`/zh`), in the slot the
+          featured band fills elsewhere: one row per subject, every book written
+          in the page's language. Empty, so unrendered, on the other homepages. */}
+      {subjectShelves.length > 0 && subjectShelvesText && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary font-display mb-10">
+              {subjectShelvesText.heading}
+            </h2>
+            <div className="space-y-12">
+              {subjectShelves.map((shelf) => (
+                <div key={shelf.slug}>
+                  <div className="flex items-end justify-between gap-4 mb-4">
+                    <h3 className="text-2xl text-primary font-display">{shelf.heading}</h3>
+                    <Link
+                      href={lp(`/collections/${shelf.slug}`)}
+                      className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap"
+                    >
+                      {subjectShelvesText.allLabel} &rarr;
+                    </Link>
+                  </div>
+                  <BookSlider books={shelf.books as unknown as MiniBook[]} lang={lang} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured Collection — editorial spread */}
       {featuredItems.length > 0 && (

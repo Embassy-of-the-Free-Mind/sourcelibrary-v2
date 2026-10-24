@@ -13,6 +13,17 @@
     "the-chronology-of-ancient-nations-sachau",
     "the-ghost-dance-religion-and-the-sioux-outbreak-of-1890-mooney"
   ],
+  "archytas-in-the-library": [
+    "aulus-gellius-noctes-atticae-aldine-press-2nd-ed-gellius",
+    "magnes-sive-de-arte-magnetica-kircher",
+    "the-history-of-philosophy-complete-edition-1687-stanley",
+    "archimedes-on-sphere-and-cylinder-with-eutocius-heron-alexandria",
+    "scripta-philosophica-cicero",
+    "the-book-of-secrets-liber-aggregationis-magnus",
+    "horatii-flacci-opera-horace",
+    "die-fragmente-der-vorsokratiker-diels",
+    "de-morbius-et-officys-vivendi-manuscript-between-1450-and-jacobus"
+  ],
   "astrological-diagrams": [
     "dunhuang-star-chart",
     "vat-gr-1594-ptolemy",
@@ -84,6 +95,26 @@
     "henr-cornelii-agrippae-ab-nettesheym-de-incertitudine-et-agrippa-von",
     "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-huser",
     "accurata-graeciae-descriptio-greek-latin-pausanias"
+  ],
+  "concords-not-unisons": [
+    "xenophon-memorabilia-oeconomicus-symposium-apologia-loeb-168-xenophon",
+    "dialogues-of-plato-vol-5-laws-epinomis-letters-plato",
+    "die-fragmente-der-vorsokratiker-diels",
+    "the-chinese-classics-vol-5-part-2-the-chun-tsew-with-the-tso",
+    "tahdhib-al-akhlaq-the-refinement-of-character-miskawayh",
+    "characteristicks-of-men-manners-opinions-times-1714-shaftesbury",
+    "an-inquiry-into-the-original-of-our-ideas-of-beauty-and-hutcheson",
+    "a-treatise-of-human-nature-volume-2-hume",
+    "a-treatise-of-human-nature-volume-3-hume",
+    "the-theory-of-moral-sentiments-smith",
+    "ethica-latin-original-spinoza",
+    "short-treatise-on-god-man-and-his-wellbeing-spinoza",
+    "essays-on-philosophical-subjects-smith",
+    "an-inquiry-into-the-nature-and-causes-of-the-wealth-of-smith",
+    "biographical-memoirs-of-adam-smith-william-robertson-and-stewart",
+    "the-origin-of-human-races-and-the-antiquity-of-man-deduced-wallace",
+    "on-the-origin-of-species-darwin",
+    "a-palace-concert"
   ],
   "confident-hallucinator": [
     "sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous",
@@ -212,6 +243,7 @@
     "traictie-de-la-premiere-invention-des-monnoies-oresme",
     "ancient-double-entry-bookkeeping-lucas-pacioli-s-treatise-tr",
     "the-harmony-of-the-world-kepler",
+    "les-six-livres-de-la-republique-de-j-bodin-angevin-plus-lapologie-de-r",
     "splendor-solis-the-splendour-of-the-sun-trismosin",
     "narrische-weiszheit-und-weise-narrheit-oder-ein-hundert-so-becher",
     "the-theory-of-moral-sentiments-smith",
@@ -226,6 +258,34 @@
     "the-unity-of-law-as-exhibited-in-the-relations-of-physical-carey",
     "die-akkumulation-des-kapitals-luxemburg",
     "goltzius-print-satirical-print"
+  ],
+  "harmony-map": [
+    "utriusque-cosmi-historia-1617-fludd",
+    "fragmenta-philosophorum-graecorum-mullach",
+    "bern-burgerbibliothek-cod-402-aristotle",
+    "aristotelous-ta-problemata-meta-ton-tou-alex-aphrodis-proble",
+    "the-dialogues-of-plato-jowett-translation-plato",
+    "the-cratylus-phaedo-parmenides-and-timaeus-of-plato-taylor",
+    "die-fragmente-der-vorsokratiker-diels",
+    "de-institutione-arithmetica-de-institutione-musica-friedlein",
+    "oeuvres-completes-tome-5-correspondance-1664-1665-huygens",
+    "demonstration-du-principe-de-l-harmonie-rameau",
+    "traite-de-l-harmonie-reduite-a-ses-principes-naturels-rameau",
+    "les-nouvelles-pensees-de-galilee-discorsi-e-dimostrazioni-galilei",
+    "thaumaturgus-mathematicus-id-est-admirabilium-effectorum-e-ens",
+    "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+    "tentamen-novae-theoriae-musicae-euler",
+    "on-the-sensations-of-tone-helmholtz",
+    "iamblichus-iamblikos-iamblichus",
+    "bodleian-library-ms-barocci-41-nicomachus",
+    "greek-texts-on-music-mathematics-and-astronomy-cambridge-aristoxenus",
+    "de-legibus-et-sectis-contra-superstitiosos-astronomos-i-add-alliaco",
+    "ficino-letters-book-i-ficino",
+    "greek-de-vita-pythagorae-jamblichus",
+    "de-vita-pythagorica-liber-codex-florentinus-nauck",
+    "de-anima-ex-aristotelis-institutione-tr-hieronymus-donatus-alexander-aphrodisae",
+    "platos-republic-greek-text-plato",
+    "euthyphro-apology-crito-phaedo-phaedrus-loeb-l036-plato"
   ],
   "hidden-engineers": [
     "corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria",
@@ -606,6 +666,15 @@
     "jamblichus-de-mysteriis-aegyptiorum-chaldaeorum-assyriorum-iamblichus",
     "mysteries-of-egypt-neoplatonic-collection-porphyry"
   ],
+  "philolaus-in-the-library": [
+    "de-revolutionibus-1543-first-edition-copernicus",
+    "aulus-gellius-noctes-atticae-aldine-press-2nd-ed-gellius",
+    "ioannis-revchlin-phorcensis-ll-doc-de-arte-cabalistica-reuchlin",
+    "destructio-cabale-seu-cabalistice-perfidie-ab-ioanne-hoogstraten",
+    "the-city-of-the-sun-campanella",
+    "claudiani-mamerti-opera-csel-xi-engelbrecht",
+    "die-fragmente-der-vorsokratiker-diels"
+  ],
   "philosophers-stone": [
     "on-the-philosopher-s-stone-lambspringk",
     "the-child-bed-of-the-philosopher-s-stone-anonymous",
@@ -656,6 +725,11 @@
     "bellifortis-kyeser",
     "nova-scientia-tartaglia",
     "de-beghinselen-des-waterwichts-stevin"
+  ],
+  "pythagoras-in-the-library": [
+    "integer-nitidus-macrobius",
+    "margarita-philosophica-reisch-1",
+    "die-fragmente-der-vorsokratiker-diels"
   ],
   "rashi-ocr": [
     "the-zohar-sefer-ha-zohar-attributed"

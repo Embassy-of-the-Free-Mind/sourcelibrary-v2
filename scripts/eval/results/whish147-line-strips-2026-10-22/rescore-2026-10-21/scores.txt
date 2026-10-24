@@ -1,0 +1,5 @@
+arm          leaf  rows chars  rowCER  floorSh floorRev  wholeCER
+fable-half   5b     10   314  0.089   0.713   0.701    0.627
+opus-half    5b     11   307  0.56   0.7   0.704    0.751
+POOLED fable-half   leaves 1 chars 314 rowCER 0.089 (leaf range 0.089–0.089, median 0.089)  floor shuffled 0.713 reversed 0.701  wholeCER median 0.627 range 0.627–0.627
+POOLED opus-half    leaves 1 chars 307 rowCER 0.560 (leaf range 0.56–0.56, median 0.56)  floor shuffled 0.700 reversed 0.704  wholeCER median 0.751 range 0.751–0.751

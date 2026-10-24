@@ -1,0 +1,1457 @@
+[
+ {
+  "slug": "69b21c3c429e087c6f86448e-p336",
+  "book_id": "69b21c3c429e087c6f86448e",
+  "page_number": 336,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 1,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "none",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Thin sliver of the facing verso at the left gutter; no legible text in it; nothing from it in the OCR."
+  },
+  "defects": [
+   {
+    "class": "O5",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Line 42 \"juxta quam etiam nunc antiqui opidi\" -> OCR drops \"etiam\" (single-word omission, no sense change)."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"superstagnanteis\" (long s + t) read as \"superfagnanteis\"; translation still renders \"overflowing\"."
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Silius line printed \"Clanio contemptae semper Acerrae\" normalised to \"contemta ... Acerra\"; Greek of Lycophron partly regularised (e.g. printed \"κλῶσις\" -> \"κλῶζις\", \"λινεργὴς\" -> \"λινερχὴς\")."
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Foot line \"Tom. 2.\" dropped; printed line numbers 10-50 omitted (acceptable)."
+   }
+  ],
+  "containment": false,
+  "notes": "Body text, verse layout, Greek and italic Latin translation all present and in order; catchword \"ne ampliùs\" and sig \"Dd\" correct; page-num 1099 correct. Long s normalised to s throughout (convention: modern s). English faithful and complete; Greek left untranslated but the Latin verse translation that follows is translated."
+ },
+ {
+  "slug": "69b21c3c429e087c6f86448e-p337",
+  "book_id": "69b21c3c429e087c6f86448e",
+  "page_number": 337,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": "Borderline: one citation numeral is wrong and carried into English (Seneca Epist. LI given as Epist. 86), so a reader citing from this page would cite the wrong letter; the rest of the page is faithful.",
+  "long_s_f_count_est": 120,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right (outer)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "none",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Narrow strip of the next leaf at the right edge; blank in the frame; nothing from it in OCR."
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Long s transcribed as f throughout (\"conceffit\", \"fpeciofus\", \"fepulcrum\", \"poft\", ~120 tokens) while p336 and p338 normalise to s."
+   },
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Printed \"Seneca Epist. LI: Literni honestius Scipio, quàm Baiis\" -> OCR \"Epift. lxxxvi\"; English says \"Seneca, Epistle 86\". The later \"Seneca Epist. LXXXVI\" on the page is correct, so the first one was copied from it/normalised."
+   },
+   {
+    "class": "O3",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Strabo Greek printed \"ἐνταῦθα τὸ πλεῖστον\" -> OCR \"ἐνταῦθα τὸ τελευταῖον\" (substituted wording, Greek ligatures not read letter by letter)."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"turreis ... utrimque subrectas\" (raised) -> OCR \"fubjectas\"; English \"placed on both sides\"."
+   },
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Damaged page number (sequence says 1100) recorded as page-num 1106."
+   },
+   {
+    "class": "T6",
+    "cause": "seam",
+    "evidence_label": "text",
+    "evidence": "Last line ends \"...auctores Liternum in exsilium concessisse\" with \"eum\" catchword; English renders it as \"the authors written above withdrew into exile\", making the authors the subject."
+   }
+  ],
+  "containment": false,
+  "notes": "Complete page, long italic quotations (Livy, Orosius, Valerius Maximus, Seneca) all present. English is otherwise fluent and accurate."
+ },
+ {
+  "slug": "69b21c3c429e087c6f86448e-p338",
+  "book_id": "69b21c3c429e087c6f86448e",
+  "page_number": 338,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "none",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Sliver of facing verso at left gutter, no text visible; not in OCR."
+  },
+  "defects": [
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Printed page number 1101 -> page-num 1161; the English then adds a heading \"(Page 1161)\"."
+   },
+   {
+    "class": "T13",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "The five-line Strabo Greek quotation at the foot is replaced in English by \"*[Greek text omitted]*...\" (labelled omission; the Latin version starts at \"Hoc est\" and runs onto the next page)."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Cicero quotation \"quaesissemque, quid ageres\" -> \"quaesisssem\" (enclitic dropped); minor."
+   }
+  ],
+  "containment": false,
+  "notes": "Side-note \"Literninae paludes\" captured as <gloss>, \"Gallinaria silva\" as <margin> in the right place. Verse blocks, small caps headings and sig \"Dd 2\" correct."
+ },
+ {
+  "slug": "69af106e266659b71a32212f-p202",
+  "book_id": "69af106e266659b71a32212f",
+  "page_number": 202,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "none",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Dark gutter band with a sliver of the facing recto; no legible text; OCR has none of it. Heavy mirror-image show-through (Ab exercitio...) in the middle also correctly ignored."
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Line end at gutter \"Igitur qui[es]\" (clipped; the strip on p203 shows \"quie\") read as \"quia\"; English drops it and gives only \"abstinence must be commanded\" (likely \"rest and abstinence\")."
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Catchword \"Fri[ctiones]\" recorded as \"Pri\"."
+   }
+  ],
+  "containment": false,
+  "notes": "Black-and-white microfilm. Heading reads \"VIII\" with the X faint; OCR gives XVIII, consistent with sequence. English faithful otherwise."
+ },
+ {
+  "slug": "69af106e266659b71a32212f-p203",
+  "book_id": "69af106e266659b71a32212f",
+  "page_number": 203,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "prev",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Clear strip of p202 line-ends at the left (\"sper-\", \"vehe-\", \"atque\", \"adeo\", \"cir-\", \"quie\", \"Fri\") - matches p202; OCR warning notes it and ignores it correctly."
+  },
+  "defects": [
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Aphorism XXI \"Exercitio corpus minus perspirat, somno magis, & magis lubrica redditur alvus\" -> \"through sleep, the bowel is rendered more and more lubricated\": drops that sleep makes the body perspire MORE."
+   },
+   {
+    "class": "T10",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Added note guessing \"the Philosopher\" = \"Aristotle or Hippocrates\" (harmless hedge)."
+   }
+  ],
+  "containment": false,
+  "notes": "OCR of all four aphorisms is exact."
+ },
+ {
+  "slug": "69af106e266659b71a32212f-p204",
+  "book_id": "69af106e266659b71a32212f",
+  "page_number": 204,
+  "cell": "roman-1",
+  "verdict": "sound",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "none",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Dark gutter with sliver of facing leaf; blank; not in OCR."
+  },
+  "defects": [],
+  "containment": false,
+  "notes": "Commentary XXII-XXIX read exactly incl. catchword \"Magna\"; English faithful (minor: \"cruditates\" rendered \"raw juices\")."
+ },
+ {
+  "slug": "6984e84f5905f8d14dbe659b-p106",
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "page_number": 106,
+  "cell": "gothic-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Left is the book fore-edge; faint show-through of the verso header only."
+  },
+  "defects": [
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"nach ihren Lehrsätzen verketzern und verdammen\" -> \"verkehren und verdammen\"; English \"pervert and condemn\" instead of \"brand as heretics\"."
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"absolviret\" -> \"absolvirt\" (spelling normalised; trivial)."
+   }
+  ],
+  "containment": false,
+  "notes": "German fraktur (not Latin). 74 lines, complete, order correct, catchword \"nehmlich\" correct. Long s normalised to s. English complete; adds a <meta> preamble and <summary>/<keywords>."
+ },
+ {
+  "slug": "6984e84f5905f8d14dbe659b-p107",
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "page_number": 107,
+  "cell": "gothic-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Right is the book fore-edge."
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "This page keeps long s as ſ (176 instances) while p106 and p108 normalise to s."
+   },
+   {
+    "class": "O13",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "A pen stroke in the left margin becomes \"<margin>/</margin>\" and \"<margin>|</margin>\" and starts invented paragraph breaks; the English carries the empty margin tags across."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"auf was vor Arth\" -> \"auf was Vorth\" (word dropped and merged); English still \"in what manner\"."
+   },
+   {
+    "class": "T10",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "\"vid. c. in Schem. Num. 53\" (see point c in the diagram) rendered \"see the chapter in Schem. Num. 53\"; note invents an idiom meaning for \"Papier unbeschnitten\"."
+   }
+  ],
+  "containment": false,
+  "notes": "Hebrew phrase transcribed both times. Catchword \"Eylen\" correct."
+ },
+ {
+  "slug": "6984e84f5905f8d14dbe659b-p108",
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "page_number": 108,
+  "cell": "gothic-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 1,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Left is the book fore-edge."
+  },
+  "defects": [
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "The page has no side-notes, but four inline citations are duplicated as <margin> notes (\"Gen. I. II. und III.\", \"Gen. II. v. 1. 2. 3.\", \"Exod. XX. v. 11.\", \"Matth. VI. v. 34.\"), and translated as margins."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"verstossen\" -> \"verstoffen\" (long s); English still \"cast out\"."
+   }
+  ],
+  "containment": false,
+  "notes": "End of Cap. V, ornament rule, Caput VI title and §1-§2 all present and in order; planet symbols transcribed. English faithful."
+ },
+ {
+  "slug": "69af0f77a940055c46680e8b-p170",
+  "book_id": "69af0f77a940055c46680e8b",
+  "page_number": 170,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "right (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Right gutter shows only this page's own printed line numbers, clipped; no facing-leaf text."
+  },
+  "defects": [
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "\"Atque oculos urget pedibus pectusque Nepai\" (with his feet he presses the eyes and chest of the Scorpion) -> \"presses his eyes and chest upon the feet of the Scorpion\": inverted."
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Printed line numbers 5-30 kept as <margin> but some placed one line off (e.g. 30 on \"Ille tamen\" vs printed at \"Namque\")."
+   }
+  ],
+  "containment": false,
+  "notes": "Verse, prose links, asterisks and Greek words exact; catchword \"Septen-\"."
+ },
+ {
+  "slug": "69af0f77a940055c46680e8b-p171",
+  "book_id": "69af0f77a940055c46680e8b",
+  "page_number": 171,
+  "cell": "italic-1",
+  "verdict": "sound",
+  "misleading_why": null,
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "left (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Left gutter shows clipped characters that are this page's own line numbers; not in OCR."
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Printed line numbers dropped here but kept as <margin> on p170 (minor)."
+   }
+  ],
+  "containment": false,
+  "notes": "All verse and prose lines, asterisks, \"Auriga\" heading and sig \"A ij\" exact; Greek \"ὑάδας\" read. A <meta> note claims the catchword is the signature (harmless). English faithful."
+ },
+ {
+  "slug": "69af0f77a940055c46680e8b-p172",
+  "book_id": "69af0f77a940055c46680e8b",
+  "page_number": 172,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": null,
+  "long_s_f_count_est": 38,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "right (gutter)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": [],
+   "note": "Right gutter shows this page's own clipped line numbers only."
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Long s as f throughout (\"fubfequitur\", \"Obfcura fpecie ftellarum Caffiepeia\", \"Pifces\", ~38 tokens) while p170-171 normalise to s."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"At quae horum e caudis\" -> \"Atque horum\"; \"vehementius illi Pisces\" -> \"illis Pifces\"; English follows the misreads (minor)."
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Page number 4 not recorded (no <page-num>); line numbers dropped."
+   }
+  ],
+  "containment": false,
+  "notes": "Complete page; Greek \"Δελτωτὸν\" read; catchword \"Andro\". English faithful despite the f spellings."
+ },
+ {
+  "slug": "6990616cef12272ffdc8d980-p231",
+  "book_id": "6990616cef12272ffdc8d980",
+  "page_number": 231,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 60,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Long s rendered as f throughout the Latin text and notes (ipfis, eft, funt, fed, fefe, neceffitas, fomnia, fufpecta, fuiffet ...), roughly 60 tokens; translation unaffected."
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "This page keeps ſ→f and preserves the original line-breaks poorly (reflowed), while p232 and p233 of the same run normalise ſ→s: convention flips between adjacent pages."
+   }
+  ],
+  "containment": false,
+  "notes": "Parallel Latin | Greek columns plus two-column notes, read in a sensible order (Latin, left notes, Greek, right notes). Body text and Greek match the image closely; centred lemma line in note 7 merged into running text (harmless). English translates both columns and notes faithfully; header, sig and catchwords correct. Dark gutter shadow at the left edge carries no text."
+ },
+ {
+  "slug": "6990616cef12272ffdc8d980-p232",
+  "book_id": "6990616cef12272ffdc8d980",
+  "page_number": 232,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "right",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Here ſ is normalised to s and the text is line-broken, whereas p231 keeps ſ as f and is reflowed: the convention flips between adjacent pages."
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Note-continuation catchword \"1.\" at the bottom right is tagged <sig>1.</sig>; the Greek catchword Θε- and the Latin catchword The- are put in <meta> (acceptable)."
+   }
+  ],
+  "containment": false,
+  "notes": "The Greek column, the Latin column and both note columns are complete and correct by eye (notes wrapped in <note>). The English is faithful for both columns and both notes. The right edge shows the dark text-block or binding edge only, with no neighbouring text."
+ },
+ {
+  "slug": "6990616cef12272ffdc8d980-p233",
+  "book_id": "6990616cef12272ffdc8d980",
+  "page_number": 233,
+  "cell": "roman-2",
+  "verdict": "misleading",
+  "misleading_why": "Note 1 reports a textual variant, but the OCR misreads the variant word (οἴνου read as θύον), and the English then makes up a relation (\"thyon is written there instead of potisantes\"), so the apparatus statement is wrong in both panes. The English of the Latin column also imports Greek-only content (Metageitnion, the \"history is full\" clause, the note numbers 1–3) that the Latin column does not contain.",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Note 1: the image reads \"οἴνου namque ποτίσαντες generandi casu\"; the OCR gives \"θύον namque ποτίσαντες\". Also \"λασιαρίου\" is read as \"λαριαρίου\"."
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "The English renders it as \"thyon [sacrificing] is written there instead of potisantes [having given to drink] in the genitive case\", inventing an \"instead of\" relation on top of the garbled lemma."
+   },
+   {
+    "class": "T11",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "The English of the Latin column reads \"§ 54. 1. And that we say these things not simply, but because history is full of examples ... 2. ... on the sixth day of the month of Metageitnion [the day before the Nones of July]\". The Latin column says only \"Quae quidem cum multa ac uaria sint ... pridie nonas Iulias\", so Greek-column content and note keys leak into the Latin translation."
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "ſ is normalised to s here but rendered as f on p231 (same run)."
+   }
+  ],
+  "containment": false,
+  "notes": "The body columns (Latin and Greek) are accurately OCR'd. Notes 2–4 are fine. The defects are concentrated in the apparatus and the conflated Latin-column translation. There is no strip of a facing page."
+ },
+ {
+  "slug": "69b4cd08d5b6c3815e1a3880-p107",
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "page_number": 107,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 10,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Most ſ are normalised to s, but there are scattered ſ→f tokens within the page: fufficeret, Borufsium, falsedinis (salſedinis), fiquidem, Osterfche, Osterfalt, flundt (ſundt)."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"dat Deutſch meer\" is read as \"dat Deuissh meer\". \"Cimbri Cimbricum\" is reduced to \"Cimbricum\". \"nomenclaturam\" is split into \"nomen claturam\". \"deprimi videtur\" is joined."
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "\"imperuestigabilis altitudinis\" (depth) is rendered as \"unfathomable height\". This is minor."
+   }
+  ],
+  "containment": false,
+  "notes": "A full two-column page of continuous prose (de Mari Germanico), all present and in order. The English is complete and faithful apart from minor wording. The right edge shows a sliver of the next leaf's blank margin and paper edge, with no text, and the OCR contains none."
+ },
+ {
+  "slug": "69b4cd08d5b6c3815e1a3880-p108",
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "page_number": 108,
+  "cell": "roman-2",
+  "verdict": "misleading",
+  "misleading_why": "About four printed lines of the Aeneas Silvius quotation are silently omitted (inter Alpes Italas ac Danubium fuit, ad Germanos defecit. Ita vt etiã alpes ipsas ... in Italia quoque sedes posuerit, Brixone, Merane, Bu-), which leaves the fragment \"branóque in valle Athesis occupato\". \"genus aduentitium\" (immigrant stock) is replaced by \"genus ἀδελφῶν\", translated as \"a type of brothers\". A made-up <margin> duplicates in-line text.",
+  "long_s_f_count_est": 3,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O5",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Right column: the image reads \"...quicquid Vindelici nominis, inter Alpes Italas ac Danubium fuit, ad Germanos defecit. Ita vt etiã alpes ipsas cœlo vicinas, & perpetua niue rigentes, nomen Germanicum penetrãs, in Italia quoque sedes posuerit, Brixone, Merane, Bubranóque...\"; the OCR jumps from \"Vindelici nominis,\" to \"branóque in valle Athefis occupato\". The English then reads \"and [the territory] occupied in the valley of the Adige\"."
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"esse genus aduentitiũ in Germania\" is read as \"esse genus ἀδελφῶν in Germania\" (the word is pulled toward the ἀδελφός etymology earlier on the page). The English reads \"a type of ἀδελφῶν (brothers)\". Also \"ἀλέμεναι\" is normalised to \"ἀλήμονες\"."
+   },
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "The OCR shows <margin>alleman quasi yederman.</margin> followed by the same words in-line. The page has no marginal note, and the English translates the fake margin as well."
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "\"superiori æquipollere\" (equivalent to the foregoing [etymology]) is rendered as \"equivalent to 'superior'\"."
+   }
+  ],
+  "containment": false,
+  "notes": "Otherwise a good read of a dense two-column page: the header, Fol. 1., the sig A 2 and the catchword \"est in\" are correct. Vistulam/Fistulam is normalised. The left edge is a gutter fold with no text from a neighbouring leaf. There is no invented sentence-level text, but the ἀδελφῶν substitution is a single invented word."
+ },
+ {
+  "slug": "69b4cd08d5b6c3815e1a3880-p109",
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "page_number": 109,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 40,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "\"longitudo est horarum 17¼\" is read as \"17 1/2\"; the English carries \"17 1/2 hours\"."
+   },
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "In-line glosses \"Vbic enim siue Vbig ... qui sinus maris incolunt.\" and \"Herd enim germanorũ lingua terram significat:\" are wrapped in <margin> tags. They are body text in the image (there are no side-notes), and the English keeps them as <margin>."
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "There is a mix of ſ→s and ſ→f on the same page: phantafmatibus, difcefsū, fua, efset, pofsit, Prufsia, Tuifcon, imperafse, cuiufuis, fæpe, cefset, about 40 tokens."
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "\"nulla tempe\" (no vales) is rendered as \"no temples\". \"Tutiæ extremis\" is silently glossed as \"Thule\". Both are minor."
+   }
+  ],
+  "containment": false,
+  "notes": "Complete text in both columns, in the right order. The numbers 17, 41, 56, 43, 15½, 16¼, 240/960 and 195/780 are otherwise correct. The right edge shows the blank fore-edge of the next leaf, with no text."
+ },
+ {
+  "slug": "69c82de66c6f3cc53c84d4bf-p9",
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "page_number": 9,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "prev",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "I3",
+    "cause": "image",
+    "evidence_label": "image",
+    "evidence": "The photograph is an unsplit spread: a blank left leaf (the marbled endpaper side, matching prev = blank) and the dedication leaf on the right. This is harmless because the left leaf is blank."
+   },
+   {
+    "class": "O15",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "The OCR emits <image-desc> \"decorative printer's ornament ... floral\" but the page has no ornament. What is visible is show-through of the coat of arms and the drop cap M from the verso, and the English carries it as a <note>."
+   }
+  ],
+  "containment": false,
+  "notes": "All ten dedication lines and the three-line subscription are read correctly. Reversed show-through text from p10 is correctly ignored. The English is faithful (two lines reordered: \"MOST WEIGHTY / IMPERIAL AULIC COUNCILOR\"). The left strip is a whole blank facing leaf, not text."
+ },
+ {
+  "slug": "69c82de66c6f3cc53c84d4bf-p10",
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "page_number": 10,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 1,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Drop-cap M + \"Vnere literario\" (Munere) is read as \"**M**Vere literario\". The English guesses \"disturb you in your literary pursuits\" instead of \"trouble you with a literary gift\", a small meaning drift."
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "There is a single ſ→f (\"fed ex offerentis\") on an otherwise ſ→s page."
+   }
+  ],
+  "containment": false,
+  "notes": "The coat of arms and the drop cap are described, and the body text (13 lines) is otherwise complete and correct. Show-through of the reversed dedication text is ignored correctly. The right edge shows the edge of the next leaf with no legible text, and none is in the OCR."
+ },
+ {
+  "slug": "69c82de66c6f3cc53c84d4bf-p11",
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "page_number": 11,
+  "cell": "roman-2",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O15",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "The OCR adds <image-desc> \"Printer's ornament at the bottom of the page\", but there is no ornament on the leaf (only the sig \")( 3\" and the catchword \"hono-\"). The English repeats it."
+   }
+  ],
+  "containment": false,
+  "notes": "All 25 lines are transcribed accurately, with the italic quotations marked, the sig and the catchword correct. The English is faithful. The left edge shows the blank margin of the facing leaf, and show-through of the verso is ignored."
+ },
+ {
+  "slug": "69c82e676c6f3cc53c84d61e-p85",
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "page_number": 85,
+  "cell": "gothic-1",
+  "verdict": "sound",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 40,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "I7",
+    "cause": "label",
+    "evidence_label": "text",
+    "evidence": "The catalogue title \"Thesaurus et armamentarium medico-chymicum\" (1670) does not fit the leaf: it is German Fraktur chiliast theology (ch. XI, \"gegenwärtige Welt ... zukünfftige Welt\"), most likely a different or bound-with work. This needs a title-page check."
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "There are trivial misreads: \"be-halten\" is read as \"beshalten\" and \"ie-doch\" is split into \"ies doch\". Neither affects the sense."
+   }
+  ],
+  "containment": false,
+  "notes": "A strip of the facing leaf (about 40 single line-end letters) is visible at the left edge. The OCR correctly ignores it, so there are no fragments and no fake margins. The footnote block (a)–(d) is placed where printed, and the English is faithful and complete."
+ },
+ {
+  "slug": "69c82e676c6f3cc53c84d61e-p86",
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "page_number": 86,
+  "cell": "gothic-1",
+  "verdict": "sound",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "There are trivial misreads: \"zwey\" is read as \"zwen\" and \"unverrückt\" as \"unversrückt\"."
+   },
+   {
+    "class": "I7",
+    "cause": "label",
+    "evidence_label": "text",
+    "evidence": "This is the same book-identity mismatch as on p85."
+   }
+  ],
+  "containment": false,
+  "notes": "The right edge shows a sliver of the next leaf with faint, illegible marks, and none of it is in the OCR. The verse-reference block (a)–(l) is complete. The English is faithful; \"(70)\" and the ornament description are carried over as furniture."
+ },
+ {
+  "slug": "69c82e676c6f3cc53c84d61e-p87",
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "page_number": 87,
+  "cell": "gothic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left",
+   "in_ocr": false,
+   "lines": 30,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O5",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "One word is omitted: the image reads \"in ihrer Offenbahrung gehören (1) (g)\" and the OCR gives \"in ihrer Offenbarung (1) (g)\", leaving the sentence without its verb. The English supplies \"belong\", so the meaning survives."
+   },
+   {
+    "class": "I7",
+    "cause": "label",
+    "evidence_label": "text",
+    "evidence": "This is the same book-identity mismatch as on p85."
+   }
+  ],
+  "containment": false,
+  "notes": "The left edge shows line-end fragments of the facing leaf (p86), and the OCR correctly ignores them. The sig \"€ 4\" is given as C 4 and the catchword \"(a) Of\" is caught. The English is complete and faithful."
+ },
+ {
+  "slug": "69c835706c6f3cc53c84e8f6-p147",
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "page_number": 147,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "right (gutter): text block itself runs into gutter, last 1-6 letters of every line not in this image; no neighbour strip",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Line-ends cut off at the gutter are silently completed by guess; ~25 of 29 lines, several wrong when checked against the cut-off ends visible on p148's left strip: 'apostolo' (print 'apostoli'), 'scopui' (print 'scopo'), 'jam ad- aut erant' (print 'jam actu aut erant'), 'essent i-ptem' (print 'se-ptem'), 'nempe' (print 'nempe 7.'), 'Ha-tenus' (print 'Hac-'), 'scri-ta' (print 'scrip-ta'), 'At' (print 'Atq;')"
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Catchword tagged as <meta>catchword: f</meta>; print shows a lone long-s fragment cut by gutter; harmless"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Translation fills the truncated 'i-ptem' as 'seven general churches' and drops 'actu' without marking any gap; result is correct by luck, not by reading"
+   }
+  ],
+  "containment": false,
+  "notes": "Verso of a tightly bound 1697 octavo; the photographed leaf loses its line-ends into the gutter. OCR normalises long s to s and qv->qu (O8-type normalisation, minor). Body otherwise accurate; italic objection rendered roman except '*Apocalypseos scopum*'. English is faithful to the reconstructed text; gist correct."
+ },
+ {
+  "slug": "69c835706c6f3cc53c84e8f6-p148",
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "page_number": 148,
+  "cell": "roman-1",
+  "verdict": "misleading",
+  "misleading_why": "29 line-end fragments of the facing verso (p147, pp.142) on the left strip are transcribed as a <margin> block, and the English renders them as a margin note ('ary. goal. apostle. thus. not. since. written...') shown to readers as if it were a side-note on this page.",
+  "long_s_f_count_est": 55,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (gutter)",
+   "in_ocr": true,
+   "lines": 29,
+   "where_in_ocr": "single <margin> block between header and body, before the first body line",
+   "matches_neighbour": "prev",
+   "translated_as_content": true,
+   "examples": [
+    "aria,",
+    "stoli,",
+    "copo"
+   ]
+  },
+  "defects": [
+   {
+    "class": "I4",
+    "cause": "image",
+    "evidence_label": "image",
+    "evidence": "Left ~90px of the frame shows the line-ends of p.142 (the facing verso); OCR emits them as a 29-line <margin> block; they are exactly the gutter-cut ends of p147's lines"
+   },
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Bleed fragments mis-tagged as marginalia (<margin>aria, g, in- stoli, itaq, ...</margin>) — the book has no side-notes"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "English carries '<margin>ary. goal. apostle. thus. not. since. written. ...</margin>' — word-by-word translation of bleed fragments presented as content"
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "This page keeps long s as f throughout ('fint præfentia', 'ipfam', 'ecclefiæ Chriftianæ', ~55 tokens) while p147 and p149 (same engine) normalise to s"
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Catchword 'a Jo-' emitted twice, once as <sig> (it is not a signature) and once as catchword"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'obitante' for print 'obstante' (minor; translator recovered 'notwithstanding')"
+   }
+  ],
+  "containment": false,
+  "notes": "Body text otherwise complete and accurate line by line; English body faithful. The defect is the bleed block + its translated margin note. Bleed fragments are this book's own text (p147), not invented, so no containment."
+ },
+ {
+  "slug": "69c835706c6f3cc53c84e8f6-p149",
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "page_number": 149,
+  "cell": "roman-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "right (gutter): line-ends cut off by binding; no neighbour strip",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "<page-num>44</page-num>; print reads 144"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "OCR honestly leaves cut line-ends truncated ('ut an', 'Ch', 'Spirit'); English silently fills them ('shown as a man standing at the altar' — Rev 8:3 'angelus' is an angel; 'we will not dispute' supplies an unseen 'non') with no gap marker"
+   }
+  ],
+  "containment": false,
+  "notes": "OCR transcribes the visible text faithfully and does not invent the gutter-cut letters (unlike p147). No f-for-s. English gist correct; one probable error ('man' for 'angel')."
+ },
+ {
+  "slug": "69906327ef12272ffdc8f9ac-p596",
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "page_number": 596,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Printed quotation marks (««) in the right margin beside the quoted Pliny passage are rendered as inline <margin>«</margin> tags, shifted by one line from their print positions; English carries the tags too"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'reliquos' for print 'reliqua' (quo loco fuisse putas reliqua); minor"
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "'Verùm Pæana uide' (see the paean / boast) rendered 'But see the result'; 'ita minimè malum: iudicibus acceptis' garbled as 'thus not at all evil; having received judges'"
+   }
+  ],
+  "containment": false,
+  "notes": "Dark stained Google scan but legible; OCR line-for-line accurate, long s correctly read as s. Opening 'dentem:' is the catchword-continued word from p595 and is correctly not re-translated."
+ },
+ {
+  "slug": "69906327ef12272ffdc8f9ac-p597",
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "page_number": 597,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "T6",
+    "cause": "seam",
+    "evidence_label": "text",
+    "evidence": "Split word 'flagra-|bat' across the page break: English opens 'it was:' translating the orphan fragment 'bat:'"
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "'quòd seuerus in cæteros, senatoribus solis ... parceret' (severe toward others, he spared only senators) rendered 'because he spared the others, but only the senators' — 'severe' dropped, sense muddled"
+   }
+  ],
+  "containment": false,
+  "notes": "OCR accurate against image (checked first 15/last 10 lines); 'Tacitus' bolded, quote line marked ->...<- fine. Rest of English faithful."
+ },
+ {
+  "slug": "69906327ef12272ffdc8f9ac-p598",
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "page_number": 598,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Catchword 'cursum,' (bottom right, under the last line) merged into the body ('non crura ad cursum,') and also tagged as catchword; next page begins 'cursum,' so the word is doubled across the seam"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'cuidam' for print 'quidam'; 'damnabant' for print 'damnabar'(sic) — minor"
+   },
+   {
+    "class": "T8",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "'qui Neruam, qui Traianum bonum esse dicis' rendered 'you who say that Nerva, who says that Trajan is good' — minor garble"
+   }
+  ],
+  "containment": false,
+  "notes": "OCR otherwise accurate; signature 'B' correctly tagged. English faithful in substance."
+ },
+ {
+  "slug": "6a06d3b79a48d5139996380e-p294",
+  "book_id": "6a06d3b79a48d5139996380e",
+  "page_number": 294,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (facing verso, ~60px of line-ends)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Heading transcribed 'De Publicia et Liania' while the body has 'Licinia' (print heading reads Licinia in cramped italic)"
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Abbreviations silently expanded and ampersands normalised ('Itaq;'->'Itaque', '&'->'et', 'lateq;'->'lateque'); acceptable but not diplomatic"
+   },
+   {
+    "class": "T5",
+    "cause": "seam",
+    "evidence_label": "text",
+    "evidence": "English omits opening 'praeproperò amori dabantur.' (carried on p293) and completes the last sentence with p295's 'exemplo uiolatae sobrietatis poenas pependisse' (lookahead) — no content lost overall"
+   }
+  ],
+  "containment": false,
+  "notes": "Facing-page strip at left edge is correctly ignored by OCR. Guide letters (C, P, E) for unprinted initials correctly folded into words. English faithful; 'assensorem' as 'assessor' slightly off."
+ },
+ {
+  "slug": "6a06d3b79a48d5139996380e-p295",
+  "book_id": "6a06d3b79a48d5139996380e",
+  "page_number": 295,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "right (facing recto, ~70px of line-starts incl. guide letters A, I, m, C)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "T5",
+    "cause": "seam",
+    "evidence_label": "text",
+    "evidence": "English ends by translating the first two sentences of p296 ('...lest it harm their morals ... carminum exilio multarunt'), lookahead across the page break; p296's English then omits them"
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Line-break joins left with spaces inside words: 'ocur ritur', 'Ro manae' (print uses '=' / no hyphen)"
+   },
+   {
+    "class": "O12",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Marginal quote marks (»») beside the two maxim lines rendered as '>' blockquote — acceptable"
+   }
+  ],
+  "containment": false,
+  "notes": "Facing-page strip at right edge correctly ignored. No page number printed; none emitted. OCR accurate line by line; English faithful."
+ },
+ {
+  "slug": "6a06d3b79a48d5139996380e-p296",
+  "book_id": "6a06d3b79a48d5139996380e",
+  "page_number": 296,
+  "cell": "italic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": true,
+   "edge": "left (facing verso p295, ~60px of line-ends)",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "T5",
+    "cause": "seam",
+    "evidence_label": "text",
+    "evidence": "English for this page omits its first ~2 sentences ('...am lectionem arbitrabantur. noluerunt enim ... carminum exilio multarunt'), which were translated on p295; a reader of this page sees source with no English"
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Printed guide letters for initials (A, I, m, C) tagged as <margin> and glued to words ('<margin>A</margin>thenienses', '<margin>m</margin>Agnam')"
+   },
+   {
+    "class": "D1",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "English carries the stray '<margin>m</margin>' and '<margin>C</margin>' tags as if side-notes"
+   },
+   {
+    "class": "O9",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "This page normalises u->v ('invisam', 'severitatis', 'graviter') while p294/p295 keep the print's u — convention flip between adjacent pages"
+   }
+  ],
+  "containment": false,
+  "notes": "Facing-page strip at left correctly ignored. Body OCR accurate. Content is not lost from the book (it sits on p295's English) but this page's English pane is missing its opening."
+ },
+ {
+  "slug": "69dbc9b11040d1d5e20a557b-p86",
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "page_number": 86,
+  "cell": "gothic-1",
+  "verdict": "misleading",
+  "misleading_why": "The abbreviation for 'aurum' (auę/auꝝ) is expanded as 'autem' throughout, so the passage about gold loses its subject and the English inverts several claims: Brahmins 'abandoned their own ends' (print: banished gold from their territory); men 'are enemies of the virtue of peace' (print: they flee gold as the enemy of virtue and peace); zealots of virtue held gold 'a good' (print: more evil than good); 'people possess the emeralds ... and the mountains of griffins' (print: griffins possess them).",
+  "long_s_f_count_est": 0,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'auꝝ totaliter a suis finibus abdicarut' read 'autem totaliter...' ; 'q̄ nō solū auꝝ non appetunt' read 'quod non solum autem non appetunt' — 'aurum' lost each time"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'Scithie hosq̃ mōtes griffes possidēt' read 'scithiae homines montes griffes possidet' — 'homines' invented, changes who possesses"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Fluent English over garble with sense inversions: 'Whence it must be purified more as an evil, which the zealots of virtue have felt to be a good' (print: putandum fore malum quam bonum)"
+   },
+   {
+    "class": "O8",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Heavy abbreviation expansion with guessing ('dices' for 'dicēs', 'odium' for 'odienti', 'oferimur'), no uncertainty marks"
+   }
+  ],
+  "containment": false,
+  "notes": "1505 gothic incunable-style, dense brevigraphs. Lines are all present and in order (no omission); the problem is expansion. Header 'Ca.r.' (=Ca.x.) rendered 'Chapter 10' correctly. Not another leaf's text; misreads, not confabulation."
+ },
+ {
+  "slug": "69dbc9b11040d1d5e20a557b-p87",
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "page_number": 87,
+  "cell": "gothic-1",
+  "verdict": "misleading",
+  "misleading_why": "The fable opens 'Macilenta vulpes' (a lean fox) with a drop-cap M; OCR reads 'Mustela vulpes', so the English makes the weasel enter the cellar 'so that the fox might refill himself'. Moral sentences are garbled into different claims: 'fuge aurum, sperne divitias, cupiditatis extingue flammas' becomes 'flee the help, despise the riches, and the flames of cupidity outside of which'; 'virtutem quaere et quod quaeris intus habes' becomes 'You must seek what you are among men'; 'aequa nempe est ratiocinatio' becomes 'That reasoning is surely equine'.",
+  "long_s_f_count_est": 3,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Drop cap M + 'acilēta vulpes' read as 'Mustela vulpes' (verified by crop) — subject of the fable changed"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'fuge auꝝ' read 'fuge auxilium'; 'extingue flāmas' read 'extra que flammas'; 'intus hēs' read 'inter homines'; 'rñdit' read 'ridit'; 'soror' read 'foroz'"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Fluent nonsense with no uncertainty floor: 'I give the proposed reason, that which burns the son more and thus the beginning'; 'The weasel, so that the fox might refill himself with fatness, entered'"
+   },
+   {
+    "class": "O14",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Decorative drop cap emitted as <image-desc> and English as <meta> note — harmless"
+   }
+  ],
+  "containment": false,
+  "notes": "Lines complete and in order; faint show-through mid-page not transcribed (correct). Defects are abbreviation/misread driven. Borderline O1-ish where 'inter homines' replaces 'intus habes', but it is a misread of this leaf's text, not invented passage — containment not flagged."
+ },
+ {
+  "slug": "69dbc9b11040d1d5e20a557b-p88",
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "page_number": 88,
+  "cell": "gothic-1",
+  "verdict": "flawed",
+  "misleading_why": "",
+  "long_s_f_count_est": 2,
+  "bleed": {
+   "strip_visible": false,
+   "edge": "none",
+   "in_ocr": false,
+   "lines": 0,
+   "where_in_ocr": "n/a",
+   "matches_neighbour": "n/a",
+   "translated_as_content": false,
+   "examples": []
+  },
+  "defects": [
+   {
+    "class": "O7",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "Fable heading 'Cap.xij.' (12) transcribed 'Cap.xiii.' and translated 'Chapter 13' (crop verified); running head correctly 'Capit.xii.'"
+   },
+   {
+    "class": "O6",
+    "cause": "OCR",
+    "evidence_label": "image",
+    "evidence": "'Veꝝ cū sit' read 'Uel ex cum sit'; 'q̄ auiditate ... sumpseras' read 'que auditate ... fumes'; 'pro pinguedine' read 'per pinguedie'"
+   },
+   {
+    "class": "T7",
+    "cause": "translation",
+    "evidence_label": "text",
+    "evidence": "Several clauses rendered as fluent nonsense: 'and you are not substantial'; 'by whose restoration the cause of such wonderful liberality in benefits is... the hiding place of shameful vileness'"
+   },
+   {
+    "class": "O11",
+    "cause": "OCR",
+    "evidence_label": "text",
+    "evidence": "Running head 'Liber tercius Capit.xii.' put in body instead of <header>; OCR keeps line breaks with hyphen-less splits ('pon dus', 'stre cta')"
+   }
+  ],
+  "containment": false,
+  "notes": "Gist (fox moral on wealth and death; monkey begs clothes from actor) survives; individual sentences often wrong. Close to misleading on the monkey's speech."
+ }
+]

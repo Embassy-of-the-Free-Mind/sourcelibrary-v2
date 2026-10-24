@@ -46,6 +46,7 @@ import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { useLocale, useLocalePath } from '@/lib/i18n';
+import { localizeAuthorName, localizePublished } from '@/lib/book-labels';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import ShareButton from '@/components/ui/ShareButton';
@@ -1375,7 +1376,7 @@ export default function TranslationEditor({
                 </h1>
                 {(book.author || book.published) && (
                   <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                    {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                    {book.author ? localizeAuthorName(book.author, locale) : ''}{book.author && book.published ? ' · ' : ''}{book.published ? localizePublished(book.published, locale) : ''}
                   </p>
                 )}
               </a>
@@ -2653,7 +2654,7 @@ export default function TranslationEditor({
               </h1>
               {(book.author || book.published) && (
                 <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                  {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                  {book.author ? localizeAuthorName(book.author, locale) : ''}{book.author && book.published ? ' · ' : ''}{book.published ? localizePublished(book.published, locale) : ''}
                 </p>
               )}
             </a>

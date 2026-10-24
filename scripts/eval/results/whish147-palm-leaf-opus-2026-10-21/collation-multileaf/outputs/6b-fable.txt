@@ -1,0 +1,25 @@
+Here is my collation. The leaf's lines 3 to 7 are split into a left block and a right block around the string hole, and the right half of every line is off the image, so each verse is only partly visible.
+
+**Verse lines read on the leaf**
+
+- **SK_23, line 1.** Read: `[adhyavasā]yo buddhi(r) dharmmo jñānaṃ vi[hole]rāga aiśvaryyaṃ sāttvika[...]`. The "r" of buddhir is not clearly visible to me. Spelling difference: aiśvaryyaṃ with doubled y and anusvāra, otherwise the same as the edition.
+- **SK_24, line 2.** Read: `[a]bhimāno haṃkā[hole]ras tasmād dvividhaḥ pravar[...]`. The leaf has haṃkāras followed by the sta ligature, where the edition prints ahaṃ-kāram. The two akṣaras I read as dvi and vi look nearly identical on the leaf, so the word could be vividhaḥ. The initial a of ahaṃ is simply elided by sandhi, so I do not count it.
+- **SK_24 end / SK_25 start, line 3.** Left block reads, uncertainly, `[tanmā]traḥ pañcakaś caiva`. Right block reads `va(?) [verse mark] sāttvika[...]`. I cannot securely read the two or three signs before sāttvika.
+- **SK_25, line 4.** Left: `[vai]kṛtād ahaṃkārā`. Right: `t bhūtādes tanmā[...]`. No differences from the edition in the visible words.
+- **SK_25 end / SK_26, line 5.** Left: `[ubha]yaṃ [verse mark] buddhīn` (buddhīn uncertain). Right: `driyāṇi cakṣuś śro[...]`. The leaf has the word buddhīndriyāṇi opening SK_26, which the edition omits. The leaf writes cakṣuś before śrotra, sandhi spelling for the edition's cakṣuḥ.
+- **SK_26, line 6.** Left: `[ākhyā]ni vākpāṇi`. Right: `pādapāyūpa[...]`. No differences visible.
+- **SK_27, line 7.** Left: `ubhayātmakam a`. Right: `tra manassaṃkalpakam i[...]`. Leaf writes manas with doubled s (sandhi) where the edition has manaḥ.
+- **SK_27, line 8.** Read: `[guṇapari]ṇāmaviśeṣān nānātvaṃ bāhyabhedā[...]`. Leaf has nānātvaṃ where the edition prints nānātnam.
+- **SK_28, line 9.** Read: `[pañcān]ām ālocanamātram iṣyate vṛttiḥ pa/va[...]`. The words ālocana and mātram are clear. The leaf has nothing corresponding to the edition's mūla-prakṛtir. The akṣaras I read as iṣyate vṛttiḥ are cramped and I am not confident of them. The first two akṣaras of the line are unclear.
+
+Not visible on this half of the leaf: SK_21, SK_22, SK_29, SK_30, the second half of SK_23, and the parts of SK_24 to SK_28 that fall on the right half of each line. The marginal sign at the far left of line 5 and the visible commentary lines are not transcribed.
+
+DIFFERENCES:
+SK_23 | aiśvaryam | aiśvaryyaṃ | uncertain
+SK_24 | ahaṃ-kāram | haṃkāras | certain
+SK_24 | dvi-vidhaḥ | vividhaḥ | uncertain
+SK_26 | (omitted) | buddhīndriyāṇi | certain
+SK_26 | cakṣuḥ | cakṣuś | uncertain
+SK_27 | manaḥ | manas (manassaṃkalpakam) | uncertain
+SK_27 | nānātnam | nānātvaṃ | certain
+SK_28 | mūla-prakṛtir | ālocanamātram | certain

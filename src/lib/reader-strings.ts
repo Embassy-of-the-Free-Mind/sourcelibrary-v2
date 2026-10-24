@@ -243,6 +243,14 @@ export interface ReaderStrings {
     ungroundedLabel: string;
     /** The same page with the Notes toggle off. */
     ungroundedHidden: string;
+    /** Amber notice over a page the OCR marked handwritten or mixed (#7098):
+     *  the bold label, then the caution that follows its colon. */
+    handwrittenManuscript: string;
+    mixedManuscript: string;
+    uncertainReadings: string;
+    /** Page-number and folio chips in the Page Info bar, from the OCR's own numbering. */
+    pageNumberLabel: (n: string) => string;
+    folioLabel: (f: string) => string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -386,6 +394,8 @@ export interface ReaderStrings {
     qualityPageDetector: (date: string) => string;
     /** `serious` is null when the check kept no per-page record. */
     qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
+    /** Follows qualityBook: the kinds of serious error that check found most often, commonest first (at most two). */
+    qualityBookKinds: (clauses: string[]) => string;
     qualitySeeReview: string;
     qualityDetectorLink: string;
     licenceLink: string;
@@ -445,6 +455,11 @@ export interface ReaderStrings {
     /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
     notModernized: string;
     notModernizedBody: string;
+    /** #7100: a stored light spelling edit of an English page, offered off by default — never a translation, never cited. */
+    modernizedSpelling: string;
+    modernizedSpellingNote: string;
+    showModernizedSpelling: string;
+    hideModernizedSpelling: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -513,6 +528,17 @@ export interface ReaderStrings {
     attachFailed: string;
     removeImage: string;
   };
+
+  /** One line beside the page-report control on a machine transcription: says
+   *  a machine made it and how accurate the engine we use measured, linking to
+   *  the chart on /quality (#6278 item 5). The numbers come from
+   *  `ocrMeasure()` (src/lib/ocr-measure.ts), never from this file. Null where
+   *  the line is not shown. */
+  ocrMeasure: {
+    /** `percent`, `low`, `high` are whole percentages; `date` is ISO (YYYY-MM-DD). */
+    line: (m: { percent: number; low: number; high: number; pages: number; date: string }) => string;
+    link: string;
+  } | null;
 
   /** One quiet line above a translation whose source page was hard to read
    *  (`pageReadCaution`, src/lib/transcription-reliability.ts). */
@@ -846,6 +872,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
       ungroundedLabel: 'Little or no text was transcribed on this page · written by the model',
       ungroundedHidden: 'Little or no text was transcribed on this page. Turn Notes on to read what the model wrote.',
+      handwrittenManuscript: 'Handwritten manuscript',
+      mixedManuscript: 'Mixed manuscript',
+      uncertainReadings: 'transcription may contain uncertain readings',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -965,6 +996,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'part of the page is missing from the transcription',
         missing_english: 'part of the page is missing from the English',
         number_misread: 'a number, date or quantity is misread',
+        word_misread: 'a word in the transcription is misread',
         repeated_text: 'a passage is repeated that appears once on the page',
         serious_transcription: 'the transcription has a serious error',
         serious_english: 'the English has a serious error',
@@ -979,6 +1011,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (serious === null) return `${start} and found serious errors.`;
         return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
       },
+      qualityBookKinds: (clauses) => `Most often, ${clauses.join('; next, ')}.`,
       qualitySeeReview: 'See the review',
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
@@ -1012,6 +1045,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
       notModernized: 'Not yet modernized',
       notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
+      modernizedSpelling: 'Modernized spelling',
+      modernizedSpellingNote: 'Machine-edited for modern spelling and punctuation. Not the author\'s text: quote and cite the transcription.',
+      showModernizedSpelling: 'Show modernized spelling',
+      hideModernizedSpelling: 'Hide modernized spelling',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1066,6 +1103,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'That image could not be uploaded. Try a smaller one.',
       removeImage: 'Remove image',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `This page was hard to read: about ${Math.round(share * 100)}% of the transcription is marked uncertain, and the English there is a best guess.`,
       damage: 'This page is damaged or faded in places, and parts of the English may rest on uncertain readings.',
@@ -1326,6 +1364,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
       ungroundedLabel: 'Se transcribió poco o ningún texto en esta página · escrito por el modelo',
       ungroundedHidden: 'Se transcribió poco o ningún texto en esta página. Activa las notas para leer lo que escribió el modelo.',
+      handwrittenManuscript: 'Manuscrito',
+      mixedManuscript: 'Manuscrito mixto',
+      uncertainReadings: 'la transcripción puede contener lecturas inciertas',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
@@ -1445,6 +1488,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'falta parte de la página en la transcripción',
         missing_english: 'falta parte de la página en la traducción',
         number_misread: 'un número, una fecha o una cantidad están mal leídos',
+        word_misread: 'una palabra de la transcripción está mal leída',
         repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
         serious_transcription: 'la transcripción tiene un error grave',
         serious_english: 'la traducción tiene un error grave',
@@ -1459,6 +1503,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (serious === null) return `${start} y encontró errores graves.`;
         return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
       },
+      qualityBookKinds: (clauses) => `Lo más frecuente: ${clauses.join('; después, ')}.`,
       qualitySeeReview: 'Ver la revisión',
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
@@ -1492,6 +1537,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
       notModernized: 'Aún sin modernizar',
       notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
+      modernizedSpelling: 'Ortografía modernizada',
+      modernizedSpellingNote: 'Editada automáticamente con ortografía y puntuación modernas. No es el texto del autor: cite la transcripción.',
+      showModernizedSpelling: 'Mostrar ortografía modernizada',
+      hideModernizedSpelling: 'Ocultar ortografía modernizada',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
@@ -1546,6 +1595,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'No se pudo subir esa imagen. Prueba con una más pequeña.',
       removeImage: 'Quitar imagen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Esta página era difícil de leer: alrededor del ${Math.round(share * 100)} % de la transcripción está marcado como dudoso, y la traducción de esas partes es una conjetura.`,
       damage: 'Esta página está dañada o desvaída en algunas partes, y parte de la traducción puede basarse en lecturas dudosas.',
@@ -1831,6 +1881,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
       ungroundedLabel: 'Paulum aut nihil textus ex hac pagina transcriptum · a machina scriptum',
       ungroundedHidden: 'Paulum aut nihil textus ex hac pagina transcriptum. Notas ostende, ut quae machina scripsit legas.',
+      handwrittenManuscript: 'Codex manu scriptus',
+      mixedManuscript: 'Codex mixtus',
+      uncertainReadings: 'transcriptio lectiones incertas continere potest',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
       traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
 
@@ -1952,6 +2007,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'pars paginae in transcriptione deest',
         missing_english: 'pars paginae in textu Anglico deest',
         number_misread: 'numerus, dies vel quantitas perperam lecta est',
+        word_misread: 'verbum in transcriptione perperam lectum est',
         repeated_text: 'locus iteratur qui in pagina semel legitur',
         serious_transcription: 'transcriptio mendum grave habet',
         serious_english: 'textus Anglicus mendum grave habet',
@@ -1966,6 +2022,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (serious === null) return `${start} et menda gravia invenit.`;
         return `${start} et menda gravia ${read === 1 ? 'in ea' : `in ${serious} earum`} invenit.`;
       },
+      qualityBookKinds: (clauses) => `Saepissime: ${clauses.join('; deinde: ')}.`,
       qualitySeeReview: 'Recensionem vide',
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
@@ -1999,6 +2056,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Hic liber Anglice scriptus est: transcriptio ipsa legenda est. Nihil est quod convertatur.',
       notModernized: 'Nondum sermone hodierno reddita',
       notModernizedBody: 'Hic liber Anglice prisco scriptus est. Sermone hodierno nondum redditus est; transcriptio ipsa legenda est.',
+      modernizedSpelling: 'Orthographia hodierna',
+      modernizedSpellingNote: 'Machina ad orthographiam hodiernam redactum. Non sunt verba auctoris: transcriptionem cita.',
+      showModernizedSpelling: 'Orthographiam hodiernam ostende',
+      hideModernizedSpelling: 'Orthographiam hodiernam cela',
       signInToRequest: 'Intra, ut conversionem petas',
       requestTranslation: 'Conversionem pete',
       requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
@@ -2052,6 +2113,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachLimit: 'Ad summum quattuor imagines',
       attachFailed: 'Ea imago mitti non potuit. Minorem tempta.',
       removeImage: 'Imaginem remove',
+    },
+    ocrMeasure: {
+      line: ({ percent, low, high, pages, date }) => {
+        const [y, m, d] = date.split('-').map(Number);
+        const months = ['Ianuarii', 'Februarii', 'Martii', 'Aprilis', 'Maii', 'Iunii', 'Iulii', 'Augusti', 'Septembris', 'Octobris', 'Novembris', 'Decembris'];
+        return `Hunc textum machina transcripsit. Machina qua nunc utimur, cum ${pages} paginis typis impressis a Vicifonte emendatis collata (die ${d} ${months[m - 1]} ${y}), ${percent} litteras e centum recte legit (inter ${low} et ${high}).`;
+      },
+      link: 'Mensuras vide',
     },
     readCaution: {
       unclear: (share) => `Haec pagina aegre lecta est: circiter ${Math.round(share * 100)}% transcriptionis incerta notantur, et conversio Anglica ibi coniectura est.`,
@@ -2312,6 +2381,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
       ungroundedLabel: 'Weinig of geen tekst getranscribeerd op deze pagina · geschreven door het model',
       ungroundedHidden: 'Weinig of geen tekst getranscribeerd op deze pagina. Zet Noten aan om te lezen wat het model schreef.',
+      handwrittenManuscript: 'Handgeschreven manuscript',
+      mixedManuscript: 'Gemengd manuscript',
+      uncertainReadings: 'de transcriptie kan onzekere lezingen bevatten',
+      pageNumberLabel: (n) => `p. ${n}`,
+      folioLabel: (f) => `f. ${f}`,
       traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
       traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
 
@@ -2432,6 +2506,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: 'een deel van de pagina in de transcriptie ontbreekt',
         missing_english: 'een deel van de pagina in het Engels ontbreekt',
         number_misread: 'een getal, datum of hoeveelheid verkeerd is gelezen',
+        word_misread: 'een woord in de transcriptie verkeerd is gelezen',
         repeated_text: 'een passage herhaald wordt die maar één keer op de pagina staat',
         serious_transcription: 'de transcriptie een ernstige fout bevat',
         serious_english: 'het Engels een ernstige fout bevat',
@@ -2446,6 +2521,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (serious === null) return `${start} en vond ernstige fouten.`;
         return `${start} en vond ernstige fouten ${read === 1 ? 'op die pagina' : `op ${serious} daarvan`}.`;
       },
+      qualityBookKinds: (clauses) => `Het vaakst: ${clauses.join('; daarna: ')}.`,
       qualitySeeReview: 'Bekijk de beoordeling',
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
@@ -2479,6 +2555,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: 'Dit boek is in het Engels: de transcriptie is de leestekst. Er is niets te vertalen.',
       notModernized: 'Nog niet gemoderniseerd',
       notModernizedBody: 'Dit boek is in vroegmodern Engels. Er is nog geen gemoderniseerde versie; de transcriptie is de leestekst.',
+      modernizedSpelling: 'Gemoderniseerde spelling',
+      modernizedSpellingNote: 'Automatisch bewerkt naar moderne spelling en interpunctie. Niet de tekst van de auteur: citeer de transcriptie.',
+      showModernizedSpelling: 'Toon gemoderniseerde spelling',
+      hideModernizedSpelling: 'Verberg gemoderniseerde spelling',
       signInToRequest: 'Log in om een vertaling aan te vragen',
       requestTranslation: 'Vertaling aanvragen',
       requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
@@ -2533,6 +2613,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'Die afbeelding kon niet worden geüpload. Probeer een kleinere.',
       removeImage: 'Afbeelding verwijderen',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `Deze pagina was moeilijk te lezen: ongeveer ${Math.round(share * 100)}% van de transcriptie is als onzeker gemarkeerd, en het Engels is daar een beste gok.`,
       damage: 'Deze pagina is hier en daar beschadigd of vervaagd, en delen van het Engels kunnen op onzekere lezingen berusten.',
@@ -2794,6 +2875,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
       ungroundedLabel: '本页几乎未转录出文字 · 由模型撰写',
       ungroundedHidden: '本页几乎未转录出文字。打开“注释”即可阅读模型撰写的内容。',
+      handwrittenManuscript: '手写稿',
+      mixedManuscript: '手写与印刷混合稿',
+      uncertainReadings: '转录可能含有不确定的释读',
+      pageNumberLabel: (n) => `第 ${n} 页`,
+      folioLabel: (f) => `第 ${f} 叶`,
       traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
       traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
 
@@ -2913,6 +2999,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_transcription: '转录中缺了页面的一部分',
         missing_english: '英文中缺了页面的一部分',
         number_misread: '数字、日期或数量识读有误',
+        word_misread: '转录中有字词识读有误',
         repeated_text: '页面上只出现一次的段落被重复了',
         serious_transcription: '转录有严重错误',
         serious_english: '英文有严重错误',
@@ -2927,6 +3014,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (serious === null) return `${start}，发现了严重错误。`;
         return `${start}，发现${read === 1 ? '该页' : `其中 ${serious} 页`}有严重错误。`;
       },
+      qualityBookKinds: (clauses) => `最常见的是：${clauses.join('；其次是：')}。`,
       qualitySeeReview: '查看审校记录',
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
@@ -2960,6 +3048,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       englishReadingTextBody: '本书以英文写成，转录文本就是阅读文本，无需翻译。',
       notModernized: '尚未现代化',
       notModernizedBody: '本书以早期现代英语写成，尚未制作现代英语读本；转录文本就是阅读文本。',
+      modernizedSpelling: '现代拼写',
+      modernizedSpellingNote: '机器按现代拼写和标点编辑，并非作者原文：引用时请使用转录文本。',
+      showModernizedSpelling: '显示现代拼写',
+      hideModernizedSpelling: '隐藏现代拼写',
       signInToRequest: '登录后申请翻译',
       requestTranslation: '申请翻译',
       requestFailed: '申请未能提交，请稍后再试。',
@@ -3014,6 +3106,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: '这张图片无法上传，请换一张小一点的。',
       removeImage: '移除图片',
     },
+    ocrMeasure: null,
     readCaution: {
       unclear: (share) => `本页较难识读：约 ${Math.round(share * 100)}% 的转录被标为不确定，这些地方的英文是尽力推测的结果。`,
       damage: '本页有些地方受损或褪色，英文的部分内容可能基于不确定的读法。',

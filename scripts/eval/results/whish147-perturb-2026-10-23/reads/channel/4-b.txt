@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപതയെ‖നമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദഭിഘാതകെഹെ‖തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ‖കാന്താത്യന്തതൊ
+ROW 3 | ഭാവാൽദൃ‖ഷ്ടവദാനുശ്രവികഃസഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ‖തഃശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽമൂല
+ROW 5 | പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത
+ROW 6 | ഷൊഡശകസ്തുവി‖കാരൊനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃ॥ദൃഷ്ട
+ROW 7 | മനുമാനമാപ്ത‖വചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം‖പ്രമെയസിദ്ധിഃ॥൪॥പ്രതിവിഷ‖യാധ്യവസായൊദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി‖പൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | ‖പ്രമാണാദ്ധി।‖
+NOTE | I read most of the leaf, but some letters are uncertain: the joins at the holes, the vowel signs and conjuncts in rows 1, 5, 6 and 8, the verse number "൪" in row 8, and the last letter of row 10. Row 10 is a short line in the middle column only and may be the scribe's insertion of words missing from row 8.

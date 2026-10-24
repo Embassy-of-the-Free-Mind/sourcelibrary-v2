@@ -8,6 +8,7 @@
  * the eviction is the layout-pattern call THEN the page call; a failed eviction
  * is reported with the exact follow-up instead of a silent success.
  */
+import { PREFIXED_LOCALES } from '@/lib/locale-path';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
@@ -122,8 +123,10 @@ describe('revalidateBookPages (#6227)', () => {
     await revalidateBookPages([{ id: 'lojong-1', slug: 'seven-points' }], { quiet: true });
     expect(fetchMock).toHaveBeenCalledTimes(2);
     const bodies = fetchMock.mock.calls.map((c) => JSON.parse(c[1].body));
-    expect(bodies[0]).toEqual({ paths: [READER_PAGE_PATTERN, '/book/seven-points', '/book/lojong-1'], type: 'layout' });
-    expect(bodies[1]).toEqual({ paths: ['/book/seven-points', '/book/lojong-1'] });
+    const twins = (tail: string) => ['', ...PREFIXED_LOCALES.map((l) => `/${l}`)].map((pre) => `${pre}/book/${tail}`);
+    const paths = [...twins('seven-points'), ...twins('lojong-1')];
+    expect(bodies[0]).toEqual({ paths: [READER_PAGE_PATTERN, ...paths], type: 'layout' });
+    expect(bodies[1]).toEqual({ paths });
   });
 
   it('throws when the server revalidated nothing', async () => {

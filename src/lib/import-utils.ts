@@ -14,6 +14,7 @@ import { applyTextRole } from '@/lib/text-role';
 import { usableManifestLabel } from '@/lib/manifest-label';
 import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 import { initialPageCounters } from '@/lib/page-counts';
+import { selfCallHeaders } from '@/lib/self-call';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -553,6 +554,7 @@ export async function importBookFromIIIF(
 
   fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
     method: 'GET',
+    headers: selfCallHeaders(baseUrl),
   }).catch(() => {
     console.log(`[Import] Split check queued for ${bookIdStr}`);
   });
@@ -560,7 +562,7 @@ export async function importBookFromIIIF(
   // Kick off image archiving (non-blocking, first batch)
   fetch(`${baseUrl}/api/books/${bookIdStr}/archive-images`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) },
     body: JSON.stringify({ limit: 50 }),
   }).catch(() => {
     console.log(`[Import] Archive kick-off queued for ${bookIdStr}`);

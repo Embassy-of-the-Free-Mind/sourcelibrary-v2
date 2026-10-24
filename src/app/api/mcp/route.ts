@@ -648,7 +648,12 @@ async function getBookText(args: Record<string, unknown>) {
     }
   }
 
-  result.tip = 'When quoting from these pages, copy text verbatim from the translation field.';
+  // An English edition's English leaves carry no `translation`: their own words
+  // are the `ocr` text (#7100), and the generic tip would send the caller to
+  // a field that is not there.
+  result.tip = result.english_edition_note
+    ? 'English edition: when quoting an English leaf, copy text verbatim from the ocr field (the author\'s own words, period spelling kept); use the translation field only on leaves that carry one.'
+    : 'When quoting from these pages, copy text verbatim from the translation field.';
   return result;
 }
 
@@ -739,7 +744,7 @@ function translationNote(result: Record<string, unknown>): string | null {
 // tip ("copy the translation text") would point at a field that isn't there.
 const OCR_ORIGINAL_TIP =
   'This page is an ENGLISH ORIGINAL: the text printed on the leaf is already English, so there is no ' +
-  'translation and none is needed (this is why the book reports pages_translated: 0). The verbatim ' +
+  'translation and none is needed (a pages_translated count on such a book is a legacy machine rewording of the English, which is never served — #7100). The verbatim ' +
   'text is in `original`. Copy it exactly and attribute it as the source\'s own words — never call it ' +
   'a translation. Render as:\n' +
   '> [exact original text, verbatim]\n' +

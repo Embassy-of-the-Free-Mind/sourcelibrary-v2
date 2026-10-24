@@ -1,0 +1,31 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script (old Malayalam/Grantha-type hand) on palm leaf, incised and inked; contrast-enhanced crop of the left half of a leaf. A binding cord passes through the string-hole in the centre and obscures parts of lines 1–2; lines 3–8 are split into two short blocks around the hole. Readings are tentative throughout; akshara-level identification only.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<image-desc size="small" type="decorative" significance="low">Twisted binding cord passing through a circular string-hole in the centre of the leaf; a small circled mark to the left of line 6 and a short incised stroke in the left margin opposite line 5.</image-desc>
+
+ശ്രീഗണേശവിരചിത <unclear>[1–2 aksharas under cord]</unclear> യിശ്രയസ്ഥാമാായമ <unclear>[text continues beyond crop]</unclear>
+
+ാശന്തടിചശിരക <unclear>[1 akshara under cord]</unclear> ശാചള്ളളമാൻള്ള <unclear>ശി</unclear>
+
+<unclear>പ്രഗർത്തിനയമാാ</unclear> <unclear>ഷ്ടാാകേഐാഇാ</unclear>
+
+<unclear>ഗണാ:ന്തേ:സഖം</unclear> <unclear>ലശ്രലകാശകമി</unclear>
+
+<unclear>ഗരുവകണകക</unclear> <unclear>മചരമടക്രക്ഷിട</unclear>
+
+<unclear>കഗശികതക്ഷാട</unclear> <unclear>നദ്ധരന്തേഗണാ</unclear>
+
+<unclear>രണഗണാശ്രശ</unclear> <unclear>കാകരാശ്രന്തോന</unclear>
+
+<unclear>ർദ്ധാംപക്കിാണാ</unclear> <unclear>ഹാനമന്ദഖാളഗഗ</unclear>
+
+<unclear>ഗാടവിളാശാമഖടശുക്രശ്രന്ദന്തേഗ്രകാഡാ</unclear>
+
+<unclear>ശ്രദാത്താണരവശിണഡാമകണശ്രലരവകക്രഠാ</unclear>
+
+<meta>Left half of a palm leaf; right-hand text runs off the crop edge. Ten lines of text. No visible foliation on this half.</meta>
+<vocab>Ganesha, Sri, palm-leaf manuscript, Malayalam script, Sanskrit</vocab>

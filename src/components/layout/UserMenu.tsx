@@ -130,7 +130,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-56 rounded-xl shadow-lg py-2 z-50"
+          className="absolute right-0 mt-2 w-56 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-xl shadow-lg py-2 z-50"
           style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
         >
           <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--border-light)' }}>

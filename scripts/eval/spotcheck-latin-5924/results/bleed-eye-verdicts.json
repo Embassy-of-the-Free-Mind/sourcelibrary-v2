@@ -1,0 +1,242 @@
+[
+  {
+    "id": "lr-69b686ce70c69d645a74659d-p158",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "text: the fake column-break and the list of cut-off author/verse names (all from the facing leaf's strip, image right edge) were deleted; body table untouched"
+  },
+  {
+    "id": "lr-69b6aaec080b19f98fd40db6-p328",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "text: the fake second column of 2-4 letter fragments (facing leaf strip, image right edge) was deleted; body intact"
+  },
+  {
+    "id": "lr-6a1009fbf71729295096d465-p715",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "text: the fake column of truncated line-starts after the column-break (facing leaf, image right) was deleted; body ending 'materia pec-' intact"
+  },
+  {
+    "id": "lr-6a425e51dfbbb4d07aa63e8c-p237",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "text: 26 fake <margin> fragments (line-ends of the left facing leaf, image left edge) were deleted; body intact"
+  },
+  {
+    "id": "lr-6a426d18175f31ca3ec5391c-p58",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "unchanged",
+    "bleed_before": "yes",
+    "bleed_after": "yes",
+    "harm_source": null,
+    "evidence": "text: only the 3-line first fake margin block was removed; the 21-line fake margin block from the left facing leaf (image) remains"
+  },
+  {
+    "id": "lr-69ee643b7b983848aff567f7-p149",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "harmed",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": "text-rule",
+    "evidence": "image: 'Antiquissimi literas inscripserunt lapidibus' is a real printed side-note on this leaf; the rule deleted it; no facing leaf visible"
+  },
+  {
+    "id": "lr-69b6b8588566c838146263bc-p223",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "unchanged",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "image: no facing-leaf text visible; text identical; real 'Figura praeced.' side-notes kept"
+  },
+  {
+    "id": "lr-69b641d01c1c21a37388850b-p29",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "unchanged",
+    "bleed_before": "yes",
+    "bleed_after": "yes",
+    "harm_source": null,
+    "evidence": "text identical; the large fake <margin> block of line-ends from the left facing leaf (image left) is still present"
+  },
+  {
+    "id": "lr-69b62fe81c1c21a3737fc0b3-p132",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "unchanged",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "image: no facing leaf; text identical"
+  },
+  {
+    "id": "lr-69b6bedd8566c83814646f26-p128",
+    "fix": "A",
+    "prereg": true,
+    "verdict": "unchanged",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "image: only a thin edge of the next leaf on the right, no text read; text identical"
+  },
+  {
+    "id": "lr-69b686ce70c69d645a74659d-p158",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed+harmed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": "crop",
+    "evidence": "crop: the right-strip bleed is gone, but the crop cuts this leaf's left edge (the '1' of page number 120 and headword initials), and the read gives page-num 20; reread also shifts headwords against their lines from Doryclus onward"
+  },
+  {
+    "id": "lr-6a424dd8c1f44d759e6cf921-p368",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "text: the invented <margin><note> about obscured text (prompted by the right strip) is gone; crop keeps the whole leaf; reread expands the apothecary signs more accurately (unciae vs drachmae)"
+  },
+  {
+    "id": "lr-69b6afd296dc15d4a16c8270-p70",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the right strip is removed and all line-ends are kept; the fake column-break and the margin of fragments are gone; body equivalent"
+  },
+  {
+    "id": "lr-69b6590718b87551bfcf91e6-p288",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the facing leaf is removed and line-ends kept; the invented second column (facing leaf text plus fill) is gone; the real side-note is kept"
+  },
+  {
+    "id": "lr-6a425e51dfbbb4d07aa63e8c-p237",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the left strip is removed and line-starts kept; the fake margins are gone; reread variation is minor and net neutral ('quamque' for 'aquamque', but 'affirmet' and 'profit' corrected)"
+  },
+  {
+    "id": "lr-6a426d18175f31ca3ec5391c-p58",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the left facing leaf is removed and the leaf is whole; all fake margin blocks are gone; body intact"
+  },
+  {
+    "id": "lr-69b641d01c1c21a37388850b-p29",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed+harmed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": "crop",
+    "evidence": "crop: it starts at x=104/1000, which shaves the first letter of several of this leaf's line-starts ('utem', 'iua', 'ent'); the read gives 'item' for 'autem', 'dictum' for 'lectum', and drops 'pelides'. The fake margin is gone"
+  },
+  {
+    "id": "lr-6a90620ec21b989bffd7625f-p30",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the facing leaf strip is removed and line-ends kept; 27 invented <margin> notes are gone; body unchanged"
+  },
+  {
+    "id": "lr-69b666edb3f4fc0441560ba8-p8",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the facing leaf is removed and the leaf is whole; the fake second column (invented Psalm list) is gone; body intact apart from vbi/ubi and & normalisation"
+  },
+  {
+    "id": "lr-69b6aaec080b19f98fd40db6-p328",
+    "fix": "B",
+    "prereg": true,
+    "verdict": "fixed",
+    "bleed_before": "yes",
+    "bleed_after": "no",
+    "harm_source": null,
+    "evidence": "crop: the right strip is removed and line-ends kept; the fake fragment column is gone; body intact, with the catchword now in meta"
+  },
+  {
+    "id": "lr-69b68a232368e1fad3218e75-p104",
+    "fix": "B",
+    "prereg": false,
+    "verdict": "harmed",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": "reread",
+    "evidence": "image: the right strip was not read before either; the crop is fine, but the reread drops many grave accents ('primùm', 'deindè', 'diuinitùs', 'à se') that the image shows; minor"
+  },
+  {
+    "id": "lr-69b6a48a080b19f98fd202ca-p3",
+    "fix": "B",
+    "prereg": false,
+    "verdict": "harmed",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": "crop",
+    "evidence": "crop: a no-bleed page cropped through its own text; verse numbers 18/19, the title start and the left part of every body line are cut off, and the read loses or garbles line-starts ('seculorum' for 'ab Apostolorum', 'sublata' for 'suboriens')"
+  },
+  {
+    "id": "lr-6a4268b7aedf4c943f91f35b-p106",
+    "fix": "B",
+    "prereg": false,
+    "verdict": "harmed",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": "crop",
+    "evidence": "crop: it cuts off the real side-note 'Additio.' and the first letters of line-starts; the after loses <margin>Additio.</margin> and adds a duplicated 'tenefer referre / per illud apostoli' loop (reread)"
+  },
+  {
+    "id": "lr-6a943b2545a4780cb83dd409-p108",
+    "fix": "B",
+    "prereg": false,
+    "verdict": "harmed",
+    "bleed_before": "no",
+    "bleed_after": "no",
+    "harm_source": "crop",
+    "evidence": "crop: it cuts the first letters of the left column's line-starts and the side-note 'HVBER.'; the read drops lines ('tior cum fratre...Graecia tota' and several in the Multi argument), the IN DECIMAMSEXTAM heading and HVBER., and turns body columns into <margin>"
+  }
+]

@@ -1,0 +1,1496 @@
+{
+ "generated": "2026-10-23T22:25:48.771Z",
+ "base": "deepseek",
+ "gate": true,
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 384,
+  "fidelity_exact": 0.784,
+  "within_1": 0.995,
+  "weighted_kappa": 0.863
+ },
+ "band": [
+  6.764339173822232,
+  9.618501452885013
+ ],
+ "routing": {
+  "all": 0.75,
+  "t5": 0.75,
+  "siku": 0.75,
+  "siku_flagged": 1,
+  "siku_clean": 0.5,
+  "cohort_reweighted": 0.533
+ },
+ "routed_by_gate": {
+  "length": 28,
+  "kanripo": 20,
+  "residue": 19,
+  "negation": 14
+ },
+ "flag_share": 0.06547713170057641,
+ "strata": {
+  "all": {
+   "lite": {
+    "n": 64,
+    "fidelity": 3.563,
+    "fidelity_ci": [
+     3.367,
+     3.742
+    ],
+    "reversal_per100": 15.625,
+    "reversal_ci": [
+     7.813,
+     24.219
+    ],
+    "omission": 0.227,
+    "delta_vs_flash": -0.727,
+    "delta_vs_flash_ci": [
+     -0.922,
+     -0.539
+    ],
+    "reversal_delta_per100": 10.938,
+    "reversal_delta_ci": [
+     2.344,
+     20.313
+    ]
+   },
+   "lite2": {
+    "n": 64,
+    "fidelity": 3.578,
+    "fidelity_ci": [
+     3.391,
+     3.758
+    ],
+    "reversal_per100": 17.188,
+    "reversal_ci": [
+     9.375,
+     26.563
+    ],
+    "omission": 0.242,
+    "delta_vs_flash": -0.711,
+    "delta_vs_flash_ci": [
+     -0.898,
+     -0.523
+    ],
+    "reversal_delta_per100": 12.5,
+    "reversal_delta_ci": [
+     3.125,
+     21.875
+    ]
+   },
+   "flash": {
+    "n": 64,
+    "fidelity": 4.289,
+    "fidelity_ci": [
+     4.141,
+     4.43
+    ],
+    "reversal_per100": 4.688,
+    "reversal_ci": [
+     0.781,
+     10.156
+    ],
+    "omission": 0.031,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "flash2": {
+    "n": 64,
+    "fidelity": 4.219,
+    "fidelity_ci": [
+     4.063,
+     4.367
+    ],
+    "reversal_per100": 4.688,
+    "reversal_ci": [
+     0.781,
+     10.156
+    ],
+    "omission": 0.031,
+    "delta_vs_flash": -0.07,
+    "delta_vs_flash_ci": [
+     -0.242,
+     0.086
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     -6.25,
+     6.25
+    ]
+   },
+   "deepseek": {
+    "n": 64,
+    "fidelity": 3.109,
+    "fidelity_ci": [
+     2.883,
+     3.336
+    ],
+    "reversal_per100": 17.188,
+    "reversal_ci": [
+     8.594,
+     26.563
+    ],
+    "omission": 0.141,
+    "delta_vs_flash": -1.18,
+    "delta_vs_flash_ci": [
+     -1.437,
+     -0.93
+    ],
+    "reversal_delta_per100": 12.5,
+    "reversal_delta_ci": [
+     4.688,
+     21.094
+    ]
+   },
+   "qwen": {
+    "n": 64,
+    "fidelity": 2.953,
+    "fidelity_ci": [
+     2.773,
+     3.125
+    ],
+    "reversal_per100": 25.781,
+    "reversal_ci": [
+     16.406,
+     36.719
+    ],
+    "omission": 0.289,
+    "delta_vs_flash": -1.336,
+    "delta_vs_flash_ci": [
+     -1.516,
+     -1.156
+    ],
+    "reversal_delta_per100": 21.094,
+    "reversal_delta_ci": [
+     10.938,
+     32.031
+    ]
+   },
+   "cascade": {
+    "n": 64,
+    "fidelity": 3.977,
+    "fidelity_ci": [
+     3.789,
+     4.164
+    ],
+    "reversal_per100": 12.5,
+    "reversal_ci": [
+     5.469,
+     20.313
+    ],
+    "omission": 0.078,
+    "delta_vs_flash": -0.312,
+    "delta_vs_flash_ci": [
+     -0.477,
+     -0.172
+    ],
+    "reversal_delta_per100": 7.813,
+    "reversal_delta_ci": [
+     1.563,
+     14.063
+    ]
+   }
+  },
+  "t5": {
+   "lite": {
+    "n": 24,
+    "fidelity": 3.729,
+    "fidelity_ci": [
+     3.375,
+     4.063
+    ],
+    "reversal_per100": 20.833,
+    "reversal_ci": [
+     6.25,
+     37.5
+    ],
+    "omission": 0.188,
+    "delta_vs_flash": -0.625,
+    "delta_vs_flash_ci": [
+     -0.937,
+     -0.292
+    ],
+    "reversal_delta_per100": 10.417,
+    "reversal_delta_ci": [
+     -6.25,
+     29.167
+    ]
+   },
+   "lite2": {
+    "n": 24,
+    "fidelity": 3.813,
+    "fidelity_ci": [
+     3.521,
+     4.104
+    ],
+    "reversal_per100": 20.833,
+    "reversal_ci": [
+     6.25,
+     37.5
+    ],
+    "omission": 0.146,
+    "delta_vs_flash": -0.542,
+    "delta_vs_flash_ci": [
+     -0.833,
+     -0.229
+    ],
+    "reversal_delta_per100": 10.417,
+    "reversal_delta_ci": [
+     -6.25,
+     27.083
+    ]
+   },
+   "flash": {
+    "n": 24,
+    "fidelity": 4.354,
+    "fidelity_ci": [
+     4.125,
+     4.563
+    ],
+    "reversal_per100": 10.417,
+    "reversal_ci": [
+     0,
+     22.917
+    ],
+    "omission": 0.042,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "flash2": {
+    "n": 24,
+    "fidelity": 4.354,
+    "fidelity_ci": [
+     4.125,
+     4.563
+    ],
+    "reversal_per100": 6.25,
+    "reversal_ci": [
+     0,
+     16.667
+    ],
+    "omission": 0.063,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     -0.312,
+     0.292
+    ],
+    "reversal_delta_per100": -4.167,
+    "reversal_delta_ci": [
+     -20.833,
+     10.417
+    ]
+   },
+   "deepseek": {
+    "n": 24,
+    "fidelity": 3.188,
+    "fidelity_ci": [
+     2.771,
+     3.583
+    ],
+    "reversal_per100": 27.083,
+    "reversal_ci": [
+     10.417,
+     45.833
+    ],
+    "omission": 0.167,
+    "delta_vs_flash": -1.167,
+    "delta_vs_flash_ci": [
+     -1.625,
+     -0.75
+    ],
+    "reversal_delta_per100": 16.667,
+    "reversal_delta_ci": [
+     4.167,
+     31.25
+    ]
+   },
+   "qwen": {
+    "n": 24,
+    "fidelity": 2.938,
+    "fidelity_ci": [
+     2.625,
+     3.229
+    ],
+    "reversal_per100": 35.417,
+    "reversal_ci": [
+     16.667,
+     54.167
+    ],
+    "omission": 0.354,
+    "delta_vs_flash": -1.417,
+    "delta_vs_flash_ci": [
+     -1.75,
+     -1.083
+    ],
+    "reversal_delta_per100": 25,
+    "reversal_delta_ci": [
+     4.167,
+     47.917
+    ]
+   },
+   "cascade": {
+    "n": 24,
+    "fidelity": 4.042,
+    "fidelity_ci": [
+     3.708,
+     4.375
+    ],
+    "reversal_per100": 18.75,
+    "reversal_ci": [
+     4.167,
+     35.417
+    ],
+    "omission": 0.104,
+    "delta_vs_flash": -0.312,
+    "delta_vs_flash_ci": [
+     -0.583,
+     -0.083
+    ],
+    "reversal_delta_per100": 8.333,
+    "reversal_delta_ci": [
+     0,
+     20.833
+    ]
+   }
+  },
+  "siku": {
+   "lite": {
+    "n": 40,
+    "fidelity": 3.463,
+    "fidelity_ci": [
+     3.238,
+     3.663
+    ],
+    "reversal_per100": 12.5,
+    "reversal_ci": [
+     3.75,
+     22.5
+    ],
+    "omission": 0.25,
+    "delta_vs_flash": -0.787,
+    "delta_vs_flash_ci": [
+     -1.037,
+     -0.562
+    ],
+    "reversal_delta_per100": 11.25,
+    "reversal_delta_ci": [
+     2.5,
+     21.25
+    ]
+   },
+   "lite2": {
+    "n": 40,
+    "fidelity": 3.438,
+    "fidelity_ci": [
+     3.213,
+     3.65
+    ],
+    "reversal_per100": 15,
+    "reversal_ci": [
+     5,
+     26.25
+    ],
+    "omission": 0.3,
+    "delta_vs_flash": -0.812,
+    "delta_vs_flash_ci": [
+     -1.037,
+     -0.587
+    ],
+    "reversal_delta_per100": 13.75,
+    "reversal_delta_ci": [
+     5,
+     25
+    ]
+   },
+   "flash": {
+    "n": 40,
+    "fidelity": 4.25,
+    "fidelity_ci": [
+     4.075,
+     4.425
+    ],
+    "reversal_per100": 1.25,
+    "reversal_ci": [
+     0,
+     3.75
+    ],
+    "omission": 0.025,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "flash2": {
+    "n": 40,
+    "fidelity": 4.138,
+    "fidelity_ci": [
+     3.925,
+     4.338
+    ],
+    "reversal_per100": 3.75,
+    "reversal_ci": [
+     0,
+     10
+    ],
+    "omission": 0.013,
+    "delta_vs_flash": -0.112,
+    "delta_vs_flash_ci": [
+     -0.325,
+     0.05
+    ],
+    "reversal_delta_per100": 2.5,
+    "reversal_delta_ci": [
+     0,
+     7.5
+    ]
+   },
+   "deepseek": {
+    "n": 40,
+    "fidelity": 3.063,
+    "fidelity_ci": [
+     2.788,
+     3.325
+    ],
+    "reversal_per100": 11.25,
+    "reversal_ci": [
+     2.5,
+     21.25
+    ],
+    "omission": 0.125,
+    "delta_vs_flash": -1.187,
+    "delta_vs_flash_ci": [
+     -1.487,
+     -0.887
+    ],
+    "reversal_delta_per100": 10,
+    "reversal_delta_ci": [
+     1.25,
+     21.25
+    ]
+   },
+   "qwen": {
+    "n": 40,
+    "fidelity": 2.963,
+    "fidelity_ci": [
+     2.738,
+     3.175
+    ],
+    "reversal_per100": 20,
+    "reversal_ci": [
+     8.75,
+     31.25
+    ],
+    "omission": 0.25,
+    "delta_vs_flash": -1.287,
+    "delta_vs_flash_ci": [
+     -1.487,
+     -1.075
+    ],
+    "reversal_delta_per100": 18.75,
+    "reversal_delta_ci": [
+     8.75,
+     31.25
+    ]
+   },
+   "cascade": {
+    "n": 40,
+    "fidelity": 3.938,
+    "fidelity_ci": [
+     3.713,
+     4.163
+    ],
+    "reversal_per100": 8.75,
+    "reversal_ci": [
+     1.25,
+     18.75
+    ],
+    "omission": 0.063,
+    "delta_vs_flash": -0.312,
+    "delta_vs_flash_ci": [
+     -0.512,
+     -0.137
+    ],
+    "reversal_delta_per100": 7.5,
+    "reversal_delta_ci": [
+     0,
+     17.5
+    ]
+   }
+  },
+  "siku_flagged": {
+   "lite": {
+    "n": 20,
+    "fidelity": 3.425,
+    "fidelity_ci": [
+     3.1,
+     3.75
+    ],
+    "reversal_per100": 7.5,
+    "reversal_ci": [
+     0,
+     20
+    ],
+    "omission": 0.3,
+    "delta_vs_flash": -0.75,
+    "delta_vs_flash_ci": [
+     -1.075,
+     -0.425
+    ],
+    "reversal_delta_per100": 7.5,
+    "reversal_delta_ci": [
+     0,
+     20
+    ]
+   },
+   "lite2": {
+    "n": 20,
+    "fidelity": 3.325,
+    "fidelity_ci": [
+     2.925,
+     3.675
+    ],
+    "reversal_per100": 7.5,
+    "reversal_ci": [
+     0,
+     20
+    ],
+    "omission": 0.375,
+    "delta_vs_flash": -0.85,
+    "delta_vs_flash_ci": [
+     -1.15,
+     -0.525
+    ],
+    "reversal_delta_per100": 7.5,
+    "reversal_delta_ci": [
+     0,
+     20
+    ]
+   },
+   "flash": {
+    "n": 20,
+    "fidelity": 4.175,
+    "fidelity_ci": [
+     3.925,
+     4.45
+    ],
+    "reversal_per100": 0,
+    "reversal_ci": [
+     0,
+     0
+    ],
+    "omission": 0.05,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "flash2": {
+    "n": 20,
+    "fidelity": 4,
+    "fidelity_ci": [
+     3.65,
+     4.325
+    ],
+    "reversal_per100": 5,
+    "reversal_ci": [
+     0,
+     15
+    ],
+    "omission": 0.025,
+    "delta_vs_flash": -0.175,
+    "delta_vs_flash_ci": [
+     -0.55,
+     0.1
+    ],
+    "reversal_delta_per100": 5,
+    "reversal_delta_ci": [
+     0,
+     15
+    ]
+   },
+   "deepseek": {
+    "n": 20,
+    "fidelity": 3.25,
+    "fidelity_ci": [
+     2.8,
+     3.675
+    ],
+    "reversal_per100": 5,
+    "reversal_ci": [
+     0,
+     15
+    ],
+    "omission": 0.125,
+    "delta_vs_flash": -0.925,
+    "delta_vs_flash_ci": [
+     -1.375,
+     -0.475
+    ],
+    "reversal_delta_per100": 5,
+    "reversal_delta_ci": [
+     0,
+     15
+    ]
+   },
+   "qwen": {
+    "n": 20,
+    "fidelity": 2.95,
+    "fidelity_ci": [
+     2.575,
+     3.275
+    ],
+    "reversal_per100": 12.5,
+    "reversal_ci": [
+     0,
+     27.5
+    ],
+    "omission": 0.375,
+    "delta_vs_flash": -1.225,
+    "delta_vs_flash_ci": [
+     -1.5,
+     -0.975
+    ],
+    "reversal_delta_per100": 12.5,
+    "reversal_delta_ci": [
+     0,
+     27.5
+    ]
+   },
+   "cascade": {
+    "n": 20,
+    "fidelity": 4.175,
+    "fidelity_ci": [
+     3.925,
+     4.45
+    ],
+    "reversal_per100": 0,
+    "reversal_ci": [
+     0,
+     0
+    ],
+    "omission": 0.05,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   }
+  },
+  "siku_clean": {
+   "lite": {
+    "n": 20,
+    "fidelity": 3.5,
+    "fidelity_ci": [
+     3.2,
+     3.775
+    ],
+    "reversal_per100": 17.5,
+    "reversal_ci": [
+     2.5,
+     35
+    ],
+    "omission": 0.2,
+    "delta_vs_flash": -0.825,
+    "delta_vs_flash_ci": [
+     -1.175,
+     -0.5
+    ],
+    "reversal_delta_per100": 15,
+    "reversal_delta_ci": [
+     0,
+     30
+    ]
+   },
+   "lite2": {
+    "n": 20,
+    "fidelity": 3.55,
+    "fidelity_ci": [
+     3.325,
+     3.775
+    ],
+    "reversal_per100": 22.5,
+    "reversal_ci": [
+     5,
+     42.5
+    ],
+    "omission": 0.225,
+    "delta_vs_flash": -0.775,
+    "delta_vs_flash_ci": [
+     -1.1,
+     -0.45
+    ],
+    "reversal_delta_per100": 20,
+    "reversal_delta_ci": [
+     5,
+     40
+    ]
+   },
+   "flash": {
+    "n": 20,
+    "fidelity": 4.325,
+    "fidelity_ci": [
+     4.075,
+     4.55
+    ],
+    "reversal_per100": 2.5,
+    "reversal_ci": [
+     0,
+     7.5
+    ],
+    "omission": 0,
+    "delta_vs_flash": 0,
+    "delta_vs_flash_ci": [
+     0,
+     0
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "flash2": {
+    "n": 20,
+    "fidelity": 4.275,
+    "fidelity_ci": [
+     4.05,
+     4.5
+    ],
+    "reversal_per100": 2.5,
+    "reversal_ci": [
+     0,
+     7.5
+    ],
+    "omission": 0,
+    "delta_vs_flash": -0.05,
+    "delta_vs_flash_ci": [
+     -0.225,
+     0.1
+    ],
+    "reversal_delta_per100": 0,
+    "reversal_delta_ci": [
+     0,
+     0
+    ]
+   },
+   "deepseek": {
+    "n": 20,
+    "fidelity": 2.875,
+    "fidelity_ci": [
+     2.55,
+     3.15
+    ],
+    "reversal_per100": 17.5,
+    "reversal_ci": [
+     2.5,
+     35
+    ],
+    "omission": 0.125,
+    "delta_vs_flash": -1.45,
+    "delta_vs_flash_ci": [
+     -1.875,
+     -1.1
+    ],
+    "reversal_delta_per100": 15,
+    "reversal_delta_ci": [
+     0,
+     32.5
+    ]
+   },
+   "qwen": {
+    "n": 20,
+    "fidelity": 2.975,
+    "fidelity_ci": [
+     2.725,
+     3.225
+    ],
+    "reversal_per100": 27.5,
+    "reversal_ci": [
+     12.5,
+     45
+    ],
+    "omission": 0.125,
+    "delta_vs_flash": -1.35,
+    "delta_vs_flash_ci": [
+     -1.65,
+     -1.025
+    ],
+    "reversal_delta_per100": 25,
+    "reversal_delta_ci": [
+     7.5,
+     42.5
+    ]
+   },
+   "cascade": {
+    "n": 20,
+    "fidelity": 3.7,
+    "fidelity_ci": [
+     3.375,
+     4.05
+    ],
+    "reversal_per100": 17.5,
+    "reversal_ci": [
+     2.5,
+     35
+    ],
+    "omission": 0.075,
+    "delta_vs_flash": -0.625,
+    "delta_vs_flash_ci": [
+     -0.975,
+     -0.3
+    ],
+    "reversal_delta_per100": 15,
+    "reversal_delta_ci": [
+     0,
+     30
+    ]
+   }
+  }
+ },
+ "floors": {
+  "lite": {
+   "mean": -0.016,
+   "ci": [
+    -0.156,
+    0.133
+   ],
+   "n": 64,
+   "note": "lite minus lite2"
+  },
+  "flash": {
+   "mean": 0.07,
+   "ci": [
+    -0.086,
+    0.242
+   ],
+   "n": 64,
+   "note": "flash minus flash2"
+  }
+ },
+ "cost": {
+  "lite": 0.000635955391450486,
+  "lite2": 0.0006329948810016002,
+  "flash": 0.0019245648473105036,
+  "flash2": 0.0019299610507263706,
+  "deepseek": 0.0003633779176910425,
+  "qwen": 0.00013980643073248456,
+  "cascade_paid": 0.0013121179176910425,
+  "cascade_agy": 0.0003633779176910425
+ },
+ "projection": {
+  "flash_batch_reference": 1584.1999999999998,
+  "flash_38_batch_measured": 1712.8627141063482,
+  "lite_batch": 566.0002983909325,
+  "deepseek": 323.4063467450278,
+  "qwen": 124.42772335191125,
+  "cascade_paid": 1167.7849467450278,
+  "cascade_agy": 323.4063467450278,
+  "cascade_agy_calls": 474370
+ },
+ "spend": {
+  "lite_batch": 0.08565450000000002,
+  "openrouter": 0.0357325225
+ },
+ "rule": {
+  "cascade": {
+   "ci_lower": -0.477,
+   "ci_ok": false,
+   "reversal": 12.5,
+   "reversal_limit": 7.688,
+   "reversal_ok": false,
+   "cost": 0.0013121179176910425,
+   "cost_limit": 0.001068,
+   "cost_ok": false
+  },
+  "adopt_cascade": false,
+  "arms_matching_flash": []
+ },
+ "worst": {
+  "lite": [
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "lite",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "T7: interleaved columns read as names: 'Dan, Cheng; Ge, Yun; Chu, Shi; Hong, Hai; Wu, Yan' for 淡成 鄖人 洪武…革除時海鹽知縣",
+     "T2: long romanized syllable column ('Dan / Ming / Dan / Cheng ...') before a prose attempt"
+    ]
+   },
+   {
+    "id": "69e72c60a409200ea79f46f6_00141",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 2,
+    "via": "lite",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/69e72c60a409200ea79f46f6?page=141",
+    "defects": [
+     "mistranslation: 'When a child feeds upon its dead mother' for 子食於其死母 (piglets suckling, per reference)",
+     "T7: 'Those who are still in the womb, their repeated lack of action' renders the OCR garble 胎者之屢 (the amputee's shoes) fluently"
+    ]
+   },
+   {
+    "id": "69e72c7da409200ea79f4a01_00053",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 2,
+    "via": "lite",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/69e72c7da409200ea79f4a01?page=53",
+    "defects": [
+     "T9: omits 戴角分牙布爪仰飛伏走謂之禽獸 (definition of birds and beasts)",
+     "mistranslation: opening two sentences garbled: 'even if one has the appearance of a beast ... affection'"
+    ]
+   },
+   {
+    "id": "6a3c63d2af3c49b59c5c8e16_00106",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "lite",
+    "gates": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c63d2af3c49b59c5c8e16?page=106",
+    "defects": [
+     "T7: table mis-aligns headwords: 'Die (碟) ... A county name'; 'Liu (留)' made a headword",
+     "T16: table shifts definitions: 'Die (碟) ... A county name', 'Liu (留) A place name'"
+    ]
+   },
+   {
+    "id": "6a3c72bc01fe4f593c1e24c0_00029",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 2,
+    "via": "lite",
+    "gates": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c72bc01fe4f593c1e24c0?page=29",
+    "defects": [
+     "T8: 稱族 (naming the clan) turned into omitting it, twice",
+     "name: 公 made Confucius; 晉侯 'Duke of Jin'"
+    ]
+   }
+  ],
+  "lite2": [
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 1,
+    "via": "lite2",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "T7: mostly romanized single characters; only 淡欽 and 淡恭 rendered, the latter as 'Renjing native'",
+     "T2: mostly romanized syllables ('Dan / Guang / Zhen / Liu / Hai'); only 淡欽 and 淡恭 rendered as sentences"
+    ]
+   },
+   {
+    "id": "69e72c60a409200ea79f46f6_00141",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 2,
+    "via": "lite2",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/69e72c60a409200ea79f46f6?page=141",
+    "defects": [
+     "mistranslation: 'A child feeding at the breast of its deceased mother... the eyes seem to abandon it all' for piglets fleeing",
+     "T7: 'Those who are pregnant repeatedly do nothing to love them' for OCR 胎者之屢無為愛之"
+    ]
+   },
+   {
+    "id": "6a3c63d2af3c49b59c5c8e16_00106",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "lite2",
+    "gates": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c63d2af3c49b59c5c8e16?page=106",
+    "defects": [
+     "mistranslation: '沬 ... A place name' for 棠汁 (crabapple juice)",
+     "mistranslation: '勒 ... To restrain; a bridle' / '錏 To forge metal' where source has 素履 and 鍜 (armor)"
+    ]
+   },
+   {
+    "id": "6a3cbeafec254ff6cae0224d_00032",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3,
+    "via": "lite2",
+    "gates": [
+     "residue",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3cbeafec254ff6cae0224d?page=32",
+    "defects": [
+     "mistranslation: Wu Shu 'Tea Thief: Waiting for the coffin flag to be raised, then stealthily snatching it' for 茶賦 待槍旗而探摘",
+     "T7: 'Waiting for the coffin flag to be raised, then stealthily snatching it' for 待槍旗而探摘 (tea sprouts)"
+    ]
+   },
+   {
+    "id": "6a3c6dc939b4508b04e4a49b_00017",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 3,
+    "via": "lite2",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c6dc939b4508b04e4a49b?page=17",
+    "defects": [
+     "T8: 'this logic may be forced' for 恐其有此理也 (perhaps there is such reasoning)",
+     "T8: 'one fears this logic may be forced' inverts 恐其有此理也 (perhaps there is such a reason)"
+    ]
+   }
+  ],
+  "flash": [
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3,
+    "via": "flash",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "name: Dan Guang 'a native of Zhenhai... held office in Liuzhou' swaps 柳州人 / 鎮海衞千户",
+     "mistranslation: 'A native of Zhenhai... held office in Liuzhou' swaps 柳州人...鎮海衛千户 and drops the chiliarch post"
+    ]
+   },
+   {
+    "id": "6a3cba973dce6cfad749d0bd_00138",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 3,
+    "via": "flash",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/6a3cba973dce6cfad749d0bd?page=138",
+    "defects": [
+     "T4: source credits come after quotes (韓詩外傳 after story, 盧思賦 after prose, 李白 after poems); T1 puts each as a heading of the NEXT block, so 'Li Bai:' heads 霜鴻有餘哀 (Du Fu, per next page)",
+     "T4: attributions shifted one block forward: 'Han Shi Waizhuan' heads the Huainanzi passage, 'Lu Sidao Rhapsody' heads 弋者何所慕 (李白), 'Li Bai' heads 霜鴻有餘哀 (next page: 杜詩)"
+    ]
+   },
+   {
+    "id": "69e72c7da409200ea79f4a01_00053",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 3,
+    "via": "flash",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/69e72c7da409200ea79f4a01?page=53",
+    "defects": [
+     "T8: 'must not possess the heart of a beast' inverts 未必無獸心"
+    ]
+   },
+   {
+    "id": "69e7494885f786e884a4e57a_00024",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 3,
+    "via": "flash",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/69e7494885f786e884a4e57a?page=24",
+    "defects": [
+     "T8: 'Would that you not look back on me' / 'Would that you not requite me' turn the complaint into a wish",
+     "T8: 'Would that you not look back on me?' turns 寧不我顧 into a wish against regard"
+    ]
+   },
+   {
+    "id": "6a3cbeafec254ff6cae0224d_00032",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3.5,
+    "via": "flash",
+    "gates": [
+     "residue",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3cbeafec254ff6cae0224d?page=32",
+    "defects": [
+     "mistranslation: rain entry 'silently, the crossbeams sink, passing ten days' for 秋暮陰沉涉旬霖瀝"
+    ]
+   }
+  ],
+  "flash2": [
+   {
+    "id": "6a3cbc04ec254ff6cadeceb9_00143",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "flash2",
+    "gates": [
+     "residue",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3cbc04ec254ff6cadeceb9?page=143",
+    "defects": [
+     "T8: X訛Y read backwards for 曰/月, 三/二, 盛/成, 歛/改: 'sheng... is an error for cheng'",
+     "T8: reverses 曰訛月, 三訛二, 盛訛成, 歛訛改 ('X is an error for Y')"
+    ]
+   },
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3,
+    "via": "flash2",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "mistranslation: Dan Cheng 'dismissed from his post during the reorganization of Yunxian' for 鄖人…革除時海鹽知縣",
+     "mistranslation: 'dismissed from his post during the reorganization of Yunxian' for 鄖人...革除時海鹽知縣 (native of Yun, magistrate of Haiyan in the Gechu year)"
+    ]
+   },
+   {
+    "id": "6a3cba973dce6cfad749d0bd_00138",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 3,
+    "via": "flash2",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/6a3cba973dce6cfad749d0bd?page=138",
+    "defects": [
+     "T4: attributions shifted one block forward: margin 'Li Bai' heads 霜鴻有餘哀; 'Han's Commentary' heads the Huainanzi passage",
+     "T4: margin labels placed before the text they follow: 'Han's Commentary' over the Huainanzi passage, 'Lu Si Dao's Rhapsody' over the Li Bai lines, 'Li Bai' over 霜鴻有餘哀"
+    ]
+   },
+   {
+    "id": "69e8b26b2ff2a8dc09e77afc_00118",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 3,
+    "via": "flash2",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/69e8b26b2ff2a8dc09e77afc?page=118",
+    "defects": [
+     "T8: 'then how could he punish them?' contradicts its own note that 安 = 'then'",
+     "T8: 'how could he punish them?' turns 安〔能〕誅之 (then he punishes it, per note ㊃) into doubt"
+    ]
+   },
+   {
+    "id": "6a3c63d2af3c49b59c5c8e16_00106",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3,
+    "via": "flash2",
+    "gates": [
+     "residue",
+     "length",
+     "negation",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c63d2af3c49b59c5c8e16?page=106",
+    "defects": [
+     "T7: 菹 entry left as word scatter 'grows / raw / cut / among / celery / Chu'"
+    ]
+   }
+  ],
+  "deepseek": [
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 1,
+    "via": "deepseek",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "T7: character-by-character gloss list ('Wu / <unclear>Fall</unclear> / Zhong / Li'), not a translation",
+     "T2: character-by-character romanization ('Dan / Cheng / Ge / Yun / <unclear>Chu</unclear>') rather than a translation of the entries"
+    ]
+   },
+   {
+    "id": "6a3cbfe8f9474f825c16c42f_00119",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 1,
+    "via": "deepseek",
+    "gates": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3cbfe8f9474f825c16c42f?page=119",
+    "defects": [
+     "T2: output is a modern Chinese paraphrase '故應天副職祝君希哲手稿一軸', not English",
+     "T2: rendered into modern Chinese ('故應天副職祝君希哲手稿一軸'), not English"
+    ]
+   },
+   {
+    "id": "6a3c6192879008ba7e15f12e_00065",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 1,
+    "via": "deepseek",
+    "gates": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c6192879008ba7e15f12e?page=65",
+    "defects": [
+     "T2: body is the Chinese source re-punctuated ('問曰：有何因緣而造此論？'), not a translation",
+     "T2: body is the Chinese source re-punctuated ('問曰：有何因緣而造此論？'), no English translation"
+    ]
+   },
+   {
+    "id": "6a3c61db40c88a541d8f091d_00083",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 1,
+    "via": "deepseek",
+    "gates": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c61db40c88a541d8f091d?page=83",
+    "defects": [
+     "T12: rendered into modern Chinese ('須菩提，你意下如何？'), not English",
+     "T2: output is a modern Chinese paraphrase (須菩提，你意下如何？…), not an English translation"
+    ]
+   },
+   {
+    "id": "6a3c72bc01fe4f593c1e24c0_00029",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 1,
+    "via": "deepseek",
+    "gates": [
+     "residue",
+     "length",
+     "negation"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c72bc01fe4f593c1e24c0?page=29",
+    "defects": [
+     "T12: rendered into modern Chinese ('師公從京師於是會諸侯伐秦'), not English",
+     "T2: output is a modern Chinese paraphrase ('師公從京師於是會諸侯伐秦'), not an English translation"
+    ]
+   }
+  ],
+  "qwen": [
+   {
+    "id": "69e72c70a409200ea79f48f9_00078",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 1,
+    "via": "qwen",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/69e72c70a409200ea79f48f9?page=78",
+    "defects": [
+     "T10: long invented dialogues (Duke of Zhou, Master of Shang, talking leaf) not on the page",
+     "T7: warden's speech after 勿滅裂 continued with invented leaf allegory instead of stopping at 昔"
+    ]
+   },
+   {
+    "id": "6a3c61a7879008ba7e15f810_00094",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 1,
+    "via": "qwen",
+    "gates": [
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c61a7879008ba7e15f810?page=94",
+    "defects": [
+     "T1: empty output; nothing of 人勢狀以鐵鉤貫其中… translated",
+     "T1: empty output; the page has a full narrative from 人勢狀 to 中夜某氏"
+    ]
+   },
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "qwen",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "T16: long working notes ('Clustering logic', 'Let's look closer') printed as the translation",
+     "name: 'Dan Chengge', 'Dan Guangzhen' for 淡成 / 淡廣; Dan Cheng's Haiyan post and Dan Yuan's entry lost"
+    ]
+   },
+   {
+    "id": "6a3cbeafec254ff6cae0224d_00032",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 2,
+    "via": "qwen",
+    "gates": [
+     "residue",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3cbeafec254ff6cae0224d?page=32",
+    "defects": [
+     "T7: entries left as fragments: 'Do not speak. Liang chen chen... traversing ten days... divination.'",
+     "mistranslation: 'Tea Thief: Waiting for the coffin flag to probe and pick against'"
+    ]
+   },
+   {
+    "id": "6a3c6dc939b4508b04e4a49b_00017",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 2,
+    "via": "qwen",
+    "gates": [
+     "length"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c6dc939b4508b04e4a49b?page=17",
+    "defects": [
+     "mistranslation: 'The jing and yong pendants are removed... Kang Hou passes away' for 鳴佩玉去君所周康后不然",
+     "name: 'Zhang Yan comments', 'Xue Qiong... Xiaojing Zhangju' for 瓚曰 and 薛君韓詩章句"
+    ]
+   }
+  ],
+  "cascade": [
+   {
+    "id": "69e72698a409200ea79ef8c3_00129",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 2,
+    "via": "deepseek",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/69e72698a409200ea79ef8c3?page=129",
+    "defects": [
+     "mistranslation: 'Cheng was furious at their stinginess and went to their gate' — source: 諸兄怒其市惠登其門",
+     "mistranslation: 'The brothers together divided the household' for 共出田宅居成 (gave land and house to Cheng)"
+    ]
+   },
+   {
+    "id": "6a3c678b39b4508b04e36d03_00168",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 2.5,
+    "via": "deepseek",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/6a3c678b39b4508b04e36d03?page=168",
+    "defects": [
+     "mistranslation: 'resume his former post after the mourning period' / gloss 'after mourning' for 起復 (recall during mourning)",
+     "mistranslation: 'resume his former post after the mourning period' for 起復 (recall during mourning)"
+    ]
+   },
+   {
+    "id": "6a3c74cc01fe4f593c1f2713_00157",
+    "track": "siku",
+    "stratum": "flagged",
+    "fidelity": 3,
+    "via": "flash",
+    "gates": [
+     "length",
+     "kanripo"
+    ],
+    "url": "https://sourcelibrary.org/book/6a3c74cc01fe4f593c1f2713?page=157",
+    "defects": [
+     "name: Dan Guang 'a native of Zhenhai... held office in Liuzhou' swaps 柳州人 / 鎮海衞千户",
+     "mistranslation: 'A native of Zhenhai... held office in Liuzhou' swaps 柳州人...鎮海衛千户 and drops the chiliarch post"
+    ]
+   },
+   {
+    "id": "6a3cba973dce6cfad749d0bd_00138",
+    "track": "siku",
+    "stratum": "clean",
+    "fidelity": 3,
+    "via": "deepseek",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/6a3cba973dce6cfad749d0bd?page=138",
+    "defects": [
+     "T8: envoy's reason inverted (source: would make my lord seem to despise men, value geese)",
+     "name: 'Collected Works of the Master of South Hill' for 淮南子; 'Stone Drum-styled Rock' for 碣石"
+    ]
+   },
+   {
+    "id": "6a3c5f05879008ba7e15291d_00045",
+    "track": "T5-zh",
+    "stratum": "T5",
+    "fidelity": 3,
+    "via": "deepseek",
+    "gates": [],
+    "url": "https://sourcelibrary.org/book/6a3c5f05879008ba7e15291d?page=45",
+    "defects": [
+     "T8: 'does not directly cut off the four abodes' for 非直斷四住人執 (not only severs)",
+     "T8: 'does not directly cut off... nor' for 非直斷...亦分斷 (not only severs... but also)"
+    ]
+   }
+  ]
+ }
+}

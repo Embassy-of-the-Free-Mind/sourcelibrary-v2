@@ -10,11 +10,13 @@
 //     same-host (/book/<id>), and a book that is hidden or gone loses its link (a hidden book 404s for readers).
 //     The summary table, per-tradition counts and the "how to read it" figures are recomputed from the same check.
 //   - Timeline maps: public/data/<theme>.json, <theme>-l2.json, graph/lens-<theme>.json → public/data/maps/.
-//     The level-2 and lens files are copied verbatim; in <theme>.json an edition that is no longer public is
+//     The level-2, lens and layers files are copied verbatim; in <theme>.json an edition that is no longer public is
 //     marked so (the map names hidden editions without a link). src/app/explore/maps/summary.json gets the counts.
 //
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/import-atlas-maps.mjs \
-//     --atlas /path/to/sourcelibrary-atlas [--theme consciousness] [--dry-run]
+//     --atlas /path/to/sourcelibrary-atlas [--theme consciousness,ritual] [--dry-run]
+// --theme names the maps to import; `ritual` is the survey document. The default is ritual,consciousness. summary.json
+// keeps the figures of every map not imported this run (#7129: importing one map must not drop the others' cards).
 import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
@@ -22,7 +24,8 @@ import { withMongo } from '../lib/mongo.mjs';
 
 const argv = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const ATLAS = argv('--atlas');
-const THEMES = (argv('--theme', 'consciousness')).split(',');
+const THEMES = (argv('--theme', 'ritual,consciousness')).split(',').filter((t) => t !== 'ritual');
+const RITUAL = (argv('--theme', 'ritual,consciousness')).split(',').includes('ritual');
 const DRY = process.argv.includes('--dry-run');
 if (!ATLAS) { console.error('usage: import-atlas-maps.mjs --atlas <sourcelibrary-atlas checkout> [--theme a,b] [--dry-run]'); process.exit(1); }
 const REPO = path.resolve(new URL('../..', import.meta.url).pathname);
@@ -43,7 +46,8 @@ async function lookup(db, ids) {
   // books.id first; a re-minted book is reachable by its _id only (book-deletion-and-identity.md)
   const rest = ids.filter((id) => !by.has(id));
   if (rest.length) {
-    const more = await db.collection('books').find({ _id: { $in: rest.map((id) => new ObjectId(id)) } }, { projection: proj }).toArray();
+    const oids = rest.filter((id) => /^[0-9a-f]{24}$/.test(id)).map((id) => new ObjectId(id)); // UUID ids have no _id twin
+    const more = oids.length ? await db.collection('books').find({ _id: { $in: oids } }, { projection: proj }).toArray() : [];
     for (const b of more) by.set(String(b._id), b);
   }
   return by;
@@ -112,7 +116,8 @@ ${bar(s)}</header>`;
 // ---- timeline maps -------------------------------------------------------------------------------------------
 const isReadable = (e) => e.v && e.pc > 0 && ((e.tt / e.pc) >= 0.8 || (/english/i.test(e.l) && (e.o / e.pc) >= 0.8)); // refresh-theme-data.mjs
 const statusOf = (w) => w.eds.length ? (w.eds.some(isReadable) ? 'readable' : w.eds.some((e) => e.v && e.pc > 0) ? 'visible' : 'hidden') : w.st;
-const summary = {};
+const SUMMARY = path.join(REPO, 'src/app/explore/maps/summary.json');
+const summary = fs.existsSync(SUMMARY) ? JSON.parse(fs.readFileSync(SUMMARY, 'utf8')) : {};
 async function theme(db, slug) {
   const destDir = path.join(REPO, 'public/data/maps');
   const d = JSON.parse(fs.readFileSync(path.join(ATLAS, `public/data/${slug}.json`), 'utf8'));
@@ -132,7 +137,7 @@ async function theme(db, slug) {
   if (DRY) return;
   fs.mkdirSync(destDir, { recursive: true });
   fs.writeFileSync(path.join(destDir, `${slug}.json`), JSON.stringify(d));
-  for (const [from, to] of [[`public/data/${slug}-l2.json`, `${slug}-l2.json`], [`public/data/graph/lens-${slug}.json`, `lens-${slug}.json`]]) {
+  for (const [from, to] of [[`public/data/${slug}-l2.json`, `${slug}-l2.json`], [`public/data/graph/lens-${slug}.json`, `lens-${slug}.json`], [`public/data/${slug}-layers.json`, `${slug}-layers.json`]]) {
     const p = path.join(ATLAS, from);
     if (!fs.existsSync(p)) { console.log('  (no', from + ')'); continue; }
     fs.copyFileSync(p, path.join(destDir, to)); console.log('  copied', to, (fs.statSync(p).size / 1e3).toFixed(0), 'KB');
@@ -140,8 +145,8 @@ async function theme(db, slug) {
 }
 
 await withMongo(async (db) => {
-  summary.ritual = await ritual(db);
+  if (RITUAL) summary.ritual = await ritual(db);
   for (const t of THEMES) await theme(db, t);
 });
 // the /explore/maps index reads its card figures from here, not from the megabyte artifacts
-if (!DRY) fs.writeFileSync(path.join(REPO, 'src/app/explore/maps/summary.json'), JSON.stringify(summary, null, 1) + '\n');
+if (!DRY) fs.writeFileSync(SUMMARY, JSON.stringify(summary, null, 1) + '\n');

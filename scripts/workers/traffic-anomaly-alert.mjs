@@ -181,6 +181,7 @@ export const EXPECTED_HOSTS = new Set([
   'sourcelibrary.org',
   'bph.sourcelibrary.org',
   'kloss.sourcelibrary.org', // tenant reading room, same footing as bph
+  'bhutan.sourcelibrary.org', // tenant reading room; Cloudflare-proxied since 2026-10-20
   'ficinosociety.org', // scoped to the society surface since #3438 — see below
 ]);
 
@@ -722,6 +723,28 @@ async function run() {
       check: 'reader_traffic_on_unexpected_host',
       message: `Reader traffic on ${unexpected.length} unexpected hostname(s): ${unexpected.map(h => `${h._id}=${h.n}`).join(' ')}. Any host outside the Cloudflare zone serves content with NO edge protection — no ASN blocks, no bot rules, no crawler gate. This is how a fleet read the corpus for nine weeks. Check with: curl -sI https://<host>/ | grep -i cf-ray — no cf-ray means the CDN is not in front of it. Fix by scoping the alias (src/lib/alias-host-scope.ts) or putting it behind Cloudflare.`,
     });
+  }
+
+  // ── 2b. Expected host that has slipped outside the CDN ─────────────────
+  // Being on EXPECTED_HOSTS says a host may serve readers, not that the edge
+  // is in front of it. bph, kloss and bhutan were all DNS-only (grey cloud)
+  // until 2026-10-20, so every edge rule skipped them while check 2 stayed
+  // quiet. Probe each zone host for cf-ray; ficinosociety.org is outside the
+  // zone by design and scoped in the app instead.
+  for (const host of EXPECTED_HOSTS) {
+    if (host !== 'sourcelibrary.org' && !host.endsWith('.sourcelibrary.org')) continue;
+    try {
+      const res = await fetch(`https://${host}/robots.txt`, { method: 'HEAD', signal: AbortSignal.timeout(10_000) });
+      if (!res.headers.get('cf-ray')) {
+        alerts.push({
+          level: 'critical',
+          check: 'expected_host_outside_cdn',
+          message: `${host} answered without cf-ray: it is not behind Cloudflare, so no edge rule (fleet blocks, ASN challenges, bot rules) applies to it. Turn the proxy back on for its DNS record (orange cloud) and re-check with: curl -sI https://${host}/ | grep -i cf-ray`,
+        });
+      }
+    } catch (err) {
+      console.error(`[traffic-anomaly] cdn probe failed for ${host}: ${err.message}`);
+    }
   }
 
   // ── 3. Edge/app disagreement ──────────────────────────────────────────────

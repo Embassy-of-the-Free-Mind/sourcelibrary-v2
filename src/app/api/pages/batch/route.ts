@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
@@ -48,6 +49,10 @@ export async function POST(request: NextRequest) {
     // each book's free sample. Tenant-scoped requests are exempt. No-op
     // unless METERED_READER=1.
     pages = await gatePagesForRequest(db, request, pages, { exempt: !!tenantId });
+
+    // English edition, English leaf: serve the transcription, never the stored
+    // English-to-English rewording (#7100).
+    pages = await serveEnglishOriginalPages(db, pages);
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
     // translation. Deterministic (content-keyed, no ref) for readers, so the

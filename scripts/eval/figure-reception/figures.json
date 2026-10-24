@@ -1,0 +1,196 @@
+{
+  "_comment": "PRIOR ART: scripts/analysis/cluster-books.py — clusters whole books, not passages about one person. One entry per figure: prefix = the full-text prefix searched in pages_en (prefix*); name = the regex that names him in a sentence; out = where the page data is published; minCluster/minSamples = HDBSCAN settings for the theme map (about passages/250, floor 10). setAside = passages whose book title matches `titles` and text matches `text` (both default to anything), and whose text does not match `unless`, are given a fixed theme before clustering: they name someone else, or the figure as a fictional speaker. rare = settings for rare.py: skipTitles/skipText drop passages that are about someone else, notes attach a sentence where a passage means something other than it seems. diels = the figure's chapters in Diels, Vorsokratiker 3rd ed. 1912 (book 6a3f0220661123baf6fe9d4e) for diels.py: ch = 1912 chapter, dk = the Diels-Kranz chapter it became (44 and 47 checked in #7097; 14 and 58 by name), pages, start/end = the heading lines that open the chapter and the next one. dielsMatch = diels.py: in = [margin, raw] a passage needs to be tagged (read by band; see diels.py), hop = how close a passage must be to a tagged one to inherit its tag, judgeTop = how many repeated claims go to the reader.",
+  "pythagoras": {
+    "prefix": "pythagor",
+    "name": "pythagoras|pythagoreans?",
+    "out": "public/articles/pythagoras-in-the-library",
+    "minCluster": 45,
+    "minSamples": 10,
+    "rare": {
+      "skipText": "rhegi|statue of|sculpt|\\bnero\\b",
+      "notes": [
+        {
+          "match": "further original|originalschriften|illuminatenorden",
+          "note": "In the papers of the Bavarian Illuminati members wrote under classical code names; this Pythagoras is one of them, not the philosopher."
+        }
+      ]
+    },
+    "diels": [
+      {
+        "ch": 4,
+        "dk": 14,
+        "pages": [
+          48,
+          56
+        ],
+        "start": "^#+ 4\\. PYTHAGORAS",
+        "end": "^#+ OLDER PYTHAGOREANS|^#+ 5\\. KERKOPS"
+      },
+      {
+        "ch": 45,
+        "dk": 58,
+        "pages": [
+          365,
+          395
+        ],
+        "start": "^#+ 45\\. PYTHAGOREAN SCHOOL",
+        "end": "^#+ 46\\. ANAXAGORAS"
+      }
+    ],
+    "dielsMatch": {
+      "in": [
+        0.18,
+        0.9
+      ],
+      "hop": 0.92,
+      "judgeTop": 150
+    },
+    "dielsOverrides": {
+      "69afe2ebcf56258c93890cac:526": {
+        "to": "elsewhere",
+        "why": "Heraclitus B 40, 'much learning does not teach understanding': Diels ch. 4 refers the reader to Heraclitus for it"
+      },
+      "69937767b0a84a57639639fe:179": {
+        "to": "elsewhere",
+        "why": "the guard-post of life (Plato, Phaedo 62 B; Cicero, Cato 73): Diels prints it as Philolaus B 15"
+      },
+      "69b21baa429e087c6f862c99:50": {
+        "to": "elsewhere",
+        "why": "the five solids and the elements (Aetius II 6, 5): Diels prints it as Philolaus A 15"
+      }
+    }
+  },
+  "philolaus": {
+    "prefix": "philola",
+    "name": "philolaus|philolaos",
+    "out": "public/articles/philolaus-in-the-library",
+    "minCluster": 20,
+    "minSamples": 5,
+    "setAside": [
+      {
+        "theme": 1000,
+        "why": "Philolaus as a speaker in Reuchlin's dialogue De arte cabalistica (1517), reprinted with Galatinus and Pico",
+        "titles": "cabal|kabbal|catholic truth|pico della mirandola",
+        "unless": "\\[(says|said|thought)|Philolaus the Pythagorean|opinion of Philolaus|bought|purchas"
+      },
+      {
+        "theme": 1001,
+        "why": "Philolaus, a companion of Apollonius in Philostratus, not the Pythagorean",
+        "titles": "apollon",
+        "unless": "^$"
+      }
+    ],
+    "rare": {
+      "skipTitles": "god: some conversations|gott",
+      "skipText": "thebes|theban|lawgiver|nomothet|of corinth|Philolaus,\\s*(prepare|it depends|let us|surely|I beg|yesterday|we will)|laws by which|patrimon",
+      "notes": [
+        {
+          "match": "boulliau|bullial|antiphilola|philolaus reborn|philolaus restored|motion of the heart",
+          "note": "Ismaël Boulliau published a book of his own titled Philolaus (1639), arguing that the earth moves; this passage is about that book, not the ancient Philolaus."
+        },
+        {
+          "match": "elderly schoolboys|marran|simon the jew|capnion",
+          "note": "This is Philolaus the younger, a speaker in Johann Reuchlin’s dialogue On the Art of the Kabbalah (1517)."
+        }
+      ]
+    },
+    "diels": [
+      {
+        "ch": 32,
+        "dk": 44,
+        "pages": [
+          322,
+          341
+        ],
+        "start": "^#+ 32\\. PHILOLAUS",
+        "end": "^#+ (32\\. PHILOLAUS\\. )?33\\. EURYTUS"
+      }
+    ],
+    "dielsMatch": {
+      "in": [
+        0.12,
+        0.84
+      ],
+      "hop": 0.88,
+      "judgeTop": 200
+    },
+    "dielsOverrides": {
+      "69af0da8be5fc7f363545d1a:321": {
+        "to": "32 A 21",
+        "why": "'the opinion of Philolaus, Aristarchus' against Ptolemy: the moving earth, A 21"
+      },
+      "695594447bd6d2cd1d61d3c5:382": {
+        "to": "none",
+        "why": "Telauges' letter to Philolaus on Empedocles' father (Diogenes VIII 53), not A 13 (Speusippus); Diels has it under Empedocles"
+      },
+      "6991d8a58c1030b12444c22f:167": {
+        "to": "none",
+        "why": "Telauges' letter to Philolaus on Empedocles' father (Diogenes VIII 53), not A 13 (Speusippus); Diels has it under Empedocles"
+      },
+      "69ac8551960d5ad0b47323a9:148": {
+        "to": "none",
+        "why": "Telauges' letter to Philolaus on Empedocles' father (Diogenes VIII 53), not A 13 (Speusippus); Diels has it under Empedocles"
+      }
+    }
+  },
+  "archytas": {
+    "prefix": "archyt",
+    "name": "archytas",
+    "out": "public/articles/archytas-in-the-library",
+    "minCluster": 15,
+    "minSamples": 5,
+    "setAside": [
+      {
+        "theme": 1000,
+        "why": "Archytas of Amphissa, the poet Athenaeus quotes on apples",
+        "text": "Euphorion or Archytas|Euphronius or Archytas"
+      }
+    ],
+    "rare": {
+      "notes": [
+        {
+          "match": "life of marcellus",
+          "note": "Plutarch tells this of Archimedes, not Archytas; the book has swapped the names."
+        },
+        {
+          "match": "archyloga|master named Archytas",
+          "note": "The manuscript reads Archyloga, and the translation made it Archytas; in the Latin of Cessolis, which it follows, the man is the king of Sicily whose father was a potter: Agathocles, not Archytas."
+        }
+      ]
+    },
+    "diels": [
+      {
+        "ch": 35,
+        "dk": 47,
+        "pages": [
+          343,
+          359
+        ],
+        "start": "^#+ 35\\. ARCHYTAS",
+        "end": "^#+ 35a\\. OKKELOS"
+      }
+    ],
+    "dielsMatch": {
+      "in": [
+        0.12,
+        0.84
+      ],
+      "hop": 0.88,
+      "judgeTop": 200
+    },
+    "dielsOverrides": {
+      "69dbc9941040d1d5e20a4810:286": {
+        "to": "elsewhere",
+        "why": "Cicero, De oratore III 139, 'Philolaus taught Archytas': Diels prints it as Philolaus A 3"
+      },
+      "695573c1f63a757109172835:119": {
+        "to": "drop",
+        "why": "groups Archytas's chromatic tetrachord (A 16) with the ps.-Archytan order of the categories"
+      },
+      "69dbc93c1040d1d5e20a16e7:49": {
+        "to": "none",
+        "why": "Cicero, Laelius 88 (heaven seen alone gives no pleasure): not B 1, and not in the 1912 chapter (later DK 47 A 7a)"
+      }
+    }
+  }
+}

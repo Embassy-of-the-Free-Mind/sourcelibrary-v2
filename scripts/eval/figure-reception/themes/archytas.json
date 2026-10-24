@@ -1,0 +1,72 @@
+{
+ "_comment": "Theme names were written by reading each theme's keywords and sample passages in clusters.txt (map.py), 2026-10-20. 1000 is set aside before clustering (figures.json setAside).",
+ "families": [
+  {
+   "key": "number",
+   "name": "Geometry",
+   "themes": [
+    2
+   ]
+  },
+  {
+   "key": "music",
+   "name": "Harmony and music",
+   "themes": [
+    7
+   ]
+  },
+  {
+   "key": "cosmos",
+   "name": "Heaven, time and knowledge",
+   "themes": [
+    4
+   ]
+  },
+  {
+   "key": "life",
+   "name": "Sayings for living",
+   "themes": [
+    1,
+    5,
+    3
+   ]
+  },
+  {
+   "key": "legend",
+   "name": "The man, his books and his machines",
+   "themes": [
+    9,
+    6,
+    8
+   ]
+  },
+  {
+   "key": "pseudo",
+   "name": "The physicians’ Archytas",
+   "themes": [
+    0
+   ]
+  },
+  {
+   "key": "other",
+   "name": "Not the Pythagorean",
+   "themes": [
+    1000
+   ]
+  }
+ ],
+ "names": {
+  "2": "Doubling the cube: two mean proportionals",
+  "7": "Ratios, consonance and the musical genera",
+  "4": "Heaven seen alone; time and universals",
+  "1": "“I would punish you, if I were not angry”",
+  "5": "No plague deadlier than pleasure",
+  "3": "A judge is like an altar; how the eyes see",
+  "9": "The philosopher and the books under his name",
+  "6": "He saved Plato from Dionysius",
+  "8": "The flying wooden dove",
+  "0": "A cure for quartan fever",
+  "1000": "Another Archytas: the poet of Amphissa"
+ },
+ "stories": []
+}

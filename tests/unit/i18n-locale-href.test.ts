@@ -176,11 +176,21 @@ describe('the Latin locale has its own, smaller set of twins', () => {
   it('leaves a path with a Spanish twin but no Latin one untouched', () => {
     // Positive control first: the same paths DO prefix for Spanish, so an
     // unprefixed result below is the Latin registry answering, not a broken helper.
-    for (const p of ['/support', '/search', '/librarian', '/auth/signin', '/collections', '/collections/alchemy']) {
+    for (const p of ['/support', '/librarian', '/auth/signin', '/collections', '/collections/alchemy']) {
       expect(localePath(p, 'es')).toBe(`/es${p}`);
       expect(localePath(p, 'la')).toBe(p);
       expect(hasLocalizedTwin(p, 'la')).toBe(false);
     }
+  });
+
+  it('has a search twin on /la and /zh but not /nl (#7175)', () => {
+    expect(localePath('/search?q=lapis', 'la')).toBe('/la/search?q=lapis');
+    expect(localePath('/search', 'zh')).toBe('/zh/search');
+    expect(hasLocalizedTwin('/search', 'la')).toBe(true);
+    expect(hasLocalizedTwin('/search', 'zh')).toBe(true);
+    // Dutch has no search twin: the link stays English.
+    expect(localePath('/search', 'nl')).toBe('/search');
+    expect(localeHref('la', '/search')).toBe('/la/search');
   });
 
   it('switches language to the twin, or to that locale\'s front page', () => {

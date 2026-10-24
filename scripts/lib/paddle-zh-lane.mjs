@@ -127,17 +127,18 @@ export function flattenHtml(raw) {
  * `ocr.engine.postprocess`. `workTitle` (the book title before '·') lets a margin title line that
  * sits next to the 四庫全書 / juan lines be marked as a header too.
  */
-export function convertPaddle(raw, { workTitle = null } = {}) {
+export function convertPaddle(raw, { workTitle = null, keepKana = false } = {}) {
   const html = flattenHtml(String(raw || '').normalize('NFC'));
   const stats = { img_dropped: html.img, tables_flattened: html.tables, kana_lines_dropped: 0, non_han_lines_dropped: 0, header_lines: 0, page_num_lines: 0 };
   // every line in Paddle's order, kept or not: a dropped kana line is where the fold strip was (the
-  // 欽定四庫全書 column misread, measured 2026-10-02 on the #5600 pilot), so it still anchors the margin
+  // 欽定四庫全書 column misread, measured 2026-10-02 on the #5600 pilot), so it still anchors the margin.
+  // keepKana (the #6101 print lane): Japanese print and kunten carry kana, so a kana line is text, not margin noise.
   const seq = [];
   for (const line0 of html.text.split(/\r?\n/)) {
     const line = line0.replace(/\s+/g, ' ').trim();
     if (!line) continue;
-    if (KANA.test(line)) { stats.kana_lines_dropped++; seq.push({ kind: 'kana' }); continue; }
-    if (!HAN.test(line)) { stats.non_han_lines_dropped++; continue; }
+    if (KANA.test(line) && !keepKana) { stats.kana_lines_dropped++; seq.push({ kind: 'kana' }); continue; }
+    if (!HAN.test(line) && !(keepKana && KANA.test(line))) { stats.non_han_lines_dropped++; continue; }
     seq.push({ kind: 'text', line, bare: line.replace(/\s/g, '') });
   }
   const wt = String(workTitle || '').normalize('NFC').replace(/\s/g, '');

@@ -1,0 +1,9 @@
+ROW 1 | ഒണ്ംതഞ്ജ്രതൈബോസ്ബ്ര‖രഞ്ജ്റജതകൊച്ര്രാപാദ്ൽനുമനമൂപ‖പസംഹാരത്തുതന്ത്രാഉതിഹിം
+ROW 2 | ഗംവിഭഞ്ജതെരചിംഗമ‖തിണ്ബയപ്രുതരെ[illegible]രതിഞ്ചംലക്ഷതനു‖[illegible]മ്പയനതിഹേതുസ്രാഭ്യ
+ROW 3 | ഉയാത്ത്രഎല്ലിര‖വ്യവ്രാഞ്ഃദഭ[illegible]ഭാവയൊഃക്ഷ്രാ‖ഉദ്യതെകവ്യാല്ലഃ
+ROW 4 | കൈവലാത്മിമ‖ന്നലക്ഷെമാവ[illegible]ഹാഃണ്ബമയതെ‖ഇകൈവല്യാമ്പഖിസാ
+ROW 5 | ഭൃകംകൈവല്യാ‖വയിത്രണത്ര്യ[illegible]ണ്ഡാഭാവാപ്രതിത‖യാഗിത്രംകൈവലാമ്പ
+ROW 6 | ഖിതമിത്രപ്രമോവ്യ‖ഖിമയബംസന്ത്വ[illegible]ചഡാഭമധയത്ബസ‖സത്ത്വാങ്കിന്ദ്രഖെല
+ROW 7 | കാഭാവപ്രതിരെമ‖ജിണ്ടഭദാഹാത്രിഭ്ര[illegible]ത്രപുവിതിനന്ത്രതര‖ഭേദഃപ്രതിതൊണവാത്ത
+ROW 8 | [illegible]‖ക്രതെവതുൽതൈബ[illegible]ബിത്വമസതൈത്വണ‖ണസാധാരണക്ംമ്ഖിങ്കിഞ്ഞ
+NOTE | Low confidence: the Malayalam script is hard for me to read. I read only about half the aksharas with any confidence, and many of the rest are guesses from the stroke shapes. The overlaps at both holes could not be aligned reliably.

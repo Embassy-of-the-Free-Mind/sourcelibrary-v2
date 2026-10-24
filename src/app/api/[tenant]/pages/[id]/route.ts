@@ -8,6 +8,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo convention (#4613)
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
@@ -92,6 +93,10 @@ export async function GET(
     [page] = await gatePagesForRequest(db, request, [page], {
       exempt: tenant !== 'default' || verifyCitationToken(id, searchParams.get('cite')),
     });
+
+    // English edition, English leaf: serve the transcription, never the stored
+    // English-to-English rewording (#7100).
+    [page] = await serveEnglishOriginalPages(db, [page]);
 
     // Reader-path provenance: translation carries the invisible imprimatur
     // (deterministic, no ref — cache-safe). Mirrors the global twin.
