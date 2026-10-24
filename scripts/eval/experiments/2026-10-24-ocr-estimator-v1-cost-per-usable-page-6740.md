@@ -109,8 +109,9 @@ effects.
 For a new page of each cell (the router's quantity), the posterior predictive count holds the observed count in 12
 of 12 stratum × engine cells. agy on S4: 13 of 34 predicted [6, 21], 14 observed.
 
-**2b. The census model** (other session's `refusal_v1.py`, census of 2.02M Flash-Lite page attempts in 15,776 books,
-plus the gate, with #4780 held out). See "Census refit" below.
+**2b. The census model** (other session's `refusal_v1.py`: 2.02M Flash-Lite page attempts in 15,776 books, plus the
+gate, with #4780 held out). It reproduces the gate as well as 2a does. It fails #4780 held out: 17 [3, 71] refusals
+predicted against 147 observed. See "Census refit" below.
 
 ### 3. Number errors on pages that print numbers (#4763, `scorePage` num_* counts)
 
@@ -235,7 +236,48 @@ never saw: era 1880 on (157 Pareto rows), web text, number-dense from the prior.
 
 ### Census refit (other session's model, archive-text term added)
 
-CENSUS_PLACEHOLDER
+The other session's `refusal_v1.py` at HEAD 969dd28 was run unchanged, on its own census. The run adds the
+archive-text term its first fit lacked. Data:
+- 15,776 books (1,743 more held out), 51,641 of 2,023,291 Flash-Lite page attempts refused;
+- the 244 gate rows;
+- #4780's 623 one-page-per-book Flash-Lite reads, held out.
+
+Sampling: NUTS, 4 × 1,000 draws, R-hat ≤ 1.002, 1 divergence (10 in the first fit). It took about 2.3 h on this box.
+
+- **In sample on the gate:**
+  - agy: 31/122 observed, 31 [23, 39] predicted; on S4, 14/34 observed, 13 [8, 17] predicted.
+  - Flash-Lite: 17/122 observed, 17 [11, 25] predicted; on S4, 7/34 observed, 7 [3, 11] predicted.
+  - For a new page of S4, P(not read) is 0.35 [0.22, 0.48] for agy and 0.18 [0.09, 0.30] for Flash-Lite. This
+    agrees with §2a (0.38 and 0.17).
+- **Held out on #4780: still fails.** Observed 147/623; predicted 17 [3, 71]. The first fit predicted 13.
+
+  | language | observed | predicted [90%] |
+  |---|---|---|
+  | English | 27/177 | 10 [2, 35] (inside) |
+  | Latin | 34/158 | 2 [0, 13] |
+  | German | 39/109 | 2 [0, 12] |
+  | French | 40/131 | 2 [0, 11] |
+  | Italian | 7/48 | 0 [0, 3] |
+
+- **The archive-text term does not carry the gap.** Fitted beside language, Gutenberg and period, it is −0.09
+  [−0.18, −0.01] for the pipeline's prompt (`lite+ctx`). It is unidentified for the no-context-line prompt and for
+  agy, whose only rows are gate pages, all of which have Archive text. The raw split (13.7% against 1.8%) is carried
+  by language (English +1.17 [0.45, 1.88]) and by a Project Gutenberg match (+0.38 [0.24, 0.51]).
+- **Where the miss sits.** It is in the prompt WITHOUT the document-context line, on Latin, German and French pages:
+  22–36% refused in #4780, where the census-fitted model predicts 1–2% (2 pages of 109–158). The census holds only the context-line prompt,
+  and the gate only English pages, so no fitted term can carry prompt × language.
+
+  That is a measurement gap, not a modelling one. #4780 itself recorded that a retry with the context line recovered
+  24 of 193. A gate of the no-context prompt on non-English pages would identify the term. So would any lane that
+  sends pages without the context line.
+- **Calibration on held-out census books:** observed against predicted refusal rate by decile.
+  - The bottom six deciles: 0.0003–0.002 observed against 0.006–0.012 predicted.
+  - The top decile: 0.151 observed against 0.208 predicted.
+
+  The model over-predicts at both ends.
+- **For routing:** this model does not pass its held-out check, so `route_ocr_v1.py` does not use it. In English
+  1880–1930 its new-page refusal rates agree with §2a's within their intervals, so the English routes would not
+  change. Draws: `/mnt/HC_Volume_105839809/jobs/estimator-v1-6740/census-fit/` on the job box; its summary is `results/refusal-v1-census-refit.json`.
 
 ### Limits
 

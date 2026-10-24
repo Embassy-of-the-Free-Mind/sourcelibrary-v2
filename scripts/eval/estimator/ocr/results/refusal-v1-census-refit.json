@@ -1,0 +1,615 @@
+{
+ "diagnostics": {
+  "divergences": 1,
+  "max_rhat": 1.002,
+  "chains": 4,
+  "draws_per_chain": 1000
+ },
+ "data": {
+  "census_books": 15776,
+  "census_heldout_books": 1743,
+  "census_refused": 51641,
+  "census_attempted": 2023291,
+  "gate_rows": 244,
+  "heldout_4780": 623,
+  "downloads_log1p_mean": 6.786,
+  "downloads_log1p_sd": 1.567
+ },
+ "effects": {
+  "route": {
+   "lite+ctx": [
+    -3.7641,
+    -2.6342,
+    -1.5501
+   ],
+   "lite": [
+    -6.1331,
+    -3.9176,
+    -1.7185
+   ],
+   "agy-3.8-flash-low": [
+    -5.7975,
+    -3.6051,
+    -1.4051
+   ]
+  },
+  "language": {
+   "English": [
+    0.4517,
+    1.168,
+    1.8761
+   ],
+   "Latin": [
+    -0.9362,
+    -0.2283,
+    0.4916
+   ],
+   "German": [
+    -1.0726,
+    -0.3495,
+    0.3488
+   ],
+   "French": [
+    -0.6881,
+    0.0348,
+    0.7521
+   ],
+   "Italian": [
+    -1.5748,
+    -0.8286,
+    -0.1155
+   ]
+  },
+  "period": {
+   "<1600": [
+    -0.9947,
+    -0.0746,
+    0.7595
+   ],
+   "1600-1699": [
+    -1.446,
+    -0.5329,
+    0.3263
+   ],
+   "1700-1799": [
+    -1.2292,
+    -0.314,
+    0.5318
+   ],
+   "1800-1879": [
+    -0.8258,
+    0.0985,
+    0.9422
+   ],
+   "1880-1930": [
+    -0.8601,
+    0.1369,
+    1.1259
+   ],
+   ">1930": [
+    -1.0641,
+    -0.0313,
+    0.9595
+   ],
+   "unknown": [
+    -0.6673,
+    0.3784,
+    1.3503
+   ]
+  },
+  "route_x_era": {
+   "lite+ctx|pre-1880": [
+    -0.4431,
+    0.0167,
+    0.5677
+   ],
+   "lite+ctx|1880-1930": [
+    -0.6673,
+    -0.0184,
+    0.4323
+   ],
+   "lite+ctx|other": [
+    -0.5341,
+    0.0039,
+    0.6883
+   ],
+   "lite|pre-1880": [
+    -0.8019,
+    -0.0303,
+    0.3995
+   ],
+   "lite|1880-1930": [
+    -0.4606,
+    0.0187,
+    0.7112
+   ],
+   "lite|other": [
+    -0.6282,
+    0.0003,
+    0.6374
+   ],
+   "agy-3.8-flash-low|pre-1880": [
+    -0.6119,
+    -0.008,
+    0.4891
+   ],
+   "agy-3.8-flash-low|1880-1930": [
+    -0.5484,
+    0.0035,
+    0.5807
+   ],
+   "agy-3.8-flash-low|other": [
+    -0.6447,
+    -0.0018,
+    0.6094
+   ]
+  },
+  "gutenberg": {
+   "lite+ctx": [
+    0.2404,
+    0.3771,
+    0.5089
+   ],
+   "lite": [
+    -0.3361,
+    0.6977,
+    1.7922
+   ],
+   "agy-3.8-flash-low": [
+    -0.4457,
+    0.5059,
+    1.4725
+   ]
+  },
+  "log_downloads_sd": {
+   "lite+ctx": [
+    -0.1589,
+    -0.1246,
+    -0.0884
+   ],
+   "lite": [
+    -0.8966,
+    -0.2644,
+    0.3359
+   ],
+   "agy-3.8-flash-low": [
+    -0.4406,
+    0.1073,
+    0.69
+   ]
+  },
+  "downloads_missing": [
+   -1.7767,
+   -1.6663,
+   -1.5588
+  ],
+  "date_dense": {
+   "lite+ctx": [
+    -1.7334,
+    -0.0087,
+    1.7196
+   ],
+   "lite": [
+    -0.821,
+    0.1884,
+    1.2026
+   ],
+   "agy-3.8-flash-low": [
+    0.0699,
+    0.9764,
+    1.9634
+   ]
+  },
+  "archive_text": {
+   "lite+ctx": [
+    -0.1824,
+    -0.092,
+    -0.0063
+   ],
+   "lite": [
+    -2.5297,
+    -0.5023,
+    1.5695
+   ],
+   "agy-3.8-flash-low": [
+    -2.3128,
+    -0.2892,
+    1.7981
+   ]
+  },
+  "kappa": [
+   1.1546,
+   1.2169,
+   1.2801
+  ],
+  "sigma_page": [
+   1.373,
+   2.1681,
+   3.1574
+  ]
+ },
+ "gate_check": [
+  {
+   "route": "lite",
+   "stratum": "ALL",
+   "n": 122,
+   "observed": 17,
+   "predicted": [
+    11.0,
+    17.0,
+    25.0
+   ],
+   "p_mean": [
+    0.1022,
+    0.1405,
+    0.1839
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S1",
+   "n": 25,
+   "observed": 2,
+   "predicted": [
+    0.0,
+    3.0,
+    6.0
+   ],
+   "p_mean": [
+    0.0552,
+    0.1077,
+    0.1793
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S2",
+   "n": 22,
+   "observed": 3,
+   "predicted": [
+    1.0,
+    3.0,
+    6.0
+   ],
+   "p_mean": [
+    0.0779,
+    0.1411,
+    0.2117
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S3",
+   "n": 41,
+   "observed": 5,
+   "predicted": [
+    1.0,
+    5.0,
+    9.0
+   ],
+   "p_mean": [
+    0.0634,
+    0.1109,
+    0.1733
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S4",
+   "n": 34,
+   "observed": 7,
+   "predicted": [
+    3.0,
+    7.0,
+    11.0
+   ],
+   "p_mean": [
+    0.1261,
+    0.1942,
+    0.2767
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "ALL",
+   "n": 122,
+   "observed": 31,
+   "predicted": [
+    23.0,
+    31.0,
+    39.0
+   ],
+   "p_mean": [
+    0.21,
+    0.2551,
+    0.3049
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S1",
+   "n": 25,
+   "observed": 4,
+   "predicted": [
+    1.0,
+    4.0,
+    7.0
+   ],
+   "p_mean": [
+    0.0953,
+    0.1625,
+    0.245
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S2",
+   "n": 22,
+   "observed": 6,
+   "predicted": [
+    3.0,
+    6.0,
+    10.0
+   ],
+   "p_mean": [
+    0.1936,
+    0.282,
+    0.3765
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S3",
+   "n": 41,
+   "observed": 7,
+   "predicted": [
+    4.0,
+    8.0,
+    13.0
+   ],
+   "p_mean": [
+    0.1316,
+    0.1933,
+    0.2647
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S4",
+   "n": 34,
+   "observed": 14,
+   "predicted": [
+    8.0,
+    13.0,
+    17.05
+   ],
+   "p_mean": [
+    0.2911,
+    0.3766,
+    0.4669
+   ]
+  }
+ ],
+ "new_page": [
+  {
+   "route": "lite",
+   "stratum": "ALL",
+   "p": [
+    0.0894,
+    0.1408,
+    0.2072
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S1",
+   "p": [
+    0.048,
+    0.1216,
+    0.2377
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S2",
+   "p": [
+    0.0457,
+    0.1289,
+    0.2406
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S3",
+   "p": [
+    0.0566,
+    0.1198,
+    0.2161
+   ]
+  },
+  {
+   "route": "lite",
+   "stratum": "S4",
+   "p": [
+    0.0864,
+    0.1765,
+    0.295
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "ALL",
+   "p": [
+    0.1882,
+    0.2578,
+    0.3346
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S1",
+   "p": [
+    0.0894,
+    0.1845,
+    0.3133
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S2",
+   "p": [
+    0.1587,
+    0.2879,
+    0.4381
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S3",
+   "p": [
+    0.1148,
+    0.2039,
+    0.3183
+   ]
+  },
+  {
+   "route": "agy-3.8-flash-low",
+   "stratum": "S4",
+   "p": [
+    0.2213,
+    0.3463,
+    0.4848
+   ]
+  }
+ ],
+ "heldout_4780": [
+  {
+   "language": "ALL",
+   "n": 623,
+   "observed": 147,
+   "predicted": [
+    3.0,
+    17.0,
+    71.0
+   ],
+   "inside_90": false
+  },
+  {
+   "language": "English",
+   "n": 177,
+   "observed": 27,
+   "predicted": [
+    2.0,
+    10.0,
+    35.0
+   ],
+   "inside_90": true
+  },
+  {
+   "language": "Latin",
+   "n": 158,
+   "observed": 34,
+   "predicted": [
+    0.0,
+    2.0,
+    13.0
+   ],
+   "inside_90": false
+  },
+  {
+   "language": "German",
+   "n": 109,
+   "observed": 39,
+   "predicted": [
+    0.0,
+    2.0,
+    12.0
+   ],
+   "inside_90": false
+  },
+  {
+   "language": "French",
+   "n": 131,
+   "observed": 40,
+   "predicted": [
+    0.0,
+    2.0,
+    11.0
+   ],
+   "inside_90": false
+  },
+  {
+   "language": "Italian",
+   "n": 48,
+   "observed": 7,
+   "predicted": [
+    0.0,
+    0.0,
+    3.0
+   ],
+   "inside_90": false
+  }
+ ],
+ "census_calibration": [
+  {
+   "books": 175,
+   "pages": 18769,
+   "observed_rate": 0.0005,
+   "predicted_rate": 0.006
+  },
+  {
+   "books": 175,
+   "pages": 25113,
+   "observed_rate": 0.0003,
+   "predicted_rate": 0.0067
+  },
+  {
+   "books": 175,
+   "pages": 27290,
+   "observed_rate": 0.0022,
+   "predicted_rate": 0.0075
+  },
+  {
+   "books": 174,
+   "pages": 36667,
+   "observed_rate": 0.0006,
+   "predicted_rate": 0.0099
+  },
+  {
+   "books": 174,
+   "pages": 13525,
+   "observed_rate": 0.0009,
+   "predicted_rate": 0.0101
+  },
+  {
+   "books": 174,
+   "pages": 11995,
+   "observed_rate": 0.0019,
+   "predicted_rate": 0.0121
+  },
+  {
+   "books": 174,
+   "pages": 21951,
+   "observed_rate": 0.0227,
+   "predicted_rate": 0.0372
+  },
+  {
+   "books": 174,
+   "pages": 26379,
+   "observed_rate": 0.0322,
+   "predicted_rate": 0.0596
+  },
+  {
+   "books": 174,
+   "pages": 17504,
+   "observed_rate": 0.0588,
+   "predicted_rate": 0.1656
+  },
+  {
+   "books": 174,
+   "pages": 17940,
+   "observed_rate": 0.1505,
+   "predicted_rate": 0.2077
+  }
+ ]
+}
