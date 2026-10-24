@@ -54,6 +54,8 @@
 import { MongoClient } from 'mongodb';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
+import { provenanceUpdate } from '../lib/field-provenance.mjs';
+import { IMPRINT_FIELDS } from '../lib/catalogue-fields.mjs';
 
 const RUN = 'repair-loc-jesuit-misfiles-6660';
 const APPLY = process.argv.includes('--apply');
@@ -181,8 +183,8 @@ async function supabasePatch(id, patch) {
 function catalogPatch(v) {
   const p = { title: v.title, display_title: v.display_title, author: v.author, year: v.year ?? null,
     published: v.published ?? null, work_id: v.work_id ?? null };
-  if ('place_of_publication' in v) p.place_published = v.place_of_publication ?? null;
-  if ('publisher' in v) p.publisher = v.publisher ?? null;
+  if ('place_of_publication' in v) p.place_published = v.place_of_publication ?? null; // imprint-write-ok: Supabase mirror patch, not a books write (the books write is stamped below)
+  if ('publisher' in v) p.publisher = v.publisher ?? null; // imprint-write-ok: Supabase mirror patch, not a books write
   if ('collections' in v) p.collections = v.collections ?? [];
   return p;
 }
@@ -316,6 +318,18 @@ for (const P of plan) {
   const r = await books.updateOne({ id: P.id, title: P.from.title }, { $set: { ...to, updated_at: now }, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
   console.log(`  authors minted: ${minted.upsertedCount}  book modified: ${r.modifiedCount}`);
   if (r.modifiedCount !== 1) { console.error('  !! book not modified'); failures++; continue; }
+  // Imprint fields carry a field_provenance stamp with the value they replaced (#6327). Written right after the
+  // books write rather than through setCatalogueFields, because that helper cannot also $unset the derived lane.
+  const imprint = touched.filter((f) => IMPRINT_FIELDS.includes(f));
+  if (imprint.length) {
+    const pset = {}, ppush = {};
+    for (const f of imprint) {
+      const prov = provenanceUpdate(f, { source: 'hand-adjudicated', script: 'scripts/maintenance/repair-loc-jesuit-misfiles-6660.mjs',
+        date: now, previous_value: before[f] ?? null, evidence: { rationale: P.why } });
+      Object.assign(pset, prov.$set); Object.assign(ppush, prov.$push);
+    }
+    await books.updateOne({ id: P.id }, { $set: pset, $push: ppush });
+  }
   const ix = await db.collection('book_indexes').updateOne({ book_id: P.id }, { $unset: { bookSummary: '' } });
   console.log(`  book_indexes modified: ${ix.modifiedCount}`);
   await db.collection('field_provenance').insertMany(['title', 'author'].map((field) => ({
