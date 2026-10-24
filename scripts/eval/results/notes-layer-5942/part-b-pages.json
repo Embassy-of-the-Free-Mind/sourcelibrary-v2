@@ -1,0 +1,282 @@
+[
+ {
+  "uid": "la-1",
+  "lang": "Latin",
+  "book_id": "6991bf50734f402cad489655",
+  "page_id": "6991bf50734f402cad48970a",
+  "page_number": 181
+ },
+ {
+  "uid": "la-2",
+  "lang": "Latin",
+  "book_id": "6a0853c249638a50931bda8e",
+  "page_id": "6a0853c249638a50931bdd07",
+  "page_number": 633
+ },
+ {
+  "uid": "la-3",
+  "lang": "Latin",
+  "book_id": "6a4b48e79f73a2728aaba931",
+  "page_id": "6a4b48e79f73a2728aaba94f",
+  "page_number": 13
+ },
+ {
+  "uid": "la-4",
+  "lang": "Latin",
+  "book_id": "6a4d6b00e91798b676b46147",
+  "page_id": "6a4d6b00e91798b676b461b2",
+  "page_number": 6
+ },
+ {
+  "uid": "la-5",
+  "lang": "Latin",
+  "book_id": "69aeacf466bcc9447837c066",
+  "page_id": "69aeacf466bcc9447837c073",
+  "page_number": 13
+ },
+ {
+  "uid": "la-6",
+  "lang": "Latin",
+  "book_id": "69dbcbca1040d1d5e20bacfe",
+  "page_id": "69dbcbca1040d1d5e20bad55",
+  "page_number": 87
+ },
+ {
+  "uid": "la-7",
+  "lang": "Latin",
+  "book_id": "6a4afe5b19bd0084b1bf26a3",
+  "page_id": "6a4afe5b19bd0084b1bf26bd",
+  "page_number": 24
+ },
+ {
+  "uid": "la-8",
+  "lang": "Latin",
+  "book_id": "6a44fb1415e37303ba5b44e7",
+  "page_id": "6a44fb1415e37303ba5b44ff",
+  "page_number": 24
+ },
+ {
+  "uid": "la-9",
+  "lang": "Latin",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "page_id": "6985eb0412477588b552de4a",
+  "page_number": 136
+ },
+ {
+  "uid": "la-10",
+  "lang": "Latin",
+  "book_id": "69f3384c876dd827cbc538aa",
+  "page_id": "69f3384c876dd827cbc538c7",
+  "page_number": 29
+ },
+ {
+  "uid": "ge-1",
+  "lang": "German",
+  "book_id": "6a267f2788f11913ee9c83a7",
+  "page_id": "6a267f2788f11913ee9c83b2",
+  "page_number": 11
+ },
+ {
+  "uid": "ge-2",
+  "lang": "German",
+  "book_id": "697704f4e3cf0372d885d0e1",
+  "page_id": "697713e421a2a38183273972",
+  "page_number": 56
+ },
+ {
+  "uid": "ge-3",
+  "lang": "German",
+  "book_id": "699ef9fe6fe9b1f2f6af869d",
+  "page_id": "699f0dcc721bae3bd6e10efd",
+  "page_number": 80
+ },
+ {
+  "uid": "ge-4",
+  "lang": "German",
+  "book_id": "6a26bdad53acc54a8c4d51c4",
+  "page_id": "6a26bdad53acc54a8c4d51c6",
+  "page_number": 2
+ },
+ {
+  "uid": "ge-5",
+  "lang": "German",
+  "book_id": "6a26bc4bd6b178e5aad823f2",
+  "page_id": "6a26bc4bd6b178e5aad82407",
+  "page_number": 21
+ },
+ {
+  "uid": "ge-6",
+  "lang": "German",
+  "book_id": "69b51e1ecf111105c42975b8",
+  "page_id": "69b51e1ecf111105c42975d2",
+  "page_number": 26
+ },
+ {
+  "uid": "ge-7",
+  "lang": "German",
+  "book_id": "6a26baa461b3857ed05b0a61",
+  "page_id": "6a26baa461b3857ed05b0a74",
+  "page_number": 19
+ },
+ {
+  "uid": "ge-8",
+  "lang": "German",
+  "book_id": "69c890fa6c6f3cc53c85b864",
+  "page_id": "69f6a77afe946fc8915b8f5c",
+  "page_number": 133
+ },
+ {
+  "uid": "ge-9",
+  "lang": "German",
+  "book_id": "69b51e11261c58d63664ee30",
+  "page_id": "69b51e11261c58d63664ee3c",
+  "page_number": 12
+ },
+ {
+  "uid": "ge-10",
+  "lang": "German",
+  "book_id": "698255f0a054f7b10c4520ba",
+  "page_id": "698267d46c47524be126e47e",
+  "page_number": 76
+ },
+ {
+  "uid": "gr-1",
+  "lang": "Greek",
+  "book_id": "69a5e5e0006a409842217a26",
+  "page_id": "69a5e5e0006a409842217a8f",
+  "page_number": 105
+ },
+ {
+  "uid": "gr-2",
+  "lang": "Greek",
+  "book_id": "6a06f4c24dcc6d5d8f036f9c",
+  "page_id": "6a06f4c24dcc6d5d8f036fad",
+  "page_number": 17
+ },
+ {
+  "uid": "gr-3",
+  "lang": "Greek",
+  "book_id": "69bfcf883047130b1c3bf88b",
+  "page_id": "69bfcf883047130b1c3bf913",
+  "page_number": 136
+ },
+ {
+  "uid": "gr-4",
+  "lang": "Greek",
+  "book_id": "69aff9be745631d276f4d08b",
+  "page_id": "69aff9be745631d276f4d205",
+  "page_number": 378
+ },
+ {
+  "uid": "gr-5",
+  "lang": "Greek",
+  "book_id": "69b3013f78de5de2306d48b0",
+  "page_id": "69b3013f78de5de2306d48d1",
+  "page_number": 33
+ },
+ {
+  "uid": "gr-6",
+  "lang": "Greek",
+  "book_id": "6a53d80f7a080ca834a9292e",
+  "page_id": "6a53d80f7a080ca834a9293c",
+  "page_number": 14
+ },
+ {
+  "uid": "gr-7",
+  "lang": "Greek",
+  "book_id": "69c726be01e1be0c9ac74d2b",
+  "page_id": "69d385ad7e011bf85933a379",
+  "page_number": 27
+ },
+ {
+  "uid": "gr-8",
+  "lang": "Greek",
+  "book_id": "6a2198e4f012c50712d32f49",
+  "page_id": "6a2198e4f012c50712d3302e",
+  "page_number": 229
+ },
+ {
+  "uid": "gr-9",
+  "lang": "Greek",
+  "book_id": "699376c6b0a84a5763961826",
+  "page_id": "699376c6b0a84a576396188a",
+  "page_number": 100
+ },
+ {
+  "uid": "gr-10",
+  "lang": "Greek",
+  "book_id": "69af453b004a024aaf21615d",
+  "page_id": "69af453b004a024aaf216164",
+  "page_number": 7
+ },
+ {
+  "uid": "ch-1",
+  "lang": "Chinese",
+  "book_id": "69bd0ac6b01b17638a09803e",
+  "page_id": "69bd0ac7b01b17638a09805c",
+  "page_number": 30
+ },
+ {
+  "uid": "ch-2",
+  "lang": "Chinese",
+  "book_id": "69af12380092756351e4478a",
+  "page_id": "69af12380092756351e447e3",
+  "page_number": 89
+ },
+ {
+  "uid": "ch-3",
+  "lang": "Chinese",
+  "book_id": "69af124b0092756351e44955",
+  "page_id": "69af124b0092756351e44987",
+  "page_number": 99
+ },
+ {
+  "uid": "ch-4",
+  "lang": "Chinese",
+  "book_id": "6992cb50d4d545ae73feee35",
+  "page_id": "6992cb50d4d545ae73feee8e",
+  "page_number": 89
+ },
+ {
+  "uid": "ch-5",
+  "lang": "Chinese",
+  "book_id": "6a3c5e9040c88a541d8e35a3",
+  "page_id": "6a3c5e9040c88a541d8e35a6",
+  "page_number": 2
+ },
+ {
+  "uid": "ch-6",
+  "lang": "Chinese",
+  "book_id": "6a3cc0d0ec254ff6cae069ae",
+  "page_id": "6a3cc0d0ec254ff6cae06a7e",
+  "page_number": 63
+ },
+ {
+  "uid": "ch-7",
+  "lang": "Chinese",
+  "book_id": "6a3cc114ec254ff6cae09184",
+  "page_id": "6a3cc114ec254ff6cae0919c",
+  "page_number": 24
+ },
+ {
+  "uid": "ch-8",
+  "lang": "Chinese",
+  "book_id": "69f13438365e3fcae574dfe1",
+  "page_id": "69f13438365e3fcae574dfea",
+  "page_number": 9
+ },
+ {
+  "uid": "ch-9",
+  "lang": "Chinese",
+  "book_id": "6992cad0d4d545ae73feeb43",
+  "page_id": "6992cad0d4d545ae73feeb47",
+  "page_number": 4
+ },
+ {
+  "uid": "ch-10",
+  "lang": "Chinese",
+  "book_id": "6958e9ac538549809db82aee",
+  "page_id": "6958e9ac538549809db82bba",
+  "page_number": -204
+ }
+]

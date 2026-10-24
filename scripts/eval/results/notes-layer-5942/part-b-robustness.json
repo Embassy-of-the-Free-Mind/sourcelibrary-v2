@@ -1,0 +1,69 @@
+{
+ "scripted": {
+  "pages": 40,
+  "anchors": 367,
+  "by": {
+   "resolved:quote": 320,
+   "orphan, words gone": 26,
+   "resolved, diff lost the words (read by eye)": 19,
+   "orphan, words still there": 2
+  },
+  "by_kind": {
+   "commentary": {
+    "resolved:quote": 278,
+    "orphan, words gone": 23,
+    "resolved, diff lost the words (read by eye)": 17
+   },
+   "mark": {
+    "resolved:quote": 42,
+    "orphan, words gone": 3,
+    "resolved, diff lost the words (read by eye)": 2,
+    "orphan, words still there": 2
+   }
+  }
+ },
+ "opus": {
+  "pages": 19,
+  "anchors": 191,
+  "by": {
+   "resolved:offset": 119,
+   "resolved, diff lost the words (read by eye)": 5,
+   "resolved:quote": 62,
+   "orphan, words gone": 5
+  },
+  "by_kind": {
+   "commentary": {
+    "resolved:offset": 99,
+    "resolved, diff lost the words (read by eye)": 5,
+    "resolved:quote": 60,
+    "orphan, words gone": 4
+   },
+   "mark": {
+    "resolved:offset": 20,
+    "orphan, words gone": 1,
+    "resolved:quote": 2
+   }
+  },
+  "similarity": [
+   0.983,
+   1,
+   0.971,
+   0.993,
+   1,
+   1,
+   0.993,
+   0.977,
+   0.98,
+   1,
+   0.992,
+   0.979,
+   0.998,
+   0.977,
+   1,
+   1,
+   0.994,
+   0.974,
+   1
+  ]
+ }
+}
