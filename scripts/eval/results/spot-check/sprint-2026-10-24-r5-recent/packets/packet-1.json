@@ -1,0 +1,413 @@
+[
+ {
+  "slot": 1,
+  "book_id": "6ad191b942debc9626925467",
+  "book_url": "https://sourcelibrary.org/book/6ad191b942debc9626925467",
+  "tradition": null,
+  "book": {
+   "id": "6ad191b942debc9626925467",
+   "title": "Chilam Balam Texts, vol. 1: Chumayel, Calkiní, Libro de los Médicos",
+   "display_title": "Chilam Balam Texts, vol. 1 (19th-century copies: Chumayel, Calkiní, Libro de los Médicos)",
+   "author": "Anonymous Yucatec Maya scribes",
+   "language": "Yucatec Maya",
+   "original_language": "Yucatec Maya",
+   "published": "1850-1860",
+   "pages_count": 294,
+   "pages_ocr": 294,
+   "pages_translated": 224,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "princeton"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 294,
+   "distinct_page_numbers": 294,
+   "duplicate_records": 0,
+   "pages_with_ocr": 294,
+   "pages_translated": 224,
+   "with_printed_number": 249,
+   "printed_backsteps": 6,
+   "printed_repeats": 109,
+   "pages_count_field": 294,
+   "pages_ocr_field": 294,
+   "pages_translated_field": 224
+  },
+  "run": [
+   45,
+   46,
+   47
+  ],
+  "pages": [
+   {
+    "page_number": 45,
+    "page_id": "6ad191b942debc9626925496",
+    "image_url": "https://images.sourcelibrary.org/pages/6ad191b942debc9626925467/0045.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Yucatec Maya</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>22</page-num>\n<warning>Handwritten copperplate-style cursive. There is a faint fingerprint stain near the top. Partial text from the facing page at the left edge is not transcribed.</warning>\n\ntenel ahau. ah ten pop ah ten ɔam: ti kuix tu than: ti uaix: maix kui: ti mi na nix V uah. ti mi na nix yaal: hun xeli: 29\n\nLic ualic V mul vi t uc maix tab u tal V yabal: lic u yan cun tic: Caal: V mut ti culic: cal kin: caal num ya: ti tali: tamuk y ahaulil: ca kuchi: ti culic tu pop: top canal hopan v kak: — Colop u uich: kin: to can ti cab = lay u buuc: ti y ahaulil = lay u chun li cil yok tic V te pal: tu kin = Numen: chuc: numen Ce lem: tu kin V na tal naat: ahauob = can ua lic: V chic che: mol tu kin: ça tay ba ba lili: can ua lic: V che: ah muuc: = tu ho can be: tu ho can he leb: Okom bal cum tu kinil: mo mo lij = pe pen = ti ta li chac mi lan nuya. Lic u talel - Ox Vin he ech = V kin = Ox ahau: ka tun: Ox tuc ti hab: lay bin nu puc: y chil ah ox ahau katun. Ca bin cum lac V yanal katun = Ox: u uah: ox yāl: Cup: u uah: cup: yaal: la cu kan tic: la cu yu kic = X batun = chi chim: chay: cu kan tic = lay cul hi: Vay tu cahal num ya e yume: y chil V Bolon tun = tu kin yan: ɔu lili = katal u cah u cuch ka tun: tu lah ya bil = ah ox la hun ahau = tij ca Ca u he kah yoc: - ah Buluc ahau = tij Ca e mi u than: Bo lon ɔa cab = V ni yak = Ca e mi: katal: V cah, u cuch katun: katun = Bo lon te u cuch: Ca e mi: ti caanil = kanix u kinil: kax ci = V cuch: tij: Ca e mi haa: tali tan yol caan = V chebal u caput çihil: Bolon haaban: yotoch: y et em cij: Bolon mayel: cha huc:\n\n<vocab>ahau, pop, ɔam, Colop u uich kin, katun, Ox ahau, Bolon tun, Ox lahun ahau, Buluc ahau, Bolon ɔacab, caput çihil, Bolon mayel</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "claude-opus-5-5",
+    "translation": "<meta>continues from previous page: \"...and was seated: Kan\"</meta>\ntenel ahau. lord of the established mat, lord of the established throne: and sacred is his word: and if there is bread: yet it is not sacred: when there is none of his bread. when there is none of his water: one portion only: 29\n\nAs he sets up the mound of his heap, yet it is not known whence comes its abundance: as he establishes the throat: the tidings when he is seated: the throat of the sun: the throat of misery: thence it came: during his reign: when he arrived: to sit upon his mat: very high is his kindled fire: — Colop u uich: kin: straight up in the world = this is his vestment: in his reign = this is the cause wherefore he weeps for his sovereignty: in the time = of Numen: chuc: numen Ce lem: in the time of the understanding of the riddle: of the lords = four times is set up: the sign of the tree: gathered in the time: of the loss of things: four times is set up: the tree: of the buried one <note>or prophet of hidden things, ah muuc</note>: = at the five-serpent road: at the five-serpent resting place: sorrowful is the jar in the time: completely dry = the butterfly = thence came great misery. As it comes - Three heaps = is its time = Ox ahau: ka tun: Three heaps of years: this shall be joined together: within the Ox ahau katun. Then shall be seated another katun = Three: are his breads: three are his waters: Jicama <note>cup, a root crop used as famine food</note>: is his bread: jicama: is his water: this he takes for his meal: this he drinks = X batun = the chichim plant: chaya: he takes for his meal = this was seated: here in the town of misery, O Father: within the Bolon tun = in the time when there are: foreigners = bearing the burden of the katun: at the end of its years = Ox la hun ahau = then he set down his foot: - Buluc ahau = then descended the word: of Bo lon ɔa cab = the tip of his tongue = Then descended: the halting, of the burden of the katun: the katun = Nine is its burden: Then it descended: from heaven = yellow was the day: when was bound = its burden: there: Then descended water: coming from the midst of the heart of heaven = so that might be reborn: Bolon haaban: his house: and with it descended: Bolon mayel: sweet rain <note>cha huc, thunder shower or sweet rain</note>:\n\n<summary>This page continues the prophetic narrative of the Chilam Balam of Chumayel, completing the installation of Kan tenel ahau and detailing the hardships, riddles, and famine foods associated with the katun cycle of Ox ahau. It concludes with the transition through Bolon tun, Ox lahun ahau, and Buluc ahau, marked by the arrival of foreigners and the descent of the word of Bolon ɔacab and renewing rains from heaven.</summary>\n<keywords>Chilam Balam of Chumayel, Kan tenel ahau, Colop u uich kin, Ox ahau katun, Bolon tun, Ox lahun ahau, Buluc ahau, Bolon ɔacab, Bolon mayel, prophecy, famine, katun cycle</keywords>",
+    "translation_model": "gemini-4-argon-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 46,
+    "page_id": "6ad191b942debc9626925497",
+    "image_url": "https://images.sourcelibrary.org/pages/6ad191b942debc9626925467/0046.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Yucatec Maya</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>22</page-num>\n<warning>Handwritten copperplate-style cursive. A faint pencil note at the top is mostly erased.</warning>\n<meta>The page number \"22\" is in pencil at top left, with a pencil \"25\" at top centre. Within line 14 there is a \"26\" in a lighter hand. Partial text from the facing page at the right edge is not transcribed.</meta>\n\n<unclear>faint pencil note, ~4 words</unclear>\n\nuchi = uni yak = cha huc: hi u ɔonil: ti ca emi = can tul: chaac: vaya: caat lae: lay u cabilob nicte = lae, tij ca ho kij: yx chac: hoch kom: ti: y yx çac hoch kom: ti: y yx ek hoch kom; y yx kan hoch kom; y yx kau nal: y yx kuk nab = yet hok ci tun: yx ho yal nicte: y yx ho nixte: y yx ni nich: ca cau: y yx cha uil tok: y yx bac nicte: y yx mac uil xuchite: yx hobon yol nicte = y yx laul nicte: y kouol: yoc tah nicte: lay hok tob nicte: lao bix ah com ay elob: lay V naa: Nicte: caho kiob: yu ɔub ah kin: yu ɔub ahau: yu ɔub hol can: lay u cuch Nicte ahau = caemi: mina nix u yanal: lay uile: ci than = maix uah u cuch na = tij tan cahoki yx hau lah nicte = Oc çic u keban: Bolon ti ku: Ox teix ti hab: V kin Ca yalah: cuchij: maix kuchi chab = Naci: ku: mit nalt: Bolon ɔacab: caemi: tu chun nicte: pis 26 yax bac: ɔununix: V uayinah caemi: cau ɔuyah V cabil: Bolon yal nicte: tu ychil tun ca cha y cham: nij yx ho yal nicte: ca tun ho ki u puc çikal nicte: V xim ban te uba: can he kix V lae nicte: lae ti yx culan ah kin: xoc bil tun chumuc: tij, ca u chi uku kis yol ox lahun ti ku: mayx yohel tah yemel a keban u pop: ti kuix ta than cuchie: Nic teyx V pop: nic teyx V kan che: nic te ye ma: çauin culic: çauin u xim bal çauin u lac: çauin u luch. çauin u puc çikal. çauin u nat. çauin u tucul.\n\n<vocab>chaac, nicte, hoch kom, Nicte ahau, Bolon ti ku, Bolon ɔacab, ah kin, Ox lahun ti ku, pop, kan che, puc çikal</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "claude-opus-5-5",
+    "translation": "<meta>The page number \"22\" is in pencil at top left, with a pencil \"25\" at top centre. Within line 14 there is a \"26\" in a lighter hand. Partial text from the facing page at the right edge is not transcribed. Continues from the previous page's sentence about Bolon mayel.</meta>\n<warning>Handwritten copperplate-style cursive. A faint pencil note at the top is mostly erased.</warning>\n\n<unclear>faint pencil note, ~4 words</unclear>\n\nwas the tip of his tongue = sweet rain: perhaps its shooting: when descended = four: chaac: here: the clay jar is this: these are the honeys of the plumeria flowers = when came forth: the red: <term>hoch kom</term> <gloss>plumeria tree of the hollow</gloss>: there: and the white hoch kom: there: and the black hoch kom; and the yellow hoch kom; and the <term>kau nal</term> <gloss>grackle maize</gloss>: and the sprout of the water lily = and together came forth then: the five-layered plumeria flower: and the five nixte flower: and the pointed cacao: and the drooping flint flower: and the bone plumeria flower: and the mac uil xuchite flower: the hollow-hearted plumeria flower = and the laurel plumeria flower: and the kouol: the planted plumeria flower: these came forth, the plumeria flowers: those are the ones of the short-lived ones: this is their mother: the plumeria flower: when they came forth: the flower-bud of the priest: the flower-bud of the lord: the flower-bud of the warrior: this is the burden of Nicte ahau = when he descended: and there is no other: this it shall be: so says the word = nor is bread the burden of the house = in the midst when came forth the upturned plumeria flower = He caused his sin to enter: Bolon ti ku: and three times in the year: was his day when he spoke: formerly: nor did his taking arrive = Ascended: the god: to hell: Bolon ɔacab: when he descended: to the base of the plumeria flower: measure 26 first bone: and the hummingbird: was his animal spirit when he descended: when he sucked the honey: of the nine-layered plumeria flower: within it then he took for his marriage: the tip of the five-layered plumeria flower: and then came forth the heart of the plumeria flower: to walk by itself: and four-branched is this plumeria flower: there where is seated the priest: the counted stone in the midst: there, when the god smelled the scent of the heart of Ox lahun ti ku: nor did he know the descent of the sin of his mat: and the god was in your word formerly: and the plumeria flower was his mat: and the plumeria flower was his wooden seat: the plumeria flower descends: crookedly he sits: crooked is his walk, crooked is his plate: crooked is his cup. crooked is his heart. crooked is his understanding. crooked is his thought.\n\n<summary>This passage from the Chilam Balam of Chumayel describes the mythic birth of the plumeria flowers and the descent of the four rain gods, linking floral imagery with the introduction of carnal sin under Nicte ahau and Bolon ti ku. It recounts how Bolon ɔacab descended in the form of a hummingbird to suck honey from the nine-layered plumeria flower, culminating in the corruption of the ruling mat, seat, and understanding by the plumeria flower.</summary>\n<keywords>Chilam Balam of Chumayel, chaac, plumeria flower, Nicte ahau, Bolon ti ku, Bolon ɔacab, Ox lahun ti ku, hummingbird, ritual transgression, prophecy</keywords>",
+    "translation_model": "gemini-4-argon-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 47,
+    "page_id": "6ad191b942debc9626925498",
+    "image_url": "https://images.sourcelibrary.org/pages/6ad191b942debc9626925467/0047.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Yucatec Maya</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>23</page-num>\n<warning>Handwritten copperplate-style cursive. Partial text from the facing page at the left edge is not transcribed.</warning>\n\nçauin u chi. co ol u than. ti yahaulili. tu kin uat uil = tu kin naat: V kul. tu xay u chi lic u hanal tu pach u xau lic u uil V chij ma chee = d ma tunich. chac u cool yan ti lahun chan. V uich ti culic çip u uich çip u than çip u can çip u naat çip u ximbal katan u uich ti culic, chac cah u pop, culic tamuk yahaulil tu ban u yum tu ban V naa: maix yohel ma V naa: a lin tec tha ban u puc cikal: tukunal. ychil yx ma yumil ah poch yum: ychil yx ma nail bin ximbal nac calan u mut. çatal u naat çicnal u yum çicnal u naa: minan ti bil ti. minan utz tu puc çikal haleli yan tu ni yak ɔe ɔec loc: ma yohel bix bin ɔoc cebal mayx yohel bal yan tu ɔoc yahaulili. lay cabin ɔoc nac u kinil V tepale.\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">A pen flourish at the end of the paragraph.</image-desc>\n\nHe bolon ti ku lae bolon chan, uich ahau uil vinicob. ah ca kin pop. ah ca kin ɔam. lay tali ychil ox ahau katun tiyx bin yanac u yanal V yumil peten. yah cul cin nahul u than V yanal katun, cabin ɔococ u than ah ox ahau katun tu kinil V con con mehen lay bin yanac yokol u nunil ah ytza, hun ua chuen hun ua, celom hun ɔit tu nil v hex V keban u nunil ah itza. lay bolon ti ku: lay bin ɔocebal u than ah ox ahau katun tiyx V natal nat yahaulil cabobi. ɔocebal u than katun tix V chacan hal V chi bal al mehenobi Batabob y u yanal ah cux olalob. y V chi bal Batabob lay muc chek tabi luum tu uichobe, ca mabal hiob tumen V cokin V co katun\n\n<vocab>yahaulil, tepal, bolon ti ku, ah ca kin pop, ox ahau katun, ah ytza, Batabob, peten</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "claude-opus-5-5",
+    "translation": "<meta>continues from previous page: the plumeria flower corruption passage</meta>Greedy is his mouth. Insolent is his word in his rule, in the time of the breaking of bread = in the time of understanding: his throat. With the corners of his mouth he eats, behind his claws he takes his food; his mouth is neither wood nor stone. Great is his madness at Lahun Chan. As for his face where he sits: sinful is his face, sinful is his word, sinful is his speech, sinful is his understanding, sinful is his walk. Bandaged are his eyes where he sits; a red settlement is his mat. He sits in the midst of his rule, in the heap of his father, in the heap of his mother; nor does he know his mother. Quickly kindled is his heart by lust. Among the fatherless, those greedy for a father, among the motherless he shall walk; drunken is his spirit, lost is his understanding beside his father, beside his mother. There is no reverence in him, there is no goodness in his heart; only on the tip of his tongue is there a little boiling. He does not know how it shall come to an end, nor does he know what is at the end of his rule. That is when the time of his reign shall come to an end.\n\n<note>A pen flourish marks the end of the paragraph.</note>\n\nHere is Bolon ti ku: Bolon Chan, the face of the lordly men, he of the two-day mat, he of the two-day throne. This one came within the Ox Ahau katun, and there shall be another lord of the province <note>Maya: \"peten\", referring to the island or region of Yucatan</note>, the establisher of the word of another katun, when the word of the Ox Ahau katun shall come to an end in the time of the selling of sons. This shall be over the stammerers, the Itza: one bread of Chuen, one bread; there shall be ground up one single stone of the loincloth of the sin of the stammerers, the Itza. This is Bolon ti ku. This shall be the ending of the word of the Ox Ahau katun, and the coming of understanding to the rulership of the towns. At the ending of the word of the katun, then shall be made manifest the lineage of the noble-born, the <term>Batabob</term> <gloss>town governors</gloss>, and the other prudent men, and the lineage of the Batabob who had earth stamped secretly into their faces, when they were made as nothing by the mad sun, the mad katun.\n\n<summary>This page continues the prophetic condemnation of corrupt rulers from the Chilam Balam of Chumayel, describing their greed, blindness, and loss of reverence before their reign ends. It then prophesies the close of the Ox Ahau katun under Bolon ti ku, foretelling the judgment of the Itza and the eventual restoration of the true lineage of the noble-born and town governors after a period of madness and humiliation.</summary>\n<keywords>Chilam Balam of Chumayel, Lahun Chan, Bolon ti ku, Bolon Chan, Ox Ahau katun, Itza, Batabob, prophecy, kingship, noble lineage</keywords>",
+    "translation_model": "gemini-4-argon-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 2,
+  "book_id": "6a40efd67f8d954eada8b8ab",
+  "book_url": "https://sourcelibrary.org/book/6a40efd67f8d954eada8b8ab",
+  "tradition": null,
+  "book": {
+   "id": "6a40efd67f8d954eada8b8ab",
+   "title": "儒林外史(二十): The Scholars, vol 20",
+   "display_title": null,
+   "author": "吳敬梓 Wu Jingzi",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "02111900.cn",
+   "pages_count": 115,
+   "pages_ocr": 115,
+   "pages_translated": 115,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 115,
+   "distinct_page_numbers": 115,
+   "duplicate_records": 0,
+   "pages_with_ocr": 115,
+   "pages_translated": 115,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 115,
+   "pages_ocr_field": 115,
+   "pages_translated_field": 115
+  },
+  "run": [
+   75,
+   76,
+   77
+  ],
+  "pages": [
+   {
+    "page_number": 75,
+    "page_id": "6a40efd67f8d954eada8b8f6",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efd67f8d954eada8b8ab/75.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n的小厮道我家老爺叫他明日去寫字季遐年\n聽了也不回他說道罷了他今日不在家我明\n日叫他來就是了次日走到下浮橋施家門口\n要進去門上人攔住道你是甚麽人混往裏邊\n跑季遐年道我是來寫字的那小厮從門房裡\n走出來看見道原來就是你你也會寫字帶他\n走到廠廳上小厮進去回了施御史的孫子剛\n在走出屏風季遐年迎着臉大罵道你是何等\n之人敢來叫我寫字我又不貪你的錢又不慕",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>him?\"\n\nThe boy replied, \"Our master told him to come write calligraphy tomorrow.\" \n\nJi Xianian listened without answering. He merely said, \"Never mind that. He is not at home today. I will just tell him to go tomorrow.\"\n\nThe following day, Ji Xianian walked to the gate of the Shi residence at Lower Floating Bridge. When he tried to enter, the gatekeeper stopped him, saying, \"Who are you, barging inside like this?\"\n\nJi Xianian said, \"I am here to write calligraphy.\"\n\nThe young servant came out from the porter's lodge, caught sight of him, and said, \"So it is you! You can write calligraphy too?\" \n\nHe led him into the main reception hall. The servant went inside to report. Just as Censor Shi's grandson stepped out from behind the screen, Ji Xianian confronted him to his face, berating him loudly: \"What kind of person do you think you are, daring to summon me to write calligraphy? I do not covet your money, nor do I admire\n\n<summary>Ji Xianian arrives at the Shi estate under the guise of an errand, enters the reception hall, and directly confronts and berates Censor Shi's arrogant grandson.</summary>\n<keywords>Ji Xianian, The Scholars, Wu Jingzi, Chinese literature, Censor Shi, calligraphy, social hierarchy, confrontation</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 76,
+    "page_id": "6a40efd67f8d954eada8b8f7",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efd67f8d954eada8b8ab/76.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n你的勢又不借你的光你敢叫我寫起字來一\n頓大嚷大呌把施鄉紳罵的閉口無言低着頭\n進去了那季遐年又罵了一會依舊回到天界\n寺裡去了又一个是賣火紙筒子的這人姓王\n名太他祖代是三牌樓賣菜的到他父親手裡\n窮了把菜園都賣掉了他自小兒最喜下圍棋\n後來父親死了他無以爲生每日到虎踞關一\n帶賣火紙筒過恬那一日妙意庵做會那庵臨\n着烏龍潭正是初夏的天氣一潭簇新的荷葉\n第五十五",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>your power, nor do I rely on your influence. How dare you order me to write calligraphy?\" After this furious shouting and scolding, Squire Shi was left speechless, hanging his head as he retreated inside. Ji Xianian shouted some more abuse for a while, then went back to the Tianjie Monastery as before.\n\nThere was another man who sold paper spill tubes <note>paper tightly rolled to transfer flame, used especially for lighting pipes</note>. His surname was Wang and his given name was Tai. For generations his family had sold vegetables at Sanpailou. By his father's time, the family had fallen into poverty and sold off all their vegetable plots. From early childhood, Wang Tai loved playing <term>weiqi</term> <gloss>Go, the traditional board game of encircling territory</gloss> best of all. Later, after his father died, he had no means of making a living, so every day he went to the Hujuguan area to sell paper spills for his livelihood. \n\nOne day, a temple fair was held at Miaoyi Nunnery. That nunnery faced Wulong Pool. It was just the beginning of summer, and the pool was crowded with fresh green lotus leaves.\n\nPage 55\n\n<summary>Ji Xianian finishes reprimanding Squire Shi and returns to the monastery, while the narrative introduces Wang Tai, an impoverished vegetable seller's son who loves weiqi and sells paper spills near Wulong Pool.</summary>\n<keywords>The Scholars, Wu Jingzi, Ji Xianian, Squire Shi, Tianjie Monastery, Wang Tai, weiqi, Go, Miaoyi Nunnery, Wulong Pool</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 77,
+    "page_id": "6a40efd67f8d954eada8b8f8",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efd67f8d954eada8b8ab/77.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n亭亭浮在水上這菴裡曲曲折折也有許多亭\n樹那些遊人都進來頑耍王太走將進來各處\n轉了一會走到柳陰樹下一个石臺兩邉西條\n石磯三四个大老官簇擁着兩个人在那裡下\n棋一个穿寶藍的道我們這位馬先生前日在\n揚州塩臺那裡下的是一百一十兩的彩他前\n後共嬴了二千多銀子一个穿玉色的少年道\n我們這馬先生是天下的大國手只有這卞先\n生受兩子還可以敵得來只是我們要學到卞",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>floating gracefully on the water. Inside this nunnery, paths twisted and turned, with many pavilions and trees. Sightseers were all wandering in to amuse themselves. \n\nWang Tai walked inside and strolled about in every direction for a while. Coming under the shade of a willow tree, he found a stone terrace flanked on both sides by stone benches. Three or four respectable gentlemen were clustered around two men who were playing <term>weiqi</term> <gloss>Go</gloss> there. \n\nA man dressed in sapphire blue said, \"A few days ago at the salt distribution commissioner's office in Yangzhou, our Master Ma here played for a stake of one hundred and ten taels. In all, he won more than two thousand taels of silver from start to finish.\" \n\nA youth dressed in jade green said, \"Our Master Ma is the realm's supreme master. Only this Master Bian, receiving a two-stone handicap, can still put up a fight against him. It is just that if we were to reach Master Bian's\n\n<summary>Wang Tai visits Miaoyi Nunnery during a temple fair and observes a crowd gathered around a high-stakes Go match between the renowned Master Ma and Master Bian.</summary>\n<keywords>The Scholars, Wu Jingzi, Wang Tai, Miaoyi Nunnery, weiqi, Go, Master Ma, Master Bian, Yangzhou salt commissioner</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 3,
+  "book_id": "6a3cebe08642f0445b157ef6",
+  "book_url": "https://sourcelibrary.org/book/6a3cebe08642f0445b157ef6",
+  "tradition": null,
+  "book": {
+   "id": "6a3cebe08642f0445b157ef6",
+   "title": "易原·卷四~卷五 (vol 2)",
+   "display_title": "Original Principles of the Book of Changes",
+   "author": "程大昌",
+   "language": "Chinese",
+   "published": "1781",
+   "ia_identifier": "06070835.cn",
+   "pages_count": 122,
+   "pages_ocr": 122,
+   "pages_translated": 119,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 122,
+   "distinct_page_numbers": 122,
+   "duplicate_records": 0,
+   "pages_with_ocr": 122,
+   "pages_translated": 119,
+   "with_printed_number": 4,
+   "printed_backsteps": 0,
+   "printed_repeats": 2,
+   "pages_count_field": 122,
+   "pages_ocr_field": 122,
+   "pages_translated_field": 119
+  },
+  "run": [
+   13,
+   14,
+   15
+  ],
+  "pages": [
+   {
+    "page_number": 13,
+    "page_id": "6a3cebe08642f0445b157f03",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cebe08642f0445b157ef6/13.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n而神者也聖人亦慮其理之起象數而卦爻之語所\n不能包也蓋嘗對為之言曰神无方而易无體也又曰\n一隂一陽之謂道也夫有方有體則皆物也雖天地隂\n陽亦物也用不離物而功超物表則妙萬物而不測者\n也是運雷風水火而坐収動撓熯潤之用者也故六子\n役於乾坤而說卦之於妙物也不以天地入六物之列\n也是故役以一為主以神為至也善者晉人孟景翼之\n論一也曰一之為妙空元絕于有境神化贍于无窮為",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and it is Spirit. The sages also worried that while the principle emerges through images and numbers, the verbal pronouncements of hexagrams and lines cannot encompass it entirely. Thus they once remarked by way of contrast, saying: \"Spirit has no localized direction, and the *Changes* has no fixed physical form.\" They also said: \"One yin and one yang is what is called the Way.\" \n\nNow, whatever has a localized direction and a physical form is a concrete object. Even Heaven and Earth, yin and yang, are concrete objects. Yet the function does not separate from concrete objects, and its efficacy transcends the realm of physical things. Therefore, that which subtly animates the ten thousand things without being fathomable is Spirit. It sets into motion thunder, wind, water, and fire, silently gathering the functions of movement, swaying, drying, and moistening. For this reason, the six children <note>the six derivative trigrams representing natural elements</note> are put to service under Qian and Kun <note>Heaven and Earth, the two primary hexagrams</note>. When the *Shuogua* <gloss>Discussion of the Trigrams</gloss> commentary speaks of subtly animating things, it does not include Heaven and Earth in the list of the six physical entities. \n\nTherefore, service takes the One as master, and considers Spirit to be the ultimate. Outstanding is the discourse on the One by Meng Jingyi <note>Meng Yi, a fourth-century Jin dynasty scholar</note> of the Jin period: \"The wonder of the One lies in its mysterious void transcending the boundary of concrete existence, while its spiritual transformations abundantly supply endless generation. Acting as\n\n<summary>Cheng Dachang explains that Spirit and the Way transcend physical form while functioning through concrete things, harmonizing the hexagrams and trigram functions. He introduces Meng Jingyi's Jin-era discourse to elucidate how the mysterious One governs all transformations without being confined by physical reality.</summary>\n<keywords>Cheng Dachang, Book of Changes, Yijing, Spirit, Shen, Dao, Way, Qian, Kun, Shuogua, Discussion of the Trigrams, six children trigrams, Meng Jingyi, Jin dynasty, the One</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 14,
+    "page_id": "6a3cebe08642f0445b157f04",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cebe08642f0445b157ef6/14.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n萬物而无為䖏一數而无數莫之能名強號為一推此\n言也而入諸易則太極之該衆萬者有則可求矣\n五易以一為祖以神為至\n一者從虛出實太極以之生萬者是也神者積實化虛\n以可測之積而致不測之用者是也故妙萬物而言之\n也變化運乎冥冥固難究言而卦爻之理苟不達諸性\n命人事則易為无用也于是借人事可見者以推天地\n之難見者則倫類相朋也蓋喜怒哀樂之未發也一未",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the ten thousand things without possessing a fixed location, it acts as a single number without being counted among numbers. None can name it, so one forcibly designates it as 'One.' Applying this statement to the *Changes*, the Supreme Ultimate <term>Taiji</term> <gloss>Supreme Ultimate</gloss> encompasses the myriad things, and its guiding principle can thus be sought.\"\n\n### V. The *Changes* takes the One as ancestor and Spirit as the ultimate\n\nThe One emerges from the void to produce the concrete: this is the Supreme Ultimate generating the ten thousand things. Spirit accumulates the concrete to transform into the void: this achieves unfathomable efficacy through a measurable accumulation. Therefore, it is spoken of as subtly animating the ten thousand things. Changes and transformations operate in the unseen realm, truly difficult to exhaust in speech. Yet if the principles of the hexagrams and lines do not reach human nature, destiny, and human affairs, then the *Changes* becomes useless. Thereupon, by borrowing the visible realm of human affairs to deduce the invisible realm of Heaven and Earth, their categories and kinds correspond with each other. For before joy, anger, sorrow, and pleasure are aroused, the One is not yet\n\n<summary>Cheng Dachang continues citing Meng Jingyi on how the transcendent One encompasses the myriad things, then asserts that the Book of Changes takes the One as origin and Spirit as ultimate. He argues that hexagram principles must connect with human affairs and psychological states to illuminate the unseen workings of Heaven and Earth.</summary>\n<keywords>Cheng Dachang, Original Principles of the Book of Changes, Taiji, Supreme Ultimate, Spirit, Shen, the One, hexagrams and lines, human affairs, nature and destiny, Zhongyong</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 15,
+    "page_id": "6a3cebe08642f0445b157f05",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cebe08642f0445b157ef6/15.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n<header>卷四</header>\n為兩有太極之象焉及其發也喜與怒對哀與樂對類\n而推之有仁則有義有禮則有樂有上則有下有是則\n有非諸如此類則昔之一者皆出而分為兩矣自兩以\n徃非迹轉多則去一轉逺故信善美大自二中四下者\n積而上之皆求及乎化也苟及乎此則皆㑹其散而返\n其初矣及其初用既至不散而㑹則一之今也一則信\n善美大皆无可見之迹而随感皆應有一能生萬之象\n矣當仁而仁欲義而義遇禮智而出禮智人莫見其勉",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>divided into two, possessing the image of the Supreme Ultimate <term>Taiji</term> <gloss>Supreme Ultimate</gloss>. Once aroused, joy opposes anger, and sorrow opposes pleasure. Extending this by analogy, where there is benevolence there is righteousness; where there is ritual propriety there is music; where there is above there is below; where there is right there is wrong. In all such cases, that which was formerly the One emerges and divides into two.\n\nFrom duality onward, as traces become ever more numerous, departure from the One becomes ever more distant. Therefore, from the two central qualities of trustworthiness and goodness down to beauty and greatness <note>referencing Mencius 7B:25, which outlines stages of spiritual development: being desirable is good, having it in oneself is true/trustworthy, being full is beautiful, being full and having great radiance is great, and being great and transformed is holy/sage-like</note>, one accumulates upward, seeking in every step to attain spiritual transformation. If one attains this state, all disparate traces gather together and return to their beginning. \n\nWhen this primal application is reached, gathering without scattering, then the One becomes the present reality. Once unified, trustworthiness, goodness, beauty, and greatness leave no visible traces, yet one responds to every stimulus as it arises. Here lies the emblem of the One being able to generate the myriad things. When confronting a situation requiring benevolence, one acts with benevolence; when desiring righteousness, one acts with righteousness; when encountering ritual propriety or wisdom, ritual propriety and wisdom come forth, without anyone observing any forced effort.\n\n<summary>Cheng Dachang explains how the unified Supreme Ultimate divides into polar dualities upon emotional and moral arousal, moving outward into numerous visible traces. By ascending through the stages of moral cultivation toward spiritual transformation, one gathers these dispersed expressions back into the primal One, enabling effortless and spontaneous moral responsiveness to all things.</summary>\n<keywords>Cheng Dachang, Original Principles of the Book of Changes, Taiji, Supreme Ultimate, the One, duality, joy and anger, Mencius, moral cultivation, spiritual transformation, benevolence, righteousness, ritual propriety, wisdom</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 4,
+  "book_id": "6a40efac7f8d954eada8b72d",
+  "book_url": "https://sourcelibrary.org/book/6a40efac7f8d954eada8b72d",
+  "tradition": null,
+  "book": {
+   "id": "6a40efac7f8d954eada8b72d",
+   "title": "儒林外史(十六): The Scholars, vol 16",
+   "display_title": null,
+   "author": "吳敬梓 Wu Jingzi",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "02111896.cn",
+   "pages_count": 95,
+   "pages_ocr": 95,
+   "pages_translated": 95,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 95,
+   "distinct_page_numbers": 95,
+   "duplicate_records": 0,
+   "pages_with_ocr": 95,
+   "pages_translated": 95,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 95,
+   "pages_ocr_field": 95,
+   "pages_translated_field": 95
+  },
+  "run": [
+   49,
+   50,
+   51
+  ],
+  "pages": [
+   {
+    "page_number": 49,
+    "page_id": "6a40efac7f8d954eada8b75e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efac7f8d954eada8b72d/49.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n來若是那考老了的秀才和那百姓請他進來\n做甚麽呢大爺道每號門前還有一首紅旗底\n下還有一首黑旗那紅旗底下是給下場人的\n恩鬼墩着黑旗底下是給下場人的怨鬼墩着\n到這時候大人上了公座坐了書辦點道恩鬼\n進怨鬼進兩邉齊燒紙籛只見一陣陰風颯颯\n的响滾了進來跟着燒的紙錢滾到紅旗黑旗\n底下去了順姑娘道阿彌陀佛可見人要做好\n人到這時候就見出分曉來了六老爺道像我",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nin. If it were those scholars who grew old taking the examinations, or common people, what would be the purpose of inviting them inside?\"\n\nThe First Young Master said, \"In front of each examination lane gate, there is also a red banner, and beneath it there is also a black banner. Beneath that red banner are gathered the benevolent spirits who come to repay kindness to the candidates in the examination arena. Beneath the black banner are gathered the vengeful spirits who come to seek retribution against the candidates in the arena. When this moment arrives, His Excellency ascends the official bench and takes his seat. The clerks then call out: 'Let the benevolent spirits enter! Let the vengeful spirits enter!' On both sides, people burn paper money together. At once, a gust of chilly wind howls with a rustling roar and billows inside, swirling along with the burning paper money beneath the red and black banners.\"\n\nMiss Shun said, \"Amitābha! Truly, one must strive to be a good person. When this moment arrives, the distinction between good and evil becomes clear!\"\n\nSixth Master said, \"Like me,\n<summary>The young masters describe how benevolent spirits and vengeful spirits are formally summoned beneath red and black banners during the examination, prompting reflections on moral retribution.</summary>\n<keywords>The Scholars, Wu Jingzi, civil service examination, benevolent spirits, vengeful spirits, paper money, moral retribution, Sixth Master, Miss Shun</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 50,
+    "page_id": "6a40efac7f8d954eada8b75f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efac7f8d954eada8b72d/50.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n們大老爺在邉上積了多少功德活了多少人\n命那恩鬼也不知是多少哩一枝紅旗那裏墩\n得下大爺道幸虧六哥不進場若是六哥要進\n場生生的就要給怨鬼拉了去六老爺道這是\n怎的大爺道像前科我宜興嚴世兄是个飽學\n秀才在場裏做完七篇文章高聲朗誦忽然一\n陣微微的風把蠟燭頭吹的亂搖掀開帘子伸\n進一个頭來嚴世兄定睛一看就是他相與的\n一个婊子嚴世兄道你已經死了怎麽來在這",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>our Master has accumulated so much merit along the frontier, saving countless lives, that who knows how many grateful spirits there must be! How could a single red banner hold them all?\"\n\nThe Eldest Master said, \"Fortunately, Sixth Brother does not enter the examination arena. If Sixth Brother were to enter, he would be dragged away alive by vengeful spirits.\"\n\nSixth Master said, \"Why would that be?\"\n\nThe Eldest Master replied, \"Take, for example, during the previous provincial examination, my sworn brother Yan from Yixing was a deeply learned scholar. In the arena, having finished seven examination essays, he was chanting them aloud in a high voice. Suddenly, a faint breeze blew the candle flame into a flickering flutter. The entrance curtain was pushed aside, and in poked a head. Brother Yan looked closely, and it was none other than a prostitute he used to frequent. Brother Yan said: 'You are already dead, why have you come here?'\"\n\n<summary>Sixth Master boasts of the family's accumulated merit and benevolent spirits, but the Eldest Master warns that vengeful spirits would seize him, recounting a tale of Brother Yan being confronted by the ghost of a deceased prostitute during the examinations.</summary>\n<keywords>The Scholars, Wu Jingzi, civil service examination, benevolent spirits, vengeful spirits, Brother Yan, ghost, moral retribution</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 51,
+    "page_id": "6a40efac7f8d954eada8b760",
+    "image_url": "https://images.sourcelibrary.org/archived/6a40efac7f8d954eada8b72d/51.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n儒林外史\n襄那婊子望着他嘻嘻的笑嚴世兄急了把號\n板一拍那硯臺就翻過來連黑墨都倒在卷子\n上把卷子黑了一大塊婊子就不見了嚴世兄\n歎息道也是我命該如此可憐下着大雨就交\n了卷冒着雨出來在下處害了三天病我去看\n他他告訢我如此我說你當初不知怎樣作踐\n了這人他所以來尋你六哥你生平作踐了多\n少人你說這大場進得進不得兩個姑娘拍手\n笑道六老爺好作踐的是\n他若進場我兩",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n# The Scholars\n\nThat prostitute looked towards him, giggling and smiling. Brother Yan grew frantic; slapping his examination desk board, the inkstone flipped over, dumping black ink right onto the examination paper, blackening a large patch of it. The prostitute was suddenly nowhere to be seen. Brother Yan sighed: \"It is simply my fate to be thus!\" Pitifully, under a heavy downpour, he turned in his paper, braved the rain outside, and took ill at his lodgings for three days. When I went to visit him, he told me what had happened. I said: \"Back then, who knows what kind of abuse you inflicted upon this person, which is why she came to find you. Sixth Brother, how many people have you abused in your lifetime? Tell me, can you enter this examination arena or not?\" \n\nThe two girls clapped their hands and laughed: \"What Sixth Master loves best is abusing people. If he were to enter the arena, the two of us\n\n<summary>The Eldest Master finishes his story of Brother Yan's exam ruined by an ink-spilling ghost, using it to question whether Sixth Brother could survive the exams given his past mistreatment of others, which amuses the two girls.</summary>\n<keywords>The Scholars, Wu Jingzi, civil service examination, ghost, inkstone, Brother Yan, Sixth Master, retribution</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 5,
+  "book_id": "6a3cc0c0f9474f825c171eab",
+  "book_url": "https://sourcelibrary.org/book/6a3cc0c0f9474f825c171eab",
+  "tradition": null,
+  "book": {
+   "id": "6a3cc0c0f9474f825c171eab",
+   "title": "三易備遺·卷六~卷十 (vol 7)",
+   "display_title": "Supplementary Records of the Three Changes",
+   "author": "朱元昇",
+   "language": "Chinese",
+   "published": "1782",
+   "ia_identifier": "06072878.cn",
+   "pages_count": 216,
+   "pages_ocr": 216,
+   "pages_translated": 199,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 216,
+   "distinct_page_numbers": 216,
+   "duplicate_records": 0,
+   "pages_with_ocr": 216,
+   "pages_translated": 199,
+   "with_printed_number": 6,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 216,
+   "pages_ocr_field": 216,
+   "pages_translated_field": 199
+  },
+  "run": [
+   90,
+   91,
+   92
+  ],
+  "pages": [
+   {
+    "page_number": 90,
+    "page_id": "6a3cc0c0f9474f825c171f05",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cc0c0f9474f825c171eab/90.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n繫辭曰天尊地卑乾坤定矣卑髙以陳貴賤位矣動靜\n有常剛柔斷矣方以類聚物以羣分吉凶生矣在天成\n象在地成形變化見矣是故剛柔相摩八卦相盪鼓之\n以雷霆潤之以風雨日月運行一寒一暑乾道成男坤\n道成女\n周易以反對為用繫辭焉者係文王周易故繫辭首\n章夫子所以明反對之義也先天之卦八後天反對\n為六先天之卦六十四後天反對為三十六六十四",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "The Commentary on the Attached Verbalizations <note>original: \"繫辭\", the <term>Xici</term>, also known as the Great Treatise of the <term>Yijing</term></note> states: \n\nHeaven is exalted and Earth is lowly, and thus <term>Qian</term> <gloss>Creative/Heaven</gloss> and <term>Kun</term> <gloss>Receptive/Earth</gloss> are determined. The low and the high are arrayed, and thus the noble and the base assume their stations. Movement and rest have their regularities, and thus the firm and the yielding are distinguished. Directions gather according to their kind, and things divide according to their classes; thus good fortune and misfortune arise. In heaven forms become celestial images; on earth they become physical shapes. Thus change and transformation become visible. Therefore the firm and the yielding rub against one another, and the eight trigrams resonate and displace one another. They are stirred by thunder and lightning, and nourished by wind and rain. The sun and moon course in their orbits; one cold season yields to one warm season. The Way of Qian establishes the male; the Way of Kun establishes the female.\n\nThe <term>Zhouyi</term> <gloss>Book of Changes of Zhou</gloss> operates through structural inversion and opposition <note>original: \"反對\", referring to paired hexagrams formed either by turning a hexagram upside down or by inverting all its yin and yang lines</note>. The Commentary on the Attached Verbalizations is affixed to King Wen's <term>Zhouyi</term>. Therefore, in this opening chapter of the Attached Verbalizations, the Master <note>Confucius</note> illuminates the principle of structural inversion and opposition. In the Pre-Heaven <note>Earlier Heaven arrangement attributed to Fuxi</note>, there are eight trigrams; in the Post-Heaven <note>Later Heaven arrangement attributed to King Wen</note>, structural inversion reduces them to six. In the Pre-Heaven, there are sixty-four hexagrams; in the Post-Heaven, structural inversion reduces them to thirty-six. The sixty-four...\n\n<summary>This page quotes the opening chapter of the Xici (Great Treatise) to demonstrate how the dual cosmological forces of Qian and Kun govern change. It then explains how King Wen's Later Heaven sequence utilizes the principle of hexagram inversion and opposition, reducing the sixty-four distinct hexagrams into thirty-six operational pairs.</summary>\n<keywords>Yijing, Zhouyi, Xici, Great Treatise, Qian, Kun, King Wen, Pre-Heaven, Post-Heaven, hexagram inversion, eight trigrams</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 91,
+    "page_id": "6a3cc0c0f9474f825c171f06",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cc0c0f9474f825c171eab/91.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n<header>卷八</header>\n者八之演也三十六者六之演也故繫辭曰天尊地\n卑乾坤定矣此上經首乾坤也曰鼓之以雷霆潤之\n以風雨此下經首震艮巽兊也曰日月運行一寒一\n暑此坎離猶上下經之用也其言雷霆而不言艮異\n乎說卦以雷風為偶者所以明震艮之反對也其言\n風雨而不言兊異乎說卦以山澤為偶者所以明巽\n兊之反對也不言艮而艮巳具於震不言兊而兊巳\n具於巽此連山易之八八反對為周易之六六則之",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>are the expansion of eight; the thirty-six are the expansion of six. Therefore, the Commentary on the Attached Verbalizations <note>original: \"繫辭\", <term>Xici</term></note> says: \"Heaven is exalted and Earth is lowly, and thus <term>Qian</term> <gloss>Creative/Heaven</gloss> and <term>Kun</term> <gloss>Receptive/Earth</gloss> are determined.\" This refers to how the Upper Classic begins with Qian and Kun. It further says: \"They are stirred by thunder and lightning, and nourished by wind and rain.\" This refers to how the Lower Classic begins with <term>Zhen</term> <gloss>Thunder</gloss>, <term>Gen</term> <gloss>Mountain</gloss>, <term>Xun</term> <gloss>Wind</gloss>, and <term>Dui</term> <gloss>Lake</gloss>. It says: \"The sun and moon course in their orbits; one cold season yields to one warm season.\" Here, <term>Kan</term> <gloss>Water</gloss> and <term>Li</term> <gloss>Fire</gloss> function as the operational dynamic of both the Upper and Lower Classics. \n\nIts speaking of thunder and lightning without mentioning Gen differs from the Discussion of the Trigrams <note>original: \"說卦\", <term>Shuogua</term></note>, which pairs thunder and wind; this is precisely to illuminate the structural inversion and opposition between Zhen and Gen. Its speaking of wind and rain without mentioning Dui differs from the Discussion of the Trigrams, which pairs mountain and lake; this is precisely to illuminate the structural inversion and opposition between Xun and Dui. Gen is not explicitly mentioned because Gen is already implicit within Zhen; Dui is not explicitly mentioned because Dui is already implicit within Xun. In this way, the eight-by-eight structural opposition of the <term>Lianshan</term> <gloss>Mountains in Succession</gloss> system of changes becomes the principle of six-by-six pairs in the <term>Zhouyi</term>.\n\n<summary>This page analyzes the structural design of the Upper and Lower Classics of the Zhouyi, showing how selective mentions of trigram pairs in the Xici demonstrate the principle of structural inversion between hexagrams. It explains how this structural pairing transforms the earlier eightfold Lianshan system into the thirty-six paired hexagrams of the Zhouyi.</summary>\n<keywords>Zhouyi, Xici, Shuogua, Qian, Kun, Zhen, Gen, Xun, Dui, Kan, Li, Lianshan, trigram pairing, structural inversion</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 92,
+    "page_id": "6a3cc0c0f9474f825c171f07",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cc0c0f9474f825c171eab/92.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n河圖乾坤縱而六子衡也周易其微矣乎欲觀周易\n大綱目舍繫辭首章其何以觀之哉",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "In the <term>Hetu</term> <gloss>Yellow River Chart</gloss>, <term>Qian</term> <gloss>Creative/Heaven</gloss> and <term>Kun</term> <gloss>Receptive/Earth</gloss> are vertical, while the six children <note>the six derived trigrams</note> are horizontal. How subtle is the <term>Zhouyi</term> <gloss>Changes of Zhou</gloss>! If one wishes to observe the grand outline\nand key principles of the Zhouyi, setting aside the opening chapter of the <term>Xici</term> <gloss>Commentary on the Attached Verbalizations</gloss>, how else could one observe them?\n\n<summary>This page discusses the vertical and horizontal alignment of Qian, Kun, and the six derived trigrams in the Hetu. It asserts that the opening chapter of the Xici provides the essential foundation for grasping the overarching structure of the Zhouyi.</summary>\n<keywords>Hetu, Yellow River Chart, Qian, Kun, six children, trigrams, Zhouyi, Xici, Commentary on the Attached Verbalizations, cosmology</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

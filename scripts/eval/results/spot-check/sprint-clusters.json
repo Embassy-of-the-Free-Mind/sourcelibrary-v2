@@ -1,6 +1,6 @@
 {
-  "rounds": 4,
-  "rows": 296,
+  "rounds": 5,
+  "rows": 326,
   "rule": "≥3 distinct books",
   "classes": [
     {
@@ -65,15 +65,16 @@
     },
     {
       "class": "T8",
-      "books": 4,
-      "serious": 4,
+      "books": 5,
+      "serious": 6,
       "candidate": true,
       "forms": {
-        "print": 4
+        "print": 5
       },
       "frames": {
         "canon": 1,
-        "public": 3
+        "public": 3,
+        "recent": 1
       },
       "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
     },
