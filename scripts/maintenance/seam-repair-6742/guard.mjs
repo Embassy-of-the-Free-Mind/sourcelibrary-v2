@@ -70,7 +70,7 @@ export const applyScope = (env = process.env) => (env.SEAM_GUARD_APPLY === 'majo
 const MODES = ['dry', 'apply'];
 const modeFromFile = (file) => { try { return fs.readFileSync(file, 'utf8').trim(); } catch { return null; } };
 /** 'dry' | 'apply' | null: SEAM_GUARD when set (any other value, e.g. `off`, is off), else the box file. */
-export const guardMode = (env = process.env, file = SEAM_GUARD_FILE) => { const v = env.SEAM_GUARD || modeFromFile(file); return MODES.includes(v) ? v : null; };
+export const guardMode = (env = process.env, file = SEAM_GUARD_FILE) => { const v = env.SEAM_GUARD || (env.VITEST ? null : modeFromFile(file)); return MODES.includes(v) ? v : null; };
 
 /** Why the Sonnet fallback may not be called now, or null. `count` = joins it has checked today (box-wide). */
 export function claudeGate({ count, cap, usage, maxWeekly }) {

@@ -1215,7 +1215,9 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  * each launch line. SEAM_GUARD in the environment wins over it (`off` turns the guard off for one process).
  */
 export const SEAM_GUARD_FILE = '/etc/sourcelibrary/seam-guard';
-export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.SEAM_GUARD ? env.SEAM_GUARD !== 'off' : existsSync(file));
+// Under a test runner the box file is ignored: a test that drives writePageTranslation with a mock db would otherwise run
+// the guard (and could call Claude) on any box that has the file (#7118, 2026-10-24: a vitest run logged a guard check).
+export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.SEAM_GUARD ? env.SEAM_GUARD !== 'off' : !env.VITEST && existsSync(file));
 
 /**
  * Snapshot the page's current translation into page_revisions, then write the
