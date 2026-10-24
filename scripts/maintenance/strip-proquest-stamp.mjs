@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-// PRIOR ART: scripts/lib/translation-text-repair.mjs (repairTranslationText + resyncMirrors) — the guarded
-// door for every edit to stored translation text; used as-is for the English. scripts/maintenance/
-// translation-cleanup-a2-5700.mjs — the corpus-wide $0 cleanup this follows (classes, dry run, revision row
-// first); it has no class for a vendor stamp and never edits OCR. scripts/audit/scan-provenance-rights.mjs
-// (#7308) — the detector that found the stamp's provenance. No existing door edits stored OCR text in place,
-// so the OCR half below copies the translation door's guards (human-edit skip, revision first, conditional
-// write) and, like it, leaves `ocr.updated_at` alone: staleness is decided from that clock
-// (scripts/lib/stale-translation.mjs), and moving it would mark every stamped page's English stale and queue
-// a paid retranslation of text that did not change.
+// PRIOR ART: scripts/lib/page-text-writer.mjs (writePageText, #7058) — the one writer of page text; used for
+// every edit here (OCR and English), with one run_id so scripts/maintenance/revert-run.mjs undoes the run.
+// scripts/lib/translation-text-repair.mjs — resyncMirrors, used as-is. scripts/maintenance/
+// translation-cleanup-a2-5700.mjs — the corpus-wide $0 cleanup this follows (dry run, revision first); it has no
+// class for a vendor stamp and never edits OCR. scripts/audit/scan-provenance-rights.mjs (#7308) — the detector
+// that found the stamp's provenance. Each field is written as its prior object with only `data` and
+// `content_hash` changed, so `ocr.updated_at` stays as it was: staleness is decided from that clock
+// (scripts/lib/stale-translation.mjs), and moving it would mark every stamped page's English stale and queue a
+// paid retranslation of text that did not change.
 /**
  * strip-proquest-stamp — remove the vendor stamp of the Early European Books scans from stored OCR and English
  * (#6056; Derek 2026-10-24: "remove proquest from the ocr/translation").
@@ -20,23 +20,24 @@
  * centring marker. A page where "ProQuest" survives the rule is NOT written; it is listed as residual.
  * The scan images are untouched (the stamp is burned into them).
  *
- * Writes per page: one `page_revisions` row per field (source `strip-proquest-6056`) BEFORE the field, then
- * `ocr.data` / `translation.data` (+ content_hash), conditional on the text not having changed. One
- * `sweep_log` row per book before its first write. Human-edited fields are skipped. Then the Supabase
- * mirrors are re-synced for books whose English changed.
+ * Writes per page and field: one writePageText edit (revision row with the whole prior field, then the field,
+ * compare-and-set; run_id `strip-proquest-6056`). One `sweep_log` row per book before its first write.
+ * Human-edited fields are skipped. Then the Supabase mirrors are re-synced for books whose English changed.
  *
  *   node --env-file=.env.production.local scripts/maintenance/strip-proquest-stamp.mjs              # dry run
  *   node --env-file=.env.production.local scripts/maintenance/strip-proquest-stamp.mjs --apply [--books=a,b] [--out DIR]
  *
- * Undo: the `page_revisions` rows with source `strip-proquest-6056` hold every replaced text.
+ * Undo: `node scripts/maintenance/revert-run.mjs strip-proquest-6056`. The first run (2026-10-24, before this
+ * script moved onto writePageText) wrote `page_revisions` rows with `source: 'strip-proquest-6056'` and no
+ * run_id; restore those from the rows directly.
  */
-import { randomBytes } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { repairTranslationText, resyncMirrors } from '../lib/translation-text-repair.mjs';
+import { writePageText, isHumanEditedField, textHash } from '../lib/page-text-writer.mjs';
+import { resyncMirrors } from '../lib/translation-text-repair.mjs';
 
 const SOURCE = 'strip-proquest-6056';
 const ISSUE = 6056;
@@ -85,24 +86,19 @@ export function stripStamp(text) {
     .trim();
 }
 
-const humanEditedOcr = (o) => !!(o && (o.source === 'manual' || o.edited_by || o.edited_at));
-
-async function repairOcr(db, page, next) {
-  const o = page.ocr || {};
-  const before = o.data;
-  if (humanEditedOcr(o)) return 'human_edited';
-  if (next === before) return 'no_change';
+// One edit per field through the shared writer (#7058): revision row with the whole prior field, compare-and-set on
+// the prior text, human edits refused, one run_id for revert-run.mjs. The field object passed is the prior one with
+// only `data` and `content_hash` changed, so its own `updated_at` — the staleness clock — is kept as it was.
+async function editField(db, page, field, next) {
+  const prior = page[field];
+  if (isHumanEditedField(prior)) return 'human_edited';
+  if (next === prior.data) return 'no_change';
   if (!APPLY) return 'dry_run';
-  const beforeHash = contentHash(before), afterHash = contentHash(next);
-  await db.collection('page_revisions').insertOne({
-    id: randomBytes(6).toString('hex'), page_id: page.id, book_id: page.book_id, field: 'ocr', data: before,
-    source: SOURCE, reason: REASON, issue: ISSUE, model: o.model, original_date: o.updated_at,
-    created_at: new Date(), content_hash: beforeHash, after_content_hash: afterHash,
+  const r = await writePageText(db, page.id, field, { ...prior, data: next, content_hash: contentHash(next) }, {
+    by: 'scripts/maintenance/strip-proquest-stamp.mjs', reason: REASON, run_id: SOURCE, revision_source: SOURCE,
+    expect_prior_hash: textHash(prior),
   });
-  const set = { 'ocr.data': next, updated_at: new Date() };
-  if (o.content_hash) set['ocr.content_hash'] = afterHash;
-  const res = await db.collection('pages').updateOne({ id: page.id, 'ocr.data': before }, { $set: set });
-  return res.modifiedCount === 1 ? 'written' : 'write_raced';
+  return r.status;
 }
 
 await withMongo(async (db) => {
@@ -122,11 +118,11 @@ await withMongo(async (db) => {
       tally.pages++;
       const nextO = stripStamp(p.ocr?.data), nextT = stripStamp(p.translation?.data);
       if (/ProQuest/i.test(nextO || '') || /ProQuest/i.test(nextT || '')) { tally.residual++; residual.push({ book_id: b.id, page: p.page_number }); continue; }
-      if (typeof p.ocr?.data === 'string' && /ProQuest/i.test(p.ocr.data)) bump(tally.ocr, await repairOcr(db, p, nextO));
+      if (typeof p.ocr?.data === 'string' && /ProQuest/i.test(p.ocr.data)) bump(tally.ocr, await editField(db, p, 'ocr', nextO));
       if (typeof p.translation?.data === 'string' && /ProQuest/i.test(p.translation.data)) {
-        const r = await repairTranslationText(db, p, nextT, { expectBefore: p.translation.data, source: SOURCE, reason: REASON, issue: ISSUE, apply: APPLY });
-        bump(tally.tr, r.status === 'skipped' ? `skipped:${r.why}` : r.status);
-        if (r.status === 'written') trChanged.push(p.id);
+        const s = await editField(db, p, 'translation', nextT);
+        bump(tally.tr, s);
+        if (s === 'written') trChanged.push(p.id);
       }
     }
   }
@@ -135,4 +131,4 @@ await withMongo(async (db) => {
   writeFileSync(join(OUT, 'summary.json'), JSON.stringify({ ...tally, apply: APPLY }, null, 1));
   writeFileSync(join(OUT, 'residual.json'), JSON.stringify(residual, null, 1));
   console.log(JSON.stringify({ ...tally, apply: APPLY }, null, 1));
-});
+}, { timeoutMs: 4 * 3600 * 1000 }); // ~7.5K page edits plus one mirror sync per book: well past the 300 s default
