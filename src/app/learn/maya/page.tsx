@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
-import MayaLearn from './MayaLearn';
+import MayaCourse from './MayaCourse';
 
 export const metadata: Metadata = {
-  title: 'Learn to read Maya: numbers, day signs and Yucatec words - Source Library',
+  title: 'Learn to read Maya: a short course from the Dresden Codex and Landa - Source Library',
   description:
-    'Count the bar-and-dot numbers of the Dresden Codex, name its day signs, and read Yucatec words from the Chilam Balam of Chumayel, each checked against Förstemann and the colonial dictionaries.',
+    'Six short lessons: count the bar-and-dot numbers of the Dresden Codex, read its days, and read the syllables a Maya scribe wrote for Diego de Landa in 1566. Every lesson ends on a real page.',
   alternates: { canonical: '/learn/maya' },
 };
 
@@ -16,7 +16,7 @@ export default function LearnMayaPage() {
     <>
       <SiteHeader variant="dark" />
       <main className="bg-cream min-h-screen">
-        <MayaLearn />
+        <MayaCourse />
       </main>
     </>
   );

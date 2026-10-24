@@ -373,19 +373,24 @@ const CYCLES = [
   { key: 'c819', name: '819-day count', unit: '819-day counts', days: 819, truth: null },
 ];
 
-export function CyclesMeet() {
-  const [on, setOn] = useState<Record<string, boolean>>({ tz: false, hb: true, ve: true, ma: false });
-  const chosen = CYCLES.filter((c) => on[c.key]);
+type Cycle = (typeof CYCLES)[number];
+
+/** `cycles`/`initial` let /learn/maya show the 13 numbers and 20 signs of the day count with the same chart. */
+const CYCLES_CAPTION = 'Each row marks where one cycle ends, laid out to the day all the chosen cycles end together. The tables count whole days only, so they run slightly off the sky; the last column shows how far by the meeting day, using modern lengths for the year and the synodic periods of the planets.';
+
+export function CyclesMeet({ cycles = CYCLES, initial = { tz: false, hb: true, ve: true, ma: false }, caption = CYCLES_CAPTION }: { cycles?: Cycle[]; initial?: Record<string, boolean>; caption?: string } = {}) {
+  const [on, setOn] = useState<Record<string, boolean>>(initial);
+  const chosen = cycles.filter((c) => on[c.key]);
   const L = chosen.reduce((a, c) => lcm(a, c.days), 1);
   const W = 640;
 
   return (
     <Card
       title="When do the cycles meet?"
-      caption="Each row marks where one cycle ends, laid out to the day all the chosen cycles end together. The tables count whole days only, so they run slightly off the sky; the last column shows how far by the meeting day, using modern lengths for the year and the synodic periods of the planets."
+      caption={caption}
     >
       <div className="flex flex-wrap gap-2 mb-5">
-        {CYCLES.map((c) => (
+        {cycles.map((c) => (
           <button key={c.key} className={on[c.key] ? btnOn : btn} onClick={() => setOn((o) => ({ ...o, [c.key]: !o[c.key] }))}>
             {c.name} · {c.days}
           </button>
