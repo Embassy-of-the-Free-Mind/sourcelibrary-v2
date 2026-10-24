@@ -72,8 +72,8 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
   const translated = stats?.translated ?? 0;
   const totalShown = useCountUp(total);
   const translatedShown = useCountUp(translated);
-  const totalText = stats ? fmt(totalShown) : '—';
-  const translatedText = stats ? `${stats.sample ? '~' : ''}${fmt(translatedShown)}` : '—';
+  const totalText = stats ? fmt(totalShown) : '–';
+  const translatedText = stats ? `${stats.sample ? '~' : ''}${fmt(translatedShown)}` : '–';
   const printed = stats?.printed ?? [];
   const maxBucket = Math.max(1, ...printed.map((p) => p.count));
   const bars = printed.map((p, i) => ({
