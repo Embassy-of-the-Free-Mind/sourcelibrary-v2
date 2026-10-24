@@ -1,0 +1,22 @@
+{
+ "dataset": "Source Library recitation-refusal census",
+ "version": "2026-10-24",
+ "snapshot_date": "2026-10-24",
+ "git_sha": "8d6ccd8344437010a0d81559ae9f57b37ef30195",
+ "built_by": "scripts/eval/export-refusal-census.mjs",
+ "census_by": "scripts/eval/estimator/ocr/refusal-census.mjs",
+ "counts": {
+  "public_books": 8955,
+  "public_pages_attempted": 1726106,
+  "public_pages_refused": 33197,
+  "all_books": 17519,
+  "all_pages_attempted": 2240424,
+  "all_pages_refused": 56854
+ },
+ "sha256": {
+  "books.jsonl": "a934872ca739470cea20311bc4172991e65d3ebe2744b6c0666fff22e104f180",
+  "summary.csv": "eaf700a8120ad2ed1ae01138fb206d8a83e843792a7a0431d83d3729d8d665d3",
+  "CANARY.txt": "6abdfa3d311d8f1aaa2a19d820cdfe4bcddf14e975cb54671f07b7dfe161cf0d",
+  "DATASHEET.md": "9bc67fb397a1a5e1bbda938b36b1604f78b2389c4498a2bc2c9cdca55340254b"
+ }
+}
