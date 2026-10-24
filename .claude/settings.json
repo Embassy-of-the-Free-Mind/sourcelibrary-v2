@@ -45,6 +45,11 @@
           {
             "type": "command",
             "command": "bash /Users/dereklomas/sourcelibrary/.claude/hooks/branch-guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "f=/Users/dereklomas/sourcelibrary/.claude/hooks/pr-create-issue-link.mjs; test ! -f $f || node $f",
+            "timeout": 20
           }
         ]
       },
