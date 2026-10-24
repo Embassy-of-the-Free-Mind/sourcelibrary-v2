@@ -18,6 +18,7 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import { catalogTranslationColumns } from '../lib/page-counts.mjs';
+import { catalogYear } from '../lib/catalogue-year.mjs';
 
 // Locally-sourced .env.production.local values can carry a literal "\n"
 // suffix (vercel env pull escaping — same footgun as the R2 vars, #3000).
@@ -59,15 +60,8 @@ function extractSummaryText(book) {
 
 // Many importers only set the `published` string ("1578", "ca. 1576-1577"),
 // not a numeric `year` — a null year renders as "—" in collection tables.
-// Fall back to the first plausible year found in `published` (2026-06-05).
-function deriveYear(book) {
-  if (typeof book.year === 'number') return book.year;
-  if (typeof book.published === 'string') {
-    const m = book.published.match(/\b([1-9][0-9]{2,3})\b/);
-    if (m) return parseInt(m[1], 10);
-  }
-  return null;
-}
+// catalogYear reads it era-aware and never returns a year later than this one (#6866).
+const deriveYear = (book) => catalogYear(book);
 
 function transformBook(book, previewColumn) {
   return {
