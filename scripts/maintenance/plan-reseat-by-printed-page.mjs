@@ -45,10 +45,12 @@ export function textBody(ocr) {
 }
 const fold = (s) => String(s ?? '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/ſ/g, 's').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 /** Share of the image line's words (≥3 letters) found among the first 80 words of the text body. */
+const headCache = new Map(); // body → its first 80 folded words (the unnumbered pass scores every text per leaf)
 export function firstLineScore(line, body) {
   const words = fold(line).split(' ').filter((w) => w.length >= 3);
   if (words.length < 2) return null;
-  const head = new Set(fold(body).split(' ').slice(0, 80));
+  let head = headCache.get(body);
+  if (!head) { head = new Set(fold(body).split(' ').slice(0, 80)); headCache.set(body, head); }
   return words.filter((w) => head.has(w)).length / words.length;
 }
 const ROMAN = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
