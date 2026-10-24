@@ -42,8 +42,8 @@ export default function GalleryStatsBand({ stats, total, galleryTotal, titleArtw
   // In the Artworks view the second box is the way back: the whole gallery, and Show everything.
   const second = artworksOnly ? (galleryTotal ?? 0) : books;
   const secondShown = useCountUp(second);
-  const imagesText = known ? fmt(imagesShown) : '—';
-  const secondText = (artworksOnly ? galleryTotal != null : !!stats) ? fmt(secondShown) : '—';
+  const imagesText = known ? fmt(imagesShown) : '–';
+  const secondText = (artworksOnly ? galleryTotal != null : !!stats) ? fmt(secondShown) : '–';
   const imagesLabel = artworksOnly
     ? (images === 1 ? 'standalone artwork' : 'standalone artworks')
     : searched
