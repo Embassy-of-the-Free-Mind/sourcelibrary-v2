@@ -59,6 +59,16 @@ describe('isGlobalOnlyTenantPath', () => {
     expect(isGlobalOnlyTenantPath('/api/ngrams')).toBe(true);
   });
 
+  it('blocks the global /library and its whole-catalogue APIs, but not the partner /catalog', () => {
+    expect(isGlobalOnlyTenantPath('/library')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/catalog/results')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/catalog/stats')).toBe(true);
+    // On a partner host /catalog is rewritten to the partner's own catalogue.
+    expect(isGlobalOnlyTenantPath('/catalog')).toBe(false);
+    expect(isGlobalOnlyTenantPath('/catalogue')).toBe(false);
+    expect(isGlobalOnlyTenantPath('/libraryx')).toBe(false);
+  });
+
   it('leaves correctly tenant-scoped routes alone', () => {
     // Verified against production by diffing tenant vs global responses:
     // /api/search/unified returns different results per host, /gallery and

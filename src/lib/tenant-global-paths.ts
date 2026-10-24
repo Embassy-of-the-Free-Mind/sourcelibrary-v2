@@ -115,6 +115,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // assistant over its own shelf needs a different feature, not this one on
   // its domain. The header and footer filter on this list, so the link goes too.
   '/librarian',
+  // The whole catalogue with search and Ask the librarian (moved from
+  // /catalog, 2026-10-18). On a partner host /catalog is rewritten to that
+  // partner's own catalogue; /library is the global one and must not answer
+  // there. The nav keeps linking /catalog, which is right on both hosts.
+  '/library',
 ] as const;
 
 /**
@@ -161,6 +166,9 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Blocking only the page would leave the whole-library agent callable from
   // the partner host.
   '/api/embassy',
+  // The /library page's list and counts: whole-catalogue queries.
+  '/api/catalog/results',
+  '/api/catalog/stats',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

@@ -496,11 +496,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/library',
-        destination: '/search',
-        permanent: true,
-      },
-      {
         source: '/prototype',
         destination: '/',
         permanent: true,

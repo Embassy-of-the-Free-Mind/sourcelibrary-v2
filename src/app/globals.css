@@ -398,6 +398,14 @@ html[data-site-menu-open] [data-cookie-banner] {
   outline: none;
 }
 
+/* Same for the Library's search and ask bars: the bar's own border (darker,
+   with a 1px ring) is the focus state, so the rust ring does not read as an
+   error around the field. */
+[data-catalog-bar] input:focus,
+[data-catalog-bar] input:focus-visible {
+  outline: none;
+}
+
 /* …except the edit-mode textareas, which have no wrapper to carry the state
    and so had no focus indicator at all. It is the surface an editor types the
    most in. */
@@ -1296,3 +1304,19 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 
 /* The lightbox is dark: a white focus ring there, not the site's rust one. */
 [data-article-lightbox] :focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
+/* Catalogue Advanced search: a pending change breathes until applied. */
+@keyframes catalog-breathe {
+  0% { box-shadow: 0 0 0 0 rgba(158, 74, 58, 0.45); }
+  100% { box-shadow: 0 0 0 10px rgba(158, 74, 58, 0); }
+}
+@keyframes catalog-slide {
+  from { left: -40%; }
+  to { left: 100%; }
+}
+/* Library results: each card rises in shortly after the one before it. */
+.catalog-rise {
+  animation: fade-in-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-rise { animation: none; }
+}
