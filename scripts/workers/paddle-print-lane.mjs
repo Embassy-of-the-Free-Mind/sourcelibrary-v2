@@ -40,7 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -435,6 +435,7 @@ async function apply() {
       const workTitle = workTitleOf(book.title);
       const live = new Map((await P.find({ id: { $in: prepped.map((p) => p.pid) } }, { projection: { id: 1, page_number: 1, book_id: 1, ocr: 1, image_width: 1, image_height: 1 } }).toArray()).map((p) => [p.id, p]));
       const writes = [];
+      const med = bookMedians(prepped.flatMap((pg) => pg.leaves.filter((lf) => !lf.blank && fs.existsSync(leafOut(bid, pg.pn, lf.side, 'txt'))).map((lf) => ({ ink: lf.ink, raw: fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'txt'), 'utf8') }))));
       for (const pg of prepped) {
         const p = live.get(pg.pid);
         if (!p || p.book_id !== bid || p.page_number !== pg.pn) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'page_moved_or_gone' }); continue; }
@@ -448,7 +449,7 @@ async function apply() {
           err: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'err')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'err'), 'utf8') : null),
           recheck: !lf.blank && fs.existsSync(recheckOut(bid, pg.pn, lf.side, 'txt')) ? fs.readFileSync(recheckOut(bid, pg.pn, lf.side, 'txt'), 'utf8') : null,
         }));
-        const a = assemblePage(leaves, { workTitle });
+        const a = assemblePage(leaves, { workTitle, med });
         if (a.verdict === 'textless') {
           // never store an empty reading: a stored reading is kept, a page with none stays unread
           if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'paddle_textless_kept', chars: a.han, blank_leaves: pg.leaves.filter((l) => l.blank).length });
