@@ -38,6 +38,7 @@
  */
 
 import { splitInlineTermDefinitions } from './term-definitions.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 export const COMMENTARY_TAGS = ['note', 'image-desc'];
 export const MARK_TAGS = ['margin', 'gloss', 'insert', 'unclear', 'term'];
@@ -87,7 +88,8 @@ export function splitAnnotations(markup, { source = 'inline', termDefinitions = 
   {
     let at = 0;
     const lines = input.split('\n');
-    const plain = lines.filter((l) => !GLOSSARY_LINE.test(l)).join('\n').replace(/<[^>]+>/g, '').toLowerCase();
+    const kept = lines.filter((l) => !GLOSSARY_LINE.test(l)).join('\n');
+    const plain = stripMarkupTags(kept, '').toLowerCase();
     for (const line of lines) {
       const s = at, e = at + line.length;
       at = e + 1;
