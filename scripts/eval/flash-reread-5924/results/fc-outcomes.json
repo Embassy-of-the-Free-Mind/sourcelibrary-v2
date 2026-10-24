@@ -1,0 +1,4519 @@
+[
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p11",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1164,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0c240e36a410eebe",
+  "changed_share": 0.576,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p15",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3269,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9fe85d6ba39bb197",
+  "changed_share": 0.611,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p18",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2975,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cf0574a5a3823ec7",
+  "changed_share": 0.128,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p22",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3016,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3af30cbb49ce6aa4",
+  "changed_share": 0.468,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p25",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2953,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f9d3cf9ef122ddd4",
+  "changed_share": 0.492,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p29",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3215,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ebcb9f3a77efb28a",
+  "changed_share": 0.458,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p32",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2974,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2b2155e4e5465b38",
+  "changed_share": 0.484,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p36",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2966,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "06f78e192e5eef14",
+  "changed_share": 0.333,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p39",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2898,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "82f5ba04bafbe332",
+  "changed_share": 0.464,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p43",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3067,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "35357d68635b5e15",
+  "changed_share": 0.394,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p46",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3013,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f35b7ed7ace3b71d",
+  "changed_share": 0.387,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p50",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3240,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9e97e5b324650021",
+  "changed_share": 0.551,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p54",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3000,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a2179c7ca9654696",
+  "changed_share": 0.5,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p57",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2984,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5f81d14f807e088c",
+  "changed_share": 0.143,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p61",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2899,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8163d81cf09b8ee7",
+  "changed_share": 0.089,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p64",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2069,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "44ed7f028fd6f684",
+  "changed_share": 0.147,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p68",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2431,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d558c300d811d53f",
+  "changed_share": 0.176,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p71",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2264,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "899809c22cc5848a",
+  "changed_share": 0.092,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p75",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2917,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e1137cba184e14dc",
+  "changed_share": 0.176,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p78",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2576,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "346cc006ee4e001c",
+  "changed_share": 0.149,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p82",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2785,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3303f231bdc5b1d4",
+  "changed_share": 0.185,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p85",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2244,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "df4bc4f0a26d75d9",
+  "changed_share": 0.148,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p89",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2276,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "de5ab22089b4a95f",
+  "changed_share": 0.123,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p92",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2745,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "36cd7f6e0ba91523",
+  "changed_share": 0.163,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69dc557bcb6f7429748b8d13-p96",
+  "book": 0,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2801,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "15e1032fd90507df",
+  "changed_share": 0.18,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p40",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2760,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "71f64eed63bd11b0",
+  "changed_share": 0.095,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p70",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2602,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f4319010e0497602",
+  "changed_share": 0.088,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p100",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2346,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b1f516e5587e1ef4",
+  "changed_share": 0.122,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p131",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2545,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c5fab83c458710a2",
+  "changed_share": 0.201,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p160",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2573,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f5da6c220478cc0f",
+  "changed_share": 0.145,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p190",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2650,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e4fd0407637e15a7",
+  "changed_share": 0.087,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p220",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2522,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d8b2d969075aa909",
+  "changed_share": 0.125,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p250",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2491,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "4969a1014af9f5a2",
+  "changed_share": 0.046,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p279",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2802,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fc5b186179c86308",
+  "changed_share": 0.036,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p309",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2759,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "84d9ae6581a1918e",
+  "changed_share": 0.142,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p339",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2590,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8d14b2ce774bb782",
+  "changed_share": 0.039,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p369",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2615,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6d4543759377ab45",
+  "changed_share": 0.111,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p399",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2628,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a0399740e21060ca",
+  "changed_share": 0.073,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p428",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2790,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c0dece5e4f95de45",
+  "changed_share": 0.06,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p460",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2499,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "432439cee5f3a609",
+  "changed_share": 0.034,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p490",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2702,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6ec0e7a0ffdb3360",
+  "changed_share": 0.101,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p520",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2675,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c8d8da4eb38f4d40",
+  "changed_share": 0.083,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p549",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2642,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "54850ce3aa27b673",
+  "changed_share": 0.087,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p579",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2864,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "003c235d3c4cd159",
+  "changed_share": 0.109,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p609",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2725,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d423e830fccee7a8",
+  "changed_share": 0.097,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p639",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2807,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "88f4aa39944df4ea",
+  "changed_share": 0.102,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p668",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2730,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c94f4d48e144f7b3",
+  "changed_share": 0.068,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p698",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2552,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "029342253844d723",
+  "changed_share": 0.069,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p728",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2576,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9b13c45c552b5029",
+  "changed_share": 0.257,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e67768235dc65992a5f-p760",
+  "book": 1,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2774,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d79f9ea917fad46b",
+  "changed_share": 0.259,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p34",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4949,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c1909e61535aedda",
+  "changed_share": 0.258,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p52",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4600,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f81987a4cc6d8003",
+  "changed_share": 0.091,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p70",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4996,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "99780640afe22099",
+  "changed_share": 0.072,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p88",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4301,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "a099e7dd1108fe47",
+  "changed_share": 0.059,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p105",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4963,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d298239408e315d9",
+  "changed_share": 0.088,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p123",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4454,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c946f2e8727e840e",
+  "changed_share": 0.043,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p141",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4886,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "bec61caec96640d4",
+  "changed_share": 0.052,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p158",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4618,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "10c03c87ca9d1768",
+  "changed_share": 0.254,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p176",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4945,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3e0058cfe229ae65",
+  "changed_share": 0.081,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p194",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4854,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f44d96609fc1ac95",
+  "changed_share": 0.052,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p212",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4771,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b891bd84c97d0852",
+  "changed_share": 0.069,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p229",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4937,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5f105ed916e3dffe",
+  "changed_share": 0.067,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p247",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4409,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0f04c4ad726e1c49",
+  "changed_share": 0.038,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p265",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4483,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b106045403a169ae",
+  "changed_share": 0.035,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p282",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4995,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "47392d50814cfbd5",
+  "changed_share": 0.074,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p300",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4990,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "965c65c2afe17e76",
+  "changed_share": 0.127,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p318",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4878,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "dda6aca51e365334",
+  "changed_share": 0.054,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p336",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4546,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b647fca372f3f9f8",
+  "changed_share": 0.075,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p353",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3672,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4842d780463ea22f",
+  "changed_share": 0.098,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p371",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4407,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fd82e7d49dcf2880",
+  "changed_share": 0.116,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p389",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4345,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "98908bae90da18e3",
+  "changed_share": 0.023,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p406",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4594,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2d67c4a3e0647679",
+  "changed_share": 0.078,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p424",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4871,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "75815f548d4021fb",
+  "changed_share": 0.071,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p442",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4851,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3a658d17cfa741b3",
+  "changed_share": 0.306,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e18efd8df28f2db058d-p460",
+  "book": 2,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3926,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f4e15ed62d2df975",
+  "changed_share": 1.627,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p30",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6229,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "ee76181d29edf1ff",
+  "changed_share": 0.23,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p39",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6243,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9138549314e97d5d",
+  "changed_share": 0.24,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p49",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5077,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "17a21035cc4f03e8",
+  "changed_share": 0.108,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p58",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6280,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5e1a388f707bb166",
+  "changed_share": 0.087,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p67",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6314,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c7d6d484252840bb",
+  "changed_share": 0.236,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p76",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5966,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "08d73da7d927af8a",
+  "changed_share": 0.368,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p86",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6190,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2569ac11d0402dbd",
+  "changed_share": 0.174,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p95",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5201,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e2421e298fddc4b5",
+  "changed_share": 0.061,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p104",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6158,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "1cf422e4e330f45e",
+  "changed_share": 0.073,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p113",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6227,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e2aa750e5cc81ed9",
+  "changed_share": 0.076,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p123",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6172,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d6d1f7ba8bc670c9",
+  "changed_share": 0.107,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p132",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5474,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e15837fdc64eb1c4",
+  "changed_share": 0.124,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p141",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6244,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "364edde05a9e57be",
+  "changed_share": 0.051,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p151",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6194,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8927bf2c800028d3",
+  "changed_share": 0.091,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p160",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5924,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "10a77fa64484db1b",
+  "changed_share": 0.156,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p170",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5357,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "bab5beecf48ffce5",
+  "changed_share": 0.108,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p179",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5542,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6f9cfa3f96ca4e44",
+  "changed_share": 0.197,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p188",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6069,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8bf14c91604ea6f9",
+  "changed_share": 0.413,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p197",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5470,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9d52343e6fb30140",
+  "changed_share": 0.074,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p207",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6224,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "aa31efb7efb38763",
+  "changed_share": 0.319,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p216",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 5075,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a174936e24295b64",
+  "changed_share": 0.159,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p225",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6194,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "aee6faad71de799d",
+  "changed_share": 0.059,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p234",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6242,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2f98138adcf4dda8",
+  "changed_share": 0.177,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p244",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6124,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d30ad58cc5feccdf",
+  "changed_share": 0.211,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51eba47b06ecd581960d3-p253",
+  "book": 3,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 6065,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "368bee23965e65ba",
+  "changed_share": 0.057,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p44",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1550,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d1c5ae6bb8ab6a4b",
+  "changed_share": 0.619,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p93",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 911,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e7074eb3a38a57ca",
+  "changed_share": 0.081,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p111",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1502,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f720476c66c948c5",
+  "changed_share": 0.015,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p130",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1736,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cd03006a057f0e5d",
+  "changed_share": 0.172,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p149",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1814,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ddb81e9e92b4941b",
+  "changed_share": 0.044,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p168",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1772,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "df14dfe8a0240cbc",
+  "changed_share": 0.251,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p186",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1495,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8f3997064074b4c4",
+  "changed_share": 0.335,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p205",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1581,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f7c20f1df96e0de0",
+  "changed_share": 0.01,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p224",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1703,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "48ed1fac456519e4",
+  "changed_share": 0.152,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p243",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1244,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "bad3680d0caa285a",
+  "changed_share": 0.041,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p261",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2002,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3a4dad7fcd95a3a6",
+  "changed_share": 0.031,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p280",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1604,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "da48af3e4a2168df",
+  "changed_share": 0.427,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p303",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1483,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3908c47b8d998ee4",
+  "changed_share": 0.055,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p322",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 277,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f9e3882d7edb82ea",
+  "changed_share": 0.857,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p344",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1619,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fb0854563d02cfcd",
+  "changed_share": 0.063,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p362",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1635,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "180e1653b8aa169b",
+  "changed_share": 0.267,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p381",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1602,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "ed2f02ac261ec934",
+  "changed_share": 0.291,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p413",
+  "book": 4,
+  "outcome": "contain",
+  "reason": "The image is cropped at the right margin, cutting off text at the ends of all lines.",
+  "chars": 93,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "60d9e3c4f5dc4606",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p432",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1479,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0666f78398630d59",
+  "changed_share": 0.211,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p450",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1890,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4e6bcb6d8549a108",
+  "changed_share": 0.126,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p469",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1666,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9f3b2da2cd728502",
+  "changed_share": 0.228,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p488",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1665,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "33a0cb6135dc7316",
+  "changed_share": 0.162,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p507",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1480,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ccb491bdd873ce72",
+  "changed_share": 0.171,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p525",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1462,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e027db2d8c346c2f",
+  "changed_share": 0.239,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69c81aed6c6f3cc53c849851-p544",
+  "book": 4,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1707,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "18d40a7fbb9f83a3",
+  "changed_share": 0.369,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p14",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1466,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d53e3a12cdac1728",
+  "changed_share": 0.085,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p29",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1636,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "36f94a613b58ebcd",
+  "changed_share": 0.172,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p44",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1491,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a936635454378c26",
+  "changed_share": 0.19,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p59",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1578,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "426f5e6f32a2e499",
+  "changed_share": 0.123,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p75",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1581,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "57859c1b6fe8e476",
+  "changed_share": 0.278,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p90",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1391,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "d5c65e2bd78c2dd6",
+  "changed_share": 0.03,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p105",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1527,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2a8de9fdf9c50839",
+  "changed_share": 0.1,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p120",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1415,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8f39375509a38a2a",
+  "changed_share": 0.194,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p135",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1489,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cf52f29bb7a540e5",
+  "changed_share": 0.025,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p150",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1379,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ea57a07099e40251",
+  "changed_share": 0.016,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p165",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1442,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ce3e3e3b84dca024",
+  "changed_share": 0.049,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p180",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1477,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "49cd33d0f4d6922b",
+  "changed_share": 0.019,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p196",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1395,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7131744fb48a7fec",
+  "changed_share": 0.01,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p211",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1440,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "03f61bfd13f2f4a7",
+  "changed_share": 0.059,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p226",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1349,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9781276f3daa8b95",
+  "changed_share": 0.039,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p241",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1491,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ada8b4b284b220d5",
+  "changed_share": 0.149,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p256",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1450,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a6c3bf91fe0f2d06",
+  "changed_share": 0.035,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p271",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1449,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7c3e94aced25a431",
+  "changed_share": 0.046,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p286",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1404,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7bfe96df6bad92bc",
+  "changed_share": 0.09,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p301",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1390,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8742ebbd945f9a2f",
+  "changed_share": 0.114,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p316",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1273,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "be3867c6686c21cb",
+  "changed_share": 1.787,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p332",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1140,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7f0d0f334a2dd770",
+  "changed_share": 0.07,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p347",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1358,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "554a5b1a51c72f1b",
+  "changed_share": 0.05,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p362",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1463,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "bc25e526361f5f27",
+  "changed_share": 0.179,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d726120d54bd0376d18-p377",
+  "book": 5,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1221,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0ddf9e6a531c16ad",
+  "changed_share": 0.047,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p30",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1247,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "34669fdf6feb1c42",
+  "changed_share": 0.091,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p40",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1448,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a9c695bbfab4f5e4",
+  "changed_share": 0.258,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p49",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1487,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b07bf9719818de4c",
+  "changed_share": 0.23,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p59",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1380,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "59fef20af12b2536",
+  "changed_share": 0.062,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p68",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1370,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "13663597b96baf15",
+  "changed_share": 0.11,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p78",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1360,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "202cbc283ab44c82",
+  "changed_share": 0.187,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p88",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1230,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a9ab82bf2f67df92",
+  "changed_share": 0.064,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p98",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1118,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cb914364fb2d7f20",
+  "changed_share": 0,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p107",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1303,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "1cf62b486bf2fbb0",
+  "changed_share": 0.164,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p117",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1283,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a7ee682972bd91f5",
+  "changed_share": 0.031,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p126",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1217,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "05a3bd1802172f1d",
+  "changed_share": 0.097,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p137",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1112,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8a0ed6cfe9f78175",
+  "changed_share": 0.222,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p148",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 897,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0369c477f64ee195",
+  "changed_share": 0.065,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p162",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2092,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4f460457bbfb4497",
+  "changed_share": 0.098,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p172",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1337,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c2a3ce96ee3921ca",
+  "changed_share": 0.517,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p181",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1921,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "66048c0b8a641086",
+  "changed_share": 0.109,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p191",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1899,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "eea22b9be9b389ca",
+  "changed_share": 0.039,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p200",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2023,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2b240c27ad1ee96b",
+  "changed_share": 0.022,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p210",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2095,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4bbebdadcd967e6f",
+  "changed_share": 0.03,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p219",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1952,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b8267b81ffd7f1b4",
+  "changed_share": 0.072,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p229",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2033,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "deeb619068c0fd78",
+  "changed_share": 0.081,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p238",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2019,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "1d603409e7d3fa95",
+  "changed_share": 0.09,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p248",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2197,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9a7289bcd85c420d",
+  "changed_share": 0.088,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p257",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1832,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a7581623afe5c47c",
+  "changed_share": 8.179,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b51e7f9a81ef7feb3d64c8-p267",
+  "book": 6,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2028,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "033d5131c2d5576a",
+  "changed_share": 0.041,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p22",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1460,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "321355bb077a4ee0",
+  "changed_share": 0.206,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p35",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1863,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4aaf07b4d48aeae8",
+  "changed_share": 0.175,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p47",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1989,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "defcf9bef37ac764",
+  "changed_share": 0.071,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p60",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1042,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cf01d670f8d1697c",
+  "changed_share": 0.117,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p73",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1851,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fe9e58235ec1f922",
+  "changed_share": 0.05,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p85",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1938,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "da16d4d362c307ac",
+  "changed_share": 0.016,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p99",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1526,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fcb1339365ae0d88",
+  "changed_share": 0.429,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p116",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1652,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5afe76ae53fb4e63",
+  "changed_share": 0.076,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p129",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1574,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a4dd1798a6c5ae90",
+  "changed_share": 0.031,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p141",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1051,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "122c44b690ca01b2",
+  "changed_share": 0.17,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p153",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1846,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "46401e61ed9c80cb",
+  "changed_share": 0.252,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p167",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1447,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b514f151c19adc40",
+  "changed_share": 0.063,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p180",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1644,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5d7073c14cfe9dd7",
+  "changed_share": 0.28,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p192",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1235,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "72af508baa25a742",
+  "changed_share": 0.168,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p205",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2170,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "892426c951bdb00a",
+  "changed_share": 0.298,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p217",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1960,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "21bc8c2afd38431c",
+  "changed_share": 0.14,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p229",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1904,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "198c0478a20bdeeb",
+  "changed_share": 0.385,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p242",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1872,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4e633d3ffee526d0",
+  "changed_share": 0.32,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p254",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1774,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "1c0af48b82edb60a",
+  "changed_share": 0.167,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p266",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1206,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0cffe84d2d54f613",
+  "changed_share": 0.342,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p279",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 2012,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "702bdb0449bbfb28",
+  "changed_share": 0.049,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p292",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1755,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7dfcdcdf27225260",
+  "changed_share": 0.315,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p304",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1753,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "0a723049fa5952ce",
+  "changed_share": 0.327,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p316",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1637,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "62bdd8f8ecc8429f",
+  "changed_share": 0.059,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69af0a0a4c57359b8d2d0f49-p330",
+  "book": 7,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1824,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7973b9566460823f",
+  "changed_share": 0.162,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p14",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1810,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "d23f025787e8a8a3",
+  "changed_share": 1.362,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p27",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1642,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ce7e6922a93572ff",
+  "changed_share": 0.536,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p41",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1807,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "read_file"
+  ],
+  "draft_text_hash": "2e4cce4c0a9c2af6",
+  "changed_share": 0.506,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p54",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1552,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e9aee4510276d5bd",
+  "changed_share": 0.918,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p67",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1820,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5f264959e8c45757",
+  "changed_share": 0.522,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p81",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1733,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f38608869a8d2979",
+  "changed_share": 0.443,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p94",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1823,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a641d7efd15ee8bc",
+  "changed_share": 0.251,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p107",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1677,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6e4a2707b6839428",
+  "changed_share": 0.133,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p121",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1815,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "fcee0d66bcf49404",
+  "changed_share": 0.318,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p134",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1544,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6a18bf39e848127f",
+  "changed_share": 0.098,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p147",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1663,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c44afe718d926f52",
+  "changed_share": 0.333,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p161",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1653,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "1796dcb40c8b822f",
+  "changed_share": 0.382,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p174",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1871,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "9f61755252b49136",
+  "changed_share": 0.384,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p187",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1567,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ffbf1ed8f06a1bf5",
+  "changed_share": 0.159,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p201",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1701,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "de1302cceb167bd9",
+  "changed_share": 0.174,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p214",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1544,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "b035fcae4be7cdf3",
+  "changed_share": 0.277,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p227",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1781,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "925a92a74ae85cd2",
+  "changed_share": 0.313,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p241",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1826,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "54f2925f488c87e5",
+  "changed_share": 0.401,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p254",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1727,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "155e0e6b33f7c621",
+  "changed_share": 0.356,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p267",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1840,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4af10b2dc102faaf",
+  "changed_share": 0.394,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p281",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1814,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a9fb8dd353cf8fed",
+  "changed_share": 0.421,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p294",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1600,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "baa5941cfe930ffa",
+  "changed_share": 0.167,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p307",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1631,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "7bb54b4e36866ccf",
+  "changed_share": 0.184,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p321",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1762,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a86403b83af9502d",
+  "changed_share": 0.435,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69b638be1c1c21a373839d77-p334",
+  "book": 8,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 1629,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "e9138df8048612e0",
+  "changed_share": 0.209,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p25",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 5 (starting \"RAIMVNDVS. Hac vti debebant...\"), but this leaf is page 4 (with running header \"LIGNVM VITAE\" and text beginning \"rit. DIS. Tu ergo...\").",
+  "chars": 186,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "cb6a379cfc5a05e1",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p47",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4316,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "27c96f4f96d50405",
+  "changed_share": 0.941,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p70",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft is the text of page 50 (the next page / verso), whereas this image is page 49 (recto), titled \"IN IOANNEM BRACESCHVM GEBRI INTERPRETEM ANIMADVERSIO, AVthore Roberto Tauladano Aquitano.\"",
+  "chars": 204,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "f1138a6079f7231b",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p92",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4189,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "3310bab89fca8cd1",
+  "changed_share": 0.915,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p115",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 99 (signature N3) of the work, whereas this image is page 94 (catchword \"iam dictis\" leading to page 95).",
+  "chars": 141,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "c1cd2ef9fda5320d",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p137",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft is from page 116 (Cap. VI, \"De praeparatione Iouis in speciali\"), whereas the image shows page 114 with the running header \"DE INVESTIGATIONE\" containing sections on \"Mundatio aluminum\", \"De uitro, & boracibus\", \"Mundatio aceti acerrimi\", and Cap. V (\"De praeparatione & melioratione corporum in genere\").",
+  "chars": 324,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "179faed6bfc08220",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p160",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 136 (De Marte, Cap. XXXVII / Pars Quarta), whereas this image is page 135 (De Saturno, Cap. XXXIIII; De Ioue, Cap. XXXV; De Venere, Cap. XXXVI).",
+  "chars": 180,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5156f5714277eeef",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p182",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4096,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8dd0ae11eb501ed9",
+  "changed_share": 0.93,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p205",
+  "book": 9,
+  "outcome": "no-answer",
+  "reason": "markers: reply cut before <<<END>>>",
+  "chars": 2320,
+  "calls": 2,
+  "rereads": 1,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "750f07e949b0d321",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p227",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 198 containing chapters XXIII–XXVII, whereas this leaf is page 197 containing the title of the third part of Geber's work and chapters XIX–XXI.",
+  "chars": 179,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "912ae79265d2da39",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p250",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3552,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d72fc81c19cc1d87",
+  "changed_share": 0.979,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p272",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 243 (\"postea pone partem illius materiae...\"), whereas this image shows page 242 (\"LIBER SECRETORVM ALCHEMIAE.\" and the beginning of \"LOCI ALIQVOT PRACTICAE EX GEBERO DECLARATI\").",
+  "chars": 215,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "35bf14fa7f10d938",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p295",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4249,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "6b794df0c11c26ad",
+  "changed_share": 0.85,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p318",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 4058,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "372ba84f78aa8efc",
+  "changed_share": 0.91,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p340",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3975,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "8325c92720bd2ece",
+  "changed_share": 0.849,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p363",
+  "book": 9,
+  "outcome": "corrected",
+  "reason": null,
+  "chars": 3856,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "2ea54e5d837c16ed",
+  "changed_share": 1.049,
+  "cli_ocr_cap_tokens": 0,
+  "over_25pct_cap": true
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p385",
+  "book": 9,
+  "outcome": "no-answer",
+  "reason": "markers: reply cut before <<<END>>>",
+  "chars": 1722,
+  "calls": 2,
+  "rereads": 1,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ba15feaa8765317c",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p408",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 132 (\"PRACTICA\"), but the image shows page 131 of Raymundus Lullus with headings on sublimation and fixation.",
+  "chars": 145,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "ca6a239570629454",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p430",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 154 (\"DE ALCHIMIA\"), but this image is page 153 (\"RAYMVNDI LVLLII\") with completely different chapter sections and text.",
+  "chars": 156,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "d080c20012e371b2",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p453",
+  "book": 9,
+  "outcome": "no-answer",
+  "reason": "markers: reply cut before <<<END>>>",
+  "chars": 2116,
+  "calls": 2,
+  "rereads": 1,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "4f98c03bc928200f",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p475",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft is from page 199 (De perfecto magisterio), whereas this image is page 198 (Aristoteles).",
+  "chars": 107,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "106d53e39b23272c",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p498",
+  "book": 9,
+  "outcome": "no-answer",
+  "reason": "markers: reply cut before <<<END>>>",
+  "chars": 3804,
+  "calls": 2,
+  "rereads": 1,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "224ef6c42e1c5298",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p520",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 243 (beginning \"id est spiritus:\"), whereas the image shows page 242 (running header \"DE THESAVRO\", beginning \"coniunctione apparentes\").",
+  "chars": 173,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "5ea36efd560b0c2d",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p543",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft transcribes page 266, whereas this image is page 265 (\"LAPIDIS PHILOSOPHICI NOMENCLATURAE\").",
+  "chars": 111,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "a94776b5f4c18561",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ },
+ {
+  "slug": "69bd9d056120d54bd0372a3a-p565",
+  "book": 9,
+  "outcome": "contain",
+  "reason": "The draft is from page 288, but the image shows page 287 of Geronticon Lib. I.",
+  "chars": 87,
+  "calls": 1,
+  "rereads": 0,
+  "nudged": false,
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ],
+  "draft_text_hash": "af490183718df961",
+  "changed_share": null,
+  "cli_ocr_cap_tokens": null,
+  "over_25pct_cap": false
+ }
+]
