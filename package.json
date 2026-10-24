@@ -44,7 +44,7 @@
     "@elevenlabs/react": "^1.15.2",
     "@google/genai": "^1.49.0",
     "@google/generative-ai": "^0.24.1",
-    "@modelcontextprotocol/sdk": "^1.31.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@octokit/rest": "^22.0.1",
     "@posthog/nextjs-config": "^1.11.1",
     "@posthog/rollup-plugin": "^1.6.0",
