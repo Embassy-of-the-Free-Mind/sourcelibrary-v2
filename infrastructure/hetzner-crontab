@@ -88,6 +88,11 @@
 
 # ── Maintenance ──
 
+# Free Internet Archive text lane, nightly (#4763, Derek 2026-10-24): English IA books with empty pages and >= 5
+# model-read reference pages, each tried at most once per 30 days; every ia-ocr-ingest gate applies; $0, no model calls.
+30 3 * * * cd /root/sourcelibrary && [ -f scripts/import/ia-ocr-nightly.mjs ] && flock -n /tmp/sl-ia-ocr-nightly.lock bash -c "set -a; source .env.production.local; set +a; node scripts/import/ia-ocr-nightly.mjs --state /root/eng-ocr/nightly-state.json --max 300 --apply" >> /var/log/sourcelibrary/ia-ocr-nightly.log 2>&1
+
+
 # Decision queue drainer (#6258): acts on PR answers from /platform/admin/decisions
 # (every 5 min). Default → safe-merge.sh (one merge per run, main tip ≥ 8 min old);
 # Other → PR comment + `blocked`. Uses this box's gh auth; reads/writes decision_answers.
