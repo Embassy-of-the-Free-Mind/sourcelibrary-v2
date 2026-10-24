@@ -139,7 +139,7 @@ function CardContent({ card, count }: { card: VizCard; count: number | null }) {
 
 export default function ExploreNav({ totals }: ExploreNavProps) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {/* Unbuilt views stay in VIZ_CARDS with available: false but are not
           shown: a "Coming soon" card on a main menu page reads as unfinished. */}
       {VIZ_CARDS.filter((card) => card.available).map((card) => {
