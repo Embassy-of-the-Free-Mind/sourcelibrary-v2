@@ -21,6 +21,8 @@ describe('writers that unset STALE_OCR_FIELDS keep the superseded provenance', (
 
   it.each(files)('%s snapshots ocr with keepMeta: true', (f) => {
     const src = fs.readFileSync(f, 'utf8');
+    // writePageText (#7058) keeps the WHOLE prior field object under the revision row's `meta`: nothing to opt into
+    if (/writePageText\([^;]*?'ocr'/s.test(src) && !/saveRevisionsBeforeOverwrite\(/.test(src)) return;
     const calls = [...src.matchAll(/saveRevisionsBeforeOverwrite\([^;]*?'ocr'[^;]*?\)/gs)].map((m) => m[0]);
     expect(calls.length).toBeGreaterThan(0);
     for (const c of calls) expect(c).toMatch(/keepMeta:\s*true/);
