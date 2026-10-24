@@ -348,6 +348,30 @@ Two ways of counting, and they must not be mixed:
 
 Survivor cells read `rows / survivors / duplicates / unresolved`. Duplicates are the same digital object or a match on a full edition key. Unresolved means a partial-key match, a spelling-only match, or a title too short to key.
 
+### Ranked: tier-A survivors by source (global run, 2026-10-24)
+One run over all of `import_candidates` (3.53M rows plus the new harvests), so a printing scanned by two libraries counts once: the first row seen keeps the key, and later rows count as "other copies". Survivors only, dated before 1900. Per-source sections below give the full `rows / survivors / duplicates / unresolved` cells.
+
+| source | A | B | C | main languages | import-ready? |
+|---|---|---|---|---|---|
+| BSB | 2,322 | 21,609 | 206,350 | German, Latin | yes (IIIF) |
+| IA language sweeps | 2,131 | 22,884 | 180,873 | Latin, many | yes (IIIF) |
+| Gallica | 1,063 | 8,912 | 95,565 | French, Latin | yes (IIIF) |
+| IA microfilm (EEBO) | 813 | 2,209 | 67,019 | English | yes, low scan quality |
+| e-rara | 541 | 11,231 | 94,768 | German, Latin, French | yes (IIIF) |
+| Alvin | 511 | 6,629 | 63,277 | Latin, Swedish | needs adapter |
+| SBB | 366 | 4,218 | 29,968 | German, Latin | yes (IIIF) |
+| BVPB (26% harvested) | 365 | 1,653 | 22,243 | Latin, Spanish, Catalan | needs adapter |
+| SLUB | 306 | 3,781 | 39,011 | German | METS lookup |
+| ISTC | 239 | 930 | 14,379 | Latin (incunabula) | links out |
+| Göttingen | 132 | 2,975 | 18,817 | Latin, German | yes (IIIF) |
+| handrit.is | 99 | 250 | 13,888 | Icelandic, Danish | needs adapter (JPEG) |
+| Delpher | 81 | 1,395 | 16,544 | Dutch, French | needs adapter |
+| Kramerius MZK | 72 | 592 | 7,487 | German, Latin, Czech | needs adapter |
+| NB Norway | 62 | 1,244 | 23,870 | Danish, Norwegian, Latin | yes (IIIF) |
+| Kramerius NKP | 45 | 613 | 13,325 | Czech, German | needs adapter |
+
+Counted through Europeana, not deduped (rows, 1400–1899, A / B): BNE 388,974 (2,278 / 61,211) · NKP 111,424 (1,689 / 9,882) · Complutense 94,050 (1,439 / 20,612; Google scans, probably also in HathiTrust/IA) · Internet Culturale 12,460 (186 / 2,780) · BN Portugal 20,862 (118 / 672) · BN Poland 13,425 (84 / 607) · Jagiellonian 28,773 (83 / 1,264) · MDC Catalonia 31,187 (67 / 702) · KB NL 15,338 (55 / 553) · Iceland NUL 2,761 (11 / 24).
+
 ### Acquisition tier survey (tooling)
 - `scripts/audit/candidate-tier-survey.ts` is read-only. Run it with `--source <s>`, `--exclude-source a,b`, or `--input sample.jsonl`. It counts language × tier, dedupes against `books` (fingerprint set, then edition key by key quality, then an early-modern spelling fold as a second, unresolved-only lookup), merges cross-source copies of one edition, and flags candidate translations (the author is held in another language). It writes `<label>-summary.json` and `<label>-survivors-AB.jsonl.gz`; each A/B row carries the `matched` term.
 - `scripts/iiif-discovery/lib/candidate-store.mjs` `upsertCandidates()` is an idempotent insert keyed on (source, source_id). `insertCandidates()` relies on a unique index that does not exist (see `ensureIndexes`), so re-running a harvester that uses it duplicates every row.
