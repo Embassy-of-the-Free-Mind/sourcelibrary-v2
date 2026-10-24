@@ -54,7 +54,7 @@ export function buildInputs(repo = process.cwd()) {
  * builds one deployment at a time and production goes first, so ~20 previews per 3 h, mostly from
  * headless job branches nobody opens, queued for an hour and held up hand merges. A preview builds
  * only when the commit message contains [preview] or the branch starts with preview/. Since #5976's
- * follow-up, vercel.json `git.deploymentEnabled` stops every branch except main and preview/** from
+ * follow-up, vercel.json `git.deploymentEnabled` stops every branch except release (production since #7008) and preview/** from
  * creating a deployment at all (a skip here still waited in the one-slot queue), so in practice a
  * preview means pushing to preview/<name>; this check stays as the second line. To check a page
  * without one, run `next dev --webpack` locally (Turbopack rejects the worktree's symlinked
@@ -87,6 +87,19 @@ function main() {
   })) {
     console.log('Skip: previews are opt-in — add [preview] to the commit message or push a preview/ branch (#5976)');
     process.exit(0);
+  }
+  // A preview somebody asked for always builds (#7008): a new preview/ branch has no previous
+  // deployment, so the diff below would compare against HEAD^ alone and could skip it.
+  if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF) {
+    console.log('Build: preview requested');
+    process.exit(1);
+  }
+  // Production is the `release` branch (#7008), and release.yml pushes to it only when build inputs
+  // changed since the last release, so a push there is already a decision to build. Diffing here
+  // again would compare against HEAD^ alone whenever Vercel has no previous deployment for the branch.
+  if (process.env.VERCEL_GIT_COMMIT_REF === 'release') {
+    console.log('Build: release (release.yml decided, #7008)');
+    process.exit(1);
   }
   const prev = process.env.VERCEL_GIT_PREVIOUS_SHA || 'HEAD^';
   try {

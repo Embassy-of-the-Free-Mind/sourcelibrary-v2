@@ -1,0 +1,25 @@
+{
+ "arm": "fable-strip",
+ "leaf": "5t",
+ "model_requested": "claude-fable-5-1",
+ "model": "claude-fable-5-1",
+ "n_images": 18,
+ "markers_ok": true,
+ "cls": null,
+ "secs": 99.466,
+ "usage": {
+  "input": 68,
+  "output": 4834,
+  "cache_read": 32316,
+  "cache_creation": 6909,
+  "turns": 19,
+  "list_cost_usd": 0.38863900000000007
+ },
+ "prompt_sha256": "e4888f37d13fce70a2819ff5c945be0faf564426f73494d7e0674df24004b65e",
+ "prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ }
+}

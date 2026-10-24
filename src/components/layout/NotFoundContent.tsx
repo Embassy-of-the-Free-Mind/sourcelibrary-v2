@@ -45,7 +45,7 @@ const QUOTES = [
   {
     text: 'The Sky is one, of one and the same essence and substance, both that which is below and that which is above.',
     source: 'Khunrath, Amphitheatre of Eternal Wisdom',
-    href: '/book/amphitheater-of-eternal-wisdom-khunrath?page=301',
+    href: '/book/amphitheatre-of-eternal-wisdom-1609-khunrath?page=306',
   },
   {
     text: 'You are inside the wall of Paradise, where the highest spirit of reason guards the gate.',

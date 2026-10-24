@@ -1,0 +1,10 @@
+ROW 1 | [illegible]।സ്വാലക്ഷണ്യംവൃത്തിസ്ത്രയസ്യസൈഷാഭവത്യസാമാന്യാസാമാന്യകരണ
+ROW 2 | [illegible]വൃത്തിഃപ്രാണാദ്യാവായവഃപഞ്ച।യുഗപച്ചതുഷ്ടയസ്യതുവൃത്തിഃക്രമശശ്ചതസ്യനിൎദ്ദി
+ROW 3 | ഷ്ടാദൃഷ്ടേതഥാപ്യ ‖ ദൃഷ്ടേത്രയസ്യതൽപൂൎവ്വികാവൃ ‖ ത്തിഃ।സ്വാംസ്വാംപ്ര
+ROW 4 | തിപദ്യന്തേപര ‖ സ്പരാകൂതഹേതുകാം।വൃത്തിം ‖ പുരുഷാൎത്ഥഏവ[illegible]
+ROW 5 | [illegible]തുൎന്നകേനചി ‖ ൽകാൎയ്യതേകരണം।[illegible]।ക ‖ രണംത്രയോദശവി
+ROW 6 | ധംതദാഹരണ ‖ ധാരണപ്രകാശകരം।കാൎയ്യ ‖ ഞ്ചതസ്യദശധാഹാ
+ROW 7 | ൎയ്യംധാൎയ്യംപ്രകാ ‖ ശ്യഞ്ച।[illegible]।അന്തഃകരണംത്രി ‖ വിധംദശധാബാഹ്യം
+ROW 8 | ത്രയസ്യവിഷയാഖ്യം।സാമ്പ്രതകാലംബാഹ്യംത്രികാലമാഭ്യന്തരംകരണം।ബുദ്ധീ
+ROW 9 | ന്ദ്രിയാണിതേഷാംപഞ്ചവിശേഷാവിശേഷവിഷയാണി।വാൿഭവതിശബ്ദവിഷയ
+NOTE | I read most of the leaf, about 85–90%, but with real uncertainty. The start of rows 1–2, the end of row 4, and the two short marks after the dandas in rows 5 and 7 (probably verse numbers) are unreadable. Several conjuncts are uncertain: തൽ, സാമ്പ്ര, വാൿഭ, the ൎ marks and some vowel signs. Rows 1–2 and 8–9 run the full width, so I put ‖ only in rows 3–7, where the text is split into columns.

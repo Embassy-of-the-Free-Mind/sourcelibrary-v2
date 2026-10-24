@@ -1,0 +1,2681 @@
+{
+ "guard_constants": {
+  "loop_min_n": 30,
+  "loop_zlib": 0.25,
+  "loop_rep": 20,
+  "overrun_per_ink": 1.2,
+  "collapse_min_ink": 300,
+  "collapse_per_ink": 0.06,
+  "num_min_n": 50,
+  "num_share": 0.6,
+  "num_blobs": 2000,
+  "hold_below_ink": 250
+ },
+ "pages": {
+  "6a3ceb4d95fcd455630554ba": {
+   "cls": "table",
+   "title": "周易圖書質疑·卷一~卷二 (vol 1)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 85,
+    "zlib": 0.71,
+    "rep6": 1,
+    "num": 0.129,
+    "ink": 561.0,
+    "blobs": 651
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 85,
+    "n_hyp": 85,
+    "cer": 0.1176,
+    "bag": 0.1176,
+    "primary": 0.1176,
+    "order_cer": 0.1176
+   },
+   "B2": {
+    "n_ref": 85,
+    "n_hyp": 85,
+    "cer": 0.1176,
+    "bag": 0.1176,
+    "primary": 0.1176,
+    "order_cer": 0.1176
+   },
+   "B2r": {
+    "n_ref": 85,
+    "n_hyp": 85,
+    "cer": 0.1176,
+    "bag": 0.1176,
+    "primary": 0.1176,
+    "order_cer": 0.1176
+   },
+   "GP": {
+    "n_ref": 85,
+    "n_hyp": 85,
+    "cer": 0.1176,
+    "bag": 0.1176,
+    "primary": 0.1176,
+    "order_cer": 0.1176
+   },
+   "good": true
+  },
+  "6a3ceaf895fcd4556305246c": {
+   "cls": "table",
+   "title": "欽定詩經樂譜全書·卷十五 (vol 10)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 122,
+    "zlib": 0.582,
+    "rep6": 1,
+    "num": 0.025,
+    "ink": 821.6,
+    "blobs": 805
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 90,
+    "n_hyp": 122,
+    "cer": 0.4,
+    "bag": 0.2951,
+    "primary": 0.2951,
+    "order_cer": 0.4
+   },
+   "B2": {
+    "n_ref": 90,
+    "n_hyp": 124,
+    "cer": 0.3778,
+    "bag": 0.2742,
+    "primary": 0.2742,
+    "order_cer": 0.3778
+   },
+   "B2r": {
+    "n_ref": 90,
+    "n_hyp": 152,
+    "cer": 0.8,
+    "bag": 0.4211,
+    "primary": 0.4211,
+    "order_cer": 0.8
+   },
+   "GP": {
+    "n_ref": 90,
+    "n_hyp": 122,
+    "cer": 0.4,
+    "bag": 0.2951,
+    "primary": 0.2951,
+    "order_cer": 0.4
+   },
+   "good": false
+  },
+  "6a3c6d5201fe4f593c1ba04b": {
+   "cls": "table",
+   "title": "春秋長歷·卷十 (vol 6)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 52,
+    "zlib": 0.808,
+    "rep6": 1,
+    "num": 0.269,
+    "ink": 351.4,
+    "blobs": 434
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 52,
+    "n_hyp": 52,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "B2": {
+    "n_ref": 52,
+    "n_hyp": 52,
+    "cer": 0.0192,
+    "bag": 0.0192,
+    "primary": 0.0192,
+    "order_cer": 0.0192
+   },
+   "B2r": {
+    "n_ref": 52,
+    "n_hyp": 52,
+    "cer": 0.0385,
+    "bag": 0.0385,
+    "primary": 0.0385,
+    "order_cer": 0.0385
+   },
+   "GP": {
+    "n_ref": 52,
+    "n_hyp": 52,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "good": true
+  },
+  "6a3cb9663d799518cd71dbc8": {
+   "cls": "table",
+   "title": "樂律表微·卷八 (vol 4)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 114,
+    "zlib": 0.749,
+    "rep6": 1,
+    "num": 0.026,
+    "ink": 879.6,
+    "blobs": 597
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 114,
+    "n_hyp": 114,
+    "cer": 0.0175,
+    "bag": 0.0175,
+    "primary": 0.0175,
+    "order_cer": 0.0175
+   },
+   "B2": {
+    "n_ref": 114,
+    "n_hyp": 114,
+    "cer": 0.0614,
+    "bag": 0.0614,
+    "primary": 0.0614,
+    "order_cer": 0.0614
+   },
+   "B2r": {
+    "n_ref": 114,
+    "n_hyp": 114,
+    "cer": 0.0088,
+    "bag": 0.0088,
+    "primary": 0.0088,
+    "order_cer": 0.0088
+   },
+   "GP": {
+    "n_ref": 114,
+    "n_hyp": 114,
+    "cer": 0.0175,
+    "bag": 0.0175,
+    "primary": 0.0175,
+    "order_cer": 0.0175
+   },
+   "good": true
+  },
+  "6a3cbf23f9474f825c165e55": {
+   "cls": "table",
+   "title": "數學·卷五 (vol 3)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 89,
+    "zlib": 0.753,
+    "rep6": 1,
+    "num": 0.045,
+    "ink": 530.8,
+    "blobs": 578
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 96,
+    "n_hyp": 89,
+    "cer": 0.2812,
+    "bag": 0.0833,
+    "primary": 0.0833,
+    "order_cer": 0.2812
+   },
+   "B2": {
+    "n_ref": 96,
+    "n_hyp": 80,
+    "cer": 0.1979,
+    "bag": 0.1875,
+    "primary": 0.1875,
+    "order_cer": 0.1979
+   },
+   "B2r": {
+    "n_ref": 96,
+    "n_hyp": 80,
+    "cer": 0.1875,
+    "bag": 0.1771,
+    "primary": 0.1771,
+    "order_cer": 0.1875
+   },
+   "GP": {
+    "n_ref": 96,
+    "n_hyp": 89,
+    "cer": 0.2812,
+    "bag": 0.0833,
+    "primary": 0.0833,
+    "order_cer": 0.2812
+   },
+   "good": true
+  },
+  "6a3ced974701a906f10e1aa9": {
+   "cls": "table",
+   "title": "數度衍·卷十五~卷十七 (vol 7)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 129,
+    "zlib": 0.68,
+    "rep6": 1,
+    "num": 0.217,
+    "ink": 854.9,
+    "blobs": 783
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0155,
+    "bag": 0.0155,
+    "primary": 0.0155,
+    "order_cer": 0.0155
+   },
+   "B2": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.031,
+    "bag": 0.031,
+    "primary": 0.031,
+    "order_cer": 0.031
+   },
+   "B2r": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0543,
+    "bag": 0.0543,
+    "primary": 0.0543,
+    "order_cer": 0.0543
+   },
+   "GP": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0155,
+    "bag": 0.0155,
+    "primary": 0.0155,
+    "order_cer": 0.0155
+   },
+   "good": true
+  },
+  "6a3ceaff95fcd455630528be": {
+   "cls": "table",
+   "title": "欽定詩經樂譜全書·卷二十二 (vol 17)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 136,
+    "zlib": 0.498,
+    "rep6": 1,
+    "num": 0.0,
+    "ink": 721.7,
+    "blobs": 737
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 136,
+    "n_hyp": 136,
+    "cer": 0.1324,
+    "bag": 0.1029,
+    "primary": 0.1029,
+    "order_cer": 0.1324
+   },
+   "B2": {
+    "n_ref": 136,
+    "n_hyp": 140,
+    "cer": 0.1544,
+    "bag": 0.15,
+    "primary": 0.15,
+    "order_cer": 0.1544
+   },
+   "B2r": {
+    "n_ref": 136,
+    "n_hyp": 113,
+    "cer": 0.1691,
+    "bag": 0.1691,
+    "primary": 0.1691,
+    "order_cer": 0.1691
+   },
+   "GP": {
+    "n_ref": 136,
+    "n_hyp": 136,
+    "cer": 0.1324,
+    "bag": 0.1029,
+    "primary": 0.1029,
+    "order_cer": 0.1324
+   },
+   "good": true
+  },
+  "6a3ceaf495fcd45563052190": {
+   "cls": "table",
+   "title": "欽定詩經樂譜全書·卷八~卷九 (vol 6)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 96,
+    "zlib": 0.635,
+    "rep6": 1,
+    "num": 0.021,
+    "ink": 627.3,
+    "blobs": 651
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 96,
+    "n_hyp": 96,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "B2": {
+    "n_ref": 96,
+    "n_hyp": 96,
+    "cer": 0.1771,
+    "bag": 0.0104,
+    "primary": 0.0104,
+    "order_cer": 0.1771
+   },
+   "B2r": {
+    "n_ref": 96,
+    "n_hyp": 96,
+    "cer": 0.1771,
+    "bag": 0.0104,
+    "primary": 0.0104,
+    "order_cer": 0.1771
+   },
+   "GP": {
+    "n_ref": 96,
+    "n_hyp": 96,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "good": true
+  },
+  "6a3cf0118642f0445b16232a": {
+   "cls": "table",
+   "title": "御製歷象考成·下編·卷五~卷十 (vol 13)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 170,
+    "zlib": 0.494,
+    "rep6": 2,
+    "num": 0.041,
+    "ink": 695.7,
+    "blobs": 925
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0471,
+    "bag": 0.0471,
+    "primary": 0.0471,
+    "order_cer": 0.0471
+   },
+   "B2": {
+    "n_ref": 170,
+    "n_hyp": 16,
+    "cer": 0.9059,
+    "bag": 0.9059,
+    "primary": 0.9059,
+    "order_cer": 0.9059
+   },
+   "B2r": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0059,
+    "bag": 0.0059,
+    "primary": 0.0059,
+    "order_cer": 0.0059
+   },
+   "GP": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0471,
+    "bag": 0.0471,
+    "primary": 0.0471,
+    "order_cer": 0.0471
+   },
+   "good": true
+  },
+  "6a3cf0198642f0445b1628ed": {
+   "cls": "table",
+   "title": "御製歷象考成·表·卷十一~卷十二 (vol 22)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE",
+    "NUMERIC"
+   ],
+   "feat": {
+    "n": 5,
+    "zlib": 1.6,
+    "rep6": 0,
+    "num": 0.0,
+    "ink": 720.5,
+    "blobs": 2384
+   },
+   "fail": "collapse",
+   "P0": {
+    "n_ref": 773,
+    "n_hyp": 5,
+    "cer": 0.9961,
+    "bag": 0.9948,
+    "primary": 0.9948,
+    "order_cer": 0.9961
+   },
+   "B2": {
+    "n_ref": 773,
+    "n_hyp": 833,
+    "cer": 0.3376,
+    "bag": 0.0852,
+    "primary": 0.0852,
+    "order_cer": 0.3376
+   },
+   "B2r": {
+    "n_ref": 773,
+    "n_hyp": 18,
+    "cer": 0.9845,
+    "bag": 0.9767,
+    "primary": 0.9767,
+    "order_cer": 0.9845
+   },
+   "GP": {
+    "n_ref": 773,
+    "n_hyp": 833,
+    "cer": 0.3376,
+    "bag": 0.0852,
+    "primary": 0.0852,
+    "order_cer": 0.3376
+   },
+   "good": false
+  },
+  "6a3cec5e8642f0445b15bdcc": {
+   "cls": "table",
+   "title": "帝王經世圖譜·卷一~卷三 (vol 8)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 103,
+    "zlib": 0.68,
+    "rep6": 1,
+    "num": 0.097,
+    "ink": 544.2,
+    "blobs": 442
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 126,
+    "n_hyp": 103,
+    "cer": 0.1825,
+    "bag": 0.1825,
+    "primary": 0.1825,
+    "order_cer": 0.1825
+   },
+   "B2": {
+    "n_ref": 126,
+    "n_hyp": 104,
+    "cer": 0.246,
+    "bag": 0.2302,
+    "primary": 0.2302,
+    "order_cer": 0.246
+   },
+   "B2r": {
+    "n_ref": 126,
+    "n_hyp": 127,
+    "cer": 0.1508,
+    "bag": 0.0236,
+    "primary": 0.0236,
+    "order_cer": 0.1508
+   },
+   "GP": {
+    "n_ref": 126,
+    "n_hyp": 103,
+    "cer": 0.1825,
+    "bag": 0.1825,
+    "primary": 0.1825,
+    "order_cer": 0.1825
+   },
+   "good": true
+  },
+  "6a3ced944701a906f10e1971": {
+   "cls": "table",
+   "title": "數度衍·卷六~卷七 (vol 3)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 145,
+    "zlib": 0.607,
+    "rep6": 1,
+    "num": 0.276,
+    "ink": 665.3,
+    "blobs": 879
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 153,
+    "n_hyp": 145,
+    "cer": 0.0523,
+    "bag": 0.0523,
+    "primary": 0.0523,
+    "order_cer": 0.0523
+   },
+   "B2": {
+    "n_ref": 153,
+    "n_hyp": 145,
+    "cer": 0.0523,
+    "bag": 0.0523,
+    "primary": 0.0523,
+    "order_cer": 0.0523
+   },
+   "B2r": {
+    "n_ref": 153,
+    "n_hyp": 146,
+    "cer": 0.0588,
+    "bag": 0.0523,
+    "primary": 0.0523,
+    "order_cer": 0.0588
+   },
+   "GP": {
+    "n_ref": 153,
+    "n_hyp": 145,
+    "cer": 0.0523,
+    "bag": 0.0523,
+    "primary": 0.0523,
+    "order_cer": 0.0523
+   },
+   "good": true
+  },
+  "6a3cf0158642f0445b162608": {
+   "cls": "table",
+   "title": "御製歷象考成·表·卷六之一~卷六之二 (vol 18)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "LOOP",
+    "OVERRUN",
+    "NUMERIC"
+   ],
+   "feat": {
+    "n": 4080,
+    "zlib": 0.013,
+    "rep6": 806,
+    "num": 0.992,
+    "ink": 687.6,
+    "blobs": 2052
+   },
+   "fail": "loop",
+   "P0": {
+    "n_ref": 682,
+    "n_hyp": 4080,
+    "cer": 5.544,
+    "bag": 0.9235,
+    "primary": 0.9235,
+    "order_cer": 5.544
+   },
+   "B2": {
+    "n_ref": 682,
+    "n_hyp": 681,
+    "cer": 0.783,
+    "bag": 0.0132,
+    "primary": 0.0132,
+    "order_cer": 0.783
+   },
+   "B2r": {
+    "n_ref": 682,
+    "n_hyp": 672,
+    "cer": 0.7801,
+    "bag": 0.0264,
+    "primary": 0.0264,
+    "order_cer": 0.7801
+   },
+   "GP": {
+    "n_ref": 682,
+    "n_hyp": 681,
+    "cer": 0.783,
+    "bag": 0.0132,
+    "primary": 0.0132,
+    "order_cer": 0.783
+   },
+   "good": false
+  },
+  "6a3ceaf795fcd45563052427": {
+   "cls": "table",
+   "title": "欽定詩經樂譜全書·卷十四 (vol 9)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 133,
+    "zlib": 0.627,
+    "rep6": 1,
+    "num": 0.053,
+    "ink": 710.6,
+    "blobs": 772
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 133,
+    "n_hyp": 133,
+    "cer": 0.0677,
+    "bag": 0.015,
+    "primary": 0.015,
+    "order_cer": 0.0677
+   },
+   "B2": {
+    "n_ref": 133,
+    "n_hyp": 133,
+    "cer": 0.015,
+    "bag": 0.015,
+    "primary": 0.015,
+    "order_cer": 0.015
+   },
+   "B2r": {
+    "n_ref": 133,
+    "n_hyp": 133,
+    "cer": 0.0301,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0301
+   },
+   "GP": {
+    "n_ref": 133,
+    "n_hyp": 133,
+    "cer": 0.0677,
+    "bag": 0.015,
+    "primary": 0.015,
+    "order_cer": 0.0677
+   },
+   "good": true
+  },
+  "6a3c6b1739b4508b04e409a9": {
+   "cls": "table",
+   "title": "鄉黨圖考·卷一 (vol 1)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 122,
+    "zlib": 0.713,
+    "rep6": 1,
+    "num": 0.107,
+    "ink": 456.3,
+    "blobs": 580
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 123,
+    "n_hyp": 122,
+    "cer": 0.0163,
+    "bag": 0.0163,
+    "primary": 0.0163,
+    "order_cer": 0.0163
+   },
+   "B2": {
+    "n_ref": 123,
+    "n_hyp": 130,
+    "cer": 0.0813,
+    "bag": 0.0615,
+    "primary": 0.0615,
+    "order_cer": 0.0813
+   },
+   "B2r": {
+    "n_ref": 123,
+    "n_hyp": 122,
+    "cer": 0.0163,
+    "bag": 0.0163,
+    "primary": 0.0163,
+    "order_cer": 0.0163
+   },
+   "GP": {
+    "n_ref": 123,
+    "n_hyp": 122,
+    "cer": 0.0163,
+    "bag": 0.0163,
+    "primary": 0.0163,
+    "order_cer": 0.0163
+   },
+   "good": true
+  },
+  "6a3ceb4d95fcd45563055413": {
+   "cls": "table",
+   "title": "周易圖書質疑·卷三~卷五 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 81,
+    "zlib": 0.77,
+    "rep6": 1,
+    "num": 0.062,
+    "ink": 531.8,
+    "blobs": 736
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 81,
+    "n_hyp": 81,
+    "cer": 0.0123,
+    "bag": 0.0123,
+    "primary": 0.0123,
+    "order_cer": 0.0123
+   },
+   "B2": {
+    "n_ref": 81,
+    "n_hyp": 81,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "B2r": {
+    "n_ref": 81,
+    "n_hyp": 81,
+    "cer": 0.0123,
+    "bag": 0.0123,
+    "primary": 0.0123,
+    "order_cer": 0.0123
+   },
+   "GP": {
+    "n_ref": 81,
+    "n_hyp": 81,
+    "cer": 0.0123,
+    "bag": 0.0123,
+    "primary": 0.0123,
+    "order_cer": 0.0123
+   },
+   "good": true
+  },
+  "6a3ced904701a906f10e1740": {
+   "cls": "table",
+   "title": "幾何論約·卷三~卷五 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 149,
+    "zlib": 0.582,
+    "rep6": 2,
+    "num": 0.101,
+    "ink": 729.9,
+    "blobs": 796
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 149,
+    "n_hyp": 149,
+    "cer": 0.0134,
+    "bag": 0.0134,
+    "primary": 0.0134,
+    "order_cer": 0.0134
+   },
+   "B2": {
+    "n_ref": 149,
+    "n_hyp": 157,
+    "cer": 0.0872,
+    "bag": 0.0828,
+    "primary": 0.0828,
+    "order_cer": 0.0872
+   },
+   "B2r": {
+    "n_ref": 149,
+    "n_hyp": 149,
+    "cer": 0.0336,
+    "bag": 0.0336,
+    "primary": 0.0336,
+    "order_cer": 0.0336
+   },
+   "GP": {
+    "n_ref": 149,
+    "n_hyp": 149,
+    "cer": 0.0134,
+    "bag": 0.0134,
+    "primary": 0.0134,
+    "order_cer": 0.0134
+   },
+   "good": true
+  },
+  "6a3cf01a8642f0445b162a59": {
+   "cls": "table",
+   "title": "御製歷象考成·表·卷十五 (vol 25)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "LOOP",
+    "OVERRUN",
+    "NUMERIC"
+   ],
+   "feat": {
+    "n": 6823,
+    "zlib": 0.006,
+    "rep6": 682,
+    "num": 1.0,
+    "ink": 1065.0,
+    "blobs": 2058
+   },
+   "fail": "loop",
+   "P0": {
+    "n_ref": 533,
+    "n_hyp": 6823,
+    "cer": 11.9043,
+    "bag": 0.9298,
+    "primary": 0.9298,
+    "order_cer": 11.9043
+   },
+   "B2": {
+    "n_ref": 533,
+    "n_hyp": 545,
+    "cer": 0.7692,
+    "bag": 0.044,
+    "primary": 0.044,
+    "order_cer": 0.7692
+   },
+   "B2r": {
+    "n_ref": 533,
+    "n_hyp": 533,
+    "cer": 0.758,
+    "bag": 0.0188,
+    "primary": 0.0188,
+    "order_cer": 0.758
+   },
+   "GP": {
+    "n_ref": 533,
+    "n_hyp": 545,
+    "cer": 0.7692,
+    "bag": 0.044,
+    "primary": 0.044,
+    "order_cer": 0.7692
+   },
+   "good": false
+  },
+  "6a3ceaf995fcd4556305252d": {
+   "cls": "table",
+   "title": "欽定詩經樂譜全書·卷十六 (vol 11)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 123,
+    "zlib": 0.762,
+    "rep6": 1,
+    "num": 0.024,
+    "ink": 893.4,
+    "blobs": 689
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 127,
+    "n_hyp": 123,
+    "cer": 0.0551,
+    "bag": 0.0551,
+    "primary": 0.0551,
+    "order_cer": 0.0551
+   },
+   "B2": {
+    "n_ref": 127,
+    "n_hyp": 127,
+    "cer": 0.0472,
+    "bag": 0.0157,
+    "primary": 0.0157,
+    "order_cer": 0.0472
+   },
+   "B2r": {
+    "n_ref": 127,
+    "n_hyp": 127,
+    "cer": 0.0079,
+    "bag": 0.0079,
+    "primary": 0.0079,
+    "order_cer": 0.0079
+   },
+   "GP": {
+    "n_ref": 127,
+    "n_hyp": 123,
+    "cer": 0.0551,
+    "bag": 0.0551,
+    "primary": 0.0551,
+    "order_cer": 0.0551
+   },
+   "good": true
+  },
+  "6a3cc14cec254ff6cae0b09b": {
+   "cls": "table",
+   "title": "易圖明辨·卷六~卷七 (vol 4)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 149,
+    "zlib": 0.647,
+    "rep6": 2,
+    "num": 0.128,
+    "ink": 946.5,
+    "blobs": 853
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 149,
+    "n_hyp": 149,
+    "cer": 0.0201,
+    "bag": 0.0201,
+    "primary": 0.0201,
+    "order_cer": 0.0201
+   },
+   "B2": {
+    "n_ref": 149,
+    "n_hyp": 150,
+    "cer": 0.0134,
+    "bag": 0.0133,
+    "primary": 0.0133,
+    "order_cer": 0.0134
+   },
+   "B2r": {
+    "n_ref": 149,
+    "n_hyp": 150,
+    "cer": 0.0134,
+    "bag": 0.0133,
+    "primary": 0.0133,
+    "order_cer": 0.0134
+   },
+   "GP": {
+    "n_ref": 149,
+    "n_hyp": 149,
+    "cer": 0.0201,
+    "bag": 0.0201,
+    "primary": 0.0201,
+    "order_cer": 0.0201
+   },
+   "good": true
+  },
+  "6a3ceb4e95fcd45563055508": {
+   "cls": "table",
+   "title": "周易圖書質疑·卷六~卷八 (vol 3)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 126,
+    "zlib": 0.712,
+    "rep6": 1,
+    "num": 0.071,
+    "ink": 644.7,
+    "blobs": 730
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0159,
+    "bag": 0.0159,
+    "primary": 0.0159,
+    "order_cer": 0.0159
+   },
+   "B2": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0079,
+    "bag": 0.0079,
+    "primary": 0.0079,
+    "order_cer": 0.0079
+   },
+   "B2r": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0238,
+    "bag": 0.0238,
+    "primary": 0.0238,
+    "order_cer": 0.0238
+   },
+   "GP": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0159,
+    "bag": 0.0159,
+    "primary": 0.0159,
+    "order_cer": 0.0159
+   },
+   "good": true
+  },
+  "6a3cf00e8642f0445b1621f9": {
+   "cls": "table",
+   "title": "御製歷象考成·表·卷一~卷二 (vol 14)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 118,
+    "zlib": 0.621,
+    "rep6": 1,
+    "num": 0.263,
+    "ink": 667.0,
+    "blobs": 675
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 118,
+    "n_hyp": 118,
+    "cer": 0.0085,
+    "bag": 0.0085,
+    "primary": 0.0085,
+    "order_cer": 0.0085
+   },
+   "B2": {
+    "n_ref": 118,
+    "n_hyp": 118,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "B2r": {
+    "n_ref": 118,
+    "n_hyp": 118,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0,
+    "order_cer": 0.0
+   },
+   "GP": {
+    "n_ref": 118,
+    "n_hyp": 118,
+    "cer": 0.0085,
+    "bag": 0.0085,
+    "primary": 0.0085,
+    "order_cer": 0.0085
+   },
+   "good": true
+  },
+  "6a3cec598642f0445b15bba1": {
+   "cls": "table",
+   "title": "帝王經世圖譜·卷七~卷八 (vol 4)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 167,
+    "zlib": 0.691,
+    "rep6": 1,
+    "num": 0.144,
+    "ink": 916.6,
+    "blobs": 703
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 167,
+    "n_hyp": 167,
+    "cer": 0.024,
+    "bag": 0.024,
+    "primary": 0.024,
+    "order_cer": 0.024
+   },
+   "B2": {
+    "n_ref": 167,
+    "n_hyp": 167,
+    "cer": 0.012,
+    "bag": 0.012,
+    "primary": 0.012,
+    "order_cer": 0.012
+   },
+   "B2r": {
+    "n_ref": 167,
+    "n_hyp": 167,
+    "cer": 0.006,
+    "bag": 0.006,
+    "primary": 0.006,
+    "order_cer": 0.006
+   },
+   "GP": {
+    "n_ref": 167,
+    "n_hyp": 167,
+    "cer": 0.024,
+    "bag": 0.024,
+    "primary": 0.024,
+    "order_cer": 0.024
+   },
+   "good": true
+  },
+  "6a3ceb5495fcd4556305581d": {
+   "cls": "table",
+   "title": "周易圖書質疑·卷十二~卷十四 (vol 5)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 130,
+    "zlib": 0.779,
+    "rep6": 1,
+    "num": 0.038,
+    "ink": 768.1,
+    "blobs": 705
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 130,
+    "n_hyp": 130,
+    "cer": 0.0308,
+    "bag": 0.0308,
+    "primary": 0.0308,
+    "order_cer": 0.0308
+   },
+   "B2": {
+    "n_ref": 130,
+    "n_hyp": 130,
+    "cer": 0.0154,
+    "bag": 0.0154,
+    "primary": 0.0154,
+    "order_cer": 0.0154
+   },
+   "B2r": {
+    "n_ref": 130,
+    "n_hyp": 130,
+    "cer": 0.0385,
+    "bag": 0.0385,
+    "primary": 0.0385,
+    "order_cer": 0.0385
+   },
+   "GP": {
+    "n_ref": 130,
+    "n_hyp": 130,
+    "cer": 0.0308,
+    "bag": 0.0308,
+    "primary": 0.0308,
+    "order_cer": 0.0308
+   },
+   "good": true
+  },
+  "6a3ced934701a906f10e18eb": {
+   "cls": "table",
+   "title": "數度衍·卷二~卷五 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 170,
+    "zlib": 0.614,
+    "rep6": 2,
+    "num": 0.129,
+    "ink": 745.3,
+    "blobs": 1033
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0176,
+    "bag": 0.0176,
+    "primary": 0.0176,
+    "order_cer": 0.0176
+   },
+   "B2": {
+    "n_ref": 170,
+    "n_hyp": 176,
+    "cer": 0.0588,
+    "bag": 0.0568,
+    "primary": 0.0568,
+    "order_cer": 0.0588
+   },
+   "B2r": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0235,
+    "bag": 0.0235,
+    "primary": 0.0235,
+    "order_cer": 0.0235
+   },
+   "GP": {
+    "n_ref": 170,
+    "n_hyp": 170,
+    "cer": 0.0176,
+    "bag": 0.0176,
+    "primary": 0.0176,
+    "order_cer": 0.0176
+   },
+   "good": true
+  },
+  "6a3cec158642f0445b159694": {
+   "cls": "mixed",
+   "title": "琴譜合璧·卷十一 (vol 10)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE"
+   ],
+   "feat": {
+    "n": 1,
+    "zlib": 3.667,
+    "rep6": 0,
+    "num": 0.0,
+    "ink": 505.3,
+    "blobs": 461
+   },
+   "fail": "collapse",
+   "P0": {
+    "n_ref": 27,
+    "n_hyp": 1,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "B2": {
+    "n_ref": 27,
+    "n_hyp": 7,
+    "cer": 1.0,
+    "bag": 0.963,
+    "primary": 1.0
+   },
+   "B2r": {
+    "n_ref": 27,
+    "n_hyp": 37,
+    "cer": 0.4074,
+    "bag": 0.2973,
+    "primary": 0.4074
+   },
+   "GP": {
+    "n_ref": 27,
+    "n_hyp": 7,
+    "cer": 1.0,
+    "bag": 0.963,
+    "primary": 1.0
+   },
+   "good": false
+  },
+  "6a3cf03b8642f0445b1639af": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷四十一 (vol 22)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 162,
+    "zlib": 0.759,
+    "rep6": 1,
+    "num": 0.13,
+    "ink": 1304.5,
+    "blobs": 1041
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 162,
+    "n_hyp": 162,
+    "cer": 0.0123,
+    "bag": 0.0123,
+    "primary": 0.0123
+   },
+   "B2": {
+    "n_ref": 162,
+    "n_hyp": 162,
+    "cer": 0.0185,
+    "bag": 0.0185,
+    "primary": 0.0185
+   },
+   "B2r": {
+    "n_ref": 162,
+    "n_hyp": 162,
+    "cer": 0.037,
+    "bag": 0.037,
+    "primary": 0.037
+   },
+   "GP": {
+    "n_ref": 162,
+    "n_hyp": 162,
+    "cer": 0.0123,
+    "bag": 0.0123,
+    "primary": 0.0123
+   },
+   "good": true
+  },
+  "6a3cf05d8642f0445b164b7d": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷九十七~卷九十八 (vol 51)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 110,
+    "zlib": 0.767,
+    "rep6": 2,
+    "num": 0.009,
+    "ink": 844.9,
+    "blobs": 815
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 110,
+    "n_hyp": 110,
+    "cer": 0.0364,
+    "bag": 0.0364,
+    "primary": 0.0364
+   },
+   "B2": {
+    "n_ref": 110,
+    "n_hyp": 110,
+    "cer": 0.0455,
+    "bag": 0.0455,
+    "primary": 0.0455
+   },
+   "B2r": {
+    "n_ref": 110,
+    "n_hyp": 111,
+    "cer": 0.0636,
+    "bag": 0.0631,
+    "primary": 0.0636
+   },
+   "GP": {
+    "n_ref": 110,
+    "n_hyp": 110,
+    "cer": 0.0364,
+    "bag": 0.0364,
+    "primary": 0.0364
+   },
+   "good": true
+  },
+  "6a3cf04f8642f0445b16458b": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷八十一~卷八十二 (vol 41)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 250,
+    "zlib": 0.601,
+    "rep6": 2,
+    "num": 0.052,
+    "ink": 1255.3,
+    "blobs": 1163
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 241,
+    "n_hyp": 242,
+    "cer": 0.0124,
+    "bag": 0.0124,
+    "primary": 0.0124
+   },
+   "B2": {
+    "n_ref": 241,
+    "n_hyp": 221,
+    "cer": 0.1494,
+    "bag": 0.083,
+    "primary": 0.1494
+   },
+   "B2r": {
+    "n_ref": 241,
+    "n_hyp": 241,
+    "cer": 0.0207,
+    "bag": 0.0041,
+    "primary": 0.0207
+   },
+   "GP": {
+    "n_ref": 241,
+    "n_hyp": 242,
+    "cer": 0.0124,
+    "bag": 0.0124,
+    "primary": 0.0124
+   },
+   "good": true
+  },
+  "6a3cf04a8642f0445b164296": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷七十一~卷七十四 (vol 38)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 129,
+    "zlib": 0.729,
+    "rep6": 1,
+    "num": 0.14,
+    "ink": 969.0,
+    "blobs": 743
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0
+   },
+   "B2": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.031,
+    "bag": 0.031,
+    "primary": 0.031
+   },
+   "B2r": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.031,
+    "bag": 0.031,
+    "primary": 0.031
+   },
+   "GP": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0,
+    "bag": 0.0,
+    "primary": 0.0
+   },
+   "good": true
+  },
+  "6a3cf02c8642f0445b163221": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷十七~卷十八 (vol 10)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 71,
+    "zlib": 0.507,
+    "rep6": 4,
+    "num": 0.056,
+    "ink": 372.1,
+    "blobs": 656
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 67,
+    "n_hyp": 65,
+    "cer": 0.1642,
+    "bag": 0.0597,
+    "primary": 0.1642
+   },
+   "B2": {
+    "n_ref": 67,
+    "n_hyp": 66,
+    "cer": 0.0149,
+    "bag": 0.0149,
+    "primary": 0.0149
+   },
+   "B2r": {
+    "n_ref": 67,
+    "n_hyp": 66,
+    "cer": 0.0149,
+    "bag": 0.0149,
+    "primary": 0.0149
+   },
+   "GP": {
+    "n_ref": 67,
+    "n_hyp": 65,
+    "cer": 0.1642,
+    "bag": 0.0597,
+    "primary": 0.1642
+   },
+   "good": true
+  },
+  "6a3cebfd8642f0445b158b97": {
+   "cls": "mixed",
+   "title": "欽定西域同文志·卷十三~卷十四 (vol 20)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 202,
+    "zlib": 0.693,
+    "rep6": 1,
+    "num": 0.03,
+    "ink": 750.1,
+    "blobs": 1144
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 189,
+    "n_hyp": 193,
+    "cer": 0.6455,
+    "bag": 0.0725,
+    "primary": 0.6455
+   },
+   "B2": {
+    "n_ref": 189,
+    "n_hyp": 11,
+    "cer": 0.9683,
+    "bag": 0.9577,
+    "primary": 0.9683
+   },
+   "B2r": {
+    "n_ref": 189,
+    "n_hyp": 6,
+    "cer": 0.9683,
+    "bag": 0.9683,
+    "primary": 0.9683
+   },
+   "GP": {
+    "n_ref": 189,
+    "n_hyp": 193,
+    "cer": 0.6455,
+    "bag": 0.0725,
+    "primary": 0.6455
+   },
+   "good": false
+  },
+  "6a3cebfd8642f0445b158c33": {
+   "cls": "mixed",
+   "title": "欽定西域同文志·卷十一~卷十二 (vol 19)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 46,
+    "zlib": 0.855,
+    "rep6": 1,
+    "num": 0.087,
+    "ink": 553.8,
+    "blobs": 690
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 70,
+    "n_hyp": 43,
+    "cer": 0.5,
+    "bag": 0.4857,
+    "primary": 0.5
+   },
+   "B2": {
+    "n_ref": 70,
+    "n_hyp": 11,
+    "cer": 0.9286,
+    "bag": 0.9143,
+    "primary": 0.9286
+   },
+   "B2r": {
+    "n_ref": 70,
+    "n_hyp": 80,
+    "cer": 0.4857,
+    "bag": 0.275,
+    "primary": 0.4857
+   },
+   "GP": {
+    "n_ref": 70,
+    "n_hyp": 43,
+    "cer": 0.5,
+    "bag": 0.4857,
+    "primary": 0.5
+   },
+   "good": false
+  },
+  "6a3cf03e8642f0445b163b8e": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷四十五~卷四十六 (vol 24)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE"
+   ],
+   "feat": {
+    "n": 32,
+    "zlib": 1.062,
+    "rep6": 1,
+    "num": 0.094,
+    "ink": 649.2,
+    "blobs": 554
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 32,
+    "n_hyp": 32,
+    "cer": 0.0625,
+    "bag": 0.0625,
+    "primary": 0.0625
+   },
+   "B2": {
+    "n_ref": 32,
+    "n_hyp": 40,
+    "cer": 0.2812,
+    "bag": 0.225,
+    "primary": 0.2812
+   },
+   "B2r": {
+    "n_ref": 32,
+    "n_hyp": 40,
+    "cer": 0.2812,
+    "bag": 0.225,
+    "primary": 0.2812
+   },
+   "GP": {
+    "n_ref": 32,
+    "n_hyp": 40,
+    "cer": 0.2812,
+    "bag": 0.225,
+    "primary": 0.2812
+   },
+   "good": true
+  },
+  "6a3cf0238642f0445b162c16": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷首下 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 126,
+    "zlib": 0.762,
+    "rep6": 1,
+    "num": 0.008,
+    "ink": 1003.3,
+    "blobs": 978
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0159,
+    "bag": 0.0159,
+    "primary": 0.0159
+   },
+   "B2": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0159,
+    "bag": 0.0159,
+    "primary": 0.0159
+   },
+   "B2r": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0238,
+    "bag": 0.0238,
+    "primary": 0.0238
+   },
+   "GP": {
+    "n_ref": 126,
+    "n_hyp": 126,
+    "cer": 0.0159,
+    "bag": 0.0159,
+    "primary": 0.0159
+   },
+   "good": true
+  },
+  "6a3cf0338642f0445b1634d0": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷二十八~卷二十九 (vol 15)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 55,
+    "zlib": 0.739,
+    "rep6": 2,
+    "num": 0.055,
+    "ink": 350.2,
+    "blobs": 678
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 61,
+    "n_hyp": 51,
+    "cer": 0.3279,
+    "bag": 0.2295,
+    "primary": 0.3279
+   },
+   "B2": {
+    "n_ref": 61,
+    "n_hyp": 62,
+    "cer": 0.1803,
+    "bag": 0.0645,
+    "primary": 0.1803
+   },
+   "B2r": {
+    "n_ref": 61,
+    "n_hyp": 60,
+    "cer": 0.082,
+    "bag": 0.0164,
+    "primary": 0.082
+   },
+   "GP": {
+    "n_ref": 61,
+    "n_hyp": 51,
+    "cer": 0.3279,
+    "bag": 0.2295,
+    "primary": 0.3279
+   },
+   "good": false
+  },
+  "6a3cc328af74b230c690d02b": {
+   "cls": "mixed",
+   "title": "正蒙初義·卷十五~卷十七 (vol 7)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 162,
+    "zlib": 0.615,
+    "rep6": 1,
+    "num": 0.068,
+    "ink": 963.8,
+    "blobs": 850
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 152,
+    "n_hyp": 152,
+    "cer": 0.0395,
+    "bag": 0.0329,
+    "primary": 0.0395
+   },
+   "B2": {
+    "n_ref": 152,
+    "n_hyp": 152,
+    "cer": 0.0329,
+    "bag": 0.0263,
+    "primary": 0.0329
+   },
+   "B2r": {
+    "n_ref": 152,
+    "n_hyp": 152,
+    "cer": 0.0263,
+    "bag": 0.0197,
+    "primary": 0.0263
+   },
+   "GP": {
+    "n_ref": 152,
+    "n_hyp": 152,
+    "cer": 0.0395,
+    "bag": 0.0329,
+    "primary": 0.0395
+   },
+   "good": true
+  },
+  "6a3cc323af74b230c690cc1f": {
+   "cls": "mixed",
+   "title": "注解正蒙·卷下 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 122,
+    "zlib": 0.776,
+    "rep6": 1,
+    "num": 0.025,
+    "ink": 777.1,
+    "blobs": 766
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 122,
+    "n_hyp": 122,
+    "cer": 0.0164,
+    "bag": 0.0164,
+    "primary": 0.0164
+   },
+   "B2": {
+    "n_ref": 122,
+    "n_hyp": 122,
+    "cer": 0.0164,
+    "bag": 0.0164,
+    "primary": 0.0164
+   },
+   "B2r": {
+    "n_ref": 122,
+    "n_hyp": 122,
+    "cer": 0.0164,
+    "bag": 0.0164,
+    "primary": 0.0164
+   },
+   "GP": {
+    "n_ref": 122,
+    "n_hyp": 122,
+    "cer": 0.0164,
+    "bag": 0.0164,
+    "primary": 0.0164
+   },
+   "good": true
+  },
+  "6a3cf03e8642f0445b163ab1": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷四十七 (vol 25)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE"
+   ],
+   "feat": {
+    "n": 16,
+    "zlib": 1.167,
+    "rep6": 1,
+    "num": 0.0,
+    "ink": 571.5,
+    "blobs": 620
+   },
+   "fail": "collapse",
+   "P0": {
+    "n_ref": 78,
+    "n_hyp": 16,
+    "cer": 0.7949,
+    "bag": 0.7949,
+    "primary": 0.7949
+   },
+   "B2": {
+    "n_ref": 78,
+    "n_hyp": 26,
+    "cer": 0.7949,
+    "bag": 0.7949,
+    "primary": 0.7949
+   },
+   "B2r": {
+    "n_ref": 78,
+    "n_hyp": 26,
+    "cer": 0.7949,
+    "bag": 0.7949,
+    "primary": 0.7949
+   },
+   "GP": {
+    "n_ref": 78,
+    "n_hyp": 26,
+    "cer": 0.7949,
+    "bag": 0.7949,
+    "primary": 0.7949
+   },
+   "good": false
+  },
+  "6a3cc325af74b230c690ce43": {
+   "cls": "mixed",
+   "title": "正蒙初義·卷二~卷三 (vol 2)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 128,
+    "zlib": 0.698,
+    "rep6": 1,
+    "num": 0.016,
+    "ink": 736.4,
+    "blobs": 832
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 129,
+    "n_hyp": 128,
+    "cer": 0.0155,
+    "bag": 0.0155,
+    "primary": 0.0155
+   },
+   "B2": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0155,
+    "bag": 0.0078,
+    "primary": 0.0155
+   },
+   "B2r": {
+    "n_ref": 129,
+    "n_hyp": 128,
+    "cer": 0.0078,
+    "bag": 0.0078,
+    "primary": 0.0078
+   },
+   "GP": {
+    "n_ref": 129,
+    "n_hyp": 128,
+    "cer": 0.0155,
+    "bag": 0.0155,
+    "primary": 0.0155
+   },
+   "good": true
+  },
+  "6a3cc325af74b230c690cdaa": {
+   "cls": "mixed",
+   "title": "正蒙初義·卷七~卷八 (vol 4)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 129,
+    "zlib": 0.654,
+    "rep6": 1,
+    "num": 0.008,
+    "ink": 843.8,
+    "blobs": 773
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0078,
+    "bag": 0.0078,
+    "primary": 0.0078
+   },
+   "B2": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0155,
+    "bag": 0.0155,
+    "primary": 0.0155
+   },
+   "B2r": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0233,
+    "bag": 0.0233,
+    "primary": 0.0233
+   },
+   "GP": {
+    "n_ref": 129,
+    "n_hyp": 129,
+    "cer": 0.0078,
+    "bag": 0.0078,
+    "primary": 0.0078
+   },
+   "good": true
+  },
+  "6a3cf0368642f0445b163626": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷三十~卷三十一 (vol 16)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 95,
+    "zlib": 0.691,
+    "rep6": 1,
+    "num": 0.042,
+    "ink": 737.0,
+    "blobs": 854
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 149,
+    "n_hyp": 85,
+    "cer": 0.7047,
+    "bag": 0.604,
+    "primary": 0.7047
+   },
+   "B2": {
+    "n_ref": 149,
+    "n_hyp": 168,
+    "cer": 0.1275,
+    "bag": 0.1131,
+    "primary": 0.1275
+   },
+   "B2r": {
+    "n_ref": 149,
+    "n_hyp": 141,
+    "cer": 0.302,
+    "bag": 0.1812,
+    "primary": 0.302
+   },
+   "GP": {
+    "n_ref": 149,
+    "n_hyp": 85,
+    "cer": 0.7047,
+    "bag": 0.604,
+    "primary": 0.7047
+   },
+   "good": false
+  },
+  "6a3cf0858642f0445b16536f": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷一百十七~卷一百十八 (vol 63)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 145,
+    "zlib": 0.692,
+    "rep6": 1,
+    "num": 0.069,
+    "ink": 1129.0,
+    "blobs": 770
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 145,
+    "n_hyp": 145,
+    "cer": 0.0552,
+    "bag": 0.0552,
+    "primary": 0.0552
+   },
+   "B2": {
+    "n_ref": 145,
+    "n_hyp": 145,
+    "cer": 0.0828,
+    "bag": 0.0828,
+    "primary": 0.0828
+   },
+   "B2r": {
+    "n_ref": 145,
+    "n_hyp": 145,
+    "cer": 0.0759,
+    "bag": 0.0759,
+    "primary": 0.0759
+   },
+   "GP": {
+    "n_ref": 145,
+    "n_hyp": 145,
+    "cer": 0.0552,
+    "bag": 0.0552,
+    "primary": 0.0552
+   },
+   "good": true
+  },
+  "6a3cebee8642f0445b15850d": {
+   "cls": "mixed",
+   "title": "欽定西域同文志·卷十二~卷十三 (vol 7)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 89,
+    "zlib": 0.629,
+    "rep6": 3,
+    "num": 0.101,
+    "ink": 463.2,
+    "blobs": 611
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 96,
+    "n_hyp": 89,
+    "cer": 0.4896,
+    "bag": 0.1042,
+    "primary": 0.4896
+   },
+   "B2": {
+    "n_ref": 96,
+    "n_hyp": 104,
+    "cer": 0.2604,
+    "bag": 0.1442,
+    "primary": 0.2604
+   },
+   "B2r": {
+    "n_ref": 96,
+    "n_hyp": 43,
+    "cer": 0.7292,
+    "bag": 0.6458,
+    "primary": 0.7292
+   },
+   "GP": {
+    "n_ref": 96,
+    "n_hyp": 89,
+    "cer": 0.4896,
+    "bag": 0.1042,
+    "primary": 0.4896
+   },
+   "good": false
+  },
+  "6a3cf0738642f0445b165220": {
+   "cls": "mixed",
+   "title": "御製律呂正義後編·卷一百十二~卷一百十三 (vol 61)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 108,
+    "zlib": 0.815,
+    "rep6": 1,
+    "num": 0.065,
+    "ink": 788.7,
+    "blobs": 862
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 108,
+    "n_hyp": 108,
+    "cer": 0.037,
+    "bag": 0.037,
+    "primary": 0.037
+   },
+   "B2": {
+    "n_ref": 108,
+    "n_hyp": 109,
+    "cer": 0.0278,
+    "bag": 0.0275,
+    "primary": 0.0278
+   },
+   "B2r": {
+    "n_ref": 108,
+    "n_hyp": 111,
+    "cer": 0.0463,
+    "bag": 0.045,
+    "primary": 0.0463
+   },
+   "GP": {
+    "n_ref": 108,
+    "n_hyp": 108,
+    "cer": 0.037,
+    "bag": 0.037,
+    "primary": 0.037
+   },
+   "good": true
+  },
+  "6a3cebe78642f0445b158229": {
+   "cls": "mixed",
+   "title": "欽定西域同文志·卷一 (vol 1)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE"
+   ],
+   "feat": {
+    "n": 1,
+    "zlib": 3.667,
+    "rep6": 0,
+    "num": 0.0,
+    "ink": 522.1,
+    "blobs": 598
+   },
+   "fail": "collapse",
+   "P0": {
+    "n_ref": 95,
+    "n_hyp": 1,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "B2": {
+    "n_ref": 95,
+    "n_hyp": 110,
+    "cer": 0.2526,
+    "bag": 0.1636,
+    "primary": 0.2526
+   },
+   "B2r": {
+    "n_ref": 95,
+    "n_hyp": 104,
+    "cer": 0.2526,
+    "bag": 0.1635,
+    "primary": 0.2526
+   },
+   "GP": {
+    "n_ref": 95,
+    "n_hyp": 110,
+    "cer": 0.2526,
+    "bag": 0.1636,
+    "primary": 0.2526
+   },
+   "good": false
+  },
+  "6a3cec148642f0445b159613": {
+   "cls": "mixed",
+   "title": "琴譜合璧·卷十 (vol 9)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 29,
+    "zlib": 1.092,
+    "rep6": 1,
+    "num": 0.034,
+    "ink": 439.7,
+    "blobs": 455
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 29,
+    "n_hyp": 29,
+    "cer": 0.0345,
+    "bag": 0.0345,
+    "primary": 0.0345
+   },
+   "B2": {
+    "n_ref": 29,
+    "n_hyp": 37,
+    "cer": 0.3103,
+    "bag": 0.2432,
+    "primary": 0.3103
+   },
+   "B2r": {
+    "n_ref": 29,
+    "n_hyp": 43,
+    "cer": 0.7241,
+    "bag": 0.3488,
+    "primary": 0.7241
+   },
+   "GP": {
+    "n_ref": 29,
+    "n_hyp": 29,
+    "cer": 0.0345,
+    "bag": 0.0345,
+    "primary": 0.0345
+   },
+   "good": true
+  },
+  "6a3cec108642f0445b1594a7": {
+   "cls": "mixed",
+   "title": "琴譜合璧·卷四 (vol 4)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "LOOP",
+    "OVERRUN"
+   ],
+   "feat": {
+    "n": 1375,
+    "zlib": 0.019,
+    "rep6": 1349,
+    "num": 0.001,
+    "ink": 594.5,
+    "blobs": 617
+   },
+   "fail": "loop",
+   "P0": {
+    "n_ref": 49,
+    "n_hyp": 1375,
+    "cer": 27.7347,
+    "bag": 0.9884,
+    "primary": 27.7347
+   },
+   "B2": {
+    "n_ref": 49,
+    "n_hyp": 90,
+    "cer": 0.9184,
+    "bag": 0.5,
+    "primary": 0.9184
+   },
+   "B2r": {
+    "n_ref": 49,
+    "n_hyp": 95,
+    "cer": 0.9388,
+    "bag": 0.4842,
+    "primary": 0.9388
+   },
+   "GP": {
+    "n_ref": 49,
+    "n_hyp": 90,
+    "cer": 0.9184,
+    "bag": 0.5,
+    "primary": 0.9184
+   },
+   "good": false
+  },
+  "6a3cec048642f0445b158ed6": {
+   "cls": "mixed",
+   "title": "欽定西域同文志·卷二十一~卷二十二 (vol 24)",
+   "scored": true,
+   "blank": false,
+   "route": "PADDLE",
+   "flags": [],
+   "feat": {
+    "n": 84,
+    "zlib": 0.655,
+    "rep6": 1,
+    "num": 0.024,
+    "ink": 653.5,
+    "blobs": 732
+   },
+   "fail": "",
+   "P0": {
+    "n_ref": 88,
+    "n_hyp": 84,
+    "cer": 0.625,
+    "bag": 0.1818,
+    "primary": 0.625
+   },
+   "B2": {
+    "n_ref": 88,
+    "n_hyp": 0,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "B2r": {
+    "n_ref": 88,
+    "n_hyp": 0,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "GP": {
+    "n_ref": 88,
+    "n_hyp": 84,
+    "cer": 0.625,
+    "bag": 0.1818,
+    "primary": 0.625
+   },
+   "good": false
+  },
+  "6a3cec128642f0445b1595a6": {
+   "cls": "mixed",
+   "title": "琴譜合璧·卷五 (vol 5)",
+   "scored": true,
+   "blank": false,
+   "route": "FLASH",
+   "flags": [
+    "COLLAPSE"
+   ],
+   "feat": {
+    "n": 1,
+    "zlib": 3.667,
+    "rep6": 0,
+    "num": 0.0,
+    "ink": 551.3,
+    "blobs": 640
+   },
+   "fail": "collapse",
+   "P0": {
+    "n_ref": 61,
+    "n_hyp": 1,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "B2": {
+    "n_ref": 61,
+    "n_hyp": 100,
+    "cer": 0.8525,
+    "bag": 0.49,
+    "primary": 0.8525
+   },
+   "B2r": {
+    "n_ref": 61,
+    "n_hyp": 0,
+    "cer": 1.0,
+    "bag": 1.0,
+    "primary": 1.0
+   },
+   "GP": {
+    "n_ref": 61,
+    "n_hyp": 100,
+    "cer": 0.8525,
+    "bag": 0.49,
+    "primary": 0.8525
+   },
+   "good": false
+  }
+ },
+ "classes": {
+  "table": {
+   "n": 25,
+   "P0": {
+    "median": 0.024,
+    "ci": [
+     0.0159,
+     0.0833
+    ],
+    "mean": 0.159636,
+    "n": 25,
+    "bad_over_50pct": 3,
+    "order_cer_median": 0.0308
+   },
+   "B2": {
+    "median": 0.044,
+    "ci": [
+     0.015,
+     0.0828
+    ],
+    "mean": 0.09849999999999999,
+    "n": 25,
+    "bad_over_50pct": 1,
+    "order_cer_median": 0.0614
+   },
+   "B2r": {
+    "median": 0.0236,
+    "ci": [
+     0.0123,
+     0.0385
+    ],
+    "mean": 0.09103199999999999,
+    "n": 25,
+    "bad_over_50pct": 1,
+    "order_cer_median": 0.0385
+   },
+   "GP": {
+    "median": 0.0201,
+    "ci": [
+     0.0155,
+     0.0523
+    ],
+    "mean": 0.051407999999999995,
+    "n": 25,
+    "bad_over_50pct": 0,
+    "order_cer_median": 0.0308
+   },
+   "noise_fresh_B2_B2r": 0.019100000000000006,
+   "noise_floor": 0.019100000000000006,
+   "d_GP_vs_B2": {
+    "median": 0.0,
+    "ci": [
+     -0.0392,
+     0.0068000000000000005
+    ],
+    "n": 25
+   },
+   "d_P0_vs_B2": {
+    "median": 0.0,
+    "ci": [
+     -0.0392,
+     0.012
+    ],
+    "n": 25
+   }
+  },
+  "mixed": {
+   "n": 25,
+   "P0": {
+    "median": 0.0625,
+    "ci": [
+     0.0345,
+     0.625
+    ],
+    "mean": 1.413276,
+    "n": 25,
+    "bad_over_50pct": 8
+   },
+   "B2": {
+    "median": 0.1494,
+    "ci": [
+     0.031,
+     0.3103
+    ],
+    "mean": 0.33364400000000005,
+    "n": 25,
+    "bad_over_50pct": 7
+   },
+   "B2r": {
+    "median": 0.082,
+    "ci": [
+     0.031,
+     0.4857
+    ],
+    "mean": 0.334128,
+    "n": 25,
+    "bad_over_50pct": 7
+   },
+   "GP": {
+    "median": 0.1642,
+    "ci": [
+     0.0345,
+     0.5
+    ],
+    "mean": 0.313576,
+    "n": 25,
+    "bad_over_50pct": 7
+   },
+   "noise_fresh_B2_B2r": 0.0079,
+   "noise_floor": 0.018,
+   "d_GP_vs_B2": {
+    "median": 0.0,
+    "ci": [
+     -0.009099999999999997,
+     0.0
+    ],
+    "n": 25
+   },
+   "d_P0_vs_B2": {
+    "median": 0.0,
+    "ci": [
+     -0.0276,
+     0.0092
+    ],
+    "n": 25
+   }
+  }
+ },
+ "routes": {
+  "table": {
+   "PADDLE": {
+    "k": 22,
+    "n": 25,
+    "wilson": [
+     0.7,
+     0.958
+    ]
+   },
+   "FLASH": {
+    "k": 3,
+    "n": 25,
+    "wilson": [
+     0.042,
+     0.3
+    ]
+   },
+   "HOLD": {
+    "k": 0,
+    "n": 25,
+    "wilson": [
+     0.0,
+     0.133
+    ]
+   },
+   "flags": {
+    "LOOP": 2,
+    "OVERRUN": 2,
+    "COLLAPSE": 1,
+    "NUMERIC": 3
+   }
+  },
+  "mixed": {
+   "PADDLE": {
+    "k": 19,
+    "n": 25,
+    "wilson": [
+     0.566,
+     0.885
+    ]
+   },
+   "FLASH": {
+    "k": 6,
+    "n": 25,
+    "wilson": [
+     0.115,
+     0.434
+    ]
+   },
+   "HOLD": {
+    "k": 0,
+    "n": 25,
+    "wilson": [
+     0.0,
+     0.133
+    ]
+   },
+   "flags": {
+    "LOOP": 1,
+    "OVERRUN": 1,
+    "COLLAPSE": 5,
+    "NUMERIC": 0
+   }
+  }
+ },
+ "guard_test": {
+  "failures": 8,
+  "caught": 8,
+  "catch_rate": 1.0,
+  "catch_wilson": [
+   0.676,
+   1.0
+  ],
+  "missed": [],
+  "good": 35,
+  "passed": 34,
+  "pass_rate": 0.9714285714285714,
+  "pass_wilson": [
+   0.855,
+   0.995
+  ],
+  "good_flagged": [
+   "6a3cf03e8642f0445b163b8e"
+  ],
+  "neither": [
+   "6a3ceaf895fcd4556305246c",
+   "6a3cebfd8642f0445b158b97",
+   "6a3cebfd8642f0445b158c33",
+   "6a3cf0338642f0445b1634d0",
+   "6a3cf0368642f0445b163626",
+   "6a3cebee8642f0445b15850d",
+   "6a3cec048642f0445b158ed6"
+  ]
+ },
+ "bar": {
+  "table": {
+   "c1_cer": true,
+   "c1_upper": 0.0068000000000000005,
+   "noise_floor": 0.019100000000000006,
+   "c2_catch": true,
+   "c3_pass": true,
+   "passes": true
+  },
+  "mixed": {
+   "c1_cer": true,
+   "c1_upper": 0.0,
+   "noise_floor": 0.018,
+   "c2_catch": true,
+   "c3_pass": true,
+   "passes": true
+  }
+ }
+}

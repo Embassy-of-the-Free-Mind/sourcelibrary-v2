@@ -1,0 +1,74 @@
+Below are 6 machine transcriptions (A, B, C, D, E, F) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śaiṣīraṇīdaṃphalaphyandhā ‖ lakṣaṇaṃ [illegible] straikhanyarairoṣīāṭapatra ‖ ntrāntāmātrāspomātrikira
+2. tvṛttiḥprāṇādyāva ‖ āyavacchedetibhūḥbhugavacchatuṣṭiyantyatulya ‖ tvakkiḥkri [illegible] khakantyanti
+3. ṣṭādaśaiṣṭitaṣāḍhya ‖ daiṣṭu [illegible] vandrakaḻkrustinmānya ‖ pṛktiḥbadhāṃ [illegible] śru
+4. śraiyagrainivana ‖ jñanākkukaṃoehakkiṃpūkkiṃ ‖ ppaṅkimātmaevao
+5. gatṛñchaikkanādyi ‖ ḻkāl̤cekkinayi [illegible] ka ‖ nanaṃtraiyāṭaśavi
+6. gaṃbhūdvihāndra ‖ kinandrakāgakānakāruḻḻa ‖ khaduḥkhabhagayāgra
+7. jhyāyātryeṣa ‖ l̤uttijñāḥonaḥkanaḻḻi ‖ vidhaṃdaśācāhi
+8. trakhyanyavikayāl̤yāṃ ‖ ṃsasyaṃ [illegible] kkālakṣāhyaṃtraikāla ‖ [illegible] trannaṃkindraṣyapṣa
+9. dvitriyādidaivāṃ ‖ cakṣuviśeṣāviśeṣaviṣayāṇā ‖ kṣaṭapadiśaṣṭaviṣaya
+
+TRANSCRIPTION B
+1. [illegible] svālakṣaṇyaṃvṛttistrayasyasaiṣābhavatyasāmānyāsāmānyakaraṇa
+2. [illegible] vṛttiḥprāṇādyāvāyavaḥpañcayugapaccatuṣṭayasyatuvṛttiḥkramaśaścatasyanirddi
+3. ṣṭādṛṣṭetathāpya ‖ dṛṣṭetrayasyatalpūrvvikāvṛ ‖ ttiḥsvāṃsvāṃpra
+4. tipadyantepara ‖ sparākūtahetukāṃvṛttiṃ ‖ puruṣārtthaeva [illegible]
+5. [illegible] turnnakenaci ‖ lkāryyatekaraṇaṃ [illegible] ka ‖ raṇaṃtrayodaśavi
+6. dhaṃtadāharaṇa ‖ dhāraṇaprakāśakaraṃkāryya ‖ ñcatasyadaśadhāhā
+7. ryyaṃdhāryyaṃprakā ‖ śyañca [illegible] antaḥkaraṇaṃtri ‖ vidhaṃdaśadhābāhyaṃ
+8. trayasyaviṣayākhyaṃsāmpratakālaṃbāhyaṃtrikālamābhyantaraṃkaraṇaṃbuddhī
+9. ndriyāṇiteṣāṃpañcaviśeṣāviśeṣaviṣayāṇivāൿbhavatiśabdaviṣaya
+
+TRANSCRIPTION C
+1. aiśaṣiāṇṇāṃlaghujhālakṣaṇyaṃ [illegible] ‖ [illegible] ṣyaināṣiādivatra ‖ nāmātrāsthāmātra [illegible]
+2. jāgṛttiḥprāṇṇādvāvākyaviśeṣebuddhyṛga ‖ āvacchatri [illegible] travṛ ‖ ttiḥkramaśa [illegible]
+3. ṣṭrādaiṣṭra [illegible] dvāvya ‖ daiṣṭrakriyasva [illegible] kṣvatikāāva ‖ vṛttiḥ [illegible]
+4. [illegible] vyaidari [illegible] ‖ jñanākri [illegible] aiha [illegible] ṃvṛttiṃ ‖ [illegible] tmai [illegible]
+5. sāryaikānami ‖ [illegible] kkābhyābhakkai [illegible] ṣṇāka ‖ noṃ [illegible] deśavi
+6. yaṃtadrāsa [illegible] ‖ kkasaṇokrakkāgakkaraṃ [illegible] ‖ [illegible] daśayāyā
+7. [illegible] āyā [illegible] kka ‖ āstrāaikka [illegible] jña [illegible] ‖ viyaṃ [illegible] daśāābā [illegible]
+8. krayantravikṣayājñāṃ ‖ sasāṃkkkāpradvāā [illegible] kuāāpa ‖ [illegible] krananta [illegible]
+9. [illegible] āṣairaivāṃ ‖ bhakṣavibherkkāvi [illegible] mukhyāṇi ‖ [illegible] ākṣai [illegible] vikṣaya
+
+TRANSCRIPTION D
+1. śeṣāṇāṃ28svā ‖ lakṣaṇyaṃvṛttistrayasyasaiṣābhava ‖ tyasāmānyāsāmānyakara
+2. ṇavṛttiḥprāṇādyāvā ‖ yavaḥpañca29ḥyugapaccatuṣṭayasyatuvṛ ‖ ttiḥkramaśaścatasyanirddi
+3. ṣṭādṛṣṭetathāpya ‖ dṛṣṭetrayasyatatpūrvvikāvṛ ‖ ttiḥ30svāṃsvāṃpra
+4. tipadyantepara ‖ sparākūtahetukīṃvṛttiṃ ‖ puruṣārtthaevahetu
+5. rnnakenacitkā ‖ ryyatekaraṇamu31ḥka ‖ raṇaṃtrayodaśavi
+6. dhaṃtadāharaṇa ‖ dhāraṇaprakāśakaraṃkāryya ‖ ñcatasyadaśadhāhā
+7. ryyaṃdhāryyaṃprakā ‖ śyañca32ḥantaḥkaraṇantri ‖ vidhaṃdaśadhābāhya
+8. trayasyaviṣayākhyaṃ ‖ sāṃprataṃkālaṃbāhyaṃtrikālamābhya ‖ ntaraṃkaraṇaṃ33ḥbu
+9. ddhīndriyāṇiteṣāṃ ‖ pañcaviśeṣāviśeṣaviṣayāṇi ‖ vāgbhavatiśabdaviṣaya
+
+TRANSCRIPTION E
+1. śeṣāṇāṃyapunasthā ‖ lakṣaṇaṃpṛthvyantrakhanyaineṣāṭapañcā ‖ nmātrāṇāmātrakama
+2. śapyaiḥprāṇādyāva ‖ vāyavālekhāḍḍuhṛgavacchattuḻḻayanyattuttū ‖ ṛkkiḥkramaśaśakanyati [illegible]
+3. cchādaiṇṇakaṣāpya ‖ ṭottaṣṭhakrabahukaikahṛṣṭhakā ‖ prakkiḥnthanthāṃnthāṃkra
+4. ndhiicchayuntapava ‖ jarātrukaṃohetrukaṃhattaṃ ‖ prattaṣāttakkalava
+5. gaintaikanati ‖ kkāṇṇakaikakkaṃraṇagarastuka ‖ nakhaṃākodaśavi
+6. dhaḥkaṭāgaraṇa ‖ karaṇaprakāśakaraṃkātta ‖ khatanyādaśadhāhā
+7. ḻḻaṃdhākkuṃpraka ‖ iikhānnaḥkandaḥkaraṇakku ‖ vidhaṃdaśākhāhu
+8. ttuyanyātikayāyuṃ ‖ sassāṃpratakālabhakkāvyaṃkrakāḻḻa ‖ untaraṃkaraṇaൗṃssuḻḻa
+9. ṭittuyāṇitekhāṃ ‖ pakhaviṣekhāviśaikaviṣayāṇā ‖ graṭavakraśaḻḻaviṣala
+
+TRANSCRIPTION F
+1. śeṣāṇāṃvyapindhā ‖ lakṣaṇaṃ pṛttṛkhanyataikhāṭaparu ‖ nāmābhāṣāmābhakama
+2. śābdarbhaḥprāṇādyāva ‖ āyavileṣaḍlṛgāvachatuttṛyanyatṛtṛ ‖ vṛttiḥkramaśaśakanyatṛttṛ
+3. ṣṭāṭaṭhattetaḍādra ‖ ṭeṭhadrṛkrakhanyaṭhakka [illegible] kṛbhraṇikā ‖ vṛttihandhāṃndhāṛ
+4. mṛpaḻumantapara ‖ jaṭhākrakaṃṭhaihabhrakaṃdṛkkaṃ ‖ pṛttaṣāttṛkhapara
+5. haganyaikaiṭhaḍi ‖ kkaṭhāntaṭhaṭhaikakkaṭhaṇa [illegible] nnaḥka ‖ nakhaṃkrattoṭaśavi
+6. dhaḥṭhaṭāharaṇa ‖ karaṇakrakāśakaraṃkāṛ ‖ khatanyoṭhaśadhāhā
+7. [illegible] ṃdhā [illegible] ṃpraka ‖ ṛgukhāntaḥṭhakantaḥkaraṇaiṭha ‖ vidhaṃṭaśābāhā
+8. ttṛkayandāvikkayāṛṃ ‖ sasāṃkrattakāli [illegible] kāhaṃkkaṭhā ‖ ṛuntaraṃkaraṇuṣṇṛ
+9. ṭiṛyāṭhikatekhāṃ ‖ okhavitaikhāviśaikaviṣaṭhāṇā ‖ ṛkāṭakattaśṛviṣala
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -142,6 +142,9 @@ export interface ProvenanceWork {
   translated: number;
   translatable: number;
   transcribed: number;
+  /** Every page of the book. Transcription counts all pages, blanks and plates
+   *  included, so it is measured against this, not `translatable`. */
+  pages: number;
 }
 
 /** What Source Library has done, never what it hasn't. */
@@ -157,8 +160,8 @@ function workClause(w: ProvenanceWork): string {
     case 'transcribed':
       return 'Source Library transcribed it.';
     case 'transcribing':
-      return w.transcribed && w.translatable
-        ? `Source Library is transcribing it (${w.transcribed.toLocaleString('en')} of ${w.translatable.toLocaleString('en')} pages so far).`
+      return w.transcribed && w.pages && w.transcribed < w.pages
+        ? `Source Library is transcribing it (${w.transcribed.toLocaleString('en')} of ${w.pages.toLocaleString('en')} pages so far).`
         : '';
     default:
       return '';

@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf (incised); this file is one crop of half a leaf, with a string and binding hole in the middle, so left-edge akṣaras are cut off and lines 4–7 are interrupted by the hole. Many readings uncertain.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm leaf fragment; text in Malayalam script. Lines 4–7 break around the central binding hole and continue on the right; no true column division. A small corrected akṣara (ധ) is written beneath line 1 near the string.</meta>
+
+<unclear>ന്മ</unclear> ചൈതന്യം പ്രബോധ<unclear>ധ്യാ</unclear>ക്കന്തഥാപ്രധ
+<unclear>ല്ലു</unclear> പ്രത്യക്ഷിക്കവിധാഭാന്മകാഃ പ്രകാശ
+<unclear>ഥാ</unclear> ചാഭഭവാ<unclear>ക്രയ</unclear>ജനനമിഴ<unclear>ന</unclear>ബ്രഹ്മയശ്ച
+<unclear>ശ</unclear>ക്തി<unclear>ഠ</unclear>ളപക്ഷംഭ <unclear>[hole]</unclear> കമ്പലമ്പരജഃ
+പ്ര<unclear>ക്തിദ്ധി</unclear>പവഥാക <unclear>[hole]</unclear> തൊബ്രഹ്മക്കിഃ സ്വഥ
+ന്യഗഞ്ചാക്ഷരവ<unclear>ഷു</unclear> <unclear>[hole]</unclear> ഖാഭാവാർക്കാ
+ഷ്ടമ്പ്യാപ്രക്ഷമചി <unclear>[hole]</unclear> ഗദ്ധം സ്ഥ<unclear>ഒടഠാ</unclear>
+<unclear>ചാ</unclear>ന<unclear>ആ</unclear>തമ്പ്രന്യൗ<unclear>ആ</unclear>ശ്വകാരണക<unclear>ന്മ</unclear>ഷ്ടിവിഭാ
+<unclear>ര</unclear>ണമസ്തൂ<unclear>ആന്ന</unclear>പ്രചക്കമക്കത്തിഗണമസ്ത്
+<unclear>ർ</unclear>ക്രത്തിപ്രക്കഗണാശ്രയവിൈക്കാർ<unclear>ന്നസ</unclear>ലംക്ഷ
+
+<vocab>caitanya, prabodha, pratyakṣa, prakāśa, brahma, kāraṇa, gaṇa, āśraya, palm leaf, Malayalam script</vocab>

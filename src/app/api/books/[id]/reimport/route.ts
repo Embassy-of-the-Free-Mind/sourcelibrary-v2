@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { ObjectId } from 'mongodb';
 import { ia } from '@/lib/api-client/images';
 import { logAuditEvent } from '@/lib/audit-logger';
@@ -144,8 +145,11 @@ export const POST = withAuth(async (request, session, context) => {
         pageCount = 100;
       }
 
-      // Delete existing pages
+      // Delete existing pages. The fresh pages get new ids, so the old pages' vectors would
+      // stay served with nothing to overwrite them (#6270): withdraw them.
+      const oldPageIds: string[] = await db.collection('pages').distinct('id', { book_id: bookId });
       const deleteResult = await db.collection('pages').deleteMany({ book_id: bookId });
+      await withdrawPageVectors(oldPageIds, { reason: 'removed', writer: 'POST /api/books/[id]/reimport' });
 
       // Create fresh pages
       const getPageImageUrl = (pageNum: number) =>

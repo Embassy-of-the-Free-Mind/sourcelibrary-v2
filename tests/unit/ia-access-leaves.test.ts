@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs script module, no types
-import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../../scripts/lib/ia-access-leaves.mjs';
+import { fetchAccessLeaves, indexJp2FilesByLeaf, positionalFallbackRefusal } from '../../scripts/lib/ia-access-leaves.mjs';
 
 /**
  * Pins the IIIF-leaf -> jp2-zip-ordinal mapping that #3368 turned on.
@@ -84,6 +84,46 @@ describe('fetchAccessLeaves', () => {
   it('never throws the caller out on a network error', async () => {
     const fetchImpl = (async () => { throw new Error('ECONNRESET'); }) as unknown as typeof fetch;
     expect(await fetchAccessLeaves('x', { fetchImpl })).toBeNull();
+  });
+});
+
+describe('fetchAccessLeaves retries (#3368)', () => {
+  it('retries a transient failure when attempts > 1', async () => {
+    let calls = 0;
+    const xml = '<book><pageData><page leafNum="0"><pageType>Normal</pageType><addToAccessFormats>true</addToAccessFormats></page></pageData></book>';
+    const fetchImpl = (async () => {
+      calls++;
+      if (calls <= 2) throw new Error('ECONNRESET'); // first attempt: both shapes fail
+      return { ok: true, text: async () => xml };
+    }) as unknown as typeof fetch;
+    expect(await fetchAccessLeaves('x', { fetchImpl, attempts: 2, backoffMs: 1 })).toEqual([0]);
+  });
+
+  it('makes one attempt by default', async () => {
+    let calls = 0;
+    const fetchImpl = (async () => { calls++; throw new Error('ECONNRESET'); }) as unknown as typeof fetch;
+    expect(await fetchAccessLeaves('x', { fetchImpl })).toBeNull();
+    expect(calls).toBe(2); // the two scandata shapes, once
+  });
+});
+
+describe('positionalFallbackRefusal (#3368)', () => {
+  const urls = (n: number) => Array.from({ length: n }, (_, i) => `https://archive.org/download/x/page/n${i}/full/full/0/default.jpg`);
+
+  it('allows positional mapping when zip files equal IIIF leaves', () => {
+    expect(positionalFallbackRefusal(159, urls(159))).toBeNull();
+  });
+
+  it('refuses Whish MS 147: 162 zip files for 159 IIIF leaves', () => {
+    expect(positionalFallbackRefusal(162, urls(159))).toBe('positional fallback: zip has 162 files for 159 IIIF leaves');
+  });
+
+  it('counts leaves by the highest nN, not the number of pages', () => {
+    expect(positionalFallbackRefusal(10, [...urls(10)].reverse().slice(0, 3))).toBeNull();
+  });
+
+  it('refuses when no page carries an IIIF leaf number', () => {
+    expect(positionalFallbackRefusal(5, ['https://example.org/a.jpg', ''])).toMatch(/no IIIF leaf numbers/);
   });
 });
 

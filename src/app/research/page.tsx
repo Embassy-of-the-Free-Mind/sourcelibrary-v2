@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { posts } from '@/app/blog/posts';
+import { posts } from '@/app/articles/posts';
 
 export const revalidate = false;
 
@@ -109,7 +109,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
       { href: '/research/concept-diffusion', label: 'Concept diffusion' },
       { href: '/research/atlas', label: 'Text atlas' },
       { href: '/research/image-atlas', label: 'Image atlas' },
-      { href: '/about/meaning', label: 'Search by meaning' },
+      { href: '/articles/search-by-meaning', label: 'Search by meaning' },
     ],
   },
 ];
@@ -119,7 +119,7 @@ function RefLinks({ refs }: { refs: Ref[] }) {
     .map(r => {
       if ('href' in r) return { href: r.href, label: r.label, external: false };
       const p = bySlug.get(r.slug);
-      return p ? { href: `/blog/${p.slug}`, label: p.title, external: false } : null;
+      return p ? { href: `/articles/${p.slug}`, label: p.title, external: false } : null;
     })
     .filter((l): l is NonNullable<typeof l> => Boolean(l));
   if (!links.length) return null;
@@ -235,14 +235,14 @@ export default function ResearchProgrammePage() {
               evaluation code
             </a>
             <span className="text-stone-300 mx-1.5">·</span>
-            <Link href="/blog" className="text-amber-800 hover:underline">
+            <Link href="/articles" className="text-amber-800 hover:underline">
               all research notes
             </Link>
           </p>
           <p className="text-sm text-stone-500">
             Everything is reproducible on purpose: AGPL code, raw model outputs shipped with the
             dataset, dated snapshots, a <Link href="/developers" className="text-amber-800 hover:underline">public API</Link> and{' '}
-            <Link href="/blog/mcp-server" className="text-amber-800 hover:underline">MCP server</Link>. A project of{' '}
+            <Link href="/articles/mcp-server" className="text-amber-800 hover:underline">MCP server</Link>. A project of{' '}
             <a href="https://wisdomfrontiers.org" className="text-amber-800 hover:underline">Wisdom Frontiers</a>;
             collaboration and data access:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-amber-800 hover:underline">team@sourcelibrary.org</a>.

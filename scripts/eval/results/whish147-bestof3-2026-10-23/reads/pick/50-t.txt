@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C reads as real words in more places than the others ("devānāṃ paripālinā", "vairāgyamityādi", "bauddhikṣayādibhedā", "pradhānāditanmātrapañca…", "sthūlaśarīra", "mokṣaḥ"); B has some good readings like "mahatattvam" but breaks down in rows 9–10, and A garbles most key words (e.g. "sthūlagarireṇa").

@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | None of the three gives readable Sanskrit or Malayalam, but A repeats implausible strings like "laṭṭahā ḍaṣaḍha" across rows, which looks like an invented loop rather than real reading, and B gives only isolated fragments such as a row starting with "ṃ", so C's fully illegible transcription misleads least.

@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, D, B
+WHY | C reads as correct, continuous Sāṅkhyakārikā 40–45 (e.g. "vaikṛtikāśca", "adhastādbhavati", "rāgādaiśvaryyād") with consistent string holes; A has good text but drops "ika" from "vaikṛtikāśca" and is missing string holes in four rows; D adds stray "ḥ" marks, drops the verse number 43 and misreads "rāgāl"; B is nonsense syllables.

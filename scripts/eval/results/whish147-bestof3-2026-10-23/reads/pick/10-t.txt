@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads as plausible Sāṅkhya commentary in more rows, with phrases like "kaivalyakāraṇameṅkil", "jñānādhigamā(n) mokṣa", "prayāṇavidhi" and "pavitra"; B has some real words ("tāratamyāc", "viratayoḥ", "vyakta") but more rows of nonsense syllables, and C is mostly unreadable.

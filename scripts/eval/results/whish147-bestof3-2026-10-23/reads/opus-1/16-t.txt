@@ -1,0 +1,11 @@
+I could only partly read this leaf. The row joins are uncertain and many letters are guesses, so treat this as a rough first pass.
+
+ROW 1 | ഭൈനാവികൃതൈഭദപനപ്രകൃ‖തിഃ[illegible]ഗ്രാൽഷഷ്ഠിഷിളളഭൂതങ്ങളുടെ‖ഃഏതാനിശിഷ്യാദ്യപരഭൂത[illegible]
+ROW 2 | നപ്രകൃതിർന്നവികൃതിഃപു‖രുഷഃ[illegible]ളെപൃന.ഗശിലം.തന്ത്രിൻപസ്തി‖ത്തിപ്രകൃതൈനൈരുക്ക[illegible]
+ROW 3 | ാദ്രവികൃതിഃധ്യഃക‖[illegible]ത്രന്തിത്രിട്ടുള്ളത്രതിങ്ങൾപ്ര‖ത്ഥഃത്രിജ്ഞയകാന്താ
+ROW 4 | ച്യയ.ക്കതഷ്ട‖ട്ടുള്ളദ്രൂകളുടെ[illegible]നവികൃതികഃഒന്ന‖ാടിത്യാടെക്ഷാചെപ്പ
+ROW 5 | ക്കാദിത്തനാംഷി‖െഭാദ്വപ്രമാണ[illegible]ങ്ങൾജ്ഞാഷാദിജ്ഞ‖മിത്യാദിദേഷ്ഠം.പ്രത്യ
+ROW 6 | ങ്ങം.ഉപരഷിക്കാ‖ഒന്നദ്വയനന്തദനന്ദമാനം.ക്കു‖ക്ഷഃക്കിയഒടാത്തഃഒ
+ROW 7 | തനാട്ടുച്യത[illegible]‖ദ്വാക്കവചനം.ത്രു[illegible]കത്തിലുവ്യ‖യത്രമാഗമിച്ചു.ജ്ഞാനച
+ROW 8 | ഈന്നാന്നവിപ്ര[illegible]‖ഗ്രടൊദിനഗ്രഭാരാഭാനിസ്ത്രാഒ‖ഗ്രദ്ധമാഗ്രഭദ്രാപള
+NOTE | The leaf has 8 rows and both holes fall around rows 5–6. Only short runs are fairly secure, such as row 2's "നപ്രകൃതിർന്നവികൃതിഃപു" and some Malayalam commentary words like ഉള്ള and കളുടെ. Much of the rest is a doubtful letter-by-letter guess, probably under half reliable, and it needs checking against a better image.

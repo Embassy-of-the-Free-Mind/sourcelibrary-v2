@@ -1,0 +1,11 @@
+ROW 1 | ശക്ഷ്യണത്വം.കാൎയ്യാണാലക്ഷണമാഹചലനമിത്യുൽക്ഷേപണാദീനാം[illegible]ണാക്ഷേ[illegible]മാഹ ഉന്മേഷപ്ര[illegible]
+ROW 2 | ശരീര[illegible]പകൃതാസംപാദമാക്കനം.ഇത്യത്താസ്.പാദ്ര[illegible]ം.പ്രസാരണമിത്യത്രസാമാന്യംല
+ROW 3 | ക്കണ്ഠ[illegible]ന്ത്രിയപരമാണ്യപരിമാണാദൈദ്യന്തരിത്വ്യാക്കിപാരണായശദേനകൈ[illegible]ം.അന
+ROW 4 | ഗന്ധത്വം.സമവേത ‖ ത്വം.[illegible]നാദൃപാദ്യപരിത്യാക്കി: ‖ വിശേഷ്യാംലക്ഷണമി
+ROW 5 | നിത്യത്വിസമവാ ‖ യം.ലക്ഷണമിതി[illegible]ഉക്തിസ്.ഭാ ‖ ജഗദ്വ്യാപ്തിപാര
+ROW 6 | ണായ[illegible]ത്വ ‖ തൃക്കാദൃദ്രപാപതിവ്യാക്കിപാര ‖ ണായസാമാന്യ
+ROW 7 | ത്വിഞ്ഞാഭൂതാവിദ്ധല ‖ [illegible]ണമാഹഭാരഘൂഭ്രതിവി ‖ ലൊഭൂട[illegible]ത്വഭിവി
+ROW 8 | ദിശ്രവിഭ[illegible]ഗമനാമി ‖ [illegible]ഗണം.ബൈപവിഷയാമിമിശ്ചപ്രത്യ ‖ ത്യയാൊൽ[illegible]ണ്ണിതം.പ്രത്യ
+ROW 9 | അവവൎദ്ധിസമവായമി ‖ ഇൎണാവാഭാവാവാഭ്യഭാവി[illegible]ക്യാമിതിൎ ‖ ൎദ്രൈസമവായിക്കാരണമ്മേവ
+ROW 10 | യവൎജ്ജൂത്വേഷ്യമകൎവൎ ‖ പ്രാഗഭാവം.ലക്ഷ്ണമിജ്ഞാതകമൈതു ‖ ത്യക്കാ.ശാദ്രാൽത്രിവ്യാക്കി
+NOTE | I made a guess at every row, but this is rough and unreliable. Maybe 50–60% of the aksharas are confident; many of the conjuncts and dot-reph readings are uncertain. In rows 8–10 the joins at the holes are guesses, and the text near the string is the weakest. A careful re-check against high-resolution images would be needed before using this.

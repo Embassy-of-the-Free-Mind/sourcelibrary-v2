@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most rows that read as real Sanskrit or Malayalam (e.g. "kanmādiviṣayaḥpravṛttakare", "sarggaḥśuddhasūkṣmavikale", "liṃgatvāvi", "viśeṣaṇami", "vṛttyārtthaṃ"); A has only scattered readable pieces between many [illegible] marks, and B fills every gap but mostly with syllables that don't form words.

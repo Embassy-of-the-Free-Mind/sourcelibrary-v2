@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three is continuous readable text, but B's few syllables (…ndri… jña… pra…ṃ…kṣa…ṃ) fit a pratyakṣa passage like "indriyārthasannikarṣajanyaṃ jñānaṃ pratyakṣam", which suits the Tarkasaṃgraha. A claims nothing, and C is repetitive filler ("rera", "reyaya", "rare") that only looks like words.

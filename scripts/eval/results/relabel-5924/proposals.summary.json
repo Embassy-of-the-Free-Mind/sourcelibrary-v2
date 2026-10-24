@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-23T07:01:29.827Z",
+  "scanned": 27487,
+  "decisions": {
+    "latin": 22654,
+    "mixed": 144,
+    "review": 709,
+    "thin": 3870,
+    "flip": 110
+  },
+  "flagged": 963,
+  "by_target": {
+    "mixed → English": 49,
+    "review → German": 225,
+    "mixed → German": 62,
+    "flip → German": 62,
+    "review → Dutch": 13,
+    "review → English": 362,
+    "mixed → French": 22,
+    "flip → Dutch": 6,
+    "mixed → Spanish": 1,
+    "mixed → Italian": 9,
+    "review → Italian": 51,
+    "flip → French": 12,
+    "review → French": 52,
+    "flip → English": 21,
+    "mixed → Dutch": 1,
+    "flip → Spanish": 1,
+    "review → Spanish": 6,
+    "flip → Italian": 8
+  },
+  "manuscript_filed_as_print": 48,
+  "flagged_translation_role": 7,
+  "flagged_visible": 483
+}

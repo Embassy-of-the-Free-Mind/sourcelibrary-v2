@@ -1,0 +1,67 @@
+{
+  "_comment": "Hand corrections to written.mjs, found by reading ~/sl-work/figure-reception/_review/written-review.tsv on 2026-10-22. year null = keep the edition year.",
+  "699058fdaaa7f10ed4cfa811": {
+    "year": null,
+    "why": "Boeckh's 1819 study of Philolaus, catalogued under Philolaus; the prose is Boeckh's"
+  },
+  "69b51ecaff09e4fe943b4a48": {
+    "year": null,
+    "why": "a 1733 catalogue of the Stoll library, wrongly linked to Plotinus"
+  },
+  "69c7b6c525ec2ba5ccd7f74d": {
+    "year": null,
+    "why": "an Ocellus Lucanus edition whose passages naming the figure are the editor's dissertations and notes"
+  },
+  "69b631a31c1c21a3738092a9": {
+    "year": null,
+    "why": "a medieval commentary on Boethius attributed to Aquinas, linked to Boethius"
+  },
+  "69dbc8781040d1d5e2099e02": {
+    "year": null,
+    "why": "the Auctoritates Aristotelis (13th/14th c.), linked to Bede"
+  },
+  "69f331b5876dd827cbc493ea": {
+    "year": null,
+    "why": "an anonymous commonplace book, linked to Walter Map"
+  },
+  "69b51dfe768235dc6598b0a8": {
+    "year": null,
+    "why": "Scheibel's 1798 mathematical bibliography, linked to Robert Fludd"
+  },
+  "699379bfb0a84a5763965ed6": {
+    "year": -354,
+    "why": "Xenophon's Hellenica, linked to Xenophon of Ephesus"
+  },
+  "695aa95dbe4023bd34bd62e3": {
+    "year": null,
+    "why": "an Ocellus Lucanus edition whose passages naming the figure are the editor's dissertations and notes"
+  },
+  "695aa97abe4023bd34bd65b7": {
+    "year": null,
+    "why": "an Ocellus Lucanus edition whose passages naming the figure are the editor's dissertations and notes"
+  },
+  "69c7cf0825ec2ba5ccd801a2": {
+    "year": null,
+    "why": "an Ocellus Lucanus edition whose passages naming the figure are the editor's dissertations and notes"
+  },
+  "695aa959a87b789737e9dce2": {
+    "year": null,
+    "why": "an Ocellus Lucanus edition whose passages naming the figure are the editor's dissertations and notes"
+  },
+  "69b2fecf5545150b61b46abe": {
+    "year": null,
+    "why": "Commentaries on the Organon (1495), catalogued under Aristotle"
+  },
+  "69e8b1a22ff2a8dc09e764f9": {
+    "year": null,
+    "why": "a 1587 commentary on Strabo, catalogued under Strabo"
+  },
+  "69b2fffee5d6d64d8e197d97": {
+    "year": null,
+    "why": "Augustine's City of God (Basel 1542) printed with Vives' commentary on every page; the passages naming Pythagoreans are Vives'"
+  },
+  "69c7fe736c6f3cc53c8437d3": {
+    "year": null,
+    "why": "Dacier's Bibliothèque des anciens philosophes (1771), a French anthology with Dacier's own lives and commentary, catalogued under Plato (found by diels.py, 2026-10-22)"
+  }
+}

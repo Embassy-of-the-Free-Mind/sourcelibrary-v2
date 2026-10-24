@@ -363,11 +363,11 @@ function langArg(args: Record<string, unknown>): string {
   return /^[a-z]{2,3}$/.test(raw) ? raw : 'en';
 }
 
-async function searchWithinBook(args: Record<string, unknown>) {
+async function searchWithinBook(args: Record<string, unknown>, caller?: McpCaller) {
   const lang = langArg(args);
   const params = new URLSearchParams({ q: String(args.query) });
   if (lang !== 'en') params.set('lang', lang);
-  const result = await apiGet(`/books/${args.book_id}/search`, params) as Record<string, unknown>;
+  const result = await mcpApiGet(`/books/${args.book_id}/search`, params, caller) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
     const best = matches?.find((m) => m.field === 'translation') || matches?.[0];
@@ -378,6 +378,8 @@ async function searchWithinBook(args: Record<string, unknown>) {
       // Relevance and which leg found it. A page found by BOTH keyword and
       // meaning is the strongest signal the tool can give.
       ...(r.score !== undefined ? { score: r.score } : {}),
+      ...(r.similarity !== undefined ? { similarity: r.similarity } : {}),
+      ...(r.phrase_match !== undefined ? { phrase_match: r.phrase_match } : {}),
       ...(r.found_by ? { found_by: r.found_by } : {}),
       // Not body text: introduction, preface, contents, index, blank leaves,
       // binding photography. Surfaced, not
@@ -394,6 +396,12 @@ async function searchWithinBook(args: Record<string, unknown>) {
   // through so the caveat reaches the agent that has to decide whether a blank
   // means "not here" — which, on an unembedded book, it does not.
   const coverage = result.semantic_coverage as { status?: string; caveat?: string } | undefined;
+  // "Nothing here" is the answer a quote-checker most needs and the one a
+  // within-book normalised score could never give (#3699). Say it outright when
+  // no page prints the words and nothing is near in meaning either.
+  const topScore = Math.max(0, ...(results ?? []).map((r) => Number(r.score) || 0));
+  const lexicalHit = (results ?? []).some((r) => r.found_by !== 'semantic');
+  const absent = !lexicalHit && topScore < 0.55;
   return {
     book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
     // Which edition of the book's text was searched, and which the snippets are
@@ -402,7 +410,7 @@ async function searchWithinBook(args: Record<string, unknown>) {
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -640,7 +648,12 @@ async function getBookText(args: Record<string, unknown>) {
     }
   }
 
-  result.tip = 'When quoting from these pages, copy text verbatim from the translation field.';
+  // An English edition's English leaves carry no `translation`: their own words
+  // are the `ocr` text (#7100), and the generic tip would send the caller to
+  // a field that is not there.
+  result.tip = result.english_edition_note
+    ? 'English edition: when quoting an English leaf, copy text verbatim from the ocr field (the author\'s own words, period spelling kept); use the translation field only on leaves that carry one.'
+    : 'When quoting from these pages, copy text verbatim from the translation field.';
   return result;
 }
 
@@ -731,7 +744,7 @@ function translationNote(result: Record<string, unknown>): string | null {
 // tip ("copy the translation text") would point at a field that isn't there.
 const OCR_ORIGINAL_TIP =
   'This page is an ENGLISH ORIGINAL: the text printed on the leaf is already English, so there is no ' +
-  'translation and none is needed (this is why the book reports pages_translated: 0). The verbatim ' +
+  'translation and none is needed (a pages_translated count on such a book is a legacy machine rewording of the English, which is never served — #7100). The verbatim ' +
   'text is in `original`. Copy it exactly and attribute it as the source\'s own words — never call it ' +
   'a translation. Render as:\n' +
   '> [exact original text, verbatim]\n' +
@@ -1480,7 +1493,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_within_book',
     title: 'Search Within Book',
-    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Each result carries score (0-1, normalised within this book) and found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
+    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Results are ordered by relevance within this book. Each carries score (0-1, ABSOLUTE, not relative to the other results, so a query the book cannot answer scores low everywhere): the higher of similarity (raw cosine from the meaning pass, calibrated like search_concept: 0.70+ strong, 0.55–0.70 verify, below 0.55 drift) and phrase_match (how much of a multi-word query the page prints in order at one place; 1 is all of it; a one-word query the page prints scores 1). Each also carries found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1625,7 +1638,7 @@ const TOOLS: Tool[] = [
         subject: { type: 'string', description: 'EXACT, case-sensitive match on an extracted subject tag ("alchemy", "medicinal plants"); a near-miss matches nothing. Look the string up with list_image_facets first, or put loose words in query instead.' },
         figure: { type: 'string', description: 'EXACT, case-sensitive match on a figure tag ("Jesus Christ", "putti"). Look it up with list_image_facets.' },
         symbol: { type: 'string', description: 'EXACT, case-sensitive match on a symbol tag ("ouroboros", "triangle"). Look it up with list_image_facets.' },
-        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
+        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some works carry the date a photograph or upload was made (e.g. 2005) rather than the date of the work — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup). Undated artworks are excluded from any year-filtered search, not passed through.' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
@@ -1903,7 +1916,7 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'search_translations':
     case 'search_passages': return searchPassages(args, caller);
     case 'search_concept': return searchConcept(args, caller);
-    case 'search_within_book': return searchWithinBook(args);
+    case 'search_within_book': return searchWithinBook(args, caller);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);

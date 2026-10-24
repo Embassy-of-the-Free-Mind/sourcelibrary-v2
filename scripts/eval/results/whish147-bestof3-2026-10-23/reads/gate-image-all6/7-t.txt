@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf starts ശെഷാണാം൨൮।സ്വാ‖ലക്ഷണ്യംവൃത്തിസ്ത്രയസ്യസൈഷാഭവ‖ത്യസാമാന്യാസാമാന്യകര. D matches. A marks the opening [illegible] and drops the verse number. B, C, E and F get only fragments right (ശെഷാണാം, ലക്ഷണ) and the rest is garbled.
+CHECK | row 5: The leaf starts ൎന്നകെനചിത്കാ‖ൎയ്യതെകരണമു।൩൧ഃക‖രണംത്രയൊദശവി. D matches. A opens with [illegible] and puts hetu at the start of the row, though it belongs at the end of row 4. B, C, E and F give unrelated letter strings (ഗതൃഞ്ഛൈ…, ഗഇന്തൈ…, ഹഗന്യൈ…, സാര്യൈ…) and agree with the leaf only near the end (…ശവി).
+CHECK | row 9: The leaf starts ദ്ധീന്ദ്രിയാണിതെഷാം‖പഞ്ചവിശെഷാവിശെഷവിഷയാണി‖വാഗ്ഭവതിശബ്ദവിഷയ. D matches. A breaks the row in the wrong place (ബുദ്ധീ/ന്ദ്രിയാണി). B, C, E and F are garbled (ദ്വിത്രിയാദി…, ടിത്തുയാണി…, ടിൃയാഠി…, [illegible]ാഷൈ…).
+PICK | D
+RANK | D, A, C, E, B, F
+WHY | Only D matches the strokes on the leaf letter by letter in every row checked, including the verse numbers ൨൮–൩൩, while A has the right text but loses rows to [illegible] and misplaces row breaks, and the other four are mostly garbled.

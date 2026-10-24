@@ -26,6 +26,7 @@
  * see needsEviction().
  */
 import { ObjectId } from 'mongodb';
+import { pingBooksPublic } from './indexnow.mjs';
 import { revalidateBookPages, bookEvictionFollowUp } from './revalidate.mjs';
 
 export const PUBLICATION_STATES = Object.freeze(['public', 'unpublished', 'hidden', 'takedown']);
@@ -279,7 +280,7 @@ function bookRefsFilter(refs) {
   return { $or: [{ id: { $in: strs } }, { _id: { $in: [...strs, ...oids] } }] };
 }
 
-const PROJECTION = { _id: 1, id: 1, slug: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
+const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
 
 const WITHDRAWN = new Set(['hidden', 'takedown']);
 
@@ -373,6 +374,7 @@ export async function setPublication(db, bookRef, opts) {
 
   await books.updateOne({ _id: book._id }, buildUpdate(state, reason, opts, now));
   await db.collection('publication_events').insertOne(eventFor(book, from, state, reason, opts, now));
+  if (state === 'public' && (book.pages_count ?? 0) > 0) await pingBooksPublic([book]); // #3755, never throws
   if (!needsEviction(from.state, state)) return { status: 'written', ...base };
   return { status: 'written', ...base, eviction: await evictBooks([book], opts) };
 }
@@ -393,6 +395,7 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
 
   const out = { written: [], unchanged: [], skipped: [], refused: [], not_found: [] };
   const toEvict = [];
+  const nowPublic = [];
   const refs = [...new Set((bookRefs || []).map(String))];
   for (let i = 0; i < refs.length; i += batchSize) {
     const chunk = refs.slice(i, i + batchSize);
@@ -417,6 +420,7 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
       toWrite.push(book._id);
       events.push(eventFor(book, from, state, reason, opts, now));
       out.written.push(id);
+      if (state === 'public' && (book.pages_count ?? 0) > 0) nowPublic.push(book);
       if (needsEviction(from.state, state)) toEvict.push(book);
     }
     if (toWrite.length) {
@@ -424,6 +428,7 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
       await db.collection('publication_events').insertMany(events);
     }
   }
+  if (nowPublic.length) await pingBooksPublic(nowPublic); // one batched ping (#3755)
   if (toEvict.length) out.eviction = await evictBooks(toEvict, opts);
   return out;
 }

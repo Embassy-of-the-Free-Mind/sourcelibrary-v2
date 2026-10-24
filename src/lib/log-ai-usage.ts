@@ -24,6 +24,8 @@ interface AiUsage {
   ok?: boolean;
   anon?: boolean;             // unauthenticated caller
   country?: string | null;
+  /** Per-feature numbers worth keeping beside the cost (stage timings, counts). */
+  detail?: Record<string, number | string | boolean>;
 }
 
 export function logAiUsage(u: AiUsage): void {

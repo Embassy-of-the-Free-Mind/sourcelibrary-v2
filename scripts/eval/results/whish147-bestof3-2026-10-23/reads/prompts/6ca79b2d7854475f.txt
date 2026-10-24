@@ -1,0 +1,53 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣālsiddhaṃññateevānai ‖ traiguṇyālmāddhyasthyaṃsākṣi [illegible] draṣṭṛ ‖ [illegible] caddṛ [illegible]
+2. ppoṭava [illegible] ttekūṭeya [illegible] ‖ maddhyasthaḥiticodanāstitarhi [illegible] iti ‖ [illegible] draṣṭā [illegible]
+3. āddhākarattisiddhaṃ [illegible] ‖ ttpramāṇenakalpya [illegible] mavagamyaceta ‖ nānāha [illegible] kiṃkaromi
+4. triguṇa [illegible] ce [illegible] ‖ āmānādhikaraṇya [illegible] ṭava [illegible] siddhaṃ [illegible] ‖ [illegible] pakarṣavatācetanasya
+5. ā [illegible] kṣolkarttṛtvā ‖ [illegible] cetanāl [illegible] āhatasmāttalsaṃ ‖ yogādacetana
+6. ṃcetanāvadivaliṃ ‖ gaṃguṇakarttṛtvecatathākartteva ‖ bhavatyudāsīnaḥ [illegible]
+7. ttai [illegible] trai [illegible] karttṛ ‖ [illegible] ādikaraṇe [illegible] āṇayukti [illegible] ‖ ndrālbhrāntiriyama
+8. tthaḥ [illegible] liṃgaṃmahada ‖ ādisūkṣmaparyyantaṃ [illegible] ‖ kṣiṃ [illegible] saṃyo
+9. gaḥsannidhāna [illegible] ‖ hitamennāl [illegible] liṃgaṃ [illegible] yo ‖ [illegible] ceṣṭā [illegible] pekṣāṃ [illegible] nā
+10. naceyamapekṣāpakāra ‖ [illegible] pakāraka [illegible] pekṣā [illegible] hetu ‖ mupakāramāhaḥpuruṣasya
+11. darśanārtthaṃkaivalyārtthaṃ ‖ tathāpradhānasyapaṃgvandhavadubhayorapisaṃ ‖ yogaḥpradhānasya [illegible]
+12. [illegible] pradhānasyasarvvaprakā ‖ [illegible] pṛtha [illegible] ‖ [illegible] pradhānasya [illegible]
+13. [illegible] pradhānaṃloka ‖ [illegible] lo [illegible] saṃ [illegible] ‖ [illegible] vṛṣṭyāde [illegible]
+
+TRANSCRIPTION B
+1. khyālbuddhyāṃ [illegible] ṅṅaḻeevāḻe [illegible] ‖ uṇṭālmātrasthānasthi [illegible] canyekhattuppalduḥ ‖ [illegible] caduḥkhaikhiṣṭhalnamātra
+2. spoṭapaṅṅattuṭayalahiteka [illegible] ‖ maddhyeḥiṅṅinecoddāsineiṅṅicābhyāyateni ‖ [illegible] veṅṅinmādapraṇāpayāmra
+3. ābhākārelttisiddhāṃtyā [illegible] ‖ ttalpramāṇenakalpryamakkalmavagamyaceta ‖ [illegible] nāhampikkiṅṅaḻkareimi
+4. ttikkilecettannayoḥna [illegible] ‖ āmānāyikaḻaññumanaṭavasiddhāṃtedginmate [illegible] ‖ [illegible] āpakaṅṅaḻetaṃceyunnya
+5. āṅṅakkayolkaṇṇā ‖ ceytannāletrāva [illegible] āhattiltalsaṃo ‖ yāgāl [illegible] cetal
+6. ṃcetaṇāvaviṭipadivihiṃ ‖ haṃguṇākaṅṅaḻececatayākaiḻva ‖ ṭapatrudāṣinaḥya
+7. taiauvatukkākartto ‖ baliṇāmikaraṇe [illegible] ṇayukkikkiḻeṭṭa ‖ stālprāṇiriyama
+8. tralḥiṃgāmahāda ‖ ādislakṣmiparyantaṃpadvivibhūmimi ‖ ṅṅāṃtansaṃkhyā
+9. gaḥsattiyānāṃṅṅaḻerāhita ‖ mennālsāṃkhyāgādituṅṅāṃnacalinaoyāo ‖ āoppāgācekkāṃminā
+10. naceyamakai [illegible] ṇṇāpakā ‖ āāḻuāpakārakaṅkaṭāvāṃpitennāvekkāvevitu ‖ ātumuvakāramāhiḥpuruṣasya
+11. daḻnātmaṃaiekevalyātmaṃta ‖ ṃtapāhyānasyapāṃgasvavaluṭeyorumisaṃo ‖ ṃyogaḥpradhānasyakaima
+12. nikkamillipradhānasyasampraka ‖ kārasyabhūlnaṃguka [illegible] daiṣātadalṃtatainana ‖ pradhānasyadartthatātana
+13. baṃṭeṭāddāṃpradhānaṃṭeka ‖ kāramanareṅṅānasaṃṭavasiddhiyukāṃkkoṇṭa ‖ eṭākkapekṣyavṛkṣayāme
+
+TRANSCRIPTION C
+1. khyālsiddhāṃṅṅatevātrai ‖ guṇyālmātrasthāṃnṛṣṭicandrevatrapyānduḥ ‖ [illegible] caduḥkhekha [illegible] ṣinnamaddhya
+2. sproṭṭapaṅṅittuṭayaśarīratte ‖ maddhyasthaḥiticodāsīnaiticāpyāyateraphi ‖ veṅkitvādapraṇāpayāmma [illegible]
+3. ādvākarelkkisiddhāṃsyā [illegible] ‖ tvpramāṇenakalpyamaṅṅaḻmavagamyaceta ‖ [illegible] nāha [illegible] kkiṅkalkaromi
+4. tvikramecetra [illegible] yeyādina ‖ āmānādikaḻaññamanaṭavasiddhāṃtaddinmateta ‖ [illegible] āpakiṅkarataṃcetanya
+5. āṅṅattukakhyālkkattukhyā ‖ caitanyāluṇṭāva [illegible] āhatatvāltalsaṃ [illegible] ‖ yāgālññacetana
+6. ṃcetanovadvivaḻiṃ ‖ haṃguṇākaṇṭukhaca [illegible] catagākaiḻva ‖ ṭapattudāsinaḥya
+7. taikhatrukalttu ‖ khaliṇādikaraṇṇa [illegible] rakhyakkikagiṭora ‖ strāldrottariyami
+8. ttulguṇaṃhaṃmahada ‖ ādvistukṣivaḻḻataṃpaśliḻedvāḻemi ‖ kkiṃtansaṃkhyā
+9. hastiyānaṃṅṅaḻerohita ‖ mennālsaṃkhyāgāditrukkāṃnacallinayo [illegible] ‖ āccugoāpekkāṃṣinā
+10. naceyamapekṣāpakkā ‖ āśśāpakkārakkaṭāvaṃṣinennāpekṣāhitu ‖ [illegible] utmavakkāramāhiḥpuruṣasya
+11. ddranāttuṃkaipallāttuṃna ‖ negāprayānasyapāśśasāśśapaluṭoyāraṣisaṃ [illegible] ‖ ṃyogaḥpradhānasyakkama
+12. nikkakṣliprayānasyasarvvaprakkā ‖ rasyaralnaṃnṛru [illegible] dekṣātadyaṃtadenana ‖ pradhānasyaddratota
+13. śśaṭṭāgrāṃviyānaṃṭakka ‖ ākkāramanaraṇṇanasaṃṭavasiddhiyyākkāmaśiprākkaṭa ‖ ṭṭāttupekṣāvyaktāpe
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

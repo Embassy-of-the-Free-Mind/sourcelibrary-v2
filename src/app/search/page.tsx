@@ -11,7 +11,8 @@ import {
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import { useLocale, useLocalePath } from '@/lib/i18n';
-import type { Locale } from '@/lib/locale-path';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
+import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
 import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
@@ -35,6 +36,7 @@ import {
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
 import { LANE_SORT, completeYear, laneHonours, searchLane, type SearchFilterKey } from '@/lib/search-filter-support';
+import { parseWorkPeriodValue, parseWorkYear, workPeriodLabel, workPeriodOptions, workPeriodValue } from '@/lib/work-dates';
 import type { NameChoices } from '@/lib/search/name-chooser';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
@@ -139,7 +141,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // and LABELLED, because the images are the content.
   const localized = lang !== 'en';
   const defaultMode: ViewMode = localized ? 'books' : 'unified';
-  const langParam = localized ? lang : undefined;
+  // An original-text locale (`/la`, `/zh`, #7175) has no translated edition to
+  // ask for: it searches books WRITTEN in its language and quotes their own
+  // text. So it sends `language=<native>&text=original` and never `lang=`,
+  // and every card opens at `/la/book/…`, which serves exactly those books.
+  const nativeLanguage = readsOriginal(lang) ? NATIVE_SHELF_LANGUAGE[lang as keyof typeof NATIVE_SHELF_LANGUAGE] : undefined;
+  const langParam = localized && !nativeLanguage ? lang : undefined;
 
   // `?mode=` is user-supplied, so the clamp lives here rather than only in the
   // tab list: a hand-typed /es/search?mode=unified must not render the English
@@ -215,13 +222,20 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   );
 
   // Filters
-  const hasInitialFilters = !!(searchParams.get('language') || searchParams.get('category') || searchParams.get('collection') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
+  const hasInitialFilters = !!((!nativeLanguage && searchParams.get('language')) || searchParams.get('category') || searchParams.get('collection') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('work_from') || searchParams.get('work_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
   const [showFilters, setShowFilters] = useState(hasInitialFilters);
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [collection, setCollection] = useState(searchParams.get('collection') || '');
   const [dateFrom, setDateFrom] = useState(searchParams.get('date_from') || '');
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
+  // When the WORK was written (#6873): a "from..to" select value; the API takes work_from/work_to.
+  const [workPeriod, setWorkPeriod] = useState(
+    workPeriodValue(parseWorkYear(searchParams.get('work_from')), parseWorkYear(searchParams.get('work_to'))),
+  );
+  const workRange = useMemo(() => parseWorkPeriodValue(workPeriod), [workPeriod]);
+  const workDateLang = lang === 'es' ? 'es' : 'en';
+  const workPeriodOptionsList = useMemo(() => workPeriodOptions(workDateLang), [workDateLang]);
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
   const [firstTranslation, setFirstTranslation] = useState(searchParams.get('first_translation') === 'true');
@@ -748,7 +762,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // request to books that HAVE that edition, so every card links to a
           // page the reader can actually open (#4095).
           lang: langParam,
-          language: language || undefined,
+          language: nativeLanguage ?? (language || undefined),
+          text: nativeLanguage ? 'original' : undefined,
           category: category || undefined,
           date_from: dateFrom || undefined,
           date_to: dateTo || undefined,
@@ -802,7 +817,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage, langParam, t]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage, langParam, nativeLanguage, t]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
@@ -815,6 +830,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     if (collection) params.set('collection', collection);
     if (dateFrom) params.set('date_from', dateFrom);
     if (dateTo) params.set('date_to', dateTo);
+    if (workRange.from !== null) params.set('work_from', String(workRange.from));
+    if (workRange.to !== null) params.set('work_to', String(workRange.to));
     if (hasDoi) params.set('has_doi', 'true');
     if (hasTranslation) params.set('has_translation', 'true');
     if (firstTranslation) params.set('first_translation', 'true');
@@ -831,7 +848,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       ? currentPathname
       : (tenant ? `/${tenant}/search` : '/search');
     router.replace(`${basePath}?${params.toString()}`, { scroll: false });
-  }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
+  }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, workRange, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
   const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null; site?: typeof siteResults; people?: NameChoices | null }>());
@@ -891,11 +908,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // it. A control the current lane ignores is not shown: it would change the
   // URL and light the active-filter dot while the results stayed put (#3401).
   const lane = searchLane(isBrowseMode, viewMode);
-  const can = (filter: SearchFilterKey) => laneHonours(lane, filter);
+  // The language is fixed on an original-text locale (#7175): no control for it.
+  const can = (filter: SearchFilterKey) => !(nativeLanguage && filter === 'language') && laneHonours(lane, filter);
   const prefetchUsed = useRef(false);
   const performBrowse = useCallback(async () => {
     // Check for prefetched data from homepage (instant load for common views)
-    if (!prefetchUsed.current && typeof window !== 'undefined' && offset === 0 && !language && !category && !collection && !library && browseSortBy === 'recent-translation') {
+    if (!prefetchUsed.current && typeof window !== 'undefined' && offset === 0 && !nativeLanguage && !language && !category && !collection && !library && !workPeriod && browseSortBy === 'recent-translation') {
       const prefetch = (window as any).__BROWSE_PREFETCH;
       const prefetchTs = (window as any).__BROWSE_PREFETCH_TS;
       const key = firstTranslation ? 'first_translation' : hasTranslation ? 'has_translation' : null;
@@ -911,7 +929,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     setBrowseError(false);
     try {
       const data = await searchApi.browse({
-        language: language || undefined,
+        // Browse cards open at `/la/book/…` too, so the same native shelf (#7175).
+        language: nativeLanguage ?? (language || undefined),
         category: category || undefined,
         collection: collection || undefined,
         library: library || undefined,
@@ -920,6 +939,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         skip: offset,
         first_translation: firstTranslation || undefined,
         has_translation: hasTranslation || undefined,
+        work_from: workRange.from ?? undefined,
+        work_to: workRange.to ?? undefined,
       });
       setBrowseBooks(data.books || []);
       setBrowseTotal(data.total || 0);
@@ -934,7 +955,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     } finally {
       setBrowseLoading(false);
     }
-  }, [language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage]);
+  }, [language, nativeLanguage, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage, workPeriod, workRange]);
 
   useEffect(() => {
     if (isBrowseMode && viewMode !== 'images') {
@@ -942,7 +963,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       updateUrl('', viewMode, offset);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, viewMode]);
+  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, viewMode, workPeriod]);
 
   // Browse gallery: load images when in browse mode + images tab
   const browseYearFrom = completeYear(dateFrom);
@@ -1030,13 +1051,13 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   };
 
   const clearFilters = () => {
-    setLanguage(''); setCategory(''); setCollection(''); setDateFrom(''); setDateTo('');
+    setLanguage(''); setCategory(''); setCollection(''); setDateFrom(''); setDateTo(''); setWorkPeriod('');
     setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(defaultLibrary || ''); setSortBy('relevance'); setBrowseSortBy('recent-translation'); setOffset(0);
   };
   // Counts only what this lane applies, so the dot never claims a filter the
   // results are not under.
   const hasActiveFilters = (can('language') && language) || (can('category') && category) || (can('collection') && collection)
-    || (can('dates') && (dateFrom || dateTo)) || (can('hasDoi') && hasDoi) || (can('hasTranslation') && hasTranslation)
+    || (can('dates') && (dateFrom || dateTo)) || (can('workDate') && workPeriod) || (can('hasDoi') && hasDoi) || (can('hasTranslation') && hasTranslation)
     || (can('firstTranslation') && firstTranslation) || (can('library') && library && library !== defaultLibrary)
     || (LANE_SORT[lane] === 'search' && sortBy !== 'relevance');
 
@@ -1256,6 +1277,19 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                         placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
                     </div>
                   )}
+                  {can('workDate') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterWrittenIn}</label>
+                      <select value={workPeriod} onChange={(e) => { setWorkPeriod(e.target.value); setOffset(0); }}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        <option value="">{t.anyTime}</option>
+                        {workPeriod && !workPeriodOptionsList.some((o) => o.value === workPeriod) && (
+                          <option value={workPeriod}>{workPeriodLabel(workRange.from, workRange.to, workDateLang)}</option>
+                        )}
+                        {workPeriodOptionsList.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                      </select>
+                    </div>
+                  )}
                   <div className="col-span-2 flex flex-wrap gap-x-6 gap-y-2">
                     {can('hasTranslation') && (
                       <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
@@ -1343,6 +1377,19 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                       <label className="block text-sm text-secondary mb-1">{t.filterPublishedBefore}</label>
                       <input type="text" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setOffset(0); }}
                         placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                    </div>
+                  )}
+                  {can('workDate') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterWrittenIn}</label>
+                      <select value={workPeriod} onChange={(e) => { setWorkPeriod(e.target.value); setOffset(0); }}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        <option value="">{t.anyTime}</option>
+                        {workPeriod && !workPeriodOptionsList.some((o) => o.value === workPeriod) && (
+                          <option value={workPeriod}>{workPeriodLabel(workRange.from, workRange.to, workDateLang)}</option>
+                        )}
+                        {workPeriodOptionsList.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                      </select>
                     </div>
                   )}
                   <div className="flex flex-col gap-2 justify-end">
@@ -1533,6 +1580,15 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             )}
 
             {browseLoading && <div className="py-8"><BookLoader size="xs" /></div>}
+
+            {can('workDate') && workPeriod && !browseLoading && (
+              <p className="text-sm text-muted mb-4">
+                {t.writtenInNote(workPeriodLabel(workRange.from, workRange.to, workDateLang))}{' '}
+                {!embed && !onTenantHost && (
+                  <Link href="/timeline/written" className="text-accent-rust hover:underline">{t.browseByCentury}</Link>
+                )}
+              </p>
+            )}
 
             {/* Book grid */}
             {!browseLoading && browseBooks.length > 0 && (
@@ -2181,6 +2237,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
   const lang = useLocale();
+  const original = readsOriginal(lang);
   const t = SEARCH_STRINGS[lang];
   const lp = useLocalePath();
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
@@ -2200,13 +2257,18 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
       // In-book search reads the language-keyed page store, same as the
       // result lane above it — otherwise the card quotes English passages
       // under a Spanish snippet.
-      const res = await fetch(`/api/books/${result.book_id}/search?q=${encodeURIComponent(query)}&lang=${lang}`);
+      // An original-text locale reads the page's own text (#7175): there is
+      // no Latin or Chinese edition in that store, so it asks the default
+      // lane and quotes the OCR match.
+      const res = await fetch(`/api/books/${result.book_id}/search?q=${encodeURIComponent(query)}&lang=${original ? 'en' : lang}`);
       if (!res.ok) throw new Error('Search failed');
       const data = await res.json();
       const matches: PassageMatch[] = (data.results || [])
         .slice(0, 5)
         .map((r: any) => {
-          const best = r.matches?.find((m: any) => m.field === 'translation') || r.matches?.[0];
+          const best = original
+            ? r.matches?.find((m: any) => m.field === 'ocr')
+            : r.matches?.find((m: any) => m.field === 'translation') || r.matches?.[0];
           return {
             pageNumber: r.pageNumber,
             snippet: cleanSnippet(best?.snippet || ''),
@@ -2220,7 +2282,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
     } finally {
       setPassagesLoading(false);
     }
-  }, [result.book_id, query, passages, lang]);
+  }, [result.book_id, query, passages, lang, original]);
 
   // Auto-fetch passages for first translated book (desktop only — too tall on mobile)
   const isMobileView = typeof window !== 'undefined' && window.innerWidth < 640;
@@ -2304,7 +2366,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
               {result.type === 'book' && result.page_count && (
                 <span>{t.pagesCount(result.page_count)}{result.translated_count ? ` · ${t.translatedCount(result.translated_count)}` : ''}</span>
               )}
-              {result.type === 'book' && result.translated_count && result.translated_count > 0 && (
+              {result.type === 'book' && (original || (result.translated_count ?? 0) > 0) && (
                 <button
                   onClick={findPassages}
                   className="text-accent-rust hover:text-accent-rust-dark font-medium transition-colors"

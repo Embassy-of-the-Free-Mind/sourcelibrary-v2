@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. uṇṭānandraśrayatebāskikkeā ‖ ānakāraṇamanassaṃ noyāgādrujattamiḻiya [illegible] ṃ ‖ śarīreṅṅyabhranovikkaya
+2. ṭekhivabemandhanuddimiraṃ [illegible] ‖ ākṣivaśarīraṃgandhavabhindriyaṃpātthivamindriya ‖ yaṃgandhavānikkayaḥpātthi
+3. pakimmayaititallakammaṇa [illegible] ‖ āboddhyaṃpākṣivaśarīraṃdṛśyatiśarī ‖ ramitiindriyandṛśyatiindri
+4. jamiṅṅigandhaprāha ‖ kamitiprakkayāḻḻanakapanaprairaṇa ‖ mitisaṃjñākānanāsā [illegible]
+5. grantrākṣeyākkiḥ ‖ ṣāpammaṇaratrāṅkivilajñalaṃpā ‖ tthivamitiyennuḻyati
+6. ulpādyāraṅṅaḻi ‖ svāraṃpakṣaṇamanmāhastiṅṅaḻiu ‖ lpannamitamplaṅṅale
+7. brāhmipāraṇañña ‖ śītaṅṅaḻsammānāvikaraṇaddya ‖ bāparaṅṅaḻbhimamebe
+8. lvatsyaṃśītaṃśīlā ‖ talamitrārabhamaṅṅalasabodhārabhava ‖ vabhītajjalbhānamikkanā
+
+TRANSCRIPTION B
+1. graṇṇānandraśrayatosaṅkko ‖ ānakkāraṇamanakṣaṃñoāgādrujñamiḻiśa [illegible] ‖ ṃśarīremiśraṇṇoāvikṣaya
+2. 7ṣivabomandhānddimira [illegible] ‖ āṣṭhivaśamitaḥśāndhavamiśraśaṃccātmivamiśraśa ‖ śaṃgandhavānmikṣayaḥpātmi
+3. vamijñayaittalpakṣaṇā [illegible] ‖ āboddhyāḥpādivaśamiraṃbhaśśakiḥśamira ‖ mittiindriyandḻyyatiindri
+4. ṇḍitiḥśandhrāpha ‖ kamitiprakayājjanakaṣanaḥśrodde ‖ mitisaṃjñānāsāe
+5. gṛtvākkaiyākkiḥ ‖ ṣivamūnnālatrākkivitajñālaṃcā ‖ śiyamikṣayandḻyati
+6. ulpāmiāraṇṇiḥ ‖ ṣavāṃlakṣaṇamanmāhastatetaiu ‖ lpanaminaddijñale
+7. ññaddhyākṣipāraṇāśa ‖ śitaṅṅaḻsamrānāvikāraṇadravya ‖ bāparajñāmetaira
+8. ālvaśyaṃśītaṃśilā ‖ ātalamitrāātedantṅṅlasaṃbodhārebhava ‖ vaśītajjīḻbhānamikkanā
+
+TRANSCRIPTION C
+1. graṇānaśrutyāṇatabasthijja [illegible] ‖ ānakkāraṇamanaskaṃoroyāgāgrahaṇattinindriyaṅṅaḻāṃ ‖ śarīrendriyaṅṅaḻoroviṣaya
+2. ṃṣivabodhasmānaddiviraṃ [illegible] ‖ ātmivaśattinśābdavabhadrabaṃcātmivattindriya ‖ yaṃgandhavānviṣayaḥpātmi
+3. vatinnayaittalloṣmaṇā [illegible] ‖ āboddhyaṃcātmivaśatiraṃdaśyatiśarīra ‖ namittiindriyandaḻyattiindri
+4. ttamittigandhagrāha ‖ kamittipraṣayāṅṅanakaṣanaṃśrodañña ‖ mittisaṃjñakānanāsā [illegible]
+5. gratyākkṛoyākkikaḥ ‖ ṣāvamuṇṇānatrākkivitaññayaṃcā ‖ jñayaviṣayandaḻyatti
+6. ilvāriddāraṇaṅṅiṃ ‖ ṣavāṃpraṣaṇamanamāhastrateṅṅiu ‖ lpanantinaduṅṅaḻe
+7. bbrāddhivāraṇadāñña ‖ tmitaṅṅaḻsamānāvikaraṇabhru ‖ bāparaṅṅaḻmameṣera
+8. ālvajñuṃśitaṃśilā ‖ talamitrādetaṅṅaḻasaṃbedhāraṇava ‖ vaṣitaṅṅaḻbhānamikkanā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

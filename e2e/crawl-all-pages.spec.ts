@@ -5,6 +5,7 @@
  * Run: npx playwright test crawl-all-pages --reporter=list
  */
 import { test, expect } from '@playwright/test';
+import { isEdgeChallenge } from './edge-challenge';
 
 // All static (non-dynamic) page routes derived from src/app
 const STATIC_PAGES = [
@@ -38,37 +39,37 @@ const STATIC_PAGES = [
   '/auth/signin',
   '/auth/verify',
   '/beta',
-  '/blog',
-  '/blog/2000-first-translations',
-  '/blog/astrological-diagrams',
-  '/blog/autonomous-agents',
-  '/blog/chakra-tradition',
-  '/blog/clustering',
-  '/blog/counting-the-gap',
-  '/blog/cuneiform-ocr',
-  '/blog/demonology',
-  '/blog/fechner-bohme',
-  '/blog/fire-horse',
-  '/blog/first-translation-methodology',
-  '/blog/first-translations',
-  '/blog/hidden-engineers',
-  '/blog/hieroglyph-ocr',
-  '/blog/history-of-astrology',
-  '/blog/history-of-classification',
-  '/blog/indigenous-traditions',
-  '/blog/invisible-hand',
-  '/blog/mcp-server',
-  '/blog/ocr-consistency',
-  '/blog/origin-story',
-  '/blog/philosophers-stone',
-  '/blog/progress-studies',
-  '/blog/rashi-ocr',
-  '/blog/rithmomachia',
-  '/blog/translation-rate',
-  '/blog/untranslated-renaissance',
-  '/blog/visualizing-classification',
-  '/blog/why-terminals-cant-edit',
-  '/blog/worlds-largest-collection',
+  '/articles',
+  '/articles/2000-first-translations',
+  '/articles/astrological-diagrams',
+  '/articles/autonomous-agents',
+  '/articles/chakra-tradition',
+  '/articles/clustering',
+  '/articles/counting-the-gap',
+  '/articles/cuneiform-ocr',
+  '/articles/demonology',
+  '/articles/fechner-bohme',
+  '/articles/fire-horse',
+  '/articles/first-translation-methodology',
+  '/articles/first-translations',
+  '/articles/hidden-engineers',
+  '/articles/hieroglyph-ocr',
+  '/articles/history-of-astrology',
+  '/articles/history-of-classification',
+  '/articles/indigenous-traditions',
+  '/articles/invisible-hand',
+  '/articles/mcp-server',
+  '/articles/ocr-consistency',
+  '/articles/origin-story',
+  '/articles/philosophers-stone',
+  '/articles/progress-studies',
+  '/articles/rashi-ocr',
+  '/articles/rithmomachia',
+  '/articles/translation-rate',
+  '/articles/untranslated-renaissance',
+  '/articles/visualizing-classification',
+  '/articles/why-terminals-cant-edit',
+  '/articles/worlds-largest-collection',
   '/brand',
   '/brand/mockups',
   '/browse',
@@ -276,6 +277,8 @@ interface PageResult {
   status: number | null;
   error: string | null;
   loadTimeMs: number;
+  /** Cloudflare challenged the request (#6485): neither passed nor broken. */
+  challenged?: boolean;
 }
 
 // Shared helper: check a single URL and return the result
@@ -291,6 +294,10 @@ async function checkPage(
     const elapsed = Date.now() - start;
 
     let error: string | null = null;
+
+    if (isEdgeChallenge(response)) {
+      return { path, status, error, loadTimeMs: elapsed, challenged: true };
+    }
 
     if (isAuth) {
       if (status >= 500) {
@@ -323,10 +330,20 @@ async function checkPage(
   }
 }
 
+function expectMostlyUnchallenged(results: PageResult[]) {
+  const challenged = results.filter(r => r.challenged).length;
+  expect(
+    challenged,
+    `${challenged} of ${results.length} requests were challenged by Cloudflare — the suite is no longer reaching the site (#6485)`
+  ).toBeLessThan(results.length / 2);
+}
+
 function printResults(results: PageResult[], broken: PageResult[], label: string) {
   console.log(`\n========== ${label} ==========`);
   console.log(`Total pages tested: ${results.length}`);
-  console.log(`Passed: ${results.length - broken.length}`);
+  const challenged = results.filter(r => r.challenged);
+  console.log(`Passed: ${results.length - broken.length - challenged.length}`);
+  console.log(`Challenged at the edge (not checked, #6485): ${challenged.length}`);
   console.log(`Broken: ${broken.length}`);
 
   if (broken.length > 0) {
@@ -372,6 +389,10 @@ test.describe('Full site crawl', () => {
     }
 
     printResults(results, broken, 'CRAWL RESULTS');
+
+    // A challenged page is not checked. If the edge rule ever widens to most
+    // of the site, this suite would pass while measuring nothing — fail then.
+    expectMostlyUnchallenged(results);
 
     // Strip out known-broken pages tracked elsewhere — they print above but
     // do not fail the test. Real regressions still fail.
@@ -478,6 +499,10 @@ test.describe('Link follower', () => {
     }
 
     printResults(results, broken, 'LINK FOLLOWER RESULTS');
+
+    // A challenged page is not checked. If the edge rule ever widens to most
+    // of the site, this suite would pass while measuring nothing — fail then.
+    expectMostlyUnchallenged(results);
 
     const unexpectedBroken = broken.filter(b => !isExpectedBroken(b.path));
     if (broken.length !== unexpectedBroken.length) {

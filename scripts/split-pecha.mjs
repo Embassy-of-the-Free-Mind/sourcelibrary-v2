@@ -22,6 +22,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -183,6 +184,8 @@ async function processBook(db, book) {
     await Pages.updateOne({ id: page.id }, { $set: { page_number: -origPn, split_into: children.map(c => c.id), updated_at: now } });
     newPages += children.length;
   }
+  // The archived originals must stop being served by semantic search (#6270).
+  await withdrawPageVectors(ops.map(o => o.page.id), { reason: 'archived', writer: 'split-pecha' });
   // renumber: interleave unsplit pages (by page_number) with new leaves (by parent slot + leaf_index)
   const all = await Pages.find({ book_id: book.id, $or: [{ page_number: { $gt: 0 } }, { split_from_pecha: { $exists: true } }] })
     .project({ _id: 1, page_number: 1, split_from_pecha: 1, leaf_index: 1, _orig_pn: 1 }).toArray();

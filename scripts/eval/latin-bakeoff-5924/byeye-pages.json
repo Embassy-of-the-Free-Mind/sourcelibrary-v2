@@ -1,0 +1,305 @@
+[
+ {
+  "slug": "lr-69b6590718b87551bfcf91e6-p288",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "win",
+  "arm_N": 0.0542,
+  "L_N": 0.3665,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 62,
+   "s_as_f": 4,
+   "s_as_s": 54,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 62,
+   "s_as_f": 61,
+   "s_as_s": 0,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-69b666edb3f4fc0441560ba8-p8",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "win",
+  "arm_N": 0.0242,
+  "L_N": 0.1848,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 59,
+   "s_as_f": 2,
+   "s_as_s": 52,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 59,
+   "s_as_f": 3,
+   "s_as_s": 51,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a426d18175f31ca3ec5391c-p58",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "win",
+  "arm_N": 0.0071,
+  "L_N": 0.1184,
+  "typeface": "italic",
+  "arm_sf": {
+   "ref_long_s": 39,
+   "s_as_f": 0,
+   "s_as_s": 39,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 39,
+   "s_as_f": 37,
+   "s_as_s": 0,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a42bdb497284560a2b078dc-p26",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "loss",
+  "arm_N": 0.0311,
+  "L_N": 0.0054,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 47,
+   "s_as_f": 0,
+   "s_as_s": 44,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 47,
+   "s_as_f": 0,
+   "s_as_s": 46,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-69b641d01c1c21a37388850b-p29",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "loss",
+  "arm_N": 0.3872,
+  "L_N": 0.1166,
+  "typeface": "gothic",
+  "arm_sf": {
+   "ref_long_s": 44,
+   "s_as_f": 7,
+   "s_as_s": 28,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 44,
+   "s_as_f": 1,
+   "s_as_s": 41,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-69b63c691c1c21a373852e60-p67",
+  "century": "1500s",
+  "arm": "G",
+  "tag": "loss",
+  "arm_N": 1,
+  "L_N": 0.1134,
+  "typeface": {
+   "A": "roman",
+   "B": "mixed-roman-italic"
+  },
+  "arm_sf": {
+   "ref_long_s": 93,
+   "s_as_f": 2,
+   "s_as_s": 70,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 93,
+   "s_as_f": 92,
+   "s_as_s": 1,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a90620ec21b989bffd7625f-p30",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "win",
+  "arm_N": 0.0076,
+  "L_N": 0.1726,
+  "typeface": "roman",
+  "arm_sf": {
+   "ref_long_s": 54,
+   "s_as_f": 1,
+   "s_as_s": 53,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 54,
+   "s_as_f": 27,
+   "s_as_s": 24,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a90c07c3822dc24e54022d9-p478",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "win",
+  "arm_N": 0.0844,
+  "L_N": 0.1833,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 99,
+   "s_as_f": 1,
+   "s_as_s": 94,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 99,
+   "s_as_f": 83,
+   "s_as_s": 0,
+   "s_kept": 1,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a90c3bca02f8189feb9f357-p406",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "win",
+  "arm_N": 0.0745,
+  "L_N": 0.1639,
+  "typeface": "roman",
+  "arm_sf": {
+   "ref_long_s": 110,
+   "s_as_f": 0,
+   "s_as_s": 104,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 110,
+   "s_as_f": 105,
+   "s_as_s": 0,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6ac5152a0749a01cb81cd1b4-p353",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "loss",
+  "arm_N": 0.1624,
+  "L_N": 0.0285,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 290,
+   "s_as_f": 0,
+   "s_as_s": 245,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 290,
+   "s_as_f": 21,
+   "s_as_s": 259,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a42f6193ad4d80da123710b-p263",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "loss",
+  "arm_N": 0.3908,
+  "L_N": 0.0655,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 196,
+   "s_as_f": 4,
+   "s_as_s": 131,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 196,
+   "s_as_f": 194,
+   "s_as_s": 0,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ },
+ {
+  "slug": "lr-6a26c68faad44c98627dfd7e-p945",
+  "century": "1600s",
+  "arm": "K",
+  "tag": "loss",
+  "arm_N": 0.728,
+  "L_N": 0.07,
+  "typeface": "mixed-roman-italic",
+  "arm_sf": {
+   "ref_long_s": 118,
+   "s_as_f": 0,
+   "s_as_s": 26,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  },
+  "L_sf": {
+   "ref_long_s": 118,
+   "s_as_f": 110,
+   "s_as_s": 2,
+   "s_kept": 0,
+   "f_as_long_s": 0,
+   "aligned": true
+  }
+ }
+]

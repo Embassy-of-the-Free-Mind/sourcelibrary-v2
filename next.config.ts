@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 80, 85, 90],
+    qualities: [60, 75, 80, 85, 90], // 60: article heroes, under a dark gradient (ParallaxImage)
     minimumCacheTTL: 31536000, // 1 year — R2 images are immutable, maximize CDN cache hits
     deviceSizes: [640, 828, 1200, 1920], // Matches grid breakpoints: mobile, tablet, desktop, wide
     imageSizes: [150, 400, 800], // Matches thumbnail tiers: thumb, card, display
@@ -356,7 +356,12 @@ const nextConfig: NextConfig = {
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
-        source: '/blog/:path*',
+        source: '/articles',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/articles/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -384,6 +389,10 @@ const nextConfig: NextConfig = {
       // /sitemap/[__metadata_id__] route and breaks the build, so the
       // index lives at /sitemap-index and we rewrite from /sitemap.xml.
       { source: '/sitemap.xml', destination: '/sitemap-index' },
+      // The strongest pages only (hubs, collections/works/authors, books), submitted
+      // to Search Console on its own so its processing is reported separately.
+      // Google spends ~150-250 HTML fetches a day here (crawl stats, Oct 2026). #3755
+      { source: '/sitemap-core.xml', destination: '/sitemap-core' },
       // The Source Library beta launch talk (embedded video + audio-aligned
       // transcript) lives in a standalone static deployment. Proxy it on-domain
       // at /launch so the email and site link to sourcelibrary.org, not a
@@ -396,6 +405,29 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Research Notes became Articles: /blog and every post under it moved
+      // to /articles with the same slugs.
+      // Renamed posts come first: the generic /blog/:path* rule below would
+      // otherwise catch them and land on a 404 under the old slug. The prose
+      // note was replaced by the document itself (PR #4991), then given its
+      // own name.
+      { source: '/partners', destination: '/ai-partners', permanent: true },
+      { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      // Choreia renamed to its main idea (2026-10-19).
+      { source: '/articles/choreia', destination: '/articles/choreia-the-dance-of-the-cosmos', permanent: true },
+      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
+      { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
+      // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
+      { source: '/vision', destination: '/articles/vision', permanent: true },
+      { source: '/specimen/aldine', destination: '/articles/aldine-roman', permanent: true },
+      { source: '/collections/drebbel/beeckman', destination: '/articles/beeckman-on-drebbel', permanent: true },
+      { source: '/about/meaning', destination: '/articles/search-by-meaning', permanent: true },
+      { source: '/about/by-the-numbers', destination: '/articles/by-the-numbers', permanent: true },
+      { source: '/blog', destination: '/articles', permanent: true },
+      { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP
       // 308s at the routing layer — the page-level permanentRedirect in
       // /collections/[id] only yields a streamed meta-refresh because the
@@ -419,6 +451,13 @@ const nextConfig: NextConfig = {
         { source: `/${name}`, destination: `/${code}`, permanent: false },
         { source: `/${name}/:path*`, destination: `/${code}/:path*`, permanent: false },
       ]),
+      // The atlas's body map already lives here as a blog document (#4922); the maps
+      // index lists it, and this keeps the /explore/maps/<theme> shape for it too.
+      {
+        source: '/explore/maps/body',
+        destination: '/blog/techniques-of-the-body',
+        permanent: true,
+      },
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {
@@ -429,18 +468,6 @@ const nextConfig: NextConfig = {
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',
-        permanent: true,
-      },
-      // The prose note was replaced by the document itself (PR #4991), then given its own name.
-      {
-        source: '/blog/where-the-instructions-are',
-        destination: '/blog/techniques-of-the-body',
-        permanent: true,
-      },
-      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
-      {
-        source: '/blog/ledgers-and-heavens',
-        destination: '/blog/harmonic-justice',
         permanent: true,
       },
       // Iconclass division pages retired (#4856) — codes were model-recalled and

@@ -1,0 +1,1038 @@
+{
+ "min_score": 0.25,
+ "table": {
+  "single -> undetermined": 6,
+  "correct -> undetermined": 5,
+  "correct -> correct": 17,
+  "bad -> reversed": 19,
+  "single -> correct": 1,
+  "correct -> reversed": 3,
+  "bad -> undetermined": 2
+ },
+ "rows": [
+  {
+   "run": "rashi",
+   "page": 7,
+   "page_id": "69f66da980c7a291ec4c220c",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [],
+   "strips": 1
+  },
+  {
+   "run": "rashi",
+   "page": 84,
+   "page_id": "69f66dd280c7a291ec4c2257",
+   "judge": "correct",
+   "columns": 2,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 1,
+     "at": 128,
+     "score": 0.75
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 34,
+   "page_id": "69f66db880c7a291ec4c222b",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 136,
+     "score": 0.67
+    },
+    {
+     "n": 2,
+     "at": 2640,
+     "score": 0.38
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 93,
+   "page_id": "69f66dda80c7a291ec4c2266",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 2720,
+     "score": 0.46
+    },
+    {
+     "n": 2,
+     "at": 5304,
+     "score": 0.83
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 135,
+   "page_id": "69f66df080c7a291ec4c228c",
+   "judge": "correct",
+   "columns": 2,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 160,
+     "score": 0.94
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 119,
+   "page_id": "69f66de580c7a291ec4c227a",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 152,
+     "score": 0.99
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 56,
+   "page_id": "69f66dc280c7a291ec4c223b",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 1,
+     "at": 112,
+     "score": 0.94
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 171,
+   "page_id": "69f66e0380c7a291ec4c22b0",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 120,
+     "score": 0.77
+    },
+    {
+     "n": 2,
+     "at": 1952,
+     "score": 0.81
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 147,
+   "page_id": "69f66df580c7a291ec4c2294",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2136,
+     "score": 0.74
+    },
+    {
+     "n": 2,
+     "at": 208,
+     "score": 0.93
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 104,
+   "page_id": "69f66ddf80c7a291ec4c226f",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 120,
+     "score": 0.45
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi",
+   "page": 32,
+   "page_id": "69f66db880c7a291ec4c2225",
+   "judge": "single",
+   "columns": 1,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 128,
+     "score": 0.99
+    },
+    {
+     "n": 2,
+     "at": 2656,
+     "score": 0.74
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 86,
+   "page_id": "69f66dd380c7a291ec4c225b",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 2,
+     "at": 120,
+     "score": 0.88
+    },
+    {
+     "n": 3,
+     "at": 2728,
+     "score": 0.77
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi",
+   "page": 96,
+   "page_id": "69f66dda80c7a291ec4c2261",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 2,
+     "at": 128,
+     "score": 0.85
+    },
+    {
+     "n": 3,
+     "at": 2712,
+     "score": 0.9
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi",
+   "page": 36,
+   "page_id": "69f66db880c7a291ec4c2227",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 120,
+     "score": 0.94
+    },
+    {
+     "n": 2,
+     "at": 2664,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 12,
+   "page_id": "69f66dae80c7a291ec4c2213",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2832,
+     "score": 0.86
+    },
+    {
+     "n": 2,
+     "at": 144,
+     "score": 0.81
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 115,
+   "page_id": "69f66de580c7a291ec4c2278",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 136,
+     "score": 0.74
+    },
+    {
+     "n": 2,
+     "at": 2448,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 177,
+   "page_id": "69f66e0480c7a291ec4c22b6",
+   "judge": "correct",
+   "columns": 3,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 3576,
+     "score": 0.85
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 5,
+   "page_id": "69f66da980c7a291ec4c220a",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 145,
+   "page_id": "69f66df580c7a291ec4c2296",
+   "judge": "single",
+   "columns": 1,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 168,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 134,
+   "page_id": "69f66df080c7a291ec4c228d",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 168,
+     "score": 0.75
+    },
+    {
+     "n": 2,
+     "at": 2680,
+     "score": 0.42
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 47,
+   "page_id": "69f66dbc80c7a291ec4c222c",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 2,
+     "at": 2792,
+     "score": 0.88
+    },
+    {
+     "n": 3,
+     "at": 160,
+     "score": 1
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi",
+   "page": 116,
+   "page_id": "69f66de580c7a291ec4c2275",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2744,
+     "score": 0.84
+    },
+    {
+     "n": 2,
+     "at": 184,
+     "score": 0.8
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 155,
+   "page_id": "69f66dfa80c7a291ec4c229c",
+   "judge": "correct",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2656,
+     "score": 0.75
+    },
+    {
+     "n": 2,
+     "at": 168,
+     "score": 0.71
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 113,
+   "page_id": "69f66de480c7a291ec4c2272",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2584,
+     "score": 0.72
+    },
+    {
+     "n": 2,
+     "at": 160,
+     "score": 0.75
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 33,
+   "page_id": "69f66db880c7a291ec4c2224",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 144,
+     "score": 0.99
+    },
+    {
+     "n": 2,
+     "at": 2568,
+     "score": 0.95
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 154,
+   "page_id": "69f66dfa80c7a291ec4c229d",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2504,
+     "score": 0.95
+    },
+    {
+     "n": 2,
+     "at": 112,
+     "score": 0.82
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 73,
+   "page_id": "69f66dce80c7a291ec4c224e",
+   "judge": "correct",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2784,
+     "score": 0.84
+    },
+    {
+     "n": 2,
+     "at": 104,
+     "score": 0.88
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi",
+   "page": 25,
+   "page_id": "69f66db280c7a291ec4c221c",
+   "judge": "correct",
+   "columns": 2,
+   "check": "undetermined",
+   "located": [],
+   "strips": 1
+  },
+  {
+   "run": "rashi",
+   "page": 182,
+   "page_id": "69f66e0880c7a291ec4c22bf",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 168,
+     "score": 1
+    },
+    {
+     "n": 2,
+     "at": 2872,
+     "score": 0.91
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi",
+   "page": 157,
+   "page_id": "69f66dfb80c7a291ec4c22a0",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 160,
+     "score": 0.81
+    },
+    {
+     "n": 2,
+     "at": 2712,
+     "score": 0.87
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 182,
+   "page_id": "69f66e0880c7a291ec4c22bf",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 168,
+     "score": 0.99
+    },
+    {
+     "n": 2,
+     "at": 2872,
+     "score": 0.93
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 177,
+   "page_id": "69f66e0480c7a291ec4c22b6",
+   "judge": "reversed",
+   "columns": 3,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 2,
+     "at": 184,
+     "score": 0.76
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 96,
+   "page_id": "69f66dda80c7a291ec4c2261",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 2,
+     "at": 128,
+     "score": 0.81
+    },
+    {
+     "n": 3,
+     "at": 2704,
+     "score": 0.87
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 115,
+   "page_id": "69f66de580c7a291ec4c2278",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 192,
+     "score": 0.42
+    },
+    {
+     "n": 2,
+     "at": 2496,
+     "score": 0.97
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 171,
+   "page_id": "69f66e0380c7a291ec4c22b0",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2672,
+     "score": 0.83
+    },
+    {
+     "n": 2,
+     "at": 160,
+     "score": 0.81
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 84,
+   "page_id": "69f66dd280c7a291ec4c2257",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "undetermined",
+   "located": [
+    {
+     "n": 1,
+     "at": 2816,
+     "score": 0.75
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 157,
+   "page_id": "69f66dfb80c7a291ec4c22a0",
+   "judge": "correct",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2840,
+     "score": 0.92
+    },
+    {
+     "n": 2,
+     "at": 176,
+     "score": 0.65
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 73,
+   "page_id": "69f66dce80c7a291ec4c224e",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2800,
+     "score": 0.73
+    },
+    {
+     "n": 2,
+     "at": 96,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 36,
+   "page_id": "69f66db880c7a291ec4c2227",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 120,
+     "score": 0.93
+    },
+    {
+     "n": 2,
+     "at": 2672,
+     "score": 0.83
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 33,
+   "page_id": "69f66db880c7a291ec4c2224",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2688,
+     "score": 1
+    },
+    {
+     "n": 2,
+     "at": 120,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 25,
+   "page_id": "69f66db280c7a291ec4c221c",
+   "judge": "correct",
+   "columns": 2,
+   "check": "undetermined",
+   "located": [],
+   "strips": 1
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 34,
+   "page_id": "69f66db880c7a291ec4c222b",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 136,
+     "score": 0.73
+    },
+    {
+     "n": 2,
+     "at": 2640,
+     "score": 0.37
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 147,
+   "page_id": "69f66df580c7a291ec4c2294",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2144,
+     "score": 0.79
+    },
+    {
+     "n": 2,
+     "at": 208,
+     "score": 0.92
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 155,
+   "page_id": "69f66dfa80c7a291ec4c229c",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2672,
+     "score": 0.68
+    },
+    {
+     "n": 2,
+     "at": 176,
+     "score": 0.86
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 86,
+   "page_id": "69f66dd380c7a291ec4c225b",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 2,
+     "at": 2712,
+     "score": 0.93
+    },
+    {
+     "n": 3,
+     "at": 112,
+     "score": 0.84
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 154,
+   "page_id": "69f66dfa80c7a291ec4c229d",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2512,
+     "score": 0.96
+    },
+    {
+     "n": 2,
+     "at": 112,
+     "score": 0.95
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 134,
+   "page_id": "69f66df080c7a291ec4c228d",
+   "judge": "correct",
+   "columns": 2,
+   "check": "correct",
+   "located": [
+    {
+     "n": 1,
+     "at": 176,
+     "score": 0.76
+    },
+    {
+     "n": 2,
+     "at": 2712,
+     "score": 0.44
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 135,
+   "page_id": "69f66df080c7a291ec4c228c",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2648,
+     "score": 0.89
+    },
+    {
+     "n": 2,
+     "at": 152,
+     "score": 0.96
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 12,
+   "page_id": "69f66dae80c7a291ec4c2213",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2848,
+     "score": 0.86
+    },
+    {
+     "n": 2,
+     "at": 144,
+     "score": 0.77
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 93,
+   "page_id": "69f66dda80c7a291ec4c2266",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2368,
+     "score": 0.51
+    },
+    {
+     "n": 2,
+     "at": 144,
+     "score": 0.9
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 47,
+   "page_id": "69f66dbc80c7a291ec4c222c",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 2,
+     "at": 2784,
+     "score": 0.93
+    },
+    {
+     "n": 3,
+     "at": 184,
+     "score": 0.99
+    }
+   ],
+   "strips": 3
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 116,
+   "page_id": "69f66de580c7a291ec4c2275",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2752,
+     "score": 0.84
+    },
+    {
+     "n": 2,
+     "at": 184,
+     "score": 0.81
+    }
+   ],
+   "strips": 2
+  },
+  {
+   "run": "rashi-colfix",
+   "page": 113,
+   "page_id": "69f66de480c7a291ec4c2272",
+   "judge": "reversed",
+   "columns": 2,
+   "check": "reversed",
+   "located": [
+    {
+     "n": 1,
+     "at": 2576,
+     "score": 0.83
+    },
+    {
+     "n": 2,
+     "at": 168,
+     "score": 0.82
+    }
+   ],
+   "strips": 2
+  }
+ ]
+}

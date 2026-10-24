@@ -1,0 +1,19 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam-script palm-leaf manuscript (incised stylus hand, Grantha/Malayalam characters); string-hole with cord at centre interrupts lines 1–7, and surface abrasion at upper centre damages part of line 1–2. Readings of this hand are tentative; most syllables marked unclear.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Single palm leaf, nine incised lines; text runs continuously around the central string-hole (left and right halves of each line belong to the same line, not to separate columns). No visible foliation or page number.</meta>
+
+<unclear>രാക്ഷവചനന്തു</unclear> <unclear>[abraded — 1-2 aksharas]</unclear> <unclear>സാമാന്യകന്യാളൂ</unclear>
+<unclear>ൽതന്തുാഭവിഖ്യാനി</unclear> <unclear>ഡംപൊനാക്കമാഒ</unclear>
+<unclear>ക്ഷഞാദള്ളയര</unclear> <unclear>ാകാദ്ധന്നൊനാ</unclear>
+<unclear>വാദഭഭവാന്ത്</unclear> <unclear>സമാനാഭാഭാ</unclear>
+<unclear>ലക്ഷ്മിന്നാഭൊ</unclear> <unclear>വാൽകാൽതൽൄ</unclear>
+<unclear>കാക്ഷഠളക്ഷഇ</unclear> <unclear>സ്ത്രൂവംവിൂൂ</unclear>
+<unclear>ാദാനഗ്രഹണാ</unclear> <unclear>ൽസല്ലസംഭവാ</unclear>
+<unclear>ാൽകൊനണാഭാവാ</unclear> <unclear>ഇസൽകാളംന്താ</unclear>
+<unclear>നകമാക്രകംലിംഗംസാവഖവംചനാ</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, സാമാന്യ (sāmānya), ലക്ഷ്മി (lakṣmī), ഗ്രഹണ (grahaṇa), ലിംഗം (liṅgam), സംഭവ (saṃbhava)</vocab>

@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ākkikāraṇagatameyālavi ‖ viṣayayoḥkkiṃprarkkarassimentyāha ‖ sāṃpratamāhaḥboddhyamitika
+2. bhūtaḻikālopivivaśa ‖ śakkipākibhūtānāgatosvārtthamānā ‖ veṣāddhyavabhānaraddhyakibha
+3. ṣaṇṇakatmokālondrima ‖ mādralmacaḍiṃ [illegible] tamatapralṃmahikaḻa ‖ trasāṃpratamāvarkkamuhaḥ
+4. kālonattraboddhya ‖ syatatdviḻebāhyaṃśrotrātradveva ‖ dvivarttamānamemabaddhyadri
+5. kaṃprakāśayati ‖ nārkkitānāgatamavāgāṇīca ‖ varttamānamemava
+6. rkkundālañcinā ‖ banovastrīnāgatalkālamo ‖ tenārkkitānāga [illegible]
+7. tāltrikālaṃ ‖ bhūtamamikkaiḥtrayaḥkālāya ‖ sūtalkrikāla
+8. khāṃbuddhindrikaḻa ‖ ānāmityarppasyākiṃkumātiya ‖ [illegible] nānāgatāvaprimākke
+9. matāssilkkalkkira ‖ ñjādeippītitiyahūsāṃkātena ‖ navarttamānamabhimanyate
+10. ṣamāśatāvyabime ‖ mabamānikamanamevaṃdvitrikālama ‖ [illegible] menāvarttinaḥ
+
+TRANSCRIPTION B
+1. ddikānāgatayorvi ‖ viṣayayoḥkiṃpratyakṣamastinetyāha ‖ sāṃpratakālaṃbāhyamitika
+2. tra [illegible] kālikāloḥviva ‖ [illegible] śaktipākiya [illegible] nāgatā [illegible] ‖ [illegible] bāhyavarttamāna [illegible]
+3. [illegible] kaikālalonnyamā ‖ mādrūl [illegible] ṃśāstra [illegible] prasaṃgaika [illegible] ‖ trasāṃpratakālavarttamānaḥ
+4. kālalo [illegible] bāhya ‖ sya [illegible] ba [illegible] bāhyaṃcetrātri [illegible] ‖ dvivarttamānama [illegible]
+5. kaṃprakṛśakti ‖ ārika [illegible] āgatamavāgādvala ‖ varttamānamemāve
+6. [illegible] ktyādṛdānavina ‖ [illegible] vastra [illegible] strānādṛlkālamo ‖ [illegible] ttitānyava [illegible]
+7. tārttikālama ‖ [illegible] drāṇamekiṃ [illegible] tutayaḥkālāya ‖ [illegible] rttikāla
+8. dharā [illegible] virkke ‖ ānamityavasya [illegible] kiñcātti [illegible] ‖ [illegible]
+9. [illegible] āntrikālkinna ‖ najñādevi [illegible] nīti [illegible] āsāṃkālena ‖ [illegible] nānāgatāvadhimāka
+10. [illegible] gatāvadhime ‖ [illegible] mavamāsilmatai [illegible] tamavaṃdavi [illegible] kika ‖ [illegible] mācamanenāvartta [illegible]
+
+TRANSCRIPTION C
+1. ākkikāraṇagatamaiyāsami ‖ viṣayayoḥkiṃbhūtekṣitandritaindrāhāḥ ‖ sāṃpratamālaṃboddhyamitika
+2. trūkaḻikkāleviṣvara ‖ [illegible] śaṃkṣipākitannānāgatosmatmāna ‖ āvaiśāradyagatānāddhyakṣikaṃ
+3. ghavaikanākālevaunnima ‖ mādbhūlppamadhiṃgatimetakaprasvaṃtaikikalpra ‖ trasāṃpratakāvarttamānaḥ
+4. kālenantrāboddhya ‖ syatattvīkṣeboddhyaṃcetrāttraddva ‖ dvivarttamānamapratthyūddi
+5. kāṃprakāśaṃśakti ‖ āditanmāpaṃgatamavāśātma ‖ varttamānametamāvai
+6. ekūtāddāmivinā ‖ bhavaicastyūśśrācatandālkkāmenā ‖ kkairākṣitānṛpaḥ
+7. tālkikkālama ‖ bhadrāntaramikkaikriyaḥkālāya ‖ nyūkalkikkāla
+8. khaṣauryabhikṣuḻkkama ‖ ānamityacasyākikkaṣātikkara ‖ manāgatāvadhimākke
+9. drāstilkkaḻkkinara ‖ jñābhaviṣyattītiyathāsāṃkādina ‖ navarttamānamabhimatame
+10. tvamāśakkāvyakhimace ‖ macabhāmāsitamanainamevaṃbhaviṣyaktikima ‖ mahāpamanaināvarttinaḥ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

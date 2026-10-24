@@ -62,6 +62,7 @@ src/data/*
 !src/data/concept-aliases.json
 !src/data/idea-pages.json
 !src/data/tengyur-section-quality.json
+!src/data/tibetan-expert-page.json
 !src/data/language-card-images.json
 !src/data/image-subjects.json
 !src/data/image-subject-map.json

@@ -1,0 +1,2260 @@
+{
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6949af986ef4a68b726b7fa9%2F40.jpg&x=0.118&y=0.052&w=0.77&h=0.456": {
+  "w": 1356,
+  "h": 1416
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F695285d5ab34727b1f04c36f%2F9.jpg&x=0.132&y=0.086&w=0.738&h=0.806": {
+  "w": 689,
+  "h": 1022
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284": {
+  "w": 806,
+  "h": 859
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177": {
+  "w": 800,
+  "h": 631
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6953b56577f38f6761bd979d%2F62.jpg&x=0.091&y=0.078&w=0.792&h=0.835": {
+  "w": 4683,
+  "h": 7375
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6953b56577f38f6761bd979d%2F65.jpg&x=0.128&y=0.235&w=0.768&h=0.672": {
+  "w": 4513,
+  "h": 5981
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6991e93135ed50020acc1458%2F37.jpg&x=0.012&y=0.074&w=0.824&h=0.851": {
+  "w": 2395,
+  "h": 3654
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518": {
+  "w": 3976,
+  "h": 2019
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515": {
+  "w": 3955,
+  "h": 2008
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508": {
+  "w": 3980,
+  "h": 1982
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512": {
+  "w": 4012,
+  "h": 1998
+ },
+ "/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514": {
+  "w": 4019,
+  "h": 2004
+ },
+ "/api/crop-image?url=https://images.sourcelibrary.org/archived/695203a5ab34727b1f041c53/357.jpg&x=0.118&y=0.279&w=0.448&h=0.433": {
+  "w": 1046,
+  "h": 1279
+ },
+ "/api/crop-image?url=https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/23.jpg&x=0.118&y=0.198&w=0.765&h=0.492": {
+  "w": 2093,
+  "h": 1817
+ },
+ "/api/crop-image?url=https://images.sourcelibrary.org/archived/a0461b95-c56a-463a-beed-a6a2fb11cec2/102.jpg&x=0.06&y=0.07&w=0.88&h=0.84": {
+  "w": 1994,
+  "h": 3118
+ },
+ "/api/image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F86fe639a-5f3d-4e9e-9d99-128742a10809%2F84.jpg&w=800&q=80": {
+  "w": 800,
+  "h": 1161
+ },
+ "/api/image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fgallery%2F69520c46ab34727b1f044141%2F69520c46ab34727b1f0441a4-0.jpg&w=800&q=80": {
+  "w": 800,
+  "h": 715
+ },
+ "/articles/drebbel/alkmaar-cartouche.jpg": {
+  "w": 1100,
+  "h": 657,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAoAA4BaJQBOgCPtz5qyVvgA/urltg0J1070eclGgTztg/VMcve1K/q0s/ZdZmzDW6wjAcFb6PoaNQn1aAAA"
+ },
+ "/articles/four-commentaries-on-nothing/eck-1519-greek-column.jpg": {
+  "w": 484,
+  "h": 490,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoQABAAA4BaJSYAIwARYAD+6lUMQyUyTrd39LOn2GoorGnFaJE7q9FyJvctFIoq9XeQAA=="
+ },
+ "/articles/harmonic-justice/misselden-circle-of-commerce-p7.jpg": {
+  "w": 1344,
+  "h": 2000,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JaQAAW+jz7x33hh7bdwAA/oQY27njMh47Ne4asNogS/R8cVLbCo9L4MrBi8J0eBc2nLcF1WMPRGyLz1+dVFoDCC5WvZ5l4216+oRXhCvAAAAA"
+ },
+ "/articles/history-of-astrology/kepler-platonic-solids.jpg": {
+  "w": 1545,
+  "h": 2000,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JYwCdACIFIqkEG5BSmAD+kZQd083YM14lL8w7vPNRE9LAFXgF11Kg9H8tEYoeCyd6XP9aTCUKBhikLOQa/cX8WII58YAA"
+ },
+ "/articles/hyperborea/caesar-1561-druids.jpg": {
+  "w": 1400,
+  "h": 1863,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoQABUAPu1orU6ppiSiMAgBMB2JQBfnBDveFcKmJZ9AJAAA9nKrd4r9s7suoJXFYHgRtgQZKDdnJ3cJfAxKb0U4MWDDKzb4G/hoiGvMBVTkYX/2L4M3lbXsGjs8m68Z9vuo/ZitVyF1xirz91gAAA=="
+ },
+ "/articles/hyperborea/cluver-northern-lands-map.jpg": {
+  "w": 2400,
+  "h": 1911,
+  "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAA0AA4BaJZQC7AEN+UcG79eAAP7zdZ484TRrlGz0LJcdt/gSY2dx1LcDOZPwAAA="
+ },
+ "/articles/hyperborea/hartknoch-samland-amber.jpg": {
+  "w": 1300,
+  "h": 2101,
+  "blur": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAAAwBACdASoQABoAPu1iqU2ppaQiMAgBMB2JZQC7ABnh81Js7pyQ+h/ohlgA/l8iL7gN27szz7MvnLioHocTS/BpE6u3ELMhoAgEheGJFtDEYYakPwZQe0pvVxO+9b2t0adhZqoCMRZJJHKn7twchHewAJtTVTELpsJI75UdSzYvFR8sNqy8RPQgAAA="
+ },
+ "/articles/hyperborea/hartknoch-widewuto-banner.jpg": {
+  "w": 1400,
+  "h": 1315,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAA8AA4BaJQBOgB4Wtf2UMSAA/sbtX13vRGNMlmwkOJ5qMuxhrE/bxSLZLWxx6ipb7OfQTjMLTFxIIdayq0e4m9otx8s0G9IG39pGpvqGkAAA"
+ },
+ "/articles/hyperborea/tongeren-dodecahedron.jpg": {
+  "w": 1280,
+  "h": 1194,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQAgCdASoQAA8AA4BaJZwAD4KumGMSL1WAAP74Fn1CdJVF1HOaGkGrkfLqTBtUgdvRH1Kj0vGJ1xrqzIzd8YGOb3K6WOqgKLJK6ZD0QvML5EWD6NTZ+xfC6cCJ1nH8z69aoLC6LVDE26Nerci5GNAgAAA="
+ },
+ "/articles/maya-mathematics/dresden-numerals.jpg": {
+  "w": 1400,
+  "h": 1082,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAAwAA4BaJYgCdAEQ43OyKfeKjAD+ySPuVvCavCCqyCcDwf8t49Qa3XPP0FEeUilxMlMUFtuHIJzZTULQADo9cLZZk4MttggAAA=="
+ },
+ "/articles/one-sentence-of-hermes/1516-aldine.jpg": {
+  "w": 760,
+  "h": 317,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAAcAA4BaJQBOgCDY6FUAAP5R8SwFsRqGZhFTk/VyDsAA"
+ },
+ "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
+  "w": 1140,
+  "h": 680,
+  "blur": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABQAQCdASoQAAoAA4BaJQBOgCgAAP7tOlfzXkJX5WbvZd7QAAA="
+ },
+ "/articles/one-sentence-of-hermes/1532-secunda.jpg": {
+  "w": 1140,
+  "h": 165,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABQAQCdASoQAAIAA4BaJQBOgCgAAP7tvAnI9H1DPaMQp9B8ZFxDSAAA"
+ },
+ "/articles/one-sentence-of-hermes/1593-eye-skip.jpg": {
+  "w": 770,
+  "h": 200,
+  "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAQAA4BaJQBOgBoQb5KAAPxci7gPDwWqQ3eomw5NQwvY9rgAAA=="
+ },
+ "/articles/one-sentence-of-hermes/1778-asclepius-32.jpg": {
+  "w": 620,
+  "h": 380,
+  "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoQAAoAA4BaJQBOgCHgbMOajQAA/up5zSzYUSDzctbqiY9FZ2TvEAAA"
+ },
+ "/articles/one-sentence-of-hermes/manuscript-laurenziana.jpg": {
+  "w": 1200,
+  "h": 491,
+  "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoQAAcAA4BaJQBOgCG63u9wAP7t0vyYenhPtIjlXE4wmknMoon4AAAA"
+ },
+ "/articles/preserved-by-enemies/kaua-wheel.jpg": {
+  "w": 1100,
+  "h": 1120,
+  "blur": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADwAQCdASoQABAAA4BaJaQAAl25EjLYCAAA/c2zOJF7Km1poYSghcYAAAA="
+ },
+ "/articles/preserved-by-enemies/landa-abc-1864.jpg": {
+  "w": 1100,
+  "h": 1306,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JZTuAABMHvdzAAP7spw8JadDWFBc9yfv42o+3Wr3Gr9jiFmBQFH9yfpeibCCrMaeldGpFM8aLdp0qPCPAQ9c8AAAAAA=="
+ },
+ "/articles/preserved-by-enemies/sermonario-1606-p78.jpg": {
+  "w": 1100,
+  "h": 517,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAgAA4BaJZACdAD0capUAP7wNgaA6xSvl5C5rSfvPlmcNeNuPKQAAAA="
+ },
+ "/articles/reciting-not-reading/mask-rect-zoom.jpg": {
+  "w": 1400,
+  "h": 489,
+  "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAYAA4BaJQBOgBhV8LAAAP3NiMWIKQb6ZR89fcoth3D4a44YaNQwvY9rgAAA"
+ },
+ "/articles/reciting-not-reading/mask-shapes.jpg": {
+  "w": 1200,
+  "h": 1335,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoQABIAPu1iqU2ppaQiMAgBMB2JYwC7ABbhjawkciNb3ZwA+EIBsuAQf40MlTgmgzafY8Ng8JmsQPzjQfFtnToQvhEFWZXdU7bF/Z9OAAA="
+ },
+ "/articles/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg": {
+  "w": 1400,
+  "h": 1028,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAQCdASoQAAwAA4BaJQBOgBwU5AAA+EKq309qaEFJbKi11EZhvb95UrdRyPvgjzzilUjO7WniG8BNeejhCPXiY9GmRN2BgAA="
+ },
+ "/articles/techniques-of-the-body/03800ebe4ec0.jpg": {
+  "w": 302,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAACwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAIEAHcvqZlrzrcAAD+8jMWAhOQbwVlE+1S7r+Lamu5rDan02YolbOIXBaCiYDvwUGmmgftebsEiuRbG/ZJS+mVYz7m9p2ivUGXWJAq4Nb5RgAAAA=="
+ },
+ "/articles/techniques-of-the-body/06e9d278645d.jpg": {
+  "w": 299,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADQAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAIEALWdkViTPBnKiAA/sW58+f1ANXKb7MC18PMBv7FXnuHw8UKt+yh1DfMCWKfHduojp8dkmMO44G7U79wLkIRT/qRy/15bkvdig6DPATkSlZawAAA"
+ },
+ "/articles/techniques-of-the-body/0b7646bfb03f.jpg": {
+  "w": 369,
+  "h": 460,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZQCdABu13A3XK0u7bgAA/u1g9zCadodpKG//cPF8h91mdDwPIJSaciaITOWdXdhjqHFMRsyzaL3wQIyHAAAA"
+ },
+ "/articles/techniques-of-the-body/0d35e8d2b9fe.jpg": {
+  "w": 266,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAABwBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAIEC6Sm+6/zzEjSSg0ejpIAAD+4ZgjcFvc2yd1yes1lyL5EODM+oLp8R1dsxjiEIh1eV5DKcjrBqJj6tihGFgRhGeDzqahXKa9cnZRqvvlRt/zFk23g4YBf1QLxBxW8q+B0dmssR+AAAA="
+ },
+ "/articles/techniques-of-the-body/144802417b1c.jpg": {
+  "w": 199,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABQBACdASoQAB0APu1kqk2ppaQiMAgBMB2JaQAD4ZoPDg8RHM7L2m4Gj/XQAP7rWpVcxvsuLP9rhrrVkQe7UptiH4kIsTyvPbx/ZINZsQqZuCYjsFhlVa8h9cdtk9edIhw4jVws5w78oFppodgO4XhuhEfXUG4/7a/nj5M+rnM3A2Gx6dJ+S7aAAAA="
+ },
+ "/articles/techniques-of-the-body/16b41b21de0e.jpg": {
+  "w": 460,
+  "h": 232,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoQAAgAA4BaJZQC7ADHQJruDwAA/vOCunh5vXyG4wNBoN8dwx2pzBGmbRC1Si2YCXtTAAAA"
+ },
+ "/articles/techniques-of-the-body/1e6620571f6e.jpg": {
+  "w": 360,
+  "h": 319,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAQCdASoQAA4AA4BaJaQAAlKppWPsAAD+7jIjtaBzK525oZBX9fgJh1LVl95B6bM6dOLhIrIAxZoqyzl8fJlVJrQcPK6HzPyYwtCW4Gf/t4riQrN1HPtAAAA="
+ },
+ "/articles/techniques-of-the-body/22e4458762d4.jpg": {
+  "w": 460,
+  "h": 300,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABQAgCdASoQAAoAA4BaJZACdAEUpBr0C4d4BAAA/vQPgI6RZlyYQPV3idbmsCdOUYt65xd4H8Ji5mDWkZjOuIiB7IEF+iYbbCJE9YQAAAA="
+ },
+ "/articles/techniques-of-the-body/2763d91d9439.jpg": {
+  "w": 460,
+  "h": 222,
+  "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAgAA4BaJZQCdADx/KFfQAD+Ai/AbWYqGSztOaw8g7Bp2vHtxNsL8U/gZjwA"
+ },
+ "/articles/techniques-of-the-body/31a1cd66fe21.jpg": {
+  "w": 148,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAAAwBQCdASoQACcAPu1irE4ppaSiKqwBMB2JaQAIFjikcGyRsMEaHT8vGY46qmUFwA9QAAD+1r+8254mY7vNTyZNYFSkfIzxpFUP9+GJr8Xurtp+GE3+E7uiTtm9rceOhmozuK5F/HnEuw3O0AV1t1o/PZo+nzzjcyr80D5TIpqaVZLUs490GvjUCNoeXJD2dbf1pC0cx29Gwqm9gfzw3gWWbJ6K/IhhvYCXDY0ZUMJ2VlNuEiUoumSD1ukG4AAA"
+ },
+ "/articles/techniques-of-the-body/4d5cee8090cd.jpg": {
+  "w": 271,
+  "h": 460,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAAAwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JZgCpBf/gPPyR9sqjbIPZwgAA/tYRC3yNuCrhOWIBL9XSyOOphcu6BFwuG+i0kpFrj4HXNiEjgPBnJBwzLIfXjxLQ30QPSu5xwLo5aly0Qj1uY1hz/LXcPMvwtoUI4AA="
+ },
+ "/articles/techniques-of-the-body/61da595d7caf.jpg": {
+  "w": 289,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAACQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAQ6UfKx/4nAYAAP7fF3UUvMTNoqwcq2cgbYHbvcZs4IhNENmmMpryxrH1aArwLMFzta3YifiKMQAVCOU44jsXxk9uDGnNp52siLoaIWYAXgfEOKQAAAA="
+ },
+ "/articles/techniques-of-the-body/6a1ccbbf1dd7.jpg": {
+  "w": 446,
+  "h": 460,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoQABEAPu1iqk4ppaQiMAgBMB2JZACsMoADZAU0cEYuo+luUAD+6CsUHUv9M33nS8go6xyRd/beaoY0cZKns4lzhIRw1Kd9kzNkPW7gh49SOUogAAA="
+ },
+ "/articles/techniques-of-the-body/6e62e9c86848.jpg": {
+  "w": 213,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRqIAAABXRUJQVlA4IJYAAAAQBACdASoQABsAPu1kqU4ppaOiMAgBMB2JaQAD5DmsGK3oxKsZ0wiAAAD+84J8bzvm6wRH/AzqDmMGrprRnr0U/25O3LMfZmFU/5DhIQEwA8ar6pyt0KTjR46xKtnTkKQIaTLuNMJnYPJI6RuvNqvcjjbauoYouE9r8daYbcNNUxRx0JfnxjZqUs/fP9PnXtZhdAAAAAA="
+ },
+ "/articles/techniques-of-the-body/6f203680f9ed.jpg": {
+  "w": 324,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABIAPu1iqU2ppaOiMAgBMB2JaQAAYcLsuNyQRQParAD+5/gCucNPaovN4oyIWLHdldRl/eBI+R6BCyBfhX1tWpIKnOFnllauhuNCOGAAAA=="
+ },
+ "/articles/techniques-of-the-body/7f6944fdae6e.jpg": {
+  "w": 360,
+  "h": 359,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAQCdASoQABAAA4BaJaQATgAIe5ZcKAD+8m9bf5Ha6gTIXAKU1XCj0wPCA4aJq3XCiWL/xArxld0pY2he6AuMLm2+Iepb5a4Q9Eimp7Xe0rQXX6BdvpPbTFAAAA=="
+ },
+ "/articles/techniques-of-the-body/7f862f738b8f.jpg": {
+  "w": 385,
+  "h": 620,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAwCdASoQABoAPu1kqU2ppaQiMAgBMB2JaQAAUVSENToiqATcCAAA/rGSZcYaY/XgP2WZNSIWQ9MweY1qlyqDAAA="
+ },
+ "/articles/techniques-of-the-body/8be5b7b757b6.jpg": {
+  "w": 267,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAD45IFKJ5JiZ0SfEmAAP7rlI9ik8vf0Z6wDi8yYaizaeJ+yyehwFLaRGHAoHf57d+CEWHlUtncYjbLV5gOvIo0mRxMbiYiTO1oQHUUVO77FBvfpqe6HbfB6DVhbxGLUqAAAAA="
+ },
+ "/articles/techniques-of-the-body/8cf57d72c929.jpg": {
+  "w": 459,
+  "h": 460,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQABAAA4BaJQBOgCIHAX0H3nzsAP617v9pC4jclQhHluw6eC7SrZE9qBb7OWPnfbsohNrbxvq2d2OY4wSHSBBsNWFBsVAKFWsYA6IVqAA="
+ },
+ "/articles/techniques-of-the-body/8d831bc30e02.jpg": {
+  "w": 348,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JaQAASopb9BR588PsmAD+8fW3SBTeBZvv3lcvGp2o4vU5bZOFALkE7V0wc3L+yBnixwSVfoMXsDGW7RwWWDMxGdPfPlfquCSs5qAAAAA="
+ },
+ "/articles/techniques-of-the-body/9482ac29d0c0.jpg": {
+  "w": 620,
+  "h": 413,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAsAA4BaJZQCw7EOl+VawsAA/u0Bcg784T68Ht0ozgfOEAb/Zk0bGis8ptEW8QAAAA=="
+ },
+ "/articles/techniques-of-the-body/94c745033390.jpg": {
+  "w": 305,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAASrCPw0sDFkt/rGkAAP7q8uI309w+y08/nMNgHWj2GXbIu1s7H8eT9D9f1y70ilrr0tYDB20rGaZ0i2s46rfb4OqdSyecdIo+09PD6IxfPWK+tF58G38L3AAAAAA="
+ },
+ "/articles/techniques-of-the-body/954cb20d91b9.jpg": {
+  "w": 273,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JaQAD46mA7pKQHnL6KtywYAAA/vOCgD4UazTrb4IGh4niQer+ZeApnEQ/g6gfmzEK7MQU9vdCyaahJ5MRw2RNOyyrN/U/X3SjA0djr36EJCEVslmNpz7GpCT+fxAEmxJix+0TzMAAAA=="
+ },
+ "/articles/techniques-of-the-body/986a8e07a683.jpg": {
+  "w": 271,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JaQAD5Sl4spFIPAML19/AAP7iJfc6+0fNWIx5V4AtsXMa0eLc6BpYXMdh2MaNsyRmIBWmy74FuLtQh6442bV+omb4pdxFiK8jahAphs+zJoDAeReXZ9zy/xv6fwgJz/2YB+AAAAA="
+ },
+ "/articles/techniques-of-the-body/98d5b810719b.jpg": {
+  "w": 360,
+  "h": 326,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAA4AA4BaJaQAAuX66bXCXgAA/vCSyr8Xjy/uOIUBjH1/ibcmuc985bjyQjTHs3isKs53iXht62aRaqMGgfD3G6fbjsAA"
+ },
+ "/articles/techniques-of-the-body/ad12998f9045.jpg": {
+  "w": 460,
+  "h": 460,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABwAgCdASoQABAAA4BaJbACdEf/gekPV16hmpZAAP7zeJizgY5BCBuQOn+hU+9yiQbDCW31k8s9xGjHvEKVQPNM6i5o9iKILdFjG7wuw1KGFF7jvuVfYAAA"
+ },
+ "/articles/techniques-of-the-body/america-matthews-masks.jpg": {
+  "w": 1200,
+  "h": 1835,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JYwAAUrIVSLzoFP5v+AAA/TtRHNIU0+U9xpzHaJhWDcOnx//eMmtYcag1eW9GQuGF7h9TiOwGM+chXFBDxPRMggV+U8PMOmx3sYSgZqVfm4aKcAA="
+ },
+ "/articles/techniques-of-the-body/america-matthews-nahikai.jpg": {
+  "w": 1500,
+  "h": 908,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABwAQCdASoQAAoAA4BaJZQAAjjSAAD+tjnWMGw35AxX+z2nozKopp+xAYEcCC7mSnYzGAd/3+LJ5N9Hc5l6glJZya1QkQAA"
+ },
+ "/articles/techniques-of-the-body/america-mooney-buckskin.jpg": {
+  "w": 1200,
+  "h": 1676,
+  "blur": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JYwCw7Be47HRLzv34XZOAAP7oJlOfzGR/GmgcBUaXimV0gcKcLjzbYvnSruH4fYaCsx2hcVxix44lgBCPE5ERhoPO7RXJ5CGArc7zlsJ+v9cMXK14xxs354TgdQjHR7wkAA=="
+ },
+ "/articles/techniques-of-the-body/america-mooney-circle.jpg": {
+  "w": 1600,
+  "h": 1011,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoAA4BaJZwC7AEOQm5NstoA/pFmnJ/WJwSeRJ5//SYqvLEa39x2vlXnZRYi/LGSccB/XColwq24ZoFa2xyeAAA="
+ },
+ "/articles/techniques-of-the-body/america-mooney-inspiration.jpg": {
+  "w": 1600,
+  "h": 1092,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAsAA4BaJQBOgMX127JUW4yAAP7WKbYLdoC0r4n35gpcb2UWrw8mXUDDyAx6iCTAcftHB9LuCT6t0Zn9btMlpa3tE7kxpVoDd1JeUJ+rwAAA"
+ },
+ "/articles/techniques-of-the-body/america-poma-antisuyu.jpg": {
+  "w": 830,
+  "h": 1181,
+  "blur": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAAAQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JQBdgBDsTVoZynbFJGey0AAD976S951DX1ezQAa9ef46yK7I2RpsAZV6KaO3zmjiqSWEuIcFLS9EFw4wmknPKoAyzoZHPvy4H7nrXRD9Uec1ObH/pft6Fc1yOoVCVb28zo3VNxmynq8f3CW11JXaZ5wYoAA=="
+ },
+ "/articles/techniques-of-the-body/america-sahagun-tlaxochimaco.jpg": {
+  "w": 833,
+  "h": 885,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JZQC7ACHiCsq39N6wAP7EATMiBY48YV2CuHyuTSeoccCcV9bb29R7Or5jogADyx5xAtryuQfESmzcIMslsLF548Fj2cIAAAA="
+ },
+ "/articles/techniques-of-the-body/america-sahagun-toxcatl.jpg": {
+  "w": 767,
+  "h": 2000,
+  "blur": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAABQBQCdASoQACoAPu1eqE2ppKQiNVgIATAdiWcAyzOoE8AXgc1aKJJdHPj7zB7DRaB/nQAA/rQL+jR6Frj1xKwY/2JtemUvbSgHeI7k1CTKDSc9RQI3dxGjwj+w0GLDzsSVpEHpOuQv9/k2HNPM+PcZx76wTu6r4aNilvHRYLkQ2x5Dk95TytHaISo+LN87js0MBBv3OOKTmOkLHqWFzhwU44dwvqIwTGuE4Ek/d5H65ZWTsVtqLAAA"
+ },
+ "/articles/techniques-of-the-body/america-shakers-lebanon.jpg": {
+  "w": 1477,
+  "h": 948,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAQCdASoQAAoAA4BaJaQAAWuaKpuAAP5OtY1LPeLNj/fSFwZOcvfF4IsLBSKh60zlPIIBgKSZ+CMh0reAqYHmnKBb+oHiDH9N35crjrw5EqAA"
+ },
+ "/articles/techniques-of-the-body/b353cbecf928.jpg": {
+  "w": 334,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JaTcAAAGTBp1wAAD+177Ef2gxoqL1BBsy7Lc8RzG8iTMYVsxPunCBTkhNyn0LbTY02ptcuyExjdGKOH5fzWHsmfDDceSENFiAAA=="
+ },
+ "/articles/techniques-of-the-body/b97df3fecee7.jpg": {
+  "w": 326,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoQABIAPu1iqU2ppaOiMAgBMB2JaQAD3yhFRz1J5z7aRDYAAP7n+Sv3o8QEflAsTB7zcHMfyoHdH9acbJP+sa24TPia/1XT9ZzcBE+D/1klhKLOc72tYsIQLG56KLIfVwsLAAAA"
+ },
+ "/articles/techniques-of-the-body/b9bb8f72756c.jpg": {
+  "w": 359,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACQAQCdASoQABAAA4BaJaQAAYlOMQAA/vVPuceOdVYjCjkybFPVPsuGA+zhspLgrO7uhO+d1pAe4my8j8rBHZCt068BNRYE5NEWOtHhuPViV7meFb1UUv2GI//EAA=="
+ },
+ "/articles/techniques-of-the-body/c0c55eead589.jpg": {
+  "w": 460,
+  "h": 392,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAA4AA4BaJYgCdAEUpGGkzTBIAP7wExBmP2qNIiJQncWAxaSCWvga3ei/uh8oJqNzxBDlZpdFhTAAgV4pbUK3gh4AAA=="
+ },
+ "/articles/techniques-of-the-body/c0cd7298bc62.jpg": {
+  "w": 259,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAABwBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAIEC6HWNGGEyGwyi3QKJIpAAD+s3JT+KvvyJk+i7LuTlD+a8viFP8GnH+e3OVkB3gXNBB0ssn+qC5yhZorZZt6C6ie762y8knlZBMp6FfzHfVQkZS1Aig4D0f9e3IS+THBubyaNnPyGQAAAA=="
+ },
+ "/articles/techniques-of-the-body/c82d78371391.jpg": {
+  "w": 321,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoQABIAPu1iqU2ppaOiMAgBMB2JaQAASmwvcyg/vnJsQAD+yd0bmY2sqM/Ve/amH4OEqAxuN/ULMOFNEq123BnRoo2zTlJGeVnFSrpKxiL3ZPetN8CxnVu1yOMMsFOAAAA="
+ },
+ "/articles/techniques-of-the-body/ca5d8e7130d8.jpg": {
+  "w": 603,
+  "h": 534,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAA4AA4BaJaQAAvq5o7MeHbAAAP73O4VU4m0cj1yAru1ZjPFnp5A0IfYfkq9p/s1HwXP6svG8cRaxhTWAgAAA"
+ },
+ "/articles/techniques-of-the-body/ca6ba6bb19d9.jpg": {
+  "w": 283,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAOV2lcKUNauYAAP7q60/R7jBRro33FKufMiv635akld2ogf9TuM0NNI96fS9UFY4eMtgFK0XPnMOwZb4Am7Qx+XKpgAA="
+ },
+ "/articles/techniques-of-the-body/ca6d5fd22bdc.jpg": {
+  "w": 460,
+  "h": 223,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoQAAgAA4BaJZwAAuQW+wAA/vfpJ/dlxV4g53nO0eb+8XAA"
+ },
+ "/articles/techniques-of-the-body/cb91fb385dca.jpg": {
+  "w": 275,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JaQAD5GoL/j77Cz5i6lJEwAD+84F0KNypaALUIsf7Qedf3RtBI3WesfuuCwCynPJlPJdOrDjWKTcWPQG5o+Iuw2wczv3rS8oSmEyoUPzWrGYvPgAAAA=="
+ },
+ "/articles/techniques-of-the-body/christian-lichtenberger-discipline.jpg": {
+  "w": 1400,
+  "h": 1382,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQABAAA4BaJYwCdADdMlRQi3AA3Pm3q2RNUfOeZtK5gF3Ln0F1XBUhJwxud1TY21YVpTHxkYaM5LIAAAA="
+ },
+ "/articles/techniques-of-the-body/christian-missale-te-igitur.jpg": {
+  "w": 900,
+  "h": 666,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAQCdASoQAAwAA4BaJYwAAlukm84UAPlIUISnk+WcnNNXIFR8Z3a5w4LpxbwIX6RCQ8H4o8+RO9lun7k3GAAA"
+ },
+ "/articles/techniques-of-the-body/christian-picart-flagellants.jpg": {
+  "w": 1320,
+  "h": 1078,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAA0AA4BaJYwCdAEfUm2pdkgAAP7e8Le8R4M0/QSLI0n52DljbUuL5SBgaEyYVpZGF8xM6NjB1UU60iCzuAAA"
+ },
+ "/articles/techniques-of-the-body/christian-valeriano-finger-numbers.jpg": {
+  "w": 1237,
+  "h": 1088,
+  "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAA4AA4BaJYgCdADG4H9qLAAA/YmiIkFQh4M1fb46jZB4YGHL64ubIijVlqIXIAA="
+ },
+ "/articles/techniques-of-the-body/comenius-natatus.jpg": {
+  "w": 900,
+  "h": 666,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAwAA4BaJaQAAn3JiqNaAAD+tlx5zEnKLLT5MdB/HYt8ivF1LUUeKK2CoaJ1npXb4Ul22i6DpCcXTj4RdLZbhVrHfXIPfksRAxJ27p2T/F8uStjSoAAA"
+ },
+ "/articles/techniques-of-the-body/d6742e8c825b.jpg": {
+  "w": 330,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABwAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JaQAATvpIfblOYIAA/u5Dux1MrkR2jNH1L7I0oDBbUhRaiKu4J0OLLiroCMaP/KiIZU/0Rv1t4feM+xFdCAAA"
+ },
+ "/articles/techniques-of-the-body/d7f9bb211596.jpg": {
+  "w": 530,
+  "h": 662,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAATvmZ8TV1/YEZgAD+8DnNnuCna1Dm7+9L6BTELgK/Wrlo/BuFQhxHIQ0HznzGDQ26RqQmBebMj12vYJ2fUkcAAA=="
+ },
+ "/articles/techniques-of-the-body/dafa443d89fd.jpg": {
+  "w": 313,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoQABIAPu1iqU2ppaQiMAgBMB2JaQAATvw2OsSW6XnkTRyxgAD+8eBd/yJ1TtotLNp+Ee5nOZBZ/fkBJc0XogmmCycIDZTvabMMUAw8oS4f2gl1/lh8kbv0zd4WwAAA"
+ },
+ "/articles/techniques-of-the-body/de52d9d69173.jpg": {
+  "w": 258,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAABwBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAD5ZvABwnLBOnDYHQjEu0AAAD+84EvVtmD6kPMyCUg6UoCFufFQqXEMPSNW2MLT6mNEtsiucRMU/4kGipeV69Q7oX9GWDZ+SebtoMz+l5Lx5Ui2mRSaDebgJGXG54Qn6MVE3x0yOops3nAAAAA"
+ },
+ "/articles/techniques-of-the-body/degheyn-musketeer-1.jpg": {
+  "w": 700,
+  "h": 980,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoQABYAPu1iqU2ppaQiMAgBMB2JZwCuHCKUGNiMuSW+YHGxwAD+1B9OF+kCJWAsEWX1Cp2g2WfhJiteAg08WE8AawMm827Pgd0/AmTMi3w+pE3lmdXM6YeGFtVDCoAA"
+ },
+ "/articles/techniques-of-the-body/e09764e61623.jpg": {
+  "w": 460,
+  "h": 357,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwAA4BaJQBOgCHhxtV1CAD+ykNHDW2GP6rtHa+0Tv2ED1WilucG3h3BCtgawIi1gYn6AAA="
+ },
+ "/articles/techniques-of-the-body/e1aaba97e118.jpg": {
+  "w": 214,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JaQAOcCzqm3h4Ls39+D7+wLnW4mAAAP7yJHLNRpTk86MGH+bhxHCAeH7ti6E+AsEPiWu038ZK22eDvxELKIh/n1Tn/rceR2kkbFK1mACuQT5mnrxVnceX4ZP+YOIdNTMIS1M67sWbhQroM8EB8ndaJKgSwQMSlZPj/mF/EeFeg43Qn/SNWsh4iQvcyAAA"
+ },
+ "/articles/techniques-of-the-body/e242d967132c.jpg": {
+  "w": 311,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADQAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAAW4Wzv6uijdFngQAA/vN+8/7xFxH/xNNQElGN6yWp1YUYQ4F0+KVXzff/vKPcyQ2AhwFciU4oiCBdeLu8LFJRHupdSRX8vePbcAAAAA=="
+ },
+ "/articles/techniques-of-the-body/e6e277693768.jpg": {
+  "w": 262,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAYfEKCvnVWArpP9kwgAD+6KTKFQhZj4rHofDecPt2FZJqrPkC69fHWJ3yLTOm1Pxo8ftii3VYaJmEVkkUqlcea+Kie2H1iiU8MmX/yYX6x5nFVCiJee79cNeg8d15GCsJfu+qAAAA"
+ },
+ "/articles/techniques-of-the-body/f303da85ac79.jpg": {
+  "w": 354,
+  "h": 360,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACQAQCdASoQABAAA4BaJaQAAg+bJgAA/vQPaF9lMlo9py6Kkcci4LEuZF37mZFRT9MoQLnNnAjWCsJUGgmiqTQ+fCxlgUUV25ZPFn9kPSWHBh2MbgAAAA=="
+ },
+ "/articles/techniques-of-the-body/f30820a673d3.jpg": {
+  "w": 360,
+  "h": 354,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABwAgCdASoQABAAA4BaJaQAFEB7fnp/oynOEioAAP7ofHOecqcUyRIMXuBSgxaA3ngYdg3KWgKYZAjRadYyoz/D2+giIYYuUSfh9EJIWcXK8XYjxQSYesDLpzhprynboAA="
+ },
+ "/articles/techniques-of-the-body/fe0336d2dcf3.jpg": {
+  "w": 360,
+  "h": 332,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAQCdASoQAA8AA4BaJaQAD5JwZ4lKAAAA/vi6J3fhGMeLKOP0sXfm8wWH5nKVEz6FVuG6qKVIKtCuPq+7SOCUcdBg5MOVvi3EnxnZQ16ypQ0n9W41u1mhloVSdmuBoAA="
+ },
+ "/articles/techniques-of-the-body/greek-mercuriale-discoboli.jpg": {
+  "w": 877,
+  "h": 1478,
+  "blur": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAADQBACdASoQABsAPu1krU6ppaSiMAgBMB2JZwDE2ywTngsLJo0Ek6M3E0c0pZGgAAD+sfcW1v4/N3DSlV92u/2clTsZzqLXsZm8KHaMZFw1/e7gGohbgjAG9ROM5HPF9XVA0TJKDhG3EYn+W0ug0K2gv7Wc5S00ut3PEh/0w+/KBLyTwuo2AT/EMSvGkngAAAA="
+ },
+ "/articles/techniques-of-the-body/greek-mercuriale-halteres.jpg": {
+  "w": 866,
+  "h": 1476,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoQABsAPu1kq04ppaQiMAgBMB2JZQCw7CKV4LluH1SY4n8cAAD94jktlT34RkW2Nmqr5gN7uW/vX9Nnw7QOTvLIHa97Dbyr/jluA0RHLe85EGKeplHOB66WQGL5sy3OQ6ZoPn1RD1+khQkg9WQgpFClnBUo6WsQAAA="
+ },
+ "/articles/techniques-of-the-body/greek-mercuriale-pancratium.jpg": {
+  "w": 826,
+  "h": 1475,
+  "blur": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBACdASoQAB0APu1iqU2ppaQiMAgBMB2JZwDG9ywTmYy+akKdd4y9A0CTmLewAP7IZa5odkflzND0Xvz5EYq8PgkGXQnIwB9gbouADilRagcj4vUVByvk7eHgI8prqAwoX+cgS4H289MBes+fAXE1j4nXEGZs0IqZlW600YaXuXk9wSpCi76rpTaq4Ro/V1ZPgpxjTUepbWprMX/m8xrqebrJJAAA"
+ },
+ "/articles/techniques-of-the-body/greek-mercuriale-pugiles.jpg": {
+  "w": 836,
+  "h": 1475,
+  "blur": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACwAwCdASoQABwALrV2u12jqampiYC0SzgABTHURpdCqCQ9P8a7YAD+kbu+/x8Jfzq/OyQYra9A9H96pCFlF8WtC/UJcLdc1P18dP4aPGdNalsCpU/NuHlThWDGKQVK1aGw+MGMkO7RvkupmuhJcXKCvcKPai8e3Enkaw/FPYExAAAA"
+ },
+ "/articles/techniques-of-the-body/hebrew-arabic-lane-postures-1.jpg": {
+  "w": 1096,
+  "h": 1163,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAABQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JYwCo9CHe9y4EsAD+6xoER4B+hBwPfA/RLjrWCOF7wUQ4I2sFCyg3X0ghagzPooIqW2IcVvp8G7Ulg+CO+xJBvE7fAAAA"
+ },
+ "/articles/techniques-of-the-body/hebrew-arabic-lane-postures-2.jpg": {
+  "w": 1105,
+  "h": 1194,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JYwCsACHdCSIi3RyAAP7rJaS5zUwJL6fpqWJDzZXmW3UlLobh9zOeor1pwNbKGBNu3vuIEHhc29y0UiDAdyLj9wl5khwBlav6PhQAAAA="
+ },
+ "/articles/techniques-of-the-body/hebrew-arabic-picart-tallit-tefillin.jpg": {
+  "w": 902,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAwBACdASoQABkAPu1iqU2ppaQiMAgBMB2JZQC/OCIj2JzlJUnpK+qkogAA/ucsU6QFTdBREJvyJnxRq/IBA7fAn9jsH7Po4sf6UJ8CQ2xMjX0RfIFwZolp9Bi1jbw+ewDUX8xgJwMRzxVb6nNuVgHWAAA="
+ },
+ "/articles/techniques-of-the-body/petter-wrestlers.jpg": {
+  "w": 900,
+  "h": 757,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAQCdASoQAA0AA4BaJYwCdAYss1i1TgAA/tXkj1qoVGjyUGnn9dZZ/m7niVXEuWdJigCKhVwdTb1swPhFWz+ws/0o29I4sBpgsuj7cjfUr0/nBTqqTCuCDB6ap8AA"
+ },
+ "/articles/training-our-own-models/suda-reader.jpg": {
+  "w": 2000,
+  "h": 1122,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAkAA4BaJYwCdAEO+nboAADieTN81Ojubh2L/HSO+PTJYJvQNRvQ+x+sUKMw5MlAAA=="
+ },
+ "/articles/trees-of-life/ani-sycamore.jpg": {
+  "w": 250,
+  "h": 310,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoQABQAPu1iqU2ppaOiMAgBMB2JZgCdMoADKuBI3DuhqzFZ0AD9+4RaFWjylbhYxzRtqhYYYwx7512dMzDxljYwUNT+uRWXEsqF0//JNYFOtQ9enM/WohA0jfAdKZIfMg7P/1LBXg1+RI0LtqrAdTE0teaMNpQAAAA="
+ },
+ "/articles/trees-of-life/arabic-porphyrian-tree.jpg": {
+  "w": 611,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAQBQCdASoQACUAPt1cpU2opaOiNUgBEBuJYwDA4Agn7rVsRapseDDaKnPPLaSvZBIAAP7T43QrU82hxZBSHq9gHrrXnE4XVOhCZapRUBqyQGfZmm7T7bvctFG1Icwl6y4B5MeIFJMvPaSGqGEd6MFZYNIakAZ/YKR5z2b2x6EXNU0WCnaREhrHhQAeEdczlJhDBR4jZZWzNAAA"
+ },
+ "/articles/trees-of-life/arnold-1700-tree.jpg": {
+  "w": 876,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADwAwCdASoQABoAPu1krU2ppaSiMAgBMB2JYwCw7dwA0u9ObHrEqaAAAPxhE1BgtTziFnfUWckCltYVB9sbNwUE5vBys+WiDOlG2EPBzyhGW1GKgGRPJysVzIQWPZ8Y5/UMII2UiWuRnFtLlCdXgljoAAA="
+ },
+ "/articles/trees-of-life/aureum-vellus.jpg": {
+  "w": 668,
+  "h": 940,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAQBACdASoQABcAPu1iqU2ppaQiMAgBMB2JQBOgA71A1t2qiH1bJ4lugAD+kNQmieOWB7biT7eWehHHy4ExhJ9A6Hn4jDW4+V/AmDNmuvKHPQmhljSjeLLBiLc+j6I1T1AUqVStfWZgQkNgKWpMAA=="
+ },
+ "/articles/trees-of-life/bohme-russian-ms-paradise.jpg": {
+  "w": 1152,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoQABMAPu1iqU2ppaOiMAgBMB2JZQCsACHIUWUmOm5cr8DMgAD+rv9anyRj6JYO6ldU6fSzKM9Oc752qmeZZ4OmdWFzAD1M/BR8NVdU97afflDEBKsiwAAA"
+ },
+ "/articles/trees-of-life/bray-odin.jpg": {
+  "w": 1092,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JQAB8wDs8LiNLxmehpcyAAOAUvGdQ9gs2HboxjF7anJAJDnR7pVJKUjflrz49EU4CRX3OHG44pRnW/VtIBdcyD6vuT9eZBc9nqmOJu4waX+7CI9kVFgk9PIa61hhZhN1th5AA"
+ },
+ "/articles/trees-of-life/callot-st-francis.jpg": {
+  "w": 1149,
+  "h": 1175,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwAgCdASoQABAAA4BaJZQAD5IQL+N65k7gYAD+8HFHLQ9/HmlkoTtWHCVFFUHx+hISSrQ16cdfTQ3nX7XIQNYo8BUUmHpGIwExFnxSOLaSreKz81oMJ7uvY6AVvgWk8V4r4mr3FKCAAA=="
+ },
+ "/articles/trees-of-life/codex-laud-25.jpg": {
+  "w": 454,
+  "h": 433,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABQAgCdASoQAA8AA4BaJYwCdAYtzvtzszM8hsYA/pS/2xtP8cPOjJZlQoro1MyGhbvtEqyYiHudhOnbWOEkhtPzsvyYnumfivCI1Ugqw80lsVgVoBWQ10YjC3HZH4rLoFXI34Y9yWg+LN1IgAA="
+ },
+ "/articles/trees-of-life/darwin-diagram.jpg": {
+  "w": 1400,
+  "h": 949,
+  "blur": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACwAQCdASoQAAsAA4BaJaQAAueDKN8YAP7uHxHCEaea+gAA"
+ },
+ "/articles/trees-of-life/dreifaltigkeit-tree.jpg": {
+  "w": 900,
+  "h": 1026,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQBACdASoQABIAPu1iqU2ppaOiMAgBMB2JQBOmUABf5M2WhDYxf/hchg0AAP6T04LMO4MzE4wCgcdAjBhh9Ps4e0l9R5SHvREE0fL96VjRboxZ/nzKh0cMEjJ34MEtUTTgAA=="
+ },
+ "/articles/trees-of-life/evoli-sefirot.jpg": {
+  "w": 640,
+  "h": 1290,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoQACAAPu1kq04ppaQiMAgBMB2JZVefU0CuCZSNQtqFXCyv4AAA/uzmVaxuy8Mned5FcYQSwRe5gJ9ipxJesqcxF9u+dIdCkABbygLrCsggSaZDmUvxwkiELrn5jBrtNyAk9q8BMn+HtKyD/1e/j08TrnBHvHVuAAA="
+ },
+ "/articles/trees-of-life/freher-una-vitis.jpg": {
+  "w": 732,
+  "h": 726,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADwAQCdASoQABAAA4BaJYgCdAEN3S3uvAAA/uBZ06CqCSDN6IlLJeqqevpkTdgYAAA="
+ },
+ "/articles/trees-of-life/geheime-figuren-baum.jpg": {
+  "w": 946,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JYwC06Bgl888XAi3AAP7V3MkwMBsEkpBmXqlDoqQDDXEx/DdvZHvh1FC/W8oHJ+rHNFGHQGSg6ATbjV6I+GI6NRQZiT/HcRQj5fzg2jSVrcAA"
+ },
+ "/articles/trees-of-life/hackspan-arbor-cabbalistica.jpg": {
+  "w": 701,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQACAAPu1iqU2ppaQiMAgBMB2JZQCdADBi7MD5u5Xy4AD+6boDtrGvUs2kQZ1MsWqPHZ8IfTZPOtun143Kmw2L7b6e3oHsQAA="
+ },
+ "/articles/trees-of-life/hall-yggdrasil.jpg": {
+  "w": 914,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBACdASoQABgAPu1iqU2ppaOiMAgBMB2JZQC/OCHiCIsxoo12ABSCE8AA/sCGZjnMU9yVwBQnKfnegQik04YmlhkMHZ2l5Kme5OE5UYg49aS3H+gGuMDDXvgdEjKBA6yB7TtismSINIYBAAA="
+ },
+ "/articles/trees-of-life/han-money-tree.jpg": {
+  "w": 933,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAABwBACdASoQABgAPu1iqU2ppaOiMAgBMB2JYwCdAYw6395pWBdLWWFgIFbESAD+8MlNfF6yCHVs2tE44ksjJBEO9oQh+9zapVG1saUjTLtr/KJKVmg4sTA1PW6hvKSTxGn+Y/wT78gKrP+yRzudfSis2eB0lu0oaZybtmI/vpzz6G3sfDErmfyf9uCfVxHrzKPNTSvznuHj5u3GX/mfydutIqIewAAA"
+ },
+ "/articles/trees-of-life/hartknoch-romowe.jpg": {
+  "w": 1400,
+  "h": 1198,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAA4AA4BaJQBOgBn5Syhc5Z1wAPg+iRSqv20KSi25EYpq7zWxWd0uxNiI5Oe+gCsHPI0lyD+03K7q+kit8lXkBYXXE0hwrj1QAA=="
+ },
+ "/articles/trees-of-life/holmberg-dolgan-world-tree.jpg": {
+  "w": 961,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JYwAAW++h3khHoQCABIAA/tXkg2U6mlHDkcopWsESnoOrcvjwY2wjod2PVsDGoMMTrxPn/etF4L5hWKR+yrNyVd39rUdw+AscVnzn63l+T+eKNAWQlwsInTR8CAAA"
+ },
+ "/articles/trees-of-life/holmberg-yakut-trees.jpg": {
+  "w": 1231,
+  "h": 813,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAsAA4BaJQBOgCKKclzw8sAA/pT8nCCFLN3l/gR3aYDqOZKJ+3CBFFN3ILEgbxqEQHjdjbmhAAAA"
+ },
+ "/articles/trees-of-life/isidore-consanguinity.jpg": {
+  "w": 941,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JZQC06BKajmPoJyWfYLAA/sQbiQubJ7dHNEPf/5ugdfDgs1bQXZ4l/z6/b5T8n9pm0GCzAHWyWTUj6l1Wi5fQnqhkMWCpblORgmjgAAA="
+ },
+ "/articles/trees-of-life/kagyu-refuge-tree.jpg": {
+  "w": 800,
+  "h": 1134,
+  "blur": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAABQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JZACdMoBOACaRrh+Xv60CW8zUAPzYJOi7GSC/93WnCQSuRvOXpTi2ymkvtb28Swap2NyiBds1v3iaJfD+MwPfWl+CnwANDyFUpLqeGnrDDN6LPF1Q9eo67O1PBPd8BPO7OHEryIvMifBkDHSBi/m9JYQzJGLla2gkAErM0WzdT8zuK1vTAAAA"
+ },
+ "/articles/trees-of-life/kanheri-bodhi.jpg": {
+  "w": 800,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAABQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JZQC7AywBs/zN8sRMY8VJR5b4AP7rMaGLB1jiiOXmKXogsrUpzR4iCLefyWXQmdaGPzlPpur02y70evR98LQahrFPgUCzFu1hMnRhCXX/Pq+VrHkB2U/2LkzqkrY/qcR+xf4Z//2Lh90nQsQocZvfBWEffOt2mK9xuendgOrkAAAA"
+ },
+ "/articles/trees-of-life/kayon.jpg": {
+  "w": 590,
+  "h": 946,
+  "blur": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAAAQBACdASoQABoALrV2u12jqampiYC0S0gAHxIh6wWF7nz6hP+z3ZWYAAD++Lp8qP+6ovptK3T8j6tY+2C5tsMTLmR1KyQ4ivNLJuUtEkyq/do0nGLTUlPIRGpKJ1wOmbHDGHdShOpV61R1kG3HhkQf7BktfV2I5Y3iuB+Qgx6FlFH94bkeTQJMBb6NE2WthzpNETdrb76mbIs12zn3pgzEbhNmNyF59MAAAA=="
+ },
+ "/articles/trees-of-life/kitab-al-bulhan-waqwaq.jpg": {
+  "w": 1012,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JZQC7ABxaw85uF7372gAA+glLz94SqhbhupZT0zYLI3yEQPrwvKj+pI0ONDC0n2FPRwMXeuiB671w1TCTSQ+80uoX4HXSfiSiYPmugAA="
+ },
+ "/articles/trees-of-life/law-tree-of-the-soul.jpg": {
+  "w": 622,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAACwBACdASoQACQAPt1cpU2opSOiNUgBEBuJQBXDhP0XuGKcBCiGhxh5oqTnhG+gAP7nQJElJzaf2RG4ZxYQ96Ial1AaF0WSS5uyunScQFIiyJ2QFPOBzefJ1353AC0IrDGVoxuflFUv5L9U8wZg0SBFKNrWK/OLu9v7maLOks8goL9M+PJIWTLeak3Azlx5m+nU7986gGS3HjPVgf/akhzEDYew8igyTgAAAA=="
+ },
+ "/articles/trees-of-life/layard-ibexes.jpg": {
+  "w": 1026,
+  "h": 534,
+  "blur": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAAAQAgCdASoQAAgAA4BaJYwCdAEPhvn1kRQAAP7x9eVzwENxRI7QO9n/uKqPd4PiwBgAAA=="
+ },
+ "/articles/trees-of-life/layard-sacred-tree.jpg": {
+  "w": 638,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAADQBACdASoQACMAPu1irE2ppaSiKqwBMB2JZwC+SAxU9Q6oscgbYzwSymP6XIZ8AAD+3uiMLbSHG0O93W49/IVNj71djhQQewtbWSJy8m9FwG2AYdsTZ4Fd1CfNBYVKUp6fuo/gGt7WWA0LSaJNhoNKevEbWXa0p+qxqA0sbOwLyyopaS+WJvirrHYdA9NRaJKAAA=="
+ },
+ "/articles/trees-of-life/llull-arbor-scientiae.jpg": {
+  "w": 1123,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZV2AU0AU/C7qzy/gAP7gdeK9xCflN09G7cYn8GUPT83gzPm5kDC3/vYrn+fnOCTNxrrZEQEAAA=="
+ },
+ "/articles/trees-of-life/lote-tree-bilal.jpg": {
+  "w": 1344,
+  "h": 856,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAQCdASoQAAoAA4BaJZgCdADGosVYAAD2Gh5p5hAmSqKVXkCcC/Dek4B5Swk+hJOSHUTETzsmrwMS/Mgf5F4OvcA2vjxU9Pgm0H2g3uS8b9wKAAA="
+ },
+ "/articles/trees-of-life/mawangdui-fusang.jpg": {
+  "w": 1400,
+  "h": 1052,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwAA4BaJYwCdAEQBxcoAAD+7xeuJ/R4goyQfOYYQIrsNpcRSxd7spQmiGMZxUxgha4wAAA="
+ },
+ "/articles/trees-of-life/miraj-paradise.jpg": {
+  "w": 648,
+  "h": 622,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAA8AA4BaJbACdAEfyzLazEGAAPJjXytfFHNvaaVD1x6MvkwRKgPt0sxheV/Xxycche+yrmAEVGSC4Cq/QtLxIBbi0NwCY0AAAA=="
+ },
+ "/articles/trees-of-life/nuysement-313.jpg": {
+  "w": 751,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRqIAAABXRUJQVlA4IJYAAABQBACdASoQAB4APu1kqU2ppaQiMAgBMB2JZQCsBagSAwv/u9IDju4Xt0TAAPyN34CATLXXFcBe0uMl8UnGdcnGa4KUzYenzIL7GR1I+fOTqqzjCuLZKJk3syP/dOHaxJekvO9fVj9yKgOjPrLhqSbzwDSfYiSEW+WAlZVEdAGrsOhQVQd8C0B1tgRoZ8KSKJGI2Bv4AAA="
+ },
+ "/articles/trees-of-life/pandora-246.jpg": {
+  "w": 758,
+  "h": 990,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABQAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JYwCw7CKRGPYDgAD9zCYzYZC/+jm8HWfUPZKZc/0twjv5E1dNEZGAgKBAIAAA"
+ },
+ "/articles/trees-of-life/pandora-260.jpg": {
+  "w": 1014,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JYwCsAC0gMJ1KHoAA/uO35BllheqPqSPP+dVPVIVkXewGs8Q0ahhrJ3n8NezewXM7nKyQHve8ksgccklnNdAS7AAAAA=="
+ },
+ "/articles/trees-of-life/picart-banyan.jpg": {
+  "w": 1288,
+  "h": 931,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAwAA4BaJZQC7AEO+0M434AA/XaSbM3R0KoeG6dLRqy/WZoVs9Mz/yp1V9rI3pR6YPHW8OslUaqY4AA="
+ },
+ "/articles/trees-of-life/porphyry-greek.jpg": {
+  "w": 1264,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoQABIAPu1iqU2ppaOiMAgBMB2JYwCdAC0ZfvhLpAAA/ui9InBurS021IxfzeDqiHYVMGwn1WL2N4+IakJ5BzMAAAA="
+ },
+ "/articles/trees-of-life/prambanan-kalpataru.jpg": {
+  "w": 1008,
+  "h": 1344,
+  "blur": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAACwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOmUI8DOiGeaokVuwVr4JnG9DgAAPR0/0bgIZQjidBB9qsqPxEIm6HuVReQw+L2bdgXJqb3eMBYJj3Pwpy4/9ofgYaUECmorRvULF5GQDqzEa/IDpJ5CSt5TI5RWUncVnRuHyI5P0oLhrSQ5czbJ4aFG9K6In80di1iOUDLxDfs8gAAAA=="
+ },
+ "/articles/trees-of-life/qazwini-waqwaq-1.jpg": {
+  "w": 570,
+  "h": 716,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JQBOgBDvd0hNWDSdnXAAA/eJG4RFwQFHZB8g7U31ftQeWQ+8cixqUYhikBJzd7KrPtOsmI1YEJMTsDq0nuuMTmhcSOX07YcWSrzklf4lGKQAA"
+ },
+ "/articles/trees-of-life/sanxingdui-tree.jpg": {
+  "w": 933,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRqIAAABXRUJQVlA4IJYAAABQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JQBadBGBudz3rL86fgLAN3+wAAP6rmTpsQ4yrsPxRZuU5mxqBldD92uKfse/nD+npu2QmpDle9Spi5uq3Exfuo8VNVHKpeVa6BEjgn9YWqWtA1XxBV5lRaxEEhKJF0xo5BpftYuFnAu8CI28ymLNw949fu3CU6/N+99XAAAA="
+ },
+ "/articles/trees-of-life/speculum-fall.jpg": {
+  "w": 1216,
+  "h": 1004,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQAA0AA4BaJYwCdAEfZkTKfq4AAP7x+KHQ1CQh//hQJZmVDd3A0eN227181teCY/u2B/ER7TNA0P+Jsg+LNRQAAAA="
+ },
+ "/articles/trees-of-life/speculum-jesse-coloured.jpg": {
+  "w": 1318,
+  "h": 840,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAoAA4BaJQBOgCFdmA0nlm0AAP7XX9nd4WM3KFSfLFmXUCCFAEODNe26bd6Y7llf7MSqOvrPsvyQsxMLDRNAhdhhMEKXYAA="
+ },
+ "/articles/trees-of-life/wilkinson-persea-54a.jpg": {
+  "w": 1400,
+  "h": 1358,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoQABAAA4BaJYwCdAEPAmDIz4AA/pRLTiAxeA10DIpGz1pZMfYK5Wwv0954zEYaM7J3iAAA"
+ },
+ "/articles/trees-of-life/wuliang-fusang.jpg": {
+  "w": 498,
+  "h": 406,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAQCdASoQAA0AA4BaJaQAAjRX3MYAAP3vN9iykrVSz1qrdr/fXXQD3rx5vURQqzBLwa3FEGh+RcU+fmuUPE3/TACQkAAA"
+ },
+ "/articles/trees-of-life/yoruba-grave-tree.jpg": {
+  "w": 1091,
+  "h": 1400,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JZQDG9B5K99sDP13XP7gA/sXQW4SmQNRlQdi0hIFkrUPEO/m83R1Uw5mwgsQvT/Jf+pCj7qWOeFGhjYEuUP4bYkTkif2VCeGAb5VHWBZQ7sCHsyA4hWBsc4QAAA=="
+ },
+ "/founder-derek.jpg": {
+  "w": 300,
+  "h": 400,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBWAMXIc3pBPo4q3tfL8LuYNgAD+r2sfpajwfiHlr5hX6FTYKEV9ruFKxtQBC9inJyibdvqBashvKRj7uH4q3Do5UfBMiD2orbBSzqRx/oXNZ/8De8JE9VGOAAAA"
+ },
+ "/vision/bibliotheca.jpg": {
+  "w": 800,
+  "h": 600,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABQAgCdASoQAAwAA4BaJbACdAYxZvNqySk1ZAAA/uzhlUkRvSDcXzlPPF1LUV3BBIkptUh8OJaxAE0lCAke91SCKkTJ11qoJnA71Kw9jYVyy9jI3uM7dstd3lplUH1sT5jPgM5wpKvjsSSWAAA="
+ },
+ "/vision/embassy-crowd.jpg": {
+  "w": 800,
+  "h": 800,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQAgCdASoQABAAA4BaJZQAD45PF6OQ+8cAAP7KiKhAdBfiidqsaQa+GvHB3h9WiP3HUcj6d1h5ip0aTv3FynDVVBn+0ZfrECOwehrhheV22eruaKonLzJRIXDg5KrS2k6r4A9NUIAKIAAA"
+ },
+ "/vision/embassy.jpg": {
+  "w": 800,
+  "h": 600,
+  "blur": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JQBUegzJ0/kJXFgpScDSQAP1qdPXbqxjZRru//IhCOFy2ec3tohWHfL4Qfz84NQdsWenACneimhA+EQOwOc7QMkBsk2wc/IpiRIPtTYPLQAocEKgySEX/qe383Ef57Nh1w+xK8UPEN8Ob4dNK74qgKpUFT7F+JdFJHJKQAQAAAA=="
+ },
+ "/vision/ficino.jpg": {
+  "w": 800,
+  "h": 600,
+  "blur": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JZQC3uB+ULhkKXiVA53ZdGeAA/ucti3Axk4jC4TKXXDPPGipxGhHMf17Zc7yy98YrCtxn85lZZOpSpeq72ixuXfCZPsJ1t/lZfH6nn2YhYo8Vq/fPD7tOK7HSn8f9rOtGhBmFtO4QaGWdADAAAA=="
+ },
+ "https://cdli.earth/dl/photo/P273210.jpg": {
+  "w": 2677,
+  "h": 5061,
+  "blur": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAwBACdASoQAB4APu1iqU2ppaQiMAgBMB2JZQCdABuQBOO/dVajshCU6gAA/u7vCxVpL2NI4Bvzb544f24WrhchxFSaM7hDq+FicQ5BwC3HttcoNpfjw6DVHxZajGpkw1f25+2t88wPnH9iqmCNEVfRV6r+3iN55aH4T6Xi+mJPVs/QEbFLI8g/2OF7kYrqzuhuc6FIx8EdnZAA"
+ },
+ "https://cdli.earth/dl/photo/P394444.jpg": {
+  "w": 1776,
+  "h": 3642,
+  "blur": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAACQBACdASoQACEAPu1orFCppaQiqqgBMB2JYwC7BagA9kFnMu6ygtZhbTuQS+AA/uxYYtt/GjG8VQYZNOWlgf3pu4KAR9OvlxitacwXN4GaQ3CR1CGPKavzT3zhfROmvGu5Sfd8lvEKi9W1s7smDbC/1k/2iAYxAmduuQUQn/v6rP3Zj9qdSEgxPqEx4IcNCT4I6g/Q1jxAAA=="
+ },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$200/full/600,/0/default.jpg": {
+  "w": 600,
+  "h": 992,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAgCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwAAfKAAAP7uzWcg6x7LH/pLpchomzS0Sz+C0Jur3MnSc3G0lRkUc7GWwAAA"
+ },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/600,/0/default.jpg": {
+  "w": 600,
+  "h": 992,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAwCdASoQABoAPu1iqk2ppaQiMAgBMB2JY2iTS0eT1wAA/u8jkpudS+vGE0ksDlKKTI1j+1IwEREmjo+DHAAA"
+ },
+ "https://images.eap.bl.uk/EAP039/EAP039_1_4_100/5.jp2/full/800,/0/default.jpg": {
+  "w": 800,
+  "h": 600,
+  "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAwAA4BaJaQAAucNVuGEQAD44TK+GEzBmrZ8w4Y4EyIZ3hiNQgXcd1ug4AAA"
+ },
+ "https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg": {
+  "w": 1200,
+  "h": 800,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACQAQCdASoQAAsAA4BaJZwAAa51o0AA+4dyMMCSKPOrob2iTODVQjMZLC8yO4oAAAA="
+ },
+ "https://images.eap.bl.uk/EAP105/EAP105_1_3_154/6.jp2/full/1200,/0/default.jpg": {
+  "w": 1200,
+  "h": 800,
+  "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAsAA4BaJQBOgCHWABvQAAD+0HASoSOc2WhWQULcT8GvGjpttuy3wWXreAAA"
+ },
+ "https://images.eap.bl.uk/EAP310/EAP310_2_1_30/3.jp2/full/800,/0/default.jpg": {
+  "w": 800,
+  "h": 533,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAsAA4BaJQBdgCHfzU+8OAD82E16+hdhpnRCaMrXjCmv8SpyYteb9rOawZa4zqTb64YzAAA="
+ },
+ "https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg": {
+  "w": 2500,
+  "h": 3400,
+  "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JbACdABQxxkIpwVjhkS9iAAD+3G5auxVf+tL22MRY432r542oR6qr2FKNMrjg2lOXIDg1DRp+HgSVq0kYSasE+w8hTP7zjT0dmL8JcKnbnTgkCaPOsg9fifaLG8ZK8M76RYvKkXoAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg": {
+  "w": 5305,
+  "h": 3820,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoQAAwAA4BaJQBOgCHfwF2AAPz7db9xNM45ZLniZg8FbF3gMMkYNPOaP8+Aiyvp/REAGuO9aLwIm7AwAAA="
+ },
+ "https://images.sourcelibrary.org/archived/694b3b5b58a47807cc735dce/34.jpg": {
+  "w": 1133,
+  "h": 1600,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABQAwCdASoQABcAPu1kq04ppaQiMAgBMB2JaQAAUp9ykar6EAD+8d+ARr0d+WpIzBGpN8ZyRXpGGM9VhnBaFH95/B8ywAAA"
+ },
+ "https://images.sourcelibrary.org/archived/694bf8d2343422769f237558/212.jpg": {
+  "w": 733,
+  "h": 1154,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAgCdASoQABkAPu1iqk2ppaQiMAgBMB2JaQAAeyAA/vDQgAGD0oZMuouKyUR+8AA="
+ },
+ "https://images.sourcelibrary.org/archived/694f3d6cbe37f451a5324e10/12.jpg": {
+  "w": 2487,
+  "h": 3820,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoQABkAPu1orU6ppiSiMAgBMB2JZQAAW+i9P/NyOXn6zAAA/k0sNIzIF8B841VhIxt9MmsOD59NmofxJrGd/CMyN9BxKmsZ/atMNugzaHIBwzLsY4AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952062dab34727b1f0432ef/4.jpg": {
+  "w": 2592,
+  "h": 3508,
+  "blur": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAAAwAwCdASoQABYAPu1iqk2ppaQiMAgBMB2JaQAAUthf+usAAMefccLAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69520773ab34727b1f043c4d/14.jpg": {
+  "w": 2157,
+  "h": 2901,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAWtBHplAAAPCyhePp1rlA5fsz9LFPixUKRtWnicNBtmu5foAAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/32.jpg": {
+  "w": 5292,
+  "h": 3825,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAwAA4BaJaQAAuQnIRH75AAA/u41FzUnu/RIp5lQK9DWoWdtMNkFXjWb0JV34d6YMVY8tVzBWMAAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/33.jpg": {
+  "w": 5353,
+  "h": 3824,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAsAA4BaJaQAAsf2MCEGcAD+8jR7K2ggAyfXUklUgCoxGZPX1r0Ite19ljmdYiAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/34.jpg": {
+  "w": 5386,
+  "h": 3826,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAsAA4BaJaQAAvqdosy0eAAA/vCHTuJST+yf20IupO/m1/5dvdgngtR9h0FLHNqoiTkAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/153.jpg": {
+  "w": 2083,
+  "h": 3182,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JZQC7ADBoeFSh0AD+7yQHsoPeKmdrLl+wah+3slPV7orMgAA="
+ },
+ "https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg": {
+  "w": 2092,
+  "h": 3164,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JZWHgRgAU/ZFsAAD+73IS0ncUyvYGO2anYRI+VombN4B44pDRuKAA"
+ },
+ "https://images.sourcelibrary.org/archived/69527376ab34727b1f04948a/727.jpg": {
+  "w": 3077,
+  "h": 4051,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABUAPu1iqU2ppaQiMAgBMB2JQBOgBD3qHAhh4fEj4AD+vJzLGGRPz69W1ewt8fiHlRALgq2p1lU9z0YgA0OzD9oDNAT8+rX0gyQIiawAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695285cdab34727b1f04c25a/96.jpg": {
+  "w": 3004,
+  "h": 4164,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoQABYAPu1mq04ppaQiMAgBMB2JYwC06B42xgSMvQEFrgAA/c1UoOPlNSjNqwIMHPdIcK/Dksmb+ott304Tk/OehItG8tDAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6952898bab34727b1f04d709/1.jpg": {
+  "w": 1749,
+  "h": 2481,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoQABcAPu1kq04ppaQiMAgBMB2JaQAAW+qy1Y9ejRGAAP7za/mpNybW1dTPbA1xvNNCJ7IJKAAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69529036b184004c526a17f8/6.jpg": {
+  "w": 1000,
+  "h": 1521,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwBACdASoQABgAPu1iqU2ppaQiMAgBMB2JYwCsACKfFLBQntinRHeTwAAA/sXA+E44ggz5zH5w/SJiA2i5vnb3oEEbwlFQ2h3tRbgwzY+vfQwdgjwgfqwZzyL85HJ7VzSgAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952c9c777f38f6761bc2ffd/8.jpg": {
+  "w": 5017,
+  "h": 7884,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoQABkAPu1iqU2ppaQiMAgBMB2JYwDCgCHgRr/yrLaQvUgA/fATVDL0e+UaTOFrzXospRiY7WrFRiIrFBunCGEYX/FV8tWGP2N5w6pILZIAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952ca2a77f38f6761bc33bf/530.jpg": {
+  "w": 1403,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoQABwAPu1kqU2ppaQiMAgBMB2JYwCw7B6Q+JXgTGiaAADgNZfO/DGZtIcVIudrW3bW85P1j7sIdd8Zcjd+6dtmrsyAeVNmOvoDswhvx4WRizeb2cAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/2.jpg": {
+  "w": 1829,
+  "h": 2984,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQAwCdASoQABoAPu1orU6ppiSiMAgBMB2JQBWABZ+w08g7AAD+70NX3DD7iMWG7XW08/J9I1Z3Aryv/HFsrvnBks4qphS86KJ1DFyAC+T0bA/3E0CSNdeHF2AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/74.jpg": {
+  "w": 1873,
+  "h": 3054,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JQBOgAySOFsE/LWm4MsAAAP7G7AnYV7/MlY0y8R3NnrhbXH/k3YSPdoaKTzAc4HQR+o+VxOn7UcpApzwRQFwK/ZPzevrxe74MFjvwAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6953a93977f38f6761bd58f4/360.jpg": {
+  "w": 1660,
+  "h": 2587,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoQABkAPu1kq04ppaQiMAgBMB2JZQAAW+t0itbYUMAA/vHbUsLsoeXVf01DgMCBBZQfABnZzJ3pFjIkgqv4DVQTf9zwAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6953a93977f38f6761bd58f4/361.jpg": {
+  "w": 1672,
+  "h": 2587,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoQABkAPu1kqU2ppaQiMAgBMB2JZQAAW+nyCJXfTp8AAP7rXjh/YnCHFdv5W9LSK1N82ATFHosUTajUIPdiIi9oOpcPO+AYAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/74.jpg": {
+  "w": 5467,
+  "h": 8423,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAQBACdASoQABkAPu1iqk2ppaQiMAgBMB2JZQCdACHXSsNHHZbkqydsAADN7+qUmCJEJBUqi7KJIXAlMFHDBkrfS8c6GQK2kTA1IbJyg0xBcmyA40NBbkpM+XiXxnTCTo8yfDOhfV/GsMXgAAA="
+ },
+ "https://images.sourcelibrary.org/archived/695434421479a63c11088c27/122.jpg": {
+  "w": 1838,
+  "h": 3034,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwCdACKUhhpNS2fmXcAAAP7ggv+u5M5nSk4qV5P0c+o46ZkE38NO9EwB07W+dEtkMsqr9mWH1jr3T8AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg": {
+  "w": 1379,
+  "h": 1800,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoQABUAPu1kqU2ppaQiMAgBMB2JQBOgBDvgmfT7AY53SAAA9r3rfWeHB3bD5H3OAm89uXKjgX/Os0ziE98Xy/m9XYohk+RUDLJjAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/695573bdf63a7571091726c0/159.jpg": {
+  "w": 2479,
+  "h": 3998,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoQABoAPu1iqk2ppaQiMAgBMB2JYwDCgBhIWkRd+2RhDVrAAP7E+kSRRJroIUMQcuUHx6QeQuVpEF6ZwLaKT6v8Q9wQ+pkyQxaAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695573e7f63a757109172b1d/293.jpg": {
+  "w": 1923,
+  "h": 2640,
+  "blur": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAACQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQATwBQUDLmE26ibmcUGXr/yogAA/usmo5YxjQD/fKpUY6ypY7Ug93M1c2bnFdy9bep4ClhXo7cnnNUd9nplL+rY+kV/LrDsyBVTvvpymgEW6WXXvCr2AhDI+wl/rCzsslPsqw1+wAAAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/695575b757e3b773024f22ad/156.jpg": {
+  "w": 2500,
+  "h": 3884,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JQBOgBDwHDjyw3dgCEnoAAP7tZiTP41J9REbm7lQIOoCzhl5IJITHooE+Jib6rQHyCevd4eRtUKimHvI1QDGp0RieF8s9kfJtyAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69557dd157e3b773024f4041/237.jpg": {
+  "w": 1842,
+  "h": 2725,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JZQCsAB4ddefnIpHvxAAA/q8jdzO24FLqbD0FLDsRFecLvUvytB8Wm+JJ2hzgzfdD4IeXAAuEkvqOhXycwzlUGtchU8AA"
+ },
+ "https://images.sourcelibrary.org/archived/695592747bd6d2cd1d61a5c3/198.jpg": {
+  "w": 5600,
+  "h": 7806,
+  "blur": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAXAAKYhPgQZ6kHAjgAP7GBXrQSjjA01dKBwn+orwO5wM0FCu70r2+B2a6QNE3kLW/pL9MIwOV3jAl3eQNi1r/aBSoSsJLbYXEsXDJm/jjVtT+uwLVRd5w+WbTH95PeMj+kDktds1y49XAlHWLxXwAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695592747bd6d2cd1d61a5c3/380.jpg": {
+  "w": 5503,
+  "h": 7826,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JaQAAW+mbh1rCNe0/qwAA/seB/fE8FwMvcVindiKlQUpHl+bn9qgoMQxUyVRpduWece3aiafMLiKU42W6wZT6hUpB2L3xGSo/8ZNv/TX+bWuK8qBX/JyGAAA="
+ },
+ "https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg": {
+  "w": 1124,
+  "h": 1600,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JaQAAUz78EnWXXXJDfkAA/u3WHfeyY2PcjaMzlvaOhpcX8CfmZ6PwStiLXGqssHNjRO7kvsWHuHpIoGd4DzgAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6955d95d8407b7c9ae212d38/85.jpg": {
+  "w": 2311,
+  "h": 3606,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoQABkAPu1kqk4ppaQiMAgBMB2JZ12AUc0TmEZWFNwAAP7uOGL5v00ZFDljYDzb1z25TENltGUEEby/OBgAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69567835be7c607c5f03b7e5/406.jpg": {
+  "w": 2194,
+  "h": 3100,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JYwCdMoADTt9y4RnVNePgAAD+02ug7m9wU5ESlMIAvWQl/RcfuYf/Vh5QAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69568b13be7c607c5f03d575/16.jpg": {
+  "w": 2075,
+  "h": 2901,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAgCdASoQABYAPu1iqU2tJaQiMAgBoB2JYwC06C0kAAD+8C7r6NJdLjsnDDUxJ6rgUOovroPwAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/695910f5ecb01322b306854d/194.jpg": {
+  "w": 2096,
+  "h": 3017,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JQBibBlETnlh4AAD+7GMSYVcO7gM2HJtc8BTSri97JXPQnswAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695910f9ecb01322b3068858/533.jpg": {
+  "w": 1894,
+  "h": 3033,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JQAAQfsP/m4EAAP7um3RMBiXZ/SXThfzEQhj9H3TXrJ8807XS4AAA"
+ },
+ "https://images.sourcelibrary.org/archived/69593413b282844d7b277aaf/1.jpg": {
+  "w": 2170,
+  "h": 3555,
+  "blur": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAACQBACdASoQABoAPu1iqU2ppaOiMAgBMB2JYwCdMoAlwRC0YB4MpuCzS0cX4gAA/sAwSHhUG3UQxLWa6puETvw4UpPKZmOjSBRHX06PTZhQgzsNF403cII3CDjN1d1KhwnAez4X/0hMgSjPjcIlNPzgXfHy2qANqSLGwN2EttUQCRBAp1uU0KsrM3sJMSgaiSr/HVHFYl0fo2MQAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6968d9624fa3b04c6de86ecd/125.jpg": {
+  "w": 4488,
+  "h": 4672,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoQABEAPu1kqU2ppaQiMAgBMB2JZQCdACKlouCZ24jiSgAA/ctD/Jh/wn7vXka0Y2xNeL4M7CqYAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69905808172958904413516a/111.jpg": {
+  "w": 1998,
+  "h": 2476,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoQABQAPu1iqU2ppaQiMAgBMB2JZV2AU0ATjrx/0dcrwAD+48f1oRB8HgnOzbC5gvqxGGhhsYKJMIpdtsLPCyx9iQVb1AAA"
+ },
+ "https://images.sourcelibrary.org/archived/6990585617295890441358e0/28.jpg": {
+  "w": 2238,
+  "h": 3277,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JZwC7ACIftydIw/Oyl7KfAAD+7cvr+EBDT/OBeG0srMwNtGstMBBcz/ilEszx4h+RRFNeO2EA5VsnLBsAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69905e3c2fd6a039938a1980/5.jpg": {
+  "w": 1131,
+  "h": 3616,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAACQBACdASoQADMAPtFWoU2oJKMiN+gBABoJZwDHUL/EbxN6i1qxvJIB+AV0NgAA/vV4XqLqww52rymtU8wAL7sPo+pdPcl0oj1Fj/S2/SaDackjSDXfdql97z9h2AsvnFaVFju800q4rfJAWqZBYkHeQAA="
+ },
+ "https://images.sourcelibrary.org/archived/69905f4140bc3a0478efb47b/3.jpg": {
+  "w": 3872,
+  "h": 5784,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAwCdASoQABgALrV2u12jqampiYC0SzgABc6xzhzXcpNBuaAA/t/4w0FTjPqgza9FHZw0JDgAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69906313e7b7642c081de828/22.jpg": {
+  "w": 1125,
+  "h": 1414,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoQABQAPu1iqU2ppaQiMAgBMB2JYwCw7CHfUFZWnwKSzoAA/fzJDtz8xga7E3VPCrppL318PXe/PFCPiMYphbZLZci+PVxn+6XgAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69906313e7b7642c081de828/8.jpg": {
+  "w": 1116,
+  "h": 1615,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABQBACdASoQABcAPu1iqU2ppaQiMAgBMB2JbACdMoR4GIJH+dicKzAppkgAAP7hq4N4uPDsOf9G666TUaCDwJnlHBC9SttbI62KZaM022kv7BvOt5xBARE12+1VtElOdWqYn6mBGSGm9F23RhcF8ZEP1kAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6990631aef12272ffdc8f4aa/324.jpg": {
+  "w": 2345,
+  "h": 3763,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JQAAPWt9MooEAAP7u8NkaV/uhpimEi2n9JxAVgRiGQCushN3Hed4WeD+8Op2AAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg": {
+  "w": 2765,
+  "h": 3971,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JYgC7ABag7ZHMT1+AAO64xMIrxaf8FeTc4yb6+jO29JSdaDpvQ7NO9cXNAAITdhMPM8qRILaE//B1q2beBprzEE7+oU1pg7as0cObpO2XgAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69906a4dd69de0e6980706cf/264.jpg": {
+  "w": 2034,
+  "h": 3294,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwCdAC0Ohxs1cn/AAP7p2t/07iDMaTVL8a8rB46nBe5aKG0INljA0XtB0YFoZ9Oag8hpAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69906a961cf6ed5fbc8f7135/157.jpg": {
+  "w": 2969,
+  "h": 4988,
+  "blur": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAgCdASoQABsAPu1iqU2ppaOiMAgBMB2JaQAAeyAA/vDfLgAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69906e6d8a353648e1ecfd91/15.jpg": {
+  "w": 5106,
+  "h": 7769,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAwCdASoQABgAPu1mq04ppaQiMAgBMB2JQBOmUABqoZ7rg68xVYGwAP7sWubawkEqDL3cqE3ZF8WZIKwGGk7FgS1j/m1LLpkbN5/6gh+0Dj9DY+moBV05wTdCgxyoOz5daAAA"
+ },
+ "https://images.sourcelibrary.org/archived/699079c0db8b55d19ec67ceb/256.jpg": {
+  "w": 1748,
+  "h": 2762,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoQABkAPu1iqU2ppaQiMAgBMB2JYwCdACHwzubBilFox1kQAP7emS59n+A/tKgFaRq8jGqOzSt2Cf9bifhqynNndwwwAA=="
+ },
+ "https://images.sourcelibrary.org/archived/699079eadb8b55d19ec685b8/288.jpg": {
+  "w": 1604,
+  "h": 2700,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABQAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JSvPpaPJxIeREAAD+7X2mZ76dae08QH10C9GyFDva9y0UiFD2CHmcXWa4fz098ftQreRKG1eRcUDhaG2KgcptzzViq5E+AAA="
+ },
+ "https://images.sourcelibrary.org/archived/6991e7e6c91ce7d733e50247/40.jpg": {
+  "w": 2488,
+  "h": 3386,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JQBOgBFPeJSKYh1oukoAA/usl6CXl0iAEu7MpZ/6hlA5wxGEx0rQc5lbG27vDgL+/SzViVQ8MH5QGoo7uVY6AAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6991e7e6c91ce7d733e50247/41.jpg": {
+  "w": 2488,
+  "h": 3386,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JQBOgBFK+egDDn5TObcg2gAD+4Q8wakEYuzPfqhYYTBCnCTdhOOaJk6wptcRkGAp8IgAA"
+ },
+ "https://images.sourcelibrary.org/archived/6991e7ecc91ce7d733e50311/283.jpg": {
+  "w": 685,
+  "h": 935,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoQABYAPu1kqk4ppaQiMAgBMB2JaQAAXfCX2j/6uekAAP7zgQsm7MOQpBRKCSurwuBD4GEzX8Po6IYGk+15rAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg": {
+  "w": 3382,
+  "h": 4781,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoQABcAPu1iqk2ppaQiMAgBMB2JaQAAW+oKvMmt86HgAP7x02Xb61srRoQl/D5OxLPbYuaaw/LSTlw3eyB+Hq65zHeB+QAA"
+ },
+ "https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg": {
+  "w": 2000,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAAAwBACdASoQABgAPu1iqk2ppaQiMAgBMB2JaQAAVMGHwd13qF/f7YkZHgAA/vOCsfKTawc+GcFJWcQCjYKct27GkWpSxBGQmIWWa0bG+/q17m/wcpDDYtJfo4b4Tlju/YP0tgEjODY72FvUoiTtU/HbrnRoJtLT+qgItesW0cUlCRfQ/wAc2AAA"
+ },
+ "https://images.sourcelibrary.org/archived/6992cbe8018b80967354c531/74.jpg": {
+  "w": 2313,
+  "h": 3113,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoQABYAPu1kqU2ppaOiMAgBMB2JaQAAXg7Mfdm4FK99vgAA/vBAp1Ctr1JiiPuwpChq6Pqe3lMTEe+1Ar27tq7tuB6nfjlV3qEwAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6992cd7543713c66ea63699e/74.jpg": {
+  "w": 1900,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAwBACdASoQABkAPu1iqU2ppaOiMAgBMB2JaQAIEAPa/wNelNMrZJCAZrAA/vIyyxyyOCohwU8TTgYLyQGbKv3GPMa09rsFvW8p78ww1KKPnnEoR6c20zVMJu+8oy3nUW0StqI3Q6fxiqBFeqVf+mtLJYF+Ibdl4dXJkOiBl5wAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/26.jpg": {
+  "w": 2500,
+  "h": 3625,
+  "blur": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JQBOmUI4ABWDQA1gplpVNrq2c1IAA/rMKQfR5WXyZ+qBnyqS8+hTdjjJGAqUmkpx3bCralF3gkVITBtx1E11kKHy7aciv5EmwFVnPoC0cOcE2s8H9QAAA"
+ },
+ "https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/5.jpg": {
+  "w": 2500,
+  "h": 3509,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JQAAFKmVN4wqMAADf86tRASRI2NRwzTBdYekGczj/qqnr8bv4MttoXEfBO5tAYghnidYmx4GpH/68FTBsQAAA"
+ },
+ "https://images.sourcelibrary.org/archived/699fcd429ff0f1d2c4517fff/3.jpg": {
+  "w": 4553,
+  "h": 7364,
+  "blur": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAABQBACdASoQABoAPu1iqU2ppaOiMAgBMB2JaQAD5YoOEO7j2fnJM487LtIgAP6qFd6vvaHHHr+5Gi1Q19Y7w6RrRstFeCX1zE7p3jaRQAOrBziNsSrspJOG433vIvihm+IXITbWmrSWKj8eP7lF8OZFvlwpQqpqsrPIqKNQr4AmPXb2Dk/j9gO1fn+h9dNGlenJffh9OTZAMQvuAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/248.jpg": {
+  "w": 2254,
+  "h": 3335,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADQAwCdASoQABgAPu1iqU2ppaQiMAgBMB2JQBOgBFcxvCiFhdAVed4A/IjYukxvrF/+ASgno6Dpt2N1PQkO+YkoBuhz6St7xc5BxZTbxiITM7fkq66wTzboU/PF+PQnHbszjrVomhYBTF7EAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg": {
+  "w": 2028,
+  "h": 3341,
+  "blur": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAABwBACdASoQABoAPu1iqU2ppaOiMAgBMB2JQBWAMX1b7bIl+L2wxwFN2ZmoAAD+w1JkX/Ey4dY+2AQJxiHvKV9DW7Yz03Rfi7do6hnjmalKgAGUGY6tetE/2TtX/Episz7fcT8Jg7YB/+G4abuS26Df2obMfaaAPw0PFTSa9gouKgDFHdyWm+cEkMJiYT6AAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg": {
+  "w": 1983,
+  "h": 3353,
+  "blur": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAADwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdAYv+3yPFAEf3o58AAP7DE5aeGhY4Ya4stpaa6YC6xKqnwCbDTU0wdMbD6PcFXx6yA+N5ijCfCYPq/Y7zH9LrcnW4oc1v52wDdcJ/X+iJY7/4R43LfmgH/xn8cgCu2+bbKB7o24mJE7o6IytTEvT3/2ICLzUOZ5PG3Vi/my+YAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/10.jpg": {
+  "w": 1884,
+  "h": 3079,
+  "blur": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAABQBACdASoQABoAPu1iqU2ppaOiMAgBMB2JaQAOcAPWKw7CJzF8tkmFvA0AAP7KO6K57iHSR2H+m0qpVsUhe7EkO2wOr8Cm0LLp9BqXjTse86307TFPCd7pvpBZ0MB1zWn4tIT0FKaZ7CES8OnicLMnYksi211LPNkn9b44SvQ1MgAA"
+ },
+ "https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/14.jpg": {
+  "w": 3079,
+  "h": 1884,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQAgCdASoQAAoAA4BaJaQAD4SQb3ws8MkAAP7oorboThao7VIwcUSJRPHf7pYGOtw39/69dLAuCAR5+r5sbH+l8RcvfcEfGfb/6Y3IrHWzBeiBttYgwwr2uV8HcMu5bFx44AAA"
+ },
+ "https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/37.jpg": {
+  "w": 3083,
+  "h": 1872,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoQAAoAA4BaJaQAAuaVZbkAAP7q8++/95wHyVQFoYAEPhKkPkRbOvddGHK9iHIPdFvYAH7sMdjdC5hNdPABG4AAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg": {
+  "w": 3083,
+  "h": 1840,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAoAA4BaJaQAApzBSMZQAAD+W/GJwaNN0SDIV1XmNb6lwmsBpSlWs1evyP7cQ9V46LeOGTkEE5ieAAA="
+ },
+ "https://images.sourcelibrary.org/archived/699fcdd19ff0f1d2c45182ec/1.jpg": {
+  "w": 3096,
+  "h": 4357,
+  "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAwAwCdASoQABYAPu1iqU2zpaOiMAgCcB2JZwDImCz8yh4AAP7wja6ouBDhPjmCA2TZ4AAA"
+ },
+ "https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/22.jpg": {
+  "w": 3000,
+  "h": 2167,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwAA4BaJZQAAveYFEXgAAD+4oV3YXGX8Bc3anpkVDwi3YNt9gZiTOuxC3XLWAvm73sBwAA="
+ },
+ "https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/40.jpg": {
+  "w": 3000,
+  "h": 2170,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJZQAAmiTcQnYHAAA/uu3ASuCFCB5heOsRpgqkGUS2Rn/aeEQB0SmXz0cxf3FOXgAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69a97a1bf3f3d2fb7de26ca4/226.jpg": {
+  "w": 1714,
+  "h": 2940,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAQAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JZWfkS0eVBAAA/u2zQWnBPhACrR+O/3l9qZgoqfqg84qrgAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ad747b059a2da73405f323/199.jpg": {
+  "w": 1996,
+  "h": 3417,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdACHwztkvB9wXcTwAAP7fVW2OdjCaSVaI3JAOOA2T1ZiFZ8kVu6TYY/0QAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ae67594b74f168e0c15d24/173.jpg": {
+  "w": 1608,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoQABkAPu1iqk2ppaQiMAgBMB2JYwCdMoADSvS7g7OqaR/OAAD+1eTieMXIuWXbo9o8Dkz80l4NgW/fLzKAP+TMxF2voDKkkcQx1EXMAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ae67594b74f168e0c15d24/227.jpg": {
+  "w": 1623,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoQABkAPu1iqk4ppaQiMAgBMB2JQBOmUABdgg8TUubMjqkAAP7Th0KYvjs2dvkezFY96tPCSVObuGA4T3hdQGH/dfURVl/2CJXQIWd8AAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ae67594b74f168e0c15d24/233.jpg": {
+  "w": 1605,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoQABkAPu1kqk4ppaQiMAgBMB2JQBOmUABo78BpBAlpsBEwAAD+k9OwiGk2bh5YIjv7Kbc37whrwlRyAxXGW6UPPVlBrGgPBtYc3H6wgMvMtyysAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ae67594b74f168e0c15d24/390.jpg": {
+  "w": 1638,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAwCdASoQABgAPu1iqk4ppaQiMAgBMB2JQBOmUABfiEi/b0fiZ7NAAP7qhoI4QiKFeV7ln6CYde0eCrKei1QWZkviAsDOLo2ktQWUZ8Fi+QAA"
+ },
+ "https://images.sourcelibrary.org/archived/69aebe60c0472fef6455a8f2/10.jpg": {
+  "w": 5729,
+  "h": 9004,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoQABkAPu1kqU2ppaQiMAgBMB2JaQAAW+oKp7aMzbUgAPlwqxXVrkLy4uT7tDgGDkZENfh3WPBuipd7gh5YJij9KMxjmGOJsRf4doLOJPECwwAA"
+ },
+ "https://images.sourcelibrary.org/archived/69aebe60c0472fef6455a8f3/206.jpg": {
+  "w": 2697,
+  "h": 3890,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAwBACdASoQABcAPu1iqk2ppaQiMAgBMB2JQBOl65A6NC9lv0IFL0KjowAA/t4hTCAeaYQWv3Phb1l6V3rWAUBeiEFlm1YPmI78Szlhu1mc5iq5qHj8ygVOiZUc4T0gngUBwXmAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69af0dab9f13b61d0a6c6105/309.jpg": {
+  "w": 2145,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAW4MiDrkwh86gAP7t4LlPs+QFh+MZIhDrx9b76/xWht5PFAgiufJlYjxAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69af5923522dc3dfdf725739/265.jpg": {
+  "w": 2073,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAABwAwCdASoQABcAPu1mqk2ppaQiMAgBMB2JaQAAW+qmUI2ULgAA/vNrwobXVtgT9UCQJ24ewgMcgAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/23.jpg": {
+  "w": 4959,
+  "h": 6601,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoQABUAPu1mq04ppaQiMAgBMB2JQBOgBDvmpT0Ub9rL+wAA/mAqsBpOcgQx+QKdEKLjyQdxGGfsIS3lf7wBZ5fM2d4RenuWfv6ityCDN3vsC5v5U2D7/fwEtAAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/33.jpg": {
+  "w": 4959,
+  "h": 6601,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoQABUAPu1mqk2ppaQiMAgBMB2JQBOgBDvd0Cg8FMi5gAD+YCqwGrzaGHM2TfzJKdEykQvPoPizXrdD+n4YrE6P+kFGO7Ew2BvGogdzgrAa9+sJyx6Ii6MdPXwAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/409.jpg": {
+  "w": 3702,
+  "h": 5065,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAgCdASoQABYAA4BaJZQC7AENBw6e2Uc/g/kJQAD+Zt+qrjYMXQLpXpVPA3sqCYNrAacOe/6AqH8Afc9ezUVzD5Hiob4NS9uXuaUkAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/493.jpg": {
+  "w": 3693,
+  "h": 5045,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQBACdASoQABYAPu1orU2ppqSiMAgBMB2JZwC7ACHpp99KG7bGX2+4AAD9/T448LSrhHb9llVC+YWmNZ2koSjgK/WuXJhnM9/3+u7z5uT1tgxdYQDF6Gp4soUMAEEZ0hhAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/500.jpg": {
+  "w": 3782,
+  "h": 5071,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoQABUAPu1yrU+pp6QiMAgBMB2JZQCdACHfZ4jUjqkfgADOPdBy8lVAQgnVGPBF/NkVnbUPmOOz9Ypa6U/vFl8U9coyIR0GVVAqN7bCv4QZNtAA"
+ },
+ "https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7/746.jpg": {
+  "w": 3853,
+  "h": 5102,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAgCdASoQABUAA4BaJZQCdAEO/+jxk4K1kAAA9r7TDeH5Bbq3oEceowV0O0D6ExdPtUtmBg3RDMGz2Wn997ZvO2XQYFkDstwAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b51e19261c58d63664f8d4/367.jpg": {
+  "w": 2133,
+  "h": 3525,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoQABoAPu1kqU2ppaOiMAgBMB2JYwC06CHBTG+JUu1zwAD8ZycjuucEiwtqUq0M37a1yrW3N3uvaiiit6YgucBdK7HdIqqKsYoYzs9prX4yPAoqW5AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b51e639a81ef7feb3d4592/145.jpg": {
+  "w": 1069,
+  "h": 1832,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABsAPu1kqk4ppaQiMAgBMB2JYwCdACHqUdgLA24g6eG4AP4mIHmQkIUGCr9xf2NNpEPoUUUPUjC3ImdAQYhA8Jxvsc9HZDiBb1E6lvKZ6ih8OIYAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b525c46be6046083031e1b/90.jpg": {
+  "w": 1320,
+  "h": 2122,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoQABoAPu1krU6ppaSiMAgBMB2JZQC7ACHHdYoQWk2XarAA/lsEWhdXN7zW/x9bFsIcMhZ2MG8Df+GW9NuGxzc7jOaYzNSpbZJUPwBA+HrJTRf0l3hLLYeAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69b632c766ab51b501d93dfd/328.jpg": {
+  "w": 1798,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABsAPu1iqk4ppaQiMAgBMB2JZQCdACHf1StCyPSHgAD+a/9CJchIDSRVLxErTQibJqNH1CspdtGcM9oKXu5K8DHpxAxOx7MhSPRr3cwAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69b6b0fa96dc15d4a16cfb67/438.jpg": {
+  "w": 2776,
+  "h": 3460,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JYwC06CHevAPCRn3TOB8AAP6yOJUpnFwh2foqNcucErjSC35M5Udz0pEACpxpy0iEF+Wen1W+jvWrfpGLLKf1ZJQDq9kCvK4+ZEgAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69b6c2618566c838146599f0/245.jpg": {
+  "w": 1822,
+  "h": 2438,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACQAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JYwCdACHfv/TEmXNAAP5msGTIy6uHwSOZDpXrbYhYHY99+7pKNqe4HDd5pO+WBE7KGV5/o6LWjC5AAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/24.jpg": {
+  "w": 2016,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoQABgAPu1kqk4ppaQiMAgBMB2JYgCdMoADUiR3liAMGPNAAP3tZjd08CZMkhxJiIEfqbRgQsr5AqFhBWqmie13+791B/fRM1P88rMgNYAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/248.jpg": {
+  "w": 2016,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JQBOmUABTv7mKmQYAAP61NC0iqkQyAK5GhQFjDcksPnk1JSF3ZxK7jL3GBCzI0d2P+iM5Jv/QAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69dea2514d19ec2e9ba762be/12.jpg": {
+  "w": 914,
+  "h": 1482,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JaWM+ADcsOHjwAP7wfN910JHmvlziiPtjX2HlzZgAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/26.jpg": {
+  "w": 3104,
+  "h": 6664,
+  "blur": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADQBACdASoQACIAPt1apE2opSOiNUgBEBuJYwC2yat2OjTLHbBX0107Fa10EP31gAD+mLioIF+WfmWWi0aMw/5eSg+QW7bqJm+1SVMSmIw0KOVxogk8bLzvVTwD2Hh2pZS6p9jOzlyoj/IDLkwqjNACeLHztomKAXyJHOs0n7j4zvXLtM6rD9lh5NVF06AxIUgt951k56AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg": {
+  "w": 3064,
+  "h": 6640,
+  "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAABwBACdASoQACMAPt1apE2opSOiNUgBEBuJZQDImCa/bfZfgaUwbSjQ3fbD/AD+3xzeXIy8jQSKcVj3YBOSVHOFosG5dBzxxypc54GVrSIe0aKG6dvDPUAXp0+1n1Po2K4NLoZj/ibN61XcGTTe+KgSV/vwzgIuqLXTrtclu9rNokkAfWeDCAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69dfdec78e5ccd1c891f0cd4/10.jpg": {
+  "w": 6200,
+  "h": 6096,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAQCdASoQABAAA4BaJQBOgBsbZcoAAP6vjkHUkEPlxR0LMDKAbazgrpa1SYl9OIl0ONSogP94wmknMoon4AAA"
+ },
+ "https://images.sourcelibrary.org/archived/69e7928980b52390feb16323/11.jpg": {
+  "w": 1536,
+  "h": 1024,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAsAA4BaJZwAApzpyy96zgAA/kEUiPh2OLIs14QgK9Gd0NJeR3ciRmBKQ6Smo5sku3Bi13ZIAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69e7abd05f1a22ab19a9e929/3.jpg": {
+  "w": 3888,
+  "h": 2592,
+  "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoQAAsAA4BaJYwC7AEO/f82AAD+0NuLJZ/sX7jJjWQcopBNPWcldJBEolF+8S0jWAA="
+ },
+ "https://images.sourcelibrary.org/archived/69e80681fdad300064d9f7a0/109.jpg": {
+  "w": 1929,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JZACdOUAA42tyrY1hb8AAAP5M/+CoAyVVqHyrdwWbhv3m2l2mSkLjZruUuKKlK6w7riPDAfnuLO9l1bNDIvHXfAAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69e8b1842ff2a8dc09e76141/154.jpg": {
+  "w": 1710,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABwAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JYwCo9Cz+YdV4LAAA/urDuqvovaDIsjCaSWBSoxzgb5oxiLmWM4iKgAA="
+ },
+ "https://images.sourcelibrary.org/archived/69e8b28a2ff2a8dc09e77ff4/2.jpg": {
+  "w": 3000,
+  "h": 2316,
+  "blur": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAABwAQCdASoQAAwAA4BaJaVefAGIAAD+9HT7m7JdKqhS45iNQAXss/XJ6EWKGQB/AAAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69e961ab2beefe2f6f72c3b6/460.jpg": {
+  "w": 1905,
+  "h": 2936,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAwBACdASoQABkAPu1kqU2ppaQiMAgBMB2JQBOmUABp3Dx0svz1VSfWLwAA/rB62NKl2gWJOul/3FXZCZYYY4SVXc5Pq6QOdD1gpRxxQo0gk4AB+nJ1I1M/XpFyYQzb2LSxEkpaKI5hgAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69ea06f14c15c76fe934a77a/41.jpg": {
+  "w": 1888,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABwAwCdASoQABkAPu1iqk2ppaQiMAgBMB2JaQAAW+mDvcUa3qAA/vBAlQ33Q2txJU2Nwv5uND6LXKc+sUEoOp8J9g0AAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69ea0f7013a685002bb8e200/203.jpg": {
+  "w": 2845,
+  "h": 4275,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JQBYdhEEQSBOpbbI+FYAA/lv2zgZBO4Y0SgeL+RaMZ65SKU2GEwTmoeyTzgRVB2tlNnn+qYj5XD9vH/U6WgZYKm9lVZP3MuqMe384OCxYAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69ea0f7e13a685002bb8e4d8/244.jpg": {
+  "w": 3403,
+  "h": 4796,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JYgCdACHgJ/q2YQKloEAA/ubQtY9Z4ygQJRt9YjYUTAyfpdY9j6Jxf6Z2oNgtn8Wzhht2MaQnRONoX872aadgXyyDv2Xt1Qv5iNBWAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ee470e6dd925d126f413f3/165.jpg": {
+  "w": 1857,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoQABoAPu1kqU2ppaQiMAgBMB2JaQAAW+wk3VzTuxOcAAD2v1Y8QWQHdtxTuxgTC9EmOVqmNj8gsqhHNSthki+VEN4n/1FCUojV4rqpgN/9Zl/C6VHANDLLaIYmZwAA"
+ },
+ "https://images.sourcelibrary.org/archived/69ee93b9f2c6312502f6a526/252.jpg": {
+  "w": 2472,
+  "h": 4318,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JY2bvRgATmgAA/uzzqXn8UU9V6/wTHa6uUU4GAz/j8szPRvHz5aPVxIfloOlmAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg": {
+  "w": 2782,
+  "h": 3955,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JQBOgBDjTlkkD9BhlmgAA/IyhstrcYTnB3HnaQ9igsXIWKEoh1GiRzNwWQNTyHh69oYL5vpXOnbTtVFlYfcldm3iF0+lU6Yg4mSg9h4JxkQRkgZZw4fbMPEAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/327.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JY2DrRgATise/WE67vQAA/uwZiDoCcaJSmUylSmJTxC/2ywmO1430B1Hh6hjz1hx35atNsA4Gw0S0jjZd87j4dyYq9CU3AXAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/329.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JY1efRgATkS/Gix+/IAD+7BmIOeyJyrweXY/mKviWkxOZu9l3vg15UnIgubumo35WQTpivVLe9RYcUqa59DIA"
+ },
+ "https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/331.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdAB7HmFag1JlY6o/jPAAA/t7sPknYkYVmn2MqjwHdbxhovQHpa2yZad7GkTNm9CZNR+Crtp7q3xwpbpz+jl3AAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/439.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACQAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdACz+sytGJQoAAP7ssIFdg30SPKxm1Gx5FZC2O0iC0LPpaSYjPvB7HKJMG7xsg2QTxeMlWsAA"
+ },
+ "https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/441.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdACKSKHtyvCjsJ5QAAP7emS0GPDzvxkHN/2YMFcn6OfYNlSduzUB+e1bLVPbJh19bU2c2mDjOAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/171.jpg": {
+  "w": 3260,
+  "h": 4352,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOgBD1pvgyiSW64wAD+WwRAkTkeY8Xz6kL3LRSG8smQ57/yD4FnQrknZSBnPIpRN+ngwxGNHV4w5AAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/184.jpg": {
+  "w": 3304,
+  "h": 4344,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACQAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JQBdgA3MYu1z9mWaAAP6W59lLMXPL5hw1yvYuLxeMZyDFwyGHYVXsZfjaLdyRoYevPZrtVvQMuTibOIAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/196.jpg": {
+  "w": 3304,
+  "h": 4344,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoQABUAPu1kqU2ppaQiMAgBMB2JQBdgBDwEsBrrSi3IAP61Qujb+A7SjUZGnsXDIYdhVexj0jmz4yeqP+jrgVvfd0BgsawAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/198.jpg": {
+  "w": 3304,
+  "h": 4344,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JQBdgBFFQZaZhb50HBYAA/pbnzmQ77B1V1m8oPMxcMhh2FXdJBggtOBBDrTziVY2Z4Tg5mgEhTnDAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/214.jpg": {
+  "w": 3304,
+  "h": 4344,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoQABUAPu1kqU4ppaOiMAgBMB2JQBWAA3M6XcMKbWU9DgAA/rVC6tsvm71d4HRdzG6GGrBTfpM/lSGeEvhSz0vNE+SZ1pj21wpeTG+oAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6a09ff94fa20006dbaba9ecb/160.jpg": {
+  "w": 1925,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAwCdASoQABkAPu1kqU4ppaOiMAgBMB2JaQAAW+0lyiAcqns4AAD+835VabBnwy+fHviXW/S4kPSenuhZy6gAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6a09ff94fa20006dbaba9ecb/190.jpg": {
+  "w": 1914,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABkAPu1oqk6ppiQiMAgBMB2JaQAAW52zIocuYr+G5AAA/vN+WV3xhJ5Qh77M4IFm02DD974RR3g/L04gAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6a10090bf717292950967757/182.jpg": {
+  "w": 800,
+  "h": 1325,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBACdASoQABoAPu1iqk2ppaQiMAgBMB2JYwCdOUAA4920/rdasGXggAD+mq/HYAst4GPN0dLyzjANmcvmAealtNf2aNRtRvQ1Xh3gxaCln3M1VpHMjm1pegl7aiIpZrKrOZowyFONriC/ZS9qT1XhY7YoAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6a267ec86c1f37c9c4f3cbed/4.jpg": {
+  "w": 1807,
+  "h": 2208,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JYwC7AB8xL82HjPNOgADh2jZIDTdFFlGIek/wIpRGGhiEFgs9qF5eK7cQhC7Ttcjz+AAA"
+ },
+ "https://images.sourcelibrary.org/archived/6a3c6cd301fe4f593c1b5581/24.jpg": {
+  "w": 1267,
+  "h": 2000,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAACwAwCdASoQABkAPu1iqk2ppaQiMAgBMB2JaQAAW+q2umSwtFwWAAD+8Ek1HeHwIs7cU7hAafIyWOFbKVSajdOzgTu+SkfMCTeFOA+/B7+PpXZMKbb4XqVThg6QfTJeeKfAOBaRTzqxLnOPcZTmWVP+psl0B4AAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6a3ceccb4701a906f10db3cb/118.jpg": {
+  "w": 780,
+  "h": 1049,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAW+jI5tnrB/7WgAD+8ECeYKn19hGJus2tXBzKE8VVZHH2e6OnTgOAGqZeEyVTPE8MxUp8+UdAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6a3cee074701a906f10e588a/21.jpg": {
+  "w": 653,
+  "h": 924,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JaQAAW+wlkNRqOPmAAP7V5/z3pmqC4PLrnp8/8DUqc1tAOanCm0jhaVzD1xGfywUuNdL0zspobC5NmqFGQY7MGl+R+OYNV/6kZ4+L963WKcIfpTa8eH7CpFQ6AAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6a4a3ea3f0f4a3b75e90cdbc/78.jpg": {
+  "w": 1761,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JZQCdACHhzPSyzVkSkAAA/u/wx+EaQvwCpe+CEQcAlYucna6zxm1kQYACbIT0mgm9NKPwayYD+GhYqjvX9ApmaQ1QMxuHLBwsCLgA"
+ },
+ "https://images.sourcelibrary.org/archived/6a878ac1d71f2514794f9e40/11.jpg": {
+  "w": 2606,
+  "h": 1933,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwAA4BaJQBOgB3CBDSIAAD9372+fyg3+7b+3MUida5AOoSftoJed0xcJy37B+AAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6a9058b07f6818cc17cd5a93/17.jpg": {
+  "w": 1070,
+  "h": 1764,
+  "blur": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAAAQBACdASoQABoAPu1kq04ppaQiMAgBMB2JYwCsAB9TUOTKzJCEiBNMAAD6/aeX4jBM6WjZGzs7yZwNIcLHxN2XrAiOaY44ckPfwPWROad+ucB93ZrO4ionfvapzjvcrLATHbYJ85Cv55vNdchgPIAA"
+ },
+ "https://images.sourcelibrary.org/archived/6a9058b07f6818cc17cd5a93/4.jpg": {
+  "w": 1086,
+  "h": 1795,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACQAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JQBOgAm0FZ4ALp/jgAPboc30oH6qQhnLhtUnuPJtjG4GttIj4uMJj+qqyHRIZWGsxPDFxSneJlWajq9XokoVgogAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6ab5a4019e89e2a1f4139282/171.jpg": {
+  "w": 4309,
+  "h": 5780,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADQAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JaQAAW6YMMeBYhfP/QSAAy0+i4YqVju2ygORJxyxZa7DF3KfrTGDqq41XeB+BgI2jnyNpHa+bXMLJYaLThzj6MyoxC0vzT8kKewXIHu11T//5ccAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/122.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABwAPu1iqU2ppaQiMAgBMB2JZV/2TKAU/bcrlCOAAAD+5NvnKGrZWVUMpnapr9pBtC+qKyZa2AQkaNQAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/235.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZQAAUZNWAnpAAPcepNMdVkT1Kn0HlhXyR2eWokaq2kCLJ7MVlbgA"
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/70.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoQABwAPu1iqU2ppaQiMAgBMB2JZWVuTKAU/oMv9SgAAP7k3LqHLGiC4xxX5MWFOpHo4p2Z9+eSvVZM5gFwAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/79.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAwAwCdASoQABwAPu1iqk2ppaQiMAgBMB2JZQAAeOJ6XrwAAP66PV/MvyjAFn279olcjik6EPWQsC9obWYavblQAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/80.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZQCo9Cz+1Pq3UAAA/uPPBHgluZNl+Iu98PpJ2pgK6sSc4CWzbUc4sQ4/coL64AAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6abfbf413c453a90d66637dc/82.jpg": {
+  "w": 2609,
+  "h": 4604,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAAAQAwCdASoQABwAPu1iqU2ppaOiMAgBMB2JZWi2TsyVGYAA/udcGjv9kFaWzUi9CEOlBTm3Xl2DZUAA"
+ },
+ "https://images.sourcelibrary.org/archived/6ac2798f02c7f994f8506b1e/68.jpg": {
+  "w": 864,
+  "h": 1760,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACQAwCdASoQACEAPu1cqE2ppKOiNVgIATAdiWkAAFADUWY8XKcAAP7vRsjPG5KKdlhOy8oBEHLZUWTJxIgydqbzXOekcUA1RGykAIWzX50gRwj+6yXCI3GGAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6ac3ade2864e04424c043050/69.jpg": {
+  "w": 5525,
+  "h": 7456,
+  "blur": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAABQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAD5YmV0ZOCMfS4p5mYfGpYAP5s4ROr1y4tSfq15G99W773skWBz8gTopJHhmzEef5WqB+kOTM1SozLJj2q7bqFQz0qj7VlOC83D7VIqhEfCMIL7ROQ9+tmAdZnyHPbentWvPIrdzn6s5O1iPjIj/2u1LF3yAns932fdDzSwRcO5BPhkPbAvpx0FhsceCKOHBzfqcCjfo46FQwQAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6ac3af023b2f03f7e59cba4e/101.jpg": {
+  "w": 3152,
+  "h": 4295,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAwCdASoQABYAPu1iqk2ppaQiMAgBMB2JYgCdMoADRiwieE+Og/X4APqfkN8+e4XXOGOpv0fT053yK5DgnLwpqM8i/y43VRN9ZyJ/mr/Ee8MGpdT6VhBG5+ff3RnWsRIUngpd1pcAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/132.jpg": {
+  "w": 2943,
+  "h": 4296,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACQAwCdASoQABcAPu1iqk2ppaQiMAgBMB2JZACw7CHe1aTGMXdAAP5mpAKqgMzBkEk1YLlq84BH8szhXsqoodYRKnRcEx6b3ufMQVopASHK67PeSKEOlImNvqpLeMSQAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/417.jpg": {
+  "w": 2868,
+  "h": 4318,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JZACdACG636djK6SO1uWAAPyPsO3RDrMraK91IIJInDsFOWZw1429j24uev85UVl+UPPZ+CjH+pCo9sjqaGYRGSkAr6Gs8PejJAAA"
+ },
+ "https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg": {
+  "w": 2868,
+  "h": 4318,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwBACdASoQABgAPu1iqU2ppaOiMAgBMB2JZACdMoADUCdqGWi5osFXSAAA997sbp4TPDxJh2Yy1vQi/OFPntfLGHShIJeDYcl1POgJzKddEuF/X8A6dwaum5WJ5P/YZarN60AA0NAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3dd5230e9a56175cd709/25.jpg": {
+  "w": 2596,
+  "h": 4016,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoQABkAPu1kqU2ppaQiMAgBMB2JZQCdAB5TDux4FU7gAPx1b7RrS9GIra+91DJ5z7AxpP9OCdDf4kH0wAA="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3dfa230e9a56175cdd32/400.jpg": {
+  "w": 5266,
+  "h": 6719,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JaQAAXK+6dvhED+49sAAA/vN+e+JO/u2Ilexp36tDTBWrArGy5ZVW76QHyioGykPsQOKVfjAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6acc3dfa230e9a56175cdd32/416.jpg": {
+  "w": 5266,
+  "h": 6719,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoQABQAPu1iqk4ppaQiMAgBMB2JaQAAW4jZoFgAjlQAAP7wQJDeGVKayNVHG9vtUnJerlrRhR5x7LCl+YobgX5TGjfgAA=="
+ },
+ "https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/16.jpg": {
+  "w": 3565,
+  "h": 4702,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JQBOgBDxAP99t6cFjxbPIKAD+xgbFm7sISBZGCN7osNTn4+vjHftEojFFAPilqSpiOR9xJWoJxX+WTIJNsAzPls6E0QiQqj0Pj0W2/gAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/11.jpg": {
+  "w": 1339,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACQAwCdASoQAB4APu1iqk2ppaQiMAgBMB2JaQAAXAYoYACyuDSAAP7yLXnblbLAf88Cn59H6lhSYgjCONXkJEjuiNowHCO2Xmp/pFmjH/H6biRau08PlyPEclfPqQWfBeAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/65.jpg": {
+  "w": 1338,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoQAB4APu1kqU2ppaQiMAgBMB2JaQAAW+sgaO7ya7PoAAD+8EDU3hPsGYIJjdwtDz0ct7AtI/CO2cmu9B27Vpw/VldNk/s+bG25HORHCQbbEkVsjM0WDk17I8h/hZoAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/66.jpg": {
+  "w": 1332,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAwCdASoQAB4APu1kq04ppaQiMAgBMB2JaQAAXFsuIeZXF55f7AAA/vA857BcdwV5BQqduGsyyBpfAM2LHqcZY+D+iTo3RZMNyWMgmV5E9BLsfTQzOaPAjwGZXwAA"
+ },
+ "https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/67.jpg": {
+  "w": 1332,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoQAB4APu1mqk4ppaOiMAgBMB2JaQAAXiFo63t2CFHR74AA/u3ZPQW8xJK71ThCrQc3IVzE8P14QbGGbz0yyXuNJuH3bhcNtcxbPjLBnmh7FTf/70JJD/6PowAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/2.jpg": {
+  "w": 2687,
+  "h": 4480,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABQAwCdASoQABsAPu1iqk4ppaQiMAgBMB2JQBOgAdLYrVBpAAD8UdHrooEcJQLV53rIAVehiWIxQ8Fk7+wHNW4IF+TwtmwdVN15xHC6Vqjj9ly5hgAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/366.jpg": {
+  "w": 2612,
+  "h": 4480,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoQABsAPu1iqU2ppaQiMAgBMB2JTDwIwsQ/cAN+UUHWwYMgAAD+53HOEK/2x2ZhhBviUKdR5dDEgy78KouiQpnm2WOnbDBB3Fy3Rz75wlkAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/5.jpg": {
+  "w": 2744,
+  "h": 4457,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwBACdASoQABoAPu1iqU2ppaOiMAgBMB2JQBOmUABsB3h6o1aYjKx6FIAA/lh0iUZ+xOOV+Hg0CtLlztPBpr4wtuhEkvAPRE071ItBXKBu7M8Icjhyd1Wb4LLwnAoMqnWyefKdV9l3bko/71AlITe4cX/VEAAA"
+ },
+ "https://images.sourcelibrary.org/artwork/art-azoth-the-alchemical-mandala.jpg": {
+  "w": 548,
+  "h": 850,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADQAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JYwCdB3gAi5SN1iPOvqAA/sTMatgYAAg7bCCHRN1Kej9RsYhD8rnHEYQggwZK2J2NX2l8gg+LNecZ1SOvK7KirRoTvPWFRhWMExFvfTCVmywxpYp/p0JCmm+i//fiNhpitXf4QAA="
+ },
+ "https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg": {
+  "w": 1600,
+  "h": 1175,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABQAgCdASoQAAwAA4BaJZACdAYr7J5QE5To58AA8Dw9bJgv6YIvBmop8s09VmH1v6AW1sXKL8zn4D0M/p7bo9rgv+y+2MZ+fX6WIQZmdVjdzwAchZePKAxZdDrbmwwnJMcwKsAA"
+ },
+ "https://images.sourcelibrary.org/artwork/art-kircher-tree-of-life.jpg": {
+  "w": 1128,
+  "h": 1668,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoQABgAPu1iqU2ppaOiMAgBMB2JaQAD5XH3TWeW6YKMl+72ALAA/vOB2GGXuqGlNRxpmgmMsm/nDTLDhcd6Zse48K4u6TACXaAf6/A66JytSRT5pLibz2R269r527zuLn/Aon4L49uOgxsHrI6dYuLXKK/WdQoAAAA="
+ },
+ "https://images.sourcelibrary.org/artwork/art-kircher-windharfe.jpg": {
+  "w": 800,
+  "h": 504,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAoAA4BaJYwCdAChMrwskgAA/l9nm62Lz2k9fRbu36/9aVaqQXr7qSuBsJEOIml4i654L9EShrHxd3DtVc+EMZ6PQAAA"
+ },
+ "https://images.sourcelibrary.org/artwork/art-lute-in-life-scenes-of-buddha-2nd-century-ce-amravati.jpg": {
+  "w": 1520,
+  "h": 1024,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwAgCdASoQAAsAA4BaJYwCdAYrxnIJjhN4AAD13GsJSynl4hml8TIiy6dTWpLtm6pRtQtUG2jnKCmiRQOLn4fuV0CU9XnusUW0T+nwQYRCI+osY6lnW5P0uuwfgAAA"
+ },
+ "https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg": {
+  "w": 2000,
+  "h": 1403,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAsAA4BaJQBOgMXr4HQR6WkAAP3bBi/SrXVJrCK2mw9BuQcvWU0ytJmIt3Rz/pXq7JNaZczRbKqvrJyU5V1lW9AeN6z6PF0+LCkYZ++GYAAA"
+ },
+ "https://images.sourcelibrary.org/artwork/nga-israhel-van-meckenem-ornament-with-the-tree-of-jesse.jpg": {
+  "w": 2000,
+  "h": 903,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAcAA4BaJQBOgBbHlas4gAD8n+IIo58TPuwGttFdlm2I0jDRnJZAAAA="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg": {
+  "w": 623,
+  "h": 971,
+  "blur": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JYwCdAB4DN2Qy8PYtelZgAP70J0wH1AM0TXYlvgo3EkvlPOlaISd+E71u9eC/lmZynyMdbnlmRbtQRybonDO9HjapnORznUUxOvDaBLkullEOQ/19ZmAvMjg199njE1iSMQAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P213189-w8UjEixlGUhd3n1Ko2sTlXgFQzDFkl.jpg": {
+  "w": 2168,
+  "h": 4512,
+  "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAADwBACdASoQACEAPulgp02pJaOiNVgIASAdCWQAnTlBUoArKTaD4H1klsbPG8hxKaAA/o0eBXLF0UQwxGBjSAy5B0l1oxII+FhnjNBj6XJCZwlUGLrhRnR/TBM5TQkBikTidM93akJ5tiCnEFUIw4F2ZkBLwDsrWjgd5GA99FI/EHp6GNIQgAAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P213189_d-MshZ02KE9TpgRclT4CiGWdAPqSHCQM.jpg": {
+  "w": 3647,
+  "h": 8166,
+  "blur": "data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAABQBACdASoQACQAPt1apE2opSOiNUgBEBuJaQAD5pKmFBwlNiThCcpi4AHAAP7008evvxi0hvntWJteynf66bfcmR2oURGj1CI4BhwLMvMI/B2Fh9LSnUPCIXmMouvrN4QU5n04SkptEub495MeKgBNuHhNdytaeFF0OoW9m8x7jiBbLvUOEAZeXEyCkh5yp9ufbzP0qw0ckvm9Eiu5SQbSF+f6Ta9PiSBAKH7FvldSt/BPSEwm6X05EIAAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P250675_raw.jpg": {
+  "w": 935,
+  "h": 1465,
+  "blur": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAABQBACdASoQABkAPu1iqU2ppaOiMAgBMB2JZgCsMoKP+JsAWnutsixeGsrIAP70MJc6R6xDww05Lfdrp8uYnnmofOGe8yNF71F/aKfGtFpCcxf7kHjF7UYGgpSNYXG0UsRcH3rrz6c+vBpbEJkrrG7M04vrq48K5yj0YHbMdOAhsjq8/bywa6UdjW9PWvZIFqzLAxocLCXx7zoAAAA="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P394421-zaEjwIliiQ1tieTAKP05Cve64ZgMak.jpg": {
+  "w": 2246,
+  "h": 4697,
+  "blur": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAABQBACdASoQACEAPu1orFCppaQiqqgBMB2JYwCsAdwLf/RuaI5DC6sDY/CAAP7m6AEltvJZq6mfy9qNz7Y2fbiOsz58cskoGQLcuLIPtXsXB6stvK+F6I5xGx9rj6HzKlZAbRdHJbOgMPdweq5ugigPeUAUZgKD5g1JyPDUSk/hSZw/Pi2828dYwf1DAOR+vUce257hgf9KX6Jsjr27Br+JqDegjRazgx2DzHjvH9+Fe+BkUpGfgAAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg": {
+  "w": 1117,
+  "h": 2158,
+  "blur": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACwBACdASoQAB8APu1iqU2ppaQiMAgBMB2JaQAIEDibr7jtpZWkZGkI+4Ewg14AAP7xorXOOrOtREifeLmKELVutfkYmXyXc+90isQPb9qcoJhP52c/VmCwKggMk6XMNuRHDlfMdnuQ3aVcZILLrLpEDwth5ladk861uCHpKTjgdpC3olYeDct8wWnVctOOWKbIAMhRoWbsEOB3QjDy7uWWty8gKg3zS6cTEhhrfgBE2AAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_clahe.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoQAA8AA4BaJaQAAvo2eQAA/bSM1lBlvCb3zlu2jWIM2AAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_combined.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAA8AA4BaJaQAAvkWICAAAP2yjizp2F/1YEfAmu48AAAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_full.jpg": {
+  "w": 1039,
+  "h": 1487,
+  "blur": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAABQBACdASoQABcAPu1iqU2ppaOiMAgBMB2JYwCdACPPyzLtm3mgK3j7ZnMAAP70JiWcuzInoGWmbmLQ/C6SwLXgI/UINsYCoZAhaOO2hWoHF26inwStZ+b2xMW71qTXqaG6W3p3Q2fzNunf/NtTjR2EW54IrvkKPJiG3MAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_graynorm.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAA8AA4BaJaQAAurgaAFmAAD+9MQoM/Iwee1u+iCmcQpQU2G7FXdEyPLbQ5t6i/ygFYCYWLyAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_invert.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAA8AA4BaJQBOgCHh4Y3ffNTAAP70DILYNHIVVUYHTAF+tTicaEzA+Zsiz9RJWA0aQQkyL1HqniriMRgAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_obverse.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABQAgCdASoQAA8AA4BaJYgCdAEQFVBPpwdG/AAA/vX5jVQZlu13BlzJABNhj3kQ4nSUGrYSkaPLy11ShDZ769M/AlrgAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_reverse.jpg": {
+  "w": 670,
+  "h": 470,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAsAA4BaJYgCdADw2qrLAWMAAP75F6X46ghoe9R5yAaivPJnX9InQfc5IWS/qZhHozc4pBdj54SmjYFnUMmKCAAAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_sharpen.jpg": {
+  "w": 470,
+  "h": 440,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAA8AA4BaJYgCdAEUpS9vSZIAAP70wJZSsPKyaF3z2K19CrlF9eb8XziaEiUYFypiCQjkNnvr0z8CWuAAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_upscale2x.jpg": {
+  "w": 940,
+  "h": 880,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAA8AA4BaJYgCdAEQFWOQbzcAAP71+Y1UGZbtfFsafWHKNtuG7FRXlVKkDlSD9Wj9RG/O7DnrqMfR9gAAAA=="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p100500_upscale_clahe.jpg": {
+  "w": 940,
+  "h": 880,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAA8AA4BaJaQAAvh65xIAAP20jNZMTfrsHtPMn2XgAAAA"
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p250675_linestrip.jpg": {
+  "w": 900,
+  "h": 80,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADwAQCdASoQAAEAA4BaJbACdLoAAnX/qaAA/gZqTb2xECHIR3r5lnC/nxbFIakAAAA="
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/p250675_obverse.jpg": {
+  "w": 900,
+  "h": 800,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAgCdASoQAA4AA4BaJbACdLoAAw17u8ZwAAD5DN5k3aj2DNffVO0XGMsODYlO+9VIBCizqVEVx3naq10x+KAf832PZ4PIpIoNwAAA"
+ },
+ "https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg": {
+  "w": 1196,
+  "h": 1594,
+  "blur": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JYwCsAYxE26VnwTMpOx1MGfYA/t6fjI5763+jf+Ce5KEpWbfB/JUXklB9cYPM2VQaKEuDDoad1k14/K+Xuo7JldFKYfwpS4ACV8OPvwjzSGZ/qmlUQVMfqvvNpRXkhfwn2LwKYeV+bEb3OXhCv1iAAAA="
+ },
+ "https://images.sourcelibrary.org/cropped/69099634cf28baa1b4cae779/69099653cf28baa1b4cae787.jpg": {
+  "w": 1200,
+  "h": 1833,
+  "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JYwCdMoADTrZJbk4lPx4oSAD2vszA67AmHIFE/60PnNgLJWATfckaqMOLf/SwCk7ZGUXSe3cuIGhOM0UNby/7bmEwGGww64ZpjbKHJ+Er0YJ5UFB/24NeUdByQDKB7HrjNjoVxgAAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg": {
+  "w": 1200,
+  "h": 1238,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQABAAA4BaJQBOgCHws+YkWADLSXk2Z2GnWuXRt2f7l9IcxPDXKrGBlDma0ZeRysH9+v0wUKjmrAAA"
+ },
+ "https://images.sourcelibrary.org/cropped/6909f75fcf28baa1b4cb0f71/69f6a9d6b6ebee470a7a2abc.jpg": {
+  "w": 2506,
+  "h": 3636,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoQABcAPu1kq04ppaQiMAgBMB2JYwCdACG582Hy7M2CVkAA/eOrkDRYlDtGmwehdR12d2ErEYaM7J3ohhwBK6BziL5zQnhwOtlNY955Jww2QAAA"
+ },
+ "https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6980bf6ac0fed4b65dfe5999.jpg": {
+  "w": 1200,
+  "h": 1381,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoQABIAPu1mqk2ppaQiMAgBMB2JZQCw7CHw0T7ca7PIclQAAP3jtizeXlgTODcjwzhR1IQFr8m66Q5CiTHEjZF4CSbdUVsEE+66l4ANrqEbIsTel5iAaCEuQ4AAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6982913e7a27b2f1693ad779.jpg": {
+  "w": 1200,
+  "h": 1592,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoQABUAPu1iqU2ppaQiMAgBMB2JZQC06CHh6f326ljKIwEgAAD+kb8lDqQk6fmH15BFaR64MlSjORnmYEZ+xbq7Sp+/80Ywm86FkM2cUkAAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg": {
+  "w": 1200,
+  "h": 2076,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoQABwAPu1iqk2ppaQiMAgBMB2JZwAAW+i6QYIhCLQAAP5sBelzlADnQX2ISUj2+3fQi7uvCTveqWucIMRoiihcfr2a2RMizuWrYYkFTEL8UMgA"
+ },
+ "https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg": {
+  "w": 1200,
+  "h": 1891,
+  "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABQBACdASoQABkAPu1iqU2ppaQiMAgBMB2JYwCdMoADQxHBzJ07lLI/6ZHAAP6HorMNkBu6M/diucEzGR9QENE8ZjkotrvX381DzJYEi4e29uf+cP00WrcFciSqjMj3+DtdaIrEn2UTuWVbFq3d+6CTAG4xUDAA"
+ },
+ "https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984ea4a1df714da9b420ae8.jpg": {
+  "w": 1200,
+  "h": 1870,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JYwCdACHNB7vZmjVPAAD8j+C/4aDinvhhpyiaZAMIwcncY9poa3povpNnJ+joZSShImRBWFsq+8PMvlb7IFMonf513r20yW+Ps7Jl7fAAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/699ef9f4b0a976d32fd37467/699f2dc1ff964210e766d487.jpg": {
+  "w": 2000,
+  "h": 2960,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQBACdASoQABgAPu1iqk4ppaQiMAgBMB2JZwC7ACG7l3qiYL1o6h8nQAD+xgbFm7mO8x+lgqRjQy54lUEIlmaPNWFoEfiq/CY9PpdOfyFntTuYUSoIsrH+8r/crI6btgAAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/69c4ec33a3a4a7c546ee6123/69f6c956d3af044f8303df91.jpg": {
+  "w": 2294,
+  "h": 3051,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoQABUAPu1mqk4ppaOiMAgBMB2JYwCdACG87AHPaDNSbNyAAP5b9vCxqx2ZomDt2a6BkRj5Sme0iC0MGJHp2oHO+f+Nd/A3e6IQQdGWndRgAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/69c8716b6c6f3cc53c857589/69f7743f6028036f8e2397ab.jpg": {
+  "w": 3301,
+  "h": 4681,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBACdASoQABcAPu1kq04ppaQiMAgBMB2JQBOmUI7LBTuNejui4/DqiwAA994cV0z4Hp3EXF02Vw+NIq1UxRQvEU0uoOe7A+bPFfqVv7XjER31OESIZ1TpOl75ThXc8xjs/1E9HyPWVIVgoAA="
+ },
+ "https://images.sourcelibrary.org/gallery/695234ddab34727b1f044cd2/6959117cecb01322b3069ae8-0.jpg": {
+  "w": 1483,
+  "h": 1503,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAQCdASoQABAAA4BaJZgCdADvqrJ5AAD+lDRGg61y3BCgi/n6UsldL25ZCmhlU7zn8JPwZJGvzBCtQYZbQrkPzFXv+smVFoSlEkAThFjwfDu5uvG3se1wAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd75a-0.jpg": {
+  "w": 2500,
+  "h": 3091,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JYwAATrfX3E1PP36eeAD+2iBQ+DEOE8QW0J4WxKFSqfc5iNn5IOoKz7k/S9MQyD1/xwMKh1uCO2qrqLEi4zxn8MC7BAHW566CW04QgAA="
+ },
+ "https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg": {
+  "w": 1670,
+  "h": 2313,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABwAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JZQC7AC0bUtnouKAA/u20VybJik1WkQbt/xkLJQFo5UfLSmHZmIjbAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/6952d08677f38f6761bc5477/695906c895a91542b28bf73e-0.jpg": {
+  "w": 1339,
+  "h": 2125,
+  "blur": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAAAwBACdASoQABkAPu1iqU2ppaOiMAgBMB2JYwCdACHwTE6gU+awBEQYNeAA/u4cKf5/aZT6z2PViUfXMvW6j3ynV5CH7g1UrSOUvkv+RlqzGjBPh9/jIgt9WW7FCf8n41EC7NTemFVZI34jKroiuemUXceINEbEX5+op7k+IpiV/rR9bIAXNYuZnKA5flPZT9P99A5O/agyIbP6wOK4B4fdiW1eQAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0.jpg": {
+  "w": 2140,
+  "h": 2880,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAwBACdASoQABYAPu1iqU2ppaOiMAgBMB2JZQCsACFsOp0Iqr43PKPWZgAA/t7yAoDn7AopEkMPvfI4jYLqVT0FMYPnKTvegJT7umpOmPhAjhh5BuZppBjwq62smFO8GTM4F4h+CzypAAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg?v=1771876133767": {
+  "w": 2344,
+  "h": 2437,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JYwCdMoADKuSR5I0CFBwA/pOjfsHQukBSoG3wGSX1v8OTakvm4oVFt6kOHbNmLIaOIBgCQ3dXgAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/6952e47c77f38f6761bc7ca8/6952e47c77f38f6761bc7cab-0.jpg": {
+  "w": 1839,
+  "h": 3260,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JZQC7AA8ZHwin10oyWZ7cAAD+FlN2YsmcbePNRYbW8qGOTCNB8XLCbsN5twqvsPhVW6PzjbugzkgKrbR0ogShYLFasdpKOuAfNQpLo63+AAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a73f-0.jpg?v=17718766731": {
+  "w": 1404,
+  "h": 831,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABQAQCdASoQAAkAA4BaJaQAAOEAAP71AsQLarLJKp7mWksxQbf9GLOA1l8II+vqmJ2G6JHwnrqfiTJsVMsgAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a741-0.jpg?v=17718766663": {
+  "w": 782,
+  "h": 546,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAsAA4BaJaQAAp3M+CiudRAAAP7zmtfZq8+buWWNMfMM5B9VmHkWwdMnOuUUfZAPZuq0wtywdAW+v09i8ghmmTpnYOkyAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/695688febe7c607c5f03c1da/69569e3b1479a63c110927ca-0.jpg": {
+  "w": 1477,
+  "h": 1836,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JYwDCgBuaXxi/II/kRgAA/dF00fpAne9HZWkQbzQ0aH/P6Iru5C2KAAAAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/695688febe7c607c5f03c1da/69569e3b1479a63c110927ca-0.jpg?v=17805160105": {
+  "w": 1477,
+  "h": 1836,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JYwDCgBuaXxi/II/kRgAA/dF00fpAne9HZWkQbzQ0aH/P6Iru5C2KAAAAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/6957ef6bcbe1dcad7b76beff/6957ef6bcbe1dcad7b76c099-0.jpg": {
+  "w": 1725,
+  "h": 2394,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAAAwBACdASoQABYAPu1iqU2ppaQiMAgBMB2JYwCdBagBYnZr+KZS/RHvPAAA/dqvIxk+v0nhIBjXoLY77+i4/TXbf3FIH9CyiLJnKQTanVThNz9rDCX7sIENUbd2L4g3AvepTxDqFeUWgtFsPdjjzQqLqsTWO0bkwAA="
+ },
+ "https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg": {
+  "w": 1115,
+  "h": 1628,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABcAPu1iqk2ppaQiMAgBMB2JaQAAW3DHbzFbCUyCO8wgAP7riwKznEgjVlBqEpp8Ox9E4yBU5xgsaER4I1iJuUhKsmk59GDanAg87rXNQamVsER2qiR/MBtWxHSOGaZQgQAAAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/69593025a41e40e9146a4acd/69593026a41e40e9146a4b2b-0.jpg": {
+  "w": 1822,
+  "h": 1884,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JYwCdACICegXD01XN9oAA/ppLmXeHeWx6eYAJtrKFa6q10UpCpUZ/SG4wmkXzyyXhdur+hvOh7VJP1iAAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/69593413b282844d7b277aaf/69593413b282844d7b277ab0-0.jpg?v=1771877346999": {
+  "w": 1831,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAACQBACdASoQABoAPu1iqU2ppaOiMAgBMB2JYwCdMoAlwRC1pn6REe9g8kcoIoAA/sAwSHhUG3UQxLWa6puETvwTuJ0mnhFuyXgGwWtfkL26+1OtUxHKlJPhKWxkILIiNZhY8RZsOvILnRLgZqjXagby48ySptdmP3y1vq9if6kF5S1eeTy6ekzMXnrr9no43iDeV/U0S6P0bGIAAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/697d9ca2e930671f09614566/697df4e48b76422bc971e8e9-0.jpg?v=17811346857": {
+  "w": 942,
+  "h": 321,
+  "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAAUAA4BaJQBOgCGhBe6wAP7n2XqBL4wOIcNZvWi6pgAA"
+ },
+ "https://images.sourcelibrary.org/gallery/69904dd67d19f3f2aac1d49d/69904dd77d19f3f2aac1d500-0.jpg": {
+  "w": 1524,
+  "h": 2225,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JaQAAWp/bxh+hRAXLWPaAAP7zfb6tQvBMDjTnIg9R1FDRTgn+8jAxcrb9xsluu6YTvk72kptLIqkjw4mnddkbdjcbeZ0AwUAAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/6990585617295890441358e0/699058571729589044135991-0.jpg?v=17816616026": {
+  "w": 1601,
+  "h": 1890,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAAUz5YugWVzFaIoAD+5+CSeSbfRie6GPIDEJJzGZZIWtJUqlT4vHsW5h6iZ6eUCqYCom6OAAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/699065973dc2ed39a49f1e71/699065983dc2ed39a49f1e72-0.jpg": {
+  "w": 2055,
+  "h": 3224,
+  "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACwAwCdASoQABkAPu1iqU2ppaQiMAgBMB2JYwCdACFQ63m5l94XkAD+1ykMfELSth+pJL0ghw3X2sPii/tGTXt2b1LjPf7JQyLr3ZFCpZG3tGWp2qdOXRHUx+zfW1ODY03A50WkX4uaQAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/69906f694b3bd4d1fffd0b26/69906f6a4b3bd4d1fffd0b61-3.jpg": {
+  "w": 264,
+  "h": 315,
+  "blur": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAAAQBACdASoQABMAPu1iqU2ppaQiMAgBMB2JYgCdMoACS0zgFiu/y/7noAD+j24PCl4/yKwEgoSASgnMMlGgiGsYnTcWNh7Gptsy6rjceXpTdu0zeiSoAodnrxI8azisWiqNXk5QUFu2qKQbu5C6wAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/69907b1f5f855ec553e70c6b/69907b1f5f855ec553e70cbe-0.jpg": {
+  "w": 2150,
+  "h": 3248,
+  "blur": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAABQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JQBOmUABp10BpHVNW8uLv4B0AAP7eky+OutvR3Lk6wzbZAKTUQkn0pkzqC90uWYbXjqBLm5sOOsIH8YXxsCI6N8UntV+NbR8AkEO7K6CeW44TdRtpROIetY8cA+hfwPB98puRFC7RJFhDAAA="
+ },
+ "https://images.sourcelibrary.org/gallery/69ac83c55d2908b26341c442/69ac83c55d2908b26341c4c4-0.jpg": {
+  "w": 2033,
+  "h": 3640,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQAB0APu1iqU2ppaOiMAgBMB2JZwAAW+qxI1zH9JBUAAD+38QAiD771Ei5RccKQENedZKUK9IY/6B00a+tlV/fsjjuDlAOKAA="
+ },
+ "https://images.sourcelibrary.org/gallery/69aebe72a103e42dc941438e/69aebe72a103e42dc941439b-0.jpg?v=17816670555": {
+  "w": 1215,
+  "h": 2224,
+  "blur": "data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAADQBACdASoQAB0APu1iqU2ppaOiMAgBMB2JQBYeNQSgG0ZO37VBBk86aaIzGWXygADj8B7LqgGleyRYMZ2qspIBrl7KI6RL+Pd/EXsHJQKS4f2LhkK67CKWZm1VJTXzCdgddPH+UzrPh4qhbPeIC4NKtVqwyvsucQ0iTGZqHI5/cLoX9tonynRyoNa8uLW7szSOGaGf3VwMtlSCskQUEHIuo4AAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/69af0a2069627f8eeaa1b8ac/69af0a2069627f8eeaa1ba97-1.jpg?v=1781667093876": {
+  "w": 823,
+  "h": 1260,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQBACdASoQABgAPu1krU2ppaSiMAgBMB2JaQAD4tILzxVwLzeKxOWUAAD+6E3Dabux+mxC/X4x2txGOmyBbVWq6ioWW6Kwfcu8tdZ1IlFs/qzfhPMQ3gKK7xv0DA+cJBIAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/69ef285385daccce30f2c71d/69ef285385daccce30f2c783-0.jpg": {
+  "w": 1280,
+  "h": 2325,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASoQAB0APu1iqU2ppaOiMAgBMB2JZwC+SB09QnV7OeXw+kgAAP6vy7+4d6nXGEJGjv1WyW9csyw1vqS0pYorzx9ETvHBxU+uT3w6yYamyZTjpaMLHMqHUaH+fDsdBPkM0QL/JNOL86a3pEWVvwAAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/69ef2b6c85daccce30f2e66d/69ef2b6c85daccce30f2e6db-0.jpg?v=1780586760763": {
+  "w": 1548,
+  "h": 1815,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JYwCdACIj51/agf1C8wAAAP7qjpg+5WsnH5x6qTBWysmyPvctEX0eEGqbxe+fLD8pAAAA"
+ },
+ "https://images.sourcelibrary.org/gallery/69ef2b7985daccce30f2e810/69ef2b7985daccce30f2e8ae-0.jpg?v=17817236117": {
+  "w": 1601,
+  "h": 2223,
+  "blur": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAABQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JagCdMoRwAdBMuvhtHHk029JAAP7riwjkQZ1P91nmu9e2oNotYaAGC1Q5hYu3N/RQ4X+3m6sVGMYeVpIvy6CKCPrIPjcuTXsanuqnSPg24LlhVadS9qYvawc1LFRwJY0r8gV+85gp4I4BuvIwHLwA"
+ },
+ "https://images.sourcelibrary.org/gallery/912cf0da-035c-425b-8975-e5a195a47767/6959afa11dfc1806c080bc8c-0.jpg": {
+  "w": 179,
+  "h": 210,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JaQAAW+3mS2/qyLmm/YEAAP7wQe2F/VDXH+eIV1E73yBzbclAS2onnfRAzy2kAfMhvNw8cNwgq1o7+pMMOnCHjbQAAA=="
+ },
+ "https://images.sourcelibrary.org/gallery/e48a21de-4db2-4c94-a71a-e952b9fa5393/69500507f426a210d109c2be-0.jpg?v=1773156760813": {
+  "w": 1818,
+  "h": 2880,
+  "blur": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAAAwBACdASoQABkAPu1iqU2ppaOiMAgBMB2JYwCdACHe7IVEC34Pdb7fi3gA/kBL2Lep8XBMNBXiGfygVeuBPo4pWlKtjmQC9mPduZOvx05P0usKoP9PtRAaRp5/2iM7DttrWZu2iVSFQudtbfQRxm6ziSJw7i24Zjw7VsGleV1jrTeMFAKAARaJ8AAAAA=="
+ },
+ "https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg": {
+  "w": 892,
+  "h": 1143,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZQC7ACHfwEWgvuWzPADeZkZTYK0L6taHQPOxkZcKKLb/5ARgU2T46jfT38G3Daz+PKOSyCkzDBoLKCGqpgImwrZ1gAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69520516ab34727b1f04245b/0225.jpg": {
+  "w": 2000,
+  "h": 3086,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JQBUeg8fcf8YSBXvAAP7nQTmhPow0XfdtCU5P0gc7pR6cGdKGcmXZMEhVQMkGq/wAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6952dbf977f38f6761bc7720/0129.jpg": {
+  "w": 1985,
+  "h": 2781,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JaQAAXBfNntAA/vHQ0X6VCDI4X1lYs2thjp7enhH3/hTPIKPkuAVHygXgAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69568c79be7c607c5f03d7bb/0344.jpg": {
+  "w": 2000,
+  "h": 3569,
+  "blur": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACQAwCdASoQAB0APu1kqk4ppaQiMAgBMB2JaQAAW+srEyHI/9+AAP6t3yZcmk+aTisi5HFRIG3orkPfDVuW1K7+H1olMBY8HcOZTJD62on9eIHaGOdjpyqiLyt+CiMKPWyC7VEwqPjaU0EaeJ2gnchq40pxyTsvvNA/8CQAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69593413b282844d7b277aaf/0102.jpg": {
+  "w": 2000,
+  "h": 3289,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAQBACdASoQABoAPu1iqU2ppaOiMAgBMB2JQBWAA+hgT0m+fyeOBbD2wAD+ryRnGsQHQKX5rle/2O5I1lUg3szq8T9KQauwwl/0FqCiELS8y7dlapimrP2kvCJIg9uhuw/kUbVxsR7cGiDCAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6970e3689b09d309d780a282/0009.jpg": {
+  "w": 1916,
+  "h": 3108,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JZQCsACHgbKGoYFoIzjQAAPffjplMKRF5v/bqxyNbp0R4LqvZ9e/vtS04/TkcDA+bWlKJ/3fv6Y+hP/CLVU/TTFzECEPaQAA="
+ },
+ "https://images.sourcelibrary.org/pages/697d9ca2e930671f09614566/0133.jpg": {
+  "w": 1200,
+  "h": 1718,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoQABcAPu1kqk4ppaQiMAgBMB2JYwCdACHpRTAsK0giPYAA/rI5FMFYMvT149xbUjnWQL79DHLNyfo5/ndNLpoFsWi+JB2diEt+8iOXzt5KBiR3KVdnGIoAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/697d9ca2e930671f09614566/0203.jpg": {
+  "w": 1200,
+  "h": 1741,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwBACdASoQABcAPu1kq04ppaQiMAgBMB2JYwCdMoADTsBeJixswFD7/AAA/P/VyImFAi8qXe68d7DmlcpM2svRQ1UDE2/My6nV0DwxLASnhO45QAA="
+ },
+ "https://images.sourcelibrary.org/pages/697d9ca2e930671f09614566/0204.jpg": {
+  "w": 1200,
+  "h": 1726,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABcAPu1kq04ppaQiMAgBMB2JZQCdMoADTtV4Nht+8oRgAP7GBXMU8F7aYHMAehVWmt+bHiCe3PqGyIjVio4MkehiYDNgttKCGG2kT/JlDAnEGRAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69905f1140bc3a0478efa1d3/0146.jpg": {
+  "w": 1992,
+  "h": 3174,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwCdAC0A/e4ngAD+70Vfhoq0+e6gFr1ouqap/MPUz4Ilznx958iBoAA="
+ },
+ "https://images.sourcelibrary.org/pages/699065763dc2ed39a49f155d/0098.jpg": {
+  "w": 1778,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JQBdgA8Jbu5VQZZoAAPyixML4REDuJQ90LvctEkQm6sQOVBefTZ6vn4GDZ37Ih26IKf9y9AsntKh+XhvIEAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6991e16bb53cae6bb6024014/0009.jpg": {
+  "w": 1828,
+  "h": 3061,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABQAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JZQC/ODBflcVOAAD+8E8OYQU08LJAAW7NgjnGwd6aD8QkAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6991e16bb53cae6bb6024014/0143.jpg": {
+  "w": 1783,
+  "h": 2879,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAwAwCdASoQABoAPu1iqk2ppaQiMAgBMB2JZQCsADBeDbtAAP7wFi/My3E2xjFLvTEiBQUfdLOAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69920bf777b798aa12121afc/0209.jpg": {
+  "w": 2000,
+  "h": 3376,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JaQAIEAPXDI7AroPuE9YAAP7x0MtWN790KiIfR/xqISch0jRI1iOldRgjmjJqVTnsHdKxto7z6AoBkHj74fdhBUkCmBAAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69924f3a5976b55115ffd500/0148.jpg": {
+  "w": 2000,
+  "h": 3251,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JY2ZAS0eTmgAA/u6/43NH+RTm72ab9t5D1tY0wBAqbnwr5hmpwAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69924f3f09c5da0cf50d7b8d/0347.jpg": {
+  "w": 1430,
+  "h": 2372,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoQABsAPu1kqU2ppaOiMAgBMB2JZQCsAC0OfDe47dAAAP7p2LaFmshSzDAE1KRguuVGf46Trkj57KNJBC2MxcHyRk5CkeAAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69937cdac970b9f8351dd273/0254.jpg": {
+  "w": 2000,
+  "h": 2997,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABgAPu1kqk4ppaQiMAgBMB2JaQAAW+n/HbVVPch/gAD+8fpwFPBGPhZdQUw1HE2UNK2hVKyaOUMcrV9jIo8N28dxlOgAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/699389510f04c37dcfa609ca/0304.jpg": {
+  "w": 2000,
+  "h": 2667,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoQABUAPu1mq04ppaQiMAgBMB2JZwAAUqjufWqPHpTAAP70MvqpLVAygOg4BjVOQrLlpxh+pOix3Yym/AA="
+ },
+ "https://images.sourcelibrary.org/pages/699389ee74305116d72d2e0d/0290.jpg": {
+  "w": 2000,
+  "h": 3097,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABkAPu1kqU2ppaQiMAgBMB2JZQC7ACICg8T7e6R3dnQA/u1FGSTil1wFT5RX6303soPEYrE4Oir0TGAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69ac9bb999d9a0170d090d1e/0155.jpg": {
+  "w": 2000,
+  "h": 3157,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JYwAAW+2Qppd+klogAP3MXsdnhn/+5vByuE1l911MzOvgRIrAESBSAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69ac9bbf99d9a0170d090df4/0014.jpg": {
+  "w": 1641,
+  "h": 2670,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACQAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwCdADBeQkGwCrmAAP7wD5+cs3yMM/N2JAus1u5wYAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69ad656c75811c30866e1810/0233.jpg": {
+  "w": 1939,
+  "h": 3148,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwAAesFXLxgQAP7vtf0epT3a/0l0t5AmxwFhX5ct4hV0iOAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69ad656c75811c30866e1810/0254.jpg": {
+  "w": 1939,
+  "h": 3148,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwC06C0Bt94C0AAA/u9rwqOjdFgpR/DcfpAP78quJ+gTAfRIAAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69b21dfa94025df5d290ae35/0457.jpg": {
+  "w": 2000,
+  "h": 2987,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAwCdASoQABgAPu1iqk4ppaQiMAgBMB2JaQAAW+uBMpW5/wr8AAD+8iDTKzRjCeV8B1odxr1c+zMUAi+hay2V6RbgzU59phUvuJgnJDTngAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69b21dfa94025df5d290ae35/0460.jpg": {
+  "w": 1995,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoQABgAPu1kqk4ppaQiMAgBMB2JaQAAW+0Nh/NwyJvQAAD+8jREWGppNl4oFZ2hVN7ZHIrjb3gQOqkBnIW/hVjusJGqQwTJ7OAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69b220b356715b0e324732e1/0584.jpg": {
+  "w": 2000,
+  "h": 3154,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoQABkAPu1iqU2ppaQiMAgBMB2JYwCw7BhenVkdJ9fMKAD+jFzlaRyhqEYob5PrFFo+XJoGWHh1InHJq+ghQDGPgAA="
+ },
+ "https://images.sourcelibrary.org/pages/69b2f33221208ea9dc277d1f/0210.jpg": {
+  "w": 2000,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JQBYdgzdKJZWEeAD+50Ck55Q9WzK/ns7g53cHbgKEL9VHY5OBaiSpY9hzisFofFDaVdQBUhQa9DXl16jYAAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a308/0122.jpg": {
+  "w": 1000,
+  "h": 1782,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoQAB0APu1iqU2ppaQiMAgBMB2JQBYdgwuqQmB4DMuAAPVrCDq+cSP8aeWRjNl2VerzHGPjCYtxX57WKVu9ZnVCxAYAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69b525de2f891867c1ae5d21/0001.jpg": {
+  "w": 2000,
+  "h": 1581,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAA0AA4BaJQBOgCHw8kWBC+AA/shdwsq3hSlXb/utkYaOP4YA3it1Ya13bH4OlBc0d2tsQn82wAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69bd9d546120d54bd0375241/0828.jpg": {
+  "w": 2000,
+  "h": 2848,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABcAPu1mqk2ppaQiMAgBMB2JQBOgBDvxNIdt9UyVOBMAAPlwzpT74A/4qQngcNTxR6jXotIrh3d3yoKdKxjnPspxS3/p7+3Cy6P5bqc9mZIB8JYrl8/aapvpRnF7BITdxf8AAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69c6614901a26ccff09f5036/0098.jpg": {
+  "w": 2000,
+  "h": 1548,
+  "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwAA4BaJaQAAudf0KnAAAD+9kYlytlbxNY5THI3LF8h6Bjjs2er1SkWW/CVHhgAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69c87ff96c6f3cc53c858fd5/0065.jpg": {
+  "w": 1200,
+  "h": 1738,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoQABcAPu1kqU2ppaOiMAgBMB2JYwCdACHggjN0HwKMGZfQAP3hxoJu8gFY5w4JvJEPJsQHiMNbkTdhzrqsMf6qDwEeZ/ZHNlXNYJy/pqO03q8trRAXj9vAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/69c87ff96c6f3cc53c858fd5/0066.jpg": {
+  "w": 1200,
+  "h": 1744,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoQABcAPu1iqk2ppaQiMAgBMB2JYwCdMoADTpjNEr6jX1FgAPzxAlKe66pMMhaw2WNusE91hgJ60yRv8Z0cU2D8LpAj3Zd7w7GXsHXC4qwn+FWdv64pUggljXQAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69d144c11c2a66dc094b1de5/0185.jpg": {
+  "w": 1924,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABkAPu1iqk4ppaQiMAgBMB2JaQAAW/6iDphgT2NvAAD+8dt86tRJJkQSd0kVGvw4i8kgOUJoiYOFZ/OB2A2udkdc3028AAA="
+ },
+ "https://images.sourcelibrary.org/pages/69dfeba8090ad7d5c33b0f36/0014.jpg": {
+  "w": 2000,
+  "h": 2946,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoQABgAPu1kqk4ppaQiMAgBMB2JZQCdACG6OSmtbQ5wAP6Rs76rQcNv3fK60pSPL+5F2bSILRo8WCRJLADKfOCUfO6lggA6JFQHlH7psO4urAAA"
+ },
+ "https://images.sourcelibrary.org/pages/69dfeba8090ad7d5c33b0f36/0124.jpg": {
+  "w": 2000,
+  "h": 2794,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABYAPu1kqk2ppaQiMAgBMB2JZQAAW49MPfFrIGXC8AD+ZrBkw4bpHOOizlLdG9PuT9L0w0hq6HdgLNHbaAGeatOEbGWbUM7ioAiIgAAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69dfeba8090ad7d5c33b0f36/0677.jpg": {
+  "w": 2000,
+  "h": 2773,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACQAwCdASoQABYAPu1kqU4ppaOiMAgBMB2JYwCdACWLQkqVirmAAPw6UzdohBIAXQtMUsEvYkYaM5afIW+5y8nwaxQE80ARRmBVdcWhoSADZcqOJhQAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69e014d347b76785d4ec8145/0040.jpg": {
+  "w": 2000,
+  "h": 3004,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwBACdASoQABgAPu1iqU2ppaOiMAgBMB2JQBOmUI9lBTV29NZoMf9ijwAA/q77bqy6AhpGQ5Nd/hYugbbUs8k2FpidNifqJp///KJWt2VVf8ecrgAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69ee47436dd925d126f41aba/0235.jpg": {
+  "w": 1200,
+  "h": 2020,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQAwCdASoQABsAPu1mqk2ppaQiMAgBMB2JaQAAW+m/OteORBAsuAAA4n37XOiPYfmvaHXbWgnte0eLv6NIjHp36aLPZQIe2xvyePwa2gRuKUuVCbINi4rjNrp5N/9wLLM+eU+LaPOk8rhyDu0FNAqTauKXJWDUgAA="
+ },
+ "https://images.sourcelibrary.org/pages/69ee4f106dd925d126f42acd/0340.jpg": {
+  "w": 2000,
+  "h": 2749,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoQABYAPu1kqU2ppaOiMAgBMB2JZQCw7CHwzpolYlaDa7AA/scMUMbTFuAUHxknkXq4RWNHGXh14BvIBzwAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69f1345d365e3fcae574e290/0051.jpg": {
+  "w": 1681,
+  "h": 2852,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoQABsAPu1kqU4ppaOiMAgBMB2JYwCw7GlEcWylGMFwAAD942XuZZLooSxnolODfV61QCZKSHPph/XLUtKOxYdK5PlDK716pa5AKDXd+oD1i/njl/pC0FYj/kVgAA=="
+ },
+ "https://images.sourcelibrary.org/pages/69f8c0f74c6a515115aedadd/0439.jpg": {
+  "w": 1784,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCdACKUCDEtJOa8VM6snoAA/t6ZIfNKr/lQV82kQWg5nc5dBpY9qksrXXUGFav39k5HTR2JoIAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a08a85450cb4ea746a09fb5/0249.jpg": {
+  "w": 1581,
+  "h": 2687,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoQABsAPu1iqU2ppaQiMAgBMB2JY2ZARgATjdEPcxHsAP7txODtTh4tq4nDGEx/Swq/z2wDzsZ3xyo9OgMncKUsJrWCqAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a08a85450cb4ea746a09fb5/0258.jpg": {
+  "w": 1581,
+  "h": 2687,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoQABsAPu1kqU2ppaQiMAgBMB2JYwCw7C0BtUhaAAD+6xUuc9tiFgyW8u3cEtbWBOu5BtBMDmCdELgAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6a09dd1e24d4d312f5c30cae/0156.jpg": {
+  "w": 2000,
+  "h": 2583,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JZQC/OB6NqDBRx+CGwAD+8eChHY7xeFhj5RTcQWD7kibTwdNIfqNNvbAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a09ece3b4da373307f15cf4/1096.jpg": {
+  "w": 1166,
+  "h": 1600,
+  "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAwCdASoQABYAPu1iqU2ppaQiMAgBMB2JaQAAW+pACE+hJYaTAAD+1aIwmL8uO2it8PEbDfJKEfg3cRXUwgAAAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6a209d3389e8715c5947a32b/0037.jpg": {
+  "w": 1769,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQBACdASoQABsAPu1iqU2ppaQiMAgBMB2JYwC7ACHguGnUcu7AviEAAAD+xDpu8nn2fz4d40K0THbwQTdhcalDGgCNDmrSMxMLNzMYfv3EDlSCxKEHFAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a209d5c89e8715c5947a6ac/0035.jpg": {
+  "w": 2000,
+  "h": 1564,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAwAA4BaJQBOgB+C+pd7wAAA/pjzfqiAIj9KXolaZozG5LuimTicSUdHkJowEzAxmLGHzX/DNJdDPWyd4gAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a3067d0c4fd77fb5b9f8378/0007.jpg": {
+  "w": 1200,
+  "h": 2024,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JY0wATKATiBqBroAA/uwdPmy/XzJ6izWQl1CBcI8a7kHojDQTjtASao4b8wNE5hARqJtzo/ApBponb+AAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a3067d0c4fd77fb5b9f8378/0514.jpg": {
+  "w": 1200,
+  "h": 2024,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAABwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JYwC08GABXf/XFrWNBI+lMuN8gAD+mrEdWNBqplWdaRqehk64KqKK7lwoavtrl93mZ/dX9mkW1gAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a3067d0c4fd77fb5b9f8378/0515.jpg": {
+  "w": 1200,
+  "h": 2024,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JYwCo9BtLAepelFfyAAD+lqc9iy5SE+3LCdab9rIX5P0gaWYLjkRD/sEW20yUpjV7S7emgAA="
+ },
+ "https://images.sourcelibrary.org/pages/6a3cc1c2ec254ff6cae0ee53/0153.jpg": {
+  "w": 770,
+  "h": 1048,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoQABYAPu1iqk4ppaQiMAgBMB2JaQAAXAZUli0WP/2cwAD+8ECwrvkE+qMFRxhXbRl7ZeA2YvJrsoEPoiSreLtY9HbMkb3EAAAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a3f035697e91e1768f6a0b5/0465.jpg": {
+  "w": 1941,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoQABkAPu1iqU2ppaOiMAgBMB2JQBWABaGejp5n1gAA/uz6kYs4KS6XHSXhjr0qRmq5MVVpGDJ5AAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6a42727728e9db2e39c14050/0006.jpg": {
+  "w": 818,
+  "h": 1240,
+  "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADQAwCdASoQABgAPu1iqU2ppaOiMAgBMB2JYwCdACHLWURVyqLtvAAA/LSLsW47uComZ0cAPHE45ajbBq56Hk8QhZ7SIQQm6tNjaiF9fqL66K6Kk++d+q+x09zTgXk1LEly1VvJSTbPuBIVAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6a5172599e29dd4d2097eeeb/0003.jpg": {
+  "w": 1189,
+  "h": 1616,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JQBYdhD/gWyYkcj437ccgAAD6DymDN7CefiRL0qCEYQOaL5wzhdKuwwmCdWygT1b0DBXmaeu9jdW37oTeKuzp+tpGS52LGlkT77JAIgeAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a87102131598d129803de7b/0013.jpg": {
+  "w": 1200,
+  "h": 1554,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JaQAAW+j6lafaZnM/AAD42TiXgy4skriL3eafZ0oNG6knAfU7fIc08AAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0278-full.jpg": {
+  "w": 1390,
+  "h": 1926,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JZQC7ACG59iQfhB1JpgAA/dU7zUoWHJSzEM1wI1pEHF3gUKzmwCsVa4xuvLml6k6/UaIyAAA="
+ },
+ "https://images.sourcelibrary.org/pages/6acc3d5f230e9a56175cc731/0048.jpg": {
+  "w": 1200,
+  "h": 1710,
+  "blur": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAACQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JYgCdACHfBlb/SutwAP33o/3jI9G0HeRqOR0eVF8URK4ng91wbXph1xc0AACbsNUUoGJh5XoeOFVYABYjt/XkNewb3pPHoLUJ8tw661ZoyLPI3ilHnjlbKAA="
+ },
+ "https://images.sourcelibrary.org/pages/6acc3d6c230e9a56175ccae2/0237.jpg": {
+  "w": 1200,
+  "h": 1752,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAwBACdASoQABcAPu1iqU2ppaOiMAgBMB2JZACdOUAA4nM2bYHi7kmUSJAA/I+gYAF0+2o2qxN3r19A0jc0w/r+zemhqhrm6iaL2y9YZD9qkeAdgthTk4xCHGzCK4nPmyreAAAA"
+ },
+ "https://images.sourcelibrary.org/pages/6ad191a242debc96269252b6/0011.jpg": {
+  "w": 4917,
+  "h": 7200,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoQABcAPu1mq04ppaQiMAgBMB2JQBOmUI8DBTTRWKR0eI4AAPfIsFY1Pn0zH91QhrR95EsF6STFP9ncjDvV709hkgbQWtb3alSFPT4Sw2T1+jL44FWcAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6ad191a242debc96269252b6/0252.jpg": {
+  "w": 4956,
+  "h": 7200,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoQABcAPu1mqk2ppaQiMAgBMB2JYwCdACHe2Hy3P04AAM44r5pM2n8i+2hFXvyWt99KU1YNPOU6ai0zz8M659GrvQLco4CXqwAAAA=="
+ },
+ "https://images.sourcelibrary.org/pages/6ad191b742debc9626925415/0056.jpg": {
+  "w": 4006,
+  "h": 4854,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoQABMAPu1orU2ppqSiMAgBMB2JZwDG9CHGSclF9gAAy0zwaPYPcS4A1CNvj2Ogd+6uP6kRvsGTfIukj89OCm9QgAA="
+ },
+ "https://images.sourcelibrary.org/pages/6ad191c342debc962692561e/0008.jpg": {
+  "w": 5145,
+  "h": 7263,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAwCdASoQABcAPu1mq04ppaQiMAgBMB2JYwCdACHgTGzinuchgAD+h6ddKTH2xVwKm1uVq4cw8q+kMfRiPg0dd30i+ahokaGKbGetYq9rTPyoMkzF3EMwAAA="
+ },
+ "https://images.sourcelibrary.org/thumbnails/6836f8ee811c8ab472a49e36/1.jpg": {
+  "w": 150,
+  "h": 265,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAABwAwCdASoQABwAPu1iqk4ppaQiMAgBMB2JYwC06Cz+mh1eM0AA/tlRdGu3RtdFgpSG7XhshHE6rOgOADeQR8BIf8NWEoNkkoNJQtsBAEaAAAAA"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/9/93/Francisco_de_Goya_y_Lucientes_-_Witches%27_Sabbath_-_WGA10007.jpg": {
+  "w": 809,
+  "h": 1117,
+  "blur": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JYwAAXK4X0U8qYti5AgwA/u6xqK9B8VNavY6Hb+Ap1u50wKqORaTrKi3x116S0omBfaeTFt3MIwiaukmsLSGyNIqJpnn4Hpis15j47RQ53LTNlQCDJ41lFeT8KY6+GQawAA=="
+ }
+}

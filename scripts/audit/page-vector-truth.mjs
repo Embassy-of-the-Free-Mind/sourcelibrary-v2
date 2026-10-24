@@ -98,8 +98,11 @@ const MAX_SHAPE_ROWS = Number(flag('--max-shape-rows', 0));
 const MAX_WRONG_BOOK_ROWS = Number(flag('--max-wrong-book-rows', 0));
 const MAX_SUMMARY_LEAK_ROWS = Number(flag('--max-summary-leak-rows', 0));
 const MAX_DUP_ROWS = Number(flag('--max-dup-rows', 0));
-// Report-only until #6270's one-time withdrawal has run; then set it to 0 in the cron line.
-const MAX_ARCHIVED_SERVED_ROWS = Number(flag('--max-archived-served-rows', Infinity));
+// Any archived page with a served vector fails the run (#6270). The one-time withdrawal ran on
+// 2026-10-11 (152,987 rows, 0 left), and every writer that archives or removes a page now calls
+// withdrawPageVectors() (tests/unit/page-vector-withdraw-writers.test.ts), so a row here is a
+// writer that slipped past both.
+const MAX_ARCHIVED_SERVED_ROWS = Number(flag('--max-archived-served-rows', 0));
 const WRITER_MIN_CHARS = 20;
 const ISSUE_PREFIX = 'Page vector truth: ';
 
@@ -617,7 +620,8 @@ function finish({ rows, planted, books, noRows, probed, batch = null }) {
   // under their own flags (archived-page-served → #6270, page-missing, no-source-text).
   const unrepairable = (r) => ['archived-page-served', 'page-missing', 'no-source-text'].some(f => r.flags.includes(f));
   const offSpaceBooks = new Set(rows.filter(r => (r.cls === 'off-space' || r.flags.includes('e5-signature')) && !unrepairable(r)).map(r => r.sampled_book));
-  const archivedServed = rows.filter(r => r.flags.includes('archived-page-served') && !r.flags.includes('e5-signature')).length;
+  // e5 rows included: after the withdrawal no vector of any model may be served for an archived page.
+  const archivedServed = rows.filter(r => r.flags.includes('archived-page-served')).length;
   const count = (pred) => rows.filter(pred).length;
   const shapeRows = count(r => r.flags.some(f => f.startsWith('shape:')));
   const wrongBook = count(r => r.flags.includes('wrong-book'));
@@ -628,7 +632,8 @@ function finish({ rows, planted, books, noRows, probed, batch = null }) {
     books_requested: books.length, books_without_vector_rows: noRows, rows: rows.length, dup_probes: probed,
     strata, batch, positive_control: PLANT ? { planted: caught.length, missed: misses.map(m => m.planted) } : 'not run',
     off_space_examples: [...offSpaceBooks].slice(0, 25),
-    thresholds: { MAX_OFF_SPACE_BOOKS, MAX_SHAPE_ROWS, MAX_WRONG_BOOK_ROWS, MAX_SUMMARY_LEAK_ROWS, MAX_DUP_ROWS },
+    archived_served_rows: archivedServed,
+    thresholds: { MAX_OFF_SPACE_BOOKS, MAX_SHAPE_ROWS, MAX_WRONG_BOOK_ROWS, MAX_SUMMARY_LEAK_ROWS, MAX_DUP_ROWS, MAX_ARCHIVED_SERVED_ROWS },
   };
   console.log(JSON.stringify(report, null, 1));
   if (JSON_OUT) {
@@ -660,7 +665,7 @@ function fileIssue(code, fails, report) {
       .filter(i => i.title.startsWith(ISSUE_PREFIX));
     if (code === 1) {
       fs.writeFileSync(body, `Weekly \`scripts/audit/page-vector-truth.mjs\` sample (seed ${report.seed}): **${fails.join('; ')}**.\n\n` +
-        `Each class and its repair: off-space / e5-signature → \`page-vector-truth.mjs --e5-scan\` for the page list, then \`embed-gemini.mjs --pages-file <list> --batch\`; summary-in-snippet → the same re-embed (the composer was fixed in #6194); wrong-book / duplicate → investigate the writer first. Background and classes: #6175, \`scripts/eval/experiments/2026-10-07-embedding-vector-truth.md\`.\n\n${block}\n`);
+        `Each class and its repair: off-space / e5-signature → \`page-vector-truth.mjs --e5-scan\` for the page list, then \`embed-gemini.mjs --pages-file <list> --batch\`; summary-in-snippet → the same re-embed (the composer was fixed in #6194); archived pages with a served vector → withdraw the rows with \`scripts/lib/withdraw-page-vectors.mjs\` (reason \`archived\`), then find the writer that archived them without calling it (#6270); wrong-book / duplicate → investigate the writer first. Background and classes: #6175, \`scripts/eval/experiments/2026-10-07-embedding-vector-truth.md\`.\n\n${block}\n`);
       execFileSync('bash', ['.github/scripts/file-or-update-issue.sh', ISSUE_PREFIX, `${ISSUE_PREFIX}${fails[0]} (${day})`, body, 'search'], { stdio: 'inherit' });
     } else {
       for (const i of open) {

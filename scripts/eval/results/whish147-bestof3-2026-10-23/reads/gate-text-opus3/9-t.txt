@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B has the most recognisable Sāṅkhyakārikā commentary text, such as "liṃgāvyāddhāvātmaḥ", "sarggaḥ", "prakṛti… mahat" and the repeated "vimokṣanimittaṃ pravṛtta…" that fits the kārikā on puruṣavimokṣa; C is readable in a few rows but garbled in most, and A is the most broken.

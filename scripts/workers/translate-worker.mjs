@@ -38,12 +38,16 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  isEmptyTranslation,
+  recordEmptyTranslation,
+  EMPTY_RESPONSE_REASON,
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
   dropLeafSeamBreaches,
   isEnglishBook,
+  seamGuardOn,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
@@ -502,6 +506,14 @@ function engineFor(page, book, promptRef, call) {
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef, call) {
   text = unwrapForWrite(page, text, book);
+  // Empty-response guard (#4685): the health gate's collapse tier needs a long source, so an empty
+  // answer on a short page used to be written as `translation.data: ''` — over the English when
+  // the page was a retranslation. Never stored; recorded as a failure (recordEmptyTranslation).
+  if (isEmptyTranslation(text)) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+    return { written: false, reason: EMPTY_RESPONSE_REASON };
+  }
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -538,7 +550,19 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
+  await seamGuardPages(db, [page], book);
   return { written: true };
+}
+
+// The write-time seam guard (#7118). This worker writes through its own door, not translate-core's, so it calls the
+// guard itself, after the commit: off unless SEAM_GUARD or the box file (translate-core SEAM_GUARD_FILE) says dry|apply,
+// bounded per page, and never the write's failure. Loaded only when on.
+async function seamGuardPages(db, pages, book) {
+  if (!seamGuardOn()) return;
+  try {
+    const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
+    for (const page of pages) await runSeamGuard(db, { page, book, note: 'translate_worker' });
+  } catch { /* never the translation write's failure */ }
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -558,6 +582,14 @@ function unwrapForWrite(page, text, book) {
 
 async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text, book) }));
+  // Empty-response guard (#4685), as in writePageTranslation: a page the block answer left empty
+  // is recorded as a failure, never written.
+  const empty = entries.filter(({ text }) => isEmptyTranslation(text));
+  entries = entries.filter(({ text }) => !isEmptyTranslation(text));
+  for (const { page } of empty) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+  }
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -576,10 +608,10 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     }
   }
   // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
-  if (entries.length === 0) return { refused: unhealthy.length };
+  if (entries.length === 0) return { refused: unhealthy.length + empty.length };
   if (entries.length === 1) {
     const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
-    return { refused: unhealthy.length + (one.written ? 0 : 1) };
+    return { refused: unhealthy.length + empty.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -639,7 +671,8 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       updated_at: now,
     },
   })));
-  return { refused: unhealthy.length };
+  await seamGuardPages(db, entries.map(({ page }) => page), book);
+  return { refused: unhealthy.length + empty.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.

@@ -1,0 +1,53 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣyādarśanaṃ puruṣasya kaivalyārtthaṃ tathā [illegible] ṭṭo [illegible] dhānena saṃsiddheḥ puruṣaḥ talga
+2. gaṃ [illegible] ḥ patrayaṃ svātantryamantrā [illegible] ḥ kaivalyārtthaṃ [illegible] puruṣāntarākhyātirbhava [illegible]
+3. naṃ [illegible] puruṣāntarākhyātiḥ pradhānamantareṇa [illegible] kaivalyārtthaṃ [illegible] ṃ puruṣaḥ pradhānamapekṣate
+4. [illegible] parasparāpekṣayā yogāt saṃyuktāviva kaivalyārtthaṃ [illegible] saṃyuktā [illegible]
+5. [illegible] vandha [illegible] yoḥ ‖ saṃyogaḥ mahadādisṛṣṭiḥ ‖ kṛtaḥ udbhūta [illegible]
+6. [illegible] rddi [illegible] kasaṃ ‖ yogo [illegible] mahadādisṛṣṭimantare ‖ ṇa [illegible]
+7. [illegible] pakṣā [illegible] ‖ [illegible] yoga [illegible] pavargā ‖ rtthaṃ sṛṣṭiṃ karoti
+8. [illegible] satkkamāha pra ‖ kṛte [illegible] hāṃkāra [illegible] ‖ lgaṇaśca ṣoḍa
+9. [illegible] mahada [illegible] āl pañcabhyaḥ pañcabhūtāni prakṛteḥ [illegible] mahadahaṃkāra [illegible]
+10. [illegible] haṃkāra [illegible] tāni [illegible]
+11. [illegible] tanmātra [illegible] pañcabhyaḥ [illegible]
+12. [illegible] pañca [illegible] tanmātra [illegible]
+13. [illegible]
+
+TRANSCRIPTION B
+1. kṣādarśi puruṣasya kaivalyārtthaṃ tathābhi [illegible] ṭṭā [illegible] ṇabhiprāyāne [illegible] nāsaṃginaḥ puruṣaḥ talga
+2. gaṃduḥkhatrayaṃ svātmanyabhimanyamānaḥ kaivalyaṃ prārtthayate tacca [illegible] puruṣānyatākhyātirevasa
+3. ṇaṃ nācasau puruṣāntarākhyātiḥ pradhānamantareṇa bhavati kaivalyārtthaṃ puruṣaḥ pradhānamapekṣate
+4. tthaṃnnādṛṣṭātmasaṃyogaparaṃparayābhogāya saṃyuktamapikaivalyāya punaḥsaṃyujyata [illegible]
+5. ttaṃnandavadubhayoḥ ‖ saṃyogaḥ mahadādisarggaḥ ‖ kṛtaḥityatra
+6. nimittāl [illegible] saṃ ‖ bhoga [illegible] mahadādisarggamantare ‖ ṇanabhogāye
+7. kaivalyāyacaparyyā ‖ ubhisaṃyogaḥevabhogāpavarggā ‖ rtthaṃsarggaṃkaroti
+8. itthaṃsarggakramāhapra ‖ kṛtermmahāṃstatohaṃkāraḥtasmā ‖ lgaṇaścaṣoḍaśakaḥ
+9. śakaḥ tasmādapi ṣoḍaśakā ‖ lpañcabhyaḥpañcabhūtāni prakṛteḥ prathamaṃmaha ‖ dahaṃkāraraupadyamāno
+10. ntraekādaśendriyāṇica ‖ [illegible] mātrāṇipañcatanmātrāṇicaṣoḍaśa ‖ saṃkhyāparimite
+11. āgaṇaścaṣoḍaśakaḥtanmā ‖ [illegible] ṣoḍaśakālbuddhīndriye [illegible] bhyaḥpañcatanmā ‖ trebhyaḥpañcabhūtāni
+12. kāryyāṇitatrabhūtanmātra ‖ dākāśādibhūtapañcakamākāraṃbhūtamātrādi ‖ bhidāl [illegible] mātrādādyaḥ
+13. śabda [illegible] rśalguṇaḥ śabdasparśarū ‖ parasagandhāl [illegible] ātrāl [illegible] śabdasparśa ‖ lrūpaguṇāṃśabdasparśal [illegible]
+
+TRANSCRIPTION C
+1. jñādarśipuruṣasyakaivalyārtthaṃtathāviloṭṭā [illegible] śiṣṭā [illegible] dhānenāsaṃ [illegible] ḥpuruṣaḥtalga
+2. gaṃbhiḥ [illegible] svā [illegible] mannā [illegible] kaivalyārtthaṃ [illegible] rtthaṃ [illegible] puruṣāntarāvyāpti [illegible]
+3. [illegible] casa [illegible] puruṣāntarāvyāptiḥpradhānamantareṇa [illegible] kaivalyārtthaṃ [illegible] puruṣaḥpradhānamapekṣate
+4. [illegible] saṃyoga [illegible] paṅgvandhayo [illegible] saṃyu [illegible] kaivalyārtthaṃ [illegible] saṃyu [illegible]
+5. [illegible] ‖ saṃyogaḥ [illegible] mahadādisṛṣṭiḥ ‖ [illegible]
+6. [illegible] ‖ [illegible] mahadādisṛṣṭa [illegible] ‖ [illegible] bhogāya [illegible]
+7. [illegible] ‖ [illegible] saṃyoga [illegible] bhogāpava [illegible] ‖ [illegible] sṛṣṭiṃ [illegible]
+8. [illegible] ‖ [illegible] kāraḥ [illegible] ‖ [illegible]
+9. [illegible] lpañca [illegible] pañca [illegible] prakṛte [illegible] mahada [illegible]
+10. [illegible]
+11. [illegible] pañca [illegible] pañca [illegible]
+12. [illegible]
+13. [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

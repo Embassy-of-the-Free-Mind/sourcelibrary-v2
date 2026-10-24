@@ -1,0 +1,21 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script incised on palm leaf, inked. The page is in Malayalam script, not Devanagari. The language may be Malayalam, or Sanskrit written in Malayalam script, and cannot be confirmed with certainty. This crop is the left half of the leaf, and the text is cut off at the right edge. A string hole in the middle splits each line into a left block and a right block. Readings are tentative throughout.</warning>
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>ഒക്കവചനത്തു</unclear>. <margin>൧</margin> <unclear>സാമ്രാജ്യകന്റെ</unclear> <unclear>[illegible — cut off at edge]</unclear>
+<unclear>ൽകൾ്ടവിചാരിപ്പ</unclear>. <unclear>ദ്ാപ്പ ഒരാമ്മമാര്ക്ക</unclear> <unclear>[cut off]</unclear>
+<unclear>ഇപ്പാദലിയലെ</unclear> <unclear>ദക്കാമ്മ ഒന്നാന</unclear>
+<unclear>നാദിരിടവെച്ച</unclear> <unclear>സമാനാദലിക്ക</unclear>
+<unclear>ലഭിന്ദ്രാദാ</unclear> <unclear>വാൽകാല്യങ്ങൾ</unclear>
+<unclear>കാര്യംപ്പെട്ടുക്കി</unclear> <unclear>ഷുൾകുവംവിണ്ണ</unclear>
+<unclear>ദദാനഗ്രഹണാ</unclear> <unclear>ൽസഹ്യസാംടവ</unclear>
+<unclear>ദൽകൊന്നൊടദവാ</unclear> <unclear>ജ സൽകാര്യം</unclear>। <unclear>ന</unclear>
+<unclear>നകമാഗ്രിങ്കംഡി</unclear>. <unclear>സാമ്പക്കവാചപ</unclear>
+
+<image-desc size="small" type="symbol" significance="low">A cross-like mark (+) with several horizontal strokes, set before the numeral ൧ in the first line. It may be a section or leaf mark.</image-desc>
+<meta>The palm leaf is threaded with a cord through the central binding hole, and there is a small dot in the left margin by line 3. The left-hand text block is laid out in short lines that stop before the hole, and the right-hand block continues past the crop edge.</meta>
+
+<vocab>palm-leaf manuscript, Malayalam script, വചനം, കാര്യം, സൽകാര്യം</vocab>

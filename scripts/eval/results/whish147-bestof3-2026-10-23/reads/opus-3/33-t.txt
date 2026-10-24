@@ -1,0 +1,13 @@
+I'm confident of the row layout but not of most of the text. I read 10 rows across all four pieces, with holes between p01|p02 and p03|p04. Treat the text below as low-confidence glyph-by-glyph guesses, not a reliable transcription.
+
+ROW 1 | ന്ദ്രാദികയോഗയതെവന ‖ ഉദ്ദിഷ്ടാഃകെഹികെദവ[illegible]സ്യപരസ്യാൎത്ഥം· ‖ [illegible]നന്ധാൎത്ഥം·[illegible]തെപ്രാ
+ROW 2 | ദ്യൂാത്മികാമഖ[illegible]3 ‖ [illegible]ദ്ധിരിൻസംജ്ഞകാസ്യം·[illegible] ‖ [illegible]വതൈഷ്യം·നചപ്ര
+ROW 3 | ദുഃഖ്യ[illegible] ക്കൊരൂഃപ ‖ പനാഷ്ടപ[illegible]ഃ[illegible]പരള [illegible]ദൃഷ്ടം· ‖ ന[illegible]മലാദാഭി[illegible]കപിണ്ഡതം·
+ROW 4 | ത്തൈമാവപൃത ‖ ക്ഷൈഹന്ദ്രഃക്യാകിദിത്രുക്രാഖുക്രുഗ്ഗാ ‖ [illegible]പ്രഭ്യോഭിഭുഃശ്ര
+ROW 5 | ഉപമ്മേഘാരിവി ‖ ഖവത്രാദലപേ[illegible]പക്ഷൊയത്മാമ്ലസ്തുതൈക ‖ ഹ്രാഗ്രതൈദിവഷിതഃപ്രമാ
+ROW 6 | ഏതൃക്കം·ഭതൈഖ ‖ കത്തിപരിതൃപാൽച്ചം·സ്ഥാഖൈഷ്ടാ ‖ ദമാത്രമെവപൃതക്ഷഃക
+ROW 7 | ന്ദീാഭ്യാഖിരിക്കഃ ‖ പൃതകൈക്ഷൈയന്യാൎത്ഥ്വാ സ്വം· ‖ ലാകഃഞമിഷ്ടെനാഭ്യ
+ROW 8 | ഭൈരധിഷ്ഠതൃഷ്ടി ‖ ഗ്രന്ധിഷ്ടാഗഹിം·മഹാദമദിർഭദവക്ഷ്ടെക· ‖ നരിനം·ഈഹലൊമൊകെ
+ROW 9 | യാമധിഷ്ഠാനൈൎക്കവന ‖ നാധിഷ്ഠതൃജ്ജ്രമിശ്രാതാരാലൊമന്ദ്രരൈച ‖ ചധിഷ്ടാനം·ശരീരം·തത്ത്വാദന്ദ്രു
+ROW 10 | ാധിഷ്ഠാത്ത്രാഭവിതവ്യം·ഖ ‖ ഖൈയ്യാസ്യാപധിഷ്ഠാതാരാധിപൃതക്ഷഃനാഹംകാരണ്ട് ‖ ണ്ടമധിഷ്ടാതൃതസ്യാമൈധിന
+NOTE | All 10 rows can be traced, but I'm only fairly sure of perhaps 40–50% of the aksharas. Rows 2–3 are hard because a crack or ruled line runs through them, and the scribe's gaps in rows 3, 4 and 7 make the joins uncertain. Check this against the original before using it.

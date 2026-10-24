@@ -54,6 +54,9 @@ const SWEEP = 'shared-surname-reattribution-5950';
 
 const arg = (flag, dflt) => { const i = process.argv.indexOf(flag); return i > 0 ? process.argv[i + 1] : dflt; };
 
+/** Scaliger pages read by eye before the 2026-10-10 apply: book id → page → 'julius' | 'joseph' | 'stay'. */
+const SCALIGER_BY_EYE = JSON.parse(fs.readFileSync(new URL('./shared-surname-by-eye-scaliger.json', import.meta.url), 'utf8'));
+
 /**
  * One block per surname. `cues` are tested on folded text (lowercase, no diacritics, j→i, v→u);
  * `citedFrom` is the first year a book could cite the person by surname. A surname without a
@@ -105,6 +108,35 @@ export const SURNAMES = {
           /\bcancellar\w+\s+bac/, /\bbac\w+\s+(of|de|uon|a|baron\w*\s+de)\s+uerulam/, /\bnou\w+\s+organ/, /\bsylua\s+syluarum/, /\bhis\s+sylua\b/,
           /\binstaurati/, /\bde\s+augmentis/, /\baduancement\s+of\s+learning/, /\bnou\w*\s+atlanti/, /\bnew\s+atlantis/,
           /\bs(t|aint)\.?\s+albans?\b/, /\bsapientia\s+ueterum/, /\bwisdom\s+of\s+the\s+ancients/, /\bhistoria\s+uitae\s+et\s+mortis/, /\bpromus\b/,
+        ],
+      },
+    ],
+  },
+  // Derek, #5950, 2026-10-10: Scaliger next, every same-book and note proposal read first.
+  // The bare record carried the father's id; in the 10-mention sample 6 were the son.
+  Scaliger: {
+    needle: /\bscalig/,
+    byEye: SCALIGER_BY_EYE,
+    persons: [
+      {
+        // First print under his name: the 1531 oration against Erasmus.
+        key: 'julius', name: 'Julius Caesar Scaliger', wikidata_id: 'Q441066', citedFrom: 1531,
+        cues: [
+          /\biul(ius|ii|io|ium|i|\.)?\s+(c(aes(ar\w*)?)?\.?\s+)?scalig/, /\bscalig\w*,?\s+iul/, /\bi\.\s?c\.\s?scalig/,
+          /\bexoteric\w+\s+exercit/, /\bscalig\w*[,.]?\s+(in\s+)?(exot\w*\.?\s+)?exerc/, /\bexerc\w*\.?\s+(\d+\.?\s+)?(contra|aduersus|in|ad)\s+cardan/,
+          /\b(contra|aduersus|against)\s+cardan/, /\bde\s+subtilitate\s+ad\s+\w*\s*cardan/, /\bpoetices\s+libr/, /\bscalig\w*[,.]?\s+(in\s+)?(libr\w*\s+)?poetic/,
+          /\bde\s+causis\s+linguae\s+latinae/, /\bcauses\s+of\s+the\s+latin\s+language/, /\bhypercritic/, /\bscalig\w*\s+(the\s+)?(elder|father|pater|senior)\b/, /\b(elder|pere)\s+scalig/,
+        ],
+      },
+      {
+        // Coniectanea in Varronem, 1565.
+        key: 'joseph', name: 'Joseph Scaliger', wikidata_id: 'Q315163', citedFrom: 1565,
+        cues: [
+          /\bios(eph\w*|\.)?\s+(iust\w*\.?\s+)?scalig/, /\bscalig\w*,?\s+ios/, /\bi\.\s?i\.\s?scalig/, /\biust\w*\s+scalig/,
+          /\bde\s+emendatione\s+temporum/, /\bemendation\w+\s+of\s+(time|chronology)/, /\bthesaur\w+\s+temporum/, /\bisagogic\w+\s+(chronolog|canon)/, /\bcanon\w*\s+isagogic/,
+          /\belench\w+\s+trihaeres/, /\bcyclometric/, /\bde\s+re\s+nummaria/, /\bscalig\w*[,.]?\s+(in|ad|on)\s+(manili|euseb|festu|uarron|catull|tibull|propert)/,
+          // Not cues: `scaligeran-` ("thesis Scaligerana" in Libavius 1606 is the father's) and the Julian period (far from the name).
+          /\bemendation\s+of\s+(the\s+)?times?\b/, /\bscalig\w*\s+(the\s+)?(younger|son|filius|iunior)\b/, /\b(younger|fils)\s+scalig/,
         ],
       },
     ],
@@ -382,7 +414,7 @@ async function main() {
       const sameBook = rule.persons.filter(p => booksOf.get(p.key).has(entry.book_id)).map(p => p.key);
       const pages = entry.page_precision === 'page' && Array.isArray(entry.pages) ? entry.pages : [];
       if (pages.length === 0) {
-        const d = decidePage(rule, { printed: '', editorial: '', bookYear, sameBook });
+        const d = byEyeVerdict(rule, entry.book_id, 'section') ?? decidePage(rule, { printed: '', editorial: '', bookYear, sameBook });
         rows.push({ book_id: entry.book_id, page: null, book_year: bookYear ?? null, ...d, precision: 'section' });
         continue;
       }

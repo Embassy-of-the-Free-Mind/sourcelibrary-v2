@@ -11,7 +11,7 @@
  * exactly as the worker seeds, and that page's English is the read just made (nothing is stored yet), else the stored one.
  * No API key, no API spend.
  *
- *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low]
+ *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low] [--ocr-checked="..."]
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
  *          Writes NOTHING to the database. Skips pages already read, pages with no translatable OCR, and blank pages.
  *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
@@ -25,7 +25,8 @@
  *          sweep_log row per page and one book_events row per book, and recounts the book.
  *          It also writes the reads of scripts/batch/claude-translate.mjs (Opus through the Claude CLI, #6559): their meta
  *          says `cli: 'claude'`, so the engine block is recorded as 'anthropic', and the exact prompt each call sent is
- *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused.
+ *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused. A meta's
+ *          `passes` (a draft and its review, scripts/batch/twopass-review.mjs) is copied into engine.run.passes.
  *
  * THE CALL (#6523, the OCR runner's config, shared code in scripts/lib/agy-cli.mjs): the prompt asks for the translation
  * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them; a PreToolUse hook in the call's empty workspace
@@ -33,6 +34,12 @@
  * translation instead of ending empty. The raw reply is kept as <page_id>.raw.txt; .txt holds the text between the
  * markers. `apply` refuses a reply with text outside the markers or cut before <<<END>>>, and still runs the chatter
  * guard on every read.
+ *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ when it
+ * is made, and `read` first asks for a kept read of the same page by the same model on the same prompt template and
+ * variant, the same OCR (by hash) and the same --instructions-file line, and uses it instead of calling (meta
+ * `reused_from`). The neighbouring context (the page before's English) is not part of that key. `--fresh` always
+ * calls: a repeat-noise eval needs fresh reads.
  *
  * HOW IT FAILS: a CLI that is not signed in, out of quota or timing out leaves an empty .txt and a non-zero `exit`
  * (up to 3 attempts in place); a quota error is logged to agy-calls.jsonl and the run STOPS rather than burning the
@@ -43,11 +50,13 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
+import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -69,6 +78,7 @@ const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
+const FRESH = wantsFresh();
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -82,7 +92,12 @@ if (STAGE === 'read') {
   fs.mkdirSync(OUT, { recursive: true });
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PAGE_PROJECTION }).toArray()).map((p) => [p.id, p]));
   console.log(`${found.size} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}`);
+  // Check the transcription before paying for a translation on top of it (#6865).
+  const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
+  console.log(gate.message);
+  if (!gate.ok) { await client.close(); process.exit(2); }
   const books = new Map();
+  let reused = 0;
   for (const id of ids) {   // the file's order, which is page order
     const p = found.get(id);
     if (!p) continue;
@@ -102,6 +117,11 @@ if (STAGE === 'read') {
     const built = buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const instruction = INSTRUCTIONS[id] || null;
     const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CLI_SUFFIX;
+    const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(p.ocr.data), prompt_variant: PROMPT_VARIANT, instruction });
+    if (!FRESH) {
+      const hit = await findRead({ page_id: id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKey, derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
+      if (hit && await reuseInto(OUT, id, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); continue; }
+    }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
     const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
@@ -110,7 +130,7 @@ if (STAGE === 'read') {
     const text = r.cls ? '' : r.answer;
     fs.writeFileSync(path.join(OUT, `${id}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify({
+    const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
       prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
@@ -118,9 +138,13 @@ if (STAGE === 'read') {
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
       stderr_tail: r.err,
-    }, null, 1));
+    };
+    fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify(meta, null, 1));
+    // Kept the moment it is paid for (#7075); best effort, never fails the read.
+    if (!meta.error_class && !meta.wrapper && meta.exit === 0) await keepRead({ page_id: id, book_id: p.book_id, page_number: p.page_number, field: 'translation', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, source_path: path.join(OUT, `${id}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || r.problem || 'ok'} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
   }
+  console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   await client.close();
   process.exit(0);
 }
@@ -157,7 +181,8 @@ for (const m of metas) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { id: m.prompt_ref?.id, name: m.prompt_ref?.name, version: m.prompt_ref?.version, hash: m.prompt_ref?.content_hash, sent_hash: sentHash, sent_chars: m.prompt_sent_chars },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
+    // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
+    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.context }),
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });

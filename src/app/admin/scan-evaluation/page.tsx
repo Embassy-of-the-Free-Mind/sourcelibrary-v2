@@ -400,7 +400,7 @@ export default async function ScanEvaluationPage() {
           full-resolution scan in a new tab.
         </p>
         <p className="text-stone-500 text-sm mt-3">
-          See <Link href="/blog/what-makes-a-good-scan" className="text-accent-rust hover:underline">What Makes a Good Scan?</Link> for the design context, and
+          See <Link href="/articles/what-makes-a-good-scan" className="text-accent-rust hover:underline">What Makes a Good Scan?</Link> for the design context, and
           {' '}<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1810" className="text-accent-rust hover:underline">issue #1810</a> for the implementation tracker.
         </p>
       </header>

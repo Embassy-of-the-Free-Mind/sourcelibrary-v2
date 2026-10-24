@@ -23,6 +23,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
 import { recountBook } from './lib/page-counts.mjs';
+import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -1023,6 +1024,9 @@ await db.collection('pages').updateMany(
     updated_at: new Date(),
   } }]
 );
+// The archived spreads must stop being served by semantic search: their rows carry the old
+// positive page_number, which now belongs to one of the halves (#6270).
+await withdrawPageVectors(allExistingPages.map(p => p.id), { reason: 'archived', writer: 'split-book' });
 
 console.log(`  Inserting ${newDocs.length} new pages...`);
 if (newDocs.length > 0) {

@@ -1,0 +1,80 @@
+Below are 6 machine transcriptions (A, B, C, D, E, F) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. dviṣaṃnavinudṛṣṭāvenaliṃga [illegible] ccukkeḥliṃgāvyāptāvāttuḥkanmādiviṣayaḥpravṛttakare
+2. sarkkaḥ [illegible] pākṣṭavikalejñānai [illegible] pralaikkulyai [illegible] nya [illegible] kṣayāṭu [illegible] mana [illegible] ttaikku
+3. kaviyaḥsamāsa ‖ aitāraṭaddaka [illegible] ślīḥ [illegible] ṣyaṃ ‖ satavintālakṣmairā
+4. virālantuddalata ‖ ssirmmaidrapai [illegible] jñāviśālātra ‖ maiādintaṃboyukte
+5. kṣūtūdraṣanāmaraṇa ‖ traiṇaṃnduyaiṃtrāndrābbātthaicaka ‖ ṇaḥpṛkṣaḥliṃgaprāvi
+6. laivṛtakkūntā ‖ ndraḥsaghandrāaivenaścaudrāka ‖ prakṛtiuairāmapau
+7. dvitīśadvayeḥ ‖ ntyaḥkaḥpravicāra [illegible] kamavimākkiā ‖ lṃntuākaḻuvaṅṅa
+8. baikkanaddabhyaca ‖ luvividhyadadvi [illegible] tamitaraṃkṣatrayama ‖ āpravṛttidaṅṅanyaca
+9. nuktivivarāṅṅaḻimiṇa ‖ [illegible] ttānapraśnakki [illegible] traiyānantyaḥjña ‖ aindutridivṛttyāṃcha
+10. bhārtthiyāntapraddṛ ‖ aitakṣaikṣāḥpṛkṣakṣanaḍigarākkitami ‖ taṃpravṛtteaukṣadadra
+
+TRANSCRIPTION B
+1. liṃgaṃnavinābhāvena ‖ liṃgatajjakkaḥliṃgaśākhyāṭṭāvākyaḥ ‖ tantrātavidhaḥpraprakkare
+2. naśloḥāllataḻavika ‖ ṇṇodaiperakkeṣṭamakhyāśyaśāca ‖ kṣayāṭavakimasattukai
+3. kavidhaḥsamāsa ‖ otodaiḍhatakasthakraḥahnauṣṭaṃ ‖ ḥsakhavintālakkamo
+4. viśālantamūlata ‖ iśraḥmadyainaijñāviśāloā ‖ kramāgintaṃkhimagyaka
+5. [illegible] tṛūrāmaraṇa ‖ krataṃṭṭeśoṃkrāaijñāgiaicira ‖ naḥpuruṣaḥliṃgantyāvi
+6. ravṛttekkantā ‖ ntṛḥkhontābhāaivanaṣṇūīotma ‖ krautautomahadā
+7. gaviretaḍatala ‖ ṇṇakkaḥpratipratamavimo ‖ kṣaṃntākṣaivadhātā
+8. khanaraṃbhaḥjñava ‖ savivicciāmigaṃkkiranyāya ‖ bhākravṛtkarajjanyapra
+9. ntamavimokṣanami ‖ ttantadhākrattakkaikradhānanyāise ‖ ntukratiprattulṃya
+10. mātriyāndhalayu ‖ telokaḥprabhamavimokṣanami ‖ taṃkraprantairatabhadavya
+
+TRANSCRIPTION C
+1. dviṣaṃnavindrāvenāliṃ ‖ gatvajñakkeḥliṃgāvyāpyāvādyuḥ ‖ kanmādiviṣayaḥpravṛttakare
+2. sarggaḥśuddhasūkṣmavikale ‖ llomeṭapeṭekkalpumaprā [illegible] ñjāpakka ‖ yādikaḻimanuṣyarekkā
+3. kaviyaḥsamāsa ‖ torāteddattekkasarggaḥśaktumiṣṭaṃ ‖ saravinālakṣaṇā
+4. vinālakṣmalaka ‖ sthiṣṭiḥmatopyāleppāviśvālotra ‖ modikkaṃcoṣyate
+5. kṣmatatrajñanāmaraṇa ‖ traraṃdvayaṃetrālebhyūtrakṣecara ‖ naḥpṛṣṭhaḥliṃgatvāvi
+6. bhṛttekkanmā ‖ ddaḥyeghadrātevandappullūmo ‖ ṣkukkaḻukomapādya
+7. dviśeṣajugala ‖ tyūkaḥpratipattagandhāviśeṣākko ‖ tvaṃnṛāyakṣmūivayo
+8. boññāṃṭṭusthava ‖ sthivinṟitvamitaṃjñānasthayakha ‖ āpravṛttibhakṣāstha
+9. ṅṅgiviśeṣaṇami ‖ tattamāprohmidraiyānantyasyo ‖ gustibhivṛttyārtthaṃpa
+10. mātriyāntrapūrṇa ‖ ṇatattāmoḥprakkasaviśeṣaṇami ‖ mitaḥpravṛttakotadevya
+
+TRANSCRIPTION D
+1. liṃgaṃ navinābhāvena ‖ liṃganirvṛttiḥ liṃgākhyobhāvākhyaḥ ta ‖ smādvividhaḥ pravarttate
+2. sarggaḥ asyaartthavika ‖ ārābhedapa [illegible] kkarākkamakhyākhyaśācabḍa ‖ khyāṭavattimasa [illegible] maikai
+3. kavidhesamāsa ‖ otānaiṭhukaslaśraḥ antaiൟḍḍāṃ ‖ saravitālaṅṅomo
+4. viśālantumūlata ‖ iśraḥmaiḍlaḍoaiṅṅāviśālodra ‖ mādrandaṃkilattaika
+5. ññaraerāmarai ‖ kraraṃṭedheṃdrāaikkātiaicira ‖ naḥ puruṣaḥ liṃgasyāvi
+6. ivyottakkantā ‖ ndaikhaindhābhāvainaṅṅūuottaika ‖ pranthaiiotāmādhā
+7. ivirentekketala ‖ ṅṅakkaḥ pratipraṅṅauṣavimokṣā ‖ kkaṃndākkauvadhānā
+8. khyaḻanaṃbheñcala ‖ saviviiovitaṃkkirantāyatha ‖ ādravyākarañcanyāpra
+9. ntaṣavimoketivi ‖ ttanatādraṣṭattiaigrādhānantaൗ to ‖ ssukkāralāttilaṃya
+10. ṭhākkiyāsulṛta ‖ otailokaḥpraukkaṣavimokṣatamita ‖ āṃpravyantāairataḍḍadavya
+
+TRANSCRIPTION E
+1. liṃgaṃnavinābhāvenaliṃgatajñaḥliṃga ‖ gākhyāṭṭāvākyaḥrantvāavidhaḥprappakāre
+2. naśśaḥallataḻivikameṇṇāodepaikkekhya ‖ kkumakhyācyaśācañña ‖ kkayāṭavakkimasatthaike
+3. kavidhasamāsa ‖ tonaidrakallūbhraḥāññauḍḍaṃ ‖ sakhyavitālakkamo
+4. viśālantūlara ‖ iśśaḥmailyalaṅṅoviśālolaḍa ‖ mābhintāṃgivakṣaka
+5. [illegible] raḍhaurāmaraḻa ‖ kraraṃṭṭekhoṃkrārallāticera ‖ naḥppuruṣaḥliṃgasyāvi
+6. uvṛttekkantrā ‖ ntekhondhābhāvainaṅṅūutyaka ‖ kratatratomadhāddā
+7. uvitekutela ‖ kkuddhaḥpratipatāravavimokṣā ‖ kṣaṃntyākṣauvavānā
+8. khāttāraṃbhaḥjñyala ‖ savivittititaṃkkirantyayaṭha ‖ ālaprakkarajñantupra
+9. ndakhivimokṣānavi ‖ ntantamāpraḻḻattaivikredhānanyāḥseṭhe ‖ ḥntyakkātippatyaraṃya
+10. bhākriyāntallaghra ‖ telokaḥpraukhavimokṣanamira ‖ ṃpravṛntarataralādavya
+
+TRANSCRIPTION F
+1. ddhiṣaṃnavināddhāvevanāliṃparicchinnaṃḥliṃgāvyāddhāvātmaḥśandādivi [illegible] yaḥpravṛttare
+2. sarggaḥ [illegible] ṣṭavikareṇṇāraidaparaikkur [illegible] aivyāṣṭrā [illegible] kayāṭṭivikimanassai [illegible]
+3. ṣavidhaḥsamāsa ‖ etāreda [illegible] kassarggaḥśiṣṭā [illegible] ṃ ‖ sandhivinālakkamo
+4. virālantrulabha ‖ ṇṭiḥmerdru [illegible] ābhekṣāviśvālopru ‖ modikkaṃbodhyai
+5. kṣatattṛjñanāmaraṣa ‖ ttaiḥṣṭeḥbhośrā [illegible] ryyāekṣāntricetaka ‖ naḥpṛthakṣaḥliṃgantrāvi
+6. divyarattaikkuntyā ‖ rbhaḥbhojādinālevanagṛṣṭrauḻeḻūkka ‖ prakṛtiuḻetāmahatthaṃ
+7. diviṣayairddṛtaila ‖ ṣyāntḥprati [illegible] ṅṅanāvidmākamā ‖ tthaṃnu [illegible] kkupāsanā
+8. montunoḥḍṛṃbhrava ‖ ssiviṇitibhitimittaṃbhintrāyaha ‖ āpravṛttirabbandruha
+9. ndakivibhimemākṣanimi [illegible] ttanamāprāhrāttibhe [illegible] ipreyānantyāḥkoti [illegible] tinnutivṛttyaṃśa
+10. māsthiyānyatvapyūraṃ [illegible] tanevākaḥplakka [illegible] kanavimemākṣanimittaṃpravṛttapekṣatabañcavṛ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

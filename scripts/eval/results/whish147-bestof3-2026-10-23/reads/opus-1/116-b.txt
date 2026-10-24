@@ -1,0 +1,9 @@
+ROW 1 | ഗ്രണ്ണാനന്ദ്രശ്രയതൊസങ്ക്കൊ‖ാനക്കാരണമനക്ഷംഞൊാഗാദ്രുജ്ഞമിളിശ[illegible]‖ംശരീരെമിശ്രണ്ണൊാവിക്ഷയ
+ROW 2 | ൭ഷിവബൊമന്ധാന്ദ്ദിമിര[illegible]‖ാഷ്ഠിവശമിതഃശാന്ധവമിശ്രശംച്ചാത്മിവമിശ്രശ‖ശംഗന്ധവാന്മിക്ഷയഃപാത്മി
+ROW 3 | വമിജ്ഞയഇത്തല്പക്ഷണാ[illegible]‖ാബൊദ്ധ്യാഃപാദിവശമിരംഭശ്ശകിഃശമിര‖മിത്തിഇന്ദ്രിയന്ദ്ൾയ്യതിഇന്ദ്രി
+ROW 4 | ണ്ഡിതിഃശന്ധ്രാഫ‖കമിതിപ്രകയാജ്ജനകഷനഃശ്രൊദ്ദേ‖മിതിസംജ്ഞാനാസാെ
+ROW 5 | ഗൃത്വാക്കൈയാക്കിഃ‖ഷിവമൂന്നാലത്രാക്കിവിതജ്ഞാലംചാ‖ശിയമിക്ഷയന്ദ്ൾയതി
+ROW 6 | ഉൽപാമിാരണ്ണിഃ‖ഷവാംലക്ഷണമന്മാഹസ്തതെതൈഉ‖ൽപനമിനദ്ദിജ്ഞലെ
+ROW 7 | ഞ്ഞദ്ധ്യാക്ഷിപാരണാശ‖ശിതങ്ങൾസമ്രാനാവികാരണദ്രവ്യ‖ബാപരജ്ഞാമെതൈര
+ROW 8 | ാൽവശ്യംശീതംശിലാ‖ാതലമിത്രാാതെദന്ത്ങ്ങ്ലസംബൊധാരെഭവ‖വശീതജ്ജീൾഭാനമിക്കനാ
+NOTE | I read the whole leaf, 8 rows on every piece, but most of it is low-confidence: the ink is faint and the leaf grain hides the conjuncts and vowel signs. Treat many readings, especially the conjuncts, as guesses. I joined the middle pieces (p02, p03) directly and removed the small overlap only where I could match it. The "൭" at the start of row 2 is a margin mark, probably the leaf number, and may not belong to the text.

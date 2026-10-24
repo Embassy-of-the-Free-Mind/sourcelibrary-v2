@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. vegaḥpramiśra [illegible] ṣṭyalamanonyatveḥ [illegible] ñaṭavajj [illegible] lehatvādvantāttvamātra
+2. vṛttiḥtra [illegible] prakāśakatvasyaupa [illegible] va [illegible] āpaddeśa [illegible] sabhāpakaḥkāṭṭā [illegible] pra [illegible]
+3. ttiḥcalanātmakaṃ ‖ [illegible] u [illegible] paṭedaśasaṃyogama ‖ hitru [illegible] ḻ [illegible] paṇaṃ
+4. kṣayegroṭegandha ‖ ṃotrāgamotranacake [illegible] paṇe ‖ ṃśarīrasa [illegible] ntya [illegible]
+5. ṃoyogamitra [illegible] ‖ dakko [illegible] ṃdvipra [illegible] ṣṭasaṃre [illegible] ‖ āgamitraḥprasāda
+6. triṃśi [illegible] lsa ‖ nyūṃśimalaṃtai [illegible] trāmame [illegible] naśa ‖ kkaṃsvāmitrāṃdra
+7. pratyekampravṛttiba [illegible] ṃsarttātthipadda [illegible] dravyā [illegible] dravṛṣṭārtthayāvyā
+8. candrakāraviśeṣā [illegible] ādḥ [illegible] khyādimavāyuḥ [illegible] tāsādṛśyavṛttilakṣyā
+
+TRANSCRIPTION B
+1. vegaḥpṛthivyādimahābhūtaṅṅaḻuma [illegible] nnonnattaḥ [illegible] ṭavajjanā [illegible] ttiveheturbhāvannāātmamātra
+2. vṛttiḥ [illegible] vaikṛtasya [illegible] kke [illegible] vasyāpa [illegible] kka [illegible] tta [illegible] āpakaḥkoṭādivṛndavivṛ
+3. ttiḥcalanātmakaṃ ‖ [illegible] padedagasaṃyogama ‖ hitrabhūlmakṣuvaṇaṃ
+4. ṅṅaḻeyoroṭegandha ‖ ṃrerāganetranacakeṣuvare ‖ ṃguritasantriṣṭas
+5. ṃoyāgamitrana ‖ dakaleṣuṃhivriṣṭhasaṃrekha ‖ āgamitraḥprasāda
+6. ttāṃṅṅulsa ‖ [illegible] malebhraika [illegible] trāmamajjināga ‖ ṇaṃsvādinyāṃdra
+7. ubhaikamuvṛttiba [illegible] ṃstatvā [illegible] paddi [illegible] ddravyāvādri [illegible] rddavṛttikaḻkkādyā
+8. thankhābhimega [illegible] ādaḥ [illegible] ttvasya [illegible] ṣṭhemavāyuḥ [illegible] ṣṭhanādipravṛttiyeyo
+
+TRANSCRIPTION C
+1. vegaḥpra [illegible] dyo [illegible] ṣṭamalamenno [illegible] bhiḥbha [illegible] ṭavajja [illegible] nma [illegible] hetra [illegible] vantā1ātma [illegible]
+2. vṛttiḥ [illegible] pra [illegible] kāśa [illegible] sya [illegible] kka [illegible] dava [illegible] trāpa [illegible] daka [illegible] tā [illegible] gāpakaḥkāṭa [illegible] pṛ [illegible]
+3. [illegible] bhiḥcalanātmakaṃ ‖ [illegible] pa [illegible] da [illegible] daśasaṃyogama ‖ [illegible] tra [illegible] l [illegible] vaṇaṃ1
+4. [illegible] yādegandha [illegible] ‖ ṃ [illegible] ga [illegible] trana [illegible] ca [illegible] paṇā ‖ ṃ [illegible] rasa [illegible]
+5. ṃ [illegible] yāga [illegible] tra [illegible] ‖ [illegible] ṃpra [illegible] saṃke [illegible] ‖ āga [illegible] traḥprasāna [illegible]
+6. [illegible] ṃ [illegible] l [illegible] ‖ [illegible] ma [illegible] trāma [illegible] ga ‖ [illegible] ṃsrā [illegible] ṃ [illegible]
+7. [illegible] upe [illegible] vṛttiḥ [illegible] ṃsattvā1 [illegible] pa [illegible] pṛ [illegible] tā [illegible] ga [illegible] tā [illegible]
+8. [illegible] trakāra [illegible] ga [illegible] ā2 [illegible] sa [illegible] kā [illegible] mapāyaḥ [illegible] ta [illegible] siddha [illegible] vṛtti [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

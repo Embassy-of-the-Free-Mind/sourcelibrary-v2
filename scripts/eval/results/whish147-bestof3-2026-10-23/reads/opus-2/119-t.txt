@@ -1,0 +1,9 @@
+ROW 1 | ഗുണകൎമ്മിനഷാകാശമവിജ്ഞാനപൂൎണ്ണാദിവനാനാവൈതന്ത്രഹതൈഷ്കമിതിദേദൈ
+ROW 2 | പ്രമാണാദാപാദ്ധിതൃത്ഥ്എകത്വാദ്ദേവശ്വത്തക്കാലൊപലബ്ധ്യൈഷ്വിരുകാമംശീകൎത്ത്യമിത്യ
+ROW 3 | ദഹാവിഭൂതിസൎവ്വ ‖ ശ്രുൽദ്രവ്യസംശൈയ്യാൎബ്ബംപിഭ്രബം ‖ തൽത്വംപരിത്യജ്ജ്യ
+ROW 4 | പരിമാണംവത്വം ‖ ത്വിയാവത്വംപരിമിതത്വാദെവ ‖ ദരുവപരിഭ്യമിത്യാ
+ROW 5 | ഹ.ഇതൃശക്കെത ‖ കാലംലക്ഷത്തമൽത്വതിതെ ‖ സൎവ്വയാദകൊലം
+ROW 6 | സദ്ദകാരൎത്ഥമി ‖ ഞ്ഞകാരണത്വാദിദെശാലക്കണ ‖ മാഹാത്മ്യംഷിതിദ്ധ
+ROW 7 | ഷികാത്മ്യമാഗ്ദെ ‖ നിമിത്തകാരണംശ്രുതിമനാലക്ഷ ‖ ക്ഷാമാഹാജ്ഞാനെനഷ്ക്ഷ
+ROW 8 | ജ്ഞാനംവിദ്വൽസാസചിവിപരീതാമമാത്മനൊലക്ഷമാഹാമകൃതിനിതൈക്ഷ
+NOTE | This is a low-confidence transcription. All 8 rows are visible: rows 1, 2 and 8 run full width, and rows 3–7 are split at the two holes. Row 7 also seems to start to the left of the right-hand hole, so that hole break is uncertain. Many syllables are tentative, especially the conjuncts, the ൎ forms and the word boundaries at the piece joins. I couldn't confirm the overlaps between pieces well, so some letters at the joins may be duplicated or missing. Treat this as a draft to check against the images.

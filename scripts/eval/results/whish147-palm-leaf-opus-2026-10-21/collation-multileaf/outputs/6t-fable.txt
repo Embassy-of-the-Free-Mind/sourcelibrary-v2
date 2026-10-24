@@ -1,0 +1,22 @@
+I read the leaf. The right half of every line is off the image, and lines 3 to 8 are also split by the string hole, so each verse line survives here only in pieces. Here is the collation.
+
+**Layout.** Lines 1, 2, 9 and 10 run the full visible width. Lines 3 to 8 have a short block left of the hole and a block right of it. Everything I give below is what I can see on this half; the rest of each verse is on the missing right half.
+
+**Verse lines, with my reading in IAST**
+
+- **Line 1, SK_17ab:** `...ghāta parārthatvāt triguṇādiviparyayād adhi` [right half missing]. Agrees with the edition. The first one or two akṣaras before `ta` are unclear to me but should be `saṃghā`.
+- **Line 2, SK_17d + SK_18a:** `kaivalyārthaṃ pravṛtteś ca || janana maraṇa` [right half missing]. The leaf plainly reads `pravṛtteś` with a double t and e. The edition's `pravṛtneś` is a misprint.
+- **Line 3, SK_18bc:** left of hole `pravṛtteś ca puru` (uncertain, the akṣaras are cramped), right of hole `ṣa bahutvaṃ siddhaṃ` [cut]. `bahutvaṃ siddhaṃ` is clear.
+- **Line 4, SK_19a:** left of hole `[?]ā tasmāc ca vi`, right of hole `paryāsāt siddhaṃ` [cut]. The first akṣara of the line is a conjunct I cannot identify; it may be the `va` of the preceding `caiva`. `viparyāsāt siddhaṃ` is clear and matches.
+- **Line 5, SK_19cd:** left of hole `valyaṃ mādhyasthyaṃ` (the `kai` of kaivalyam sits on the missing part of line 4), right of hole `draṣṭṛtvam akartṛbhāva` [cut]. Matches. I cannot tell whether the scribe geminated the t after r, so I make no claim about `kartṛ` vs `karttṛ`.
+- **Line 6, SK_20a:** left of hole `saṃyogād ā`, right of hole `cetanaṃ cetanāva` [cut]. Here the leaf seems to differ: after `gād` I see a sign shaped like a second long ā before the hole, which would give `saṃyogādācetanaṃ`. It may instead be the prefixed e sign of `ce` written before the gap. I rate this uncertain.
+- **Line 7, SK_20cd:** left of hole `ca tathā karte` (uncertain, worn), right of hole `va bhavaty udāsīna` [cut]. `bhavatyudāsīna` is clear and matches.
+- **Line 8, SK_21ab:** left of hole `kaivalyārthaṃ`, right of hole `[1–2 akṣaras I cannot read] pradhānasya pa` [cut]. Matches as far as read. The akṣaras before `pradhānasya` look like `gā` but I cannot make sense of them.
+- **Line 9, SK_21d / SK_22ab region:** I cannot read this line reliably. It starts with a conjunct that looks like `ṅgva`, and I see a visarga and something like `sargaḥ` in the first third, then a stretch I cannot resolve. It should contain the end of SK_21 and the start of SK_22, but I do not want to transcribe it from the edition. Note that the edition's `mahāṃs, chāyā .ahaṃ-kāras` is itself garbled for `mahāṃs tato 'haṃkāras`; I cannot confirm what the leaf has there.
+- **Line 10, SK_22cd:** `śakaḥ tasmād api ṣoḍaśakāt pañcabhyaḥ` [cut]. Clear and matches the edition. `ṣo` is partly under the string.
+
+Lines not listed are, as far as I can tell, all verse text on this half. I did not see commentary on the visible half except possibly in the unread part of line 9.
+
+DIFFERENCES:
+SK_17 | pravṛtneś | pravṛtteś | certain
+SK_20 | a-cetanaṃ | ācetanaṃ (sign after gād looks like ā) | uncertain

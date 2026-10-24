@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B is the only one that keeps the full list of the eight powers in rows 9–10 (aṇimā, mahimā, laghimā, prāptiḥ, prākāmya, īśitva, vaśitva, yatrakāmāvasāyitva) with the string holes where they should be; C is close but drops mahimā, has more gaps and loses the row structure in rows 9–11, and A is mostly garbled.

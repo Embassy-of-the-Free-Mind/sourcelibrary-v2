@@ -29,9 +29,14 @@
  *   --pages=N          Max pages per book (default: 500; not applied to --page-ids-file)
  *
  * Control:
- *   --model=lite|flash Force the model. Default: the OCR router's choice per book
- *                      (scripts/lib/ocr-routing.mjs — flash-lite for everything while
- *                      OCR_LITE_ONLY is on, except visible/new Greek, #5575).
+ *   --model=lite       Force flash-lite. Default: the OCR router's choice per book
+ *                      (scripts/lib/ocr-routing.mjs). Only flash-lite runs on the paid API
+ *                      (#7075): `--model=flash` is refused, and pages of books the router sends
+ *                      to Flash (Greek, Persian, Sanskrit, Pali, Arabic, Ge'ez, Chinese — see
+ *                      FLASH_OCR_FROM) are NOT submitted. They are listed in a page-ids file
+ *                      for the agy CLI lane (scripts/batch/cli-ocr.mjs read --page-ids-file=…).
+ *   --cli-pages-out=F  Where to write that list (default: ./cli-ocr-pages-<timestamp>.json).
+ *                      Written in --dry-run too: it is a local file, not a database write.
  *   --max-chunk-mb=N   Byte cap per file-based job's JSONL (default 40). Chunks are bounded by
  *                      bytes first and pages second (#3974: a page-count bound overflowed V8's
  *                      string limit on large scans and silently dropped the chunk).
@@ -48,12 +53,13 @@
  */
 
 import os from 'node:os';
+import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { readPageIdsFile, readBookIdsFile, chunkByBytes } from '../lib/ocr-targeting.mjs';
-import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE, isApiOcrModel, assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { batchJobProvenance, contentHash, codeVersion } from '../lib/write-provenance.mjs';
 import { logUsage, estimateBatchCostUsd } from '../workers/lib/supabase-usage-logger.mjs';
 import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
@@ -100,6 +106,11 @@ if (MODEL_CHOICE && !['flash', 'lite'].includes(MODEL_CHOICE)) {
   console.error(`--model must be flash or lite, got ${MODEL_CHOICE}`);
   process.exit(1);
 }
+if (MODEL_CHOICE === 'flash') {
+  console.error('--model=flash: Flash does not run on the paid API (#7075). Read these pages through the agy CLI lane: scripts/batch/cli-ocr.mjs read --page-ids-file=F --out=DIR');
+  process.exit(1);
+}
+const CLI_PAGES_OUT = getArg('cli-pages-out') || `cli-ocr-pages-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
 const FORCED_MODEL = MODEL_CHOICE === 'lite' ? OCR_MODEL_LITE : MODEL_CHOICE === 'flash' ? OCR_MODEL_FLASH : null;
 const BOOK_IDS = IDS_FILE ? readBookIdsFile(IDS_FILE) : null;
 const PAGE_IDS = PAGE_IDS_FILE ? readPageIdsFile(PAGE_IDS_FILE) : null;
@@ -188,6 +199,7 @@ async function uploadBatchFile(jsonlContent, displayName) {
 }
 
 async function createBatchJob(model, inputConfig, displayName, retries = 3) {
+  assertApiOcrModel(model, 'bulk-reocr-local');
   const apiKey = getBatchApiKey();
   for (let attempt = 0; attempt < retries; attempt++) {
     const response = await fetch(
@@ -452,7 +464,17 @@ async function main() {
   try {
     const promptRef = await getOcrPrompt(db);
     console.log(`  Prompt: ${promptRef.name} v${promptRef.version}`);
-    const targets = await resolveTargets(db, promptRef.version);
+    const resolved = await resolveTargets(db, promptRef.version);
+    // #7075: only flash-lite goes to the API. Pages the router sends to another model are listed
+    // for the agy CLI lane and not submitted; they wait for it.
+    const targets = resolved.filter((t) => isApiOcrModel(t.model));
+    const cliTargets = resolved.filter((t) => !isApiOcrModel(t.model));
+    if (cliTargets.length) {
+      const pageIds = cliTargets.flatMap((t) => t.pages.map((p) => p.id));
+      fs.writeFileSync(CLI_PAGES_OUT, JSON.stringify(pageIds, null, 1) + '\n');
+      console.log(`  CLI lane (#7075): ${pageIds.length} pages of ${cliTargets.length} books route to ${[...new Set(cliTargets.map((t) => t.model))].join(', ')} — NOT submitted to the API.`);
+      console.log(`    Listed in ${CLI_PAGES_OUT}; read them with: node --env-file=.env.production.local scripts/batch/cli-ocr.mjs read --page-ids-file=${CLI_PAGES_OUT} --out=DIR`);
+    }
     const promptSentHash = contentHash(promptRef.text);
     const promptBytes = Buffer.byteLength(promptRef.text);
     const runCodeVersion = await codeVersion();

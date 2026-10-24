@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three has any readable text, so none can be judged on its language; I ranked B first because its string holes fall only in the middle rows, which fits a real leaf, and it adds no stray marks, while C has the same layout plus a lone "ḥ" that isn't language and A puts holes in all eleven rows.

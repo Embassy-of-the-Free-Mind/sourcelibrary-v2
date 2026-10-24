@@ -18,6 +18,9 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { getOcrModelForBook, apiOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 const OCR_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
@@ -47,7 +50,7 @@ async function main() {
     'image_source.provider_name': 'Embassy of the Free Mind',
   }, {
     projection: {
-      id: 1, title: 1, language: 1, year: 1, published: 1,
+      id: 1, title: 1, language: 1, 'image_source.provider': 1, year: 1, published: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1,
       read_count: 1, likes_count: 1, gallery_image_count: 1,
       reading_summary: 1, index: 1, quality_score: 1, job: 1
@@ -129,6 +132,9 @@ async function main() {
       continue;
     }
 
+    // #7075: only flash-lite runs on the paid API (this job is read by the Lambda, which calls it).
+    const apiModel = apiOcrModelForBook(book);
+    if (!apiModel) { console.log(`  ${book.id}: routes to ${getOcrModelForBook(book)}, which reads through the agy CLI lane (scripts/batch/cli-ocr.mjs), not the API (#7075) — skipped`); continue; }
     const jobId = nanoid(12);
     await db.collection('jobs').insertOne({
       id: jobId,
@@ -137,7 +143,7 @@ async function main() {
       book_title: book.title,
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
+      config: { page_ids: pageIds, model: apiModel, language: book.language || 'auto-detect' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),
@@ -195,6 +201,15 @@ async function main() {
     }, { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray();
 
     if (pages.length === 0) continue;
+
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    const trust = await ocrTrustGate(db, book, { lane: 'queue-efm-priority', record: !DRY_RUN });
+    if (!trust.ok) {
+      console.log(`  REFUSED "${(book.title || '').substring(0, 50)}": ${trust.reason}`);
+      skipped++;
+      continue;
+    }
+
     const pageIds = pages.map(p => p.id);
 
     if (DRY_RUN) {
@@ -212,7 +227,7 @@ async function main() {
       book_title: book.title,
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
+      config: { page_ids: pageIds, model: getTranslateModelForBook(book), language: book.language || 'auto-detect' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),

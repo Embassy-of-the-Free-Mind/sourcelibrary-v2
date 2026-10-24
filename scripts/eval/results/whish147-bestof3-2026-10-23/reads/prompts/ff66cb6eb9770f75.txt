@@ -1,0 +1,50 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṃkha [illegible] ṭṭitamahaddi [illegible] kha [illegible] ṃkhādi [illegible] dida [illegible] śraya [illegible] ṣṭatara [illegible] hara [illegible] ṣṭaḥkha
+2. ṣa [illegible] śru [illegible] ya [illegible] śrū [illegible] tra [illegible] śru [illegible] ya [illegible] ṃjra [illegible] ḥ [illegible]
+3. ra [illegible] ḥ [illegible] ṃkha [illegible] śra [illegible] yaya [illegible] śra [illegible] ṃkha [illegible] ḥ [illegible]
+4. śra [illegible] ṃya [illegible] ḥ [illegible] ṃkha [illegible] śra [illegible] ṃ [illegible] ṃkha
+5. śra [illegible] ya ‖ [illegible] ṃkha [illegible] ‖ śra [illegible] ṃya [illegible]
+6. [illegible] śra [illegible] ‖ [illegible] ṃya [illegible] ‖ [illegible]
+7. ṃ [illegible] śra [illegible] ya ‖ śra [illegible] ‖ [illegible] ḥkha [illegible]
+8. [illegible] ‖ [illegible] śra [illegible] ‖ [illegible]
+9. [illegible] ya [illegible] ‖ [illegible] śra [illegible] ‖ [illegible] śra [illegible]
+10. śra [illegible] śra [illegible] ‖ [illegible] śra [illegible] ‖ [illegible] śra [illegible]
+11. [illegible] śra [illegible] ‖ [illegible] śra [illegible] ‖ [illegible]
+12. [illegible] śra [illegible] ‖ [illegible] ṃkha [illegible] ‖ [illegible] śra [illegible]
+
+TRANSCRIPTION B
+1. ṃbatra [illegible] ta banandilatra [illegible] laba ṃlandi yanaba [illegible] śrūyālila ‖ tāya ṃniyaśrūya ṣṭhaya ṃyi śya [illegible] śrutvaṃ bha ṇī syaṃba
+2. śa [illegible] ṃmri grūdveya ṃni agriya śrūya ṃ śśi lāya ṣaṃ ‖ śaṃle ṃbhro [illegible] śrūṃyadve praya [illegible] data [illegible] ḥladdeṃletri
+3. ra grūlā ṃba śri lṛlale gra [illegible] grūlā yāyaladayagdūbharalaga ‖ laga ṃdda le [illegible] grūlā ṃba śrū [illegible] gra ṃyāya [illegible] ḥladde
+4. lagrū ṃyaga naṃtayi [illegible] ḥlala ṃba [illegible] laṃlayalalagrū ‖ yalagrūlṛ [illegible] grū ṃśśi daya ṃdda [illegible] grūyaṃla [illegible] ṃya
+5. śru [illegible] liya ‖ lalara [illegible] grūlā ṃla baśru [illegible] lṛ ‖ grū ṃ [illegible] ya [illegible]
+6. śrū [illegible] layara [illegible] śru ‖ [illegible] grū ṃ [illegible] laśru [illegible] lala ‖ [illegible] lala [illegible] śru [illegible]
+7. [illegible] lalale [illegible] ya ‖ śrulaya [illegible] lala [illegible] lala ‖ [illegible] yaḥba [illegible] la
+8. lagrūlalara [illegible] ‖ [illegible] śru [illegible] lala ‖ laya [illegible] lala [illegible]
+9. [illegible] yalayalalalala [illegible] ‖ [illegible] laya [illegible] lala [illegible] śru [illegible] ‖ [illegible] lala [illegible] śru [illegible]
+10. grūlala [illegible] ya [illegible] yaśru ‖ [illegible] śru [illegible] laya [illegible] lala [illegible] ‖ [illegible] śru [illegible] lala [illegible]
+11. ṃna [illegible] laya [illegible] śru [illegible] ‖ [illegible] lala [illegible] lṛ ‖ [illegible] yaya [illegible] lala [illegible]
+12. ṇini [illegible] śru [illegible] śru [illegible] ‖ [illegible] lala ṃlaya [illegible] ‖ [illegible] śru [illegible] ṃlala [illegible] ‖ [illegible] gra [illegible]
+
+TRANSCRIPTION C
+1. ṃṇatra [illegible] thamaha [illegible] tha [illegible] ṇa ‖ ṇaṃ [illegible] ssi [illegible] ṇa [illegible] ppaya [illegible] nna [illegible] nniya [illegible] ya [illegible] ‖ [illegible]
+2. ya [illegible] kkā [illegible] ppa [illegible] ya [illegible] ‖ [illegible] ya [illegible] ya [illegible] ൿ [illegible] ndra [illegible] ya [illegible] ‖ [illegible] ya [illegible] ḥ [illegible]
+3. bha [illegible] ṃṇa [illegible] nna [illegible] ‖ [illegible] yaya [illegible] ya [illegible] ṃṇa [illegible] ḥ ‖ [illegible] ḥ [illegible]
+4. [illegible] ṃya [illegible] ḥ [illegible] ‖ [illegible] ṃṇa [illegible] yaya [illegible] ṃṇa [illegible] ‖ [illegible] yaṃ [illegible] ya [illegible] ṃya
+5. [illegible] ‖ [illegible] ṃṇa [illegible] ṃṇa [illegible] ‖ [illegible] ṃya [illegible]
+6. [illegible] ya [illegible] ‖ [illegible] ṃya [illegible] ya [illegible] ‖ [illegible] ya [illegible]
+7. [illegible] ya ‖ [illegible] ya [illegible] ‖ [illegible] yaḥ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] yamayamama [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ya [illegible] ‖ [illegible] ya [illegible] ‖ [illegible] ḥ [illegible]
+11. [illegible] ya [illegible] ‖ [illegible] yaya [illegible] ‖ [illegible] ya [illegible]
+12. [illegible] ya [illegible] ‖ [illegible] ṃṇa [illegible] ḥ [illegible] ṃṇa [illegible] ‖ [illegible] ḥ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

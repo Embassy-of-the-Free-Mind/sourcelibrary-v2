@@ -100,6 +100,42 @@ export const COLLECTION_COVER_OVERRIDES: Record<string, string> = {
   // "An Account of the Plant" had no cover at all; a botanical scene from its books.
   'cannabis-western-record':
     'https://images.sourcelibrary.org/gallery/69e9618b2beefe2f6f72bcd1/69e9618b2beefe2f6f72bd7d-0.jpg',
+  // Was an initial-letter crop; now a manuscript diagram from its books.
+  'perennial-philosophy':
+    'https://images.sourcelibrary.org/gallery/6955739df63a7571091720cf/6955739df63a757109172118-0-thumb.jpg',
+  // Was the title page of a book on another subject; now a tree-of-letters emblem.
+  'art-of-memory':
+    'https://images.sourcelibrary.org/gallery/69527313ab34727b1f048b15/69591186ecb01322b306a37e-0-thumb.jpg',
+  // Was a blank book cover; now a plate of Byzantine ivory combs.
+  'byzantine-bridge':
+    'https://images.sourcelibrary.org/gallery/69aea5c30fefd7831dcdb048/69aea5c30fefd7831dcdb149-3-thumb.jpg',
+  // Was an initial plus a library stamp; now an early printed woodcut page.
+  'printing-press-revolution':
+    'https://images.sourcelibrary.org/archived/699200a2768b426600239dc3/408.jpg',
+  // Was a Chinese monk portrait; now rock-cut guardian figures.
+  'global-demonology':
+    'https://images.sourcelibrary.org/gallery/69907b1c5f855ec553e709bb/69907b1c5f855ec553e70a3e-0-thumb.jpg',
+  // Was the same cosmos frontispiece as Music of the Spheres; now talismanic seals.
+  'women-of-the-secret-tradition':
+    'https://images.sourcelibrary.org/gallery/6953e36a77f38f6761becbcd/6953e36a77f38f6761bece51-0-thumb.jpg',
+  // Was the same Mercury image as Newton's Other Science; now a coloured emblem landscape.
+  'alchemical-emblem':
+    'https://images.sourcelibrary.org/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044180-0-thumb.jpg',
+  // Was a text-only title page; now a woodcut of a figure beneath a tree.
+  'nova-reperta':
+    'https://images.sourcelibrary.org/gallery/6953e59677f38f6761bf0f90/6953e59677f38f6761bf1133-0-thumb.jpg',
+  // Was a diagram crowded with text; now three theologians in an engraved frame.
+  'forbidden-books':
+    'https://images.sourcelibrary.org/gallery/6953e47777f38f6761bee635/6953e47777f38f6761bee63c-0-thumb.jpg',
+  // Was a handwritten page on a dark scan; now the annotated title page of Spinoza's Opera posthuma.
+  'index-librorum-prohibitorum':
+    'https://images.sourcelibrary.org/archived/69b17be3938cbe91c8720452/3.jpg',
+  // Was a hard-to-read Sanskrit grid; now a red-ruled Sanskrit manuscript leaf.
+  'ayurveda':
+    'https://images.sourcelibrary.org/gallery/69907d97aee9f4aa5859304e/69907d97aee9f4aa58593056-0-thumb.jpg',
+  // Was a faint pencil diagram; now a coloured herbal figure.
+  'great-manuscripts':
+    'https://images.sourcelibrary.org/gallery/6991c5853074a1745a41199b/6991c5853074a1745a4119b6-0-thumb.jpg',
 };
 
 /** The override URL for a collection slug, if one is curated. */
@@ -187,4 +223,24 @@ export function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Pr
     }),
     new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
   ]);
+}
+
+// ---------- Highlight membership ----------
+
+/**
+ * Whether a curated highlight's book may be shown on a collection: it must be a
+ * MEMBER (`books.collections` holds the slug) with something to open — pages, or
+ * an artwork (`resource_type`). `highlighted_books` is a list of ids written by
+ * hand, by old bulk curation, and by sweeps, and nothing re-checks it when a
+ * book is untagged or retagged: /collections/maya opened ("Start here") on
+ * Herold's Heydenweldt, which was never in the collection, and 148 highlights in
+ * 50 collections pointed at non-members (#6899). The caller must project
+ * `collections` — a guard over a projected-away field drops everything.
+ */
+export function isHighlightMember(
+  book: Record<string, unknown> | null | undefined,
+  slug: string,
+): boolean {
+  if (!book || !Array.isArray(book.collections) || !book.collections.includes(slug)) return false;
+  return (Number(book.pages_count) || 0) > 0 || !!book.resource_type;
 }

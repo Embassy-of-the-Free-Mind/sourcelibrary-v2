@@ -211,7 +211,7 @@ function EvidenceFooter({
   showExternalLinks: boolean;
 }) {
   const methodology = showExternalLinks ? (
-    <>{' '}&middot;{' '}<a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>
+    <>{' '}&middot;{' '}<a href="/articles/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>
   ) : null;
 
   const date = attempt?.date ?? legacy?.verified_at;

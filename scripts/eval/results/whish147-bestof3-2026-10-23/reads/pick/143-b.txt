@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | Row 1 of A is garbled, but its colophon rows read as real text: "kollaṃ 997" (Kollam era 997, which is 1822 CE and matches the manuscript's date), "iṭavamāsaṃ" (the month Edavam), the Malayalam "el̤utitīrnnu" ("finished writing") and "śrīparamagurubhyonamaḥ". B has a cleaner first row but many [illegible] gaps after it, and C breaks down into nonsense syllables in row 2.

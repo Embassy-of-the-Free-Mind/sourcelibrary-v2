@@ -1,0 +1,128 @@
+[
+ {
+  "id": "i9e85ac5e",
+  "page_id": "69b99ec16ed9e0490990a70d",
+  "kind": "pair",
+  "X": "new",
+  "Y": "old"
+ },
+ {
+  "id": "i5d3f265a",
+  "page_id": "69b99ec16ed9e0490990a725",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "i30b451fd",
+  "page_id": "69b99ec16ed9e0490990a805",
+  "kind": "pair",
+  "X": "new",
+  "Y": "old"
+ },
+ {
+  "id": "i3b86ce8c",
+  "page_id": "69d5ae284dc55b8478de0f9f",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "id6a855fa",
+  "page_id": "6a09ff0029abf62080bbd974",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "ia9115ef8",
+  "page_id": "6a09ff0429abf62080bbdb64",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "ie60dbdd5",
+  "page_id": "6a09ff0429abf62080bbdb6d",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "idf7ec536",
+  "page_id": "6a09ff1629abf62080bbdc56",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "id806c4ff",
+  "page_id": "6a09ff1629abf62080bbdc78",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "iabf6f059",
+  "page_id": "6a09ff1629abf62080bbdcc2",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "ia91bc0ac",
+  "page_id": "6a09ff1dfa20006dbaba89ab",
+  "kind": "pair",
+  "X": "new",
+  "Y": "old"
+ },
+ {
+  "id": "id1209903",
+  "page_id": "6a09ff65fa20006dbaba93d5",
+  "kind": "pair",
+  "X": "new",
+  "Y": "old"
+ },
+ {
+  "id": "i6f350d16",
+  "page_id": "6a09ff65fa20006dbaba93d9",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "i74618d3e",
+  "page_id": "6a31c8b74400787ae5a9d7bb",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "i67754724",
+  "page_id": "6a31c8b74400787ae5a9d7bc",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "icb39cc26",
+  "page_id": "6a31c8b74400787ae5a9d7bf",
+  "kind": "pair",
+  "X": "old",
+  "Y": "new"
+ },
+ {
+  "id": "ia05def46",
+  "page_id": "69b99ec16ed9e0490990a70d",
+  "kind": "control",
+  "X": "wrong",
+  "Y": "right"
+ },
+ {
+  "id": "i97e8ac35",
+  "page_id": "69b99ec16ed9e0490990a725",
+  "kind": "control",
+  "X": "right",
+  "Y": "wrong"
+ }
+]

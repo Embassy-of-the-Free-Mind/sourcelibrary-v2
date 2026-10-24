@@ -1,0 +1,146 @@
+{
+ "_comment": "Theme names were written by reading each theme's keywords and sample passages in clusters.txt (map.py), 2026-10-20. Families group themes for colour; family keys map to colours in FigureMap.tsx. stories: keyword stories for the family tree, matched with word boundaries over the whole harvest (tree.py).",
+ "families": [
+  {
+   "key": "soul",
+   "name": "The soul and its journeys",
+   "themes": [
+    34,
+    32,
+    12,
+    0,
+    30
+   ]
+  },
+  {
+   "key": "cosmos",
+   "name": "Cosmos and nature",
+   "themes": [
+    9,
+    2,
+    29,
+    20,
+    5,
+    21
+   ]
+  },
+  {
+   "key": "number",
+   "name": "Number",
+   "themes": [
+    28,
+    22,
+    26,
+    23,
+    24,
+    27,
+    25,
+    10,
+    18
+   ]
+  },
+  {
+   "key": "music",
+   "name": "Harmony and music",
+   "themes": [
+    11
+   ]
+  },
+  {
+   "key": "life",
+   "name": "The way of life",
+   "themes": [
+    17,
+    16,
+    33,
+    15,
+    19,
+    1,
+    3,
+    8,
+    38,
+    31
+   ]
+  },
+  {
+   "key": "legend",
+   "name": "The man, his books and his school",
+   "themes": [
+    41,
+    37,
+    43,
+    44,
+    36,
+    35,
+    40,
+    42,
+    39
+   ]
+  },
+  {
+   "key": "pseudo",
+   "name": "The alchemists’ and herbalists’ Pythagoras",
+   "themes": [
+    6,
+    7,
+    13,
+    4,
+    14
+   ]
+  }
+ ],
+ "names": {
+  "34": "The soul passes from body to body",
+  "32": "Euphorbus and his earlier lives",
+  "12": "The freed soul in the pure ether",
+  "0": "Do not leave your post without the commander’s order",
+  "30": "Gods, daimons and the ladder of beings",
+  "9": "Stars, sun and the central fire",
+  "2": "The void and the breathing cosmos",
+  "29": "Was the world made, and can it perish?",
+  "20": "The four elements",
+  "5": "Colour as the surface of a body",
+  "21": "The infinite and the limit",
+  "28": "Number as the principle of things",
+  "22": "The one and the two",
+  "26": "From monad to decad",
+  "23": "Three: beginning, middle and end",
+  "24": "Odd and even",
+  "27": "Perfect numbers: ten, six, marriage",
+  "25": "The oath by the tetractys",
+  "10": "The first cause called Opportunity",
+  "18": "Two principles, good and evil",
+  "11": "Harmony and the music of the spheres",
+  "17": "Abstaining from animals",
+  "16": "Beans",
+  "33": "Five years of silence",
+  "15": "The symbols: ring, light, sacrifice",
+  "19": "Do not walk the public road",
+  "1": "Friends hold all things in common",
+  "3": "Speaking darkly to outsiders",
+  "8": "Justice as reciprocity",
+  "38": "Virtue, piety and the gods",
+  "31": "Truth and kindness make men like God",
+  "41": "The first to call himself a lover of wisdom",
+  "37": "The teacher and his school in Italy",
+  "43": "Lysis, Archippus and the teaching handed down",
+  "44": "Ancient theology: Pythagoras, Egypt and Moses",
+  "36": "“Pythagoras and Plato held…”",
+  "35": "What the Pythagoreans called things",
+  "40": "Sayings, riddles and odd attributions",
+  "42": "The Golden Verses and books under his name",
+  "39": "The Golden Verses and their commentators",
+  "6": "The Turba: “clean water is from sulfur alone”",
+  "7": "Sulfur, quicksilver and the white and red",
+  "13": "Pythagoras among the adepts",
+  "4": "Secret plant names: “Pythagoras calls it…”",
+  "14": "Herbs: mustard, rue and their powers"
+ },
+ "stories": [
+  {
+   "key": "hammers",
+   "name": "The smiths’ hammers",
+   "match": "hammers?|anvils?|(black)?smiths?|smithy"
+  }
+ ]
+}

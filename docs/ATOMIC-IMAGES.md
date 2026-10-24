@@ -137,7 +137,6 @@ GET /api/gallery/image/{pageId}:{index}
 
 **Social sharing:**
 - `/gallery/image/{id}` - Detail page with zoom and share
-- `/gallery/image/{id}/opengraph-image` - Generated preview cards
 
 ## Data Model
 
@@ -196,7 +195,7 @@ page: {
 | Job Processing | `/src/app/api/jobs/[id]/process/route.ts` |
 | Review UI | `/src/app/gallery/review/page.tsx` |
 | Image Detail Page | `/src/app/gallery/image/[id]/page.tsx` |
-| OpenGraph Image | `/src/app/gallery/image/[id]/opengraph-image.tsx` |
+| OpenGraph Image | the plate itself, set in `/src/app/gallery/image/[id]/layout.tsx` (#4286) |
 | Crop API | `/src/app/api/crop-image/route.ts` |
 
 ## Usage Examples

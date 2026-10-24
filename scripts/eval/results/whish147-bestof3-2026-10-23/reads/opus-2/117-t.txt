@@ -1,0 +1,10 @@
+ROW 1 | [illegible]വ്യാപ്തിഃ ശ[illegible]ൽ സമ്പ്രദൃഷ്ടമിത്യാവ്യാവ്യൈശം॰ തെജ്ഞാലക്ഷ്മണമാഹഃ ഉഷ്ണസൾവഭിമിഉഷ്ണ
+ROW 2 | [illegible]ജ്ഞലമിതിപ്രതീതെതൊഷ്ണജ്ഞജ്ഞ॰ ബെസ്യാസന്മിധിയാമിത്വാന്നാതിവ്യാപ്തിഃ വിഷയം॰ വിട്ടജ്ജെ
+ROW 3 | തെടുമെമിതാന്യവണ്ണ॰ പാത്മിപ॰ ഷ്മിതത്രുതങ്ങൾത്വാൾഗുരുത്വാദ്ദി॰ ശാന്ദ്രാഭിവദ്ധിതെ
+ROW 4 | ചന॰ ആത്രാന്ന ‖ ലസം॰ ഒയാഗെസതിൎവ്യതാരെദ്വാ ‖ ദ്രവത്വാന്മകൾനെ
+ROW 5 | നജ്ജലമധൂമെസ്വ ‖ ഭൃതൊനാമശാദ്ദൽനെനാസതി ‖ പ്രതിബന്ധകാഭാ
+ROW 6 | ത്ഥിവദ്ദ്വ്യത്വനാ ‖ ശാന്മിസം॰ ഒഞാശാഗയൊഃ കൊാഷ്ഠ ‖ കാരണഭൂതവായ്വാ
+ROW 7 | ണൊൽസ്യവണ്ണാസ്യ ‖ ാതൃന്തനലസം॰ യൊഗസമി[illegible] ‖ [illegible]നജ്ഞിദ്ദമാനദ്രവത്വാദി
+ROW 8 | ഭിവരതൊതൊനവ ‖ ത്ഥിവത്വാന്മപകമതഃ ക്രൊൎദ്ധമിതു[illegible] ‖ [illegible]ദ്രവത്വനാശപ്രതിബ
+ROW 9 | സ്ഥിതയൊദ്വൃദ്ദ്വ[illegible] ‖ ാനരസ്ബിതൈ[illegible]ഒനമിത്തികരുവത്വാൽ ‖ ധികാരണൊതയൊജ്ജലത്വാ
+NOTE | All 9 rows are mapped and roughly read, but this is a low-confidence draft, so check every row against the images. The left-column and middle-column parts are the least certain. Ligatures, vowel signs and where words divide are often guesses, and I may not have removed all the overlap text cleanly at the piece edges.

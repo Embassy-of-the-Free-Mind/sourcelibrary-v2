@@ -4,7 +4,7 @@
 # down: after a copy PR merges, run the checker with --tighten and commit the result.
 # Raising a number needs a reason a reviewer agrees with (a quoted source, a model
 # prompt, a parser that must match an em dash in data). Empty cells take an en dash.
-src/app/about/by-the-numbers/page.tsx 14  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/articles/by-the-numbers/page.tsx 14  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/about/faq/page.tsx 17  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/about/models/page.tsx 4  # compares against the '—' sentinel in src/data/public-models.ts (never rendered); rest rewritten in a #6215 copy PR
 src/app/about/page.tsx 16  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -120,81 +120,81 @@ src/app/author/[name]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten afte
 src/app/beta/BetaLandingClient.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/beta/layout.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/bhutan-library/page.tsx 23  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/blog/10000-books/page.tsx 16  # blog copy, owned by the blog job (#6215)
-src/app/blog/2000-first-translations/page.tsx 39  # blog copy, owned by the blog job (#6215)
-src/app/blog/astrological-diagrams/page.tsx 61  # blog copy, owned by the blog job (#6215)
-src/app/blog/atlas-of-lost-instruments/page.tsx 3  # blog copy, owned by the blog job (#6215)
-src/app/blog/autonomous-agents/page.tsx 24  # blog copy, owned by the blog job (#6215)
-src/app/blog/cannabis-bangue/page.tsx 17  # blog copy, owned by the blog job (#6215)
-src/app/blog/carbon-ledger/methodology/page.tsx 11  # blog copy, owned by the blog job (#6215)
-src/app/blog/carbon-ledger/page.tsx 30  # blog copy, owned by the blog job (#6215)
-src/app/blog/cellulae/page.tsx 28  # blog copy, owned by the blog job (#6215)
-src/app/blog/chakra-tradition/page.tsx 24  # blog copy, owned by the blog job (#6215)
-src/app/blog/clustering/page.tsx 26  # blog copy, owned by the blog job (#6215)
-src/app/blog/confident-hallucinator/page.tsx 57  # blog copy, owned by the blog job (#6215)
-src/app/blog/counting-first-translations/page.tsx 32  # blog copy, owned by the blog job (#6215)
-src/app/blog/counting-the-gap/page.tsx 29  # blog copy, owned by the blog job (#6215)
-src/app/blog/cuneiform-ocr/page.tsx 109  # blog copy, owned by the blog job (#6215)
-src/app/blog/demonology/page.tsx 45  # blog copy, owned by the blog job (#6215)
-src/app/blog/did-an-ai-write-the-encyclical/page.tsx 38  # blog copy, owned by the blog job (#6215)
-src/app/blog/did-the-ai-read-this/page.tsx 11  # blog copy, owned by the blog job (#6215)
-src/app/blog/does-ai-get-religion/page.tsx 14  # blog copy, owned by the blog job (#6215)
-src/app/blog/fechner-bohme/page.tsx 49  # blog copy, owned by the blog job (#6215)
-src/app/blog/fire-horse/page.tsx 47  # blog copy, owned by the blog job (#6215)
-src/app/blog/first-translation-methodology/page.tsx 48  # blog copy, owned by the blog job (#6215)
-src/app/blog/first-translations/page.tsx 27  # blog copy, owned by the blog job (#6215)
-src/app/blog/fish-voiced-priest/page.tsx 36  # blog copy, owned by the blog job (#6215)
-src/app/blog/free-reading/page.tsx 3  # blog copy, owned by the blog job (#6215)
-src/app/blog/greek-lemma-table/page.tsx 23  # blog copy, owned by the blog job (#6215)
-src/app/blog/greek-lemma-table/ShapeCloud.tsx 2  # blog copy, owned by the blog job (#6215)
-src/app/blog/hidden-engineers/page.tsx 60  # blog copy, owned by the blog job (#6215)
-src/app/blog/hieroglyph-ocr/page.tsx 21  # blog copy, owned by the blog job (#6215)
-src/app/blog/history-of-astrology/page.tsx 58  # blog copy, owned by the blog job (#6215)
-src/app/blog/history-of-classification/page.tsx 55  # blog copy, owned by the blog job (#6215)
-src/app/blog/hogwarts-library/page.tsx 78  # blog copy, owned by the blog job (#6215)
-src/app/blog/how-big-is-the-library/page.tsx 19  # blog copy, owned by the blog job (#6215)
-src/app/blog/how-long-to-translate/page.tsx 4  # blog copy, owned by the blog job (#6215)
-src/app/blog/how-these-are-made/page.tsx 14  # blog copy, owned by the blog job (#6215)
-src/app/blog/iiif/page.tsx 60  # blog copy, owned by the blog job (#6215)
-src/app/blog/incunabula-knowledge-graph/page.tsx 28  # blog copy, owned by the blog job (#6215)
-src/app/blog/indigenous-traditions/page.tsx 57  # blog copy, owned by the blog job (#6215)
-src/app/blog/interlinear-experiment/page.tsx 14  # blog copy, owned by the blog job (#6215)
-src/app/blog/invisible-hand/page.tsx 59  # blog copy, owned by the blog job (#6215)
-src/app/blog/man-his-own-maker/page.tsx 82  # blog copy, owned by the blog job (#6215)
-src/app/blog/mcp-server/page.tsx 26  # blog copy, owned by the blog job (#6215)
-src/app/blog/naked-philosophers/page.tsx 42  # blog copy, owned by the blog job (#6215)
-src/app/blog/nature-of-harmony/page.tsx 76  # blog copy, owned by the blog job (#6215)
-src/app/blog/ngram-viewer/page.tsx 23  # blog copy, owned by the blog job (#6215)
-src/app/blog/nine-models-forty-pages/page.tsx 29  # blog copy, owned by the blog job (#6215)
-src/app/blog/nobody-knows-what-has-been-scanned/page.tsx 17  # blog copy, owned by the blog job (#6215)
-src/app/blog/ocr-consistency/page.tsx 25  # blog copy, owned by the blog job (#6215)
-src/app/blog/origin-story/page.tsx 29  # blog copy, owned by the blog job (#6215)
-src/app/blog/philosophers-stone/page.tsx 45  # blog copy, owned by the blog job (#6215)
-src/app/blog/playable-page/page.tsx 17  # blog copy, owned by the blog job (#6215)
-src/app/blog/posts.ts 39  # blog copy, owned by the blog job (#6215)
-src/app/blog/progress-studies/page.tsx 48  # blog copy, owned by the blog job (#6215)
-src/app/blog/rashi-ocr/page.tsx 31  # blog copy, owned by the blog job (#6215)
-src/app/blog/reading-classical-chinese/page.tsx 31  # blog copy, owned by the blog job (#6215)
-src/app/blog/reciting-not-reading/page.tsx 19  # blog copy, owned by the blog job (#6215)
-src/app/blog/rithmomachia/page.tsx 67  # blog copy, owned by the blog job (#6215)
-src/app/blog/show-me-the-number/page.tsx 39  # blog copy, owned by the blog job (#6215)
-src/app/blog/singularity-1486/page.tsx 58  # blog copy, owned by the blog job (#6215)
-src/app/blog/sound-laboratory/page.tsx 36  # blog copy, owned by the blog job (#6215)
-src/app/blog/suda-benchmark/page.tsx 61  # blog copy, owned by the blog job (#6215)
-src/app/blog/technique-is-local/page.tsx 38  # blog copy, owned by the blog job (#6215)
-src/app/blog/the-deletion/page.tsx 50  # blog copy, owned by the blog job (#6215)
-src/app/blog/the-giants-werent-translated/page.tsx 23  # blog copy, owned by the blog job (#6215)
-src/app/blog/tibetan-ocr/page.tsx 23  # blog copy, owned by the blog job (#6215)
-src/app/blog/translation-collapse/page.tsx 22  # blog copy, owned by the blog job (#6215)
-src/app/blog/translation-rate/page.tsx 20  # blog copy, owned by the blog job (#6215)
-src/app/blog/translations-across-civilizations/page.tsx 27  # blog copy, owned by the blog job (#6215)
-src/app/blog/two-copies-two-languages/page.tsx 19  # blog copy, owned by the blog job (#6215)
-src/app/blog/untranslated-renaissance/page.tsx 43  # blog copy, owned by the blog job (#6215)
-src/app/blog/visualizing-classification/page.tsx 9  # blog copy, owned by the blog job (#6215)
-src/app/blog/what-makes-a-good-scan/page.tsx 37  # blog copy, owned by the blog job (#6215)
-src/app/blog/why-terminals-cant-edit/page.tsx 18  # blog copy, owned by the blog job (#6215)
-src/app/blog/word-alignment/page.tsx 7  # blog copy, owned by the blog job (#6215)
-src/app/blog/worlds-largest-collection/page.tsx 37  # blog copy, owned by the blog job (#6215)
+src/app/articles/10000-books/page.tsx 16  # blog copy, owned by the blog job (#6215)
+src/app/articles/2000-first-translations/page.tsx 39  # blog copy, owned by the blog job (#6215)
+src/app/articles/astrological-diagrams/page.tsx 61  # blog copy, owned by the blog job (#6215)
+src/app/articles/atlas-of-lost-instruments/page.tsx 3  # blog copy, owned by the blog job (#6215)
+src/app/articles/autonomous-agents/page.tsx 24  # blog copy, owned by the blog job (#6215)
+src/app/articles/cannabis-bangue/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/articles/carbon-ledger/methodology/page.tsx 11  # blog copy, owned by the blog job (#6215)
+src/app/articles/carbon-ledger/page.tsx 30  # blog copy, owned by the blog job (#6215)
+src/app/articles/cellulae/page.tsx 28  # blog copy, owned by the blog job (#6215)
+src/app/articles/chakra-tradition/page.tsx 24  # blog copy, owned by the blog job (#6215)
+src/app/articles/clustering/page.tsx 26  # blog copy, owned by the blog job (#6215)
+src/app/articles/confident-hallucinator/page.tsx 57  # blog copy, owned by the blog job (#6215)
+src/app/articles/counting-first-translations/page.tsx 32  # blog copy, owned by the blog job (#6215)
+src/app/articles/counting-the-gap/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/articles/cuneiform-ocr/page.tsx 109  # blog copy, owned by the blog job (#6215)
+src/app/articles/demonology/page.tsx 45  # blog copy, owned by the blog job (#6215)
+src/app/articles/did-an-ai-write-the-encyclical/page.tsx 38  # blog copy, owned by the blog job (#6215)
+src/app/articles/did-the-ai-read-this/page.tsx 11  # blog copy, owned by the blog job (#6215)
+src/app/articles/does-ai-get-religion/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/articles/fechner-bohme/page.tsx 49  # blog copy, owned by the blog job (#6215)
+src/app/articles/fire-horse/page.tsx 47  # blog copy, owned by the blog job (#6215)
+src/app/articles/first-translation-methodology/page.tsx 48  # blog copy, owned by the blog job (#6215)
+src/app/articles/first-translations/page.tsx 27  # blog copy, owned by the blog job (#6215)
+src/app/articles/fish-voiced-priest/page.tsx 36  # blog copy, owned by the blog job (#6215)
+src/app/articles/free-reading/page.tsx 3  # blog copy, owned by the blog job (#6215)
+src/app/articles/greek-lemma-table/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/articles/greek-lemma-table/ShapeCloud.tsx 2  # blog copy, owned by the blog job (#6215)
+src/app/articles/hidden-engineers/page.tsx 60  # blog copy, owned by the blog job (#6215)
+src/app/articles/hieroglyph-ocr/page.tsx 21  # blog copy, owned by the blog job (#6215)
+src/app/articles/history-of-astrology/page.tsx 58  # blog copy, owned by the blog job (#6215)
+src/app/articles/history-of-classification/page.tsx 55  # blog copy, owned by the blog job (#6215)
+src/app/articles/hogwarts-library/page.tsx 78  # blog copy, owned by the blog job (#6215)
+src/app/articles/how-big-is-the-library/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/articles/how-long-to-translate/page.tsx 4  # blog copy, owned by the blog job (#6215)
+src/app/articles/how-these-are-made/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/articles/iiif/page.tsx 60  # blog copy, owned by the blog job (#6215)
+src/app/articles/incunabula-knowledge-graph/page.tsx 28  # blog copy, owned by the blog job (#6215)
+src/app/articles/indigenous-traditions/page.tsx 57  # blog copy, owned by the blog job (#6215)
+src/app/articles/interlinear-experiment/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/articles/invisible-hand/page.tsx 59  # blog copy, owned by the blog job (#6215)
+src/app/articles/man-his-own-maker/page.tsx 82  # blog copy, owned by the blog job (#6215)
+src/app/articles/mcp-server/page.tsx 26  # blog copy, owned by the blog job (#6215)
+src/app/articles/naked-philosophers/page.tsx 42  # blog copy, owned by the blog job (#6215)
+src/app/articles/nature-of-harmony/page.tsx 76  # blog copy, owned by the blog job (#6215)
+src/app/articles/ngram-viewer/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/articles/nine-models-forty-pages/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/articles/nobody-knows-what-has-been-scanned/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/articles/ocr-consistency/page.tsx 25  # blog copy, owned by the blog job (#6215)
+src/app/articles/origin-story/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/articles/philosophers-stone/page.tsx 45  # blog copy, owned by the blog job (#6215)
+src/app/articles/playable-page/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/articles/posts.ts 39  # blog copy, owned by the blog job (#6215)
+src/app/articles/progress-studies/page.tsx 48  # blog copy, owned by the blog job (#6215)
+src/app/articles/rashi-ocr/page.tsx 31  # blog copy, owned by the blog job (#6215)
+src/app/articles/reading-classical-chinese/page.tsx 31  # blog copy, owned by the blog job (#6215)
+src/app/articles/reciting-not-reading/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/articles/rithmomachia/page.tsx 67  # blog copy, owned by the blog job (#6215)
+src/app/articles/show-me-the-number/page.tsx 39  # blog copy, owned by the blog job (#6215)
+src/app/articles/singularity-1486/page.tsx 58  # blog copy, owned by the blog job (#6215)
+src/app/articles/sound-laboratory/page.tsx 36  # blog copy, owned by the blog job (#6215)
+src/app/articles/suda-benchmark/page.tsx 61  # blog copy, owned by the blog job (#6215)
+src/app/articles/technique-is-local/page.tsx 38  # blog copy, owned by the blog job (#6215)
+src/app/articles/the-deletion/page.tsx 50  # blog copy, owned by the blog job (#6215)
+src/app/articles/the-giants-werent-translated/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/articles/tibetan-ocr/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/articles/translation-collapse/page.tsx 22  # blog copy, owned by the blog job (#6215)
+src/app/articles/translation-rate/page.tsx 20  # blog copy, owned by the blog job (#6215)
+src/app/articles/translations-across-civilizations/page.tsx 27  # blog copy, owned by the blog job (#6215)
+src/app/articles/two-copies-two-languages/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/articles/untranslated-renaissance/page.tsx 43  # blog copy, owned by the blog job (#6215)
+src/app/articles/visualizing-classification/page.tsx 9  # blog copy, owned by the blog job (#6215)
+src/app/articles/what-makes-a-good-scan/page.tsx 37  # blog copy, owned by the blog job (#6215)
+src/app/articles/why-terminals-cant-edit/page.tsx 18  # blog copy, owned by the blog job (#6215)
+src/app/articles/word-alignment/page.tsx 7  # blog copy, owned by the blog job (#6215)
+src/app/articles/worlds-largest-collection/page.tsx 37  # blog copy, owned by the blog job (#6215)
 src/app/book/[id]/edition/[editionId]/review/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/book/[id]/overview/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/book/[id]/page/[pageId]/error.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -216,7 +216,7 @@ src/app/census/CensusSearch.tsx 2  # rewritten in a #6215 copy PR; --tighten aft
 src/app/census/page.tsx 17  # server-side throw, reader sees the generic error page; rest rewritten in a #6215 copy PR
 src/app/check/[token]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collection-areas/[id]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/collections/drebbel/beeckman/passages.ts 1  # quoted historical source (Beeckman's journal)
+src/app/articles/beeckman-on-drebbel/passages.ts 1  # quoted historical source (Beeckman's journal)
 src/app/collections/[id]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collections/jung-resonances/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collections/mycology/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -347,7 +347,7 @@ src/app/roadmap/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it m
 src/app/scan/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/search/layout.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/search/visual/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/specimen/aldine/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/articles/aldine-roman/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/sponsors/page.tsx 15  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/status/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/support/business/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -370,7 +370,6 @@ src/app/works/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it mer
 src/components/account/ProfilePhotoEditor.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/charts/MultiLineChart.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/tabs/BooksTab.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
-src/components/analytics/tabs/PipelineTab.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/TrafficDashboard.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkHero.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkInfo.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -501,6 +500,6 @@ src/components/ui/SaveToListButton.tsx 1  # rewritten in a #6215 copy PR; --tigh
 src/components/ui/ShareButton.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/welcome/WelcomeForm.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/work/LocusJumpBox.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/blog/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/articles/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)

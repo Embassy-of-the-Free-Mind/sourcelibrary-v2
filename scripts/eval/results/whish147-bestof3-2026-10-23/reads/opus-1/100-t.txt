@@ -1,0 +1,12 @@
+ROW 1 | [illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | ഹേതു[illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]
+ROW 9 | [illegible]
+ROW 10 | [illegible]
+ROW 11 | [illegible]
+NOTE | I couldn't make a reliable transcription. The leaf has 11 rows: rows 1–3 and 8–11 run the full width, and rows 4–7 are broken by the two holes into left, middle and right columns. At this image resolution I can't tell similar Malayalam letters and conjuncts apart, so the only partial reading is "ഹേതു" at the start of row 7, and that is uncertain. I chose not to guess or fill in from the Sāṅkhyakārikā. Higher-resolution scans of each piece would make a real transcription possible.

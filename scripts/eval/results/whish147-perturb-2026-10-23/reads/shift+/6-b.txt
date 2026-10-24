@@ -1,0 +1,10 @@
+ROW 1 | ഷ്ടഖീയമെന്നൂജ്ഞാനം.വി.[illegible]ാഗമൈകപക്ഷം.സാങ്കികമെക്കൂപം.കമസമസ്തദിപദ്രു[illegible]ന്നുതാഘു!
+ROW 2 | ജ്ജിമാനെന്നാപാ.ക[illegible]നങ്ക്ങാദിവിയഃപ്രവൃത്തകൈസത്ഥ:ഏകാദശകണ്ഠ[illegible]ത്ഃ.ക്ലൃഷ്മ൨
+ROW 3 | ശ്രാവഷ്കിക്കളൈക്കി ‖ പഷ്ടഃസാങ്കികഏകാദശകഃ ‖ പ്രവൃത്തൈഃ[illegible]തവൈ
+ROW 4 | ക്കരാദ്ധ്യംക്കാര ‖ ാന്ത്രകാദശ്ശങ്കമാത്രസങ്കമ ‖ തദൈക്കജ്ജസാട്ടട
+ROW 5 | ശ്യാ:ഷയ്ത്!ജ്ഞമി ‖ ദ്രിയാണിചക്ഷുശ്ശ്രോത്രൂത്രാണി ‖ നസന്നാമഗാഗ്യ്രാ
+ROW 6 | ത്രിവാക്പാണി ‖ ജ്ഞപാദപായൂപസ്ഥാൻകൊക്കു ‖ ഇതാഘുരപ്രേഡ്ഡ്വ
+ROW 7 | ഉദയാമെകിമ ‖ ത്രമനസ്സ്.കള്ളിക്കിമിത്രിണ്ടോസ്ര ‖ യക്രാൽഗുണേവന്നി
+ROW 8 | ഞാമതിളെശമാനാനായെടൊഹ്വെട്ടത്രാകം!ഡ്യത്ഃഗസ്ത്രേപാമിഷ്യപക്ഷോ
+ROW 9 | ഞാന്ത്രാല്ലാചനമമചക്രമിണ്ണലൈപക്കീ:പചസാദരളവിഹാനലൈത്രാഭസ്ത്രീനത്രാഷ്
+NOTE | All five pieces join into 9 rows: rows 1–2 and 8–9 run the full width, rows 3–7 are split into columns. Most glyphs are only partly certain, so treat this as a low-confidence draft: many consonant clusters, vowel signs and reph/dot marks are tentative, and I didn't mark every uncertain one. The ends of rows 1–2 at the right edge, and the joins between pieces, are the weakest parts.

@@ -17,9 +17,10 @@ export interface LibrarianStrings {
   metaDescription: string;
   /** Hero */
   title: string;
-  intro: string;
+  /** `books` is the live collection size, already rounded and formatted. */
+  intro: (books: string) => string;
   /** Empty chat state */
-  emptyLead: string;
+  emptyLead: (books: string) => string;
   emptyDisclaimer: string;
   /** Composer */
   placeholder: string;
@@ -57,6 +58,10 @@ export interface LibrarianStrings {
   /** '4 messages' in the thread list */
   messages: string;
   librarianIsReading: string;
+  /** Shown the moment Ask is pressed, before the first event (#6904) */
+  lookingThroughLibrary: string;
+  /** Shown once every search has returned and the answer is being written */
+  readingWhatItFound: string;
   /** Research notebook */
   notebook: string;
   exportNotebook: string;
@@ -75,8 +80,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     metaTitle: 'The Librarian | Source Library',
     metaDescription: 'Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy: thousands of rare books, many translated into English for the first time.',
     title: 'The Librarian',
-    intro: 'Your research agent for over 10,000 rare books. Ask a question, and the Librarian will search the collection, cross-reference sources, and build up findings you can export.',
-    emptyLead: 'The Librarian searches the collection, Wikipedia, and semantic search to find answers in over 10,000 rare books.',
+    intro: (books) => `Your research agent for over ${books} rare books. Ask a question, and the Librarian will search the collection, cross-reference sources, and build up findings you can export.`,
+    emptyLead: (books) => `The Librarian searches the collection, Wikipedia, and semantic search to find answers in over ${books} rare books.`,
     emptyDisclaimer: 'Responses may contain errors. Always verify against the source page.',
     placeholder: 'Ask the Librarian...',
     send: 'Send',
@@ -109,6 +114,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     justNow: 'just now',
     messages: 'messages',
     librarianIsReading: 'The Librarian is reading',
+    lookingThroughLibrary: 'Looking through the library…',
+    readingWhatItFound: 'Reading what it found…',
     notebook: 'Research notebook',
     exportNotebook: 'Export',
     tools: {
@@ -116,6 +123,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
       search_collection: 'Searching the collection',
       search_semantic: 'Semantic search',
       browse_catalog: 'Counting the shelves',
+      find_passages: 'Finding passages that answer it',
       search_wikipedia: 'Checking Wikipedia',
       search_images: 'Searching illustrations',
       search_artworks: 'Searching artworks',
@@ -186,11 +194,11 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     dateLocale: 'en-US',
   },
   es: {
-    metaTitle: 'Pregunta a la fuente: El Bibliotecario | Source Library',
+    metaTitle: 'El Bibliotecario | Source Library',
     metaDescription: 'Pregunta al Bibliotecario sobre cualquier texto de la colección. Alquimia, Hermetismo, Cábala, astrología, filosofía natural: miles de libros raros, y una edición en español que crece.',
-    title: 'Pregunta a la fuente',
-    intro: 'El Bibliotecario es tu agente de investigación sobre más de 10.000 libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.',
-    emptyLead: 'El Bibliotecario busca en la colección, en Wikipedia y por semejanza de sentido para encontrar respuestas en más de 10.000 libros raros.',
+    title: 'El Bibliotecario',
+    intro: (books) => `El Bibliotecario es tu agente de investigación sobre más de ${books} libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.`,
+    emptyLead: (books) => `El Bibliotecario busca en la colección, en Wikipedia y por semejanza de sentido para encontrar respuestas en más de ${books} libros raros.`,
     emptyDisclaimer: 'Las respuestas pueden contener errores: comprueba siempre la página de origen.',
     placeholder: 'Pregunta al Bibliotecario...',
     send: 'Enviar',
@@ -223,6 +231,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     justNow: 'ahora mismo',
     messages: 'mensajes',
     librarianIsReading: 'El Bibliotecario está leyendo',
+    lookingThroughLibrary: 'Buscando en la biblioteca…',
+    readingWhatItFound: 'Leyendo lo que ha encontrado…',
     notebook: 'Cuaderno de investigación',
     exportNotebook: 'Exportar',
     tools: {
@@ -230,6 +240,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
       search_collection: 'Buscando en la colección',
       search_semantic: 'Búsqueda semántica',
       browse_catalog: 'Contando los estantes',
+      find_passages: 'Buscando pasajes que respondan',
       search_wikipedia: 'Consultando Wikipedia',
       search_images: 'Buscando ilustraciones',
       search_artworks: 'Buscando obras de arte',

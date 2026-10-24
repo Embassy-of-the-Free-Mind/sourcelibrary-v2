@@ -1,0 +1,50 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] bhayāṃyalpunarīśvarakṛṣṇe ‖ nakathitaṃtal [illegible] śraddha [illegible] trai [illegible] drimi ‖ [illegible] yeṇaṃetalpavitraṃ
+2. pāvanāṃduḥkhatrayāpana ‖ [illegible] mitryāṃsaṣṭryaḥmuniḥkapilaḥāsura [illegible] ‖ [illegible] rayanukampayāpradadau
+3. āsurirapipañcaśikhāya ‖ [illegible] tena [illegible] bahudhākṛtaṃtantraṃśiṣyaparaṃpa ‖ rayāgatamīśvarakṛṣṇena
+4. caitadāryābhiḥsaṃkṣi ‖ ptamāryamatināsamyagvijñāyasiddhāntamiti ‖ [illegible] ddhāntama [illegible]
+5. itya [illegible] mati [illegible] ‖ [illegible] tyāṃsakalaśāstrārtthaśca ‖ [illegible] prakaraṇa [illegible]
+6. [illegible] hata [illegible] rā [illegible] ‖ [illegible] kāṃ [illegible] yā [illegible] mekatāma ‖ [illegible] ntrasya
+7. [illegible] pāra [illegible] pai [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] rttho [illegible] ‖ [illegible] ryā [illegible] ‖ [illegible] ca [illegible]
+9. [illegible] ‖ [illegible] mayā [illegible] ‖ [illegible] sva [illegible]
+10. [illegible] ‖ [illegible] sakala [illegible] ‖ [illegible] ñcañjāne [illegible] prakara
+11. [illegible] vidyā [illegible] kaiva ‖ [illegible] ‖ [illegible] sāṃ [illegible]
+12. [illegible] ‖ [illegible] bodhayatisatāṃ [illegible] ‖ [illegible]
+
+TRANSCRIPTION B
+1. bhogāṃśānpunarīśvaraiccha ‖ [illegible] karitaṃtalkṛtaṃ [illegible] tretṛṃha [illegible] tediti ‖ dicabhāgaṃetalpavitraṃ
+2. pāvanāṃduḥkhatrayāṃpuna ‖ [illegible] gryaṃsa [illegible] ṣṭhaḥmuniḥkapilaḥāsura [illegible] ‖ [illegible] rayanukampayāpradadau
+3. āsurirapipañcaśikhāya ‖ [illegible] tane [illegible] bahudhākṛtaṃtantraṃśiṣyaparaṃpa ‖ parayāgatamīśvarakṛṣṇena
+4. [illegible] caitadāryyābhiḥsaṃkṣi ‖ [illegible] āryyamatināsamyagvijñā [illegible] yasiddhāntamiti ‖ [illegible] rudrāntamakkaivallya
+5. [illegible] tyārtthamati [illegible] ‖ [illegible] śārtthyaṃsa [illegible] sakalaśāstrārtthyaṃca ‖ nālnāmaprakaraṇaṃ
+6. [illegible] ‖ pārtthikyaṃ [illegible] yārtthikyamekatvama ‖ [illegible] pārtthyamathānyatha
+7. [illegible] pārārtthyaṃcatatha ‖ [illegible] naikyaṃvi [illegible] yogoyo ‖ gaevacaśeṣavṛ
+8. [illegible] karttṛtvaṃmauḻikārtthā ‖ rtthāḥsmṛtā [illegible] pañcaviparyyayabhedā ‖ [illegible] catuṣṭayāḥ [illegible]
+9. [illegible] ṇāṃsāmartthyamaṣṭa ‖ ṣṭāviṃśatidhā [illegible] itiṣaṣṭiḥpadārtthānā ‖ nāmaṣṭabhiḥsahasiddhibhiḥ [illegible]
+10. [illegible] ṣṭiḥpadārtthānāṃ ‖ [illegible] kathito [illegible] ityevaṃsakalaśāstrārttha ‖ rtthasya [illegible] prakara
+11. ṇaṃ [illegible] ruhyārkkaiveva ‖ [illegible] bhiḥ [illegible] ‖ [illegible] sāṃkhyasa [illegible]
+12. [illegible] ‖ [illegible] nda [illegible] va [illegible] sā [illegible] ‖ [illegible]
+
+TRANSCRIPTION C
+1. deyaṃyalpunarityevamukte ‖ [illegible] ‖ [illegible] yeṇaetalpavitraṃ
+2. pāvanāṃduḥkhatrayāpana ‖ [illegible] muniḥkapilaḥāsu ‖ rayanukampayāpradadau
+3. āsurirapipañcaśikhāya ‖ tenacabahudhākṛtaṃtantraṃ [illegible] paraṃpa ‖ rayāgatamīśvarakṛṣṇena
+4. caitadāryābhissaṃkṣi ‖ ptamāryamatināsamyagvijñāyasiddhāntamiti ‖ śi [illegible]
+5. ityā [illegible] ‖ [illegible] kila [illegible] ‖ [illegible] prakaraṇa
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] ‖ [illegible]
+11. [illegible] ‖ [illegible] ‖ [illegible]
+12. [illegible] ‖ [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

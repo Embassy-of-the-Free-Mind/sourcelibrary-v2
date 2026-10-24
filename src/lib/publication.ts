@@ -10,6 +10,7 @@
  * `hidden_reason`, derived from the state, in the same update, and
  * publicationFilter() expands to the legacy predicates.
  */
+import { notifyBooksPublic } from '@/lib/indexnow';
 import { ObjectId, type Db, type Document, type Filter, type ObjectId as ObjectIdType } from 'mongodb';
 
 export const PUBLICATION_STATES = ['public', 'unpublished', 'hidden', 'takedown'] as const;
@@ -256,7 +257,7 @@ function bookRefsFilter(refs: string[]): Filter<Document> {
   return { $or: [{ id: { $in: refs } }, { _id: { $in: [...refs, ...oids] as never[] } }] };
 }
 
-const PROJECTION = { _id: 1, id: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
+const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
 
 function eventFor(
   book: Document, from: CurrentPublication, state: PublicationState,
@@ -311,6 +312,8 @@ export async function setPublication(db: Db, bookRef: string, opts: PublicationO
 
   await books.updateOne({ _id: book._id as ObjectIdType }, buildUpdate(state, reason, opts, now));
   await db.collection('publication_events').insertOne(eventFor(book, from, state, reason, opts, now));
+  // Newly public and live: tell IndexNow (never throws; #3755).
+  if (state === 'public' && (book.pages_count ?? 0) > 0) await notifyBooksPublic([book]);
   return { status: 'written', ...base };
 }
 
@@ -333,6 +336,7 @@ export async function setPublicationMany(
   const reason = effectiveReason(state, opts.reason);
 
   const out: SetPublicationManyResult = { written: [], unchanged: [], skipped: [], refused: [], not_found: [] };
+  const nowPublic: Document[] = [];
   const refs = [...new Set((bookRefs || []).map(String))];
   for (let i = 0; i < refs.length; i += batchSize) {
     const chunk = refs.slice(i, i + batchSize);
@@ -343,6 +347,7 @@ export async function setPublicationMany(
 
     const toWrite: unknown[] = [];
     const events: Document[] = [];
+    const nowPublic: Document[] = [];
     for (const book of docs) {
       const id = book.id ?? String(book._id);
       const from = legacyPublication(book);
@@ -357,12 +362,15 @@ export async function setPublicationMany(
       toWrite.push(book._id);
       events.push(eventFor(book, from, state, reason, opts, now));
       out.written.push(id);
+      if (state === 'public' && (book.pages_count ?? 0) > 0) nowPublic.push(book);
     }
     if (toWrite.length) {
       await books.updateMany({ _id: { $in: toWrite as never[] } }, buildUpdate(state, reason, opts, now));
       await db.collection('publication_events').insertMany(events);
     }
   }
+  // One batched ping for the whole call (#3755), not one per book.
+  if (nowPublic.length) await notifyBooksPublic(nowPublic);
   return out;
 }
 

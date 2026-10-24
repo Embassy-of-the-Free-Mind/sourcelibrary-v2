@@ -8,7 +8,7 @@
  * src for contrast/luminance/legibility.
  *
  * Every post can become a lead or the Latest card, where its title is set on the
- * picture over CARD_SCRIM (src/app/blog/card-scrim.ts). For every post, at both
+ * picture over CARD_SCRIM (src/app/articles/card-scrim.ts). For every post, at both
  * card shapes (phone 4:5, desktop 2:1), with the post's imagePosition, this:
  *   1. crops the image as `object-fit: cover` would,
  *   2. composites the real gradient over the text block,
@@ -25,8 +25,8 @@
 import sharp from 'sharp';
 import { mkdirSync, writeFileSync } from 'fs';
 import path from 'path';
-import { posts, type BlogPost } from '../../src/app/blog/posts';
-import { SCRIM_RGB, SCRIM_MIN_ALPHA, SCRIM_MAX_ALPHA, FADE_PX } from '../../src/app/blog/card-scrim';
+import { posts, type BlogPost } from '../../src/app/articles/posts';
+import { SCRIM_RGB, SCRIM_MIN_ALPHA, SCRIM_MAX_ALPHA, FADE_PX } from '../../src/app/articles/card-scrim';
 
 const arg = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.split('=')[1];
 const OUT = arg('out') || 'scripts/output/blog-cards';

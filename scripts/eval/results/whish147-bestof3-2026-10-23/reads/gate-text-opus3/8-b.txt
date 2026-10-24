@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C keeps the most recognisable Sāṅkhyakārikā phrases in the right places across the leaf ("guṇavaiṣamyavi-[marda]", "ekādaśendriyava-dhāḥ saha", "prakṛtyupādānaka-[kāla]bhāgyā", "tuṣṭi", "siddhi"); A gets only some of these right and garbles the rest ("guṇavaiṣamṛddhi", "prakṛtyapādānaka-ālabhāgyā"), and B is mostly [illegible] gaps and fragments.

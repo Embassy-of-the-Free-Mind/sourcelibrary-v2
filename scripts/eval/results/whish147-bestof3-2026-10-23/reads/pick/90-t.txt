@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three has any readable text, since every row is [illegible], so no reading can be judged as real Sanskrit or Malayalam; A and B are tied, and I placed C last only because rows 1–4 drop the string-hole marks the other rows show, and I chose A over B arbitrarily.

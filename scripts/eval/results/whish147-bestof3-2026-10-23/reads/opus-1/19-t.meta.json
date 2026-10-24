@@ -1,0 +1,47 @@
+{
+ "stage": "opus-1",
+ "id": "19-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T01:34:04.990Z",
+ "finished_at": "2026-10-23T01:34:54.092Z",
+ "secs": 49,
+ "prompt_hash": "ef836994a6f1e9ca",
+ "prompt_file": "reads/prompts/ef836994a6f1e9ca.txt",
+ "images": [
+  {
+   "crop": "19-t-1.jpg",
+   "bytes": 441933,
+   "sha256": "eb016b287e8a0d5b195f3be1449beaf60a9e34a2bbffad561809f3b47c8f4a6a"
+  },
+  {
+   "crop": "19-t-2.jpg",
+   "bytes": 301765,
+   "sha256": "88c8a88a69ea41d82dac053d46ec9141a72659c516534f14fc727cb337fd1725"
+  },
+  {
+   "crop": "19-t-3.jpg",
+   "bytes": 290809,
+   "sha256": "326be707c2846900661727cfe1800e3237fa5dcac0171cc98bb82a339439637c"
+  },
+  {
+   "crop": "19-t-4.jpg",
+   "bytes": 405985,
+   "sha256": "aec8c7ef1ab0f2e55023c466961c8cb9ae1b7d87a30487021c27acbd894c36a8"
+  }
+ ],
+ "usage": {
+  "input": 4,
+  "output": 4516,
+  "cache_read": 6404,
+  "cache_creation": 9297,
+  "turns": 5,
+  "list_cost_usd": 0.16599280000000002
+ },
+ "copied_from": "whish147-best-attempt-2026-10-22/reads.tar.gz:reads/fresh/19-t",
+ "same_crops": true,
+ "same_prompt": true
+}

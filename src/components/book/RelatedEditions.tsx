@@ -1,6 +1,7 @@
 import { getReadDb } from '@/lib/mongodb';
 import { localePath, type Locale } from '@/lib/locale-path';
 import Link from 'next/link';
+import { isEnglishOriginal } from '@/lib/page-counts';
 import { Library, ScanSearch } from 'lucide-react';
 import { isTrustedEditionKey } from '@/lib/edition-key';
 
@@ -125,7 +126,7 @@ export default async function RelatedEditions({
             {b.display_title || b.title}
           </span>
           <span className="text-stone-500 flex-shrink-0">
-            {[b.language, b.year, pct >= 99 ? 'translated' : pct > 0 ? `${pct}% translated` : null]
+            {[b.language, b.year, isEnglishOriginal(b.language) ? null : pct >= 99 ? 'translated' : pct > 0 ? `${pct}% translated` : null]
               .filter(Boolean).join(' · ')}
           </span>
         </Link>

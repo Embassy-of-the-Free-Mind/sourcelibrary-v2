@@ -1,0 +1,46 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 3 machine transcriptions (A, B, C) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. സൂക്ഷ്മപൎയ്യന്തംസംസരതി ‖ നിരുപഭൊഗംഭാവൈരധിവാസിതം ‖ ലിംഗം[illegible]।ചിത്രംയഥാ
+2. ശ്രയമൃതെസ്ഥാണ്വാദി ‖ ഭ്യൊ[illegible]ഥാച്ഛായാതദ്വദ്വിനാ ‖ വിശെഷൈൎന്നതിഷ്ഠതി
+3. നിരാശ്രയംലിം ‖ ഗം।൪൧।പുരുഷാൎത്ഥഹെതുകമി ‖ ദംനിമിത്തനൈമി
+4. ത്തികപ്രസംഗെ ‖ നപ്രകൃതെൎവ്വിഭുത്വയൊഗാന്ന ‖ ടവദ്വ്യവതിഷ്ഠതെ
+5. ലിംഗം।൪൨।സാ ‖ ംസിദ്ധികാശ്ചഭാവാഃ പ്രാ ‖ കൃതികാവൈകൃതാ
+6. ശ്ചധൎമ്മാദ്യാഃദൃ ‖ ഷ്ടാഃകരണാശ്രയിണഃകാൎയ്യാ ‖ ശ്രയിണശ്ചകലലാ
+7. ദ്യാഃ।൪൩।ധൎമ്മെ ‖ ണഗമനമൂൎദ്ധ്വംഗമനമധസ്താൽ ‖ ഭവത്യധൎമ്മെണ[illegible]
+8. [illegible]നെനചാപവൎഗ്ഗൊ ‖ വിപൎയ്യയാദിഷ്യതെബന്ധഃ।൪൪।വൈ ‖ രാഗ്യാൽപ്രകൃതിലയഃ
+9. സംസാരൊഭവതിരാ ‖ ജസാദ്രാഗാൽഐശ്വൎയ്യാദവി ‖ ഘാതൊവിപൎയ്യയാത്ത
+
+TRANSCRIPTION B
+1. സൂക്ഷ്മപൎയ്യന്തംസംസ‖രതിനിരുപഭോഗംഭാവൈരധിവാസി‖തംലിംഗം।൪൦।ചിത്രംയഥാ
+2. ശ്രയമൃതേസ്ഥാണ്വാ‖ദിഭ്യോവിനായഥാഛായാതദ്വദ്വി‖നാവിശേഷൈൎന്നതിഷ്ഠ
+3. തിനിരാശ്രയംലിം‖ഗം।൪൧॥പുരുഷാൎത്ഥഹേതുകമി‖ദംനിമിത്തനൈമി
+4. ത്തികപ്രസംഗേ‖നപ്രകൃതേൎവ്വിഭുത്വയോഗാന്നട‖വദ്വ്യവതിഷ്ഠതേ
+5. ലിംഗം।൪൨।സ‖ാംസിദ്ധികാശ്ചഭാവാഃ [illegible/blank] പ്ര‖ാകൃതികാവൈകൃത
+6. ികാശ്ചധൎമ്മാദ്യാഃദൃ‖ഷ്ടാഃകരണാശ്രയിണഃകാൎയ്യ‖ാശ്രയിണശ്ചകലലാ
+7. ദ്യാഃ॥൪൩॥ധൎമ്മേ‖ണഗമനമൂൎദ്ധ്വംഗമനമധസ്താ‖ദ്ഭവത്യധൎമ്മേണ
+8. ജ്ഞാനേനചാപവൎഗ്ഗോ‖വിപൎയ്യയാദിഷ്യതേബന്ധഃ॥൪൪॥വൈ‖രാഗ്യാൽപ്രകൃതിലയഃ
+9. സംസാരോഭവതിരാ‖ജസാദ്രാഗാദൈശ്വൎയ്യാദവി‖ഘാതോവിപൎയ്യയാത്ത
+
+TRANSCRIPTION C
+1. സൂക്ഷ്മപൎയ്യന്തംസംസര‖തിനിരുപഭോഗംഭാവൈരധിവാസി‖തംലിംഗം[illegible]
+2. [illegible]‖[illegible]‖[illegible]
+3. [illegible]‖[illegible]‖[illegible]
+4. [illegible]‖[illegible]‖[illegible]
+5. [illegible]‖[illegible]സിദ്ധി[illegible]‖[illegible]
+6. [illegible]‖[illegible]‖[illegible]
+7. [illegible]‖[illegible]‖[illegible]
+8. [illegible]‖[illegible]‖[illegible]
+9. [illegible]‖[illegible]‖[illegible]
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { BLOG_KINDS } from '@/app/articles/posts';
 import ShareButton from '@/components/ui/ShareButton';
 
 /**
@@ -18,7 +19,9 @@ import ShareButton from '@/components/ui/ShareButton';
  */
 export default function BlogShareButton() {
   const pathname = usePathname();
-  if (!pathname || pathname === '/blog' || pathname === '/blog/') return null;
+  // The index and the category pages (/articles/tours) share themselves through the chip row.
+  if (!pathname || pathname === '/articles' || pathname === '/articles/') return null;
+  if ((BLOG_KINDS as readonly string[]).includes(pathname.replace(/^\/articles\//, '').replace(/\/$/, ''))) return null;
 
   return (
     <div className="fixed bottom-20 right-6 z-40 print:hidden">

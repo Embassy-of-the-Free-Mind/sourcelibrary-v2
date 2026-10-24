@@ -1,0 +1,546 @@
+[
+ {
+  "id": "6ce1815fb9e5",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "b47e27ea9af3",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "32858924be20",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "drift",
+  "normal": "touches-more-than-3-sentences",
+  "store": false,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "2161ec20343a",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "8e913446ee61",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "d788f07e2435",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "916a534bf1b9",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "50e1ee1431cb",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "37538df57f2c",
+  "prefers": false,
+  "worse": false,
+  "ab": "tie/P",
+  "label": "drift",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "169f4f610971",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "17c4de7ff149",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "drift",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "b080eb373164",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "drift",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "d046c73358d8",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "edit-too-large",
+  "store": false
+ },
+ {
+  "id": "362bc6c43b0e",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "27b68640e94e",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "503080a9963e",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "7f375b4c7fef",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": false,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "24dd75bc4069",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "9b807ce2b9a9",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "63501e76f94c",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "catchword",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "9bb895f8c651",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "c678f125eeaf",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "6a2683727041",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "b624b766e450",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "touches-more-than-3-sentences",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "fec628425cbf",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "058855928b45",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "2d34467bb1ff",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "402a31ef68f1",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "catchword",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "bdbd1b120054",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "ae7c80aac6b5",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "b0e7ac002375",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "571474e84624",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "e9ae295f9e3c",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "drift",
+  "normal": "touches-more-than-3-sentences",
+  "store": true
+ },
+ {
+  "id": "73e175af3130",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "edit-too-large",
+  "store": false
+ },
+ {
+  "id": "f6ec1c9f82f2",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "3dd23f89743b",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "78df35ccc825",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "touches-more-than-3-sentences",
+  "store": false
+ },
+ {
+  "id": "3169c2e2d7cf",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "cb1148e4c7f1",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "ad6384e75392",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "a7386255c93a",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "4e20541809c5",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "b0cfddc18024",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "2fa042c924fe",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "2dd49de4eed5",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "edit-too-large",
+  "store": false
+ },
+ {
+  "id": "37b14cd2b898",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "d08e4f0cfe12",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "drops-content-words",
+  "store": false,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "09f80c04192c",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "aaa736d87dbe",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "drops-content-words",
+  "store": true,
+  "aa": [
+   "tie",
+   "tie"
+  ]
+ },
+ {
+  "id": "10b2c040c9de",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "drift",
+  "normal": "touches-more-than-3-sentences",
+  "store": true
+ },
+ {
+  "id": "9ddf1895b93d",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "ea4b8bb9b908",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "catchword",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "4642ca163f35",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "omission",
+  "normal": "edit-too-large",
+  "store": true
+ },
+ {
+  "id": "6e4594d5ced4",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "duplication",
+  "normal": "drops-content-words",
+  "store": false
+ },
+ {
+  "id": "16c71664b0e6",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "broken_syntax",
+  "normal": "drops-content-words",
+  "store": true
+ },
+ {
+  "id": "f14dcae1ad51",
+  "prefers": true,
+  "worse": false,
+  "ab": "Q/P",
+  "label": "other",
+  "normal": "touches-more-than-3-sentences",
+  "store": false
+ }
+]

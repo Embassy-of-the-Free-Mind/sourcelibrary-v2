@@ -1,0 +1,34 @@
+I collated the lines that overlap with the edition: SK 11–14. Each line runs across the gap at the string hole, so I read the part left of the hole and then the part right of it. The right edge of the image cuts every line off, and the rest of each line is on the other half of the leaf. This half contains no commentary that I could identify.
+
+### SK_11
+**Leaf (line 1):** triguṇam avivekiviṣayas sāmānyam ace[…cut off at right edge]
+**Leaf (line 2, start):** […pra]dhānan tad-[viparītas?] … [tathā?] ca pumān
+- **viṣayas sāmānyam** for the edition's *viṣayaḥ sāmānyam*. The leaf writes the visarga as -s before s-. This is a sandhi spelling, not a different reading.
+- **pradhānan tad-** for *pradhānaṃ tad-*. The leaf writes the final nasal as -n before t-, again only spelling.
+- Most of the middle of line 2 is unclear to me. I can read the end, "…ca pumān", and possibly "tathā" before it. I can't confirm the letters for *viparītas*, so I'm not collating that word.
+
+### SK_12
+**Leaf:** line 2 ends prī[…], and the rest of this part (*prīty-aprīti-viṣādātmakāḥ prakāśa-*) must be on the other half of the leaf. Line 3 has pravṛttiniyamā | rthāḥ anyonyā[…]. Line 4 starts guṇāḥ.
+- **niyamā** for the edition's *viyamā*. The leaf clearly has ന (na). The edition's *viyamā* looks like a printing error for *niyama*, and its own index lists "niyama 12".
+- *rthāḥ anyonyā* is uncertain: the letters next to the hole are hard to make out. I can't see *-bhibhavāśraya-jananamithunavṛttayaś ca* on this half.
+
+### SK_13
+**Leaf:** (line 4) sattvaṃ | laghu prakāśakam i[ṣṭam…]; (line 5) guru varaṇakam | eva tamaḥ pradī[pavac…]
+- I see no differences in the visible words.
+- *upaṣṭambhakaṃ calaṃ ca rajaḥ* and *-pavac cārthato vṛttiḥ* are not on this half.
+
+### SK_14
+**Leaf:** (line 6) […]vivekyādi hi(?) | siddhaṃ traiguṇyā[t…]; (line 7) […kāra]ṇaguṇātmaka | tvāt kāryasyā[…]; (line 8) […]pi siddham(?)
+- I see no certain differences.
+- The start of line 6 (*a-viveky-ādi hi*) is badly blurred, so I can't confirm the word *hi*.
+- *tad-viparyayā'bhāvāt* is not on this half.
+- The start of line 8 is unclear. It seems to have "[a]pi siddham", but I can't read *avyaktam* there.
+
+### Text after SK_14 (not in the printed edition)
+Lines 8–10 go on with verses that the edition only lists in its index:
+- **SK_15:** *…samanvayāt…*, *…[vi]bhāgād avibhāgād vaiśvarūpyasya*
+- **SK_16:** *kāraṇa[m]…* and line 10 *[sam]udayāc ca pariṇāmatas salilavat prati[…]* (again with -s for the visarga)
+
+The edition doesn't print the text of these verses, so I couldn't collate them.
+
+**Summary of real differences:** SK_12 has **niyamā** where the edition has *viyamā*, and the leaf's reading is the correct one. Everything else I could read differs only in sandhi spelling (-s or -n for the visarga or anusvāra). The passages I marked "?" or "cut off" need the full leaf, or a higher-resolution crop of the area around the hole and the edges, to check.

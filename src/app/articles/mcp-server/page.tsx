@@ -1,0 +1,296 @@
+import { Metadata } from 'next';
+import Link from 'next/link';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
+
+export const metadata: Metadata = withArticleMeta('mcp-server', {
+  title: 'Claude Can Now Read Thousands of Rare Books - Articles - Source Library',
+  description: 'We shipped an MCP server that gives Claude direct access to Source Library: thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations. One command to install.',
+  openGraph: {
+    title: 'Claude Can Now Read Thousands of Rare Books',
+    description: 'An MCP server that gives Claude direct access to Source Library: thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg' }],
+  },
+  alternates: {
+    canonical: '/articles/mcp-server',
+  },
+});
+
+export default function McpServerPage() {
+  return (
+    <ContentPageLayout
+      header={
+        <ContentHeader feature headerVariant="dark"
+          title="Claude Can Now Read Thousands of Rare Books"
+          subtitle="An MCP server for primary source research in alchemy, Hermeticism, Renaissance philosophy, and early modern science"
+          image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg"
+          imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
+        >
+          <p className="text-stone-400 text-sm mt-4">18 February 2026 &middot; 8 min read</p>
+        </ContentHeader>
+      }
+      bg="bg-cream"
+    >
+      <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900">
+        <strong>Update, September 2026:</strong> the connector is now one click from the Claude directory and works in
+        ChatGPT too. The current setup steps, with a video, are at{' '}
+        <Link href="/connect" className="underline font-medium">sourcelibrary.org/connect</Link>.
+      </div>
+
+      <article className="prose-content max-w-none">
+        <p className="text-xl text-secondary leading-relaxed mb-8">
+          Today we&apos;re releasing an{' '}
+          <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP server</a>
+          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts, with full English translations and 110,000+ extracted illustrations.
+        </p>
+
+        <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
+          <code className="text-stone-100 text-sm">claude mcp add source-library -- npx -y @source-library/mcp-server</code>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <a href="https://modelcontextprotocol.io/" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP</a>
+          {' '}(Model Context Protocol) is an open standard that lets AI assistants connect to external data sources. Instead of pasting text into a chat window, you give Claude a set of tools, and it decides when and how to use them. The server now provides 15 tools covering search, full-text reading, verbatim citation, canonical-reference lookup, and image retrieval, plus ways to contribute findings back. <em>(This post has been updated as the toolset has grown since launch; the list below is current.)</em>
+        </p>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          What you can do with it
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The point isn&apos;t to query a database. It&apos;s to do research. Here are some things that now work naturally in a conversation with Claude:
+        </p>
+
+        {/* Example 1 */}
+        <h3 className="text-xl font-semibold text-primary mt-10 mb-4">Trace a concept across centuries</h3>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
+          <p className="text-stone-700 italic mb-2">&ldquo;Search for references to &lsquo;prima materia&rsquo; across the collection. How do different alchemical authors describe it?&rdquo;</p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Claude searches the full text of every translated book, finds passages discussing prima materia in works spanning the 15th to 17th centuries, reads the relevant pages, and synthesizes a comparative analysis. It can pull the original Latin alongside the translation, showing you exactly what Sendivogius wrote versus what Basil Valentine wrote, with page numbers and links back to the source.
+        </p>
+
+        {/* Example 2 */}
+        <h3 className="text-xl font-semibold text-primary mt-10 mb-4">Follow a figure through the tradition</h3>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
+          <p className="text-stone-700 italic mb-2">&ldquo;Find everything about Hermes Trismegistus in the collection. What books mention him, and how does his treatment change across traditions?&rdquo;</p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">search_within_book</code> &rarr; <code className="text-accent-rust">get_quotes</code></p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Source Library maintains a knowledge graph of entities (people, places, and concepts) linked across books. Hermes Trismegistus, for example, appears in 18 books with 441 total mentions, connecting:
+        </p>
+
+        <ul className="space-y-2 mb-8 ml-4">
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Ficino&apos;s <Link href="/book/pymander-asclepius-and-on-the-mysteries-of-the-egyptians-trismegistus" className="text-accent-rust hover:text-accent-rust underline"><em>Pymander</em></Link>: the 1471 translation that launched the Hermetic revival</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Copernicus&apos;s <Link href="/book/de-revolutionibus-1543-first-edition-copernicus" className="text-accent-rust hover:text-accent-rust underline"><em>De Revolutionibus</em></Link>, which quotes Hermes on the Sun&apos;s centrality</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>The <Link href="/book/the-hermetic-museum-various-sendivogius" className="text-accent-rust hover:text-accent-rust underline"><em>Musaeum Hermeticum</em></Link>: 543 pages of alchemical texts under his name</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Kepler&apos;s <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust underline"><em>Harmonices Mundi</em></Link>, the <Link href="/book/6da19aeb-aec0-411c-b890-73035c92273d" className="text-accent-rust hover:text-accent-rust underline"><em>Fama Fraternitatis</em></Link>, Kircher&apos;s <Link href="/book/universal-music-making-musurgia-universalis-volume-i-kircher" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>, and more</span>
+          </li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Claude can follow these connections, read the relevant passages in each book, and show you how the figure of Hermes shifts from Ficino&apos;s prisca theologia to the Rosicrucian manifestos to Kircher&apos;s baroque syncretism, all grounded in the primary sources.
+        </p>
+
+        {/* Example 3 */}
+        <h3 className="text-xl font-semibold text-primary mt-10 mb-4">Read a book and ask questions</h3>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
+          <p className="text-stone-700 italic mb-2">&ldquo;Read the first 50 pages of Galileo&apos;s Sidereus Nuncius and summarize what he observed through the telescope.&rdquo;</p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The <code className="text-accent-rust text-sm">get_book_text</code> tool returns the complete text of a book (or a page range) in a single call. Claude can read 50 pages of the 1610 <em>Sidereus Nuncius</em> in both the original Latin and translation, then discuss the content as a reading partner who has actually read the text. This is the difference between searching <em>about</em> a book and reading <em>the book</em>.
+        </p>
+
+        {/* Example 4 */}
+        <h3 className="text-xl font-semibold text-primary mt-10 mb-4">Get a citation for your paper</h3>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
+          <p className="text-stone-700 italic mb-2">&ldquo;I need a quote from Copernicus about the Sun&apos;s centrality in the universe, with a proper citation I can use in my paper.&rdquo;</p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">get_quote</code></p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The <code className="text-accent-rust text-sm">get_quote</code> tool returns the passage alongside pre-formatted citations (inline, footnote, and bibliography formats) with DOI when available. Claude finds the relevant passage, gives you the Latin and English, and hands you a citation ready to paste into your paper.
+        </p>
+
+        {/* Example 5 */}
+        <h3 className="text-xl font-semibold text-primary mt-10 mb-4">Explore historical illustrations</h3>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
+          <p className="text-stone-700 italic mb-2">&ldquo;Find alchemical emblems depicting the ouroboros. What texts are they from, and what do they symbolize?&rdquo;</p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_images</code> &rarr; <code className="text-accent-rust">get_quote</code></p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Source Library has extracted and catalogued 90,000+ illustrations from its books (woodcuts, engravings, emblems, frontispieces, diagrams), each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
+        </p>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          The collection
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Source Library holds over 4,000 books digitized from 13 archives worldwide: the Internet Archive, Gallica, the Bodleian, the Vatican Library, the Bavarian State Library, and others. The collection focuses on the Western esoteric tradition broadly defined:
+        </p>
+
+        <ul className="space-y-2 mb-8 ml-4">
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Latin alchemical and Hermetic manuscripts (1450&ndash;1700)</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>German mystical and Paracelsian works</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Renaissance philosophy: Ficino, Bruno, Pico, Agrippa</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Rosicrucian manifestos and related texts</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Early modern science: Copernicus, Galileo, Kepler</span>
+          </li>
+          <li className="text-secondary flex items-start gap-2">
+            <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
+            <span>Sanskrit, Chinese, Greek, Arabic, and Hebrew philosophical texts</span>
+          </li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Every book has been OCR&apos;d from the original page images and translated to English by AI, with the original language always preserved alongside for verification. Published editions carry DOIs via Zenodo.
+        </p>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          How it works
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The MCP server runs locally on your machine and calls Source Library&apos;s public API. It doesn&apos;t need database credentials, API keys, or any configuration. When Claude needs to search for a book or read a passage, it calls the appropriate tool, the server makes an HTTP request to <code className="text-accent-rust text-sm">sourcelibrary.org/api</code>, and the result comes back into the conversation.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The 15 tools are organized into five groups:
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Search</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">search_library</code> to find books on a topic.{' '}
+              <code className="text-accent-rust">search_translations</code> for quotable passages by keyword,{' '}
+              <code className="text-accent-rust">search_concept</code> for passages by meaning (semantic search), and{' '}
+              <code className="text-accent-rust">search_within_book</code> to dig inside one book.
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Reading</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">get_book</code> for a book&apos;s summary, chapters, and metadata.{' '}
+              <code className="text-accent-rust">get_book_text</code> for bulk reading (chapters or page ranges).{' '}
+              <code className="text-accent-rust">list_books</code> to browse the catalog and{' '}
+              <code className="text-accent-rust">list_editions</code> to find every edition of a work we hold.
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Citing</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">get_quote</code> and <code className="text-accent-rust">get_quotes</code> for verbatim page text with stable citation links.{' '}
+              <code className="text-accent-rust">get_locus</code> resolves canonical references (Bekker numbers for Aristotle, Stephanus pages for Plato) to the actual leaves that carry them.
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Gallery</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">search_images</code> across 110,000+ illustrations and 23,000+ artworks by subject, symbol, figure, or type.
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Contributing</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">submit_feedback</code> for bug reports and requests,{' '}
+              <code className="text-accent-rust">share_findings</code> to send back a cited research dossier, and{' '}
+              <code className="text-accent-rust">propose_collection</code> to suggest a themed grouping of books. All three go to a human review queue.
+            </p>
+          </div>
+        </div>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Install
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          The easiest path today needs no install at all: Source Library is in the{' '}
+          <a href="https://claude.ai/directory/connectors/source-library" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">Claude connector directory</a>
+          : switch it on from the connectors menu, or add{' '}
+          <code className="text-accent-rust text-sm">https://sourcelibrary.org/api/mcp</code> as a custom connector in any MCP client.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          To run it locally instead, for Claude Code:
+        </p>
+
+        <div className="bg-stone-900 rounded-xl p-4 mb-6 overflow-x-auto">
+          <code className="text-stone-100 text-sm">claude mcp add source-library -- npx -y @source-library/mcp-server</code>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          For Claude Desktop, add this to your config file (<code className="text-accent-rust text-sm">claude_desktop_config.json</code>):
+        </p>
+
+        <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
+          <pre className="text-stone-100 text-sm">{`{
+  "mcpServers": {
+    "source-library": {
+      "command": "npx",
+      "args": ["-y", "@source-library/mcp-server"]
+    }
+  }
+}`}</pre>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The server is{' '}
+          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">open source</a>
+          {' '}and published on{' '}
+          <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">npm</a>. Full documentation is on the{' '}
+          <Link href="/developers" className="text-accent-rust hover:text-accent-rust underline">developers page</Link>.
+        </p>
+
+        <div className="border-t border-border-light pt-8 mt-16">
+          <p className="text-secondary text-sm leading-relaxed">
+            Source Library is a project of the Embassy of the Free Mind. If you use it for research, we&apos;d love to hear about it:{' '}
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
+          </p>
+        </div>
+      </article>
+
+    </ContentPageLayout>
+  );
+}

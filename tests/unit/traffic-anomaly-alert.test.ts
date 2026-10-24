@@ -51,7 +51,9 @@ describe('unexpected-host detection', () => {
   it('keeps the allowlist small on purpose', () => {
     // Every added host is a surface nobody is watching. If this trips, the
     // question is whether the new host should serve readers at all.
-    expect(EXPECTED_HOSTS.size).toBeLessThanOrEqual(4);
+    // 5 since 2026-10-20: bhutan is a tenant reading room (TENANT_ROOT_PATHS),
+    // and every zone host is now probed for cf-ray (expected_host_outside_cdn).
+    expect(EXPECTED_HOSTS.size).toBeLessThanOrEqual(5);
   });
 });
 

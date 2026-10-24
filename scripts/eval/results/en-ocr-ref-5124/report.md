@@ -8,13 +8,13 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | S1 pre-1880 prose | ia-djvu | 25/25 | 1.23% | 6.63% [1.47%, 15.50%] | 2.9% | 10 | 10.00% [0.00%, 33.33%] | 1 | 0 | 0.0% | 42 | – |
 | S1 pre-1880 prose | gemini-lite-realtime | 23/25 | 0.11% | 1.49% [0.33%, 3.15%] | 0.5% | 10 | 0.00% [0.00%, 0.00%] | 0 | 0 | 20.0% | 18 | 6 first / 2 after retry [2%, 25%] |
-| S2 pre-1880 date-dense | ia-djvu | 22/22 | 3.32% | 6.39% [3.12%, 11.04%] | 10.0% | 265 | 1.13% [0.00%, 3.18%] | 2 | 0 | 3.0% | 51 | – |
+| S2 pre-1880 date-dense | ia-djvu | 22/22 | 3.32% | 6.39% [3.12%, 11.04%] | 10.0% | 265 | 0.75% [0.00%, 2.67%] | 1 | 0 | 3.0% | 51 | – |
 | S2 pre-1880 date-dense | gemini-lite-realtime | 19/22 | 0.45% | 3.99% [0.88%, 9.31%] | 1.0% | 194 | 0.00% [0.00%, 0.00%] | 0 | 0 | 4.1% | 37 | 8 first / 3 after retry [5%, 33%] |
 | S3 1880–1930 prose | ia-djvu | 41/41 | 0.38% | 0.62% [0.41%, 0.87%] | 1.1% | 12 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 6 | – |
 | S3 1880–1930 prose | gemini-lite-realtime | 36/41 | 0.11% | 0.34% [0.19%, 0.50%] | 0.5% | 12 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 4 | 8 first / 5 after retry [5%, 26%] |
-| S4 1880–1930 date-dense | ia-djvu | 34/34 | 0.98% | 3.48% [1.79%, 5.77%] | 3.1% | 599 | 1.50% [0.46%, 3.09%] | 6 | 3 | 4.2% | 43 | – |
+| S4 1880–1930 date-dense | ia-djvu | 34/34 | 0.98% | 3.48% [1.79%, 5.77%] | 3.1% | 599 | 1.00% [0.18%, 2.12%] | 4 | 3 | 4.2% | 43 | – |
 | S4 1880–1930 date-dense | gemini-lite-realtime | 27/34 | 0.64% | 4.90% [1.17%, 10.99%] | 2.1% | 534 | 0.00% [0.00%, 0.00%] | 0 | 0 | 9.9% | 80 | 12 first / 7 after retry [10%, 37%] |
-| ALL | ia-djvu | 122/122 | 0.62% | 3.95% [2.33%, 6.07%] | 2.6% | 886 | 1.47% [0.60%, 2.68%] | 9 | 3 | 3.7% | 142 | – |
+| ALL | ia-djvu | 122/122 | 0.62% | 3.95% [2.33%, 6.07%] | 2.6% | 886 | 1.02% [0.29%, 1.96%] | 6 | 3 | 3.7% | 142 | – |
 | ALL | gemini-lite-realtime | 105/122 | 0.24% | 2.62% [1.17%, 4.55%] | 0.8% | 750 | 0.00% [0.00%, 0.00%] | 0 | 0 | 8.4% | 139 | 34 first / 17 after retry [9%, 21%] |
 
 ## Paired (same page, both engines scorable)
@@ -22,16 +22,16 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 | cell | pages | Archive better | lite better | tie (|ΔCER| < 0.2pp) | sign-test p | median ΔCER (lite − Archive) | silent number misreads Archive vs lite | numbers dropped Archive vs lite |
 |---|---|---|---|---|---|---|---|---|
 | S1 pre-1880 prose | 23 | 1 | 15 | 7 | 0.001 | -0.68% | 1 vs 0 | 0 vs 2 |
-| S2 pre-1880 date-dense | 19 | 1 | 11 | 7 | 0.006 | -0.38% | 3 vs 0 | 8 vs 8 |
+| S2 pre-1880 date-dense | 19 | 1 | 11 | 7 | 0.006 | -0.38% | 2 vs 0 | 8 vs 8 |
 | S3 1880–1930 prose | 36 | 1 | 16 | 19 | 0.000 | -0.09% | 0 vs 0 | 0 vs 0 |
-| S4 1880–1930 date-dense | 27 | 2 | 15 | 10 | 0.002 | -0.26% | 6 vs 0 | 20 vs 53 |
-| ALL | 105 | 5 | 57 | 43 | 0.000 | -0.27% | 10 vs 0 | 28 vs 63 |
+| S4 1880–1930 date-dense | 27 | 2 | 15 | 10 | 0.002 | -0.26% | 5 vs 0 | 20 vs 53 |
+| ALL | 105 | 5 | 57 | 43 | 0.000 | -0.27% | 8 vs 0 | 28 vs 63 |
 
 ## By Archive OCR engine (the item's `ocr` metadata)
 
 | group | engine | scored/pages | median CER | pooled CER [95% CI] | median WER | numbers printed | SILENT number misreads, verified [95% CI] | pages w/ a silent misread | visibly garbled numbers | numbers dropped | spurious numbers | refusals |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| (converted: abbyy-to-hocr 1.1.37) | ia-djvu | 65/65 | 0.60% | 3.90% [2.02%, 6.27%] | 2.6% | 502 | 1.99% [0.60%, 4.29%] | 6 | 3 | 2.4% | 73 | – |
+| (converted: abbyy-to-hocr 1.1.37) | ia-djvu | 65/65 | 0.60% | 3.90% [2.02%, 6.27%] | 2.6% | 502 | 1.39% [0.27%, 3.12%] | 4 | 3 | 2.4% | 73 | – |
 | (converted: abbyy-to-hocr 1.1.37) | gemini-lite-realtime | 56/65 | 0.24% | 4.64% [1.64%, 8.57%] | 0.8% | 452 | 0.00% [0.00%, 0.00%] | 0 | 0 | 10.4% | 108 | 16 first / 9 after retry [7%, 24%] |
 | ABBYY FineReader 8.0 | ia-djvu | 23/23 | 0.52% | 1.63% [0.76%, 2.75%] | 1.7% | 109 | 0.92% [0.00%, 3.70%] | 1 | 0 | 1.8% | 16 | – |
 | ABBYY FineReader 8.0 | gemini-lite-realtime | 19/23 | 0.25% | 0.94% [0.28%, 1.80%] | 0.9% | 100 | 0.00% [0.00%, 0.00%] | 0 | 0 | 3.0% | 17 | 6 first / 4 after retry [7%, 37%] |
@@ -45,7 +45,7 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 | ABBYY FineReader 11.0 | gemini-lite-realtime | 3/3 | 0.00% | 0.16% [0.00%, 0.32%] | 0.0% | 11 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | 0 first / 0 after retry [0%, 56%] |
 | tesseract 5.0.0-alpha-20201231-10-g1236 | ia-djvu | 2/2 | 1.71% | 1.66% [0.49%, 2.93%] | 3.3% | 69 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | – |
 | tesseract 5.0.0-alpha-20201231-10-g1236 | gemini-lite-realtime | 2/2 | 1.25% | 1.20% [0.22%, 2.28%] | 2.3% | 69 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | 0 first / 0 after retry [0%, 66%] |
-| ABBYY FineReader 11.0 (Extended OCR) | ia-djvu | 2/2 | 6.87% | 6.78% [6.38%, 7.36%] | 24.7% | 18 | 5.56% [0.00%, 8.33%] | 1 | 0 | 16.7% | 2 | – |
+| ABBYY FineReader 11.0 (Extended OCR) | ia-djvu | 2/2 | 6.87% | 6.78% [6.38%, 7.36%] | 24.7% | 18 | 0.00% [0.00%, 0.00%] | 0 | 0 | 16.7% | 2 | – |
 | ABBYY FineReader 11.0 (Extended OCR) | gemini-lite-realtime | 2/2 | 1.61% | 1.71% [1.05%, 2.17%] | 4.5% | 18 | 0.00% [0.00%, 0.00%] | 0 | 0 | 33.3% | 5 | 1 first / 0 after retry [0%, 66%] |
 | tesseract 5.1.0-1-ge935 | ia-djvu | 2/2 | 43.96% | 40.16% [0.71%, 87.21%] | 60.3% | 4 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 27 | – |
 | tesseract 5.1.0-1-ge935 | gemini-lite-realtime | 2/2 | 0.12% | 0.11% [0.04%, 0.20%] | 0.7% | 4 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | 0 first / 0 after retry [0%, 66%] |
@@ -60,7 +60,7 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 
 | group | engine | scored/pages | median CER | pooled CER [95% CI] | median WER | numbers printed | SILENT number misreads, verified [95% CI] | pages w/ a silent misread | visibly garbled numbers | numbers dropped | spurious numbers | refusals |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ia-native | ia-djvu | 110/110 | 0.60% | 4.11% [2.32%, 6.57%] | 2.4% | 828 | 1.57% [0.64%, 2.91%] | 9 | 3 | 3.4% | 139 | – |
+| ia-native | ia-djvu | 110/110 | 0.60% | 4.11% [2.32%, 6.57%] | 2.4% | 828 | 1.09% [0.32%, 2.15%] | 6 | 3 | 3.4% | 139 | – |
 | ia-native | gemini-lite-realtime | 98/110 | 0.23% | 2.72% [1.17%, 4.76%] | 0.8% | 731 | 0.00% [0.00%, 0.00%] | 0 | 0 | 8.5% | 139 | 27 first / 12 after retry [6%, 18%] |
 | google | ia-djvu | 8/8 | 1.49% | 2.78% [0.68%, 4.94%] | 3.0% | 23 | 0.00% [0.00%, 0.00%] | 0 | 0 | 21.7% | 3 | – |
 | google | gemini-lite-realtime | 5/8 | 0.42% | 0.99% [0.13%, 2.34%] | 0.7% | 17 | 0.00% [0.00%, 0.00%] | 0 | 0 | 5.9% | 0 | 4 first / 3 after retry [14%, 69%] |
@@ -71,7 +71,7 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 
 | group | engine | scored/pages | median CER | pooled CER [95% CI] | median WER | numbers printed | SILENT number misreads, verified [95% CI] | pages w/ a silent misread | visibly garbled numbers | numbers dropped | spurious numbers | refusals |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2023 | ia-djvu | 63/63 | 0.60% | 3.72% [1.88%, 6.08%] | 2.6% | 502 | 1.99% [0.65%, 4.20%] | 6 | 2 | 2.4% | 73 | – |
+| 2023 | ia-djvu | 63/63 | 0.60% | 3.72% [1.88%, 6.08%] | 2.6% | 502 | 1.39% [0.28%, 3.04%] | 4 | 2 | 2.4% | 73 | – |
 | 2023 | gemini-lite-realtime | 54/63 | 0.20% | 4.38% [1.38%, 8.54%] | 0.6% | 450 | 0.00% [0.00%, 0.00%] | 0 | 0 | 10.0% | 106 | 16 first / 9 after retry [8%, 25%] |
 | 2024 | ia-djvu | 29/29 | 0.38% | 2.53% [1.10%, 4.47%] | 1.7% | 216 | 0.46% [0.00%, 1.74%] | 1 | 0 | 6.0% | 30 | – |
 | 2024 | gemini-lite-realtime | 26/29 | 0.27% | 0.98% [0.34%, 1.87%] | 0.9% | 163 | 0.00% [0.00%, 0.00%] | 0 | 0 | 5.5% | 24 | 9 first / 3 after retry [4%, 26%] |
@@ -79,7 +79,7 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 | 2009 | gemini-lite-realtime | 7/10 | 0.42% | 0.69% [0.09%, 1.85%] | 1.1% | 23 | 0.00% [0.00%, 0.00%] | 0 | 0 | 4.3% | 0 | 4 first / 3 after retry [11%, 60%] |
 | 2022 | ia-djvu | 8/8 | 1.46% | 13.87% [1.05%, 38.42%] | 3.0% | 12 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 29 | – |
 | 2022 | gemini-lite-realtime | 8/8 | 0.25% | 0.41% [0.16%, 0.73%] | 1.1% | 12 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 2 | 2 first / 0 after retry [0%, 32%] |
-| 2021 | ia-djvu | 7/7 | 2.93% | 5.19% [2.28%, 8.71%] | 5.7% | 99 | 2.02% [0.00%, 13.04%] | 2 | 0 | 7.1% | 9 | – |
+| 2021 | ia-djvu | 7/7 | 2.93% | 5.19% [2.28%, 8.71%] | 5.7% | 99 | 1.01% [0.00%, 10.53%] | 1 | 0 | 7.1% | 9 | – |
 | 2021 | gemini-lite-realtime | 7/7 | 0.22% | 1.11% [0.30%, 1.74%] | 0.7% | 99 | 0.00% [0.00%, 0.00%] | 0 | 0 | 6.1% | 5 | 1 first / 0 after retry [0%, 35%] |
 | 2026 | ia-djvu | 3/3 | 0.61% | 0.64% [0.00%, 0.80%] | 2.6% | 31 | 0.00% [0.00%, 0.00%] | 0 | 1 | 0.0% | 0 | – |
 | 2026 | gemini-lite-realtime | 1/3 | 0.00% | 0.00% [0.00%, 0.00%] | 0.0% | 0 | –  | 0 | 0 | – | 0 | 2 first / 2 after retry [21%, 94%] |
@@ -92,9 +92,9 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 
 | group | engine | scored/pages | median CER | pooled CER [95% CI] | median WER | numbers printed | SILENT number misreads, verified [95% CI] | pages w/ a silent misread | visibly garbled numbers | numbers dropped | spurious numbers | refusals |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| wikisource | ia-djvu | 87/87 | 0.59% | 4.20% [1.99%, 7.29%] | 1.9% | 416 | 2.16% [0.73%, 4.17%] | 6 | 2 | 1.4% | 127 | – |
+| wikisource | ia-djvu | 87/87 | 0.59% | 4.20% [1.99%, 7.29%] | 1.9% | 416 | 1.44% [0.29%, 2.83%] | 4 | 2 | 1.4% | 127 | – |
 | wikisource | gemini-lite-realtime | 78/87 | 0.23% | 1.94% [0.82%, 3.60%] | 0.8% | 381 | 0.00% [0.00%, 0.00%] | 0 | 0 | 1.0% | 84 | 18 first / 9 after retry [6%, 19%] |
-| gutenberg | ia-djvu | 35/35 | 1.23% | 3.38% [1.99%, 4.99%] | 3.2% | 470 | 0.85% [0.00%, 2.41%] | 3 | 1 | 5.7% | 15 | – |
+| gutenberg | ia-djvu | 35/35 | 1.23% | 3.38% [1.99%, 4.99%] | 3.2% | 470 | 0.64% [0.00%, 2.04%] | 2 | 1 | 5.7% | 15 | – |
 | gutenberg | gemini-lite-realtime | 27/35 | 0.30% | 4.48% [0.82%, 10.31%] | 0.9% | 369 | 0.00% [0.00%, 0.00%] | 0 | 0 | 16.0% | 55 | 16 first / 8 after retry [12%, 39%] |
 
 ## By decade of edition
@@ -103,11 +103,11 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1900s | ia-djvu | 18/18 | 0.84% | 1.61% [0.67%, 3.12%] | 2.7% | 118 | 0.00% [0.00%, 0.00%] | 0 | 1 | 0.8% | 14 | – |
 | 1900s | gemini-lite-realtime | 15/18 | 0.24% | 1.48% [0.33%, 3.37%] | 1.1% | 118 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.8% | 13 | 5 first / 3 after retry [6%, 39%] |
-| 1910s | ia-djvu | 17/17 | 0.34% | 4.10% [0.80%, 8.71%] | 1.6% | 174 | 3.45% [1.37%, 8.64%] | 4 | 1 | 5.2% | 9 | – |
+| 1910s | ia-djvu | 17/17 | 0.34% | 4.10% [0.80%, 8.71%] | 1.6% | 174 | 2.87% [0.00%, 7.14%] | 3 | 1 | 5.2% | 9 | – |
 | 1910s | gemini-lite-realtime | 17/17 | 0.43% | 1.95% [0.24%, 5.20%] | 0.8% | 174 | 0.00% [0.00%, 0.00%] | 0 | 0 | 1.7% | 3 | 0 first / 0 after retry [0%, 18%] |
 | 1890s | ia-djvu | 16/16 | 0.55% | 2.08% [0.64%, 3.91%] | 1.7% | 80 | 1.25% [0.00%, 4.55%] | 1 | 0 | 17.5% | 3 | – |
 | 1890s | gemini-lite-realtime | 13/16 | 0.20% | 1.29% [0.21%, 3.25%] | 0.7% | 59 | 0.00% [0.00%, 0.00%] | 0 | 0 | 16.9% | 1 | 5 first / 3 after retry [7%, 43%] |
-| 1880s | ia-djvu | 14/14 | 0.33% | 0.72% [0.26%, 1.36%] | 2.0% | 178 | 1.12% [0.00%, 9.52%] | 1 | 1 | 0.6% | 0 | – |
+| 1880s | ia-djvu | 14/14 | 0.33% | 0.72% [0.26%, 1.36%] | 2.0% | 178 | 0.00% [0.00%, 0.00%] | 0 | 1 | 0.6% | 0 | – |
 | 1880s | gemini-lite-realtime | 8/14 | 0.05% | 11.68% [0.04%, 33.04%] | 0.3% | 134 | 0.00% [0.00%, 0.00%] | 0 | 0 | 29.1% | 46 | 7 first / 6 after retry [21%, 67%] |
 | 1870s | ia-djvu | 11/11 | 0.54% | 3.62% [0.52%, 8.06%] | 2.0% | 89 | 2.25% [0.00%, 8.45%] | 1 | 0 | 0.0% | 16 | – |
 | 1870s | gemini-lite-realtime | 10/11 | 0.27% | 1.57% [0.21%, 4.15%] | 0.5% | 51 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 4 | 4 first / 1 after retry [2%, 38%] |
@@ -117,7 +117,7 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 | 1850s | gemini-lite-realtime | 5/6 | 0.00% | 10.39% [0.00%, 33.53%] | 0.0% | 33 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 25 | 2 first / 1 after retry [3%, 56%] |
 | 1790s | ia-djvu | 4/4 | 5.22% | 7.58% [2.27%, 16.26%] | 21.6% | 16 | 0.00% [0.00%, 0.00%] | 0 | 0 | 25.0% | 7 | – |
 | 1790s | gemini-lite-realtime | 4/4 | 0.59% | 1.35% [0.00%, 2.61%] | 1.8% | 16 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | 0 first / 0 after retry [0%, 49%] |
-| 1680s | ia-djvu | 4/4 | 6.87% | 6.28% [4.90%, 7.63%] | 24.7% | 28 | 3.57% [0.00%, 8.33%] | 1 | 0 | 10.7% | 2 | – |
+| 1680s | ia-djvu | 4/4 | 6.87% | 6.28% [4.90%, 7.63%] | 24.7% | 28 | 0.00% [0.00%, 0.00%] | 0 | 0 | 10.7% | 2 | – |
 | 1680s | gemini-lite-realtime | 3/4 | 1.19% | 1.58% [1.05%, 2.17%] | 3.6% | 18 | 0.00% [0.00%, 0.00%] | 0 | 0 | 33.3% | 5 | 2 first / 1 after retry [5%, 70%] |
 | 1860s | ia-djvu | 3/3 | 0.23% | 0.50% [0.00%, 0.80%] | 1.5% | 23 | 0.00% [0.00%, 0.00%] | 0 | 0 | 0.0% | 0 | – |
 | 1860s | gemini-lite-realtime | 2/3 | 0.35% | 0.37% [0.00%, 0.70%] | 1.8% | 0 | –  | 0 | 0 | – | 0 | 2 first / 1 after retry [6%, 79%] |
@@ -164,17 +164,17 @@ run en-ocr-ref-5124-2026-09 · scorer en-ocr-ref-scorer@1 · pages scored only w
 | en-69ae66-ws159 | 70 | 1 | gemini-lite-realtime | ref | heading reads 70 This necessarily brings |
 | en-69ae90-ws101 | 56 | 5g | ia-djvu | ref | footnote v 18 47 56 Aristophanes |
 | en-695434-ws122 | 11 | ii | ia-djvu | ref | Corol 11 pt 2 printed |
-| en-695434-ws122 | 16 | 6 | ia-djvu | ref | Prop 16 pt 2 printed |
-| en-695434-ws122 | 11 | 1 | ia-djvu | ref | Prop 11 pt 2 printed |
+| en-695434-ws122 | 16 | 6 | ia-djvu | split | Prop 16 pt 2 printed; Archive text reads "Prop. 1 6": digits right, split by a space (not a misread; re-checked 2026-10-18) |
+| en-695434-ws122 | 11 | 1 | ia-djvu | split | Prop 11 pt 2 printed; Archive text reads "Prop, 1 1": digits right, split by a space (not a misread; re-checked 2026-10-18) |
 | en-6991eb-ws75 | 105 | io | ia-djvu | ref | section heading 105 clearly printed |
 | en-6aa1d5-ws52 | 438 | 488 | ia-djvu | ref | footnote HUb p 438 Salomon |
 | en-69b9a2-ws132 | 31 | i | ia-djvu | ref | footnote On July 31 1879 thirteenth incarnation |
 | en-69b9a2-ws132 | 1879 | 1s79 | ia-djvu | ref | footnote On July 31 1879 printed clearly |
-| en-6ab233-ws84 | 18 | 8 | ia-djvu | ref | Matthew 18 15-17 printed twice on page |
+| en-6ab233-ws84 | 18 | 8 | ia-djvu | split | Matthew 18 15-17 printed twice on page; Archive text reads "Matthew, 1 8 : 15-17": digits right, split by a space (not a misread; re-checked 2026-10-18) |
 | en-699069-pg31511p363 | 11 | ii | ia-djvu | ref | true and exact Relation 10 11 13-15 27 |
 | en-699069-pg31511p363 | 13 | i3 | ia-djvu | ref | same list 10 11 13-15 27 printed |
 | en-699069-pg31511p363 | 15 | is | ia-djvu | ref | same list 10 11 13-15 27 printed |
-| en-6a0b25-pg77434p155 | 50 | 0 | ia-djvu | ref | every where in the Leaf Tab 50 continued |
+| en-6a0b25-pg77434p155 | 50 | 0 | ia-djvu | split | every where in the Leaf Tab 50 continued; Archive text reads "Tab. 5 0": digits right, split by a space (not a misread; re-checked 2026-10-18) |
 | en-6ab245-pg35895p272 | 219 | 119 | ia-djvu | ref | throne of Magadha 110-112 219 printed |
 | en-6ab245-pg35895p272 | 227 | 127 | ia-djvu | ref | not disrespectable 227 228 231 232 printed |
 | en-699079-pg74335p860 | 36 | 30 | ia-djvu | ref | (G. D., 36; War, 8.) prints 36 |

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getConsent, setConsent, type ConsentState } from '@/lib/consent';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
-import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
+import { CHROME_STRINGS, useChromeLocale } from '@/lib/i18n';
 
 /**
  * Minimal cookie consent banner — thin bar at the bottom of the screen.
@@ -15,7 +15,7 @@ import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
  */
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
-  const chrome = CHROME_STRINGS[useLocale()];
+  const chrome = CHROME_STRINGS[useChromeLocale()];
   const isEmbedded = useIsEmbedded();
 
   useEffect(() => {
@@ -57,6 +57,7 @@ export default function CookieConsent() {
 
   return (
     <div
+      data-cookie-banner=""
       className="fixed inset-x-0 z-[9999] animate-in slide-in-from-bottom duration-300"
       // A page with its own bottom dock (the phone reader) sets this, so the
       // banner sits above the controls instead of covering them. On a first

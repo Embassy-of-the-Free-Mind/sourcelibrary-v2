@@ -32,7 +32,7 @@ export default function IdeasIndexPage() {
           The passages were found by AI readers that searched and read the pages. Each quotation was checked by
           program to be on the page it links to, last on {VERIFIED_ON}. Almost all of the English is AI translation
           that no scholar has reviewed, and each passage says so.{' '}
-          <Link href="/about/meaning" className="text-accent-rust hover:underline">How search by meaning works</Link>
+          <Link href="/articles/search-by-meaning" className="text-accent-rust hover:underline">How search by meaning works</Link>
         </p>
       </div>
       <ul className="list-none p-0 mt-8 grid gap-4 md:grid-cols-2">

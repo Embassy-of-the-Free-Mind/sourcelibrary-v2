@@ -6,6 +6,7 @@ import { notifyEditionPublished } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { generateKdpEpub } from '@/lib/kdp-epub';
+import { screenBookPages } from '../../../../../../../scripts/lib/modern-intrusion.mjs';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -64,6 +65,19 @@ export const POST = withAuth(async (request, session, context) => {
       })
       .sort({ page_number: 1 })
       .toArray() as unknown as Page[];
+
+    // quality_score is not a fabrication screen (#4960): refuse a permanent DOI while any page's
+    // English carries text that cannot belong to a book of this date. A person reads the page first.
+    const intrusions = screenBookPages(book, pages) as { page_number: number; hits: { marker: string }[] }[];
+    if (intrusions.length) {
+      return NextResponse.json(
+        {
+          error: `Modern text on page(s) ${intrusions.map(i => i.page_number).join(', ')} that cannot belong to this book; read and repair before minting.`,
+          intrusions: intrusions.map(i => ({ page_number: i.page_number, markers: i.hits.map(h => h.marker) })),
+        },
+        { status: 409 }
+      );
+    }
 
     // Build translation text
     const translationText = pages

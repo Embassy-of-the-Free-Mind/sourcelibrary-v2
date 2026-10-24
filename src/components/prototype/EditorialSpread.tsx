@@ -4,6 +4,8 @@ import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { hasLocalizedEdition, localizedCollection, type LocalizedCollectionMap } from '@/lib/localized';
+import { HOME_STRINGS, collectionName } from '@/lib/home-i18n';
 
 interface FeaturedBook {
   id: string;
@@ -13,6 +15,8 @@ interface FeaturedBook {
   author: string;
   thumbnail?: string;
   thumbnail_blob?: string;
+  language?: string;
+  pages_translated_es?: number;
 }
 
 interface EditorialSpreadProps {
@@ -24,6 +28,7 @@ interface EditorialSpreadProps {
     description: string;
     book_count: number;
     hero_image: string | null;
+    localized?: LocalizedCollectionMap | null;
   };
   books: FeaturedBook[];
   /** Locale of the page mounting this — its links keep the URL prefix. */
@@ -37,6 +42,19 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 
 export default function EditorialSpread({ collection, books, lang = 'en' }: EditorialSpreadProps) {
   const lp = (href: string) => localePath(href, lang);
+  const t = HOME_STRINGS[lang];
+  // A book with no edition in the page's language links straight to the page
+  // its locale URL would redirect to, instead of a 307 hop (#7076). Unknown
+  // (null) keeps the locale URL and lets the book page decide.
+  const bookHref = (book: FeaturedBook) =>
+    hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
+      ? `${bookUrl(book)}?lang=${lang}`
+      : lp(bookUrl(book));
+  const copy = localizedCollection(collection, lang);
+  const name = lang === 'en' ? copy.name : collectionName(lang, collection.slug, copy.name);
+  // No English description under foreign chrome.
+  const description = lang !== 'en' && copy.descriptionIsEnglish ? undefined : copy.description;
+  const subtitle = lang !== 'en' && !collection.localized?.[lang]?.subtitle ? undefined : copy.subtitle;
   return (
     <section className="relative overflow-hidden">
       {/* Background image */}
@@ -59,26 +77,26 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
       <div className="relative max-w-[1500px] mx-auto px-6 md:px-12 py-16 md:py-24">
         <div className="max-w-xl">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
-            Featured Collection
+            {t.featuredCollectionEyebrow}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white leading-[1.1] mb-4">
-            {collection.name}
+            {name}
           </h2>
-          {collection.subtitle && (
+          {subtitle && (
             <p className="text-xl text-white/70 leading-relaxed mb-4 font-body">
-              {collection.subtitle}
+              {subtitle}
             </p>
           )}
-          {collection.description && (
+          {description && (
             <p className="text-base text-white/50 leading-relaxed mb-8 line-clamp-3 font-body">
-              {collection.description}
+              {description}
             </p>
           )}
           <Link
             href={lp(`/collections/${collection.slug}`)}
             className="inline-flex items-center gap-2 bg-accent-gold/90 hover:bg-accent-gold text-white px-6 py-3 rounded-lg text-sm font-medium transition-colors"
           >
-            Explore {collection.book_count} books
+            {t.exploreCollectionBooks(collection.book_count)}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -95,7 +113,7 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
                 // for the 120px slot — a 150px source upscales and looks soft.
                 const thumb = getBookThumbnailUrl(book, 'display') || book.thumbnail_blob || book.thumbnail;
                 return (
-                  <Link key={book.id} href={lp(bookUrl(book))} className="group flex-shrink-0">
+                  <Link key={book.id} href={bookHref(book)} className="group flex-shrink-0">
                     <div className="w-[100px] md:w-[120px] aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-accent-gold/50 transition-all">
                       {thumb ? (
                         <Image

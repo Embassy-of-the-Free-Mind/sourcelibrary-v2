@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three has any readable Sanskrit or Malayalam; B and C are identical and honestly mark every row illegible, while A adds lone visarga marks (ḥ) that form no words and are probably noise, so B and C are effectively tied and B is picked only by order.

@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ya [illegible] mārṣṭaḥ [illegible] śātadbhitalprakāra ‖ ṇṭabhaivāyamārṣṭaḥ daivapra [illegible] śca
+2. ta [illegible] dāpapañcatalprakārakāraṇabhavaḥ ‖ [illegible] yamārkkāraṇaṭavaba indriyaso
+3. kṣāl i [illegible] ṇamiśrapamimigāñjūdaṭadāl ‖ kalkāraṇamamicaindriyaṃ pra [illegible]
+4. [illegible] e ‖ [illegible] daṭadālkal [illegible] sāyāṇa [illegible] ‖ [illegible] ṇaṃ ka [illegible] ṇaṃkāri [illegible]
+5. [illegible] ‖ kāraṇāṃ kāra [illegible] ṃprāgabhāvapra ‖ [illegible] kāraṇāṃ [illegible]
+6. [illegible] sama [illegible] ‖ samapāribhi [illegible] dāl ‖ [illegible] lsamavai [illegible] ṇaṃkāryyaṃ
+7. u [illegible] lsama ‖ [illegible] dikāraṇaṃ [illegible] ‖ [illegible] ga [illegible] pādeḥko
+8. [illegible] kāraṇa [illegible] ‖ [illegible] l [illegible] sama [illegible] ‖ [illegible] kāraṇaṃ [illegible] samavāyi
+
+TRANSCRIPTION B
+1. dhaṭayathārtthaḥoyathārtthaśvātaddhritalprakāra ‖ nakāraṇabhūtevāyuthārtthaḥ ‖ oonaprakamatyacra
+2. taradadadapañcabhūtalprakāranakāraṇabhavaḥ ‖ rayathārtthaḥyathāra ‖ ārtthānaṭavabbaubhriyaso
+3. khyālutrāramaddhyapama [illegible] bhihājñeṭaṭāl ‖ kalkkālaṇamamicau ‖ uddhiyaṃpratyakṣākṣetraṃ
+4. namarākorāpamadana ‖ maññeṭabhālosāyānaaudāna ‖ ṇāṃkalaṇḍaṃkāryyatve
+5. khartavvūvṛtti ‖ kāraṇeṃkāryyañcuṃprāgabhāvapra ‖ tvedhābhikāraṇaṃtri
+6. miyaṃsamavāya ‖ samavāyitvamittakaṭabhāl ‖ yalsamavetaṃkāryyaṃ
+7. ubhidānetalsama ‖ āmikāraṇaṃcalaitanaiḥpaṭasya ‖ ṭasbbhagatantrapāṭeḥka
+8. olluñekāṟanāñe ‖ ṟālaotbhināñcalḍhasamaivātantṛ ‖ strakāraṇaṃṝsamavāyi
+
+TRANSCRIPTION C
+1. yaṭayaṣālbhḥñayaṣāktra [illegible] ‖ śvātaddhattalprakāraṇakāraṇabhedevāya ‖ ṣālkṣḥbhaisapaprakama [illegible] ccu
+2. takaṭadabhedapavabhital ‖ prakāranakāraṇabhedavaḥnayaṣālkṣaṭayaṣā ‖ ākṣānaṭavakhaindriyasyo
+3. kṣālindrāṇamitryakha ‖ bhihāñjevaṭṭamālkalkkāraṇemavicatu ‖ [illegible] indriyaṃpratyakṣākṣettan
+4. ṇamararaṇaൗrapamaṭana ‖ ñṣebheṭadālkkaṇsāyānaññamāra ‖ ṇeṃkaraṇeṃkāryyame
+5. ṣetaktuvvṛtti ‖ kṣāraṇeṃkāryyāḻṣaṃprāgabhāvapra ‖ tteyomikāraṇeṃtti
+6. kiyaṃsamarātrya ‖ samavāyiññimittakaibhedāl ‖ ṣalsamavetaṃkāryyaṃ
+7. upbhiddāraimailsama [illegible] ‖ rakhikādaṅṅaññāṣṭāvāratatevaḥbheṭaddhāra ‖ ṣṭaśvaghagatatruṣābhedaḥkā
+8. ollejñakāranamaiñña [illegible] ‖ ṟāṣaṃrahamiñāmakksamaivātaibhavsa ‖ stikāraṇesamavāyi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

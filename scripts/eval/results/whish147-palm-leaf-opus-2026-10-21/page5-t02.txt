@@ -1,0 +1,27 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script (old Malayalam/Vattezhuthu-influenced cursive hand) incised on a palm leaf. The leaf is cut at the left edge, so each line starts partway through. Final-consonant (chillu) forms such as ൽ suggest the language is Malayalam rather than Sanskrit, though Sanskrit written in Malayalam script cannot be ruled out. A confident letter-by-letter reading is not possible from this image, so most of the text is marked unclear rather than reconstructed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Half of one palm leaf with a string hole and cord in the centre. Lines 3–7 are written in two blocks, one on each side of the string hole. The first two lines and the last two run across the full width. Some letters are written above or below the line with connecting strokes, which are probably insertions or corrections.</meta>
+
+<unclear>[line 1 — about 14 akṣaras, Malayalam script; left edge cut off]</unclear>
+
+<unclear>[line 2 — about 16 akṣaras, Malayalam script, including a word ending in ൽ (…മാൽ) and ending …ൽ സാ]</unclear>
+
+<unclear>[line 3, left block — about 8 akṣaras, ending …ർക്കെ]</unclear> <unclear>[line 3, right block — about 6 akṣaras]</unclear>
+
+<unclear>[line 4, left block — about 8 akṣaras]</unclear> <unclear>[line 4, right block — about 6 akṣaras]</unclear>
+
+<unclear>[line 5, left block — about 7 akṣaras]</unclear> <unclear>[line 5, right block — about 6 akṣaras]</unclear>
+
+<unclear>[line 6, left block — about 7 akṣaras]</unclear> <unclear>[line 6, right block — about 7 akṣaras]</unclear>
+
+<unclear>[line 7, left block — about 7 akṣaras]</unclear> <unclear>[line 7, right block — about 6 akṣaras]</unclear>
+
+<unclear>[line 8 — about 16 akṣaras, Malayalam script, written across the string hole]</unclear>
+
+<unclear>[line 9 — about 16 akṣaras, Malayalam script, ending with a punctuation mark (double daṇḍa) and a numeral or section mark]</unclear>
+
+<vocab>palm leaf manuscript, Malayalam script, granthi, string hole</vocab>

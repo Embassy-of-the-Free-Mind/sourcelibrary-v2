@@ -32,7 +32,7 @@ const STATIC_PAGES = [
   '/search',
   '/about',
   '/librarian',
-  '/blog',
+  '/articles',
   '/artwork',
   '/encyclopedia',
   '/explore',

@@ -19,9 +19,13 @@
  *   - main's tip is ≥ BUILD_GAP_MIN minutes old: merges are serialised so
  *     each gets its own Vercel build (2026-09-25: the newest of two close
  *     merges got NO build while the older kept building)
- *   - the entities-sweep interlock is CLEAR (exit 0). A merge is a prod build,
+ *   - the entities-sweep interlock is CLEAR (exit 0). A merge was a prod build,
  *     and a concurrent bulk `entities` writer fails the /explore prerender.
  *     Exit 2 (UNKNOWN) is not clear — see CLAUDE.md.
+ *   Since #7008 a merge builds nothing: production is the `release` branch,
+ *   which release.yml fast-forwards twice a day and which runs the interlock
+ *   itself. The gap and the interlock stay here for one week so that pointing
+ *   Vercel back at `main` is a complete rollback; then remove them.
  *
  * Merges oldest-first, one per run, with --squash --delete-branch (the repo's
  * merge style). Prints what it did and why it skipped the rest.
@@ -186,7 +190,6 @@ function main() {
   sh(`gh pr comment ${pr.number} --body "Auto-merged by auto-merge.yml: tier:auto, test+DCO green, interlock clear, main quiet ${gap.toFixed(0)} min. Rules: scripts/maintenance/pr-tier-rules.json"`);
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
-  dispatchWarm(pr.number);
   dispatchLedgers(pr.number);
   return ready.length > 1 ? BUILD_GAP_MIN + 1 : null;
 }
@@ -202,23 +205,10 @@ function emitRetry(minutes) {
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `retry_in=${m}\n`);
 }
 
-// A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
-// recursion guard), so post-deploy-warm.yml — the Cloudflare purge + re-warm
-// that stops stale HTML pointing at dead CSS chunks for 24h — must be started
-// by hand here for any merge Vercel will build. Paths mirror that workflow's
-// `on.push.paths`. deploy-hetzner.yml is not dispatched: Hetzner pulls hourly.
-const WARM_PATHS = [/^src\//, /^public\//, /^next\.config\.ts$/, /^vercel\.json$/, /^package(-lock)?\.json$/];
-function dispatchWarm(number) {
-  const view = JSON.parse(sh(`gh pr view ${number} --json files,mergeCommit`));
-  const paths = (view.files || []).map((f) => f.path);
-  if (!paths.some((p) => WARM_PATHS.some((re) => re.test(p)))) { console.log('no app files changed — no Vercel build, no warm needed'); return; }
-  const sha = view.mergeCommit?.oid;
-  if (!sha) { console.log('::warning::merge commit SHA unknown — run post-deploy-warm.yml by hand'); return; }
-  sh(`gh workflow run post-deploy-warm.yml --ref main -f sha=${sha}`);
-  console.log(`dispatched post-deploy-warm.yml for ${sha}`);
-}
+// The post-merge warm moved to release.yml (#7008): a merge no longer builds.
 
-// Same recursion guard, second victim: eval-ledgers-regenerate.yml rebuilds the
+// A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
+// recursion guard): eval-ledgers-regenerate.yml rebuilds the
 // generated scripts/eval/EXPERIMENTS.md and INDEX.md on push to main, and a
 // token merge never fires it (#5390 on 2026-10-01 landed an entry nobody
 // regenerated). Dispatch it for any merge that touched scripts/eval/.

@@ -47,3 +47,18 @@ describe('claude-translate splitBlockReply', () => {
     expect(CALL_SUFFIX).toMatch(/nothing before, between or after/);
   });
 });
+
+// #6865: Opus sometimes closes the tag before the page's summary and keywords.
+describe('claude-translate splitBlockReply, summary after the tag', () => {
+  const late = (n: number) => `<translation page="${n}">English of page ${n}.</translation>\n<summary>S.</summary>\n<keywords>k</keywords>`;
+  it('moves them inside on a one-page reply', () => {
+    expect(splitBlockReply(late(208), [208])?.get(208)).toBe('English of page 208.\n<summary>S.</summary>\n<keywords>k</keywords>');
+  });
+  it('still refuses them on a block reply, where the page they belong to is a guess', () => {
+    expect(splitBlockReply(`<translation page="1">One.</translation>\n${late(2)}`, [1, 2])).toBeNull();
+  });
+  it('still refuses other prose after the tag', () => {
+    expect(splitBlockReply(`${late(3)}\nHope this helps.`, [3])).toBeNull();
+  });
+});
+

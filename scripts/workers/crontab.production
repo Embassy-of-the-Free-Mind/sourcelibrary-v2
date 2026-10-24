@@ -238,6 +238,12 @@
 # a clean run closes it. Exit 2 never files. Guarded by [ -f ] until the script is on main.
 # Approved 2026-10-10 (Derek, Decision Deck): gemini-embedding on the paid API, an explicit exception to the flash-lite-only rule (#6197).
 15 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/page-vector-truth.mjs ] && flock -n /tmp/sl-page-vector-truth.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/page-vector-truth.mjs --books 200 --seed \$(date +\%G\%V) --plant --dup-probe 50 --file-issue --json /var/log/sourcelibrary/page-vector-truth-last.json" >> /var/log/sourcelibrary/page-vector-truth.log 2>&1
+# english-served-divergence weekly (#7100): on English-original books, does the served English equal the transcription?
+# One seeded page per live English-original book (~2.2K, Mongo only), then up to 200 quote-API probes of the leaves whose
+# stored English differs. Hall p.40 positive control every run. Exit 1 files/updates "English served divergence: "; a clean
+# run closes it; exit 2 (control silent, >10% unreadable probes) never files. Read-only, no model call, ~1 min.
+# Approved 2026-10-21 (Derek, "do it"). Guarded by [ -f ] until the script is on main.
+35 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/english-served-divergence.mjs ] && flock -n /tmp/sl-english-served.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/english-served-divergence.mjs --seed \$(date +\%G\%V) --max-probes 200 --file-issue --json /var/log/sourcelibrary/english-served-divergence-last.json" >> /var/log/sourcelibrary/english-served-divergence.log 2>&1
 # translation-language-label weekly (#4937): does a page whose translation says English contain English? Full sweep
 # of books with pages_translated > 0, 12 pages each, read-only (~28 min). --out is dated per ISO week because books.jsonl
 # is a checkpoint (a rerun skips books already written). Exit 1 on findings; nothing files an issue yet.
@@ -315,3 +321,18 @@
 40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-export-mirror.lock node --max-old-space-size=1536 --env-file=.env.production.local scripts/maintenance/export-mirror.mjs >> /var/log/sourcelibrary/export-mirror.log 2>&1
 # Weekly cover-frame backfill (#6010, Derek 2026-10-10): writes only books.thumbnail_frame diffs, sweep_log per write; undo: --rollback --apply
 30 1 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-cover-frame-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/cover-frame-backfill.mjs --apply" >> /var/log/sourcelibrary/cover-frame-backfill.log 2>&1
+# Seam repair nightly (#6742): lean.mjs night repairs broken page joins in the most-read books first (Gemini via agy,
+# a 7% blind Opus sample, writes through writePageTranslation, label seam-repair-6742; undo seam-repair.mjs undo).
+# Stops itself at the box account's 60% weekly. Approved 2026-10-16 (Derek); installed by hand on main 2026-10-16.
+30 1 * * * cd /root/sourcelibrary && flock -n /tmp/sl-seam-lean.lock bash -c 'export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; set -a; source .env.production.local; set +a; node scripts/maintenance/seam-repair-6742/lean.mjs night --out=/mnt/HC_Volume_105839809/seam-lean-6742 --max-joins=2500 --apply' >> /var/log/sourcelibrary/seam-lean.log 2>&1  # seam repair nightly, #6742, Derek yes 2026-10-16
+# Pre-OCR duplicate screen nightly (#4285): holds queued books whose page images match a copy already read or further
+# along (reason same-edition-copy-unread); never merges or hides. Approved 2026-10-22 (Derek); installed by hand on main.
+40 2 * * * flock -n /tmp/sl-pre-ocr-dupe-screen.lock /root/sourcelibrary/scripts/workers/pre-ocr-dupe-screen-nightly.sh >> /var/log/sourcelibrary/pre-ocr-dupe-screen.log 2>&1
+# Same-scan duplicate detector daily (#4285): reads only; pages ntfy when unreviewed same-object groups grow day on day.
+# Approved 2026-10-23 (Derek); installed by hand on main.
+20 6 * * * flock -n /tmp/sl-duplicate-detector.lock /root/sourcelibrary/scripts/workers/duplicate-detector-daily.sh >> /var/log/sourcelibrary/duplicate-detector.log 2>&1
+# Write-time seam guard (#7118): NOT a cron line. Its mode is the box file /etc/sourcelibrary/seam-guard (`dry` or
+# `apply`; no file = off), read by every lane that writes a translation here: translate-worker (scheduler), the chained
+# translate-batch-worker lines above, and cli-translate / realtime-translate inside jobs. Set to `dry` on main 2026-10-22
+# (job seam-prevent-7118); log + proposals in /mnt/HC_Volume_105839809/seam-guard-6742. Off: rm the file. One process
+# off: SEAM_GUARD=off. Sonnet fallback while agy is locked: ≤ SEAM_GUARD_CLAUDE_DAILY (1500) joins a day, none at ≥ 50% weekly.

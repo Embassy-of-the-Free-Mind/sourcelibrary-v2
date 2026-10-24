@@ -1,0 +1,927 @@
+[
+ {
+  "book_id": "2950c384-e5de-44c2-bbb5-a486556d6a93",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Incunable-style roman with heavy abbreviation; multi-line Greek quotations on p84; guide letters for missing initials; edges of facing page visible; heavy show-through"
+ },
+ {
+  "book_id": "6952d05477f38f6761bc511e",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic",
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Pharmaceutical recipes with apothecary symbols (R/, ounce/drachm signs) and indented ingredient lists on p298; italic marginal notes on p548; show-through"
+ },
+ {
+  "book_id": "6952dac677f38f6761bc683a",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Music-theory text with monochord diagrams (number/letter scales) inline on p359; strip of facing page at right edge of p698; ink annotations in margin"
+ },
+ {
+  "book_id": "69540d5d790862145d7de805",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Bitonal high-contrast microfilm scan with scratch lines; heavy abbreviation; ~1.5 lines of Greek on p133; guide letters for missing initials"
+ },
+ {
+  "book_id": "6955da018407b7c9ae21361a",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Dense roman with abbreviations; line numbers (10,20,30,40) in outer margin, not notes; italic only in a chapter heading line"
+ },
+ {
+  "book_id": "69593413b282844d7b277aaf",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Clean roman; italic chapter heading and citations; large decorated initial on p144; heavy show-through on p144"
+ },
+ {
+  "book_id": "698255eec7e5d26b8a0eb612",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Small-format, large clean roman; ink underlining by a reader on p231"
+ },
+ {
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic",
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "German text in fraktur with Latin words in roman; alchemical symbols throughout; large symbols and notes in outer margin on p43, verse/paragraph numbers in margin on p72; Hebrew words (Elohim, YHWH) on p72; dense small type"
+ },
+ {
+  "book_id": "6988a5a159f3a9c9513f9f17",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Both image paths are the same leaf (p78); small prayer book in a rounded early roman with abbreviations; gothic signature mark; thin strip of facing page at left edge"
+ },
+ {
+  "book_id": "6990616cef12272ffdc8d980",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Parallel Greek/Latin columns (Porphyry De abstinentia) with two-column footnote commentary below mixing Latin, Greek and italic references"
+ },
+ {
+  "book_id": "69906327ef12272ffdc8f9ac",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic",
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Italic body with roman capitals; section numbers (23-26) and quotation marks in left margin, not notes; dark discoloured scan on p584 with stains"
+ },
+ {
+  "book_id": "69a9570865ddd05bbcd3daee",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Ammianus Marcellinus; italic marginal summaries beside roman text; low-resolution images, abbreviation marks"
+ },
+ {
+  "book_id": "69aeabe767e6731bc1367193",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Incunable-style early roman (gotico-antiqua feel), very heavy abbreviation (tildes, q; , -rum/-orum signs); Ficino De christiana religione"
+ },
+ {
+  "book_id": "69af0f77a940055c46680e8b",
+  "typeface": "italic",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Aratea: Cicero's verse in italic alternating with roman prose; printed line numbers in left margin (not notes); roman/italic roughly equal"
+ },
+ {
+  "book_id": "69af106e266659b71a32212f",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Aphorisms in roman (p109), commentary in italic (p174); high-contrast black-and-white microfilm scan with bleed-through; facing-page strip at edge on both leaves"
+ },
+ {
+  "book_id": "69af10ef06b10527be566275",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Surgical text; italic used for quoted Avicenna passage"
+ },
+ {
+  "book_id": "69b21c3c429e087c6f86448e",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Cluverius Italia antiqua folio: multi-line Greek quotations (ligatured Greek) with italic Latin translations and verse; printed line numbers; facing page visible at edge on both leaves"
+ },
+ {
+  "book_id": "69b2ff6a5545150b61b48140",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "16th-c. Augustine Opera; scripture-reference side notes and section letters C/D in margin; woodcut initial; abbreviations (tildes, q;)"
+ },
+ {
+  "book_id": "69b30230c22956d8a0de5c55",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Small-format Cluverius Introductio geographica photographed open; facing page visible on both leaves, text near gutter partly cut/obscured"
+ },
+ {
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "typeface": null,
+  "typefaces_present": [],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": false,
+  "spread": true,
+  "non_text": false,
+  "notes": "MANUSCRIPT, not print: 18th-c. cursive hand (magical/ritual text, Adonay prayers); long s written by hand; facing-page strip visible at right"
+ },
+ {
+  "book_id": "69b4cd08d5b6c3815e1a3880",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Atlas text (Ortelius-type) in two columns: p84 all italic, p150 all roman; one isolated blackletter place-name on p150; map show-through and facing-page sliver at left edge"
+ },
+ {
+  "book_id": "69b51dbd768235dc659874a8",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Small-format Rosicrucian dialogue (Tyrosophus); stained, somewhat worn print"
+ },
+ {
+  "book_id": "69b51e4647b06ecd5818cd3a",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Possevino Apparatus sacer, bibliographic dictionary entries with small-caps headwords; italic annotations; facing-page strip at edge on both leaves; uses e-caudata"
+ },
+ {
+  "book_id": "69b51e5147b06ecd5818de97",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic",
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "word",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Morhof Polyhistor: italic book titles, short fraktur German titles inline (p67), one Greek word (p123); hanging 'Ad \u00a7.' paragraphs; dense small type"
+ },
+ {
+  "book_id": "69b51e679a81ef7feb3d4811",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Small-format roman with long italic quotations (p174 mostly italic); clean scan."
+ },
+ {
+  "book_id": "69b51e8147b06ecd581913fb",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Roman body, italic only in running heads/rubric lines; p220 slightly blurred/show-through."
+ },
+ {
+  "book_id": "69b51ebdff09e4fe943b3e60",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic",
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "p70 is entirely Greek with heavy Greek ligatures/abbreviations (Plethon scholia); p119 Latin italic commentary with roman verse lemmas."
+ },
+ {
+  "book_id": "69b51ed9cf111105c42a4f1e",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "18th-c. roman, some bleed-through; plain running text."
+ },
+ {
+  "book_id": "69b52c0f3dd6d9423027d7ec",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "NOT PRINTED: humanist cursive MANUSCRIPT with red rubric and initial, heavy abbreviation; vertical catchwords; facing-page edge visible at right."
+ },
+ {
+  "book_id": "69b62f861c1c21a3737f6a83",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Folio biblical commentary, dense small roman in two columns with lemmas, superscript source sigla and occasional marginal variant note; p954 section opening with argumentum and decorated initials."
+ },
+ {
+  "book_id": "69b62fcf1c1c21a3737faf5a",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "word",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Small-format commentary on Mark; isolated Greek words on p213; some ink blots/faint letters."
+ },
+ {
+  "book_id": "69b631ba1c1c21a373809ff8",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Incunable Bible in gothic (rotunda), rubricated capitals and red-underlined Hebrew letter names, heavy abbreviation; facing-page strips visible."
+ },
+ {
+  "book_id": "69b6ae73dc00a90e322b11c7",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Elegiac verse in roman, italic only in headings; strip of facing page visible on both leaves; book clamps in frame."
+ },
+ {
+  "book_id": "69b6c95731b7f0d07f5057d3",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "p497 is parallel Latin/Italian in two columns with mixed roman/italic emphasis; p942 Latin in two columns."
+ },
+ {
+  "book_id": "69bd9dc46120d54bd0379640",
+  "typeface": "italic",
+  "typefaces_present": [],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "passage",
+  "long_s_printed": false,
+  "spread": true,
+  "non_text": false,
+  "notes": "Both leaves entirely GREEK (Psellus scholia) with heavy Greek ligatures; no Latin body text on the leaves; only a strip of the facing Latin page (apparently italic, with long s) visible at right."
+ },
+ {
+  "book_id": "69bd9e676120d54bd037cc19",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Alchemical text, roman with long italic quotations, printed marginal notes on p281; line ends crowded/warped into gutter; facing-page edge visible."
+ },
+ {
+  "book_id": "69c82de66c6f3cc53c84d4bf",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "p181 set as two parallel columns, Latin left / Hebrew (Zohar) right; Hebrew word on p82; footnotes; strip of facing page with Hebrew text visible on p181 left edge"
+ },
+ {
+  "book_id": "69c82e676c6f3cc53c84d61e",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic",
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "German in Fraktur, not Latin; roman only for Latin terms and Bible citations; facing-page text strips at edges of both leaves"
+ },
+ {
+  "book_id": "69c835706c6f3cc53c84e8f6",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "word",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "right edge of text block cut off at the gutter in both images (last letters of each line missing); a few Greek words on p101"
+ },
+ {
+  "book_id": "69c846296c6f3cc53c8516d9",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "early roman, heavy abbreviation (macrons, q-ligatures); facing-page text strip at right edge of both; show-through of side notes from reverse on p111"
+ },
+ {
+  "book_id": "69d665cabf5afe33937f883e",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "MANUSCRIPT, not print: handwritten cursive Latin recipes, heavily abbreviated, red/blue initials, recipe numbers in margin; facing-page strip at right edge"
+ },
+ {
+  "book_id": "69dbc8271040d1d5e2097634",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 2,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "incunable rotunda, two columns, text in larger type with commentary in smaller type, heavy abbreviation; facing-page strip at left edge"
+ },
+ {
+  "book_id": "69dbc83c1040d1d5e2097f86",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "incunable gothic, list of aphorisms each with paragraph mark, heavy abbreviation; only blank edge of facing leaf visible"
+ },
+ {
+  "book_id": "69dbc8cc1040d1d5e209c88e",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "incunable gothic, text lemmata in large type with commentary in smaller type, very heavy abbreviation; facing-page strip with handwritten annotation at right of p130"
+ },
+ {
+  "book_id": "69dbc9401040d1d5e20a179d",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "incunable textura with red rubricated capitals, heavy abbreviation; facing-page text strip at left edge of both"
+ },
+ {
+  "book_id": "69dbc9b11040d1d5e20a557b",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "incunable gothic fables, heavy abbreviation, uneven/blotchy inking on p44, water staining on p79"
+ },
+ {
+  "book_id": "69dbc9f31040d1d5e20a7fda",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "gothic wide single column (Ficino commentary on Plato), chapter headings with guide letters, heavy abbreviation; facing-page text strips at edges"
+ },
+ {
+  "book_id": "69dbca0d1040d1d5e20a8e56",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "word",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "incunable roman, heavy abbreviation, red handwritten underlining and marginal index words (manuscript, not printed); faint print on p102; Greek word on p102; facing-page text strips"
+ },
+ {
+  "book_id": "69dbcb861040d1d5e20b7839",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Incunable rotunda, heavy abbreviation, woodcut initials; faint offset/show-through between sections."
+ },
+ {
+  "book_id": "69dbcc270f8c5edf20f46b67",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Early incunable roman, extremely heavy abbreviation; hand rubrication (red paraphs/underlines); page-block edges visible at left."
+ },
+ {
+  "book_id": "69de992d1b234a773e43a4a4",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Verse with line-initial capitals set off in a separate column (looks like marginal letters, not notes); gutter shadow at right edge."
+ },
+ {
+  "book_id": "69e747a485f786e884a492c6",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Incunable roman verse (Lucretius), centred section headings; strong show-through from verso."
+ },
+ {
+  "book_id": "69f334ae876dd827cbc4d35c",
+  "typeface": "gothic",
+  "typefaces_present": [
+   "gothic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "MANUSCRIPT, not printed: gothic cursive hand with red rubrics/initials, abbreviated; strip of facing leaf at right edge; colour bar in frame."
+ },
+ {
+  "book_id": "69f335b4876dd827cbc4ee76",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "MANUSCRIPT, not printed: ruled verse in semi-humanistic/gothico-antiqua book hand, set-off initials, pen-flourished border, brief hand annotation; facing leaf with text visible at right."
+ },
+ {
+  "book_id": "69f33618876dd827cbc4fc2c",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "MANUSCRIPT, not printed: humanistic minuscule, abbreviated; strip of facing page with text at right edge; colour bar in frame."
+ },
+ {
+  "book_id": "6a06d3b79a48d5139996380e",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": true,
+  "greek_extent": "word",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Aldine italic (Valerius Maximus) with roman capitals; one Greek word (amnestia); facing-page strips visible at both edges; ProQuest EEB footer."
+ },
+ {
+  "book_id": "6a08525b49638a50931ba0cb",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Italic Terence, speaker names in roman small caps; facing page strip visible at right; ProQuest EEB footer."
+ },
+ {
+  "book_id": "6a08551d15c643eb1af54d46",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 2,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": false,
+  "notes": "Two-column hagiography (Surius-type) with italic chapter headings and italic marginal notes on both sides; dense, some bleed-through."
+ },
+ {
+  "book_id": "6a10092ff7172929509680b9",
+  "typeface": "italic",
+  "typefaces_present": [
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": false,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": true,
+  "non_text": false,
+  "notes": "Small-format italic Latin text with roman running head/numerals (French title 'Le Veritable'); facing page with roman French text visible at right of second leaf."
+ },
+ {
+  "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+  "typeface": "roman",
+  "typefaces_present": [
+   "roman",
+   "italic"
+  ],
+  "columns": 1,
+  "side_notes": true,
+  "greek": false,
+  "greek_extent": "none",
+  "long_s_printed": true,
+  "spread": false,
+  "non_text": true,
+  "notes": "Vesalius Fabrica: p316 is mostly an anatomical woodcut plate with italic caption/key; p562 roman body with italic side-notes and figure-reference marginalia on both sides plus superscript sigla."
+ }
+]

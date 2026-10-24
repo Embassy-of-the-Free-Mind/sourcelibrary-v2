@@ -30,6 +30,7 @@ const WRITE_LINE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A
 
 /** Files that write the field but not a model's reading of a page image. */
 const ALLOWED: Record<string, string> = {
+  'scripts/lib/longs-orthography.mjs': 'rewrites the stored transcription with f → ſ only (assertOrthographicOnly throws otherwise); no model reading is written, so there is no new text to loop (#5924)',
   'scripts/maintenance/withhold-paddle-table-pages-6388.mjs': "--undo puts back the page's own Paddle transcription from the page_revisions snapshot the withhold took (#6388); no model is read",
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text (not a model reading), cannot loop; written only where a Kraken read of the image verifies it (#5560)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',

@@ -1,0 +1,14 @@
+LINE 1 | SK_5–SK_6 | vacanaṃ (āpta-vacanaṃ tu) | sāmānyatas tu (dṛ…) | confident
+LINE 2 | SK_6–SK_7 | api? (start of the left part is unclear) | ati-dūrāt | unsure
+LINE 3 | SK_7 | indriya-ghātān | mano.an-avasthānāt | unsure
+LINE 4 | SK_7 | vyavadhānād | samānā'bhihārāc | unsure
+LINE 5 | SK_8 | an-upalabdhir (…labdhir nā) | kāryatas | confident
+LINE 6 | SK_8 | kāryam | sa-rūpaṃ | unsure
+LINE 7 | SK_9 | upādāna-grahaṇāt | sarva-sambhavā'-bhāvāt | confident
+LINE 8 | SK_9–SK_10 | kāraṇa-bhāvāc | sat-kāryam (verse number follows, then the start of hetumad) | confident
+LINE 9 | SK_10 | an-ekam | para-tantraṃ | confident
+FIRST_VISIBLE_VERSE=5 LAST_VISIBLE_VERSE=10
+
+The "visible half" isn't one continuous block: the text breaks at the string hole and carries on to its right, so I read both sides of the hole as one run of each line. The "last word" for each line is the last thing I could read at the right edge of the image.
+
+The anchors I'm surest of are lines 5, 7, 8 and 9. Lines 2 to 4 and 6 are worn or hard to read. I placed them mainly because they fall in order between the clear lines, so treat their exact first and last words as estimates.

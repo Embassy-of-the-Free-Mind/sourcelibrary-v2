@@ -1,0 +1,1060 @@
+{
+ "scored_at": "2026-10-19T06:01:45.322373+00:00",
+ "judges_scoring": [
+  "J1",
+  "J2"
+ ],
+ "gate": {
+  "J1": {
+   "plants": 8,
+   "plant_caught_prereg": 7,
+   "plant_caught_strict": 6,
+   "dups": 4,
+   "dup_tie": 4,
+   "pass": true
+  },
+  "J2": {
+   "plants": 8,
+   "plant_caught_prereg": 8,
+   "plant_caught_strict": 7,
+   "dups": 4,
+   "dup_tie": 4,
+   "pass": true
+  }
+ },
+ "controls": [
+  {
+   "judge": "J1",
+   "item": "T010",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T011",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T017",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": false,
+   "lower_fid": false,
+   "fid": [
+    3,
+    3
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T021",
+   "kind": "PLANT",
+   "how": "\\bis not\\b \u2192 is",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T023",
+   "kind": "PLANT",
+   "how": "\\bdoes not\\b \u2192 does",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    5
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T026",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T031",
+   "kind": "PLANT",
+   "how": "\\bis\\b \u2192 is not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T033",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T043",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T044",
+   "kind": "PLANT",
+   "how": "\\bis not\\b \u2192 is",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T049",
+   "kind": "PLANT",
+   "how": "\\bis\\b \u2192 is not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J1",
+   "item": "T052",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": true,
+   "lower_fid": false,
+   "fid": [
+    3,
+    3
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T010",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T011",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T017",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    2,
+    3
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T021",
+   "kind": "PLANT",
+   "how": "\\bis not\\b \u2192 is",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T023",
+   "kind": "PLANT",
+   "how": "\\bdoes not\\b \u2192 does",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    5
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T026",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T031",
+   "kind": "PLANT",
+   "how": "\\bis\\b \u2192 is not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T033",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T043",
+   "kind": "DUP",
+   "tie": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T044",
+   "kind": "PLANT",
+   "how": "\\bis not\\b \u2192 is",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T049",
+   "kind": "PLANT",
+   "how": "\\bis\\b \u2192 is not",
+   "reversal_listed": true,
+   "lower_fid": true,
+   "fid": [
+    3,
+    4
+   ]
+  },
+  {
+   "judge": "J2",
+   "item": "T052",
+   "kind": "PLANT",
+   "how": "\\bare\\b \u2192 are not",
+   "reversal_listed": true,
+   "lower_fid": false,
+   "fid": [
+    3,
+    3
+   ]
+  }
+ ],
+ "blocks": {
+  "ALL": {
+   "pages": 40,
+   "pages_shared": 40,
+   "arms_shared": {
+    "STORED": {
+     "pages": 40,
+     "fidelity": 3.938,
+     "ci": [
+      3.725,
+      4.138
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 8,
+     "invention_pages_either": 25,
+     "unreadable_fill_pages_either": 4,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 8
+    },
+    "G4L": {
+     "pages": 40,
+     "fidelity": 4.312,
+     "ci": [
+      4.125,
+      4.487
+     ],
+     "reversal_pages_either": 4,
+     "reversal_pages_both": 3,
+     "reversal_page_ids": [
+      "T003",
+      "T012",
+      "T022",
+      "T048"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 30,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 3
+    },
+    "OP": {
+     "pages": 40,
+     "fidelity": 4.688,
+     "ci": [
+      4.55,
+      4.812
+     ],
+     "reversal_pages_either": 2,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027",
+      "T051"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 23,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "arms_all_pages": {
+    "STORED": {
+     "pages": 40,
+     "fidelity": 3.938,
+     "ci": [
+      3.725,
+      4.138
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 8,
+     "invention_pages_either": 25,
+     "unreadable_fill_pages_either": 4,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 8
+    },
+    "G4L": {
+     "pages": 40,
+     "fidelity": 4.312,
+     "ci": [
+      4.125,
+      4.487
+     ],
+     "reversal_pages_either": 4,
+     "reversal_pages_both": 3,
+     "reversal_page_ids": [
+      "T003",
+      "T012",
+      "T022",
+      "T048"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 30,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 3
+    },
+    "OP": {
+     "pages": 40,
+     "fidelity": 4.688,
+     "ci": [
+      4.55,
+      4.812
+     ],
+     "reversal_pages_either": 2,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027",
+      "T051"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 23,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "deltas": {
+    "STORED-G4L": {
+     "pages": 40,
+     "mean": -0.375,
+     "ci": [
+      -0.65,
+      -0.113
+     ],
+     "higher": 6,
+     "lower": 19
+    },
+    "STORED-OP": {
+     "pages": 40,
+     "mean": -0.75,
+     "ci": [
+      -0.988,
+      -0.537
+     ],
+     "higher": 2,
+     "lower": 29
+    },
+    "G4L-OP": {
+     "pages": 40,
+     "mean": -0.375,
+     "ci": [
+      -0.6,
+      -0.163
+     ],
+     "higher": 7,
+     "lower": 20
+    }
+   }
+  },
+  "S38": {
+   "pages": 20,
+   "pages_shared": 20,
+   "arms_shared": {
+    "STORED": {
+     "pages": 20,
+     "fidelity": 4.3,
+     "ci": [
+      4.05,
+      4.55
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 13,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 1
+    },
+    "G4L": {
+     "pages": 20,
+     "fidelity": 4.175,
+     "ci": [
+      3.875,
+      4.475
+     ],
+     "reversal_pages_either": 4,
+     "reversal_pages_both": 3,
+     "reversal_page_ids": [
+      "T003",
+      "T012",
+      "T022",
+      "T048"
+     ],
+     "omission_pages_either": 0,
+     "invention_pages_either": 14,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 3
+    },
+    "OP": {
+     "pages": 20,
+     "fidelity": 4.675,
+     "ci": [
+      4.5,
+      4.85
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T051"
+     ],
+     "omission_pages_either": 0,
+     "invention_pages_either": 10,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "arms_all_pages": {
+    "STORED": {
+     "pages": 20,
+     "fidelity": 4.3,
+     "ci": [
+      4.05,
+      4.55
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 13,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 1
+    },
+    "G4L": {
+     "pages": 20,
+     "fidelity": 4.175,
+     "ci": [
+      3.875,
+      4.475
+     ],
+     "reversal_pages_either": 4,
+     "reversal_pages_both": 3,
+     "reversal_page_ids": [
+      "T003",
+      "T012",
+      "T022",
+      "T048"
+     ],
+     "omission_pages_either": 0,
+     "invention_pages_either": 14,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 3
+    },
+    "OP": {
+     "pages": 20,
+     "fidelity": 4.675,
+     "ci": [
+      4.5,
+      4.85
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T051"
+     ],
+     "omission_pages_either": 0,
+     "invention_pages_either": 10,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "deltas": {
+    "STORED-G4L": {
+     "pages": 20,
+     "mean": 0.125,
+     "ci": [
+      -0.175,
+      0.45
+     ],
+     "higher": 6,
+     "lower": 4
+    },
+    "STORED-OP": {
+     "pages": 20,
+     "mean": -0.375,
+     "ci": [
+      -0.65,
+      -0.125
+     ],
+     "higher": 2,
+     "lower": 10
+    },
+    "G4L-OP": {
+     "pages": 20,
+     "mean": -0.5,
+     "ci": [
+      -0.875,
+      -0.175
+     ],
+     "higher": 3,
+     "lower": 10
+    }
+   }
+  },
+  "S3P": {
+   "pages": 20,
+   "pages_shared": 20,
+   "arms_shared": {
+    "STORED": {
+     "pages": 20,
+     "fidelity": 3.575,
+     "ci": [
+      3.35,
+      3.8
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 8,
+     "invention_pages_either": 12,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 7
+    },
+    "G4L": {
+     "pages": 20,
+     "fidelity": 4.45,
+     "ci": [
+      4.25,
+      4.625
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 1,
+     "invention_pages_either": 16,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 20,
+     "fidelity": 4.7,
+     "ci": [
+      4.475,
+      4.875
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 13,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "arms_all_pages": {
+    "STORED": {
+     "pages": 20,
+     "fidelity": 3.575,
+     "ci": [
+      3.35,
+      3.8
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 8,
+     "invention_pages_either": 12,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 7
+    },
+    "G4L": {
+     "pages": 20,
+     "fidelity": 4.45,
+     "ci": [
+      4.25,
+      4.625
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 1,
+     "invention_pages_either": 16,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 20,
+     "fidelity": 4.7,
+     "ci": [
+      4.475,
+      4.875
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 13,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "deltas": {
+    "STORED-G4L": {
+     "pages": 20,
+     "mean": -0.875,
+     "ci": [
+      -1.15,
+      -0.6
+     ],
+     "higher": 0,
+     "lower": 15
+    },
+    "STORED-OP": {
+     "pages": 20,
+     "mean": -1.125,
+     "ci": [
+      -1.4,
+      -0.85
+     ],
+     "higher": 0,
+     "lower": 19
+    },
+    "G4L-OP": {
+     "pages": 20,
+     "mean": -0.25,
+     "ci": [
+      -0.5,
+      0.025
+     ],
+     "higher": 4,
+     "lower": 10
+    }
+   }
+  },
+  "S3P:derge-tengyur": {
+   "pages": 10,
+   "pages_shared": 10,
+   "arms_shared": {
+    "STORED": {
+     "pages": 10,
+     "fidelity": 3.85,
+     "ci": [
+      3.5,
+      4.1
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 2,
+     "invention_pages_either": 5,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 1
+    },
+    "G4L": {
+     "pages": 10,
+     "fidelity": 4.4,
+     "ci": [
+      4.15,
+      4.65
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 1,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 10,
+     "fidelity": 4.75,
+     "ci": [
+      4.5,
+      4.95
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "arms_all_pages": {
+    "STORED": {
+     "pages": 10,
+     "fidelity": 3.85,
+     "ci": [
+      3.5,
+      4.1
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 2,
+     "invention_pages_either": 5,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 1
+    },
+    "G4L": {
+     "pages": 10,
+     "fidelity": 4.4,
+     "ci": [
+      4.15,
+      4.65
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 1,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 10,
+     "fidelity": 4.75,
+     "ci": [
+      4.5,
+      4.95
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "deltas": {
+    "STORED-G4L": {
+     "pages": 10,
+     "mean": -0.55,
+     "ci": [
+      -0.85,
+      -0.25
+     ],
+     "higher": 0,
+     "lower": 6
+    },
+    "STORED-OP": {
+     "pages": 10,
+     "mean": -0.9,
+     "ci": [
+      -1.15,
+      -0.6
+     ],
+     "higher": 0,
+     "lower": 9
+    },
+    "G4L-OP": {
+     "pages": 10,
+     "mean": -0.35,
+     "ci": [
+      -0.65,
+      -0.05
+     ],
+     "higher": 1,
+     "lower": 5
+    }
+   }
+  },
+  "S3P:bdrc-yigdzin-v1": {
+   "pages": 10,
+   "pages_shared": 10,
+   "arms_shared": {
+    "STORED": {
+     "pages": 10,
+     "fidelity": 3.3,
+     "ci": [
+      3.05,
+      3.55
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 6,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 6
+    },
+    "G4L": {
+     "pages": 10,
+     "fidelity": 4.5,
+     "ci": [
+      4.2,
+      4.75
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 9,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 10,
+     "fidelity": 4.65,
+     "ci": [
+      4.3,
+      4.95
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 6,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "arms_all_pages": {
+    "STORED": {
+     "pages": 10,
+     "fidelity": 3.3,
+     "ci": [
+      3.05,
+      3.55
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 1,
+     "reversal_page_ids": [
+      "T024"
+     ],
+     "omission_pages_either": 6,
+     "invention_pages_either": 7,
+     "unreadable_fill_pages_either": 2,
+     "span_off_pages_either": 6,
+     "fid_le_3_pages": 6
+    },
+    "G4L": {
+     "pages": 10,
+     "fidelity": 4.5,
+     "ci": [
+      4.2,
+      4.75
+     ],
+     "reversal_pages_either": 0,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [],
+     "omission_pages_either": 0,
+     "invention_pages_either": 9,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    },
+    "OP": {
+     "pages": 10,
+     "fidelity": 4.65,
+     "ci": [
+      4.3,
+      4.95
+     ],
+     "reversal_pages_either": 1,
+     "reversal_pages_both": 0,
+     "reversal_page_ids": [
+      "T027"
+     ],
+     "omission_pages_either": 1,
+     "invention_pages_either": 6,
+     "unreadable_fill_pages_either": 0,
+     "span_off_pages_either": 0,
+     "fid_le_3_pages": 0
+    }
+   },
+   "deltas": {
+    "STORED-G4L": {
+     "pages": 10,
+     "mean": -1.2,
+     "ci": [
+      -1.55,
+      -0.85
+     ],
+     "higher": 0,
+     "lower": 9
+    },
+    "STORED-OP": {
+     "pages": 10,
+     "mean": -1.35,
+     "ci": [
+      -1.8,
+      -0.9
+     ],
+     "higher": 0,
+     "lower": 10
+    },
+    "G4L-OP": {
+     "pages": 10,
+     "mean": -0.15,
+     "ci": [
+      -0.55,
+      0.25
+     ],
+     "higher": 3,
+     "lower": 5
+    }
+   }
+  }
+ },
+ "rule": {
+  "S38": {
+   "stored_minus_g4l": 0.125,
+   "ci": [
+    -0.175,
+    0.45
+   ],
+   "gap_trigger": false,
+   "reversal_pages_either": 0,
+   "reversal_pages_both": 0,
+   "scored_pages": 20,
+   "reversal_trigger": false,
+   "decision": "KEEP"
+  },
+  "S3P": {
+   "stored_minus_g4l": -0.875,
+   "ci": [
+    -1.15,
+    -0.6
+   ],
+   "gap_trigger": true,
+   "reversal_pages_either": 1,
+   "reversal_pages_both": 1,
+   "scored_pages": 20,
+   "reversal_trigger": false,
+   "decision": "RE-TRANSLATE"
+  }
+ },
+ "agreement_within_1": 0.983
+}

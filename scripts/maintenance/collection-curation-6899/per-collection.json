@@ -1,0 +1,1686 @@
+{
+ "classical-philosophy": {
+  "members": 1826,
+  "stray": 566,
+  "borderline": 751
+ },
+ "kabbalah": {
+  "members": 474,
+  "stray": 80,
+  "borderline": 187
+ },
+ "art-illustrated": {
+  "members": 1312,
+  "stray": 50,
+  "borderline": 306
+ },
+ "chinese-classics": {
+  "members": 1538,
+  "stray": 13,
+  "borderline": 1017
+ },
+ "indic-traditions": {
+  "members": 702,
+  "stray": 26,
+  "borderline": 177
+ },
+ "natural-philosophy": {
+  "members": 6255,
+  "stray": 1739,
+  "borderline": 1838
+ },
+ "mysticism": {
+  "members": 1380,
+  "stray": 96,
+  "borderline": 518
+ },
+ "literature": {
+  "members": 2266,
+  "stray": 286,
+  "borderline": 606
+ },
+ "alchemy": {
+  "members": 1782,
+  "stray": 61,
+  "borderline": 353
+ },
+ "hermetica": {
+  "members": 1329,
+  "stray": 126,
+  "borderline": 470
+ },
+ "magic": {
+  "members": 755,
+  "stray": 44,
+  "borderline": 307
+ },
+ "demonology": {
+  "members": 286,
+  "stray": 6,
+  "borderline": 96
+ },
+ "secret-societies": {
+  "members": 433,
+  "stray": 24,
+  "borderline": 187
+ },
+ "astrology": {
+  "members": 4414,
+  "stray": 2701,
+  "borderline": 710
+ },
+ "sacred-texts": {
+  "members": 1679,
+  "stray": 172,
+  "borderline": 665
+ },
+ "theology": {
+  "members": 2434,
+  "stray": 323,
+  "borderline": 625
+ },
+ "renaissance-philosophy": {
+  "members": 1238,
+  "stray": 132,
+  "borderline": 521
+ },
+ "medicine": {
+  "members": 1660,
+  "stray": 87,
+  "borderline": 438
+ },
+ "herbalism": {
+  "members": 495,
+  "stray": 24,
+  "borderline": 148
+ },
+ "leonardo-da-vinci": {
+  "members": 50,
+  "stray": 1,
+  "borderline": 2
+ },
+ "christianity": {
+  "members": 834,
+  "stray": 23,
+  "borderline": 105
+ },
+ "judaism": {
+  "members": 344,
+  "stray": 4,
+  "borderline": 63
+ },
+ "islam": {
+  "members": 111,
+  "stray": 2,
+  "borderline": 35
+ },
+ "buddhism": {
+  "members": 235,
+  "stray": 4,
+  "borderline": 24
+ },
+ "hinduism": {
+  "members": 127,
+  "stray": 12,
+  "borderline": 17
+ },
+ "manichaeism": {
+  "members": 32,
+  "stray": 0,
+  "borderline": 20
+ },
+ "mandaeanism": {
+  "members": 7,
+  "stray": 0,
+  "borderline": 0
+ },
+ "jainism": {
+  "members": 15,
+  "stray": 0,
+  "borderline": 1
+ },
+ "orphism-mysteries": {
+  "members": 23,
+  "stray": 0,
+  "borderline": 6
+ },
+ "norse-germanic": {
+  "members": 13,
+  "stray": 1,
+  "borderline": 3
+ },
+ "sikhism": {
+  "members": 4,
+  "stray": 0,
+  "borderline": 1
+ },
+ "druze": {
+  "members": 2,
+  "stray": 0,
+  "borderline": 0
+ },
+ "ancient-egyptian": {
+  "members": 289,
+  "stray": 1,
+  "borderline": 66
+ },
+ "shinto": {
+  "members": 9,
+  "stray": 0,
+  "borderline": 1
+ },
+ "indigenous-traditions": {
+  "members": 48,
+  "stray": 2,
+  "borderline": 7
+ },
+ "bahai": {
+  "members": 4,
+  "stray": 0,
+  "borderline": 1
+ },
+ "sumerian-mesopotamian": {
+  "members": 373,
+  "stray": 0,
+  "borderline": 33
+ },
+ "ancient-greek-religion": {
+  "members": 67,
+  "stray": 6,
+  "borderline": 39
+ },
+ "celtic": {
+  "members": 27,
+  "stray": 1,
+  "borderline": 9
+ },
+ "polynesian": {
+  "members": 12,
+  "stray": 0,
+  "borderline": 1
+ },
+ "samaritan": {
+  "members": 10,
+  "stray": 0,
+  "borderline": 8
+ },
+ "music-of-the-spheres": {
+  "members": 197,
+  "stray": 17,
+  "borderline": 89
+ },
+ "sympathy-of-all-things": {
+  "members": 61,
+  "stray": 2,
+  "borderline": 23
+ },
+ "perennial-philosophy": {
+  "members": 63,
+  "stray": 0,
+  "borderline": 10
+ },
+ "art-of-memory": {
+  "members": 47,
+  "stray": 3,
+  "borderline": 12
+ },
+ "forbidden-books": {
+  "members": 177,
+  "stray": 1,
+  "borderline": 54
+ },
+ "star-science": {
+  "members": 104,
+  "stray": 3,
+  "borderline": 7
+ },
+ "making-things-visible": {
+  "members": 24,
+  "stray": 0,
+  "borderline": 2
+ },
+ "invention-of-method": {
+  "members": 56,
+  "stray": 3,
+  "borderline": 19
+ },
+ "letters-from-the-desert": {
+  "members": 25,
+  "stray": 0,
+  "borderline": 9
+ },
+ "kepler-fludd-debate": {
+  "members": 39,
+  "stray": 0,
+  "borderline": 13
+ },
+ "newtons-other-science": {
+  "members": 223,
+  "stray": 7,
+  "borderline": 78
+ },
+ "courts-of-wonder": {
+  "members": 762,
+  "stray": 143,
+  "borderline": 403
+ },
+ "agrippas-world": {
+  "members": 68,
+  "stray": 0,
+  "borderline": 4
+ },
+ "behmenist-underground": {
+  "members": 32,
+  "stray": 0,
+  "borderline": 0
+ },
+ "robert-hooke-polymath": {
+  "members": 27,
+  "stray": 5,
+  "borderline": 9
+ },
+ "encyclopedists": {
+  "members": 51,
+  "stray": 0,
+  "borderline": 4
+ },
+ "women-of-the-secret-tradition": {
+  "members": 148,
+  "stray": 29,
+  "borderline": 59
+ },
+ "beguine-mystics": {
+  "members": 7,
+  "stray": 0,
+  "borderline": 5
+ },
+ "famous-women": {
+  "members": 13,
+  "stray": 1,
+  "borderline": 3
+ },
+ "theatres-of-machines": {
+  "members": 78,
+  "stray": 1,
+  "borderline": 30
+ },
+ "bestiary-tradition": {
+  "members": 452,
+  "stray": 21,
+  "borderline": 165
+ },
+ "alchemical-emblem": {
+  "members": 199,
+  "stray": 20,
+  "borderline": 61
+ },
+ "maps-of-the-invisible": {
+  "members": 449,
+  "stray": 165,
+  "borderline": 156
+ },
+ "byzantine-bridge": {
+  "members": 50,
+  "stray": 4,
+  "borderline": 12
+ },
+ "rhineland-mystics": {
+  "members": 15,
+  "stray": 1,
+  "borderline": 0
+ },
+ "syriac-church": {
+  "members": 58,
+  "stray": 2,
+  "borderline": 6
+ },
+ "armenian-golden-age": {
+  "members": 53,
+  "stray": 1,
+  "borderline": 8
+ },
+ "islamic-philosophy-meets-christian-mysticism": {
+  "members": 26,
+  "stray": 0,
+  "borderline": 8
+ },
+ "indian-mathematical-tradition": {
+  "members": 14,
+  "stray": 0,
+  "borderline": 1
+ },
+ "sacred-objects": {
+  "members": 18,
+  "stray": 5,
+  "borderline": 5
+ },
+ "indigenous-sacred-narratives": {
+  "members": 24,
+  "stray": 0,
+  "borderline": 5
+ },
+ "apocrypha": {
+  "members": 36,
+  "stray": 1,
+  "borderline": 5
+ },
+ "sacred-books-of-the-east": {
+  "members": 49,
+  "stray": 6,
+  "borderline": 16
+ },
+ "dutch-golden-age-of-science": {
+  "members": 43,
+  "stray": 0,
+  "borderline": 1
+ },
+ "anatomical-revolution": {
+  "members": 59,
+  "stray": 3,
+  "borderline": 12
+ },
+ "mining-metals-and-fire": {
+  "members": 33,
+  "stray": 0,
+  "borderline": 9
+ },
+ "canon-of-avicenna": {
+  "members": 30,
+  "stray": 1,
+  "borderline": 7
+ },
+ "nova-reperta": {
+  "members": 70,
+  "stray": 3,
+  "borderline": 31
+ },
+ "weapon-salve-controversy": {
+  "members": 14,
+  "stray": 1,
+  "borderline": 8
+ },
+ "herculaneum-papyri": {
+  "members": 28,
+  "stray": 0,
+  "borderline": 0
+ },
+ "rosicrucian-moment": {
+  "members": 47,
+  "stray": 4,
+  "borderline": 10
+ },
+ "global-demonology": {
+  "members": 48,
+  "stray": 4,
+  "borderline": 17
+ },
+ "printing-press-revolution": {
+  "members": 21,
+  "stray": 0,
+  "borderline": 3
+ },
+ "ayurveda": {
+  "members": 21,
+  "stray": 6,
+  "borderline": 5
+ },
+ "grimoire-tradition": {
+  "members": 52,
+  "stray": 12,
+  "borderline": 15
+ },
+ "ancient-engineering": {
+  "members": 57,
+  "stray": 0,
+  "borderline": 12
+ },
+ "strategy-games": {
+  "members": 69,
+  "stray": 2,
+  "borderline": 9
+ },
+ "persian-literary-tradition": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 2
+ },
+ "rumi": {
+  "members": 4,
+  "stray": 0,
+  "borderline": 0
+ },
+ "mystical-practice": {
+  "members": 92,
+  "stray": 0,
+  "borderline": 11
+ },
+ "theravada": {
+  "members": 44,
+  "stray": 0,
+  "borderline": 1
+ },
+ "mahayana": {
+  "members": 41,
+  "stray": 1,
+  "borderline": 8
+ },
+ "vajrayana": {
+  "members": 584,
+  "stray": 0,
+  "borderline": 23
+ },
+ "zen-chan": {
+  "members": 67,
+  "stray": 0,
+  "borderline": 4
+ },
+ "buddhist-studies": {
+  "members": 52,
+  "stray": 1,
+  "borderline": 9
+ },
+ "paracelsian-medicine": {
+  "members": 275,
+  "stray": 1,
+  "borderline": 39
+ },
+ "rosicrucian-alchemy": {
+  "members": 70,
+  "stray": 0,
+  "borderline": 12
+ },
+ "laboratory-chemistry": {
+  "members": 184,
+  "stray": 0,
+  "borderline": 19
+ },
+ "spiritual-alchemy": {
+  "members": 142,
+  "stray": 1,
+  "borderline": 25
+ },
+ "platonic-tradition": {
+  "members": 54,
+  "stray": 0,
+  "borderline": 8
+ },
+ "neoplatonism": {
+  "members": 612,
+  "stray": 48,
+  "borderline": 248
+ },
+ "aristotelian-tradition": {
+  "members": 136,
+  "stray": 1,
+  "borderline": 15
+ },
+ "cosmology-astronomy": {
+  "members": 296,
+  "stray": 1,
+  "borderline": 73
+ },
+ "natural-magic-sympathies": {
+  "members": 214,
+  "stray": 6,
+  "borderline": 91
+ },
+ "geography-exploration": {
+  "members": 247,
+  "stray": 0,
+  "borderline": 34
+ },
+ "biblical-exegesis": {
+  "members": 199,
+  "stray": 8,
+  "borderline": 54
+ },
+ "philosophical-theology": {
+  "members": 339,
+  "stray": 19,
+  "borderline": 110
+ },
+ "theosophical-tradition": {
+  "members": 240,
+  "stray": 8,
+  "borderline": 64
+ },
+ "reformation-theology": {
+  "members": 58,
+  "stray": 3,
+  "borderline": 15
+ },
+ "christian-mysticism-sub": {
+  "members": 264,
+  "stray": 7,
+  "borderline": 73
+ },
+ "german-speculative-mysticism": {
+  "members": 110,
+  "stray": 0,
+  "borderline": 20
+ },
+ "jewish-kabbalistic-mysticism": {
+  "members": 38,
+  "stray": 0,
+  "borderline": 5
+ },
+ "sufi-eastern-mysticism": {
+  "members": 46,
+  "stray": 0,
+  "borderline": 5
+ },
+ "corpus-hermeticum": {
+  "members": 45,
+  "stray": 8,
+  "borderline": 16
+ },
+ "rosicrucian-tradition": {
+  "members": 87,
+  "stray": 1,
+  "borderline": 14
+ },
+ "paracelsian-hermetica": {
+  "members": 87,
+  "stray": 0,
+  "borderline": 20
+ },
+ "hermetic-revival": {
+  "members": 87,
+  "stray": 0,
+  "borderline": 22
+ },
+ "ancient-epic-drama": {
+  "members": 115,
+  "stray": 26,
+  "borderline": 15
+ },
+ "renaissance-letters": {
+  "members": 139,
+  "stray": 1,
+  "borderline": 35
+ },
+ "oriental-classics": {
+  "members": 45,
+  "stray": 0,
+  "borderline": 17
+ },
+ "history-political-thought": {
+  "members": 379,
+  "stray": 35,
+  "borderline": 100
+ },
+ "galenic-classical-medicine": {
+  "members": 93,
+  "stray": 0,
+  "borderline": 9
+ },
+ "early-modern-medicine-sub": {
+  "members": 166,
+  "stray": 3,
+  "borderline": 35
+ },
+ "ritual-ceremonial-magic": {
+  "members": 105,
+  "stray": 10,
+  "borderline": 42
+ },
+ "divination-oracles": {
+  "members": 96,
+  "stray": 13,
+  "borderline": 38
+ },
+ "horoscopic-western-astrology": {
+  "members": 75,
+  "stray": 6,
+  "borderline": 23
+ },
+ "celestial-divination": {
+  "members": 82,
+  "stray": 4,
+  "borderline": 16
+ },
+ "daoist-alchemy": {
+  "members": 7,
+  "stray": 0,
+  "borderline": 0
+ },
+ "arabic-alchemy": {
+  "members": 32,
+  "stray": 0,
+  "borderline": 4
+ },
+ "mathematics": {
+  "members": 410,
+  "stray": 50,
+  "borderline": 156
+ },
+ "mechanical-engineering": {
+  "members": 230,
+  "stray": 69,
+  "borderline": 112
+ },
+ "experimental-philosophy": {
+  "members": 41,
+  "stray": 0,
+  "borderline": 9
+ },
+ "optics": {
+  "members": 15,
+  "stray": 0,
+  "borderline": 4
+ },
+ "natural-history": {
+  "members": 194,
+  "stray": 4,
+  "borderline": 41
+ },
+ "encyclopedic-works": {
+  "members": 119,
+  "stray": 1,
+  "borderline": 28
+ },
+ "chinese-natural-knowledge": {
+  "members": 438,
+  "stray": 13,
+  "borderline": 223
+ },
+ "indian-natural-philosophy": {
+  "members": 34,
+  "stray": 0,
+  "borderline": 3
+ },
+ "chinese-astrology": {
+  "members": 33,
+  "stray": 0,
+  "borderline": 4
+ },
+ "chinese-daoist-magic": {
+  "members": 12,
+  "stray": 0,
+  "borderline": 1
+ },
+ "arabic-islamic-magic": {
+  "members": 11,
+  "stray": 0,
+  "borderline": 1
+ },
+ "mithraism": {
+  "members": 17,
+  "stray": 0,
+  "borderline": 4
+ },
+ "jungs-library": {
+  "members": 566,
+  "stray": 17,
+  "borderline": 34
+ },
+ "zoroastrian-tradition": {
+  "members": 35,
+  "stray": 2,
+  "borderline": 4
+ },
+ "psychology": {
+  "members": 397,
+  "stray": 150,
+  "borderline": 134
+ },
+ "fechner": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 1
+ },
+ "renaissance-literary-imagination": {
+  "members": 63,
+  "stray": 6,
+  "borderline": 22
+ },
+ "medieval-heresies": {
+  "members": 20,
+  "stray": 2,
+  "borderline": 6
+ },
+ "byzantine-philosophy": {
+  "members": 139,
+  "stray": 57,
+  "borderline": 68
+ },
+ "ficinos-florence": {
+  "members": 1011,
+  "stray": 83,
+  "borderline": 397
+ },
+ "before-ficino": {
+  "members": 414,
+  "stray": 204,
+  "borderline": 31
+ },
+ "school-of-athens": {
+  "members": 534,
+  "stray": 57,
+  "borderline": 155
+ },
+ "the-visionary": {
+  "members": 1557,
+  "stray": 190,
+  "borderline": 479
+ },
+ "hermetic-image": {
+  "members": 450,
+  "stray": 33,
+  "borderline": 110
+ },
+ "emblems-great-work": {
+  "members": 35,
+  "stray": 24,
+  "borderline": 9
+ },
+ "alchemists-studio": {
+  "members": 167,
+  "stray": 4,
+  "borderline": 65
+ },
+ "rudolf-prague": {
+  "members": 957,
+  "stray": 14,
+  "borderline": 141
+ },
+ "the-cosmos": {
+  "members": 737,
+  "stray": 199,
+  "borderline": 192
+ },
+ "death-and-mortality": {
+  "members": 116,
+  "stray": 3,
+  "borderline": 13
+ },
+ "portraits-tradition": {
+  "members": 1971,
+  "stray": 931,
+  "borderline": 768
+ },
+ "classical-mysteries": {
+  "members": 531,
+  "stray": 88,
+  "borderline": 155
+ },
+ "kabbalah-sacred-geometry": {
+  "members": 305,
+  "stray": 68,
+  "borderline": 183
+ },
+ "medieval-illuminations": {
+  "members": 958,
+  "stray": 216,
+  "borderline": 399
+ },
+ "esoteric-engravers": {
+  "members": 1806,
+  "stray": 42,
+  "borderline": 514
+ },
+ "florentine-neoplatonism": {
+  "members": 125,
+  "stray": 3,
+  "borderline": 25
+ },
+ "humanist-scholarship": {
+  "members": 184,
+  "stray": 8,
+  "borderline": 58
+ },
+ "renaissance-natural-philosophy": {
+  "members": 333,
+  "stray": 19,
+  "borderline": 97
+ },
+ "renaissance-art-architecture": {
+  "members": 143,
+  "stray": 20,
+  "borderline": 47
+ },
+ "renaissance-utopias": {
+  "members": 32,
+  "stray": 7,
+  "borderline": 13
+ },
+ "gnostic-texts": {
+  "members": 241,
+  "stray": 126,
+  "borderline": 59
+ },
+ "islamic-philosophy": {
+  "members": 189,
+  "stray": 59,
+  "borderline": 44
+ },
+ "syriac-tradition": {
+  "members": 110,
+  "stray": 4,
+  "borderline": 8
+ },
+ "slavic-tradition": {
+  "members": 256,
+  "stray": 6,
+  "borderline": 146
+ },
+ "ancient-papyri": {
+  "members": 66,
+  "stray": 3,
+  "borderline": 17
+ },
+ "great-manuscripts": {
+  "members": 228,
+  "stray": 9,
+  "borderline": 38
+ },
+ "papyri-magical": {
+  "members": 5,
+  "stray": 1,
+  "borderline": 4
+ },
+ "papyri-literary": {
+  "members": 4,
+  "stray": 0,
+  "borderline": 2
+ },
+ "papyri-historical": {
+  "members": 12,
+  "stray": 0,
+  "borderline": 10
+ },
+ "confucian-classics": {
+  "members": 62,
+  "stray": 6,
+  "borderline": 7
+ },
+ "daoist-classics": {
+  "members": 89,
+  "stray": 16,
+  "borderline": 35
+ },
+ "chinese-buddhist-texts": {
+  "members": 123,
+  "stray": 2,
+  "borderline": 9
+ },
+ "chinese-medicine-natural-philosophy": {
+  "members": 188,
+  "stray": 1,
+  "borderline": 8
+ },
+ "chinese-divination-cosmology": {
+  "members": 55,
+  "stray": 0,
+  "borderline": 4
+ },
+ "chinese-history-statecraft": {
+  "members": 371,
+  "stray": 44,
+  "borderline": 109
+ },
+ "jyotisha-vedic-astrology": {
+  "members": 166,
+  "stray": 1,
+  "borderline": 25
+ },
+ "vedanta-darshana": {
+  "members": 45,
+  "stray": 8,
+  "borderline": 15
+ },
+ "puranas-epics": {
+  "members": 62,
+  "stray": 8,
+  "borderline": 13
+ },
+ "yoga-tantra-mysticism": {
+  "members": 62,
+  "stray": 4,
+  "borderline": 27
+ },
+ "indian-mathematics-astronomy": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 0
+ },
+ "indian-buddhist-jain": {
+  "members": 30,
+  "stray": 2,
+  "borderline": 10
+ },
+ "falsafa": {
+  "members": 30,
+  "stray": 2,
+  "borderline": 9
+ },
+ "sufism-islamic-mysticism": {
+  "members": 64,
+  "stray": 1,
+  "borderline": 18
+ },
+ "islamic-medicine-science": {
+  "members": 40,
+  "stray": 3,
+  "borderline": 7
+ },
+ "islamic-occult-sciences": {
+  "members": 35,
+  "stray": 2,
+  "borderline": 9
+ },
+ "judeo-islamic-philosophy": {
+  "members": 52,
+  "stray": 1,
+  "borderline": 35
+ },
+ "quran-islamic-theology": {
+  "members": 37,
+  "stray": 5,
+  "borderline": 7
+ },
+ "royal-court-poetry": {
+  "members": 164,
+  "stray": 9,
+  "borderline": 26
+ },
+ "divine-hymns": {
+  "members": 121,
+  "stray": 7,
+  "borderline": 5
+ },
+ "myths-epics": {
+  "members": 59,
+  "stray": 10,
+  "borderline": 6
+ },
+ "wisdom-debate-literature": {
+  "members": 64,
+  "stray": 5,
+  "borderline": 11
+ },
+ "russian-religious-philosophy": {
+  "members": 72,
+  "stray": 0,
+  "borderline": 9
+ },
+ "russian-theosophy-occultism": {
+  "members": 12,
+  "stray": 0,
+  "borderline": 0
+ },
+ "russian-literary-social-thought": {
+  "members": 189,
+  "stray": 0,
+  "borderline": 101
+ },
+ "slavic-esoteric-translations": {
+  "members": 5,
+  "stray": 1,
+  "borderline": 1
+ },
+ "animal-magnetism-mesmerism": {
+  "members": 38,
+  "stray": 3,
+  "borderline": 7
+ },
+ "faculty-psychology-de-anima": {
+  "members": 72,
+  "stray": 28,
+  "borderline": 13
+ },
+ "depth-psychology": {
+  "members": 11,
+  "stray": 2,
+  "borderline": 1
+ },
+ "psychology-of-religion": {
+  "members": 41,
+  "stray": 3,
+  "borderline": 13
+ },
+ "witch-trial-literature": {
+  "members": 73,
+  "stray": 2,
+  "borderline": 24
+ },
+ "spirit-conjuration": {
+  "members": 68,
+  "stray": 6,
+  "borderline": 26
+ },
+ "theological-demonology": {
+  "members": 72,
+  "stray": 6,
+  "borderline": 27
+ },
+ "skeptical-rational-critique": {
+  "members": 46,
+  "stray": 22,
+  "borderline": 10
+ },
+ "indic-alchemy": {
+  "members": 25,
+  "stray": 0,
+  "borderline": 5
+ },
+ "the-moon": {
+  "members": 58,
+  "stray": 3,
+  "borderline": 17
+ },
+ "islamic-sciences": {
+  "members": 41,
+  "stray": 0,
+  "borderline": 6
+ },
+ "ethiopian-manuscripts": {
+  "members": 15,
+  "stray": 0,
+  "borderline": 2
+ },
+ "ancient-historiography": {
+  "members": 75,
+  "stray": 12,
+  "borderline": 18
+ },
+ "late-antique-byzantine-history": {
+  "members": 24,
+  "stray": 1,
+  "borderline": 3
+ },
+ "renaissance-political-thought": {
+  "members": 49,
+  "stray": 10,
+  "borderline": 13
+ },
+ "enlightenment-political-philosophy": {
+  "members": 34,
+  "stray": 5,
+  "borderline": 7
+ },
+ "socialist-revolutionary-thought": {
+  "members": 19,
+  "stray": 1,
+  "borderline": 3
+ },
+ "russian-political-thought": {
+  "members": 14,
+  "stray": 0,
+  "borderline": 2
+ },
+ "political-economy": {
+  "members": 15,
+  "stray": 1,
+  "borderline": 2
+ },
+ "military-strategic-writing": {
+  "members": 23,
+  "stray": 1,
+  "borderline": 6
+ },
+ "roman-canon-law": {
+  "members": 195,
+  "stray": 4,
+  "borderline": 39
+ },
+ "asian-historical-texts": {
+  "members": 36,
+  "stray": 1,
+  "borderline": 17
+ },
+ "indic-magic": {
+  "members": 42,
+  "stray": 0,
+  "borderline": 21
+ },
+ "freemasonry": {
+  "members": 86,
+  "stray": 0,
+  "borderline": 16
+ },
+ "templar-chivalric-orders": {
+  "members": 21,
+  "stray": 0,
+  "borderline": 2
+ },
+ "illuminati-radical-orders": {
+  "members": 20,
+  "stray": 0,
+  "borderline": 6
+ },
+ "contemplative-traditions": {
+  "members": 14,
+  "stray": 2,
+  "borderline": 12
+ },
+ "mycology": {
+  "members": 41,
+  "stray": 0,
+  "borderline": 1
+ },
+ "theosophical-society": {
+  "members": 176,
+  "stray": 3,
+  "borderline": 18
+ },
+ "blavatsky-mahatmas": {
+  "members": 22,
+  "stray": 0,
+  "borderline": 3
+ },
+ "spiritual-in-art": {
+  "members": 8,
+  "stray": 0,
+  "borderline": 0
+ },
+ "chinese-fiction": {
+  "members": 78,
+  "stray": 1,
+  "borderline": 14
+ },
+ "mesoamerican": {
+  "members": 55,
+  "stray": 0,
+  "borderline": 7
+ },
+ "world-traditions": {
+  "members": 100,
+  "stray": 0,
+  "borderline": 15
+ },
+ "americas": {
+  "members": 93,
+  "stray": 1,
+  "borderline": 21
+ },
+ "east-asia": {
+  "members": 913,
+  "stray": 20,
+  "borderline": 22
+ },
+ "south-asia": {
+  "members": 573,
+  "stray": 28,
+  "borderline": 71
+ },
+ "middle-east-africa": {
+  "members": 504,
+  "stray": 9,
+  "borderline": 30
+ },
+ "world-fable-traditions": {
+  "members": 32,
+  "stray": 0,
+  "borderline": 14
+ },
+ "indian-philosophy": {
+  "members": 280,
+  "stray": 3,
+  "borderline": 67
+ },
+ "kashmir-shaivism": {
+  "members": 26,
+  "stray": 1,
+  "borderline": 11
+ },
+ "vedic-literature": {
+  "members": 37,
+  "stray": 1,
+  "borderline": 8
+ },
+ "yoga-samkhya": {
+  "members": 27,
+  "stray": 1,
+  "borderline": 5
+ },
+ "indian-epics": {
+  "members": 65,
+  "stray": 4,
+  "borderline": 18
+ },
+ "indian-tantra": {
+  "members": 59,
+  "stray": 4,
+  "borderline": 21
+ },
+ "kama": {
+  "members": 64,
+  "stray": 6,
+  "borderline": 8
+ },
+ "aztec-nahua": {
+  "members": 47,
+  "stray": 0,
+  "borderline": 3
+ },
+ "maya": {
+  "members": 74,
+  "stray": 0,
+  "borderline": 15
+ },
+ "navajo-dine": {
+  "members": 3,
+  "stray": 0,
+  "borderline": 0
+ },
+ "hopi-pueblo": {
+  "members": 7,
+  "stray": 1,
+  "borderline": 1
+ },
+ "pacific-northwest-peoples": {
+  "members": 5,
+  "stray": 0,
+  "borderline": 1
+ },
+ "pawnee": {
+  "members": 3,
+  "stray": 0,
+  "borderline": 0
+ },
+ "african-traditions": {
+  "members": 26,
+  "stray": 0,
+  "borderline": 9
+ },
+ "witches-sabbath": {
+  "members": 73,
+  "stray": 9,
+  "borderline": 17
+ },
+ "panchatantra-derivatives": {
+  "members": 8,
+  "stray": 0,
+  "borderline": 2
+ },
+ "chinese-technology": {
+  "members": 177,
+  "stray": 0,
+  "borderline": 53
+ },
+ "chinese-agricultural-industrial": {
+  "members": 3,
+  "stray": 0,
+  "borderline": 0
+ },
+ "chinese-military-technology": {
+  "members": 105,
+  "stray": 0,
+  "borderline": 19
+ },
+ "chinese-natural-history": {
+  "members": 65,
+  "stray": 0,
+  "borderline": 3
+ },
+ "the-infernal": {
+  "members": 772,
+  "stray": 104,
+  "borderline": 273
+ },
+ "yokai-oni": {
+  "members": 353,
+  "stray": 98,
+  "borderline": 50
+ },
+ "angels-celestials": {
+  "members": 619,
+  "stray": 61,
+  "borderline": 151
+ },
+ "wrathful-deities": {
+  "members": 298,
+  "stray": 24,
+  "borderline": 204
+ },
+ "book-of-the-dead": {
+  "members": 314,
+  "stray": 9,
+  "borderline": 40
+ },
+ "erotic-art": {
+  "members": 71,
+  "stray": 3,
+  "borderline": 17
+ },
+ "music-sound": {
+  "members": 322,
+  "stray": 10,
+  "borderline": 44
+ },
+ "fables-folk-tales": {
+  "members": 85,
+  "stray": 2,
+  "borderline": 24
+ },
+ "sleep-and-dreams": {
+  "members": 67,
+  "stray": 0,
+  "borderline": 8
+ },
+ "poetry": {
+  "members": 682,
+  "stray": 213,
+  "borderline": 244
+ },
+ "wine-and-the-vine": {
+  "members": 22,
+  "stray": 0,
+  "borderline": 2
+ },
+ "drama": {
+  "members": 179,
+  "stray": 0,
+  "borderline": 16
+ },
+ "food-and-the-feast": {
+  "members": 35,
+  "stray": 1,
+  "borderline": 15
+ },
+ "agriculture": {
+  "members": 49,
+  "stray": 2,
+  "borderline": 10
+ },
+ "prose-fiction": {
+  "members": 79,
+  "stray": 2,
+  "borderline": 11
+ },
+ "ancient-music-theory": {
+  "members": 30,
+  "stray": 1,
+  "borderline": 12
+ },
+ "cosmic-harmony": {
+  "members": 54,
+  "stray": 8,
+  "borderline": 8
+ },
+ "renaissance-music": {
+  "members": 32,
+  "stray": 1,
+  "borderline": 3
+ },
+ "world-music-traditions": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 5
+ },
+ "architecture": {
+  "members": 49,
+  "stray": 0,
+  "borderline": 9
+ },
+ "druids-megaliths": {
+  "members": 28,
+  "stray": 0,
+  "borderline": 4
+ },
+ "norse-antiquities": {
+  "members": 22,
+  "stray": 1,
+  "borderline": 2
+ },
+ "sacred-plants": {
+  "members": 25,
+  "stray": 0,
+  "borderline": 5
+ },
+ "aesthetic-theory": {
+  "members": 23,
+  "stray": 0,
+  "borderline": 6
+ },
+ "education": {
+  "members": 24,
+  "stray": 1,
+  "borderline": 12
+ },
+ "arabic-medicine": {
+  "members": 17,
+  "stray": 0,
+  "borderline": 1
+ },
+ "pharmacopeias": {
+  "members": 39,
+  "stray": 0,
+  "borderline": 4
+ },
+ "the-human-condition": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 6
+ },
+ "eastern-erotic-literature": {
+  "members": 16,
+  "stray": 0,
+  "borderline": 3
+ },
+ "european-vernacular-erotica": {
+  "members": 25,
+  "stray": 0,
+  "borderline": 13
+ },
+ "hogwarts-library": {
+  "members": 99,
+  "stray": 6,
+  "borderline": 21
+ },
+ "accademia-dei-lincei": {
+  "members": 24,
+  "stray": 0,
+  "borderline": 7
+ },
+ "accademia-dei-segreti": {
+  "members": 24,
+  "stray": 0,
+  "borderline": 6
+ },
+ "renaissance-architecture": {
+  "members": 35,
+  "stray": 0,
+  "borderline": 3
+ },
+ "gardens-festivals-ephemeral": {
+  "members": 30,
+  "stray": 0,
+  "borderline": 14
+ },
+ "yoga": {
+  "members": 97,
+  "stray": 2,
+  "borderline": 19
+ },
+ "sibyls": {
+  "members": 37,
+  "stray": 0,
+  "borderline": 4
+ },
+ "aldine-press": {
+  "members": 866,
+  "stray": 6,
+  "borderline": 30
+ },
+ "baltic-paganism": {
+  "members": 24,
+  "stray": 0,
+  "borderline": 4
+ },
+ "signs-in-the-sky": {
+  "members": 38,
+  "stray": 1,
+  "borderline": 8
+ },
+ "chariots-of-the-gods": {
+  "members": 14,
+  "stray": 0,
+  "borderline": 4
+ },
+ "taken-up-to-the-heavens": {
+  "members": 17,
+  "stray": 2,
+  "borderline": 3
+ },
+ "spirits-of-the-air": {
+  "members": 21,
+  "stray": 0,
+  "borderline": 9
+ },
+ "cannabis-western-record": {
+  "members": 60,
+  "stray": 0,
+  "borderline": 14
+ },
+ "tibetan-canon": {
+  "members": 251,
+  "stray": 0,
+  "borderline": 6
+ },
+ "eros-esoteric": {
+  "members": 32,
+  "stray": 3,
+  "borderline": 6
+ },
+ "american-founding": {
+  "members": 280,
+  "stray": 0,
+  "borderline": 23
+ },
+ "erotic-literature": {
+  "members": 227,
+  "stray": 2,
+  "borderline": 112
+ },
+ "stoicism": {
+  "members": 173,
+  "stray": 0,
+  "borderline": 28
+ },
+ "moral-philosophy": {
+  "members": 154,
+  "stray": 4,
+  "borderline": 37
+ },
+ "shakers": {
+  "members": 14,
+  "stray": 0,
+  "borderline": 2
+ },
+ "dissenters-prophets": {
+  "members": 40,
+  "stray": 0,
+  "borderline": 4
+ },
+ "sufism": {
+  "members": 22,
+  "stray": 1,
+  "borderline": 4
+ },
+ "en-espanol": {
+  "members": 170,
+  "stray": 1,
+  "borderline": 9
+ },
+ "slime-moulds": {
+  "members": 25,
+  "stray": 0,
+  "borderline": 5
+ },
+ "harmonia-mundi-economic-order": {
+  "members": 33,
+  "stray": 0,
+  "borderline": 3
+ },
+ "picturing-the-world-1450-1750": {
+  "members": 22,
+  "stray": 0,
+  "borderline": 6
+ },
+ "forum-of-conscience": {
+  "members": 67,
+  "stray": 1,
+  "borderline": 12
+ },
+ "nalanda": {
+  "members": 6,
+  "stray": 0,
+  "borderline": 1
+ },
+ "drebbel": {
+  "members": 75,
+  "stray": 1,
+  "borderline": 32
+ },
+ "lojong": {
+  "members": 3,
+  "stray": 0,
+  "borderline": 0
+ },
+ "derge-tengyur": {
+  "members": 213,
+  "stray": 0,
+  "borderline": 0
+ },
+ "derge-kangyur": {
+  "members": 15,
+  "stray": 0,
+  "borderline": 0
+ },
+ "haarlem-mannerists": {
+  "members": 419,
+  "stray": 12,
+  "borderline": 45
+ },
+ "leonardo-drawings": {
+  "members": 116,
+  "stray": 5,
+  "borderline": 32
+ },
+ "art-of-altdorfer-baldung": {
+  "members": 307,
+  "stray": 71,
+  "borderline": 104
+ },
+ "venetian-mystery": {
+  "members": 470,
+  "stray": 5,
+  "borderline": 48
+ },
+ "visions-ecstasies": {
+  "members": 824,
+  "stray": 18,
+  "borderline": 141
+ },
+ "thought-forms": {
+  "members": 13,
+  "stray": 0,
+  "borderline": 0
+ },
+ "dreams-unconscious": {
+  "members": 1288,
+  "stray": 49,
+  "borderline": 288
+ },
+ "hashika-e-measles-prints": {
+  "members": 49,
+  "stray": 1,
+  "borderline": 8
+ },
+ "__controls": {
+  "maya": {
+   "members": 74,
+   "judged": 74,
+   "stray": 0,
+   "borderline": 18
+  },
+  "erotic-art": {
+   "members": 78,
+   "judged": 78,
+   "stray": 7,
+   "borderline": 17
+  }
+ }
+}

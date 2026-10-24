@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C most often matches the expected Sāṅkhyakārikā 62–63 commentary wording, with phrases like "kasyacilbandhād…saṃsaratibaddhyate…prakṛtir", "nānāśraya" and "puruṣārtthaṃpratikaivalyārthaṃvimocayatyātmatmānaṃekarūpeṇa"; A is fluent in places (e.g. "saṃsaratibadhyatemucyatecaprakṛtir") but breaks down in rows 9–10, and B has the most garbled strings and [illegible] gaps.

@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | Only C produces real, recognizable text that fits this manuscript: "pañcaśikha", "īśvarakṛṣṇanāmānāṃ", "saṃkṣiptaṃ ṣaṣṭitantraṃ pañcaviṃśatitattvajñānam", "āryamatiḥ buddhi", "āryābhiḥ" and "pavitram" match the Sāṅkhyakārikā's lineage verses; A only partly reaches these words, and B is mostly garbled syllables.

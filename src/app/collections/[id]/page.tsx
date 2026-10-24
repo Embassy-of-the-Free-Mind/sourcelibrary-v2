@@ -20,7 +20,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, isHighlightMember, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl, toDisplayVariantUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
@@ -399,7 +399,7 @@ const COMPACT_LIMIT = 14;
 // the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
 // meta row and is never shown inside a partner room.
 const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
-  drebbel: { href: '/collections/drebbel/beeckman', label: 'Beeckman on Drebbel, in his own words' },
+  drebbel: { href: '/articles/beeckman-on-drebbel', label: 'Beeckman on Drebbel, in his own words' },
 };
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
@@ -861,8 +861,10 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   const curatedBookMap = new Map(
     (highlights as Record<string, unknown>[]).map(b => [b.id as string, b]),
   );
+  // Members only (#6899): a highlight whose book left the collection, or never
+  // joined it, must not open the page as "Start here".
   const mergedHighlights = curatedHighlights
-    .filter((h: CuratedHighlight) => curatedBookMap.has(h.book_id))
+    .filter((h: CuratedHighlight) => isHighlightMember(curatedBookMap.get(h.book_id) as Record<string, unknown> | undefined, id))
     .map((h: CuratedHighlight) => {
       const book = curatedBookMap.get(h.book_id) as Record<string, unknown>;
       return {
@@ -1079,20 +1081,31 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   const isCatalogCollection = (catalogEditionCount ?? 0) > 0;
 
   // For catalogue collections, the description names many authors (Bruno,
-  // Galileo, …) — link them to their CANONICAL author page. Resolve each
-  // distinct author string → its book's entity → canonical name → canonical
-  // slug, so name-order variants of one person ("Bruno, Giordano" / "Giordano
-  // Bruno") share a single href (this is what the canonical-author relink in
-  // #2180 enables). Falls back to the raw string slug when unlinked.
+  // Galileo, …) — link them to their CANONICAL author page, so name-order
+  // variants of one person ("Bruno, Giordano" / "Giordano Bruno") share a
+  // single href. The link goes through `books.author_id` (the canonical FK),
+  // never a slug of the byline: a byline names whoever a catalogue wrote, and
+  // a bare "Thomas" slug points at one Thomas for all of them (#4318, #4355).
+  // A byline whose books carry MORE than one author_id names several people
+  // and gets no link at all. Only a byline with no author_id on any of its
+  // books falls back to the legacy entity name (#2180), then the byline slug.
   let descriptionAuthorLinks: { name: string; href: string; canonical?: string }[] = [];
   if (isCatalogCollection) {
     try {
       const db = await getReadDb();
       const pairs = await db.collection('books').aggregate([
         { $match: { collections: id, author: { $type: 'string', $ne: '' } } },
-        { $group: { _id: '$author', ent: { $first: '$author_entity_id' }, n: { $sum: 1 } } },
+        { $group: { _id: '$author', aids: { $addToSet: '$author_id' }, ent: { $first: '$author_entity_id' }, n: { $sum: 1 } } },
       ]).toArray();
-      const entIds = [...new Set(pairs.map(p => p.ent).filter(Boolean).map(String))];
+      const aidsOf = (p: { aids?: unknown[] }) =>
+        (p.aids || []).filter((a): a is string => typeof a === 'string' && a !== '');
+      const authorIds = [...new Set(pairs.flatMap(p => { const a = aidsOf(p); return a.length === 1 ? a : []; }))];
+      const authorDocs = authorIds.length
+        ? await db.collection<{ _id: string; canonical_name?: string }>('authors').find(
+          { _id: { $in: authorIds } }, { projection: { canonical_name: 1 } }).toArray()
+        : [];
+      const authorName = new Map(authorDocs.map(a => [a._id, a.canonical_name]));
+      const entIds = [...new Set(pairs.filter(p => aidsOf(p).length === 0).map(p => p.ent).filter(Boolean).map(String))];
       const entDocs = entIds.length
         ? await db.collection('entities').find(
           { _id: { $in: entIds.filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s)) } },
@@ -1100,8 +1113,13 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         : [];
       const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
       descriptionAuthorLinks = pairs.flatMap(p => {
-        const canon = (p.ent ? entName.get(String(p.ent)) : null) as string | null;
-        const href = authorUrl(canon || (p._id as string));
+        const aids = aidsOf(p);
+        if (aids.length > 1) return [];
+        const aid = aids[0];
+        const canon = (aid ? authorName.get(aid) : p.ent ? entName.get(String(p.ent)) : null) as string | null | undefined;
+        // a placeholder ("Anonymous") is not a name to link in prose
+        if (canon && !authorUrl(canon)) return [];
+        const href = aid ? authorUrl(p._id as string, aid) : authorUrl(canon || (p._id as string));
         return href ? [{ name: p._id as string, canonical: canon || undefined, href, count: (p.n as number) || 1 }] : [];
       });
     } catch { /* non-fatal — description just won't gain author links */ }

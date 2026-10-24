@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. vānaṣadṛśyāntarami [illegible] ‖ grahmatannubadaravya [illegible] vyanāraṃgikkaraṇen [illegible] ‖ [illegible] kaivalyanni [illegible] ṣṭhatamasa
+2. tryākāralssadāvā [illegible] ‖ āvodadāṣaka [illegible] ṇarattirikkaṃttinapa [illegible] ‖ [illegible] paṇṭārusaṃgrālddyasa
+3. prāgadāvaṣṭhāṃsaṃba [illegible] ‖ praśnikkayoruka [illegible] vat [illegible] gaddaravādadāvovā [illegible] ‖ [illegible] ilikkaṃṣavagrū [illegible]
+4. dāvasyapramamā ‖ dāvatvānāra [illegible] ānavānta [illegible] na ‖ ṣirādaṇābaprarama
+5. ññaprameyasaṃba ‖ yapraiyājña [illegible] dainādijñā [illegible] ddhā ‖ [illegible] kāravayavarākka [illegible]
+6. [illegible] ṣavādajjiṣvi ‖ [illegible] ñcā [illegible] yyādāsa [illegible] laja ‖ ākra [illegible] hasṛ [illegible]
+7. āṃ [illegible] ṇmāraṃā ‖ [illegible] śrayasādi [illegible] ādigama [illegible] ntrā ‖ [illegible] svakkāra [illegible]
+8. śapadṛlranrāmpakkara [illegible] ‖ kabānkṣaśaṃsakṣa [illegible] okkavaitya [illegible] ‖ [illegible] tugasai [illegible] kkarammi [illegible] sa
+9. ovykkāṃsaddhi [illegible] ‖ [illegible] ṇadāva [illegible] ṣāṃtrameśabdi [illegible] ‖ [illegible] divāl [illegible] manāprṛ [illegible]
+10. [illegible] dairā [illegible] prandā [illegible] ‖ āvaṣladdha [illegible] āgama [illegible] ṇākhddha [illegible] pramaiyami [illegible] ‖ mittivādaśaviyaṃpramaiya
+
+TRANSCRIPTION B
+1. vānaṣadūratvārtthanami [illegible] ‖ graṣṭhaṃrannaḥlbadravyānāṃgīkkāraṇenma [illegible] ‖ makaivalyanyarhiṣṭhatvamasa
+2. tryārtthabadāvā [illegible] ‖ āvaivādāyakaivaṇa [illegible] ṇātribhikkaṃṇṭiṇava [illegible] ‖ [illegible] ñcādyusaṃgrahālduḥkhasa
+3. prāgadravyaprāṃśava [illegible] ‖ prakkiyoragehravaṇa [illegible] ṇṭabhadravādrāvaivā [illegible] ‖ [illegible] keviḥkriyo
+4. drāvyapramamā ‖ drāvakvāndra [illegible] rnnavavācaivariṇa ‖ jñinnāṭaḥnandapradyama
+5. ñeprameyasaṃkhya ‖ yapraiyājña [illegible] ṭṭoppijñākkavidyā ‖ kkāvayyavatvakkaḻ
+6. ṛyavādajñajñavi ‖ daṇḍāvairava [illegible] kyādrāsajñalajña ‖ ākrindrahasvāpara
+7. āṃrakvajñāraṃā ‖ traiśrayasvāmi [illegible] āmigamajjyendrā ‖ khabhavaistrukṣorakha
+8. gavadūrtthānāmukkata [illegible] ‖ takvānkāthaṃsakke [illegible] aikaikkavetyotantri [illegible] ‖ trihraṃstraiṣkārammitrisa
+9. veṣkkāraṃsaṅketava [illegible] ‖ vāṇabhrāvajrākṣṭā [illegible] ṣṭaṃtṛñcegaliveṇṭli [illegible] ‖ ddiyāljjaitrimataḥpravṛ
+10. kkibhidokṣapratuḥbhā [illegible] ‖ āvaṣṭhalakṣmīkārava [illegible] vaṣmapraimeyammi [illegible] ‖ ttibhavadagaviyaṃprameyaṃ
+
+TRANSCRIPTION C
+1. vānapade [illegible] dyāntarami [illegible] ‖ gṛhṇantaḥnvideravyānāṃgīkkāramenme ‖ [illegible] kaivalyaṃndriṣṭhatamaḥ
+2. jñānārtthadevā [illegible] ‖ āvaivādeāyakṣaivannutibikkaṃbhranva ‖ [illegible] ptadādṛsaṃgālbuddheḥsa
+3. pramagadevakṣāṃsya [illegible] ‖ prakkityaiāgaiśryavatbharavādeāvai [illegible] ‖ [illegible] līkṣevādṛṣṭiddhyā
+4. devasyaprathamā ‖ devatvānnānavāhasthina ‖ ṣinnādḥnavaprarama
+5. ṣeprameyasaṃba ‖ yaprameyājñaitjñānakkapriddhyā ‖ kkāvayavatalkkṛ
+6. jñayavādajñajñavi ‖ bhaññācainādyādevasajjalajña ‖ ākkerugahasvacaru
+7. āṃśaktajñārānā ‖ traiśryayasvādhigamamañjunnā ‖ labharosrūlaikṣādya
+8. śapadmālānnāmukkakolkāthaṃsattakkai ‖ kkaikkavetyāntu [illegible] ‖ tthagraḥsattekṣādikasa
+9. khaitbhrāṃsatvādekhai [illegible] ‖ pāṇadevaṛṣṭāṃntramesavidebhi ‖ [illegible] bhūyālmuktimataḥpravṛ
+10. bhideāṣūprandevā [illegible] ‖ āvakhaladṛṣṭābhāvaḥṣṭraprameyami ‖ mitidhādeśaviṣayaṃprameya
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

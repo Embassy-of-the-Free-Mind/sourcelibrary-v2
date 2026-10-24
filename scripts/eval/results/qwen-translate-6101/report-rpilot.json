@@ -1,0 +1,200 @@
+{
+ "round": 1,
+ "best": null,
+ "judged_pages": 10,
+ "missing_pages": 0,
+ "retest_A_vs_Q_same_outcome": {
+  "Q3": "7/10"
+ },
+ "alpha_fidelity": 0.927,
+ "alpha_acc_spans": 0.87,
+ "pooled": {
+  "label": "pooled",
+  "n": 10,
+  "arms": {
+   "Q3": {
+    "acc_mean": 3.9,
+    "major_mean": 1.2,
+    "fid_mean": 3.25,
+    "meaning_defects_mean": 2.8,
+    "fill_pages": 2,
+    "added_fact_mean": 0.95,
+    "reversal_pages": 2,
+    "omission_pages": 3,
+    "top_rank_share": 0.35,
+    "acc_diff_vs_A": 2.3,
+    "acc_diff_ci": [
+     1,
+     3.9
+    ],
+    "margin": 0.32,
+    "bar1": false,
+    "pairwise_vs_A": 0.25,
+    "pairwise_ci": [
+     0.05,
+     0.45
+    ],
+    "bar2": false,
+    "pairwise_wlt": [
+     "2-2-6",
+     "1-2-7"
+    ],
+    "mech_fail": 1,
+    "mech_fail_rate": 0.1,
+    "bar3": false,
+    "mech_kinds": {
+     "hit_cap": 1
+    },
+    "production_guard_refusals": {
+     "runaway": 1
+    },
+    "tags_repaired_pages": 0,
+    "pass": false
+   },
+   "A": {
+    "acc_mean": 1.6,
+    "major_mean": 0.1,
+    "fid_mean": 4.2,
+    "meaning_defects_mean": 1.2,
+    "fill_pages": 0,
+    "added_fact_mean": 1.05,
+    "reversal_pages": 0,
+    "omission_pages": 3,
+    "top_rank_share": 0.85,
+    "mech_fail": 0,
+    "production_guard_refusals": []
+   }
+  }
+ },
+ "zh": {
+  "label": "zh",
+  "n": 7,
+  "arms": {
+   "Q3": {
+    "acc_mean": 3.143,
+    "major_mean": 0.286,
+    "fid_mean": 3.857,
+    "meaning_defects_mean": 2.071,
+    "fill_pages": 0,
+    "added_fact_mean": 0.786,
+    "reversal_pages": 1,
+    "omission_pages": 0,
+    "top_rank_share": 0.5,
+    "acc_diff_vs_A": 1.714,
+    "acc_diff_ci": [
+     0.571,
+     2.714
+    ],
+    "margin": 0.286,
+    "bar1": false,
+    "pairwise_vs_A": 0.357,
+    "pairwise_ci": [
+     0.107,
+     0.571
+    ],
+    "bar2": false,
+    "pairwise_wlt": [
+     "2-2-3",
+     "1-2-4"
+    ],
+    "mech_fail": 0,
+    "mech_fail_rate": 0,
+    "bar3": true,
+    "mech_kinds": {},
+    "production_guard_refusals": {},
+    "tags_repaired_pages": 0,
+    "pass": false
+   },
+   "A": {
+    "acc_mean": 1.429,
+    "major_mean": 0.071,
+    "fid_mean": 4.214,
+    "meaning_defects_mean": 1.071,
+    "fill_pages": 0,
+    "added_fact_mean": 1.5,
+    "reversal_pages": 0,
+    "omission_pages": 2,
+    "top_rank_share": 0.786,
+    "mech_fail": 0,
+    "production_guard_refusals": []
+   }
+  }
+ },
+ "ja": {
+  "label": "ja",
+  "n": 3,
+  "arms": {
+   "Q3": {
+    "acc_mean": 5.667,
+    "major_mean": 3.333,
+    "fid_mean": 1.833,
+    "meaning_defects_mean": 4.5,
+    "fill_pages": 2,
+    "added_fact_mean": 1.333,
+    "reversal_pages": 1,
+    "omission_pages": 3,
+    "top_rank_share": 0,
+    "acc_diff_vs_A": 3.667,
+    "acc_diff_ci": [
+     0,
+     8
+    ],
+    "margin": 0.4,
+    "bar1": false,
+    "pairwise_vs_A": 0,
+    "pairwise_ci": [
+     0,
+     0
+    ],
+    "bar2": false,
+    "pairwise_wlt": [
+     "0-0-3",
+     "0-0-3"
+    ],
+    "mech_fail": 1,
+    "mech_fail_rate": 0.333,
+    "bar3": false,
+    "mech_kinds": {
+     "hit_cap": 1
+    },
+    "production_guard_refusals": {
+     "runaway": 1
+    },
+    "tags_repaired_pages": 0,
+    "pass": false
+   },
+   "A": {
+    "acc_mean": 2,
+    "major_mean": 0.167,
+    "fid_mean": 4.167,
+    "meaning_defects_mean": 1.5,
+    "fill_pages": 0,
+    "added_fact_mean": 0,
+    "reversal_pages": 0,
+    "omission_pages": 1,
+    "top_rank_share": 1,
+    "mech_fail": 0,
+    "production_guard_refusals": []
+   }
+  }
+ },
+ "classes": {
+  "Q3": {
+   "name": 23,
+   "mistranslation": 16,
+   "T10": 6,
+   "T8": 3,
+   "T4": 1,
+   "T9": 4,
+   "T1": 2,
+   "T5": 2,
+   "T6": 1
+  },
+  "A": {
+   "T9": 4,
+   "mistranslation": 12,
+   "name": 8,
+   "terminology": 3
+  }
+ }
+}

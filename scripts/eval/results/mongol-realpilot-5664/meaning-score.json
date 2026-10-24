@@ -1,0 +1,26 @@
+{
+ "meaning": {
+  "real": {
+   "n": 30,
+   "partial": 12,
+   "no": 8,
+   "match": 8,
+   "unreadable": 2
+  },
+  "control": {
+   "n": 30,
+   "partial": 4,
+   "match": 1,
+   "no": 20,
+   "unreadable": 5
+  },
+  "match_rate": 0.26666666666666666,
+  "control_match_rate": 0.03333333333333333,
+  "bar": {
+   "match_rate_min": 0.6,
+   "control_match_rate_max": 0.1
+  },
+  "passes": false
+ },
+ "note": "judge.mjs (PR #6924 branch, stdin fix) stages meaning+score on reads-pilot set==meaning; Opus via subscription; 2026-10-19"
+}

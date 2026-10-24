@@ -151,6 +151,8 @@ export const BOOK_FIELDS = Object.freeze([
   // ORAEC corpus imports
   'oraec_id', 'oraec_bibliography', 'oraec_object_type', 'oraec_origplace',
   'oraec_period', 'oraec_sentence_count',
+  // ETCSL corpus imports (373 books, 2026-03; scripts/etcsl/import-etcsl-text.mjs, #4391)
+  'etcsl_id', 'etcsl_category',
   // timestamps
   'created_at', 'updated_at',
 ]);
@@ -168,6 +170,8 @@ export const PAGE_FIELDS = Object.freeze([
   'page_frame',
   // text
   'ocr', 'summary', 'translation', 'transliteration',
+  // ETCSL text editions: the composite lines and translation paragraph a page holds (#4391)
+  'etcsl_line_range', 'etcsl_paragraph_id',
   // #4927: the materialised verdict that `translation` was made from a
   // transcription the page no longer holds — { reason, since, lane? }. Written
   // by the daily sweep (and by a re-OCR lane that stamps it itself), cleared by

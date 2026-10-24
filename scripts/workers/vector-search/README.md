@@ -50,13 +50,20 @@ the RPC on any error or `complete: false`. Default off. The app reaches it at
   The response says `text_ms` and `text_missing`. A row the store lacks comes back without those three
   keys, and the app hydrates only that row from Supabase. Title and author are kept per row, as the RPC
   returns them, not per book. Shadow calls do not ask for text: they compare page ids.
+- **`book_ids`** (≤ 50, #2049) is `match_pages_in_books`' question: `path: "books"`, an exact float32 scan
+  of exactly those books' live rows, ANDed with any other filter. The keys come from a book index (CSR
+  over the row store, built at startup and after each save; keys a delta sets in between are checked on
+  every query). Each row is scored from the float32 shards, or from its int8 override if a delta changed
+  it since the build. Without the shards it answers `complete: false` and the app asks the RPC. On 30
+  real search_within_book calls: 10 ms server-side p50, the RPC's top 10 up to ties
+  (`scripts/eval/experiments/2026-10-18-within-book-vector-books-2049.md`).
 - `GET /health` → `{size, live_rows, book_map_size, built_at, last_delta_at, checkpoint, generation, text_store, …}`.
 - `k` ≤ 1000. Bodies over 256 KB are refused.
 
 Listeners: `127.0.0.1:3458` (`VECTOR_SEARCH_HOST`) needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on
 every route, `/health` included; Caddy terminates TLS for `vectors.sourcelibrary.org` and proxies to it
 (`infrastructure/caddy/Caddyfile.l7a`), and ufw allows 80/443, not 3458. `127.0.0.1:3459` needs no token
-and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-delta.mjs`); Caddy never proxies it.
+and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-delta.mjs`); Caddy never proxies it.
 
 ## Files
 
@@ -66,9 +73,11 @@ and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-d
 | `pull-embeddings.mjs` | Supabase → `shards/shard-<k>.{f32,jsonl}`, keyset on `page_id`, resumable |
 | `build-hnsw.mjs` | shards → `index/index-1.usearch` + `rows-1.jsonl` + `state.json`, streamed |
 | `server.mjs` | the service |
-| `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (~26 GB, ~20 min), resumable |
-| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase), `--save`, `--count-check` |
-| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
+| `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (19.3 GB at 7.64M rows, ~30 min), resumable |
+| `text-fingerprints.mjs` | once, for a store made before the `fp` table: fills each row's fingerprint from the store itself and sets `meta.fp_complete` |
+| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase, plus the text fingerprints; `--hash` adds the md5 for a seventh of the rows), `--save`, `--count-check` |
+| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, `/health` slower than 1 s, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
+| `match-latency-probe.mjs` | steady `/match` load at a fixed rate, p50/p90/p99 per window: what a reconcile or a save does to query latency |
 | `latency-eval.mjs` | end to end over HTTPS: service + text vs service + Supabase hydration vs the RPC, and a column-by-column check against the RPC |
 | `build-exact.mjs` | shards → `index/exact.{i8,keys,json}`: int8 vectors in (language, year) order for the exact filtered scan (~5.9 GB, ~4 min) |
 | `recall-eval.mjs` | overlap@45 vs exact float32 cosine, latency; no Gemini |
@@ -77,6 +86,7 @@ and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-d
 | `../../../infrastructure/l7a-crontab` | the delta, nightly save and freshness lines (installed 2026-10-17) |
 | `../../../infrastructure/caddy/` | the Caddyfile and Caddy's slice drop-in |
 | `../../../infrastructure/systemd/vector-search.service` | the unit |
+| `../../../infrastructure/systemd/l7a-search.slice` | its slice (installed as `search.slice` on l7a; cloudlayer's `search.slice` is a different file), shared with Caddy and apart from the jobs' `sourcelibrary.slice` |
 
 ## Choices that are not obvious
 
@@ -84,6 +94,12 @@ and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-d
   ~±0.04, so i8 keeps about five levels of each. On 2,000 real rows against exact float32 cosine: similarity
   error mean 0.0129 (i8) vs 0.0015 (e4m3) at the same 917 B/row; overlap 0.951 vs 0.975. f16 would be
   near-exact but 1.7 KB/row, which at 7.6M rows does not fit the slice beside anything else.
+- **Its own slice, not the jobs'.** The service and Caddy run in `search.slice` (MemoryMin 9G, MemoryLow
+  11G, MemoryMax 13G, no MemoryHigh). They started in `sourcelibrary.slice`, and on 2026-10-17 two `sl-tsc`
+  runs took that slice past its MemoryHigh=12G: the kernel throttled every process in it, the service
+  included (state D in `mem_cgroup_handle_over_high`), and every shadow call timed out from ~21:04 UTC.
+  The delta, reconcile and freshness jobs stay in `sourcelibrary.slice`: a throttled job is late, a
+  throttled service fails a reader. `freshness-check.mjs` pages when `/health` takes over 1 s.
 - **Delta in the server's process.** `sync-delta.mjs` reads Supabase and posts the rows to `/admin/apply`;
   it does not load its own copy of the index, because two 7 GB copies do not fit the 14 GB slice.
 - **Saves are nightly.** `index.save` blocks queries for seconds. Between saves the changes live in RAM;
@@ -95,9 +111,29 @@ and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-d
   embedded after the checkpoint with an older source time is invisible to the delta. In the first 26 h
   that was 4,055 rows against the delta's 681 (2026-10-17). Deleted rows are invisible to it too.
   `--reconcile` (cron, every 2 h) reads every served page_id in one unordered cursor scan (~55 s; ordered
-  by page_id it was ~10K ids/s, 12 min), the service diffs it range by range (`/admin/diff`), and the
-  missing rows are fetched and applied, the extras removed. It writes `logs/reconcile.json`, where
+  by page_id it was ~10K ids/s, 12 min), reads the service's live ids range by range (`/admin/ids`, pages
+  of 50K) and diffs them itself, and the missing rows are fetched and applied, the extras removed. It writes `logs/reconcile.json`, where
   `freshness-check.mjs` reads the drift. `--count-check` (nightly) still exits 4 above 0.1%.
+- **…and ids are not enough either: the text store compares fingerprints.** In-place edits of
+  `page_translations.translation` leave `updated_at` alone (`resyncMirrors` in
+  `scripts/lib/translation-text-repair.mjs`, `backfill-clean-snippets.mjs`, `translation-cleanup-a2-5700.mjs`,
+  `repair-text-shift-run.mjs`), and `updated_at` is the Mongo source time by design (`.claude/docs/embeddings.md`),
+  so bumping it in the writers would break what the column means for `--restale`. Instead the store keeps a
+  fingerprint per row (`fp`: byte lengths of translation and of title + author, and an md5 of all three),
+  written with every row write. The reconcile's scan reads the lengths beside each page_id — Postgres
+  takes `octet_length` from the TOAST header; the fingerprint lookups add ~40 s, in sorted batches — and the
+  nightly run adds `--hash`, which catches a same-length edit. The md5 detoasts every translation it covers
+  on Supabase, and the full pass ran past 28 min, IO-bound (2026-10-17), pushing `match_semantic`'s HNSW
+  index out of Supabase's cache with it, so `--hash` covers one seventh of the rows a night
+  (`abs(hashtext(page_id)) % 7` = the UTC weekday): every row weekly. `--hash-part all` forces the full pass. A row
+  whose fingerprint differs, or that the store lacks, has its text re-read and replaced (its vector is
+  left alone). The JS and SQL fingerprints agreed on 3,000 of 3,000 store rows, 2,010 of them non-ASCII
+  (2026-10-17).
+- **Admin work yields to `/match`.** `/admin/apply` and `/admin/ids` run on the thread that answers
+  queries, so they give the loop back every 5 ms (`VECTOR_SEARCH_ADMIN_YIELD_MS`), never between a row's
+  index and row-store updates. Vectors travel as base64 float32 (`embedding_b64`), not JSON arrays, so a
+  500-row apply is ~2 MB to parse instead of ~7.5 MB. Before this (2026-10-17), one reconcile took `/match`
+  p99 from ~17 ms to 1,869 ms, with 2.4 s stalls.
 - **The exact file is a second copy, on disk, not in RAM.** The shards are ordered by page_id, so a
   filtered set is scattered across 23 GB (5.5K random reads/s on l7a). In (language, year) order,
   one language is one sequential read. Rows a delta adds or re-embeds are not in the file: the server
@@ -109,7 +145,7 @@ and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-d
 - **Postgres, not PostgREST**, for the pull: 5,000 rows with vectors in 1.9 s per stream from l7a against
   ~11 s per 1,000 over REST. The `translation` column is not in the shards; `pull-text.mjs` pulls it into
   the text store.
-- **The text store is SQLite on disk, not RAM.** ~26 GB does not fit the slice beside the index; 45 point
+- **The text store is SQLite on disk, not RAM.** 19.3 GB does not fit the slice beside the index; 45 point
   reads by primary key cost about a millisecond once cached. Writers (the pull, the delta) and the server
   are separate processes on one WAL file; every upsert carries the row's `updated_at` and only replaces an
   older one, so a pull and a delta can run in either order. The delta writes the text BEFORE it hands the
@@ -122,19 +158,19 @@ mkdir -p /data/vector-search/{app,logs}
 cp scripts/workers/vector-search/{*.mjs,bootstrap.sh,package*.json} /data/vector-search/app/
 (cd /data/vector-search/app && npm ci)        # its own node_modules: usearch (prebuilt linux-arm64) + pg
 umask 077; printf 'VECTOR_SEARCH_TOKEN=%s\nVECTOR_SEARCH_PORT=3458\nVECTOR_SEARCH_LOCAL_PORT=3459\n' "$(openssl rand -hex 32)" > /etc/vector-search.env
-cp infrastructure/systemd/vector-search.service /etc/systemd/system/ && systemctl daemon-reload && systemctl enable vector-search
+cp infrastructure/systemd/l7a-search.slice /etc/systemd/system/search.slice && cp infrastructure/systemd/vector-search.service /etc/systemd/system/ && systemctl daemon-reload && systemctl enable vector-search
 # TLS (phase 4, #6843): Caddy in front, the service on loopback. See infrastructure/caddy/Caddyfile.l7a.
 apt-get install -y caddy && cp infrastructure/caddy/Caddyfile.l7a /etc/caddy/Caddyfile
 mkdir -p /etc/systemd/system/caddy.service.d && cp infrastructure/caddy/caddy-slice.conf /etc/systemd/system/caddy.service.d/slice.conf
 systemctl daemon-reload && systemctl restart caddy
 ufw allow 80/tcp; ufw allow 443/tcp                 # never 3458: the service listens on 127.0.0.1
-# Cron: append the three lines of infrastructure/l7a-crontab to root's crontab (back it up first).
+# Cron: append the four lines of infrastructure/l7a-crontab to root's crontab (back it up first).
 setsid nohup systemd-run --scope --quiet --unit=vector-search-bootstrap --slice=sourcelibrary.slice \
   bash /data/vector-search/app/bootstrap.sh >> /data/vector-search/logs/bootstrap.log 2>&1 < /dev/null &
 ```
 
 Disk: ~23 GB of float32 shards (kept: the recall evals, the exact path's float32 re-score and a rebuild
-read them) + ~7 GB per index generation + ~5.9 GB for `exact.i8` + ~26 GB for `text/pages.sqlite`.
+read them) + ~7 GB per index generation + ~5.9 GB for `exact.i8` + ~19.3 GB for `text/pages.sqlite` (plus ~0.5 GB of fingerprints).
 
 Rotating the token: `openssl rand -hex 32` into `/etc/vector-search.env` (mode 600), `systemctl restart
 vector-search` (~5 min until `/health` answers), then the same value in Vercel's `VECTOR_SEARCH_TOKEN`.

@@ -50,6 +50,17 @@
  * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
  * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
  *
+ * BY-EYE CHECK (#6865): `apply --by-eye=FILE` (JSONL, one row per page: {page_id, read_sha256, verdict, checked_by, at,
+ * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
+ * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
+ * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
+ * `engine.input.by_eye`.
+ *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ the
+ * moment it is made. Before calling, `read` asks for a kept read of the same page by the same model on the same prompt
+ * sent and the same image bytes (correct mode: the same draft, in the prompt), and uses it instead of calling; the meta
+ * then carries `reused_from`. `--fresh` always calls (a repeat-noise eval needs fresh reads; kept ones are its noise).
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -73,6 +84,7 @@ import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -113,6 +125,12 @@ const NUDGE = 'Running commands is not available here. Answer directly from the 
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = arg('job') || 'cli-ocr';
 const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, kind: 'ocr', ...row }) + '\n'); } catch { /* the meter is advisory */ } };
+// The reuse key of a read (#7075): the prompt sent (it names the page's image file, and in correct mode carries the
+// draft), the image bytes, and the mode. `readReuseKey` rebuilds it from a kept meta for reads kept before readers
+// stamped their own.
+const variantOf = (mode, lane, promptVariant) => (mode === 'correct' ? `correct:${lane}` : promptVariant ?? null);
+const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant) }) : null);
+const FRESH = wantsFresh();
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -142,7 +160,7 @@ if (STAGE === 'read') {
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
-  let quotaUntil = 0;
+  let quotaUntil = 0, reused = 0;
   const readOne = async (p) => {
     const key = p.id;
     if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); return; }
@@ -161,6 +179,12 @@ if (STAGE === 'read') {
     // Correct mode: the #6560 request exactly — template with the draft in its slot, then the attachment.
     const sent = CORRECT_PROMPT ? `${base.split('{draft}').join(p.ocr.data)} @./${path.basename(img)}` : base + extra + imageInstruction(img);
     if (CORRECT_PROMPT) fs.writeFileSync(path.join(OUT, `${key}.prompt.txt`), sent);
+    const imageSha = createHash('sha256').update(buf).digest('hex');
+    const reuseKey = reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(CORRECT_PROMPT ? 'correct' : null, LANE, PROMPT_VARIANT) });
+    if (!FRESH) {
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKey, derive: readReuseKey });
+      if (hit && await reuseInto(OUT, key, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); return; }
+    }
     const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
@@ -169,7 +193,10 @@ if (STAGE === 'read') {
     let r, nudged = false, rereads = 0, calls = 0;
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img)); calls++;
+      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
+      // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
+      if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
+      calls++;
       logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
@@ -184,19 +211,23 @@ if (STAGE === 'read') {
     const { text, problem: wrapper } = unwrapRead(r.text);
     fs.writeFileSync(path.join(OUT, `${key}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify({
+    const meta = {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
       chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
-      image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
+      image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
-    }, null, 1));
+    };
+    fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
+    // Kept the moment it is paid for (#7075); best effort, never fails the read.
+    if (meta.exit === 0 && !meta.error_class && !meta.wrapper) await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, prompt_text: CORRECT_PROMPT ? sent : null, source_path: path.join(OUT, `${key}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
   };
   const queue = [...pages];
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readOne(queue.shift()); }));
+  console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   await client.close();
   process.exit(0);
 }
@@ -241,6 +272,8 @@ if (LANE_GATE) {
   if (why) { console.error(`lane gate refused, nothing written: ${why}`); fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? 'refused' : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, lane: LANE, gate_refused: why, written: 0 }, null, 1)); await client.close(); process.exit(1); }
   console.log(`lane gate ${LANE}: PASS (${LANE_GATE.sample.better} better / ${LANE_GATE.sample.same} same / ${LANE_GATE.sample.worse} worse of ${LANE_GATE.sample.n}; controls ${LANE_GATE.controls.pass}/${LANE_GATE.controls.n}) — the 40% shared-words floor is lifted for this book`);
 }
+const BY_EYE = new Map();
+if (arg('by-eye')) for (const l of fs.readFileSync(arg('by-eye'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); BY_EYE.set(r.page_id, r); }
 const EXTRA_PATH = path.join(OUT, 'prompt-extra.txt');
 const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : '';
 const bookCache = new Map();
@@ -277,7 +310,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
-  let yat = null;
+  let yat = null, byEye = null;
   if (correct) {
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     const d = diffSyllables(page.ocr.data, text);
@@ -303,7 +336,13 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   } else if (page.ocr?.data && !LANE_GATE) {
     const was = longWords(page.ocr.data), now = longWords(text);
     const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
-    if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+    if (was.size >= 40 && shared < MIN_SHARED) {
+      const eye = BY_EYE.get(page.id);
+      if (!eye) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+      if (eye.read_sha256 !== sha256(text)) { skip(m, 'the by-eye check was made on a different read'); continue; }
+      if (eye.verdict !== 'read-matches-image') { skip(m, `by-eye verdict: ${eye.verdict}`); continue; }
+      byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
+    }
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
@@ -319,7 +358,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }),
-      ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }) },
+      ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
+      ...(byEye && { by_eye: byEye }) },
   });
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);

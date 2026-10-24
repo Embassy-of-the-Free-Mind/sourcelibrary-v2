@@ -118,6 +118,54 @@ choice (how much quality we give up if we are wrong). Cells we have never tested
 **Checks before the estimator is trusted:** posterior predictive checks against held-out experiments. It must
 predict the result of a test before the test reports. A simulation from known effects must recover them.
 
+## 3a. What the router optimises: cost per usable page at a quality bar
+
+Added 2026-10-24 (Derek: "the price of agy and claude is based on the subscription and quota%"). The first estimator
+(OCR v0, #6740) ranks engines on character error alone. On 2026-10-23 that could not answer the routing question for
+88,680 number-bearing English pages (#4763): on the early-English panel it showed eight engines tied within two points,
+and the decision turned on two outcomes it does not model. The router's job is to choose, for each cell,
+**the cheapest route whose quality clears the cell's bar with high probability**, and to test only where the answer
+could still change.
+
+**Outcomes per cell and route, each with its own likelihood:**
+- **Quality on what readers use.** Character error stays. A cell also carries the errors its readers would notice.
+  For pages with printed numbers (indexes, contents, tables, dates), number errors: misread, dropped and spurious
+  numbers per number printed (the `num_sub` / `num_drop` / `num_ins` counts that `en-ocr-reference-5124.mjs`
+  `scorePage` already produces). A route can tie on character error and still be the wrong one, as the Archive's
+  text is on index pages.
+- **Did not read.** Refusals, copy-filter blocks and empty replies, as a Bernoulli **with period and fame terms**.
+  Gemini's recitation filter fires on text it judges well known. v0 predicted about 2% failed reads for Gemini 3.8 Flash
+  on English (early print); the 122-page #4763 gate measured 25% overall and 41% on 1880–1930 date-dense pages
+  (14 of 34). A refusal still uses up a call, and then the fallback route pays again.
+- **Cost of one call**, by route:
+  - **Paid API:** dollars, from the token counts and list price (`ai-models.md`).
+  - **Subscriptions (agy for Gemini, `claude -p` for Claude):** the plan's fee over its period × the share of
+    the period's quota one call uses. Quota share comes from the meters, never from memory: agy from
+    `/root/agy-quota/` (calls before each lock, per model), Claude from `climits` and the weekly report in
+    the ops repo (`costs/subscription/`, one point = 1% of an account's weekly limit, $-equivalent per point
+    calibrated weekly). The plan fees live in the ops cost ledger. Quota left unused at the period's end is worth
+    nothing, so the price per call falls as the reset approaches with quota still left.
+  - **GPU on gex45:** the box is a flat monthly fee, so a call on an idle card costs nothing extra. A call on a busy
+    card costs the delay to the work it pushes back (the queue).
+
+**The decision quantity:**
+
+expected cost per usable page = cost of a call ÷ P(read) + P(not read) × cost of the next route on the ladder
+
+The router picks the route that minimises this, subject to P(quality ≥ bar) above the cell's threshold. The bar comes
+from what the page is for: a page whose numbers are cited needs the number-error bar, and plain prose needs only the
+character bar. A ladder (GPU → subscription → paid) is a route too, priced the same way.
+
+**What the planner does with it:** test a cell when (pages waiting) × P(the choice flips) × (cost or quality gained if
+it does) is larger than the test's own cost. #4763 is the worked example. All routes tied on character error,
+refusals carried the cost, and the cell is large, so a 122-page gate per route was worth running before 88,680 pages.
+
+**v0 → v1 changes this implies** (tracked on #6740): a refusal Bernoulli with period and fame terms; number-error
+outcomes for pages that carry numbers; period as a cell dimension for English (early print vs 1880–1930); a cost row
+per route from the meters; output = cheapest route meeting the bar with its expected cost per usable page, beside
+P(best). The #4763 gate rows (Archive, lite, agy Gemini 3.8 Flash, and the gex45 GPU arms) are the first evidence in
+this shape.
+
 ## 4. Planner: value of information
 
 For each cell, ask whether more data could change the routing decision, and whether that matters at the cell's

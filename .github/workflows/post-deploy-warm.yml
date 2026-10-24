@@ -1,6 +1,9 @@
 name: Post-deploy cache warm
 
-# Runs after a push to main that changes app files (i.e., triggers a Vercel deploy).
+# Runs after a production release that changes app files (i.e., triggers a Vercel deploy).
+# Production is the `release` branch since #7008: release.yml dispatches this with the
+# released SHA (its GITHUB_TOKEN push does not trigger `push`), and a hand push to
+# `release` triggers it directly. A merge to main no longer deploys, so it no longer warms.
 # Waits for that deploy to actually be live, then warms the top pages so the new
 # deployment's ISR cache is populated instead of waiting for organic traffic.
 #
@@ -22,7 +25,7 @@ name: Post-deploy cache warm
 
 on:
   push:
-    branches: [main]
+    branches: [release]
     paths:
       - 'src/**'
       - 'public/**'
@@ -30,9 +33,9 @@ on:
       - 'vercel.json'
       - 'package.json'
       - 'package-lock.json'
-  # A merge made by auto-merge.yml uses GITHUB_TOKEN, and pushes made with that
-  # token never trigger `push` workflows (GitHub's recursion guard). So the
-  # auto-merger dispatches this workflow explicitly with the merge commit's SHA.
+  # release.yml pushes with GITHUB_TOKEN, and pushes made with that token never
+  # trigger `push` workflows (GitHub's recursion guard). So it dispatches this
+  # workflow explicitly with the released SHA.
   workflow_dispatch:
     inputs:
       sha:

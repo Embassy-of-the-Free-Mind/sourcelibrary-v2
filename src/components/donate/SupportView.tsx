@@ -152,7 +152,7 @@ export default function SupportView({
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/50 to-stone-950/70" />
 
         <div className="relative">
-          <SiteHeader variant="transparent" homeLocale={locale} />
+          <SiteHeader variant="dark" homeLocale={locale} />
 
           <div className="px-6 md:px-12 max-w-5xl mx-auto pt-12 pb-14 md:pt-20 md:pb-20">
             <h1 className="text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight font-display drop-shadow-sm">

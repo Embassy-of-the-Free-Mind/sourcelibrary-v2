@@ -1,0 +1,290 @@
+{
+ "4b": {
+  "excerpt": [
+   1,
+   7
+  ],
+  "plants": [
+   {
+    "verse": 2,
+    "kind": "near_homograph",
+    "original": "dṛṣṭavad",
+    "planted": "dṛpṭavad"
+   },
+   {
+    "verse": 2,
+    "kind": "wrong_plausible",
+    "original": "tad-viparītaḥ",
+    "planted": "tad-viparītam"
+   },
+   {
+    "verse": 3,
+    "kind": "omission",
+    "original": "vikāro",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 5,
+    "kind": "substitution",
+    "original": "ākhyātam",
+    "planted": "a-saktaṃ"
+   }
+  ]
+ },
+ "5t": {
+  "excerpt": [
+   3,
+   12
+  ],
+  "plants": [
+   {
+    "verse": 6,
+    "kind": "wrong_plausible",
+    "original": "'-siddham",
+    "planted": "'-siddhaḥ"
+   },
+   {
+    "verse": 7,
+    "kind": "substitution",
+    "original": "abhibhavāt",
+    "planted": "sāṃsiddhikāś"
+   },
+   {
+    "verse": 8,
+    "kind": "omission",
+    "original": "prakṛti-vi-rūpaṃ",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 10,
+    "kind": "near_homograph",
+    "original": "sā'vayavaṃ",
+    "planted": "sā'vamavaṃ"
+   }
+  ]
+ },
+ "5b": {
+  "excerpt": [
+   9,
+   18
+  ],
+  "plants": [
+   {
+    "verse": 11,
+    "kind": "substitution",
+    "original": "viṣayaḥ",
+    "planted": "munir"
+   },
+   {
+    "verse": 11,
+    "kind": "near_homograph",
+    "original": "tad-viparītas",
+    "planted": "tad-niparītas"
+   },
+   {
+    "verse": 13,
+    "kind": "omission",
+    "original": "sattvaṃ",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 13,
+    "kind": "wrong_plausible",
+    "original": "tamaḥ",
+    "planted": "tamaṃ"
+   }
+  ]
+ },
+ "6t": {
+  "excerpt": [
+   15,
+   24
+  ],
+  "plants": [
+   {
+    "verse": 17,
+    "kind": "near_homograph",
+    "original": "pravṛtteś",
+    "planted": "pravṛtneś"
+   },
+   {
+    "verse": 21,
+    "kind": "omission",
+    "original": "tathā",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 21,
+    "kind": "wrong_plausible",
+    "original": "ubhayor",
+    "planted": "a-ubhayor"
+   },
+   {
+    "verse": 22,
+    "kind": "substitution",
+    "original": "tato",
+    "planted": "chāyā"
+   }
+  ]
+ },
+ "6b": {
+  "excerpt": [
+   21,
+   30
+  ],
+  "plants": [
+   {
+    "verse": 24,
+    "kind": "wrong_plausible",
+    "original": ".ahaṃ-kāras",
+    "planted": ".ahaṃ-kāram"
+   },
+   {
+    "verse": 26,
+    "kind": "omission",
+    "original": "buddhī'ndriyāṇi",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 27,
+    "kind": "near_homograph",
+    "original": "nānātvam",
+    "planted": "nānātnam"
+   },
+   {
+    "verse": 28,
+    "kind": "substitution",
+    "original": "ālocana-mātram",
+    "planted": "mūla-prakṛtir"
+   }
+  ]
+ },
+ "7t": {
+  "excerpt": [
+   27,
+   36
+  ],
+  "plants": [
+   {
+    "verse": 29,
+    "kind": "near_homograph",
+    "original": "aiṣā",
+    "planted": "aipā"
+   },
+   {
+    "verse": 30,
+    "kind": "wrong_plausible",
+    "original": "tathā",
+    "planted": "a-tathā"
+   },
+   {
+    "verse": 31,
+    "kind": "substitution",
+    "original": "kena",
+    "planted": "ye"
+   },
+   {
+    "verse": 33,
+    "kind": "omission",
+    "original": "antaḥ-karaṇaṃ",
+    "planted": "(omitted)"
+   }
+  ]
+ },
+ "8t": {
+  "excerpt": [
+   38,
+   47
+  ],
+  "plants": [
+   {
+    "verse": 40,
+    "kind": "substitution",
+    "original": "saṃsarati",
+    "planted": "pravartate"
+   },
+   {
+    "verse": 43,
+    "kind": "wrong_plausible",
+    "original": "sāṃsiddhikāś",
+    "planted": "a-sāṃsiddhikāś"
+   },
+   {
+    "verse": 44,
+    "kind": "near_homograph",
+    "original": "iṣyate",
+    "planted": "iṣyane"
+   },
+   {
+    "verse": 45,
+    "kind": "omission",
+    "original": "rāgāt",
+    "planted": "(omitted)"
+   }
+  ]
+ },
+ "8b": {
+  "excerpt": [
+   43,
+   53
+  ],
+  "plants": [
+   {
+    "verse": 46,
+    "kind": "near_homograph",
+    "original": "pratyaya-sargo",
+    "planted": "pratyaya-sarko"
+   },
+   {
+    "verse": 47,
+    "kind": "wrong_plausible",
+    "original": "pañca",
+    "planted": "a-pañca"
+   },
+   {
+    "verse": 50,
+    "kind": "substitution",
+    "original": "bāhyā",
+    "planted": "vijñāya"
+   },
+   {
+    "verse": 51,
+    "kind": "omission",
+    "original": ".adhyayanaṃ",
+    "planted": "(omitted)"
+   }
+  ]
+ },
+ "9t": {
+  "excerpt": [
+   49,
+   60
+  ],
+  "plants": [
+   {
+    "verse": 53,
+    "kind": "substitution",
+    "original": "aṣṭa-vikalpo",
+    "planted": "tat-pūrvikā"
+   },
+   {
+    "verse": 53,
+    "kind": "omission",
+    "original": "pañcadhā",
+    "planted": "(omitted)"
+   },
+   {
+    "verse": 55,
+    "kind": "wrong_plausible",
+    "original": "liṅgasyā",
+    "planted": "a-liṅgasyā"
+   },
+   {
+    "verse": 58,
+    "kind": "near_homograph",
+    "original": "lokaḥ",
+    "planted": "logaḥ"
+   }
+  ]
+ }
+}

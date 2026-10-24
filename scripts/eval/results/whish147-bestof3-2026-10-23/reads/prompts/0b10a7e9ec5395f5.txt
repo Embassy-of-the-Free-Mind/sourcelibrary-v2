@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. aitihyamidāvassa ‖ ṭavajñaphāñatthāvakṣikkimānelpama ‖ [illegible] āṟyavanejja [illegible] kki
+2. lennilbhyuṣpaṭhekka ‖ ttuhāsavyuṣṭamāṇennāsiddhyeśābhrattise ‖ [illegible] ṣmāḥpruttiṭāipramāṇa
+3. unnāṃsiddhyai [illegible] ‖ vidhamevākkaṭṭāpārityākhyaḥe ‖ [illegible] āmenaganevevra
+4. varttakaikki [illegible] bhai ‖ ṭālenāññrutryayadākkiṇedā ‖ kṣānyūkkatābhi [illegible]
+5. āñcicālpratyakṣa ‖ mevatryūnkkiṇedāṣinyū ‖ mitamakkādādu [illegible] mā
+6. ṇekkā [illegible] ādi ‖ saṃvāddhinekdācilkkāla ‖ āvikkuṭācilkkā
+7. bhaṭavandamitai [illegible] ‖ didrumānānamānaramavana ‖ pramāṇaikakkaṃnaiga
+8. ugrivahavayaitrūupa ‖ mūtātrugavayamajjrānānaḥkkaññi ‖ kṣidākṣaṃprujñakikiṭe
+9. śagśavayyaikkisatakamā ‖ hāyādraśebhāoddeggādraibhāhā ‖ vaśaḥuttitakadrataṭā
+
+TRANSCRIPTION B
+1. aitrahyamadāvassa ‖ davajñathāñjyāvaṣṭhiṣṭhikkimāṇallama ‖ ṇādryavanejña [illegible] ki
+2. [illegible] lendrilhṛṣṭaparakka ‖ jñāsāsadṛṣṭamāṇena [illegible] siddhyabādyatra [illegible] ‖ [illegible] ṣāḥpratya [illegible] dra [illegible] māṇa
+3. unnāṃsiddhyayādi ‖ vidhaipārakṭrāpāditrākhyaḥka ‖ tragrāmai [illegible] gaivā
+4. varttakaḻil [illegible] ‖ dākṣendrāratrayadākṣīṇodā ‖ ṣṛtradābhijñapra
+5. ājjacālpratyakṣa ‖ maivattantrajñakṣīṇodāṣantra ‖ vitathacādatramā
+6. ṇṇaḥkyāvṛttādda ‖ saṃvāṅṅaḻekṣaḥdācilkkāla ‖ āmikyadācilkkā
+7. odavannamitaidda ‖ ṣṭramānānamāṟamevana ‖ pramāṇonanaṃgi
+8. upivaṇavayaḻtejāva ‖ āpatmāṃtragavayumaññānānaḥkakki ‖ dākṣaṃpṛṣṭikkiṭe
+9. śaśagavayauktisātamā ‖ vāyāddeśāleṣantrāddeśāvā ‖ vaśaḥuktakkedakadā
+
+TRANSCRIPTION C
+1. traigrāmaṭāvanssa ‖ ṭavaṅkuṣājñyāvakṣijjikkimāṇaprama ‖ maṇontyavainajñantuṣikki
+2. ḻainmildṛṣyapaṭhakka ‖ jñāsavṛṣṭamāṇensiddhatādyatrannai ‖ aiṣyāḥpratyaṭāindramāṇa
+3. dandāṃsiddhayādvi ‖ vidhaivāntaṭṭāpādetrāṣḥka ‖ tragrāmainagalaivya
+4. varttakauktaprabhai ‖ ṭāṣṭerāntrayaṭākṣīṇaidā ‖ ṣṇanyatadābhijñapra
+5. ātmavālpratyakṣa ‖ aimavatnyaśakṣīṇaidācinya ‖ mitacevādarmā
+6. traṃṣāvyarādra ‖ ssaṃvāddaikṣadācilkkāla ‖ āmikyadācilkkā
+7. odavannaddhimaiddha ‖ jhūṭamānānamāṟaimavara ‖ pramāṇekatvaṃpaigi
+8. dvivatavayaṇeddādyaca ‖ āpaddhāṃtragavamayamajñānānaḥkṣi ‖ kṣidāmlūṃpṛṣṭhikkiṭe
+9. gadagavayyaikkasatakamā ‖ māḍāyāddeśālaigaṇṇuṅkāddaśāga ‖ gavaśaḥśśubhrakdedakadā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -12,7 +12,7 @@ import { trackEvent } from '@/lib/track-event';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { visibleFooterNavColumns, type FooterLinkKey } from '@/lib/footer-nav';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
-import { useLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
+import { useChromeLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
 import { useStableSession } from '@/hooks/useStableSession';
 
 type Partner = {
@@ -65,7 +65,7 @@ const SOCIALS: { name: string; href: string; path: string }[] = [
 
 export default function GlobalFooter() {
   const pathname = usePathname();
-  const t = FOOTER_STRINGS[useLocale()];
+  const t = FOOTER_STRINGS[useChromeLocale()];
   // Footer labels were localized before the pages were; now that `/collections`,
   // `/support` and `/auth/signin` have twins, the LINKS follow too. localePath
   // is registry-guarded, so everything else still points at its English page.
@@ -136,7 +136,7 @@ export default function GlobalFooter() {
               />
             </Link>
             <span className="w-px h-[18px] md:h-5 bg-white/20" aria-hidden="true" />
-            <Link href="/in-memoriam" className="font-serif italic text-white/45 text-lg md:text-xl hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
+            <Link href={isEmbedded ? '/in-memoriam' : '/articles/in-memoriam'} className="font-serif italic text-white/45 text-lg md:text-xl hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
               ad fontes
             </Link>
           </div>

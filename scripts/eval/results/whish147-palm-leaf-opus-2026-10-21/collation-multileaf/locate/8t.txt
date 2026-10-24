@@ -1,0 +1,15 @@
+I read the leaf directly and placed it at **SK_40 to SK_45**. There are 9 written lines. The rope hole leaves a gap in the middle of lines 3–8; text on both sides of the gap is visible and counted.
+
+LINE 1 | SK_40 | sūkṣma-pary-antam | bhāvair | confident
+LINE 2 | SK_41 | *śrayam (only the end, "-m ṛte", is visible) | tadvad | unsure
+LINE 3 | SK_41-SK_42 | nir-āśrayaṃ | puruṣā'rtha-hetukam | confident
+LINE 4 | SK_42 | naimittika-prasaṅgena (only "-ttika-" is visible) | vibhutva-yogān | confident
+LINE 5 | SK_42-SK_43 | liṅgam | bhāvāḥ (only "bhā-" is visible) | confident
+LINE 6 | SK_43 | dharmā`dyāḥ | karaṇā`śrayiṇaḥ | confident
+LINE 7 | SK_43-SK_44 | kalalā`dyāḥ | gamanam (the second one, before "adhastād") | confident
+LINE 8 | SK_44 | jñānena | bandhaḥ | unsure
+LINE 9 | SK_45 | saṃsāro | aiśvaryād | confident
+
+Lines 3, 5 and 7 each contain a short mark between verses. It looks like a daṇḍa with the verse number, but I couldn't read the digits. None of the lines is commentary, a title or a colophon.
+
+FIRST_VISIBLE_VERSE=40 LAST_VISIBLE_VERSE=45

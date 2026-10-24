@@ -1,0 +1,11 @@
+ROW 1 | [illegible]ക്കവചനതു: + ‖ ദസാമാന്യതസ്തുദൃഷ്ടാദതീന്ദ്രിയാണാം ‖ പ്രസിദ്ധിരനുമാനാ
+ROW 2 | ൽതസ്മാദപിചാസിദ്ധംപരോക്ഷമാ ‖ മാപ്താഗമാൽസിദ്ധം।ന ‖ [illegible]ന്ദ്രിയാൽസാ
+ROW 3 | [illegible]ാദിന്ദ്രിയൈര[illegible]ാന്നൈന ‖ [illegible]നവച്ചാനാക്ക ‖ സാ[illegible]
+ROW 4 | നാദിദൃഷ്ട[illegible]സമാനദൃഷ്ട ‖ [illegible]നാഷ്ടൈര ‖ [illegible]മാനാദേവ
+ROW 5 | ലഭ്യന്താ[illegible]വാൽകാര്യങ്ങ ‖ ങ്ങ[illegible]ലക്ഷണ്ട ‖ ഃമഹദാദിക[illegible]
+ROW 6 | കാര്യംലിംഗ[illegible]ഷ്ടൃന്തംവി[illegible] ‖ [illegible]പകൊ।ണ്ടു[illegible] ‖ ന്ദുകനനാദൃ[illegible]
+ROW 7 | ദാനന്ദ്രഗ്രഹണാൽസപ്തസംദ ‖ ദചാന്ദ്രുവിദ്ധൽഗ ‖ ക്കസ്യ[illegible]ക്കമി
+ROW 8 | ാൽക്കാല[illegible]ദ്ധസൽകാര്യം।ന ‖ [illegible]പൈശതമദ[illegible] ‖ ദ[illegible]ചിസക്തിയമൈ
+ROW 9 | നക്കമാത്തിക്കംചി·ം·സാമാന്യം·ച ‖ ചരിത്രൃം·[illegible]ക്തം·ന ‖ [illegible]മൈവ്യക്തം।[illegible]।
+
+NOTE | I placed the pieces as p01 = left column, p02 and p03 = middle column, p04 = right column, with 9 rows. Rows 1–2 are read with moderate confidence. Rows 3–9 are low confidence: many letters are guesses from the stroke shapes and probably contain errors, so they need checking against the leaf. I recognised the kārikā wording in rows 1–2, so treat those readings as possibly influenced by memory and check them against the strokes.

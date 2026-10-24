@@ -75,7 +75,7 @@ export default function SourceLibraryPublicBetaLaunch() {
         <li>6,000+ first-ever English translations</li>
         <li>
           roughly 7 billion words of original text and translation, about the size of the entire{' '}
-          <a href="https://sourcelibrary.org/blog/how-big-is-the-library" className="text-accent-rust hover:underline">
+          <a href="/articles/how-big-is-the-library" className="text-accent-rust hover:underline">
             English Wikipedia
           </a>
         </li>

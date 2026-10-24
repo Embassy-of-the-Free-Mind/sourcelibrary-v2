@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | All three are heavily garbled, but B keeps the most real words in context, such as dvināśaḥ, samaṣṭikāraṇa, pramāṇaṃ ucyate, duḥkha, kārya and gandhaṃ lakṣyate; A has a few good stretches like kāraṇanāśāc and saṃpradāyaḥ but is gibberish elsewhere, and C is too fragmentary to read as continuous text.

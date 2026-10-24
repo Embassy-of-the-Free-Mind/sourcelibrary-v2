@@ -1,5 +1,5 @@
 // Translates the English of an authored HTML document (a blog "made document" such as
-// src/app/blog/techniques-of-the-body/document.json) into another language, for a thin
+// src/app/articles/techniques-of-the-body/document.json) into another language, for a thin
 // /es/... twin route. Reads {body}, writes {body, generated, lang, source_generated}.
 //
 // What is translated: English text and the alt / aria-label / title attributes.
@@ -16,8 +16,8 @@
 //
 // Run:
 //   node scripts/maintenance/translate-html-document.mjs \
-//     --in src/app/blog/techniques-of-the-body/document.json \
-//     --out src/app/blog/techniques-of-the-body/document.es.json --lang es
+//     --in src/app/articles/techniques-of-the-body/document.json \
+//     --out src/app/articles/techniques-of-the-body/document.es.json --lang es
 //
 // PRIOR ART: scripts/maintenance/localize-metadata.mjs — glosses titles and collection
 // copy into books/collections.localized via Gemini; it handles short metadata strings,

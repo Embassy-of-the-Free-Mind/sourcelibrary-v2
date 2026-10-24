@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C is the only one that keeps the recognisable Sāṅkhyakārikā 18 commentary readable across most rows, with phrases like "puruṣabahutvaṃ siddhaṃ", "ayugavalpravṛtteśca", "traiguṇyaviparyyayā" and "adhiṣṭhānasya…triguṇātmakatvāt", plus plausible Malayalam; B has real words but many gaps, and A is mostly syllable strings that only look like words.

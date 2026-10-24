@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AUTHORED_ARTICLES, BLOG_KINDS } from '@/app/articles/posts';
 import revisions from '@/generated/blog-revisions.json';
 
 const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
@@ -24,32 +25,69 @@ interface RevisionEntry {
  * from git history by scripts/maintenance/generate-blog-revisions.mjs (run
  * automatically by scripts/deploy-prod.sh).
  *
- * Skipped on the /blog index and on the colophon page itself.
+ * Skipped on the /articles index, the category pages and on the colophon page itself.
+ * An article a person wrote (AUTHORED_ARTICLES) gets their byline in place of the
+ * AI disclosure.
  */
 export default function NoteFooter() {
   const pathname = usePathname();
-  if (!pathname || !pathname.startsWith('/blog/')) return null;
+  if (!pathname || !pathname.startsWith('/articles/')) return null;
 
-  const slug = pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
-  if (!slug || slug === 'how-these-are-made') return null;
+  const slug = pathname.replace(/^\/articles\//, '').replace(/\/$/, '');
+  if (!slug || slug === 'how-these-are-made' || (BLOG_KINDS as readonly string[]).includes(slug)) return null;
 
   const rev = (revisions as Record<string, RevisionEntry>)[slug];
   const revisedDate = rev
-    ? new Date(rev.revised).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? new Date(rev.revised).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
     : null;
-  const sourcePath = rev?.path || `src/app/blog/${slug}/page.tsx`;
+  const sourcePath = rev?.path || `src/app/articles/${slug}/page.tsx`;
+  const author = AUTHORED_ARTICLES[slug];
 
   return (
     <div className="bg-cream print:hidden">
-      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-12">
-        <div className="border-t border-border-light pt-6 text-sm text-muted space-y-1.5">
-          <p>
-            An AI-assisted research note from Source Library.{' '}
-            <Link href="/blog/how-these-are-made" className="text-accent-rust hover:underline">
-              How these notes are made
-            </Link>
-          </p>
-          <p>
+      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-16">
+        <div className="border border-border-light bg-white px-6 py-6 md:px-8 md:py-7">
+          {author ? (
+            <div className="flex items-center gap-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={author.photo}
+                alt={author.name}
+                width={72}
+                height={72}
+                className="w-[72px] h-[72px] rounded-full object-cover shrink-0"
+              />
+              <div>
+                <p className="text-sm text-muted">Written by</p>
+                <h2 className="font-serif text-xl text-primary leading-tight mt-0.5">{author.name}</h2>
+                <p className="mt-1 font-body text-secondary leading-relaxed">{author.bio}</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h2 className="font-serif text-xl text-primary">How this article was made</h2>
+              <div className="mt-3 space-y-3 font-body text-secondary leading-relaxed">
+                <p>
+                  This is an AI-assisted article. Derek Lomas set the question; AI models searched the library, read the
+                  sources and drafted the text, which was reviewed before it was published.
+                </p>
+                <p>
+                  Every quotation is checked by machine against the scanned page it comes from and links to that page, so
+                  you can read the original yourself. The article is a living document: it is revised when a reader finds
+                  an error or the library gains a better source.
+                </p>
+              </div>
+            </>
+          )}
+          <p className="mt-5 pt-4 border-t border-border-light text-sm text-muted">
+            {!author && (
+              <>
+                <Link href="/articles/how-these-are-made" className="text-secondary underline decoration-border-light underline-offset-2 hover:decoration-secondary">
+                  How these articles are made
+                </Link>
+                {' '}&middot;{' '}
+              </>
+            )}
             {revisedDate && <>Last revised {revisedDate} &middot; </>}
             <a
               href={`${REPO}/commits/main/${sourcePath}`}

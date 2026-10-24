@@ -1,0 +1,19 @@
+===== PAGE p01 =====
+<warning>Handwritten palm-leaf manuscript (olai) incised in Malayalam/Grantha-type South Indian script, ink-blackened. The leaf is cut off at the right edge, so every line runs past the frame. A string hole with its binding cord splits lines 3–7 into left and right blocks. These readings were not confident enough to transcribe without inventing text, so the lines are marked unclear and not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>A single palm leaf photographed against a dark background. The binding cord passes through a string hole at lower centre. There is a second cord at the top centre. The right edge is cropped mid-line.</meta>
+
+<unclear>2 full-width lines of Malayalam/Grantha-script text (lines 1–2), cut off at the right edge, not transcribed</unclear>
+
+<unclear>5 short lines of Malayalam/Grantha-script text to the left of the string hole (lines 3–7), not transcribed</unclear>
+
+<unclear>5 short lines of Malayalam/Grantha-script text to the right of the string hole (lines 3–7), cut off at the right edge, not transcribed</unclear>
+
+<unclear>2 full-width lines of Malayalam/Grantha-script text (lines 8–9), interrupted by the binding cord and cut off at the right edge, not transcribed</unclear>
+
+<image-desc size="small" type="decorative" significance="low">Circular string hole in the palm leaf with a twisted fibre cord passing through it. The leaf around the hole is slightly split.</image-desc>
+
+<vocab>palm-leaf manuscript, olai, Malayalam script, Grantha script, Sanskrit</vocab>
