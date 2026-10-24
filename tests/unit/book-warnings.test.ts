@@ -147,4 +147,27 @@ describe('kindsOfFinding — named classes', () => {
     expect(kindsOfFinding(f('ocr-wrong-leaf'))).toEqual(['wrong_page']);
     expect(kindsOfFinding(f('other:translation-not-of-page', 'translation'))).toEqual(['english_other_page']);
   });
+  it('two readings the scan could not settle are named as such, not as "a serious error" (#7082)', () => {
+    expect(kindsOfFinding(f('ocr-unsettled'))).toEqual(['transcription_unsettled']);
+  });
+});
+
+describe('the book line says what "serious" means and how many pages were clean (#7082)', () => {
+  const langs = Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[];
+  it('every locale has the closing sentence', () => {
+    for (const lang of langs) expect(READER_UI_STRINGS[lang].info.qualitySeriousMeans, lang).toBeTruthy();
+  });
+  it('names the clean pages when some were clean, and only then', () => {
+    const book = READER_UI_STRINGS.en.info.qualityBook;
+    const base = { ai: true, image: true, date: '22 October 2026' };
+    expect(book({ ...base, read: 10, serious: 3 })).toContain('on 3 of them; the other 7 had none.');
+    expect(book({ ...base, read: 4, serious: 3 })).toContain('; the other page had none.');
+    expect(book({ ...base, read: 3, serious: 3 })).toMatch(/on 3 of them\.$/);
+    expect(book({ ...base, read: 1, serious: 1 })).toMatch(/on it\.$/);
+    expect(book({ ...base, read: 5, serious: null })).toMatch(/found serious errors\.$/);
+    for (const lang of langs) {
+      const l = READER_UI_STRINGS[lang].info.qualityBook({ ...base, read: 10, serious: 3 });
+      expect(l, lang).toContain('7');
+    }
+  });
 });
