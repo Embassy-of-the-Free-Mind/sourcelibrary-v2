@@ -83,6 +83,9 @@ const ILLUSTRATED_PAGE_REASONS = new Set([
   'decorated title-page', 'frontispiece', 'frontispiece with engraving',
 ]);
 
+/** The scorer's reason without its "+names-work" bonus tag (#3584), for set lookups. */
+const baseReason = r => String(r || '').replace(/ \+names-work$/, '');
+
 /** Scorer reasons that must never front a book, even as a last resort. */
 const JUNK_REASONS = new Set([
   'blank', 'hidden', 'digitizer-notice', 'digitizer insert', 'physical book photo',
@@ -100,7 +103,7 @@ export function isIllustratedTitle(book) {
 }
 
 /**
- * @param {Object} book    { title, display_title }
+ * @param {Object} book    { title, display_title, author }
  * @param {Object[]} pages Opening-window page docs (page_number, page_type, hidden,
  *                         ocr.data, and the photo fields resolvePageCoverUrl reads)
  * @param {Object[]} plates gallery_images for the book: { page_number, gallery_quality, type, bbox }
@@ -114,7 +117,7 @@ export function chooseCover(book, pages, plates = [], platePages = new Map()) {
   // site CSP blocks it, so it would render as a blank card.
   const usable = p => p && !p.hidden && isRenderableCoverUrl(resolvePageCoverUrl(p));
 
-  const scoreOf = p => scorePageForCover(p, { bookTitle: book?.title });
+  const scoreOf = p => scorePageForCover(p, { bookTitle: book?.title, bookAuthor: book?.author });
   const goodPlates = plates
     .filter(isCoverWorthyPlate)
     .sort((a, b) => (b.gallery_quality - a.gallery_quality) || (a.page_number - b.page_number));
@@ -141,7 +144,7 @@ export function chooseCover(book, pages, plates = [], platePages = new Map()) {
 
   // 2. Illustration-led titles: an illustrated title page / frontispiece, else a plate.
   if (isIllustratedTitle(book)) {
-    const illustratedTitle = confident(r => ILLUSTRATED_PAGE_REASONS.has(r));
+    const illustratedTitle = confident(r => ILLUSTRATED_PAGE_REASONS.has(baseReason(r)));
     if (illustratedTitle) return { ...illustratedTitle, rule: 'illustrated-title-page' };
     const plate = bestPlate();
     if (plate) return { ...plate, rule: 'illustrated-title-plate' };
@@ -188,7 +191,7 @@ export function currentCoverPageNumber(book) {
 /** True when the current cover page is one the policy would never pick. */
 export function isJunkCover(page, book) {
   if (!page) return true;
-  return JUNK_REASONS.has(scorePageForCover(page, { bookTitle: book?.title }).reason);
+  return JUNK_REASONS.has(scorePageForCover(page, { bookTitle: book?.title, bookAuthor: book?.author }).reason);
 }
 
 const PAGE_PROJECTION = {

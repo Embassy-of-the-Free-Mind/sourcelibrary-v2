@@ -539,7 +539,7 @@ import { buildCoverUpdate } from '../lib/cover-write.mjs';
 async function applyChosenCover(db, bookId) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { id: 1, title: 1, display_title: 1, thumbnail: 1, image_display: 1, thumbnail_source: 1, cover_page: 1 } },
+    { projection: { id: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, image_display: 1, thumbnail_source: 1, cover_page: 1 } },
   );
   if (!book || isManualCover(book)) return null;
   const { pages, plates, platePages } = await loadCoverCandidates(db, bookId);

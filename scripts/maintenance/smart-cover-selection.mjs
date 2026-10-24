@@ -119,7 +119,7 @@ if (!BOOK_ID && PROVIDER) bookQuery['image_source.provider'] = PROVIDER;
 if (!BOOK_ID && COLLECTION) bookQuery.collections = COLLECTION;
 
 const allBooks = (await db.collection('books')
-  .find(bookQuery, { projection: { _id: 0, id: 1, title: 1, display_title: 1, thumbnail_source: 1, cover_page: 1, thumbnail: 1, image_display: 1 } })
+  .find(bookQuery, { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, thumbnail_source: 1, cover_page: 1, thumbnail: 1, image_display: 1 } })
   .toArray())
   .filter(b => !isManualCover(b));
 

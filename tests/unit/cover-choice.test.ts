@@ -48,6 +48,14 @@ describe('chooseCover', () => {
     expect(c.rule).toBe('illustrated-title-page');
   });
 
+  it('still counts a decorated title page that names the work (+names-work, #3584)', () => {
+    const naming = page(5, '<page-type>title-page</page-type>\n# ICONES FUNGORUM\nauctore Schaeffer, decorative border');
+    const c = chooseCover({ title: 'Icones Fungorum', author: 'Schaeffer, Jacob Christian' }, [blank, insert, naming, text], [plate], platePages);
+    expect(c.reason).toBe('decorated title-page +names-work');
+    expect(c.page.page_number).toBe(5);
+    expect(c.rule).toBe('illustrated-title-page');
+  });
+
   it('gives an illustrated title its best plate when the title page is plain', () => {
     const plain = page(5, '<page-type>title-page</page-type>\n# DE FUNGIS\n# LIBER\n# PRIMUS');
     const c = chooseCover({ title: 'Icones Fungorum' }, [blank, insert, plain, text], [plate], platePages);
