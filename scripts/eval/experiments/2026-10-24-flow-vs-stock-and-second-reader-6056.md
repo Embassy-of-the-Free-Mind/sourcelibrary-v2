@@ -1,5 +1,5 @@
 ---
-stage: [ocr, translation]
+stage: pipeline
 measure: judged
 languages: []
 scripts: []
