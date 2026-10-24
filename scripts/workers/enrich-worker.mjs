@@ -63,6 +63,7 @@ import { autoAssignTargets, addedSlugs } from '../lib/collection-auto-assign.mjs
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
+import { pagesForEnrichment, isEnglishEdition } from '../lib/english-original-text.mjs';
 import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
@@ -451,7 +452,7 @@ function buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage) {
 
   if (!batchContent.trim()) return { pageRange, prompt: null };
 
-  const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (translated from ${bookLanguage})` : ''}.
+  const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${bookLanguage && !isEnglishEdition(bookLanguage) ? ` (translated from ${bookLanguage})` : ''}.
 
 ## Pages to analyze:
 ${batchContent}
@@ -974,14 +975,16 @@ const PHASE_6_CHAPTER_TEXT_PROJECTION = {
 async function loadPhase6Inputs(db, book) {
   const bookId = book.id;
 
-  // Get all pages
-  const pages = await db.collection('pages')
+  // Get all pages. An English original's English leaves read as their transcription:
+  // everything below keys off translation.data, which such a book does not have (#6559).
+  const pages = pagesForEnrichment(await db.collection('pages')
     .find({ book_id: bookId }, { projection: PHASE_6_PAGE_PROJECTION })
     .sort({ page_number: 1 })
-    .toArray();
+    .toArray(), book);
 
   const translatedCount = pages.filter(p => p.translation?.data).length;
-  console.log(`    ${translatedCount}/${pages.length} pages translated`);
+  const originalCount = pages.filter(p => p.translation?.source === 'ocr_original').length;
+  console.log(`    ${translatedCount}/${pages.length} pages with English text${originalCount ? ` (${originalCount} English original, read from OCR)` : ''}`);
 
   // Get chapters for section structure
   const chapters = (book.chapters || []).map(c => ({
@@ -1656,7 +1659,7 @@ async function main() {
         // generic embeddings and book_embeddings.year/categories were always
         // null/[] — the single-book --book lane (unprojected findOne) was
         // correct while this batch lane silently wasn't.
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, 'translation_state.english_original': 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }
