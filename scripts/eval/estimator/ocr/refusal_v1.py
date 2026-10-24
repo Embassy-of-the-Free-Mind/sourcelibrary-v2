@@ -16,6 +16,10 @@ a transcription (cli-chatter's `refusal or summary`). It is counted, never score
   gutenberg    the book's title + author surname match a Project Gutenberg text (refusal-census.mjs)
   downloads    the book's own Archive item's download count (log1p, standardised); missing is its own term
   date_dense   the #4763 stratum rule (S2/S4); known only on gate pages, so e is fitted there alone
+  archive_text a clean digital text of this edition is online: the book has pages the free IA lane filled with the
+               Archive's own OCR (census), or its Archive-text agreement clears the lane's cutoff (#4780). Added after
+               v1's first fit failed the #4780 check (13 predicted vs 147): in the census, books with Archive text refuse
+               13.7% of lite's pages (19,727/144,530), books without 1.8% (37,127/2,095,894).
   u[page]      a page effect shared by the engines that read the same gate page (a page lite refuses, agy tends to)
 
 Data and likelihoods:
@@ -61,6 +65,15 @@ def era(p):
     return 'pre-1880' if p in ('<1600', '1600-1699', '1700-1799', '1800-1879') else '1880-1930' if p == '1880-1930' else 'other'
 
 
+# The free IA lane's per-language agreement cutoffs (scripts/lib/ia-ocr-gate.mjs IA_OCR_MIN_AGREEMENT).
+IA_CUTOFF = {'English': 0.80, 'French': 0.80, 'Latin': 0.85, 'German': 0.85, 'Italian': 0.85}
+
+
+def has_archive_text(b):
+    """The book has pages filled with the Archive's own OCR: a clean digital text of this edition is online."""
+    return any(m.startswith('ia-ocr') for m in b.get('models', {}))
+
+
 def year_of(s):
     m = re.search(r'(?<!\d)(1[4-9]\d\d|20\d\d)(?!\d)', str(s or ''))
     return int(m.group(1)) if m else None
@@ -86,12 +99,14 @@ def features(rows, mu_dl, sd_dl):
                 gut=jnp.array([float(r['gutenberg']) for r in rows]),
                 dl=jnp.array([(x - mu_dl) / sd_dl if x is not None else 0.0 for x in ldl]),
                 miss=jnp.array([1.0 if x is None else 0.0 for x in ldl]),
-                dense=jnp.array([float(r.get('dense', 0)) for r in rows]))
+                dense=jnp.array([float(r.get('dense', 0)) for r in rows]),
+                arch=jnp.array([float(r['archive_text']) for r in rows]))
 
 
 def logit_p(P, F, upage=None):
     x = (P['a'][F['route']] + P['b'][F['lang']] + P['c'][F['period']] + P['d'][F['route'], F['era']]
-         + P['g'][F['route']] * F['gut'] + P['h'][F['route']] * F['dl'] + P['m'] * F['miss'] + P['e'][F['route']] * F['dense'])
+         + P['g'][F['route']] * F['gut'] + P['h'][F['route']] * F['dl'] + P['m'] * F['miss'] + P['e'][F['route']] * F['dense']
+         + P['k'][F['route']] * F['arch'])
     return x if upage is None else x + upage
 
 
@@ -113,7 +128,8 @@ def main():
         if b['language'] not in LANGS or b['lite_attempted'] < 1:
             continue
         r = dict(route='lite+ctx', lang=b['language'], period=period(b['year']), gutenberg=b['gutenberg'],
-                 downloads=b['downloads'], k=min(b['refused'], b['lite_attempted']), n=b['lite_attempted'], id=b['id'])
+                 downloads=b['downloads'], k=min(b['refused'], b['lite_attempted']), n=b['lite_attempted'], id=b['id'],
+                 archive_text=has_archive_text(b))
         (census_out if rng.random() < a.holdout_frac else census).append(r)
 
     gate_books = {p['page_id']: p['book_id'] for p in json.load(open(a.gate_pages))}
@@ -127,6 +143,7 @@ def main():
         gate.append(dict(route=GATE_ENGINE[s['engine']], lang='English',
                          period=period(b.get('year')) if b.get('year') else ('1800-1879' if s['stratum'] in ('S1', 'S2') else '1880-1930'),
                          gutenberg=b.get('gutenberg', False), downloads=b.get('downloads'), dense=int(s['stratum'] in ('S2', 'S4')),
+                         archive_text=True,  # every #5124 reference page is an Archive book whose text the lane admitted
                          y=int(s['cer'] is None), page=pages.index(s['page_id']), stratum=s['stratum']))
 
     held = []
@@ -139,6 +156,7 @@ def main():
         # So it is the no-context arm, the gate's prompt: route 'lite', scored against the bracket [169, 193].
         held.append(dict(route='lite', lang=lang, period=period(year_of(r.get('year'))), gutenberg=b.get('gutenberg', False),
                          downloads=b.get('downloads'), y=int(bool(re.search('RECITATION|PROHIBITED', r.get('finish_reason') or ''))),
+                         archive_text=float(r.get('agreement_log') or 0) >= IA_CUTOFF.get(lang, 0.85),
                          in_census=bool(b)))
 
     ldl = [math.log1p(r['downloads']) for r in census if r['downloads'] is not None]
@@ -163,7 +181,8 @@ def main():
             g=numpyro.sample('g', dist.Normal(0, 1.0).expand([len(ROUTES)])),
             h=numpyro.sample('h', dist.Normal(0, 1.0).expand([len(ROUTES)])),
             m=numpyro.sample('m', dist.Normal(0, 1.0)),
-            e=numpyro.sample('e', dist.Normal(0, 1.0).expand([len(ROUTES)])))
+            e=numpyro.sample('e', dist.Normal(0, 1.0).expand([len(ROUTES)])),
+            k=numpyro.sample('k', dist.Normal(0, 1.5).expand([len(ROUTES)])))
 
     def model():
         P = params()
@@ -174,7 +193,7 @@ def main():
         numpyro.factor('census', betabinom(Kc, Nc, pc, kappa).sum())
         numpyro.sample('gate', dist.Bernoulli(logits=logit_p(P, Fg, up[Pg])), obs=Yg)
 
-    mc = MCMC(NUTS(model, target_accept_prob=0.9), num_warmup=1000, num_samples=a.samples, num_chains=4,
+    mc = MCMC(NUTS(model, target_accept_prob=0.97), num_warmup=1000, num_samples=a.samples, num_chains=4,
               chain_method='parallel', progress_bar=False)
     mc.run(jax.random.PRNGKey(6740), extra_fields=('diverging',))
     by = {k: np.asarray(v) for k, v in mc.get_samples(group_by_chain=True).items()}
@@ -183,7 +202,7 @@ def main():
     post['d'] = post['tau_d'][:, None, None] * post['z_d']
     S = post['a'].shape[0]
     q = lambda x: [round(float(v), 4) for v in np.percentile(x, [5, 50, 95])]
-    draw = lambda s: {k: jnp.asarray(post[k][s]) for k in 'abcdghme'}
+    draw = lambda s: {k: jnp.asarray(post[k][s]) for k in 'abcdghmek'}
 
     def predict(rows, page_effect):
         """Posterior predictive refusal probabilities per row, per draw (draws x rows)."""
@@ -245,12 +264,12 @@ def main():
         effects=dict(route=eff('a', ROUTES, post['a']), language=eff('b', LANGS, post['b']), period=eff('c', PERIODS, post['c']),
                      route_x_era={f'{r}|{e}': q(post['d'][:, i, j]) for i, r in enumerate(ROUTES) for j, e in enumerate(ERAS)},
                      gutenberg=eff('g', ROUTES, post['g']), log_downloads_sd=eff('h', ROUTES, post['h']),
-                     downloads_missing=q(post['m']), date_dense=eff('e', ROUTES, post['e']),
+                     downloads_missing=q(post['m']), date_dense=eff('e', ROUTES, post['e']), archive_text=eff('k', ROUTES, post['k']),
                      kappa=q(post['kappa']), sigma_page=q(post['sigma_page'])),
         gate_check=gate_check, new_page=new_page, heldout_4780=held_check, census_calibration=deciles)
     json.dump(res, open(a.out, 'w'), indent=1)
     # Draws for route_v1.py (chains need the joint refusal of two engines on one page, through sigma_page).
-    np.savez_compressed(a.out.replace('.json', '-draws.npz'), **{k: post[k] for k in ('a', 'b', 'c', 'd', 'g', 'h', 'm', 'e', 'sigma_page', 'kappa')},
+    np.savez_compressed(a.out.replace('.json', '-draws.npz'), **{k: post[k] for k in ('a', 'b', 'c', 'd', 'g', 'h', 'm', 'e', 'k', 'sigma_page', 'kappa')},
                         mu_dl=mu_dl, sd_dl=sd_dl)
     print(json.dumps(res['diagnostics']))
     for c in gate_check:

@@ -117,10 +117,10 @@ def p_usable_given_read(post, ri, ci, v):
     return 1 / (1 + np.exp(-eta))
 
 
-def refusal_logits(D, route, period, dense, gut, zdl):
+def refusal_logits(D, route, period, dense, gut, zdl, arch=1.0):
     i, p, e = ROUTES.index(route), PERIODS.index(period), ERAS.index('pre-1880' if period == '1800-1879' else '1880-1930')
     return (D['a'][:, i] + D['b'][:, LANGS.index('English')] + D['c'][:, p] + D['d'][:, i, e] + D['g'][:, i] * gut
-            + D['h'][:, i] * zdl + D['e'][:, i] * dense)
+            + D['h'][:, i] * zdl + D['e'][:, i] * dense + D['k'][:, i] * arch)  # arch=1: the #4763 pages are Archive books
 
 
 def main():
