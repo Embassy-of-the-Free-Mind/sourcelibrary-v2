@@ -23,6 +23,7 @@
  */
 
 import { createHash, randomBytes } from 'crypto';
+import { existsSync } from 'fs';
 import { recountBook } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
@@ -1209,6 +1210,14 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
 }
 
 /**
+ * The box-wide switch for the write-time seam guard (#7118): a file holding `dry` or `apply`. One file reaches every
+ * lane that writes a translation on the box (scheduler workers, cron lanes, cli-translate inside jobs) without editing
+ * each launch line. SEAM_GUARD in the environment wins over it (`off` turns the guard off for one process).
+ */
+export const SEAM_GUARD_FILE = '/etc/sourcelibrary/seam-guard';
+export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.SEAM_GUARD ? env.SEAM_GUARD !== 'off' : existsSync(file));
+
+/**
  * Snapshot the page's current translation into page_revisions, then write the
  * new one with full provenance. Promise 3 lives here so no caller can forget
  * it. Non-fatal revision failure is logged, never blocks the write (matching
@@ -1356,9 +1365,10 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply. It runs after the commit, is bounded and
-  // fail-open, and skips its own writes; loaded only when on, so this door does not depend on it otherwise.
-  if (process.env.SEAM_GUARD) {
+  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
+  // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
+  // depend on it otherwise.
+  if (seamGuardOn()) {
     try {
       const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
       await runSeamGuard(db, { page, book, note, jobId });
