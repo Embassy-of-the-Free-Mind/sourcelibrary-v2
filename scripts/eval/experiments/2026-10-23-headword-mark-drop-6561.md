@@ -1,8 +1,8 @@
 ---
 stage: ocr
 measure: none
-languages: [Chinese]
-scripts: [Hans]
+languages: [lzh]
+scripts: [Hant]
 canons: []
 n_books: 825
 n_pages: 74464
