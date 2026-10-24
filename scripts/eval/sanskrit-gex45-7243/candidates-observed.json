@@ -1,0 +1,3748 @@
+{
+ "drawn_at": "2026-10-24T01:42:45.986Z",
+ "seed": 7243,
+ "population": 8806,
+ "take": {
+  "ia": 60,
+  "other": 25,
+  "moi": 20
+ },
+ "rule": "pps by pages_count within group; interior page",
+ "pages": [
+  {
+   "slug": "sa-5d8be3dd-p368",
+   "group": "ia",
+   "book_id": "6a94a579bf723b215d8be3dd",
+   "page_id": "6a94a579bf723b215d8be54d",
+   "page_number": 368,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a579bf723b215d8be3dd/368.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Shiva Drishti And Other 9 Manuscripts Sharada Alm 28 Shelf 6 Birch Bark",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 554,
+    "pages_ocr": 59,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 0,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-30f2e4ed-p90",
+   "group": "ia",
+   "book_id": "69ef2b5885daccce30f2e4ed",
+   "page_id": "69ef2b5885daccce30f2e547",
+   "page_number": 90,
+   "image_url": "https://images.sourcelibrary.org/archived/69ef2b5885daccce30f2e4ed/90.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kavyamimamsa of Rajashekhara",
+    "author": "Rajashekhara",
+    "published": "1934",
+    "language": "Sanskrit",
+    "pages_count": 381,
+    "pages_ocr": 381,
+    "categories": [],
+    "script": null,
+    "creator": "Rajasekhara",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 1,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-853bff46-p151",
+   "group": "ia",
+   "book_id": "699249c9a2d53df4853bff46",
+   "page_id": "699249cba2d53df4853bffdf",
+   "page_number": 151,
+   "image_url": "https://images.sourcelibrary.org/archived/699249c9a2d53df4853bff46/151.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Jaina Sutras, Part I (Ācārānga and Kalpa Sūtra)",
+    "author": "Hermann Jacobi",
+    "published": "1964",
+    "language": "Sanskrit",
+    "pages_count": 388,
+    "pages_ocr": 386,
+    "categories": [
+     "theology",
+     "mysticism"
+    ],
+    "script": null,
+    "creator": "Jacobi,Hermann.",
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 2,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d6ef5-p318",
+   "group": "ia",
+   "book_id": "6a94d740b24b5a49c27d6ef5",
+   "page_id": "6a94d740b24b5a49c27d7033",
+   "page_number": 318,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d740b24b5a49c27d6ef5/318.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Rn No 1409 Geeta Sharada Raghunath Temple Uncatalogued",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 708,
+    "pages_ocr": 69,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 3,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d9b72-p58",
+   "group": "ia",
+   "book_id": "6a94de12b24b5a49c27d9b72",
+   "page_id": "6a94de12b24b5a49c27d9bac",
+   "page_number": 58,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94de12b24b5a49c27d9b72/58.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Shiraza Malihabadi Number 56kashmiri Urdu Pahari 43 Kashmiri Urdu Pahari Jk Academy",
+    "author": "Arsh Sehbai",
+    "published": "2018",
+    "language": "Sanskrit",
+    "pages_count": 292,
+    "pages_ocr": 25,
+    "categories": [
+     "literature",
+     "history"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 4,
+   "observed": {
+    "script": "arabic",
+    "kind": "print",
+    "lang": "ur",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-ee26ada9-p538",
+   "group": "ia",
+   "book_id": "69af0c37067c0c26ee26ada9",
+   "page_id": "69af0c37067c0c26ee26afc3",
+   "page_number": 538,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0c37067c0c26ee26ada9/538.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Samarangana Sutradhara (Sanskrit Treatise on Architecture and Mechanical Devices)",
+    "author": "King Bhoja; T. Ganapati Sastri",
+    "published": "1966",
+    "language": "Sanskrit",
+    "pages_count": 722,
+    "pages_ocr": 12,
+    "categories": [],
+    "script": null,
+    "creator": "T.gganpatisastri",
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 5,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "1966 edition, apparatus"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8bf98a-p208",
+   "group": "ia",
+   "book_id": "6a94a80cbf723b215d8bf98a",
+   "page_id": "6a94a80cbf723b215d8bfa5a",
+   "page_number": 208,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a80cbf723b215d8bf98a/208.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Stava Chintamani Vritti Sharada RSkt S Jammu No 41",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 261,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "mysticism",
+     "theology",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 6,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d27c88-p70",
+   "group": "ia",
+   "book_id": "6a94cfa88e2a2ffc91d27c88",
+   "page_id": "6a94cfa88e2a2ffc91d27cce",
+   "page_number": 70,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cfa88e2a2ffc91d27c88/70.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "MN 000663 Vishveshvari Stotra Pradeepika Of Prithvidharacharya Sharada Manuscripts At Kurukshetra University",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 86,
+    "pages_ocr": 47,
+    "categories": [
+     "Stotra",
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 7,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-5d8c038d-p99",
+   "group": "ia",
+   "book_id": "6a94a8aebf723b215d8c038d",
+   "page_id": "6a94a8aebf723b215d8c03f0",
+   "page_number": 99,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a8aebf723b215d8c038d/99.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "The Siva Sutra Vimarsini Of Ksemraja A Commentary On The Siva Sutra Of Vishnugupta Ed By Jagadish Chandra Chatterji 1993 Delhi Sharada Publishing House",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 244,
+    "pages_ocr": 242,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 8,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "commentary small type",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-7b76611e-p276",
+   "group": "ia",
+   "book_id": "69d7e24ce08c70307b76611e",
+   "page_id": "69d7e24ce08c70307b766232",
+   "page_number": 276,
+   "image_url": "https://images.sourcelibrary.org/archived/69d7e24ce08c70307b76611e/276.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Yogini Hridaya",
+    "author": "Vraj Vallabha Dwivedi (ed.)",
+    "published": "1965",
+    "language": "Sanskrit",
+    "pages_count": 485,
+    "pages_ocr": 485,
+    "categories": [
+     "mysticism",
+     "philosophy",
+     "theology",
+     "linguistics"
+    ],
+    "script": null,
+    "creator": "Tarun Dwivedi(S/o Later Vraj Vallabh Dwivedi)",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 9,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "single",
+    "hard": "Hindi commentary, poor scan",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-82c837b7-p62",
+   "group": "ia",
+   "book_id": "6a94c25556cac2f882c837b7",
+   "page_id": "6a94c25556cac2f882c837f5",
+   "page_number": 62,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c25556cac2f882c837b7/62.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Garbha Shiksha Urdu Script Gyneaological Information Shri Bhagat Gordas Ramji Punjabi Pustak Bahndar",
+    "author": "Shri Bhagat Gordas Ramji",
+    "published": "1934",
+    "language": "Sanskrit",
+    "pages_count": 102,
+    "pages_ocr": 25,
+    "categories": [
+     "medicine"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 10,
+   "observed": {
+    "script": "arabic",
+    "kind": "print",
+    "lang": "ur",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-bed23a80-p523",
+   "group": "ia",
+   "book_id": "6a0e5848b8ad266ebed23a80",
+   "page_id": "6a0e5848b8ad266ebed23c8b",
+   "page_number": 523,
+   "image_url": "https://images.sourcelibrary.org/archived/6a0e5848b8ad266ebed23a80/523.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sri Tattva Nidhi Vol. 4: Brahma Nidhi (with Kannada translation)",
+    "author": "Mummadi Krishnaraja Wodeyar (attrib.); Mysore Oriental Research Institute",
+    "published": "1900",
+    "language": "Sanskrit",
+    "pages_count": 681,
+    "pages_ocr": 668,
+    "categories": [],
+    "script": null,
+    "creator": "Oriental Research Institute Mysore",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 11,
+   "observed": {
+    "script": "kannada",
+    "kind": "print",
+    "lang": "kn",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d27ce1-p156",
+   "group": "ia",
+   "book_id": "6a94cfbc8e2a2ffc91d27ce1",
+   "page_id": "6a94cfbc8e2a2ffc91d27d7d",
+   "page_number": 156,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cfbc8e2a2ffc91d27ce1/156.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "MN 000664 Jnanarnava Maharahasya And Saubhagya Chintamani Sharada Manuscripts At Kurukshetra University",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 328,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "mysticism",
+     "theology",
+     "ritual-magic"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 12,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-5d8c0b6e-p20",
+   "group": "ia",
+   "book_id": "6a94a9a1bf723b215d8c0b6e",
+   "page_id": "6a94a9a1bf723b215d8c0b82",
+   "page_number": 20,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a9a1bf723b215d8c0b6e/20.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vimarsh Parijata Sharada RSkt S Jammu No 25",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 96,
+    "pages_ocr": 42,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 13,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-57444dbb-p191",
+   "group": "ia",
+   "book_id": "6a948b2831b41d9c57444dbb",
+   "page_id": "6a948b2831b41d9c57444e7a",
+   "page_number": 191,
+   "image_url": "https://images.sourcelibrary.org/archived/6a948b2831b41d9c57444dbb/191.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "4209 UPSS Gutka Stotra Sangraha",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 388,
+    "pages_ocr": 383,
+    "categories": [
+     "Stotra"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 14,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d24124-p93",
+   "group": "ia",
+   "book_id": "6a94c5a48e2a2ffc91d24124",
+   "page_id": "6a94c5a48e2a2ffc91d24181",
+   "page_number": 93,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c5a48e2a2ffc91d24124/93.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kashmir Research Institute Sharada Manuscript Catalogue Folder 5 ( Set Of 100) File 5",
+    "author": "Unknown",
+    "published": "1892",
+    "language": "Sanskrit",
+    "pages_count": 108,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "theology",
+     "mysticism",
+     "philosophy",
+     "literature"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 15,
+   "observed": {
+    "script": "latin",
+    "kind": "mixed",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "catalogue card"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-347d21b6-p187",
+   "group": "ia",
+   "book_id": "699066f5249ce014347d21b6",
+   "page_id": "699066f6249ce014347d2271",
+   "page_number": 187,
+   "image_url": "https://images.sourcelibrary.org/archived/699066f5249ce014347d21b6/187.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ramala Shastra (Geomancy)",
+    "author": "Balakrishna Malhara Lada",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 228,
+    "pages_ocr": 228,
+    "categories": [
+     "divination",
+     "astrology"
+    ],
+    "script": null,
+    "creator": "Shri Ram Tattva Printing Press",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 16,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "mr",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-7bd9afc5-p393",
+   "group": "ia",
+   "book_id": "69d91e423a50087f7bd9afc5",
+   "page_id": "69d91e423a50087f7bd9b14e",
+   "page_number": 393,
+   "image_url": "https://images.sourcelibrary.org/archived/69d91e423a50087f7bd9afc5/393.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Atharvaveda (Saunaka recension)",
+    "author": "Unknown",
+    "published": "-1000",
+    "language": "Sanskrit",
+    "pages_count": 468,
+    "pages_ocr": 468,
+    "categories": [
+     "theology",
+     "linguistics",
+     "vedanta",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "Visha Bandhu",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 17,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "Vedic accents, pada text",
+    "canonical": true,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-82c83321-p55",
+   "group": "ia",
+   "book_id": "6a94c1f756cac2f882c83321",
+   "page_id": "6a94c1f756cac2f882c83358",
+   "page_number": 55,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c1f756cac2f882c83321/55.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ganapati Vidhanam Pratyangira Stotra Vir Hanumant Kavach Aparajita Vidhi Sharada Manuscripts From A Kupwara Resident No 3",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 113,
+    "pages_ocr": 25,
+    "categories": [
+     "stotra",
+     "sharada",
+     "ritual-magic",
+     "theology",
+     "mysticism"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 18,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-9d20b867-p224",
+   "group": "ia",
+   "book_id": "69e13a3f0dae29249d20b867",
+   "page_id": "69e13a3f0dae29249d20b947",
+   "page_number": 224,
+   "image_url": "https://images.sourcelibrary.org/archived/69e13a3f0dae29249d20b867/224.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Rāmāyaṇa — Gorresio Critical Edition, Vol. I",
+    "author": "Vālmīki; Gaspare Gorresio, ed.",
+    "published": "1843",
+    "language": "Sanskrit",
+    "pages_count": 424,
+    "pages_ocr": 423,
+    "categories": [
+     "literature",
+     "history",
+     "linguistics",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "Valmiki",
+    "hidden_reason": null
+   },
+   "idx": 19,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "it",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d280c9-p318",
+   "group": "ia",
+   "book_id": "6a94cff98e2a2ffc91d280c9",
+   "page_id": "6a94cff98e2a2ffc91d28207",
+   "page_number": 318,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cff98e2a2ffc91d280c9/318.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "MN 000673 Patanjala Sutra Vyasa Bhashya Bhoj Vritti Tatvanusandhanam Aparokshanubhav Vedanta Sara 52719 52723 Sharada Manuscripts At Kurukshetra University",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 341,
+    "pages_ocr": 310,
+    "categories": [
+     "vedanta",
+     "sharada",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 20,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-d69433d6-p121",
+   "group": "ia",
+   "book_id": "6991d44321124c9ad69433d6",
+   "page_id": "6991d44521124c9ad6943451",
+   "page_number": 121,
+   "image_url": "https://images.sourcelibrary.org/archived/6991d44321124c9ad69433d6/121.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Siddha Siddhanta Paddhati",
+    "author": "Gorakhnath (ed. Kalyani Mallik)",
+    "published": "1954",
+    "language": "Sanskrit",
+    "pages_count": 161,
+    "pages_ocr": 161,
+    "categories": [
+     "mysticism",
+     "philosophy",
+     "theology",
+     "medicine"
+    ],
+    "script": null,
+    "creator": "Smt. Kalyani Mallik",
+    "hidden_reason": null
+   },
+   "idx": 21,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-ee26b27e-p430",
+   "group": "ia",
+   "book_id": "69af0c6f067c0c26ee26b27e",
+   "page_id": "69af0c6f067c0c26ee26b42c",
+   "page_number": 430,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0c6f067c0c26ee26b27e/430.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Charaka Samhita: Sutra Sthanam Vol. 1 (Sanskrit Medical Text)",
+    "author": "Agnivesha; Charaka; Viswanadha Sastry",
+    "published": "1935",
+    "language": "Sanskrit",
+    "pages_count": 858,
+    "pages_ocr": 25,
+    "categories": [],
+    "script": null,
+    "creator": "Viswanadha Sastry, N",
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 22,
+   "observed": {
+    "script": "telugu",
+    "kind": "print",
+    "lang": "te",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d24769-p171",
+   "group": "ia",
+   "book_id": "6a94c6028e2a2ffc91d24769",
+   "page_id": "6a94c6038e2a2ffc91d24814",
+   "page_number": 171,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c6028e2a2ffc91d24769/171.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kavya Prakash Mss No 62 Sharada Alm 1 Panjab Uni",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 309,
+    "pages_ocr": 46,
+    "categories": [
+     "Kavya",
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 23,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e5a9d99f-p487",
+   "group": "ia",
+   "book_id": "6a31c8f84400787ae5a9d99f",
+   "page_id": "6a31c8f84400787ae5a9db86",
+   "page_number": 487,
+   "image_url": "https://images.sourcelibrary.org/archived/6a31c8f84400787ae5a9d99f/487.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vyākaraṇa-Mahābhāṣya of Patañjali, Vol. I (Sanskrit, ed. Kielhorn) — the great commentary on Pāṇini",
+    "author": "Patañjali",
+    "published": "1892",
+    "language": "Sanskrit",
+    "pages_count": 561,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "Kielhorn,f.",
+    "hidden_reason": null
+   },
+   "idx": 24,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "1892 Kielhorn"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c27d80e9-p504",
+   "group": "ia",
+   "book_id": "6a94db19b24b5a49c27d80e9",
+   "page_id": "6a94db19b24b5a49c27d82e1",
+   "page_number": 504,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94db19b24b5a49c27d80e9/504.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada Composite Manuscripts Consisting Of Over Fifty Texts Mostly Puja Collection Of Shri Sunil Raina Rajanak",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 1597,
+    "pages_ocr": 52,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 25,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-024f76ae-p621",
+   "group": "ia",
+   "book_id": "6955831757e3b773024f76ae",
+   "page_id": "6955831757e3b773024f791b",
+   "page_number": 621,
+   "image_url": "https://images.sourcelibrary.org/archived/6955831757e3b773024f76ae/621.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Abhidharmakosa with Bhashya",
+    "author": "Vasubandhu",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 1258,
+    "pages_ocr": 1258,
+    "categories": [
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": "Naveena Ahluwalia",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 26,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "commentary small type",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-82c846f3-p83",
+   "group": "ia",
+   "book_id": "6a94c36156cac2f882c846f3",
+   "page_id": "6a94c36156cac2f882c84746",
+   "page_number": 83,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c36156cac2f882c846f3/83.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ishvar Pratyabhijna Sutra Vimarshini Sharada Manuscript Of S P Dhar Sahib",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 443,
+    "pages_ocr": 43,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 27,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d98de-p270",
+   "group": "ia",
+   "book_id": "6a94dde7b24b5a49c27d98de",
+   "page_id": "6a94dde7b24b5a49c27d99ec",
+   "page_number": 270,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94dde7b24b5a49c27d98de/270.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sheeshkashmiri Urdu Pahari Ekashmiri Urdu Pahari Nayan Kandhan Pahari Shayari Kashmiri Urdu Pahari Sheikh Azad Ahmad Azad",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 317,
+    "pages_ocr": 317,
+    "categories": [],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 28,
+   "observed": {
+    "script": "arabic",
+    "kind": "print",
+    "lang": "ur",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-82c808a7-p10",
+   "group": "ia",
+   "book_id": "6a94b96c56cac2f882c808a7",
+   "page_id": "6a94b96c56cac2f882c808b1",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94b96c56cac2f882c808a7/10.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Shri Vishnu Sahasra Nama ( Padma Purana)",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 13,
+    "pages_ocr": 13,
+    "categories": [
+     "purana",
+     "theology",
+     "vedanta",
+     "mysticism"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 29,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "spread",
+    "hard": "two-leaf spread, small, red ink",
+    "canonical": true,
+    "cols": 2,
+    "note": "Vishnu Sahasranama"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-3fd9cc34-p27",
+   "group": "ia",
+   "book_id": "6a9431c7aa4a51583fd9cc34",
+   "page_id": "6a9431c7aa4a51583fd9cdc4",
+   "page_number": 27,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9431c7aa4a51583fd9cc34/27.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "1397 Vatul Nath Sutram Sharada Raghunath Temple Uncatalogued Almira 9 531 1694 Pg 10 Missing",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 41,
+    "pages_ocr": 40,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 30,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-5d8c0c6c-p264",
+   "group": "ia",
+   "book_id": "6a94a9c4bf723b215d8c0c6c",
+   "page_id": "6a94a9c4bf723b215d8c0d74",
+   "page_number": 264,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a9c4bf723b215d8c0c6c/264.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vishnu Dharmottara Purana Mss No 41 Sharada Alm 1 Panjab Uni",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 1174,
+    "pages_ocr": 35,
+    "categories": [
+     "Purana",
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 31,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-5d8bd83c-p21",
+   "group": "ia",
+   "book_id": "6a94a33fbf723b215d8bd83c",
+   "page_id": "6a94a33fbf723b215d8bd851",
+   "page_number": 21,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a33fbf723b215d8bd83c/21.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada April II",
+    "author": "Vasant Anant Gadgil",
+    "published": "1969",
+    "language": "Sanskrit",
+    "pages_count": 52,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "literature",
+     "linguistics",
+     "politics",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 32,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c27da0e3-p74",
+   "group": "ia",
+   "book_id": "6a94deedb24b5a49c27da0e3",
+   "page_id": "6a94deedb24b5a49c27da12d",
+   "page_number": 74,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94deedb24b5a49c27da0e3/74.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Shri Bhagavad Gita",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 133,
+    "pages_ocr": 46,
+    "categories": [],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 33,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e625ae62-p64",
+   "group": "ia",
+   "book_id": "6a942f0b52baa7aee625ae62",
+   "page_id": "6a942f0b52baa7aee625aea2",
+   "page_number": 64,
+   "image_url": "https://images.sourcelibrary.org/archived/6a942f0b52baa7aee625ae62/64.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "103 Lagna Chandrika Jyotisha DAM Devanagari Paper",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 127,
+    "pages_ocr": 25,
+    "categories": [
+     "Jyotish",
+     "Devanagari"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 34,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "red ink"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-e5a9d0dc-p668",
+   "group": "ia",
+   "book_id": "6a31b3fa4400787ae5a9d0dc",
+   "page_id": "6a31b3fa4400787ae5a9d378",
+   "page_number": 668,
+   "image_url": "https://images.sourcelibrary.org/archived/6a31b3fa4400787ae5a9d0dc/668.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Atharvaveda Saṃhitā with Sāyaṇa’s Bhāṣya, Vol. 5 (Sanskrit, ed. S.P. Pandit)",
+    "author": "Anonymous (Atharvaveda)",
+    "published": "1900",
+    "language": "Sanskrit",
+    "pages_count": 804,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "Pandit,shankar Pandurang",
+    "hidden_reason": null
+   },
+   "idx": 35,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "index",
+    "hard": "numeric index, two columns",
+    "canonical": false,
+    "cols": 2,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-91d262a0-p40",
+   "group": "ia",
+   "book_id": "6a94cb848e2a2ffc91d262a0",
+   "page_id": "6a94cb848e2a2ffc91d262c8",
+   "page_number": 40,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cb848e2a2ffc91d262a0/40.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Manu 1 With Extra Pages Ganesha Stotram Bhavani Nama Sahasram",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 50,
+    "pages_ocr": 49,
+    "categories": [
+     "Stotra"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 36,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d79cc-p24",
+   "group": "ia",
+   "book_id": "6a94d88db24b5a49c27d79cc",
+   "page_id": "6abd950dfc608310c5d564e9",
+   "page_number": 24,
+   "image_url": "https://images.sourcelibrary.org/pages/6a94d88db24b5a49c27d79cc/spqn1s-0024-full.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Saundarya Lahari By Shri Shankaracharya Sharada Manuscript From Kulgam",
+    "author": "Shri Shankaracharya",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 89,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "mysticism",
+     "theology",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 37,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-302663b7-p38",
+   "group": "ia",
+   "book_id": "6a94d165c3eaca06302663b7",
+   "page_id": "6a94d165c3eaca06302663dd",
+   "page_number": 38,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d165c3eaca06302663b7/38.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "MN 003318 Ashtavakra Sharada Manuscripts At Kurukshetra University",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 50,
+    "pages_ocr": 48,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 38,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d68a4-p868",
+   "group": "ia",
+   "book_id": "6a94d727b24b5a49c27d68a4",
+   "page_id": "6a94d727b24b5a49c27d6c08",
+   "page_number": 868,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d727b24b5a49c27d68a4/868.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ritualistic Sharada Manuscript Scan 2 With Page Numbers Marking From Dina Nath Raina Jammu Courtesy Sanjay Raina",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 1584,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "ritual-magic",
+     "theology",
+     "mysticism",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 39,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-05c7c5f3-p196",
+   "group": "ia",
+   "book_id": "6a30905cd8c6b8a005c7c5f3",
+   "page_id": "6a30905cd8c6b8a005c7c6b7",
+   "page_number": 196,
+   "image_url": "https://images.sourcelibrary.org/archived/6a30905cd8c6b8a005c7c5f3/196.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhagavad-gītā — with Śaṅkara’s Bhāṣya (Sanskrit)",
+    "author": "Vyāsa; Śaṅkarācārya (comm.)",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 313,
+    "pages_ocr": 49,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 40,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "Gita with Sankara bhasya"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c27d8fd6-p84",
+   "group": "ia",
+   "book_id": "6a94dd23b24b5a49c27d8fd6",
+   "page_id": "6a94dd23b24b5a49c27d902a",
+   "page_number": 84,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94dd23b24b5a49c27d8fd6/84.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada Patala Paddhati Sahasranama Etc Sharada Related 6 Texts",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 224,
+    "pages_ocr": 221,
+    "categories": [
+     "sharada",
+     "ritual-magic",
+     "theology",
+     "mysticism"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 41,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-82c81291-p19",
+   "group": "ia",
+   "book_id": "6a94bc2b56cac2f882c81291",
+   "page_id": "6a94bc2b56cac2f882c812a4",
+   "page_number": 19,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94bc2b56cac2f882c81291/19.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "4208 UPSS Karna Sukta Pitri Sukta Sandhya Brahman Sharada 12 20",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 20,
+    "pages_ocr": 16,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 42,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d282d5-p42",
+   "group": "ia",
+   "book_id": "6a94d0348e2a2ffc91d282d5",
+   "page_id": "6a94d0348e2a2ffc91d282ff",
+   "page_number": 42,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d0348e2a2ffc91d282d5/42.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "MN 003267 Shri XXXX Prakash Partially Damaged Text Name Undecipherable Sharada Manuscripts At Kurukshetra University",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 132,
+    "pages_ocr": 45,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 43,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d2a563-p125",
+   "group": "ia",
+   "book_id": "6a94d6318e2a2ffc91d2a563",
+   "page_id": "6a94d6318e2a2ffc91d2a5e0",
+   "page_number": 125,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d6318e2a2ffc91d2a563/125.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Pratyabhijna Sutra Vimarshini II Sharada RSkt S Jammu No 69",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 232,
+    "pages_ocr": 48,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 44,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d7d15-p27",
+   "group": "ia",
+   "book_id": "6a94d9d2b24b5a49c27d7d15",
+   "page_id": "6a94d9d2b24b5a49c27d7d30",
+   "page_number": 27,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d9d2b24b5a49c27d7d15/27.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada Almanac 5031 1955 56 Vijeshwar Panchang",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 38,
+    "pages_ocr": 35,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 45,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "table",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "almanac table"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-ac24e17b-p194",
+   "group": "ia",
+   "book_id": "6a9434297680120fac24e17b",
+   "page_id": "6a9434297680120fac24e32f",
+   "page_number": 194,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9434297680120fac24e17b/194.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "2nd Scan Of Incomplete Photocopy Of Bhagavat Gita And 19 Other Sharada Manuscripts With 3 Illustrations R. L Bhatt Jammu Residence",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 306,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "theology",
+     "mysticism",
+     "vedanta",
+     "linguistics"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 46,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-91d25f36-p187",
+   "group": "ia",
+   "book_id": "6a94cb2b8e2a2ffc91d25f36",
+   "page_id": "6a94cb2b8e2a2ffc91d25ff1",
+   "page_number": 187,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cb2b8e2a2ffc91d25f36/187.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Manas Mani No 1 12 Ed By Bhagavandas Saphadiya 1959 Ramavan Sharada Prasad",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 450,
+    "pages_ocr": 49,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 47,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "two-column",
+    "hard": "two columns, curved page",
+    "canonical": false,
+    "cols": 2,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-a9a96a43-p165",
+   "group": "ia",
+   "book_id": "6ad8544bd38af690a9a96a43",
+   "page_id": "6ad8544bd38af690a9a96ae8",
+   "page_number": 165,
+   "image_url": "https://images.sourcelibrary.org/archived/6ad8544bd38af690a9a96a43/165.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bṛhaddeśī",
+    "author": "Mataṅga",
+    "published": "1928",
+    "language": "Sanskrit",
+    "pages_count": 184,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Government Press",
+    "hidden_reason": null
+   },
+   "idx": 48,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5744775b-p139",
+   "group": "ia",
+   "book_id": "6a9490e631b41d9c5744775b",
+   "page_id": "6a9490e631b41d9c574477e6",
+   "page_number": 139,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9490e631b41d9c5744775b/139.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhagavan Gopiinathji Birth Centenary Volume Bhagvaan Gopinath Trust",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 282,
+    "pages_ocr": 69,
+    "categories": [],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 49,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d92aa-p221",
+   "group": "ia",
+   "book_id": "6a94dd4bb24b5a49c27d92aa",
+   "page_id": "6a94dd4bb24b5a49c27d9387",
+   "page_number": 221,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94dd4bb24b5a49c27d92aa/221.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada Tilak",
+    "author": "Lakshmana Deshikendra",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 239,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "ritual-magic",
+     "theology",
+     "mysticism",
+     "divination"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 50,
+   "observed": {
+    "script": "unsure",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "Sharada Tilak; script not settled at thumbnail size"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-5744a96f-p127",
+   "group": "ia",
+   "book_id": "6a94944631b41d9c5744a96f",
+   "page_id": "6a94944631b41d9c5744a9ee",
+   "page_number": 127,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94944631b41d9c5744a96f/127.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ek Vilakshan Santa Bhagwan Gopinath Hndi Translation Triloki Nath Dhar",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 244,
+    "pages_ocr": 25,
+    "categories": [],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 51,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "photograph, 3-word caption"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-82c82b68-p40",
+   "group": "ia",
+   "book_id": "6a94c0f656cac2f882c82b68",
+   "page_id": "6a94c0f656cac2f882c82b90",
+   "page_number": 40,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c0f656cac2f882c82b68/40.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Chatur Dasodeaya By Dharam Singh Punjabi Gurumukhi Medical Manuscript From Kulgam",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 213,
+    "pages_ocr": 37,
+    "categories": [],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 52,
+   "observed": {
+    "script": "gurmukhi",
+    "kind": "print",
+    "lang": "pa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e625b010-p5",
+   "group": "ia",
+   "book_id": "6a942f4f52baa7aee625b010",
+   "page_id": "6a942f5052baa7aee625b015",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6a942f4f52baa7aee625b010/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Madhava Nala – Kama Kandala Katha ( Hindi Devanagari)",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 21,
+    "pages_ocr": 21,
+    "categories": [
+     "Devanagari"
+    ],
+    "script": null,
+    "creator": "eGangotri Digital Preservation Trust",
+    "hidden_reason": null
+   },
+   "idx": 53,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-91d24943-p9",
+   "group": "ia",
+   "book_id": "6a94c6268e2a2ffc91d24943",
+   "page_id": "6a94c6268e2a2ffc91d2494c",
+   "page_number": 9,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c6268e2a2ffc91d24943/9.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kesha Vijanak Devanagari Paper Manuscript Slightly Damaged",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 46,
+    "pages_ocr": 44,
+    "categories": [
+     "Devanagari"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 54,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "stained, interlinear glosses",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8bd8c5-p111",
+   "group": "ia",
+   "book_id": "6a94a360bf723b215d8bd8c5",
+   "page_id": "6a94a360bf723b215d8bd934",
+   "page_number": 111,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a360bf723b215d8bd8c5/111.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada Bhagavat Gita From Resident Of Shopian",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 222,
+    "pages_ocr": 72,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 55,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-de21a71e-p163",
+   "group": "ia",
+   "book_id": "69b99f3676b9bab2de21a71e",
+   "page_id": "69b99f3676b9bab2de21a7c1",
+   "page_number": 163,
+   "image_url": "https://images.sourcelibrary.org/archived/69b99f3676b9bab2de21a71e/163.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Madhyamaka Śāstra of Nāgārjuna (Sanskrit Text)",
+    "author": "Nāgārjuna (ed. P. L. Vaidya)",
+    "published": "1960",
+    "language": "Sanskrit",
+    "pages_count": 368,
+    "pages_ocr": 365,
+    "categories": [
+     "philosophy",
+     "buddhism",
+     "theology"
+    ],
+    "script": null,
+    "creator": "javanesegraviton",
+    "hidden_reason": "unarchived"
+   },
+   "idx": 56,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-9ba76960-p555",
+   "group": "ia",
+   "book_id": "69dea59e4d19ec2e9ba76960",
+   "page_id": "69dea59e4d19ec2e9ba76b8b",
+   "page_number": 555,
+   "image_url": "https://images.sourcelibrary.org/archived/69dea59e4d19ec2e9ba76960/555.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Rig-Veda-Sanhita: Sacred Hymns of the Brahmans, Vol. 1",
+    "author": "F. Max Müller (ed.)",
+    "published": "1849",
+    "language": "Sanskrit",
+    "pages_count": 1022,
+    "pages_ocr": 25,
+    "categories": [],
+    "script": null,
+    "creator": "Muller, Max, ed.",
+    "hidden_reason": null
+   },
+   "idx": 57,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "dense commentary, small type",
+    "canonical": true,
+    "cols": 1,
+    "note": "Rigveda 1849"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-91d25d81-p22",
+   "group": "ia",
+   "book_id": "6a94cac08e2a2ffc91d25d81",
+   "page_id": "6a94cac08e2a2ffc91d25d97",
+   "page_number": 22,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94cac08e2a2ffc91d25d81/22.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahanaya Prakash Sharada RSkt S Jammu No 49",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 105,
+    "pages_ocr": 69,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 58,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-c27d7530-p260",
+   "group": "ia",
+   "book_id": "6a94d83ab24b5a49c27d7530",
+   "page_id": "6a94d83bb24b5a49c27d7634",
+   "page_number": 260,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94d83ab24b5a49c27d7530/260.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sanskrit Sahitya Ka Itihas By Baladev Upadhyay Sharada Mandir, Banaras",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 715,
+    "pages_ocr": 60,
+    "categories": [
+     "Sahitya",
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 59,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi+sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1697c6ed-p499",
+   "group": "other",
+   "book_id": "6a3088edeb59f1191697c6ed",
+   "page_id": "6a3088fceb59f1191697c8e0",
+   "page_number": 499,
+   "image_url": "https://images.sourcelibrary.org/books/6a3088edeb59f1191697c6ed/pages/0498.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 6: Bhīṣmaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 595,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "philosophy",
+     "history",
+     "military"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 60,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-e0f809e3-p1393",
+   "group": "other",
+   "book_id": "6a8f621eddd2f57fe0f809e3",
+   "page_id": "6a8f621eddd2f57fe0f80f54",
+   "page_number": 1393,
+   "image_url": "https://images.sourcelibrary.org/archived/6a8f621eddd2f57fe0f809e3/1393.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Arthaśāstra",
+    "author": "Kautilya",
+    "published": "2021-05-15 10:05:55",
+    "language": "Sanskrit",
+    "pages_count": 1758,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Kautilya, Visvanath Sastri Datar",
+    "hidden_reason": null
+   },
+   "idx": 61,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "dense commentary",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697bec1-p584",
+   "group": "other",
+   "book_id": "6a3088abeb59f1191697bec1",
+   "page_id": "6a3088c9eb59f1191697c109",
+   "page_number": 584,
+   "image_url": "https://images.sourcelibrary.org/books/6a3088abeb59f1191697bec1/pages/0583.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 3: Āraṇyakaparvan",
+    "author": "Vyāsa",
+    "published": null,
+    "language": "Sanskrit",
+    "pages_count": 1184,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 62,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-487f33e3-p412",
+   "group": "other",
+   "book_id": "6a30912abec66f86487f33e3",
+   "page_id": "6a30913dbec66f86487f357f",
+   "page_number": 412,
+   "image_url": "https://images.sourcelibrary.org/books/6a30912abec66f86487f33e3/pages/0411.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Pātañjala Yogasūtra — with Vyāsa’s Bhāṣya & Vācaspati’s Tattvavaiśāradī (Sanskrit)",
+    "author": "Patañjali",
+    "published": "1917",
+    "language": "Sanskrit",
+    "pages_count": 484,
+    "pages_ocr": 483,
+    "categories": [
+     "sanskrit-literature",
+     "philosophy",
+     "vedanta",
+     "mysticism"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 63,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "Yogasutra bhasya"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697d8cb-p58",
+   "group": "other",
+   "book_id": "6a308985eb59f1191697d8cb",
+   "page_id": "6a30898ceb59f1191697d905",
+   "page_number": 58,
+   "image_url": "https://images.sourcelibrary.org/books/6a308985eb59f1191697d8cb/pages/0057.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 14: Aśvamedhikaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 323,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "theology",
+     "philosophy",
+     "literature",
+     "history"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 64,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-7c60b19b-p202",
+   "group": "other",
+   "book_id": "69af0c1986d6cf307c60b19b",
+   "page_id": "69af0c1986d6cf307c60b265",
+   "page_number": 202,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0c1986d6cf307c60b19b/202.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Rasarnava (Sanskrit Treatise on Alchemy and Chemistry)",
+    "author": "Unknown; Haris Chandra Kaviratna",
+    "published": "1910",
+    "language": "Sanskrit",
+    "pages_count": 564,
+    "pages_ocr": 16,
+    "categories": [],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 65,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-18cd7e27-p306",
+   "group": "other",
+   "book_id": "6a26e5e865df759218cd7e27",
+   "page_id": "6a26e5e965df759218cd7f59",
+   "page_number": 306,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26e5e865df759218cd7e27/306.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Science Of Social Organisation Of The Laws Of Manu In The Light Of Theosophy Bhagavan Das Volume 1",
+    "author": "Bhima Borde",
+    "published": "2020-03-22 11:36:52",
+    "language": "Sanskrit",
+    "pages_count": 387,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Bhima Borde",
+    "hidden_reason": null
+   },
+   "idx": 66,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-2380f313-p419",
+   "group": "other",
+   "book_id": "69bd0230f403a9ca2380f313",
+   "page_id": "69bd0233f403a9ca2380f4b6",
+   "page_number": 419,
+   "image_url": "https://images.sourcelibrary.org/archived/69bd0230f403a9ca2380f313/419.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Tattvārthādhigama Sūtra Ṭīkā (Svārtha Siddhi Commentary)",
+    "author": "Umāsvāti",
+    "published": "1833",
+    "language": "Sanskrit",
+    "pages_count": 1444,
+    "pages_ocr": 50,
+    "categories": [],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "unprocessed"
+   },
+   "idx": 67,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "rotated",
+    "hard": "page rotated 90 degrees",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697c43d-p421",
+   "group": "other",
+   "book_id": "6a3088d7eb59f1191697c43d",
+   "page_id": "6a3088e8eb59f1191697c5e2",
+   "page_number": 421,
+   "image_url": "https://images.sourcelibrary.org/books/6a3088d7eb59f1191697c43d/pages/0420.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 5: Udyogaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 687,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "philosophy",
+     "theology",
+     "history"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 68,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f502cf88-p131",
+   "group": "other",
+   "book_id": "69c666975ee2cfa2f502cf88",
+   "page_id": "69c666975ee2cfa2f502d00b",
+   "page_number": 131,
+   "image_url": "https://images.sourcelibrary.org/archived/69c666975ee2cfa2f502cf88/131.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mudrarakshasa — The Signet Ring of Rakshasa (Maurya political drama)",
+    "author": "Vishakhadatta",
+    "published": "400",
+    "language": "Sanskrit",
+    "pages_count": 330,
+    "pages_ocr": 0,
+    "categories": [
+     "history",
+     "drama",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 69,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-0f19d805-p339",
+   "group": "other",
+   "book_id": "6a91e1f1bb7a47bd0f19d805",
+   "page_id": "6a91e1f1bb7a47bd0f19d958",
+   "page_number": 339,
+   "image_url": "https://iiif.wellcomecollection.org/image/b2995292x_WT2895_OR_MS_Indic_Delta_2_0339.JP2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "MS Indic delta 2.",
+    "author": "Vagbhata",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 921,
+    "pages_ocr": 21,
+    "categories": [
+     "Medicine, Ayurvedic"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 70,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-18cd706c-p280",
+   "group": "other",
+   "book_id": "6a26e0c165df759218cd706c",
+   "page_id": "6a26e0c165df759218cd7184",
+   "page_number": 280,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26e0c165df759218cd706c/280.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Encyclopedia Of Astrological Remedies Arun Kumar Bansal",
+    "author": "Hiya Sule",
+    "published": "2020-03-17 20:36:34",
+    "language": "Sanskrit",
+    "pages_count": 311,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Hiya Sule",
+    "hidden_reason": null
+   },
+   "idx": 71,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1697cfd2-p60",
+   "group": "other",
+   "book_id": "6a308938eb59f1191697cfd2",
+   "page_id": "6a30893aeb59f1191697d00e",
+   "page_number": 60,
+   "image_url": "https://images.sourcelibrary.org/books/6a308938eb59f1191697cfd2/pages/0059.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 10: Sauptikaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 89,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "history",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 72,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-8eaa4a1c-p167",
+   "group": "other",
+   "book_id": "6a91e16c051d1f3e8eaa4a1c",
+   "page_id": "6a91e16c051d1f3e8eaa4ac3",
+   "page_number": 167,
+   "image_url": "https://iiif.wellcomecollection.org/image/b3009284x_0167.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Victoria-gítika, or Sanskrit verses, celebrating the deeds and the virtues of Her Most Gracious Majesty the Queen Victoria and her renowned predecessors / Composed and set to music by Sourindro Mohun Tagore. [With a translation].",
+    "author": "Sourindro Mohun Tagore",
+    "published": "1875",
+    "language": "Sanskrit",
+    "pages_count": 372,
+    "pages_ocr": 25,
+    "categories": [
+     "Music - India",
+     "India",
+     "Victoria"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 73,
+   "observed": {
+    "script": "latin",
+    "kind": "print",
+    "lang": "en",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-8eaa4560-p334",
+   "group": "other",
+   "book_id": "6a91e163051d1f3e8eaa4560",
+   "page_id": "6a91e163051d1f3e8eaa46ae",
+   "page_number": 334,
+   "image_url": "https://iiif.wellcomecollection.org/image/b30094768_0001_0336.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Mani-málá; or, A treatise on gems / by Sourindro Mohun Tagore.",
+    "author": "Sourindro Mohun Tagore",
+    "published": "1879-81",
+    "language": "Sanskrit",
+    "pages_count": 550,
+    "pages_ocr": 25,
+    "categories": [
+     "Gems",
+     "Gems"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 74,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-487f2e8d-p348",
+   "group": "other",
+   "book_id": "6a30909cbec66f86487f2e8d",
+   "page_id": "6a3090b1bec66f86487f2fe9",
+   "page_number": 348,
+   "image_url": "https://images.sourcelibrary.org/books/6a30909cbec66f86487f2e8d/pages/0347.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Pramāṇavārttika — with Manorathanandin’s Vṛtti (Sanskrit)",
+    "author": "Dharmakīrti",
+    "published": "1968",
+    "language": "Sanskrit",
+    "pages_count": 536,
+    "pages_ocr": 528,
+    "categories": [
+     "buddhist-philosophy",
+     "philosophy",
+     "buddhism"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 75,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-8eaa58d0-p117",
+   "group": "other",
+   "book_id": "6a91e193051d1f3e8eaa58d0",
+   "page_id": "6a91e193051d1f3e8eaa5945",
+   "page_number": 117,
+   "image_url": "https://iiif.wellcomecollection.org/image/b3009432x_0117.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Agnipurāṇam / Kr̥ṣṇadvaipāyana-maharṣi-śrīvedavyāsa-praṇītam ; paṇḍitavaraśrīyuktaPañcānanatarkaratnena sampāditam.",
+    "author": "Unknown",
+    "published": "1890",
+    "language": "Sanskrit",
+    "pages_count": 378,
+    "pages_ocr": 25,
+    "categories": [],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 76,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "hard": "two columns, small type",
+    "canonical": false,
+    "cols": 2,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-8eaa0aa8-p70",
+   "group": "other",
+   "book_id": "6a91cdc8051d1f3e8eaa0aa8",
+   "page_id": "6a91cdc8051d1f3e8eaa0aee",
+   "page_number": 70,
+   "image_url": "https://iiif.wellcomecollection.org/image/b30092887_0070.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Anthologia sanscritica glossario instrvcta / In vsvm scholarvm edidit Christianvs Lassen ... Denvo adornavit Ioannes Gildemeister.",
+    "author": "Christian Lassen",
+    "published": "1868",
+    "language": "Sanskrit",
+    "pages_count": 318,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit language"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 77,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-0f19de12-p607",
+   "group": "other",
+   "book_id": "6a91e20dbb7a47bd0f19de12",
+   "page_id": "6a91e20dbb7a47bd0f19e071",
+   "page_number": 607,
+   "image_url": "https://iiif.wellcomecollection.org/image/b3288199x_0607.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Suśrutasaṃhitā; Suśrutasaṃhitā : The Suśrutasaṃhitā of Suśruta with the Nibandhasaṅgrahā commentary of Śrī Dalhaṇāchārya and the Nyāyacandrikā Pañjikā of Śrī Gayadāschārya on Nīdanasthāna. Ed. by Vaidya Jādavji Trikamji Āchārya and Nārāyan Rām Āchārya / Suśrutena viracitā ; Vaidyavaraśrīḍalhaṇācaryaviracitayā Nibandhasaṃgrahākhyavyākhyayā samullasitā ; Ācāryopāhvena Trivikramātmajena Yādavaśarmaṇā saṃśodhitā . =.",
+    "author": "Suśruta",
+    "published": "1938",
+    "language": "Sanskrit",
+    "pages_count": 922,
+    "pages_ocr": 24,
+    "categories": [
+     "Medicine, Ayurvedic"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "rights_unresolved_editor_term_qa_2026-09-01"
+   },
+   "idx": 78,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "hard": "two columns, dense, curved",
+    "canonical": false,
+    "cols": 2,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-e2ff17f5-p809",
+   "group": "other",
+   "book_id": "6a26de26a33c2a9ce2ff17f5",
+   "page_id": "6a26de26a33c2a9ce2ff1b1e",
+   "page_number": 809,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26de26a33c2a9ce2ff17f5/809.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Alchemy Of Wisdom ( Articles Wrtten By Prem Lata Sharma) Collection Of Articles Prem Lata Sharma",
+    "author": "Rameshvara Tara",
+    "published": "2020-03-19 12:33:45",
+    "language": "Sanskrit",
+    "pages_count": 870,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Rameshvara Tara",
+    "hidden_reason": null
+   },
+   "idx": 79,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1697c941-p391",
+   "group": "other",
+   "book_id": "6a308902eb59f1191697c941",
+   "page_id": "6a308919eb59f1191697cac8",
+   "page_number": 391,
+   "image_url": "https://images.sourcelibrary.org/books/6a308902eb59f1191697c941/pages/0390.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 7: Droṇaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 881,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "history",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 80,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "BORI Mahabharata, digital type"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-8eaa2441-p684",
+   "group": "other",
+   "book_id": "6a91e105051d1f3e8eaa2441",
+   "page_id": "6a91e105051d1f3e8eaa26ed",
+   "page_number": 684,
+   "image_url": "https://iiif.wellcomecollection.org/image/b30094720_0684.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "The Râjatarangini of Kalhaṇa / edited by Durgâprasâda, son of Vrajalâla.",
+    "author": "Kalhana",
+    "published": "1892-1896",
+    "language": "Sanskrit",
+    "pages_count": 1124,
+    "pages_ocr": 25,
+    "categories": [
+     "Narrative poetry, Sanskrit",
+     "Jammu and Kashmir"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 81,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": true,
+    "cols": 1,
+    "note": "Rajatarangini"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-2a4369ae-p548",
+   "group": "other",
+   "book_id": "6a91935a5732dd632a4369ae",
+   "page_id": "6a91935a5732dd632a436bd2",
+   "page_number": 548,
+   "image_url": "https://images.sourcelibrary.org/pages/6a91935a5732dd632a4369ae/0548.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vaidyakaśabdasindhuḥ : āyurvvedīya-śabdauṣadha-nāma-nirṇayako br̥hatkośa-granthaḥ / Kavirāja-śrī Umeśacandra-gupta-kaviratna saṅkalitaḥ.",
+    "author": "Gupta, Umeśacandra",
+    "published": "1894",
+    "language": "Sanskrit",
+    "pages_count": 1168,
+    "pages_ocr": 25,
+    "categories": [
+     "Medicine, Ayurvedic",
+     "Materia Medica"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 82,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "hard": "dictionary, two columns, small type",
+    "canonical": false,
+    "cols": 2,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-18cd84c5-p248",
+   "group": "other",
+   "book_id": "6a26e84c65df759218cd84c5",
+   "page_id": "6a26e84c65df759218cd85bd",
+   "page_number": 248,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26e84c65df759218cd84c5/248.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vruddha Yava Jataka David Pingree Part 2 University Of Baroda 163 ( Astrology)",
+    "author": "Murali Bala",
+    "published": "2020-03-18 14:05:51",
+    "language": "Sanskrit",
+    "pages_count": 415,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Murali Bala",
+    "hidden_reason": null
+   },
+   "idx": 83,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-a1471341-p478",
+   "group": "other",
+   "book_id": "6a91c42b43010201a1471341",
+   "page_id": "6a91c42b43010201a147151f",
+   "page_number": 478,
+   "image_url": "https://iiif.wellcomecollection.org/image/b30095608_0478.jp2/full/full/0/default.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Cakradattaḥ / Cakrapāṇidattaviracitaḥ ; Jīvānandavidyāsāgarabhaṭṭācāryyeṇa saṣkr̥taḥ.",
+    "author": "Cakrapāṇidatta. Cakradatta",
+    "published": "1872",
+    "language": "Sanskrit",
+    "pages_count": 548,
+    "pages_ocr": 25,
+    "categories": [
+     "Medicine, Ayurvedic"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 84,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "poor scan, cropped",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1a8dfbde-p5",
+   "group": "moi",
+   "book_id": "6ac7617c492b9d701a8dfbde",
+   "page_id": "6ac7617c492b9d701a8dfbe3",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7617c492b9d701a8dfbde/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Satadushani",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 6,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 85,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1a8de87b-p5",
+   "group": "moi",
+   "book_id": "6ac75bbb492b9d701a8de87b",
+   "page_id": "6ac75bbb492b9d701a8de880",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac75bbb492b9d701a8de87b/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kavyaprakasha",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 6,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 86,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-7a628dac-p3",
+   "group": "moi",
+   "book_id": "6ac7791ae90a6ba07a628dac",
+   "page_id": "6ac7791ae90a6ba07a628daf",
+   "page_number": 3,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7791ae90a6ba07a628dac/3.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Trishuparn",
+    "author": "Unknown",
+    "published": "C. 18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 6,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 87,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-7a628f20-p2",
+   "group": "moi",
+   "book_id": "6ac779a5e90a6ba07a628f20",
+   "page_id": "6ac779a5e90a6ba07a628f22",
+   "page_number": 2,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac779a5e90a6ba07a628f20/2.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Yagyopavita Vidhi",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 2,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 88,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1a8e15ca-p1",
+   "group": "moi",
+   "book_id": "6ac76726492b9d701a8e15ca",
+   "page_id": "6ac76726492b9d701a8e15cb",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac76726492b9d701a8e15ca/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vyakaran Khandit Siddhant Kaumudi",
+    "author": "Not Known",
+    "published": "18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 5,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 89,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-52bee82a-p3",
+   "group": "moi",
+   "book_id": "6ac7e256089105c952bee82a",
+   "page_id": "6ac7e256089105c952bee82d",
+   "page_number": 3,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7e256089105c952bee82a/3.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Puyanama Brahmana",
+    "author": "Not Traceable",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 3,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Sharda",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 90,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e6c258c2-p2",
+   "group": "moi",
+   "book_id": "6ac787c84bf5025fe6c258c2",
+   "page_id": "6ac787c84bf5025fe6c258c4",
+   "page_number": 2,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac787c84bf5025fe6c258c2/2.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sankashtanira Karana Stotra",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 2,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 91,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-b5126bc4-p1",
+   "group": "moi",
+   "book_id": "6ac77050c251b1f1b5126bc4",
+   "page_id": "6ac77050c251b1f1b5126bc5",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac77050c251b1f1b5126bc4/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Kalikopanisat Samhita",
+    "author": "NA",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 92,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": "very faint",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e61c8a50-p3",
+   "group": "moi",
+   "book_id": "6ac78029d95f1eaae61c8a50",
+   "page_id": "6ac78029d95f1eaae61c8a53",
+   "page_number": 3,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac78029d95f1eaae61c8a50/3.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ganesa",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 93,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-87c61f7c-p2",
+   "group": "moi",
+   "book_id": "6ac778815aac1f9687c61f7c",
+   "page_id": "6ac778815aac1f9687c61f7e",
+   "page_number": 2,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac778815aac1f9687c61f7c/2.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vibhuti Dhajarana Mantra/ Yogyopavita Dharana",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 2,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 94,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1a8e17d4-p5",
+   "group": "moi",
+   "book_id": "6ac76760492b9d701a8e17d4",
+   "page_id": "6ac76760492b9d701a8e17d9",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac76760492b9d701a8e17d4/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vyakaran Khandit Paribhasha Prakaran",
+    "author": "Not Known",
+    "published": "18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 6,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 95,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-e64f2ec5-p3",
+   "group": "moi",
+   "book_id": "6ac77438541cd556e64f2ec5",
+   "page_id": "6ac77438541cd556e64f2ec8",
+   "page_number": 3,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac77438541cd556e64f2ec5/3.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Brahama Visnu Rudra Vishanti",
+    "author": "Unknown",
+    "published": "C. 18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 96,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e64f3615-p1",
+   "group": "moi",
+   "book_id": "6ac77628541cd556e64f3615",
+   "page_id": "6ac77628541cd556e64f3616",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac77628541cd556e64f3615/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ahilyakrit Stotra",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 97,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "near-blank leaf"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-a62f320c-p3",
+   "group": "moi",
+   "book_id": "6ac773debc5aab5ba62f320c",
+   "page_id": "6ac773debc5aab5ba62f320f",
+   "page_number": 3,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac773debc5aab5ba62f320c/3.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Nandimukh Sraddha",
+    "author": "Unknown",
+    "published": "C. 18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 98,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-1a8e167c-p35",
+   "group": "moi",
+   "book_id": "6ac76739492b9d701a8e167c",
+   "page_id": "6ac76739492b9d701a8e169f",
+   "page_number": 35,
+   "image_url": "https://museumsofindia.gov.in/repository/file/alh_ald/alh_ald-AM-MSS-21A-351-7075/alh_ald-AM-MSS-21A-351-7075_35_h.jpg",
+   "image_field": "photo",
+   "catalogue": {
+    "title": "Vyakaran Khandit Saraswat",
+    "author": "Not Known",
+    "published": "18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 50,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 99,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-52bedcef-p1",
+   "group": "moi",
+   "book_id": "6ac7dd8e089105c952bedcef",
+   "page_id": "6ac7dd8e089105c952bedcf0",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7dd8e089105c952bedcef/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vedic Tantric Sapindi Karana Vidhi",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 3,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "[Sharada]",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 100,
+   "observed": {
+    "script": "sharada",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e64f2efd-p5",
+   "group": "moi",
+   "book_id": "6ac7744c541cd556e64f2efd",
+   "page_id": "6ac7744c541cd556e64f2f02",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7744c541cd556e64f2efd/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Siddhantakaumudi (Vaidikiprakriya), Vaidikaprakriya, Linganusasana Sutravrittih, Uttararddha",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrita",
+    "pages_count": 8,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 101,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-cd957b8a-p1",
+   "group": "moi",
+   "book_id": "6ac75665a3787bb2cd957b8a",
+   "page_id": "6ac75665a3787bb2cd957b8b",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac75665a3787bb2cd957b8a/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Lagnavichara",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 3,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 102,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "near-blank leaf"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-e6c2556b-p1",
+   "group": "moi",
+   "book_id": "6ac7869f4bf5025fe6c2556b",
+   "page_id": "6ac7869f4bf5025fe6c2556c",
+   "page_number": 1,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac7869f4bf5025fe6c2556b/1.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Vishnu Sahasranama Stotra",
+    "author": "Not Known",
+    "published": "C.18th Century CE",
+    "language": "Sanskrit",
+    "pages_count": 4,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 103,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": "near-blank leaf"
+   },
+   "in_test": false
+  },
+  {
+   "slug": "sa-23bfb025-p5",
+   "group": "moi",
+   "book_id": "6ac76de986dad48523bfb025",
+   "page_id": "6ac76de986dad48523bfb02a",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/6ac76de986dad48523bfb025/5.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahabhashya Prathamadhyayasya Prathama Pada with Pradipa Patanjalivirachita",
+    "author": "Unknown",
+    "published": "C.18th Century CE",
+    "language": "Sanskrita",
+    "pages_count": 9,
+    "pages_ocr": 0,
+    "categories": [
+     "Manuscript"
+    ],
+    "script": "Devnagari",
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 104,
+   "observed": {
+    "script": "devanagari",
+    "kind": "manuscript",
+    "lang": "sa",
+    "layout": "tripatha",
+    "hard": "commentary layout, small hand",
+    "canonical": false,
+    "cols": 1,
+    "note": ""
+   },
+   "in_test": true
+  }
+ ]
+}
