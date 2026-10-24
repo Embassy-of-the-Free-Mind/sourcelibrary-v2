@@ -115,3 +115,12 @@ Argon low ran it on 2026-10-16 (NO-GO: `experiments/2026-10-15-tibetan-g4l-pass-
 `score.py readoff-prep --settler opus-settles-g4l` builds its own read-off key. Opus ran that key through
 `replicate-6547/run-claude-arm.py --model opus --parallel 2`. Scores: `results/tibetan-correct-6560/scores-g4l.json.gz`.
 Write-up: `scripts/eval/experiments/2026-10-15-tibetan-gemini4-argon-correct-6560.md`.
+
+## gemini-3.1-flash-lite arms (#7263)
+
+`prep.py --root <scratch> --reuse-plants`, then `scripts/eval/lite-correct-gpu-7263/run-lite.mjs` (paid API, production
+lite OCR settings) on `req/corr.jsonl` and `req/corr-anchor.jsonl` into `out/lite-corr*.jsonl` (image), `out/lite-noimg-corr*`
+(no image), `out/lite-corr-r2` (repeat, 10 folios) and, from `mkreq-p2.mjs` + `p2-post.mjs`, `out/lite-p2-corr*`
+(production-shaped prompt). `score.py` adds them and a `wreck` list (folios with lines > draft + 2, syllables > 115%,
+or identity < 0.85). Scores: `results/tibetan-correct-6560/scores-7263.json.gz`. No image read-off was run. Write-up:
+`scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md`.

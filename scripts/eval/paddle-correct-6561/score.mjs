@@ -38,7 +38,15 @@ const ARMS = {
   // #6667: the same correct request on Sonnet and Haiku (opus.mjs with a 5th argument)
   'sonnet-correct': lastBy(readJsonl('out-sonnet-correct.jsonl')),
   'haiku-correct': lastBy(readJsonl('out-haiku-correct.jsonl')),
+  // #7263: gemini-3.1-flash-lite, the Gemini arms' correct prompt (lite-correct-gpu-7263/run-lite.mjs); noimg = same
+  // prompt with no image attached (control); r2 = a repeat read on 10 pages (noise floor)
+  'lite-correct': lastBy(readJsonl('out-lite-correct.jsonl')),
+  'lite-noimg-correct': lastBy(readJsonl('out-lite-noimg-correct.jsonl')),
+  'lite-correct-r2': lastBy(readJsonl('out-lite-correct-r2.jsonl')),
+  // #7263 PREREG amendment 1: the production-shaped prompt (lite-correct-gpu-7263/mkreq-p2.mjs, p2-post.mjs)
+  'lite-p2-correct': lastBy(readJsonl('out-lite-p2-correct.jsonl')),
 };
+for (const k of Object.keys(ARMS)) if (k.startsWith('lite-') && !ARMS[k].size) delete ARMS[k];
 const CORRECT = Object.keys(ARMS).filter((a) => a.endsWith('-correct') && ARMS[a].size);
 const second = lastBy(readJsonl('out-flashlow-second.jsonl'));
 // The transcription between the sentinels; a reply with text but no sentinel pair is used whole and marked.
@@ -79,7 +87,7 @@ const pages = sets.map((s) => {
   const paddleQ = hanOf(s.paddle);
   row.arms.paddle = { status: 'ok', ...(s.kanripo ? scoreText(s.paddle, s.kanripo) : { han: [...paddleQ].length }) };
   for (const [arm, m] of Object.entries(ARMS)) {
-    if (arm === 'opus-redo' && !m.has(s.uid)) { row.arms[arm] = { status: 'missing' }; continue; }
+    if ((arm === 'opus-redo' || arm === 'lite-correct-r2') && !m.has(s.uid)) { row.arms[arm] = { status: 'missing' }; continue; }
     const r = m.get(s.uid); const x = extract(r);
     // a reply with no body text on a page that prints >= 40 characters (e.g. "blank page") is a failed read, not a score
     if (x.text.trim() && [...hanOf(x.text)].length === 0 && [...paddleQ].length >= 40) { x.status = 'did-not-read'; x.why = 'no body text'; x.text = ''; }
@@ -87,6 +95,9 @@ const pages = sets.map((s) => {
     if (x.text.trim() && s.kanripo) Object.assign(o, scoreText(x.text, s.kanripo));
     // edit size vs the Paddle draft (Han, Levenshtein / Paddle length)
     if (x.text.trim()) { const q = hanOf(x.text); o.edit_vs_paddle = +(lev(paddleQ, q) / Math.max(1, [...paddleQ].length)).toFixed(4); }
+    // #7263 wreck signals: a loop or duplication (Han length > 125% of Paddle's), a markdown table, a cut reply
+    if (x.text.trim()) { o.long = [...hanOf(x.text)].length > 1.25 * [...paddleQ].length; o.mdtable = /^\s*\|.*\|.*\|/m.test(bodyText(x.text)); }
+    if (r?.finish) o.finish = r.finish;
     row.arms[arm] = o;
   }
   // flag signals (no Kanripo in any of them except qa_dice, which is the lane's own Kanripo screen)
@@ -181,6 +192,18 @@ for (const [sn, f] of Object.entries(STRATA)) {
         draws.sort((a, b) => a - b);
         o.vs_opus_correct = { n: pr.length, books: books.length, delta_cer_mean: +mean(pr.map((x) => x.d)).toFixed(4), delta_cer_median: +median(pr.map((x) => x.d)).toFixed(4), ci95: [+draws[100].toFixed(4), +draws[3899].toFixed(4)], worse: pr.filter((x) => x.d > 0.005).length, better: pr.filter((x) => x.d < -0.005).length };
       }
+    }
+    // #7263: paired with Paddle, 95% interval by bootstrap over books (4,000 draws), and the wreck count
+    if (arm !== 'paddle') {
+      const pr = scored.filter((x) => pad(x).cer != null).map((x) => ({ b: x.p.bid, d: x.a.cer - pad(x).cer }));
+      if (pr.length) {
+        const byBook = new Map(); for (const x of pr) (byBook.get(x.b) || byBook.set(x.b, []).get(x.b)).push(x.d);
+        const books = [...byBook.values()], r = makeRng(7263), draws = [];
+        for (let k = 0; k < 4000; k++) { let t = 0, n = 0; for (let i = 0; i < books.length; i++) { const g = books[Math.floor(r() * books.length)]; for (const d of g) { t += d; n++; } } draws.push(t / n); }
+        draws.sort((a, b) => a - b);
+        o.vs_paddle_ci95 = [+draws[100].toFixed(4), +draws[3899].toFixed(4)];
+      }
+      o.wreck = { cer_ge50: scored.filter((x) => x.a.cer >= 0.5).length, long: read.filter((x) => x.a.long).length, mdtable: read.filter((x) => x.a.mdtable).length, max_tokens: rows.filter((x) => x.a.finish === 'MAX_TOKENS').length };
     }
     summary[sn][arm] = o;
   }
