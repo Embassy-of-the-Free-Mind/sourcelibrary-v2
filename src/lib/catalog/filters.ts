@@ -55,8 +55,21 @@ const year = (v: string | null): number | undefined => {
   const n = parseInt(v, 10);
   return Number.isFinite(n) && n > -5000 && n < 3000 ? n : undefined;
 };
+/**
+ * A text filter, without the characters the filter syntax cannot take (they are
+ * stripped downstream anyway, see sanitizeFilterValue). Doing it here means a
+ * search of only those (`?q=\\`) is no search at all: it shares the cached
+ * whole-library numbers instead of a cold count, which took ~10 s and once
+ * timed out (2026-10-18).
+ */
 const text = (v: string | null): string | undefined => {
-  const t = (v ?? '').trim().slice(0, 200);
+  const raw = (v ?? '').trim();
+  // A whole-query "phrase" keeps its pair of quotes (query.ts reads them); any other quote goes.
+  const phrase = /^"[^"]+"$/.test(raw);
+  // % and _ are LIKE wildcards: "%" matched every record through the slow text
+  // path and timed out about one time in fifteen. They never help a title match.
+  const inner = (phrase ? raw.slice(1, -1) : raw).replace(/[,()"\\{}%_]/g, ' ').replace(/\s+/g, ' ').trim();
+  const t = (phrase && inner ? `"${inner}"` : inner).slice(0, 200);
   return t || undefined;
 };
 const list = (vs: string[], max = 20): string[] | undefined => {
@@ -82,11 +95,21 @@ export function parseCatalogFilters(sp: URLSearchParams): CatalogFilters {
   };
 }
 
+/**
+ * The order a state gets when none is chosen: most relevant after any words,
+ * most read otherwise. A shared /library?q=alchemy link used to open in "most
+ * read" while typing the same search gave "most relevant".
+ */
+export function defaultSort(s: CatalogFilters & { topic?: string }): CatalogSort {
+  return hasTextQuery(s) ? 'relevance' : 'popular';
+}
+
 export function parseCatalogState(sp: URLSearchParams): CatalogState {
   const sort = sp.get('sort') as CatalogSort | null;
+  const filters = { ...parseCatalogFilters(sp), topic: text(sp.get('topic')) };
   return {
     ...parseCatalogFilters(sp),
-    sort: sort && CATALOG_SORTS.includes(sort) ? sort : 'popular',
+    sort: sort && CATALOG_SORTS.includes(sort) ? sort : defaultSort(filters),
     view: sp.get('view') === 'list' ? 'list' : 'grid',
     page: Math.min(10_000, Math.max(1, parseInt(sp.get('page') || '1', 10) || 1)),
     ask: text(sp.get('ask')),
@@ -116,7 +139,7 @@ export function writeCatalogState(s: CatalogState): URLSearchParams {
   if (s.ask) sp.set('ask', s.ask);
   if (s.topic) sp.set('topic', s.topic);
   writeCatalogFilters(s, sp);
-  if (s.sort !== 'popular') sp.set('sort', s.sort);
+  if (s.sort !== defaultSort(s)) sp.set('sort', s.sort);
   if (s.view === 'list') sp.set('view', 'list');
   if (s.page > 1) sp.set('page', String(s.page));
   return sp;

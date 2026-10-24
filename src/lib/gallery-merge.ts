@@ -109,24 +109,21 @@ export function artworkToGalleryItem(a: any) {
   };
 }
 
-/** Artworks interleaved into the unfiltered default browse: the library's own period. */
-export const DEFAULT_ARTWORK_YEARS = { from: 1400, to: 1800 } as const;
 
-export async function mergedGalleryBrowse(
-  db: any,
-  opts: MergedBrowseOpts,
-): Promise<{ items: any[]; total: number; hasMore: boolean; degraded: boolean }> {
+/**
+ * The two Mongo filters the merged browse reads: plates (gallery_images) and
+ * standalone artworks (books). Exported so a count of "what this browse shows"
+ * (src/lib/gallery-stats.ts) uses the very same filters as the rows.
+ */
+export function mergedBrowseFilters(opts: Pick<MergedBrowseOpts, 'tenantId' | 'source' | 'imageType' | 'minQuality' | 'qualityExplicit' | 'maxPerBook' | 'yearStart' | 'yearEnd'>): {
+  illus: Record<string, unknown>;
+  art: Record<string, unknown>;
+} {
   const {
-    tenantId, source, limit, offset,
-    imageType = null, minQuality = 0.7, maxPerBook = 1000,
-    yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
-    sort = 'quality', seed = 0,
+    tenantId, imageType = null, minQuality = 0.7, maxPerBook = 1000,
+    yearStart = null, yearEnd = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
-  // Set when any read fell back to a placeholder. The route answers a degraded
-  // response with no-store, so a shared cache only ever holds a complete one.
-  let degraded = false;
-  const pageIndex = Math.floor(offset / Math.max(1, limit));
   // The natural-aspect masonry shows full pages, so raise the quality floor for
   // the merged browse — blank/low-content plates the old square crop hid now
   // read as empty tiles.
@@ -146,6 +143,44 @@ export async function mergedGalleryBrowse(
     { image_thumb: { $nin: [null, ''] } },
   ] };
 
+  const illus: Record<string, unknown> = {
+    ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
+    extracted_url: { $ne: null }, image_url: { $ne: null },
+  };
+  if (maxPerBook < 100) illus.book_rank = { $lte: maxPerBook };
+  if (imageType) illus.type = imageType;
+  if (yearStart !== null || yearEnd !== null) {
+    const y: Record<string, number> = {};
+    if (yearStart !== null) y.$gte = yearStart;
+    if (yearEnd !== null) y.$lte = yearEnd;
+    illus.book_year = y;
+  }
+  const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true, ...artHasImage };
+  if (imageType) af.resource_type = imageType;
+  if (yearStart !== null || yearEnd !== null) {
+    const y: Record<string, number> = {};
+    if (yearStart !== null) y.$gte = yearStart;
+    if (yearEnd !== null) y.$lte = yearEnd;
+    af.year = y;
+  }
+  // Every artwork is in the mixed default browse, as in the Artworks view, so the
+  // two agree (2026-10-18: the main gallery said 6,943 artworks and the Artworks
+  // view 15,805). It used to take only those dated 1400–1800, because sorting by
+  // (year, title) put undated records first ("113e Sala…", stamps, murals); undated
+  // ones now come last instead (see artFind in mergedGalleryBrowse).
+  return { illus, art: af };
+}
+
+export async function mergedGalleryBrowse(
+  db: any,
+  opts: MergedBrowseOpts,
+): Promise<{ items: any[]; total: number; hasMore: boolean; degraded: boolean }> {
+  const { source, limit, offset, visitorId = null, sort = 'quality', seed = 0 } = opts;
+  const filters = mergedBrowseFilters(opts);
+  // Set when any read fell back to a placeholder. The route answers a degraded
+  // response with no-store, so a shared cache only ever holds a complete one.
+  let degraded = false;
+  const pageIndex = Math.floor(offset / Math.max(1, limit));
   const artPerPage = source === 'artwork' ? limit : Math.max(1, Math.round(limit * 0.25));
   const illusPerPage = source === 'artwork' ? 0 : limit - artPerPage;
 
@@ -156,18 +191,7 @@ export async function mergedGalleryBrowse(
   // See the note at the count site: these used to be two different queries.
   let illusFilter: Record<string, unknown> | null = null;
   if (illusPerPage > 0) {
-    const f: Record<string, unknown> = {
-      ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
-      extracted_url: { $ne: null }, image_url: { $ne: null },
-    };
-    if (maxPerBook < 100) f.book_rank = { $lte: maxPerBook };
-    if (imageType) f.type = imageType;
-    if (yearStart !== null || yearEnd !== null) {
-      const y: Record<string, number> = {};
-      if (yearStart !== null) y.$gte = yearStart;
-      if (yearEnd !== null) y.$lte = yearEnd;
-      f.book_year = y;
-    }
+    const f = filters.illus;
     illusFilter = f;
     // Order comes from gallery-sort.ts. The default ('quality') round-robins
     // through books within each quality score: scores are coarse (26k plates
@@ -178,26 +202,39 @@ export async function mergedGalleryBrowse(
   }
 
   // ---- artworks (allowDiskUse guards the sort on the 26k-row artwork set) ----
-  const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true, ...artHasImage };
-  if (imageType) af.resource_type = imageType;
-  if (yearStart !== null || yearEnd !== null) {
-    const y: Record<string, number> = {};
-    if (yearStart !== null) y.$gte = yearStart;
-    if (yearEnd !== null) y.$lte = yearEnd;
-    af.year = y;
-  } else if (source === 'all' && !imageType) {
-    // The mixed default browse sorts artworks by (year, title), so undated records
-    // came first, alphabetically: photographs of Vatican rooms titled "113e Sala…",
-    // "16 Estancia…", then canopic jars and modern murals and stamps. On the default
-    // view, interleave only dated artworks from the library's period. The Artworks
-    // facet (source=artwork) and an explicit year range still reach all of them.
-    af.year = { $gte: DEFAULT_ARTWORK_YEARS.from, $lte: DEFAULT_ARTWORK_YEARS.to };
-  }
+  const af = filters.art;
   const artProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 };
-  const artFind = (skip: number, n: number) => db.collection('books')
-    .find(af, { projection: artProjection, allowDiskUse: true })
-    .sort(artworkSort(sort))
+  const artSort = artworkSort(sort);
+  const findIn = (filter: Record<string, unknown>, skip: number, n: number) => n <= 0 ? Promise.resolve([]) : db.collection('books')
+    .find(filter, { projection: artProjection, allowDiskUse: true })
+    .sort(artSort)
     .skip(skip).limit(n).toArray();
+  // An ascending year sort puts undated artworks first, so it reads the dated
+  // ones, then the undated ones after them. (Descending already puts them last.)
+  const datedFirst = artSort.year === 1;
+  const dated = { $and: [af, { year: { $type: 'number' } }] };
+  const undated = { $and: [af, { year: { $not: { $type: 'number' } } }] };
+  const artFind = async (skip: number, n: number): Promise<any[]> => {
+    if (!datedFirst) return findIn(af, skip, n);
+    // Counted as all minus undated: both are fast (~0.2 s); counting the dated
+    // ones directly took ~1.7 s and timed out under load.
+    let datedCount: number;
+    try {
+      const [allCount, undatedCount] = await Promise.all([
+        galleryMemo(filterKey('art-count', af), () => db.collection('books').countDocuments(af, { maxTimeMS: 8000 }) as Promise<number>),
+        galleryMemo(filterKey('art-undated', undated), () => db.collection('books').countDocuments(undated, { maxTimeMS: 8000 }) as Promise<number>),
+      ]);
+      datedCount = allCount - undatedCount;
+    } catch {
+      // A failed count must not fail the page: serve the plain order (undated
+      // first) and mark the response degraded so no shared cache keeps it.
+      degraded = true;
+      return findIn(af, skip, n);
+    }
+    const fromDated = await findIn(dated, skip, Math.min(n, Math.max(0, datedCount - skip)));
+    const rest = n - fromDated.length;
+    return [...fromDated, ...(await findIn(undated, Math.max(0, skip - datedCount), rest))];
+  };
   let artDocs: any[];
   let artHasMore: boolean;
   if (sort === 'random') {

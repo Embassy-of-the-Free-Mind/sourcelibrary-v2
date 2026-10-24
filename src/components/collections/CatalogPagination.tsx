@@ -1,9 +1,17 @@
 'use client';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 interface CatalogPaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  /**
+   * 'search' is the /library and /gallery look: square, black Prev and Next,
+   * plain page numbers with the current one outlined. Other surfaces keep the
+   * rounded default.
+   */
+  variant?: 'default' | 'search';
 }
 
 /**
@@ -14,6 +22,7 @@ export default function CatalogPagination({
   currentPage,
   totalPages,
   onPageChange,
+  variant = 'default',
 }: CatalogPaginationProps) {
   if (totalPages <= 1) return null;
 
@@ -31,6 +40,38 @@ export default function CatalogPagination({
     } else if (pages[pages.length - 1] !== 'ellipsis') {
       pages.push('ellipsis');
     }
+  }
+
+  if (variant === 'search') {
+    const step = 'inline-flex items-center gap-1.5 h-10 px-4 bg-primary text-cream text-sm hover:bg-accent-rust transition-colors disabled:opacity-25 disabled:hover:bg-primary disabled:cursor-not-allowed cursor-pointer';
+    return (
+      <nav className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-12" aria-label="Pagination">
+        <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage <= 1} className={`${step} mr-1 sm:mr-3`} aria-label="Previous page">
+          <ChevronLeft className="w-4 h-4" aria-hidden /><span className="hidden sm:inline">Previous</span>
+        </button>
+        {pages.map((page, i) =>
+          page === 'ellipsis' ? (
+            <span key={`e${i}`} className="w-6 text-center text-sm text-muted select-none" aria-hidden>…</span>
+          ) : (
+            <button
+              key={page}
+              onClick={() => onPageChange(page)}
+              className={`min-w-10 h-10 px-2 text-sm tabular-nums transition-colors cursor-pointer ${
+                page === currentPage
+                  ? 'border border-primary text-primary font-semibold'
+                  : 'border border-transparent text-secondary hover:bg-warm hover:text-primary'
+              }`}
+              aria-current={page === currentPage ? 'page' : undefined}
+            >
+              {page}
+            </button>
+          ),
+        )}
+        <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage >= totalPages} className={`${step} ml-1 sm:ml-3`} aria-label="Next page">
+          <span className="hidden sm:inline">Next</span><ChevronRight className="w-4 h-4" aria-hidden />
+        </button>
+      </nav>
+    );
   }
 
   return (

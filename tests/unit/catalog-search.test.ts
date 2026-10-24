@@ -99,6 +99,11 @@ describe('readRequest', () => {
     expect(byName.category).toBeUndefined();
   });
 
+  it('drops filler words and punctuation from the topic', () => {
+    expect(readRequest('printers at their presses', vocab).topic).toBe('printers presses');
+    expect(readRequest('mushrooms, poisonous and edible', vocab).topic).toBe('mushrooms poisonous edible');
+  });
+
   it('does not stem in the search bar', () => {
     expect(readRequest('alchemical', vocab, { stems: false }).category).toBeUndefined();
   });
@@ -141,5 +146,29 @@ describe('catalogue wire format', () => {
     const s = parseCatalogState(new URLSearchParams('sort=drop&year_min=abc'));
     expect(s.sort).toBe('popular');
     expect(s.yearMin).toBeUndefined();
+  });
+});
+
+describe('default order', () => {
+  it('is most relevant for a search link and most read without words, and survives a round trip', () => {
+    expect(parseCatalogState(new URLSearchParams('q=alchemy')).sort).toBe('relevance');
+    expect(parseCatalogState(new URLSearchParams('language=Latin')).sort).toBe('popular');
+    const chosen = parseCatalogState(new URLSearchParams('q=alchemy&sort=popular'));
+    expect(chosen.sort).toBe('popular');
+    expect(parseCatalogState(writeCatalogState(chosen)).sort).toBe('popular');
+    expect(writeCatalogState(parseCatalogState(new URLSearchParams('q=alchemy'))).toString()).toBe('q=alchemy');
+  });
+});
+
+describe('text filters', () => {
+  it('drop characters the filter syntax cannot take, keeping phrases and apostrophes', () => {
+    const q = (v: string) => parseCatalogFilters(new URLSearchParams({ q: v })).q;
+    expect(q('"')).toBeUndefined();
+    expect(q('\\')).toBeUndefined();
+    expect(q('%')).toBeUndefined();
+    expect(q('%%_')).toBeUndefined();
+    expect(q('"venus humanitas"')).toBe('"venus humanitas"');
+    expect(q("l'alchimie")).toBe("l'alchimie");
+    expect(q('dragon"')).toBe('dragon');
   });
 });

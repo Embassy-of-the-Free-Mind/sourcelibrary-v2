@@ -215,7 +215,7 @@ export async function resolveAuthor(query: string): Promise<{ name: string; surn
  * /search makes). Offered to the reader as one-click additions, never applied:
  * they are leads (a book, a person, a field), not other names for the topic.
  */
-export async function guideTerms(text: string): Promise<string[]> {
+export async function guideTerms(text: string, kind: 'terms' | 'image_terms' = 'terms'): Promise<string[]> {
   try {
     const r = await fetch('/api/search/ai-expand', {
       method: 'POST',
@@ -224,7 +224,7 @@ export async function guideTerms(text: string): Promise<string[]> {
     });
     const raw = await r.text();
     for (const block of raw.split('\n\n')) {
-      if (!/event: terms/.test(block)) continue;
+      if (!new RegExp(`event: ${kind}\\b`).test(block)) continue;
       const data = block.match(/data: ([\s\S]*)/)?.[1];
       const terms = data ? JSON.parse(data) : [];
       return Array.isArray(terms) ? terms.filter((t): t is string => typeof t === 'string').slice(0, 6) : [];

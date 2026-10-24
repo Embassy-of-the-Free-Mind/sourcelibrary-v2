@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { parseCatalogFilters } from '@/lib/catalog/filters';
-import { catalogStats } from '@/lib/catalog/query';
+import { parseCatalogFilters, PRINTED_BUCKETS } from '@/lib/catalog/filters';
+import { catalogStats, isUpstreamBlock } from '@/lib/catalog/query';
 
 export const maxDuration = 30;
 
@@ -18,6 +18,13 @@ export async function GET(request: Request) {
       headers: { 'Cache-Control': 'public, max-age=0, s-maxage=600, stale-while-revalidate=3600' },
     });
   } catch (err) {
+    // A request the upstream firewall refuses counts nothing (see isUpstreamBlock).
+    if (isUpstreamBlock(err)) {
+      return NextResponse.json({
+        total: 0, translated: 0, languageCount: 0, languages: [],
+        printed: PRINTED_BUCKETS.map(([from, to]) => ({ from, to, count: 0 })), yearFirst: null, yearLast: null,
+      });
+    }
     console.error('[catalog/stats]', (err as Error)?.message);
     return NextResponse.json({ error: 'Failed to count the catalogue' }, { status: 500 });
   }
