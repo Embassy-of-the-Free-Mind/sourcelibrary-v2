@@ -104,6 +104,8 @@ jobs:
               ].join('\n'),
               labels: ['bug', 'e2e-tests'],
             });
+        env:
+          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
 
       # A green scheduled run closes the failure issue this job filed (#7277):
       # otherwise one red day stays open for good, and the dedupe above means
@@ -135,5 +137,3 @@ jobs:
                 state_reason: 'completed',
               });
             }
-        env:
-          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
