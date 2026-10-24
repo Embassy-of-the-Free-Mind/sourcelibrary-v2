@@ -1,0 +1,2103 @@
+{
+  "_doc": "Hand-picked input for build-yucatec-course.mjs (#6921). Every sentence, attestation and gloss here is checked VERBATIM against the page text at build time; nothing is written from recall. `page_checks` records that the page IMAGE was opened and read for every page a sentence or word is taken from. Schema: scripts/learn/README.md (Yucatec section).",
+  "books": {
+    "berendt": {
+      "id": "6acc3e26230e9a56175cdf9c",
+      "cite": "Berendt, Cartilla en lengua maya (1871)"
+    },
+    "ruz": {
+      "id": "6acc3dc5230e9a56175cd6de",
+      "cite": "Ruz, Cartilla ó silabario de lengua maya (1845)"
+    },
+    "decl1860": {
+      "id": "6acc3df2230e9a56175cdd1c",
+      "cite": "Beltrán, Declaración de la doctrina cristiana (1860)"
+    },
+    "piop": {
+      "id": "6acc3dfa230e9a56175cdd32",
+      "cite": "Pío Pérez, Diccionario de la lengua maya (1866–77)"
+    },
+    "motul1": {
+      "id": "6acc3d5f230e9a56175cc731",
+      "cite": "Diccionario de Motul, vol. 1"
+    },
+    "coord": {
+      "id": "6a9f3fa783c3b522416e4a0d",
+      "cite": "Beltrán, Coordinación alfabética de las voces del idioma maya (1898)"
+    },
+    "arte": {
+      "id": "6a9f3fa483c3b522416e48fa",
+      "cite": "Beltrán, Arte del idioma maya (1859)"
+    },
+    "tozzer": {
+      "id": "6acc3ed4230e9a56175ce8e7",
+      "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    "dresden": {
+      "id": "69dfd990220eedf04e13b0cf",
+      "cite": "Dresden Codex"
+    }
+  },
+  "page_checks": {
+    "berendt:9": "Image read 2026-10-18. Lesson 7 word list matches the OCR (naa, nii, paal, uich, chii).",
+    "berendt:10": "Image read 2026-10-18. Lesson 8 list matches the OCR (me-hen, zu-cun, ui-nic, cħup-lal with barred h, xi-cin).",
+    "berendt:11": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'.",
+    "berendt:12": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used.",
+    "berendt:13": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4).",
+    "berendt:14": "Image read 2026-10-18. 'Leiti cu bin antah ua ca katic y a puczikal.' matches the OCR.",
+    "berendt:16": "Image read 2026-10-18. The commandments match the OCR (barred p in camꝑel).",
+    "ruz:14": "Image read 2026-10-18. Two-syllable list matches the OCR (co-ten, ta-lez, tu-nich, cu-len, co-lel, ui-nic, xi-pal, me-hen, nu-xib, hun-tul, hun-pél).",
+    "decl1860:11": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR.",
+    "piop:64": "Image read 2026-10-18. BEL entry with 'bix a bel, bix u beloob' matches the OCR.",
+    "piop:68": "Image read 2026-10-18. BIX entry with 'bix a bel, como estás ó te hallas' matches the OCR."
+  },
+  "notes": [
+    {
+      "id": "yn-1",
+      "title": "My, your, his",
+      "examples": [
+        [
+          "in kaba",
+          "my name"
+        ],
+        [
+          "a kaba",
+          "your name"
+        ],
+        [
+          "u kaba",
+          "his or her name"
+        ]
+      ],
+      "body": "Put in, a or u in front of a word to say whose it is.",
+      "quotes": [
+        {
+          "key": "arte",
+          "page": 35,
+          "es": "Este pronombre se llama mixto, porque igualmente sirve para demostrativos y posesivos.",
+          "en": "This pronoun is called mixed because it serves equally as demonstrative and possessive."
+        },
+        {
+          "key": "arte",
+          "page": 35,
+          "es": "En cuanto posesivo sirve para declinar todos los nombres, que así mismo comienzan en consonante.",
+          "en": "As a possessive it serves to decline all nouns that likewise begin with a consonant, but only when denoting possession."
+        },
+        {
+          "key": "tozzer",
+          "page": 63,
+          "en": "There are two forms of the pronoun, the real pronoun called \"verbal\" and used as a suffix and the possessive pronoun called \"nominal\" and used as a prefix."
+        }
+      ],
+      "table": {
+        "key": "arte",
+        "page": 35,
+        "rows": [
+          [
+            "In,",
+            "Yo ó mio.",
+            "I or mine."
+          ],
+          [
+            "A,",
+            "Tú ó tuyo.",
+            "You or yours."
+          ],
+          [
+            "U,",
+            "Aquel ó suyo.",
+            "That one or his."
+          ]
+        ]
+      }
+    },
+    {
+      "id": "yn-2",
+      "title": "Counting people and things",
+      "examples": [
+        [
+          "oxtul xiblal",
+          "three men"
+        ],
+        [
+          "oxpel",
+          "three things"
+        ]
+      ],
+      "body": "Add -tul to count people, -pel to count things.",
+      "quotes": [
+        {
+          "key": "tozzer",
+          "page": 127,
+          "en": "There is a large number of classificatory suffixes in use with the numerals. The latter can never stand alone."
+        },
+        {
+          "key": "tozzer",
+          "page": 127,
+          "en": "At the present time all nouns are broadly classified into two classes, animate and inanimate, by the two suffixes -tul and -p'el:"
+        },
+        {
+          "key": "tozzer",
+          "page": 127,
+          "en": "oš-tul winik, three men, — oš-p'el na, three houses."
+        },
+        {
+          "key": "tozzer",
+          "page": 124,
+          "en": "oš la hun, 13 (3 and 10). — kan la hun, 14 (4 and 10), etc."
+        },
+        {
+          "key": "tozzer",
+          "page": 125,
+          "en": "These latter show, in most cases, a fleshless lower jaw signifying 10 in addition to the glyph for the numbers from 3 to 9."
+        }
+      ]
+    },
+    {
+      "id": "yn-3",
+      "title": "Whose son?",
+      "examples": [
+        [
+          "u mehen in yum",
+          "my father’s son"
+        ],
+        [
+          "u xcħupal a na",
+          "your mother’s daughter"
+        ]
+      ],
+      "body": "Say the thing first, with u. Then say whose it is.",
+      "quotes": [
+        {
+          "key": "tozzer",
+          "page": 73,
+          "en": "The forms of the nominal pronoun used to convey the idea of possession are attached to the name of the object possessed rather than to that of the possessor;"
+        },
+        {
+          "key": "tozzer",
+          "page": 73,
+          "en": "u peq winik, the man's dog."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "id": "yw-bix",
+      "form": "bix",
+      "short": "how",
+      "dict": {
+        "key": "piop",
+        "page": 68,
+        "head": "^BIX: como"
+      },
+      "attest": {
+        "key": "piop",
+        "page": 68,
+        "text": "bix a bel"
+      }
+    },
+    {
+      "id": "yw-bel",
+      "form": "bel",
+      "short": "state of health; used in greeting",
+      "dict": {
+        "key": "piop",
+        "page": 64,
+        "head": "^BEL: el estado"
+      },
+      "attest": {
+        "key": "piop",
+        "page": 64,
+        "text": "bix a bel, bix u beloob"
+      }
+    },
+    {
+      "id": "yw-a",
+      "form": "a",
+      "short": "your",
+      "dict": {
+        "key": "coord",
+        "page": 17,
+        "head": "^A\\. pronombre posesivo"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "max á kaba",
+        "form": "á"
+      }
+    },
+    {
+      "id": "yw-in",
+      "form": "in",
+      "short": "my",
+      "dict": {
+        "key": "coord",
+        "page": 53,
+        "head": "^In\\. pronombre de la primera"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "in kaba"
+      }
+    },
+    {
+      "id": "yw-u",
+      "form": "u",
+      "short": "his, her, its",
+      "dict": {
+        "key": "coord",
+        "page": 97,
+        "head": "^U\\. Su; pronombre"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "U me-hen in yum"
+      }
+    },
+    {
+      "id": "yw-utz",
+      "form": "utz",
+      "short": "good",
+      "dict": {
+        "key": "piop",
+        "page": 423,
+        "head": "^UTZ: bueno"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 13,
+        "text": "Le max cu betic utz ua lob utial leti cu betic."
+      }
+    },
+    {
+      "id": "yw-lob",
+      "form": "lob",
+      "short": "harm, a bad thing",
+      "dict": {
+        "key": "piop",
+        "page": 242,
+        "head": "^LOB: daño"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 13,
+        "text": "Le max cu betic utz ua lob utial leti cu betic."
+      }
+    },
+    {
+      "id": "yw-kaba",
+      "form": "kaba",
+      "short": "name",
+      "dict": {
+        "key": "piop",
+        "page": 204,
+        "head": "^KABA: nombre"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "max á kaba"
+      }
+    },
+    {
+      "id": "yw-max",
+      "form": "max",
+      "short": "who",
+      "dict": {
+        "key": "piop",
+        "page": 251,
+        "head": "^MAC: quien"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "max á kaba"
+      },
+      "source_note": "Pío Pérez enters it as mac and maax; Beltrán’s catechism prints max."
+    },
+    {
+      "id": "yw-uaix",
+      "form": "ua ix",
+      "short": "or",
+      "dict": {
+        "key": "piop",
+        "page": 412,
+        "head": "^UAIX:"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "Pedro, ua ix Juan, in kaba."
+      },
+      "source_note": "Pío Pérez writes it as one word, uaix."
+    },
+    {
+      "id": "yw-pal",
+      "form": "pal",
+      "short": "boy, child",
+      "dict": {
+        "key": "piop",
+        "page": 309,
+        "head": "^PAL: mozo"
+      },
+      "note": "In the catechism the priest calls the child Pale.",
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "Pale, álten max á kaba?",
+        "form": "Pale"
+      }
+    },
+    {
+      "id": "yw-uinic",
+      "form": "uinic",
+      "short": "man, person",
+      "dict": {
+        "key": "piop",
+        "page": 421,
+        "head": "^UINIC: hombre"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 10,
+        "text": "ui-nic",
+        "form": "ui-nic"
+      }
+    },
+    {
+      "id": "yw-hahal",
+      "form": "hahal",
+      "short": "true",
+      "dict": {
+        "key": "piop",
+        "page": 150,
+        "head": "^HAHAL: verdadero"
+      },
+      "attest": {
+        "key": "decl1860",
+        "page": 11,
+        "text": "Hahal Dios, hahal uinicixan."
+      }
+    },
+    {
+      "id": "yw-xiblal",
+      "form": "xiblal",
+      "short": "male, the man",
+      "dict": {
+        "key": "piop",
+        "page": 434,
+        "head": "^XIBLAL:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "le mehen h xiblal yan ichna"
+      }
+    },
+    {
+      "id": "yw-chuplal",
+      "form": "cħuplal",
+      "short": "girl, young woman",
+      "dict": {
+        "key": "coord",
+        "page": 40,
+        "head": "^Cħupal, Muchacha"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 10,
+        "text": "cħup-lal",
+        "form": "cħup-lal"
+      },
+      "source_note": "The Coordinación (same page) gives cħuplal as the plural of cħupal. Berendt’s translation renders it “woman”."
+    },
+    {
+      "id": "yw-colel",
+      "form": "colel",
+      "short": "lady",
+      "dict": {
+        "key": "piop",
+        "page": 96,
+        "head": "^COLEL:"
+      },
+      "attest": {
+        "key": "ruz",
+        "page": 14,
+        "text": "co-lel",
+        "form": "co-lel"
+      }
+    },
+    {
+      "id": "yw-nuxib",
+      "form": "nuxib",
+      "short": "old man",
+      "dict": {
+        "key": "piop",
+        "page": 294,
+        "head": "^NUXIB:"
+      },
+      "attest": {
+        "key": "ruz",
+        "page": 14,
+        "text": "nu-xib",
+        "form": "nu-xib"
+      }
+    },
+    {
+      "id": "yw-xipal",
+      "form": "xipal",
+      "short": "child, youth",
+      "dict": {
+        "key": "piop",
+        "page": 435,
+        "head": "^XIPAL:"
+      },
+      "attest": {
+        "key": "ruz",
+        "page": 14,
+        "text": "xi-pal",
+        "form": "xi-pal"
+      }
+    },
+    {
+      "id": "yw-coten",
+      "form": "coten",
+      "short": "come here",
+      "dict": {
+        "key": "motul1",
+        "page": 887,
+        "head": "^\\[V\\]ay\\. l\\. vaye",
+        "es_excerpt": "coten vaye: ven aca",
+        "en_excerpt": "coten vaye: come here"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Coten a hanal cay."
+      }
+    },
+    {
+      "id": "yw-xen",
+      "form": "xen",
+      "short": "go away",
+      "dict": {
+        "key": "piop",
+        "page": 433,
+        "head": "^XEN:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Xen ximbal ta cahal."
+      }
+    },
+    {
+      "id": "yw-talez",
+      "form": "talez",
+      "short": "bring",
+      "dict": {
+        "key": "piop",
+        "page": 358,
+        "head": "^TALEZAH:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Talez in bóx tzimin."
+      },
+      "source_note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez."
+    },
+    {
+      "id": "yw-culen",
+      "form": "culen",
+      "short": "sit down",
+      "dict": {
+        "key": "coord",
+        "page": 34,
+        "head": "^Cultal, culhi, culac"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Cu-len yokol tunich.",
+        "form": "Culen"
+      },
+      "source_note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen."
+    },
+    {
+      "id": "yw-hanal",
+      "form": "hanal",
+      "short": "to eat",
+      "dict": {
+        "key": "piop",
+        "page": 153,
+        "head": "^HANAL, HANI"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Coten a hanal cay."
+      }
+    },
+    {
+      "id": "yw-cay",
+      "form": "cay",
+      "short": "fish",
+      "dict": {
+        "key": "piop",
+        "page": 86,
+        "head": "^CAY, CAYIL"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Coten a hanal cay."
+      }
+    },
+    {
+      "id": "yw-tunich",
+      "form": "tunich",
+      "short": "stone",
+      "dict": {
+        "key": "piop",
+        "page": 381,
+        "head": "^TUNICH"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Cu-len yokol tunich."
+      }
+    },
+    {
+      "id": "yw-yokol",
+      "form": "yokol",
+      "short": "above, upon",
+      "dict": {
+        "key": "piop",
+        "page": 450,
+        "head": "^YOKOL:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "Cu-len yokol tunich."
+      }
+    },
+    {
+      "id": "yw-hun",
+      "form": "hun",
+      "short": "one",
+      "number": 1,
+      "dict": {
+        "key": "piop",
+        "page": 189,
+        "head": "^HUN: uno"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "hun."
+      },
+      "dresden": "num-41-pos-L5"
+    },
+    {
+      "id": "yw-ca",
+      "form": "ca",
+      "short": "two",
+      "number": 2,
+      "dict": {
+        "key": "piop",
+        "page": 78,
+        "head": "^CA: numeral"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ca."
+      },
+      "dresden": "num-27-pos-c2-20"
+    },
+    {
+      "id": "yw-ox",
+      "form": "ox",
+      "short": "three",
+      "number": 3,
+      "dict": {
+        "key": "piop",
+        "page": 300,
+        "head": "^OX: número cardinal"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ox."
+      },
+      "dresden": "num-27-pos-c1-360"
+    },
+    {
+      "id": "yw-can",
+      "form": "can",
+      "short": "four",
+      "number": 4,
+      "dict": {
+        "key": "piop",
+        "page": 83,
+        "head": "^CAN, CANIL: numeral"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "can."
+      },
+      "dresden": "num-41-s3a-1"
+    },
+    {
+      "id": "yw-ho",
+      "form": "ho",
+      "short": "five",
+      "number": 5,
+      "dict": {
+        "key": "piop",
+        "page": 171,
+        "head": "^HO: cinco"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "| 5 | ho |"
+      }
+    },
+    {
+      "id": "yw-uac",
+      "form": "uac",
+      "short": "six",
+      "number": 6,
+      "dict": {
+        "key": "piop",
+        "page": 411,
+        "head": "^UAC: seis"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "uac."
+      },
+      "dresden": "num-41-s3a-2"
+    },
+    {
+      "id": "yw-uuc",
+      "form": "uuc",
+      "short": "seven",
+      "number": 7,
+      "dict": {
+        "key": "piop",
+        "page": 423,
+        "head": "^UUC: siete"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "uuc."
+      },
+      "dresden": "num-41-s3a-3"
+    },
+    {
+      "id": "yw-uaxac",
+      "form": "uaxac",
+      "short": "eight",
+      "number": 8,
+      "dict": {
+        "key": "piop",
+        "page": 415,
+        "head": "^UAXAC: ocho"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ua-xac.",
+        "form": "ua-xac"
+      },
+      "dresden": "num-41-pos-L1"
+    },
+    {
+      "id": "yw-bolon",
+      "form": "bolon",
+      "short": "nine",
+      "number": 9,
+      "dict": {
+        "key": "piop",
+        "page": 71,
+        "head": "^BOLON: nueve"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "bolon."
+      }
+    },
+    {
+      "id": "yw-lahun",
+      "form": "lahun",
+      "short": "ten",
+      "number": 10,
+      "dict": {
+        "key": "piop",
+        "page": 232,
+        "head": "^LAHUN: diez"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "la-hun.",
+        "form": "la-hun"
+      },
+      "dresden": "num-41-s3b-4"
+    },
+    {
+      "id": "yw-buluc",
+      "form": "buluc",
+      "short": "eleven",
+      "number": 11,
+      "dict": {
+        "key": "piop",
+        "page": 74,
+        "head": "^BULUC: once"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "bu-luc.",
+        "form": "bu-luc"
+      },
+      "dresden": "num-32-lo-g45-c"
+    },
+    {
+      "id": "yw-lahca",
+      "form": "lahca",
+      "short": "twelve",
+      "number": 12,
+      "dict": {
+        "key": "piop",
+        "page": 232,
+        "head": "^LAHCA: doce"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "lah-ca.",
+        "form": "lah-ca"
+      },
+      "dresden": "num-41-s3a-4"
+    },
+    {
+      "id": "yw-oxlahun",
+      "form": "oxlahun",
+      "short": "thirteen",
+      "number": 13,
+      "dict": {
+        "key": "piop",
+        "page": 300,
+        "head": "^OXLAHUN: trece"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ox-la-hun.",
+        "form": "ox-la-hun"
+      },
+      "dresden": "num-32-lo-g41-b",
+      "note": "Ox + lahun: three and ten. Up to nineteen, the teens are built the same way."
+    },
+    {
+      "id": "yw-canlahun",
+      "form": "canlahun",
+      "short": "fourteen",
+      "number": 14,
+      "dict": {
+        "key": "piop",
+        "page": 83,
+        "head": "^CAN LAHUN: catorce"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "can-la-hun.",
+        "form": "can-la-hun"
+      },
+      "dresden": "num-41-pos-R3"
+    },
+    {
+      "id": "yw-holahun",
+      "form": "holahun",
+      "short": "fifteen",
+      "number": 15,
+      "dict": {
+        "key": "piop",
+        "page": 176,
+        "head": "^HOLAHUN: quince"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ho-la-hun.",
+        "form": "ho-la-hun"
+      },
+      "dresden": "num-41-pos-L3"
+    },
+    {
+      "id": "yw-uaclahun",
+      "form": "uaclahun",
+      "short": "sixteen",
+      "number": 16,
+      "dict": {
+        "key": "piop",
+        "page": 411,
+        "head": "^UAC-LAHUN: diez y seis"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "uac-la-hun.",
+        "form": "uac-la-hun"
+      },
+      "dresden": "num-41-pos-L2"
+    },
+    {
+      "id": "yw-uuclahun",
+      "form": "uuclahun",
+      "short": "seventeen",
+      "number": 17,
+      "dict": {
+        "key": "piop",
+        "page": 423,
+        "head": "^UUC-LAHUN: diez y siete"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "uuc-la-hun.",
+        "form": "uuc-la-hun"
+      },
+      "dresden": "num-32-up-g2-20"
+    },
+    {
+      "id": "yw-uaxaclahun",
+      "form": "uaxaclahun",
+      "short": "eighteen",
+      "number": 18,
+      "dict": {
+        "key": "piop",
+        "page": 415,
+        "head": "^UAXAC-LAHUN: diez y ocho"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "ua-xac-la-hun.",
+        "form": "ua-xac-la-hun"
+      },
+      "dresden": "num-32-lo-g44-d"
+    },
+    {
+      "id": "yw-bolonlahun",
+      "form": "bolonlahun",
+      "short": "nineteen",
+      "number": 19,
+      "dict": {
+        "key": "piop",
+        "page": 71,
+        "head": "^BOLON LAHUN: diez y nueve"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "bo-lon-la-hun.",
+        "form": "bo-lon-la-hun"
+      }
+    },
+    {
+      "id": "yw-hunkal",
+      "form": "hunkal",
+      "short": "twenty",
+      "number": 20,
+      "dict": {
+        "key": "piop",
+        "page": 190,
+        "head": "^HUNKAL:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "hun-kal.",
+        "form": "hun-kal"
+      }
+    },
+    {
+      "id": "yw-pel",
+      "form": "-pel",
+      "short": "ending for counting things",
+      "dict": {
+        "key": "piop",
+        "page": 336,
+        "head": "^PPEL: terminacion"
+      },
+      "keywords": [
+        "numerals",
+        "counting",
+        "things"
+      ],
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "Campel catac oxpel cu xocol uucpel"
+      },
+      "source_note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel."
+    },
+    {
+      "id": "yw-tul",
+      "form": "-tul",
+      "short": "ending for counting people",
+      "dict": {
+        "key": "piop",
+        "page": 379,
+        "head": "^TUL: unido"
+      },
+      "keywords": [
+        "rational",
+        "beings",
+        "count"
+      ],
+      "attest": {
+        "key": "berendt",
+        "page": 13,
+        "text": "oxtul xib-lal y catul cħuplal"
+      }
+    },
+    {
+      "id": "yw-catac",
+      "form": "catac",
+      "short": "and (between numbers)",
+      "dict": {
+        "key": "piop",
+        "page": 85,
+        "head": "^CATAC:"
+      },
+      "keywords": [
+        "and",
+        "numbers"
+      ],
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "Campel catac oxpel cu xocol uucpel"
+      }
+    },
+    {
+      "id": "yw-xoc",
+      "form": "xoc",
+      "short": "to count, to read",
+      "dict": {
+        "key": "piop",
+        "page": 437,
+        "head": "^XOC, XOCAH"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "Campel catac oxpel cu xocol uucpel"
+      }
+    },
+    {
+      "id": "yw-yum",
+      "form": "yum",
+      "short": "father, lord",
+      "dict": {
+        "key": "piop",
+        "page": 451,
+        "head": "^YUM: padre"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "U me-hen in yum."
+      }
+    },
+    {
+      "id": "yw-na",
+      "form": "na",
+      "short": "mother",
+      "dict": {
+        "key": "piop",
+        "page": 272,
+        "head": "^NA: con pronunciacion fuerte"
+      },
+      "note": "Na also means house. In “mother” the vowel is said strongly, so some write naa.",
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "u xchup-al a na."
+      }
+    },
+    {
+      "id": "yw-mehen",
+      "form": "mehen",
+      "short": "son",
+      "dict": {
+        "key": "piop",
+        "page": 259,
+        "head": "^MEHEN: hijo"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "U me-hen in yum.",
+        "form": "me-hen"
+      }
+    },
+    {
+      "id": "yw-chupal",
+      "form": "cħupal",
+      "short": "girl, young woman",
+      "dict": {
+        "key": "piop",
+        "page": 137,
+        "head": "^CĦUPAL: muchacha"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "u xchup-al a na.",
+        "form": "xcħup-al"
+      },
+      "source_note": "Berendt prints xcħupal; his translation gives “daughter”."
+    },
+    {
+      "id": "yw-zucun",
+      "form": "zucun",
+      "short": "elder brother",
+      "dict": {
+        "key": "piop",
+        "page": 464,
+        "head": "^ZUCUN:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "Tħanten a zucun Juan."
+      }
+    },
+    {
+      "id": "yw-cic",
+      "form": "cic",
+      "short": "elder sister",
+      "dict": {
+        "key": "piop",
+        "page": 89,
+        "head": "^CIC: hermana mayor"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "u noh-yum in cic."
+      }
+    },
+    {
+      "id": "yw-nohoch",
+      "form": "nohoch",
+      "short": "large",
+      "dict": {
+        "key": "piop",
+        "page": 286,
+        "head": "^NOHOCH:"
+      },
+      "note": "Nohoch yum, “great father”, is your grandfather.",
+      "attest": {
+        "key": "berendt",
+        "page": 12,
+        "text": "Binezti haa a nohoch yum."
+      }
+    },
+    {
+      "id": "yw-ich",
+      "form": "uich",
+      "short": "face, eyes, fruit",
+      "dict": {
+        "key": "piop",
+        "page": 196,
+        "head": "^ICH: cara"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "u uich op."
+      },
+      "source_note": "Pío Pérez enters the word under ICH; Berendt prints uich."
+    },
+    {
+      "id": "yw-ni",
+      "form": "ni",
+      "short": "nose",
+      "dict": {
+        "key": "piop",
+        "page": 282,
+        "head": "^NI: pronunciando"
+      },
+      "keywords": [
+        "nose",
+        "snout"
+      ],
+      "attest": {
+        "key": "berendt",
+        "page": 9,
+        "text": "nii.",
+        "form": "nii"
+      }
+    },
+    {
+      "id": "yw-chi",
+      "form": "chi",
+      "short": "mouth",
+      "dict": {
+        "key": "coord",
+        "page": 37,
+        "head": "^Chi, Boca"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 9,
+        "text": "chii.",
+        "form": "chii"
+      }
+    },
+    {
+      "id": "yw-xicin",
+      "form": "xicin",
+      "short": "ear",
+      "dict": {
+        "key": "piop",
+        "page": 434,
+        "head": "^XICIN:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 10,
+        "text": "xi-cin.",
+        "form": "xi-cin"
+      }
+    },
+    {
+      "id": "yw-pol",
+      "form": "pol",
+      "short": "head",
+      "dict": {
+        "key": "piop",
+        "page": 324,
+        "head": "^POL: cabeza"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "u pol kix-pach-och."
+      }
+    },
+    {
+      "id": "yw-kab",
+      "form": "kab",
+      "short": "arm, hand",
+      "dict": {
+        "key": "piop",
+        "page": 204,
+        "head": "^KAB: brazo"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 13,
+        "text": "U caɔiɔ yal in kab, tucħub u kaba."
+      }
+    },
+    {
+      "id": "yw-oc",
+      "form": "oc",
+      "short": "foot, leg",
+      "dict": {
+        "key": "piop",
+        "page": 295,
+        "head": "^OC: pi[ée]"
+      },
+      "note": "u + oc makes yoc: its leg. Before a vowel, u turns into y.",
+      "note_ref": {
+        "key": "tozzer",
+        "page": 73
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 11,
+        "text": "ox-pel yoc in caa.",
+        "form": "yoc"
+      }
+    },
+    {
+      "id": "yw-puczikal",
+      "form": "puczikal",
+      "short": "heart",
+      "dict": {
+        "key": "piop",
+        "page": 327,
+        "head": "^PUCZIKAL:"
+      },
+      "attest": {
+        "key": "berendt",
+        "page": 14,
+        "text": "Leiti cu bin antah ua ca katic y a puczikal."
+      }
+    },
+    {
+      "id": "yw-al",
+      "form": "al",
+      "short": "a woman's child",
+      "dict": {
+        "key": "piop",
+        "page": 50,
+        "head": "^AL: hijo"
+      },
+      "keywords": [
+        "son",
+        "daughter",
+        "woman"
+      ],
+      "note": "Yal in kab is a finger of my hand: the same al, with y in front.",
+      "attest": {
+        "key": "berendt",
+        "page": 13,
+        "text": "U caɔiɔ yal in kab, tucħub u kaba.",
+        "form": "yal"
+      }
+    }
+  ],
+  "sentences": [
+    {
+      "id": "ys-bix-a-bel",
+      "key": "piop",
+      "page": 68,
+      "maya": "bix a bel",
+      "es": "como estás ó te hallas",
+      "en": "how are you, how do you find yourself",
+      "en_short": "How are you?",
+      "words": [
+        "yw-bix",
+        "yw-a",
+        "yw-bel"
+      ],
+      "tiles": [
+        "bix",
+        "a",
+        "bel"
+      ],
+      "rule": {
+        "note": "yn-1",
+        "quote": 1,
+        "text": "a goes in front of what it owns: a bel, your health."
+      }
+    },
+    {
+      "id": "ys-max-kaba",
+      "key": "decl1860",
+      "page": 11,
+      "maya": "Pale, álten max á kaba?",
+      "en": "Child, tell me, what is your name?",
+      "words": [
+        "yw-pal",
+        "yw-max",
+        "yw-a",
+        "yw-kaba"
+      ],
+      "tiles": [
+        "max",
+        "á",
+        "kaba?"
+      ],
+      "tiles_en": "what is your name?",
+      "rule": {
+        "note": "yn-1",
+        "quote": 1,
+        "text": "Max, who, comes first. Then á kaba: your name."
+      }
+    },
+    {
+      "id": "ys-in-kaba",
+      "key": "decl1860",
+      "page": 11,
+      "maya": "Pedro, ua ix Juan, in kaba.",
+      "en": "Peter, or else John, is my name.",
+      "words": [
+        "yw-uaix",
+        "yw-in",
+        "yw-kaba"
+      ],
+      "fill": "yw-in"
+    },
+    {
+      "id": "ys-utz-lob",
+      "key": "berendt",
+      "page": 13,
+      "maya": "Le max cu betic utz ua lob utial leti cu betic.",
+      "en": "Whoever does good or evil, does it for himself.",
+      "words": [
+        "yw-max",
+        "yw-utz",
+        "yw-lob"
+      ],
+      "fill": "yw-utz"
+    },
+    {
+      "id": "ys-hahal",
+      "key": "decl1860",
+      "page": 11,
+      "maya": "Hahal Dios, hahal uinicixan.",
+      "en": "True God, and true man as well.",
+      "words": [
+        "yw-hahal",
+        "yw-uinic"
+      ]
+    },
+    {
+      "id": "ys-coten",
+      "key": "berendt",
+      "page": 11,
+      "maya": "Coten a hanal cay.",
+      "en": "Come eat fish.",
+      "words": [
+        "yw-coten",
+        "yw-a",
+        "yw-hanal",
+        "yw-cay"
+      ],
+      "tiles": [
+        "Coten",
+        "a",
+        "hanal",
+        "cay."
+      ],
+      "rule": {
+        "note": "yn-1",
+        "quote": 0,
+        "text": "Coten, come, goes first. Same a as in a kaba: here it means you."
+      }
+    },
+    {
+      "id": "ys-culen",
+      "key": "berendt",
+      "page": 11,
+      "maya": "Cu-len yokol tunich.",
+      "show": "Culen yokol tunich.",
+      "show_note": "Berendt splits Cu-len across two lines.",
+      "en": "Sit down upon the stone.",
+      "words": [
+        "yw-culen",
+        "yw-yokol",
+        "yw-tunich"
+      ],
+      "tiles": [
+        "Culen",
+        "yokol",
+        "tunich."
+      ],
+      "rule": {
+        "text": "Same order as English: sit down, upon, the stone."
+      }
+    },
+    {
+      "id": "ys-xen",
+      "key": "berendt",
+      "page": 11,
+      "maya": "Xen ximbal ta cahal.",
+      "en": "Go walk in your town.",
+      "words": [
+        "yw-xen"
+      ]
+    },
+    {
+      "id": "ys-talez",
+      "key": "berendt",
+      "page": 11,
+      "maya": "Talez in bóx tzimin.",
+      "en": "Bring my black horse.",
+      "words": [
+        "yw-talez",
+        "yw-in"
+      ],
+      "fill": "yw-in"
+    },
+    {
+      "id": "ys-campel",
+      "key": "berendt",
+      "page": 12,
+      "maya": "Campel catac oxpel cu xocol uucpel",
+      "es": "cuatro y tres cuéntanse siete.",
+      "en": "Four and three are counted as seven",
+      "words": [
+        "yw-can",
+        "yw-catac",
+        "yw-ox",
+        "yw-xoc",
+        "yw-uuc",
+        "yw-pel"
+      ],
+      "tiles": [
+        "Campel",
+        "catac",
+        "oxpel",
+        "cu xocol",
+        "uucpel"
+      ],
+      "rule": {
+        "note": "yn-2",
+        "quote": 1,
+        "text": "Each number ends in -pel. Catac, and, goes between them."
+      }
+    },
+    {
+      "id": "ys-oxpel-ti",
+      "key": "berendt",
+      "page": 12,
+      "maya": "Oxpel ti uucpel yalatah campel",
+      "es": "tres â siete sobran cuatro.",
+      "en": "Three from seven leaves four",
+      "words": [
+        "yw-ox",
+        "yw-uuc",
+        "yw-can",
+        "yw-pel"
+      ],
+      "fill_text": {
+        "blank": "uucpel",
+        "choices": [
+          {
+            "text": "uucpel",
+            "word": "yw-uuc"
+          },
+          {
+            "text": "uacpel",
+            "word": "yw-uac"
+          },
+          {
+            "text": "campel",
+            "word": "yw-can"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ys-oxlem",
+      "key": "berendt",
+      "page": 13,
+      "maya": "Oxlem capel cu hokol uacpel",
+      "es": "dos veces tres salen seis.",
+      "en": "Three times two makes six",
+      "words": [
+        "yw-ox",
+        "yw-ca",
+        "yw-uac",
+        "yw-pel"
+      ],
+      "fill_text": {
+        "blank": "uacpel",
+        "choices": [
+          {
+            "text": "uacpel",
+            "word": "yw-uac"
+          },
+          {
+            "text": "uucpel",
+            "word": "yw-uuc"
+          },
+          {
+            "text": "campel",
+            "word": "yw-can"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ys-oxtul",
+      "key": "berendt",
+      "page": 13,
+      "maya": "oxtul xib-lal y catul cħuplal",
+      "show": "oxtul xiblal y catul cħuplal",
+      "show_note": "Berendt splits xib-lal across two lines. His y has a bar through it: short for yetel, “and”.",
+      "en": "three males and two females",
+      "words": [
+        "yw-ox",
+        "yw-tul",
+        "yw-xiblal",
+        "yw-ca",
+        "yw-chuplal"
+      ],
+      "fill_text": {
+        "blank": "oxtul",
+        "choices": [
+          {
+            "text": "oxtul",
+            "word": "yw-tul"
+          },
+          {
+            "text": "oxpel",
+            "word": "yw-pel"
+          }
+        ],
+        "explain": {
+          "note": "yn-2",
+          "quote": 1,
+          "text": "People take -tul. Oxpel would be three things."
+        }
+      }
+    },
+    {
+      "id": "ys-mehen-yum",
+      "key": "berendt",
+      "page": 11,
+      "maya": "U me-hen in yum.",
+      "show": "U mehen in yum.",
+      "show_note": "Berendt splits the words into syllables in this lesson: me-hen.",
+      "en": "My father's son.",
+      "words": [
+        "yw-u",
+        "yw-mehen",
+        "yw-in",
+        "yw-yum"
+      ],
+      "tiles": [
+        "U",
+        "mehen",
+        "in",
+        "yum."
+      ],
+      "rule": {
+        "note": "yn-3",
+        "quote": 0,
+        "text": "Son first: u mehen, his son. Then whose: in yum, my father."
+      }
+    },
+    {
+      "id": "ys-chupal-na",
+      "key": "berendt",
+      "page": 11,
+      "maya": "u xchup-al a na.",
+      "show": "u xcħupal a na.",
+      "show_note": "The page prints xcħup-al with a barred h; the transcription reads xchup-al.",
+      "en": "your mother's daughter.",
+      "words": [
+        "yw-u",
+        "yw-chupal",
+        "yw-a",
+        "yw-na"
+      ],
+      "tiles": [
+        "u",
+        "xcħupal",
+        "a",
+        "na."
+      ],
+      "rule": {
+        "note": "yn-3",
+        "quote": 0,
+        "text": "Daughter first: u xcħupal, her daughter. Then whose: a na, your mother."
+      }
+    },
+    {
+      "id": "ys-campel-yum",
+      "key": "berendt",
+      "page": 16,
+      "maya": "U camꝑel, bin á tzic á yum y á ná.",
+      "en": "The fourth, you shall honor your father and your mother.",
+      "words": [
+        "yw-yum",
+        "yw-na",
+        "yw-a"
+      ],
+      "fill": "yw-yum"
+    },
+    {
+      "id": "ys-zucun",
+      "key": "berendt",
+      "page": 12,
+      "maya": "Tħanten a zucun Juan.",
+      "en": "Call your older brother John for me.",
+      "words": [
+        "yw-a",
+        "yw-zucun"
+      ],
+      "fill": "yw-zucun"
+    },
+    {
+      "id": "ys-nohoch",
+      "key": "berendt",
+      "page": 12,
+      "maya": "Binezti haa a nohoch yum.",
+      "en": "Carry water to your grandfather.",
+      "words": [
+        "yw-a",
+        "yw-nohoch",
+        "yw-yum"
+      ],
+      "fill": "yw-nohoch"
+    },
+    {
+      "id": "ys-cic",
+      "key": "berendt",
+      "page": 11,
+      "maya": "u noh-yum in cic.",
+      "show": "u nohyum in cic.",
+      "show_note": "Berendt splits the words into syllables in this lesson: noh-yum.",
+      "en": "my older sister's grandfather.",
+      "words": [
+        "yw-u",
+        "yw-in",
+        "yw-cic",
+        "yw-yum"
+      ],
+      "tiles": [
+        "u",
+        "nohyum",
+        "in",
+        "cic."
+      ],
+      "rule": {
+        "note": "yn-3",
+        "quote": 0,
+        "text": "Grandfather first: u nohyum. Then whose: in cic, my older sister."
+      }
+    },
+    {
+      "id": "ys-tal-yum",
+      "key": "berendt",
+      "page": 12,
+      "maya": "He cu tal a yum ich col.",
+      "en": "Here comes your father in the cornfield.",
+      "words": [
+        "yw-a",
+        "yw-yum"
+      ]
+    },
+    {
+      "id": "ys-pol",
+      "key": "berendt",
+      "page": 11,
+      "maya": "u pol kix-pach-och.",
+      "show": "u pol kixpachoch.",
+      "show_note": "Berendt splits the words into syllables in this lesson: kix-pach-och.",
+      "en": "the opossum's head.",
+      "words": [
+        "yw-u",
+        "yw-pol"
+      ],
+      "fill": "yw-pol"
+    },
+    {
+      "id": "ys-uich",
+      "key": "berendt",
+      "page": 11,
+      "maya": "u uich op.",
+      "en": "the custard apple's fruit.",
+      "words": [
+        "yw-u",
+        "yw-ich"
+      ]
+    },
+    {
+      "id": "ys-kab",
+      "key": "berendt",
+      "page": 13,
+      "maya": "U caɔiɔ yal in kab, tucħub u kaba.",
+      "en": "The second finger of my hand, its name is the index finger.",
+      "words": [
+        "yw-al",
+        "yw-in",
+        "yw-kab",
+        "yw-u",
+        "yw-kaba"
+      ],
+      "fill": "yw-kab"
+    },
+    {
+      "id": "ys-oc",
+      "key": "berendt",
+      "page": 11,
+      "maya": "ox-pel yoc in caa.",
+      "show": "oxpel yoc in caa.",
+      "show_note": "Berendt splits the words into syllables in this lesson: ox-pel.",
+      "en": "the three legs of my grinding stone.",
+      "words": [
+        "yw-ox",
+        "yw-pel",
+        "yw-oc",
+        "yw-in"
+      ]
+    },
+    {
+      "id": "ys-puczikal",
+      "key": "berendt",
+      "page": 14,
+      "maya": "Leiti cu bin antah ua ca katic y a puczikal.",
+      "en": "He will help if you ask with your heart.",
+      "words": [
+        "yw-a",
+        "yw-puczikal"
+      ],
+      "fill": "yw-puczikal"
+    }
+  ],
+  "units": [
+    {
+      "id": "yu-1",
+      "n": 1,
+      "title": "Greetings and people",
+      "note": "yn-1",
+      "lessons": [
+        {
+          "id": "yl-1-1",
+          "title": "How are you?",
+          "new": [
+            "yw-bix",
+            "yw-bel",
+            "yw-a",
+            "yw-in",
+            "yw-u"
+          ],
+          "sentences": [
+            "ys-bix-a-bel"
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "u:3"
+            ],
+            "spells": "u",
+            "says": "This is u, his or her, as carved in stone. You will see it again in u kaba."
+          }
+        },
+        {
+          "id": "yl-1-2",
+          "title": "What is your name?",
+          "new": [
+            "yw-max",
+            "yw-kaba",
+            "yw-pal",
+            "yw-uaix"
+          ],
+          "sentences": [
+            "ys-max-kaba",
+            "ys-in-kaba"
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "u:3",
+              "k'a:1",
+              "b'a:1"
+            ],
+            "spells": "u k'a-ba",
+            "word": "yw-kaba",
+            "says": "This spells u k'a-ba: u kaba, his name. Same word in glyphs."
+          }
+        },
+        {
+          "id": "yl-1-3",
+          "title": "People",
+          "new": [
+            "yw-uinic",
+            "yw-hahal",
+            "yw-xiblal",
+            "yw-chuplal",
+            "yw-colel",
+            "yw-nuxib",
+            "yw-xipal"
+          ],
+          "sentences": [
+            "ys-hahal"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-eb",
+            "says": "Eb, a day sign in the Dresden Codex: a face in profile."
+          }
+        },
+        {
+          "id": "yl-1-4",
+          "title": "Good and bad",
+          "new": [
+            "yw-utz",
+            "yw-lob"
+          ],
+          "review": [
+            "yw-max",
+            "yw-in",
+            "yw-kaba"
+          ],
+          "sentences": [
+            "ys-utz-lob",
+            "ys-in-kaba"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-kan",
+            "says": "Kan, a day sign in the Dresden Codex. Pío Pérez gives kan as yellow."
+          }
+        },
+        {
+          "id": "yl-1-5",
+          "title": "Come, go, bring",
+          "new": [
+            "yw-coten",
+            "yw-xen",
+            "yw-talez",
+            "yw-hanal",
+            "yw-cay"
+          ],
+          "sentences": [
+            "ys-coten",
+            "ys-xen",
+            "ys-talez"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-manik",
+            "says": "Manik, a day sign in the Dresden Codex: a shape like a hand."
+          }
+        },
+        {
+          "id": "yl-1-6",
+          "title": "Sit on the stone",
+          "new": [
+            "yw-culen",
+            "yw-yokol",
+            "yw-tunich"
+          ],
+          "review": [
+            "yw-coten",
+            "yw-xen"
+          ],
+          "sentences": [
+            "ys-culen"
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "tu:1",
+              "ni:1"
+            ],
+            "spells": "tu-ni",
+            "word": "yw-tunich",
+            "spelling_ref": "wayeb2025 logogram TUN: tuun, stone; spelled tu-ni",
+            "says": "This spells tu-ni: tun, stone. Your word tunich means stone too."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yu-2",
+      "n": 2,
+      "title": "Numbers 1 to 20",
+      "note": "yn-2",
+      "lessons": [
+        {
+          "id": "yl-2-1",
+          "title": "One to five",
+          "new": [
+            "yw-hun",
+            "yw-ca",
+            "yw-ox",
+            "yw-can",
+            "yw-ho"
+          ],
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 5,
+            "word": "yw-ho",
+            "says": "Five: one bar. Ho in Maya."
+          }
+        },
+        {
+          "id": "yl-2-2",
+          "title": "Six to ten",
+          "new": [
+            "yw-uac",
+            "yw-uuc",
+            "yw-uaxac",
+            "yw-bolon",
+            "yw-lahun"
+          ],
+          "review": [
+            "yw-ox",
+            "yw-can"
+          ],
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 10,
+            "word": "yw-lahun",
+            "says": "Ten: two bars. Lahun in Maya."
+          }
+        },
+        {
+          "id": "yl-2-3",
+          "title": "Eleven to twenty",
+          "new": [
+            "yw-buluc",
+            "yw-lahca",
+            "yw-oxlahun",
+            "yw-canlahun",
+            "yw-holahun",
+            "yw-uaclahun",
+            "yw-uuclahun",
+            "yw-uaxaclahun",
+            "yw-bolonlahun",
+            "yw-hunkal"
+          ],
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 19,
+            "word": "yw-bolonlahun",
+            "says": "Nineteen: three bars and four dots. Bolonlahun in Maya."
+          }
+        },
+        {
+          "id": "yl-2-4",
+          "title": "Counting things and people",
+          "new": [
+            "yw-pel",
+            "yw-tul",
+            "yw-catac",
+            "yw-xoc"
+          ],
+          "sentences": [
+            "ys-campel",
+            "ys-oxpel-ti",
+            "ys-oxlem",
+            "ys-oxtul"
+          ],
+          "glyph": {
+            "kind": "numeral",
+            "value": 7,
+            "word": "yw-uuc",
+            "says": "Seven: one bar and two dots. Campel catac oxpel: four and three make uucpel."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yu-3",
+      "n": 3,
+      "title": "Family and body",
+      "note": "yn-3",
+      "lessons": [
+        {
+          "id": "yl-3-1",
+          "title": "Father, mother, son, daughter",
+          "new": [
+            "yw-yum",
+            "yw-na",
+            "yw-mehen",
+            "yw-chupal"
+          ],
+          "review": [
+            "yw-u",
+            "yw-in",
+            "yw-a"
+          ],
+          "sentences": [
+            "ys-mehen-yum",
+            "ys-chupal-na",
+            "ys-campel-yum"
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "ya:3",
+              "la:1"
+            ],
+            "spells": "ya-la",
+            "word": "yw-al",
+            "spelling_ref": "wayeb2025 logogram AL/YAL: (mother's) son; spelled ya-la",
+            "says": "This spells ya-la: yal, a woman’s child. Same word as al."
+          }
+        },
+        {
+          "id": "yl-3-2",
+          "title": "Brothers, sisters, grandparents",
+          "new": [
+            "yw-zucun",
+            "yw-cic",
+            "yw-nohoch"
+          ],
+          "review": [
+            "yw-yum"
+          ],
+          "sentences": [
+            "ys-zucun",
+            "ys-nohoch",
+            "ys-cic",
+            "ys-tal-yum"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-chuen",
+            "says": "Chuen, a day sign in the Dresden Codex: two curls facing each other."
+          }
+        },
+        {
+          "id": "yl-3-3",
+          "title": "The face",
+          "new": [
+            "yw-pol",
+            "yw-ich",
+            "yw-ni",
+            "yw-chi",
+            "yw-xicin"
+          ],
+          "sentences": [
+            "ys-pol",
+            "ys-uich"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-cimi",
+            "says": "Cimi, a day sign in the Dresden Codex: a closed eye with lashes."
+          }
+        },
+        {
+          "id": "yl-3-4",
+          "title": "Hand, foot, heart",
+          "new": [
+            "yw-kab",
+            "yw-al",
+            "yw-oc",
+            "yw-puczikal"
+          ],
+          "review": [
+            "yw-kaba",
+            "yw-ox"
+          ],
+          "sentences": [
+            "ys-kab",
+            "ys-oc",
+            "ys-puczikal"
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-oc",
+            "word": "yw-oc",
+            "says": "Oc, a day sign in the Dresden Codex. Pío Pérez gives oc as foot and leg: your word oc."
+          }
+        }
+      ]
+    }
+  ]
+}
