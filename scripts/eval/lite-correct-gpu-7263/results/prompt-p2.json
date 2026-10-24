@@ -1,0 +1,13 @@
+{
+ "ocr_prompt": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "base_sha": "34f12611ca3d77e9",
+ "instruction_sha": "6c19591e1a624c3d",
+ "rule_v2_sha": "0695a637bbfdf388",
+ "template_sha": "59804ae2e092d23b",
+ "instruction": "\n\n**This call: correct an existing transcription against the page image.** The attached image is a page of a book; the draft below, between ===DRAFT=== and ===END DRAFT===, is the transcription a library currently gives readers for that page, made by an OCR engine. It may contain misread words, letters or numbers, dropped or repeated lines, a missed column or marginal note, or text that is not on the page. The IMAGE is the authority.\nCheck the draft against the image line by line and answer with exactly one of:\n- `UNCHANGED` (that word alone) — the draft is a faithful transcription of this leaf: any differences from the image are spacing, punctuation, line breaks or conventions (tags, abbreviation expansion, the long s) that do not change what a reader learns.\n- `CONTAIN: <one sentence>` — the draft is not this leaf's text (another page's text, a different work, an invention), or the leaf cannot be read; say which and why.\n- The complete corrected transcription of the page, not a list of changes, in the format above: its metadata tags as the format above defines them, always including <page-type>, even where the draft uses older tags (such as <lang>). Keep the draft's conventions and layout where the image does not contradict them; change what the image contradicts, add what the draft left out, remove what the page does not print. Do not change a word the image supports, even where another reading would be more usual. Transcribe each page on its own: never carry text over from a neighbouring page.\nOutput nothing but that answer, and no commentary anywhere.\n"
+}

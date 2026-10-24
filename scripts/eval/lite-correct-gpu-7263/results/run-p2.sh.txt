@@ -1,0 +1,8 @@
+set -u
+N="node --env-file=/root/sourcelibrary/.env.production.local /mnt/HC_Volume_105839809/worktrees/job-lite-correct-gpu-7263/scripts/eval/lite-correct-gpu-7263/run-lite.mjs --cap=520"
+cd /mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/zh
+$N --req=req-p2.jsonl --out=out-lite-p2-raw.jsonl --arm=lite-p2-correct
+cd /mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/tib
+$N --req=req/p2-corr.jsonl --out=out/lite-p2-raw.jsonl --arm=lite-p2-corr
+$N --req=req/p2-corr-anchor.jsonl --out=out/lite-p2-anchor-raw.jsonl --arm=lite-p2-corr-anchor
+echo ALL_DONE
