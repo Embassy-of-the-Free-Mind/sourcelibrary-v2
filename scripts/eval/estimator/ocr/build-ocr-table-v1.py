@@ -72,7 +72,7 @@ def main():
         era = '1880 on' if late else ('before 1700' if y is not None and y < 1700 else '1700-1879')
         eng, fam = GATE_ENGINE[g['engine']]
         scored = g['cer'] is not None
-        n = int(ref_chars[g['page_id']])
+        n = int(ref_chars.get(g['page_id']) or 20)  # no engine read the page: the beta-binomial floor (n >= 20)
         out.append(dict(chart=('english-1880-1930' if late else 'english-pre1880') + ('-dense' if b['stratum'] in ('S2', 'S4') else '-prose'),
                         panel='english-ia-5124',
                         page=f"english-ia-5124|{g['page_id']}", work=f"book:{b['book_id']}", engine=eng,

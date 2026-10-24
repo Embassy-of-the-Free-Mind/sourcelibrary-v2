@@ -181,7 +181,7 @@ def main():
         summ['gate_insample_cell'] = gate_predictions(df, *f['acc'][:2], *f['ref'][:2], 1, holdout=False)
         h = pickle.load(open(os.path.join(a.out_dir, 'holdout.pkl'), 'rb'))
         cells = gate_predictions(df, *h['acc'][:2], *h['ref'][:2], 1, holdout=True)
-        summ['holdout_4763'].update(cells=cells, fail_covered=f"{sum(c['fail_covered'] for c in cells)}/{len(cells)}",
+        summ.setdefault('holdout_4763', {}).update(cells=cells, fail_covered=f"{sum(c['fail_covered'] for c in cells)}/{len(cells)}",
                                     cer_covered=f"{sum(c.get('cer_covered', False) for c in cells)}/{sum('cer_covered' in c for c in cells)}")
         json.dump(summ, open(a.summary, 'w'), indent=1)
     if a.only in ('all', 'holdout'):

@@ -15,7 +15,7 @@ Claude (`claude -p`, per account): one point = 1% of an account's weekly limit. 
 the only measured calibration is sealed Sonnet text calls (66 calls = +2 weekly points, 2026-10-14, #6721), passed
 in by hand with --claude-points-per-call. Re-measure on image calls before routing on it.
 """
-import argparse, csv, datetime as dt, json
+import argparse, csv, datetime as dt, json, sys
 
 
 def main():
@@ -27,6 +27,8 @@ def main():
     rows = list(csv.DictReader(open(a.calls)))
     t = [dt.datetime.fromisoformat(r['start_utc']) for r in rows]
     days = (t[-1] - t[0]).total_seconds() / 86400
+    if days <= 0:
+        sys.exit(f'{a.calls}: fewer than two distinct call times; no rate to read')
     ok = sum(1 for r in rows if not r['quota_429_resets_in'])
     capped = sum(1 for r in rows if r['quota_429_resets_in'])
     cap_month = ok / days * 30
