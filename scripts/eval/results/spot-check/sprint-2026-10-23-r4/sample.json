@@ -1,0 +1,820 @@
+[
+ {
+  "slot": 1,
+  "book_id": "6a4f450d0de5c369a2509b83",
+  "book_url": "https://sourcelibrary.org/book/6a4f450d0de5c369a2509b83",
+  "tradition": null,
+  "book": {
+   "id": "6a4f450d0de5c369a2509b83",
+   "title": "Armamentarium Turcico-Diabolicum, Per duodecim horarum spacium reseratum, & dum delectus Wirtembergici Ducatus a Serenissimo eius Principe Tubingae ageretur, offerendum, sed, deficientibus tunc typis, delatum, & iam, ea, qua par est, submissione dicatum & dedicatum ab Olao Fielkio Crone, Havnia-Dano",
+   "display_title": "Fielchecrone, Oluf Nielsen: Armamentarium Turcico-Diabolicum",
+   "author": "Fielchecrone, Oluf Nielsen",
+   "language": "Latin",
+   "published": "Unknown",
+   "pages_count": 18,
+   "pages_ocr": 18,
+   "pages_translated": 16,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 18,
+   "distinct_page_numbers": 18,
+   "duplicate_records": 0,
+   "pages_with_ocr": 18,
+   "pages_translated": 16,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 18,
+   "pages_ocr_field": 18,
+   "pages_translated_field": 16
+  },
+  "run": [
+   3,
+   4,
+   5
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "6a4f450d0de5c369a2509b86",
+    "image_url": "https://images.sourcelibrary.org/pages/6a4f450d0de5c369a2509b83/0003.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>A 2</sig>\n<meta>catchword: Spi-</meta>\n\n->J.J.J.<-\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornate decorative initial T with floral and vine motifs.</image-desc>TURCARUM, quæ sunt, ARMAMENTA-\nRIA, BELLIS,\nINFERNIque DOLIS; et quæ DIS-\nCORDIA Martem\nChristigenûm turbat: rursus CONCORDIA\nfirmas,\nQuanta Tibi faciat, PRINCEPS CELSISSI-\nME, vires,\nARMORUM FIDEIque simul; depingere versu\nMens Christo sacrata jubet: vah! qualia cerno?\nIllic, quæ prodam! cujus, crudelior, agros\nImpetus, infestat, Domini? miseranda Virorum,\nEt pariter Versus, facies! sed tristia lætis\nHic Tua pensabit, DUX ILLUSTRISSIME,\nCURA:\nAudaci tantùm DANORUM ignosce Poësi.\n\nExierant nuper, Iovam, Mandata, rogandi,\nUt Turcas, Hostes Christi, depelleret oris\nChristicolûm, paribusque, daret, concurrere telis\nGermanos: animum precibus, pia lumina, cuncti\nIntendêre Polo: cum latis personet astris,\nHorrendum! gemitus: Populis, quæ, Turcaque,\nStyxque,\nIntentant, ô Christe! tuis! furor occupat Orbem\nEt cæcas hominum mentes: horrentia Patris\n\n<vocab>Turcae, Danorum, Germanos, Styx, Christicolum, Iovam</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "->J.J.J.<-\n\n<meta>An ornate decorative initial T with floral and vine motifs.</meta>OF THE TURKS, what they are, ARMAMENTS,\nWARS,\nand HELLISH WAYS; and what DISCORD\ntroubles the Mars\nof Christians; in return CONCORD\nstrengthens,\nHow much it provides Thee, MOST ILLUSTRIOUS PRINCE, with strengths,\nOf ARMS and FAITH alike; my mind,\nconsecrated to Christ, commands me to depict in verse: alas! what do I see?\nThere, what I reveal! whose, more cruel, force,\ninvades the fields of the Lord? A piteous face\nof Men, and equally of Verse! but sad things for joyful\nhere Thy CARE will compensate, MOST ILLUSTRIOUS DUKE:\nOnly forgive the bold Poetry of the DANES.\n\nThey had gone forth recently, to ask Jove, for Commands,\nthat he might drive the Turks, Enemies of Christ, from the shores\nof the Christians, and might grant the Germans to clash\nwith equal weapons: all directed their soul in prayers, pious eyes,\ntoward the Pole: when it resounds among the wide stars,\nHorrible! the groans: which, both the Turk, and\nStyx,\nthreaten to Thy people, O Christ! frenzy occupies the World\nand the blind minds of men: the horrific things of the Father",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 4,
+    "page_id": "6a4f450d0de5c369a2509b87",
+    "image_url": "https://images.sourcelibrary.org/pages/6a4f450d0de5c369a2509b83/0004.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>catchword: Quis</meta>\n\nSpicula Gradivi! muris iterum imminet hostis\nAgmen agens equitum, fulgentes ære catervas:\nInsequitur nimbus peditum: clypeataque totis\nTurma ruit campis: terræ crudelis ubique\nLuctus, ubique pavor, nec non fera mortis imago,\nSuspirat mortale genus, rata verbera sentit,\nAuditur ferri stridor, tractæque catenæ:\nVentum ad supremum est: nimis altè vulnus adactus\nParcarumque dies, & vis inimica propinquat.\nHæc dum Turca parat magno molimine; discors,\nEloquar! an sileam! conatus, distrahit omne\nAuxilium; toto sonitum Germania cœlo\nArmorum exaudit: tamen infensissima Regnum\nRegno tela acuit: tremuerunt motibus Alpes\nInsolitis: sistunt amnes, terræque dehiscunt;\nTempestas sine more furit, miserandaque pestis\nArboribusque fatisque venit: vastatio terras,\nMorta Viros, ignis pagos consumit & urbes:\nRara tamen jungit, Christi, CONCORDIA, Reges.\nScilicet hoc signat conjunctio nupera septem\nIlla Planetarum: Turcis hæc porrigit arma,\nArma Stygi præbet Constans DISCORDIA Terræ,\n   Hic gemitus cœlo volitabat: lumina tollo,\nEt Musam inclamo: quæque hæc suspiria, posco,\nDiceret, & qualis terror, simul Astra solumque\nTurbaret: mala quæ cœlorum parturit ira?\n\n<vocab>Gradivi, Turca, Germania, Alpes, Concordia, Discordia, Planetarum, Christi</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "The darts of Mars! once more the enemy looms over the walls\nleading a troop of horsemen, the companies shining with bronze:\nA cloud of infantry follows: and the shielded\nthrong rushes over the fields: everywhere the cruel\ngrief of the earth, everywhere fear, and indeed the fierce image of death,\nmortal kind sighs, it feels the fixed lashes,\nthe grinding of iron is heard, and chains are dragged:\nThe end has come: the wound is driven in too deeply\nand the day of the Fates, & the hostile force approaches.\nWhile the Turk prepares these things with great effort; discordant,\nshall I speak! or shall I remain silent! the endeavor distracts all\naid; Germany hears the sound of arms in the whole\nsky: yet most hostile to the kingdom, kingdom\nsharpens weapons: the Alps have trembled with unusual\nmovements: the rivers stop, and the earth gaps open;\nThe storm rages without measure, and a piteous plague\ncomes to both trees and fates: devastation consumes the lands,\nDeath the Men, fire consumes the villages & cities:\nRarely, however, does CONCORD, of Christ, join Kings.\nSurely that recent conjunction of the seven\nPlanets marks this: it offers these arms to the Turks,\nConstant DISCORD offers weapons to the Stygian Earth,\n   Here groans were flying to the sky: I lift my eyes,\nAnd I invoke the Muse: and I ask, what these sighs mean,\nThat she might say, & what kind of terror, at the same time, was troubling\nthe Stars and the ground: what evils does the wrath of the heavens give birth to?",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 5,
+    "page_id": "6a4f450d0de5c369a2509b88",
+    "image_url": "https://images.sourcelibrary.org/pages/6a4f450d0de5c369a2509b83/0005.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>A 3</sig>\n<meta>catchword: Ver-</meta>\n\nQuis fragor in populos: & quo, nos, Numine laeso,\nQuidve dolens Deus Omnipotens, tot volvere ca-\nInsignem pietate gregem, tot adire labores (sus,\nImpellat? justaene animis coelestibus irae?\nAn quid Relligio debet perferre malorum:\nCuî mox Musa refert: quid me alta silentia cogis\nRumpere, & obductum verbis vulgare dolorem?\nO Patria! ô Divum domus! ô gratissima tellus!\nO Germana Parens doctis! Parnassia sedes!\nDoctrinae Claustrum! Musis dulcissima Tempe!\nEuropae pars prima meae! quam Phoebus & omnis\nTurba Camoenarum per longos deperit annos.\nHaec est illa dies! haec, haec suprema manebant,\nOmnibus exhaustam te casibus, omnium egenam!\nIam magis atque magis Vatum praedicta priorum\nApparent, acuuntque metum mortalibus aegris.\nHorresco referens: en quâ tibi TURCICUS ardor\nSaevitiâ incumbit! quaeque en discordia cives\nPerducit miseros! Surgit tibi lethifer annus,\nEt genus omne neci pecudum datur, omne ferarum:\nPraecipuus dolor, Europae pars maxima luctus,\nTURCA venit, magnoque irarum fluctuat aestu.\nInsequitur Bellona Virum, parat arma, cohortes,\nScuta, dolos, rabiem Sevo, tormenta, catenas.\nDux Erebi pariter tumidas exardet in iras,\nPraelia moturus, neque visve potentiave ulla\n\n<vocab>Numine laeso, Musa, Parnassia, Camoenarum, TURCICUS, Bellona, Dux Erebi</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "What crash upon the peoples: & by what injured Deity,\nor what is God Almighty grieving, that so many should be rolled (fates,\nShould He drive a flock distinguished by piety, to approach so many labors?\nAre there just wraths in celestial souls?\nOr what evils does Religion owe to endure:\nTo which the Muse soon replies: why do you force me to break\nthe high silence, & to make public with words the pain that has been covered?\nO Fatherland! O home of the Gods! O most pleasing land!\nO German Parent to the learned! Parnassian seat!\nCloister of Doctrine! Tempe most sweet to the Muses!\nFirst part of my Europe! whom Phoebus & the whole\nthrong of Muses pining away for long years.\nThis is that day! these, these were the final things that remained,\nwith you exhausted by all misfortunes, needy of everything!\nNow more and more the predictions of the former Prophets\nappear, and they sharpen fear for the sick mortals.\nI shudder as I relate: behold with what TURKISH ardor\nit presses upon you with cruelty! and behold what discord\nleads the miserable citizens! A deadly year rises for you,\nand every kind of cattle is given to slaughter, every kind of beast:\nThe chief sorrow, the greatest part of Europe’s grief,\nThe TURK comes, and he surges with a great tide of wraths.\nBellona follows the Man, prepares weapons, cohorts,\nshields, deceits, rabies with iron, tortures, chains.\nThe Leader of Erebus likewise burns with swollen wraths,\nabout to move battles, nor is there any force or power",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 2,
+  "book_id": "6a3c63ecaf3c49b59c5c99ce",
+  "book_url": "https://sourcelibrary.org/book/6a3c63ecaf3c49b59c5c99ce",
+  "tradition": null,
+  "book": {
+   "id": "6a3c63ecaf3c49b59c5c99ce",
+   "title": "御定佩文韻府·卷二十三之七 (vol 411)",
+   "display_title": null,
+   "author": "張玉書",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06074503.cn",
+   "pages_count": 123,
+   "pages_ocr": 122,
+   "pages_translated": 120,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 123,
+   "distinct_page_numbers": 123,
+   "duplicate_records": 0,
+   "pages_with_ocr": 122,
+   "pages_translated": 120,
+   "with_printed_number": 12,
+   "printed_backsteps": 5,
+   "printed_repeats": 5,
+   "pages_count_field": 123,
+   "pages_ocr_field": 122,
+   "pages_translated_field": 120
+  },
+  "run": [
+   95,
+   96,
+   97
+  ],
+  "pages": [
+   {
+    "page_number": 95,
+    "page_id": "6a3c63ecaf3c49b59c5c9a2d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63ecaf3c49b59c5c99ce/95.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n不過五百金皆所\n得奉賜丨它丨\n私贏\n見\n上\n欲贏\n左傳賈而丨\n丨而惡嚻乎\n邪贏\n史記貨殖傳贊\n廢居善積倚市\n丨丨西京賦何必昏于作勞丨丨優而\n足恃杜甫詩所務穀為本丨丨無乃勞\n奇贏\n漢書食貨志商賈大\n者積貯倍息小者坐\n列販賣操其丨丨曰游都市注丨丨謂有餘財而\n蓄聚奇異之物也一說奇謂殘餘物也音居宜反\n養贏\n管子以室\n廡籍謂之\n毀成以六畜籍謂之止生以田畆籍謂之禁耕以正人籍謂之離\n情以正户籍謂之丨丨五者不可畢用故王者徧行而不盡也\n增攻贏\n周禮天官疾醫以五藥養病注養猶治也\n病由氣勝負而生丨其丨養其不足者\n水贏\n周禮天官\n疾醫以五\n藥養病疏假令夏時熱病者體寒即\n是水丨丨而勝也火氣負而不足也\n計贏\n周禮地官泉府以國服\n為之息疏王莽時民貸\n以治産業者但丨丨所得受息無過歲什一此與周少異周時不一\n其丨所得多少據本徵利宋史孫覺傳青苗法行覺條奏其妄曰成\n周賒貸特以備民之緩急不可徒與也故以國服為之息然國服\n之息說者不明鄭康成釋經乃引王莽丨丨受息無過歲什一為\n御定傳文韻府\n四十六",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "not more than five hundred pieces of gold, all of which were received as imperial gifts.\nOther <term>Ying</term> <gloss>profit/surplus</gloss>\nPrivate <term>Ying</term> <gloss>gain/accumulation</gloss>\nSee above.\nDesired <term>Ying</term> <gloss>profit</gloss>\n<term>Zuo Zhuan</term> <gloss>The Commentary of Zuo</gloss>: To trade and <term>Ying</term> <gloss>seek profit</gloss>, yet one despises the clamor of the marketplace?\nEvil <term>Ying</term> <gloss>ill-gotten gain</gloss>\n<term>Shi Ji</term> <gloss>Records of the Grand Historian</gloss>, Appraisal of the Biographies of Money-makers: Buying low and selling high, skillfully accumulating goods and relying on the market <term>Ying</term> <gloss>surplus</gloss>.\n<term>Xi Jing Fu</term> <gloss>Rhapsody on the Western Capital</gloss>: Why must one grow weary from manual labor? Market <term>Ying</term> <gloss>profits</gloss> are superior and sufficient to rely upon.\nPoem by Du Fu: One should focus on grain as the foundation; for the market <term>Ying</term> <gloss>gain</gloss> is surely too laborious.\nSpecial <term>Ying</term> <gloss>profit/surplus</gloss>\n<term>Han Shu</term> <gloss>Book of Han</gloss>, Treatise on Food and Money: Among merchants, the great ones store goods to double their interest, while the small ones sit in rows selling wares, controlling their <term>Qi Ying</term> <gloss>special surplus</gloss>, as they roam the city markets.\n<note>The original annotation explains: Special surplus refers to having excess wealth and storing up rare or strange items. Another interpretation suggests \"special\" refers to residual goods.</note>\nCultivating <term>Ying</term> <gloss>surplus/abundance</gloss>\n<term>Guanzi</term>: Taxing rooms and corridors is called destroying completion. Taxing livestock is called stopping life. Taxing fields is called forbidding farming. Taxing laborers is called separating emotions. Taxing households is called <term>Yang Ying</term> <gloss>cultivating surplus</gloss>. These five methods cannot be used all at once; therefore, a true king practices them broadly but never exhausts them.\nAdded: To Attack the <term>Ying</term> <gloss>excess/surplus</gloss>\n<term>Zhou Li</term> <gloss>Rites of Zhou</gloss>, Offices of Heaven, Physician of Diseases: Use the five medicines to nurture the sick.\n<note>The annotation explains: \"Nurturing\" is like \"treating.\" Illness arises from the victory or defeat of Qi. Attack the excess and nurture that which is insufficient.</note>\nWater <term>Ying</term> <gloss>excess</gloss>\n<term>Zhou Li</term> <gloss>Rites of Zhou</gloss>, Offices of Heaven, Physician of Diseases, Sub-commentary: For instance, if a person with a fever in summer has a cold body, it is because the Water element is <term>Ying</term> <gloss>excessive</gloss> and victorious, while the Fire Qi is defeated and insufficient.\nCalculating <term>Ying</term> <gloss>profit</gloss>\n<term>Zhou Li</term> <gloss>Rites of Zhou</gloss>, Offices of Earth, Bureau of Currency: Use the national tax to determine interest.\n<note>The sub-commentary states: In the time of Wang Mang, when the people borrowed to manage their industries, they only calculated the profit gained; the interest received did not exceed one-tenth per year. This differs slightly from the Zhou system. In Zhou times, it did not matter how much was gained; interest was collected based on the principal.</note>\n<term>Song Shi</term> <gloss>History of Song</gloss>, Biography of Sun Jue: When the Green Sprouts Law was implemented, Jue submitted a memorial criticizing its absurdity, saying: In the Zhou dynasty, lending was specifically to prepare for the people's emergencies and was not to be given lightly. Thus, interest was based on the national tax. However, the explanation of \"national tax interest\" was unclear. Zheng Kangcheng, in interpreting the classics, cited Wang Mang's method of <term>Ji Ying</term> <gloss>calculating profit</gloss> where interest did not exceed one-tenth per year as a standard.\n\nImperial Edition of the Peiwen Yunfu\nVolume 46\n\n<summary>This page catalogs historical and literary usages of the term Ying, meaning profit, surplus, or excess. It cites classical texts including the Rites of Zhou and the Book of Han to discuss economic principles, taxation, and medical theories regarding elemental balance.</summary>\n<keywords>Ying, profit, taxation, Rites of Zhou, Wang Mang, Green Sprouts Law, economics, medicine, Qi</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 96,
+    "page_id": "6a3c63ecaf3c49b59c5c9a2e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63ecaf3c49b59c5c99ce/96.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷二十三之七</header>\n據不應周公取息重于莽時管子量其重丨其\n丨民得其十君得其三則民疾作而為上虜矣\n舉嬴\n史記韓世家\n屈宜曰曰人\n固有利不利時昭侯嘗利矣不作髙門往年秦拔宜陽今年旱昭\n侯不以此時䘏民之急而顧益奢此謂時絀丨丨按嬴嬴古字通\n得贏\n史記龜策傳商賈不彊不丨其丨賈誼諫鑄錢疏鑄錢\n之情非殽雜為巧則不可丨丨而殽之甚微為利甚厚\n餘嬴\n漢書食貨志逐利之民畜積丨丨以稽市物痛騰躍注痛甚也言\n以贏餘之財蓄積羣貨使稽滯在巳故市價甚騰貴又莊子夫飺\n人特為食羹之\n貨多丨之丨\n收贏\n唐書食貨志財之所生必因人力有場圃囷\n倉直輕而衆以為富者有流通蕃息之貨數\n寡而日丨其丨者又開元十八年復給京官職田州縣籍一歲稅\n錢為本以髙户捉之月丨丨以給外官復置天下公廨本錢丨丨\n十之六鶴林玉露宣和中盜擾浙中王師討之因建議如賣酒鬻\n糟與夫頭子錢樓店錢皆少増其數謂之經制錢至翁彦國為總\n制使倣其法又丨\n丨焉謂之總制錢\n簿贏\n唐書王方翼傳遷肅州刺史河西蝗獨不\n至方翼境而他郡民皆重繭走方翼治下",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Volume 23, Part 7\n\nAccording to the Law, it is improper for the Duke of Zhou to take interest heavier than in Wang Mang's time. Master Guan weighed its weight and said: If the ruler takes <note>as tax or interest</note> seven parts while the people keep only three, then the people will fall ill from labor and become captives of the superior.\n\n# Raising Profit <note>original: 舉嬴</note>\n\n**Records of the Grand Historian: Hereditary House of Han**\nQu Yi said: Truly, people have times of advantage and disadvantage. Marquis Zhao once had an advantage, yet he did not build the High Gate. Last year Qin captured Yiyang, and this year there is a drought. Marquis Zhao does not use this time to relieve the distress of the people, but instead increases his extravagance. This is called \"time is depleted, yet he **raises profit**.\" <note>Note: 'Ying' <gloss>profit/surplus</gloss> was used interchangeably with 'Ying' <gloss>fullness</gloss> in ancient characters.</note>\n\n# Obtaining Profit <note>original: 得贏</note>\n\n**Records of the Grand Historian: Biographies of Turtle and Divining Stalks**\nIf merchants are not strong, they do not **obtain their profit**.\n**Jia Yi: Memorial on Minting Coins**\nThe nature of minting coins is such that if one does not use cleverness in mixing materials, one cannot **obtain profit**. If the mixing is subtle, the profit is very thick.\n\n# Excess Profit <note>original: 餘贏</note>\n\n**Book of Han: Treatise on Food and Money**\nPeople who pursue profit accumulate **excess profit** to delay the flow of goods in the market, causing prices to soar painfully. <note>Note: 'Painfully' means 'extremely'. It means using surplus wealth to accumulate groups of goods and keep them stagnant for oneself, thus the market price becomes very expensive.</note>\nAlso, **Zhuangzi**: For a person with a skin disease, the only special thing for them is the soup they eat. <note>unclear: text may refer to hoarding or specific consumption</note>\nWhere goods are many, there is **excess of them**.\n\n# Collecting Profit <note>original: 收贏</note>\n\n**Book of Tang: Treatise on Food and Money**\nWhat wealth produces must depend on human labor. There are fields, gardens, and granaries where values are light, but the masses consider them wealth. There are circulating and breeding goods where the number is small, but daily one **collects their profit**.\nAlso, in the eighteenth year of the Kaiyuan era, official fields were again given to capital officials. The prefectures and counties recorded one year's tax money as capital, selecting high-status households to manage it. Monthly they **collected the profit** to supply to provincial officials. Furthermore, the capital for public offices throughout the empire was re-established, **collecting a profit** of sixty percent.\n**Jade Dew from the Forest of Cranes**\nDuring the Xuanhe era, bandits disturbed the Zhejiang region. The Imperial Army suppressed them. A proposal was made that for selling wine, selling dregs, and for various transaction fees and shop taxes, the amounts should be slightly increased. These were called \"Regulated Funds.\" When Weng Yanguo became the General Controller, he imitated this method and further **collected profit** from it; these were called \"Controlled Funds.\"\n\n# Registering Profit <note>original: 簿贏</note>\n\n**Book of Tang: Biography of Wang Fangyi**\nHe was promoted to Governor of Su Prefecture. While locusts plagued Hexi, they alone did not reach Fangyi's territory. The people of other commanderies all traveled with heavily calloused feet to come under Fangyi's governance.\n\n<summary>This page catalogs historical and literary usages of the term 'Ying' (profit/surplus) within various Chinese classical texts, focusing on economic governance and taxation.</summary>\n<keywords>economics, taxation, Records of the Grand Historian, Book of Han, Book of Tang, profit, market prices, official salaries</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 97,
+    "page_id": "6a3c63ecaf3c49b59c5c9a2f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63ecaf3c49b59c5c99ce/97.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n乃出私錢作氷磑丨其丨以濟饑\n年羸\n唐書崔從傳為淮南節度\n副大使知節度事揚州凡\n瘵構舍數十百楹居之全活甚衆\n交易貲産奴婢有貫率錢畜羊有口算\n分羸\n唐書蘇頲傳頲節度\n又買麴丨其丨以佐用度從皆蠲除之\n劍南諸州時蜀彫起\n人流亡詔收山澤鹽鐵自贍頲募戍人輸雇直\n開井置鑪量入計出丨所丨市穀以廣見糧\n常羸\n管子修隂陽\n之從而道天\n地之\n操羸\n子華子丨丨而制餘\n商賈子之所為也\n貴羸\n鶡冠子先人富\n則驕丨則丨\n春羸\n淮南子\n孟丨始\n丨孟秋始縮仲春\n始出仲冬始内\n觚羸\n淮南子古者衣無隅差之削冠無丨丨之\n理注丨丨之理謂若馬目籠相連干也無\n者冠文取\n平直而己\n虛羸\n道德經丨丨踦踦禪無已也注\n隂極陽生更相禪代無窮已也\n損羸\n道德經月闕\n其博丨丨也\n盜羸\n道德經藏不滿盜不羸\n藏滿丨丨還自損也\n贊羸\n道德經丨丨入表注羸滿也贊\n九贊之位贊滿而入三表表者\n見其休\n咎也\n表羸\n道德經丨丨入家注\n三表見故以家定\n家羸\n道德經丨丨入部注\n家位定故以部分\n部羸\n<header>御定佩文韻府</header>\n<page-num>四十七</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>This page is from a Chinese imperial dictionary/encyclopedia, specifically the volume dealing with the rhyme category for the character \"Lei\" (meaning lean, thin, surplus, or entangled, depending on context). The entries consist of historical and philosophical citations containing specific compound terms ending in or including \"Lei\".</meta>\n\nThen he took out his own money to build an ice mill <note>original: 氷磑</note> and used the <term>lei</term> <gloss>surplus/profit</gloss> from it to provide relief for the hungry during years of famine.\n\n# Profit Surplus <note>original: 分羸</note>\n\n**The Book of Tang: Biography of Cui Cong**\nWhen Cui Cong served as the Deputy Grand Ambassador for the Huainan Circuit overseeing regional affairs, Yangzhou had <unclear>20 characters</unclear> and constructed hundreds of buildings to house people, saving many lives. Previously, there were taxes on the purchase of property and slaves, and a head tax on those who raised sheep.\n\n**The Book of Tang: Biography of Su Ting**\nSu Ting served as the Military Governor of the various prefectures of Jiannan. At that time, the Shu region was impoverished and the people were displaced. An imperial decree was issued to collect resources from the mountains, marshes, salt, and iron to sustain them. Su Ting recruited garrison soldiers to pay their employment wages; he opened wells, set up furnaces, and calculated income against expenditures. He used the <term>lei</term> <gloss>surplus</gloss> to purchase grain and expand the current food stores. Cui Cong later abolished all these previous burdensome taxes.\n\n# Constant Surplus <note>original: 常羸</note>\n\n**Guanzi: Cultivating Yin and Yang**\nOne follows and aligns with the <term>lei</term> <gloss>excess/surplus</gloss> of Heaven and Earth.\n\n# Controlling the Surplus <note>original: 操羸</note>\n\n**Zihuazi**\n<term>Cao lei</term> <gloss>Controlling the surplus</gloss> and managing the excess is the work of merchants and their sons.\n\n# Valuing Surplus <note>original: 貴羸</note>\n\n**Heguanzi**\nWhen ancestors are wealthy, they become arrogant; when they <term>gui lei</term> <gloss>value surplus/overabundance</gloss>, then <unclear>2 characters</unclear>.\n\n# Spring Surplus <note>original: 春羸</note>\n\n**Huainanzi**\nIn the first month of Spring, it begins to <term>lei</term> <gloss>expand/emerge</gloss>; in the first month of Autumn, it begins to shrink. In the middle of Spring, it begins to go out; in the middle of Winter, it begins to go in.\n\n# Corner Entanglement <note>original: 觚羸</note>\n\n**Huainanzi**\nIn ancient times, clothing had no uneven corners, and caps had no <term>gu lei</term> <gloss>cornered entanglement</gloss> patterns.\n<margin>Note: The pattern of <term>gu lei</term> refers to something like a horse’s eye cage or linked shields. Having \"none\" means the cap's design was simply smooth and straight.</margin>\n\n# Void and Surplus <note>original: 虛羸</note>\n\n**Classic of the Way and Virtue <note>The Daodejing, likely referencing a specific commentary or apocryphal version</note>**\n<term>Xu lei</term> <gloss>Void and surplus</gloss> lean upon each other, alternating without end.\n<margin>Note: When Yin reaches its limit, Yang is born; they alternate and replace each other infinitely.</margin>\n\n# Diminishing Surplus <note>original: 損羸</note>\n\n**Classic of the Way and Virtue**\nThe moon wanes in its fullness; this is the <term>sun lei</term> <gloss>diminishing of the surplus</gloss>.\n\n# Theft of Surplus <note>original: 盜羸</note>\n\n**Classic of the Way and Virtue**\nIf the treasury is not full, thieves will not <term>lei</term> <gloss>gain a surplus</gloss>. If the treasury is full, then <term>dao lei</term> <gloss>the theft of the surplus</gloss> leads back to self-injury.\n\n# Assisting the Surplus <note>original: 贊羸</note>\n\n**Classic of the Way and Virtue**\n<term>Zan lei</term> <gloss>Assist the surplus</gloss> and enter the outward signs.\n<margin>Note: <term>Lei</term> means full. This refers to the position of the Nine Assists; when the assistance is full, one enters the Three Manifestations to see good or bad fortune.</margin>\n\n# Manifesting Surplus <note>original: 表羸</note>\n\n**Classic of the Way and Virtue**\n<term>Biao lei</term> <gloss>Manifest the surplus</gloss> and enter the household.\n<margin>Note: Because the Three Manifestations are seen, the household is determined.</margin>\n\n# Household Surplus <note>original: 家羸</note>\n\n**Classic of the Way and Virtue**\n<term>Jia lei</term> <gloss>Household surplus</gloss> enters the divisions.\n<margin>Note: Because the household position is determined, it is organized by divisions.</margin>\n\n# Division Surplus <note>original: 部羸</note>\n\n<header>Imperial Peiwen Yunfu</header>\n<page-num>47</page-num>\n\n<summary>This page catalogs historical and philosophical usages of the character Lei, moving from its meaning as financial surplus in Tang dynasty biographies to more abstract concepts of excess and balance in the Guanzi, Huainanzi, and Daodejing.</summary>\n<keywords>surplus, finance, Tang Dynasty, Daodejing, Huainanzi, governance, philosophy, Cui Cong, Su Ting</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 3,
+  "book_id": "69c8691a6c6f3cc53c8567f9",
+  "book_url": "https://sourcelibrary.org/book/69c8691a6c6f3cc53c8567f9",
+  "tradition": null,
+  "book": {
+   "author": "[Southcott, Joanna]",
+   "display_title": "The answer of the Lord",
+   "id": "69c8691a6c6f3cc53c8567f9",
+   "image_source": {
+    "provider": "bph"
+   },
+   "language": "English",
+   "pages_count": 107,
+   "pages_ocr": 107,
+   "pages_translated": 107,
+   "place_published": "Londen",
+   "published": "1813",
+   "title": "The answer of the Lord",
+   "visible": true
+  },
+  "structure": {
+   "page_records": 107,
+   "distinct_page_numbers": 107,
+   "duplicate_records": 0,
+   "pages_with_ocr": 107,
+   "pages_translated": 107,
+   "with_printed_number": 100,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 107,
+   "pages_ocr_field": 107,
+   "pages_translated_field": 107
+  },
+  "run": [
+   39,
+   40,
+   41
+  ],
+  "pages": [
+   {
+    "page_number": 39,
+    "page_id": "69d391a0a0f7d03065d6a778",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8691a6c6f3cc53c8567f9/spsigv-0039.jpg",
+    "image_status": 200,
+    "ocr": "<language>en</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>47</page-num>\n\nAs on his head the Woman cast the blame,\nI instant told her I’d her <small>HUSBAND</small> come;\nAnd over her in power I said I’d rule;\nAnd so *preserve the* <small>TREE</small> *of* <small>LIFE</small> *for all*,\nThat *in the end you all might live in* <small>ME</small>,\nWhen I *fulfil the promise given to* <small>SHE</small>.\nSo, as thou say’st, the third Marriage shall stand;\nThe first a Union was with <small>GOD</small> and Man,\nThat in my <small>LIKENESS</small> I said he should stand;\nAnd so my <small>LIKENESS</small> I did join in Two;\nThe Man and Woman they were joined so;\nThe Man was *One*, and soon became as *Two*:\nThen know, as *Man I surely did appear*,\nWhen I did die, the guilt of Man to clear;\nBecause the Woman’s Ignorance was betray’d,\nAnd perfect so the Serpent now did lead;\nThat as a Husband he did sure become,\nAnd said to Marriage he would hold thy hand;\nAnd thou for want of judgment didst not see,\\*\nSatan was *never nam’d a Husband once to be*.\nThen how the fool could he the marriage claim?\nAnd to his words to marriage now I’ll bind:\nI said, a whoring they went all from <small>ME</small>,\nWhen unto Satan they were wandering free;\nAnd nought but bastards did their children call,\nBecause strange gods had drawn the hearts of all,\nThat they as bondsmen surely did appear:\nBut know, a bastard never was an Heir;\nThough Satan’s arts had thousands so ensnar’d,\nThat all a whoring they went from their God.\nBut now the fool shall tremble at my rod;\nBecause a Husband he cannot assume,\nAnd now the fool shall tremble at his doom.\nFor now to Marriage every soul I’ll bind—\nAnd, Satan, where’s thy Altar now to find?\nProduce thy License; why thy Banns will call?\nProduce thy Ring for to encircle all;\nAnd now thy Marriage Deeds, let them appear;\nI ask thee, how a Husband thou canst clear\nThat thou wast ever to the sons of men?\nOr where’s the Woman thou’st put on the Ring?\nOr where’s the Priest that did the Marriage join?\nThe roving heart is an adulterous mind,\nThat I pronounc’d was whoring from their God,\nAnd so the Harlots they are public shew’d,\nThat they are prostitutes to men become;\nBut where’s the Marriage doth the Harlots join?\n\n---\n\n\\* See the bottom of the preceding page.\n\n<vocab>Husband, Tree of Life, Likeness, Serpent, Satan, Heir, Altar, License, Banns, Harlots</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>The text continues the Lord’s reply to Joanna Southcott regarding the spiritual \"marriages\" and the dispute with Satan. It builds on the previous page's discussion of the first three unions, preparing for the Marriage of the Lamb.</meta>\n\nAs on his <note>Satan’s</note> head the Woman <note>Eve</note> cast the blame,\nI instant told her I’d her **HUSBAND** come;\nAnd over her in power I said I’d rule;\nAnd so *preserve the* **TREE** *of* **LIFE** *for all*,\nThat *in the end you all might live in* **ME**,\nWhen I *fulfil the promise given to* **SHE** <note>the Woman, representing the female principle or the Bride</note>.\nSo, as thou say’st, the third Marriage shall stand;\nThe first a Union was with **GOD** and Man,\nThat in my **LIKENESS** I said he should stand;\nAnd so my **LIKENESS** I did join in Two;\nThe Man and Woman they were joined so;\nThe Man was *One*, and soon became as *Two*:\nThen know, as *Man I surely did appear*,\nWhen I did die, the guilt of Man to clear;\nBecause the Woman’s Ignorance was betray’d,\nAnd perfect so the Serpent now did lead;\nThat as a Husband he did sure become,\nAnd said to Marriage he would hold thy hand;\nAnd thou for want of judgment didst not see, <margin>See the bottom of the preceding page.</margin>\nSatan was *never nam’d a Husband once to be*.\nThen how the fool could he the marriage claim?\nAnd to his words to marriage now I’ll bind:\nI said, a whoring they went all from **ME**,\nWhen unto Satan they were wandering free;\nAnd nought but bastards did their children call,\nBecause strange gods had drawn the hearts of all,\nThat they as bondsmen surely did appear:\nBut know, a bastard never was an Heir;\nThough Satan’s arts had thousands so ensnar’d,\nThat all a whoring they went from their God.\nBut now the fool shall tremble at my rod;\nBecause a Husband he cannot assume,\nAnd now the fool shall tremble at his doom.\nFor now to Marriage every soul I’ll bind—\nAnd, Satan, where’s thy Altar now to find?\nProduce thy License; why thy Banns <gloss>the public announcement in church of an intended marriage</gloss> will call?\nProduce thy Ring for to encircle all;\nAnd now thy Marriage Deeds, let them appear;\nI ask thee, how a Husband thou canst clear\nThat thou wast ever to the sons of men?\nOr where’s the Woman thou’st put on the Ring?\nOr where’s the Priest that did the Marriage join?\nThe roving heart is an adulterous mind,\nThat I pronounc’d was whoring from their God,\nAnd so the Harlots they are public shew’d,\nThat they are prostitutes to men become;\nBut where’s the Marriage doth the Harlots join?",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "69d391a0a0f7d03065d6a779",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8691a6c6f3cc53c8567f9/spsigv-0040.jpg",
+    "image_status": 200,
+    "ocr": "<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>48</page-num>\n<meta>catchwords: then, their</meta>\nNo, if they're married, then they are made free,\nIf they no longer live in adultery.\nSo 'tis not that Marriage can proclaim;\nBecause that Marriage bears the sacred name;\n(But nothing sacred, Satan, is in thee)\nSo by thy own Bonds bound thou now shalt be.)\nFor that's the way I made the Bonds at first;\nAnd that's the way I said the Heirs must burst.\nSo now a Husband wilt thou dare assume?\nThen now I'll make thee tremble at thy doom.\nAnd bring thy sacred altar; tell ME where\nThat as a Priest that ever join'd thy hand:\nI tell thee MARRIAGE was design'd for man.\nBut make the Crosses,* see how all do stand,\nIn every page where Satan threaten'd there,\nFor on his head his threatenings all shall fall.\nThe fourteenth page the Crosses do appear;\nAnd the like on all who ever my word he'll hear.\nSo now those pieces I do tear the fool,\nHe now shall know he brought it on himself.\nSo, if his Back be Brass, he can appear,\nFor from Iron to Iron my word he'll bear.\nHe now shall find and feel my iron rod,\nIf he is come my Subjects to compel,\nAnd boldly triumph of his host in hell.\nThen now his hellish host, they may appear\nAnd meet their awful JUDGE now in the air,\nAnd see if they can be match for heaven.\nFor now the Challenge is by Satan given;\nAnd the mad fool shall know my Power's there;\nAnd now his matchless power, let it be known\nWhen I the Earth a strong foundation laid,\nI plac'd for man a double flaming sword;\nAnd now I'll use it perfect like my word:\nFor every way I've sav'd the TREE of LIFE;\nAnd now I'll use the sword to end the strife.\nThe Breath of LIFE in Man I sure did breathe;\nAnd Man shall find I will not him deceive.\nBut as the Devil saith that I'm unjust;\nThen like his faith I bid him now to trust;\nIf they no mercy ever found in ME,\nThen now they never shall, they all shall see.\n\n<margin>* The Reader will see the reason of the Crosses in a subsequent page.</margin>\n\n<column-break/>\n\n<page-num>49</page-num>\n<header>DISCURSUS IV.</header>\n<sig>D</sig>\nSo now their power let it to appear;\nAnd meet their awful JUDGE now in the air,\nWhose just displeasure they have now provok'd;\nAnd now I bid them fear the coming stroke:\nThe limits of their space were given by ME:\nAnd that their boasting I shall soon destroy,\nAnd then their wisdom let them all enjoy.\nI'll now go on, till I the whole do clear.\nAnd to the eighteenth page I now shall come:\nThere stands the Cross, and so it shall fall on them;\nFor as he said the fish did jump in thee,\nI tell him now, it so shall fall on one.\nSo now the fool I'd have him to take care,\nIf he is hardened now he'th all to fear;\nFor to my word he'll find that I will stand.\nI want not armies now for to command,\nBut want to see if he's a King supreme,\nAnd by his power can all my subjects gain;\nThe twentieth page, like him, I'll answer here:\nUnto men's peril let them join him here;\nFor all his Votes must meet him in the air;\nFor there, I tell you all, will be the sight;\nAnd you, my Friends, below will see the fight;\nAnd then with pleasure you may stand and gaze,\nAnd say we're lost in wonder and amaze.\nTo see our God stand out a Man of War,\nAnd all his heavenly armies to appear!\nFor as the Shadow unto thee was seen,\nI tell thee plain the Substance will begin;\nShot after shot, I tell thee, fast will fly,\nAnd fiery serpents be seen in the sky:\nAnd for a Type my Thunder it doth stand;*\nFlashes of lightning are seen in all your land,†\nAnd so the lightning will to all appear,\nAnd rolling thunder bursting in the air:\nWith great confusion fast it will be hurl'd,\nWave after wave, and world confus'd with world.\nFor as the Vision it did first appear,\nI tell thee plain, the End will be seen clear;\nFor all the swords will be seen in the sky,\nAnd fast the shot on every side will fly,\nSo Satan thou hast challeng'd for a War,\nMark, how the twenty-second page appears;\nFor in thy own words I shall answer here:\n\n<margin>* See Dispute with the Powers of Darkness, page 96.\n† See Strange Effects of Faith, page 29.</margin>\n\n<vocab>marriage, adultery, priest, bonds, Crosses, Satan, iron rod, hellish host, Judge, flaming sword, Tree of Life, Devil, God, Man of War, Thunder, lightning, fiery serpents, Vision, End, swords, powers of darkness, faith</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "No, if they're married, then they are made free,\nIf they no longer live in adultery.\nSo 'tis not that Marriage can proclaim;\nBecause that Marriage bears the sacred name;\n(But nothing sacred, Satan, is in thee)\nSo by thy own Bonds bound thou now shalt be.)\nFor that's the way I made the Bonds at first;\nAnd that's the way I said the Heirs must burst.\nSo now a Husband wilt thou dare assume?\nThen now I'll make thee tremble at thy doom.\nAnd bring thy sacred altar; tell **ME** where\nThat as a Priest that ever join'd thy hand:\nI tell thee **MARRIAGE** was design'd for man.\nBut make the **Crosses**, <margin>The Reader will see the reason of the Crosses in a subsequent page.</margin> see how all do stand,\nIn every page where Satan threaten'd there,\nFor on his head his threatenings all shall fall.\nThe fourteenth page the Crosses do appear;\nAnd the like on all who ever my word he'll hear.\nSo now those pieces I do tear the fool,\nHe now shall know he brought it on himself.\nSo, if his Back be Brass, he can appear,\nFor from Iron to Iron my word he'll bear.\nHe now shall find and feel my iron rod,\nIf he is come my Subjects to compel,\nAnd boldly triumph of his host in hell.\nThen now his hellish host, they may appear\nAnd meet their awful **JUDGE** now in the air,\nAnd see if they can be match for heaven.\nFor now the Challenge is by Satan given;\nAnd the mad fool shall know my Power's there;\nAnd now his matchless power, let it be known\nWhen I the Earth a strong foundation laid,\nI plac'd for man a double flaming sword;\nAnd now I'll use it perfect like my word:\nFor every way I've sav'd the **TREE** of **LIFE**;\nAnd now I'll use the sword to end the strife.\nThe Breath of **LIFE** in Man I sure did breathe;\nAnd Man shall find I will not him deceive.\nBut as the Devil saith that I'm unjust;\nThen like his faith I bid him now to trust;\nIf they no mercy ever found in **ME**,\nThen now they never shall, they all shall see.\n\n<column-break/>\n\n### DISCOURSE IV <note>original: \"DISCURSUS IV\"</note>\n<note>The letter \"D\" likely refers to the fourth section or a specific signature for the printer.</note>\n\nSo now their power let it to appear;\nAnd meet their awful **JUDGE** now in the air,\nWhose just displeasure they have now provok'd;\nAnd now I bid them fear the coming stroke:\nThe limits of their space were given by **ME**:\nAnd that their boasting I shall soon destroy,\nAnd then their wisdom let them all enjoy.\nI'll now go on, till I the whole do clear.\nAnd to the eighteenth page I now shall come:\nThere stands the Cross, and so it shall fall on them;\nFor as he said the fish did jump in thee,\nI tell him now, it so shall fall on one.\nSo now the fool I'd have him to take care,\nIf he is hardened now he'th all to fear;\nFor to my word he'll find that I will stand.\nI want not armies now for to command,\nBut want to see if he's a King supreme,\nAnd by his power can all my subjects gain;\nThe twentieth page, like him, I'll answer here:\nUnto men's peril let them join him here;\nFor all his Votes must meet him in the air;\nFor there, I tell you all, will be the sight;\nAnd you, my Friends, below will see the fight;\nAnd then with pleasure you may stand and gaze,\nAnd say we're lost in wonder and amaze.\nTo see our God stand out a **Man of War**,\nAnd all his heavenly armies to appear!\nFor as the Shadow unto thee was seen,\nI tell thee plain the Substance will begin;\nShot after shot, I tell thee, fast will fly,\nAnd fiery serpents be seen in the sky:\nAnd for a Type my Thunder it doth stand; <margin>See *Dispute with the Powers of Darkness*, page 96.</margin>\nFlashes of lightning are seen in all your land, <margin>See *Strange Effects of Faith*, page 29.</margin>\nAnd so the lightning will to all appear,\nAnd rolling thunder bursting in the air:\nWith great confusion fast it will be hurl'd,\nWave after wave, and world confus'd with world.\nFor as the Vision it did first appear,\nI tell thee plain, the End will be seen clear;\nFor all the swords will be seen in the sky,\nAnd fast the shot on every side will fly,\nSo Satan thou hast challeng'd for a War,\nMark, how the twenty-second page appears;\nFor in thy own words I shall answer here:",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 41,
+    "page_id": "69d391a0a0f7d03065d6a77a",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8691a6c6f3cc53c8567f9/spsigv-0041.jpg",
+    "image_status": 200,
+    "ocr": "<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>50, 51</page-num>\n<sig>D2</sig>\n<meta>\n  <catchwords>Left: And; Right: His</catchwords>\n  <image-quality>good</image-quality>\n</meta>\n\nIf thou art a devil, so thou say'st thou'lt be,\nAnd in like manner, now I'll answer thee:\nAs in my ways thou say'st I've been unjust,\nThen now I tell thee perfect so't shall burst;\nIn fury on thee I will now appear;\nAnd unto Man my *Justice* I shall clear,\nWho doth confess that *Justice* is in *God*;\nAnd unto Man my *Justice* shall be show'd.\nBut as the fallen angels all agree,\nTo say that God is nought but cruelty,\nAnd with their Leader they do all combine,\nTo say in wisdom brightest he doth shine,\nIn words, in merit, and in every praise,\nAnd altogether they adore his ways;\nThen all together they with him shall go;\nIngratitude shall all its vengeance know:\nThe worst of witchcraft it doth now appear,\nWhen I have tried his reign Five Thousand Years,\nAnd now Eight Hundred added to the Sixth;\nThen now he'll find that my Decrees are fix'd.\nFor as the Cross for him it doth appear,\nDrawn with the Circle, so I tell thee here,\nIn all thy words I have so encircled thee,\nAnd now, O Satan, thou thy ruin see;\nFor on thy head the threatenings they shall fall,\nAnd like the King I'll act, I tell you all,\nThat made the man his poisonous coat to wear,*\nThat he had brought the king to poison there;\nSo on the man he did his guilt turn back,\nAnd perfect so shall Satan feel the rack;\nFor his low cunning arts I all despise;\nAnd all thy ways are now before mine eyes;\nFor as thou say'st that *God* is now *unjust*,\nAnd all thy fury doth against *ME* burst;\nThen all my fury thou shalt surely see—\nPrepare for battle, meet thy match in *ME*!\nIf thou dost judge thou hast a powerful hand,\nCall forth thy legions, and the challenge stand,\nTo meet thy awful *JUDGE* now in the world.\nI ask what armies there need to appear\nOne single woman's life for to destroy?\nAnd see what brittle thread man's life enjoys;\nAnd if that brittle thread of life be cut,\nThere need no armies for to make it break.\nSo all thy hellish host thou call'st in vain,\nAnd thy destruction now thou'lt surely gain;\n->* A poisoned Coat that was made for a King, which, when on, the warmth<-\n->of the body caused the poison to infuse its baneful effects. This Prince, being<-\n->secretly apprized of the plot, desired the man to put it on himself, to see how<-\n->it looked. This the person endeavoured to avoid; the King insisted on being<-\n->obeyed; and in a short time he felt its effects, and expired.<-\n\n<column-break/>\n\nBefore the Woman thou'st begun to fall;\nAnd now, O Satan, I do tell you all,•\nThy powerful reign make hast for to prepare,\nAs in the twenty-ninth page it is here.\nNo more for honour I'll contend with thee,\nBut in thy weapon now cut down thou'lt be;\nBecause of honour in thee there is none;\nNo love, no pity, or mercy hast thou shown;\nAnd now of mercy I'll show none to thee,\nBring in thy bill; and all thy debts now pay;\nAnd now I tell thee I will sure pay mine:\nThe Curse I did pronounce thou now shalt find;\nFor all thy *Legs* I now shall *take away*—\nI ask thee how thou'st stand the *Judgment Day*,\nWhen I in thunder do to thee appear,\nAnd show the murders thou'st committed here,\nAnd show what traitor thou hast been to man?\nFor like a thief, in ambush, is thy plan;\nBecause the thief in ambush thou dost prepare;\nAnd now thou'st find the gallows it is near,\nThat thou so often didst prepare for man.\nTo rob and murder was thy every plan:\nBut yet of man thou daily dost complain!\nI tell thee now I'll try the sons of men;\nFor all thy power now I'll take away—\nIf I'm unjust, Satan, it shall be to thee:\nBecause my *Justice* thou'st allow'd there's none;\nThen now I tell thee, it shall not be shown,\nFor any justice now to come to thee:\nWhat thou call'st *Justice* can't agree with *ME*.\nBut to my *Justice* justly thou art cast,\nAnd now I'll come to be thy *JUDGE* at last:\nThat I in *RIGHTEOUSNESS* may surely sit,\nWhen I pronounce on sinners then their fate,\nThat to eternity it must endure,\nFirm as the Heavens, and never alter more.\nThen clear in judgment I will sure begin;\nAnd now, without thy arts, I will try Man;\nAnd then in *Justice* I'll to Man appear:\nIf all the Fault be thine, the Fault thou'lt bear:\nBut as thou say'st, “ the Fault is so in *Men* ;\n“ 'Tis their own hearts that first enticed them.”\nThen now the *TRUTH* of this I'll surely know;\nTo prove the *Truth* I'll chain thee down below;\nAnd then a *JUDGE* of *Man* I'll surely be,\nWhether the fault do lie in Man or thee.\nBut as to Man, his ways I sure do blame;\nI gave him *Reason*, to exert the same;\n->* His whole hoast. † See *Genesis*, iii. 14. *Upon thy belly shalt thou go*, &c.<-\n\n<vocab>Satan, God, Justice, King, Judgment Day, Righteousness, Truth, Reason, Genesis, poisonous coat</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-2.5-flash",
+    "translation": "If thou art a devil, so thou say'st thou'lt be,\nAnd in like manner, now I'll answer thee:\nAs in my ways thou say'st I've been unjust,\nThen now I tell thee perfect so't shall burst;\nIn fury on thee I will now appear;\nAnd unto Man my *Justice* I shall clear,\nWho doth confess that *Justice* is in *God*;\nAnd unto Man my *Justice* shall be show'd.\nBut as the fallen angels all agree,\nTo say that God is nought but cruelty,\nAnd with their Leader they do all combine,\nTo say in wisdom brightest he doth shine,\nIn words, in merit, and in every praise,\nAnd altogether they adore his ways;\nThen all together they with him shall go;\nIngratitude shall all its vengeance know:\nThe worst of witchcraft it doth now appear,\nWhen I have tried his reign Five Thousand Years,\nAnd now Eight Hundred added to the Sixth; <note>This refers to the common millenarian belief that the world would last 6,000 years before the Sabbath of rest; 1813 was seen as near the end of the 5,800th year.</note>\nThen now he'll find that my Decrees are fix'd.\nFor as the Cross for him it doth appear,\nDrawn with the Circle, so I tell thee here,\nIn all thy words I have so encircled thee,\nAnd now, O Satan, thou thy ruin see;\nFor on thy head the threatenings they shall fall,\nAnd like the King I'll act, I tell you all,\nThat made the man his poisonous coat to wear, <note>This refers to the following anecdote about a poisoned coat.</note>\nThat he had brought the king to poison there;\nSo on the man he did his guilt turn back,\nAnd perfect so shall Satan feel the rack;\nFor his low cunning arts I all despise;\nAnd all thy ways are now before mine eyes;\nFor as thou say'st that *God* is now *unjust*,\nAnd all thy fury doth against **ME** burst;\nThen all my fury thou shalt surely see—\nPrepare for battle, meet thy match in **ME**!\nIf thou dost judge thou hast a powerful hand,\nCall forth thy legions, and the challenge stand,\nTo meet thy awful **JUDGE** now in the world.\nI ask what armies there need to appear\nOne single woman's life for to destroy?\nAnd see what brittle thread man's life enjoys;\nAnd if that brittle thread of life be cut,\nThere need no armies for to make it break.\nSo all thy hellish host thou call'st in vain,\nAnd thy destruction now thou'lt surely gain;\n\n->*A poisoned Coat that was made for a King, which, when on, the warmth of the body caused the poison to infuse its baneful effects. This Prince, being secretly apprized of the plot, desired the man to put it on himself, to see how it looked. This the person endeavoured to avoid; the King insisted on being obeyed; and in a short time he felt its effects, and expired.*<-\n\n<column-break/>\n\nBefore the Woman thou'st begun to fall;\nAnd now, O Satan, I do tell you all, <note>His whole host.</note>\nThy powerful reign make hast for to prepare,\nAs in the twenty-ninth page it is here.\nNo more for honour I'll contend with thee,\nBut in thy weapon now cut down thou'lt be;\nBecause of honour in thee there is none;\nNo love, no pity, or mercy hast thou shown;\nAnd now of mercy I'll show none to thee,\nBring in thy bill; and all thy debts now pay;\nAnd now I tell thee I will sure pay mine:\nThe Curse I did pronounce thou now shalt find; <note>See *Genesis*, iii. 14. *Upon thy belly shalt thou go*, &c.</note>\nFor all thy *Legs* I now shall *take away*—\nI ask thee how thou'st stand the **Judgment Day**,\nWhen I in thunder do to thee appear,\nAnd show the murders thou'st committed here,\nAnd show what traitor thou hast been to man?\nFor like a thief, in ambush, is thy plan;\nBecause the thief in ambush thou dost prepare;\nAnd now thou'st find the gallows it is near,\nThat thou so often didst prepare for man.\nTo rob and murder was thy every plan:\nBut yet of man thou daily dost complain!\nI tell thee now I'll try the sons of men;\nFor all thy power now I'll take away—\nIf I'm unjust, Satan, it shall be to thee:\nBecause my *Justice* thou'st allow'd there's none;\nThen now I tell thee, it shall not be shown,\nFor any justice now to come to thee:\nWhat thou call's *Justice* can't agree with **ME**.\nBut to my *Justice* justly thou art cast,\nAnd now I'll come to be thy **JUDGE** at last:\nThat I in **RIGHTEOUSNESS** may surely sit,\nWhen I pronounce on sinners then their fate,\nThat to eternity it must endure,\nFirm as the Heavens, and never alter more.\nThen clear in judgment I will sure begin;\nAnd now, without thy arts, I will try Man;\nAnd then in *Justice* I'll to Man appear:\nIf all the Fault be thine, the Fault thou'lt bear:\nBut as thou say'st, “the Fault is so in *Men*;\n“'Tis their own hearts that first enticed them.”\nThen now the **TRUTH** of this I'll surely know;\nTo prove the **Truth** I'll chain thee down below;\nAnd then a **JUDGE** of **Man** I'll surely be,\nWhether the fault do lie in Man or thee.\nBut as to Man, his ways I sure do blame;\nI gave him **Reason**, to exert the same;",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 4,
+  "book_id": "69938a8ee07f979c72ac6590",
+  "book_url": "https://sourcelibrary.org/book/69938a8ee07f979c72ac6590",
+  "tradition": null,
+  "book": {
+   "id": "69938a8ee07f979c72ac6590",
+   "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+   "display_title": "Plutus and Clouds with Commentaries",
+   "author": "Aristophanes",
+   "language": "Greek",
+   "published": "1450",
+   "pages_count": 308,
+   "pages_ocr": 308,
+   "pages_translated": 268,
+   "image_source": {
+    "provider": "bodleian"
+   },
+   "visible": true,
+   "catalog_metadata": {}
+  },
+  "structure": {
+   "page_records": 308,
+   "distinct_page_numbers": 308,
+   "duplicate_records": 0,
+   "pages_with_ocr": 308,
+   "pages_translated": 308,
+   "with_printed_number": 146,
+   "printed_backsteps": 24,
+   "printed_repeats": 21,
+   "pages_count_field": 308,
+   "pages_ocr_field": 308,
+   "pages_translated_field": 268
+  },
+  "run": [
+   29,
+   30,
+   31
+  ],
+  "pages": [
+   {
+    "page_number": 29,
+    "page_id": "69938a8ee07f979c72ac6701",
+    "image_url": "https://images.sourcelibrary.org/archived/69938a8ee07f979c72ac6590/29.jpg",
+    "image_status": 200,
+    "ocr": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>11</page-num>\n\n<margin>\nπολλὰς ἂν εὕροις: Διοσκουρίδην δὲ τὸν νο <unclear>η</unclear> πᾶσι δὲ διαβα <unclear>α</unclear> <unclear>αμεθ</unclear> <unclear>αι</unclear> <unclear>δ</unclear> <unclear>ε</unclear> <unclear>β</unclear> <unclear>α</unclear> <unclear>π</unclear> <unclear>... [? ...]</unclear>\nὅτι γάρ εἰσι πολλοὶ <unclear>... [? ...]</unclear> ἀλλὰ <unclear>μὴν</unclear> <unclear>... [? ...]</unclear> <unclear>οὐδέναν</unclear> <unclear>ἐπιστήμην</unclear>.\nδιά τοι τοῦτο, ὅτι ὁ μισθός ἐστιν, ὅτε ἡ τέχνη <unclear>χρειαν</unclear> <unclear>η</unclear> <unclear>α</unclear> <unclear>θηναι</unclear>, ὡς μηδὲν οὐδενὶ\n</margin>\n\n<margin>\n<gloss>ποιῆσαι</gloss> <gloss>τι</gloss> <gloss>βο[ηθός]</gloss>\n<gloss>ιεροῖς</gloss> <gloss>παλαιὸν</gloss> <gloss>γὰρ</gloss>\n<gloss>... ἐπίσταται</gloss> <gloss>ἐν</gloss>\n<gloss>τοῖς: +</gloss>\n</margin>\n\n<margin>ΧΡ</margin> Τί δαὶ; τί αὖ σὺ δῆτ’ ἐφ’ ἡμῶν ἐνθάδε;\n<gloss>υδονε</gloss>\n<margin>βλε</margin> οὐ γὰρ ὁ μαθὸς δουλεύει τῇ τέχνῃ.\n<gloss>του χαιδου</gloss> <gloss>τος</gloss> <gloss>τον</gloss> <gloss>φαινε[ι]</gloss>\n<margin>βλε</margin> <gloss>σκοπῶ πῶς</gloss> <margin>ΧΡ</margin> ἀλλ’ οὐκ ἔστιν βλέπου δ’ ἐμοὶ δοκεῖ. <margin>σκοπῶ βουλὰς σύνθε-</margin>\n<margin>ΧΡ</margin> <gloss>ετοίμαζον χύτρας [?]</gloss>\nκαὶ διαλλάχ’ ὅπερ παρεσκευαζόμεθα πάλαι, <margin>... οὐδὲ <unclear>... [? ...]</unclear> <unclear>πάππον</unclear> ἐστὶ <unclear>... [? ...]</unclear></margin>\n<gloss>κατακλινήσου</gloss> <gloss>σε</gloss> <gloss>κελύναι</gloss> <gloss>λίαν κακον</gloss>\nκατακλινῇς αὐτόν γε ἀσκληπιοῦ κράτης ἔτι.\n<margin>βλε</margin> <gloss>γὰρ ἐπὶ πλοῦ[τον] καὶ...</gloss> <gloss>βραδέως</gloss>\nβλέπω δὲ μὲν οὖν μὴ τοῖς θεοῖσι μηνίον λάτρειβε.\n<gloss>σπουδαία ἐκτελε</gloss> <gloss>προδόμε</gloss>\nἀλλ’ ἄνυε πράττων· ἐφ’ <gloss>χρέ</gloss> κἀδὴ βάδιζε.\n<margin>βλε</margin> <gloss>τον σπουδαία</gloss> <gloss>Διὶ</gloss> <gloss>ποιῶ</gloss> <margin>κορωνίζεται ο μοι <unclear>... [? ...]</unclear></margin>\nσπεύδω μὲν <gloss>χρ</gloss> τοῦτ’ αὐτὸ δρῶ.\n<margin>ΠΕ</margin> <gloss>λυπηρὸν τολμηρ</gloss> <gloss>ἔξω τῶν νόμ[ων]</gloss>\nὦ θερμὸν ἔργον κἀνόσιον καὶ παράνομον\n<gloss>αἳ ἐπιχείρησαν</gloss> <gloss>ποιεῖν</gloss> <gloss>ἀνθρώπια</gloss> <gloss>Δυστυχέστατ[α]</gloss>\nτολμῶντες πρᾶγμα ἀνθρωπαρίω κακοδαίμον[ε].\n<gloss>ποῦ· ποῦ</gloss> <gloss>διατὶ</gloss> <gloss>φεύγετε</gloss> <gloss>οὐχὶ καρτερῶ</gloss> <gloss>γε θαυμα[στὸν]</gloss>\nποῖ ποῖ. τί φεύγετον; οὐ μένητον χρ ἢ <unclear>δὲ</unclear>.\n<margin>ΠΕ</margin> <gloss>φθαρῶ</gloss> <gloss>κατὰ ὄντας</gloss> <margin>ἔξολε θράσος <unclear>... [? ...]</unclear></margin>\nἐγὼ γὰρ ὑμᾶς ἐξολῶ κακοὺς κακῶς\n<gloss>ἐπιχείρημα</gloss> <gloss>ποῖον τε</gloss> <gloss>οὐχὶ υπομενεῖν</gloss>\nτόλμημα γὰρ τολμᾶτον οὐκ ἀνάσχετον\n<gloss>τοιοῦτον ἐπὶ</gloss> <gloss>ἔτολμησεν</gloss> <gloss>Δὶ</gloss> <gloss>ἐπιχείρη[μα]</gloss>\nἀλλ’ οἷον οὐδὲ ἄλλος οὐδέ πω ποτέ.\n<gloss>ἐφθάρ[η]τε</gloss>\nοὔτε θεὸς οὔτ’ ἄνθρωπος. ὥστ’ ἀπολώλατον.\n\n---\n\n<image-desc>A circular official stamp is visible in the bottom right corner of the page.</image-desc>\n\n<vocab>Aristophanes, Plutus, Chremylus, Blepsidemus, Penia, Greek drama, Scholia, ligatures</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues the comedic dialogue from Aristophanes’ *Wealth*. Having resolved to restore the sight of the god Wealth (Plutus), Chremylus and Blepsidemus are preparing to take him to the Temple of Asclepius. This page captures the transition from their planning to the sudden, terrifying entrance of Penia (Poverty personified), who confronts them for trying to banish her from Greece.</meta>\n\n<margin>\nYou would find many [examples]: but regarding Dioscorides the... <unclear>mind</unclear> and to all... <unclear>we pass through</unclear>... because there are many... <unclear>indeed</unclear>... <unclear>no knowledge</unclear>.\nFor this reason, because the reward exists, when the art <term>art: here meaning a craft or profession</term> <unclear>need</unclear>... so that nothing for no one.\n</margin>\n\n<margin>\n<gloss>to do something as a helper</gloss>\n<gloss>in the temples, for it is ancient</gloss>\n<gloss>...he knows in</gloss>\n<gloss>the: +</gloss>\n</margin>\n\n**CH:** What then? Why are you here with us again?\n<gloss>pleasure</gloss>\n**BLE:** For the reward does not serve the art. <note>A cynical observation that professional skill is useless if it isn't paid for; Blepsidemus is still preoccupied with the profit Wealth might bring.</note>\n<gloss>of Hades</gloss> <gloss>the</gloss> <gloss>the</gloss> <gloss>he appears</gloss>\n**BLE:** <gloss>I am considering how</gloss> **CH:** But it is not so; look, it seems to me. <margin>I am considering plans to put together-</margin>\n**CH:** <gloss>they were preparing pots [?]</gloss>\nAnd settle what we were preparing long ago, <margin>...not even ... <unclear>grandfather</unclear> is ...</margin>\n<gloss>you will be laid down</gloss> <gloss>you</gloss> <gloss>to call</gloss> <gloss>very bad</gloss>\nLay him down <note>original: \"kataklinēs\" - referring to the practice of 'incubation' where the sick slept in a temple to receive a healing dream.</note> in the temple of Asclepius <note>the god of medicine and healing</note> while there is still time.\n**BLE:** <gloss>for for wealth and...</gloss> <gloss>slowly</gloss>\nI am looking; but do not serve the gods in anger.\n<gloss>earnestly complete</gloss> <gloss>to betray</gloss>\nBut hurry up and do it; go where you must. <gloss>need</gloss>\n**BLE:** <gloss>the serious things</gloss> <gloss>to Zeus</gloss> <gloss>I do</gloss> <margin>he is being puffed up/crested for me <unclear>...</unclear></margin>\nI am hurrying; <gloss>CH</gloss> I am doing this very thing.\n**PE:** <gloss>painful/grievous</gloss> <gloss>daring</gloss> <gloss>outside the laws</gloss>\nO rash deed, and unholy, and illegal! <note>Penia (Poverty) makes her dramatic entrance here, appearing as a terrifying, fury-like figure.</note>\n<gloss>who attempted</gloss> <gloss>to do</gloss> <gloss>little humans</gloss> <gloss>Most miserable</gloss>\nDaring such a thing, you two wretched manikins! <note>original: \"anthropário\" - a mocking diminutive for humans.</note>\n<gloss>Where? Where?</gloss> <gloss>why</gloss> <gloss>do you flee?</gloss> <gloss>I do not endure</gloss> <gloss>at least wonderful</gloss>\nWhere? Where? Why are you two fleeing? Why do you not stay, Chremylus and [Blepsidemus]?\n**PE:** <margin>I will destroy [you]</margin> <gloss>I shall perish</gloss> <gloss>according to those being</gloss> <margin>O utter destruction, boldness <unclear>...</unclear></margin>\nFor I will destroy you, you evil men, in an evil way!\n<gloss>enterprise/attempt</gloss> <gloss>what sort of</gloss> <gloss>not to endure</gloss>\nFor you two dare a daring deed that is unendurable—\n<gloss>such upon</gloss> <gloss>dared</gloss> <gloss>to Zeus</gloss> <gloss>attempt</gloss>\n—such as no one else has ever yet [dared],\n<gloss>you were destroyed</gloss>\nneither god nor human. Therefore, you are both lost!\n\n---\n\n<note>A circular official stamp is visible in the bottom right corner of the page.</note>\n\n<summary>Chremylus and Blepsidemus prepare to take the blind god Wealth to the temple of Asclepius for healing, but they are interrupted by the terrifying arrival of Penia (Poverty), who curses them for their illegal attempt to banish her.</summary>\n<keywords>Aristophanes, Plutus, Chremylus, Blepsidemus, Penia, Asclepius, incubation, Greek comedy, scholia, Poverty</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 30,
+    "page_id": "69938a8ee07f979c72ac6702",
+    "image_url": "https://images.sourcelibrary.org/archived/69938a8ee07f979c72ac6590/30.jpg",
+    "image_status": 200,
+    "ocr": "<language>Greek</language>\n<page-type>text</page-type>\n\n<margin>\nοἱ ἐριννύες ἐστί: τοῦτο δὲ εἶναι λέγεσι τὴν <unclear>ἀσχάλα</unclear> <unclear>μον</unclear> <unclear>μον</unclear> πᾶσαν <unclear>βουλήν</unclear>.\nὡς δὲ <unclear>ὁ</unclear> παλαιὸς <unclear>αὐτὸς</unclear> ὡς φασὶ γὰρ εἶπεν υπέρ.\nγὰρ τὰς γυναικείας θεας: ἢ τὰς αὐτὰς ἃς οἱ βαπτισταὶ ἐριννὺν φασὶν μετα\nλαμβάνειν <unclear>πρὸς</unclear> τὰ ἀποσκοπῆσαι φάσματι, βασιλίδες μάλ’ <unclear>ἁρμόστῃ</unclear> :+\n</margin>\n\n<margin>\n<unclear>ΧΡ.</unclear>\nἐριγνύς φησι ταύτην ἐκ τραγωδι- ῶν ὑποκριταὶ ποιοῦ- σιν οὕτως:\nὥσπερ αἰσχύλος ἐποίησεν <unclear>ὄμμα</unclear>\n</margin>\n<gloss>ὑπάρχει κίτρινον τοιοῦτον γάρ ἐστιν</gloss>\n**ΧΡΕ** σὺ δ’ εἴ τις ἐς χρῶμα μόνον ἐμοὶ δοκεῖς.\n\n<margin>\n<unclear>ΒΛΕ</unclear>\nδείσας ταύτην μελαγχολώδους ὄψεως οὖσαν : —\n</margin>\n<gloss>ἴσως ἐριγνὺς <insert>ὑπὸ</insert> ἐκ τραγωδίας. βλέπειν</gloss>\n**ΒΛΕ** ἴσως ἐριννύς ἐστιν ἐκ τραγωδίας.\n<gloss>γὰρ καὶ θηριῶδες <unclear>τι</unclear> ἐνταῦθα οὐκ οἴα τις ἐμοὶ καὶ φασὶν</gloss>\n<margin>\n<unclear>ΧΡΕ</unclear>\n<unclear>πρὸς</unclear> <unclear>τὰς</unclear> ὡς <unclear>αὐτὰς</unclear> φυλάσσειν φερὰ, <unclear>ἵνα</unclear> <unclear>αὐ</unclear>\nπάλαιας <unclear>ἡμᾶς</unclear>.\n</margin>\n-> βλέπει γέ τοι μανικόν τι καὶ τραγῳδικόν. <-\n\n<gloss>γὰρ λοιπὸν <unclear>δαρίσει</unclear> παρ’ ἡμῶν ὥστε κλαίειν</gloss>\n**ΧΡΕ** ἀλλ’ οὐκ ἔχει γὰρ δᾷδας. <gloss>ΒΛΕ</gloss> οὐκοῦν κλαύσεται.\n<gloss>ἐπιλαμβάνετε <unclear>ὑμᾶς</unclear></gloss>\n\n<margin>\n<unclear>ΠΕ</unclear>\nλέκυθος <unclear>δὲ</unclear> δοκεῖ <unclear>παρὰ</unclear> <unclear>τῷ</unclear> <unclear>ποιητῷ</unclear> λήκυθον <unclear>... </unclear>\n</margin>\n<gloss>τίνας</gloss>\n**ΠΕ** οἴεσθε δ’ εἶναι ὑμᾶς.\n<gloss>ξενοδόχον <unclear>κυρίως</unclear></gloss>\n<gloss>ἐλαιοπωλιν.</gloss>\n**ΧΡΕ** πανδοκεύτριαν ἢ λεκυθόπωλιν. οὐ γὰρ ἂν\n<gloss>τοσοῦτον</gloss>\n<gloss>ἐβόα ὡς πρὸς τοὺς ποιοῦντας ὑμᾶς</gloss>\n<margin>\n<unclear>ΧΡΕ</unclear>\nγὰρ λέγετέ <unclear>τι</unclear> <unclear>ὀργὴ</unclear> <unclear>... </unclear> <unclear>τῷ</unclear> <unclear>ὅτι</unclear> <unclear>... </unclear> <unclear>ἢ</unclear> <unclear>... </unclear>\nκεῖται καλομένη.\n</margin>\nτοσουτονὶ ἀνεκράγετε μηδὲν ἠδικημένη.\n<gloss>κατεβόησαν.</gloss> <gloss>ἀνηκέστατα πεποιήκατε.</gloss>\n\n<margin>\n<unclear>ΠΕ</unclear>\nπρὸς τὸ ὥσπερ <unclear>ἐ-</unclear> κέκρατε ποιοῦσι <unclear>... </unclear>\nἀληθῶς εἰ <unclear>ἄληθες</unclear>\nφαύλως <unclear>καλεῖται</unclear> <unclear>θορύβῳ</unclear> <unclear>... </unclear>\n</margin>\n<gloss>τί λέγεις</gloss>\n**ΠΕ** ἄληθες; οὐ γὰρ δεινότατα δεδράκατον,\n<margin>\nτινὶ παροξύνεται ἄληθες, ἵνα <unclear>ἐκ</unclear> τοῦ ῥήματος <unclear>λάμ-</unclear> βανει, <unclear>ὡς</unclear> <unclear>ἐξ</unclear> <unclear>αὐ-</unclear> τοῦ <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> τὸ ἀληθές. τὸ ἀληθὲς γὰρ <unclear>... </unclear> <unclear>... </unclear> οὐ οὕτως ἐστὶ.\n</margin>\n<gloss>ἀποδιώξαι</gloss>\nζητοῦντες ἐκ πάσης με χώρας ἐκβαλεῖν;\n<gloss>λοιπὸν <unclear>αὖ</unclear> <unclear>ἐκ</unclear> τῆς γῆς τὸ βάραθρον</gloss> <gloss>ὅπερ ἐστὶ <unclear>... </unclear></gloss>\n\n<margin>\n<unclear>ΧΡΕ</unclear>\n</margin>\n**ΧΡΕ** οὐκοῦν ὑπόλοιπόν σοι τὸ βάραθρον.\n<gloss>τίς οὖν</gloss> <gloss>ὑπάρχει</gloss> <gloss>λίαν <unclear>βαθύτατος</unclear></gloss>\nΓίνεται <unclear>... </unclear> πρὸς τὸ βλέπειν ἐχρῆν αὐτίκα <unclear>... </unclear>\n\n<margin>\n<unclear>ΠΕ</unclear>\n</margin>\n<gloss>ἡμᾶς</gloss> <gloss>ἤμαρτ’</gloss>\n**ΠΕ** ἡ σφῷ ποιήσω τήμερον δοῦναι δίκην.\n<gloss>λοιπόν</gloss> <gloss>ζητεῖτε <unclear>ἀπέναντι</unclear> διαφορὰν</gloss>\n\n<margin>\nκάπηλίς προπαρο- ξύνεται, <unclear>ὅτι</unclear> διὰ τὸ <unclear>... </unclear> <unclear>... </unclear>\n</margin>\nἀνθ’ ὧν ἐμὲ ζητεῖτον ἐνθάδ’ ἀφανίσαι.\n<gloss>ἡ σιτοπωλις</gloss>\n\n<margin>\n<unclear>ΒΛΕ</unclear>\nἀπὸ τοῦ καπηύω <unclear>... </unclear> ὁ καὶ δηλοῖ τὸ <unclear>συν</unclear> <unclear>... </unclear> <unclear>... </unclear>\nτὸν ὕδωρ οἶνον. <unclear>... </unclear>\n</margin>\n<gloss>ἥτις</gloss>\n**ΒΛΕ** ἀρτόπωλις ἢ καπηλὶς ἡ ἐκ τῶν γειτόνων,\n<gloss>γαστρὶ</gloss> <gloss>φθείρει τιμῶν</gloss> <gloss>τότε με</gloss>\nἢ ταῖς κοτύλαις ἀεί με διαλυμαίνεται,\n<gloss>πρὸς οἷς πη πράττειν <unclear>ἐν οἷς</unclear></gloss>\n\n<margin>\nὡς <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear>\nἢ <unclear>ἐκμετροῦσα</unclear>.\nκαπηλίς <unclear>δ’</unclear> <unclear>ἔξω</unclear> <unclear>... </unclear>\nνεται ὑποκοριστικῶς ἢ <unclear>ἀντὶ</unclear> <unclear>τῆς</unclear> <unclear>ὑπηρέτης</unclear> τῆς κάπης.\n</margin>\n\n---\n\nτὸ βάραθρον δὲ: βάραθρόν ἐστι χάσμα φρεατῶδες σκοτεινόν τε καὶ φοβερὸν ἐν Ἀθήναις <unclear>... </unclear>\nἐν ᾧ ἔβαλλον τοὺς ἀποθανόντας. ἡ δὲ <unclear>ὁ</unclear> ἐν τῷ βαράθρῳ <unclear>ῥίπτουν</unclear> <unclear>χύκλον</unclear> <unclear>σκοτάζειν</unclear> ἀποστ’\n<unclear>ἐως</unclear> <unclear>ἐδέχθη</unclear>. <unclear>ἔοικε</unclear> δὲ <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> φάσματι <unclear>ἐκεινῷ</unclear>: λέγε <unclear>τοῦ</unclear> <unclear>πολλῆς</unclear> ἐμφανῆ <unclear>τινὰ</unclear>\n<unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear>\n\n<vocab>Aristophanes, Plutus, Chremylus, Blepsidemus, Penia, Scholia, Barathron, Erinnys, Comedy, Byzantine Greek</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues the encounter between Chremylus, Blepsidemus, and the terrifying figure who has just interrupted them. In the previous lines, the two men were startled by her ghastly appearance. Here, they attempt to identify her, comparing her to a monster from a stage play before realizing she is Penia (Poverty) herself. The margins are dense with Byzantine-era scholarly commentary explaining the theatrical references and the vocabulary of the Athenian underworld.</meta>\n\n<margin>\nThey are Furies <note>original: \"erinnyes\"</note>: some say this refers to every <unclear>unhappy</unclear> <unclear>state</unclear> of <unclear>will</unclear>.\nAs the ancient <unclear>poet</unclear> himself said, as they say, on behalf of\nthe female goddesses: or the same ones whom the Baptists <note>The \"Baptists\" here refers to the cult of Cotytto, known for lewd rites, though the commentator may be confused; they were often associated with \"Furies\" in a metaphorical sense.</note> say are Furies, taking them\nto be an apparition for the purpose of looking upon; they are very much <unclear>fitting</unclear> queens.\n</margin>\n\n<margin>\n<unclear>CHRE.</unclear>\nHe says she is a Fury; actors in tragedies represent her in this way:\njust as Aeschylus depicted the <unclear>eye</unclear> <note>Aeschylus was famous for first introducing the terrifying masks and costumes of the Furies (Erinyes) in his play *The Eumenides*.</note>\n</margin>\n<gloss>she has a yellow color, for she is such a type</gloss>\n**CHRE:** But as for you—it seems to me you are someone based on your color alone.\n\n<margin>\n<unclear>BLEP.</unclear>\nfearing her because she has a melancholic appearance: —\n</margin>\n<gloss>perhaps a Fury <insert>from</insert> a tragedy. to look upon</gloss>\n**BLEP:** Perhaps she is a Fury out of a tragedy.\n<gloss>for she also has something wild in her, not at all like what they say of us</gloss>\n<margin>\n<unclear>CHRE.</unclear>\n<unclear>towards</unclear> <unclear>those</unclear> same ones to keep the clothes, <unclear>so that</unclear> <unclear>they</unclear>\nlong ago <unclear>us</unclear>.\n</margin>\n-> At any rate, she looks like something mad and tragic. <-\n\n<gloss>for the rest she will <unclear>suffer</unclear> from us so as to weep</gloss>\n**CHRE:** But she doesn't have any torches. <gloss>BLEP</gloss> Then she’ll suffer for it! <note>Furies in theater usually carried torches; Blepsidemus jokes that if she’s an actress without her props, she'll be punished.</note>\n<gloss>you all take hold</gloss>\n\n<margin>\n<unclear>PENIA</unclear>\nthe flask <note>original: \"lekythos\"</note> <unclear>seems</unclear> <unclear>beside</unclear> <unclear>the</unclear> <unclear>poet</unclear> a flask <unclear>... </unclear>\n</margin>\n<gloss>who</gloss>\n**PENIA:** Who do you think you are?\n<gloss>an innkeeper <unclear>properly</unclear></gloss>\n<gloss>an oil-seller.</gloss>\n**CHRE:** An innkeeper or an oil-flask seller! Otherwise,\n<gloss>so much</gloss>\n<gloss>she would cry out as if against those who made you</gloss>\n<margin>\n<unclear>CHRE.</unclear>\nfor you say <unclear>something</unclear> <unclear>anger</unclear> <unclear>... </unclear> <unclear>to the</unclear> <unclear>because</unclear> <unclear>... </unclear> <unclear>or</unclear> <unclear>... </unclear>\nit lies there so called.\n</margin>\nyou wouldn't have cried out so much, having suffered no wrong.\n<gloss>they cried out against.</gloss> <gloss>you have done most incurable things.</gloss>\n\n<margin>\n<unclear>PENIA</unclear>\ntowards the way they <unclear>cried out</unclear>... <unclear>... </unclear>\ntruly if <unclear>it is true</unclear>\nit is <unclear>called</unclear> poorly <unclear>in the uproar</unclear> <unclear>... </unclear>\n</margin>\n<gloss>what are you saying?</gloss>\n**PENIA:** Truly? Have you not done the most terrible things,\n<margin>\n\"Truly\" <note>original: \"alēthes\"</note> is accented in a certain way, so that it takes from the verb <unclear>to shine</unclear>, as if from <unclear>itself</unclear>... the truth. For the truth <unclear>... </unclear> is not thus. <note>This marginal note is a grammatical debate about the accentuation of the word for \"truth\" or \"really,\" a common obsession for Byzantine scribes.</note>\n</margin>\n<gloss>to drive away</gloss>\nseeking to cast me out from every land?\n<gloss>furthermore <unclear>again</unclear> <unclear>from</unclear> the earth the Pit</gloss> <gloss>which is <unclear>... </unclear></gloss>\n\n<margin>\n<unclear>CHRE.</unclear>\n</margin>\n**CHRE:** Well then, the Pit <note>the Barathron, a deep chasm in Athens where criminals were thrown</note> is what’s left for you.\n<gloss>who then</gloss> <gloss>exists</gloss> <gloss>exceedingly <unclear>deepest</unclear></gloss>\nIt becomes <unclear>... </unclear> regarding the look, one should immediately <unclear>... </unclear>\n\n<margin>\n<unclear>PENIA</unclear>\n</margin>\n<gloss>us</gloss> <gloss>wronged</gloss>\n**PENIA:** Truly, I will make you both pay the penalty today!\n<gloss>furthermore</gloss> <gloss>you seek <unclear>opposite</unclear> a difference</gloss>\n\n<margin>\n\"Tavern-keeper\" <note>original: \"kapēlis\"</note> is accented on the penult, <unclear>because</unclear> through the <unclear>... </unclear> <unclear>... </unclear>\n</margin>\nFor the things which you both seek to destroy me here.\n<gloss>the grain-seller</gloss>\n\n<margin>\n<unclear>BLEP.</unclear>\nfrom the word \"to hawk\" <unclear>... </unclear> which also reveals the <unclear>with</unclear> <unclear>... </unclear> <unclear>... </unclear>\nthe water [into] wine. <unclear>... </unclear> <note>A note on \"kapēlis\" (female tavern-keeper), notoriously accused in antiquity of diluting wine with water.</note>\n</margin>\n<gloss>whoever</gloss>\n**BLEP:** Are you a bread-seller, or a tavern-keeper from the neighborhood,\n<gloss>in the belly</gloss> <gloss>she destroys the values</gloss> <gloss>then me</gloss>\nwho always cheats me in the measures? <note>original: \"kotylais\" - a small liquid measure.</note>\n<gloss>towards which things somehow to do <unclear>in which</unclear></gloss>\n\n<margin>\nas <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear>\nor <unclear>measuring out</unclear>.\nthe tavern-keeper <unclear>outside</unclear> <unclear>... </unclear>\nit is [called] diminutively or <unclear>instead of</unclear> <unclear>the servant</unclear> of the shop.\n</margin>\n\n---\n\nThe Pit <note>original: \"to barathron\"</note>: The Pit is a well-like chasm, dark and fearful in Athens <unclear>... </unclear> in which they used to throw those who were executed. And the [person] <unclear>thrown</unclear> in the Pit <unclear>into the circle</unclear> <unclear>to be in darkness</unclear> <unclear>until</unclear> <unclear>he was received</unclear>. It is <unclear>likely</unclear> moreover <unclear>... </unclear> <unclear>... </unclear> with <unclear>that</unclear> apparition: say <unclear>of the</unclear> great manifest <unclear>someone</unclear> <unclear>... </unclear> <unclear>... </unclear> <unclear>... </unclear>\n\n<summary>Penia (Poverty) confronts Chremylus and Blepsidemus, who mock her appearance by comparing her to a tragic Fury or a common, dishonest shopkeeper. The text and margins provide a fascinating blend of Aristophanic wit and later Byzantine scholarly definitions of Athenian judicial and theatrical terms.</summary>\n<keywords>Aristophanes, Plutus, Penia, Poverty, Barathron, Furies, Erinyes, Greek Drama, Athenian Law, Byzantine Scholia</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 31,
+    "page_id": "69938a8ee07f979c72ac6703",
+    "image_url": "https://images.sourcelibrary.org/archived/69938a8ee07f979c72ac6590/31.jpg",
+    "image_status": 200,
+    "ocr": "<language>Greek</language>\n<page-type>text</page-type>\n<page-num>12</page-num>\n\n<warning>Staining and fading on the right side of the page. Some text obscured by a circular stamp.</warning>\n\n### + περὶ παραγραφῆς ὅτι ο βλεψίδημ(ος) <unclear>εφάνη</unclear> <unclear>ακουσας</unclear> ὅτι πενιχ(ός) ἐστι:\n\n<gloss>η</gloss> <gloss>φαίνη</gloss> <gloss>υμῖν</gloss> <gloss>πολλῆ χρ...</gloss>\n<margin>Η</margin> πενία μὲν οὖν ἡ σφοδρῶς ξυνοικοῦσα πολλα ἔτη .\n\n<gloss>ψολ ω</gloss>\nΒλε ἄναξ ἄπολλον καὶ θεοὶ ποῖ τις φύγοι .\n\n<gloss>ταχέως</gloss>\nΧρ οὗτος . τί δρᾶς . ὦ δειλότατον σὺ θηρίον\n\nοὐ παραμενεῖς; <gloss>ψολ εωδεκε</gloss> Βλε ἥκιστα πάντων. Χρ οὐ μενεῖς;\n\nἀλλ’ ἄνδρε δύο γυναῖκα φεύγομεν μίαν;\n\n<gloss>τον</gloss> <gloss>Γεωργὸν</gloss> <gloss>ηνην τις πενι..</gloss>\nΒλε πενία γάρ ἐστιν ὦ πονηρέ . ἧς οὐδαμοῦ\n\n<gloss>υπαρχει</gloss> <gloss>ισχενει</gloss> <gloss>αφανιστικω..</gloss> <gloss>ολεθριωστ..</gloss>\nοὐδὲν πέφυκε ζῶον ἐξωλέστερον\n\n<gloss>παρακαλῶ</gloss> <gloss>ψολ</gloss> <gloss>στήσομεν</gloss>\nΧρ στῆθ’ ἀντιβολῶ σε στῆθι Βλε καὶ δὴ ἑστηκ’ ἐγώ; Χρ οὔ.\n\n<gloss>τον</gloss> <gloss>φαυλον</gloss> <gloss>καθ’ ου πολὺ</gloss>\nΧρ καὶ μὴν λέγω δεινότατον ἔργον παρα πολὺ\n\n<gloss>ποιησωμεν</gloss> <gloss>τον πλουτον</gloss>\nἔργων ἁπάντων ἐργασαίμεθ’ ἂν, τὸν θεὸν\n\n<gloss>αφέντες</gloss> <gloss>που</gloss> <gloss>φύγομεν</gloss>\nἔρημον ἀπολιπόντε ποι φύγοιμεν ἂν;\n\n<gloss>ταύτην</gloss> <gloss>φοβούμενοι</gloss> <gloss>μη πολεμήσωμεν</gloss>\nτὴν δὲ δεδιότε, μηδ’ ἅπαξ μαχώμεθα;\n\n<gloss>ψολ</gloss> <gloss>ωπλοις</gloss> <gloss>οπλοις</gloss> <gloss>θαρροῦντες</gloss> <gloss>λαμψ(..)</gloss>\nΒλε ποίοισιν ὅπλοις ἢ δυνάμει πεποιθότες;\n\n<gloss>τινην σωσωμεν</gloss> <gloss>η σκουταρίον</gloss>\n<margin>\nση(μείωσαι) μοναχοῦ τινος ερη-\nμος κ(ύρι)ος ως αγωνίσασθαι\nτη εν ονόματι. ετύπω(σε)\nλεγ(εται) γάρ, απηλλομένη\nγυναικὶ εραικ.. την γῆν.\nθνητὸς ετερον αμήν: +\n</margin>\nποῖον γὰρ οὐ θώρακα, ποίαν δ’ ἀσπίδα,\n\n<gloss>συγχευον</gloss> <gloss>σκληρόν</gloss> <gloss>αυτη η πενία</gloss>\n<margin>\nη κολουσ(ις) η πειθουσ(α) η\nουδ’ εγκ. αδειν ιστω\nαψ’ ουτως αυται γίνεσθαι.\nεν τοις πένησιν αλλ’ ρη\nαπορούντες ενεχυρα\nτίθεσθαι ελέγομεν κοινῶ\nαιμα:\n</margin>\nοὐκ ἐνεχυρον ἥδ’ ἡ μιαρωτάτη.\n\n---\n\n<margin>\nση(μείωσαι) ὅτι ἂν παρορευη(...) (...) (...) (...) (...) (...) (...) (...) (...) (...)\nλεγ(εται) βλεψιδ(ημος) (...) (...) (...) (...) (...) (...) (...) (...) (...)\n(...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...) (...)\n</margin>\n\n<vocab>Aristophanes, Plutus, Penia, Blepsidemus, Chremylus, Greek drama, Scholia, Byzantine manuscript, glossing</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page continues the tense confrontation between Chremylus and his friend Blepsidemus as they face the personified figure of Poverty. In the preceding text, the men were terrified by her ghost-like appearance. Here, the dialogue shifts to a comedic debate: Blepsidemus wants to run away in terror, while Chremylus tries to convince him that they must stay to protect Wealth (Plutus), whom they have recently found. The Byzantine-era margins and glosses provide linguistic explanations and perhaps some Christianized interpretations added by a later scribe.</meta>\n\n<warning>Staining and fading on the right side of the page. Some text obscured by a circular stamp.</warning>\n\n### + Concerning the marginal note <note>original: \"paragraphe\"</note> that Blepsidemus appeared [frightened] upon hearing that she is Poverty:\n\n<gloss>Does she appear to you [to be in] much [want?]</gloss>\n<margin>Poverty, then, is she who has lived together [with us] intensely for many years.</margin>\n\n<gloss>Scholion</gloss>\n**BLEPSIDEMUS:** Lord Apollo and gods, where can one flee?\n\n<gloss>Quickly</gloss>\n**CHREMYLUS:** Hey! What are you doing? You most cowardly beast, won't you stay?\n\n<gloss>Scholion</gloss> **BLEPSIDEMUS:** Not in the least! **CHREMYLUS:** Won't you stay? \n\nShall we, two men, flee from one single woman?\n\n<gloss>Someone [mentioned] the [play] *The Farmer* <note>original: \"Geōrgon\"</note> [regarding] poverty...</gloss>\n**BLEPSIDEMUS:** For she is Poverty, you wretch! No living creature anywhere \n\n<gloss>It exists... it is powerful... destructive... ruinous...</gloss>\nis born more destructive than her.\n\n<gloss>I urge [you], Scholion, we shall stand</gloss>\n**CHREMYLUS:** Stand! I entreat you, stand! **BLEPSIDEMUS:** See, have I stood still? **CHREMYLUS:** No!\n\n<gloss>the base man against whom [we have] much [to say]</gloss>\n**CHREMYLUS:** And yet I say we would be doing the most terrible deed by far\n\n<gloss>Let us make Wealth...</gloss>\nof all deeds, if we leave the God [Wealth] \n\n<gloss>Having left [him], where shall we flee?</gloss>\ndeserted—where would we flee?\n\n<gloss>Fearing her, let us not fight?</gloss>\nAre you so afraid of her that we won't even fight her once?\n\n<gloss>Scholion: weapons, weapons, trusting...</gloss>\n**BLEPSIDEMUS:** Relying on what weapons or what power?\n\n<gloss>[Whom] shall we save? Or a small shield? <note>original: \"skoutarion\"</note></gloss>\n<margin>\nNote <note>original abbreviation: \"se(meiosai)\"</note>: [This note refers to] a certain monk... the Lord deserted... so as to struggle in the name. It is impressed; for it is said, [for] a woman who has departed... the earth. A mortal... another... Amen. +\n</margin>\nFor what breastplate, what shield, \n\n<gloss>Confusing... harsh... she is Poverty</gloss>\n<margin>\nThe clipping or the persuasion... or not... let him know... thus these things come to be among the poor... but being in need, we were said to give pledges <note>original: \"enechyra\"</note>, commonly [called] blood.\n</margin>\nhas this most abominable woman not [taken as] a <term>pledge</term> <note>a pawned item left as security for a debt</note>?\n\n---\n\n<margin>\nNote <note>original: \"se(meiosai)\"</note> that if <unclear>...</unclear> it is said Blepsidemus <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear> <unclear>...</unclear>\n</margin>\n\n<summary>Chremylus attempts to prevent a terrified Blepsidemus from fleeing the personification of Poverty. Blepsidemus argues that they are defenseless because Poverty has already forced them to pawn all their weapons and armor.</summary>\n<keywords>Aristophanes, Plutus, Poverty, Penia, Blepsidemus, Chremylus, Greek Comedy, Byzantine Scholia, pawning, armor, debt</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 5,
+  "book_id": "6a3cefef4701a906f10f3395",
+  "book_url": "https://sourcelibrary.org/book/6a3cefef4701a906f10f3395",
+  "tradition": null,
+  "book": {
+   "id": "6a3cefef4701a906f10f3395",
+   "title": "西陽雜俎·卷十六~卷二十 (vol 6)",
+   "display_title": "Miscellaneous Morsels from Youyang",
+   "author": "段成式",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06081664.cn",
+   "pages_count": 133,
+   "pages_ocr": 133,
+   "pages_translated": 131,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 133,
+   "distinct_page_numbers": 133,
+   "duplicate_records": 0,
+   "pages_with_ocr": 133,
+   "pages_translated": 131,
+   "with_printed_number": 1,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 133,
+   "pages_ocr_field": 133,
+   "pages_translated_field": 131
+  },
+  "run": [
+   84,
+   85,
+   86
+  ],
+  "pages": [
+   {
+    "page_number": 84,
+    "page_id": "6a3cefef4701a906f10f33e9",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cefef4701a906f10f3395/84.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n渭河中覆舟一粒無餘\n卜人徐道昇言江淮有王生者榜言解夢賈客張瞻將\n歸夢炊於臼中問王生生言君歸不見妻矣臼中炊\n固無釜也賈客至家妻果卒巳數月方知王生之言\n不誣矣\n補闕楊子孫堇善占夢一人夢松生户前一人夢棗生\n屋上堇言松丘壠間所植棗字重來重來呼魄之象\n二人俱卒",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>...in the Wei River, the boat overturned, and not a single grain was left.\"\n\nThe diviner Xu Daosheng said that in the Jianghuai region there was a Scholar Wang, whose signboard announced that he interpreted dreams. The traveling merchant Zhang Zhan was preparing to return home when he dreamed of cooking rice in a mortar. He asked Scholar Wang about it. Wang said, \"When you return, you will not see your wife; cooking in a mortar naturally means there is no cauldron <note>A punning interpretation: a mortar (jiu) is a homophone for long (jiu), and cooking without a cauldron (fu) implies no wife (fu).</note>.\" When the merchant arrived home, his wife had indeed died several months prior, proving that Scholar Wang's words were no falsehood.\n\nRemonstrator Yang's grandson, Jin, was skilled at dream divination. One man dreamed of a pine tree growing before his door, and another dreamed of a jujube tree growing on his roof. Jin said, \"Pines are planted among burial mounds, and the character for jujube <term>zao</term> <gloss>jujube</gloss> consists of repeated characters meaning to come again <note>The character 棗 (zao) is composed of two instances of 來 (lai, to come), which forms the phrase 'come again' (chonglai), an expression used to summon back the soul of the dead.</note>, which is the omen of summoning back the soul.\" Both men subsequently died.\n\n<summary>This page records several accounts of dream divination from the Tang dynasty, including an omen of overturned cargo, an accurate prediction of a wife's death, and fatal omens involving trees.</summary>\n<keywords>dream interpretation, divination, omens, Xu Daosheng, Scholar Wang, Zhang Zhan, Yang Jin, Youyang Zazu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 85,
+    "page_id": "6a3cefef4701a906f10f33ea",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cefef4701a906f10f3395/85.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"high\">A circular seal containing Chinese characters, positioned at the top center of the page.</image-desc>\n\n酉陽雜俎卷八\n\n卷八\n\n<vocab>酉陽雜俎, 卷八</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<note>A circular seal containing Chinese characters, positioned at the top center of the page.</note>\n\nMiscellaneous Morsels from Youyang, Volume Eight\n\nVolume Eight\n\n<summary>This page contains the title and volume designation for the eighth scroll of the Miscellaneous Morsels from Youyang, a collection of historical, anecdotal, and supernatural accounts.</summary>\n<keywords>Miscellaneous Morsels from Youyang, Duan Chengshi, classical Chinese literature, miscellany</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 86,
+    "page_id": "6a3cefef4701a906f10f33eb",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3cefef4701a906f10f3395/86.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n總校官庶吉士臣侍朝\n校對官檢討臣盧應\n謄錄監生臣趙立福\n謄錄監生臣徐壇",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Chief Collation Officer, <term>shujishi</term> <gloss>Hanlin Academy bachelor</gloss>, your humble servant Shi Zhao\nProofreading Official, <term>jiantao</term> <gloss>Hanlin Academy assistant compiler</gloss>, your humble servant Lu Ying\nTranscription Official, <term>jiansheng</term> <gloss>Imperial Academy student</gloss>, your humble servant Zhao Lifu\nTranscription Official, <term>jiansheng</term> <gloss>Imperial Academy student</gloss>, your humble servant Xu Tan\n\n<summary>This page records the imperial editorial roster for the volume, identifying the collators, proofreaders, and scribes responsible for transcribing the text into the imperial collection.</summary>\n<keywords>editorial staff, colophon, proofreading, transcription, Hanlin Academy, Imperial Academy, Siku Quanshu, Qing dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 6,
+  "book_id": "6a0853e515c643eb1af51643",
+  "book_url": "https://sourcelibrary.org/book/6a0853e515c643eb1af51643",
+  "tradition": null,
+  "book": {
+   "id": "6a0853e515c643eb1af51643",
+   "title": "De natura daemonum libri 4. Io. Laurentii Ananiae Tabernatis theologi",
+   "display_title": null,
+   "author": "Giovanni Lorenzo D'Anania",
+   "language": "Latin",
+   "published": "1581",
+   "ia_identifier": "bub_gb_MynQXp8GaqIC",
+   "pages_count": 279,
+   "pages_ocr": 279,
+   "pages_translated": 272,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 279,
+   "distinct_page_numbers": 279,
+   "duplicate_records": 0,
+   "pages_with_ocr": 279,
+   "pages_translated": 272,
+   "with_printed_number": 232,
+   "printed_backsteps": 8,
+   "printed_repeats": 32,
+   "pages_count_field": 279,
+   "pages_ocr_field": 279,
+   "pages_translated_field": 272
+  },
+  "run": [
+   54,
+   55,
+   56
+  ],
+  "pages": [
+   {
+    "page_number": 54,
+    "page_id": "6a0853e515c643eb1af51679",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/54.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>22</page-num>\n<header>Io. Laurentii Ananiae</header>\n<meta>catchword: fune-</meta>\n\npaulo postquam esset producta, manciparetur, eo maxime, quod in suis, ut Scriptura inquit, Angelis reperit mutationem. Verumtamen Daemones (libet enim inceptum ordinem prosequi) plus iusto et aequo diutius, a uoluntate sui Creatoris sese abstrahendo, usque adeo omnes, sui ipsorum amore immoderati, stulti, et ebrii, in hac secunda mora processere, ut tandem iustissimo Dei iudicio, honorem suum alteri non dantis, in ea praefracta ceruice, in odium Dei obstinati perseuerantes, ad unum omnes in tertia damnarentur mora, nulla prorsus iusta excusatione ipsos releuante: siquidem hoc iudicio et sententia non praecipitatione quadam, sed sed potius aequissima Dei longanimitate, iustitia, nempe, ipsa misericordia temperata, contra ipsos processum est. Adde, quod non unius, ut nonnulli opinantur, tantum criminis rei peracti fuerint, sed et diuersorum, quibus omnes simul, sua tamen quisque peculiari malitia, ineffabili cum cupidine agitabatur. Hi enim uariis flagitiis sceleribus impliciti a minoribus ad maiora et atrociora, semper adeo progressi sunt, ut, etsi non ex aequo cuncti, suae naturae praestantia; at uoluntatis certe imperio, frenum sceleratissimis cupiditatibus laxando, in infinitum peccauerint, adeo ut in Dei extremum contemptum et odium (horribile dictu) sic prolapsi et demersi sunt, quo inde pedem referre, retrocedereque, tandem ipsis integrum minime fuerit. Hinc factum, ut hac tandem sua postrema et fune-\n\n<vocab>Daemones, Creator, Dei iudicium, Scriptura, peccauerint, malitia</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Io. Laurentii Ananiae\n\n<meta>continues from previous page: ...fatal</meta>\nral <note>original: \"fune-\"</note> fall, they were cast down. For since they did not desire the light of grace, they remained in their own darkness, which they had chosen for themselves through their own malice. They were not dragged into this by any external force, but rather they rushed into it headlong by the force of their own corrupted wills. Therefore, because their fall was complete and their rebellion against the Creator was total, the judgment that followed was equally final. It was not a matter of a single moment of weakness, but a progression of persistent pride that led to their irreversible state of separation. Thus, they became the authors of their own misery, having rejected the order of divine love and replaced it with an insatiable hunger for their own exaltation.\n\n<summary>This passage continues the theological argument regarding the fall of the demons, asserting that their condemnation was the result of their own persistent, willful rejection of God rather than divine caprice. It emphasizes that their descent into evil was a gradual progression of pride and malice, ultimately leading to a state from which repentance was no longer possible.</summary>\n\n<keywords>demons, fall of the angels, free will, divine justice, malice, pride, theological judgment</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 55,
+    "page_id": "6a0853e515c643eb1af5167a",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/55.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>23</page-num>\n<header>De natura Daemonum Lib. I.</header>\n<sig>B 4</sig>\n<meta>catchword: lapsu</meta>\n\nfunesta mora, ipsi daemones e Caelo, non secus, ac plumbum, in aquam, Angelorum, ut dictum est, ministerio, eiecti praecipitatique fuerint, non sine summa extremaque suorum ignominia, sic interni, uermis nunquam morientis, arrosionis dolore, et ad inferna plerumque relegati; eorum enim plurimi adhuc, (Diuo Iacobo innuente) huic caliginoso frigidoque aeri inhaerent; quem quidem ipse Deus, pro sua miranda et infinita prouidentia, ut nos incautos exerceant, et ad timorem Dei somnolentos exuscitent, usque ad diem magnum Domini, ne et ipsi penitus sine causa ibi relicti uiderentur, ipsis ita concessit permisitque quibus etiam interdum in executione suae diuinae iustitiae in nos homines utitur, ut suo loco dicetur. Atque hos omnes, qui huic inclusi sunt aeri, inferiores fuisse tradunt: magnates enim ob eorum nobilitatem, propriaque uoluntatis a Deo se auertentis furorem et impetum atrocius alijs in creatorem suum peccando, iustissima Dei trutina rem examinantes, ad infima Tartara detrusi sunt, una cum eorum principe Dracone. Hic enim cum suae ipsius stolidae superbiae ueneno, plus caeteris inflatus, nobilioris suae essentiae a Deo concessis donis ad id elatus, reliquique tam turpissimae, aeternisque doloribus expiandae apostasiae, ansam praebuisset; haud iniuria qui amisit mensuram, qua summo torquetur opere, et Dei iure optimo, poenas delictis commensurantis, acerbiores quoque luit, sustinetque. Caeterum, quanta pars\n\n<vocab>daemones, Caelo, Angelorum, Diuo Iacobo, Tartara, Dracone, apostasiae, iustitia Dei</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "De natura Daemonum Lib. I.\n<sig>B 4</sig>\n\n<meta>continues from previous page: fatal</meta> fall, they were cast down. Just as lead is thrown into water, they were cast and precipitated by the ministry of the Angels, as has been said, not without the ultimate and extreme ignominy of their state. They were thus cast down, suffering the pain of the internal worm that never dies <note>a reference to Mark 9:48</note>, and for the most part relegated to the infernal regions. Many of them, however, as Saint James <note>original: \"Diuo Iacobo\"</note> intimates, still cling to this dark and cold air. God himself, in his marvelous and infinite providence, has conceded and permitted them to remain there until the great day of the Lord, so that they might exercise us in our lack of caution and rouse us from our sleepiness toward the fear of God, lest they appear to have been left there entirely without cause. God also makes use of them at times in the execution of his divine justice against us humans, as will be said in its proper place. And it is reported that all those who are confined to this air were the inferior ones. For the magnates <note>great or powerful beings</note>, on account of their nobility and the fury and impetus of their own will turning away from God, by sinning more atrociously against their Creator than the others, were thrust down to the lowest depths of Tartarus <note>the abyss of the underworld</note>, together with their prince, the Dragon <note>original: \"Dracone\"</note>, having examined the matter with the most just scales of God. For he, inflated more than the others by the poison of his own foolish pride, and raised to that state by the gifts granted to him by God for his nobler essence, provided the opportunity for the rest to join in such a shameful apostasy, which must be atoned for with eternal pains. Therefore, he who lost the measure by which he is now tormented with the highest exertion, and by the best right of God, who commensurates punishments to offenses, rightfully suffers and sustains even harsher penalties. Moreover, how great a part",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 56,
+    "page_id": "6a0853e515c643eb1af5167b",
+    "image_url": "https://images.sourcelibrary.org/archived/6a0853e515c643eb1af51643/56.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>24</page-num>\n<header>Io. Laurentii Ananiae</header>\n<meta>catchword: in</meta>\n\n*lapsu illo ceciderit, et an ii omnes unius, uel diuersorum ordinum fuerint: non minima inter Theologos, ea de re dissensio est. Quidam enim considerantes, multo maiorem hominum turbam, ad inferos, cum diabolis ibi cruciandam detrudi, quam ad caelestia gaudia cum Angelis perfruenda, euehi: huius quiddam instar ac simile in ipsis etiam Angelis, usu uenisse, opinati sunt: qua de re, maiori eos etiam numero ad inferos detrusos, hinc colligunt. Alii uero, sanioris aliquanto hac in re (ut mea fert opinio) iudicii, oculis defixis in bonum illud, quod spiritibus, ut intellectus purioris capacibus, inerat, ideo minorem eorum partem, hoc lapsu corruisse, uoluerunt; quorum quidem opinio, ut uero magis consentanea, ita magis amplectenda, mihi uidetur. Quotus tamen quisque eorum sic praecipitatus e Coelis fuerit, a diuersis in diuersas opiniones, itum est. Nam quidam, partem decimam, huius flagitii ream peractam fuisse, referunt; alii uero, nonam his aeternis poenis destinatam. nec pauciores reperire est, numero, qui tertium duntaxat Angelorum agmen, damnatum asserunt; quorum sententiae aut opinioni, utputa D. Ioannis suffultae auctoritati, ex ipsa ueritate haec uerba depromentis: Draconem, sua ipsius cauda tertiam partem stellarum, secum traxisse, plerique tutius inhaerendum praedicant. Verum, a quotis, quibusue ordinibus, pars haec deiecta fuerit, quod non secundum gloriae statum intelligendum, cum nec etiam*\n\n<vocab>Theologos, Angelis, diabolos, lapsu, D. Ioannis, Draconem, inferos</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Io. Laurentii Ananiae\n\nfell in that <term>lapsus</term> <gloss>fall</gloss>, and whether they all belonged to one or different orders, is a subject of no small disagreement among theologians. Some, considering that a much greater crowd of men is thrust down to the infernal regions to be tortured there with the devils, than is raised to enjoy heavenly joys with the Angels, have opined that something of this same sort happened among the Angels themselves. From this, they conclude that a greater number of them were also thrust down to the infernal regions. Others, however, who in my opinion possess a somewhat sounder judgment in this matter, with their eyes fixed on that goodness which was inherent in the spirits as beings capable of a purer intellect, have maintained that a smaller part of them fell in this collapse. This opinion seems to me to be more agreeable to the truth, and thus more to be embraced. Yet, as to exactly how many of them were thus precipitated from the Heavens, various opinions have been held. For some report that a tenth part was guilty of this crime; others, however, that a ninth part was destined for these eternal punishments. And one can find no fewer who assert that only the third rank of Angels was damned. Many declare that it is safer to adhere to the opinion or view supported by the authority of Saint John <note>original: \"D. Ioannis\"</note>, who draws these words from the truth itself: that the Dragon dragged with him a third part of the stars <note>referencing Revelation 12:4</note>. Truly, from how many, or from which orders, this part was cast down—which is not to be understood according to their state of glory, since they never even stood in conditions",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "book_id": "6a3c6732af3c49b59c5d11ee",
+  "book_url": "https://sourcelibrary.org/book/6a3c6732af3c49b59c5d11ee",
+  "tradition": null,
+  "book": {
+   "id": "6a3c6732af3c49b59c5d11ee",
+   "title": "理學類編·卷四~卷六 (vol 2)",
+   "display_title": null,
+   "author": "張九韶",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06051861.cn",
+   "pages_count": 142,
+   "pages_ocr": 142,
+   "pages_translated": 141,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 142,
+   "distinct_page_numbers": 142,
+   "duplicate_records": 0,
+   "pages_with_ocr": 142,
+   "pages_translated": 141,
+   "with_printed_number": 4,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 142,
+   "pages_ocr_field": 142,
+   "pages_translated_field": 141
+  },
+  "run": [
+   95,
+   96,
+   97
+  ],
+  "pages": [
+   {
+    "page_number": 95,
+    "page_id": "6a3c6732af3c49b59c5d124d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/95.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n張子曰乾稱父坤稱母子茲藐焉乃混然中處故天地\n之塞吾其體天地之帥吾其性民吾同胞物吾與也\n朱子曰天陽也以至健而位乎上父道也地隂也\n以至順而位乎下母道也人稟氣於天賦形於地以\n藐然之身混合無間而位乎中子道也然不曰天地\n而曰乾坤者天地其形體也乾坤其性情也乾者健\n而無息之謂萬物之所以資始也坤者順而有常之\n謂萬物之所資以生者也是乃天地之所以為天地",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Master Zhang said: \"<term>Qian</term> <gloss>the Creative</gloss> is called the father, and <term>Kun</term> <gloss>the Receptive</gloss> is called the mother. I, this tiny creature, dwell blended indistinctly in their midst. Therefore, that which fills Heaven and Earth is my body, and that which directs Heaven and Earth is my nature. All people are my brothers and sisters, and all things are my companions.\"\n\nMaster Zhu said: \"Heaven is <term>yang</term> <gloss>active polarity</gloss>; through supreme vigor it occupies the place above, which is the way of the father. Earth is <term>yin</term> <gloss>receptive polarity</gloss>; through supreme compliance it occupies the place below, which is the way of the mother. Humans receive <term>qi</term> <gloss>vital energy</gloss> from Heaven and take physical form from Earth; with their tiny bodies they blend together seamlessly and occupy the position in the center, which is the way of the child. Yet the reason he speaks of <term>Qian</term> and <term>Kun</term> rather than Heaven and Earth is that Heaven and Earth are their physical forms, while <term>Qian</term> and <term>Kun</term> are their inherent natures and dispositions. <term>Qian</term> refers to vigor without rest, that upon which all things rely for their beginning. <term>Kun</term> refers to compliance with constancy, that upon which all things rely to be born. This is truly the reason why Heaven and Earth are Heaven and Earth.\"\n\n<summary>Master Zhang identifies Heaven and Earth as the universal parents of humanity, establishing cosmic kinship among all people and things. Master Zhu explains that Qian and Kun represent the active and compliant natures of Heaven and Earth, while humans occupy the harmonious center as their children.</summary>\n<keywords>Zhang Zai, Zhu Xi, Western Inscription, Qian and Kun, Heaven and Earth, yin and yang, qi, cosmic kinship, Neo-Confucian cosmology</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 96,
+    "page_id": "6a3c6732af3c49b59c5d124e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/96.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n玉學類編\n<header>卷六</header>\n而父母乎萬物者故指而言之人物並生於天地間\n其所資以為體者皆天地之氣塞乎兩間者也其所\n得以為性者皆天地之志為氣之帥者也然體有偏\n正之殊故其於性也不無明暗之異惟人也得其形\n氣之正是以其心之最靈而有以通乎性命之全體\n於並生之中又為同類而最貴焉故曰同胞則其視\n之也皆如已之兄弟矣物則得夫形氣之偏而不能\n通乎性命之全故與我不同類而不若人之貴然原",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "# 六\n## Imperial Approved Complete Library of the Four Treasuries, Compendium of Neo-Confucian Studies, Volume 6\n\n\"...and are the parents of the ten thousand things. Therefore, when pointing them out, people and things are born together between heaven and earth. What they rely on to form their bodies is all the energy of heaven and earth that fills the space between them. Because what they obtain is different, their natures do not lack differences in clarity and darkness. Only humans obtain the correctness of form and energy. Therefore, their hearts are the most spiritual and have the means to communicate with the complete body of nature and fate. Among all that is born, they are of the same kind and are the most precious. Thus it is said: 'If they are my siblings,' then when one looks at them, it is all as if they were one's own brothers. Things obtain the bias of form and energy and are unable to communicate with the totality of nature and fate. Therefore, they are not of the same kind as me and are not as precious as humans. However, the origin of...\"",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 97,
+    "page_id": "6a3c6732af3c49b59c5d124f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6732af3c49b59c5d11ee/97.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n其體性之所自是亦本之天地而未甞不同也故曰\n吾與則其視之也亦如巳之儕輩矣 北溪陳氏曰\n塞字是就孟子浩然之氣塞乎天地句掇一字來說\n氣帥字是就孟子志氣之帥也句掇一字來說理\n朱子曰天道流行發育萬物其所以為造化者隂陽五\n行而已而所謂隂陽五行者又必有是理而後有是\n氣及其生物則又必因是氣之聚而後有是形故人\n物之生必得是理然後有以為健順仁義禮智之性",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>their physical nature also originates from Heaven and Earth and has never been different. Therefore it is said: \"they are my companions.\" Thus, regarding them, they are also like one's own peers.\n\nMaster Chen of <term>Beixi</term> <note>Chen Chun, 1159–1223, prominent disciple of Zhu Xi</note> said: The character <term>sai</term> <gloss>filling</gloss> takes a single word from the Mencius passage, \"the flood-like <term>qi</term> <gloss>vital force</gloss> fills Heaven and Earth,\" to explain <term>qi</term>. The character <term>shuai</term> <gloss>commander</gloss> takes a single word from the Mencius passage, \"the will is the commander of <term>qi</term>,\" to explain <term>li</term> <gloss>principle</gloss>.\n\nMaster Zhu <note>Zhu Xi, 1130–1200</note> said: The Way of Heaven circulates, nourishing and bringing forth the myriad things. That which constitutes the creative transformation is simply <term>yin</term> and <term>yang</term> and the Five Elements. Yet regarding what is called <term>yin</term> and <term>yang</term> and the Five Elements, there must first be this <term>li</term> before there is this <term>qi</term>. When it comes to producing living things, it must rely on the gathering of this <term>qi</term> before there is physical form. Therefore, at the birth of humans and things, they must receive this <term>li</term>, and only then do they have that which constitutes the natures of strength, compliance, benevolence, righteousness, propriety, and wisdom.\n\n<summary>This text explores Neo-Confucian cosmology regarding the shared origin of humans and non-human beings through Heaven and Earth. It records commentary by Chen Chun on key Mencian terms and cites Zhu Xi on the priority of principle over vital force in the formation of creatures.</summary>\n<keywords>Neo-Confucianism, Zhu Xi, Chen Chun, Beixi, Mencius, li and qi, principle, vital force, yin and yang, Five Elements, Western Inscription, Zhang Zai</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "book_id": "69a5ead1d507939f0352ced7",
+  "book_url": "https://sourcelibrary.org/book/69a5ead1d507939f0352ced7",
+  "tradition": null,
+  "book": {
+   "id": "69a5ead1d507939f0352ced7",
+   "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)",
+   "display_title": "History of the Armenians",
+   "author": "P'awstos Buzand",
+   "language": "Armenian",
+   "published": "1883",
+   "ia_identifier": "PawstosiBuzandatswoyPatmutiwnHayotsIChorsDprutiwnspawstos",
+   "pages_count": 320,
+   "pages_ocr": 319,
+   "pages_translated": 306,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "robert-bedrosian-library",
+     "patron-library-collection"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 320,
+   "distinct_page_numbers": 320,
+   "duplicate_records": 0,
+   "pages_with_ocr": 319,
+   "pages_translated": 314,
+   "with_printed_number": 284,
+   "printed_backsteps": 7,
+   "printed_repeats": 12,
+   "pages_count_field": 320,
+   "pages_ocr_field": 319,
+   "pages_translated_field": 306
+  },
+  "run": [
+   299,
+   300,
+   301
+  ],
+  "pages": [
+   {
+    "page_number": 299,
+    "page_id": "69a5ead1d507939f0352d002",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/299.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>276</page-num>\n<header>ԲՈՒԶԱՆԴԱՐԱՆ</header>\n\nբռնաբար յինքն հանեալ զձին, և զայրն արձակեաց:\nԵւ այս ամենայն իրքս վասն ձիոյն եղեն:\n\nԱպա այրն թէ ոչ կամէր՝ աղեքողն արկեալ, գը-\nնայր 'ի տուն իւր, և երթեալ մտանէր 'ի մէջ ընդա-\nնեաց իւրոց, ասէ ցկին իւր և ցընդանիս. Արիք յա-\nղօթս կամք: Եւ նոքա ասեն. Մոլիս դու, զէ՞ւ ու-\nրեմն հարաւ 'ի քեզ: Իսկ նա ասէ. Արիք կամք յա-\nղօթս, վասն զի երէց եմ: Իսկ նոքա զարմացեալ,\nմերթ շիկնէին, մերթ ծիծաղէին. մինչև բազում\nանգամ յամառեալք, ապա ուրեմն հաւանեցան կալ\nյաղօթս ընդ նմա: Ապա ասէ կինն ցայրն իւր. Ո՞չ\nդու երախայ էիր, և չէիր մկրտեալ: Ասէ այրն ցկինն\nիւր. Ապշեցոյց, չետ յիշել, և ոչ ևս յիշեցի զայդ\nասել ցնա. զիս երէց արար, և զձին սանձաւ թամ-\nբաւ առ և անց: Եւ ասեն ցայրն ընդանիքն իւր.\nՅարիցես անդրէն գնասցես առ եպիսկոպոսն, և ա-\nսասցես. Մկրտեալ չէի, զի՞ արարեր զիս երէց: Իսկ\nնորա յարուցեալ գնացեալ առ եպիսկոպոսն, ասէ\nցնա. Ես մկրտեալ չէի, զի՞ արարեր զիս երէց: Եւ\nասէ Յոհան. Սափորով միով ջուր բերէք: Եւ առեալ\nզջուրն էարկ զգլխով նորա, և ասէ. Երթ, մկրտեցի\nզքեզ: Եւ արձակէր զայրն վաղվաղակի յիւրմէ:\n\n# Գ Լ Ո Ւ Խ Թ .\n\n## Յաղագս նորին Յոհաննու:\n\nԵրբեմն սոյն Յոհան անցանէր առ այգեօք ուրումն.\nև էր ժամանակն զայգիս յատելոյ: Աղաղակէր\nառ նա այր մի յայգւոյն, և ասէ. Օրհնեա, տէր\nեպիսկոպոս, զմեզ և զայգիսս: Ասէ Յոհան. Փուշ\nև տատասկ բուսցի, փոխանակ զի տարապարտուց\nանիծանես զմեզ: Եւ եղեն նշանք յաստուծոյ. զի\nիբրև չոգաւ եպիսկոպոսն 'ի վանս իւր, հասին հա-\nրուածք 'ի վերայ նորա, սկսաւ ընդ ամենայն անդամս\n\n<vocab>Յոհան, եպիսկոպոս, մկրտութիւն, երէց, Բուզանդարան</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>BUZANDARAN</header>\n\nforcibly took the horse for himself and released the man.\nAnd all these matters happened because of the horse.\n\nThen the man, whether he wanted to or not, put on the stole and went to his house, and entering among his family, he said to his wife and household, \"Arise, let us pray.\" And they said, \"Are you mad? Why did this happen to you?\" But he said, \"Arise, let us pray, for I am a priest.\" They were amazed, and at times they blushed, and at other times they laughed. After they had persisted many times, they finally agreed to stand in prayer with him. Then his wife said to her husband, \"Were you not a child, and were you not baptized?\" The husband said to his wife, \"I was stunned, it did not occur to me, and I did not think to say that to him. He made me a priest, and the horse was taken away with its bridle and saddle.\" And his family said to the husband, \"Get up and go back to the bishop, and say, 'I was not baptized; why did you make me a priest?'\" He rose and went to the bishop and said to him, \"I was not baptized; why did you make me a priest?\" And Yohan said, \"Bring water in a pitcher.\" He took the water, poured it over his head, and said, \"Go, I have baptized you.\" And he quickly dismissed the man from his presence.\n\n# CHAPTER IX.\n\n## Regarding the same Yohan.\n\nOnce, this same Yohan was passing by someone's vineyard, and it was the time for picking the grapes. A man in the vineyard shouted to him and said, \"Bless us and these vineyards, Lord Bishop.\" Yohan said, \"May thorns and thistles grow, because you curse us with your indebtedness.\" And signs from God occurred: as soon as the bishop went to his monastery, blows came upon him, and he began, in every limb\n\n<summary>The newly made priest questions his baptism, leading Yohan to perform a mocking baptism; subsequently, Yohan curses a vineyard and suffers a physical affliction.</summary>\n<keywords>Yohan, bishop, baptism, priest, Buzandaran, vineyard, blessing, curse</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 300,
+    "page_id": "69a5ead1d507939f0352d003",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/300.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>277</page-num>\n<header>ԴՊՐՈՒԹԻՒՆ Ե.</header>\n\nմարմնոյ նորա որպէս զփուշ հարկանել։ Եւ մեծապէս շտապեալ անկեալ 'ի տանջանս չարաչարս հարուածոց, և 'ի մեծ տագնապի կայր աւուրս բազումս։ Ապա յղեաց կոչեաց առ ինքն զայգորդն, աղաչեաց զնա առնել 'ի վերայ նորա աղօթս, զի փրկեսցի նա 'ի ցաւոցն։ Այգորդն ասէր. Իսկ ես ո՞վ եմ, զի կարեմ զոք օրհնել կամ անիծանել. Թող թէ զայր եպիսկոպոս։ Իսկ նա բռնադատէր զնա յայնժամ. մինչև յառնէր այգորդն կայր յաղօթս և ասէր. Տէր աստուած, դու գիտես՝ զի ես այր մեղաւոր եմ և անարժան, ոչ գիտեմ զաղմուկս՝ յորում ըմբռնեցայս. դու փրկեա զիս յայս 'ի չարէս, զի ասեն՝ թէ զայր եպիսկոպոս դու անիծեր, և ասեն՝ քո բանիւ եղև։ Զի լաւ էր ինձ մահ. քանզի չգիտեմ զայս՝ զոր ինչ զինէն ասեն։ Եւ զայս ասացեալ՝ անդէն բժշկեցաւ եպիսկոպոսն, և սկսաւ յամենայն մարմնոյն փուշն 'ի բաց թափել. և էր իբրև զփուշ խոտոց. վաղվաղակի յարուցեալ ողջացաւ յախտէն։\n\n---\n\n# ԳԼՈՒԽ Ժ.\n\n**Յաղագս նորին Յոհաննու։**\n\nՍոյն Յոհան եպիսկոպոս, որդի Փառննայ, յորժամ երթայր առ թագաւորն Հայոց, խաղակատակ լինէր նոցա. որպէս խաղալովն զանձն իւր կրթէր յագահութեան, որում ծարաւեալ պասքեալ փափաքէր, սակայն միհանէսք<note>1 Ի Պատկանեան օրինակի միահանէք։</note> այն էին նորա։ Ի չորք անկեալ յոտս և 'ի ձեռս սողէր առաջի թագաւորացն, և զուղտու զձայն ածէր կառաչելով, զօրէն ուղտու այնպէս փարելով։ Ընդ կառաչելն ապա մի մի բան խառնելով առնէր 'ի ձայն կառաչելոյն, ասելով՝ թէ ուղտ եմ, ուղտ եմ, և զարքայի զմեղս բառնամ. դիք 'ի վերայ իմ զմեղս արքայի, թող բառնամ։\n\n<vocab>Յոհան եպիսկոպոս, Փառննայ, թագաւորն Հայոց, աղօթք, բժշկութիւն, կառաչել, մեղք</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>BOOK V.</header>\n\nof his body, to be struck as if by thorns. He was in great haste, falling into terrible, painful torments, and he remained in great anguish for many days. Then he sent for the vine-grower and begged him to pray for him so that he might be saved from his pains. The vine-grower said, \"Who am I that I should be able to bless or curse anyone? Let alone a bishop.\" But he forced him at that time, until the vine-grower stood and prayed, saying, \"Lord God, you know that I am a sinful and unworthy man, and I do not know the confusion in which I have been caught. Save me from this evil, because they say that I cursed the bishop, and they say it happened by my word. For death would have been better for me, because I do not know about this thing that they say of me.\" Having said this, the bishop was immediately healed, and the thorns began to fall away from his entire body; and it was like the prickles of grass. He immediately rose and was healed of the ailment.\n\n---\n\n# CHAPTER X.\n\n**Regarding the same Yohan.**\n\nThis same Bishop Yohan, son of Pharnn, whenever he went to the King of the Armenians, would play the jester for them. By playing, he trained himself in the greed for which he thirsted and fasted with desire, yet these were his only means. He would fall onto his hands and feet and crawl before the kings, and he would make the sound of a camel by braying, imitating a camel in that manner. While braying, he would mix in words with the sound of the braying, saying, \"I am a camel, I am a camel, and I bear the sins of the King. Place the sins of the King upon me, let me bear them.\"\n\n<summary>The vine-grower's prayers heal Yohan; Yohan is also described as a greedy man who acted like a jester and a camel before the king to absolve the king's sins in exchange for land and wealth.</summary>\n<keywords>Yohan, bishop, Pharnn, King of Armenians, prayer, healing, greed, camel, sins</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 301,
+    "page_id": "69a5ead1d507939f0352d004",
+    "image_url": "https://images.sourcelibrary.org/archived/69a5ead1d507939f0352ced7/301.jpg",
+    "image_status": 200,
+    "ocr": "<language>Armenian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>278</page-num>\n<header>ԲՈՎԱՆԴԱԿՈՒԹԻՒՆ</header>\n\nԻսկ թագաւորքն զմուրհակս գիւղաց կամ զագա-\nրակաց գրեալ և կնքեալ՝ դնէին 'ի վերայ ոզինն Յո-\nհաննու փոխանակ ընդ մեղաց իւրեանց. և 'ի թա-\nգաւորէն Հայոց ստացաւ իւր գեղջս և ագարակս\nև գանձս յուղտն լինելոյ և զմեղան բառնալոյ ըստ\nբանիցն: Այսպիսի էր այլս Յոհանս ապեալ յլորժ-\nդութեան և յագահութեան զամենայն աւուրս կե-\nնաց իւրոց. զայսպիսի գործս գործէր վասն ագահու-\nթեան, որ չէր արժան:\n\n### ԳԼՈՒԽ ԺԱ.\n\n**Յաղագս Կիրակոսի եպիսկոպոսի:**\n\nԵւ էր եպիսկոպոսն Տայոց Կիրակոս, որ Շահապ\nանուն կոչէր, այր ճշմարիտ աստուածապաշտ ըստ կա-\nմացն աստուծոյ, և ուղիղ ճշմարտութեամբ առաջ-\nնորդէր ժողովրդեան իւրում. և վարէր զեպիսկոպո-\nսութիւն իւր ըստ կամացն աստուծոյ զամենայն աւ-\nուրս կենաց իւրոց:\n\n### ԳԼՈՒԽ ԺԲ.\n\n**Յաղագս Զորթուաղու եպիսկոպոսի Վանանդայ:**\n\nԵւ Զորթուաղ եպիսկոպոս Վանանդայ գաւառին,\nայր սուրբ պարկեշտ արժանի աստուծոյ, արբեալ\nՈգով սրբով. քրիստոնէութեամբ գնայր գործէր,\nառաջնորդէր իւրում ժողովրդեան ըստ կամացն\nաստուծոյ:\n\n<vocab>Կիրակոս, Զորթուաղ, Վանանդ, եպիսկոպոս, ագահութիւն, աստուածապաշտ</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<header>CONTENTS</header>\n\nThe kings, having written and sealed the deeds for villages or estates, would place them upon the back of Yohan instead of their sins. From the King of the Armenians, he received villages, estates, and treasures for being a \"camel\" and for \"bearing the sins,\" according to his words. Such was this Yohan, who spent all the days of his life in madness and greed. He performed such acts for the sake of greed, which was not fitting.\n\n### CHAPTER XI.\n\n**Regarding Bishop Kirakos.**\n\nThere was Kirakos, the Bishop of the Tayk region, who was called by the name Shahap. He was a true, God-fearing man according to the will of God, and he led his people with upright truth. He conducted his bishopric according to the will of God throughout all the days of his life.\n\n### CHAPTER XII.\n\n**Regarding Bishop Zortuagh of Vanand.**\n\nAnd Zortuagh, the Bishop of the district of Vanand, was a holy, modest man worthy of God, filled with the Holy Spirit. He lived and acted in Christianity, and led his people according to the will of God.\n\n<summary>Yohan continues his deceitful practices to acquire wealth, while Bishops Kirakos and Zortuagh are praised for their piety and holy conduct.</summary>\n<keywords>Yohan, Kirakos, Tayk, Zortuagh, Vanand, bishop, greed, piety</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 9,
+  "book_id": "6a06f2fbf27801273413e9c6",
+  "book_url": "https://sourcelibrary.org/book/6a06f2fbf27801273413e9c6",
+  "tradition": null,
+  "book": {
+   "id": "6a06f2fbf27801273413e9c6",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+   "display_title": null,
+   "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "language": "Italian",
+   "published": "1549",
+   "ia_identifier": "ita-bnc-ald-00000406-001",
+   "pages_count": 498,
+   "pages_ocr": 498,
+   "pages_translated": 479,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "early-european-books",
+     "europeanlibraries"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 498,
+   "distinct_page_numbers": 498,
+   "duplicate_records": 0,
+   "pages_with_ocr": 498,
+   "pages_translated": 479,
+   "with_printed_number": 291,
+   "printed_backsteps": 58,
+   "printed_repeats": 162,
+   "pages_count_field": 498,
+   "pages_ocr_field": 498,
+   "pages_translated_field": 479
+  },
+  "run": [
+   389,
+   390,
+   391
+  ],
+  "pages": [
+   {
+    "page_number": 389,
+    "page_id": "6a06f2fbf27801273413eb4b",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/389.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>71</page-num>\n<meta>The page number 71 is visible on the facing page in the original binding, but this scan focuses on the verso side of the previous leaf or the recto of the current one. Based on the context of the book \"Lettere Volgari\", this is a continuation of a letter.</meta>\n\nlettere, poscia ch'io sono in Francia: & di questo m'hanno fatta ampia fede le lettere, che voi m'hauete scritte: ma io no vi ho uoluto mai scriuere per due rispetti: per il primo, accioche mi fusse ben noto, se questo uostro desiderio nasceua da uero amore, che u'inuitasse a desiderar nouelle di me, ò pure da uno appetito cosi fatto: per l'altro, à fine che conosciuta la gran dispositione mia in scriuerui, subito che m'haueste accennato, non haueste ogni di ad essermi adosso con lettere, & prometterui di me uolumi & bibbie, che non sarebbe stato punto à proposito mio, che scriuo tanto per forza di seruitu, che mi fa fuggire la uolontà di scriuere à gli amici per piacere. Nondimeno quando M. Alexandro mio fratello mi ha scritto, che uoi ui dolete di me, che non solo non ui scriua, ma ne pure ui saluti nelle lettere, ch'io scriuo à lui; & ho conosciuto, che questo uostro dolerui dipende da passione, che hauete, temendo forse, ch'io non u'habbia cosi à memoria, come merita l'amore, che uoi mi portate: ho giudicato esser' il tempo, ch'io rompa il silentio, che, tanto tempo ha, ho tenuto con uoi. & mi son risoluto, perche conosciate, che sete in amore da me ricambiato, anzi superato, d'auanzare il desiderio uostro non solamente scriuendoui, come uedete ch'io ui scriuo, ma mandandoui ancora parte delle mie coglionerie Francesche, in che ui dee esser chiara la fede che ho in uoi, che m'assicuro di communicarui ogni mia sciocchezza. Eccoui dunque fratel dolce due sonetti, che nuouamente ho composti; l'uno sopra un dolcissimo bacio donatomi da una dolcissima figlia Francese, che mi uuole il mè del mondo, & io à lei; l'altro al Conte Annibale Nuuolara à sodisfattione di Buona Valle gia Signora di lui, che m'ha pregato à far couelle in questo proposito. Il primo ui\n\n<vocab>Francia, M. Alexandro, sonetti, Conte Annibale Nuuolara, Buona Valle</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "letters, since I have been in France: and of this, the letters that you have written to me have provided ample proof: but I have never wished to write to you for two reasons: firstly, so that it might be well known to me whether this desire of yours arose from true love, which invited you to desire news of me, or rather from some such appetite; and for the other reason, to the end that, having known my great disposition to write to you, as soon as you had given me a hint, you would not have been on my back every day with letters, and promising me volumes and Bibles of myself, which would not have been at all to my purpose, as I write so much by the force of servitude that it makes me flee the will to write to friends for pleasure. Nevertheless, when Mr. Alessandro, my brother, wrote to me that you complain of me, that not only do I not write to you, but I do not even greet you in the letters that I write to him, and I have known that this grievance of yours depends on the passion that you have, perhaps fearing that I do not hold you in memory as the love that you bear me merits, I have judged it to be the time that I break the silence that I have kept with you for so long. And I have resolved, so that you may know that you are returned in love by me, nay, surpassed, to advance your desire not only by writing to you, as you see that I am writing to you, but by sending you also a part of my French <term>coglionerie</term> <gloss>foolish trifles</gloss>, in which the faith that I have in you must be clear to you, for I assure myself to communicate to you every stupidity of mine. Here you have, then, sweet brother, two sonnets that I have newly composed; one upon a sweetest kiss given to me by a sweetest French girl, who wants me as the world, and I her; the other to Count Annibale Nuvolara for the satisfaction of Buona Valle, formerly mistress of him, who has prayed me to make verses to this purpose. The first I",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 390,
+    "page_id": "6a06f2fbf27801273413eb4c",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/390.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>70</page-num>\n\nprego con buon modo à far peruenire in mano della Signora Dorothea, si ch'ella sappia, che sia mia fattura, accio che in un tempo s'aueggia, che io non ho piu quel pensiero di lei, ch'ella dubita, onde fa meco della sdegnosa, & che benach'io non habbia la gratia di lei, uiuo però, & di sorte, che non mi mancano donne, che mi trattano bene. & se ui parrà, che gouernandomi, come ho fatto con uoi nello scriuere ui, io ui habbia fatto torto, datene à lei sola la colpa, che hauendo preso in parte di costumi di lei, ho seguitate le sue uestigie. Quello, che di piu ho ha dirui, che ui prego, che m'amiate, & m'habbiate per tutto uostro, & che facciate le mie raccommandationi al Signor Guido prima, & poi à tutta la corte uostra, salutando particularmente il Pisone. & quando uedrete uostro padre, ditegli, che cosi gli è ubidiente figliuolo, come è à uoi amoreuole fratello.\n\n->Marc'Anto. Bendidio.<-\n\n---\n\n### A M. BARTOLOMEO SALA.\n\nSignor Sala mio osseruandissimo, Molte sono le gratie, ch'io ho riceuute da uostra signoria, ma due sono quelle, di che io le debbo esser maggiormente obligato, che di tutte l'altre: la prima d'hauermi fatto acquistar l'amicitia d'un tant'huomo, com'è M. Galasso Ariosto, & della quale mi reputo tanto indegno, quanto è degno esso di esser amato & osseruato da maggiori di me. è ben uero, che douerei di ciò dolermi piu tosto, che allegrarmi: per esser certo (perche mi conosco molto bene, ne m'inganno punto in questo del\n\n<vocab>Dorothea, Marc'Antonio Bendidio, Bartolomeo Sala, Galasso Ariosto, Pisone, amicitia</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "pray you in good manner to have delivered into the hand of the Lady Dorothea, so that she may know that it is my handiwork, so that at one time she may perceive that I no longer have that thought of her that she suspects, whence she makes herself disdainful with me, and that although I do not have her grace, I live nevertheless, and in such a way that I do not lack women who treat me well. And if it seems to you that, by governing myself as I have done with you in writing to you, I have done you wrong, give the blame for it to her alone, who, having taken on part of her customs, I have followed her footsteps. That which I have more to say to you is that I pray you to love me, and to have me for entirely yours, and that you make my recommendations to Mr. Guido first, and then to all your court, greeting particularly Pisone. And when you see your father, tell him that he has as obedient a son as he has a loving brother in you.\n\n->Marc'Antonio Bendidio.<-\n\n---\n\n### TO MR. BARTOLOMEO SALA.\n\nMy most observant Mr. Sala, many are the graces that I have received from your lordship, but two are those for which I must be more obligated to you than for all the others: the first, for having made me acquire the friendship of such a man as Mr. Galasso Ariosto, and of which I deem myself as unworthy as he is worthy of being loved and observed by those greater than I. It is indeed true that I should grieve for this rather than rejoice: for being certain (because I know myself very well, nor do I deceive myself at all in this",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 391,
+    "page_id": "6a06f2fbf27801273413eb4d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a06f2fbf27801273413e9c6/391.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>The text is printed in an italic typeface characteristic of the Aldine press.</meta>\n\nconoscermi) che non potrò rispondere con fatti alla opinione, che v. s. gli ha fatto prendere di me. ma consolomi poi co'l pensar solo, che ne siete stato cagion voi, et che tutto quel biasimo, che me ne può venire, caderà sopra di voi: se ben di ciò haverei à dolermi anchor più gravemente per l'amicizia nostra. la seconda, che habbiate dato alla mala contentezza mia quel rimedio, ilquale non poteva venirmi dato se non da Dio, havendo fatto quell'ufficio per me con chi appunto bisognava, che io non seppi, ne haverei mai saputo domandare. Parvi signor Sala, che io ne habbi ragione? non voglia negarlo. io vi son molto obligato, e sarò mentre viverò: che non son queste cose da passar per alto. sopra questo obligo potrei dir di molte cose: ma perche non sodisfarei ne à me, ne alla molta affettione, laquale ho con effetti conosciuto che mi portate per bontà vostra, le taccio. dirò solamente, che io sono restituito nel pristino stato, et con favore maggiore di prima, mercè di Dio veramente, ma secondariamente del Sala. Hor non più: io ho ricevuto la risposta della lettera di quel amico mio, et ne bacio à v. s. la mano, et al signor Galasso son servitore, poi che secondo mi scrivete, è piaciuto à sua signoria di accettarmi per tale: ilquale che habbi à corrispondere alla opinione mia, non son punto in dubbio: così fussi certo d'havere à corrispondere io alla sua. Mi raccomando di cuore à v. s. allaquale scriverei qualche cosa di nuovo, se la prescia di questo corriero, che è il signor Don Garcia di Toledo, non me lo disturbasse. Da Spira, alli XIX di Marzo, M. D. XLIIII.\n\n->D. V. S.<-\n->Servitor, Giuliano Goselino.<-\n\n<vocab>Giuliano Goselino, Sala, Galasso, Don Garcia di Toledo, Spira, 1544</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "of knowing myself) that I will not be able to respond with deeds to the opinion that your lordship has made him take of me. But I console myself then with thinking only that you have been the cause of it, and that all that blame that may come to me from it will fall upon you: even if I should have to grieve for this even more gravely for the sake of our friendship. The second is that you have given to my ill-contentment that remedy which could not have been given to me except by God, having performed that office for me with whom it was precisely necessary, which I did not know how, nor would I have ever known how to ask. Does it seem to you, Mr. Sala, that I have reason for it? Do not wish to deny it. I am very obligated to you, and will be while I live: for these are not things to be passed over. Upon this obligation, I could speak of many things: but because I would not satisfy myself, nor the much affection which I have known in effects that you bear me for your goodness, I remain silent about them. I will only say that I am restored to my former state, and with greater favor than before, truly thanks to God, but secondarily to Sala. Now no more: I have received the answer to the letter of that friend of mine, and I kiss your lordship's hand for it, and to Mr. Galasso I am a servant, since, according to what you write to me, it has pleased his lordship to accept me as such: that he has to correspond to my opinion, I am not in doubt at all: I wish I were as certain of having to correspond to his. I recommend myself with heart to your lordship, to whom I would write something new if the haste of this courier, who is Mr. Don Garcia of Toledo, did not disturb me in it. From Speyer, the XIX of March, 1544.\n\n->Your Lordship's<-\n->Servant, Giuliano Goselino.<-",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "book_id": "69de98d21b234a773e439622",
+  "book_url": "https://sourcelibrary.org/book/69de98d21b234a773e439622",
+  "tradition": null,
+  "book": {
+   "id": "69de98d21b234a773e439622",
+   "title": "De Prospectiva Pingendi",
+   "display_title": null,
+   "author": "Piero della Francesca",
+   "language": "Latin",
+   "published": "1899",
+   "ia_identifier": "petruspictorburg00pier",
+   "pages_count": 278,
+   "pages_ocr": 278,
+   "pages_translated": 276,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "getty",
+     "americana"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 278,
+   "distinct_page_numbers": 278,
+   "duplicate_records": 0,
+   "pages_with_ocr": 278,
+   "pages_translated": 276,
+   "with_printed_number": 101,
+   "printed_backsteps": 9,
+   "printed_repeats": 4,
+   "pages_count_field": 278,
+   "pages_ocr_field": 278,
+   "pages_translated_field": 276
+  },
+  "run": [
+   39,
+   40,
+   41
+  ],
+  "pages": [
+   {
+    "page_number": 39,
+    "page_id": "69de98d31b234a773e439649",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/39.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>31</page-num>\n\nwie die verkürzte weibliche Gestalt in der Frauengruppe ad c: zur Abrundung der Gruppe und als Uebergang vom hellen Vordergrund des Figürlichen zum dunklen Hintergrund der Landschaft. Das möglichste Streben nach Symmetrie setzt sich weiter in den Einzelgruppen fort: Die activen Glieder beider Theile rechts und links nehmen den grössern Raum ein: Die Breite ihrer Basis verhält sich beidemal zu der, der passiven wie 3 : 2 wodurch auch formell die durch jene ausgedrückte Stimmung gegen die andern als das die Composition beherrschende sich geltend macht. Zur Vermeidung zu grosser Symmetrie oder auch als Gegengewicht gegen die unsymmetrische Umrahmung zeigen beide Figurengruppen eine leichte Verschiebung nach links. Um dabei den rechts stark fühlbaren Unterschied der Krümmung des Rahmens gegen die Verticale des Figürlichen zu verwischen, sind die letzten Figuren rechts nicht ohne einige Steifheit laufend dargestellt, derart dass ihre Rückentcontour der des Bildrahmens nahezu parallel ist. Das weitere Detail durch Alignement ergibt die Skizze.\n\nb) Tod und Bestattung Adams. Auch hier ist die Lünette der Umrahmung nicht ganz symmetrisch: die Spitze etwas nach links verschoben. Weil das Ganze zwei, der Zeit nach getrennte Vorgänge darstellt, so ist überhaupt die Symmetrie im Figürlichen nicht\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A geometric diagram showing a triangular composition with numbered points (1-19) and lines indicating the structural alignment of figures in a fresco.</image-desc>\n\nFreskencyclus von Arezzo: Tod und Bestattung Adams.\n\nI. Bestattung Adams.\n10 = rechter Absatz der äussersten Figur rechts.\n11 = rechter Schulterpunct der äussersten Figur links.\n12 = Stirnhöhe derselben.\n13 = Durchschnitt der Rückenlinie der rechts gegenüberstehenden Figur mit der verticalen Mittellinie (m).\n14 = Mitte der rechten, vordern Fussbegrenzung der vornüber gebeugten männlichen Figur am linken Ende.\n5-2 = Richtung des rechten Armes der weibl. Figur am Baumstamm.\n13-14 = Richtung des linken Armes ders. (letztere parallel zu 3-9.)\n15 = Durchschnitt des rechten Armes der Figur ad 14 mit der verticalen Mittellinie.\n16 = Ansatz des untersten Astes an der linken Stammseite.\n17 = Mitte der rechten Hand der Endfigur links.\n18 = vorderster, höchster Stirnpunct des rechts. rückwärts von der ausschreitenden männlichen Figur sichtbaren Kopfes.\n19 = Punct, wo die obere Contour des ausgestreckten rechten Armes der Figur ad 15 aus dem Aermel tritt.\n\nII. Tod Adams.\n1 = linker Fussballen des auf die Schaufel Gestützten.\n2 = vorspringendster Punct der linken Gesässcontour ad 1.\n3 = Durchschnitt der Rückenlinie Evas mit der Bildcontour.\n4 = Kopfhöhe der Eva.\n5 = rechter Absatz der Eva.\n6 = Kopfhöhe der Figur ad 1.\n7 = Kopfhöhe der hinter Adam stehenden männl. Figur.\n8 = Punct in der Beinaxe in Höhe des Kniees von Adam.\n9 = linker, unterer Absatzpunct ad 1.\n\nangestrebt, dafür aber in der Anordnung des trennenden Baums, der zum Ausgleich der Unsymmetrie des Bildrahmens um die halbe Stammdicke nach rechts verschoben ist, so dass die linke Stammcontour genau in die Mittellinie des Bildes fällt, die Contour der Krone wie Skizze andeutet, symmetrisch.\n\nDer Vorgang rechts zeigt wenig Figuren in landschaftlich reicher Umgebung, im Hintergrunde die Gruppe der drei Engel, die linke zahlreiche Figuren ohne sonstiges Beiwerk.\n\n<vocab>Freskencyclus, Arezzo, Tod und Bestattung Adams, Symmetrie, Composition, Bildrahmen, Alignement, Lünette</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "— 31 —\n\nas the foreshortened female figure in the women's group ad c: for the rounding off of the group and as a transition from the bright foreground of the figurative to the dark background of the landscape. The greatest possible striving for symmetry continues in the individual groups: The active members of both parts on the right and left occupy the greater space: The width of their base relates in both cases to that of the passive ones as 3 : 2, whereby also formally the mood expressed by the former makes itself felt against the others as the one dominating the composition. To avoid too great a symmetry or also as a counterweight against the asymmetrical framing, both figure groups show a slight shift to the left. In order to blur the difference in the curvature of the frame against the vertical of the figurative, which is strongly perceptible on the right, the last figures on the right are not depicted without some stiffness, such that their back contour is almost parallel to that of the picture frame. The further detail through alignment is yielded by the sketch.\n\nb) Death and Burial of Adam. Here, too, the lunette of the framing is not quite symmetrical: the tip shifted somewhat to the left. Because the whole depicts two processes separated in time, the symmetry in the figurative is generally not\n\n<note>A geometric diagram showing a triangular composition with numbered points (1-19) and lines indicating the structural alignment of figures in a fresco.</note>\n\nFresco cycle of Arezzo: Death and Burial of Adam.\n\nI. Burial of Adam.\n10 = Right heel of the outermost figure on the right.\n11 = Right shoulder point of the outermost figure on the left.\n12 = Forehead height of the same.\n13 = Intersection of the back line of the figure standing opposite on the right with the vertical center line (m).\n14 = Center of the right, front foot boundary of the male figure bending over at the left end.\n5-2 = Direction of the right arm of the female figure at the tree trunk.\n13-14 = Direction of the left arm of the same (the latter parallel to 3-9.)\n15 = Intersection of the right arm of the figure ad 14 with the vertical center line.\n16 = Base of the lowest branch on the left trunk side.\n17 = Center of the right hand of the end figure on the left.\n18 = Frontmost, highest forehead point of the head visible on the right behind the striding male figure.\n19 = Point where the upper contour of the extended right arm of the figure ad 15 emerges from the sleeve.\n\nII. Death of Adam.\n1 = Left ball of the foot of the person leaning on the shovel.\n2 = Most protruding point of the left buttock contour ad 1.\n3 = Intersection of the back line of Eve with the picture contour.\n4 = Head height of Eve.\n5 = Right heel of Eve.\n6 = Head height of the figure ad 1.\n7 = Head height of the male figure standing behind Adam.\n8 = Point in the leg axis at the height of Adam's knee.\n9 = Left, lower heel point ad 1.\n\nstriven for, but instead in the arrangement of the separating tree, which, to compensate for the asymmetry of the picture frame, is shifted by half the trunk thickness to the right, so that the left trunk contour falls exactly into the center line of the picture, and the contour of the crown, as the sketch indicates, is symmetrical.\n\nThe process on the right shows few figures in a landscape-rich environment, in the background the group of the three angels; the left, numerous figures without other accessories.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "69de98d31b234a773e43964a",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/40.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>32</page-num>\n\n--- 32 ---\n\nDas Ganze wird von einem, dem Bildrahmen nahezu sich anschliessenden zur Bildaxe symmetrischen Fünfseit umschlossen, dessen Spitze in der auf der Basismitte errichteten Senkrechten genau in der Bildhöhe, also in der verlängerten linken Stammcontour liegt. Trägt man die halbe Länge der in halber Bildhöhe innerhalb des Bildrahmens gezogenen horizontalen Strecke von rechts her auf der Grundlinie ab, so ergibt sich damit Punct 10: die Begrenzung der linken Gruppe. Die stetige Theilung dieser Gruppenlänge gibt als grösseren Abschnitt die Länge der rechten Gruppe. Beide Gruppen characterisiren sich durch ein die jedesmalige Hauptfigur umfassendes gleichschenkliges Dreieck.¹ Beide Dreiecke werden von den passiven Gliedern in nahezu symmetrischer Art umhüllt, doch ist die Symmetrie bezüglich der linken Gruppe durch die zwei Füllfiguren links am Rande, in der rechten Gruppe durch den Gegensatz der Figuren selber aufgehoben. Die zwei Armrichtungen 13—14 und 5—15 der weiblichen Figur am rechten Ende der linken Gruppe schneiden sich in der aus der wirklichen Lünettenspitze gedachten Verticalen zur Grundlinie. Die Höhe m—o=c—13 ergibt sich als grösserer Abschnitt der stetig getheilten halben Bildbreite. Die untern Contouren des mittlern Baums aligniren sich nahezu auf die unteren Bildecken. Das weitere Details s. Skizze.\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A geometric diagram showing the composition of a painting, with lines and numbered points overlaid on a schematic representation of figures.</image-desc>\n\n4. Auferstehung Christi.\n\n1. Perspective. Augenpunct in der Axe Christi anzunehmen, da dieser in voller rechts und links symmetrischer Vordersicht dem Beschauer gegenübersteht. Augenhöhe angenähert durch die (undeutliche) horizontale Gesimslinie des kastellartigen Bauwerkes im Mittelgrunde bestimmbar, wonach derselbe etwas oberhalb der Deckplatte des Grabes fällt. Die Augendistanz dem Deutlichkeitsgrade der vordern Figuren entsprechend mag etwa 2 Bildhöhen betragen.\n\n| | |\n|---|---|\n| A = Augenpunct. | sprung des vorn liegenden Wächters rechts. |\n| 1 = Stirnmitte Christi. | 7 = Ferseneinschnitt am linken Unterschenkel desselben. |\n| 2 = Ecke des Mantels, ad 1 in Höhe des linken Ellbogens. | 8 = rechte Fussspitze des vorderen Wächters links. |\n| 3 = r. Ellbogenspitze Christi. | 9—10 = linke resp. rechte obere Ecke der Grabplatte. |\n| 4 = Kopfhöhe des sitzenden rückwärtigen Wächters links, wo sie die Axe der Fahnenstange trifft. | 11 = vorderer rechter Zeigefingerknöchel Christi. |\n| 5 = Schläfe des sitzenden rückwärtigen Wächters rechts, wo sie die Partisanenaxe trifft. | 12 = Spitze der Partisane des rechts rückwärts sitzenden Wächters. |\n| 6 = linker Kniescheibenvor- | 13—14 = Richtung des rechten Unterschenkels Christi. |\n| | 15 = Nabel Christi. |\n\n2. Allgemeine Gruppirung. Das Ganze als Centralcomposition in einer, die Verticale kräftig betonenden Umrahmung. Die Axe Christi zeigt eine leichte Verschiebung nach links: das Contourdreieck derselben Figur ist bei entsprechender Verlängerung der schrägen Seiten bis zur Grundlinie nahezu gleichschenklig. Die Länge dieser Basis ist, nachdem die Seitenverschiebung der Axe Christi feststeht, dadurch bestimmt, dass über ihr ein gleichseitiges Dreieck errichtet wird, dessen Höhe die Bildhöhe ist und dessen Spitze im Durchschnitt jener\n\n<note>1 In der linken Gruppe weniger scharf bestimmbar, wegen der Verwaschenheit der Umrisse.</note>\n\n<vocab>Auferstehung Christi, Perspective, Augenpunct, Centralcomposition, Bildrahmen, Bildaxe, Contourdreieck, Gruppirung</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: ...as striven for, but instead in the arrangement of the separating tree, which, to compensate for the asymmetry of the picture frame, is shifted by half the trunk thickness to the right, so that the left trunk contour falls exactly into the center line of the picture, and the contour of the crown, as the sketch indicates, is symmetrical.</meta>\n\nThe whole is enclosed by a pentagon nearly adjacent to the picture frame and symmetrical to the picture axis, whose apex, situated on the vertical line erected at the center of the base, lies exactly at the height of the image, thus in the extended left trunk contour. If one marks off half the length of the horizontal segment drawn at half the image height within the picture frame from the right onto the base line, this results in Point 10: the boundary of the left group. The continuous division <note>a geometric method often called the golden ratio or extreme and mean ratio</note> of this group length provides the length of the right group as the larger section. Both groups are characterized by an isosceles triangle encompassing the respective main figure.<note>1 In the left group less sharply determinable, due to the blurriness of the outlines.</note> Both triangles are enveloped by the passive members in a nearly symmetrical manner, yet the symmetry regarding the left group is neutralized by the two filler figures on the left edge, and in the right group by the contrast of the figures themselves. The two arm directions 13—14 and 5—15 of the female figure at the right end of the left group intersect in the vertical line projected from the actual lunette apex to the base line. The height m—o=c—13 results as the larger section of the continuously divided half-image width. The lower contours of the middle tree align nearly with the lower picture corners. For further details, see the sketch.\n\n<note>A geometric diagram showing the composition of a painting, with lines and numbered points overlaid on a schematic representation of figures.</note>\n\n4. Resurrection of Christ.\n\n1. Perspective. The eye point is to be assumed on the axis of Christ, as he stands opposite the viewer in full symmetrical front view, right and left. The eye level is approximately determinable by the (indistinct) horizontal cornice line of the castle-like structure in the middle ground, according to which it falls slightly above the cover slab of the tomb. The eye distance, corresponding to the degree of clarity of the front figures, may amount to about 2 image heights.\n\n| | |\n|---|---|\n| A = Eye point. | 6 = Left kneecap protrusion of the guard lying in front on the right. |\n| 1 = Center of Christ's forehead. | 7 = Heel incision on the left lower leg of the same. |\n| 2 = Corner of the cloak, ad 1 at the height of the left elbow. | 8 = Right toe of the front guard on the left. |\n| 3 = Tip of Christ's right elbow. | 9—10 = Left and right upper corners of the tomb slab, respectively. |\n| 4 = Head height of the seated rear guard on the left, where it meets the axis of the flagpole. | 11 = Christ's front right knuckle. |\n| 5 = Temple of the seated rear guard on the right, where it meets the partisan axis. | 12 = Tip of the partisan of the guard seated at the rear right. |\n| | 13—14 = Direction of Christ's right lower leg. |\n| | 15 = Christ's navel. |\n\n2. General Grouping. The whole as a central composition within a frame that strongly emphasizes the vertical. The axis of Christ shows a slight shift to the left: the contour triangle of the same figure is nearly isosceles with a corresponding extension of the slanted sides to the base line. Once the lateral shift of Christ's axis is established, the length of this base is determined by erecting an equilateral triangle over it, whose height is the image height and whose apex is at the intersection of that\n\n<note>1 In the left group less sharply determinable, due to the blurriness of the outlines.</note>\n\n<summary>This page analyzes the geometric composition of Piero della Francesca's works, specifically focusing on the use of symmetry, isosceles triangles, and perspective in the \"Resurrection of Christ.\"</summary>\n<keywords>Piero della Francesca, Resurrection of Christ, central composition, perspective, geometry, symmetry, eye point</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 41,
+    "page_id": "69de98d31b234a773e43964b",
+    "image_url": "https://images.sourcelibrary.org/archived/69de98d21b234a773e439622/41.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>33</page-num>\n\n— 33 —\n\nAxe mit dem oberen Bildrande liegt. Ein über derselben Basis construirtes gleichschenkliges Dreieck dessen Schenkel gleich der Bildhöhe, liefert als Spitze Punct 1 und die Hauptrichtungen der Composition (s. Skizze). Die Puncte 2 und 3 werden ihrerseits als Durchschnitte der Dreieckscontour Christi mit einem Dreieck gefunden, dessen Spitze die des vorerwähnten gleichseitigen dessen Basis die Länge der vordern verticalen Grabplatte, von den innern Rändern aus gemessen ist. Die zwei Halb-Diagonalen dieser Platte, von den äussern oberen Ecken aus gezogen, bestimmen die allgemeine Richtung der zwei vordern Wächter. Die Contouren der hintern bestimmen sich durch Parallelen zu denen des Hauptdreiecks. Der Verschiebung des letzteren nach links entspricht zur Herstellung des Gleichgewichts, eine ebensolche der zwei Dreieckscontouren der beiden rückwärtigen Wächter nach rechts.\n\nDie Kopfhöhe des rechten von der Grundlinie an ist nahezu gleich der Christi vom obern Rande der Grabplatte an gerechnet.\n\nAuch im Beiwerk herrscht grosse Symmetrie: Die Flaggenstange in der rechten Christi ist vom linken Rand des Baumstammes zur linken ebensoweit entfernt, wie die Axe des linken Unterschenkels Christi vom rechten Rande des rechts zunächst befindlichen Baumstammes. Sogar die Contouren der Baumkronen beiderseits schliessen sich im Allgemeinen denen des Hauptdreiecks an.\n\n5. Taufe Christi.\n\n1. Perspective. Der Augenpunct nur näherungsweise bestimmbar. Die seitliche Lage weist auf die Axe Christi hin, der in voller Vordersicht steht. Die Augenhöhe ergibt sich näherungsweise durch Schätzung der Augendistanz. Angenommen dieselbe sei gleich 2 Bildbreiten so würde darnach mittelst des Verhältnisses der natürlichen Menschenhöhe zur Höhe Christi im Bilde die Augenhöhe durch einfache Proportion sich finden. Da jedoch das Verkleinerungsverhältniss die Photographie nicht bekannt ist, so muss noch ausserdem der Abstand Christi vom Auge angenähert bestimmt werden. Schätzt man ihn auf Grund der Abtönung zu etwa 5/2 Bildbreiten so findet sich die Augenhöhe durch Proportion etwas unterhalb des Nabels Christi. Dieser relativ hohen Lage gemäss sind dann auch die Tiefenverhältnisse hier schärfer bestimmt als in den bisher betrachteten Werken, und durch die Gruppenstellung sowie Beiwerk verdeutlicht: Demgemäss ergibt sich schon hier ein gewisser in den Theillinien der Skizze angedeuteter, näherungsweise auf proportionaler Abnahme gleicher Distanzen begründeter Rhytmus (die erste Theillinie geht durch den Fuss der Engelgruppe, die zweite durch den des Entkleidenden, die dritte durch den der 3 Gestalten im Mittelgrunde, die dritte durch die letzte noch sichtbare Flusswindung).\n\nAls Mangel ist die Nichtübereinstimmung der Grössenverhältnisse mit denen der Abtönung zu bezeichnen. Die zu detaillirte Ausführung der Blätter des Baums in der Nähe, die zu scharfen, der Kleinheit nicht entsprechenden Umrisse der Bäume in grösserer Entfernung an die Bezeichnungweise älterer topographischer Karten erinnernd, stört entschieden die einheitliche Stimmung.\n\n2. Allgemeine Raumgliederung. Das Ganze als Längenbild mit oberem Bogenabschlusse, die Anordnung wesentlich Centralcomposition. Die Hauptfigur, Christus, steht mit der Basis des sie umschliessenden gleichschenkligen Dreiecks genau in der Mitte der Grundlinie. Die allzugrosse Symmetrie wird, abgesehen von dem Detail des Figürlichen, schon in den Umrisslinien dadurch aufgehoben, dass das mittlere Dreieck von dem des Täufers durchschnitten wird.\n\nMit Verrochio's Composition gleichen Inhalts verglichen ist wie schon früher bemerkt im vorliegenden Falle die allgemeine Form der Umrahmung passender. Die Gruppe der Engel steht dagegen hier zu sehr im Vordergrunde, die Mittelgruppe der Grösse nach fast coordinirt. Infolge dieses Arrangements sind rechts ihnen gegenüber mehr Figuren zur Herstellung des Gleichgewichts nöthig.\n\nSpeziell: Die Basis des Hauptdreiecks in der Grundlinie gemessen, ist gleich deren halber Länge. Die Höhe, gezählt bis zur Stamme des Taubenkopfes (1) etwa gleich 2/3 der Gesammt-\n\n<vocab>Taufe Christi, Verrochio, Perspective, Raumgliederung, Composition, Christus, Engel, Grabplatte, Wächter</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "— 33 —\n\naxis lies with the upper edge of the picture. An isosceles triangle constructed over the same base, whose sides are equal to the height of the picture, provides point 1 at the apex and the main directions of the composition (see sketch). Points 2 and 3 are found as the intersections of Christ’s triangular contour with a triangle whose apex is that of the aforementioned equilateral one, and whose base is the length of the front vertical tomb slab, measured from the inner edges. The two half-diagonals of this slab, drawn from the outer upper corners, determine the general direction of the two front guards. The contours of the rear guards are determined by parallels to those of the main triangle. The displacement of the latter to the left is countered, for the sake of balance, by a similar displacement of the two triangular contours of the two rear guards to the right.\n\nThe head height of the one on the right, measured from the baseline, is nearly equal to that of Christ, measured from the upper edge of the tomb slab.\n\nGreat symmetry also prevails in the accessories: the flagpole in Christ’s right hand is as far from the left edge of the tree trunk as the axis of Christ’s left lower leg is from the right edge of the tree trunk immediately to the right. Even the contours of the tree crowns on both sides generally follow those of the main triangle.\n\n5. Baptism of Christ.\n\n1. Perspective. The eye point is only determinable by approximation. Its lateral position points to the axis of Christ, who stands in full frontal view. The eye level is found approximately by estimating the viewing distance. Assuming this is equal to twice the picture width, the eye level could be found through simple proportion by using the ratio of natural human height to the height of Christ in the picture. However, since the reduction ratio of the photograph is unknown, the distance of Christ from the eye must also be determined approximately. If one estimates this on the basis of the shading at about 2.5 times the picture width, the eye level is found through proportion to be somewhat below Christ’s navel. Consistent with this relatively high position, the depth relations are defined more sharply here than in the previously examined works, and are clarified by the grouping and accessories. Accordingly, a certain rhythm already emerges here, indicated in the dividing lines of the sketch and based approximately on the proportional decrease of equal distances (the first dividing line passes through the foot of the angel group, the second through that of the figure undressing, the third through that of the three figures in the middle ground, the fourth through the last visible bend of the river).\n\nA defect is the lack of correspondence between the scale of proportions and that of the shading. The overly detailed execution of the leaves on the nearby tree, and the outlines of the distant trees which are too sharp and do not correspond to their small scale—reminiscent of the notation used in older topographic maps—decidedly disturb the unified atmosphere.\n\n2. General Spatial Arrangement. The whole is a horizontal picture with an upper arched finish; the arrangement is essentially a central composition. The main figure, Christ, stands with the base of the isosceles triangle that encloses him exactly in the middle of the baseline. Aside from the details of the figures, the excessive symmetry is broken in the outlines by the fact that the central triangle is intersected by that of the Baptist.\n\nCompared with Verrocchio’s composition of the same subject, it is, as previously noted, the general form of the framing that is more appropriate in this case. The group of angels, however, stands too much in the foreground here, and is almost equal in size to the central group. As a result of this arrangement, more figures are necessary on the right side to establish balance.\n\nSpecifically: the base of the main triangle, measured along the baseline, is equal to half its length. The height, measured to the stem of the dove's head (1), is about equal to 2/3 of the total height.\n\n<summary>This page analyzes the geometric composition and perspective of Piero della Francesca's works, specifically focusing on the structural symmetry of the tomb slab figures and the Baptism of Christ.</summary>\n<keywords>Baptism of Christ, Perspective, Verrocchio, Geometry, Composition, Christ, Angels</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]
