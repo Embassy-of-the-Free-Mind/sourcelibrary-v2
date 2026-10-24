@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import type { Db } from 'mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 import { classifyTraffic, type TrafficClass } from '@/lib/traffic-classification';
+import { trustedClientIp } from '@/lib/client-ip';
 
 /**
  * Shared ingestion-side traffic classification for the analytics write paths.
@@ -64,12 +65,9 @@ export function clientIp(request: NextRequest): string {
  * paths did not. Keep the two in agreement.
  */
 export function clientIpFromHeaders(headers: Headers): string {
-  const raw = headers.get('cf-connecting-ip')?.trim()
-    || headers.get('true-client-ip')?.trim()
-    || headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || headers.get('x-real-ip')
-    || 'unknown';
-  return anonymizeIp(raw);
+  // cf-connecting-ip only when the peer is a Cloudflare edge node; off the
+  // CDN the client can write it (#7155). See src/lib/client-ip.ts.
+  return anonymizeIp(trustedClientIp(headers));
 }
 
 // Per-IP daily cap for *events*, mirroring the pageview cap in /api/track.

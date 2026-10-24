@@ -7,8 +7,9 @@
  * SOCIETY_DOMAINS was an additive allowlist, and that host sits outside the
  * Cloudflare zone, so it was where the AS132203 fleet actually read.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { NextRequest } from 'next/server';
+import { encode } from 'next-auth/jwt';
 import { proxy } from '@/proxy';
 import { shouldRedirectToCanonical } from '@/lib/alias-host-scope';
 import { isBlockedNetwork } from '@/lib/blocked-networks';
@@ -94,6 +95,10 @@ describe('proxy() on preview deployments', () => {
   // public repo — and previews sit outside Cloudflare. The bug being pinned:
   // an outside party read books through a stale worktree preview (2026-08-09).
   const PREVIEW = 'https://sourcelibrary-v2-git-worktree-reader-1df8dc-dereklomas-projects.vercel.app';
+  beforeAll(() => {
+    process.env.AUTH_SECRET ||= 'test-auth-secret-at-least-32-characters-long';
+    process.env.CRON_SECRET ||= 'test-cron-secret';
+  });
 
   it('refuses anonymous book content with a loud 403, not a redirect', async () => {
     for (const p of ['/book/some-slug?page=3', '/api/books/abc123/text', '/embed/bph/reader/x']) {
@@ -125,18 +130,30 @@ describe('proxy() on preview deployments', () => {
     }
   });
 
-  it('lets a signed-in dev review the branch', async () => {
+  it('lets a signed-in dev review the branch (a session that decodes)', async () => {
+    const name = '__Secure-authjs.session-token';
+    const token = await encode({ token: { sub: 'dev' }, secret: process.env.AUTH_SECRET!, salt: name });
+    const res = await proxy(req(`${PREVIEW}/book/some-slug`, { cookie: `${name}=${token}` }));
+    expect(res?.status).not.toBe(403);
+  });
+
+  it('lets a CRON_SECRET caller through to app-layer auth', async () => {
     const res = await proxy(
-      req(`${PREVIEW}/book/some-slug`, { cookie: '__Secure-authjs.session-token=tok' })
+      req(`${PREVIEW}/api/books/abc123/text`, { authorization: `Bearer ${process.env.CRON_SECRET}` })
     );
     expect(res?.status).not.toBe(403);
   });
 
-  it('lets credentialed callers through to app-layer auth', async () => {
-    const res = await proxy(
-      req(`${PREVIEW}/api/books/abc123/text`, { authorization: 'Bearer whatever' })
-    );
-    expect(res?.status).not.toBe(403);
+  it('refuses a credential that is merely PRESENT (#7155)', async () => {
+    // Negative control: the gate used to check presence, and `Bearer x`
+    // read whole books off a production branch alias.
+    for (const headers of [
+      { authorization: 'Bearer whatever' },
+      { cookie: '__Secure-authjs.session-token=tok' },
+    ]) {
+      const res = await proxy(req(`${PREVIEW}/api/books/abc123/text`, headers));
+      expect(res?.status, JSON.stringify(headers)).toBe(403);
+    }
   });
 
   it('leaves non-content surfaces open for anonymous review', async () => {
