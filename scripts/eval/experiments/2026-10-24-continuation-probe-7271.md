@@ -1,7 +1,7 @@
 ---
 stage: ocr
 measure: accuracy
-languages: [English, French, Greek, Dutch, Sanskrit, Latin]
+languages: [en, fr, grc, nl, sa, la]
 scripts: [Latn, Grek]
 canons: []
 n_books: 55
