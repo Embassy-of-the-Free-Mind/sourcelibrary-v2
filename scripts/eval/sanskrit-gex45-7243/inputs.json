@@ -15,7 +15,12 @@
      2262
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-30f2e4ed-p90-c1-s1.jpg",
+    "tiles/sa-30f2e4ed-p90-c1-s2.jpg",
+    "tiles/sa-30f2e4ed-p90-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-ee26ada9-p538",
@@ -32,7 +37,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-ee26ada9-p538-c1-s1.jpg",
+    "tiles/sa-ee26ada9-p538-c1-s2.jpg",
+    "tiles/sa-ee26ada9-p538-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-5d8c038d-p99",
@@ -49,7 +59,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-5d8c038d-p99-c1-s1.jpg",
+    "tiles/sa-5d8c038d-p99-c1-s2.jpg",
+    "tiles/sa-5d8c038d-p99-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-7b76611e-p276",
@@ -66,7 +81,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-7b76611e-p276-c1-s1.jpg",
+    "tiles/sa-7b76611e-p276-c1-s2.jpg",
+    "tiles/sa-7b76611e-p276-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-347d21b6-p187",
@@ -83,7 +103,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-347d21b6-p187-c1-s1.jpg",
+    "tiles/sa-347d21b6-p187-c1-s2.jpg",
+    "tiles/sa-347d21b6-p187-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-7bd9afc5-p393",
@@ -100,7 +125,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-7bd9afc5-p393-c1-s1.jpg",
+    "tiles/sa-7bd9afc5-p393-c1-s2.jpg",
+    "tiles/sa-7bd9afc5-p393-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-d69433d6-p121",
@@ -117,7 +147,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-d69433d6-p121-c1-s1.jpg",
+    "tiles/sa-d69433d6-p121-c1-s2.jpg",
+    "tiles/sa-d69433d6-p121-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-e5a9d99f-p487",
@@ -134,7 +169,12 @@
      1437
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-e5a9d99f-p487-c1-s1.jpg",
+    "tiles/sa-e5a9d99f-p487-c1-s2.jpg",
+    "tiles/sa-e5a9d99f-p487-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-024f76ae-p621",
@@ -151,24 +191,34 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-024f76ae-p621-c1-s1.jpg",
+    "tiles/sa-024f76ae-p621-c1-s2.jpg",
+    "tiles/sa-024f76ae-p621-c1-s3.jpg"
+   ]
   },
   {
-   "slug": "sa-82c808a7-p10",
-   "url": "https://images.sourcelibrary.org/archived/6a94b96c56cac2f882c808a7/10.jpg",
-   "sha256_original": "1fcaec432ae7a9704631c967985abfee136fffb5fb102201687009f5b3ea1a4c",
+   "slug": "sa-5744775b-p139",
+   "url": "https://images.sourcelibrary.org/archived/6a9490e631b41d9c5744775b/139.jpg",
+   "sha256_original": "e5efc9f6f43b7e525cf98b4eba9919dac85f14dd06bada7d9296e7ab3feed47b",
    "original_size": [
-    3000,
-    966
+    3484,
+    5340
    ],
    "fed": {
-    "sha256": "66e87da58f7f67c1b0b4162719247f8dc088ae3ad3eb8388b5615faf533413e5",
+    "sha256": "8126a567ee6a3cc990783caa6f6910e2b9346896bd75cf25a9192843da2969f8",
     "size": [
-     2400,
-     773
+     1566,
+     2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-5744775b-p139-c1-s1.jpg",
+    "tiles/sa-5744775b-p139-c1-s2.jpg",
+    "tiles/sa-5744775b-p139-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-5d8bd83c-p21",
@@ -185,7 +235,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-5d8bd83c-p21-c1-s1.jpg",
+    "tiles/sa-5d8bd83c-p21-c1-s2.jpg",
+    "tiles/sa-5d8bd83c-p21-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-e625ae62-p64",
@@ -202,7 +257,13 @@
      1277
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-e625ae62-p64-c1-s1-h1.jpg",
+    "tiles/sa-e625ae62-p64-c1-s1-h2.jpg",
+    "tiles/sa-e625ae62-p64-c1-s2-h1.jpg",
+    "tiles/sa-e625ae62-p64-c1-s2-h2.jpg"
+   ]
   },
   {
    "slug": "sa-e5a9d0dc-p668",
@@ -219,7 +280,13 @@
      1133
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-e5a9d0dc-p668-c1-s1.jpg",
+    "tiles/sa-e5a9d0dc-p668-c1-s2.jpg",
+    "tiles/sa-e5a9d0dc-p668-c2-s1.jpg",
+    "tiles/sa-e5a9d0dc-p668-c2-s2.jpg"
+   ]
   },
   {
    "slug": "sa-05c7c5f3-p196",
@@ -236,7 +303,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-05c7c5f3-p196-c1-s1.jpg",
+    "tiles/sa-05c7c5f3-p196-c1-s2.jpg",
+    "tiles/sa-05c7c5f3-p196-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-91d25f36-p187",
@@ -253,7 +325,19 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-91d25f36-p187-c1-s1.jpg",
+    "tiles/sa-91d25f36-p187-c1-s2.jpg",
+    "tiles/sa-91d25f36-p187-c1-s3.jpg",
+    "tiles/sa-91d25f36-p187-c1-s4.jpg",
+    "tiles/sa-91d25f36-p187-c1-s5.jpg",
+    "tiles/sa-91d25f36-p187-c2-s1.jpg",
+    "tiles/sa-91d25f36-p187-c2-s2.jpg",
+    "tiles/sa-91d25f36-p187-c2-s3.jpg",
+    "tiles/sa-91d25f36-p187-c2-s4.jpg",
+    "tiles/sa-91d25f36-p187-c2-s5.jpg"
+   ]
   },
   {
    "slug": "sa-a9a96a43-p165",
@@ -270,7 +354,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-a9a96a43-p165-c1-s1.jpg",
+    "tiles/sa-a9a96a43-p165-c1-s2.jpg",
+    "tiles/sa-a9a96a43-p165-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-e625b010-p5",
@@ -287,7 +376,12 @@
      1834
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-e625b010-p5-c1-s1.jpg",
+    "tiles/sa-e625b010-p5-c1-s2.jpg",
+    "tiles/sa-e625b010-p5-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-91d24943-p9",
@@ -304,7 +398,10 @@
      1466
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-91d24943-p9-c1-s1.jpg"
+   ]
   },
   {
    "slug": "sa-de21a71e-p163",
@@ -321,7 +418,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-de21a71e-p163-c1-s1.jpg",
+    "tiles/sa-de21a71e-p163-c1-s2.jpg",
+    "tiles/sa-de21a71e-p163-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-9ba76960-p555",
@@ -338,7 +440,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-9ba76960-p555-c1-s1.jpg",
+    "tiles/sa-9ba76960-p555-c1-s2.jpg",
+    "tiles/sa-9ba76960-p555-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-1697c6ed-p499",
@@ -355,7 +462,12 @@
      1241
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1697c6ed-p499-c1-s1.jpg",
+    "tiles/sa-1697c6ed-p499-c1-s2.jpg",
+    "tiles/sa-1697c6ed-p499-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-1697bec1-p584",
@@ -372,7 +484,12 @@
      1241
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1697bec1-p584-c1-s1.jpg",
+    "tiles/sa-1697bec1-p584-c1-s2.jpg",
+    "tiles/sa-1697bec1-p584-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-1697c43d-p421",
@@ -389,7 +506,12 @@
      1241
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1697c43d-p421-c1-s1.jpg",
+    "tiles/sa-1697c43d-p421-c1-s2.jpg",
+    "tiles/sa-1697c43d-p421-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-e0f809e3-p1393",
@@ -406,7 +528,19 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-e0f809e3-p1393-c1-s1-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s1-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s2-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s2-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s3-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s3-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s4-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s4-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s5-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s5-h2.jpg"
+   ]
   },
   {
    "slug": "sa-487f33e3-p412",
@@ -423,7 +557,11 @@
      1216
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-487f33e3-p412-c1-s1.jpg",
+    "tiles/sa-487f33e3-p412-c1-s2.jpg"
+   ]
   },
   {
    "slug": "sa-7c60b19b-p202",
@@ -440,7 +578,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-7c60b19b-p202-c1-s1.jpg",
+    "tiles/sa-7c60b19b-p202-c1-s2.jpg",
+    "tiles/sa-7c60b19b-p202-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-2380f313-p419",
@@ -457,24 +600,32 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-2380f313-p419-c1-s1.jpg"
+   ]
   },
   {
-   "slug": "sa-0f19d805-p339",
-   "url": "https://iiif.wellcomecollection.org/image/b2995292x_WT2895_OR_MS_Indic_Delta_2_0339.JP2/full/full/0/default.jpg",
-   "sha256_original": "0887a2f58e07d323b4a44aed57ef5e116584ff8b64068db0eefd9c079eff5f04",
+   "slug": "sa-1697d8cb-p58",
+   "url": "https://images.sourcelibrary.org/books/6a308985eb59f1191697d8cb/pages/0057.jpg",
+   "sha256_original": "36ac5eaa12b3366794c4727e6496bd5db15a0edf586af0bd870e49f2479adab7",
    "original_size": [
-    4285,
-    6190
+    875,
+    1241
    ],
    "fed": {
-    "sha256": "288e3f34fe0d6bbc598b12fe99ec0a7a3d16a194976f1fcd2deabe4d296c3598",
+    "sha256": "36ac5eaa12b3366794c4727e6496bd5db15a0edf586af0bd870e49f2479adab7",
     "size": [
-     1661,
-     2400
+     875,
+     1241
     ],
-    "downscaled": true
-   }
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1697d8cb-p58-c1-s1.jpg",
+    "tiles/sa-1697d8cb-p58-c1-s2.jpg",
+    "tiles/sa-1697d8cb-p58-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-8eaa4560-p334",
@@ -491,7 +642,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-8eaa4560-p334-c1-s1.jpg",
+    "tiles/sa-8eaa4560-p334-c1-s2.jpg",
+    "tiles/sa-8eaa4560-p334-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-8eaa58d0-p117",
@@ -508,7 +664,20 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-8eaa58d0-p117-c1-s1.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s2.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s3.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s4.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s5.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s6.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s1.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s2.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s3.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s4.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s5.jpg"
+   ]
   },
   {
    "slug": "sa-0f19de12-p607",
@@ -525,7 +694,18 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-0f19de12-p607-c1-s1.jpg",
+    "tiles/sa-0f19de12-p607-c1-s2.jpg",
+    "tiles/sa-0f19de12-p607-c1-s3.jpg",
+    "tiles/sa-0f19de12-p607-c1-s4.jpg",
+    "tiles/sa-0f19de12-p607-c1-s5.jpg",
+    "tiles/sa-0f19de12-p607-c2-s1.jpg",
+    "tiles/sa-0f19de12-p607-c2-s2.jpg",
+    "tiles/sa-0f19de12-p607-c2-s3.jpg",
+    "tiles/sa-0f19de12-p607-c2-s4.jpg"
+   ]
   },
   {
    "slug": "sa-8eaa2441-p684",
@@ -542,7 +722,12 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-8eaa2441-p684-c1-s1.jpg",
+    "tiles/sa-8eaa2441-p684-c1-s2.jpg",
+    "tiles/sa-8eaa2441-p684-c1-s3.jpg"
+   ]
   },
   {
    "slug": "sa-2a4369ae-p548",
@@ -559,7 +744,21 @@
      2400
     ],
     "downscaled": true
-   }
+   },
+   "tiles": [
+    "tiles/sa-2a4369ae-p548-c1-s1.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s2.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s3.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s4.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s5.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s6.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s1.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s2.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s3.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s4.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s5.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s6.jpg"
+   ]
   },
   {
    "slug": "sa-1a8dfbde-p5",
@@ -576,7 +775,10 @@
      891
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1a8dfbde-p5-c1-s1.jpg"
+   ]
   },
   {
    "slug": "sa-1a8e15ca-p1",
@@ -593,7 +795,11 @@
      1794
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1a8e15ca-p1-c1-s1.jpg",
+    "tiles/sa-1a8e15ca-p1-c1-s2.jpg"
+   ]
   },
   {
    "slug": "sa-e6c258c2-p2",
@@ -610,7 +816,11 @@
      1553
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-e6c258c2-p2-c1-s1.jpg",
+    "tiles/sa-e6c258c2-p2-c1-s2.jpg"
+   ]
   },
   {
    "slug": "sa-87c61f7c-p2",
@@ -627,7 +837,11 @@
      1800
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-87c61f7c-p2-c1-s1.jpg",
+    "tiles/sa-87c61f7c-p2-c1-s2.jpg"
+   ]
   },
   {
    "slug": "sa-1a8e17d4-p5",
@@ -644,7 +858,11 @@
      1519
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-1a8e17d4-p5-c1-s1.jpg",
+    "tiles/sa-1a8e17d4-p5-c1-s2.jpg"
+   ]
   },
   {
    "slug": "sa-e64f2efd-p5",
@@ -661,7 +879,10 @@
      884
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-e64f2efd-p5-c1-s1.jpg"
+   ]
   },
   {
    "slug": "sa-23bfb025-p5",
@@ -678,7 +899,10 @@
      680
     ],
     "downscaled": false
-   }
+   },
+   "tiles": [
+    "tiles/sa-23bfb025-p5-c1-s1.jpg"
+   ]
   }
  ]
 }
