@@ -1,0 +1,14 @@
+ROW 1 | ധേഃയഥാനാദ്ദക[illegible]ക്ഷ്ടയത‖ത്രന്ദ്രംതേനഃമെതേക്കേ[illegible]ഗ്രപേ[illegible]ഃഭേക്കിഭി[illegible]‖[illegible]വയസമേകയഥതിവിക്ഷേ
+ROW 2 | ഖയയത്രപദ്ദേവതൃ[illegible]ഖ[illegible]‖[illegible]തൃഢഥത[illegible]യദ്ദ്ര[illegible]സ്ത്രൃഷ്ഠയഥത്ഥൃ[illegible]‖[illegible]ത്രഗ്രേതഥഭേഭഷ്ഠ[illegible]
+ROW 3 | ക്ഷിനായിഷ്ഠിപ[illegible]ദിനിഷ്ഠ‖[illegible]തപത്രലേപ[illegible]ഥതൃ[illegible]യഥൃ[illegible]ത്രേനെ‖[illegible]ഥേയത്രൃക്കിതയ[illegible]പത്ര
+ROW 4 | ത്രനെഷ്ഠവക്ഷ്ടയൃയൃപദ്ദേവ‖[illegible]യന്ത[illegible]ഷ്ഠത്രൃത്രഥ[illegible]ഷ്ഠഷ്ഠത്രഭേ[illegible]‖[illegible]നയപ്രേനേവത്രഭേഷ്ഠ
+ROW 5 | ദതേദ്വിനേദേത്ര‖ലേഷ്ഠ്രേഭേഖതത്ര[illegible]ഷ്ഠയസ്രീഷ്ഠ[illegible]‖ശ്ശദത്രനനേം
+ROW 6 | ദത്രഭ്രമ്യപ്രഷ്ഠയഭ‖ഘേദേത്രതനേക്കിഷ്ഠ[illegible]ഭേന[illegible]‖നവേതത്രനെഷ്ഠ
+ROW 7 | ഥനാത്രത്രദേപംഗ്ഗ‖[illegible]ദേത്രതഭി[illegible]ദേഃനേഭേഷ്ഠപ[illegible]‖ദതദ്ദയനേസയ
+ROW 8 | ധതഭേഭേപ്രൃനായ്യൃ‖[illegible]ദേഃതദ്ദതദതപനെ[illegible]യത്രേഡഃനേനേദേ‖ത[illegible]ഭേയത്രേ[illegible]
+ROW 9 | തദ്ദിനാഃദ്ദിഭിഷ്ഠയത്രേഃ‖[illegible]ഭേഷ്ഠക്കേ[illegible]ക്കിഭേഷ്ഠതയനായഭിദനാ‖ഘേക്കിഭേഷ്ഠ[illegible]ഭേനേയ
+ROW 10 | നയഃക്കപ്രദേദതദ്ദതപ്ര്യപദേ‖[illegible]ക്കിതദേഷ്ഠതയനായഭി[illegible]ത്രേ[illegible]‖[illegible]ത്രയപക്കിത[illegible]
+ROW 11 | ദിനേതഭിക്ഷനക്ഷ്ടിക്കേപ്ര‖[illegible]ഭിതത്ഥതയഭി[illegible]ക്ഷേക്കി[illegible]യ[illegible]‖[illegible]ത്രയ[illegible]ഭിതയ
+ROW 12 | ദിനിക്കേവഭേയനായിഭേദ‖[illegible]ത്രയഭേഭിതഭി[illegible]നായഭേ[illegible]‖[illegible]ക്കിഭേക്കിതേ[illegible]
+
+NOTE | Very low confidence. The leaf has 12 rows: rows 1–4 and 10–12 run the full width, and rows 5–9 are shorter column rows. I could make out letter shapes but couldn't reliably identify most akṣaras or the ligature, reph and chillu forms. Treat this as a rough outline of the strokes, not a usable transcription; I'd guess under a third of it is right.

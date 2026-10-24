@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { getReadDb } from '@/lib/mongodb';
 import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
@@ -29,6 +30,10 @@ import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence
 import { keywordSearchMode, callKeywordLane, serveKeywordPages, indexOfWord, buildKeywordShadow, liveBookSet, type KeywordLaneParams, type KeywordLaneResult, type KeywordShadow } from '@/lib/keyword-search';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
 import { phraseMatch } from '@/lib/passage-score';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
+import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
+import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
+import { locateQuery } from '@/lib/search/original-snippet';
 
 export const preferredRegion = 'fra1';
 
@@ -125,6 +130,21 @@ function snippetAt(cleaned: string, start: number, end: number, contextChars = 1
   return (from > 0 ? '...' : '') + cleaned.slice(from, to) + (to < cleaned.length ? '...' : '');
 }
 
+/**
+ * The excerpt for a row on an original-text request (#7175): the page's own
+ * text, cut around the query. Latin pages are matched with u/v, i/j, ſ and
+ * ae/æ folded, so `universum` finds `vniuersum`; the excerpt keeps the page's
+ * spelling. No OCR → no excerpt, never the English in its place.
+ */
+function originalSnippet(ocr: unknown, query: string, bookLanguage: unknown, hit?: string): string {
+  const cleaned = cleanText(typeof ocr === 'string' ? ocr : '');
+  if (!cleaned) return '';
+  const latin = typeof bookLanguage === 'string' && NATIVE_EDITION_LANGUAGE.la.test(bookLanguage);
+  const span = locateQuery(cleaned, query, { latin, hit });
+  if (span) return snippetAt(cleaned, span[0], span[1]);
+  return cleaned.slice(0, 300) + (cleaned.length > 300 ? '...' : '');
+}
+
 interface PassagePhrase { match: number; start: number; end: number; field: 'translation' | 'ocr'; text: string }
 
 /**
@@ -156,7 +176,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
-    const language = searchParams.get('language');
+    let language = searchParams.get('language');
     const languagesParam = searchParams.get('languages');
     const excludeLanguagesParam = searchParams.get('exclude_languages');
     const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
@@ -173,7 +193,34 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // straight back to English (i18n.md, "an /es URL is a promise"). A result
     // the reader cannot open in their language is worse than no result.
     const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
-    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    // An ORIGINAL-text locale (`/la`, `/zh`, `/nl`; #7175) has no translated
+    // edition to search: nothing is translated into Latin or Chinese, so
+    // `pages_translated_la` is 0 on every book and this request used to come
+    // back empty, silently. Such a reader wants books WRITTEN in the language,
+    // quoted in it. So `lang=la` means `language=Latin&text=original` here, and
+    // a `language` that contradicts it is refused rather than answered empty.
+    const originalLocale = readsOriginal(langParam as Locale) ? NATIVE_SHELF_LANGUAGE[langParam as 'la' | 'nl' | 'zh'] : undefined;
+    if (originalLocale) {
+      if (language && language !== originalLocale) {
+        return NextResponse.json({
+          error: `lang=${langParam} searches books written in ${originalLocale}; it cannot be combined with language=${language}`,
+          results: [], total: 0,
+        }, { status: 400 });
+      }
+      language = originalLocale;
+    }
+    // `text=original` (#7175): quote each page in its own language (the OCR),
+    // never the English translation. A flag, not a new meaning for `lang`,
+    // because `lang` names an edition and the original is not one.
+    const textParam = searchParams.get('text');
+    if (textParam !== null && textParam !== 'original' && textParam !== 'translation') {
+      return NextResponse.json({
+        error: `text must be "original" or "translation", not "${textParam}"`,
+        results: [], total: 0,
+      }, { status: 400 });
+    }
+    const originalText = !!originalLocale || textParam === 'original';
+    const textLang = originalLocale ? 'en' : /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
     const isLocalizedSearch = textLang !== 'en';
     const editionCounter = `pages_translated_${textLang}`;
     const category = searchParams.get('category'); // Category filter
@@ -359,8 +406,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         is_first_translation: !!(typedBook as any).is_first_translation,
         doi: typedBook.doi,
         categories: typedBook.categories,
-        summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
-        snippet_type: summaryText ? 'summary' : undefined,
+        // The summary is English prose; an original-text request gets none (#7175).
+        summary: summaryText && !originalText ? extractSnippet(summaryText, matchQuery) : undefined,
+        snippet_type: summaryText && !originalText ? 'summary' : undefined,
         thumbnail: (typedBook as any).thumbnail,
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
@@ -417,9 +465,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
     // KEYWORD_SEARCH_MODE (#6852): the keyword page service on Hetzner beside
     // (shadow) or in front of (serve) the Atlas page lane. Global English
-    // searches only: a `book_id` search admits a book that is not visible, a
-    // tenant's lane is confined at its join, and `?lang=` is the Postgres lane.
+    // searches, plus `bookServe` below: a `book_id` search admits a book that is
+    // not visible, a tenant's lane is confined at its join, and `?lang=` is the
+    // Postgres lane.
     const keywordMode = (!bookId && !tenantId && !isLocalizedSearch) ? keywordSearchMode() : 'off';
+    // A `book_id` search on a LIVE book is served too (#2049): the book is the
+    // allow-list, and the service holds every live book. A book that is not
+    // live stays on Atlas, which is why the liveness is checked first. Serve
+    // only; no shadow comparison for this lane.
+    const bookServe = !!bookId && !tenantId && !isLocalizedSearch && keywordSearchMode() === 'serve';
     const keyword: {
       shadowCall?: Promise<{ ok: true; r: KeywordLaneResult; ms: number } | { ok: false; error: string; ms: number }>;
       k: number; filtered: boolean; variants: boolean;
@@ -664,10 +718,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // typed; name variants (#5888) arrive through the second query.
           const terms = (bookId || pagesOnly) ? null : rollupTerms(query);
           let nameQuery: Awaited<ReturnType<typeof expandNameQuery>> | undefined;
-          if (keywordMode === 'serve') {
+          const serveBook = bookServe && (await liveBookSet(db as any, [bookId!]).catch(() => new Set<string>())).has(bookId!);
+          if (keywordMode === 'serve' || serveBook) {
             nameQuery = await expandNameQuery(query);
             const { variants, topicWords } = nameQuery;
-            const served = await serveKeywordLane(keywordParams(terms, pageLimit, filteredBookIds, variants, topicWords));
+            const served = await serveKeywordLane(keywordParams(terms, pageLimit, serveBook ? [bookId!] : filteredBookIds, variants, topicWords));
             keyword.lane = served ? 'served' : 'fallback';
             if (served) return served;
           }
@@ -905,9 +960,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         }
       }
 
-      for (const page of pageDocs) {
-        const book = bookMap.get(page.book_id as string);
+      for (const rawPage of pageDocs) {
+        const book = bookMap.get(rawPage.book_id as string);
         if (!book) continue;
+        // English edition, English leaf: the stored English "translation" is a
+        // rewording, never a snippet of the page (#7100).
+        const page = serveEnglishOriginalPage(rawPage, book, { modernized: false });
+        const withheld = page !== rawPage;
         if ((book as any).hidden === true) continue;
         if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
@@ -915,7 +974,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // Prefer Atlas Search highlights (faster, more precise) over full-text extraction
         let snippet = '';
         let snippetType: 'translation' | 'ocr' = 'ocr';
-        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+        const highlights = (page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined)
+          ?.filter(h => !(withheld && h.path === 'translation.data'));
         if (highlights && highlights.length > 0) {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
@@ -945,9 +1005,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // together, which is the place the page was ranked on. Same cleaned
         // text as extractSnippet reads, so no editorial wrapper can come back.
         const phrase = (page as { _phrase?: PassagePhrase })._phrase;
-        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN) {
+        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN && !(withheld && phrase.field === 'translation')) {
           snippet = snippetAt(phrase.text, phrase.start, phrase.end);
           snippetType = phrase.field;
+        }
+
+        // Original-text request (#7175): the page's own text, whichever field
+        // Atlas highlighted. Its OCR hit, when it has one, is where to cut.
+        if (originalText) {
+          const ocrHit = highlights?.find(h => h.path === 'ocr.data')?.texts.find(t => t.type === 'hit')?.value;
+          snippet = originalSnippet(page.ocr?.data, matchQuery, book.language, ocrHit);
+          snippetType = 'ocr';
         }
 
         const pageResult: SearchResult = {
@@ -1048,8 +1116,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             has_doi: !!(book as any).doi,
             doi: (book as any).doi,
             categories: book.categories as string[],
-            summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
-            snippet_type: summaryText ? 'summary' : undefined,
+            summary: summaryText && !originalText ? extractSnippet(summaryText, matchQuery) : undefined,
+            snippet_type: summaryText && !originalText ? 'summary' : undefined,
             thumbnail: book.thumbnail as string | undefined,
             thumbnail_blob: book.thumbnail_blob as string | undefined,
             quality_score: (book as any).quality_score,
@@ -1079,6 +1147,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       )];
 
       const pageBookMap = new Map<string, any>();
+      // Original-text request (#7175): the semantic lane's snippet is the
+      // English translation for any page that has one, so read the OCR.
+      const ocrByPage = new Map<string, string>();
+      if (originalText && pageBookIds.length > 0) {
+        const pageIds = semanticPageDocs.map(s => s.page_id).filter(Boolean);
+        try {
+          const docs = await db.collection('pages')
+            .find({ id: { $in: pageIds } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } })
+            .maxTimeMS(3000)
+            .toArray();
+          for (const d of docs) ocrByPage.set(d.id as string, ((d.ocr as { data?: string } | undefined)?.data) || '');
+        } catch {
+          degradedLanes.push('semantic_page_text');
+        }
+      }
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
@@ -1127,9 +1210,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           doi: book.doi,
           categories: book.categories,
           page_number: sp.page_number,
-          snippet: sp.snippet,
+          snippet: originalText ? originalSnippet(ocrByPage.get(sp.page_id), matchQuery, book.language) : sp.snippet,
           // An original-text row's snippet is the page's own language (#5729).
-          snippet_type: sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
+          snippet_type: originalText || sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
@@ -1396,7 +1479,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // fan-out above, for the same reasons, plus localized requests: the link
     // promises an English translation.
     const pageSlice = dedupedResults.slice(offset, offset + limit);
-    const unreadableRows = pagesOnly || isLocalizedSearch ? [] : pageSlice
+    const unreadableRows = pagesOnly || isLocalizedSearch || originalText ? [] : pageSlice
       .filter(r => r.type === 'book' && ((r as any)._readability ?? TIER_READABLE) > TIER_READABLE)
       .map(r => ({ bookId: r.book_id, workId: (r as any)._work_id as string | undefined }));
     const translatedEditions = unreadableRows.length > 0
@@ -1462,7 +1545,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       tenantId,
       // `lang` is recorded so Spanish demand is measurable — without it a
       // localized search is indistinguishable from an English one in the log.
-      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: textLang },
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: originalLocale ? langParam : textLang },
     });
 
     logSearchQuery({
@@ -1500,6 +1583,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       license: CONTENT_LICENSE,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),
+      ...(originalText ? { text: 'original' } : {}),
       filters: {
         language,
         category,

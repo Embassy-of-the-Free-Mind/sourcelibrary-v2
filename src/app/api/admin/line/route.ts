@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
  * scripts/workers/stage-coverage-snapshot.mjs), plus the previous snapshot
  * and the newest snapshot at least ~7 days old so callers can compute
  * night-over-night and 7-day deltas. Never runs the measurements itself —
- * same read-a-precomputed-doc pattern as /platform/admin/metrics.
+ * same read-a-precomputed-doc pattern as the /admin dashboard.
  *
  * CRON_SECRET bearer auth, same as /api/admin/key-fingerprints.
  */

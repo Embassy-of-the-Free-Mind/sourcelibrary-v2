@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most like real Sanskrit across the most rows, with phrases that fit Dīpikā-style commentary on the guṇas such as "buddhisthaṃ lakṣayati", "bhāvanāṃ lakṣayati", "bhrāntismāram iti" and "traiguṇyāḥ pravṛttir"; C has some good fragments ("saṃkhyādayo", "sāmānyaguṇāḥ", "pṛthaktva") but is garbled elsewhere, and A is the most broken.

@@ -1,0 +1,8 @@
+ROW 1 | ഞൊരപ്രക്ഷാദ്യാസ്സംജ്ഞിതാ ‖ താഃതദൈവസൎഗ്ഗംദൎശിതാത[illegible]പവൎഗ്ഗ ‖ [illegible]യാനവൈഷ്ണാ[illegible]പ
+ROW 2 | യാഗിന്ദുഃഖിതാമാഹഃത ‖ ത്തജ്ജനാമരണ[illegible]ഃഖം(+ ക്ഷേം above)പ്രാചീന്താതിഷേതനാമ ‖ [illegible]ദുഃഖഃത്രയത്താൽദുഃഖസ്സ
+ROW 3 | ഷ്ടഃസ്പഷ്ടാവൈപരീത്യാദ്വാമി ‖ ത്രിവിധഃജാഃഏവഷ്ടാൽഎഴുതിയതക്കൂടനൊക്കിയ ‖ [illegible]സ്സംതിൽഎനക്കുംതന്നു
+ROW 4 | ക്കുന്നത.യാഇപ്രകൃ ‖ ഇല്ലാവിനസദ്യൎത്ഥാണദ്രവ്യ ‖ സപചകാലപരി
+ROW 5 | പാകമവൈക്ഷ്യസിദ്ധി ‖ ഉത്തരൊത്തരംഎഴുതിയഎട്ടിൽ൦൦ ‖ ഷിനൊപരിപാകാ
+ROW 6 | ത്ത്ടെപരിണിഞ്ഞിപ്രകാ ‖ രംഎഴുതിയഉടക്കിയഎടിൽ൦ാമെ ‖ വത്തിന്റെഎന്നുക
+ROW 7 | ടകൊൎക്കൊടെതാരത്തെ ‖ ടെകിൽകൂട്ടലാംകൂടിഒതിൽകാട്ടെത ‖ ടുപരിതിൽഉദ്ധരിക്കുന്നൂ
+NOTE | I could read most of the 7 written rows only roughly, and many letters are low-confidence. The hand is cursive and the cord hides letters at both holes in rows 1–3. Rows 1–3 run the full width, so there ‖ marks where the cord crosses, not a gap in the text. Rows 4–7 are in three columns. The text seems to be mostly Malayalam gloss, and there is a marginal mark at the left of row 6.

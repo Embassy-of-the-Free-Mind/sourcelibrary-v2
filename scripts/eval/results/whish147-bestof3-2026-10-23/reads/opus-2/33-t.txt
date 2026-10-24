@@ -1,0 +1,11 @@
+ROW 1 | സ്യാദിയൊദൃശതൈവഷട്ടഷ്ട്വഃകെമി[illegible]ദവദതുകസ്യൂപലസ്യാൎത്ഥം‧കുഷ്ഠിനന്ധാൎത്ഥം‧എതെപ്പാ
+ROW 2 | ദൃഷ്ടിക്കാരണ ൩ [illegible]പഷ്ഠിതിസംജ്ഞകാസ്യം‧ന്ദ്രാതദൃശ്യതെകി[illegible]ഗൊണാൎക്കിവതൊഷ്ഠം‧നചാപ്യ
+ROW 3 | ത്ഭക്ഷ്യ കൊണ്ടുഃപതൊണ്ണിഴ്ചതയഃഗവപഞ്ജ ഇതാകൊദൃഷ്ടം‧നതമസാദാദിഭിൎക്കപ്യുതം‧
+ROW 4 | ഞമൈവഘട‖കൊണ്ണാദ്യഃകാകിദിതുരാഖുകൃഗണാ‖[illegible]ഉമിചല്ലൊദിതിഃദ്വ
+ROW 5 | ഉസമെജ്ഞൌവി‖വെത്രാദലപെ[illegible]പക്ഷയദ്ദൊദ്ഘൃതെകത‖ഛാഗതവിപരീതപ്പമാ
+ROW 6 | ഭിദൃക്കംതതൈഖ‖കത്വിഷിതപ്രാൽചംസക്കൊപമഭാദാ‖ഉമാത്രമെവവ്യക്തഃക
+ROW 7 | ന്ദ്വാദൃക്തിതക്കഃ‖പുകൊണ്ണാദൃന്ദാകഥാ സം‖ലാകഃണധിഷ്ഠഎനാദ്ര
+ROW 8 | ഭെണദിഷ്ഠതുന്ത്രി‖ത്രിധിഷ്ഠാനഥംമഹാദാദിഭൂതവജ്ജ്ഞകം‖ശിതം‧ഈഹലെപാക്കൊ
+ROW 9 | ഷഭഡിഷ്ഠാന്ദ്രെൾവ‖ദാധിഷ്ഠനടുജ്ഞത്രയാദ്ധാനമാകെദതൃതെച‖ചധിഷ്ഠാനംശിതംരജ്ജാദന്ദ്ര
+ROW 10 | ാധിഷ്ഠാത്രാഭമിതപ്പംഭയാസാപധിഷ്ഠാതാരഹപ്രതകൂഹ്യാനകാവ‖ണ്ണമധിഷ്ഠാതുതസ്യാചെതന
+NOTE | The leaf has 10 rows and every piece has writing on it, but my reading is low-confidence throughout: only roughly half of the aksharas are reasonably certain (e.g. ൎത്ഥം, അധിഷ്ഠാന-, ശിതം, ചെതന), and many conjuncts and vowel signs are tentative guesses. Rows 1–3 are given as full-width rows with no hole marks. From row 4 down I placed ‖ at the holes, but in row 4 that placement is uncertain, and in rows 5–9 the first ‖ is placed tentatively at the left hole.

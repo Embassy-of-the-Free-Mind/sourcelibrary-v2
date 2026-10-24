@@ -245,3 +245,90 @@ describe('books.collections is written in one place', () => {
     }
   });
 });
+
+// ── Structural half, scripts/: every inline write carries the bump (#4452) ──
+//
+// Scripts can't import the TS helper, so routing isn't enforceable there.
+// Pairing is: whatever update document writes `collections` must also touch
+// `updated_at` (`$currentDate: { updated_at: true }` or `updated_at` in a
+// `$set`), or the incremental `books_catalog` sync never sees the change.
+
+/** `$addToSet` / `$pull` / `$pullAll` / `$push` / `$set` of `collections`. */
+const SCRIPT_WRITE = /\$(?:addToSet|pull|pullAll|push|set)\s*:\s*\{\s*['"]?collections['"]?\s*:/g;
+
+function scriptFiles(dir: string): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === 'node_modules') continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...scriptFiles(full));
+    else if (/\.(?:mjs|cjs|js|ts)$/.test(entry.name)) out.push(full);
+  }
+  return out;
+}
+
+/** The innermost `{ … }` enclosing `index` — the update document the
+ *  operator sits in. Brace-counting, so strings with braces can fool it; the
+ *  failure mode of that is a false alarm, not a miss. */
+function enclosingObject(src: string, index: number): string {
+  let depth = 0;
+  let start = -1;
+  for (let k = index - 1; k >= 0; k--) {
+    if (src[k] === '}') depth++;
+    else if (src[k] === '{') {
+      if (depth === 0) { start = k; break; }
+      depth--;
+    }
+  }
+  if (start < 0) return '';
+  depth = 0;
+  for (let k = start; k < src.length; k++) {
+    if (src[k] === '{') depth++;
+    else if (src[k] === '}' && --depth === 0) return src.slice(start, k + 1);
+  }
+  return src.slice(start);
+}
+
+function unbumpedWrites(src: string): number[] {
+  const lines: number[] = [];
+  for (const m of src.matchAll(SCRIPT_WRITE)) {
+    if (!/updated_at/.test(enclosingObject(src, m.index!))) {
+      lines.push(src.slice(0, m.index).split('\n').length);
+    }
+  }
+  return lines;
+}
+
+describe('scripts/ pair every books.collections write with an updated_at bump', () => {
+  const files = scriptFiles(path.join(root, 'scripts'));
+
+  it('finds the scripts tree it means to guard', () => {
+    expect(files.length).toBeGreaterThan(1000);
+  });
+
+  it('the detector sees the pattern (positive and negative controls)', () => {
+    expect(unbumpedWrites(`books.updateMany(q, { $addToSet: { collections: s } });`)).toEqual([1]);
+    expect(unbumpedWrites(`x({ $pull: {\n  collections: s } })`)).toEqual([1]);
+    expect(
+      unbumpedWrites(`books.updateMany(q, { $addToSet: { collections: s }, $currentDate: { updated_at: true } });`),
+    ).toEqual([]);
+    expect(
+      unbumpedWrites(`x({\n  $addToSet: { collections: { $each: a } },\n  $set: { updated_at: new Date() },\n})`),
+    ).toEqual([]);
+    // A bump on a *different* update document does not count.
+    expect(
+      unbumpedWrites(`a({ $set: { updated_at: d } }); b({ $addToSet: { collections: s } });`),
+    ).toEqual([1]);
+  });
+
+  it('no inline write of collections leaves updated_at alone', () => {
+    const offenders = files.flatMap((f) =>
+      unbumpedWrites(readFileSync(f, 'utf8')).map((line) => `${path.relative(root, f)}:${line}`),
+    );
+    expect(
+      offenders,
+      'add `$currentDate: { updated_at: true }` to the same update document — ' +
+        'without it the incremental books_catalog sync never picks the book up (#4399, #4452)',
+    ).toEqual([]);
+  });
+});

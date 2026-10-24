@@ -49,6 +49,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
+import { assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { rereadVerdict, storedLoops, decide } from '../lib/reread-verdict.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -159,6 +160,8 @@ async function submit() {
   const pass = Number(arg('pass'));
   const approved = Number(arg('approved-usd'));
   if (!PASSES[pass]) throw new Error('--pass=1|2');
+  // #7075: pass 2 is Flash, which no longer runs on the paid API; its pages go to the agy CLI lane.
+  assertApiOcrModel(PASSES[pass].model, CALL_SITE);
   if (!(approved > 0)) throw new Error('submit needs --approved-usd (the ceiling this run may spend)');
   const s = load();
   // Resumable: a page already in one of this pass's jobs is not sent again.

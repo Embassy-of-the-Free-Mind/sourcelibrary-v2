@@ -20,7 +20,8 @@
  *                   ignore step skipping a no-op merge (deploy-and-caching.md, "Canceled after ~12s") — it
  *                   neither counts nor breaks the streak. In-flight builds are skipped.
  *   behind_main     the oldest commit on origin/main that touches build inputs and is NOT in production's
- *                   commit is more than 60 min old. "Build inputs" are read from vercel.json's ignoreCommand,
+ *                   commit is older than the threshold (RELEASE_BEHIND_MIN, 13 h, live since #7008; MAX_BEHIND_MIN,
+ *                   60 min, in fixtures and tests). "Build inputs" are read from vercel.json's ignoreCommand,
  *                   so this check and Vercel's own skip rule cannot drift apart. This one also catches the
  *                   integration going silent (#4025): no deployment at all is created, so no streak forms.
  *
@@ -50,6 +51,10 @@ import { buildInputs as ignoreScriptInputs } from '../vercel-ignore-build.mjs';
 
 export const MIN_STREAK = 2;
 export const MAX_BEHIND_MIN = 60;
+// Since #7008 production is the `release` branch, which release.yml fast-forwards to main at 07:00, 13:00
+// and 19:00 UTC. The longest planned wait is 19:00 → 07:00, 12 h, so production is "behind" only past 13 h:
+// that catches a dropped scheduled run (GitHub drops schedules under load, #5276) and a silent integration.
+export const RELEASE_BEHIND_MIN = 13 * 60;
 // Public identifiers (not secrets; Vercel's own PR comments print them). Env or .vercel/project.json override.
 const PROJECT_ID = 'prj_rUw0rjkXvVbIo7iwqpRTl31sxA8s'; // sourcelibrary-v2
 const TEAM_ID = 'team_lpvBLTNADOdDvzq054wPGov8'; // dereklomas-projects
@@ -341,7 +346,7 @@ async function main() {
     }
   }
 
-  const r = judge(deployments, { mainCommits, now });
+  const r = judge(deployments, { mainCommits, now, maxBehindMin: fixturePath ? MAX_BEHIND_MIN : RELEASE_BEHIND_MIN });
   const text = renderText(r);
   if (JSON_OUT) console.log(JSON.stringify(r, null, 2)); else console.log(text);
   let exitCode = r.status === 'FAIL' ? 1 : r.status === 'UNKNOWN' ? 2 : 0;

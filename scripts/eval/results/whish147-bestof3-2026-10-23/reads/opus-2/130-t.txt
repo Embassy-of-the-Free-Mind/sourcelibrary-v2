@@ -1,0 +1,9 @@
+ROW 1 | സമ്യജ്ഞാനാഭാവാ‖ൽകാമനാദിസിദ്ധ്യാനമത്തിവിംശതിതജ്ഞ‖ാനാഭാവപ്വിസിദ്ധജ്ഞാ
+ROW 2 | നാൽദശ്യാൽപ്രത്തിഭേ‖യാദിജ്ഞാനാഭാവാൽവൃത്തിരേകിവ്യാ‖ക്ഷിജ്ഞാനമബിനവ്യാദ്ധിത്തെ
+ROW 3 | ഷന്നു।ഇലാദ്രി‖ഒയാടശാമെറ്റാറ്റുടവാന്നാംത്ര‖മൊദ്ദേശ്യൂത്രമേത്യകംപ്ര
+ROW 4 | സിദ്ധാനാരമെളന‖ംപൃമിത്ര്യാംസാദൃശ്യതതംഭ്രെയാദ‖ശാവക്ഷിന്നസാദൃശ്യെ
+ROW 5 | ഖ്യാകാംബികാദ‖പൃത്തിത്വാടാവാൽനാമഭിത്വാ‖സായനത്തെപ്രകൃക്കാ
+ROW 6 | ഭിഭന്നജ്ഞാനെപ്രസി‖ദ്ധസാദൃശ്യവിശിഷ്ടാനാമിത്തിവൃത്തിതെ‖ഭക്കവ്യാപ്തിഭിന്ദ്രുപണെക
+ROW 7 | ത്രിപക്ഷലക്ഷണമാവ‖സംഭവക്ഷേത്തിനനസ്രുവണാനതനഭ‖വിമനനക്ഷൈലഞ്ഞവ്യാപ്തി
+ROW 8 | ക്ഷേത്രൈപദവാരൈ‖ത്രരാങ്ങെമാരഭിഖിതരത്ഥൈസമദഹാ‖ടാവാൽക്ഷിക്ഷേപ്രതൃക്കി
+NOTE | I worked out the layout reliably: rows 1–2 and 7–8 run the full width, and rows 3–6 are short lines between the holes. The readings themselves are low-confidence. Only a few stretches are fairly secure: ജ്ഞാനാഭാവ in rows 1–2, സാദൃശ്യ in rows 4 and 6, and ലക്ഷണ in row 7. Most other syllables, especially in rows 3, 5 and 8, are tentative stroke-guesses and probably contain misreadings. They should be checked against a higher-resolution image.

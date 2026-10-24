@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   title: ES_SIGNIN_TITLE,
   description: ES_SIGNIN_DESCRIPTION,
   alternates: { canonical: '/es/auth/signin', languages: { en: '/auth/signin', es: '/es/auth/signin' } },
+  // Not a reading page: keep it out of search results, like /auth/* (#6398).
+  robots: { index: false, follow: true },
   openGraph: {
     title: ES_SIGNIN_TITLE,
     description: ES_SIGNIN_DESCRIPTION,

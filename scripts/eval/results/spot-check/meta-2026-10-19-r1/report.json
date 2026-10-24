@@ -1,0 +1,641 @@
+{
+ "seed": 2026101901,
+ "n_books": 40,
+ "findings": 147,
+ "books_with_serious": {
+  "n": 21,
+  "rate": 0.525,
+  "ci95": [
+   0.375,
+   0.671
+  ]
+ },
+ "per_field": {
+  "author": {
+   "evaluable": 38,
+   "wrong": 5,
+   "missing": 1,
+   "defect_rate": 0.158,
+   "ci95": [
+    0.074,
+    0.304
+   ],
+   "serious": 3,
+   "serious_rate": 0.079,
+   "serious_ci95": [
+    0.027,
+    0.208
+   ],
+   "frame_weighted_defect_rate": 0.161
+  },
+  "author_id": {
+   "evaluable": 36,
+   "wrong": 4,
+   "missing": 5,
+   "defect_rate": 0.25,
+   "ci95": [
+    0.138,
+    0.411
+   ],
+   "serious": 4,
+   "serious_rate": 0.111,
+   "serious_ci95": [
+    0.044,
+    0.253
+   ],
+   "frame_weighted_defect_rate": 0.188
+  },
+  "categories": {
+   "evaluable": 39,
+   "wrong": 5,
+   "missing": 12,
+   "defect_rate": 0.436,
+   "ci95": [
+    0.293,
+    0.59
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.09
+   ],
+   "frame_weighted_defect_rate": 0.529
+  },
+  "display_title": {
+   "evaluable": 32,
+   "wrong": 7,
+   "missing": 1,
+   "defect_rate": 0.25,
+   "ci95": [
+    0.133,
+    0.421
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.107
+   ],
+   "frame_weighted_defect_rate": 0.28
+  },
+  "edition_date": {
+   "evaluable": 24,
+   "wrong": 2,
+   "missing": 0,
+   "defect_rate": 0.083,
+   "ci95": [
+    0.023,
+    0.258
+   ],
+   "serious": 2,
+   "serious_rate": 0.083,
+   "serious_ci95": [
+    0.023,
+    0.258
+   ],
+   "frame_weighted_defect_rate": 0.147
+  },
+  "edition_key": {
+   "evaluable": 39,
+   "wrong": 7,
+   "missing": 0,
+   "defect_rate": 0.179,
+   "ci95": [
+    0.09,
+    0.327
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.09
+   ],
+   "frame_weighted_defect_rate": 0.2
+  },
+  "editor": {
+   "evaluable": 5,
+   "wrong": 0,
+   "missing": 5,
+   "defect_rate": 1,
+   "ci95": [
+    0.566,
+    1
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.434
+   ],
+   "frame_weighted_defect_rate": 1
+  },
+  "language": {
+   "evaluable": 40,
+   "wrong": 4,
+   "missing": 1,
+   "defect_rate": 0.125,
+   "ci95": [
+    0.055,
+    0.261
+   ],
+   "serious": 4,
+   "serious_rate": 0.1,
+   "serious_ci95": [
+    0.04,
+    0.231
+   ],
+   "frame_weighted_defect_rate": 0.044
+  },
+  "languages": {
+   "evaluable": 38,
+   "wrong": 4,
+   "missing": 4,
+   "defect_rate": 0.211,
+   "ci95": [
+    0.111,
+    0.363
+   ],
+   "serious": 4,
+   "serious_rate": 0.105,
+   "serious_ci95": [
+    0.042,
+    0.241
+   ],
+   "frame_weighted_defect_rate": 0.225
+  },
+  "original_language": {
+   "evaluable": 12,
+   "wrong": 3,
+   "missing": 4,
+   "defect_rate": 0.583,
+   "ci95": [
+    0.32,
+    0.807
+   ],
+   "serious": 3,
+   "serious_rate": 0.25,
+   "serious_ci95": [
+    0.089,
+    0.532
+   ],
+   "frame_weighted_defect_rate": 0.899
+  },
+  "pages_count": {
+   "evaluable": 40,
+   "wrong": 0,
+   "missing": 0,
+   "defect_rate": 0,
+   "ci95": [
+    0,
+    0.088
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.088
+   ],
+   "frame_weighted_defect_rate": 0
+  },
+  "place_published": {
+   "evaluable": 24,
+   "wrong": 2,
+   "missing": 16,
+   "defect_rate": 0.75,
+   "ci95": [
+    0.551,
+    0.88
+   ],
+   "serious": 1,
+   "serious_rate": 0.042,
+   "serious_ci95": [
+    0.007,
+    0.202
+   ],
+   "frame_weighted_defect_rate": 0.943
+  },
+  "published": {
+   "evaluable": 23,
+   "wrong": 3,
+   "missing": 0,
+   "defect_rate": 0.13,
+   "ci95": [
+    0.045,
+    0.321
+   ],
+   "serious": 3,
+   "serious_rate": 0.13,
+   "serious_ci95": [
+    0.045,
+    0.321
+   ],
+   "frame_weighted_defect_rate": 0.189
+  },
+  "publisher": {
+   "evaluable": 24,
+   "wrong": 1,
+   "missing": 12,
+   "defect_rate": 0.542,
+   "ci95": [
+    0.351,
+    0.721
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.138
+   ],
+   "frame_weighted_defect_rate": 0.411
+  },
+  "text_role": {
+   "evaluable": 40,
+   "wrong": 6,
+   "missing": 0,
+   "defect_rate": 0.15,
+   "ci95": [
+    0.071,
+    0.291
+   ],
+   "serious": 3,
+   "serious_rate": 0.075,
+   "serious_ci95": [
+    0.026,
+    0.199
+   ],
+   "frame_weighted_defect_rate": 0.184
+  },
+  "title": {
+   "evaluable": 39,
+   "wrong": 9,
+   "missing": 0,
+   "defect_rate": 0.231,
+   "ci95": [
+    0.126,
+    0.383
+   ],
+   "serious": 1,
+   "serious_rate": 0.026,
+   "serious_ci95": [
+    0.005,
+    0.132
+   ],
+   "frame_weighted_defect_rate": 0.277
+  },
+  "translator": {
+   "evaluable": 3,
+   "wrong": 0,
+   "missing": 3,
+   "defect_rate": 1,
+   "ci95": [
+    0.438,
+    1
+   ],
+   "serious": 0,
+   "serious_rate": 0,
+   "serious_ci95": [
+    0,
+    0.562
+   ],
+   "frame_weighted_defect_rate": 1
+  },
+  "work_date": {
+   "evaluable": 23,
+   "wrong": 2,
+   "missing": 0,
+   "defect_rate": 0.087,
+   "ci95": [
+    0.024,
+    0.268
+   ],
+   "serious": 1,
+   "serious_rate": 0.043,
+   "serious_ci95": [
+    0.008,
+    0.21
+   ],
+   "frame_weighted_defect_rate": 0.099
+  },
+  "work_id": {
+   "evaluable": 40,
+   "wrong": 13,
+   "missing": 1,
+   "defect_rate": 0.35,
+   "ci95": [
+    0.221,
+    0.505
+   ],
+   "serious": 7,
+   "serious_rate": 0.175,
+   "serious_ci95": [
+    0.087,
+    0.32
+   ],
+   "frame_weighted_defect_rate": 0.291
+  },
+  "year": {
+   "evaluable": 24,
+   "wrong": 3,
+   "missing": 2,
+   "defect_rate": 0.208,
+   "ci95": [
+    0.092,
+    0.405
+   ],
+   "serious": 4,
+   "serious_rate": 0.167,
+   "serious_ci95": [
+    0.067,
+    0.359
+   ],
+   "frame_weighted_defect_rate": 0.249
+  }
+ },
+ "classes": {
+  "work-split": {
+   "findings": 11,
+   "books": 11
+  },
+  "place-missing": {
+   "findings": 10,
+   "books": 10
+  },
+  "publisher-missing": {
+   "findings": 7,
+   "books": 7
+  },
+  "categories-missing": {
+   "findings": 5,
+   "books": 5
+  },
+  "author-id-missing": {
+   "findings": 4,
+   "books": 4
+  },
+  "editor-missing": {
+   "findings": 4,
+   "books": 4
+  },
+  "missing-categories": {
+   "findings": 4,
+   "books": 4
+  },
+  "categories-empty": {
+   "findings": 3,
+   "books": 3
+  },
+  "translator-missing": {
+   "findings": 3,
+   "books": 3
+  },
+  "original-language-missing": {
+   "findings": 3,
+   "books": 3
+  },
+  "language-wrong": {
+   "findings": 6,
+   "books": 3
+  },
+  "imprint-place-missing": {
+   "findings": 3,
+   "books": 3
+  },
+  "imprint-publisher-missing": {
+   "findings": 3,
+   "books": 3
+  },
+  "original-language-wrong": {
+   "findings": 3,
+   "books": 3
+  },
+  "work-overmerged": {
+   "findings": 2,
+   "books": 2
+  },
+  "translation-as-original": {
+   "findings": 2,
+   "books": 2
+  },
+  "categories-junk": {
+   "findings": 2,
+   "books": 2
+  },
+  "languages-incomplete": {
+   "findings": 2,
+   "books": 2
+  },
+  "title-truncated": {
+   "findings": 2,
+   "books": 2
+  },
+  "display-title-junk": {
+   "findings": 2,
+   "books": 2
+  },
+  "text-role-wrong": {
+   "findings": 2,
+   "books": 2
+  },
+  "categories-wrong": {
+   "findings": 2,
+   "books": 2
+  },
+  "edition-key-from-bad-fields": {
+   "findings": 2,
+   "books": 2
+  },
+  "author-id-wrong-person": {
+   "findings": 2,
+   "books": 2
+  },
+  "missing-place": {
+   "findings": 2,
+   "books": 2
+  },
+  "volume-not-indicated": {
+   "findings": 2,
+   "books": 1
+  },
+  "edition-key-junk-token": {
+   "findings": 1,
+   "books": 1
+  },
+  "category-wrong": {
+   "findings": 1,
+   "books": 1
+  },
+  "volume-not-identified": {
+   "findings": 2,
+   "books": 1
+  },
+  "title-junk-prefix": {
+   "findings": 2,
+   "books": 1
+  },
+  "display-title-truncated": {
+   "findings": 1,
+   "books": 1
+  },
+  "title-junk": {
+   "findings": 1,
+   "books": 1
+  },
+  "display-title-missing": {
+   "findings": 1,
+   "books": 1
+  },
+  "author-missing": {
+   "findings": 1,
+   "books": 1
+  },
+  "copy-date-as-composition": {
+   "findings": 1,
+   "books": 1
+  },
+  "language-missing": {
+   "findings": 2,
+   "books": 1
+  },
+  "work-id-missing": {
+   "findings": 1,
+   "books": 1
+  },
+  "praeses-as-author": {
+   "findings": 2,
+   "books": 1
+  },
+  "work-date-from-wrong-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "date-missing-shown": {
+   "findings": 2,
+   "books": 1
+  },
+  "holding-library-as-place": {
+   "findings": 1,
+   "books": 1
+  },
+  "languages-missing": {
+   "findings": 1,
+   "books": 1
+  },
+  "edition-key-missing-year": {
+   "findings": 1,
+   "books": 1
+  },
+  "title-cataloguer-gloss": {
+   "findings": 1,
+   "books": 1
+  },
+  "edition-key-gloss": {
+   "findings": 1,
+   "books": 1
+  },
+  "place-form": {
+   "findings": 1,
+   "books": 1
+  },
+  "owner-as-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "placeholder-date": {
+   "findings": 1,
+   "books": 1
+  },
+  "library-as-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "digitization-date-as-year": {
+   "findings": 1,
+   "books": 1
+  },
+  "date-in-title-wrong": {
+   "findings": 1,
+   "books": 1
+  },
+  "era-year-misconverted": {
+   "findings": 3,
+   "books": 1
+  },
+  "publisher-garbled": {
+   "findings": 1,
+   "books": 1
+  },
+  "date-in-key-wrong": {
+   "findings": 1,
+   "books": 1
+  },
+  "composer-as-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "acquisition-date-as-edition-date": {
+   "findings": 1,
+   "books": 1
+  },
+  "imprint-missing": {
+   "findings": 2,
+   "books": 1
+  },
+  "text-role-translation-as-original": {
+   "findings": 1,
+   "books": 1
+  },
+  "author-name-truncated": {
+   "findings": 1,
+   "books": 1
+  },
+  "commentator-missing": {
+   "findings": 1,
+   "books": 1
+  },
+  "printer-as-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "title-mistranscribed": {
+   "findings": 2,
+   "books": 1
+  },
+  "language-nonstandard-value": {
+   "findings": 1,
+   "books": 1
+  },
+  "missing-languages": {
+   "findings": 1,
+   "books": 1
+  },
+  "date-missing-as-unknown": {
+   "findings": 1,
+   "books": 1
+  },
+  "missing-year": {
+   "findings": 1,
+   "books": 1
+  },
+  "missing-publisher": {
+   "findings": 1,
+   "books": 1
+  },
+  "holding-institution-as-author": {
+   "findings": 1,
+   "books": 1
+  },
+  "missing-original-language": {
+   "findings": 1,
+   "books": 1
+  },
+  "period-translation-as-original": {
+   "findings": 1,
+   "books": 1
+  },
+  "missing-author-id": {
+   "findings": 1,
+   "books": 1
+  }
+ }
+}

@@ -18,7 +18,7 @@ import { CHECK_METHODS } from './check-methods';
 /** What is wrong, in the order a reader should hear it (most consequential first). */
 export const WARNING_KINDS = [
   'wrong_page', 'english_other_page', 'invented_transcription', 'model_notes', 'garble_translated', 'meaning_reversed',
-  'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english', 'number_misread', 'repeated_text',
+  'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english', 'number_misread', 'word_misread', 'transcription_unsettled', 'repeated_text',
   'serious_transcription', 'serious_english', 'serious_other',
 ] as const;
 export type WarningKind = (typeof WARNING_KINDS)[number];
@@ -38,6 +38,16 @@ const KIND_OF_CLASS: Record<string, WarningKind> = {
   O7: 'number_misread',
   O4: 'repeated_text',
 };
+/**
+ * Named classes some methods write instead of a taxonomy code. Without these they fell back to the stage, and a single
+ * misread word (ocr-convergence's `ocr-misread`, the commonest finding of all) reached readers as "a serious error".
+ */
+const KIND_OF_NAMED_CLASS: Record<string, WarningKind> = {
+  'ocr-misread': 'word_misread',
+  'ocr-unsettled': 'transcription_unsettled',
+  'ocr-wrong-leaf': 'wrong_page',
+  'other:translation-not-of-page': 'english_other_page',
+};
 const KIND_OF_STAGE = { ocr: 'serious_transcription', translation: 'serious_english', other: 'serious_other' } as const;
 
 /** The kinds on one page, deduplicated, most consequential first. */
@@ -46,7 +56,7 @@ export function kindsOfFinding(f: PageFinding): WarningKind[] {
   if (f.wrong_page) found.add('wrong_page');
   for (const e of f.errors) {
     const cls = e.class?.match(/^[OTI]\d+/)?.[0];
-    found.add((cls && KIND_OF_CLASS[cls]) || KIND_OF_STAGE[e.stage] || 'serious_other');
+    found.add((cls && KIND_OF_CLASS[cls]) || (e.class && KIND_OF_NAMED_CLASS[e.class]) || KIND_OF_STAGE[e.stage] || 'serious_other');
   }
   return WARNING_KINDS.filter((k) => found.has(k));
 }
@@ -77,6 +87,8 @@ export interface BookWarning extends WarningSource {
   pagesRead: number;
   /** Of those, pages with a serious finding. Null when the check kept no per-page record. */
   pagesSerious: number | null;
+  /** The kinds of serious error on those pages, commonest first, at most two. Empty when no per-page record. */
+  commonKinds: WarningKind[];
 }
 
 export interface QualityWarnings {
@@ -129,6 +141,13 @@ export function ownChecks(rows: BookCheck[]): BookCheck[] {
   });
 }
 
+/** Kinds counted once per page, commonest first (ties keep WARNING_KINDS order), at most two. */
+export function commonKinds(perPage: WarningKind[][]): WarningKind[] {
+  const count = new Map<WarningKind, number>();
+  for (const kinds of perPage) for (const k of new Set(kinds)) count.set(k, (count.get(k) ?? 0) + 1);
+  return WARNING_KINDS.filter((k) => count.has(k)).sort((a, b) => count.get(b)! - count.get(a)!).slice(0, 2);
+}
+
 export function deriveWarnings(rows: BookCheck[], stamps: Map<number, PageTextStamp>): QualityWarnings {
   const checks = ownChecks(rows).sort((a, b) => new Date(b.checked_at).getTime() - new Date(a.checked_at).getTime());
   const live = new Map(checks.map((r) => [r, livePages(r, stamps)]));
@@ -162,10 +181,13 @@ export function deriveWarnings(rows: BookCheck[], stamps: Map<number, PageTextSt
     const pages = live.get(r)!;
     if (!pages.length) continue;
     if (r.page_findings) {
-      const serious = pages.filter((n) => r.page_findings!.some((f) => f.page_number === n) && decided.get(n)).length;
-      if (serious > 0) { book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: serious }; break; }
+      const seriousPages = pages.filter((n) => r.page_findings!.some((f) => f.page_number === n) && decided.get(n));
+      if (seriousPages.length > 0) {
+        book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: seriousPages.length, commonKinds: commonKinds(seriousPages.map((n) => decided.get(n)!.kinds)) };
+        break;
+      }
     } else if (r.verdict === 'fix') {
-      book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: null };
+      book = { ...sourceOf(r), pagesRead: pages.length, pagesSerious: null, commonKinds: [] };
       break;
     }
   }

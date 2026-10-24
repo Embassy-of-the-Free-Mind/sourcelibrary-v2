@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
@@ -7,8 +8,10 @@ import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo convention (#4613)
+import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
@@ -89,10 +92,16 @@ export async function GET(
       exempt: !!tenantId || verifyCitationToken(id, searchParams.get('cite')),
     });
 
+    // English edition, English leaf: serve the transcription, never the stored
+    // English-to-English rewording (#7100).
+    [page] = await serveEnglishOriginalPages(db, [page]);
+
     // Reader-path provenance: translation carries the invisible imprimatur.
-    // Deterministic (no ref), so the cache header below stays valid.
-    return NextResponse.json(markPageForReader(page), {
-      headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
+    // Deterministic for readers; a flagged proxy pool also gets its extraction
+    // ref (#6950), and that response is never cached.
+    const ref = await poolRefFor(request);
+    return NextResponse.json(markPageForReader(page, undefined, { ref }), {
+      headers: { 'Cache-Control': ref ? 'private, no-store' : 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
     console.error('Error fetching page:', error);
@@ -297,6 +306,8 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
 
     // Delete the page
     await db.collection('pages').deleteOne(scope);
+    // Its vector must stop being served by semantic search (#6270).
+    await withdrawPageVectors([id], { reason: 'removed', writer: 'DELETE /api/pages/[id]' });
 
     // Renumber remaining pages for this book - use bulkWrite for speed
     const remainingPages = await db.collection('pages')

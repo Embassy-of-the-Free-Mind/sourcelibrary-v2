@@ -278,6 +278,7 @@ if (mode === 'redate') {
   const set = (x, id) => {
     const m = META.get(id); if (!m) return;
     if (x.basis !== m.work.basis || x.year !== m.work.year) moved.n = (moved.n || 0) + 1;
+    // imprint-write-ok: in-memory report row for the vocabulary page, not a books write
     x.year = m.work.year; x.basis = m.work.basis; x.edition_year = m.edition_year; x.work_confidence = m.work.confidence ?? null;
   };
   for (const c of Object.values(counts)) for (const b of c.books) set(b, b.id);

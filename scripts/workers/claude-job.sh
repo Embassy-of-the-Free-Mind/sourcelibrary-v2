@@ -85,12 +85,18 @@ HEADLESS RULES (prepended by claude-job.sh; they override anything below):
 - Long work: run it in the foreground (Bash timeout up to 600000 ms), or detach it with nohup writing to a
   file and then wait in the FOREGROUND with an until-loop on that file (each call <= 10 min, repeat the call).
 $HOST_RULES
+- SOURCE LIBRARY API: send \`-H "Authorization: Bearer \$(cat /root/.sl-internal-key)"\` on every sourcelibrary.org/api call.
+  It is an internal full-tier key (no daily page budget, 300 req/min); anonymous calls stop at 500 pages/day.
+  Never print, commit or post the key. Bulk reads (thousands of pages) go to Mongo directly, not the API.
 - DISK: write every large or bulky output (reports, jsonl, images, model files, downloads) under
   \$JOB_SCRATCH ($DATA/$1), never in /root or the repo checkout. \$TMPDIR points there too. Gzip big reports.
   The root disk is small and shared; when it fills, every job on the box dies without a word (#6223).
 - Vercel previews are opt-in (#5976, #6000): only main and preview/** branches deploy. If a human must look at
   a page, push ONCE at the end: git push origin HEAD:preview/<job-name>, and post that preview URL. Otherwise check
   locally (route harness, next dev --webpack). Never push preview/ on every commit; it holds the one build slot.
+- COMMITS: always \`git commit -s\`, which signs as this checkout's git identity. Never type a Signed-off-by
+  line yourself: a hand-typed trailer (e.g. the box's Claude login, team@) does not match the commit author,
+  fails DCO, and a tier:auto PR then never merges (#6960, #6715 sat for days).
 - Before you write the done file, \`git status --porcelain\` in your worktree must be empty: commit and push what
   is worth keeping, move scratch to \$JOB_SCRATCH, delete the rest. Anything left uncommitted or unpushed pages
   Derek at high priority as work at risk (#6358).
@@ -406,6 +412,23 @@ Your PR $url has failing checks: $bad. A job owns its PR until it is green. Read
   touch "$JD/$name.done"
 }
 
+# Keep the job's unwritten reads (#7075): the backstop for a reader that ran before it kept its own reads, or whose
+# R2 write failed. Copies every <page_id>.txt + .meta.json read in $DATA/<name> to R2 candidate-reads/ (private bucket),
+# skipping what a page or page_revisions already holds; unknown shapes are only counted. Best effort: never blocks DONE.
+# Runs the script from the main checkout (on main), else the job's worktree, whichever has it.
+keep_reads() {
+  local name="$1" dir="$DATA/$1" script="" out
+  [ -d "$dir" ] || return 0
+  for c in "$SL" "$(wt_dir "$name")"; do
+    [ -f "$c/scripts/maintenance/archive-candidate-reads.mjs" ] && { script="$c/scripts/maintenance/archive-candidate-reads.mjs"; break; }
+  done
+  [ -n "$script" ] && [ -s "$SL/.env.production.local" ] || return 0
+  out=$(timeout 1800 node --env-file="$SL/.env.production.local" "$script" --roots="$dir" --apply \
+    --checkpoint="$dir/archive-candidate-reads.checkpoint.jsonl" 2>/dev/null | grep -E '^[0-9]+ meta files|^apply ' | tr '\n' ' ')
+  echo "[claude-job] kept reads: ${out:-none or failed} $(date -u +%FT%TZ)" >> "$LOGD/$name.log"
+  return 0
+}
+
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
@@ -455,6 +478,7 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
   done
   if [ -f "$JD/$name.done" ]; then
     echo "[claude-job] DONE $(date -u +%FT%TZ)" >> "$log"
+    keep_reads "$name"
     pr_fix_once "$name"
     land=$(landing_check "$name"); echo "[claude-job] landing: $land" >> "$log"
     # One line per finished job, for the morning digest: ntfy.sh keeps only ~12 h of the topic.

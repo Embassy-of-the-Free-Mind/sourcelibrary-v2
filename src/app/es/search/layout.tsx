@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: {
     canonical: '/es/search',
-    languages: { en: '/search', es: '/es/search', 'x-default': '/search' },
+    languages: { en: '/search', es: '/es/search', la: '/la/search', zh: '/zh/search', 'x-default': '/search' },
   },
   // Both blocks, always. Declaring only `openGraph` leaves the root layout's
   // ENGLISH `twitter` block in place, which is how /es/collections shipped an

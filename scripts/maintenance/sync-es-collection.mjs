@@ -100,12 +100,12 @@ if (dryRun) { console.log('[dry-run] nothing written'); await client.close(); pr
 
 const toTag = members.filter((b) => !(b.collections || []).includes(SLUG)).map((b) => b.id);
 if (toTag.length) {
-  const r = await books.updateMany({ id: { $in: toTag } }, { $addToSet: { collections: SLUG } });
+  const r = await books.updateMany({ id: { $in: toTag } }, { $addToSet: { collections: SLUG }, $currentDate: { updated_at: true } });
   console.log(`tagged ${r.modifiedCount}/${toTag.length}`);
   for (const id of toTag) await recordSweepAction(db, { sweep: 'sync-es-collection', book_id: id, action: 'tagged-en-espanol' });
 }
 if (stale.length) {
-  const r = await books.updateMany({ id: { $in: stale.map((b) => b.id) } }, { $pull: { collections: SLUG } });
+  const r = await books.updateMany({ id: { $in: stale.map((b) => b.id) } }, { $pull: { collections: SLUG }, $currentDate: { updated_at: true } });
   console.log(`untagged ${r.modifiedCount}/${stale.length}`);
   for (const b of stale) await recordSweepAction(db, { sweep: 'sync-es-collection', book_id: b.id, action: 'untagged-en-espanol' });
 }

@@ -10,7 +10,7 @@ shell (python, to crop the image). In plan mode headless `agy` auto-denies that 
 empty reply (the 470/867 "nudged" reads of #6293). Given a hook that denies the call WITH A REASON, the model gets the
 reason back as the tool result and goes on in the same turn to write the transcription.
 
-Rule: allow `view_file` on a path inside the call's own workspace (the one-image directory the runner made);
+Rule: allow `view_file` / `read_file` (agy ≥ 1.4.6) on a path inside the call's own workspace (the one-image directory the runner made);
 deny every other tool call, and say why. It never approves a command, a write or a network call (#6345). An
 install writes <workspace>/.agents/hooks.json pointing here (install_gate in scripts/eval/run-cli-arm.py).
 
@@ -37,8 +37,11 @@ REASONS = {
 def decide(call, root, task='ocr'):
     name = (call or {}).get('name', '')
     args = (call or {}).get('args') or {}
-    if name == 'view_file' and root:
-        p = os.path.realpath(str(args.get('AbsolutePath') or ''))
+    # agy 1.4.6 (self-updated 2026-10-23 07:16Z) opens the image with `read_file {Path}`, not `view_file`. Denied, the
+    # model never saw the page and wrote an invented one that every chatter guard passed (#4763, #5924). Same rule:
+    # a path inside the workspace, read only.
+    if name in ('view_file', 'read_file') and root:
+        p = os.path.realpath(str(args.get('AbsolutePath') or args.get('Path') or ''))
         if p.startswith(os.path.realpath(root) + os.sep):
             return {'decision': 'allow'}
     return {'decision': 'deny', 'reason': REASONS.get(task, REASON)}

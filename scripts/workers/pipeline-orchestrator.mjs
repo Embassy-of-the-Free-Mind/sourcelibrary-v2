@@ -29,13 +29,13 @@ import {
 } from '../lib/image-extraction-request.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
-import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE, isApiOcrModel, assertApiOcrModel, CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
 import { LONG_S_GLYPH_VARIANT, withLongSLine, longSRetryApplies } from '../lib/ocr-long-s-retry.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -56,7 +56,7 @@ import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
-import { holdViolation } from '../lib/pipeline-hold.mjs';
+import { holdViolation, holdBook } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
@@ -1479,6 +1479,69 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
+/**
+ * The channel rule (#7075): only gemini-3.1-flash-lite runs on the paid API. A book the router
+ * sends to any other Gemini model is queued for the agy CLI lane instead, by the pipeline hold
+ * CLI_FLASH_OCR_HOLD (scripts/lib/ocr-routing.mjs), and waits there; it never falls back to the
+ * API. A book with no unread page is left alone (there is nothing for the lane to read).
+ * Under --dry-run it only says what it would do.
+ */
+async function routeBookToCliOcrLane(db, book, model) {
+  const label = (book.title || '').substring(0, 40);
+  const unread = await db.collection('pages').countDocuments({
+    book_id: book.id,
+    page_number: { $gt: 0 },
+    'ocr.recitation_blocked': { $ne: true },
+    $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
+  });
+  if (unread === 0) return { outcome: 'nothing_unread' };
+  if (DRY_RUN) {
+    console.log(`    Would queue for the CLI lane (${model}, #7075): ${label} — ${unread} unread pages`);
+    return { outcome: 'dry_run' };
+  }
+  const r = await holdBook(db, book.id, {
+    ...CLI_FLASH_OCR_HOLD,
+    source: 'pipeline-orchestrator',
+    detail: { routed_model: model, unread_pages: unread, language: book.language ?? null },
+  });
+  console.log(`    CLI lane (${model}, #7075): ${label} — ${unread} unread pages, hold ${r.outcome}`);
+  return r;
+}
+
+/**
+ * The translation twin of routeBookToCliOcrLane (#7075). A book whose translation-routing-table row is
+ * `channel: "cli"` (Opus through `claude -p`, Gemini 3.8 Flash through `agy -p`) is held by CLI_TRANSLATE_HOLD and
+ * waits for scripts/batch/cli-translate-lane.mjs; it is never dispatched to the chained or realtime API lanes.
+ * Only UNTRANSLATED pages are the lane's: retranslating a page whose stored English predates its OCR is a separate
+ * decision (#7075), so a book with only such pages is not held, and is advanced as the no-pages case would be.
+ */
+async function routeBookToCliTranslateLane(db, book, lane) {
+  const label = (book.title || '').substring(0, 50);
+  const untranslated = await db.collection('pages').countDocuments({
+    book_id: book.id,
+    page_number: { $gt: 0 },
+    'ocr.data': { $exists: true, $nin: [null, ''] },
+    page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+    'translation.health_blocked': { $exists: false },
+    $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }],
+  });
+  if (untranslated === 0) {
+    console.log(`  CLI lane (${lane.engine}, #7075): only stale translations left, retranslation not decided — not held: ${label}`);
+    return { outcome: 'only_stale' };
+  }
+  if (DRY_RUN) {
+    console.log(`  Would hold for the CLI translation lane (${lane.engine}, row ${lane.row.id}, #7075): ${label} — ${untranslated} untranslated pages`);
+    return { outcome: 'dry_run' };
+  }
+  const r = await holdBook(db, book.id, {
+    ...CLI_TRANSLATE_HOLD,
+    source: 'pipeline-orchestrator',
+    detail: { routed_engine: lane.engine, row: lane.row.id, untranslated_pages: untranslated, language: book.language ?? null },
+  });
+  console.log(`  CLI translation lane (${lane.engine}, #7075): ${label} — ${untranslated} untranslated pages, hold ${r.outcome}`);
+  return r;
+}
+
 async function submitOcrDirectly(db, book, opts = {}) {
   // Same lease as the cross-book pooler (#5498): Phase 2 here and Phase 1.5's pool in the
   // `--phase 1.5` worker can select the same book at the same moment.
@@ -1547,6 +1610,13 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
 
   if (pages.length === 0) {
     return { submitted: 0, jobName: null, alreadyDone: true };
+  }
+
+  // #7075: a non-lite Gemini model never goes to the API. The book is queued for the CLI lane and
+  // waits there. (After the "nothing left" check, so a finished book still advances.)
+  if (!isApiOcrModel(ocrModel)) {
+    const routed = await routeBookToCliOcrLane(db, book, ocrModel);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, routedToCli: true, skipReason: `CLI lane (${ocrModel}): ${routed.outcome}` };
   }
 
   // Page-level guard (#5498). If it refuses EVERY page, that is "already bought", not "done":
@@ -1721,7 +1791,7 @@ Output structure:
         }
 
         try {
-          batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
+          batchJob = await createBatchJobFromFile(assertApiOcrModel(ocrModel, 'pipeline-orchestrator OCR'), fileResult.name, displayName, uploadKeyIndex);
           recordSubmission(uki);
           try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
@@ -1764,7 +1834,7 @@ Output structure:
         },
         metadata: { key: item.pageId },
       }));
-      batchJob = await createBatchJobInline(ocrModel, inlineRequests, displayName);
+      batchJob = await createBatchJobInline(assertApiOcrModel(ocrModel, 'pipeline-orchestrator OCR'), inlineRequests, displayName);
     }
 
     if (!firstJobName) firstJobName = batchJob.name;
@@ -1922,6 +1992,16 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
   if (interiorSample && wholeBooksOnly) throw new Error('submitCrossBookOcrBatches: interiorSample samples a book; wholeBooksOnly takes all of it');
   if (interiorSample && maxPagesPerBook) throw new Error('submitCrossBookOcrBatches: interiorSample and maxPagesPerBook select different pages; pass one');
   const ocrModel = model;
+  // #7075: a pool on a non-lite Gemini model is never submitted. Each book is queued for the CLI
+  // lane instead and handed back as considered, so a looping caller does not re-offer it.
+  if (!isApiOcrModel(ocrModel)) {
+    const heldForCli = new Set();
+    for (const book of books) {
+      const r = await routeBookToCliOcrLane(db, book, ocrModel);
+      if (r.outcome !== 'nothing_unread') heldForCli.add(book.id);
+    }
+    return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds: books.map((b) => b.id), routedToCli: true, heldForCli };
+  }
   const basePromptRef = await getOcrPromptFromDb(db);
   const basePrompt = basePromptRef.text;
 
@@ -2104,7 +2184,7 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
       break;
     }
     try {
-      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uki);
+      batchJob = await createBatchJobFromFile(assertApiOcrModel(ocrModel, 'pipeline-orchestrator OCR'), fileResult.name, displayName, uki);
       recordSubmission(uki);
       try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
       break;
@@ -4212,7 +4292,9 @@ Rules:
                 log.ocr_submitted++;
               }
               const pooled = new Set(r.bookIds);
-              for (const id of r.consideredBookIds) if (!pooled.has(id)) leftover.add(id);
+              // #7075: a pool on a CLI-lane model queued its books for the CLI lane; only the ones
+              // with nothing unread go on to the per-book path (which advances them).
+              for (const id of r.consideredBookIds) if (!pooled.has(id) && !r.heldForCli?.has(id)) leftover.add(id);
               const done = new Set(r.consideredBookIds);
               queue = queue.filter(b => !done.has(b.id));
               if (r.submitted === 0) break;
@@ -4273,6 +4355,9 @@ Rules:
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
             console.log(`  Already OCR'd: ${label}`);
+          } else if (result.routedToCli) {
+            // #7075: queued for the agy CLI lane (held); it waits there, never on the API.
+            console.log(`  ${result.skipReason}: ${label}`);
           } else if (result.skippedDuplicate) {
             // Don't change state — active batch jobs exist, wait for them
             console.log(`  Skipped (active batch exists): ${label}`);
@@ -4994,6 +5079,19 @@ Rules:
             const trust = await ocrTrustGate(db, book, { lane: 'orchestrator-phase4', record: !DRY_RUN });
             if (!trust.ok) {
               console.log(`  Not dispatched (${trust.reason}): ${label}`);
+              continue;
+            }
+
+            // THE CHANNEL RULE for translation (#7075): a book the table routes to a subscription CLI reader is held
+            // for that lane here, before either API lane can take it.
+            const translateLane = translateLaneForBook(book);
+            if (translateLane.channel === 'cli') {
+              const held = await routeBookToCliTranslateLane(db, book, translateLane);
+              // A fresh book (ocr_complete) would otherwise be selected again every tick; a gap-fill book stays put.
+              if (held.outcome === 'only_stale' && !DRY_RUN && freshBooks.includes(book)) {
+                await setPipelineStatus(db, book.id, 'translate_complete');
+                log.translate_advanced++;
+              }
               continue;
             }
 

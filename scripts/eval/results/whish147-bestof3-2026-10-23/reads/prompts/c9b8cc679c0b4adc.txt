@@ -1,0 +1,54 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. soyamiduśyassuguṇa [illegible] paśyoyāndyagāṭāvattvekṣyatekṣya [illegible] khenidāyeṣya [illegible] valyāe
+2. trakāḥpuruṣasyālṭaidacāyamadoṣa [illegible] vivaṃpuruṣabahutvaṃprasāddhyamivekajñānopaye
+3. āsita [illegible] praya [illegible] ānā [illegible] ṃtantrālcamiparyyāyālniddhaṃsākṣitvamasyapuruṣasyakaivalyamāddhyasthyaṃ
+4. uddiṣṭamakarttṛbhāvaścatatthāekṣacakāraḥ puruṣabahutva [illegible] sahāyartthārādisamuccinotiviparyyāsa
+5. āditvaikaitraiguṇya ‖ viparyyāsādityanenate [illegible] saṃvedya ‖ tenatasya [illegible]
+6. ṣṭhāditva [illegible] ṃte ‖ na [illegible] kkaṃvisa [illegible] yānā [illegible] miti ‖ [illegible] ḥviprakṛterttai
+7. ṇṇiviprakṛtyāguṇa ‖ mamicevikṛtyādesaṃboddhya [illegible] āl ‖ traiguṇyādeḥviparyya
+8. saḥpuruṣasyasākṣi ‖ [illegible] ṃvipakṣi [illegible] tvaṃnikṣayatvaṃ ‖ [illegible] sāyā [illegible] tvaṃ
+9. asyapamithyātattvece ‖ tanatvenā [illegible] tānecasākṣitva [illegible] ‖ [illegible] cetanai [illegible] āṭṭu
+10. patinārecatanaḥsākṣici ‖ [illegible] darśitāvikṣayā [illegible] ṣiyāṃ [illegible] ddiṣṭāl [illegible] ‖ ḥsākṣiṇaḥ [illegible]
+11. pratyakṣa [illegible] ‖ [illegible] sākṣi [illegible] taḥ [illegible] pravṛtti [illegible] sāpi ‖ [illegible] bhikṣayāṃpuruṣāyāl
+12. śayatiitipuruṣassākṣi ‖ [illegible] taḥeva [illegible] ṭevattina [illegible] ‖ [illegible] kaivalyaṃ [illegible]
+13. [illegible] ta [illegible] kaivalyaṃ [illegible] ātimāta [illegible] traiguṇyāl [illegible]
+
+TRANSCRIPTION B
+1. so [illegible] traigu ‖ ṇyaviparyyayo [illegible] ‖ [illegible] nidrā [illegible]
+2. [illegible] kāḥpuruṣasyāl [illegible] ‖ [illegible] itievaṃpuruṣabahutvaṃprasā ‖ ddhya [illegible]
+3. [illegible] siddhaṃ [illegible] ‖ [illegible] tasmālcaviparyyāsālsiddhaṃ [illegible] sākṣitvamasyapuruṣa ‖ syakaivalyamāddhya [illegible] sthyaṃ
+4. draṣṭṛtvamakarttṛbhāvaścatasmā ‖ [illegible] puruṣasyabahutvenasādharmyānta ‖ rāṇisamuccinotiviparyyāsa
+5. [illegible] ‖ viparyyāsāditya [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. guṇaviparyyayāl [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+10. [illegible] ‖ [illegible] sākṣi [illegible] ‖ [illegible]
+11. [illegible] ‖ [illegible] sākṣi [illegible] ‖ [illegible]
+12. [illegible] ‖ [illegible] ‖ [illegible] puruṣa [illegible]
+13. [illegible] ‖ [illegible] kaivalyaṃ [illegible]
+14. [illegible] ‖ [illegible] kaivalyaṃ [illegible] ‖ [illegible]
+
+TRANSCRIPTION C
+1. soyamiduḥkha [illegible] ujña ‖ ntiparyyavasānaghāṭāvaścaiṣṭateṣṭabha [illegible] ‖ bhavanitāmaiṣṛnta [illegible] valyyā [illegible]
+2. dvakāḥpuruṣasyālṭaiṭeda ‖ dacāyamedāṣṭaītiṣivavivaḥpuruṣabāhyaḥprasā ‖ ddhyamivekajñānāpayai
+3. ditastātatryadharmmānāmaḥta ‖ tantālcantiparyyāsālniddhaḥsākṣitvamasyapuruṣasya ‖ kaivalyamāddhyasthyaṃ
+4. draṣṭṛtvamakarttṛbhāvaścanmā ‖ cciddhacakāraḥpuruṣabahutvānāsādharmmyānara ‖ rādisamuccaittiviparyyāsa
+5. [illegible] ddhitvaṃna [illegible] triguṇā ‖ ntiparyyāsādityanenairāktaṃsācedya ‖ tenatannirātmata
+6. sthāddhyatvaṃaṃna ‖ na [illegible] hisa [illegible] yāntaromemiśa ‖ ṣṭāḥviparyyastaka
+7. uddhiviparyyastimuga ‖ mandicevittvādimasasuboddhyatatventāl ‖ triguṇāmeḥviparyya
+8. sḥpuruṣasyāgrima ‖ guṇātvāṃaṃmicepli [illegible] triguṇāntimikṣayatvaṃ ‖ [illegible] sāyāraṇatvaṃa
+9. trasavāyamitvāgatatracela ‖ tannetvenānimikṣayatvācasākṣitvadraṣṭṛceda ‖ da [illegible] tecetanāvikrūdra
+10. vatinākecatanāḥsākṣica ‖ dritamikṣayeṭevitvaṃ [illegible] draṣṭṛtremikṣayaḥ ‖ ḥsākṣiṇaḥdāmilokima
+11. granthitataimipādami [illegible] ‖ [illegible] tvaṃsākṣiṇaika [illegible] taḥevābhūvṛttitasāmi ‖ mitamikṣayaḥpuruṣāyata
+12. [illegible] yamiguṇāpuruṣasākṣi ‖ tahapacadaddhyaviṭeḥdivamiṇṇātevraddhācā ‖ ccābhūtaikavalyaṃtutvamito
+13. ddato [illegible] tvāṭācāpādai ‖ daivalyaṃnaiṣṭastvāṭavidivikṣanādacānaketriguṇa ‖ guṇālnyavāmmavabhaimāhatahita
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

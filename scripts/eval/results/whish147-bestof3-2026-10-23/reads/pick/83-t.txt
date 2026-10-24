@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | None of the three gives readable Sanskrit or Malayalam, but A at least keeps a few believable syllables (e.g. "śrī", "jña", "śru") and, like B, puts the string holes only in the middle rows (5–8), which fits a real leaf; C shows holes in all twelve rows, which is less likely.

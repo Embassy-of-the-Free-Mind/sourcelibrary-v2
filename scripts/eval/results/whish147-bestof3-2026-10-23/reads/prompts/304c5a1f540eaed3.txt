@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. meghamitipravṛttasa [illegible] ‖ [illegible] ṇṇartaṃgatā [illegible] tamevācaneso [illegible] ṭagavantamehamitṛvāca
+2. [illegible] tomutināya [illegible] vi [illegible] ‖ [illegible] jjā [illegible] vipramacaryya [illegible] saൗdddha [illegible] satulya [illegible] bhavā
+3. [illegible] dhayamma [illegible] kkā ‖ prapra [illegible] jitaḥ [illegible] ṣṇu [illegible] ‖ [illegible] kkā [illegible] yāsakṣi
+4. prada [illegible] vāntama ‖ [illegible] labiddamānamil [illegible] ‖ ma [illegible] kṣatajña [illegible]
+5. pa [illegible] maḥ [illegible] me ‖ prayānaṃkṣetrajñaḥ [illegible] ‖ [illegible] tantya [illegible]
+6. vi [illegible] ṭavestti ‖ kṣa [illegible] kovipa [illegible] tthāya ‖ [illegible] sakāpayā [illegible]
+7. pradadenaൗ [illegible] ti ‖ [illegible] koviṃ [illegible] mmahinā [illegible] yāddha [illegible] [illegible] kkita [illegible]
+8. kki [illegible] ṃ [illegible] miti ‖ [illegible] ṣa [illegible] raṣāmṛācā [illegible] [illegible] jji [illegible]
+
+TRANSCRIPTION B
+1. meghamiti pravṛttisā [illegible] ndravṛttendrataṃ gabā [illegible] ātamaivākhalesā [illegible] dbhagavannanameghamityuvāca
+2. bhavatāmṛtannāyaṣevi [illegible] dakakṣyaṃ evibrahmaca [illegible] ryyacaryyakhendūsaൗdvakṣaḥ sa truprakṛtiṣaidravā
+3. sthayamū trakṣā ‖ praprajjitaḥ tai [illegible] mairggūśiṣyāyā ‖ sakāraṃpayāsaṃkūi
+4. pyadmavān tama ‖ bhavacaliddama [illegible] damārggil tajñānaska ‖ masi kṣetrajñakami
+5. palamaṇḍalamaḥ ‖ pradhānaṃ kṣetra [illegible] trajñaḥ puruṣaḥ ‖ pyate ñjānamida
+6. pitaibhauryyostri ‖ jñācakṣavipa [illegible] pākṣasādhitrāna ‖ ānasāṃ vayopraśca
+7. bhrabhadraukhatadenantipakṣobhiṣabinamvambhihābāhyayātṛte tantraṃ bhakṣitantrākhyaṃ
+8. ñākkikheṇḍaṃ jabhamibhitatattebhṛvapiścimabhirakṣānṛāccāātoḥ nanmacaṣṭhiratra
+
+TRANSCRIPTION C
+1. mehamitipunarvvarṣasa ‖ hasreṛṣistaṃgatvātathaivovācasopi ‖ bhagavanramehamityuvāca
+2. tatomunnonāyabhivi [illegible] ‖ [illegible] kṣāevibrahmacaryyacaryyabentrāsau [illegible] ‖ dṛkkaḥsatuprakṛti [illegible]
+3. [illegible] sthadharmmaṃtyaktvā ‖ pravrajitaḥśi [illegible] śiṣyo [illegible] ‖ [illegible] kāraṃpa [illegible] saṃ [illegible]
+4. pradattavāntama ‖ [illegible] va [illegible] dma [illegible] mil [illegible] ‖ manni [illegible] kṣetrajña [illegible]
+5. pañca [illegible] maḥ [illegible] ‖ pradhānaṃkṣetrajñaḥpuruṣa [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible] prā [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

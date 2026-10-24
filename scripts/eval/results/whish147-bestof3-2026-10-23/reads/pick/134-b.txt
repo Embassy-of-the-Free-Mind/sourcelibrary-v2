@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives recognizable Tarkasaṃgraha-Dīpikā vocabulary throughout, such as "abhihitārthasaṃsarga" (the connection of the meanings conveyed), "anuvyavasāyasākṣika" (attested by reflective cognition), "devadattādi … bhuṅkte" and "arthāpattyā", while A is mostly garbled and C is coherent only in scattered rows.

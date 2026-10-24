@@ -11,6 +11,7 @@ import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/
 import { chatRequestSchema, type ChatRequest } from '@/lib/embassy/chat-request';
 import { threadVisibility } from '@/lib/embassy/thread-visibility';
 import { toUserId } from '@/lib/user-id';
+import { noteOidcToken } from '@/lib/search/question-search';
 
 export const dynamic = 'force-dynamic';
 // 120s was killing real research turns mid-stream: the agentic loop routinely
@@ -91,6 +92,9 @@ async function anonymousGate(request: NextRequest): Promise<NextResponse | null>
 }
 
 export async function POST(request: NextRequest) {
+  // The find_passages tool's re-ranker authenticates with this deployment's
+  // OIDC token; Vercel puts it on every request (#6875).
+  noteOidcToken(request.headers.get('x-vercel-oidc-token'));
   // Everything before the model call used to run one step after another,
   // about 1.0 s before the reader saw a thread id (#6904). It now runs in
   // parallel wherever the steps are independent. Two orderings are kept on

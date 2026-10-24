@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. jñānaprāptiviṣṭaṃkuśaḥtṛjñitavyaṃkuśaḥ [illegible] dāprakṛtyupādānakālabhāgyākhyā [illegible] pākhya
+2. uditivimarśayāpana [illegible] makkaḻetrakālamātrādyupadeśātmaka [illegible] ṣṭānajñānaṃca [illegible]
+3. [illegible] yādāupacayeṣṭhati [illegible] tādānaṃkeśa [illegible] utbhratḥeṣapratyayasarggabhedāḥpañcāśa
+4. lpadārtthāḥnna ‖ kṣādayaścadaśabhedaśānanya [illegible] ‖ āmevasaṃjñākri
+5. [illegible] ḥkeṣāhā ‖ hāsaṃgrahisāraḥ [illegible] ntitapameka ‖ bamaṣārtthaprabaṃpa
+6. ārārtthamadrava ‖ makārtthadāvaḥ [illegible] ḥśayāgāviśe ‖ āgobahivaḥpraṃma [illegible]
+7. ḥsana [illegible] ppami ‖ ntyaḥbahu [illegible] pṛkkil [illegible] ‖ ekaikamartthaprabaṃpa
+8. darāṣṭu [illegible] kai ‖ prayānamadhikṛteṅṅā [illegible] ṃśebha ‖ bamaktrabaṃbahu
+9. jharairatimṛśara [illegible] kaḻunna [illegible] bahvāgaiviyo [illegible] raṃbahviveṭayamadhikṛtya
+10. nmahitikkulābhṛṣṇamadikṛtvapakṣa [illegible] tikṣatisaṃkhyā [illegible] badāddhikkamakatarkkṛ
+
+TRANSCRIPTION B
+1. jñānaprakṛtimūlyaṃkleśaḥtṛ ‖ ṣṇinalyaṃkleśaḥyadāprakṛtyapādānakā ‖ labhāgyā [illegible] mārakṣopākhya
+2. uddiṣṭakathāpanamāḻḻama ‖ kkauttrākāvamātrādupadeśātra ‖ ṭa [illegible] sthānaṃpadeśyattu
+3. tvayādāupadeśyaṣṭatti ‖ tvadānaṃkleśauttaratvaḥaiśvaryapratya ‖ tryavasthabhedāḥpañcobādha
+4. lpadātthābhena ‖ kliṣṭādayaścadaśatataśāntya ‖ āmevasaptyākki
+5. ddījñādaḥtehādā ‖ hasaṃgrahasāraḥśrāntibameka ‖ bamahātmyaṃpa
+6. darātthamautā ‖ makāntyadopaḥyogaigāvidye ‖ āmegābahavaḥpama
+7. sahattippūdi ‖ ntyaparamakkapakkānte ‖ ekāntāmatvātthaṃpa
+8. darāṣṭuhetumi ‖ pradhānamadhyatebhikettāl̤ekkaṃbhimā ‖ bamakṣittvathaṃbehu
+9. bakotivṛttakama ‖ hākuttāklitvābeśakoāgaigāvidyo ‖ āvebhatiṭeyamadhikkuttu
+10. sthitiyuṃcettukkuma ‖ mādikuttupakkutititikkutisaṃkhyādāva ‖ vaḍāddītikkakkakku
+
+TRANSCRIPTION C
+1. jñānaprāptirityukuśaḥtra ‖ bhitavyaṃkuśaḥyadāgrāprakṛtyapādānakāla ‖ labhaṃbhāgyā [illegible] māḥka [illegible] vāṅka
+2. udivimarśayāpyamāḻūma ‖ makkaḻetrākāvammātrāṭṭupamaṭaśāḻuka ‖ tukaṭṭinaṅṅānaṃpacayyunnu
+3. tvayādātrupamacaiṣṭatti ‖ tvādānāṃkakṣeśaujñālḥśraicakapratya ‖ trūprasarggaṭadāḥpacaiśa
+4. lpadātthānana ‖ kṣitvādayatvadaśatataśānasya ‖ āmevasaklatrākki
+5. drikṣvāḥtegāmā ‖ hāsaṃprihisārāḥnyūkṣitṛṃmaka ‖ bamagālmpabaṃpa
+6. āṟātmaitva ‖ makṛtdrāvaḥyogovime ‖ āgobahivaḥpaṃma
+7. santittipri ‖ ttyacamakkaskapṛkkinkkime ‖ hakkatvamalvatvaṃpa
+8. utrāḻḻukkaitti ‖ prayānamadhyikukkatvābhakkaṃḻttu ‖ bamakkitratvaṃbagra
+9. bamaṅkāttivṛttamāma ‖ kattvanikṣitāṃbaiyocaigāvimaiyo ‖ āmacaivikṣibhaibhayamadhikkatu
+10. ndhittimūlānyarkkama ‖ mādikkṛtyapakṣattippattisaṃkhyāda ‖ davarāditikkakkarkki
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

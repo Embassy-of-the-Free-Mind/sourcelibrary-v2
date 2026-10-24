@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most consistently as the Malayalam commentary on the gavaya example of upamāna (aitihya… pramāṇallama, pratyakṣa, gavayum ajñāna, upadeśa/ukti); C shares some of these readings but drifts into nonsense, and A gets aitihyam right and then falls apart in most rows.

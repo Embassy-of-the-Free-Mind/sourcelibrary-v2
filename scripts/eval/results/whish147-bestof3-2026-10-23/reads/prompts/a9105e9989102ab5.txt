@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. caññetaṭṭukkaḻevaprāṇkatiyamaṅṅaḥ kāraṇamityartthaḥ karaṇantrayodaśavidhamityatra pakṣe
+2. jñīndriyāṇi pañcakarmmendriyāṇi buddhyahaṃkāramanāṃsi ceti [illegible] trayodaśavidhaṃ kā
+3. raṇaṃ kāraṇamākkikke [illegible] lpeṭā pehkala mikkaḻ vilpa śaktesyā [illegible] kriyāyadevakṣyatāraṇami
+4. jñāhārddāhāraṇadhā ‖ raṇaprakāśakāramitikaḻkkāraṇama ‖ hāraṇādīnikā
+5. rākkiratṛkkaḻelli ‖ yājñāpāraṇaṃ kravṛtti ślailyāhāṃ ‖ kkārmanaṇṇaṃnniyāṇṭa
+6. ṃ ṣa jñīndriyāṇiva ‖ kāśamittikkalkkāryyaṃ dhyasrāhā ‖ ṇeṃ ruṣkitradā
+7. kāryyamitimanūkkāra ‖ ṇaipṛdaśavidhaṃ kkāryyaṃ karṛśabddha ‖ ḻkkṛparasparāḥ vakke
+8. pacantādānaviha ‖ kkaraṇoṇābaddhānandyāḥ pa ra baikkaḻ da ‖ śayāḥ dṛkkevividhāḥ
+9. nyūkṣāhatammātulakkaḻe nṟṟu raimpakke kṣūṭadāvakṣābhivṛāḥ syūlāṇṭukāśādayanyūbddaṣṭhenuma
+10. bhūtamūkakābhvivṛāssāḻḻa taitvātal kāryyaṃ bhejñīndriyāṇāṃ prakrāntāṃ vāśābhināmṛktāda
+11. āntābhikaḻ kārttuntāḻ kāṃṣṭhaṃ ketṛvampāhāraṃblū nyūpāṇibhyāmādādevanyāddabhayamāṇavanda
+
+TRANSCRIPTION B
+1. candeṟṟukkaḻevaprārkka ‖ tavidhamantaḥkaraṇamittyartthaḥkaraṇatrayo ‖ daśavidhamittyartthaḥpañcabu
+2. jñindriyāṇipañcakārmma ‖ indriyāṇi [illegible] haṃkāramanāṃsicatrīṇi ‖ etatrayodaśavidhaṃkā
+3. raṇaṃkāraṇamitikkennula ‖ lyuṭā [illegible] kaḻ [illegible] ḻratrakonyuṇāki ‖ kriyāyā [illegible] raṇami
+4. jñāharaṇadhāraṇayā ‖ [illegible] prakāśakāramitikaḻkkonnema ‖ hāraṇādinikku
+5. dākkitunnukaḻeḻḻi ‖ yājñāsāraṇaṃ [illegible] vṛttibuddhyahāṃ ‖ kāramanāṃsi [illegible]
+6. ṃṣa [illegible] driyāṇipra ‖ kāśamitikke [illegible] talkāryyaṃ [illegible] hā ‖ raṇaṃ [illegible] karmmendriyāha
+7. kāryyamititantrakāra ‖ ṇasyadaśavidhaṃkāryyaṃ [illegible] ‖ rpparamarśānāyaḥva [illegible]
+8. pacanādānaviha ‖ [illegible] rddānandāḥpa [illegible] ‖ śayāḥ [illegible] vividhāḥ
+9. ntukkivantamātralakka ‖ [illegible] kṣū [illegible] padmāddhvāḥ [illegible] lāra ‖ dikāśādaya [illegible] kṣema
+10. duḥkhātmakakā [illegible] lla ‖ [illegible] talkāryyaṃ [illegible] indriyāṇāṃpraka ‖ kāśyaṃcāśālināṃ [illegible] da
+11. dantādikaḻkāryyattāka ‖ ḻ [illegible] kunnava [illegible] śabdasparśādi [illegible] bhyāmā ‖ dikaḻvannubhedamāṇavaḻ
+
+TRANSCRIPTION C
+1. ca [illegible] kkaḻe prārkka ‖ tividhama [illegible] ḥ karaṇamityāhaḥ karaṇantrayo ‖ daśavidhamitya [illegible] ṣakke
+2. [illegible] ndriyāṇi pañcakarmme ‖ ndriyāṇi buddhyahaṃkāramanasāṃ [illegible] catri ‖ ṇi etatrayodaśavidhaṃkā
+3. ṇaṃkāra [illegible] kkikkatṛ ‖ la [illegible] ṭā [illegible] mikkarmma [illegible] ta [illegible] kkasva [illegible] ‖ kriyāyadevakṣya [illegible] raṇami
+4. [illegible] hāra [illegible] hāraṇayā ‖ naprakāśakāramitikarkkāraṇama ‖ āhāraṇādīnikkare
+5. [illegible] kkimaratrakkaḻe [illegible] ‖ yā [illegible] dāraṇaṃkravṛtti [illegible] hāṃ ‖ karmmendriyāṇāṃ
+6. ṃ bu [illegible] ndriyāṇi [illegible] ‖ kāśamitikalkkāryyaṃ [illegible] hā ‖ [illegible] hyuktitrāha
+7. kāryyamiti [illegible] kkāra ‖ ṇa [illegible] daśavidhaṃkāryyaṃ [illegible] ‖ [illegible] prati [illegible] bhāgaṃ [illegible]
+8. vacanādānaviha ‖ raṇo [illegible] rggānandāḥpañcaka [illegible] ‖ śayāḥ [illegible] ṣṣividhāḥ
+9. nnukkyārtthamātṛlakka ‖ [illegible] maibākkeṣpaṭāva [illegible] āddhyāḥ [illegible] lā ‖ [illegible] kāśādaya [illegible] ṭṭema
+10. [illegible] makkāṣya [illegible] śyārgga ‖ [illegible] talkkāryyaṃ [illegible] ndriyāṇāṃpraka ‖ [illegible] truṃvāśādinā [illegible] kkāda
+11. āta [illegible] bhikaḻkkārtthamāḻ ‖ kkaḥ [illegible] kriva [illegible] śśeṣya [illegible] ṇṇibhrāmā ‖ kedavanyādraibhayamāṇḍavādra
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

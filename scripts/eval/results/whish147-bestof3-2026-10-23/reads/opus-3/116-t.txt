@@ -1,0 +1,9 @@
+ROW 1 | വഗ്ഗബാധൈസ്യ്വപ്രകിതിരിസംരുവെപ്നമിത്രഗസാനംഗികാരനാൎത്ഥിതൈബാള്ളനമിനള്ളഴ്ടഭൈരമൃാ
+ROW 2 | ജ്ഞതികിചെന്നാത്ത്വാഭയവ്യാതിലെങ്കാഭ്യാംപ്രഴുഷിഗഢഘടെസ്യ്വകത്രടാന്നാംശികാരനൽ।ഹർതഷൊ
+ROW 3 | മികരലസ്യസർവ്വാധാരതൈഷൊ.സഷ്യ്വഷാരലക്ഷ്മിനാന്നാംഖാലെ ‖ ത്തമിവ്യാജ്ഞിരികിചെ
+ROW 4 | ന്ന.സ.ഷ്ടായാരഭ്യ. ‖ പ്രയൊജനസംചെഘഭിന്നാസംബെ ‖ ചെഘാനലക്ഷണാവബോധ്യ
+ROW 5 | ഷ്ടിമതത്വാൎത്ഥപൃഷ്ട ‖ ഷി.വിടജ്ഞതന്നൊദിവിമെയത്തി ‖ ദ്യ്രത്വാംധ്യാംസാപ്രകൃതൈ
+ROW 6 | ഷാഗിതൈംധ്യാന ‖ പ്രത്തിയൊഗിതമതെത്വത്ത്വാപ്രകാ ‖ രാന്തെനെണഷിഭജികെ
+ROW 7 | ഢനരിതിഞ്ജഭൈനരൈ‖ംരഗാരഥതന്നംഗമിനാഷൂടവക്ഷിന്നാഷ്ടഗൈഷ‖ടാഗൊജിായതൈതൽ
+ROW 8 | ടൊ.ഗ്ഗൈക്ഷതനംപ്യൈ‖ഷ്ട്ഃബെസാക്ഷിാൽകാരെനാടൊ.ഗഃഗൈശ്ശ‖ളൂതകെണ്ടാൽദ്രതെഷിശൈഷ
+NOTE | Confidence is low throughout. The leaf has 8 rows. Rows 4–6 stop at both holes. I couldn't tell for sure whether rows 1–3 and 7–8 actually continue past the holes, so ‖ only marks where the pieces meet in those rows. Many conjuncts and vowel signs, and the joins in the overlaps, are uncertain guesses at the stroke shapes, so this is a rough draft for checking against the leaf, not a reliable transcription.

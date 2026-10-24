@@ -1,0 +1,53 @@
+name: Preview on demand
+
+# Label a PR `preview` to get a Vercel preview of it (#7008). Previews are opt-in (#5976):
+# vercel.json `git.deploymentEnabled` builds only `release` (production) and `preview/**`.
+# This pushes the PR's head to `preview/pr-<n>`, again on every new commit while the label
+# is on, and deletes that branch when the PR closes or the label comes off. The preview's
+# URL appears in the Vercel check on the PR, about 6 minutes after the push.
+#
+# From a local branch without a PR: `npm run preview`.
+
+on:
+  pull_request:
+    types: [labeled, unlabeled, synchronize, closed]
+
+permissions:
+  contents: write       # push and delete preview/pr-<n>
+  pull-requests: write  # one comment when the label goes on
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    # Same-repo PRs only: a fork's GITHUB_TOKEN cannot push here.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: preview/pr-${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'preview') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Push the PR head to its preview branch
+        if: >-
+          github.event.action != 'closed' && env.HAS_LABEL == 'true' &&
+          (github.event.action != 'labeled' || github.event.label.name == 'preview')
+        run: git push --force origin "$HEAD_SHA:refs/heads/$BRANCH"
+
+      - name: Say where the link will appear
+        if: github.event.action == 'labeled' && github.event.label.name == 'preview'
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body \
+            "Preview building from \`$BRANCH\` at ${HEAD_SHA:0:7}. The link appears in the Vercel check on this PR in about 6 minutes, and the preview rebuilds on each new commit while the \`preview\` label stays on."
+
+      - name: Remove the preview branch
+        if: github.event.action == 'closed' || (github.event.action == 'unlabeled' && github.event.label.name == 'preview')
+        run: git push origin --delete "$BRANCH" || echo "no $BRANCH to delete"

@@ -1,0 +1,24 @@
+**Leaf readings (left half only; each line continues onto the right half of the leaf, which is not in the image). Lines 3 to 8 are split by the string hole into a short left block and a right block.**
+
+- **Line 1, SK_11 (opening):** `triguṇam aviveki viṣayas sāmānyam ace-`. The leaf clearly writes വിഷയ (viṣaya), with doubled s before sāmānyam. The edition's "munir" is not on the leaf.
+- **Line 2, SK_11 (end):** `-(a)n tathā pradhānan tadviparītas tathā ca pumān`. Final anusvāras appear as homorganic n (ന്ത) before t. Several glyphs around the hole are rubbed; I cannot confirm tadviparītas letter by letter. The edition's "tad-niparītas" is a misprint; what I can see is consistent with tadvi-, but I mark it uncertain.
+- **Line 3, SK_12:** left `pravṛttiniyamā`, right `-rthāḥ anyonyā-`. Matches the edition's text. The start of SK_12 is on the lost right half of line 2.
+- **Line 4, SK_12 end / SK_13 start:** left `guṇāḥ [mark] sattvaṃ`, right `laghu prakāśakam i-`. The mark after guṇāḥ is probably a verse numeral but I cannot read it. The leaf has sattvaṃ, which the edition omits at the head of SK_13. I treat that as an edition omission, not a leaf variant, but list it for completeness.
+- **Line 5, SK_13:** left `guru varaṇaka-`, right `-m eva tama(ṃ/ḥ) pradīpa-`. I cannot tell whether the sign after tama is anusvāra or visarga.
+- **Line 6, SK_14:** left `avivekyādi`, right `siddhan traiguṇyā-`. I do not see a clear hi between -ādi and siddhan, but the glyphs at the hole edge are faint, so I will not assert an omission with confidence.
+- **Line 7, SK_14:** left `-raṇaguṇātmaka-`, right `-tvāt kāryasyāvya-`. Matches.
+- **Line 8, SK_15:** left `-nāṃ parimāṇā-`, right `-t samanvayāc chakti-`. Matches.
+- **Line 9, SK_15 end / SK_16 start:** `-gād avibhāgād vaiśvarūpasya [two unread glyphs, probably a numeral] kāraṇa-`. Matches where legible.
+- **Line 10, SK_16:** `-(mu)dayāc ca pariṇāmatas salilavat prati-`. Doubled s written for -taḥ sa-.
+
+The remaining text at the right margins of lines 2 to 10 is cut by the image edge and I have not read it.
+
+DIFFERENCES:
+SK_11 | munir | viṣayas | certain
+SK_11 | tad-niparītas | tadviparītas | uncertain
+SK_11 | vyaktaṃ tathā pradhānaṃ | (vyakta)n tathā pradhānan | uncertain
+SK_13 | (no word before laghu) | sattvaṃ | certain
+SK_13 | tamaṃ | tama(ṃ/ḥ), sign illegible | uncertain
+SK_14 | a-viveky-ādi hi | avivekyādi (hi not visible) | uncertain
+SK_14 | siddhaṃ | siddhan | certain
+SK_16 | pariṇāmataḥ | pariṇāmatas | certain

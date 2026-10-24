@@ -33,9 +33,9 @@
  *   node scripts/maintenance/hold-pipeline-books.mjs --from <leaf-drift joined.jsonl>          # CLASS C, counts
  *   node scripts/maintenance/hold-pipeline-books.mjs --from <joined.jsonl> --apply
  *   node scripts/maintenance/hold-pipeline-books.mjs --ids <file> --reason <kebab> --issue N --release "<sentence>" --apply
- *   node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ia-wrong-leaf-4790 [--book <id>] [--to ocr_complete] --apply
+ *   node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ia-wrong-leaf-4790 [--book <id> | --ids <file>] [--to ocr_complete] --apply
  *   node scripts/maintenance/hold-pipeline-books.mjs --reassert [--reason <kebab>] --apply     # CLOBBERED → held again
- * `--from` implies reason `ia-wrong-leaf-4790`; `--release-held` lifts every hold with that reason
+ * `--from` implies reason `ia-wrong-leaf-4790`; `--release-held` lifts every hold with that reason (or only the books in `--ids <file>`)
  * (or one book with --book) and restores the status each book was holding at, unless --to says
  * otherwise. Idempotent: a second run holds (or releases) 0 books.
  */
@@ -99,9 +99,11 @@ await withMongo(async (db) => {
     return;
   }
   if (RELEASE) {
-    const q = { 'pipeline_auto.hold.reason': hold.reason, ...(BOOK ? { id: BOOK } : {}) };
+    // --ids narrows a release to the listed books; without it every book held for the reason is released.
+    const only = IDS ? fs.readFileSync(IDS, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean) : null;
+    const q = { 'pipeline_auto.hold.reason': hold.reason, ...(BOOK ? { id: BOOK } : only ? { id: { $in: only } } : {}) };
     const held = await B.find(q, { projection: { id: 1, title: 1, pipeline_auto: 1 } }).toArray();
-    console.log(`${held.length} book(s) held for ${hold.reason}${BOOK ? ` (book ${BOOK})` : ''} (${APPLY ? 'APPLY' : 'dry run'})`);
+    console.log(`${held.length} book(s) held for ${hold.reason}${BOOK ? ` (book ${BOOK})` : only ? ` (of ${only.length} listed in ${IDS})` : ''} (${APPLY ? 'APPLY' : 'dry run'})`);
     const totals = { released: 0, to: {} };
     for (const b of held) {
       const r = await releaseBook(db, b.id, { to: TO, note: `released by hold-pipeline-books --release-held`, source: 'hold-pipeline-books' }, { dryRun: !APPLY });

@@ -140,7 +140,8 @@ export default async function PageLayout({ children, params, lang = 'en' }: Layo
   // projection ever drops `language`, every natively-Spanish book starts
   // redirecting away from its own /es reader.
   if (lang !== 'en' && (hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) ?? false) === false) {
-    redirect(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${pageId}`);
+    // `?lang=` keeps the header in the reader's language on the English page (#6938).
+    redirect(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${pageId}?lang=${lang}`);
   }
 
   return children;

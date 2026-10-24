@@ -949,7 +949,7 @@ export default function RithmomachiaPage() {
                 sub: 'German \u2022 540 pages',
               },
               {
-                href: '/book/de-institutione-arithmetica-libri-ii-de-institutione-musica-friedlein',
+                href: '/book/de-institutione-arithmetica-de-institutione-musica-friedlein',
                 title: 'Boethius, De Institutione Arithmetica',
                 sub: 'The mathematical foundation',
               },

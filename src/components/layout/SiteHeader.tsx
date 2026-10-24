@@ -8,11 +8,12 @@ import UserMenu from './UserMenu';
 import LanguageMenu, { HEADER_LANGUAGE_NAME } from './LanguageMenu';
 import SiteMenuPanel from './SiteMenuPanel';
 import { Search, X } from 'lucide-react';
-import { useLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
+import { useChromeLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { trackEvent } from '@/lib/track-event';
+import { adminMenuLinks } from '@/lib/admin-links';
 
 interface NavLink {
   key: keyof NavStrings;
@@ -103,7 +104,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const searchInputRef = useRef<HTMLInputElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-  const pathnameLocale = useLocale();
+  const pathnameLocale = useChromeLocale();
   // Prefer the homepage's explicit locale (server-known) over the pathname-
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
@@ -146,7 +147,16 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const onSupportClick = () => trackEvent('give_nav_click', { source: 'header', url: '/give' });
 
   // Close menus on route change
-  useEffect(() => { setMenuOpen(false); setSearching(false); }, [pathname]);
+  // Arriving on a new page closes the menu at once, no fade (the reader tapped
+  // a link and should simply see the page).
+  const [closeInstantly, setCloseInstantly] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setCloseInstantly(true);
+    setMenuOpen(false);
+    setSearching(false);
+  }
 
   const closeMenu = useCallback(() => {
     setMenuOpen(false);
@@ -177,11 +187,54 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     return () => { clearTimeout(id); document.removeEventListener('keydown', onKey); };
   }, [searching]);
 
-  // Over the homepage hero the bar is see-through until the menu opens.
-  const barBg = isHero && !menuOpen ? 'bg-transparent' : 'bg-dark';
+  // The bar scrolls away with the page, then slides back in from the top as
+  // soon as the reader scrolls up, and out again when they scroll down. Its
+  // slot at the top of the page keeps its height, so nothing jumps.
+  const slotRef = useRef<HTMLDivElement>(null);
+  const [pinned, setPinned] = useState(false);
+  const [shown, setShown] = useState(false);
+  const [glide, setGlide] = useState(false);
+  useEffect(() => {
+    // Travel in one direction before the bar reacts, so the small jiggles of
+    // reading don't make it flicker; a deliberate flick up still brings it back.
+    const THRESHOLD = 40;
+    let lastY = window.scrollY, frame = 0, isPinned = false, travelUp = 0, travelDown = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const slot = slotRef.current;
+        if (!slot) return;
+        const y = window.scrollY, dy = y - lastY;
+        lastY = y;
+        const top = slot.getBoundingClientRect().top + y;
+        const bottom = top + slot.offsetHeight;
+        if (y <= top) {
+          if (isPinned) { isPinned = false; setPinned(false); setShown(false); setGlide(false); }
+          return;
+        }
+        if (!isPinned) {
+          if (y <= bottom) return;
+          // Pin it out of sight first; the slide is enabled on the next frame
+          // so it doesn't animate in from its old place.
+          isPinned = true; travelUp = 0; travelDown = 0; setPinned(true); setShown(false);
+          requestAnimationFrame(() => setGlide(true));
+        }
+        if (dy < 0) { travelUp -= dy; travelDown = 0; if (travelUp >= THRESHOLD) setShown(true); }
+        else if (dy > 0) { travelDown += dy; travelUp = 0; if (travelDown >= THRESHOLD) setShown(false); }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
+  }, []);
+
+  // Over the homepage hero the bar is see-through until the menu opens or it
+  // returns on scroll-up.
+  const barBg = isHero && !menuOpen && !pinned ? 'bg-transparent' : 'bg-dark';
   const position = menuOpen
     ? 'fixed top-0 inset-x-0 z-50'
-    : `${isHero ? 'relative z-50' : 'relative z-30'} ${sticky ? 'sticky top-0' : ''}`;
+    : pinned
+      ? `fixed top-0 inset-x-0 z-40 ${glide ? 'transition-transform duration-300 ease-out' : ''} ${shown ? 'translate-y-0' : '-translate-y-full'}`
+      : `absolute top-0 inset-x-0 ${isHero ? 'z-50' : 'z-30'}`;
 
   // Phones: the homepage shows the full logo; every other page shows only the
   // rings until the menu opens, then the wordmark slides out beside them. Wide
@@ -198,12 +251,19 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     image: session.user?.image,
     initials: (session.user?.name?.split(' ').map((n) => n[0]).join('') || session.user?.email?.[0] || '?').toUpperCase().slice(0, 2),
   } : undefined;
+  // Admins get the avatar dropdown's admin links inside the phone menu too;
+  // without them the menu's Account button was their only way in, and /account
+  // has none. Readers keep the plain Account button.
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const adminLinks = role === 'admin' || role === 'superadmin'
+    ? adminMenuLinks({ role }).map((l) => ({ href: l.href, label: l.label }))
+    : undefined;
 
   return (
-    <>
+    <div ref={slotRef} className={`relative h-14 lg:h-16 ${isHero ? 'z-50' : `z-40 ${pinned ? 'bg-dark' : ''}`} ${sticky ? 'sticky top-0' : ''} ${className}`}>
       <header
         data-site-header=""
-        className={`${barBg} text-white ${position} ${className}`}
+        className={`${barBg} text-white ${position}`}
       >
         <div className="flex items-center gap-6 h-14 lg:h-16 pl-5 pr-2.5 md:pl-10 md:pr-8 lg:pr-10 max-w-[var(--container-wide)] mx-auto">
           <div className="flex items-center gap-3 shrink-0">
@@ -296,7 +356,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           <button
             ref={burgerRef}
             type="button"
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => { setCloseInstantly(false); setMenuOpen((o) => !o); }}
             aria-label={menuOpen ? CHROME_STRINGS[locale].close : t.menu}
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
@@ -330,9 +390,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           label: HEADER_LANGUAGE_NAME[l],
           current: l === locale,
         }))}
-        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar }}
+        account={{ href: accountHref, label: accountLabel, avatar: accountAvatar, adminLinks }}
         support={showSupport ? { href: '/give', label: t.support, onClick: onSupportClick } : null}
+        instant={closeInstantly}
       />
-    </>
+    </div>
   );
 }

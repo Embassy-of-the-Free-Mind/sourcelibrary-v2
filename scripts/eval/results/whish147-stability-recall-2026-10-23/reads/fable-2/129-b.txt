@@ -1,0 +1,9 @@
+ROW 1 | രണംതജ്ഞഇതെസ ‖ രജ്ഞഇജ്ഞരകൊച്ചാപാരഃൎത്തന്മനലൂ ‖ പസംഹരതിതന്മാദിതിഛിം
+ROW 2 | ഗംവിദജ്ഞരെതിംഗമ ‖ തിന്തന്വയവ്യകൂരതിണംലക്ഷയതിന ‖ ന്യമയെനതിഹെതുനാവ്യാ
+ROW 3 | യൊവ്യാപ്തിര ‖ ന്വയവ്യാപ്തിഃദഭാവതയൊവ്യാ ‖ പ്തിവ്യതിരെകവ്യാപ്തിഃ
+ROW 4 | കെവലാന്വയിെ ‖ ന്യാലക്ഷണമാവഃന്തന്യയയനരെ ‖ തികെവലാന്വയിസാ
+ROW 5 | ദ്യകംകെവലാ ‖ ന്വയിന്നത്യന്താഭാവാപ്രതി ‖ യൊഗത്വംകെവലാന്വ
+ROW 6 | തിരുമിശാരപ്രദാമി ‖ തയത്വംസവ്യവാദാഭിധയത്വംകവലാ ‖ സവ്യക്കാപ്തിതിര്യതിരെ
+ROW 7 | കാഭാവപ്രെതിരന്തി ‖ ണഭദാഹൎതിപ്രകൃതിനനഇതരര ‖ ൎരഭഃദഃപ്രതിയൊനവാണം
+ROW 8 | ദ്യയത്രപ്രനിദൃഷ്ട ‖ ത്രെവഉസെത്വബതിത്വമസെത്വന്താര ‖ സാധാരണഖംതിതിെത്ത
+NOTE | All 8 rows read across the four pieces (p01 left, p02+p03 middle, p04 right); rows 3–5 of the middle column start after the first hole. The leaf is legible but several conjuncts are uncertain: the knotted glyph I render ജ്ഞ (rows 1–2) may be ങ്ക/ക്ഷ, the loop-with-knot glyph is read പ്തി, the ച്യ-shaped glyph is read വ്യ, and the ഃ/ദ sequences in rows 3, 4, 7 may be a punctuation mark rather than visarga. A marginal foliation mark (ധ over ൬) stands in the left margin of p01 beside rows 4–5 and is not part of the text.

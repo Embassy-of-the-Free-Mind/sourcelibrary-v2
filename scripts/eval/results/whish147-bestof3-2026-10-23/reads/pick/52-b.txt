@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C clearly matches the Sāṅkhyakārikā 49 passage throughout ("sahabuddhivadhairaśakti…", "saptadaśavadhā buddheḥ viparyayāt tuṣṭisiddhīnām", "evamaśaktiraṣṭāviṃśatibhedā", "pratyayasarggaḥ"); A has real words in only some rows (e.g. "indriyāṇi cakṣuḥśro…", "pādapāyūpasthāna"), and B is mostly strings of syllables that only look like words.

@@ -21,6 +21,8 @@
  * without someone deliberately passing two different scopes.
  */
 
+import { OWNERSHIP_IMAGE_TYPES } from '@/lib/gallery-image-types';
+
 /** Images per book on an unscoped browse; >= this means "no cap". */
 export const NO_PER_BOOK_CAP = 999;
 export const DEFAULT_MAX_PER_BOOK = 3;
@@ -59,6 +61,10 @@ export function galleryFilter(scope: GalleryScope, opts: { tenantId?: string | n
     book_visible: true,
     extracted_url: { $ne: null },
     image_url: { $ne: null },
+    // An owner's bookplate is provenance, not an illustration. The prompt's rule
+    // (exlibris at quality <= 0.3) was not enforced at write time, so typed rows
+    // sit at 0.7+ — 157 on the public gallery, measured 2026-10-11 (#5200).
+    type: { $nin: [...OWNERSHIP_IMAGE_TYPES] },
   };
 
   if (scope.bookId) filter.book_id = scope.bookId;

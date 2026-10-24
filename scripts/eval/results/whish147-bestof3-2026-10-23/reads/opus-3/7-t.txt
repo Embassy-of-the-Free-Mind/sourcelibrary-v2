@@ -1,0 +1,11 @@
+ROW 1 | ശൈഷിൗണാംഡഡ്യ।ന്മാലക്ഷണം॰ പൃഷ്ഠ്രക്രൂഷന്യൈതൈനാ[illegible]ടവത്രന്താമാത്രാസ്വാമാത്രികഭ
+ROW 2 | ഗാപൃതിഃപ്രാണോദ്രാവാഖ്യവിശേഷേ।ഡ്ഡ്യദ്യുഗാവച്ഛിന്ന[illegible]ത്രദ്യക്ഷിഃക്ര[illegible]ശംഖക്യന്മിന്ദ്ര
+ROW 3 | ഷ്ഠാദ്ദൈഷ്ഠിതഷാദ്യ ‖ ദ്ദൈഷ്ഠ്രക്രൂവന്ദ്ര[illegible]കൎക്കൃഷ്ണാദ്യ ‖ ദ്യക്കിഃ।[illegible]ഡ്യാംഡ്യാപ്ര
+ROW 4 | ലൈഡൃഢനന്തപന ‖ ജ്ഞാത്ക്രക്ഷംരൈഹക്രക്കി॰ദൃഷ്ടി॰ ‖ ഷ്യത്ഷാൎ[illegible]വര
+ROW 5 | സാത്മ്യതൈതിാനാമി ‖ ക്കാത്മ്യരതൈ[illegible]ത്ക്കതതൂ।സ്ഥേ।ത ‖ ത്മ॰ത്രൈഭാദശ്ചി
+ROW 6 | യാരണദ്വാഹാരണ ‖ ഭതന്ത്രക്കാഗക്കരം॰കാവ്യ ‖ ഷതന്ദൃദശയായാ
+ROW 7 | [illegible]ാഡാക്ഷ്രുക്ക ‖ ദ്ദൃഷ്ട്വാസ്ഥഃഭസ്ഥഃക്രതൈതദ്ദൃ ‖ വിയം॰ദശാബാഹ്യ
+ROW 8 | ത്രയാന്മിക്ഷേയാദൃ॰ ‖ ം॰സസ്ാംഗ്രന്ഥകാലടതൊാഹ്രം॰ദ്ദൃതാഖല ‖ ത്രന്ദ്രം॰ക്ഷത്രം[illegible]സ്ഥ്വേ
+ROW 9 | ദ്ദിദ്ധിഷോഭിതേതൈവാം ‖ ॰ലക്ഷവിശേഷാഖിവിശേഷവിഷയാണാം ‖ [illegible]ൾടവ[illegible]ശക്തിവിഷല
+
+NOTE | I found 9 rows: rows 1–2 run the full width, rows 3–9 are split into three columns, and the pieces join cleanly at the overlaps. Confidence is low: these are my best guesses at the letter shapes, and many conjuncts and vowel signs are probably misread, especially in rows 1–3 and at the edges of the pieces. Treat this as a rough draft that needs checking against the leaf, not a reliable reading.

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A has recognizable Sāṅkhya terms that fit this passage (prakṛte, mahādādi, vyaktaṃ, kāraṇa, mahān hetumān, ekādaśendriyāṇi, siddhānta, along with Malayalam uḷḷa), while B is mostly repeated nonsense syllables (jña, bhadra) and C is too fragmentary to make sense.

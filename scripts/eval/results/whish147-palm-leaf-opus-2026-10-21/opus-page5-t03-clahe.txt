@@ -1,0 +1,29 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf, incised and inked. The crop shows half of the leaf. The string hole and cord interrupt lines 3–8, which leaves a short block of text on each side of the hole. The page uses Malayalam chillu letters (ൽ, ൻ), so the language looks like Malayalam rather than the Sanskrit given in the book's context, though the text may contain Sanskrit vocabulary (maṇipravāḷam). The letter forms are irregular and the right edge is cut off by the crop, so many readings are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Malayalam</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>ശ്രുഗണമവിജെന്തി</unclear> <unclear>വിഷ്ണയസ്സരാമാത്രമചെ</unclear>
+
+<unclear>എന്നതെട്ടിചവികണ്ട</unclear>. <unclear>രാചണ്ടചമാൻഷ്ട</unclear>
+
+<unclear>പ്രവൃത്തിനിയമാ</unclear> <unclear>ഷൊൽ[...]</unclear>
+
+<unclear>ഗുണാന്ത്യസഖം</unclear> <unclear>ലച്ചുപ്രകാശകമി</unclear>
+
+<unclear>ഗുണ. വങ്ങകൾ</unclear> <unclear>മവകമത്തപ്ര[...]</unclear>
+
+<margin><unclear>ാ</unclear></margin>
+<unclear>[illegible — 1 word]</unclear> <unclear>ന്ത്രി[...]</unclear>
+
+<unclear>[illegible — 1 word]</unclear> <unclear>കാൽ[...]</unclear>
+
+<unclear>ഏം. ചെ[...]</unclear> <unclear>സമവയാ[...]</unclear>
+
+<unclear>രാ[...]കെടുപ്ര[...]കാനൊ</unclear>
+
+<unclear>[illegible — 1 line]</unclear> <unclear>മവൽ</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, പ്രവൃത്തി, നിയമ, ഗുണ, പ്രകാശ</vocab>

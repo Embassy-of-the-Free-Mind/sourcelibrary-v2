@@ -127,7 +127,29 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   `actions/runs/<id>/jobs`, not just the run conclusion — a workflow can go green while skipping it
   (#4060, closed).
 
-## Did my merge actually ship?
+## Releases, not merges, deploy production (#7008)
+
+Since 2026-10-19 Vercel's production branch is `release`, not `main`. A merge builds nothing.
+`.github/workflows/release.yml` fast-forwards `release` to `main` at 07:00, 13:00 and 19:00 UTC,
+on `gh workflow run release.yml`, and on a hand merge whose subject line (the PR title) carries `[deploy-now]`
+(auto-merge.yml merges with GITHUB_TOKEN and cannot trigger it). It never forces: if `release` is not
+an ancestor of `main`, someone committed to `release` directly, and it fails and pages.
+- **Why.** Vercel's ISR cache is per deployment, so every production build starts it empty. In the
+  week to 2026-10-19, 131 merges touched build inputs (~19 builds a day), so a cached page lived about
+  an hour, ISR writes outran reads, and the refill renders were most of the $717 cycle (#4753).
+- **Seeing a change before the release:** label the PR `preview` (`preview-label.yml` pushes its head to
+  `preview/pr-<n>` and keeps it current) or run `npm run preview` from a branch. Every push to `release`
+  or `preview/**` builds: release.yml makes the diff decision (pushing only when build inputs changed,
+  or with `force`), because the ignore step has no previous deployment to diff against on a new branch.
+- **Alarm:** `vercel-prod-watch.mjs` fires `behind_main` past 13 h (the longest planned wait is
+  19:00 → 07:00), which also catches a scheduled run GitHub dropped (#5276).
+- **`npm run deploy:prod` is for emergencies.** It deploys main's disk directly and leaves `release`
+  behind, so the next release rebuilds the same commit once.
+- **Rollback:** Vercel → Settings → Environments → Production → branch `main`, and put `"main": true`
+  back in `vercel.json` `git.deploymentEnabled`. auto-merge.mjs keeps its build gap and interlock
+  until 2026-10-26 so that this is a complete rollback.
+
+## Did my release actually ship?
 
 - **Verify the COMMIT, not the alias status.** `npx vercel inspect sourcelibrary.org` answers "what
   is the alias serving *now*" — while a build runs it reports the PREVIOUS deployment as
@@ -135,7 +157,7 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   confident, wrong "the merged change doesn't work" (it was simply not deployed yet). The one-liner:
   `npx vercel ls sourcelibrary-v2 --meta githubCommitSha=$SHA` returns only YOUR commit's deployment
   and its `● Building`/`● Ready`/`● Error`. Builds run 5–6 min, so the still-building window is the
-  common case after a merge, not a rarity.
+  common case after a release, not a rarity.
   **When that filter returns nothing for a commit that plainly has a build** (2026-09-28: three
   squash merges in a row, all three came back empty while the first was `● Ready`), fall back to
   `npx vercel ls sourcelibrary-v2 | grep Production` for the newest deployments and
@@ -151,8 +173,8 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   queues.** The ignore step runs only when a deployment reaches the slot, so a skipped preview still
   waits behind production first (p90 27 min, 2026-10-06; 54 previews queued, held hand merges up an
   hour). Branch gating therefore lives in `vercel.json` `git.deploymentEnabled`
-  (`"**": false, "main": true, "preview/**": true`; any matching `true` wins), so other branches create
-  no deployment at all. To get a preview, push to `preview/<name>` once. Do NOT fix the queue by
+  (`"**": false, "release": true, "preview/**": true`; any matching `true` wins), so other branches create
+  no deployment at all. To get a preview, label the PR `preview` or `npm run preview`. Do NOT fix the queue by
   re-enabling concurrent builds: on Oct 1, the last day they were on, builds cost $20.48, against
   $0.06–0.48/day since (#5976, #5990).
 - **Pipeline/worker scripts (`scripts/**`) need no Vercel deploy** — the Hetzner box auto-pulls

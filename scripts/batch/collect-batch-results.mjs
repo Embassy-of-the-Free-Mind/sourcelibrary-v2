@@ -16,7 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
@@ -198,10 +198,17 @@ async function processOneJob(db, job) {
         }
       }
     } else {
-      for (let idx = 0; idx < responses.length; idx++) {
-        const result = responses[idx];
-        const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
-        if (!pageId) { failCount++; continue; }
+      // Match by metadata.key ONLY. Gemini Batch does not keep request order, so
+      // the old fallback to job.page_ids[idx] wrote one page's text onto another,
+      // across books (2026-03-24 contamination; batch-collector.mjs was fixed then,
+      // this cron'd collector was not, #4685). A key must also name a page this
+      // job submitted, and a repeated key keeps only its first response.
+      const submitted = new Set((job.page_ids || []).map(String));
+      const seenKeys = new Set();
+      for (const result of responses) {
+        const pageId = result.metadata?.key;
+        if (!pageId || !submitted.has(String(pageId)) || seenKeys.has(String(pageId))) { failCount++; continue; }
+        seenKeys.add(String(pageId));
         const candidate = result.response?.candidates?.[0];
         const text = candidateText(candidate);
         if (!text) { failCount++; continue; }
@@ -302,6 +309,12 @@ async function processOneJob(db, job) {
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
       } else {
+        // #4685 — an empty answer is never stored; same failure record as batch-collector.mjs.
+        if (isEmptyTranslation(text)) {
+          console.warn(`  EMPTY RESPONSE: not writing page ${pageId} — the answer is only whitespace`);
+          if (!DRY_RUN) await recordEmptyTranslation(db, { id: pageId });
+          failCount++; continue;
+        }
         // The page's text inside its continuity <meta> is text no reader sees (#5376) — same
         // refusal as batch-collector.mjs: write nothing, stamp the reason, keep the text.
         if (hidesPageInMeta(text)) {
@@ -348,7 +361,7 @@ async function processOneJob(db, job) {
                 })(),
                 updated_at: now,
               },
-              $unset: CLEAR_STALE_UNSET,
+              $unset: { ...CLEAR_STALE_UNSET, ...CLEAR_EMPTY_RESPONSE_UNSET }, // a real write ends the empty-response record (#4685)
             },
           }
         });

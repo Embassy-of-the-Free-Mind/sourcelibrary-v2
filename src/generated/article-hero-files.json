@@ -1,0 +1,1058 @@
+{
+ "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/e0d92482997a-1280.avif",
+    "w": 1140
+   },
+   {
+    "src": "/articles/heroes/e0d92482997a-1920.avif",
+    "w": 1140
+   }
+  ]
+ },
+ "/articles/preserved-by-enemies/florentine-omen-jaguar.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/830e54c2ee31-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/830e54c2ee31-1920.avif",
+    "w": 1600
+   }
+  ]
+ },
+ "/articles/reciting-not-reading/mask-rect-zoom.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/84930e6397e7-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/84930e6397e7-1920.avif",
+    "w": 1400
+   }
+  ]
+ },
+ "/articles/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/2d4bed006808-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/2d4bed006808-1920.avif",
+    "w": 1400
+   }
+  ]
+ },
+ "/articles/techniques-of-the-body/hero-khrul-khor.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/2445ad9bd960-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/2445ad9bd960-1920.avif",
+    "w": 1290
+   }
+  ]
+ },
+ "/memoriam/joost-ritman.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/dbaa27f78439-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/dbaa27f78439-1920.avif",
+    "w": 1441
+   }
+  ]
+ },
+ "/vision/hero.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/db6a28dcb75c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/db6a28dcb75c-1920.avif",
+    "w": 1500
+   }
+  ]
+ },
+ "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/2e74476ccdc3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/2e74476ccdc3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/3f7c1fdc4cdd-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/3f7c1fdc4cdd-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/76ec7c4598fc-1920.avif",
+    "w": 1000
+   }
+  ]
+ },
+ "https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8dece868365a-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/8dece868365a-1920.avif",
+    "w": 1000
+   }
+  ]
+ },
+ "https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/600,/0/default.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/b5e542265694-1280.avif",
+    "w": 600
+   },
+   {
+    "src": "/articles/heroes/b5e542265694-1920.avif",
+    "w": 600
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/cbcf3631f472-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/cbcf3631f472-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/a6c59c8323a8-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/a6c59c8323a8-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/dcded147d5e3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/dcded147d5e3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6909d654cf28baa1b4cb0269/4.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ef3b1df1ad8b-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ef3b1df1ad8b-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695201a9ab34727b1f041826/250.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/03c273f7ed18-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/03c273f7ed18-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f60e9be7e8c8-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f60e9be7e8c8-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f2b9b76c67d9-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f2b9b76c67d9-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/2a9f3a6e06ef-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/2a9f3a6e06ef-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d8e633d73e55-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d8e633d73e55-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6b27b3357019-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6b27b3357019-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/043373bf2223-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/043373bf2223-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ff38e14037cf-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ff38e14037cf-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/dabaf0604890-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/dabaf0604890-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/42be92fcd1c8-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/42be92fcd1c8-1920.avif",
+    "w": 1379
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695573e7f63a757109172b1d/293.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/246b1aada08c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/246b1aada08c-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/4234bd72af96-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/4234bd72af96-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/22810e640d46-1280.avif",
+    "w": 1124
+   },
+   {
+    "src": "/articles/heroes/22810e640d46-1920.avif",
+    "w": 1124
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/e9ee4d18b823-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/e9ee4d18b823-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6956eaf4f23ebf30578dba35/221.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/29a2c0984334-1280.avif",
+    "w": 1076
+   },
+   {
+    "src": "/articles/heroes/29a2c0984334-1920.avif",
+    "w": 1076
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/55ddedbcdc49-1920.avif",
+    "w": 1571
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/4e0bb172d7a6-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/4e0bb172d7a6-1920.avif",
+    "w": 1893
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/80e5f816b7c1-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/80e5f816b7c1-1920.avif",
+    "w": 1699
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f8c33d42f4dd-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f8c33d42f4dd-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6990631aef12272ffdc8f4aa/324.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/3998c8f666bd-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/3998c8f666bd-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/b3082711445f-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/b3082711445f-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/47964f54bd35-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/47964f54bd35-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ebb92efc7057-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ebb92efc7057-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ef9c5180284f-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ef9c5180284f-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/49981af87dc4-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/49981af87dc4-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d5c5f9e646f3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d5c5f9e646f3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/94faea1b12cb-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/94faea1b12cb-1920.avif",
+    "w": 1500
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69a99ce86c7545e2236e12de/100.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/88f93ab4ebcf-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/88f93ab4ebcf-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/9f7e2f8c57d4-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/9f7e2f8c57d4-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/580364b15a20-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/580364b15a20-1920.avif",
+    "w": 1529
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/31fa6959fcea-1280.avif",
+    "w": 1000
+   },
+   {
+    "src": "/articles/heroes/31fa6959fcea-1920.avif",
+    "w": 1000
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6ea68f18cdb6-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/03afa9eccf79-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/03afa9eccf79-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f3f087e3b91e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f3f087e3b91e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/4209801cd1a5-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/4209801cd1a5-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d277049fe794-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d277049fe794-1920.avif",
+    "w": 1336
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c68dadc34c8e-1280.avif",
+    "w": 1098
+   },
+   {
+    "src": "/articles/heroes/c68dadc34c8e-1920.avif",
+    "w": 1098
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/2dac23f6c815-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/2dac23f6c815-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-a-group-of-men-at-right-pushing-philosophers-toward-a-fire-with-burning-books-at.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/5bb516a12dd5-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/5bb516a12dd5-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/7860e991aaf3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/7860e991aaf3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/128b5df628aa-1280.avif",
+    "w": 1130
+   },
+   {
+    "src": "/articles/heroes/128b5df628aa-1920.avif",
+    "w": 1130
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/4fc65e41f57b-1280.avif",
+    "w": 1120
+   },
+   {
+    "src": "/articles/heroes/4fc65e41f57b-1920.avif",
+    "w": 1120
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/dd17887f115b-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/dd17887f115b-1920.avif",
+    "w": 1600
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/0812ed16e5fd-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/0812ed16e5fd-1920.avif",
+    "w": 1750
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f33be1ffbbe5-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f33be1ffbbe5-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/b262481ab30c-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/b262481ab30c-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/c65d7956ccf2-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-raphael-raphael-after-heraclitus.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/199ddd6c007e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/199ddd6c007e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/af3e092465d6-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/af3e092465d6-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/61e4bb7a1289-1280.avif",
+    "w": 600
+   },
+   {
+    "src": "/articles/heroes/61e4bb7a1289-1920.avif",
+    "w": 600
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/art-usa-national-gallery-of-art0.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ab265f1f61db-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ab265f1f61db-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/blog/siku-yuhai-6a3ceccb4701a906f10db3cb-118.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6f5d0e92aa30-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6f5d0e92aa30-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/met-unknown-cuneiform-tablet-late-babylonian-grammatical-text.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d880852d66bf-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/d880852d66bf-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/artwork/nga-israhel-van-meckenem-ornament-with-the-tree-of-jesse.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/41514e68aad1-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/41514e68aad1-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/183ebbbb5c90-1280.avif",
+    "w": 1117
+   },
+   {
+    "src": "/articles/heroes/183ebbbb5c90-1920.avif",
+    "w": 1117
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/9024eff5e619-1280.avif",
+    "w": 1196
+   },
+   {
+    "src": "/articles/heroes/9024eff5e619-1920.avif",
+    "w": 1196
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/42ee588851c3-1280.avif",
+    "w": 1189
+   },
+   {
+    "src": "/articles/heroes/42ee588851c3-1920.avif",
+    "w": 1189
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8e873b6bc75b-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8e873b6bc75b-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/089f8826e202-1280.avif",
+    "w": 892
+   },
+   {
+    "src": "/articles/heroes/089f8826e202-1920.avif",
+    "w": 892
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/308b2a49e881-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/308b2a49e881-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8fc93f3a827e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/9c6d8dbf13ce-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/9c6d8dbf13ce-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/5bf9fa5640b3-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/5bf9fa5640b3-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/3030ace1392e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/3030ace1392e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69b1863dc4be2cdd0edc573a/0011.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/9068bc031c60-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/9068bc031c60-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69b220ccf79d8af0eab7fd3a/0043.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/6bb6dde9675e-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/6bb6dde9675e-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/10c5f8f9163b-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/10c5f8f9163b-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/69c87ff96c6f3cc53c858fd5/0066.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/eeeeb832b43f-1280.avif",
+    "w": 1200
+   },
+   {
+    "src": "/articles/heroes/eeeeb832b43f-1920.avif",
+    "w": 1200
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/6a06d1f39a48d51399960d08/0020.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/14e51f281a75-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/14e51f281a75-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/pages/6a1d81af5afc14a085e6d7e6/spdxcs-0138.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/84020e3e020a-1280.avif",
+    "w": 1200
+   },
+   {
+    "src": "/articles/heroes/84020e3e020a-1920.avif",
+    "w": 1200
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/73cdfc673439-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/73cdfc673439-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/292e01114521-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/292e01114521-1920.avif",
+    "w": 1920
+   }
+  ]
+ }
+}

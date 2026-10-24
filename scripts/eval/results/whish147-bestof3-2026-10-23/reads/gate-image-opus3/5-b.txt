@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf reads ത്രിഗുണമവിവെകി‖വിഷയസ്സാമാന്യമചെതനംപ്രസവ‖ധൎമ്മി…, using the scribe's െ vowel sign. A matches this letter for letter. C has the same letters but places the hole after ധ. B changes the vowel to േ (വിവേകി, ചേതനം), which is not on the leaf.
+CHECK | row 6: The first letter is a blotted mark, followed by വിവെക്യാദെ‖സിദ്ധി(സ്)ത്രൈഗുണ്യാ… with a single സ at the start of the middle piece. A matches this. B guesses അ for the blot and writes സ്സിദ്ധി, but only one സ is on the leaf. C writes സിദ്ധം, which the strokes do not support.
+CHECK | row 10: The row starts മുദയാച്ചപരിണാ‖മതസ്സലിലവൽ… and ends …വിശെഷാൽ followed by a few cramped letters. A and B match the start. C adds a സ before മുദയാ that is not on the leaf.
+PICK | A
+RANK | A, B, C
+WHY | A matches the strokes in all three checked rows, while B changes the scribe's െ to േ and doubles a സ in row 6, and C adds letters in rows 6 and 10 that are not on the leaf.

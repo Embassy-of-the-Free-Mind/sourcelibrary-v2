@@ -1,0 +1,2257 @@
+{
+ "credits": {
+  "stuart": "Syllable drawings © David Stuart, Maya Hieroglyph Syllabary (2013), used with permission; vector tracing by Source Library. These are Classic carved forms (about AD 700), not the painted forms of the codices.",
+  "twkm": "Word-sign drawings by Christian Prager, Text Database and Dictionary of Classic Mayan (Bonn), CC BY 4.0.",
+  "morley": "Day signs from Sylvanus G. Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 17: the painted forms of the codices. Public domain. The meanings are traditional and approximate.",
+  "palenque": "Glyph blocks and readings from David Stuart, The Palenque Mythology: Inscriptions from the Cross Group at Palenque (2006), used with permission. Most drawings in the sourcebook are by Linda Schele."
+ },
+ "sheets": [
+  {
+   "slug": "syllable-chart",
+   "title": "The syllable chart",
+   "level": "Reference",
+   "intro": "Maya scribes wrote with about 80 syllable signs, each a consonant plus a vowel. Here is one clear form of each, drawn by David Stuart. Keep this chart beside you. An empty square means no sign is securely known yet.",
+   "layout": "chart",
+   "chart": [
+    {
+     "consonant": "",
+     "cells": [
+      {
+       "value": "a",
+       "src": "/learn/maya/glyphs/stuart/a-1.svg",
+       "w": 424,
+       "h": 424
+      },
+      {
+       "value": "e",
+       "src": "/learn/maya/glyphs/stuart/e-1.svg",
+       "w": 448,
+       "h": 428
+      },
+      {
+       "value": "i",
+       "src": "/learn/maya/glyphs/stuart/i-1.svg",
+       "w": 404,
+       "h": 464
+      },
+      {
+       "value": "o",
+       "src": "/learn/maya/glyphs/stuart/o-1.svg",
+       "w": 232,
+       "h": 500
+      },
+      {
+       "value": "u",
+       "src": "/learn/maya/glyphs/stuart/u-1.svg",
+       "w": 172,
+       "h": 456
+      }
+     ]
+    },
+    {
+     "consonant": "b'",
+     "cells": [
+      {
+       "value": "b'a",
+       "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+       "w": 440,
+       "h": 488
+      },
+      {
+       "value": "b'e",
+       "missing": true
+      },
+      {
+       "value": "b'i",
+       "src": "/learn/maya/glyphs/stuart/bqi-1.svg",
+       "w": 368,
+       "h": 348
+      },
+      {
+       "value": "b'o",
+       "src": "/learn/maya/glyphs/stuart/bqo-1.svg",
+       "w": 436,
+       "h": 404
+      },
+      {
+       "value": "b'u",
+       "src": "/learn/maya/glyphs/stuart/bqu-1.svg",
+       "w": 420,
+       "h": 348
+      }
+     ]
+    },
+    {
+     "consonant": "ch",
+     "cells": [
+      {
+       "value": "cha",
+       "src": "/learn/maya/glyphs/stuart/cha-1.svg",
+       "w": 384,
+       "h": 380
+      },
+      {
+       "value": "che",
+       "src": "/learn/maya/glyphs/stuart/che-1.svg",
+       "w": 252,
+       "h": 460
+      },
+      {
+       "value": "chi",
+       "src": "/learn/maya/glyphs/stuart/chi-1.svg",
+       "w": 464,
+       "h": 384
+      },
+      {
+       "value": "cho",
+       "missing": true
+      },
+      {
+       "value": "chu",
+       "src": "/learn/maya/glyphs/stuart/chu-1.svg",
+       "w": 500,
+       "h": 428
+      }
+     ]
+    },
+    {
+     "consonant": "ch'",
+     "cells": [
+      {
+       "value": "ch'a",
+       "src": "/learn/maya/glyphs/stuart/chqa-1.svg",
+       "w": 464,
+       "h": 452
+      },
+      {
+       "value": "ch'e",
+       "missing": true
+      },
+      {
+       "value": "ch'i",
+       "missing": true
+      },
+      {
+       "value": "ch'o",
+       "src": "/learn/maya/glyphs/stuart/chqo-1.svg",
+       "w": 492,
+       "h": 440
+      },
+      {
+       "value": "ch'u",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "h",
+     "cells": [
+      {
+       "value": "ha",
+       "src": "/learn/maya/glyphs/stuart/ha-2.svg",
+       "w": 432,
+       "h": 432
+      },
+      {
+       "value": "he",
+       "src": "/learn/maya/glyphs/stuart/he-1.svg",
+       "w": 516,
+       "h": 452
+      },
+      {
+       "value": "hi",
+       "src": "/learn/maya/glyphs/stuart/hi-1.svg",
+       "w": 496,
+       "h": 528
+      },
+      {
+       "value": "ho",
+       "missing": true
+      },
+      {
+       "value": "hu",
+       "src": "/learn/maya/glyphs/stuart/hu-1.svg",
+       "w": 556,
+       "h": 524
+      }
+     ]
+    },
+    {
+     "consonant": "j",
+     "cells": [
+      {
+       "value": "ja",
+       "src": "/learn/maya/glyphs/stuart/ja-1.svg",
+       "w": 548,
+       "h": 512
+      },
+      {
+       "value": "je",
+       "src": "/learn/maya/glyphs/stuart/je-1.svg",
+       "w": 504,
+       "h": 516
+      },
+      {
+       "value": "ji",
+       "src": "/learn/maya/glyphs/stuart/ji-1.svg",
+       "w": 464,
+       "h": 284
+      },
+      {
+       "value": "jo",
+       "src": "/learn/maya/glyphs/stuart/jo-1.svg",
+       "w": 492,
+       "h": 548
+      },
+      {
+       "value": "ju",
+       "src": "/learn/maya/glyphs/stuart/ju-1.svg",
+       "w": 592,
+       "h": 328
+      }
+     ]
+    },
+    {
+     "consonant": "k",
+     "cells": [
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "ke",
+       "src": "/learn/maya/glyphs/stuart/ke-1.svg",
+       "w": 488,
+       "h": 468
+      },
+      {
+       "value": "ki",
+       "src": "/learn/maya/glyphs/stuart/ki-2.svg",
+       "w": 464,
+       "h": 272
+      },
+      {
+       "value": "ko",
+       "src": "/learn/maya/glyphs/stuart/ko-1.svg",
+       "w": 552,
+       "h": 364
+      },
+      {
+       "value": "ku",
+       "src": "/learn/maya/glyphs/stuart/ku-1.svg",
+       "w": 516,
+       "h": 508
+      }
+     ]
+    },
+    {
+     "consonant": "k'",
+     "cells": [
+      {
+       "value": "k'a",
+       "src": "/learn/maya/glyphs/stuart/kqa-1.svg",
+       "w": 524,
+       "h": 460
+      },
+      {
+       "value": "k'e",
+       "src": "/learn/maya/glyphs/stuart/kqe-1.svg",
+       "w": 520,
+       "h": 480
+      },
+      {
+       "value": "k'i",
+       "src": "/learn/maya/glyphs/stuart/kqi-1.svg",
+       "w": 520,
+       "h": 280
+      },
+      {
+       "value": "k'o",
+       "src": "/learn/maya/glyphs/stuart/kqo-1.svg",
+       "w": 540,
+       "h": 428
+      },
+      {
+       "value": "k'u",
+       "src": "/learn/maya/glyphs/stuart/kqu-1.svg",
+       "w": 520,
+       "h": 496
+      }
+     ]
+    },
+    {
+     "consonant": "l",
+     "cells": [
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      },
+      {
+       "value": "le",
+       "src": "/learn/maya/glyphs/stuart/le-1.svg",
+       "w": 480,
+       "h": 288
+      },
+      {
+       "value": "li",
+       "src": "/learn/maya/glyphs/stuart/li-2.svg",
+       "w": 524,
+       "h": 324
+      },
+      {
+       "value": "lo",
+       "src": "/learn/maya/glyphs/stuart/lo-1.svg",
+       "w": 508,
+       "h": 488
+      },
+      {
+       "value": "lu",
+       "src": "/learn/maya/glyphs/stuart/lu-1.svg",
+       "w": 516,
+       "h": 520
+      }
+     ]
+    },
+    {
+     "consonant": "m",
+     "cells": [
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      },
+      {
+       "value": "me",
+       "missing": true
+      },
+      {
+       "value": "mi",
+       "src": "/learn/maya/glyphs/stuart/mi-1.svg",
+       "w": 344,
+       "h": 532
+      },
+      {
+       "value": "mo",
+       "src": "/learn/maya/glyphs/stuart/mo-1.svg",
+       "w": 476,
+       "h": 476
+      },
+      {
+       "value": "mu",
+       "src": "/learn/maya/glyphs/stuart/mu-1.svg",
+       "w": 512,
+       "h": 396
+      }
+     ]
+    },
+    {
+     "consonant": "n",
+     "cells": [
+      {
+       "value": "na",
+       "src": "/learn/maya/glyphs/stuart/na-1.svg",
+       "w": 616,
+       "h": 268
+      },
+      {
+       "value": "ne",
+       "src": "/learn/maya/glyphs/stuart/ne-1.svg",
+       "w": 460,
+       "h": 420
+      },
+      {
+       "value": "ni",
+       "src": "/learn/maya/glyphs/stuart/ni-1.svg",
+       "w": 580,
+       "h": 244
+      },
+      {
+       "value": "no",
+       "src": "/learn/maya/glyphs/stuart/no-1.svg",
+       "w": 580,
+       "h": 436
+      },
+      {
+       "value": "nu",
+       "src": "/learn/maya/glyphs/stuart/nu-1.svg",
+       "w": 428,
+       "h": 400
+      }
+     ]
+    },
+    {
+     "consonant": "p",
+     "cells": [
+      {
+       "value": "pa",
+       "src": "/learn/maya/glyphs/stuart/pa-1.svg",
+       "w": 436,
+       "h": 452
+      },
+      {
+       "value": "pe",
+       "missing": true
+      },
+      {
+       "value": "pi",
+       "src": "/learn/maya/glyphs/stuart/pi-1.svg",
+       "w": 656,
+       "h": 372
+      },
+      {
+       "value": "po",
+       "src": "/learn/maya/glyphs/stuart/po-1.svg",
+       "w": 476,
+       "h": 484
+      },
+      {
+       "value": "pu",
+       "src": "/learn/maya/glyphs/stuart/pu-1.svg",
+       "w": 484,
+       "h": 448
+      }
+     ]
+    },
+    {
+     "consonant": "s",
+     "cells": [
+      {
+       "value": "sa",
+       "src": "/learn/maya/glyphs/stuart/sa-1.svg",
+       "w": 464,
+       "h": 380
+      },
+      {
+       "value": "se",
+       "src": "/learn/maya/glyphs/stuart/se-1.svg",
+       "w": 540,
+       "h": 476
+      },
+      {
+       "value": "si",
+       "src": "/learn/maya/glyphs/stuart/si-1.svg",
+       "w": 256,
+       "h": 496
+      },
+      {
+       "value": "so",
+       "missing": true
+      },
+      {
+       "value": "su",
+       "src": "/learn/maya/glyphs/stuart/su-1.svg",
+       "w": 516,
+       "h": 352
+      }
+     ]
+    },
+    {
+     "consonant": "t",
+     "cells": [
+      {
+       "value": "ta",
+       "src": "/learn/maya/glyphs/stuart/ta-1.svg",
+       "w": 216,
+       "h": 464
+      },
+      {
+       "value": "te",
+       "src": "/learn/maya/glyphs/stuart/te-1.svg",
+       "w": 516,
+       "h": 480
+      },
+      {
+       "value": "ti",
+       "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+       "w": 288,
+       "h": 568
+      },
+      {
+       "value": "to",
+       "src": "/learn/maya/glyphs/stuart/to-1.svg",
+       "w": 472,
+       "h": 476
+      },
+      {
+       "value": "tu",
+       "src": "/learn/maya/glyphs/stuart/tu-1.svg",
+       "w": 264,
+       "h": 488
+      }
+     ]
+    },
+    {
+     "consonant": "t'",
+     "cells": [
+      {
+       "value": "t'a",
+       "missing": true
+      },
+      {
+       "value": "t'e",
+       "missing": true
+      },
+      {
+       "value": "t'i",
+       "missing": true
+      },
+      {
+       "value": "t'o",
+       "missing": true
+      },
+      {
+       "value": "t'u",
+       "src": "/learn/maya/glyphs/stuart/tqu-1.svg",
+       "w": 548,
+       "h": 492
+      }
+     ]
+    },
+    {
+     "consonant": "ts",
+     "cells": [
+      {
+       "value": "tsa",
+       "src": "/learn/maya/glyphs/stuart/tza-1.svg",
+       "w": 516,
+       "h": 532
+      },
+      {
+       "value": "tse",
+       "missing": true
+      },
+      {
+       "value": "tsi",
+       "src": "/learn/maya/glyphs/stuart/tzi-1.svg",
+       "w": 568,
+       "h": 476
+      },
+      {
+       "value": "tso",
+       "missing": true
+      },
+      {
+       "value": "tsu",
+       "src": "/learn/maya/glyphs/stuart/tzu-1.svg",
+       "w": 488,
+       "h": 532
+      }
+     ]
+    },
+    {
+     "consonant": "ts'",
+     "cells": [
+      {
+       "value": "ts'a",
+       "src": "/learn/maya/glyphs/stuart/tzqa-1.svg",
+       "w": 300,
+       "h": 528
+      },
+      {
+       "value": "ts'e",
+       "missing": true
+      },
+      {
+       "value": "ts'i",
+       "src": "/learn/maya/glyphs/stuart/tzqi-1.svg",
+       "w": 472,
+       "h": 324
+      },
+      {
+       "value": "ts'o",
+       "missing": true
+      },
+      {
+       "value": "ts'u",
+       "src": "/learn/maya/glyphs/stuart/tzqu-1.svg",
+       "w": 276,
+       "h": 552
+      }
+     ]
+    },
+    {
+     "consonant": "w",
+     "cells": [
+      {
+       "value": "wa",
+       "src": "/learn/maya/glyphs/stuart/wa-1.svg",
+       "w": 624,
+       "h": 244
+      },
+      {
+       "value": "we",
+       "src": "/learn/maya/glyphs/stuart/we-1.svg",
+       "w": 484,
+       "h": 496
+      },
+      {
+       "value": "wi",
+       "src": "/learn/maya/glyphs/stuart/wi-1.svg",
+       "w": 244,
+       "h": 628
+      },
+      {
+       "value": "wo",
+       "src": "/learn/maya/glyphs/stuart/wo-1.svg",
+       "w": 596,
+       "h": 252
+      },
+      {
+       "value": "wu",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "x",
+     "cells": [
+      {
+       "value": "xa",
+       "src": "/learn/maya/glyphs/stuart/xa-1.svg",
+       "w": 272,
+       "h": 496
+      },
+      {
+       "value": "xe",
+       "missing": true
+      },
+      {
+       "value": "xi",
+       "src": "/learn/maya/glyphs/stuart/xi-1.svg",
+       "w": 408,
+       "h": 436
+      },
+      {
+       "value": "xo",
+       "src": "/learn/maya/glyphs/stuart/xo-1.svg",
+       "w": 552,
+       "h": 432
+      },
+      {
+       "value": "xu",
+       "missing": true
+      }
+     ]
+    },
+    {
+     "consonant": "y",
+     "cells": [
+      {
+       "value": "ya",
+       "src": "/learn/maya/glyphs/stuart/ya-1.svg",
+       "w": 180,
+       "h": 564
+      },
+      {
+       "value": "ye",
+       "src": "/learn/maya/glyphs/stuart/ye-1.svg",
+       "w": 372,
+       "h": 456
+      },
+      {
+       "value": "yi",
+       "src": "/learn/maya/glyphs/stuart/yi-1.svg",
+       "w": 320,
+       "h": 496
+      },
+      {
+       "value": "yo",
+       "src": "/learn/maya/glyphs/stuart/yo-1.svg",
+       "w": 352,
+       "h": 456
+      },
+      {
+       "value": "yu",
+       "src": "/learn/maya/glyphs/stuart/yu-1.svg",
+       "w": 256,
+       "h": 532
+      }
+     ]
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 1
+  },
+  {
+   "slug": "first-signs",
+   "title": "First signs",
+   "level": "Level 1",
+   "intro": "Write the sound of each sign on the line. Start with the five vowels, then use the chart for the rest.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-1.svg",
+     "w": 424,
+     "h": 424,
+     "answer": "a"
+    },
+    {
+     "value": "e",
+     "src": "/learn/maya/glyphs/stuart/e-1.svg",
+     "w": 448,
+     "h": 428,
+     "answer": "e"
+    },
+    {
+     "value": "i",
+     "src": "/learn/maya/glyphs/stuart/i-1.svg",
+     "w": 404,
+     "h": 464,
+     "answer": "i"
+    },
+    {
+     "value": "o",
+     "src": "/learn/maya/glyphs/stuart/o-1.svg",
+     "w": 232,
+     "h": 500,
+     "answer": "o"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-1.svg",
+     "w": 172,
+     "h": 456,
+     "answer": "u"
+    },
+    {
+     "value": "b'a",
+     "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+     "w": 440,
+     "h": 488,
+     "answer": "b'a"
+    },
+    {
+     "value": "ka",
+     "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+     "w": 520,
+     "h": 428,
+     "answer": "ka"
+    },
+    {
+     "value": "la",
+     "src": "/learn/maya/glyphs/stuart/la-1.svg",
+     "w": 536,
+     "h": 516,
+     "answer": "la"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+     "w": 448,
+     "h": 452,
+     "answer": "ma"
+    },
+    {
+     "value": "na",
+     "src": "/learn/maya/glyphs/stuart/na-1.svg",
+     "w": 616,
+     "h": 268,
+     "answer": "na"
+    },
+    {
+     "value": "ja",
+     "src": "/learn/maya/glyphs/stuart/ja-1.svg",
+     "w": 548,
+     "h": 512,
+     "answer": "ja"
+    },
+    {
+     "value": "ya",
+     "src": "/learn/maya/glyphs/stuart/ya-1.svg",
+     "w": 180,
+     "h": 564,
+     "answer": "ya"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 2
+  },
+  {
+   "slug": "copy-the-signs",
+   "title": "Copy the signs",
+   "level": "Level 1",
+   "intro": "Draw each sign three times and say its sound aloud. Copy the outline first, then the details inside.",
+   "layout": "trace",
+   "items": [
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-1.svg",
+     "w": 424,
+     "h": 424,
+     "answer": "a"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-1.svg",
+     "w": 172,
+     "h": 456,
+     "answer": "u"
+    },
+    {
+     "value": "ka",
+     "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+     "w": 520,
+     "h": 428,
+     "answer": "ka"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+     "w": 448,
+     "h": 452,
+     "answer": "ma"
+    },
+    {
+     "value": "na",
+     "src": "/learn/maya/glyphs/stuart/na-1.svg",
+     "w": 616,
+     "h": 268,
+     "answer": "na"
+    },
+    {
+     "value": "la",
+     "src": "/learn/maya/glyphs/stuart/la-1.svg",
+     "w": 536,
+     "h": 516,
+     "answer": "la"
+    },
+    {
+     "value": "b'a",
+     "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+     "w": 440,
+     "h": 488,
+     "answer": "b'a"
+    },
+    {
+     "value": "ya",
+     "src": "/learn/maya/glyphs/stuart/ya-1.svg",
+     "w": 180,
+     "h": 564,
+     "answer": "ya"
+    },
+    {
+     "value": "chi",
+     "src": "/learn/maya/glyphs/stuart/chi-1.svg",
+     "w": 464,
+     "h": 384,
+     "answer": "chi"
+    },
+    {
+     "value": "ku",
+     "src": "/learn/maya/glyphs/stuart/ku-1.svg",
+     "w": 516,
+     "h": 508,
+     "answer": "ku"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 3
+  },
+  {
+   "slug": "bars-and-dots",
+   "title": "Bars and dots",
+   "level": "Level 1",
+   "intro": "A dot is one and a bar is five, so three bars and two dots make seventeen. The shell is zero. Write each number, then draw the numbers in part B.",
+   "layout": "numerals",
+   "read": [
+    3,
+    7,
+    11,
+    14,
+    19,
+    5,
+    0,
+    8,
+    16,
+    12
+   ],
+   "draw": [
+    4,
+    9,
+    13,
+    17,
+    10,
+    6
+   ],
+   "credits": [],
+   "number": 4
+  },
+  {
+   "slug": "day-signs",
+   "title": "Day signs",
+   "level": "Level 1",
+   "intro": "The Maya calendar names each day with one of 20 signs, as they are painted in the codices. Write the name of each sign from the box.",
+   "layout": "match",
+   "bank": [
+    "Imix",
+    "Ik’",
+    "Ak’b’al",
+    "K’an",
+    "Chikchan",
+    "Kimi",
+    "Manik’",
+    "Lamat",
+    "Muluk",
+    "Ok",
+    "Chuwen",
+    "Eb’",
+    "B’en",
+    "Ix",
+    "Men",
+    "Kib’",
+    "Kab’an",
+    "Etz’nab’",
+    "Kawak",
+    "Ajaw"
+   ],
+   "items": [
+    {
+     "value": "Kab’an",
+     "src": "/learn/maya/glyphs/morley/kaban.svg",
+     "w": 1140,
+     "h": 852,
+     "answer": "Kab’an, “earth”"
+    },
+    {
+     "value": "Chikchan",
+     "src": "/learn/maya/glyphs/morley/chikchan.svg",
+     "w": 1050,
+     "h": 939,
+     "answer": "Chikchan, “serpent”"
+    },
+    {
+     "value": "Ik’",
+     "src": "/learn/maya/glyphs/morley/ik.svg",
+     "w": 1071,
+     "h": 966,
+     "answer": "Ik’, “wind, breath”"
+    },
+    {
+     "value": "Imix",
+     "src": "/learn/maya/glyphs/morley/imix.svg",
+     "w": 1089,
+     "h": 957,
+     "answer": "Imix, “water lily, the earth”"
+    },
+    {
+     "value": "Eb’",
+     "src": "/learn/maya/glyphs/morley/eb.svg",
+     "w": 1074,
+     "h": 903,
+     "answer": "Eb’, “road”"
+    },
+    {
+     "value": "K’an",
+     "src": "/learn/maya/glyphs/morley/kan.svg",
+     "w": 1131,
+     "h": 963,
+     "answer": "K’an, “seed, ripe maize”"
+    },
+    {
+     "value": "Kimi",
+     "src": "/learn/maya/glyphs/morley/kimi.svg",
+     "w": 1071,
+     "h": 933,
+     "answer": "Kimi, “death”"
+    },
+    {
+     "value": "Ok",
+     "src": "/learn/maya/glyphs/morley/ok.svg",
+     "w": 1023,
+     "h": 963,
+     "answer": "Ok, “dog”"
+    },
+    {
+     "value": "Manik’",
+     "src": "/learn/maya/glyphs/morley/manik.svg",
+     "w": 1083,
+     "h": 927,
+     "answer": "Manik’, “deer”"
+    },
+    {
+     "value": "B’en",
+     "src": "/learn/maya/glyphs/morley/ben.svg",
+     "w": 1065,
+     "h": 924,
+     "answer": "B’en, “reed, cornfield”"
+    },
+    {
+     "value": "Kib’",
+     "src": "/learn/maya/glyphs/morley/kib.svg",
+     "w": 1038,
+     "h": 852,
+     "answer": "Kib’, “wax”"
+    },
+    {
+     "value": "Lamat",
+     "src": "/learn/maya/glyphs/morley/lamat.svg",
+     "w": 1077,
+     "h": 948,
+     "answer": "Lamat, “star, Venus”"
+    },
+    {
+     "value": "Men",
+     "src": "/learn/maya/glyphs/morley/men.svg",
+     "w": 1068,
+     "h": 873,
+     "answer": "Men, “eagle”"
+    },
+    {
+     "value": "Chuwen",
+     "src": "/learn/maya/glyphs/morley/chuwen.svg",
+     "w": 1107,
+     "h": 969,
+     "answer": "Chuwen, “monkey, craftsman”"
+    },
+    {
+     "value": "Kawak",
+     "src": "/learn/maya/glyphs/morley/kawak.svg",
+     "w": 1074,
+     "h": 837,
+     "answer": "Kawak, “storm, rain”"
+    },
+    {
+     "value": "Ajaw",
+     "src": "/learn/maya/glyphs/morley/ajaw.svg",
+     "w": 1044,
+     "h": 909,
+     "answer": "Ajaw, “lord, sun”"
+    },
+    {
+     "value": "Muluk",
+     "src": "/learn/maya/glyphs/morley/muluk.svg",
+     "w": 1044,
+     "h": 999,
+     "answer": "Muluk, “water, jade”"
+    },
+    {
+     "value": "Ix",
+     "src": "/learn/maya/glyphs/morley/ix.svg",
+     "w": 1068,
+     "h": 933,
+     "answer": "Ix, “jaguar”"
+    },
+    {
+     "value": "Etz’nab’",
+     "src": "/learn/maya/glyphs/morley/etznab.svg",
+     "w": 1059,
+     "h": 858,
+     "answer": "Etz’nab’, “flint”"
+    },
+    {
+     "value": "Ak’b’al",
+     "src": "/learn/maya/glyphs/morley/akbal.svg",
+     "w": 1071,
+     "h": 966,
+     "answer": "Ak’b’al, “night”"
+    }
+   ],
+   "credits": [
+    "morley"
+   ],
+   "number": 5
+  },
+  {
+   "slug": "more-signs",
+   "title": "More signs",
+   "level": "Level 2",
+   "intro": "Write the sound of each sign. Look at the details inside as well as the outline: many signs share the same rounded frame.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "chi",
+     "src": "/learn/maya/glyphs/stuart/chi-1.svg",
+     "w": 464,
+     "h": 384,
+     "answer": "chi"
+    },
+    {
+     "value": "hu",
+     "src": "/learn/maya/glyphs/stuart/hu-1.svg",
+     "w": 556,
+     "h": 524,
+     "answer": "hu"
+    },
+    {
+     "value": "k'u",
+     "src": "/learn/maya/glyphs/stuart/kqu-1.svg",
+     "w": 520,
+     "h": 496,
+     "answer": "k'u"
+    },
+    {
+     "value": "mo",
+     "src": "/learn/maya/glyphs/stuart/mo-1.svg",
+     "w": 476,
+     "h": 476,
+     "answer": "mo"
+    },
+    {
+     "value": "pa",
+     "src": "/learn/maya/glyphs/stuart/pa-1.svg",
+     "w": 436,
+     "h": 452,
+     "answer": "pa"
+    },
+    {
+     "value": "te",
+     "src": "/learn/maya/glyphs/stuart/te-1.svg",
+     "w": 516,
+     "h": 480,
+     "answer": "te"
+    },
+    {
+     "value": "tu",
+     "src": "/learn/maya/glyphs/stuart/tu-1.svg",
+     "w": 264,
+     "h": 488,
+     "answer": "tu"
+    },
+    {
+     "value": "wa",
+     "src": "/learn/maya/glyphs/stuart/wa-1.svg",
+     "w": 624,
+     "h": 244,
+     "answer": "wa"
+    },
+    {
+     "value": "xa",
+     "src": "/learn/maya/glyphs/stuart/xa-1.svg",
+     "w": 272,
+     "h": 496,
+     "answer": "xa"
+    },
+    {
+     "value": "yu",
+     "src": "/learn/maya/glyphs/stuart/yu-1.svg",
+     "w": 256,
+     "h": 532,
+     "answer": "yu"
+    },
+    {
+     "value": "ku",
+     "src": "/learn/maya/glyphs/stuart/ku-1.svg",
+     "w": 516,
+     "h": 508,
+     "answer": "ku"
+    },
+    {
+     "value": "li",
+     "src": "/learn/maya/glyphs/stuart/li-2.svg",
+     "w": 524,
+     "h": 324,
+     "answer": "li"
+    },
+    {
+     "value": "ti",
+     "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+     "w": 288,
+     "h": 568,
+     "answer": "ti"
+    },
+    {
+     "value": "lo",
+     "src": "/learn/maya/glyphs/stuart/lo-1.svg",
+     "w": 508,
+     "h": 488,
+     "answer": "lo"
+    },
+    {
+     "value": "ni",
+     "src": "/learn/maya/glyphs/stuart/ni-1.svg",
+     "w": 580,
+     "h": 244,
+     "answer": "ni"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 6
+  },
+  {
+   "slug": "find-the-sign",
+   "title": "Find the sign",
+   "level": "Level 2",
+   "intro": "Circle the sign that spells the sound on the left. One of the wrong choices often looks very like the right one.",
+   "layout": "circle",
+   "items": [
+    {
+     "prompt": "ma",
+     "options": [
+      {
+       "value": "ts'a",
+       "src": "/learn/maya/glyphs/stuart/tzqa-1.svg",
+       "w": 300,
+       "h": 528
+      },
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      },
+      {
+       "value": "b'a",
+       "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+       "w": 440,
+       "h": 488
+      },
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "te",
+     "options": [
+      {
+       "value": "he",
+       "src": "/learn/maya/glyphs/stuart/he-1.svg",
+       "w": 516,
+       "h": 452
+      },
+      {
+       "value": "lo",
+       "src": "/learn/maya/glyphs/stuart/lo-1.svg",
+       "w": 508,
+       "h": 488
+      },
+      {
+       "value": "te",
+       "src": "/learn/maya/glyphs/stuart/te-1.svg",
+       "w": 516,
+       "h": 480
+      },
+      {
+       "value": "le",
+       "src": "/learn/maya/glyphs/stuart/le-1.svg",
+       "w": 480,
+       "h": 288
+      }
+     ],
+     "answer": "C"
+    },
+    {
+     "prompt": "ka",
+     "options": [
+      {
+       "value": "na",
+       "src": "/learn/maya/glyphs/stuart/na-1.svg",
+       "w": 616,
+       "h": 268
+      },
+      {
+       "value": "ha",
+       "src": "/learn/maya/glyphs/stuart/ha-2.svg",
+       "w": 432,
+       "h": 432
+      },
+      {
+       "value": "sa",
+       "src": "/learn/maya/glyphs/stuart/sa-1.svg",
+       "w": 464,
+       "h": 380
+      },
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "ni",
+     "options": [
+      {
+       "value": "wi",
+       "src": "/learn/maya/glyphs/stuart/wi-1.svg",
+       "w": 244,
+       "h": 628
+      },
+      {
+       "value": "yi",
+       "src": "/learn/maya/glyphs/stuart/yi-1.svg",
+       "w": 320,
+       "h": 496
+      },
+      {
+       "value": "ti",
+       "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+       "w": 288,
+       "h": 568
+      },
+      {
+       "value": "ni",
+       "src": "/learn/maya/glyphs/stuart/ni-1.svg",
+       "w": 580,
+       "h": 244
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "ku",
+     "options": [
+      {
+       "value": "pi",
+       "src": "/learn/maya/glyphs/stuart/pi-1.svg",
+       "w": 656,
+       "h": 372
+      },
+      {
+       "value": "yu",
+       "src": "/learn/maya/glyphs/stuart/yu-1.svg",
+       "w": 256,
+       "h": 532
+      },
+      {
+       "value": "ku",
+       "src": "/learn/maya/glyphs/stuart/ku-1.svg",
+       "w": 516,
+       "h": 508
+      },
+      {
+       "value": "k'u",
+       "src": "/learn/maya/glyphs/stuart/kqu-1.svg",
+       "w": 520,
+       "h": 496
+      }
+     ],
+     "answer": "C"
+    },
+    {
+     "prompt": "chi",
+     "options": [
+      {
+       "value": "ye",
+       "src": "/learn/maya/glyphs/stuart/ye-1.svg",
+       "w": 372,
+       "h": 456
+      },
+      {
+       "value": "yi",
+       "src": "/learn/maya/glyphs/stuart/yi-1.svg",
+       "w": 320,
+       "h": 496
+      },
+      {
+       "value": "yo",
+       "src": "/learn/maya/glyphs/stuart/yo-1.svg",
+       "w": 352,
+       "h": 456
+      },
+      {
+       "value": "chi",
+       "src": "/learn/maya/glyphs/stuart/chi-1.svg",
+       "w": 464,
+       "h": 384
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "la",
+     "options": [
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      },
+      {
+       "value": "b'a",
+       "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+       "w": 440,
+       "h": 488
+      },
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      }
+     ],
+     "answer": "D"
+    },
+    {
+     "prompt": "mu",
+     "options": [
+      {
+       "value": "yo",
+       "src": "/learn/maya/glyphs/stuart/yo-1.svg",
+       "w": 352,
+       "h": 456
+      },
+      {
+       "value": "b'u",
+       "src": "/learn/maya/glyphs/stuart/bqu-1.svg",
+       "w": 420,
+       "h": 348
+      },
+      {
+       "value": "mu",
+       "src": "/learn/maya/glyphs/stuart/mu-1.svg",
+       "w": 512,
+       "h": 396
+      },
+      {
+       "value": "ju",
+       "src": "/learn/maya/glyphs/stuart/ju-1.svg",
+       "w": 592,
+       "h": 328
+      }
+     ],
+     "answer": "C"
+    },
+    {
+     "prompt": "sa",
+     "options": [
+      {
+       "value": "sa",
+       "src": "/learn/maya/glyphs/stuart/sa-1.svg",
+       "w": 464,
+       "h": 380
+      },
+      {
+       "value": "cha",
+       "src": "/learn/maya/glyphs/stuart/cha-1.svg",
+       "w": 384,
+       "h": 380
+      },
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "ts'a",
+       "src": "/learn/maya/glyphs/stuart/tzqa-1.svg",
+       "w": 300,
+       "h": 528
+      }
+     ],
+     "answer": "A"
+    },
+    {
+     "prompt": "yo",
+     "options": [
+      {
+       "value": "to",
+       "src": "/learn/maya/glyphs/stuart/to-1.svg",
+       "w": 472,
+       "h": 476
+      },
+      {
+       "value": "yo",
+       "src": "/learn/maya/glyphs/stuart/yo-1.svg",
+       "w": 352,
+       "h": 456
+      },
+      {
+       "value": "chi",
+       "src": "/learn/maya/glyphs/stuart/chi-1.svg",
+       "w": 464,
+       "h": 384
+      },
+      {
+       "value": "mu",
+       "src": "/learn/maya/glyphs/stuart/mu-1.svg",
+       "w": 512,
+       "h": 396
+      }
+     ],
+     "answer": "B"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 7
+  },
+  {
+   "slug": "one-sound-many-signs",
+   "title": "One sound, many signs",
+   "level": "Level 2",
+   "intro": "Scribes could spell the same syllable with different signs. Every sign here spells one of six sounds: a, u, ma, ji, ka, na. Write the sound under each.",
+   "layout": "write",
+   "items": [
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-1.svg",
+     "w": 424,
+     "h": 424,
+     "answer": "a"
+    },
+    {
+     "value": "na",
+     "src": "/learn/maya/glyphs/stuart/na-2.svg",
+     "w": 424,
+     "h": 400,
+     "answer": "na"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-5.svg",
+     "w": 200,
+     "h": 492,
+     "answer": "u"
+    },
+    {
+     "value": "ji",
+     "src": "/learn/maya/glyphs/stuart/ji-1.svg",
+     "w": 464,
+     "h": 284,
+     "answer": "ji"
+    },
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-3.svg",
+     "w": 204,
+     "h": 440,
+     "answer": "a"
+    },
+    {
+     "value": "ji",
+     "src": "/learn/maya/glyphs/stuart/ji-3.svg",
+     "w": 516,
+     "h": 212,
+     "answer": "ji"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-3.svg",
+     "w": 452,
+     "h": 228,
+     "answer": "ma"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-1.svg",
+     "w": 172,
+     "h": 456,
+     "answer": "u"
+    },
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-4.svg",
+     "w": 220,
+     "h": 436,
+     "answer": "a"
+    },
+    {
+     "value": "ji",
+     "src": "/learn/maya/glyphs/stuart/ji-4.svg",
+     "w": 520,
+     "h": 216,
+     "answer": "ji"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+     "w": 448,
+     "h": 452,
+     "answer": "ma"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-4.svg",
+     "w": 372,
+     "h": 364,
+     "answer": "u"
+    },
+    {
+     "value": "na",
+     "src": "/learn/maya/glyphs/stuart/na-3.svg",
+     "w": 440,
+     "h": 424,
+     "answer": "na"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-3.svg",
+     "w": 344,
+     "h": 372,
+     "answer": "u"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-4.svg",
+     "w": 452,
+     "h": 164,
+     "answer": "ma"
+    },
+    {
+     "value": "ka",
+     "src": "/learn/maya/glyphs/stuart/ka-2.svg",
+     "w": 232,
+     "h": 568,
+     "answer": "ka"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-2.svg",
+     "w": 192,
+     "h": 420,
+     "answer": "u"
+    },
+    {
+     "value": "ma",
+     "src": "/learn/maya/glyphs/stuart/ma-2.svg",
+     "w": 428,
+     "h": 444,
+     "answer": "ma"
+    },
+    {
+     "value": "ka",
+     "src": "/learn/maya/glyphs/stuart/ka-3.svg",
+     "w": 636,
+     "h": 188,
+     "answer": "ka"
+    },
+    {
+     "value": "ji",
+     "src": "/learn/maya/glyphs/stuart/ji-2.svg",
+     "w": 460,
+     "h": 456,
+     "answer": "ji"
+    },
+    {
+     "value": "ka",
+     "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+     "w": 520,
+     "h": 428,
+     "answer": "ka"
+    },
+    {
+     "value": "a",
+     "src": "/learn/maya/glyphs/stuart/a-2.svg",
+     "w": 228,
+     "h": 448,
+     "answer": "a"
+    },
+    {
+     "value": "na",
+     "src": "/learn/maya/glyphs/stuart/na-1.svg",
+     "w": 616,
+     "h": 268,
+     "answer": "na"
+    },
+    {
+     "value": "u",
+     "src": "/learn/maya/glyphs/stuart/u-6.svg",
+     "w": 208,
+     "h": 492,
+     "answer": "u"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 8
+  },
+  {
+   "slug": "tell-them-apart",
+   "title": "Tell them apart",
+   "level": "Level 2",
+   "intro": "Each pair is two different syllables that are easy to mix up. Write the sound under each sign, then circle the detail that tells them apart.",
+   "layout": "pairs",
+   "items": [
+    {
+     "signs": [
+      {
+       "value": "b'a",
+       "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+       "w": 440,
+       "h": 488
+      },
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-2.svg",
+       "w": 428,
+       "h": 444
+      }
+     ],
+     "answer": "b'a / ma"
+    },
+    {
+     "signs": [
+      {
+       "value": "lo",
+       "src": "/learn/maya/glyphs/stuart/lo-1.svg",
+       "w": 508,
+       "h": 488
+      },
+      {
+       "value": "te",
+       "src": "/learn/maya/glyphs/stuart/te-1.svg",
+       "w": 516,
+       "h": 480
+      }
+     ],
+     "answer": "lo / te"
+    },
+    {
+     "signs": [
+      {
+       "value": "b'u",
+       "src": "/learn/maya/glyphs/stuart/bqu-2.svg",
+       "w": 316,
+       "h": 404
+      },
+      {
+       "value": "mu",
+       "src": "/learn/maya/glyphs/stuart/mu-2.svg",
+       "w": 264,
+       "h": 408
+      }
+     ],
+     "answer": "b'u / mu"
+    },
+    {
+     "signs": [
+      {
+       "value": "e",
+       "src": "/learn/maya/glyphs/stuart/e-1.svg",
+       "w": 448,
+       "h": 428
+      },
+      {
+       "value": "b'i",
+       "src": "/learn/maya/glyphs/stuart/bqi-1.svg",
+       "w": 368,
+       "h": 348
+      }
+     ],
+     "answer": "e / b'i"
+    },
+    {
+     "signs": [
+      {
+       "value": "ja",
+       "src": "/learn/maya/glyphs/stuart/ja-1.svg",
+       "w": 548,
+       "h": 512
+      },
+      {
+       "value": "i",
+       "src": "/learn/maya/glyphs/stuart/i-1.svg",
+       "w": 404,
+       "h": 464
+      }
+     ],
+     "answer": "ja / i"
+    },
+    {
+     "signs": [
+      {
+       "value": "ni",
+       "src": "/learn/maya/glyphs/stuart/ni-1.svg",
+       "w": 580,
+       "h": 244
+      },
+      {
+       "value": "wi",
+       "src": "/learn/maya/glyphs/stuart/wi-2.svg",
+       "w": 588,
+       "h": 220
+      }
+     ],
+     "answer": "ni / wi"
+    },
+    {
+     "signs": [
+      {
+       "value": "k'u",
+       "src": "/learn/maya/glyphs/stuart/kqu-1.svg",
+       "w": 520,
+       "h": 496
+      },
+      {
+       "value": "ch'a",
+       "src": "/learn/maya/glyphs/stuart/chqa-1.svg",
+       "w": 464,
+       "h": 452
+      }
+     ],
+     "answer": "k'u / ch'a"
+    },
+    {
+     "signs": [
+      {
+       "value": "ti",
+       "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+       "w": 288,
+       "h": 568
+      },
+      {
+       "value": "ts'a",
+       "src": "/learn/maya/glyphs/stuart/tzqa-1.svg",
+       "w": 300,
+       "h": 528
+      }
+     ],
+     "answer": "ti / ts'a"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 9
+  },
+  {
+   "slug": "read-a-word",
+   "title": "Read a word",
+   "level": "Level 3",
+   "intro": "Maya words are spelled syllable by syllable, and the vowel of the last syllable is usually silent: ka-ka-wa is read kakaw, “cacao”. Write the syllables, then the word. The meanings are in the box.",
+   "layout": "spell-read",
+   "bank": [
+    "youth",
+    "jaguar",
+    "turtle",
+    "macaw",
+    "cacao",
+    "shield"
+   ],
+   "items": [
+    {
+     "signs": [
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "wa",
+       "src": "/learn/maya/glyphs/stuart/wa-1.svg",
+       "w": 624,
+       "h": 244
+      }
+     ],
+     "answer": "ka-ka-wa → kakaw, “cacao”"
+    },
+    {
+     "signs": [
+      {
+       "value": "b'a",
+       "src": "/learn/maya/glyphs/stuart/bqa-1.svg",
+       "w": 440,
+       "h": 488
+      },
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      },
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      }
+     ],
+     "answer": "b'a-la-ma → b'ahlam, “jaguar”"
+    },
+    {
+     "signs": [
+      {
+       "value": "mo",
+       "src": "/learn/maya/glyphs/stuart/mo-1.svg",
+       "w": 476,
+       "h": 476
+      },
+      {
+       "value": "o",
+       "src": "/learn/maya/glyphs/stuart/o-1.svg",
+       "w": 232,
+       "h": 500
+      }
+     ],
+     "answer": "mo-o → mo', “macaw”"
+    },
+    {
+     "signs": [
+      {
+       "value": "a",
+       "src": "/learn/maya/glyphs/stuart/a-1.svg",
+       "w": 424,
+       "h": 424
+      },
+      {
+       "value": "ku",
+       "src": "/learn/maya/glyphs/stuart/ku-1.svg",
+       "w": 516,
+       "h": 508
+      }
+     ],
+     "answer": "a-ku → ahk, “turtle”"
+    },
+    {
+     "signs": [
+      {
+       "value": "pa",
+       "src": "/learn/maya/glyphs/stuart/pa-1.svg",
+       "w": 436,
+       "h": 452
+      },
+      {
+       "value": "ka",
+       "src": "/learn/maya/glyphs/stuart/ka-1.svg",
+       "w": 520,
+       "h": 428
+      },
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      }
+     ],
+     "answer": "pa-ka-la → pakal, “shield”"
+    },
+    {
+     "signs": [
+      {
+       "value": "ch'o",
+       "src": "/learn/maya/glyphs/stuart/chqo-1.svg",
+       "w": 492,
+       "h": 440
+      },
+      {
+       "value": "ko",
+       "src": "/learn/maya/glyphs/stuart/ko-1.svg",
+       "w": 552,
+       "h": 364
+      }
+     ],
+     "answer": "ch'o-ko → ch'ok, “youth”"
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 10
+  },
+  {
+   "slug": "write-a-word",
+   "title": "Write a word",
+   "level": "Level 3",
+   "intro": "Spell each word with signs from the chart, one sign per box. All five words are carved on the Cross Group tablets at Palenque.",
+   "layout": "spell-write",
+   "items": [
+    {
+     "word": "huliiy",
+     "gloss": "he arrived",
+     "parts": [
+      "hu",
+      "li",
+      "ya"
+     ],
+     "answerSigns": [
+      {
+       "value": "hu",
+       "src": "/learn/maya/glyphs/stuart/hu-1.svg",
+       "w": 556,
+       "h": 524
+      },
+      {
+       "value": "li",
+       "src": "/learn/maya/glyphs/stuart/li-2.svg",
+       "w": 524,
+       "h": 324
+      },
+      {
+       "value": "ya",
+       "src": "/learn/maya/glyphs/stuart/ya-1.svg",
+       "w": 180,
+       "h": 564
+      }
+     ]
+    },
+    {
+     "word": "uhtiiy",
+     "gloss": "it happened",
+     "parts": [
+      "u",
+      "ti",
+      "ya"
+     ],
+     "answerSigns": [
+      {
+       "value": "u",
+       "src": "/learn/maya/glyphs/stuart/u-1.svg",
+       "w": 172,
+       "h": 456
+      },
+      {
+       "value": "ti",
+       "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+       "w": 288,
+       "h": 568
+      },
+      {
+       "value": "ya",
+       "src": "/learn/maya/glyphs/stuart/ya-1.svg",
+       "w": 180,
+       "h": 564
+      }
+     ]
+    },
+    {
+     "word": "yotoot",
+     "gloss": "his house",
+     "parts": [
+      "yo",
+      "to",
+      "ti"
+     ],
+     "answerSigns": [
+      {
+       "value": "yo",
+       "src": "/learn/maya/glyphs/stuart/yo-1.svg",
+       "w": 352,
+       "h": 456
+      },
+      {
+       "value": "to",
+       "src": "/learn/maya/glyphs/stuart/to-1.svg",
+       "w": 472,
+       "h": 476
+      },
+      {
+       "value": "ti",
+       "src": "/learn/maya/glyphs/stuart/ti-1.svg",
+       "w": 288,
+       "h": 568
+      }
+     ]
+    },
+    {
+     "word": "Matwiil",
+     "gloss": "a mythical place",
+     "parts": [
+      "ma",
+      "ta",
+      "wi",
+      "la"
+     ],
+     "answerSigns": [
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      },
+      {
+       "value": "ta",
+       "src": "/learn/maya/glyphs/stuart/ta-1.svg",
+       "w": 216,
+       "h": 464
+      },
+      {
+       "value": "wi",
+       "src": "/learn/maya/glyphs/stuart/wi-1.svg",
+       "w": 244,
+       "h": 628
+      },
+      {
+       "value": "la",
+       "src": "/learn/maya/glyphs/stuart/la-1.svg",
+       "w": 536,
+       "h": 516
+      }
+     ]
+    },
+    {
+     "word": "ch'ajoom",
+     "gloss": "he who scatters incense",
+     "parts": [
+      "ch'a",
+      "jo",
+      "ma"
+     ],
+     "answerSigns": [
+      {
+       "value": "ch'a",
+       "src": "/learn/maya/glyphs/stuart/chqa-1.svg",
+       "w": 464,
+       "h": 452
+      },
+      {
+       "value": "jo",
+       "src": "/learn/maya/glyphs/stuart/jo-1.svg",
+       "w": 492,
+       "h": 548
+      },
+      {
+       "value": "ma",
+       "src": "/learn/maya/glyphs/stuart/ma-1.svg",
+       "w": 448,
+       "h": 452
+      }
+     ]
+    }
+   ],
+   "credits": [
+    "stuart"
+   ],
+   "number": 11
+  },
+  {
+   "slug": "word-signs",
+   "title": "Word signs",
+   "level": "Level 3",
+   "intro": "Some signs stand for a whole word. Write the meaning of each sign from the box. Look for the picture in the sign: the jaguar’s spots, the deer’s antler, the hand’s fingers.",
+   "layout": "match",
+   "bank": [
+    "tree, wood",
+    "red",
+    "water",
+    "star",
+    "deer",
+    "moon",
+    "dog",
+    "cloud",
+    "hand",
+    "jaguar",
+    "sun, day",
+    "snake"
+   ],
+   "items": [
+    {
+     "value": "KAN",
+     "src": "/learn/maya/glyphs/twkm/764st.svg",
+     "w": 1024,
+     "h": 990,
+     "meaning": "snake",
+     "answer": "KAN, “snake”"
+    },
+    {
+     "value": "HA’",
+     "src": "/learn/maya/glyphs/twkm/1516st.svg",
+     "w": 1024,
+     "h": 996,
+     "meaning": "water",
+     "answer": "HA’, “water”"
+    },
+    {
+     "value": "K’IN",
+     "src": "/learn/maya/glyphs/twkm/544ex.svg",
+     "w": 1024,
+     "h": 994,
+     "meaning": "sun, day",
+     "answer": "K’IN, “sun, day”"
+    },
+    {
+     "value": "EK’",
+     "src": "/learn/maya/glyphs/twkm/510bv.svg",
+     "w": 1024,
+     "h": 990,
+     "meaning": "star",
+     "answer": "EK’, “star”"
+    },
+    {
+     "value": "CHAK",
+     "src": "/learn/maya/glyphs/twkm/1646st.svg",
+     "w": 1024,
+     "h": 808,
+     "meaning": "red",
+     "answer": "CHAK, “red”"
+    },
+    {
+     "value": "CHIJ",
+     "src": "/learn/maya/glyphs/twkm/796st.svg",
+     "w": 1024,
+     "h": 996,
+     "meaning": "deer",
+     "answer": "CHIJ, “deer”"
+    },
+    {
+     "value": "TE’",
+     "src": "/learn/maya/glyphs/twkm/1524st.svg",
+     "w": 1024,
+     "h": 982,
+     "meaning": "tree, wood",
+     "answer": "TE’, “tree, wood”"
+    },
+    {
+     "value": "MUYAL",
+     "src": "/learn/maya/glyphs/twkm/632st.svg",
+     "w": 1024,
+     "h": 998,
+     "meaning": "cloud",
+     "answer": "MUYAL, “cloud”"
+    },
+    {
+     "value": "BALAM",
+     "src": "/learn/maya/glyphs/twkm/751st.svg",
+     "w": 1024,
+     "h": 988,
+     "meaning": "jaguar",
+     "answer": "BALAM, “jaguar”"
+    },
+    {
+     "value": "TZ’I’",
+     "src": "/learn/maya/glyphs/twkm/1573st.svg",
+     "w": 1024,
+     "h": 984,
+     "meaning": "dog",
+     "answer": "TZ’I’, “dog”"
+    },
+    {
+     "value": "UH",
+     "src": "/learn/maya/glyphs/twkm/731bv.svg",
+     "w": 1024,
+     "h": 1006,
+     "meaning": "moon",
+     "answer": "UH, “moon”"
+    },
+    {
+     "value": "K’AB",
+     "src": "/learn/maya/glyphs/twkm/1531st.svg",
+     "w": 1024,
+     "h": 690,
+     "meaning": "hand",
+     "answer": "K’AB, “hand”"
+    }
+   ],
+   "credits": [
+    "twkm"
+   ],
+   "number": 12
+  }
+ ]
+}

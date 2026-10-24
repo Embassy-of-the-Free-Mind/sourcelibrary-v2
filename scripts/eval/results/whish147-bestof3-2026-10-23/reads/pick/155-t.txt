@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most like real Sanskrit-Malayalam commentary over most rows ("pṛthivyādimahābhūtaṅṅaḻum…", "ṅṅaḻeyoroṭe gandha", "āpakaḥ koṭādivṛndavivṛttiḥ calanātmakaṃ"), A has some readable phrases but breaks up into syllable strings elsewhere, and C is mostly [illegible] fragments.

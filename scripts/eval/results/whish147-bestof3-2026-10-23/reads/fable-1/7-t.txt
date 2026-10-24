@@ -1,0 +1,10 @@
+ROW 1 | ശെഷാണാംധപ്രിസ്വാ ‖ ലക്ഷണ്യംവൃത്തിസ്ത്രയസ്യസൈഷാഭവത്യസാ ‖ മാന്യാസാമാന്യകര
+ROW 2 | ണവൃത്തിഃപ്രാണാദ്യാവാ ‖ യവഃപഞ്ച|ഡ്ഡൃഷ്യഗവഷ്ടഇഗ്ഗയസ്യ ‖ വൃത്തിഃക്രമശശ്ചകന്യതിട്ട
+ROW 3 | ദ്വാദത്തെരശാഷ്യ ‖ ടാഖണ്ണക്രയധാന്യകൎകകൃഗ്രകാഥൃ ‖ ത്തിഃ|ഘസ്ഥാംസ്ഥാംക്ര
+ROW 4 | ക്ഷയളരന്തപര ‖ ഇവാത്തകംരാഹക്രക്കിംഷക്കം ‖ ൃത്തഷാത്തൃക്കവവ
+ROW 5 | ഹഇന്ഥാകൈവമി ‖ ക്കാത്തൈകൈക്കരണാ|സ്തു|ക ‖ നഃ|ക്രൈകാദശവി
+ROW 6 | ധഃതടാഹരണ ‖ കരണപ്രകാശകാരംകാളു ‖ ഖതന്ത്രാദശധാഗാ
+ROW 7 | ഷ്ടംധാത്തൃംപ്രക ‖ ഉത്തഞ്ചന്തഃകാകന്തഃകവണാക്ക ‖ വിധംദശാബാഹ്യ
+ROW 8 | ക്രയന്യാവികമയാമ്യാം ‖ സസ്സാംപ്രകകാലമകാമ്യംക്കികാളാ ‖ ളന്തരംകരണാപസ്ലഷ്ട
+ROW 9 | ട്രിത്തയാണിതെഷാം ‖ പഞ്ചവിശെഷാവിശൈകവിഷയാണാ ‖ ഷ്ടവക്കശള്ളവിഷല
+NOTE | All nine rows of the leaf are legible and transcribed across the four pieces (p01 = left column, p02+p03 = wide middle column, p04 = right column); rows 1–2 are secure, but many clusters in rows 3–9 (especially the middle column and the glyphs just after each hole) are strokes-only readings with low confidence.

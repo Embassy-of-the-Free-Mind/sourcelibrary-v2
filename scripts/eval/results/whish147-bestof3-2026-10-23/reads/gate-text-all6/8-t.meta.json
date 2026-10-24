@@ -1,0 +1,23 @@
+{
+ "stage": "gate-text-all6",
+ "id": "8-t",
+ "ok": true,
+ "error_class": null,
+ "model": "claude-opus-5-5",
+ "model_requested": "opus",
+ "cli": "claude",
+ "started_at": "2026-10-23T07:28:47.323Z",
+ "finished_at": "2026-10-23T07:28:57.210Z",
+ "secs": 10,
+ "prompt_hash": "4e42b5cafbe8fe93",
+ "prompt_file": "reads/prompts/4e42b5cafbe8fe93.txt",
+ "images": [],
+ "usage": {
+  "input": 2,
+  "output": 557,
+  "cache_read": 2371,
+  "cache_creation": 4102,
+  "turns": 1,
+  "list_cost_usd": 0.0444382
+ }
+}

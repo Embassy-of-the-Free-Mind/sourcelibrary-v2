@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣṭīyameḻḻajñānaṃvirāgamaiṣṣyaṃsākṣikaḻaikrūpaṃkarakasamastādipa [illegible] dvandvya
+2. blimānanāhaṃka [illegible] bajñajñādiviyaḥpra [illegible] vṛṣaisaṅgaḥeka [illegible] bhāṭaśakakṣagateḥkṣamā
+3. śrāṣakṣikaikai ‖ paśyaḥsākṣikaekādaśakaḥ ‖ prairakkaitaivai
+4. urāddhyākrāma ‖ āndrakāraijñamātrasakaima ‖ tāraikṣajñasāṭṭūṭa
+5. yaḥjhluḥl̤yebhi ‖ ddiyānicajjai [illegible] śrṛntari ‖ basanāāghagāākhyā
+6. bhivākpāṇi ‖ jjapādapājjūpasthānkāratra ‖ bhibrāññāhubheḍhya
+7. uddyāmakrama ‖ ramanāsskallikimiśśraṇṭossā ‖ yaṣṭālguṇapatri
+8. jñāmatidaiśampānākṣahaiāhvaiṭadākhyaൗḥjhyaiḥgantrṛpādiṣṭhiṣpakho
+9. aurabhāvalācanamatrūmisṟṟuraiggvaikkaḥpacanābhādbhavipānabhairaiḥasslīnatāśi
+
+TRANSCRIPTION B
+1. ṣyaddīyamerjñānaṃvirāgameaikṣaṣyaṃsākṣikamerkṣrapaṃtemasamastādipaśyantraṃ [illegible]
+2. balimātanāhākā [illegible] najñajñādiviyaḥpravṛttaitesajñaḥe [illegible] āṭaśakakṣaṇojñamā
+3. [illegible] āṣkkikkaikke ‖ vaṣyaḥsātvikaekādaśakaḥ ‖ [illegible] prairakkaitaivai
+4. urādihāṃkrāva ‖ āldrakāleñjamātrasakalama ‖ tameṅkillasāṭṭaṭa
+5. yāḥ [illegible] ḥṣṭheki ‖ driyāṇicakṣu [illegible] śrotra [illegible] dri ‖ śasanākhagāḻbyā
+6. nivākḻpāni ‖ [illegible] pādapāyūpasthānkarmma ‖ ddātrūhūdrya
+7. uṭṭayāmekima ‖ tramanasskaḻḻikkamindriyañcosra ‖ yitrālgaṇacati
+8. trāmatidauyanānoāyaṣaioāhṛmeṭṭamārjñājhaigvassrūpādiṣpakṣā
+9. ñāmarālepācanamamaṣṭṭatramiśramempṛrktaḥpacasādandasavihāgaijāḥsakhyānarākṣ
+
+TRANSCRIPTION C
+1. buddhirdharmmojñānaṃvi ‖ rāgaaiśvaryyaṃsātvikametadrūpaṃtā ‖ masamasmādviparyyastaṃ
+2. abhimānohaṃ ‖ kārastasmādvividhaḥpravarttatesarggaḥ ‖ ekādaśakaścagaṇastanmā
+3. trapañcakaścai ‖ va24sātvikaekādaśakaḥ ‖ pravarttatevai
+4. kṛtādahaṃkārā ‖ dbhūtādestanmātrassatāmasa ‖ staijasādubha
+5. yaṃ25buddhi ‖ ndriyāṇicakṣuśśrotraghrāṇa ‖ rasanatvagākhyā
+6. nivākpāṇi ‖ [illegible] pādapāyūpasthānkarmme ‖ ndriyāṇyāhuḥ26
+7. ubhayātmakama ‖ tramanassaṃkalpakamindriyañcasā ‖ dharmmyālguṇapari
+8. ṇāmaviśeṣā ‖ nnānātvaṃbāhyabhedāśca27rū ‖ pādiṣupañcā
+9. nāmālocana ‖ mātramiṣyatevṛttiḥvacanādānaviha ‖ raṇotsarggānandāśca
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

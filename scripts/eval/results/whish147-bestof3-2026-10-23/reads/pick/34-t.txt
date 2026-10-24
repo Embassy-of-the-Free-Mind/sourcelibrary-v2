@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B reads most clearly as a gloss on Sāṅkhyakārikā 18 (puruṣa-bahutva), with phrases like "pṛthak pratiśarīram anekaḥ puruṣaḥ", "maraṇakaraṇānām ityādi", "cakṣurādibhi", "jananamaraṇe" and "pratiniya"; A keeps some of this, and C is mostly broken syllable strings.

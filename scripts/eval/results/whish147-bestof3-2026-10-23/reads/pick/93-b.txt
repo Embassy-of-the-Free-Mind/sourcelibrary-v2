@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | A is mostly made-up syllable strings ("ṣṭhatrṛtratha", "bhebheprṛnāyyṛ") that never form real Sanskrit or Malayalam, while B gives only a little but believable text ("…dheḥ yathā", which A also has as its opening) and C adds nothing.

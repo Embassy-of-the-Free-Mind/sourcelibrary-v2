@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three gives any readable Sanskrit or Malayalam, so B ranks first only because it keeps the string-hole layout in every row and adds nothing made up; A adds stray, meaningless "ḥ" marks, and C leaves out the string holes in rows 1–4.

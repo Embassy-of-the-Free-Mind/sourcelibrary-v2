@@ -8,6 +8,7 @@ import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOT
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { isBookReadable } from '@/lib/book-access';
 
@@ -101,9 +102,12 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
-    if (isBot(request) && !(await isTrustedBot(request))) {
-      const maxPage = botMaxPage(book.pages_count || 0);
-      if (pageNumber > maxPage) {
+    if (isBot(request)) {
+      const trusted = await isTrustedBot(request);
+      const maxPage = trusted ? undefined : botMaxPage(book.pages_count || 0);
+      const clamped = maxPage !== undefined && pageNumber > maxPage;
+      logBotRead(request, { route: 'quote', book: resolvedBookId, trusted, pageFrom: pageNumber, maxPage, clamped });
+      if (clamped) {
         return NextResponse.json({
           error: `Page ${pageNumber} is beyond the bot-accessible range (pages 1–${maxPage}). Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server`,
           accessible_pages: maxPage,
@@ -124,7 +128,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
-    const quotable = resolveQuoteText(page, book.id);
+    const quotable = resolveQuoteText(page, book.id, 'en', { book });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -210,7 +214,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       // sentence spanning the leaf break be quoted whole (#3939).
       const neighbour = (p: unknown) => {
         const pg = p as Page | null;
-        return pg ? resolveQuoteText(pg, resolvedBookId)?.text : undefined;
+        return pg ? resolveQuoteText(pg, resolvedBookId, 'en', { book })?.text : undefined;
       };
       response.context = {
         previous_page: neighbour(prevPage),

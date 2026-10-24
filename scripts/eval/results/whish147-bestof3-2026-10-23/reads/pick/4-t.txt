@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B, D
+WHY | A reads as a coherent title leaf: "sāṃkhyasaptatiḥ", then "jayamaṅgalā nāma vyākhyā" (the Jayamaṅgalā commentary) with Malayalam "nanni", and a scribal alphabet row (ka kha ga gha ṅa ca cha ja jha ña). B, C and D break into fragments or meaningless syllables after their first word.

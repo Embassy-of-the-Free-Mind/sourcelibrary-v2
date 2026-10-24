@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | None of the three contains any readable Sanskrit or Malayalam; B and C are identical and fully marked illegible without claiming false content, while A adds only isolated marks ("lo", "ḥ", "ṃ") that form no words, so this is a near-tie with no real basis for preferring any one.

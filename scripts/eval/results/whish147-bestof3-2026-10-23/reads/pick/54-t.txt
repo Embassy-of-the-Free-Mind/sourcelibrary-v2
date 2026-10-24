@@ -1,0 +1,4 @@
+PICK | B
+RANK | B, A, C
+
+WHY | B has the most rows that read as real Sanskrit or Malayalam, such as "viṣayiddhāre", "bāhyāḥ…dṛṣṭikāraṇā", "saṃbhavati", "tatraikattu" and "dratatvapakṣāt"; A is readable in a few rows but breaks down elsewhere, and C is full of repeated "bha" syllables that only look like words.

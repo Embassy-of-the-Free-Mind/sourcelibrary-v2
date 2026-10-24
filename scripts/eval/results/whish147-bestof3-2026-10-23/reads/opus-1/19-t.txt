@@ -1,0 +1,10 @@
+ROW 1 | ംഗിനംദ്രഷ്ടാശ്രുതാരെവ്യൃണാമിവിരുദ്ധമെന ‖ നാന്യടമിത്വമിക്ഷികഖാദൃഷ്ടാഗമകല്പനാഃഖ ‖ [illegible]
+ROW 2 | രസംഖെഞസാബന്ധ്യാത്ഥാസക്ഷഃതെന്ദ്ര ‖ [illegible]ഷ്ടാമിസംബന്ധായാഗ്യഭാനാജ്ഞ്യതമെബ ‖ [illegible]
+ROW 3 | ാടഞാദാമിൽവൃത്ത ‖ ലക്ഷണനാജ്ഞാനാജ്ഞാപവാപ്യ ‖ ൃദൃഷ്ടഃഏവംപ്രക്രി
+ROW 4 | വികാരസംഖെ ‖ ന്യാഖ്യാതാവലവസക്കുാഃഥാ ‖ ശ്ചാരണസംഖെ
+ROW 5 | ഝാഖ്യാതായെന ‖ ചണ്ടെയൊഃവാക്യവൃത്തികസ ‖ ംഖ്യെയായാഭി
+ROW 6 | പൃഷ്ഠമിവിജ്ഞ ‖ ജ്ഞതഭാഃസാന്നിദ്ധ്യസംഖ ‖ െന്യാഖ്യാതാചൃവ്
+ROW 7 | ഏകയൊഃഉ ‖ ശ്ചമ്പിസംഞ്ചന്യായഭാഗ്രി ‖ തൊക്ഷെയാദ
+ROW 8 | ത്രിക്കസ്യാഭാവെഗു ‖ ാടാവഃപ്രകൃതിയകതനിമിത്തകൈബ ‖ ഗ്ലിക്കസംബന്ധാദിഷ
+ROW 9 | ംരെട്ടാത്രൈട്ടാദു ‖ ലൈമേന്ദ്രിയെഔഭ്രസ്ഥംബൈന്ദ്യ ‖ സ്ഥിയമണ്ഡമാനംപ്രമാ
+NOTE | All 9 rows have visible text, but my reading is reliable for only about 40–50% of the akṣaras, so this is a rough attempt: the conjuncts, vowel signs and the start and end of each piece are uncertain. ROW 1–2: their right-hand sections have no text after the second ‖ because the first ‖ falls where p02 meets p03, not at the left hole. ROW 8–9 are also full-width, and their ‖ marks don't line up with the holes either.

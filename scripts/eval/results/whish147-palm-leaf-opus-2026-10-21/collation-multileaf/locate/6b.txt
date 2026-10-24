@@ -1,0 +1,17 @@
+LINE 1 | SK_23 | buddhir | sāttvikam | confident
+LINE 2 | SK_24 | abhimāno | pravartate | confident
+LINE 3 | SK_24-SK_25 | sargaḥ | ekādaśakaḥ | confident
+LINE 4 | SK_25 | vaikṛtād | tan-mātraḥ | confident
+LINE 5 | SK_25-SK_26 | tāmasas | śrotra | unsure
+LINE 6 | SK_26 | ākhyāni | pāyū 'pasthān | unsure
+LINE 7 | SK_27 | ubhayā`tmakam | saṃkalpakam | confident
+LINE 8 | SK_27 | pariṇāma | bhedāc | confident
+LINE 9 | SK_28 | pañcānām | vacanā`dāna | confident
+FIRST_VISIBLE_VERSE=23 LAST_VISIBLE_VERSE=28
+
+How I placed the lines:
+- **Lines 3–7:** Each has a large blank gap before the string hole. Text resumes on the right side of this half.
+- **Line 1:** It starts mid-word, so the visible text begins with the end of "buddhir".
+- **Line 5:** It's hard to read before the gap. The right side clearly reads "-driyāṇi cakṣuḥ śro-", which is SK_26.
+- **Line 6:** It starts with something like "…ni vākpāṇi". That's probably the end of "tvag-ākhyāni".
+- **Missing words:** The end of SK_23, "śabdā`diṣu" (SK_28) and part of SK_26 aren't visible here. They should be at the line ends on the right half.

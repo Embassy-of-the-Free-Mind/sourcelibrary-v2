@@ -19,6 +19,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { makePageDoc } from '../lib/book-docs.mjs';
+import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
@@ -173,6 +174,7 @@ async function processBook(db, bookId) {
 
   // Now that new pages are written, delete the parked old page.
   await db.collection('pages').deleteOne({ _id: sourcePage._id });
+  await withdrawPageVectors([sourcePage.id], { reason: 'removed', writer: 'oraec-paginate-translate' }); // #6270
 
   // Update book counts
   await db.collection('books').updateOne(

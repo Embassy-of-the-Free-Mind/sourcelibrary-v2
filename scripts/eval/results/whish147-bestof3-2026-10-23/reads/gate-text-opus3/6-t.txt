@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most complete and grammatical text of Sāṅkhyakārikā 17–22 ("saṃghātaparārthatvāt…", "kartteva bhavatyudāsīnaḥ", with the verse numbers 18–22 in place). C reads the same passage but has more gaps and slips, such as "parārthāt" and "bhavatīti", and A is mostly broken fragments.

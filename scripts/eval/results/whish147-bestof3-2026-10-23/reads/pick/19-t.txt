@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B has the most real Sāṅkhya vocabulary (dṛṣṭa, śruta, viruddha, prakṛti-vikāra-saṃkhyā, vyākhyātā, vākyavṛtti, sānnidhya, saṃbandha, indriya, pramāṇa) across most rows; A is fluent only in scattered places and garbled elsewhere, and C is too fragmentary to read as continuous text.

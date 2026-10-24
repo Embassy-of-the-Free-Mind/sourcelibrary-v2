@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three reads as continuous language, but only A has fragments that fit a Sāṅkhya context ("satva", "hetu", "ndra…" as in indriya), while C and B are almost entirely [illegible] with a few stray visarga marks.

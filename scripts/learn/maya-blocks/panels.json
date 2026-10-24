@@ -1,0 +1,1029 @@
+[
+ {
+  "id": "tc-alfarda-west",
+  "monument": "tc-alfardas",
+  "page": 24,
+  "clip": [
+   118,
+   252,
+   510,
+   398
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F"
+  ],
+  "rows": [
+   1,
+   2
+  ]
+ },
+ {
+  "id": "tc-alfarda-east",
+  "monument": "tc-alfardas",
+  "page": 24,
+  "clip": [
+   122,
+   482,
+   510,
+   642
+  ],
+  "cols": [
+   "G",
+   "H",
+   "I",
+   "J",
+   "K",
+   "L"
+  ],
+  "rows": [
+   1,
+   2
+  ]
+ },
+ {
+  "id": "tc-facade-ad",
+  "monument": "tc-shrine-facade",
+  "page": 27,
+  "clip": [
+   88,
+   330,
+   305,
+   385
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rows": [
+   ""
+  ],
+  "xcuts_pt": [
+   90,
+   153,
+   211,
+   263,
+   303
+  ]
+ },
+ {
+  "id": "tc-facade-eh",
+  "monument": "tc-shrine-facade",
+  "page": 27,
+  "clip": [
+   322,
+   330,
+   552,
+   385
+  ],
+  "cols": [
+   "E",
+   "F",
+   "G",
+   "H"
+  ],
+  "rows": [
+   ""
+  ],
+  "xcuts_pt": [
+   324,
+   378,
+   434,
+   494,
+   551
+  ]
+ },
+ {
+  "id": "tc-caption-row",
+  "monument": "tc-sanctuary-panel-left",
+  "page": 30,
+  "clip": [
+   236,
+   128,
+   421,
+   174
+  ],
+  "cols": [
+   "I",
+   "J",
+   "K",
+   "L",
+   "M"
+  ],
+  "rows": [
+   ""
+  ],
+  "rename": {
+   "M": "M1"
+  },
+  "xcuts_pt": [
+   237,
+   272,
+   306,
+   342,
+   386,
+   422
+  ],
+  "ycuts_pt": [
+   138,
+   176
+  ]
+ },
+ {
+  "id": "tc-caption-m",
+  "monument": "tc-sanctuary-panel-left",
+  "page": 30,
+  "clip": [
+   376,
+   174,
+   424,
+   402
+  ],
+  "cols": [
+   "M"
+  ],
+  "rows": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "ycuts_pt": [
+   176,
+   216,
+   256,
+   291,
+   318,
+   352,
+   398
+  ]
+ },
+ {
+  "id": "tc-jamb-upper",
+  "monument": "tc-sanctuary-jamb",
+  "page": 31,
+  "clip": [
+   370,
+   165,
+   485,
+   395
+  ],
+  "cols": [
+   "A",
+   "B"
+  ],
+  "rows": [
+   "p5",
+   "p6",
+   "p7",
+   "p8",
+   "p9"
+  ],
+  "xcuts_pt": [
+   374,
+   429,
+   481
+  ],
+  "ycuts_pt": [
+   168,
+   206,
+   250,
+   300,
+   346,
+   392
+  ]
+ },
+ {
+  "id": "tc-jamb-lower",
+  "monument": "tc-sanctuary-jamb",
+  "page": 31,
+  "clip": [
+   420,
+   490,
+   485,
+   600
+  ],
+  "cols": [
+   "A",
+   "B"
+  ],
+  "rows": [
+   "p11",
+   "p12"
+  ],
+  "xcuts_pt": [
+   424,
+   450,
+   481
+  ],
+  "ycuts_pt": [
+   495,
+   540,
+   592
+  ],
+  "skip": [
+   "Ap11"
+  ]
+ },
+ {
+  "id": "tc-main-left",
+  "monument": "tc-main-tablet",
+  "page": 34,
+  "clip": [
+   90,
+   125,
+   300,
+   705
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ {
+  "id": "tc-main-right",
+  "monument": "tc-main-tablet",
+  "page": 34,
+  "clip": [
+   322,
+   125,
+   542,
+   705
+  ],
+  "cols": [
+   "G",
+   "H",
+   "I",
+   "J",
+   "K",
+   "L"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ {
+  "id": "tc-sec-mq",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   108,
+   198,
+   290,
+   242
+  ],
+  "cols": [
+   "M",
+   "N",
+   "O",
+   "P",
+   "Q"
+  ],
+  "rows": [
+   1
+  ],
+  "xcuts_pt": [
+   110,
+   145,
+   181,
+   215,
+   249,
+   288
+  ],
+  "ycuts_pt": [
+   204,
+   241
+  ]
+ },
+ {
+  "id": "tc-sec-q2",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   246,
+   240,
+   296.5,
+   422
+  ],
+  "cols": [
+   "Q"
+  ],
+  "rows": [
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "tc-sec-q7",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   248,
+   472,
+   296.5,
+   632
+  ],
+  "cols": [
+   "Q"
+  ],
+  "rows": [
+   7,
+   8,
+   9,
+   10
+  ]
+ },
+ {
+  "id": "tc-sec-rst",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   336,
+   131,
+   446,
+   171
+  ],
+  "cols": [
+   "R",
+   "S",
+   "T"
+  ],
+  "rows": [
+   1
+  ],
+  "xcuts_pt": [
+   336,
+   374,
+   410,
+   444
+  ],
+  "ycuts_pt": [
+   133,
+   172
+  ]
+ },
+ {
+  "id": "tc-sec-r",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   334,
+   171,
+   376,
+   242
+  ],
+  "cols": [
+   "R"
+  ],
+  "rows": [
+   2,
+   3
+  ],
+  "ycuts_pt": [
+   172,
+   201,
+   241
+  ]
+ },
+ {
+  "id": "tc-sec-u",
+  "monument": "tc-main-tablet",
+  "page": 48,
+  "clip": [
+   441,
+   178,
+   488,
+   692
+  ],
+  "cols": [
+   "U"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15
+  ]
+ },
+ {
+  "id": "tfc-alfarda-1",
+  "monument": "tfc-alfardas",
+  "page": 50,
+  "clip": [
+   99,
+   158,
+   493,
+   284
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F"
+  ],
+  "rows": [
+   1,
+   2
+  ],
+  "xcuts_pt": [
+   105,
+   167,
+   229,
+   295,
+   363,
+   429,
+   490
+  ],
+  "ycuts_pt": [
+   159,
+   221,
+   281
+  ]
+ },
+ {
+  "id": "tfc-alfarda-2",
+  "monument": "tfc-alfardas",
+  "page": 50,
+  "clip": [
+   104,
+   336,
+   493,
+   464
+  ],
+  "cols": [
+   "G",
+   "H",
+   "I",
+   "J",
+   "K",
+   "L"
+  ],
+  "rows": [
+   1,
+   2
+  ],
+  "xcuts_pt": [
+   108,
+   175,
+   235,
+   297,
+   361,
+   425,
+   490
+  ],
+  "ycuts_pt": [
+   339,
+   401,
+   465
+  ]
+ },
+ {
+  "id": "tfc-jamb",
+  "monument": "tfc-sanctuary-jamb",
+  "page": 55,
+  "clip": [
+   453,
+   118,
+   542,
+   697
+  ],
+  "cols": [
+   "A",
+   "B"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ]
+ },
+ {
+  "id": "tfc-main-left",
+  "monument": "tfc-main-tablet",
+  "page": 58,
+  "clip": [
+   128,
+   101,
+   275,
+   692
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ {
+  "id": "tfc-main-right",
+  "monument": "tfc-main-tablet",
+  "page": 58,
+  "clip": [
+   353,
+   101,
+   507,
+   697
+  ],
+  "cols": [
+   "E",
+   "F",
+   "G",
+   "H"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ {
+  "id": "tfc-sec-i1",
+  "monument": "tfc-main-tablet",
+  "page": 67,
+  "clip": [
+   144,
+   138,
+   196,
+   417
+  ],
+  "cols": [
+   "I"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ {
+  "id": "tfc-sec-i8",
+  "monument": "tfc-main-tablet",
+  "page": 67,
+  "clip": [
+   144,
+   460,
+   196,
+   554
+  ],
+  "cols": [
+   "I"
+  ],
+  "rows": [
+   8,
+   9
+  ]
+ },
+ {
+  "id": "tfc-sec-j",
+  "monument": "tfc-main-tablet",
+  "page": 67,
+  "clip": [
+   244,
+   250,
+   291,
+   480
+  ],
+  "cols": [
+   "J"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "tfc-sec-ko",
+  "monument": "tfc-main-tablet",
+  "page": 67,
+  "clip": [
+   327,
+   173,
+   533,
+   213
+  ],
+  "cols": [
+   "K",
+   "L",
+   "M",
+   "N",
+   "O"
+  ],
+  "rows": [
+   1
+  ],
+  "xcuts_pt": [
+   333,
+   380,
+   418,
+   455,
+   492,
+   530
+  ],
+  "ycuts_pt": [
+   171,
+   214
+  ]
+ },
+ {
+  "id": "tfc-sec-k",
+  "monument": "tfc-main-tablet",
+  "page": 67,
+  "clip": [
+   324,
+   213,
+   376,
+   507
+  ],
+  "cols": [
+   "K"
+  ],
+  "rows": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "id": "ts-alfarda-1",
+  "monument": "ts-alfardas",
+  "page": 71,
+  "clip": [
+   135,
+   153,
+   296,
+   277
+  ],
+  "cols": [
+   "A",
+   "B"
+  ],
+  "rows": [
+   1,
+   2
+  ],
+  "xcuts_pt": [
+   140,
+   208,
+   277
+  ],
+  "ycuts_pt": [
+   162,
+   218,
+   279
+  ]
+ },
+ {
+  "id": "ts-alfarda-2",
+  "monument": "ts-alfardas",
+  "page": 71,
+  "clip": [
+   137,
+   349,
+   357,
+   461
+  ],
+  "cols": [
+   "pG",
+   "pH",
+   "pI"
+  ],
+  "rows": [
+   1,
+   2
+  ],
+  "xcuts_pt": [
+   142,
+   213,
+   287,
+   354
+  ],
+  "ycuts_pt": [
+   349,
+   407,
+   459
+  ]
+ },
+ {
+  "id": "ts-jamb-upper",
+  "monument": "ts-sanctuary-jamb",
+  "page": 76,
+  "clip": [
+   355,
+   155,
+   500,
+   325
+  ],
+  "cols": [
+   "A",
+   "B"
+  ],
+  "rows": [
+   1,
+   2,
+   3
+  ],
+  "xcuts_pt": [
+   358,
+   430,
+   497
+  ],
+  "ycuts_pt": [
+   160,
+   199,
+   258,
+   323
+  ]
+ },
+ {
+  "id": "ts-jamb-lower",
+  "monument": "ts-sanctuary-jamb",
+  "page": 76,
+  "clip": [
+   385,
+   455,
+   505,
+   600
+  ],
+  "cols": [
+   "pA",
+   "pB"
+  ],
+  "rows": [
+   10,
+   11,
+   12
+  ],
+  "xcuts_pt": [
+   389,
+   448,
+   499
+  ],
+  "ycuts_pt": [
+   458,
+   491,
+   539,
+   597
+  ]
+ },
+ {
+  "id": "ts-main-left",
+  "monument": "ts-main-tablet",
+  "page": 79,
+  "clip": [
+   120,
+   114,
+   281,
+   730
+  ],
+  "cols": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ {
+  "id": "ts-main-right",
+  "monument": "ts-main-tablet",
+  "page": 79,
+  "clip": [
+   350,
+   114,
+   510,
+   730
+  ],
+  "cols": [
+   "E",
+   "F",
+   "G",
+   "H"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ {
+  "id": "ts-sec-io",
+  "monument": "ts-main-tablet",
+  "page": 87,
+  "clip": [
+   169,
+   157,
+   461,
+   241
+  ],
+  "cols": [
+   "I",
+   "J",
+   "K",
+   "L",
+   "M",
+   "N",
+   "O"
+  ],
+  "rows": [
+   1,
+   2
+  ],
+  "extra": [
+   {
+    "coord": "O3",
+    "box_pt": [
+     411,
+     240,
+     461,
+     279
+    ]
+   }
+  ],
+  "xcuts_pt": [
+   174,
+   219,
+   259,
+   299,
+   339,
+   381,
+   420,
+   461
+  ],
+  "ycuts_pt": [
+   155,
+   200,
+   245
+  ]
+ },
+ {
+  "id": "ts-sec-pq",
+  "monument": "ts-main-tablet",
+  "page": 87,
+  "clip": [
+   277,
+   341,
+   369,
+   602
+  ],
+  "cols": [
+   "P",
+   "Q"
+  ],
+  "rows": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ }
+]

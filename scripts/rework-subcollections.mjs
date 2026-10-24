@@ -232,7 +232,7 @@ async function main() {
       if (!DRY_RUN) {
         const pullResult = await db.collection('books').updateMany(
           { collections: oldSlug },
-          { $pull: { collections: oldSlug } },
+          { $pull: { collections: oldSlug }, $currentDate: { updated_at: true } },
         );
         console.log(`  Removed "${oldSlug}" from ${pullResult.modifiedCount} books`);
 
@@ -411,8 +411,8 @@ async function main() {
     // Apply reassignments (move from Western sub → tradition sub)
     if (reassignments.size > 0 && !DRY_RUN) {
       const bulkReassign = [...reassignments.entries()].flatMap(([bookId, { from, to }]) => [
-        { updateOne: { filter: { id: bookId }, update: { $pull: { collections: from } } } },
-        { updateOne: { filter: { id: bookId }, update: { $addToSet: { collections: to } } } },
+        { updateOne: { filter: { id: bookId }, update: { $pull: { collections: from }, $currentDate: { updated_at: true } } } },
+        { updateOne: { filter: { id: bookId }, update: { $addToSet: { collections: to }, $currentDate: { updated_at: true } } } },
       ]);
       await db.collection('books').bulkWrite(bulkReassign);
       console.log(`  Reassigned: ${reassignments.size} books moved to tradition subs`);
@@ -431,7 +431,7 @@ async function main() {
       const bulkOps = [...assigned.entries()].map(([bookId, subSlug]) => ({
         updateOne: {
           filter: { id: bookId },
-          update: { $addToSet: { collections: subSlug } },
+          update: { $addToSet: { collections: subSlug }, $currentDate: { updated_at: true } },
         },
       }));
       const result = await db.collection('books').bulkWrite(bulkOps);

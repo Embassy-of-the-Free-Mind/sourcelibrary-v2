@@ -1,0 +1,12 @@
+ROW 1 | മദൃശ്യബ്ദിത്വാമെന്നാഹ‖മോയന്തെന്യാതുനകഹേതുകാന്തസിദ്ധിഃയ‖ലദുക്കാവിസ്താഃ[illegible]ശാന്യ
+ROW 2 | ംശ്രുത്വേനാപിദൃഷ്ടിതെദ്‖ദ്ദൎഷ്ടവ്യാനാബ്യദ്ധ്യരികിതന്യശബ്ദഹാതു‖തുകാന്തസിദ്ധിഃബ്യദ്ധിദൊഷ
+ROW 3 | ഷിവാരയാംയസ്യഏകുതു‖[illegible]ക്ഷിത്രാദ്ര്യയനാംശെ[illegible]ദ്ധിദോഷാമെദവത‖[illegible]ന്യനദ്ധ്യനഹെതുകാന്തസി
+ROW 4 | ദ്ധിഃനായത്രമിത്രസം‖ഗ്രഹാനാചദാനമത്രഷ്ടാവന്തി‖ദ്ധ്യയൊബുദ്ധിവധ
+ROW 5 | ാന്നശക്താവന്തദ്ദ്രെ‖ത്വാൎത്ഥാസാമെ[illegible]ാബൊസിദ്ധിനാമെ‖ാക്ഷഷണ്ണാമയന്ത്ര
+ROW 6 | മിത്രാജ്ഞാനക്കദ‖ഷംബുദ്ധാവ[illegible]വന്ദ്രതകൽസ‖ൾത്വാൽസിദ്ധെഃഭൂദെ
+ROW 7 | ഭൂാംകശത്രിവിധ‖ഉക്തന്യാ[illegible]ാന്തഷ്ടിവിധായന്യാ‖സ്ഥിദൊഷ്യഃഭ്യവിദ്യാവി
+ROW 8 | പക്ഷയംശക്തിത്രയ്യാദ്ദൃ‖ഷ്ടിവിധഉക്കമെഭ്യാംകശഉമൈതു‖ാതുാകശഃഉക്തഃമെതനത്വാ
+ROW 9 | ഘന്ത്രികൂമെകൊലൊ‖ലാകന്ദ്യുംസാരചക്രൈവക്ഷിജ്ഞവതതത്രഷ്ടി‖ഷ്ടിവപ്ഷ്യയാൎഭ്രഞ്ഞാതെബൎന്ധ
+ROW 10 | ജ്ഞാവചനാൽപക്ഷെ‖പിയമജ്ജാനമംക്ഷഗുഃന്താക്കിഃകലജ്ഞെ‖ജ്ഞൈമെവികല്പ്യാംഭമെതാമി
+
+NOTE | This is a low-confidence, best-effort reading. The 10 rows and the column joins are reliable, but many akṣaras (especially conjuncts, the vowel signs next to the cuts, and whole stretches of rows 1, 3, 5, 7 and 8) are uncertain guesses from the stroke shapes, so treat it as a rough draft to check against the leaf, not a finished transcription.

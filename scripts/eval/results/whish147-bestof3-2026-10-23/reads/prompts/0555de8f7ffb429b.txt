@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ntalodre [illegible] bhāndca [illegible] laṃ ‖ ślaiṭāmyalghaṭā [illegible] ‖ cāñcaṭaḥyadyantalkāra
+2. [illegible] ṃ [illegible] āltaibalndu ‖ bhāvepaṭeṭrājñal [illegible] travetantraipa ‖ ca [illegible] ṃsvaida
+3. haivājjaddurakajja ‖ siddhyāntaḥ [illegible] paśa [illegible] ṭādikkaṭa ‖ jyoṃbaraṭavidya [illegible]
+4. dyakaṇṇadyava ‖ ntāprakṛte [illegible] ruvaṃnya [illegible] pa ‖ jaidarya [illegible] tadrūpata
+5. teta [illegible] rūvāma ‖ [illegible] kṛtvāhave [illegible] haññumaddhāntarāddha ‖ [illegible] ṃmahādādi [illegible]
+6. caṣṇaṃtillāṣka ‖ ṃ [illegible] yānāṃtadra [illegible] ntravyaktaṃdaiva [illegible] ‖ lyathānnaṃkāraṇa
+7. [illegible] ḻḻadrūmāna ‖ yol [illegible] yādvijjrumāra ‖ nnāmahānhetumā
+8. nmahāde [illegible] kāra [illegible] ṇāhetumānbhavaṃkāraṇama [illegible] ṇiekādaśendriyāṇi
+9. uḻḻadrumānā [illegible] vepa [illegible] tramañjitame [illegible] ttadbhrājñāmahādbhratāṇi [illegible] hetuma [illegible] tyama
+
+TRANSCRIPTION B
+1. nmūlodruśla [illegible] ndda ‖ cebhavetalaṃmūṭomūlndhaṭā ‖ othājñaṭaḥyadrutsalkkā
+2. ḻḻaṃntyālbendhalndha ‖ bhāveṭṭājñaljñātretetyapa ‖ ndhāṃsrādantāṃndheṭa
+3. pevajñaddatauḻḻa ‖ svabhrānnaḥ [illegible] khaṃkhaṭābhakkaṭa ‖ ḻḻaṃnaṭekhābhra
+4. drakajñatrava ‖ ndāpraketajñirddavaṃndharddapa ‖ daḻ [illegible] tadrabhrakadra
+5. tajñirddavabha ‖ kradrāha [illegible] drabhadradrā [illegible] ‖ vyājñaṃbhahādā [illegible]
+6. patmanma [illegible] jña ‖ ṃ [illegible] yānmaṃtadravyākṣaṃ [illegible] ‖ l [illegible] thāndhaṃkkāre
+7. ddajñajñadrabhāha ‖ ṣolndhakrahayāddajñaddabhā [illegible] ‖ nnabhahālvehadrabhā
+8. lbhahatāhaṃkkāre ‖ rāhadrabhālndhahaṃkkārājñakabhākrājña ‖ ekkāṭeśajñajñājña
+9. ujñaddabhānājñepadra ‖ bhajñatajñātraddāṅkabhagāḻdratājña ‖ nnehadrabhajñaṣa [illegible] pajñatabha
+
+TRANSCRIPTION C
+1. [illegible] lobhraṣṭa [illegible] bhaൗndra ‖ cabhairavairalaṃgra [illegible] bhaidāglbḍadā [illegible] ‖ [illegible] codājñaṭaḥyadṛnlkā [illegible]
+2. śśatryāl [illegible] selnṟa [illegible] ‖ bhāpepattrājjal [illegible] lṣpātrāpaitapryāpa ‖ cāsāpryā [illegible] ntāsvabhaida
+3. paiva [illegible] ddraka [illegible] ‖ sviddhāṅṅaḻlaipagra [illegible] dā [illegible] kkā ‖ [illegible] ṃ [illegible] padaidapeviddva
+4. ddra [illegible] drava ‖ [illegible] āpraka [illegible] triddravanma [illegible] ca ‖ [illegible] daḻ [illegible] ta [illegible] prakta
+5. [illegible] rupama ‖ [illegible] kṛddhāhālehahaddhama [illegible] ddhā [illegible] ‖ [illegible] ṃmahādā [illegible] drabha
+6. caddhra [illegible] ṃ [illegible] lṛkka ‖ [illegible] dhānaṃ [illegible] ttyā [illegible] ṃ [illegible] ddhama ‖ l [illegible] dhā [illegible] ṃkādārai
+7. [illegible] ddra [illegible] ddhamā [illegible] ‖ [illegible] āl [illegible] ttra [illegible] yāddra [illegible] ddhamādai ‖ [illegible] āmahālhāddhamā
+8. lmahā [illegible] āhikādā [illegible] ‖ [illegible] āhāddhamāl [illegible] ākādā [illegible] krā [illegible] ‖ [illegible] ekādaśa [illegible]
+9. [illegible] ddramā [illegible] ‖ ddhama [illegible] ā [illegible] ddhrā [illegible] mahā [illegible] ‖ [illegible] hāddhama [illegible] pa [illegible] tama
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

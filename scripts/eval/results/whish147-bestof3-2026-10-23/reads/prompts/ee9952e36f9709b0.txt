@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. rūpatalbhramādaśādrūpava ‖ ntāhāmaremetaṣiṣayānetrāṅṅadaśāṃkā ‖ ntalakṣaṇaṃtanmādabhramānala
+2. kṣaṇādaśāṃkāntābhiv [illegible] ‖ paḥpravarttatesaśśaḥikkaisūjñyateḻitasasa ‖ śśatamemavaṣiṣyayaṃdarśitama
+3. āśabdikāādaśakṣagaṇaṅṅa ‖ ḻhākāādaśaparmāṇamahramatrukāādaśa ‖ ḥletrādiśśaṇaḥtanmātrāva
+4. ṣekakaiṣṭeltanmātra ‖ śabdasparśarūpamātraityuktāḥta ‖ nmātrānniśabdasparśa
+5. rūparasagandhāḥmeā ‖ trāgrahaṇaṃbhūtatratasthaṃ [illegible] vyūtyu ‖ tthaṃbhūteteṣuviśśa
+6. ādisaṃduṣpārtthasa ‖ cāhaṃkāntasthiviṣaṅṅilṭarśana ‖ hāḥsātvikaityādi
+7. ghaṭāsattamaḻikka ‖ ṃghaṭadāhaṃkāmanokaivarukairā ‖ bhirmmamanānaṭavabhi
+8. tajjaśeṣādikkaṃlaita ‖ jjasḥkamaśeṣādikkaṃbhūtādi [illegible] ‖ pittaivatitālaṭakādaśa
+9. lokāgaṇopravarttateta ‖ sahāstriṣṭhaḥsatvallehalaḥsthaviṣaya ‖ vagrahāṇāḥmūrdbhūtādeśśu
+10. damasādaṃvikkārārata ‖ tamūprṛsjatāmasakkeṅkomāphalehulabhārl ‖ rltakṣesthamasantāmātrāl
+
+TRANSCRIPTION B
+1. rūpatanmātrāṇṇārūpavā ‖ nnāhāmemetakṣimayā [illegible] ñetraldaśāṃkāra ‖ lakṣaṇaṃtanmātrādabhūmānala
+2. kṣaṇādaśāṃkārādipa [illegible] ‖ ḥpravarttatesarggaḥ iti [illegible] kkesṛṣṭyaitesasargga ‖ tamemavaṣipiyaṃdarśitama
+3. āśābhikādaśakaraṇagaṇaṅṅaḻ ‖ miṇakādaśaparvvimāṇa [illegible] āṇamendriyendriyakādaśa ‖ ḥśrotrādiśrotaḥtanmātrāva
+4. ṣekkameṣṇitanmātra ‖ śabdasparśarūpa [illegible] rūpamātraityarthaḥta ‖ nmātrāniśabdasparśa
+5. rūparasagandhādmeda ‖ krāgrahāṇaṃbhūta [illegible] ntrāṇḍaṃgṛhītarūpavṛtti ‖ ṇḍaṃbhūtaitakṣavimaśabda
+6. ādibhasaṃdevānsa ‖ cāhaṃkkānandya [illegible] khyāmidhaṇṇimadarśana ‖ dvāḥsātvikaityādi
+7. yadāsarūpamatikka ‖ ṣaḍāhaṃkkāma [illegible] gaḍanāmekhalakkarā ‖ bhiṇṇamānanādevaka
+8. tajñameṣādikkaṃmaita ‖ tajñaskamamekkādi [illegible] dikaṃbhūtādiditikki ‖ ditatvamevatrāmadekādaśa
+9. kkānābhravaktametasa ‖ sabānātthitaṃsatvā [illegible] baihūlaḥsvaviṣaya ‖ vagrahāṇātbhūtādekka
+10. damasādaṃhikārānma ‖ nalaghatrasstāmasarkka [illegible] rkkamābahulatvāl ‖ ltattassūmasarūmātrāl
+
+TRANSCRIPTION C
+1. rūpatalbhimāyennārūpavā [illegible] ‖ nnāhāmuoomataṣiṣayāvādaitrāntadaśāṃkāra ‖ lakṣaṇaṃtanmādabhimānala
+2. kṣaṇādaśāṃkārālpiva [illegible] ‖ ḥpravarttatesarggaḥitisṛṣṭyataiḻatasasargga ‖ taomavaṣiṣayaṃdaśitrama
+3. āhaṅkārādaśakṣakagaṇaṅṅa ‖ ḻekādaśaparmāṇamaosvāratrukādaśa ‖ ḥśrotrādiśśabdaḥtanmātrāva
+4. ṣekakaṣeṣatanmātra ‖ śabdatanmātrārūpamātraityuṣḥra ‖ nmātrālśabdaspa [illegible]
+5. rūparasagandhādimā ‖ trāgrahaṇaṃbhūtatrāṇaṃoṣṭhaṣagravyatva ‖ tvaṃbhūtatvaṣaṣaḥśabda
+6. ābhinadal̤avālsa ‖ cāhaṃkārantusthiṣayaṇamiṭaryanna ‖ āhaḥsāttvikaḻutrādi
+7. yadāsatvamukka ‖ ṃṣaṭāhaṃkārāerākevakkukarā ‖ bhikṣimānanāṭavaṅka
+8. tajjeśādikaṃeeta ‖ tajjasaḥkameśādikaṃdrutāditri [illegible] ‖ ttatarevattarāedakādaśa
+9. ekāgaṇaupravarttetasa ‖ sahanātthiraṃsattva [illegible] caphalaḥsvaviṣayagra ‖ vagrahaṇāttalbhūtādeññu
+10. damasādaṃhikkārātmabha ‖ [illegible] ātmagatyatāmasaṅkaomāvephalabār ‖ ltatantramasanmātrāl
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

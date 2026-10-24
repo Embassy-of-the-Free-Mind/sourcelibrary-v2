@@ -389,6 +389,10 @@ const nextConfig: NextConfig = {
       // /sitemap/[__metadata_id__] route and breaks the build, so the
       // index lives at /sitemap-index and we rewrite from /sitemap.xml.
       { source: '/sitemap.xml', destination: '/sitemap-index' },
+      // The strongest pages only (hubs, collections/works/authors, books), submitted
+      // to Search Console on its own so its processing is reported separately.
+      // Google spends ~150-250 HTML fetches a day here (crawl stats, Oct 2026). #3755
+      { source: '/sitemap-core.xml', destination: '/sitemap-core' },
       // The Source Library beta launch talk (embedded video + audio-aligned
       // transcript) lives in a standalone static deployment. Proxy it on-domain
       // at /launch so the email and site link to sourcelibrary.org, not a
@@ -407,8 +411,11 @@ const nextConfig: NextConfig = {
       // otherwise catch them and land on a 404 under the old slug. The prose
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
+      { source: '/partners', destination: '/ai-partners', permanent: true },
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      // Choreia renamed to its main idea (2026-10-19).
+      { source: '/articles/choreia', destination: '/articles/choreia-the-dance-of-the-cosmos', permanent: true },
       // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
       { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
       { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
@@ -444,6 +451,13 @@ const nextConfig: NextConfig = {
         { source: `/${name}`, destination: `/${code}`, permanent: false },
         { source: `/${name}/:path*`, destination: `/${code}/:path*`, permanent: false },
       ]),
+      // The atlas's body map already lives here as a blog document (#4922); the maps
+      // index lists it, and this keeps the /explore/maps/<theme> shape for it too.
+      {
+        source: '/explore/maps/body',
+        destination: '/blog/techniques-of-the-body',
+        permanent: true,
+      },
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {

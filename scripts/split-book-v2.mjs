@@ -39,6 +39,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 
 // --- Config ---
 const MIN_SPREAD_AR = 1.1;
@@ -554,6 +555,9 @@ for (const entry of newPages) {
 if (bulkOps.length > 0) {
   const result = await pagesCol.bulkWrite(bulkOps, { ordered: true });
   console.log(`DB: ${result.insertedCount} inserted, ${result.modifiedCount} modified`);
+  // The archived spreads must stop being served by semantic search (#6270).
+  const archivedIds = newPages.filter(e => e.action === 'split-first').map(e => e.page.id);
+  await withdrawPageVectors(archivedIds, { reason: 'archived', writer: 'split-book-v2' });
 }
 
 // --- Update book metadata ---

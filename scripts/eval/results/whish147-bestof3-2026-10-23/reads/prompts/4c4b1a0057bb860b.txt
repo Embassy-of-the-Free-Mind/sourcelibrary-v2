@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ugatamitiparamāṇṇagatamityuktena [illegible] tyagatamiti [illegible] kkādigatamityatra [illegible] cityu [illegible]
+2. ulbhūtaṃpratyakṣaṃanulbhūtamapratyakṣaṃulbhūtatvaṃpratyakṣaprayoja [illegible] mitiśa [illegible] kadabhāve
+3. [illegible] nalbhūtatvaṃsaṃkhyāṃlakṣayati [illegible] kattiḥparimāṇaṃlakṣaṇamā [illegible] nattiḥparimāṇaṃmi
+4. [illegible] jjatāta [illegible] tti ‖ dāvallyāne [illegible] nānta [illegible] jñāna ‖ tvaṃmahatvaṃdīrghatvaṃhra
+5. [illegible] lakṣaṇātyuḥ ‖ ṣva [illegible] kkaṃlakṣayatti [illegible] ttiu ‖ dami [illegible] gittipya
+6. pa [illegible] rakāraṇami ‖ tya [illegible] saṃ [illegible] yāgapalakṣayati ‖ saṃkhya [illegible] ttiukta [illegible]
+7. saṃkhya [illegible] vitti ‖ tryapahāraṇava [illegible] hātumityulsaṃkhya ‖ [illegible] lakṣaṇa [illegible] sva [illegible]
+8. ukkālapāda [illegible] cabhipāraṇaṃṣa [illegible] yāsadayā [illegible] ttibhāṣyaṃ [illegible] yāgā
+
+TRANSCRIPTION B
+1. ugatamitilakṣaṇāgatamityādyartthenaitityagatamiticcāṇakkādagatamityarttha [illegible] ṣuparicchi [illegible]
+2. darddṛtaṃpratyakṣaṃanarddṛtamapratyakṣaṃurddṛtatvaṃpratyakṣaprayogaira [illegible] śabdaikadeśāve
+3. danarddṛtatvaṃsaṃkhyā [illegible] ṃlakṣyatti [illegible] kettiparimāṇaṃlakṣaṇattimānenattiparimāṇaṃmi
+4. ṭīketāta [illegible] tti ‖ ṭāvya [illegible] yānāminṟe [illegible] ññāṇa ‖ khyaṃmahatvaṃdīrghatvaṃhra
+5. [illegible] yavakai [illegible] rtthaḥ ‖ ṣmadakkaṃlakṣaṇayattiṣṭadaśittii ‖ damiśrārttha [illegible] daśitippṛ
+6. padārtthakāraṇami ‖ tbhi [illegible] saṃbai [illegible] galalakṣaṇatti ‖ saṃkhyatatti [illegible]
+7. saṃkhyakkāvitti ‖ tyupahāramityartthaṃsaṃkhya [illegible] laṅkāṇaka [illegible] savvṛtra
+8. uktālādarttha [illegible] ttipāraṇāṃ [illegible] yyāsadayārttha [illegible] tti [illegible] boddhyaṃ [illegible] yogā
+
+TRANSCRIPTION C
+1. igatamitipathamāraṇyagatamityuktennettityugatamiticcāṇyakkādigatamityal [illegible] paricitrajña
+2. dalbhūtaṃpratyakṣaṃnanalbhūtamapratyakṣaṃulbhūtatvaṃpratyakṣaprameyādikṣe [illegible] bhāve
+3. dvandratvaṃsaṃkhyeyaṃlakṣayattiekaikattiḥparimāṇaṃlakṣaṇamādenattiḥparimāṇaṃvi
+4. dṛṣṭatātadṛṣṭatti ‖ dāvallayāne [illegible] rimenṟeguṇaṅṅaḻ ‖ khyaṃmahatvaṃdiṣṭa [illegible]
+5. ghaṭapaṭabhedyārtthaḥ ‖ l̤uchakkaṃlakṣayattipṛthagittiu ‖ damindrālpṛthagitivya
+6. padhānakkāraṇatti ‖ truṣṭedasaṃyogalakṣayatti ‖ saṃkhyakatti [illegible]
+7. saṃkhyakkāvitti ‖ dyupahāravaihātramityulktvāsaṃkhya ‖ [illegible] dilakṣaṇaṅṅaḻsarvvatra
+8. ṭhakkāralādikka [illegible] ‖ ldapattipāraṇāṃlyosadayādī [illegible] tti ‖ boddhyaṃbrahmayogā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

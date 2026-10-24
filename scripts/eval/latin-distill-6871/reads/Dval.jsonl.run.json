@@ -1,0 +1,12 @@
+{
+ "mode": "glm",
+ "model": "m",
+ "pages_this_pass": 99,
+ "clients": 16,
+ "wall_secs": 197.9,
+ "pages_per_hour": 1801,
+ "errors": 0,
+ "hit_cap": 3,
+ "out_tok": 90795,
+ "in_tok": 357972
+}

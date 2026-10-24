@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf begins "ഘാതപരാൎത്ഥത്വാൽത്രി | ഗുണാദിവിപൎയ്യയാദധിഷ്ഠാനാൽപുരുഷൊ | സ്തിഭൊക്തൃഭാവാൽകൈ". B matches. C matches except for an extra "സം" at the start, which is not on this leaf. E drops "ത്വ". F leaves the opening illegible. A and D have garbled letters ("ഷ്ഠാകപരാത്തകാൾ", "ഝാകപരാത്മഖാൽ").
+CHECK | row 6: The leaf begins "സംയൊഗാദചെ | തനംചെതനാവദിവലി | ംഗംഗുണകൎത്തൃത്വെ". C matches exactly. B and E start with "ത്സം", but that "ത്" ends row 5 on the leaf. F is mostly illegible. A and D have the wrong letters ("ചതനതകൊതനാപഇലവി", "ചതമകഖൊതനാപദെവവി").
+CHECK | row 10: The leaf begins "ശകഃതസ്മാദപിഷൊ | ഡശകാൽപഞ്ചഭ്യഃപഞ്ചഭൂതാനി | ॥൨൨॥അദ്ധ്യവസായൊ". C matches but adds "ബുദ്ധി" at the end, which I can't see on the leaf. E matches. B marks "തസ്മ" illegible. F is almost entirely illegible. A and D are garbled ("തെന്താദവിമാ", "തന്താദവിത").
+PICK | C
+RANK | C, B, E, F, D, A
+WHY | Only C matches the leaf's actual row breaks with correct letters in every row checked: row 2 starts "കൈവല്യാൎത്ഥം" and row 6 starts "സംയൊഗാദചെ", where B and E start in the wrong place. Its errors are small: an extra "സം" in row 1 and an extra "ബുദ്ധി" in row 10.

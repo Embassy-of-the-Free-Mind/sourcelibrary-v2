@@ -1,0 +1,56 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasava ‖ dharmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān [illegible] prītyaprītiviṣā ‖ dātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśrayaja ‖ nanamithunavṛttayaśca
+4. guṇāḥ [illegible] satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ [illegible]
+6. [illegible] vivekyāde ‖ siddhistraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ [illegible] bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasya [illegible] kāraṇamastyavyaktaṃpra ‖ varttatetriguṇatassa
+10. mudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣāl [illegible]
+
+TRANSCRIPTION B
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasava ‖ dharmmivyaktaṃtathāpradha
+2. ānanteyacavikṛtajñapa ‖ ācaprakṛtimānṣṭapratyatrikivipa ‖ ādātmakāḥprakāśa
+3. pravṛttiniyamaൗ ‖ khyāḥkhainnaiāgrābhabhavākraṣa ‖ jananamiṣṭaṇaṣṭhaāyaśra
+4. guṇāḥsthāsakhyaṃ ‖ lakṣaprakāśakamiṣṭaghapaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ mavatamaḥprettibhipavannākṣa ‖ toāvṛkkiḥsandha
+6. āśrikamanyāda ‖ nidraitregaññāiradipaṇṇa ‖ dhyābhāvālkā
+7. raṇaguṇāṣmaka ‖ khālkābhaḻḻantāāprakkamavi ‖ niddhaṃsthaśabhaṭā
+8. nāṃparimāṇā ‖ lsamanvayādaṣṭikitapreṣṭhoa ‖ śrakānaṇakaṣṭhavibhā
+9. gādaviṭāśramadve ‖ śakharuppantṛstṛkānaṇamantṛbhyakapra ‖ uṣṭhakarakattiguṇakanta
+10. dradākhāllavatiṇā ‖ makannivilavalśrakaprakaguṇāśrakha ‖ viraikkālssasaṃkṣa
+
+TRANSCRIPTION C
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasava ‖ dharmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān [illegible] prītyaprītivi ‖ ṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥanyonyābhibhavāśrayaja ‖ nanamithunavṛttayaśca
+4. guṇāḥ [illegible] satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇakame ‖ vatamaḥpradīpavaccārttha ‖ tovṛttiḥ [illegible]
+6. avivekyāde ‖ ssiddhistraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ [illegible] bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasya [illegible] kāraṇamastyavyaktaṃprava ‖ rttatetriguṇatassa
+10. mudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣālsaṃ [illegible]
+
+TRANSCRIPTION D
+1. triguṇamaviveki ‖ viṣayassāmānyamacetanaṃprasavadha ‖ rmmivyaktantathāpradha
+2. ānantadviparītasta ‖ thācapumān [illegible] prītyaprītivi ‖ ṣādātmakāḥprakāśa
+3. pravṛttiniyamā ‖ rtthāḥ [illegible] nyonyābhibhavāśraya ‖ jananamithunavṛttayaśca
+4. guṇāḥ [illegible] satvaṃ ‖ laghuprakāśakamiṣṭamupaṣṭaṃbha ‖ kañcalañcarajaḥ
+5. guruvaraṇaka ‖ mevatamaḥpradīpavaccārttha ‖ tovṛttiḥ [illegible]
+6. [illegible] vivekyāde ‖ siddhaṃtraiguṇyāttadviparyya ‖ yābhāvālkā
+7. raṇaguṇātmaka ‖ tvālkāryyasyāvyaktamapi ‖ siddhaṃ [illegible] bhedā
+8. nāṃparimāṇā ‖ lsamanvayācchaktitaḥpravṛtteśca ‖ kāraṇakāryyavibhā
+9. gādavibhāgādvaiśva ‖ rūpyasyakāraṇamastyavyaktaṃprava ‖ rttatetriguṇatassa
+10. samudayāccapariṇā ‖ matassalilavalpratipratiguṇāśraya ‖ viśeṣāl [illegible] saṃgha
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

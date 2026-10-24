@@ -291,7 +291,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          <Link href="/book/harmonices-mundi-1619-first-edition-kepler" className="text-accent-rust hover:underline">
+          <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:underline">
             Read the full translation &rarr;
           </Link>
         </p>
@@ -523,7 +523,7 @@ export default function Singularity1486Page() {
             : the Earth as a conscious being, the noosphere a century early
           </li>
           <li className="text-secondary font-body">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler" className="text-accent-rust hover:underline">
+            <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:underline">
               Kepler, <em>Harmonices Mundi</em> (1619)
             </Link>
             : planetary motion as polyphonic music

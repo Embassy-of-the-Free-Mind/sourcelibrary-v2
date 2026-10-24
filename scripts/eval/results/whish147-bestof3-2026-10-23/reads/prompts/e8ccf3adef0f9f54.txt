@@ -1,0 +1,85 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 6 machine transcriptions (A, B, C, D, E, F) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുഃ[illegible]യാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+2. ദഭിഘാതകെഹെ‖തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ‖കാന്താത്യന്തതൊ
+3. ഭാവാൽ൧ദൃ‖ഷ്ടവദാനുശ്രവികസ്സഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+4. ക്തഃതദ്വിപരി‖തശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽ൨മൂല
+5. പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത
+6. ഷൊഡശകസ്തുവി‖കാരൊനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃ൩ദൃഷ്ട
+7. മനുമാനമാ‖പ്തവചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+8. ധംപ്രമാണമിഷ്ടം‖പ്രമെയസിദ്ധിഃ[illegible]പ്ര[illegible]തിവി‖ഷയാദ്ധ്യവസായൊദൃ
+9. ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി‖പൂൎവ്വക[illegible]
+10. ‖[illegible]മാണാദി‖
+
+TRANSCRIPTION B
+1. ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+2. ദഭിഘാതകെഹെ‖തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ‖കാന്താത്യന്തതൊ
+3. ഭാവാൽ[illegible]തു‖[illegible]പദാ[illegible]ൎത്ഥ[illegible]വ്യാ[illegible]‖[illegible]ഭിശബ്ദ[illegible]
+4. ജ്ഞഃ[illegible]പരി‖[illegible]ൻ‖വ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽ[illegible]
+5. പ്രകൃ[illegible]വിളു‖[illegible]പാദാദ[illegible]ഃപ്രകൃതിവി‖കൃതി[illegible]
+6. [illegible]വി‖[illegible]ൻപ്രകൃതി[illegible]‖[illegible]ഃപുരുഷഃ[illegible]
+7. മനസാനമ[illegible]‖[illegible]വചന[illegible]പ്രമാണ‖[illegible]സിദ്ധ[illegible]
+8. യംപ്രമാണമി[illegible]‖പ്രമെയസിദ്ധിഃ[illegible]പ്രകൃതിവി[illegible]‖[illegible]യാ[illegible]വസായൊ[illegible]
+9. [illegible]ത്രിവിധമ‖[illegible]മാന[illegible]ം[illegible]ം[illegible]‖[illegible]
+10. [illegible]‖[illegible]മാണാദി।‖
+
+TRANSCRIPTION C
+1. –ഹരിഃശ്രീഗണപത ‖ യെനമഃഅവിഘ്ന ‖ മസ്തുദുഃഖത്രയാഭി ‖ ഘാതാജ്ജിജ്ഞാസാത
+2. ദപഘാതകെ ‖ ഹെതൗദൃഷ്ടെസാ ‖ പാൎത്ഥാചെന്നൈ ‖ കാന്താത്യന്തതൊ
+3. ഭാവാൽ൧ദൃ ‖ ഷ്ടവദാനുശ്ര ‖ വികസ്സഹ്യവിശു ‖ ദ്ധിക്ഷയാതിശയയു
+4. ക്തഃതദ്വിപരീ ‖ തഃശ്രെയാൻ ‖ വ്യക്താവ്യക്തജ്ഞ ‖ വിജ്ഞാനാൽ൨മൂല
+5. പ്രകൃതിരവികൃ ‖ തിൎമ്മഹദാദ്യാ ‖ ഃപ്രകൃതിവി ‖ കൃതയസ്സപ്തഷൊ
+6. ഡശകസ്തുവി ‖ കാരൊനപ്ര ‖ കൃതിൎന്നവികൃ ‖ തിഃപുരുഷഃ൩ദൃഷ്ട
+7. മനുമാനമാ ‖ പ്തവചനഞ്ച ‖ സൎവ്വപ്രമാണ ‖ സിദ്ധത്വാൽത്രിവി
+8. ധംപ്രമാണമിഷ്ട ‖ ംപ്രമെയസിദ്ധിഃ ‖ ൪പ്രതിവിഷ ‖ യാദ്ധ്യവസായൊദൃ
+9. ഷ്ടംത്രിവിധമ ‖ നുമാനമാഖ്യാത ‖ ംതല്ലിംഗലിംഗി ‖ പൂൎവ്വകമാപ്തശ്രുതി
+10. ‖ പ്രമാണാദ്ധി। ‖
+
+TRANSCRIPTION D
+1. - ഹരിഃ ശ്രീഗണപതയെ ന ‖ [illegible]ഃ അയനമഃ അവിഘ്നമസ്തു ദുഃഖത്രയാഭി ‖ ഘാതാജ്ജിജ്ഞാസാത
+2. ദപഘാതകെ ഹെ ‖ തൗദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ ‖ കാന്താത്യന്തതൊ
+3. ഭാവാൽ ൧ ഃ ദൃ ‖ ഷ്ടവദാനുശ്രവികസ്സഹ്യവിശു ‖ ദ്ധിക്ഷയാതിശയയു
+4. ക്തഃ തദ്വിപരീ ‖ തശ്ശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ ‖ വിജ്ഞാനാൽ ൨ ല
+5. മൂലപ്രകൃതിരവികൃ ‖ തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി ‖ കൃതയസ്സപ്തഷൊ
+6. ഡശകസ്തുവി ‖ കാരൊനപ്രകൃതിൎന്നവികൃതി[illegible] ‖ രുഷഃ ൩ ഃ ദൃഷ്ട
+7. മനുമാനമാ ‖ പ്തവചനഞ്ചസൎവ്വപ്രമാണ ‖ സിദ്ധത്വാൽത്രിവി
+8. ധംപ്രമാണമിഷ്ടം ‖ പ്രമെയസിദ്ധിഃ ൪ ഃ പ്രതിവിഷ ‖ യാധ്യവസായൊദൃ
+9. ഷ്ടംത്രിവിധമ ‖ നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി ‖ പൂൎവ്വകമാപ്തശ്രുതി
+10. ‖ പ്രമാണാദി । ‖
+
+TRANSCRIPTION E
+1. ഹരിഃശ്രീഗണപതയേനമഃ‖അവിഘ്നമസ്തുദുഃഖത്രയാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+2. ദഭിഘാതകേഹേ‖തൌദൃഷ്ടേസാപാൎത്ഥാചേന്നൈ‖കാന്താത്യന്തതോ
+3. ഭാവാൽദൃ‖ഷ്ടവദാനുശ്രവികഃസഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+4. ക്തഃതദ്വിപരീ‖തശ്രേയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽമൂല
+5. പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത
+6. ഷോഡശകസ്തുവി‖കാരോനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃദൃഷ്ട
+7. മനുമാനമാപ്ത‖വചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+8. ധംപ്രമാണമിഷ്ടം‖പ്രമേയസിദ്ധിഃ[insertion mark?]പ്രതിവിഷ‖യാദ്ധ്യവസായോദൃ
+9. ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിം‖ഗിപൂൎവ്വകമാപ്തശ്രുതി
+10. ‖പ്രമാണാദ്ധി।‖
+
+TRANSCRIPTION F
+1. –ഹരിഃശ്രീഗണപത ‖ യെനമഃഅവിഘ്നമസ്തുദുഃഖത്രയാഭി ‖ ഘാതാജ്ജിജ്ഞാസാത
+2. ദപഘാതകെഹെതൌ ‖ ദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ ‖ കാന്താത്യന്തതൊ
+3. ഭാവാൽ ദൃ ‖ ഷ്ടവദാനുശ്രവികഃസഹ്യവിശു ‖ ദ്ധിക്ഷയാതിശയയു
+4. ക്തഃതദ്വിപരീ ‖ തഃശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ ‖ വിജ്ഞാനാൽമൂല
+5. പ്രകൃതിരവികൃ ‖ തിൎമഹദാദ്യാഃപ്രകൃതിവി ‖ കൃതയഃസപ്തഷൊ
+6. ഡശകസ്തുവി ‖ കാരൊനപ്രകൃതിൎനവികൃ ‖ തിഃപുരുഷഃദൃഷ്ട
+7. മനുമാനമാ ‖ പ്തവചനഞ്ചസൎവ്വപ്രമാണ ‖ സിദ്ധത്വാൽത്രിവി
+8. ധംപ്രമാണമിഷ്ട ‖ ംപ്രമെയസിദ്ധിഃ[illegible]പ്രതിവിഷ ‖ യാധ്യവസായൊദൃ
+9. ഷ്ടംത്രിവിധമ ‖ നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി ‖ പൂൎവ്വകമാപ്തശ്രു[illegible]
+10. ‖ പ്രമാണാദ്ധി। ‖
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

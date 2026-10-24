@@ -1,0 +1,1 @@
+{"arm": "siglip2-so400m", "model": "google/siglip2-so400m-patch14-384", "images": 14995, "secs": 331.6, "images_per_sec": 45.2, "peak_vram_mib": 3674}

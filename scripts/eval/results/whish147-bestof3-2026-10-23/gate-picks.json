@@ -1,0 +1,425 @@
+{
+ "text|opus3|5-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  }
+ },
+ "text|opus3|4-b": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  }
+ },
+ "text|opus3|5-b": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  }
+ },
+ "text|opus3|6-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  }
+ },
+ "text|opus3|6-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  }
+ },
+ "text|opus3|7-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-3",
+   "C": "opus-2"
+  }
+ },
+ "text|opus3|8-t": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  }
+ },
+ "text|opus3|9-t": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  }
+ },
+ "text|opus3|8-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  }
+ },
+ "text|all6|4-b": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "fable-2",
+   "D": "opus-3",
+   "E": "fable-3",
+   "F": "fable-1"
+  }
+ },
+ "text|all6|5-t": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "fable-3",
+   "B": "opus-1",
+   "C": "fable-2",
+   "D": "opus-2",
+   "E": "opus-3",
+   "F": "fable-1"
+  }
+ },
+ "text|all6|5-b": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "fable-1",
+   "C": "opus-1",
+   "D": "fable-2",
+   "E": "opus-2",
+   "F": "fable-3"
+  }
+ },
+ "text|all6|6-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "fable-3",
+   "B": "opus-2",
+   "C": "opus-3",
+   "D": "opus-1",
+   "E": "fable-2",
+   "F": "fable-1"
+  }
+ },
+ "text|all6|7-t": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1",
+   "D": "fable-2",
+   "E": "fable-1",
+   "F": "fable-3"
+  }
+ },
+ "text|all6|8-b": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "fable-1",
+   "B": "fable-3",
+   "C": "opus-2",
+   "D": "opus-3",
+   "E": "fable-2",
+   "F": "opus-1"
+  }
+ },
+ "text|all6|6-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "fable-2",
+   "D": "opus-3",
+   "E": "fable-3",
+   "F": "fable-1"
+  }
+ },
+ "text|all6|8-t": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2",
+   "D": "fable-1",
+   "E": "fable-3",
+   "F": "fable-2"
+  }
+ },
+ "text|all6|9-t": {
+  "pick": "fable-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "fable-2",
+   "C": "opus-1",
+   "D": "fable-1",
+   "E": "fable-3",
+   "F": "opus-2"
+  }
+ },
+ "image|opus3|4-b": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1"
+  }
+ },
+ "image|opus3|5-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "opus-2"
+  }
+ },
+ "image|opus3|6-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  }
+ },
+ "image|opus3|5-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  }
+ },
+ "image|opus3|6-b": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  }
+ },
+ "image|opus3|7-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  }
+ },
+ "image|opus3|8-t": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3"
+  }
+ },
+ "image|opus3|8-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "opus-2",
+   "C": "opus-3"
+  }
+ },
+ "image|all6|4-b": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "fable-2",
+   "D": "fable-3",
+   "E": "opus-1",
+   "F": "fable-1"
+  }
+ },
+ "image|opus3|9-t": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1"
+  }
+ },
+ "image|all6|5-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "fable-2",
+   "C": "fable-1",
+   "D": "fable-3",
+   "E": "opus-1",
+   "F": "opus-2"
+  }
+ },
+ "image|all6|5-b": {
+  "pick": "fable-3",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "fable-2",
+   "C": "fable-3",
+   "D": "fable-1",
+   "E": "opus-3",
+   "F": "opus-2"
+  }
+ },
+ "image|all6|6-t": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "fable-3",
+   "B": "opus-3",
+   "C": "fable-2",
+   "D": "fable-1",
+   "E": "opus-1",
+   "F": "opus-2"
+  }
+ },
+ "image|all6|6-b": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "fable-2",
+   "B": "fable-3",
+   "C": "opus-1",
+   "D": "opus-3",
+   "E": "opus-2",
+   "F": "fable-1"
+  }
+ },
+ "image|all6|7-t": {
+  "pick": "fable-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "fable-1",
+   "D": "fable-2",
+   "E": "fable-3",
+   "F": "opus-1"
+  }
+ },
+ "image|all6|8-t": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-1",
+   "B": "fable-2",
+   "C": "opus-2",
+   "D": "fable-3",
+   "E": "fable-1",
+   "F": "opus-3"
+  }
+ },
+ "image|all6|8-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "fable-2",
+   "B": "opus-2",
+   "C": "opus-1",
+   "D": "fable-3",
+   "E": "fable-1",
+   "F": "opus-3"
+  }
+ },
+ "image|all6|9-t": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "fable-3",
+   "B": "opus-3",
+   "C": "opus-1",
+   "D": "fable-2",
+   "E": "fable-1",
+   "F": "opus-2"
+  }
+ },
+ "text|opus3fable1|5-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-3",
+   "C": "opus-1",
+   "D": "fable-1"
+  }
+ },
+ "text|opus3fable1|4-b": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "opus-3",
+   "D": "fable-1"
+  }
+ },
+ "text|opus3fable1|5-b": {
+  "pick": "opus-2",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "fable-1",
+   "C": "opus-2",
+   "D": "opus-1"
+  }
+ },
+ "text|opus3fable1|6-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "fable-1",
+   "B": "opus-3",
+   "C": "opus-2",
+   "D": "opus-1"
+  }
+ },
+ "text|opus3fable1|7-t": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "opus-1",
+   "C": "fable-1",
+   "D": "opus-3"
+  }
+ },
+ "text|opus3fable1|6-b": {
+  "pick": "opus-3",
+  "keyMap": {
+   "A": "opus-2",
+   "B": "fable-1",
+   "C": "opus-1",
+   "D": "opus-3"
+  }
+ },
+ "text|opus3fable1|8-t": {
+  "pick": "opus-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-2",
+   "C": "opus-1",
+   "D": "fable-1"
+  }
+ },
+ "text|opus3fable1|9-t": {
+  "pick": "fable-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "opus-1",
+   "C": "fable-1",
+   "D": "opus-2"
+  }
+ },
+ "text|opus3fable1|8-b": {
+  "pick": "fable-1",
+  "keyMap": {
+   "A": "opus-3",
+   "B": "fable-1",
+   "C": "opus-1",
+   "D": "opus-2"
+  }
+ }
+}

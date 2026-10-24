@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf reads ദിവശ്ശ്രാസ്ഃത്ര' എഷെ ‖ പ്രത്യക്ഷതശ്ശ്രാവിഷയ്യാ… ‖ ദ്ധ്യാഭ്യഃ ഗുണവൈഷമ്യവി. F matches stroke for stroke. C is close only in the second and third columns (പ്രത്യക്ഷസ്യാ…, ദ്ധ്യാ ഭ്യുഃ). B is partial and has gaps. D and E have the wrong letters (തിലഭ്യാസഃ, ടിഖക്ഷാസഃ). A gives the well-known kārikā wording (ദ്വിപൎയ്യാസഃ ൪൫ ഏഷ പ്രത്യയസൎഗ്ഗോ…), but those letters are not on the leaf.
+CHECK | row 6: The leaf reads ധാസ്സഹാഭേദ്ദിവര ‖ മധ്നശക്തിരുദ്ദ്യാദപട്ടദ്ദധ ‖ ാലസ്യുടൈപഞ്ചവ. F matches. C is partial (…ശക്കിരുദ്രേ…). B is partial with gaps. D and E differ (ധാസ്സഹഖതിലവ, ധാസ്സഹബ്ദടിപ). A's ധാസ്സഹബുദ്ധിവധൈരശക്തി… / ാബുദ്ധേൎവ്വിപൎയ്യ does not fit the strokes.
+CHECK | row 10: The leaf reads ദാരക്ഷേസിദ്ധൈവാ… ‖ …ദ്ദീക്ഷേട്ടൈഭൈല്ലാംകഗസ്തുവിയ൯। ‖ (യഃ।) ഭ്രഷ്ടിനവിനാട്ടവൈ. F matches. C is near (ദാനക്ഷേസിദ്ധകൊ). B, D and E have the wrong letters. A's ദാനഞ്ചസിദ്ധയോ… ൫൧ നവിനാഭാവൈ is not what the leaf shows.
+PICK | F
+RANK | F, C, B, E, D, A
+WHY | Only F follows the leaf's actual strokes across all three columns in rows 1, 6 and 10, while A is the polished kārikā text and its letters are not the ones on the leaf.

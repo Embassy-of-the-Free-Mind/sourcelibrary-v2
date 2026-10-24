@@ -1,0 +1,746 @@
+{
+ "112-t": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "dipika",
+  "window_start": -353
+ },
+ "112-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 0,
+  "end": 520,
+  "phrases": 31,
+  "dropped": 0
+ },
+ "113-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 507,
+  "end": 1094,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "113-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 1096,
+  "end": 1844,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "114-t": {
+  "status": "partly",
+  "work": "dipika",
+  "start": 1826,
+  "end": 2371,
+  "phrases": 19,
+  "dropped": 0
+ },
+ "114-b": {
+  "status": "partly",
+  "work": "dipika",
+  "start": 2480,
+  "end": 2795,
+  "phrases": 16,
+  "dropped": 0
+ },
+ "115-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 2749,
+  "end": 3548,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "115-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 3529,
+  "end": 4397,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "116-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 4378,
+  "end": 5125,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "116-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 5126,
+  "end": 5760,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "117-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 5750,
+  "end": 6389,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "117-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 6391,
+  "end": 7106,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "118-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 7151,
+  "end": 7924,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "118-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 7883,
+  "end": 8594,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "119-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 8579,
+  "end": 9167,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "119-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 9144,
+  "end": 9861,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "120-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 9870,
+  "end": 10555,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "120-b": {
+  "status": "partly",
+  "work": "dipika",
+  "start": 10214,
+  "end": 10436,
+  "phrases": 11,
+  "dropped": 0
+ },
+ "121-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 10371,
+  "end": 11141,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "121-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 11124,
+  "end": 11780,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "122-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 11763,
+  "end": 12415,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "122-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 12355,
+  "end": 13096,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "123-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 13078,
+  "end": 13702,
+  "phrases": 32,
+  "dropped": 0
+ },
+ "123-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 13632,
+  "end": 14471,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "124-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 14448,
+  "end": 15133,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "124-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 15092,
+  "end": 15787,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "125-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 15946,
+  "end": 16565,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "125-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 16535,
+  "end": 17569,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "126-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 17532,
+  "end": 18149,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "126-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 18133,
+  "end": 18848,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "127-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 18788,
+  "end": 19425,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "127-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 19427,
+  "end": 21216,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "128-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 21219,
+  "end": 21824,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "128-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 21675,
+  "end": 22413,
+  "phrases": 31,
+  "dropped": 0
+ },
+ "129-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 22416,
+  "end": 23005,
+  "phrases": 28,
+  "dropped": 0
+ },
+ "129-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 22985,
+  "end": 23630,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "130-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 23631,
+  "end": 24196,
+  "phrases": 32,
+  "dropped": 0
+ },
+ "130-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 24201,
+  "end": 24787,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "131-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 24765,
+  "end": 25615,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "131-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 25629,
+  "end": 26364,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "132-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 26366,
+  "end": 28106,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "132-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 28093,
+  "end": 29040,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "133-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 29029,
+  "end": 29767,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "133-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 29880,
+  "end": 30585,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "134-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 30587,
+  "end": 31152,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "134-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 31153,
+  "end": 31725,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "135-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 31722,
+  "end": 32228,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "135-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 32229,
+  "end": 32759,
+  "phrases": 27,
+  "dropped": 0
+ },
+ "136-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 32742,
+  "end": 33352,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "136-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 33005,
+  "end": 34346,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "137-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 34329,
+  "end": 35125,
+  "phrases": 24,
+  "dropped": 0
+ },
+ "137-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 34789,
+  "end": 35783,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "138-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 35769,
+  "end": 36583,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "138-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 36565,
+  "end": 37321,
+  "phrases": 36,
+  "dropped": 0
+ },
+ "139-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 37302,
+  "end": 38033,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "139-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 38031,
+  "end": 38747,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "140-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 38724,
+  "end": 39479,
+  "phrases": 37,
+  "dropped": 0
+ },
+ "140-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 39457,
+  "end": 40144,
+  "phrases": 38,
+  "dropped": 0
+ },
+ "141-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 40133,
+  "end": 40887,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "141-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 40890,
+  "end": 41629,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "142-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 41475,
+  "end": 42307,
+  "phrases": 42,
+  "dropped": 0
+ },
+ "142-b": {
+  "status": "located",
+  "work": "dipika",
+  "start": 42272,
+  "end": 43066,
+  "phrases": 41,
+  "dropped": 0
+ },
+ "143-t": {
+  "status": "located",
+  "work": "dipika",
+  "start": 43032,
+  "end": 43763,
+  "phrases": 40,
+  "dropped": 0
+ },
+ "143-b": {
+  "status": "partly",
+  "work": "dipika",
+  "start": 43758,
+  "end": 43801,
+  "phrases": 4,
+  "dropped": 0
+ },
+ "144-t": {
+  "status": "not-in-window",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "dipika",
+  "window_start": 43428
+ },
+ "144-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 0,
+  "end": 1383,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "145-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 1386,
+  "end": 2642,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "145-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 2430,
+  "end": 4048,
+  "phrases": 26,
+  "dropped": 0
+ },
+ "146-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 4114,
+  "end": 5135,
+  "phrases": 15,
+  "dropped": 0
+ },
+ "146-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 5270,
+  "end": 6543,
+  "phrases": 27,
+  "dropped": 0
+ },
+ "147-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 6544,
+  "end": 7675,
+  "phrases": 28,
+  "dropped": 0
+ },
+ "147-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 7657,
+  "end": 8799,
+  "phrases": 27,
+  "dropped": 0
+ },
+ "148-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 8800,
+  "end": 9965,
+  "phrases": 29,
+  "dropped": 0
+ },
+ "148-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 9958,
+  "end": 11393,
+  "phrases": 35,
+  "dropped": 0
+ },
+ "149-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 11316,
+  "end": 11835,
+  "phrases": 25,
+  "dropped": 0
+ },
+ "149-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 11822,
+  "end": 13666,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "150-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 13346,
+  "end": 14234,
+  "phrases": 28,
+  "dropped": 0
+ },
+ "150-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 13960,
+  "end": 16071,
+  "phrases": 32,
+  "dropped": 0
+ },
+ "151-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 16054,
+  "end": 17659,
+  "phrases": 32,
+  "dropped": 0
+ },
+ "151-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 17618,
+  "end": 18783,
+  "phrases": 33,
+  "dropped": 0
+ },
+ "152-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 18524,
+  "end": 20386,
+  "phrases": 25,
+  "dropped": 0
+ },
+ "152-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 20204,
+  "end": 20910,
+  "phrases": 30,
+  "dropped": 0
+ },
+ "153-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 20858,
+  "end": 21906,
+  "phrases": 29,
+  "dropped": 0
+ },
+ "153-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 21620,
+  "end": 23160,
+  "phrases": 29,
+  "dropped": 0
+ },
+ "154-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 22949,
+  "end": 23916,
+  "phrases": 20,
+  "dropped": 0
+ },
+ "154-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 23833,
+  "end": 25231,
+  "phrases": 25,
+  "dropped": 0
+ },
+ "155-t": {
+  "status": "located",
+  "work": "ts",
+  "start": 25234,
+  "end": 26512,
+  "phrases": 25,
+  "dropped": 0
+ },
+ "155-b": {
+  "status": "located",
+  "work": "ts",
+  "start": 26529,
+  "end": 27738,
+  "phrases": 34,
+  "dropped": 0
+ },
+ "156-t": {
+  "status": "not-in-window",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ },
+ "156-b": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ },
+ "157-t": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ },
+ "157-b": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ },
+ "158-t": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ },
+ "158-b": {
+  "status": "not-text",
+  "located": false,
+  "why": "only 0 placed phrases matched the window",
+  "window_work": "ts",
+  "window_start": 27382
+ }
+}

@@ -198,6 +198,52 @@ export const posts: BlogPost[] = [
     imageAlt: 'Joost R. Ritman',
   },
   {
+    slug: 'choreia-the-dance-of-the-cosmos',
+    title: 'Choreia: The Dance of the Cosmos',
+    subtitle:
+      'To the Greeks the planets danced, and every human chorus was a small copy of their dance: Plato’s Timaeus and Laws, Lucian, Plotinus, Homer and Plutarch, read in the original pages.',
+    summary:
+      'The Greek idea that the cosmos is a dance: Plato’s planets moving as a chorus, Lucian, Plotinus, and the human chorus that copied them.',
+    date: '18 October 2026',
+    readTime: '11 min read',
+    kind: 'tours',
+    // Red chalk drawing of a bacchante dancing between two fauns (Raphael, per the Commons record; public domain).
+    image: 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg',
+    imageAlt:
+      'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
+  },
+  {
+    slug: 'concords-not-unisons',
+    title: 'Concords, Not Unisons',
+    subtitle:
+      'Harmony as the fitting together of unlike things: a Greek armourer, a Chinese minister’s soup, Miskawayh’s silent dinar, Hume’s strings and Smith’s concords, Spinoza’s refusal of the music of the spheres, Wallace’s governor, and the sound waves of the early universe.',
+    summary:
+      'Harmony as the fitting of unlike things: Xenophon’s armourer, Yan Ying’s soup, Miskawayh’s silent dinar, Hume, Smith’s concords, Spinoza, Wallace.',
+    date: '22 October 2026',
+    readTime: '18 min read',
+    kind: 'stories',
+    // A Palace Concert, anonymous, Tang style, National Palace Museum, Taipei (public domain, via Commons).
+    image: 'https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg',
+    imageAlt:
+      'Chinese painting on silk: court women around a long table drink and play a lute, pipes and a flute while one keeps time with clappers.',
+  },
+  {
+    slug: 'harmony-map',
+    title: 'Eleven Ideas About Harmony',
+    subtitle:
+      'What harmony is, where it fails, and what it would mean for people, machines and the natural world: eleven ideas from Derek Lomas’s research, each with the primary sources it rests on, its tensions and its open questions.',
+    summary:
+      'Eleven ideas about harmony, from lock and dissonance to AI alignment, each with its sources: Philolaus, Plato, Aristotle, Iamblichus, Huygens, Rameau.',
+    date: '21 October 2026',
+    readTime: '29 min read',
+    kind: 'stories',
+    // Robert Fludd's world monochord, Utriusque cosmi historia (1617), scan p. 99.
+    image: 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg',
+    imageAlt:
+      'Engraving: a hand from a cloud tunes a single string that runs from the earth through the planets to the stars, with musical ratios marked beside it.',
+    imagePosition: 'center 20%',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
@@ -225,6 +271,67 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg',
     imageAlt: 'A page of the Dresden Codex with columns of glyphs and two descending serpents',
     imagePosition: 'center 30%',
+  },
+  {
+    slug: 'maya-mathematics',
+    title: 'How the Maya Counted',
+    subtitle:
+      'Bars, dots and a shell for zero; a count by twenties with one place of eighteen; and calendar cycles that meet after whole numbers of days. Try the numerals and the counts, with the codex pages and the colonial sources beside them.',
+    summary:
+      'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex and Bowditch, with the Venus table, the eclipse table and the 819-day count.',
+    date: '18 October 2026',
+    readTime: '15 min read',
+    kind: 'interactive',
+    // A Venus page of the Dresden Codex (reader page 27), identified by eye.
+    image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg',
+    imageAlt:
+      'A Venus page of the Dresden Codex: columns of day signs and bar-and-dot numbers beside three painted panels, the top one a seated god on a blue ground.',
+  },
+  {
+    slug: 'pythagoras-in-the-library',
+    title: 'Pythagoras in the Library',
+    subtitle:
+      'He wrote nothing that survives, and four thousand works in the library name him. Every one, in date order, with the passage and the page.',
+    summary:
+      'Every work in the library that names Pythagoras, from Aristotle and Euclid to the 20th century: beans, silence, the smiths’ hammers, each with its page.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Raphael's study for the School of Athens (public domain), mirrored in the artwork collection.
+    image:
+      'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-pythagoras-mit-seinen-schulern-studie-fur-die-schule-von-athen-stanza-della-segnat.jpg',
+    imageAlt:
+      'Raphael’s drawing for the School of Athens: a bearded Pythagoras bent over a book on his knee, students leaning in around him.',
+  },
+  {
+    slug: 'philolaus-in-the-library',
+    title: 'Philolaus in the Library',
+    subtitle:
+      'The first Pythagorean to write a book, and the name Copernicus found when he looked for someone who had moved the earth.',
+    summary:
+      'Every work in the library that names Philolaus: the moving earth Copernicus found in Plutarch, the books Plato bought, and Reuchlin’s Pythagorean.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Copernicus' diagram of the spheres, De revolutionibus (1543), reader page 34, opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/606a74d7-2ac1-420b-924d-de761439fb3f/0034.jpg',
+    imageAlt:
+      'Copernicus’ diagram of the universe from De revolutionibus (1543): seven nested circles around the Sun, with the Earth and the Moon’s small circle in the fifth.',
+  },
+  {
+    slug: 'archytas-in-the-library',
+    title: 'Archytas in the Library',
+    subtitle:
+      'Plato’s friend, a general seven times over, the geometer who doubled the cube, and the maker of a wooden dove that flew.',
+    summary:
+      'Every work in the library that names Archytas of Tarentum: the flying wooden dove, doubling the cube, his anger at a farm manager, and a fever cure.',
+    date: '20 October 2026',
+    readTime: '5 min read',
+    kind: 'interactive',
+    // Kircher, Magnes (1641), reader page 446: the plate "Columba Architae", opened by eye.
+    image: 'https://images.sourcelibrary.org/pages/69527376ab34727b1f04948a/0446.jpg',
+    imageAlt:
+      'Engraving from Kircher’s Magnes (1641) titled “Columba Architae”: a dove on a line flies beneath a great dial held out of the clouds, while a man on a hill holds the line.',
   },
   {
     slug: 'preserved-by-enemies',

@@ -1,0 +1,11 @@
+ROW 1 | –ഹരിഃശ്രീഗണപത ‖ യെനമഃഅവിഘ്നമ ‖ സ്തുദുഃഖത്രയാഭിഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദഭിഘാതകെഹെ ‖ തൌദൃഷ്ടെസാ ‖ പാൎത്ഥാചെന്നൈകാന്താത്യന്തതൊ
+ROW 3 | ഭാവാത്൧ദൃ ‖ ഷ്ടവദാനുശ്ര ‖ വികസ്സഹ്യവിശുദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ ‖ തശ്ശ്രെയാന്വ്യ ‖ ക്താവ്യക്തജ്ഞവിജ്ഞാനാത്൨മൂലപ്ര
+ROW 5 | കൃതിരവികൃ ‖ തിൎമ്മഹദാ ‖ ദ്യാഃപ്രകൃതിവികൃതയസ്സപ്തഷൊ
+ROW 6 | ഡശകസ്തുവി ‖ കാരൊനപ്ര ‖ കൃതിൎന്നവികൃതിഃപുരുഷഃ൩
+ROW 7 | ദൃഷ്ടമനുമാനമാ ‖ പ്തവചനംച ‖ സൎവ്വപ്രമാണസിദ്ധത്വാത്ത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം ‖ പ്രമെയസിദ്ധിഃ൪ ‖ പ്രതിവിഷയാദ്ധ്യവസായൊദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ ‖ നുമാനമാഖ്യാതം ‖ തല്ലിംഗലിംഗിപൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | ‖ പ്രമാണാദ്ധി। ‖
+NOTE | Nine full rows plus a short tenth row (a scribal supplement written only under the middle column, supplying text skipped before the figure ൪ in row 8); the leaf is nearly fully legible, but several akṣaras in rows 2–6 (ligatures, the ൧/൨ figures and the exact letters around the hole gaps) are read with less certainty, and the slight overlaps at the cuts were merged.

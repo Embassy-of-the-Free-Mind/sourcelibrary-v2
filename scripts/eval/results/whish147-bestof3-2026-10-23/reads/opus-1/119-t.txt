@@ -1,0 +1,9 @@
+ROW 1 | ഗുണകദിത്തിന്നപാകാശമവിജ്ഞാനപൂൎവ്വ്യാദിവന്നാന്നാവൈത്രുകന്നുഹതചെഷ്ടക്ഷിതികെടുനെ
+ROW 2 | ഉമാണ്ടാദനാപാദത്യൾട്ടുഏകത്താംദെവസ്വ്രക്കാലൊപലജ്ജൈസ്മ്രീരുദ്രമംസികൎത്തവ്യമിത്യ
+ROW 3 | ാഹവിഭൂതിതിസ്ത്വ ‖ ത്വൽഭ്രദ്ര്യംസംഖ്യൊസിദ്ധംശിദ്ധം ‖ ത്വൽസ്വാപരിത്ത്വിന
+ROW 4 | പരിമാണവത്വം ‖ ത്രിയാവത്വംവാമിഭൂത്വാദെവ ‖ ാശ്ചപരിണാമിത്വാ
+ROW 5 | ഹം,ഇത്യെക്ഷത ‖ ണാലുംലക്ഷഞ്ഞത്തീനെന്നി ‖ സൎവ്വായാനകൊലഃ
+ROW 6 | സജ്ജകാൎയ്യതിമി ‖ ങ്കക്കാരണ്ടശ്ചഭിവെശാലക്ഷണ ‖ മാഹാത്രാംഷിതിദ്രഃ
+ROW 7 | ഹികാൎയ്യമാറ്റെ ‖ ബിമിതകാരണംന്തൃമെവൈരാലക്ഷ ‖ ക്ഷാമാഹാജ്ഞാനൈവൈത്ത
+ROW 8 | ജ്ഞാനംവിടുക്കുനെ ‖ സചിവിഖ്യാതിലവമമാത്രൈനൈരാലക്ഷ ‖ ലമാമഹാതര്രത്തിനിതാക്ഷ
+NOTE | All 8 rows and every piece were read, but this is a low-confidence, stroke-by-stroke guess: many conjuncts, dot-rephs, ൎ/ത്ര forms and vowel signs are uncertain, so expect a lot of misreadings. Rows 1–2 run the full width. On row 8 the text crosses both holes, and on row 7 it crosses the right hole. I put ‖ at the column breaks to keep the requested format.

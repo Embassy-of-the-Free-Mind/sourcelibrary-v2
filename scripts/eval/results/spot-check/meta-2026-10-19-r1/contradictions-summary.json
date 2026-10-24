@@ -1,0 +1,171 @@
+{
+ "frame": "live (visible && pages_count > 0)",
+ "scanned": 42391,
+ "run_at": "2026-10-19T21:35:05.414Z",
+ "classes": {
+  "language-vs-script": {
+   "n": 69,
+   "by_provider": {
+    "internet_archive": 25,
+    "leiden": 22,
+    "mdz": 9,
+    "gallica": 4,
+    "bodleian": 3,
+    "bph": 3,
+    "sat_daizokyo": 1,
+    "e-rara": 1,
+    "allard_pierson": 1
+   },
+   "by_direction": {
+    "latin-lang-on-nonlatin-script": 54,
+    "nonlatin-lang-on-latin-script": 15
+   }
+  },
+  "language-stamp-mismatch": {
+   "n": 521,
+   "by_provider": {
+    "internet_archive": 360,
+    "manchester": 71,
+    "bph": 42,
+    "mdz": 17,
+    "bodleian": 5,
+    "gallica": 5,
+    "allard_pierson": 5,
+    "leiden": 3,
+    "harvard": 3,
+    "google_books": 2,
+    "cambridge": 1,
+    "ndl_japan": 1
+   },
+   "by_stamp_source": {
+    "import": 309,
+    "page_ocr": 140,
+    "ai_enrichment": 69,
+    "bph-nas-ingest": 3
+   }
+  },
+  "original-language-on-original": {
+   "n": 255,
+   "by_provider": {
+    "internet_archive": 126,
+    "mdz": 124,
+    "gallica": 2,
+    "bodleian": 1,
+    "bph": 1,
+    "bl": 1
+   }
+  },
+  "translation-marker-on-original": {
+   "n": 289,
+   "by_provider": {
+    "allard_pierson": 99,
+    "internet_archive": 95,
+    "mdz": 58,
+    "harvard": 11,
+    "laurenziana": 7,
+    "e-rara": 5,
+    "bsb": 5,
+    "sbb": 4,
+    "bph": 2,
+    "slub_dresden": 1,
+    "gallica": 1,
+    "hab": 1
+   }
+  },
+  "published-unknown-title-page-dated": {
+   "n": 3984,
+   "by_provider": {
+    "mdz": 3033,
+    "sbb": 421,
+    "goettingen": 269,
+    "internet_archive": 199,
+    "gallica": 21,
+    "bl": 13,
+    "b-nice": 8,
+    "bph": 4,
+    "bsb": 4,
+    "e-rara": 3,
+    "wikimedia_commons": 2,
+    "leiden": 2
+   }
+  },
+  "year-outside-edition-window": {
+   "n": 3306,
+   "by_provider": {
+    "internet_archive": 1130,
+    "bl": 987,
+    "etcsl": 372,
+    "manchester": 194,
+    "harvard": 85,
+    "bodleian": 67,
+    "bph": 60,
+    "e-rara": 53,
+    "gallica": 46,
+    "bsb": 36,
+    "sat_daizokyo": 36,
+    "mdz": 28
+   },
+   "by_year": {
+    "950": 22,
+    "1350": 35,
+    "1450": 28,
+    "1550": 42,
+    "1650": 41,
+    "1700": 997,
+    "1750": 55,
+    "1850": 41,
+    "1890": 26,
+    "1900": 24,
+    "2018": 35,
+    "-2000": 372
+   }
+  },
+  "display-title-junk": {
+   "n": 803,
+   "by_provider": {
+    "allard_pierson": 354,
+    "mdz": 289,
+    "sbb": 60,
+    "slub_dresden": 35,
+    "goettingen": 31,
+    "e-rara": 30,
+    "bl": 2,
+    "leiden": 1,
+    "harvard": 1
+   }
+  },
+  "title-bracket-prefix": {
+   "n": 29,
+   "by_provider": {
+    "bph": 24,
+    "allard_pierson": 1,
+    "leiden": 1,
+    "internet_archive": 1,
+    "mdz": 1,
+    "harvard": 1
+   }
+  },
+  "author-id-is-library": {
+   "n": 1078,
+   "by_provider": {
+    "bl": 1005,
+    "internet_archive": 61,
+    "harvard": 12
+   },
+   "by_author_id": {
+    "ogyen-choling-collection": 438,
+    "drametse-monastery-collection": 285,
+    "gangtey-monastery-collection": 282,
+    "manly-palmer-hall-collection": 46,
+    "british-museum": 10,
+    "biblioteca-aldina-ed": 5,
+    "biblioteca-ambrosiana": 3,
+    "biblioteca-nazionale-centrale-di-firenze": 3,
+    "biblioteca-capitolare-di-verona": 2,
+    "biblioteca-casanatense": 2,
+    "biblioteca-palatina-di-parma": 1,
+    "biblioteca-estense-modena-italy": 1
+   }
+  }
+ }
+}

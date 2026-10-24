@@ -16,7 +16,10 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
+import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
+import { isTrustedByUserAgent } from '@/lib/bot-gate';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -712,6 +715,20 @@ export async function proxy(request: NextRequest) {
     });
   }
 
+  // Fake desktop Chrome (client hints missing or malformed) on reader paths.
+  // Cloudflare rule cb7dfe4b blocks the same thing on sourcelibrary.org; this
+  // covers every other hostname. See src/lib/client-hint-gate.ts (#4476).
+  if (isForgedChrome(pathname, request.headers)) {
+    return new NextResponse(FORGED_CHROME_RESPONSE, {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+        'Cache-Control': 'no-store',
+      },
+    });
+  }
+
   // Preview deployments sit outside Cloudflare and their URLs are public
   // (the Vercel bot posts them on every PR of this public repo), so book
   // content there is withheld from anonymous callers. A session cookie or an
@@ -1144,6 +1161,20 @@ export async function proxy(request: NextRequest) {
       headers.set('x-redirect-page-id', pageId);
       headers.set('x-redirect-search', request.nextUrl.search);
       return NextResponse.rewrite(url, { request: { headers } });
+    }
+  }
+
+  // Which crawler read which book, on the HTML reader path (#4309). Placed
+  // after every /book/* redirect above so a 301 hop is not counted twice;
+  // /read logs itself with the resolved id. Fire-and-forget, and a no-op for
+  // any UA outside KNOWN_BOTS. CDN cache HITs never get here — a floor.
+  if (pathname.startsWith('/book/') && !/^\/book\/[^/]+\/read$/.test(pathname)) {
+    const segment = bookSegmentFromPath(pathname);
+    if (segment) {
+      logBotRead(request, {
+        route: 'html', book: segment, bookIsUrlSegment: true,
+        trusted: isTrustedByUserAgent(request), clamped: false,
+      });
     }
   }
 

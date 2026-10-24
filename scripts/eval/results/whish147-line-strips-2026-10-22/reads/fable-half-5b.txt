@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Handwritten Malayalam script on palm leaf, incised with stylus; older letterforms with Grantha features. Text appears to be Sanskrit written in Malayalam script. Readings are tentative at the akshara level; a cord passes through the string-hole and interrupts the middle lines, which are written in two blocks either side of the hole.</warning>
+<scan-quality>fair</scan-quality>
+<language>Sanskrit</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Palm-leaf folio, landscape format, with central string-hole and binding cord; a small mark resembling the Malayalam numeral ൧ appears in the left margin beside line 6, possibly a leaf number. Edges of adjacent leaves visible below.</meta>
+
+<unclear>ഗുണമവിബെതിയിഷയസ്താമാഗുമകാ</unclear>
+<unclear>ാനത്തദ്രചഴികഋ</unclear> <unclear>ഫാചുക്ഷപ്രമാൻഷ്ടുല</unclear>
+<unclear>പ്രശർത്തിനയമാ</unclear> <unclear>ഖാാദ്രഗൈാഗയ</unclear>
+<unclear>ഗണാഃന്സാസഖം</unclear> <unclear>ലക്കലകാശകമ</unclear>
+<unclear>ഗുരുവരണകന</unclear> <unclear>മവരമംപ്രണീഭ</unclear>
+<unclear>കരവികബക്കാഭ</unclear> <unclear>നിദ്ദൊൈന്യഗഈ</unclear>
+<unclear>ണഗണാർഷക</unclear> <unclear>ഖാർകാണ്ണന്യാ</unclear>
+<unclear>ഞാംചശിമാണാ</unclear> <unclear>കസമന്യഖാരുണ</unclear>
+<unclear>ഗാദവിഭാശാരകെഴശരുൈന്യന്യകാഗണ</unclear>
+<unclear>ഈദാണാച്ഛവര്യണാമരസ്തഉലവർകാഭാ</unclear>
+
+<vocab>palm-leaf manuscript, Malayalam script, Sanskrit, guru, guṇa</vocab>

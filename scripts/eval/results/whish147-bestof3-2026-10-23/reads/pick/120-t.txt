@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real Sanskrit argument (e.g. "śarīranāśād ātmano vināśaprasaṅgāt", "mithyājñānam", "vyāpi", "paramāṇu", "manas sākṣi") with string holes placed consistently, and its readings in rows 2, 4 and 5 agree with B's legible fragments; A starts well but turns into nonsense, and B is mostly [illegible].

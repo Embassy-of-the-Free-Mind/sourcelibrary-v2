@@ -60,8 +60,31 @@ const ROUTES: Record<string, () => Promise<Handler>> = {
   },
 };
 
+/**
+ * `/books/<id>/search` (search_within_book, #2049): the route takes its book id
+ * from the dynamic segment, so it is matched by pattern rather than listed
+ * above. Not edge-cached (no `s-maxage`), so the LRU never keeps it either.
+ */
+const BOOK_SEARCH = /^\/books\/([^/?#]+)\/search$/;
+
+function routeFor(path: string): (() => Promise<Handler>) | undefined {
+  if (path in ROUTES) return ROUTES[path];
+  const m = BOOK_SEARCH.exec(path);
+  if (!m) return undefined;
+  let id: string;
+  try {
+    id = decodeURIComponent(m[1]);
+  } catch {
+    return undefined; // a malformed %-escape: over HTTP, which answers it as before
+  }
+  return async () => {
+    const { GET } = await import('@/app/api/books/[id]/search/route');
+    return (request) => GET(request, { params: Promise.resolve({ id }) });
+  };
+}
+
 export function inProcessEnabled(path: string): boolean {
-  return process.env.MCP_INPROCESS !== '0' && path in ROUTES;
+  return process.env.MCP_INPROCESS !== '0' && routeFor(path) !== undefined;
 }
 
 // ── The cache ──────────────────────────────────────────────────────────────
@@ -108,7 +131,7 @@ export function clearInProcessCache(): void {
 // ── The call ───────────────────────────────────────────────────────────────
 
 async function runInProcess(path: string, url: string, caller: McpCaller): Promise<{ body: string; cacheable: boolean }> {
-  const handler = await ROUTES[path]();
+  const handler = await routeFor(path)!();
   const headers = new Headers(MCP_HEADERS);
   if (caller.ip && caller.ip !== 'unknown') headers.set('x-forwarded-for', caller.ip);
   const request = new NextRequest(url, { headers });

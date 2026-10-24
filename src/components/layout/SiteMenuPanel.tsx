@@ -2,7 +2,8 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, User as UserIcon } from 'lucide-react';
+import { signOut } from 'next-auth/react';
+import { ChevronLeft, Search, User as UserIcon } from 'lucide-react';
 
 // The full-screen phone menu (variant "A" from the 2026-10-18 mockups). It
 // fades in under the header bar, which stays put and turns its hamburger into a
@@ -22,9 +23,18 @@ interface Props {
   links: MenuLink[];
   search: { action: string; label: string };
   languages: { locale: string; href: string; label: string; current: boolean }[] | null;
-  /** Signed in: label is "Account" and `avatar` carries their picture or initials. */
-  account: { href: string; label: string; avatar?: { image?: string | null; initials: string } };
+  /** Signed in: label is "Account" and `avatar` carries their picture or initials.
+   *  Admins also get `adminLinks`: the button then opens an account view in the
+   *  menu (the avatar dropdown's admin section) instead of going to /account. */
+  account: {
+    href: string;
+    label: string;
+    avatar?: { image?: string | null; initials: string };
+    adminLinks?: { href: string; label: string }[];
+  };
   support: { href: string; label: string; onClick: () => void } | null;
+  /** Close without a fade and without restoring scroll: the reader navigated away. */
+  instant?: boolean;
 }
 
 // Tighten steps, applied one at a time until the open menu fits the screen
@@ -32,15 +42,26 @@ interface Props {
 const LINK_SIZE = ['text-[29px] py-[9px]', 'text-[25px] py-1.5', 'text-[22px] py-1'];
 const CONTROL_H = ['h-12', 'h-11', 'h-11'];
 
-export default function SiteMenuPanel({ id, open, onClose, links, search, languages, account, support }: Props) {
+export default function SiteMenuPanel({ id, open, onClose, links, search, languages, account, support, instant = false }: Props) {
+  const instantRef = useRef(instant);
+  instantRef.current = instant;
   const panelRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLFormElement>(null);
   const ringsRef = useRef<SVGSVGElement>(null);
   const [level, setLevel] = useState(0);
   const [viewport, setViewport] = useState(0);
+  const [accountView, setAccountView] = useState(false);
+  // Every opening starts on the site links, never on the account view.
+  useEffect(() => { if (!open) setAccountView(false); }, [open]);
   // A value, not the array: SiteHeader rebuilds `links` on every render.
   const linksKey = links.map((l) => l.label).join('|');
+
+  // Navigating from the menu unmounts it with the next page already showing:
+  // that is not a close, so the reader must not be scrolled back to where they
+  // were on the old page. This cleanup runs before the lock's (declared first).
+  const unmounting = useRef(false);
+  useEffect(() => () => { unmounting.current = true; }, []);
 
   // Lock the page behind the menu, and put the reader back where they were.
   useEffect(() => {
@@ -54,19 +75,29 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
     document.documentElement.dataset.siteMenuOpen = '1';
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
-    const onResize = () => setViewport(window.innerHeight * 10000 + window.innerWidth);
-    window.addEventListener('resize', onResize);
     return () => {
       document.body.style.overflow = prev;
       delete document.documentElement.dataset.siteMenuOpen;
-      window.scrollTo(0, y);
+      if (!unmounting.current && !instantRef.current) window.scrollTo(0, y);
       document.removeEventListener('keydown', onKey);
-      window.removeEventListener('resize', onResize);
     };
   }, [open, onClose]);
 
-  // Start from the roomiest layout whenever the menu opens or the screen changes.
-  useLayoutEffect(() => { if (open) setLevel(0); }, [open, viewport, linksKey]);
+  // The closed panel is invisible but still laid out, so the fit and the rings
+  // are worked out on page load and on resize, never at the moment of opening.
+  // Measuring on open cost the first open a re-render on a real phone, and the
+  // rings (already animating) arrived ahead of the links; every later open was
+  // smooth. Now the first open is the same as the rest.
+  useEffect(() => {
+    const onResize = () => setViewport(window.innerHeight * 10000 + window.innerWidth);
+    onResize();
+    window.addEventListener('resize', onResize);
+    document.fonts?.ready.then(onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Start from the roomiest layout whenever the screen or the links change.
+  useLayoutEffect(() => { setLevel(0); }, [viewport, linksKey]);
 
   const placeRings = useCallback(() => {
     const rings = ringsRef.current, list = linksRef.current;
@@ -80,11 +111,12 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   }, []);
 
   useLayoutEffect(() => {
-    if (!open) return;
     const panel = panelRef.current;
+    // The account view is a plain list that scrolls; only the site view is fitted.
+    if (accountView) return;
     if (panel && level < 2 && panel.scrollHeight > panel.clientHeight + 1) { setLevel(level + 1); return; }
     placeRings();
-  }, [open, level, viewport, linksKey, placeRings]);
+  }, [level, viewport, linksKey, placeRings, accountView]);
 
   const stagger = (i: number) => ({
     transitionDelay: open ? `${160 + i * 40}ms` : '0ms',
@@ -92,6 +124,21 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   // Gentle entrance: the items fade in close together with only a 4px drift,
   // so the menu settles rather than jumps. Closing is quick and plain.
   const item = `transition-[opacity,transform] ease-out ${open ? 'duration-[950ms] opacity-100 translate-y-0' : 'duration-200 opacity-0 translate-y-1'}`;
+
+  // Rust is the Sign in call to action; once signed in, the button is a quiet
+  // outline (like the search field) so the picture doesn't sit on the rust.
+  const accountButton = `flex-1 min-w-0 flex items-center justify-center gap-2 text-base font-medium ${
+    account.avatar ? 'border border-border-medium bg-cream text-primary' : 'bg-accent-rust text-white'
+  } ${CONTROL_H[level]}`;
+  // shrink-0 + object-cover keep the picture round in the flex row.
+  const accountAvatar = account.avatar?.image ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={account.avatar.image} alt="" className="w-6 h-6 shrink-0 rounded-full object-cover" />
+  ) : account.avatar ? (
+    <span aria-hidden="true" className="w-6 h-6 shrink-0 rounded-full bg-warm text-primary text-xs flex items-center justify-center">{account.avatar.initials}</span>
+  ) : (
+    <UserIcon className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+  );
 
   let i = 0;
   return (
@@ -101,7 +148,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       role="dialog"
       aria-modal="true"
       aria-hidden={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] ${open ? 'duration-[450ms]' : 'duration-300'} ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 ${instant && !open ? 'transition-none' : `transition-[opacity,visibility] ${open ? 'duration-[450ms]' : 'duration-300'}`} ${
         open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}
     >
@@ -131,12 +178,59 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         ))}
       </svg>
 
+      {account.adminLinks && (
+        <div className={accountView ? 'relative z-10 flex flex-col' : 'hidden'}>
+          <button
+            type="button"
+            onClick={() => setAccountView(false)}
+            tabIndex={open && accountView ? 0 : -1}
+            className="self-start flex items-center gap-1 -ml-1 mt-2.5 mb-3 text-sm text-muted hover:text-primary"
+          >
+            <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+            Menu
+          </button>
+          <Link
+            href={account.href}
+            tabIndex={open && accountView ? 0 : -1}
+            className="flex items-center gap-2.5 py-2.5 text-[22px] font-medium tracking-[-0.02em] border-b border-border-light"
+          >
+            {accountAvatar}
+            {account.label}
+          </Link>
+          <div className="pt-5 pb-1 text-[11px] uppercase tracking-wider text-muted">Admin</div>
+          {account.adminLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              tabIndex={open && accountView ? 0 : -1}
+              className="py-2 text-lg active:text-accent-rust"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <button
+            type="button"
+            onClick={() => signOut({ callbackUrl: '/' })}
+            tabIndex={open && accountView ? 0 : -1}
+            className="self-start mt-4 py-2 text-lg text-accent-rust"
+          >
+            Sign out
+          </button>
+        </div>
+      )}
+
+      {/* The site view. `contents` keeps its children laid out as the panel's
+          own flex items; the account view swaps it out without unmounting it,
+          so the fitting and the rings keep their measurements. */}
+      <div className={accountView ? 'hidden' : 'contents'}>
       <nav ref={linksRef} className="relative z-10 mt-2.5" aria-label="Site">
         {links.map((l) => (
           <Link
             key={l.key}
             href={l.href}
-            onClick={onClose}
+            // Go straight to the page: the menu stays until it arrives, then
+            // vanishes. Only the page you're already on closes it here.
+            onClick={l.active ? onClose : undefined}
             tabIndex={open ? 0 : -1}
             aria-current={l.active ? 'page' : undefined}
             className={`block w-full font-medium leading-none tracking-[-0.02em] active:text-accent-rust ${LINK_SIZE[level]} ${item}`}
@@ -151,7 +245,6 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         ref={searchRef}
         action={search.action}
         role="search"
-        onSubmit={onClose}
         className={`relative z-10 flex items-center gap-2.5 mt-4 mb-3.5 px-3.5 border border-border-medium focus-within:border-primary bg-cream text-muted ${CONTROL_H[level]} ${item}`}
         style={stagger(i++)}
       >
@@ -179,6 +272,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
               key={l.locale}
               href={l.href}
               hrefLang={l.locale}
+              rel={l.href.includes('?') ? 'nofollow' : undefined}
               lang={l.locale}
               tabIndex={open ? 0 : -1}
               aria-current={l.current ? 'page' : undefined}
@@ -193,32 +287,34 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       )}
 
       <div className={`relative z-10 flex gap-2.5 ${item}`} style={stagger(i++)}>
-        <Link
-          href={account.href}
-          onClick={onClose}
-          tabIndex={open ? 0 : -1}
-          className={`flex-1 flex items-center justify-center gap-2 text-base font-medium bg-accent-rust text-white ${CONTROL_H[level]}`}
-        >
-          {account.avatar?.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={account.avatar.image} alt="" className="w-6 h-6 rounded-full border border-white/40" />
-          ) : account.avatar ? (
-            <span aria-hidden="true" className="w-6 h-6 rounded-full bg-white/20 text-xs flex items-center justify-center">{account.avatar.initials}</span>
-          ) : (
-            <UserIcon className="w-[18px] h-[18px]" aria-hidden="true" />
-          )}
-          {account.label}
-        </Link>
+        {account.adminLinks ? (
+          <button
+            type="button"
+            onClick={() => setAccountView(true)}
+            tabIndex={open ? 0 : -1}
+            aria-expanded={accountView}
+            className={accountButton}
+          >
+            {accountAvatar}
+            {account.label}
+          </button>
+        ) : (
+          <Link href={account.href} tabIndex={open ? 0 : -1} className={accountButton}>
+            {accountAvatar}
+            {account.label}
+          </Link>
+        )}
         {support && (
           <Link
             href={support.href}
-            onClick={() => { support.onClick(); onClose(); }}
+            onClick={support.onClick}
             tabIndex={open ? 0 : -1}
             className={`flex-1 flex items-center justify-center text-base font-medium bg-dark text-white ${CONTROL_H[level]}`}
           >
             {support.label}
           </Link>
         )}
+      </div>
       </div>
     </div>
   );

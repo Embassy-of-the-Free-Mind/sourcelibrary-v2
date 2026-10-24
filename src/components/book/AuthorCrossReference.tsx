@@ -27,12 +27,14 @@ export interface AuthorCrossRefData {
 
 interface Props {
   author: string;
+  /** `books.author_id` — the "View all" link prefers it over the byline (#4355). */
+  authorId?: string | null;
   crossRef?: AuthorCrossRefData;
   /** 'book' = we're on a book page, show artworks. 'artwork' = we're on artwork, show books. */
   context: 'book' | 'artwork';
 }
 
-export default function AuthorCrossReference({ author, crossRef, context }: Props) {
+export default function AuthorCrossReference({ author, authorId, crossRef, context }: Props) {
   if (!crossRef) return null;
 
   if (context === 'book') {
@@ -96,9 +98,9 @@ export default function AuthorCrossReference({ author, crossRef, context }: Prop
           <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
           Books by {author}
         </h2>
-        {authorUrl(author) && (
+        {authorUrl(author, authorId) && (
           <Link
-            href={authorUrl(author)!}
+            href={authorUrl(author, authorId)!}
             className="text-sm hover:underline"
             style={{ color: 'var(--accent-rust)' }}
           >

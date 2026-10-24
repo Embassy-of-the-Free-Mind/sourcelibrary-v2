@@ -1,0 +1,10 @@
+ROW 1 | നൎദ്ദലശനന്തു।ര ‖ സ[illegible]ദദജ്യന്തുദ്ദ[illegible]ദ്ദിബാദ[illegible] ‖ ണാം.തുഷ്ടിൎന്നവധാ[illegible]
+ROW 2 | ശക്ത[illegible]ദവിശനി ‖ ദഃ[illegible]നാജ്ഞമാഷ്ടാ[illegible]ശ[illegible]ൽദ്ദിജ്ഞും.[illegible] ‖ [illegible]ന്നദ്ദിര[illegible]
+ROW 3 | ദ്യ്യാദിദ്രിലയ ‖ ദനാ[illegible]നനദ[illegible]വ[illegible]ഷാകൈ ‖ [illegible]സംഖ്യാ[illegible]യ[illegible]
+ROW 4 | സദ[illegible]ദ്ദദലയ്‌ ‖ സമാനന്ദ്ര[illegible]ണ്ണ[illegible]ഭാദ്ദന ‖ [illegible]ണ്ണാക[illegible]ല
+ROW 5 | ചതിൎന്ദദ[illegible] ‖ നാൎക്കനന്ദ്ര[illegible]ണ്ണദ്ധ[illegible]ല[illegible] ‖ [illegible]ദ്ദാദിക[illegible]
+ROW 6 | കാദ്ധ്യം.ലള്ളി ‖ ഷ്ദ്ദ്യം.വി[illegible]ഭ്യാസ്യ[illegible] ‖ സദ്ദകനബാദ്ധ
+ROW 7 | ദദദ്ദ[illegible]ലനന ‖ ൽസദ്ധസം[illegible]ലാദ്ദ[illegible]ൽ[illegible] ‖ ക്കാന്ദ്ര[illegible]ക്കാദി
+ROW 8 | ദ്ദക്കാനനനനദ്ദ ‖ ദ്ദസൽക്കാമ്യ്യം।[illegible]ന[illegible]ണ്ണ[illegible]ദദ ‖ [illegible]മ[illegible]പിസ്ഥിയമ[illegible]
+ROW 9 | നകമാദ്ദ്രി[illegible]ംവി ‖ ം.സാലബനം[illegible]ൎ[illegible]ന്ദ്ര[illegible]ംന്യ്യക്കം. ‖ [illegible]വിൎത്ഥമദ്ര്യക്കം।।
+NOTE | Very low confidence: the images are heavily binarised and noisy, so only scattered syllables could be read (a reliable guess might be around 20–30% of the leaf). The rest is a rough guess at stroke shapes or marked [illegible]. The only word that matches a recognisable reading is തുഷ്ടിൎന്നവധാ in row 1, right column, and even that is uncertain. Check against a higher-quality greyscale image before using this.

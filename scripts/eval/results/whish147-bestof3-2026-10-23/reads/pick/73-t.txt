@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | All three are almost entirely illegible, but C keeps the most fragments that look like real Sanskrit ("śca", "-rviśeṣai-", which fits Sāṅkhya wording such as "aviśeṣaiḥ/viśeṣaiḥ"); A keeps only "ādi" and stray visargas, and B keeps no text at all.

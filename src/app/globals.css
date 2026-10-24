@@ -820,6 +820,21 @@ mark {
   .quote-timer-arc { animation: none; stroke-dashoffset: 0; }
 }
 
+/* /articles index entrance: heading, intro, controls, then the cards, each
+   rising a little after the one before (--enter is its place in that order).
+   Plain CSS, so it runs from the server HTML without waiting for scripts. */
+@keyframes articles-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.articles-enter {
+  animation: articles-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--enter, 0) * 70ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .articles-enter { animation: none; }
+}
+
 /* Page-load entrance: opacity-only (a transform here would break sticky
    headers inside the page). Slightly longer + a soft ease so it's noticeable. */
 .animate-page-enter {
@@ -1258,9 +1273,26 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   color: var(--text-primary);
 }
 
-/* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx). */
+/* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx);
+   a picture inside a link (an article or book card) follows the link instead, and
+   a page from a book in the library opens that page in the reader. */
 .article-page main.has-lightbox img { cursor: zoom-in; }
-.article-page main.has-lightbox [data-no-lightbox] img { cursor: auto; }
+.article-page main.has-lightbox [data-no-lightbox] img,
+.article-page main.has-lightbox [data-lightbox-href^="/book/"] img,
+.article-page main.has-lightbox a img { cursor: pointer; }
+
+/* Phones: article text one step smaller, captions and notes with it. Body
+   18 -> 15px, lead paragraphs 20 -> 17, quotes and large text 18 -> 15,
+   captions and small notes 14 -> 12, the smallest 12 -> 11. Headings keep
+   their size. Only inside the article body (main), not the hero or panels. */
+@media (max-width: 639px) {
+  .article-page main:not([data-articles-index]) .prose-content { --reader-font-size: 15px; }
+  .article-page main:not([data-articles-index]) .text-xl:not(h1, h2, h3, h4) { font-size: 1.0625rem; line-height: 1.6; }
+  .article-page main:not([data-articles-index]) .text-lg:not(h1, h2, h3, h4) { font-size: 0.9375rem; line-height: 1.65; }
+  .article-page main:not([data-articles-index]) .text-base:not(h1, h2, h3, h4) { font-size: 0.9375rem; }
+  .article-page main:not([data-articles-index]) .text-sm { font-size: 0.75rem; line-height: 1.55; }
+  .article-page main:not([data-articles-index]) .text-xs { font-size: 0.6875rem; }
+}
 
 /* The lightbox is dark: a white focus ring there, not the site's rust one. */
 [data-article-lightbox] :focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }

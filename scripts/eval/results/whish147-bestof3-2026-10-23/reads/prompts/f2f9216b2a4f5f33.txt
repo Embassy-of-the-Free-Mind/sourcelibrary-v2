@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. savavarattarkrūṣaparatantraca ‖ cārayyacārtiṣṇanantadbhāvāḥkettajñasvabhāvisvaḥ ‖ ātaresyājñasthalbhāvasya [illegible]
+2. paroṣyātrapaṣṭīdrakāva ‖ ājñipakravastthaḻdrāṃpratibandhāddavala ‖ lajjaḥkasmālsuvarṇṇāde
+3. jjasammitrivāryaṃlakṣaṃ ‖ trūpasamitajñita [illegible] trukāśādāvapivṛ ‖ ttivāraṇeddhayastthaḻvātati
+4. tradṛprādāvapi ‖ dryākṣivāraṇārayaccaḻvātitiśraddhi ‖ śrṛādāvapivyākṣivāraṇā
+5. ṣuddhyādiṣṭatta ‖ nasaprāṇasyakatrāntardbhāvaityu ‖ tatkṣviśaktirityettha
+6. catiekākārippa ‖ āṇaḥsthānamadadālprāṇādapā ‖ nādiśaraiṇṭevyāpa
+7. triyataṇutal ‖ jñaḻnanamekkatejānāpādyuteva ‖ diyogabhāvareya
+8. bhavātistriṣeṣaṇṇa ‖ āśitasyaiḻdānacesastthaḻkāci ‖ dātitaḥguṇabhāvattva
+9. pavalnaecānyaprava ‖ ṛtyatthaḥulddanāddhaḻpāttivasṛu ‖ lddatvarupavāniḍyal
+10. najjalatajñisanna ‖ sajjāśitabāralnavinacauṣṇṭasthai ‖ kṣotrālalakṣirasaṃgāl
+
+TRANSCRIPTION B
+1. sapavakhattrmaparattupaca ‖ āyacādiṣunantadrāvakettajñasabandheṇṭi ‖ ḥṃtavesyāṇṇassaḻbhāvanapuru
+2. paraiyāndhapañceddakāva ‖ ātthipatruvassaḻbhrāṃpratibandhādanvala ‖ lejñeḥkrūrālnyavajñākai
+3. jasamittivādyaṃlakṣma ‖ tikrūpasthitajñātikrukāśādāvativyā ‖ ptivāraṇāyassaḻvātiti
+4. praṣavyādāvati ‖ vyāptivāraṇāyakṣḻvātitipraṣa ‖ yādāvativyāptivāraṇā
+5. śraddhavarikataṇṇi ‖ nasvaprāṇanyākatrātaldrāvaññu ‖ takṣviśaṣirattisara
+6. catiekāntavila ‖ āṇaḥsthānamaṭadālprāṇaivā ‖ nādiśataijjevyapa
+7. triyataññātv ‖ jjaḻnasamekaññopāyyageṣa ‖ giṣeyāyukkavāṣe
+8. dvātisatitantajña ‖ jñāśitassaḻlddāsataisjjaḻkyābhi ‖ cidātviṇaḥhaṇabāltra
+9. pavalnaecānyrabha ‖ bhavyahetuyaḥulbhranatandḻpātivanyarau ‖ ulbhrataññupavabandhāyamāl
+10. najñalatatajñatitana ‖ jñāśitabālnadividdacatujñyaḥsake ‖ keṭṭamatrāmalaññiprasaṃgāl
+
+TRANSCRIPTION C
+1. sapavakhattjñamaparattvāca ‖ cāryaḥtriṣanantadbhāvaḥkettajñasakhaṃniḥ ‖ ātamesvājñastlbhāvasapura
+2. pamaugāndhapaṣṭhaṃdṛkāva [illegible] ‖ [illegible] ṣivakruvaṇṇaḻādyāṃpratibandhādapravala ‖ ṅṅaḥosthālsṛvattūṃke
+3. jñasamitivāmyaṃlakṣa [illegible] ‖ mitruparamitaitiśukārādāvativya ‖ [illegible] jñivāraṇāyasslvāniti
+4. prakṛtyādāvati ‖ vyāptivāraṇāyasslvāmitiprami ‖ [illegible] tyādāvativyāptivāraṇā
+5. śuddhyavaramitaiti ‖ nasvarūpāṇanyāṅkatrāntadbhāvaiti ‖ tājñāviśatityetesa
+6. catiṣṇākāntāvala ‖ āṇaḥsthānamaṭadālprāṇāyā ‖ nātha [illegible] śamaiṭṭevyāpa
+7. tiyataññātvā ‖ jñaḻnanmamatārapāyyatekha ‖ giṣyogyūvādya
+8. dasātistinanajña ‖ jñāśitasloddāsataissaṃjjaḻkāvi ‖ cidātitaiḥgaṇabhāvaljja
+9. cavalnaecānyuprami ‖ ṣivyāśrayaḥulddanaddiḻpātivanyuu ‖ ulddatatvapavaboddhamāl
+10. najñalatatajñatiana ‖ najñāśitabālnaviddhacaijñeyaḥsame ‖ mejñametrābhalājjiprasaṃgāl
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

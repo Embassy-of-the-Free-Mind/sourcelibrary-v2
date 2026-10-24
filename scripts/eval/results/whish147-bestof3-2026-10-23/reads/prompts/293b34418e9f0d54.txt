@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. yadāhavatsavivṛddhini ‖ mittamityādivatsasyavivṛddhiḥpuṣṭistanni ‖ mittaṃkṣīrasyayathā
+2. pravṛttirajñasya [illegible] ‖ cetanasyayathātṛṇodakamacetanaṃ ‖ gavāśitaṃpītañcavatsa
+3. syapuṣṭiḥ [illegible] vyāvṛ ‖ ttirātmanāvariṇa [illegible] kṛtārttha [illegible] ‖ [illegible] varttate [illegible] puru
+4. ṣavimokṣārtthaṃ ‖ pradhānasyapravṛttiḥpravṛtteḥ ‖ prākpuruṣasyai
+5. kavalyaṃsthitame ‖ vatalkintannapravṛttene [illegible] ‖ [illegible] cāryyaḥma [illegible] pra [illegible]
+6. take [illegible] lgrāmyā ‖ [illegible] mākṣi [illegible] kece ‖ mapṛ [illegible] takkamatraṃ
+7. pallitaṃprajñal ‖ utthi [illegible] tvāhaautsukyamityā ‖ diḥyathautsukyanivṛ
+8. ttyartthaṃyathākriyā ‖ sulokaḥpravarttatetadvalpra [illegible] ‖ [illegible] puruṣa
+9. [illegible] mokṣā [illegible] tthaṃya ‖ [illegible] nnivṛtta [illegible] upa [illegible] ‖ [illegible] lpradhāna [illegible]
+10. [illegible] ramāyava ‖ [illegible] gandhādi [illegible] ‖ [illegible] sāya [illegible] ttāddha
+
+TRANSCRIPTION B
+1. yadāhavatsavivṛddhini ‖ mittamityādivatsasyavivṛddhiḥpuṣṭistanni ‖ mittaṃkṣīrasyayathā
+2. pravṛttirajña [illegible] ‖ [illegible] cetanasyayathātṛṇodakamacetana [illegible] ‖ gavāśitaṃkṣīrabhāvena
+3. [illegible] kṛtya [illegible] ‖ kṣīrātmanāpariṇa [illegible] kṛtā [illegible] ‖ [illegible] tvālte [illegible] tyādipuruṣa
+4. ṣavimokṣanimittaṃ ‖ pradhānasyapravṛttiḥpravṛtta [illegible] ‖ ḥprākpuruṣasya [illegible]
+5. kaivalyaṃ [illegible] ratame ‖ [illegible] lkiṃ [illegible] pravṛtta [illegible] ‖ [illegible] ḥ [illegible] prakṛ [illegible]
+6. [illegible] ‖ [illegible] mākṣi [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] kramityā ‖ [illegible]
+8. [illegible] kriyā ‖ [illegible] lokaḥpravartta [illegible] lpra [illegible] ‖ [illegible] puruṣa
+9. [illegible] mokṣa [illegible] ‖ [illegible] vyakta [illegible] ‖ [illegible] pradhāna [illegible]
+10. [illegible] ‖ [illegible] ‖ [illegible]
+
+TRANSCRIPTION C
+1. yathāhavatsavivṛddhini ‖ mittamityādivatsasyavivṛddhiḥpuṣṭista ‖ nnimittaṃkṣīrasyayathā
+2. pravṛttirajña [illegible] cenyati ‖ [illegible] cetanasyayathātṛṇodakamacetana ‖ nagavāśitaṃ [illegible] caivatsa
+3. syāpuṣṭiḥkintu [illegible] ‖ ṣṭhirātmanāpariṇamikṛtā [illegible] ‖ tvāltathetyādipuruṣa
+4. ṣavimokṣārtthaṃ ‖ pradhānasyapravṛttiḥpravṛtte ‖ ḥprākpuruṣasya [illegible]
+5. kaivalyaṃsthiratamai ‖ varttalkkikkennāpravṛttennarttha ‖ [illegible] cāryyaḥmadhyasthalpravṛtti
+6. takeṣilgrāmamā ‖ drāghaitṛmākṣitaṃ [illegible] kecai ‖ madhyaṣiddhetakkamatthaṃ
+7. pallitaṃpraśnal ‖ uktilkrāhaonyakṛtamityā ‖ diyathaivānyakṛtamivṛ
+8. iṣṭamevamatakriyā ‖ yānyalokaḥpravarttatetadvalpra [illegible] ‖ [illegible] yāṃpuruṣa
+9. nimokṣārtthamityaṃya ‖ yadāvyaktantannivṛttaiyaupakāraka [illegible] ‖ [illegible] rtthamādyāṃpuruṣa
+10. ṣāraṇyo [illegible] ‖ [illegible] rahāvanyathādi [illegible] ntakiṃkiṃnārtthakīna ‖ disvāyagāgasyanitartta
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

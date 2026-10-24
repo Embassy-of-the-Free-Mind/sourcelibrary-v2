@@ -28,9 +28,10 @@ export const readArm = arm => new Map(readJsonl(path.join(HERE, 'reads', `${arm}
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|blocked by Gemini's filters|^#{2,3} Summary\b|overview and summary of the text/im;
 const BLOCK_FINISH = ['SAFETY', 'RECITATION', 'PROHIBITED_CONTENT', 'BLOCKLIST'];
 export const isZh = st => st === 'zh-manuscript';
-export const norm = (t, st, spaces) => {
+// opts is normalizeForScript's: { digits: false } is the v3 digit handling (adjudicate.mjs --v3-digits).
+export const norm = (t, st, spaces, opts) => {
   if (isZh(st)) return [...normalizeCJK(t || '')].slice(0, MAX_CHARS);
-  const s = normalizeForScript(t || '', 'latin');
+  const s = normalizeForScript(t || '', 'latin', opts);
   return [...(spaces ? s : s.replace(/ /g, ''))].slice(0, MAX_CHARS);
 };
 // outcome: 'text' | 'refusal' | 'failed' | 'empty' | 'missing'
@@ -73,7 +74,7 @@ function addToNetwork(cols, k, s) {
 }
 export const buildNetwork = strings => strings.reduce((cols, s, k) => addToNetwork(cols, k, s), []);
 // Plurality per column over the key readers; a tie accepts every tied reading.
-function accepted(cols) {
+export function accepted(cols) {
   return cols.map(col => {
     const v = new Map();
     for (const x of col) v.set(x, (v.get(x) || 0) + 1);
@@ -83,7 +84,7 @@ function accepted(cols) {
   });
 }
 // Edit distance of a hypothesis to the key network.
-function distToKey(key, h) {
+export function distToKey(key, h) {
   const m = h.length;
   let prev = new Int32Array(m + 1), cur = new Int32Array(m + 1);
   for (let j = 0; j <= m; j++) prev[j] = j;

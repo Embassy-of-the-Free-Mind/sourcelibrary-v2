@@ -23,6 +23,7 @@
  */
 
 import { createHash, randomBytes } from 'crypto';
+import { existsSync } from 'fs';
 import { recountBook } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
@@ -33,6 +34,10 @@ import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-scr
 import { guardTranslationText } from './translation-write-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
+import { createRequire } from 'node:module';
+import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
+
+export { CLI_TRANSLATE_HOLD };
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource, refusableReasoningLeak, REASONING_LEAK_REASON } from './page-integrity.mjs';
 export { REASONING_LEAK_REASON };
@@ -125,12 +130,28 @@ export function isLatinScriptLanguage(language) {
  * Mar 27 – May 12 2026 lite era (scripts/eval/results/translation-model-obs-*)
  * found no faithfulness gap. Worth ~$12K over 5.4M untranslated pages.
  * Do not "fix" this back into parity with OCR without new evidence.
+ *
+ * READ FROM THE TABLE (#7170): the rules above are the rows of translation-routing-table.json
+ * (bph, tibetan, flash-measured; default lite), which the TS twin reads too. A routing change is a
+ * reviewed edit of that file, proposed by scripts/eval/estimator/routing/derive_routes.py; the
+ * evidence comments here and on the helpers below stay as the history of why each row exists.
  */
+export const TRANSLATION_ROUTING_TABLE = Object.freeze(
+  validateTranslationTable(createRequire(import.meta.url)('./translation-routing-table.json'), [MODEL_FLASH, MODEL_LITE]),
+);
+
 export function getTranslateModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  if (isTibetanBook(book)) return MODEL_FLASH;
-  if (isFlashMeasuredLanguage(book)) return MODEL_FLASH;
-  return MODEL_LITE;
+  return translateEngineFor(TRANSLATION_ROUTING_TABLE, book);
+}
+
+/**
+ * The CHANNEL for this book (#7075): { channel: 'cli', engine, reader, model, row } when a `channel: "cli"` row of the
+ * table fits, else { channel: 'batch', engine, row }. getTranslateModelForBook stays the Batch engine (a cli row is
+ * invisible to it); the pipeline orchestrator asks this first and holds a cli book (CLI_TRANSLATE_HOLD) instead of
+ * dispatching it to the API.
+ */
+export function translateLaneForBook(book) {
+  return laneFromTable(TRANSLATION_ROUTING_TABLE, book);
 }
 
 /**
@@ -145,10 +166,8 @@ export function getTranslateModelForBook(book) {
  * Matches the book's FIRST language label, so "Greek-Latin" and
  * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
  */
-const FLASH_MEASURED_LANGUAGE = /^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i;
-
 export function isFlashMeasuredLanguage(book) {
-  return FLASH_MEASURED_LANGUAGE.test(String(book?.language ?? ''));
+  return tableRowFor(TRANSLATION_ROUTING_TABLE, { language: book?.language })?.id === 'flash-measured';
 }
 
 /**
@@ -1060,6 +1079,50 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
   await persistRefusedTranslation(db, page, text, reason, { jobId, model });
 }
 
+/** The value recorded in `translation.fail_reason` when the model answered with nothing (#4685). */
+export const EMPTY_RESPONSE_REASON = 'empty_response';
+
+/** Is this model answer empty, or only whitespace? Such an answer is never stored as a translation (#4685). */
+export function isEmptyTranslation(text) {
+  return typeof text !== 'string' || !/\S/.test(text);
+}
+
+/**
+ * The fields `recordEmptyTranslation` stamps. A writer that $sets the whole `translation` object
+ * clears them by construction; a writer that $sets dotted `translation.*` paths must $unset these
+ * on a real write, so a page that later translates does not keep saying it failed.
+ */
+export const CLEAR_EMPTY_RESPONSE_UNSET = Object.freeze({ 'translation.fail_reason': '', 'translation.failed_at': '', 'translation.fail_count': '' });
+
+/**
+ * Record an empty model answer on the page instead of storing it (#4685). An empty answer used to
+ * be written as `translation.data: ''`: on a page that had English it replaced it with a blank page,
+ * and on one that had none it looked done and was never tried again (the collapse check that would
+ * catch it only fires on a long source).
+ *
+ * Not a refusal: `health_blocked` takes a page out of every selector, and an empty answer is
+ * usually one bad call. So it is a failure marker, the shape the OCR side uses (`ocr.fail_count`,
+ * `fail_reason`, #4674): `translation.fail_reason: 'empty_response'`, `failed_at`, `fail_count`.
+ * `translation.data` is never touched, and a page that already holds a translation is left alone
+ * entirely (the filter): the empty answer was a retry, and the real text stands. Never throws.
+ */
+export async function recordEmptyTranslation(db, page) {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      {
+        $set: { 'translation.fail_reason': EMPTY_RESPONSE_REASON, 'translation.failed_at': now, updated_at: now },
+        $inc: { 'translation.fail_count': 1 },
+      }
+    );
+  } catch (e) {
+    console.error(`[empty-response] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
+}
+
 /**
  * The stray-script gate for a writer that does not go through `writePageTranslation` (the batch
  * collectors, #5734). Repairs the measured Korean 그-for-"that"; refuses (stamp + evidence, via
@@ -1147,6 +1210,16 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
 }
 
 /**
+ * The box-wide switch for the write-time seam guard (#7118): a file holding `dry` or `apply`. One file reaches every
+ * lane that writes a translation on the box (scheduler workers, cron lanes, cli-translate inside jobs) without editing
+ * each launch line. SEAM_GUARD in the environment wins over it (`off` turns the guard off for one process).
+ */
+export const SEAM_GUARD_FILE = '/etc/sourcelibrary/seam-guard';
+// Under a test runner the box file is ignored: a test that drives writePageTranslation with a mock db would otherwise run
+// the guard (and could call Claude) on any box that has the file (#7118, 2026-10-24: a vitest run logged a guard check).
+export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.SEAM_GUARD ? env.SEAM_GUARD !== 'off' : !env.VITEST && existsSync(file));
+
+/**
  * Snapshot the page's current translation into page_revisions, then write the
  * new one with full provenance. Promise 3 lives here so no caller can forget
  * it. Non-fatal revision failure is logged, never blocks the write (matching
@@ -1171,7 +1244,10 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   One refusal is NOT opt-in: a page hidden in its continuity <meta>
  *   (`hidesPageInMeta`, reason 'hidden-meta') is refused for every caller,
  *   stamped `translation.health_blocked` and kept in page_revisions (#5376).
- * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, reason?: string, text: string}}
+ *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
+ *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
+ *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
@@ -1232,6 +1308,14 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     return { written: false, protected: true, text: existing.data };
   }
 
+  // Always on (#4685): an empty answer is never stored, so it can neither blank a page that has
+  // English nor make one without it look done. Recorded as a failure; `text` is the page's
+  // existing translation, for continuity.
+  if (isEmptyTranslation(clean)) {
+    await recordEmptyTranslation(db, page);
+    return { written: false, protected: false, emptyResponse: true, reason: EMPTY_RESPONSE_REASON, text: existing?.data || '' };
+  }
+
   // Always on, unlike the opt-in gate above (#5376): a translation whose continuity <meta> holds
   // the page is never stored, whoever the caller is — the reader would be shown an empty page.
   // The refusal is recorded on the page and the text kept, so the words can be put back in the
@@ -1283,9 +1367,10 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply. It runs after the commit, is bounded and
-  // fail-open, and skips its own writes; loaded only when on, so this door does not depend on it otherwise.
-  if (process.env.SEAM_GUARD) {
+  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
+  // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
+  // depend on it otherwise.
+  if (seamGuardOn()) {
     try {
       const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
       await runSeamGuard(db, { page, book, note, jobId });

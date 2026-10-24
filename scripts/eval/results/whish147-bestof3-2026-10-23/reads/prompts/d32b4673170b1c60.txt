@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. byājñaprattipādakamudāharaṇaṃpakṣadharmmatvājñānyārtthopanayaḥsakṣāditaṣyāddhakaṇṇe
+2. gamanaprayojanaṃnannamittikāleṇamāhasyācettinanavyākkirttipakṣadharmmatā
+3. jñonānābhyāme ‖ vānamittesādravephaśiṣṭa ‖ paṇāmaḻkkimakkemaṃ
+4. dikālkkavyāmitti ‖ veciṇaṃvattivyā [illegible] vyāpānaya ‖ mittirañjeāvarāma
+5. ḻchalalapanmā ‖ maḻsyāvaśyatrkatayālāpha ‖ vepasarvvatrapanmema
+6. ḻcaityāvaṅṅā ‖ raṇācetālkiṃgamakaraṇamatittā ‖ nadaൗvṛddhicānāl
+7. vyāpāravalkkāraṇaṃkinaṇaimittemakāpānāmaḻddhaḥnāvyāptijñānaṃkā
+
+TRANSCRIPTION B
+1. dhyāṣṭhipratipādakamudāharaṇaṃ pakṣadharmmatāṣṭhānyārttha [illegible] pannayaḥ [illegible] ṣāditayā [illegible] kaṇṇe
+2. gamanaprayojanaṃnanamittikakaṇamāhasyā [illegible] nanavyā [illegible] pakṣadharmmatā
+3. jñānādbhāme ‖ vānamittesā [illegible] ve [illegible] śiṣṭha ‖ paṇāma [illegible] kkima [illegible] mā
+4. mikarttavyamiti ‖ ceñña va [illegible] vṛāvyāpāraya ‖ mi [illegible] ññevarāma
+5. ḻ [illegible] malapanā ‖ maḻsyāva [illegible] kkatayālāgha ‖ vepa [illegible] palāma
+6. ḻcainyāvaṅkā ‖ [illegible] tālmiṃ gamakaraṇamaktitā ‖ [illegible] vya [illegible] cānāl
+7. vyāpāravarkkāna ‖ [illegible] ṇaṃ ke [illegible] ṇaimittema [illegible] panāmaḻdbaḥ ‖ nāvyā [illegible] jñānaṃ ka
+
+TRANSCRIPTION C
+1. vyāptipratipādakamudāharaṇaṃpakṣadharmmatājñānārtthamupanayaḥ [illegible] ditayādikaṅṅaḻe
+2. gamanaprayojanaṃnnanumitikaraṇamāha [illegible] rttinanavyāpti [illegible] pakṣadharmmatā
+3. jñānādrāme ‖ pānamitisādave [illegible] śiṣṭa ‖ parāmarśikkeṇaṃ
+4. dikarttavyāmiti ‖ ceññavabhindrāvyāpānaya ‖ mitti [illegible] varāma
+5. ḻ [illegible] laparā ‖ maḻsyāvaśya [illegible] katayālākla ‖ vaisa [illegible] palama
+6. ḻcaityāvatra ‖ vaṇṭanālhiṃgamakaraṇamatitā ‖ redaൗvṛddhicārāl
+7. vyāpāravarkkāra [illegible] ṇakiraṇamitima [illegible] pārāmaḻdaḥrāvyāptijñānaṃkā
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

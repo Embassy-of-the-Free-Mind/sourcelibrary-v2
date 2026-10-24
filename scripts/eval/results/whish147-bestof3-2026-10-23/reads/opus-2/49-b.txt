@@ -1,0 +1,12 @@
+ROW 1 | ലഫലത്രൂക്കംകെട്ടുഭയമമിദൎശിതുമാഹാഃയത്തെക്കൊണ്ടുഭീഃയൎദ്ധമിത്തമൂഢാഗമനാഭിക്കെനമി
+ROW 2 | ക്കിക്കാംകത്രുയമുള്ളതൊക്കൾ‖ഇയമലക്ഷണെനാഗമനമൂപമിതിനുക്ക‖ശബ്ദസ്യദെവാഭിധ്യവന്തി
+ROW 3 | കിമിത്രത്വ്ഃശാമനമയന്ദ്യ‖ൽഭവത്രയമെന്നെണ്ടതിഃതിദ്ധ്യെഗ്രാഹിദ്ദ‖സ്ഥതിഃമിത്രാവരണാള്ളെല
+ROW 4 | ദക്കെകനമിത്തിത്രൈ‖ഷ്ടാക്കാംജ്ഞാദെനെനചാപവിദ്ദുമിതി‖പ്രധാനവ്യക്താവ്യ
+ROW 5 | ജ്ഞാനാദവ്യാനജ്ഞാ‖നെനനിംഗന്തിവൎത്തയതഃതകഃ‖കെവലംപുരുഷയൊ
+ROW 6 | ഭവതിഃവിവക്ഷ്യയാ‖ദിഃഇതെകചെന്ദ്യഉക്തിജ്ഞാനവി‖വക്ഷ്യയാദജ്ഞാനാൽ
+ROW 7 | ബംസാരചക്രെഷ്ടെ‖ബൎഃപ്രവൃത്തനംതാവൎത്തനാദസ‖ഛക്രിപ്രകാരഃപ്രകൃ
+ROW 8 | ത്തിചൈകെനാദക്ഷിണാവെ‖കന്യാവികാരങ്ങന്യാനബന്ധിഃതെക്ഷാംപ്ര‖കൃതിരെവവിവാരകലെന്തെ
+ROW 9 | ഇൽതെക്ഷാംപ്രകൃതിവാ‖ദിനാംപ്രകൃതികൊണ്ടെബന്ധഃതെക്ഷാമിമ്മ്രാ‖പുൎക്കെന്തഭാവിനകെവ
+ROW 10 | ദിശ്യാദിശ്യമമെതക്കെ‖ഭാഗാഃപുരുക്ഷാദക്ഷിണിക്കെതെക്ഷാംകത്രൂപാദി‖ന്ത്രാംദക്ഷിണാവെബന്ധഃഇഷ്ട്രാ
+
+NOTE | I could only partly read the leaf, and this is a rough attempt: the images are low-resolution and many of the readings are guesses, especially rows 1–3 and 8–10. Rows 1, 8, 9 and 10 have no ‖ marks because I couldn't place the hole breaks reliably there. Rows 4–7 are short indented lines between the holes. The left margin also has a short note, possibly "ന്സ്ര", which I left out. Treat every reading as provisional and check it against a higher-resolution image.

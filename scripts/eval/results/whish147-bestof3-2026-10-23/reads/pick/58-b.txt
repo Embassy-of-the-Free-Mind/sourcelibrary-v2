@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C reads most consistently as a real Malayalam-Sanskrit Sāṅkhya commentary across rows (svābhāvikaṃ viparītaguṇa, mahadādi…aviśeṣa pañca, sṛṣṭi/saṃhāra, trailokya, sūkṣma-śarīra, kramam, liṃga), while A has only scattered real words and B is mostly broken syllables.

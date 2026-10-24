@@ -1,0 +1,48 @@
+Reading done. Here is the collation of the left half, line by line. Square brackets mark text lost in the hole or off the right edge; question marks mark akṣaras I cannot read with confidence.
+
+**Line 1 — SK_40 (second half)**
+Leaf: `sūkṣmaparyantaṃ saṃsarati nirupabhogaṃ bhā[vair ...]`
+Differs from edition: *pravartate* → leaf reads *saṃsarati* (the akṣaras സംസരതി are clear). *nirupabhogaṃ bhā* is readable but the akṣaras are cramped.
+
+**Line 2 — SK_41 (from the second word)**
+Leaf: `śrayam ṛte sthāṇvādibhyo vinā yathā chāyā tadvad vi[nā ...]`
+*citraṃ yathā* must stand at the end of line 1 on the right half, which is not in the image. No difference seen in the visible words.
+
+**Line 3 — SK_41 end / SK_42 start**
+Leaf (left of hole): `[ni]rāśrayaṃ liṃ` | (right of hole): `gaṃ |` followed by about eight akṣaras I cannot read securely. They would be the place for *puruṣārthahetukam idaṃ* but I cannot confirm that reading.
+
+**Line 4 — SK_42**
+Leaf: `[...]ttikaprasaṅge` | `na prakṛter vvibhutva[yogān ...]`
+The join across the hole (prasaṅge|na) is secure. *vvibhutva* with doubled v is my reading but uncertain.
+
+**Line 5 — SK_42 end / SK_43 start**
+Leaf: `liṅgaṃ | asā` | `ṃsiddhikāś ca bhā[vāḥ ...]`
+No difference seen.
+
+**Line 6 — SK_43**
+Leaf: `[vaikṛt]āś ca dharmmādyāḥ dṛ` | `ṣṭāḥ karaṇāśrayi[ṇaḥ ...]`
+Doubled m in *dharmmādyāḥ* is normal Malayalam orthography; uncertain at this resolution.
+
+**Line 7 — SK_43 end / SK_44 start**
+Leaf: `[kalal]ādyāḥ dharmmeṇa` | `[ga]manam ūrddhvaṃ gama[nam ...]`
+*ūrddhvaṃ* with the conjunct ദ്ധ്വ is clear.
+
+**Line 8 — SK_44 (second half) and start of SK_45**
+Leaf: `[a]dharmmeṇa jñānena cāpavarggo viparyayād iṣyate bandhaḥ [...]`
+The first five akṣaras are faint; *viparyayād iṣyate bandhaḥ* is clear. The edition's *iṣyane* is not what the leaf has: the leaf reads *iṣyate*. *vairāgyāt prakṛtilayaḥ* must be on the right half.
+
+**Line 9 — SK_45**
+Leaf: `saṃsāro bhavati rā?asād ?ā?ā? ai??? [...]`
+*saṃsāro bhavati* is clear. The following akṣaras are consistent with *rājasād rāgāt aiśvaryād* (the edition's footnoted *rājasād* lacks *rāgāt*), but I cannot read them securely enough to claim the word.
+
+**Commentary:** every legible line on this half maps onto SK_40–45 in sequence. I found no stretch I can identify as commentary, apart from the unread akṣaras after the daṇḍa in line 3, which could be either SK_42 or a gloss.
+
+DIFFERENCES:
+SK_40 | pravartate | saṃsarati | certain
+SK_44 | iṣyane | iṣyate | certain
+SK_44 | ūrdhvaṃ | ūrddhvaṃ | certain
+SK_42 | vibhutva | vvibhutva | uncertain
+SK_43 | dharmādyāḥ | dharmmādyāḥ | uncertain
+SK_44 | dharmeṇa | dharmmeṇa | uncertain
+SK_44 | 'pavargo | pavarggo | uncertain
+SK_45 | rājasād (no following word) | rājasād rāgāt | uncertain

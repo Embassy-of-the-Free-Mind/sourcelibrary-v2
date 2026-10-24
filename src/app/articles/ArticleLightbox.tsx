@@ -43,8 +43,26 @@ function originalSrc(img: HTMLImageElement): string {
   return src;
 }
 
+/**
+ * The reader page a picture comes from, if it is a page of a book in the
+ * library: the holder's data-lightbox-href, or a /book/ link in its caption.
+ * Such a picture opens that page in the reader, never the viewer (Derek,
+ * 2026-10-18: "I always want it to go to the page in the book").
+ */
+function bookPage(img: HTMLImageElement): string | null {
+  const isBook = (h: string | null | undefined) => (h && /^(https:\/\/sourcelibrary\.org)?\/book\//.test(h) ? h : null);
+  const held = isBook(img.closest<HTMLElement>('[data-lightbox-href]')?.dataset.lightboxHref);
+  if (held) return held;
+  const link = img.closest('figure')?.querySelector('figcaption a[href*="/book/"]');
+  return isBook(link?.getAttribute('href'));
+}
+
 function qualifies(img: HTMLImageElement): boolean {
   if (img.closest('[data-no-lightbox]')) return false;
+  if (bookPage(img)) return false;
+  // A picture inside a link is a card (another article, a book): the click
+  // should follow the link, not open the viewer.
+  if (img.closest('a[href]')) return false;
   // Article pictures count even before they load (lazy images measure 0 until then).
   if (img.closest('figure, [data-lightbox-href]')) return true;
   const r = img.getBoundingClientRect();
@@ -98,7 +116,16 @@ export default function ArticleLightbox() {
     main.classList.add('has-lightbox');
     const onClick = (e: MouseEvent) => {
       const img = (e.target as HTMLElement).closest?.('img') as HTMLImageElement | null;
-      if (!img || !main.contains(img) || !qualifies(img)) return;
+      if (!img || !main.contains(img) || img.closest('a[href]')) return;
+      const page = bookPage(img);
+      if (page) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.metaKey || e.ctrlKey) window.open(page, '_blank');
+        else window.location.assign(page);
+        return;
+      }
+      if (!qualifies(img)) return;
       e.preventDefault();
       e.stopPropagation();
       const all = imagesOnPage();

@@ -1,0 +1,77 @@
+{
+ "u": {
+  "boxes": [
+   [
+    70,
+    890,
+    128,
+    1003
+   ],
+   [
+    129,
+    890,
+    170,
+    995
+   ],
+   [
+    70,
+    1004,
+    154,
+    1092
+   ],
+   [
+    165,
+    1000,
+    255,
+    1090
+   ],
+   [
+    280,
+    933,
+    325,
+    1053
+   ],
+   [
+    340,
+    935,
+    390,
+    1055
+   ]
+  ],
+  "note": "top-left thin variant and the block below it touch on the chart; split by hand at y=1004"
+ },
+ "sa": {
+  "boxes": [
+   [
+    76,
+    64,
+    190,
+    158
+   ],
+   [
+    76,
+    160,
+    190,
+    250
+   ],
+   [
+    222,
+    96,
+    324,
+    206
+   ]
+  ],
+  "note": "two stacked variants touch on the chart; split by hand at y=159"
+ },
+ "me": {
+  "boxes": [
+   [
+    425,
+    300,
+    522,
+    425
+   ]
+  ],
+  "note": "Stuart marks this value '??' (doubtful)."
+ }
+}

@@ -11,11 +11,14 @@
  * pages). READ stage only; `cli-ocr.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F)
- *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME]
+ *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME] [--reread]
  *   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *
  * --books-file: book ids, one per line; reads every page of each that has NO OCR yet (a page with text is never
- * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped.
+ * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped
+ * unless --reread is given (page-ids mode only: a re-read is chosen page by page, never a whole book). Each page's meta
+ * then records `reread: true` and the OCR model it was read over (`replaces_model`); `cli-ocr.mjs apply` still holds
+ * a re-read to its guards (human edits, the 40% shared-words floor or a lane gate, the OCR timestamp).
  * --language: the CONTENT language for the prompt's language slot, overriding `books.language` for every book in the
  * run — for a dictionary or grammar catalogued under its front-matter language (Spanish, French…) whose pages are
  * mostly Maya. `books.language` is the edition's language and is not changed (language-fields.md); each page's meta
@@ -28,6 +31,11 @@
  * `===== PAGE pNN =====` markers. A reply whose markers are not exactly p01..pNN in order is REFUSED whole; the call
  * is retried once, then each of its pages is read alone. The exact prompt sent is saved under DIR/prompts/<hash>.txt
  * and each page's meta points at it, so `apply` hashes the text that was sent rather than rebuilding it.
+ *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable page read is copied to R2 candidate-reads/
+ * (with the exact prompt its call sent) when it is made. Before the calls, each page asks for a kept read by the same
+ * --model on the same book prompt (live prompt + language slot) and per-call instruction, of the same image bytes,
+ * and uses it instead of calling (meta `reused_from`). `--fresh` always calls: a repeat-noise eval needs fresh reads.
  *
  * HOW IT FAILS. A usage-limit reply stops the run (exit 3) with the pages done so far saved; re-running skips them.
  * Any other failed page gets an empty .txt and a non-zero `exit` in its meta, which `apply` skips and counts.
@@ -43,6 +51,8 @@ import { contentHash } from '../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../lib/cli-chatter.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
+import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-ocr.mjs';
 const CLI = 'claude';
@@ -105,6 +115,9 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 
 /** One sealed `claude -p` call. Resolves {text, model, usage, code, cls, err, secs}. Shared with claude-ocr-two-read.mjs. */
 export function claudeCall(prompt, model, cwd) {
+  // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
+  const blocked = claudeBlocked();
+  if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: claudeEnv() });
@@ -121,6 +134,7 @@ export function claudeCall(prompt, model, cwd) {
       const resolved = models.find((m) => /opus|sonnet|haiku|fable/.test(m) && m.includes(String(model).replace(/^claude-/, ''))) || models[0] || null;
       const failed = j.is_error || code !== 0;
       const cls = failed && USAGE_LIMIT.test(text + out + err) ? 'usage_limit' : code === null ? 'timeout' : failed ? `exit_${code}${j.subtype ? `_${j.subtype}` : ''}` : !text ? 'empty' : null;
+      if (cls === 'usage_limit') noteLimitHit('claude', { reason: (err || text).slice(-200) });
       resolve({ text, model: resolved, usage: j.usage ? { input: j.usage.input_tokens, output: j.usage.output_tokens, cache_read: j.usage.cache_read_input_tokens, cache_creation: j.usage.cache_creation_input_tokens, turns: j.num_turns, list_cost_usd: j.total_cost_usd } : null, code, cls, err: (err || (failed ? text : '')).slice(-300), secs: (Date.now() - t0) / 1000 });
     });
   });
@@ -136,6 +150,8 @@ async function main() {
   const JOB = arg('job') || 'claude-ocr';
   const LANGUAGE = arg('language');
   if (LANGUAGE) slotLanguage(null, LANGUAGE);   // refuse an unknown override before touching anything
+  const REREAD = process.argv.includes('--reread');
+  if (REREAD && !arg('page-ids-file')) { console.error('--reread needs --page-ids-file: a re-read names its pages'); process.exit(2); }
   if (!OUT || !(arg('books-file') || arg('page-ids-file'))) { console.error('usage: claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F) (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -146,10 +162,10 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
-  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 };
+  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.model': 1 };
   const filter = arg('books-file')
     ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...NO_OCR }
-    : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...NO_OCR };
+    : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...(!REREAD && NO_OCR) };
   const pages = await db.collection('pages').find(filter, { projection: PAGE_FIELDS }).sort({ book_id: 1, page_number: 1 }).toArray();
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { id: 1, language: 1, title: 1 } }).toArray()).map((b) => [b.id, b]));
   const { base, ref } = await liveOcrPrompt(db);   // the auto-detect base, for the log line; each book's slot is filled here
@@ -171,7 +187,7 @@ async function main() {
     const last = calls[calls.length - 1];
     if (last && last[0].book_id === p.book_id && last.length < PER_CALL) last.push(p); else calls.push([p]);
   }
-  console.log(`${pages.length} pages without OCR in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})${LANGUAGE ? `; language slot ${LANGUAGE} (override)` : ''}`);
+  console.log(`${pages.length} pages ${REREAD ? 'to re-read (--reread)' : 'without OCR'} in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})${LANGUAGE ? `; language slot ${LANGUAGE} (override)` : ''}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'claude-ocr-sealed', path.basename(OUT));
   const callLog = path.join(OUT, 'calls.jsonl');
@@ -188,9 +204,12 @@ async function main() {
     imgCache.set(p.id, v);
     return v;
   };
+  // The reuse key (#7075): the book's prompt, the per-call instruction's template, the image bytes.
+  const FRESH = wantsFresh();
+  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(promptFor[p.book_id]), input: imageSha, variant: contentHash(callInstruction(1)) });
   const writePage = (p, text, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, chars: text.length, chatter: text ? ocrReadProblem(text) : null }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(REREAD && { reread: true, replaces_model: p.ocr?.model ?? null }), ...meta, chars: text.length, chatter: text ? ocrReadProblem(text) : null }, null, 1));
   };
 
   /** Read a group of pages in one sealed call. Returns 'ok' | 'mismatch' | 'failed'. */
@@ -223,12 +242,32 @@ async function main() {
       return r.cls ? 'failed' : 'mismatch';
     }
     group.forEach((p, i) => writePage(p, texts[i], { ...common, call_position: i + 1, exit: 0, error_class: null, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha }));
+    // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
+    for (const [i, p] of group.entries()) {
+      const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text: texts[i], model: MODEL, prompt_hash: reuseKeyOf(p, imgs[i].sha), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
     const bad = texts.filter((t) => ocrReadProblem(t)).length;
     console.log(`  ${group[0].book_id} p.${group[0].page_number}-${group[group.length - 1].page_number}: ok ${texts.map((t) => t.length).join('/')} chars${bad ? `, ${bad} fail the chatter guard` : ''} (${Math.round(r.secs)}s)`);
     return 'ok';
   };
 
-  const queue = [...calls];
+  // A kept read of the same page, model, book prompt and image bytes is used instead of a call (#7075).
+  let reused = 0;
+  const reusedIds = new Set();
+  if (FRESH) console.log('--fresh: kept reads are not looked up');
+  else {
+    const keptBooks = new Set();
+    for (const b of new Set(todo.map((p) => p.book_id))) if (await hasKeptReads(b)) keptBooks.add(b);
+    for (const p of todo.filter((q) => keptBooks.has(q.book_id))) {
+      const im = await fetchImage(p);
+      if (im.error) continue;
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKeyOf(p, im.sha) });
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); }
+      imgCache.delete(p.id);   // fetched again when its call comes: a whole book's images are not held for the lookup
+    }
+  }
+  const queue = calls.map((g) => g.filter((p) => !reusedIds.has(p.id))).filter((g) => g.length);
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (queue.length && !stop) {
       const group = queue.shift();
@@ -245,7 +284,7 @@ async function main() {
     }
   }));
   const metas = todo.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
-  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached`);
+  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached; reused ${reused} kept read(s) instead of calling`);
   if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
 }
 

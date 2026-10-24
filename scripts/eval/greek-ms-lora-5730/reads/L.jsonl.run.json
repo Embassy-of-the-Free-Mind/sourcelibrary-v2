@@ -1,0 +1,8 @@
+{
+ "model": "gemini-3.1-flash-lite",
+ "temperature": 0,
+ "prompt": "Transcribe ALL text visible in this image using the appropriate Unicode script. Output ONLY the raw text. No commentary, no translation, no labels, no markdown.",
+ "wall_secs": 625.725,
+ "in_tok": 432516,
+ "out_tok": 1376873
+}

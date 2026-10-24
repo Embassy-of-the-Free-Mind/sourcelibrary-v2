@@ -1,0 +1,71 @@
+{
+ "meaning": {
+  "real": {
+   "n": 30,
+   "unreadable": 24,
+   "partial": 3,
+   "no": 3
+  },
+  "control": {
+   "n": 30,
+   "unreadable": 25,
+   "no": 5
+  },
+  "match_rate": 0,
+  "control_match_rate": 0,
+  "bar": {
+   "match_rate_min": 0.6,
+   "control_match_rate_max": 0.1
+  },
+  "passes": false
+ },
+ "calib": {
+  "real": {
+   "n": 30,
+   "match": 29,
+   "partial": 1
+  },
+  "control": {
+   "n": 30,
+   "no": 30
+  }
+ },
+ "names": {
+  "sanskrit": {
+   "real": {
+    "n": 10,
+    "partly": 5,
+    "yes": 2,
+    "no": 3
+   },
+   "control": {
+    "n": 10,
+    "no": 10
+   }
+  },
+  "tibetan": {
+   "real": {
+    "n": 10,
+    "partly": 2,
+    "yes": 4,
+    "no": 4
+   },
+   "control": {
+    "n": 10,
+    "no": 10
+   }
+  },
+  "mongolian": {
+   "real": {
+    "n": 10,
+    "yes": 6,
+    "partly": 4
+   },
+   "control": {
+    "n": 10,
+    "no": 9,
+    "partly": 1
+   }
+  }
+ }
+}

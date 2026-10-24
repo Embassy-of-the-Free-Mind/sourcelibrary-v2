@@ -1,0 +1,15 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible] ഃ ഉക്തംഹി
+ROW 8 | [illegible] ‖ [illegible] ഃ ഉക്തംഹി [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ഃ ഉക്തംഹി [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ഃ ഉക്തംഹി [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ഃ ഉക്തംഹി [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 13 | [illegible] ‖ [illegible] ‖ [illegible] ഃ ഉക്തംഹി [illegible]
+
+NOTE | I opened all four pieces and counted 13 rows: rows 1–5 and 10–13 run the full width, and rows 6–9 are short rows between the two holes. At this resolution I could only read one recurring phrase for certain (ഃ ഉക്തംഹി), so almost all of the leaf is marked [illegible] rather than guessed or filled in from the known text. Higher-resolution crops of each row would allow a real transcription.

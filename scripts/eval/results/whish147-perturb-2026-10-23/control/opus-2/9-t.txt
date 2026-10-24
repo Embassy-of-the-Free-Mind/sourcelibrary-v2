@@ -1,0 +1,13 @@
+Low-confidence reading. Many glyph identifications below are uncertain (marked with ?), and parts I couldn't resolve are marked [illegible]. I had only the four full images to work from and couldn't zoom in, so please check this against the leaf before relying on it.
+
+ROW 1 | ദ്ധിഷംനവിനാദ്ധാവെവനാലിംപരിച്ഛിന്നംഃലിംഗാവ്യാദ്ധാവാത്മഃശന്ദാദിവി[illegible]യഃപ്രവൃത്തരെ
+ROW 2 | സൎഗ്ഗഃ[illegible]ഷ്ടവികരെണ്ണാരൈദപരൈക്കുൎ[illegible]ൈവ്യാഷ്ട്രാ[illegible]കയാട്ടിവികിമനസ്സൈ[illegible]
+ROW 3 | ഷവിധഃസമാസ ‖ െതാരെദ[illegible]കസ്സൎഗ്ഗഃ।ശിഷ്ടാ[illegible]ം ‖ സന്ധിവിനാലക്കമൊ
+ROW 4 | വിരാലന്ത്രുലഭ ‖ ണ്ടിഃമെൎദ്രു[illegible]ാഭെക്ഷാവിശ്വാലൊപ്രു ‖ മൊദിക്കംബൊധ്യൈ
+ROW 5 | ക്ഷതത്തൃജ്ഞനാമരഷ ‖ ത്തൈഃഷ്ടെഃഭൊ॰ശ്രാ[illegible]ൎയ്യാെക്ഷാന്ത്രിചെതക ‖ നഃപൃഥക്ഷഃലിംഗന്ത്രാവി
+ROW 6 | ദിവ്യരത്തൈക്കുന്ത്യാ ‖ ൎഭഃഭൊജാദിനാലെവനഗൃഷ്ട്രഉളെളൂക്ക ‖ പ്രകൃതിഉളെതാമഹത്ഥം
+ROW 7 | ദിവിഷയൈൎദ്ദൃതൈല ‖ ഷ്യാന്ത്ഃപ്രതി[illegible]ങ്ങനാവിദ്മാകമാ ‖ ത്ഥംനു[illegible]ക്ക്ഉപാസനാ
+ROW 8 | മൊന്തുനോഃഡൃംഭ്രവ ‖ സ്സിവിണിതിഭിതിമിത്തംഭിന്ത്രായഹ ‖ ാപ്രവൃത്തിരബ്ബന്ദ്രുഹ
+ROW 9 | ന്ദകിവിഭിമെമാക്ഷനിമി[illegible]ത്തനമാപ്രാഹ്രാത്തിഭേ[illegible]ിപ്രേയാനന്ത്യാഃ।കൊതി[illegible]തിന്നുതിവൃത്ത്യംശ
+ROW 10 | മാസ്ഥിയാന്യത്വപ്യൂരം[illegible]തനെവാകഃപ്ലക്ക[illegible]കനവിമെമാക്ഷനിമിത്തം॰പ്രവൃത്തപെക്ഷതബഞ്ചവൃ
+NOTE | All 10 rows are there: rows 1–2 and 9–10 run the full width, and rows 3–8 are split at the two holes. My letter-level confidence is low, about 40–50% overall, and only a few words are fairly secure (e.g. ലിംഗ, പ്രവൃത്ത, വിമൊക്ഷനിമി).

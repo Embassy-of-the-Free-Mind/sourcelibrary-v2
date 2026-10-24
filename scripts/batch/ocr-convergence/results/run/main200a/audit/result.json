@@ -1,0 +1,442 @@
+{
+ "set": "main200a",
+ "audited": 38,
+ "writes": 38,
+ "read": {
+  "opus": 38,
+  "gemini": 38
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 3
+ },
+ "writes_better": {
+  "opus": 35,
+  "gemini": 35
+ },
+ "writes_same": {
+  "opus": 3,
+  "gemini": 0
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "6952dac977f38f6761bc6cb8",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X stops at 'tuis propriis manibus ipſum ſicut', omitting the rest of the page through 'per orbem univerſum' which Y gives.",
+   "gemini_note": "X truncates after 'ipſum ſicut' and omits the remainder of the leaf starting with 'ex argilla in creatione ejus aptaſti'."
+  },
+  {
+   "page_id": "69529036b184004c526a17ff",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y ends at 'ex his que historie', dropping the last ~13 lines ('et memorie refferunt ... sanctissimos ecclesie') that X transcribes.",
+   "gemini_note": "Y cuts off mid-sentence after 'ex his que historie', omitting the final 15 lines of the page."
+  },
+  {
+   "page_id": "697d619955d6b030fcf76724",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads 'denen Hällischen Hrn. Theologen' as 'häßlichen', reads 'unterm' as 'uns term', and gives the signature as 'Ddd ddd 3' instead of 'Yyy yyy 3'.",
+   "gemini_note": "Y misreads 'Hällischen' as 'häßlichen' ('häßlichen Hrn. Theologen') in item 53."
+  },
+  {
+   "page_id": "6979375e599649dc6adad1be",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'perfringendam' for the printed 'perſtringendam' and invents a page number '505' and circle text ('Quia ubi deficit opus hominis...') that is really mirrored show-through.",
+   "gemini_note": "X misreads 'perstringendam' as 'perfringendam' and transcribes bleed-through text from the reverse leaf."
+  },
+  {
+   "page_id": "6979443555e3b340167df4a4",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y gives Mars 'in ♑' (Capricorn) where the leaf has '♒' (Aquarius), which changes the astrological example.",
+   "gemini_note": "Y transcribes the zodiac sign as Capricorn ('in ♑') instead of Aquarius ('in ♒') and misreads 'planetae' as 'planeta'."
+  },
+  {
+   "page_id": "695906cb95a91542b28bf795",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Both are complete; Y has small slips ('Medicina Aurea producenda' for 'Medicinæ Aureæ producendæ') and leaves the final 'ſtretur' only as a catchword.",
+   "gemini_note": "X prints 'demonſtretur.' with text from the next leaf where this page ends at 'demon-' (catchword 'stretur.'), and introduces errors like 'affirmment' and 'dys'."
+  },
+  {
+   "page_id": "6977e0c6cfbe5c2d0102c28f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both are complete with only minor letter slips (Y 'Libb.' for 'Labb.', 'incalescante'; X 'Usserii' for the printed 'Usserri').",
+   "gemini_note": "Y introduces several OCR misreadings of words and names, including 'Libb.' for 'Labb.', 'Usserri' for 'Usserii', and 'solæ' for 'sola'."
+  },
+  {
+   "page_id": "6952dac977f38f6761bc6cb9",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y breaks off mid-word at 'igneo ſ', omitting more than half the page, including the 'Atque etiam...' paragraph and the marginal references.",
+   "gemini_note": "Y truncates mid-sentence at 'igneo ſ' and omits the rest of the page."
+  },
+  {
+   "page_id": "6978f1c53a7ffaa2e622fec7",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf shows only mirrored show-through; X invents diagram labels ('Rex', 'Luna', 'Ignis', 'Mineralia') and misreads the motto as 'jacet', while Y correctly marks the page as blank with show-through.",
+   "gemini_note": "The page is blank with only mirrored show-through from the reverse, but X transcribes the reverse side's text ('CHARACTER ADEPTORUM')."
+  },
+  {
+   "page_id": "69761aa510ab2f37beb723eb",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'imperueſtigabili' as 'imperscrutabili', 'offurtiat' as 'offurcat' and 'humilimi' as 'humillimi'; Y matches the print.",
+   "gemini_note": "Y misreads 'imperscrutabili' as 'imperuestigabili' and 'offurcat' as 'offurtiat'."
+  },
+  {
+   "page_id": "69763febfe54dbd78c2cbf0f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the line 'profert: Domine labia mea aperies: mentē pro uiribus in redēptionis oracu-', jumping from 'dum' to 'lum intēdat'; Y keeps it.",
+   "gemini_note": "X omits the passage 'profert: Domine labia mea aperies: mentem pro uiribus in redemptionis oracu-' before 'lum intēdat'."
+  },
+  {
+   "page_id": "69529036b184004c526a1803",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Y gives the printed folio for 'Angela nugarola' as '144' where the leaf has 164, and also misreads 'Bragnes' as 'Aragnes', 'Elysabeth' as 'Elysaheth' and 'cymbrorum' as 'cymbrotum'; X's only real slip is 'eolis' for 'solis'.",
+   "gemini_note": "X corrupts the name 'Aragnes asiatica' to 'Bragnes asyatica' and misreads folio '144' as '164' for Angela Nogarola."
+  },
+  {
+   "page_id": "697df59a8a0087ecea447d7b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the Ulpian clause '& in eos, qui in opus metalli damnantur, differentia in vinculis tantum est; quod qui in metallum' and turns 'Africæ Exarcho' into 'Eparcho'.",
+   "gemini_note": "Y omits a passage in the first entry ('& in eos, qui in opus metalli damnantur, differentia in vinculis tantum eſt; quod qui in metallum')."
+  },
+  {
+   "page_id": "697cc321612a232fc6db9066",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X is close to the leaf; Y has small slips such as 'Wir ziehen nicht unsere Kleider, sondern' (dropping 'aus'), 'freueten sie sich sehr' (dropping 'so') and 'wieder Christus' for 'Christum'.",
+   "gemini_note": "Y omits 'aus' from 'unsere Kleider aus' and misreads the author name 'Nyss.' as 'Nyff.'."
+  },
+  {
+   "page_id": "69757d32509965a3101c2fd1",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y reads 'qui Christianorum antecesserunt aduentum' where the leaf has 'Christi', drops 'siue Græca' from chapter VIII, and adds a page number 6 that is not printed.",
+   "gemini_note": "Y omits 'siue Gręca' in chapter VIII and transcribes 'Christi' as 'Christianorum' in chapter III."
+  },
+  {
+   "page_id": "6980c9aa5b66e0e746d4e0bd",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'non autem factis' where the leaf has 'sacris' (reversing the sacred/profane point), plus 'expoliare' and 'doctis' for 'expoliaret' and 'dotis'.",
+   "gemini_note": "X misreads 'sacris' as 'factis' and 'dotis' as 'doctis', altering the meaning."
+  },
+  {
+   "page_id": "69759b45f85b0fd83098c6d2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the passage from 'Esa. 66. 10. χαίρειν χαρᾷ' through 'Apul. 4. Metam. 64. Cænas cœnare' and garbles 'Reg. 1. 40'; Y keeps it, though Y's header 'Eccl. 17.' is wrong (the leaf has 'Es. LI. 17.').",
+   "gemini_note": "X omits a substantial passage citing Latin authors ('Sed de Latinitate nos videamus. Macrob. 3. Sat. 7. Saltationem saltare... cui')."
+  },
+  {
+   "page_id": "69529036b184004c526a1800",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y transcribes only the last 12 lines (from 'dissimo Nicolao maria Estēse') and leaves out the first two-thirds of the prologue page.",
+   "gemini_note": "Y omits most of the page, dropping the opening twenty-four lines ('catholice doctores viros illustres...') and the concluding lines."
+  },
+  {
+   "page_id": "697e254c858e04747b5aa758",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'nesciant praedicantes' where the leaf has 'sileant prædicantes', plus 'elixiribus' and 'contritionibus' for 'exiribus' and 'conteritionibus'.",
+   "gemini_note": "X misreads '& sileant' as 'ne-sciant' across lines 18–19 and drops 'si-' at the end of line 28."
+  },
+  {
+   "page_id": "695906cb95a91542b28bf79a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y reads 'Hyſtorici contra dant' where the leaf has 'eos tradant', and puts the marginal note '& ſcriptores.' into the body text; X matches the leaf.",
+   "gemini_note": "Y inserts marginal text into the body sentence ('& scriptores.') and misreads 'eos tradant' as 'contra dant'."
+  },
+  {
+   "page_id": "69529036b184004c526a1801",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X stops at 'tuam Regiam maiesta-' (line 11), dropping the remaining ~33 lines of the page that Y gives through 'quod quidem speciosum munus'.",
+   "gemini_note": "X omits the remainder of the leaf after line 11 ('tem persepe elaborasse constat')."
+  },
+  {
+   "page_id": "697db4947c2773f045eddfc3",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'ANNVLVS nunquam fibulam significat' where the leaf has 'Annulus nonnunquam fibulam significat', which reverses the sense; X also moves inline citations into invented margin notes.",
+   "gemini_note": "X reads 'nunquam' ('ANNVLVS nunquam fibulam fignificat') instead of 'nonnunquàm', reversing the meaning of the sentence."
+  },
+  {
+   "page_id": "697dad08e9d666223e00589b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the line 'tali Pontifici vltimum reddidisset officiu so-' and puts a garbled duplicate in its place ('reboans in sublime tecta domorum / nabant psalmi'); Y matches the leaf.",
+   "gemini_note": "X omits 'tali Pontifici vltimum reddidiſſet officiū' and inserts a garbled repetition ('reboans in ſublime tecta domorum')."
+  },
+  {
+   "page_id": "6952dac977f38f6761bc6cbb",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y is model reasoning ('Wait, \"peridum\" is not a standard Latin word...') and breaks off at 'Nam facis, qu', so most of the page is missing; X transcribes the full page.",
+   "gemini_note": "Y truncates mid-sentence at 'Nam facis, qu', omitting the remainder of the leaf."
+  },
+  {
+   "page_id": "69794092a6ce11f0b8874b34",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y's Nocte column is wrong: Ignea has only two planets ('♃ ♄', missing ☉), and Terrea, Aerea and Aquea list wrong rulers (e.g. Aquea '♂ ☽ ♄' where the leaf has ♂ ♀ ☽); X has every ruler and only swaps the order in two rows.",
+   "gemini_note": "Y corrupts multiple nocturnal planetary rulers in the table, omitting the Sun in Ignea and giving erroneous planets ('☽ ♂ ♄', '♃ ♀ ☿'), and adds the unprinted word 'Unuſquiſque'."
+  },
+  {
+   "page_id": "694f3d6cbe37f451a5324e1c",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both give the full text from 'christi: hic futurę iudicium' to 'quę hoc in dyalogo disputat'; they differ only in line breaks and small spellings such as 'futurę' vs 'futurum'.",
+   "gemini_note": "X misreads 'futurum' as 'futurę' and 'disputant' as 'disputat'."
+  },
+  {
+   "page_id": "697b0aaa24b583bbc4eefa03",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The body text matches in both from 'totis viribus' to 'cogitare, in'; they differ only in the page number (X '9', Y '7') and in long-s and paragraph conventions.",
+   "gemini_note": "X misreads the page number as '9' instead of '7' and appends the catchword to the text ('cogitare, in')."
+  },
+  {
+   "page_id": "6952dac977f38f6761bc6cbc",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y is only '10' followed by a run of '&nbsp;' with no text; X transcribes the whole page from 'litis apparuisti?' to 'Nam quamvis, tu Jehova,'.",
+   "gemini_note": "Y is truncated after the page number '10' and omits the entire body of the page ('litis apparuisti?...')."
+  },
+  {
+   "page_id": "6952dac977f38f6761bc6cbe",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X stops at 'an ipse dixisti, &', dropping about two-thirds of the page (Josua, Samson, Gedeon, Bezaleel, etc.); Y gives the full page.",
+   "gemini_note": "X cuts off mid-sentence after 'an ipse dixisti, &' and omits the rest of the page."
+  },
+  {
+   "page_id": "6952dac977f38f6761bc6cba",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y breaks off at 'doctrinæ atque scientiæ' halfway down the page, dropping the rest including the 'Moysen' passage; X is complete through 'tibi, & populo-'.",
+   "gemini_note": "Y cuts off mid-sentence after 'doctrinæ atque scientiæ' and omits the rest of the page."
+  },
+  {
+   "page_id": "697e3d0f10b9a0c099c29986",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'Cerinthus (seyt hy) van welcke oock de' and 'behoorlicke byslapinge n/ die dese secte onder sijnen' (giving 'tot onbesinnent name'), and garbles 'grouwelijcke den inghebracht' as 'grouwelijcke dīnghen seght'.",
+   "gemini_note": "Y omits 'Cerinthus (seyt hy) van welcke oock de' and drops 'onbehoorlicke byslapinge n/ die dese secte onder sijnen' (garbled as 'onbesinnent name')."
+  },
+  {
+   "page_id": "69591183ecb01322b3069ff2",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads 'perfectiorem' as 'perfectionem', 'sciscitabimur' as 'sciscitabitur', 'suscipiendas' as 'suspiciendas' and 'aliqui' as 'aliquis'; X follows the print (both give the page number as 340, but the leaf reads 349).",
+   "gemini_note": "Y introduces multiple sense-changing errors and corruptions, such as 'suspiciendas' for 'suscipiendas' and 'actum perfectionem' for 'actum perfectiorem'."
+  },
+  {
+   "page_id": "69529036b184004c526a1804",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y stops at 'Melania Romana', leaving out the rest of column 1 and the whole of column 2 (Penolopes through Zenobia, 'Finis').",
+   "gemini_note": "Y truncates mid-page after 'Melania Romana', omitting the remainder of the leaf through 'Zenobia regina folio 72'."
+  },
+  {
+   "page_id": "695434de1479a63c1108a2b5",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X has 'größte' for printed 'grellste' and 'Möglichkeit' for 'Nützlichkeit', and adds an '&c.' that is not on the leaf.",
+   "gemini_note": "X misreads 'grellste' as 'größte', 'Nützlichkeit' as 'Möglichkeit', and adds an invented '&c.'."
+  },
+  {
+   "page_id": "6977d04ce6399ded13c4bb1a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y breaks up the side note 'Claruit ante Chr. Anno XXXIX.': it keeps only 'XXXIX.' and moves 'Chr. Anno' into the Hieronymus citation; X keeps the note intact.",
+   "gemini_note": "Y omits 'Claruit ante' from the margin and erroneously inserts 'Chr. Anno' into the text after 'Hieronym. in Chron.'."
+  },
+  {
+   "page_id": "694f3d6cbe37f451a5324e17",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The pencil note reads 'Wants sheet F'; X has 'Want Sheet 1', which gives the wrong missing sheet.",
+   "gemini_note": "X misreads 'Wants sheet F' as 'Want Sheet 1'."
+  },
+  {
+   "page_id": "69764693c66414bb8d3ec4a8",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'omnia' from 'inuicta manu omnia subrogat' and the Hebrew יהוה after אדני, misreads the second margin note 'Psalm. 32.' as '33.', and has 'fortitudinis' where the print reads 'fortitudines uocari'.",
+   "gemini_note": "Y omits the Hebrew Tetragrammaton יהוה from 'dum scribitur אדני יהוה' and drops 'omnia' from 'inuicta manu omnia subrogat'."
+  },
+  {
+   "page_id": "69569e391479a63c1109224a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X gets the numbers wrong: 'Fg = 3/8 D' where the leaf has 5/8, '1/2 FC (sive 1/2 radii)' where it has 1/3 and 2/3, and 'æquali' for 'æquealti'; Y's figures match, though it shortens 'Infinitorum Arithmeticæ'.",
+   "gemini_note": "X introduces serious mathematical errors in §§ 58–59, giving 'Fg = 3/8 D' instead of '5/8 D' and '1/2 FC (sive 1/2 radii)' instead of '1/3 FC (sive 2/3 radii)'."
+  }
+ ]
+}

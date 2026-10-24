@@ -58,6 +58,32 @@ export function extractionRef(clientKey: string, now: Date): string {
 }
 
 /**
+ * Extraction ref for a suspected residential proxy pool (#6950).
+ *
+ * A pool rotates its address on nearly every request, so `extractionRef`
+ * (keyed on IP + UA) would mint a different ref per page and no recovered
+ * passage would ever match another. What a pool holds constant is its forged
+ * user-agent string, so the ref is keyed on that string + calendar month.
+ *
+ * Resolvable without a new store: every flagged string is kept, never
+ * deleted, in `suspected_pool_fingerprints` (written by
+ * scripts/workers/traffic-anomaly-alert.mjs). A decoder recomputes this ref
+ * for each stored string × month and matches it
+ * (scripts/audit/decode-provenance.ts). The `SLP-` prefix tells the decoder
+ * which table to search.
+ */
+export function poolRef(userAgent: string, now: Date): string {
+  const month = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  if (!PROVENANCE_KEY) return `SLP-unkeyed-${month}`;
+  const digest = crypto
+    .createHmac('sha256', PROVENANCE_KEY)
+    .update(`pool-ref:${userAgent}:${month}`)
+    .digest('hex')
+    .slice(0, 8);
+  return `SLP-${digest}-${month}`;
+}
+
+/**
  * Attribution ref for an API-KEYED caller (#4491 follow-up). Unlike the bot
  * extractionRef this is deliberately STABLE (no month rotation) and directly
  * resolvable: the payload is a prefix of the api_keys._id, so a passage that

@@ -15,8 +15,8 @@
  *   ocr          a header (language, script, page type) + a provenance line + sections 1-4: the structured
  *                transcription (numerals by row/column with red/black and the arithmetic self-check, calendar signs,
  *                figures, glyph captions with [unread glyph]);
- *   translation  a provenance line + sections 3 and 5: the English account of the page, the reference's interpretation
- *                attributed and linked to its page.
+ *   translation  a provenance line + section 5: the English account of the page, the reference's interpretation
+ *                attributed and linked to its page (the figures stay in the OCR only: repeated, they trip the echo gate).
  *
  *   node --env-file=.env.production.local scripts/batch/codex-reading-apply.mjs --out=DIR --book=ID \
  *        --reference-book=ID --reference-cite="Förstemann, Commentary on the Maya Manuscript … (1906)" \
@@ -67,11 +67,14 @@ export function splitReading(md, refBook) {
   const at = SECTIONS.map((re) => { const m = t.match(re); return m ? { i: m.index, len: m[0].length } : null; });
   if (at.some((x) => !x)) return { why: `section ${at.findIndex((x) => !x) + 1} missing` };
   if (at.some((x, k) => k && x.i <= at[k - 1].i)) return { why: 'sections out of order' };
-  if (t.slice(0, at[0].i).trim()) return { why: 'text before section 1' };
+  // A one-line status note before section 1 ("Finished reading all ten tiles…", 5 of 74 Dresden leaves) is the agent
+  // talking, not the reading: it is dropped and recorded. Anything longer is refused.
+  const pre = t.slice(0, at[0].i).trim();
+  if (pre && (pre.includes('\n') || pre.length > 300)) return { why: 'text before section 1' };
   const body = at.map((x, k) => t.slice(x.i + x.len, k + 1 < at.length ? at[k + 1].i : undefined).trim());
   if (body.some((b) => b.length < 2)) return { why: `section ${body.findIndex((b) => b.length < 2) + 1} empty` };
   if (!new RegExp(`sourcelibrary\\.org/book/${refBook}\\?page=\\d+`).test(body[4])) return { why: 'section 5 has no link to the reference book' };
-  return { body, headings: at.map((x) => t.slice(x.i, x.i + x.len).trim()) };
+  return { body, headings: at.map((x) => t.slice(x.i, x.i + x.len).trim()), preamble: pre || null };
 }
 
 export function composeOcr({ body, headings }, { codex, cp, leaf, refCite }) {
@@ -81,8 +84,10 @@ export function composeOcr({ body, headings }, { codex, cp, leaf, refCite }) {
 }
 
 export function composeTranslation({ body, headings }, { codex, cp, refCite }) {
-  return `*${codex}, page ${cp}: what the page shows, and what ${refCite} says about it. The numerals, dates and glyph captions are in the transcription.*\n\n`
-    + `## Figures\n\n${body[2]}\n\n## ${headings[4].replace(/^## 5\.\s*/, '')}\n\n${body[4]}`;
+  // Section 5 only: the figures are already in the OCR, and repeating them here makes the English an echo of the
+  // transcription (the translation door's echo gate refused 3 of 74 Dresden leaves when they were included).
+  return `*${codex}, page ${cp}: what ${refCite} says about this page. The numerals, dates, figures and glyph captions are in the transcription.*\n\n`
+    + `## ${headings[4].replace(/^## 5\.\s*/, '')}\n\n${body[4]}`;
 }
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -147,10 +152,10 @@ for (const f of files) {
   );
   if (r.modifiedCount !== 1) { skip(leaf, 'page changed between read and write'); continue; }
   const fresh = await db.collection('pages').findOne({ id: page.id }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 } });
-  const trEngine = geminiEngine({ ...base, input: { ...translationInput({ ocrText: fresh.ocr.data, ocrUpdatedAt: fresh.ocr.updated_at, context: { derived_from: 'the same reading as the OCR (sections 3 and 5)', reading_hash: contentHash(md) } }), reference } });
+  const trEngine = geminiEngine({ ...base, input: { ...translationInput({ ocrText: fresh.ocr.data, ocrUpdatedAt: fresh.ocr.updated_at, context: { derived_from: 'the same reading as the OCR (section 5)', reading_hash: contentHash(md) } }), reference } });
   const res = await writePageTranslation(db, { page: fresh, book, text: trText, promptRef: { id: LANE, name: base.prompt.name, version: '1' }, model: meta.model, jobId: runId, note: 'codex_reading', refuseUnhealthy: true, engine: trEngine });
   if (!res.written && (res.protected || res.unhealthy)) console.log(`    translation NOT written: ${res.protected ? 'human-edited' : res.reason} (the OCR was)`);
-  await recordSweepAction(db, { sweep: 'codex-reading', book_id: BOOK, action: 'codex-reading-written', detail: { page_id: page.id, page_number: leaf, codex_page: meta.cp, from_model: page.ocr?.model ?? null, to_model: meta.model, translation_written: !!res.written, run: runId, reason: REASON, reference } });
+  await recordSweepAction(db, { sweep: 'codex-reading', book_id: BOOK, action: 'codex-reading-written', detail: { page_id: page.id, page_number: leaf, codex_page: meta.cp, from_model: page.ocr?.model ?? null, to_model: meta.model, translation_written: !!res.written, preamble_dropped: parts.preamble, run: runId, reason: REASON, reference } });
   nums.push(leaf);
   models.add(meta.model);
   tally.written++;

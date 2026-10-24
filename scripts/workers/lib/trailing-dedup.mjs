@@ -22,8 +22,10 @@
  *   gallery_images (PR #2095) but overkill for byte-exact page wrappers.
  *
  * Reversible: pages are hidden via negative page_number, never deleted.
- * To restore: set page_number back to its absolute value.
+ * To restore: set page_number back to its absolute value, and `--unmove` the
+ * page_translations rows withheld as `archived-page-6270`.
  */
+import { withdrawPageVectors } from '../../lib/withdraw-page-vectors.mjs';
 
 export const DEFAULT_OPTS = {
   // Initial probe size — start small so books WITHOUT dupes return fast (the
@@ -99,7 +101,7 @@ export async function findTrailingDupes(db, book, opts = {}) {
     const pages = await db.collection('pages')
       .find({ book_id: book.id, page_number: { $gte: start, $lte: end } })
       .sort({ page_number: 1 })
-      .project({ _id: 1, page_number: 1, archived_photo: 1 })
+      .project({ _id: 1, id: 1, page_number: 1, archived_photo: 1 })
       .toArray();
     if (pages.length === 0) break;
 
@@ -167,5 +169,7 @@ export async function applyHide(db, dupes_to_hide) {
     },
   }));
   const r = await db.collection('pages').bulkWrite(ops, { ordered: false });
+  // A hidden page must stop being served by semantic search (#6270).
+  await withdrawPageVectors(dupes_to_hide.map(p => p.id), { reason: 'archived', writer: 'trailing-dedup' });
   return { matched: r.matchedCount, modified: r.modifiedCount };
 }

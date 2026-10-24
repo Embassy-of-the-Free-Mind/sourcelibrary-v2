@@ -13,6 +13,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { aiGenerator } from '@/lib/iiif-provenance';
 import { isBookReadable } from '@/lib/book-access';
@@ -113,6 +114,13 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     const bot = isBot(request);
     const trusted = bot && (await isTrustedBot(request));
     const maxPage = bot && !trusted ? botMaxPage(pagesCount) : pagesCount;
+    // A search spans the whole book; the gated span is pages 1..maxPage.
+    if (bot) {
+      logBotRead(request, {
+        route: 'iiif-search', book: bookId, trusted, pageFrom: 1, pageTo: pagesCount,
+        maxPage: trusted ? undefined : maxPage, clamped: !trusted && pagesCount > maxPage,
+      });
+    }
 
     // Use MongoDB $regex to filter pages server-side (scoped to one book, safe)
     const regexFilter = { $regex: query, $options: 'i' };

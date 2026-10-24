@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | None of the three gives readable text, but C at least has "kṣīra", a real Sanskrit word that fits the Sāṅkhyakārikā (verse 57's milk analogy), while A and B are entirely illegible.
