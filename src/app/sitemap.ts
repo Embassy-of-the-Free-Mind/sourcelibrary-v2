@@ -4,6 +4,7 @@ import { posts as blogPostList, BLOG_KINDS } from '@/app/articles/posts';
 import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
+import { isLivePath } from '@/lib/page-status';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -166,11 +167,11 @@ export default async function sitemap({
   const chunkId = typeof rawId === 'string' ? parseInt(rawId, 10) : rawId;
 
   if (chunkId === 0) {
-    return [
+    return livePagesOnly([
       ...staticPages(),
       ...blogPosts(),
       ...categoryPages(),
-    ];
+    ]);
   }
 
   if (chunkId === 1) {
@@ -181,7 +182,7 @@ export default async function sitemap({
       getWorks(),
       getAuthors(),
     ]);
-    return [...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages];
+    return livePagesOnly([...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages]);
   }
 
   // Offset ranges — highest first, since each test is only a lower bound.
@@ -202,6 +203,13 @@ export default async function sitemap({
   const bookChunkIndex = (chunkId ?? -1) - 2;
   if (!Number.isFinite(bookChunkIndex) || bookChunkIndex < 0) return [];
   return getBooks(bookChunkIndex);
+}
+
+// Internal, draft and archived pages (src/lib/page-status.ts) never go in the
+// sitemap. Applied to the hand-written and named-page chunks; the book, page,
+// gallery and artwork chunks are per-record and are not listed there.
+function livePagesOnly(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  return entries.filter((e) => isLivePath(new URL(e.url).pathname));
 }
 
 // --- Static content ---
