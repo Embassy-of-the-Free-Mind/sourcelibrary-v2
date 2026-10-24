@@ -12,6 +12,8 @@
  * same fixtures and fails on any divergence.
  */
 
+import { stripMarkupTags } from './strip-markup-tags';
+
 export interface CoverScoreInput {
   page_number?: number;
   page_type?: string | null;
@@ -55,9 +57,8 @@ function isDecoratedFrontCover(ocr: string): boolean {
 
 /** Characters of transcribed text, tags and whitespace removed. */
 export function ocrBodyLength(ocrRaw: string): number {
-  return String(ocrRaw || '')
-    .replace(/<([a-z-]+)[^>]*>[\s\S]*?<\/\1>/gi, '')
-    .replace(/<[^>]+>/g, '')
+  // Paired tags go with their contents; then stripMarkupTags (#5564) for the rest.
+  return stripMarkupTags(String(ocrRaw || '').replace(/<([a-z-]+)[^>]*>[\s\S]*?<\/\1>/gi, ''), '')
     .replace(/\s+/g, '').length;
 }
 
