@@ -90,7 +90,6 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     links: [
       { href: '/admin/traffic', label: 'Traffic', menu: true },
       { href: '/analytics', label: 'Analytics', menu: true },
-      { href: '/platform/admin/metrics', label: 'Metrics', gate: 'superadmin' },
       { href: '/about/progress', label: 'Progress' },
       { href: '/admin/outreach', label: 'Outreach' },
       { href: '/admin/social', label: 'Social' },
