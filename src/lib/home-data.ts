@@ -478,8 +478,9 @@ const NATIVE_SHELF_COUNT = 15;
 /**
  * The most-read books WRITTEN in the page's language, for the band under the
  * hero: the one section of that page whose books are in the visitor's
- * language. Transcribed books only — a shelf of scans nobody can read as text
- * would break the promise the heading makes. Real covers, one card per work.
+ * language. Scans-only books count: a reader of Latin or Chinese reads the
+ * page image, and serving those readers is why these sites exist (Derek,
+ * 2026-10-22; #7176 published ~16K such books). Real covers, one card per work.
  */
 async function getNativeShelf(language: string): Promise<CatalogBook[]> {
   const { books } = await browseBooks({ language, sort: 'popular', limit: 200, skipCount: true });
@@ -487,7 +488,6 @@ async function getNativeShelf(language: string): Promise<CatalogBook[]> {
   const out: CatalogBook[] = [];
   for (const b of books) {
     if (!hasRenderableCover(b)) continue;
-    if (!b.pages_ocr) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -506,14 +506,14 @@ const SUBJECT_SHELF_MIN = 6;
 /**
  * One collection's most-read books WRITTEN in the page's language, for the
  * "分类书架" band on `/zh` (NATIVE_SUBJECT_SHELVES in home-i18n.ts). Same rules as
- * the native shelf: transcribed, real cover, one card per work.
+ * the native shelf: scans-only books count, real cover, one card per work.
  */
 async function getSubjectShelf(slug: string, language: string): Promise<CatalogBook[]> {
   const { books } = await browseBooks({ collection: slug, language, sort: 'popular', limit: 200, skipCount: true });
   const seen = new Set<string>();
   const out: CatalogBook[] = [];
   for (const b of books) {
-    if (!hasRenderableCover(b) || !b.pages_ocr) continue;
+    if (!hasRenderableCover(b)) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -571,6 +571,41 @@ async function getBeginnerShelf(): Promise<CatalogBook[]> {
     out.push(rest as CatalogBook);
   }
   return JSON.parse(JSON.stringify(out)) as CatalogBook[];
+}
+
+// ---------- Nondum conversi (the /la band of Latin books with no English, #6278) ----------
+
+const UNTRANSLATED_SHELF_COUNT = 15;
+
+export interface UntranslatedShelf {
+  books: CatalogBook[];
+  /** Every live book in the language outside `readable_in_english`, counted at render. */
+  total: number;
+}
+
+/**
+ * Live books WRITTEN in the page's language that are not `readable_in_english`
+ * (.claude/docs/translation-state.md; `NOT_READABLE_IN_ENGLISH_OR` is the
+ * complement of the view's own expression), most read first. For a
+ * neo-Latinist this is the list of work not yet done here. Unlike the native
+ * shelf it does not require a transcription: a Latin reader can read a book
+ * from its scans (Derek, 2026-10-22), and scans-only books are about to be
+ * published in bulk (#7176). Returns candidates past the shelf length so the
+ * caller can drop works another band already shows and still fill it.
+ */
+async function getUntranslatedShelf(language: string): Promise<UntranslatedShelf> {
+  const { books, total } = await browseBooks({ language, notReadableInEnglish: true, sort: 'popular', limit: 200, exactCount: true });
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b)) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= UNTRANSLATED_SHELF_COUNT * 3) break;
+  }
+  return { books: out, total };
 }
 
 // ---------- Most liked ----------
@@ -939,6 +974,8 @@ export interface HomeData {
   nativeShelf: CatalogBook[];
   /** Hand-picked readable Latin for the `/la` "Tironibus" shelf (#6278). Empty elsewhere. */
   beginnerShelf: CatalogBook[];
+  /** Latin books not readable in English, with their count, for the `/la` "Nondum conversi" band (#6278). Null elsewhere. */
+  untranslatedShelf: UntranslatedShelf | null;
   /** The `en-espanol` collection card. Null on the English homepage. */
   spanishCollection: EsSpanishCollectionCard | null;
   /**
@@ -974,7 +1011,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const localizedCountsPromise = lang === 'en'
     ? Promise.resolve({} as Record<string, number>)
     : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>);
-  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks, untranslatedShelf] = await Promise.all([
     nativeFirst
       ? Promise.resolve([] as FeaturedItem[])
       : withTimeout(localizedCountsPromise.then((c) => getFeaturedCollections(
@@ -991,6 +1028,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
+    lang === 'la' ? withTimeout<UntranslatedShelf | null>(getUntranslatedShelf('Latin'), 20000, null) : Promise.resolve(null),
   ]);
 
   // One work, one appearance across the book shelves of a native-first page:
@@ -1035,5 +1073,13 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     nativeShelf: nativeShelf.filter((b) => !beginnerShelf.some((p) => p.id === b.id)),
     beginnerShelf,
     subjectShelves,
+    // One work, one appearance: the two Latin shelves above it keep theirs.
+    untranslatedShelf: untranslatedShelf && untranslatedShelf.total > 0 ? {
+      total: untranslatedShelf.total,
+      books: untranslatedShelf.books.filter((b) => {
+        const key = workKey(b);
+        return !nativeShelf.some((n) => workKey(n) === key) && !beginnerShelf.some((p) => workKey(p) === key);
+      }).slice(0, UNTRANSLATED_SHELF_COUNT),
+    } : null,
   };
 }

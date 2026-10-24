@@ -56,6 +56,7 @@ import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { isRTLLanguage } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
+import { galleryFilter } from '@/lib/gallery-scope';
 
 // Gating depends on who is asking (session, bot, tenant), so this cannot be ISR.
 export const dynamic = 'force-dynamic';
@@ -142,7 +143,7 @@ function pageHtml(raw: string | undefined, pageLevel: number): string | null {
   if (!raw || !raw.trim()) return null;
   const html = markdownToHtml(raw, { stripNotes: true });
   if (!html || html === '<p></p>') return null;
-  return html.replace(/<(\/?)h([1-3])>/g, (_m, slash: string, n: string) => {
+  return html.replace(/<(\/?)h([1-6])>/g, (_m, slash: string, n: string) => {
     const level = Math.min(6, pageLevel + Number(n));
     return `<${slash}h${level}>`;
   });
@@ -152,11 +153,19 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/** The page markers inside joined HTML: small, quiet, raised — present for finding a page, never read as text. */
+/** The page markers inside joined HTML: small and quiet, present for finding a page, never read as text. On the
+ *  line, behind a thin rule, as a page break is marked in an edition — NOT raised: a raised number reads as a
+ *  footnote call, and the notes are footnotes in the EPUB. */
 const FLOW_MARKER_CLASSES = [
-  '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-super',
-  '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:px-0.5',
+  '[&_.page-marker]:font-sans', '[&_.page-marker]:text-[0.65rem]', '[&_.page-marker]:align-baseline',
+  '[&_.page-marker]:text-muted', '[&_.page-marker]:no-underline', '[&_.page-marker]:mx-1', '[&_.page-marker]:pl-1',
+  '[&_.page-marker]:border-l', '[&_.page-marker]:border-[var(--border-light)]',
   '[&_.page-marker:hover]:text-accent-rust', '[&_.page-marker]:scroll-mt-20',
+  // A page's printed footnotes, moved below the sentence that ran over the page.
+  '[&_.flow-footnote]:text-sm', '[&_.flow-footnote]:text-muted', '[&_.flow-footnote]:pl-4',
+  // Illustrations: their own block, never wider than the text, never taller than the screen.
+  '[&_.flow-figure]:my-8', '[&_.flow-figure_img]:block', '[&_.flow-figure_img]:mx-auto', '[&_.flow-figure_img]:max-w-full',
+  '[&_.flow-figure_img]:max-h-[80vh]', '[&_.flow-figure_img]:w-auto', '[&_.flow-figure_img]:h-auto',
 ].join(' ');
 
 function Heading({ level, id, className, children }: { level: number; id?: string; className?: string; children: React.ReactNode }) {
@@ -260,6 +269,26 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const open = firstGatedIdx < 0 ? slice : slice.slice(0, firstGatedIdx);
   const gateFrom = firstGatedIdx < 0 ? null : slice[firstGatedIdx].page_number;
 
+  // Continuous view: the book's illustrations stand in the text at their page, so the flow is the book and not
+  // only its words (#7118). Every image the gallery materialised (>= 0.5, its floor), not only the showcase ones
+  // (0.7, the book page's row): a diagram the text describes is part of reading it. The alt text is the image's
+  // description; no visible caption, because notes are off here and the description is the model's account.
+  const figuresAt = new Map<number, string>();
+  if (view === 'flow' && open.length > 0) {
+    const imgs = await db.collection('gallery_images')
+      .find(
+        { ...galleryFilter({ bookId, minQuality: 0.5 }), page_number: { $gte: open[0].page_number, $lte: open[open.length - 1].page_number } },
+        { projection: { _id: 0, page_number: 1, extracted_url: 1, description: 1, bbox: 1, detection_index: 1 }, maxTimeMS: 5000 },
+      )
+      .toArray()
+      .catch(() => []) as unknown as Array<{ page_number: number; extracted_url: string; description?: string; bbox?: { y?: number }; detection_index?: number }>;
+    imgs.sort((a, b) => a.page_number - b.page_number || (a.bbox?.y ?? 0) - (b.bbox?.y ?? 0) || (a.detection_index ?? 0) - (b.detection_index ?? 0));
+    for (const img of imgs) {
+      const fig = `<figure class="flow-figure"><img src="${escapeHtml(img.extracted_url)}" alt="${escapeHtml((img.description || 'Illustration').slice(0, 300))}" loading="lazy" decoding="async"/></figure>`;
+      figuresAt.set(img.page_number, (figuresAt.get(img.page_number) || '') + fig);
+    }
+  }
+
   // Continuous view: one run of pages per chapter (a chapter heading always breaks the flow).
   const flowLevel = chapters.length > 0 ? 2 : 1;
   const flowRuns = (list: typeof open): (typeof open)[] => {
@@ -300,7 +329,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         <p className="text-sm text-muted mt-3">
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
           {view === 'flow'
-            ? ' The text runs on across pages; the small numbers mark where each page begins and open it beside the scan.'
+            ? ' The text runs on across pages; the small numbers after a thin rule mark where each printed page begins, and open it beside the scan.'
             : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
         </p>
       </header>
@@ -331,7 +360,35 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </nav>
       )}
 
-      {partCount > 1 && (
+      {partCount > 3 && (
+        // A long book: where you are and the next step on one line; the full list folded, so on a phone the
+        // text starts on the first screen instead of under fifteen links.
+        <nav aria-label="Parts" className="mb-4 text-sm">
+          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="font-semibold" aria-current="page">Part {part} of {partCount}, pages {first}–{last}</span>
+            {part > 1 && <Link href={href({ part: part - 1 })} className="underline underline-offset-2 hover:text-accent-rust">← Part {part - 1}</Link>}
+            {part < partCount && <Link href={href({ part: part + 1 })} className="underline underline-offset-2 hover:text-accent-rust">Part {part + 1} →</Link>}
+          </p>
+          <details className="mt-2">
+            <summary className="cursor-pointer text-muted">All {partCount} parts</summary>
+            <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+              {Array.from({ length: partCount }, (_, i) => i + 1).map(p => {
+                const a = pages[(p - 1) * PART_SIZE]?.page_number;
+                const b = pages[Math.min(pages.length, p * PART_SIZE) - 1]?.page_number;
+                return (
+                  <li key={p}>
+                    {p === part
+                      ? <span className="font-semibold">Part {p}, pages {a}–{b}</span>
+                      : <Link href={href({ part: p })} className="underline underline-offset-2 hover:text-accent-rust">Part {p}, pages {a}–{b}</Link>}
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        </nav>
+      )}
+
+      {partCount > 1 && partCount <= 3 && (
         <nav aria-label="Parts" className="mb-4 text-sm">
           <ul className="flex flex-wrap gap-x-3 gap-y-1">
             {Array.from({ length: partCount }, (_, i) => i + 1).map(p => {
@@ -369,7 +426,12 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </nav>
       )}
 
-      <article aria-label={`${shownTitle}${partCount > 1 ? `, part ${part} of ${partCount}` : ''}`}>
+      {/* A wide table (Ptolemy's Handy Tables run to 2,400px) scrolls inside its own box; it must never widen
+          the page, which on a phone turns every line of the book into a sideways scroll. */}
+      <article
+        aria-label={`${shownTitle}${partCount > 1 ? `, part ${part} of ${partCount}` : ''}`}
+        className="[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-3 [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_table]:my-4 [&_table]:text-sm [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:align-top [&_td]:px-2 [&_td]:py-1 [&_td]:align-top"
+      >
         {view === 'flow' && flowRuns(open).map((run, i) => (
           <div key={i}>
             {chapterAt.get(run[0].page_number)?.map((c, j) => (
@@ -381,7 +443,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
               className={`prose-manuscript ${FLOW_MARKER_CLASSES}`}
               lang={mode === 'original' ? originalLang : 'en'}
               dir={mode === 'original' ? originalDir : undefined}
-              dangerouslySetInnerHTML={{ __html: joinPagesHtml(run.map(flowPage)) }}
+              dangerouslySetInnerHTML={{ __html: joinPagesHtml(run.map(p => ({ ...flowPage(p), figures: figuresAt.get(p.page_number) }))) }}
             />
           </div>
         ))}

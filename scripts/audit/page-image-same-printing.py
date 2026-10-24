@@ -39,7 +39,7 @@ Usage:
 Env: MONGODB_URI (load with: set -a; source .env.production.local; set +a).
 Options: --cache DIR (default /tmp/page-image-same-printing), --workers N (default 6).
 """
-import argparse, concurrent.futures as cf, hashlib, json, os, re, statistics, sys, time, urllib.request
+import argparse, concurrent.futures as cf, hashlib, json, os, re, statistics, sys, time, urllib.error, urllib.request
 
 import cv2
 import numpy as np
@@ -66,20 +66,38 @@ class Images:
         self.orb = cv2.ORB_create(nfeatures=3000)
         self.feats = {}
         self.failures = 0
+        self.failed = set()  # urls that failed this run: never fetched twice
 
     def fetch(self, url):
         fp = os.path.join(self.dir, hashlib.sha1(url.encode()).hexdigest() + '.jpg')
         if os.path.exists(fp):
             return fp
+        if url in self.failed:
+            return None
         for attempt in range(4):
             try:
                 data = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), timeout=60).read()
-                with open(fp, 'wb') as f:
-                    f.write(data)
+                # Keep only what features() reads: grayscale, long side 1000px. R2 originals average
+                # ~1 MB, and a 1,300-pair run cached 111 GB of them and filled a shared box (2026-10-22).
+                img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_GRAYSCALE)
+                if img is None:
+                    break
+                h, w = img.shape
+                s = 1000.0 / max(h, w)
+                if s < 1:
+                    img = cv2.resize(img, (int(w * s), int(h * s)))  # same resize features() applied to originals
+                cv2.imwrite(fp, img, [cv2.IMWRITE_JPEG_QUALITY, 90])
                 return fp
+            except urllib.error.HTTPError as e:
+                # A refusal (e-rara answers 403 to the main Hetzner box) will not change on retry; the
+                # retries' 20 s of sleep per leaf made 16 pairs take 3.5 hours (2026-10-23).
+                if 400 <= e.code < 500 and e.code != 429:
+                    break
+                time.sleep(2 * (attempt + 1))
             except Exception:
                 time.sleep(2 * (attempt + 1))
         self.failures += 1
+        self.failed.add(url)
         return None
 
     def features(self, url):
@@ -145,6 +163,7 @@ def compare(db, imgs, a, b, wide, workers):
     urls = {u for s in samples for u in [s[0], *s[1]] if u}
     with cf.ThreadPoolExecutor(workers) as ex:
         list(ex.map(imgs.fetch, urls))
+    fetch_failures = len(urls & imgs.failed)
     best = []
     for ua, wb in samples:
         fa = imgs.features(ua) if ua else None
@@ -160,7 +179,8 @@ def compare(db, imgs, a, b, wide, workers):
         verdict = 'different'
     else:
         verdict = 'unclear'
-    return {'a': a, 'b': b, 'nA': len(A), 'nB': len(B), 'window': radius, 'inliers': best, 'median': med, 'verdict': verdict}
+    return {'a': a, 'b': b, 'nA': len(A), 'nB': len(B), 'window': radius, 'inliers': best, 'median': med, 'verdict': verdict,
+            'fetch_failures': fetch_failures}
 
 
 def main():

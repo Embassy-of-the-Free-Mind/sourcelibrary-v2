@@ -517,7 +517,7 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
       // The book failed the digits gate (#5186) and this leaf prints a number: its numbers are not to
       // be quoted from this text. Absent (never false) otherwise, so the field means one thing.
       ...(agreementRef.numeric?.unreliable && carriesNumbers(leaves[k]) ? { digits_unreliable: true } : {}),
-      ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
+      ia: { ...iaProvenance(iaId, meta, { year: publicationYear(b) }), ingest_run: INGEST_RUN },
       content_hash: contentHash(leaves[k]),
     };
     const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
@@ -536,5 +536,11 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
 }
 
 function bookId(b) { return b.id || String(b._id); }
-/** The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit). */
-const carriesNumbers = (text) => pageNumberCounts(text).size > 0;
+/**
+ * The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit).
+ * A function DECLARATION, not a `const`: it is defined below the top-level `await withMongo(...)`
+ * that calls it, and a `const` there is still in its temporal dead zone — every run that reached an
+ * accepted book with unreliable digits died with "Cannot access 'carriesNumbers' before
+ * initialization" (2026-10-13 → 2026-10-23).
+ */
+function carriesNumbers(text) { return pageNumberCounts(text).size > 0; }

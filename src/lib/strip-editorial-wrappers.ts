@@ -292,6 +292,32 @@ function stripWrapperBlocks(text: string, plain: boolean): string {
     .replace(/<leaf-break\s*\/?>/gi, '\n\n');
 }
 
+/** Plain HTML a transcription or translation carries as text: layout, not words (#7118). */
+const LAYOUT_BLOCK_TAGS = 'p|div';
+const LAYOUT_INLINE_TAGS = 'center|foreign|italic|bold|i|b|em|strong|s|u|sup|sub|small|big|span|font';
+/** Tags with their own meaning here (inline glosses, page marks, structural markers): never touched by this step. */
+const KEPT_TAGS = /^(?:note|term|margin|gloss|unclear|insert|lacuna|image-desc|header|catchword|sig|page-num|folio|column-break|leaf-break)$/i;
+
+/**
+ * Layout HTML out of plain page text, the words kept (#7118). A probe of 12 random books found `<br>`, `<center>`,
+ * `<italic>`, `<s>` and stray closers like `</t>` in stored text — and `/api/books/[id]/text`, which agents are told
+ * to "copy verbatim", served them inside quotable passages. `<br>` is a line break (inside a pipe-table row, a
+ * space, or the row is cut in two); `<p>`/`<div>` break lines; inline layout tags go; a closing tag whose opener
+ * appears nowhere in the text closed nothing and goes. Inline glosses and page marks are left exactly as they
+ * were — they are kept on purpose (quote-and-snippet-integrity.md). Parity with the scripts twin.
+ */
+export function stripLayoutHtml(text: string): string {
+  if (!text) return text;
+  const out = text
+    .split('\n')
+    .map(line => line.replace(/<br\s*\/?>/gi, /^[ \t]*\|.*\|[ \t]*$/.test(line) ? ' ' : '\n'))
+    .join('\n')
+    .replace(new RegExp(`<\\/?(?:${LAYOUT_BLOCK_TAGS})(?:\\s[^>]*)?\\/?>`, 'gi'), '\n')
+    .replace(new RegExp(`<\\/?(?:${LAYOUT_INLINE_TAGS})(?:\\s[^>]*)?\\/?>`, 'gi'), '');
+  const opened = new Set([...out.matchAll(/<([a-z][\w-]{0,30})(?:\s[^>]*)?>/gi)].map(m => m[1].toLowerCase()));
+  return out.replace(/<\/([a-z][\w-]{0,30})>/gi, (m, name: string) => (opened.has(name.toLowerCase()) || KEPT_TAGS.test(name) ? m : ''));
+}
+
 export function stripEditorialWrappers(
   text: string,
   opts?: StripEditorialWrappersOptions,
@@ -311,7 +337,7 @@ export function stripEditorialWrappers(
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
       flattenTables(
-        stripWrapperBlocks(text, true),
+        stripLayoutHtml(stripWrapperBlocks(text, true)),
       ),
     ),
   );

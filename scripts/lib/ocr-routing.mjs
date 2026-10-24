@@ -112,8 +112,15 @@ export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
  *
  * Keyed by language FAMILY (codeFamily of the first language), so "Judeo-Arabic"
  * (Hebrew script, family jrb) and "Latin, Arabic" do not qualify.
+ *
+ * READ FROM THE TABLE (#7170). The families and dates live in the `route` field of the rows of
+ * ocr-routing-table.json (greek-print, persian-sanskrit-pali-arabic-print, chinese-print), so a
+ * routing change proposed by the estimators (scripts/eval/estimator/routing/derive_routes.py) is a
+ * reviewed edit of that one file. The constants below are the pinned FALLBACK, used only when the
+ * table carries no family route at all; a malformed route throws at import, so a bad edit fails
+ * the tests rather than quietly routing to lite.
  */
-export const FLASH_OCR_FROM = Object.freeze({
+export const FLASH_OCR_FROM_FALLBACK = Object.freeze({
   grc: GREEK_FLASH_FROM,
   fas: new Date('2026-10-04T00:00:00Z'),
   san: new Date('2026-10-04T00:00:00Z'),
@@ -129,8 +136,40 @@ export const FLASH_OCR_FROM = Object.freeze({
  * nothing invented. It missed the preregistered rule by one looping flash page in 30; a loop is
  * refused at write time by the collector's loop guard (ocr-loop-guard.mjs), so it is not served.
  * Sanskrit, Arabic and Pali failed on labels or legibility and wait for #4884 / better scans.
+ * In the table: `hidden: true` on the family.
  */
-export const FLASH_OCR_INCLUDES_HIDDEN = Object.freeze(new Set(['fas']));
+export const FLASH_OCR_INCLUDES_HIDDEN_FALLBACK = Object.freeze(new Set(['fas']));
+
+/**
+ * The flash families a routing table declares: { from: {family: Date}, hidden: Set }, or the
+ * fallback when no row of `table` has a family route. Only routes to OCR_MODEL_FLASH count: this
+ * router has two models, and a row naming any other engine is a lane of its own (or a proposal
+ * nobody has built), so it throws rather than being read as flash.
+ */
+export function flashFamiliesFromTable(table, fallback = { from: FLASH_OCR_FROM_FALLBACK, hidden: FLASH_OCR_INCLUDES_HIDDEN_FALLBACK }) {
+  const from = {};
+  const hidden = new Set();
+  for (const row of table?.rows ?? []) {
+    const fams = row.route?.families;
+    if (!fams) continue;
+    if (row.route.engine !== OCR_MODEL_FLASH) {
+      throw new Error(`ocr-routing-table: row ${row.id} routes families to ${row.route.engine}; getOcrModelForBook can only route them to ${OCR_MODEL_FLASH}`);
+    }
+    for (const [family, spec] of Object.entries(fams)) {
+      const date = new Date(`${spec?.from}T00:00:00Z`);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(spec?.from ?? '') || Number.isNaN(date.getTime())) throw new Error(`ocr-routing-table: row ${row.id} family ${family}: bad date ${spec?.from}`);
+      if (from[family]) throw new Error(`ocr-routing-table: family ${family} is routed by two rows`);
+      from[family] = date;
+      if (spec.hidden === true) hidden.add(family);
+    }
+  }
+  if (!Object.keys(from).length) return fallback;
+  return { from: Object.freeze(from), hidden: Object.freeze(hidden) };
+}
+
+const TABLE_FLASH = flashFamiliesFromTable(createRequire(import.meta.url)('./ocr-routing-table.json'));
+export const FLASH_OCR_FROM = TABLE_FLASH.from;
+export const FLASH_OCR_INCLUDES_HIDDEN = TABLE_FLASH.hidden;
 
 export function isFlashOcrBook(book) {
   const first = toLanguageCodes(book?.language).codes[0];
@@ -251,9 +290,11 @@ export function apiOcrModelForBook(book, opts) {
  * (scripts/eval/build-routing-table.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
  * `code` claim against getOcrModelForBook above or the lane file it names.
  *
- * It RECORDS what the evidence settled; it does not route. getOcrModelForBook stays the only
- * Gemini router, and the specialist lanes select their own books. A row with `routed: 'no'` is
- * evidence production has not acted on, which is a decision for Derek, not a bug to fix here.
+ * Its prose RECORDS what the evidence settled. Since #7170 its `route` fields are also READ: the
+ * flash families above, and the refusal lane's next reader per script. getOcrModelForBook stays
+ * the only Gemini router, and the specialist lanes select their own books. A row with
+ * `routed: 'no'` is evidence production has not acted on, which is a decision for Derek, not a bug
+ * to fix here.
  */
 export const OCR_ROUTING_TABLE = Object.freeze(createRequire(import.meta.url)('./ocr-routing-table.json'));
 
@@ -262,4 +303,16 @@ export function ocrRouteForKind(id) {
   const row = OCR_ROUTING_TABLE.rows.find((r) => r.id === id);
   if (!row) throw new Error(`ocr-routing: no page kind "${id}" (known: ${OCR_ROUTING_TABLE.rows.map((r) => r.id).join(', ')})`);
   return row;
+}
+
+/**
+ * The next reader for a page Gemini refused (RECITATION), by estimator chart (`latin`, `greek`, `chinese-print` …),
+ * from the `refused-pages` row's route (#7170): { engine, lane, chart }. A chart the table does not list gets the
+ * row's `otherwise` reader. Never a Gemini model: the refusal is Gemini's.
+ */
+export function ocrRefusalFallback(chart, table = OCR_ROUTING_TABLE) {
+  const route = table.rows.find((r) => r.id === 'refused-pages')?.route;
+  if (!route?.fallback) throw new Error('ocr-routing: the refused-pages row has no route.fallback');
+  const hit = route.fallback.find((f) => f.chart === chart);
+  return hit ?? { chart, engine: route.otherwise, lane: 'scripts/batch/claude-ocr.mjs' };
 }

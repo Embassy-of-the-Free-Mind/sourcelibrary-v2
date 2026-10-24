@@ -17,6 +17,8 @@
  *   2. uv run -q --env-file .env.production.local scripts/audit/page-image-same-printing.py \
  *          --pairs <dir>/pairs.tsv --out <dir>/verdicts.jsonl --wide
  *   3. decide      read verdicts → holds.jsonl (dry run) or hold with --apply, and review.jsonl
+ * Nightly on the main box: scripts/workers/pre-ocr-dupe-screen-nightly.sh (approved by Derek 2026-10-22),
+ * which keeps every verdict and image-checks only pairs it has not seen (`candidates --known`).
  *
  * HOLD RULE. Only on a `same_printing` verdict, never on metadata alone. The queued book Q is held when
  * the other copy C is at least 90% of Q's length and C is read (pages_ocr >= 80% of its pages), or
@@ -25,7 +27,7 @@
  * Everything else with a `same_printing` verdict goes to review.jsonl for a person.
  *
  * Usage (from the repo root; reads only, unless `decide --apply`):
- *   npx tsx --env-file=.env.production.local scripts/audit/pre-ocr-duplicate-screen.ts candidates --dir <dir> [--min-priority 50] [--limit N]
+ *   npx tsx --env-file=.env.production.local scripts/audit/pre-ocr-duplicate-screen.ts candidates --dir <dir> [--min-priority 50] [--limit N] [--known <verdicts.jsonl>]
  *   npx tsx --env-file=.env.production.local scripts/audit/pre-ocr-duplicate-screen.ts decide --dir <dir> [--apply]
  */
 
@@ -52,7 +54,7 @@ const pagesAgree = (a: number, b: number) => a > 0 && b > 0 && Math.abs(a - b) <
 const STAGE: Record<string, number> = { archiving: 0, archive_complete: 1, queued: 2, ocr_queued: 3, held: 3 };
 const stage = (s: string | null | undefined) => STAGE[s ?? ''] ?? 4; // anything later (ocr_complete, enriched…) is further along
 
-const BOOK_PROJ = { id: 1, title: 1, author: 1, year: 1, published: 1, pages_count: 1, pages_ocr: 1, visible: 1, hidden: 1, processing_priority: 1, 'pipeline_auto.status': 1, duplicate_of: 1 };
+const BOOK_PROJ = { id: 1, title: 1, author: 1, year: 1, published: 1, pages_count: 1, pages_ocr: 1, visible: 1, hidden: 1, processing_priority: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, duplicate_of: 1 };
 
 async function candidates(db: Db, dir: string) {
   const min = Number(arg('--min-priority', '50'));
@@ -97,7 +99,29 @@ async function candidates(db: Db, dir: string) {
   }
   fs.writeFileSync(path.join(dir, 'pairs.tsv'), pairs.join('\n') + '\n');
   fs.writeFileSync(path.join(dir, 'candidates.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  console.log(JSON.stringify({ queued: queued.length, with_candidates: withCand, pairs: pairs.length, skipped_page_counts: rows.filter((r) => r.skipped).length, errors: rows.filter((r) => r.error).length }));
+  // --known: a file of earlier verdicts (the nightly run keeps one). Pairs it already answers are copied
+  // into this run's verdicts.jsonl; only the rest go to pairs-new.tsv for the image check. An `unclear`
+  // is reused too (re-checking 54 of them on 2026-10-22 settled only 7), unless images failed to load:
+  // that is the host, not the books, and is tried again the next night.
+  const knownFile = arg('--known');
+  let reused = 0;
+  if (knownFile) {
+    const prior = new Map<string, string>();
+    if (fs.existsSync(knownFile)) {
+      for (const l of fs.readFileSync(knownFile, 'utf8').split('\n').filter(Boolean)) {
+        const v = JSON.parse(l);
+        const key = [v.a, v.b].sort().join('|');
+        if (!(v.verdict === 'unclear' && v.fetch_failures > 0)) prior.set(key, l);
+      }
+    }
+    const pairKey = (p: string) => p.split('\t').sort().join('|');
+    const fresh = pairs.filter((p) => !prior.has(pairKey(p)));
+    const known = pairs.map((p) => prior.get(pairKey(p))).filter((l): l is string => !!l);
+    reused = known.length;
+    fs.writeFileSync(path.join(dir, 'pairs-new.tsv'), fresh.map((p) => p + '\n').join(''));
+    fs.writeFileSync(path.join(dir, 'verdicts.jsonl'), known.map((l) => l + '\n').join(''));
+  }
+  console.log(JSON.stringify({ queued: queued.length, with_candidates: withCand, pairs: pairs.length, ...(knownFile ? { reused, new: pairs.length - reused } : {}), skipped_page_counts: rows.filter((r) => r.skipped).length, errors: rows.filter((r) => r.error).length }));
 }
 
 /** `year`, else the first plausible imprint year in the free-text `published` (never parseInt the whole string). */
@@ -142,6 +166,8 @@ async function decide(db: Db, dir: string, apply: boolean) {
   const books = new Map((await db.collection('books').find({ id: { $in: ids } }, { projection: BOOK_PROJ }).toArray()).map((b) => [b.id, b]));
   const holds: Document[] = [], review: Document[] = [];
   const willHold = new Set<string>(), kept = new Set<string>(), decided = new Set<number>();
+  const heldHere = (x: Document) => x.pipeline_auto?.hold?.reason === HOLD_REASON;
+  let alreadyHeld = 0;
   const brief = (x: Document) => ({ id: x.id, title: String(x.title || '').slice(0, 70), year: x.year ?? x.published ?? null, pages: x.pages_count, pages_ocr: x.pages_ocr || 0, status: x.pipeline_auto?.status, visible: !!x.visible, duplicate_of: x.duplicate_of || null });
   // Pass 1 keeps a read or further-along copy; pass 2 settles copies that are both still queued.
   // A book kept for one pair is never held for another, so every hold points at a copy that goes on.
@@ -151,6 +177,7 @@ async function decide(db: Db, dir: string, apply: boolean) {
       const a = books.get(v.a), b = books.get(v.b);
       if (!a || !b) { decided.add(i); return; }
       if (willHold.has(a.id) || willHold.has(b.id)) { decided.add(i); return; } // settled through another pair
+      if (heldHere(a) || heldHere(b)) { decided.add(i); alreadyHeld++; return; } // held by an earlier run
       const pick = chooseHold(a, b);
       if (!pick || kept.has(pick.hold.id)) return;
       if ((pass === 1) === pick.why.startsWith('both queued')) return;
@@ -167,7 +194,7 @@ async function decide(db: Db, dir: string, apply: boolean) {
   fs.writeFileSync(path.join(dir, 'holds.jsonl'), holds.map((r) => JSON.stringify(r)).join('\n') + '\n');
   fs.writeFileSync(path.join(dir, 'review.jsonl'), review.map((r) => JSON.stringify(r)).join('\n') + '\n');
   const pages = holds.reduce((s, h) => s + (h.hold.pages - h.hold.pages_ocr), 0);
-  console.log(`${holds.length} to hold (${pages} unread pages), ${review.length} same-printing pairs for review (${apply ? 'APPLY' : 'dry run'})`);
+  console.log(`${holds.length} to hold (${pages} unread pages), ${alreadyHeld} pairs already held, ${review.length} same-printing pairs for review (${apply ? 'APPLY' : 'dry run'})`);
   const outcomes: Record<string, number> = {};
   for (const h of holds) {
     const r = await holdBook(db, h.hold.id, {
@@ -177,7 +204,7 @@ async function decide(db: Db, dir: string, apply: boolean) {
     outcomes[r.outcome] = (outcomes[r.outcome] || 0) + 1;
     console.log(`  ${r.outcome.padEnd(17)} ${h.hold.id} ${h.hold.title.slice(0, 40).padEnd(40)} keeps ${h.kept.id} (${h.why}, median ${h.median_inliers})`);
   }
-  console.log(JSON.stringify({ outcomes, unread_pages_held: pages, review: review.length, apply }));
+  console.log(JSON.stringify({ outcomes, unread_pages_held: pages, already_held: alreadyHeld, review: review.length, apply }));
 }
 
 async function main() {

@@ -1,0 +1,12 @@
+{
+ "mode": "mineru",
+ "model": "m",
+ "pages_this_pass": 99,
+ "clients": 16,
+ "wall_secs": 106.9,
+ "pages_per_hour": 3335,
+ "errors": 0,
+ "hit_cap": 0,
+ "out_tok": 0,
+ "in_tok": 0
+}

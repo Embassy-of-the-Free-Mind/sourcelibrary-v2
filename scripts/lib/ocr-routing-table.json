@@ -15,7 +15,8 @@
     "audit": "the weekly audit stratum (scripts/eval/ocr-routing/README.md, \"The weekly audit\"): how the lane's pages are selected, and which model family reviews them (never the reader's own)",
     "pareto": "optional: the /quality/pareto chart this row's reader is the engine in use for, and that engine's id in the benchmark data. scripts/eval/build-ocr-pareto.mjs reads it; a chart no row names takes its engine in use from getOcrModelForBook",
     "stored": "public: what readers have now, the stored text by the engine that wrote it, in pages, with the count it came from (the `census` block gives date, method and source; a row counted on another date says so); null where it was not counted. It differs from `reader`, which is what NEW pages get",
-    "charts": "optional: the /quality/pareto charts whose pages are this kind; build-ocr-pareto.mjs copies `stored` onto them so each chart names both baselines"
+    "charts": "optional: the /quality/pareto charts whose pages are this kind; build-ocr-pareto.mjs copies `stored` onto them so each chart names both baselines",
+    "route": "internal, READ BY THE ROUTER (#7170): what the code does for this kind. {engine, families: {<language family>: {from: date, hidden?: true}}}: getOcrModelForBook sends a book whose first language is in one of these families to `engine` (visible books, books created on or after `from`, and the hidden backlog too when `hidden`). {engine, default: true}: the model for every other book. {fallback: [{chart, engine, lane}], otherwise, source}: the next reader for a page Gemini refused, per estimator chart, never a Gemini model; `otherwise` for a page no chart covers; `source` is the derive_routes.py proposal it was adopted from. A row with no `route` routes nothing; with no family route anywhere the router keeps its pinned constants (FLASH_OCR_FROM_FALLBACK). A change to a route is proposed by scripts/eval/estimator/routing/derive_routes.py and lands as a reviewed diff of this field, never a silent edit."
   },
   "rows": [
     {
@@ -28,6 +29,10 @@
       "status": "settled",
       "routed": "yes",
       "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Batch API.",
+      "route": {
+        "engine": "gemini-3.1-flash-lite",
+        "default": true
+      },
       "code": {
         "router": {
           "language": "Latin",
@@ -77,6 +82,14 @@
       "status": "settled",
       "routed": "partly",
       "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
+      "route": {
+        "engine": "gemini-3-flash-preview",
+        "families": {
+          "grc": {
+            "from": "2026-10-02"
+          }
+        }
+      },
       "code": {
         "router": {
           "language": "Greek",
@@ -119,6 +132,27 @@
       "status": "provisional",
       "routed": "partly",
       "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
+      "route": {
+        "engine": "gemini-3-flash-preview",
+        "families": {
+          "fas": {
+            "from": "2026-10-04",
+            "hidden": true
+          },
+          "san": {
+            "from": "2026-10-04"
+          },
+          "pli": {
+            "from": "2026-10-04"
+          },
+          "ara": {
+            "from": "2026-10-04"
+          },
+          "gez": {
+            "from": "2026-10-04"
+          }
+        }
+      },
       "code": {
         "router": {
           "language": "Persian",
@@ -291,6 +325,14 @@
       "status": "settled",
       "routed": "partly",
       "production": "FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API, and it waits there. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Paddle lane (row chinese-siku-manuscript) keep that hold. Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold; about 68K held for the Paddle lane; about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
+      "route": {
+        "engine": "gemini-3-flash-preview",
+        "families": {
+          "zho": {
+            "from": "2026-10-21"
+          }
+        }
+      },
       "code": {
         "router": {
           "language": "Chinese",
@@ -442,6 +484,62 @@
       "status": "settled",
       "routed": "yes",
       "production": "The RECITATION ladder (ocr-lane-decision-tree.md, branch 3): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
+      "route": {
+        "fallback": [
+          {
+            "chart": "armenian",
+            "engine": "claude-sonnet-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs --model=sonnet"
+          },
+          {
+            "chart": "chinese-manuscript",
+            "engine": "paddleocr-vl-1.6",
+            "lane": "scripts/workers/paddle-zh-guarded-lane.mjs"
+          },
+          {
+            "chart": "chinese-print",
+            "engine": "claude-opus-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs"
+          },
+          {
+            "chart": "english",
+            "engine": "claude-sonnet-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs --model=sonnet"
+          },
+          {
+            "chart": "greek",
+            "engine": "claude-opus-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs"
+          },
+          {
+            "chart": "hebrew",
+            "engine": "claude-opus-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs"
+          },
+          {
+            "chart": "latin",
+            "engine": "claude-sonnet-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs --model=sonnet"
+          },
+          {
+            "chart": "latin-script-other",
+            "engine": "claude-sonnet-5-5",
+            "lane": "scripts/batch/claude-ocr.mjs --model=sonnet"
+          },
+          {
+            "chart": "syriac",
+            "engine": "sophro-defaultseg",
+            "lane": "scripts/lib/syriac-kraken-lane.mjs"
+          },
+          {
+            "chart": "syriac-print",
+            "engine": "omnisyr",
+            "lane": "scripts/lib/syriac-kraken-lane.mjs"
+          }
+        ],
+        "otherwise": "claude-opus-5-5",
+        "source": "scripts/eval/estimator/routing/results/route-proposals-2026-10-22.json"
+      },
       "code": {
         "file": "scripts/workers/mineru-ocr-worker.mjs"
       },

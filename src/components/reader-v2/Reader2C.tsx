@@ -14,6 +14,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
 import { ReadCautionNote, PageProblemReport } from './PageProblem';
+import type { OcrMeasure } from '@/lib/ocr-measure';
 import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
@@ -186,6 +187,9 @@ interface Reader2CProps {
   qualityWarnings?: QualityWarnings;
   /** Printed pages missing between scans of this book (#6675); the whole book's, like qualityWarnings. */
   scanGaps?: ScanGaps;
+  /** The measured accuracy of the engine we use on this book's script, for the line beside the page-report
+   *  control (#6278); the server passes it on `/la` Latin books only. */
+  ocrMeasure?: OcrMeasure | null;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -2561,7 +2565,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, ocrMeasure }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
@@ -3957,6 +3961,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                     {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
+                    {/* With the English pane closed (the /la default, #6254) the report control
+                        would otherwise be off screen: it follows the text being read (#6278). */}
+                    {!r.views.en && <PageProblemReport page={r.currentPage} book={r.book} measure={ocrMeasure} />}
                   </div>
                 </div>
               )}
@@ -4048,7 +4055,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
-                    <PageProblemReport page={r.currentPage} book={r.book} />
+                    <PageProblemReport page={r.currentPage} book={r.book} measure={ocrMeasure} />
                   </div>
                 </div>
               )}
@@ -4365,6 +4372,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
+                {!r.views.en && <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} measure={ocrMeasure} />}
               </div>
             </section>
           )}
@@ -4441,7 +4449,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
-                <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} />
+                <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} measure={ocrMeasure} />
               </div>
             </section>
           )}

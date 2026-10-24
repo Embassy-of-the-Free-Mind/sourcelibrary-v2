@@ -1,0 +1,11 @@
+ROW 1 | –ഹരിഃശ്രീഗണപത ‖ യെനമഃഅവിഘ്ന ‖ മസ്തുദുഃഖത്രയാഭി ‖ ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദപഘാതകെ ‖ ഹെതൗദൃഷ്ടെസാ ‖ പാൎത്ഥാചെന്നൈ ‖ കാന്താത്യന്തതൊ
+ROW 3 | ഭാവാൽ൧ദൃ ‖ ഷ്ടവദാനുശ്ര ‖ വികസ്സഹ്യവിശു ‖ ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരീ ‖ തഃശ്രെയാൻ ‖ വ്യക്താവ്യക്തജ്ഞ ‖ വിജ്ഞാനാൽ൨മൂല
+ROW 5 | പ്രകൃതിരവികൃ ‖ തിൎമ്മഹദാദ്യാ ‖ ഃപ്രകൃതിവി ‖ കൃതയസ്സപ്തഷൊ
+ROW 6 | ഡശകസ്തുവി ‖ കാരൊനപ്ര ‖ കൃതിൎന്നവികൃ ‖ തിഃപുരുഷഃ൩ദൃഷ്ട
+ROW 7 | മനുമാനമാ ‖ പ്തവചനഞ്ച ‖ സൎവ്വപ്രമാണ ‖ സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ട ‖ ംപ്രമെയസിദ്ധിഃ ‖ ൪പ്രതിവിഷ ‖ യാദ്ധ്യവസായൊദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ ‖ നുമാനമാഖ്യാത ‖ ംതല്ലിംഗലിംഗി ‖ പൂൎവ്വകമാപ്തശ്രുതി
+ROW 10 | ‖ പ്രമാണാദ്ധി। ‖
+NOTE | Nearly the whole leaf is readable; the items I am least sure of are the verse-number signs after ൽ in rows 3 and 4 and after ഃ in rows 6 and 8, the first letters of row 2 left piece, and row 10, which is a short line in the middle column only (fainter, below row 9, apparently an insertion for the text skipped in row 8 after സിദ്ധിഃ); there is also an unread marginal mark at the far left of the left piece level with row 5.

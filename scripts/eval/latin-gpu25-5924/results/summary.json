@@ -1,0 +1,3102 @@
+{
+ "rule": {
+  "min_ref_letters": 100,
+  "catastrophic_cer": 0.5,
+  "ok_median": 0.02,
+  "view": "latin-bakeoff-5924 N, order-tolerant, --fold-f (ſ,f -> s)",
+  "measure": "agreement CER vs stored pages.ocr.data (not accuracy)"
+ },
+ "arms": {
+  "GS": {
+   "pages": 1348,
+   "books": 54,
+   "ok_books": 5,
+   "median_N_all": 0.0436,
+   "catastrophic": 146,
+   "loops": 66,
+   "cap": 77,
+   "missing": 0,
+   "per_book": {
+    "69af10ef06b10527be566275": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0139,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69aeabe767e6731bc1367193": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0282,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6952d05477f38f6761bc511e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.058,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b30230c22956d8a0de5c55": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.044,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbcc270f8c5edf20f46b67": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.2244,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c82e676c6f3cc53c84d61e": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0379,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69af106e266659b71a32212f": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0299,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1028,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6955da018407b7c9ae21361a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0255,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08551d15c643eb1af54d46": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0632,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "698255eec7e5d26b8a0eb612": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.166,
+     "catastrophic": 4,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc83c1040d1d5e2097f86": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1146,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51e4647b06ecd5818cd3a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.023,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51ebdff09e4fe943b3e60": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.6446,
+     "catastrophic": 13,
+     "loops": 9,
+     "cap": 9,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51dbd768235dc659874a8": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0195,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b51e8147b06ecd581913fb": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0272,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69de992d1b234a773e43a4a4": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0309,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc8cc1040d1d5e209c88e": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1946,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c846296c6f3cc53c8516d9": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0517,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69e747a485f786e884a492c6": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.019,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "6a10092ff7172929509680b9": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0164,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b62fcf1c1c21a3737faf5a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.023,
+     "catastrophic": 2,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69a9570865ddd05bbcd3daee": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1457,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b21c3c429e087c6f86448e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 1,
+     "catastrophic": 17,
+     "loops": 17,
+     "cap": 17,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69bd9dc46120d54bd0379640": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1798,
+     "catastrophic": 9,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b62f861c1c21a3737f6a83": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.9293,
+     "catastrophic": 25,
+     "loops": 18,
+     "cap": 24,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9b11040d1d5e20a557b": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0998,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51ed9cf111105c42a4f1e": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.0117,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "6990616cef12272ffdc8d980": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.102,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c82de66c6f3cc53c84d4bf": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1387,
+     "catastrophic": 4,
+     "loops": 2,
+     "cap": 3,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6984e84f5905f8d14dbe659b": {
+     "pages": 25,
+     "counted": 19,
+     "median_N": 0.069,
+     "catastrophic": 5,
+     "loops": 2,
+     "cap": 3,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51e5147b06ecd5818de97": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0243,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "2950c384-e5de-44c2-bbb5-a486556d6a93": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0253,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b6c95731b7f0d07f5057d3": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0194,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69540d5d790862145d7de805": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0154,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69906327ef12272ffdc8f9ac": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0306,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69af0f77a940055c46680e8b": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0252,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c835706c6f3cc53c84e8f6": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0539,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a06d3b79a48d5139996380e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0381,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6988a5a159f3a9c9513f9f17": {
+     "pages": 23,
+     "counted": 11,
+     "median_N": 0.0292,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9f31040d1d5e20a7fda": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1218,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbca0d1040d1d5e20a8e56": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0952,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbcb861040d1d5e20b7839": {
+     "pages": 25,
+     "counted": 7,
+     "median_N": 0.0681,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b6ae73dc00a90e322b11c7": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0278,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b631ba1c1c21a373809ff8": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7738,
+     "catastrophic": 24,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b2ff6a5545150b61b48140": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0389,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b4cd08d5b6c3815e1a3880": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.2264,
+     "catastrophic": 8,
+     "loops": 5,
+     "cap": 5,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69bd9e676120d54bd037cc19": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1548,
+     "catastrophic": 12,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9401040d1d5e20a179d": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.14,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69593413b282844d7b277aaf": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0148,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b51e679a81ef7feb3d4811": {
+     "pages": 25,
+     "counted": 21,
+     "median_N": 0.0269,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6952dac677f38f6761bc683a": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.0297,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08525b49638a50931ba0cb": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0276,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc8271040d1d5e2097634": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1598,
+     "catastrophic": 5,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    }
+   }
+  },
+  "DS": {
+   "pages": 1348,
+   "books": 54,
+   "ok_books": 7,
+   "median_N_all": 0.0381,
+   "catastrophic": 163,
+   "loops": 86,
+   "cap": 127,
+   "missing": 0,
+   "per_book": {
+    "69af10ef06b10527be566275": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0047,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69aeabe767e6731bc1367193": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.021,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6952d05477f38f6761bc511e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0464,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b30230c22956d8a0de5c55": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0393,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbcc270f8c5edf20f46b67": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.19,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c82e676c6f3cc53c84d61e": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0394,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69af106e266659b71a32212f": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0168,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.092,
+     "catastrophic": 4,
+     "loops": 3,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6955da018407b7c9ae21361a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.025,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08551d15c643eb1af54d46": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.4201,
+     "catastrophic": 9,
+     "loops": 4,
+     "cap": 6,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "698255eec7e5d26b8a0eb612": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1617,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc83c1040d1d5e2097f86": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.086,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51e4647b06ecd5818cd3a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0219,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51ebdff09e4fe943b3e60": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.757,
+     "catastrophic": 12,
+     "loops": 9,
+     "cap": 12,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51dbd768235dc659874a8": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.016,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b51e8147b06ecd581913fb": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0131,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69de992d1b234a773e43a4a4": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0211,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc8cc1040d1d5e209c88e": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1742,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c846296c6f3cc53c8516d9": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0441,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69e747a485f786e884a492c6": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0128,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "6a10092ff7172929509680b9": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0149,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b62fcf1c1c21a3737faf5a": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0199,
+     "catastrophic": 2,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69a9570865ddd05bbcd3daee": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1491,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b21c3c429e087c6f86448e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.6339,
+     "catastrophic": 14,
+     "loops": 11,
+     "cap": 14,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69bd9dc46120d54bd0379640": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1823,
+     "catastrophic": 3,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b62f861c1c21a3737f6a83": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7756,
+     "catastrophic": 24,
+     "loops": 18,
+     "cap": 25,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9b11040d1d5e20a557b": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1092,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51ed9cf111105c42a4f1e": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.0116,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "6990616cef12272ffdc8d980": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0812,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69c82de66c6f3cc53c84d4bf": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.4367,
+     "catastrophic": 11,
+     "loops": 10,
+     "cap": 11,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6984e84f5905f8d14dbe659b": {
+     "pages": 25,
+     "counted": 19,
+     "median_N": 0.0722,
+     "catastrophic": 5,
+     "loops": 3,
+     "cap": 3,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51e5147b06ecd5818de97": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0213,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "2950c384-e5de-44c2-bbb5-a486556d6a93": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0194,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b6c95731b7f0d07f5057d3": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0119,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69540d5d790862145d7de805": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0122,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69906327ef12272ffdc8f9ac": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0163,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69af0f77a940055c46680e8b": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0077,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69c835706c6f3cc53c84e8f6": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0513,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a06d3b79a48d5139996380e": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0303,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6988a5a159f3a9c9513f9f17": {
+     "pages": 23,
+     "counted": 11,
+     "median_N": 0.0251,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9f31040d1d5e20a7fda": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1093,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbca0d1040d1d5e20a8e56": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0774,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbcb861040d1d5e20b7839": {
+     "pages": 25,
+     "counted": 7,
+     "median_N": 0.2029,
+     "catastrophic": 1,
+     "loops": 3,
+     "cap": 15,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b6ae73dc00a90e322b11c7": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0291,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b631ba1c1c21a373809ff8": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7691,
+     "catastrophic": 24,
+     "loops": 2,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b2ff6a5545150b61b48140": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0297,
+     "catastrophic": 3,
+     "loops": 3,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b4cd08d5b6c3815e1a3880": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.4806,
+     "catastrophic": 10,
+     "loops": 7,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69bd9e676120d54bd037cc19": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1686,
+     "catastrophic": 12,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9401040d1d5e20a179d": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1158,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69593413b282844d7b277aaf": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0059,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "69b51e679a81ef7feb3d4811": {
+     "pages": 25,
+     "counted": 21,
+     "median_N": 0.0217,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6952dac677f38f6761bc683a": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.023,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08525b49638a50931ba0cb": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0183,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "69dbc8271040d1d5e2097634": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.4632,
+     "catastrophic": 10,
+     "loops": 2,
+     "cap": 6,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    }
+   }
+  },
+  "GW": {
+   "pages": 10274,
+   "books": 20,
+   "ok_books": 0,
+   "median_N_all": 0.1214,
+   "catastrophic": 3302,
+   "loops": 1707,
+   "cap": 2063,
+   "missing": 0,
+   "per_book": {
+    "69dbc9401040d1d5e20a179d": {
+     "pages": 253,
+     "counted": 239,
+     "median_N": 0.1393,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbcb861040d1d5e20b7839": {
+     "pages": 314,
+     "counted": 76,
+     "median_N": 0.0776,
+     "catastrophic": 15,
+     "loops": 26,
+     "cap": 34,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9f31040d1d5e20a7fda": {
+     "pages": 323,
+     "counted": 314,
+     "median_N": 0.1262,
+     "catastrophic": 13,
+     "loops": 10,
+     "cap": 12,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbc9b11040d1d5e20a557b": {
+     "pages": 124,
+     "counted": 122,
+     "median_N": 0.1084,
+     "catastrophic": 4,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b631ba1c1c21a373809ff8": {
+     "pages": 1136,
+     "counted": 1130,
+     "median_N": 0.7755,
+     "catastrophic": 1113,
+     "loops": 33,
+     "cap": 37,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b4cd08d5b6c3815e1a3880": {
+     "pages": 230,
+     "counted": 213,
+     "median_N": 0.102,
+     "catastrophic": 73,
+     "loops": 28,
+     "cap": 42,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6990616cef12272ffdc8d980": {
+     "pages": 452,
+     "counted": 445,
+     "median_N": 0.1707,
+     "catastrophic": 19,
+     "loops": 5,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b62f861c1c21a3737f6a83": {
+     "pages": 1436,
+     "counted": 1423,
+     "median_N": 0.9161,
+     "catastrophic": 1381,
+     "loops": 1063,
+     "cap": 1359,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08551d15c643eb1af54d46": {
+     "pages": 719,
+     "counted": 707,
+     "median_N": 0.0615,
+     "catastrophic": 15,
+     "loops": 5,
+     "cap": 6,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69bd9dc46120d54bd0379640": {
+     "pages": 146,
+     "counted": 139,
+     "median_N": 0.0808,
+     "catastrophic": 40,
+     "loops": 24,
+     "cap": 24,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b51ebdff09e4fe943b3e60": {
+     "pages": 184,
+     "counted": 168,
+     "median_N": 0.1512,
+     "catastrophic": 58,
+     "loops": 48,
+     "cap": 49,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b21c3c429e087c6f86448e": {
+     "pages": 602,
+     "counted": 582,
+     "median_N": 0.9788,
+     "catastrophic": 354,
+     "loops": 330,
+     "cap": 348,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69dbca0d1040d1d5e20a8e56": {
+     "pages": 157,
+     "counted": 150,
+     "median_N": 0.094,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6952d05477f38f6761bc511e": {
+     "pages": 856,
+     "counted": 851,
+     "median_N": 0.0426,
+     "catastrophic": 67,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69a9570865ddd05bbcd3daee": {
+     "pages": 746,
+     "counted": 737,
+     "median_N": 0.1429,
+     "catastrophic": 14,
+     "loops": 7,
+     "cap": 10,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69b2ff6a5545150b61b48140": {
+     "pages": 829,
+     "counted": 819,
+     "median_N": 0.0338,
+     "catastrophic": 100,
+     "loops": 99,
+     "cap": 99,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1": {
+     "pages": 898,
+     "counted": 860,
+     "median_N": 0.0768,
+     "catastrophic": 28,
+     "loops": 21,
+     "cap": 26,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69af106e266659b71a32212f": {
+     "pages": 251,
+     "counted": 246,
+     "median_N": 0.038,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "6a08525b49638a50931ba0cb": {
+     "pages": 444,
+     "counted": 432,
+     "median_N": 0.0269,
+     "catastrophic": 2,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "69de992d1b234a773e43a4a4": {
+     "pages": 174,
+     "counted": 159,
+     "median_N": 0.0285,
+     "catastrophic": 3,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    }
+   }
+  }
+ },
+ "posthoc": {
+  "grid": [
+   {
+    "median_le": 0.02,
+    "catastrophic_share_le": 0,
+    "agree": 20,
+    "both_ok": 0,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 20
+   },
+   {
+    "median_le": 0.02,
+    "catastrophic_share_le": 0.04,
+    "agree": 20,
+    "both_ok": 0,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 20
+   },
+   {
+    "median_le": 0.02,
+    "catastrophic_share_le": 0.1,
+    "agree": 20,
+    "both_ok": 0,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 17
+   },
+   {
+    "median_le": 0.03,
+    "catastrophic_share_le": 0,
+    "agree": 18,
+    "both_ok": 0,
+    "spread_ok_whole_fail": 2,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 20
+   },
+   {
+    "median_le": 0.03,
+    "catastrophic_share_le": 0.04,
+    "agree": 18,
+    "both_ok": 1,
+    "spread_ok_whole_fail": 1,
+    "spread_fail_whole_ok": 1,
+    "first25_agree": 18
+   },
+   {
+    "median_le": 0.03,
+    "catastrophic_share_le": 0.1,
+    "agree": 18,
+    "both_ok": 1,
+    "spread_ok_whole_fail": 1,
+    "spread_fail_whole_ok": 1,
+    "first25_agree": 16
+   },
+   {
+    "median_le": 0.05,
+    "catastrophic_share_le": 0,
+    "agree": 17,
+    "both_ok": 0,
+    "spread_ok_whole_fail": 3,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 20
+   },
+   {
+    "median_le": 0.05,
+    "catastrophic_share_le": 0.04,
+    "agree": 20,
+    "both_ok": 3,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 17
+   },
+   {
+    "median_le": 0.05,
+    "catastrophic_share_le": 0.1,
+    "agree": 18,
+    "both_ok": 3,
+    "spread_ok_whole_fail": 1,
+    "spread_fail_whole_ok": 1,
+    "first25_agree": 14
+   },
+   {
+    "median_le": 0.1,
+    "catastrophic_share_le": 0,
+    "agree": 15,
+    "both_ok": 1,
+    "spread_ok_whole_fail": 5,
+    "spread_fail_whole_ok": 0,
+    "first25_agree": 17
+   },
+   {
+    "median_le": 0.1,
+    "catastrophic_share_le": 0.04,
+    "agree": 17,
+    "both_ok": 5,
+    "spread_ok_whole_fail": 2,
+    "spread_fail_whole_ok": 1,
+    "first25_agree": 12
+   },
+   {
+    "median_le": 0.1,
+    "catastrophic_share_le": 0.1,
+    "agree": 16,
+    "both_ok": 6,
+    "spread_ok_whole_fail": 3,
+    "spread_fail_whole_ok": 1,
+    "first25_agree": 12
+   }
+  ],
+  "spearman_median": {
+   "spread_GS": 0.8872,
+   "first25_GW": 0.4586
+  },
+  "spearman_catastrophic_share": {
+   "spread_GS": 0.7489,
+   "first25_GW": 0.6932
+  }
+ },
+ "whole_vs_spread": {
+  "books": [
+   {
+    "book_id": "69dbc9401040d1d5e20a179d",
+    "quota": "gothic",
+    "format": {
+     "gothic": true,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 253,
+     "counted": 239,
+     "median_N": 0.1393,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.14,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1479,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.0897,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.1158,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 0.9928
+   },
+   {
+    "book_id": "69dbcb861040d1d5e20b7839",
+    "quota": "gothic",
+    "format": {
+     "gothic": true,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 314,
+     "counted": 76,
+     "median_N": 0.0776,
+     "catastrophic": 15,
+     "loops": 26,
+     "cap": 34,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 7,
+     "median_N": 0.0681,
+     "catastrophic": 0,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 7,
+     "median_N": 0.0583,
+     "catastrophic": 0,
+     "loops": 2,
+     "cap": 3,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 21,
+     "median_N": 0.0417,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 7,
+     "median_N": 0.2029,
+     "catastrophic": 1,
+     "loops": 3,
+     "cap": 15,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69dbc9f31040d1d5e20a7fda",
+    "quota": "gothic",
+    "format": {
+     "gothic": true,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 323,
+     "counted": 314,
+     "median_N": 0.1262,
+     "catastrophic": 13,
+     "loops": 10,
+     "cap": 12,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1218,
+     "catastrophic": 1,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.119,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.0862,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1093,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69dbc9b11040d1d5e20a557b",
+    "quota": "gothic",
+    "format": {
+     "gothic": true,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 124,
+     "counted": 122,
+     "median_N": 0.1084,
+     "catastrophic": 4,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0998,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1004,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0826,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1092,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b631ba1c1c21a373809ff8",
+    "quota": "gothic",
+    "format": {
+     "gothic": true,
+     "two_column": true,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 1136,
+     "counted": 1130,
+     "median_N": 0.7755,
+     "catastrophic": 1113,
+     "loops": 33,
+     "cap": 37,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7738,
+     "catastrophic": 24,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7727,
+     "catastrophic": 24,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.1253,
+     "catastrophic": 4,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7691,
+     "catastrophic": 24,
+     "loops": 2,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b4cd08d5b6c3815e1a3880",
+    "quota": "two_column",
+    "format": {
+     "gothic": false,
+     "two_column": true,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 230,
+     "counted": 213,
+     "median_N": 0.102,
+     "catastrophic": 73,
+     "loops": 28,
+     "cap": 42,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.2264,
+     "catastrophic": 8,
+     "loops": 5,
+     "cap": 5,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.2264,
+     "catastrophic": 8,
+     "loops": 5,
+     "cap": 5,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.8714,
+     "catastrophic": 13,
+     "loops": 7,
+     "cap": 11,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.4806,
+     "catastrophic": 10,
+     "loops": 7,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "6990616cef12272ffdc8d980",
+    "quota": "two_column",
+    "format": {
+     "gothic": false,
+     "two_column": true,
+     "greek": true,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 452,
+     "counted": 445,
+     "median_N": 0.1707,
+     "catastrophic": 19,
+     "loops": 5,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.102,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1007,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0098,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0812,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b62f861c1c21a3737f6a83",
+    "quota": "two_column",
+    "format": {
+     "gothic": false,
+     "two_column": true,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 1436,
+     "counted": 1423,
+     "median_N": 0.9161,
+     "catastrophic": 1381,
+     "loops": 1063,
+     "cap": 1359,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.9293,
+     "catastrophic": 25,
+     "loops": 18,
+     "cap": 24,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.9718,
+     "catastrophic": 25,
+     "loops": 18,
+     "cap": 25,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.697,
+     "catastrophic": 15,
+     "loops": 10,
+     "cap": 15,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.7756,
+     "catastrophic": 24,
+     "loops": 18,
+     "cap": 25,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "6a08551d15c643eb1af54d46",
+    "quota": "two_column",
+    "format": {
+     "gothic": false,
+     "two_column": true,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 719,
+     "counted": 707,
+     "median_N": 0.0615,
+     "catastrophic": 15,
+     "loops": 5,
+     "cap": 6,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0632,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0642,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 19,
+     "median_N": 0.0416,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.4201,
+     "catastrophic": 9,
+     "loops": 4,
+     "cap": 6,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69bd9dc46120d54bd0379640",
+    "quota": "greek",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": true,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 146,
+     "counted": 139,
+     "median_N": 0.0808,
+     "catastrophic": 40,
+     "loops": 24,
+     "cap": 24,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1798,
+     "catastrophic": 9,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1976,
+     "catastrophic": 7,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 18,
+     "median_N": 0.1899,
+     "catastrophic": 3,
+     "loops": 4,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1823,
+     "catastrophic": 3,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b51ebdff09e4fe943b3e60",
+    "quota": "greek",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": true,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 184,
+     "counted": 168,
+     "median_N": 0.1512,
+     "catastrophic": 58,
+     "loops": 48,
+     "cap": 49,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.6446,
+     "catastrophic": 13,
+     "loops": 9,
+     "cap": 9,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.7977,
+     "catastrophic": 13,
+     "loops": 11,
+     "cap": 11,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 17,
+     "median_N": 0.237,
+     "catastrophic": 8,
+     "loops": 8,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 22,
+     "median_N": 0.757,
+     "catastrophic": 12,
+     "loops": 9,
+     "cap": 12,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b21c3c429e087c6f86448e",
+    "quota": "greek",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": true,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 602,
+     "counted": 582,
+     "median_N": 0.9788,
+     "catastrophic": 354,
+     "loops": 330,
+     "cap": 348,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 1,
+     "catastrophic": 17,
+     "loops": 17,
+     "cap": 17,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.9378,
+     "catastrophic": 15,
+     "loops": 14,
+     "cap": 15,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 15,
+     "median_N": 0.9666,
+     "catastrophic": 10,
+     "loops": 7,
+     "cap": 8,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.6339,
+     "catastrophic": 14,
+     "loops": 11,
+     "cap": 14,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69dbca0d1040d1d5e20a8e56",
+    "quota": "greek",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": true,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 157,
+     "counted": 150,
+     "median_N": 0.094,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0952,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0952,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 21,
+     "median_N": 0.0798,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0774,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 0.3465
+   },
+   {
+    "book_id": "6952d05477f38f6761bc511e",
+    "quota": "side_notes",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 856,
+     "counted": 851,
+     "median_N": 0.0426,
+     "catastrophic": 67,
+     "loops": 1,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.058,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.058,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.3209,
+     "catastrophic": 9,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0464,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69a9570865ddd05bbcd3daee",
+    "quota": "side_notes",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 746,
+     "counted": 737,
+     "median_N": 0.1429,
+     "catastrophic": 14,
+     "loops": 7,
+     "cap": 10,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1457,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1446,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.0206,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.1491,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69b2ff6a5545150b61b48140",
+    "quota": "side_notes",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 829,
+     "counted": 819,
+     "median_N": 0.0338,
+     "catastrophic": 100,
+     "loops": 99,
+     "cap": 99,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0389,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0389,
+     "catastrophic": 3,
+     "loops": 3,
+     "cap": 3,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.0543,
+     "catastrophic": 5,
+     "loops": 5,
+     "cap": 5,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0297,
+     "catastrophic": 3,
+     "loops": 3,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+    "quota": "side_notes",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": true
+    },
+    "whole": {
+     "pages": 898,
+     "counted": 860,
+     "median_N": 0.0768,
+     "catastrophic": 28,
+     "loops": 21,
+     "cap": 26,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1028,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.1035,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 20,
+     "median_N": 0.0674,
+     "catastrophic": 2,
+     "loops": 1,
+     "cap": 1,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.092,
+     "catastrophic": 4,
+     "loops": 3,
+     "cap": 4,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69af106e266659b71a32212f",
+    "quota": "any",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 251,
+     "counted": 246,
+     "median_N": 0.038,
+     "catastrophic": 2,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0299,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0309,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 21,
+     "median_N": 0.0153,
+     "catastrophic": 1,
+     "loops": 2,
+     "cap": 2,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 25,
+     "median_N": 0.0168,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "6a08525b49638a50931ba0cb",
+    "quota": "any",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 444,
+     "counted": 432,
+     "median_N": 0.0269,
+     "catastrophic": 2,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0276,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0276,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 16,
+     "median_N": 0.0668,
+     "catastrophic": 2,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 24,
+     "median_N": 0.0183,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": true,
+     "ok_median_only": true
+    },
+    "worst_whole_N": 1
+   },
+   {
+    "book_id": "69de992d1b234a773e43a4a4",
+    "quota": "any",
+    "format": {
+     "gothic": false,
+     "two_column": false,
+     "greek": false,
+     "side_notes": false
+    },
+    "whole": {
+     "pages": 174,
+     "counted": 159,
+     "median_N": 0.0285,
+     "catastrophic": 3,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_GS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0309,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "spread_from_GW": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0308,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "first25_GW": {
+     "pages": 25,
+     "counted": 18,
+     "median_N": 0.0199,
+     "catastrophic": 1,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": true
+    },
+    "spread_DS": {
+     "pages": 25,
+     "counted": 23,
+     "median_N": 0.0211,
+     "catastrophic": 0,
+     "loops": 0,
+     "cap": 0,
+     "missing": 0,
+     "ok": false,
+     "ok_median_only": false
+    },
+    "worst_whole_N": 0.8622
+   }
+  ],
+  "agreement": {
+   "spread_GS": {
+    "n": 20,
+    "agree": 20,
+    "both_ok": 0,
+    "both_fail": 20,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0
+   },
+   "spread_from_GW": {
+    "n": 20,
+    "agree": 20,
+    "both_ok": 0,
+    "both_fail": 20,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0
+   },
+   "first25_GW": {
+    "n": 20,
+    "agree": 20,
+    "both_ok": 0,
+    "both_fail": 20,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0
+   },
+   "median_only_spread_GS": {
+    "n": 20,
+    "agree": 20,
+    "both_ok": 0,
+    "both_fail": 20,
+    "spread_ok_whole_fail": 0,
+    "spread_fail_whole_ok": 0
+   },
+   "median_only_first25": {
+    "n": 20,
+    "agree": 17,
+    "both_ok": 0,
+    "both_fail": 17,
+    "spread_ok_whole_fail": 3,
+    "spread_fail_whole_ok": 0
+   }
+  },
+  "median_abs_gap_spread_vs_whole": 0.0083,
+  "median_abs_gap_first25_vs_whole": 0.04
+ },
+ "by_format": {
+  "GS": {
+   "gothic": {
+    "with": {
+     "n": 10,
+     "fail": 10,
+     "median_N": 0.1182
+    },
+    "without": {
+     "n": 44,
+     "fail": 39,
+     "median_N": 0.0303
+    }
+   },
+   "two_column": {
+    "with": {
+     "n": 8,
+     "fail": 7,
+     "median_N": 0.1493
+    },
+    "without": {
+     "n": 46,
+     "fail": 42,
+     "median_N": 0.0344
+    }
+   },
+   "greek": {
+    "with": {
+     "n": 10,
+     "fail": 9,
+     "median_N": 0.0746
+    },
+    "without": {
+     "n": 44,
+     "fail": 40,
+     "median_N": 0.0384
+    }
+   },
+   "side_notes": {
+    "with": {
+     "n": 9,
+     "fail": 9,
+     "median_N": 0.1028
+    },
+    "without": {
+     "n": 45,
+     "fail": 40,
+     "median_N": 0.0306
+    }
+   }
+  },
+  "DS": {
+   "gothic": {
+    "with": {
+     "n": 10,
+     "fail": 10,
+     "median_N": 0.1126
+    },
+    "without": {
+     "n": 44,
+     "fail": 37,
+     "median_N": 0.0251
+    }
+   },
+   "two_column": {
+    "with": {
+     "n": 8,
+     "fail": 8,
+     "median_N": 0.45
+    },
+    "without": {
+     "n": 46,
+     "fail": 39,
+     "median_N": 0.0294
+    }
+   },
+   "greek": {
+    "with": {
+     "n": 10,
+     "fail": 9,
+     "median_N": 0.0643
+    },
+    "without": {
+     "n": 44,
+     "fail": 38,
+     "median_N": 0.0345
+    }
+   },
+   "side_notes": {
+    "with": {
+     "n": 9,
+     "fail": 9,
+     "median_N": 0.1491
+    },
+    "without": {
+     "n": 45,
+     "fail": 38,
+     "median_N": 0.0251
+    }
+   }
+  },
+  "GW": {
+   "gothic": {
+    "with": {
+     "n": 5,
+     "fail": 5,
+     "median_N": 0.1262
+    },
+    "without": {
+     "n": 15,
+     "fail": 15,
+     "median_N": 0.0808
+    }
+   },
+   "two_column": {
+    "with": {
+     "n": 5,
+     "fail": 5,
+     "median_N": 0.1707
+    },
+    "without": {
+     "n": 15,
+     "fail": 15,
+     "median_N": 0.0808
+    }
+   },
+   "greek": {
+    "with": {
+     "n": 5,
+     "fail": 5,
+     "median_N": 0.1512
+    },
+    "without": {
+     "n": 15,
+     "fail": 15,
+     "median_N": 0.0776
+    }
+   },
+   "side_notes": {
+    "with": {
+     "n": 7,
+     "fail": 7,
+     "median_N": 0.0768
+    },
+    "without": {
+     "n": 13,
+     "fail": 13,
+     "median_N": 0.102
+    }
+   }
+  }
+ },
+ "student_vs_stock": {
+  "books": 54,
+  "ok_GS": 5,
+  "ok_DS": 7,
+  "DS_lower_median": 41,
+  "DS_higher_median": 13
+ }
+}

@@ -9,7 +9,7 @@
 #   hold.sh <out.jsonl> [--cap 2400] [--only ids.txt] [--limit N]     env: SECS (1080), UTIL (0.85),
 #     NOLOCK=1 when the caller already holds /root/gpu.lock (a gpu-queue task: a second flock would wait forever)
 set -uo pipefail
-J=/root/jobs/grounding-6871; VL=/root/bench/vl; OUT=$1; shift
+J=${J:-/root/jobs/grounding-6871}; VL=/root/bench/vl; OUT=$1; shift   # J= another job dir (grounding-6871a) with its own code/items.jsonl and img/
 export VLLM_USE_FLASHINFER_SAMPLER=0 HF_HUB_OFFLINE=1
 log() { echo "$(date -u +%FT%TZ) $*" >> "$J/hold.log"; }
 if [ "${NOLOCK:-0}" != 1 ]; then

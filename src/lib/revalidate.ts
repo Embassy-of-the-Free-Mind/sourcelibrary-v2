@@ -1,3 +1,5 @@
+import { selfCallHeaders } from '@/lib/self-call';
+
 /**
  * Trigger on-demand revalidation for a book page after pipeline processing.
  * Call this after OCR, translation, enrichment, or image extraction completes.
@@ -8,7 +10,7 @@ export async function revalidateBook(bookId: string): Promise<boolean> {
     || 'https://sourcelibrary.org';
 
   try {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    const headers: Record<string, string> = { 'Content-Type': 'application/json', ...selfCallHeaders(baseUrl) };
     // The route fails CLOSED since #4470 — a missing secret is a guaranteed 401,
     // not a pass. CRON_SECRET is always set server-side; REVALIDATE_SECRET wins
     // if someone configures it.

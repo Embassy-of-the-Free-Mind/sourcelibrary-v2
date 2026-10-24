@@ -1,0 +1,2110 @@
+{
+ "built": "2026-10-23T22:08:56.784Z",
+ "seed": 7202,
+ "input": "$JOB_SCRATCH/work/records-arms.jsonl",
+ "input_sha": "213ff2ba33aa6b89",
+ "any_private": false,
+ "n_items": 64,
+ "n_gate": 9,
+ "n_main": 55,
+ "chunk": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/gate-01.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/gate-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/gate-02.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/gate-02.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-01.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-02.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-02.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-03.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-03.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-04.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-04.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-05.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-05.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-06.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-06.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-07.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-07.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-08.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-08.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-09.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-09.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j1/main-10.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j1/main-10.jsonl",
+   "n": 1
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/gate-01.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/gate-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/gate-02.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/gate-02.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-01.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-02.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-02.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-03.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-03.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-04.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-04.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-05.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-05.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-06.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-06.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-07.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-07.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-08.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-08.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-09.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-09.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "$JOB_SCRATCH/packet/packets/j2/main-10.jsonl",
+   "verdicts": "$JOB_SCRATCH/packet/verdicts/j2/main-10.jsonl",
+   "n": 1
+  }
+ ],
+ "warnings": [
+  "input line 33 (6a3c61a7879008ba7e15f810:94): arm qwen has empty text (judged as an empty translation)"
+ ],
+ "records": [
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69935b692c63944063133f67",
+   "page_number": 112,
+   "reference_meta": {
+    "title": "Tao Te Ching with Commentary",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "commentaries on ch. 48 (蘇註, 呂註, 黃茂材註, 息齋註), then root text of ch. 49 from 聖人無常心 to 聖人 (breaks off before the final 皆孩之)",
+    "url": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    "coverage_note": "reference = Legge ch. 48 §3 (the opening paragraph numbered '3.'; context: the last clause discussed by the ch. 48 commentaries) + ch. 49 whole. Ch. 49 §3's last clause ('and he deals with them all as his children', 皆孩之) lies past the page break. The ch. 48 commentaries (about 80% of the page) have no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c60a409200ea79f46f6_00141",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c60a409200ea79f46f6",
+   "page_number": 141,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk V, Ai-thâi Tho story, from 子食於其死母者 to 形全猶足以為爾 (Legge SBE 39 pp. 230–231)",
+    "url": "https://archive.org/download/sacredbooksofchi01oxfo/sacredbooksofchi01oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; the marginal 旁注 glosses have no reference. Opens with the start of the sentence the page enters mid-way (the page begins at 子食), and ends with one extra clause ('how much greater results…', 而況全德之人乎) beyond the page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c65a409200ea79f47bd_00106",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c65a409200ea79f47bd",
+   "page_number": 106,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 2",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk XIII §8 (Legge numbering), Shih-khăng Khî and Lâo-ȝze, from (積斂)無崖 to 士成綺雁行避影履 (Legge SBE 39 p. 341)",
+    "url": "https://archive.org/download/sacredbooksofchi01oxfo/sacredbooksofchi01oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; marginal glosses have no reference. Begins with the whole sentence whose last words (無崖) open the page, and ends with the sentence the page breaks off in (履 / 'retraced his steps… asked how he should cultivate himself' runs onto the next page). Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c6ba409200ea79f484e",
+   "page_number": 102,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 3",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk XX end of §4 (大公任 to Confucius: 至人不聞…; Confucius retires to the marsh) and start of §5 (Confucius asks 子桑雽), Legge SBE 40 pp. 23–24",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; marginal glosses have no reference. Begins with the sentence containing 責焉 (the page's first words) and ends at the end of Confucius's question; Ȝze-sang Hû's reply begins on the next page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c70a409200ea79f48f9_00078",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c70a409200ea79f48f9",
+   "page_number": 78,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 4",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XXV (則陽) par. 5, from its last words 「…邪」 (= 'Is he not a sort of Î Liâo of Shih-nan?'), through the end of par. 5, and the opening of par. 6 up to 「…治民焉勿滅裂昔」 ('Formerly, ...')",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "Reference covers the whole root text on the page. Context added: the start of par. 5 (on the previous page) and the rest of the Border-warden's speech in par. 6 (continues on the next page, ending '...more than I could eat.'); the page itself stops at 昔 = 'Formerly'. The marginal glosses (旁注, short notes) have no reference. Legge's special initial (Ȝ, read ts/dz) is shown as Ȝ; diacritics restored by comparing two archive.org OCRs (the OCR text has garbled diacritics, e.g. 'Khh', '3ze-l&'); footnote markers and translator's footnotes dropped. OCR on the page reads 子牟 where the received text (and Legge) has 子牢 (Ȝze-lâo).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c75a409200ea79f4976_00100",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c75a409200ea79f4976",
+   "page_number": 100,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XXXII (列御寇) par. 10, from 「（醉之以）酒而觀其則」 (the drunkenness test) to the end of par. 10 (九徵至不肖人得矣); par. 11 正考父… through 「凶德有五中德（為首）」 ('This evil quality has five forms, and the chief of them is that which is the central')",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "Reference covers the whole root text on the page. Context added: the beginning of par. 10 (Confucius on the nine tests; on the previous page) and the next sentence after the page break ('What do we mean by the central quality?...'). The page ends at 中德 mid-sentence. Marginal glosses (旁注) have no reference. Legge's translator's footnotes and markers dropped; diacritics in 'Hsü (Yû)' and 'Yâo' restored from garbled OCR ('Hsli (Yii)').",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c7da409200ea79f4a01_00053",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72c7da409200ea79f4a01",
+   "page_number": 53,
+   "reference_meta": {
+    "title": "列子沖虛真經 (Liezi), Vol. 1",
+    "translator": "Lionel Giles",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "ch. 2 黃帝 (The Yellow Emperor): from 必無獸心 (mid-passage on outward form) to 鳳凰來儀",
+    "url": "https://archive.org/download/taoistteachingsf00liezrich/taoistteachingsf00liezrich_djvu.txt",
+    "coverage_note": "reference covers the whole page; the opening of Giles' paragraph (similarity in understanding vs form, before 必無獸心) and the following sentence 'This was the attraction of animals by the power of music' (此以聲致禽獸者也, on the next page) are included as context. Giles' footnotes (Chinese foot; K'uei) omitted; 'Nii Kua' and 'Ch-'u' OCR errors corrected to Nü Kua, Ch'u. The marginal commentary has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e7494885f786e884a4e57a_00024",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e7494885f786e884a4e57a",
+   "page_number": 24,
+   "reference_meta": {
+    "title": "詩經 (Shījīng / Book of Songs)",
+    "translator": "James Legge",
+    "year": 1871,
+    "licence": "public domain (published 1871)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Odes of Bei (邶風), ode 4 日月 'Jeh yueh' (Mao 29): last two lines of stanza 1, stanzas 2-4 (whole), and the tally line 日月四章章六句",
+    "url": "https://archive.org/download/10982080bsb/10982080bsb_djvu.txt",
+    "coverage_note": "reference covers the whole ode; stanza 1 lines 1-4 precede the page and are included as context. Zhu Xi's genre labels, phonetic glosses and closing note (roughly a quarter of the page) have no reference. Legge's notes omitted.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "confucian classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e8b2642ff2a8dc09e778a1_00439",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e8b2642ff2a8dc09e778a1",
+   "page_number": 439,
+   "reference_meta": {
+    "title": "墨子 (Mòzǐ)",
+    "translator": "Y. P. Mei",
+    "year": 1929,
+    "licence": "public domain in the US (published 1929; entered US public domain 1 Jan 2025)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "ch. 48 公孟 (Kung Meng): second half of the 'no propitiousness' exchange, the mourning/Three Hundred Odes exchange, ending mid-sentence in Motse's reply (治之廢則國之治亦廢國之...)",
+    "url": "https://archive.org/download/in.ernet.dli.2015.283868/2015.283868.The-Works_djvu.txt",
+    "coverage_note": "page begins mid-paragraph (不能為禍福...); the start of that paragraph is included as context. Page ends mid-sentence at 'A country [may be rich]'; the reference runs to the end of that sentence group. Bi Yuan's small editorial notes have no reference. Obvious OCR errors in the archive.org text were corrected to the printed reading (tlie->the, he->be, moiixning->mourning, Ghitse->Chitse, curly-quote debris); Mei's footnotes omitted.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "philosophy (Mozi)",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e8b26b2ff2a8dc09e77afc_00118",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e8b26b2ff2a8dc09e77afc",
+   "page_number": 118,
+   "reference_meta": {
+    "title": "荀子 (Xúnzǐ)",
+    "translator": "Homer H. Dubs",
+    "year": 1928,
+    "licence": "public domain in the US (published 1928; entered US public domain 1 Jan 2024)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Book 18 正論 (Correction of Errors), section on whether Tang and Wu usurped: from 古者天子千官 to 積其凶全其[惡] (page ends mid-sentence)",
+    "url": "https://archive.org/download/in.ernet.dli.2015.103953/2015.103953.Works-Of-Hsuntze_djvu.txt",
+    "coverage_note": "reference covers the page's root text; the opening of Dubs' paragraph (the sophists' claim, before 古者天子千官) and the closing sentences after the page break (天下去之 ... clear from this argument) are included as context. The foot-of-page notes have no reference. Dubs' margin headings, paragraph numbers and footnotes omitted; obvious OCR errors in the archive.org text corrected to the printed reading (tlie->the, ttose->those, Ch^ie/Chfie->Ch'ie, beiQg->being, hmidred->hundred, sliced etc.).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "philosophy (Xunzi)",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c5f05879008ba7e15291d_00045",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c5f05879008ba7e15291d",
+   "page_number": 45,
+   "reference_meta": {
+    "title": "大乘起信論疏",
+    "translator": "Timothy Richard (with Yang Wen Hwui)",
+    "year": 1907,
+    "licence": "public domain (published 1907)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Awakening of Faith, section on the six defiled minds (染心者有六種): heading and defiled minds 1-3 (執相應染, 不斷相應染, 分別智相應染); commentary continues into the 八地 discussion",
+    "url": "https://archive.org/download/cu31924022892198/cu31924022892198_djvu.txt",
+    "coverage_note": "Page quotes Paramartha's version T1666 (wording 一者執相應染依二乘解脫及信相應地遠離故... matches T1666), so Richard (who translated T1666) is used rather than Suzuki (T1667). Richard's rendering is very free: he omits the count 'six kinds' and the question 云何爲六, renders 染 as 'Confusion', and lists only five confusions. Reference = his paragraph on the arising of ignorance (root text just before this page, context), his first three 'Confusions' (= defiled minds 1-3 on the page), and the fourth (context). The commentary has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c5f3b879008ba7e153836_00013",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c5f3b879008ba7e153836",
+   "page_number": 13,
+   "reference_meta": {
+    "title": "金剛般若波羅蜜經 (vol 1)",
+    "translator": "William Gemmell",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "end of §6 正信希有分 (from 是故不應取法), §7 無得無說分 (whole), §8 依法出生分 (whole), heading of §9 一相無相分",
+    "url": "https://archive.org/download/cu31924022914588/cu31924022914588_djvu.txt",
+    "coverage_note": "Gemmell (pp. 22-29) covers the whole span. He does not translate the Zhaoming section headings (he marks sections by a blank). Gemmell is a free, interpretive rendering (e.g. 'supreme spiritual wisdom' for 阿耨多羅三藐三菩提, 'intuition' for 無為法), and does not render 須菩提！所謂佛法者，即非佛法 literally. Context: the first paragraph of §9 (Srotāpanna) is appended after the page end, since the page ends on the §9 heading. Footnotes and footnote markers removed; spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c5f3c879008ba7e153862_00029",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c5f3c879008ba7e153862",
+   "page_number": 29,
+   "reference_meta": {
+    "title": "金剛般若波羅蜜經 (vol 3)",
+    "translator": "William Gemmell",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Section 9: end of the Srotapanna passage (...色聲香味觸法是名須陀洹), the Sakridagamin passage, and the Anagamin passage (to 是故名阿那含)",
+    "url": "https://www.gutenberg.org/cache/epub/64623/pg64623.txt",
+    "coverage_note": "Gemmell's chapter 9 Srotapanna paragraph (partly on the previous page) and the Arhat paragraph (next page) are included as boundary context. Translator's footnote markers removed. Gemmell adds glosses in parentheses that are not in the Chinese.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c6191879008ba7e15f0b2_00070",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c6191879008ba7e15f0b2",
+   "page_number": 70,
+   "reference_meta": {
+    "title": "大乘起信論義記(二) (vol 2)",
+    "translator": "Timothy Richard (with Yang Wen Hwui)",
+    "year": 1907,
+    "licence": "public domain (published 1907)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Awakening of Faith, the six coarse aspects (六麤): aspect 2 相續相 (whole) and the beginning of aspect 3 執取相",
+    "url": "https://archive.org/download/cu31924022892198/cu31924022892198_djvu.txt",
+    "coverage_note": "Wording 依於智故生其苦樂覺心起念相應不斷故 matches Paramartha's T1666, which Richard translated. Richard's rendering is free: aspect 1 'Consciousness' (context, not on page), aspect 2 'Emotion' (= 相續相, on page), aspect 3 'Attention' (= 執取相, beginning on page). Two OCR misreadings in the archive.org text were corrected: '(6.)' -> '(b.)' and the comma before 'These' -> full stop. Fazang's commentary (most of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c6192879008ba7e15f12e_00065",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c6192879008ba7e15f12e",
+   "page_number": 65,
+   "reference_meta": {
+    "title": "大乘起信論義記(一) (vol 1)",
+    "translator": "Daisetz Teitaro Suzuki",
+    "year": 1900,
+    "licence": "public domain (published 1900)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Awakening of Faith, Part I 因緣分: the question 問曰有何因緣而造此論, the answer 答曰是因緣有八種云何為八, and reason 1 一者因緣總相所謂為令眾生離一切苦得究竟樂 (its continuation 非求世間名利恭敬故 appears only as a lemma inside the commentary); interleaved with Fazang's commentary (△答中有三…, 總中離一切苦者…)",
+    "url": "https://archive.org/download/avaghoshasdisc00asva/avaghoshasdisc00asva_djvu.txt",
+    "coverage_note": "Reference covers the root text only; Fazang's commentary (about 65% of the page) has no reference. RECENSION CAVEAT: Suzuki 1900 translates Śikṣānanda's 'new' Chinese version, not Paramārtha's which Fazang comments on; his text has no counterpart to the question 問曰有何因緣而造此論, so that line is uncovered by the main reference. Reason 2 is included as context after the page end. An alternate reference from Timothy Richard (1907), who translated Paramārtha's version and does render the question, is given in alternate_reference. Richard is looser and theologically coloured, but here it is close.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c61b1879008ba7e15fba1_00068",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c61b1879008ba7e15fba1",
+   "page_number": 68,
+   "reference_meta": {
+    "title": "四書大全論語集註大全·卷一 (vol 1)",
+    "translator": "James Legge",
+    "year": 1861,
+    "licence": "public domain (published 1861/1893)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Analects I.7 (子夏曰賢賢易色…吾必謂之學矣), whole; preceded by the tail of the sub-commentary on I.6 and followed by the 集註/大全 commentary on I.7",
+    "url": "https://www.gutenberg.org/cache/epub/3330/pg3330.txt",
+    "coverage_note": "Reference covers only the root text I.7 (about 15% of the page); the commentary (about 85%: tail of the I.6 sub-commentary, Zhu Xi's 集註 on I.7 and the 大全 notes) has no reference. I.6 (whose commentary opens the page) and the first sentence of I.8 are added as boundary context only.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "confucian classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c61b3879008ba7e15fc71_00112",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c61b3879008ba7e15fc71",
+   "page_number": 112,
+   "reference_meta": {
+    "title": "四書大全論語集註大全·卷二~卷三 (vol 2)",
+    "translator": "James Legge",
+    "year": 1861,
+    "licence": "public domain (published 1861/1893)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Analects III.7 (whole root text: 君子無所爭必也射乎...其爭也君子), preceded by the tail of the sub-commentary on III.6",
+    "url": "https://www.gutenberg.org/cache/epub/3330/pg3330.txt",
+    "coverage_note": "Root text III.7 is covered; III.6 and III.8 v.1 are included only as boundary context (III.6's root text is NOT on this page, only commentary on it). The commentary (most of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "confucian classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c61b5879008ba7e15fd28_00117",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c61b5879008ba7e15fd28",
+   "page_number": 117,
+   "reference_meta": {
+    "title": "四書大全論語集註大全·卷四~卷五 (vol 3)",
+    "translator": "James Legge",
+    "year": 1861,
+    "licence": "public domain (published 1861/1893)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Analects V.16 (whole root text: 晏平仲善與人交久而敬之), preceded by the end of the sub-commentary on V.15 (子產)",
+    "url": "https://www.gutenberg.org/cache/epub/3330/pg3330.txt",
+    "coverage_note": "Root text V.16 is covered; V.15 and V.17 are boundary context only (V.15's root text is not on the page, only commentary on it). Commentary (about 80% of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "confucian classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c61db40c88a541d8f091d_00083",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c61db40c88a541d8f091d",
+   "page_number": 83,
+   "reference_meta": {
+    "title": "金剛經口訣",
+    "translator": "William Gemmell",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Diamond Sūtra §19 法界通化分 (whole: 須菩提於意云何…如來說得福德多) + Huineng's comment on it + heading and gloss of §20 離色離相分 + opening of §20 (須菩提於意云何。佛可以具足色身見不。不也世尊。如…, breaks off mid-sentence)",
+    "url": "https://archive.org/download/cu31924022914588/cu31924022914588_djvu.txt",
+    "coverage_note": "Reference covers the root text only: Gemmell §19 whole and the first exchange of §20 (the page breaks off at 如[來不應以具足色身見], so the reference runs to the end of that answer). Huineng's commentary and the section-title gloss (about 40% of the page) have no reference. Gemmell does not render 以是因緣 ('by this cause'). One OCR error in the source scan ('body .''') was checked against a second scan (archive.org in.ernet.dli.2015.68779), which reads 'body ?'. Footnotes removed.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a3c61ec40c88a541d8f0f4a_00018",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "6a3c61ec40c88a541d8f0f4a",
+   "page_number": 18,
+   "reference_meta": {
+    "title": "妙法蓮華經—觀世音菩薩普門品 (vol 1)",
+    "translator": "W. E. Soothill",
+    "year": 1930,
+    "licence": "public domain in the US (published 1930; US copyright expired 1 Jan 2026)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "ch. 25, closing gāthās from 無垢清淨光 to 是故應頂禮 (the last six stanzas), then the prose coda: 持地菩薩's speech and 佛說是普門品時…皆發無等等阿耨多羅三藐三菩提心",
+    "url": "https://archive.org/download/in.gov.ignca.60721/60721_djvu.txt",
+    "coverage_note": "Soothill 1930 is abridged. For this page he renders the verse stanzas 無垢清淨光, 悲體戒雷震, 妙音觀世音, 念念勿生疑…依怙 and 具一切功德, but OMITS the stanza 諍訟經官處…眾怨悉退散 and OMITS Dharaṇīṃdhara's (持地菩薩) speech; only the final sentence of the coda is rendered. Soothill's verse is free, so stanza-to-line matching is approximate. About 75% of the page is covered. One preceding stanza (真觀清淨觀…常願常瞻仰 = 'True Regard… ever looked for') is included as context. Soothill does not mark stanza boundaries exactly where the Chinese does. 'Regardcr' (OCR) is corrected to 'Regarder' per a second scan (archive.org in.ernet.dli.2015.108057). As alternate_reference, Kern's SBE 21 ch. 24 (translated from the SANSKRIT, a different recension) covers the omitted stanza (his v. 23) and Dharaṇīṃdhara's speech. Its verses 21-26 correspond roughly to the page's six stanzas; his vv. 27-33 have no Chinese counterpart and are omitted with a bracketed marker. Kern's footnote numbers are removed and his 'Avalokitejvara/Avalokite^vara' OCR forms are normalised to 'Avalokitesvara'. Kern's name 'Dharaṇiṃdhara' is restored from the scan's diacritic-damaged OCR ('Dhara-windhara').",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e7268ca409200ea79ef73b_00111",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e7268ca409200ea79ef73b",
+   "page_number": 111,
+   "reference_meta": {
+    "title": "Liaozhai zhiyi 聊齋志異, tale 嬌娜 (Jiaona) = Giles No. VIII 'Miss Chiao-no'",
+    "translator": "Herbert A. Giles",
+    "year": 1880,
+    "licence": "public domain (published 1880)",
+    "private": false,
+    "style": "free",
+    "style_note": "Victorian literary prose; follows the narrative sentence by sentence but smooths, condenses and occasionally glosses details",
+    "located": "嬌娜, opening of the tale from the title through 案頭書一冊籤云瑯環瑣[記] (Giles No. VIII, first paragraph up to the book title 'Jottings from Paradise')",
+    "url": "https://www.gutenberg.org/cache/epub/43629/pg43629.txt",
+    "coverage_note": "Reference = Giles's title + opening through the book title, plus one following clause ('and turning over its leaves, K‘ung found therein many strange things') as boundary context; the page breaks mid-word at 瑯環瑣. Giles is mildly free here (e.g. 晷致慰問 'briefly offered condolences' is folded into 'entered into conversation'; 瑯環瑣記 rendered 'Jottings from Paradise'). The first OCR line (tail of the preceding tale, apparently the end of 狐嫁女 / Giles No. VII in garbled form) and the margin note are not covered. Translator's footnote markers removed.",
+    "page_content": "One garbled line ending the preceding tale (……柳笑曰一一不複詰), then the title 嬌娜 and the opening of the tale (about 85-90% of the main text), plus an upper-margin commentator's note (蘊藉人而得蘊藉之妻……). Reference covers the 嬌娜 portion, ~85% of the page's main text; neither the tail line nor the marginal commentary has a reference.",
+    "confidence": 0.9,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Herbert A. Giles, Strange Stories from a Chinese Studio, 2 vols, London: Thos. De La Rue, 1880 (Project Gutenberg #43629, transcribed from the 1880 edition)",
+    "canonical": false,
+    "genre": "fiction (tales)",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e72698a409200ea79ef8c3_00129",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e72698a409200ea79ef8c3",
+   "page_number": 129,
+   "reference_meta": {
+    "title": "Liaozhai zhiyi 聊齋志異, tale 曾友于 (Zeng Youyu) = Giles 'The Quarrelsome Brothers'",
+    "translator": "Herbert A. Giles",
+    "year": 1880,
+    "licence": "public domain (published 1880)",
+    "private": false,
+    "style": "free",
+    "style_note": "Victorian literary prose; follows the narrative sentence by sentence but smooths, condenses and occasionally glosses details",
+    "located": "曾友于, mid-tale: from ……共出田宅居成 (the younger brothers give the returned eldest brother Cheng a share) through 成不聽刻期 (Cheng ignores Youyu and fixes a day for the reburial)",
+    "url": "https://www.gutenberg.org/cache/epub/43629/pg43629.txt",
+    "coverage_note": "Page begins mid-sentence (共出田宅居成); reference starts at the beginning of Giles's paragraph ('One day the eldest brother, Ch‘êng…'), so Cheng's return, Jen and Yi inviting him and sending for Yu-yü precede the page as context; it ends with the sentence that completes 刻期 ('fixed a day for her interment in the family vault'). Giles condenses a few details (e.g. 以石投孝 'threw a stone at Hsiao and knocked him down'; 使七分相準 'divided equally among the seven brothers'). Translator's footnote markers removed.",
+    "page_content": "Root narrative text only (no commentary on this page); reference covers ~100% of it",
+    "confidence": 0.9,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Herbert A. Giles, Strange Stories from a Chinese Studio, 2 vols, London: Thos. De La Rue, 1880 (Project Gutenberg #43629, transcribed from the 1880 edition)",
+    "canonical": false,
+    "genre": "fiction (tales)",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e792f880b52390feb17389_00344",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e792f880b52390feb17389",
+   "page_number": 344,
+   "reference_meta": {
+    "title": "Honglou meng (Dream of the Red Chamber), 120-chapter edition",
+    "translator": "H. Bencraft Joly",
+    "year": 1893,
+    "licence": "public domain (published 1893)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Victorian consular-interpreter prose, very close to the Chinese, rendering idioms and politeness formulas word for word",
+    "located": "ch. 48: end of Ping'er's account of Jia She beating Jia Lian over the antique fans, through Xiangling asking Daiyu to teach her verse, Daiyu's reading list (Wang Wei, Du Fu, Li Bai), and Xiangling returning the Wang Wei volume ('Let me tell you')",
+    "url": "https://www.gutenberg.org/cache/epub/9604/pg9604.txt",
+    "coverage_note": "reference is exactly the page span with no context (the span itself is ~6,400 chars, over the 6,000 guide, so context dropped per the brief); Joly's version is complete for this passage, no omissions found; the Lu You couplet is kept as two verse lines",
+    "page_content": "narrative prose of ch. 48 only (no commentary); the page begins mid-sentence in Ping'er's speech (倒用板子棍子) and ends with Xiangling's '說給你聽聽'",
+    "confidence": 0.95,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "H. Bencraft Joly, Hung Lou Meng, or, The Dream of the Red Chamber, a Chinese Novel, Book II (Hong Kong: Kelly & Walsh, 1893), ch. XLVIII; Project Gutenberg eBook #9604",
+    "canonical": false,
+    "genre": "fiction (novel)",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e792fd80b52390feb1770f_00022",
+   "track": "T5-zh",
+   "lang": "Chinese",
+   "book_id": "69e792fd80b52390feb1770f",
+   "page_number": 22,
+   "reference_meta": {
+    "title": "Sanguo yanyi (Romance of the Three Kingdoms), Mao Zonggang recension with Mao commentary (第一才子書)",
+    "translator": "C. H. Brewitt-Taylor",
+    "year": 1925,
+    "licence": "public domain in the US (first published 1925; scanned printing 1929, both pre-1931)",
+    "private": false,
+    "style": "free",
+    "style_note": "fluent early-20th-c. narrative English that condenses and smooths, verses recast in rhymed couplets",
+    "located": "ch. 4, latter part: Li Ru urges Dong Zhuo to employ famous men, Cai Yong summoned and promoted; the deposed Shaodi's swallow poem in the Yong'an palace; Dong Zhuo orders Li Ru to kill him; Li Ru offers the poisoned wine",
+    "url": "https://archive.org/download/sankuoorromanceo0001chbr/sankuoorromanceo0001chbr_djvu.txt",
+    "coverage_note": "reference covers the root text; one paragraph of context before (Dong Zhuo's arrogance, 卓為相國...) because the page begins mid-sentence with 比李儒勸卓; one sentence of context after. Brewitt-Taylor abridges: the 8-line poem is rendered in 6 lines and its last line (何人仗忠義，洩我心中怨) is omitted; he says 'ten men' where the text has 武士十八人; Mao's interlinear commentary is not translated. Archive.org OCR stray characters (margin noise like '|', '—', 'Bes:') removed and hyphenated line breaks rejoined",
+    "page_content": "root narrative of ch. 4 with Mao Zonggang interlinear commentary (<gloss>) in small characters; root text is roughly 75% of the page, the reference covers that ~75% (the commentary has no reference)",
+    "confidence": 0.85,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "C. H. Brewitt-Taylor, San Kuo, or Romance of the Three Kingdoms, vol. 1, ch. IV (Shanghai: Kelly & Walsh; first printed 1925, Popular Edition 1929 scanned)",
+    "canonical": false,
+    "genre": "fiction (novel) + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c70cb01fe4f593c1d4e1d_00011",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c70cb01fe4f593c1d4e1d",
+   "page_number": 11,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1e0114 WYG @ KR1e0114_WYG_041-2b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1e0114_WYG_041-2b",
+    "url": "https://github.com/kanripo/KR1e0114/blob/WYG/KR1e0114_WYG_041.txt",
+    "coverage_note": "Kanripo alignment Dice 0.08 (runner-up 0.071); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cbeafec254ff6cae0224d_00032",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cbeafec254ff6cae0224d",
+   "page_number": 32,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0060 WYG @ KR3k0060_WYG_101-15b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0060_WYG_101-15b",
+    "url": "https://github.com/kanripo/KR3k0060/blob/WYG/KR3k0060_WYG_101.txt",
+    "coverage_note": "Kanripo alignment Dice 0.547 (runner-up 0.156); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c777601fe4f593c2025e0_00112",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c777601fe4f593c2025e0",
+   "page_number": 112,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0081 WYG @ KR1j0081_WYG_014-12b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0081_WYG_014-12b",
+    "url": "https://github.com/kanripo/KR1j0081/blob/WYG/KR1j0081_WYG_014.txt",
+    "coverage_note": "Kanripo alignment Dice 0.104 (runner-up 0.087); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c613840c88a541d8eeec0_00042",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c613840c88a541d8eeec0",
+   "page_number": 42,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0056 WYG @ KR3k0056_WYG_161-20b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0056_WYG_161-20b",
+    "url": "https://github.com/kanripo/KR3k0056/blob/WYG/KR3k0056_WYG_161.txt",
+    "coverage_note": "Kanripo alignment Dice 0.563 (runner-up 0.141); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb70d3dce6cfad7485fa7_00171",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb70d3dce6cfad7485fa7",
+   "page_number": 171,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1d0018 WYG @ KR1d0018_WYG_001-3b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1d0018_WYG_001-3b",
+    "url": "https://github.com/kanripo/KR1d0018/blob/WYG/KR1d0018_WYG_001.txt",
+    "coverage_note": "Kanripo alignment Dice 0.023 (runner-up 0.022); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c74cc01fe4f593c1f2713_00157",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c74cc01fe4f593c1f2713",
+   "page_number": 157,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0044 WYG @ KR3k0044_WYG_067-19a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0044_WYG_067-19a",
+    "url": "https://github.com/kanripo/KR3k0044/blob/WYG/KR3k0044_WYG_067.txt",
+    "coverage_note": "Kanripo alignment Dice 0.554 (runner-up 0.068); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c63d2af3c49b59c5c8e16_00106",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c63d2af3c49b59c5c8e16",
+   "page_number": 106,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0059 WYG @ KR3k0059_WYG_193-51b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0059_WYG_193-51b",
+    "url": "https://github.com/kanripo/KR3k0059/blob/WYG/KR3k0059_WYG_193.txt",
+    "coverage_note": "Kanripo alignment Dice 0.344 (runner-up 0.181); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb9aa3dce6cfad7495af1_00105",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb9aa3dce6cfad7495af1",
+   "page_number": 105,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0012 WYG @ KR1j0012_WYG_014-10b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0012_WYG_014-10b",
+    "url": "https://github.com/kanripo/KR1j0012/blob/WYG/KR1j0012_WYG_014.txt",
+    "coverage_note": "Kanripo alignment Dice 0.597 (runner-up 0.242); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c61a7879008ba7e15f810_00094",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c61a7879008ba7e15f810",
+   "page_number": 94,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3c0007 WYG @ KR3c0007_WYG_008-4b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3c0007_WYG_008-4b",
+    "url": "https://github.com/kanripo/KR3c0007/blob/WYG/KR3c0007_WYG_008.txt",
+    "coverage_note": "Kanripo alignment Dice 0.017 (runner-up 0.017); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb9ae3dce6cfad7495cc1_00081",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb9ae3dce6cfad7495cc1",
+   "page_number": 81,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0012 WYG @ KR1j0012_WYG_032-7a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0012_WYG_032-7a",
+    "url": "https://github.com/kanripo/KR1j0012/blob/WYG/KR1j0012_WYG_032.txt",
+    "coverage_note": "Kanripo alignment Dice 0.588 (runner-up 0.418); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6ff501fe4f593c1cf4a8_00004",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6ff501fe4f593c1cf4a8",
+   "page_number": 4,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1d0035 WYG @ KR1d0035_WYG_011-56b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1d0035_WYG_011-56b",
+    "url": "https://github.com/kanripo/KR1d0035/blob/WYG/KR1d0035_WYG_011.txt",
+    "coverage_note": "Kanripo alignment Dice 0.582 (runner-up 0.426); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cbc04ec254ff6cadeceb9_00143",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cbc04ec254ff6cadeceb9",
+   "page_number": 143,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1d0053 WYG @ KR1d0053_WYG_014-2b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1d0053_WYG_014-2b",
+    "url": "https://github.com/kanripo/KR1d0053/blob/WYG/KR1d0053_WYG_014.txt",
+    "coverage_note": "Kanripo alignment Dice 0.045 (runner-up 0.035); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6f0601fe4f593c1c85a6_00129",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6f0601fe4f593c1c85a6",
+   "page_number": 129,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1g0007 WYG @ KR1g0007_WYG_006-30b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1g0007_WYG_006-30b",
+    "url": "https://github.com/kanripo/KR1g0007/blob/WYG/KR1g0007_WYG_006.txt",
+    "coverage_note": "Kanripo alignment Dice 0.562 (runner-up 0.38); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6c9901fe4f593c1b2c94_00198",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6c9901fe4f593c1b2c94",
+   "page_number": 198,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3j0161 WYG @ KR3j0161_WYG_039-98b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3j0161_WYG_039-98b",
+    "url": "https://github.com/kanripo/KR3j0161/blob/WYG/KR3j0161_WYG_039.txt",
+    "coverage_note": "Kanripo alignment Dice 0.577 (runner-up 0.359); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c70ac39b4508b04e508d1_00050",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c70ac39b4508b04e508d1",
+   "page_number": 50,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1e0114 WYG @ KR1e0114_WYG_003-112a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1e0114_WYG_003-112a",
+    "url": "https://github.com/kanripo/KR1e0114/blob/WYG/KR1e0114_WYG_003.txt",
+    "coverage_note": "Kanripo alignment Dice 0.156 (runner-up 0.121); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb99f3dce6cfad74954ba_00080",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb99f3dce6cfad74954ba",
+   "page_number": 80,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0012 WYG @ KR1j0012_WYG_001-8a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0012_WYG_001-8a",
+    "url": "https://github.com/kanripo/KR1j0012/blob/WYG/KR1j0012_WYG_001.txt",
+    "coverage_note": "Kanripo alignment Dice 0.526 (runner-up 0.296); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6ef201fe4f593c1c79f4_00090",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6ef201fe4f593c1c79f4",
+   "page_number": 90,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1g0003 WYG @ KR1g0003_WYG_021-49b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1g0003_WYG_021-49b",
+    "url": "https://github.com/kanripo/KR1g0003/blob/WYG/KR1g0003_WYG_021.txt",
+    "coverage_note": "Kanripo alignment Dice 0.516 (runner-up 0.475); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6aefaf3c49b59c5eb80b_00052",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6aefaf3c49b59c5eb80b",
+   "page_number": 52,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3g0051 WYG @ KR3g0051_WYG_018-1a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3g0051_WYG_018-1a",
+    "url": "https://github.com/kanripo/KR3g0051/blob/WYG/KR3g0051_WYG_018.txt",
+    "coverage_note": "Kanripo alignment Dice 0.103 (runner-up 0.049); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6853af3c49b59c5d7ea7_00016",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6853af3c49b59c5d7ea7",
+   "page_number": 16,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0052 WYG @ KR3k0052_WYG_002-1a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0052_WYG_002-1a",
+    "url": "https://github.com/kanripo/KR3k0052/blob/WYG/KR3k0052_WYG_002.txt",
+    "coverage_note": "Kanripo alignment Dice 0.068 (runner-up 0.058); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6a2639b4508b04e3f51a_00106",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6a2639b4508b04e3f51a",
+   "page_number": 106,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0057 WYG @ KR1j0057_WYG_008-52b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0057_WYG_008-52b",
+    "url": "https://github.com/kanripo/KR1j0057/blob/WYG/KR1j0057_WYG_008.txt",
+    "coverage_note": "Kanripo alignment Dice 0.535 (runner-up 0.165); FLAGGED (< 0.6): the Kanripo page may be a different passage, or the OCR may be wrong"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c71b201fe4f593c1da00d_00074",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c71b201fe4f593c1da00d",
+   "page_number": 74,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3d0010 WYG @ KR3d0010_WYG_048-5b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3d0010_WYG_048-5b",
+    "url": "https://github.com/kanripo/KR3d0010/blob/WYG/KR3d0010_WYG_048.txt",
+    "coverage_note": "Kanripo alignment Dice 0.924 (runner-up 0.064); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6e8a01fe4f593c1c3b93_00138",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6e8a01fe4f593c1c3b93",
+   "page_number": 138,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1d0042 WYG @ KR1d0042_WYG_012-22b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1d0042_WYG_012-22b",
+    "url": "https://github.com/kanripo/KR1d0042/blob/WYG/KR1d0042_WYG_012.txt",
+    "coverage_note": "Kanripo alignment Dice 0.971 (runner-up 0.151); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c69f339b4508b04e3e620_00091",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c69f339b4508b04e3e620",
+   "page_number": 91,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3e0067 WYG @ KR3e0067_WYG_393-45a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3e0067_WYG_393-45a",
+    "url": "https://github.com/kanripo/KR3e0067/blob/WYG/KR3e0067_WYG_393.txt",
+    "coverage_note": "Kanripo alignment Dice 0.921 (runner-up 0.299); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3ce7760a0011cb4bc09b97_00118",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3ce7760a0011cb4bc09b97",
+   "page_number": 118,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1c0013 WYG @ KR1c0013_WYG_024-10a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1c0013_WYG_024-10a",
+    "url": "https://github.com/kanripo/KR1c0013/blob/WYG/KR1c0013_WYG_024.txt",
+    "coverage_note": "Kanripo alignment Dice 0.976 (runner-up 0.059); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c72bc01fe4f593c1e24c0_00029",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c72bc01fe4f593c1e24c0",
+   "page_number": 29,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1e0053 WYG @ KR1e0053_WYG_016-14b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1e0053_WYG_016-14b",
+    "url": "https://github.com/kanripo/KR1e0053/blob/WYG/KR1e0053_WYG_016.txt",
+    "coverage_note": "Kanripo alignment Dice 0.911 (runner-up 0.16); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cbb5d3dce6cfad74a30b8_00080",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cbb5d3dce6cfad74a30b8",
+   "page_number": 80,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1d0087 WYG @ KR1d0087_WYG_244-39b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1d0087_WYG_244-39b",
+    "url": "https://github.com/kanripo/KR1d0087/blob/WYG/KR1d0087_WYG_244.txt",
+    "coverage_note": "Kanripo alignment Dice 0.95 (runner-up 0.177); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cba973dce6cfad749d0bd_00138",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cba973dce6cfad749d0bd",
+   "page_number": 138,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3k0025 WYG @ KR3k0025_WYG_097-22a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3k0025_WYG_097-22a",
+    "url": "https://github.com/kanripo/KR3k0025/blob/WYG/KR3k0025_WYG_097.txt",
+    "coverage_note": "Kanripo alignment Dice 0.924 (runner-up 0.065); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c678b39b4508b04e36d03_00168",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c678b39b4508b04e36d03",
+   "page_number": 168,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3a0105 WYG @ KR3a0105_WYG_095-25a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3a0105_WYG_095-25a",
+    "url": "https://github.com/kanripo/KR3a0105/blob/WYG/KR3a0105_WYG_095.txt",
+    "coverage_note": "Kanripo alignment Dice 0.883 (runner-up 0.093); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb8063dce6cfad748a51a_00074",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb8063dce6cfad748a51a",
+   "page_number": 74,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1c0028 WYG @ KR1c0028_WYG_008-37a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1c0028_WYG_008-37a",
+    "url": "https://github.com/kanripo/KR1c0028/blob/WYG/KR1c0028_WYG_008.txt",
+    "coverage_note": "Kanripo alignment Dice 0.973 (runner-up 0.123); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c776c01fe4f593c201f9c_00167",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c776c01fe4f593c201f9c",
+   "page_number": 167,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1a0103 WYG @ KR1a0103_WYG_013-32b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1a0103_WYG_013-32b",
+    "url": "https://github.com/kanripo/KR1a0103/blob/WYG/KR1a0103_WYG_013.txt",
+    "coverage_note": "Kanripo alignment Dice 0.979 (runner-up 0.102); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb8753d799518cd71b52a_00028",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb8753d799518cd71b52a",
+   "page_number": 28,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3h0061 WYG @ KR3h0061_WYG_099-13b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3h0061_WYG_099-13b",
+    "url": "https://github.com/kanripo/KR3h0061/blob/WYG/KR3h0061_WYG_099.txt",
+    "coverage_note": "Kanripo alignment Dice 0.964 (runner-up 0.059); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cb5ec3dce6cfad7484149_00056",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cb5ec3dce6cfad7484149",
+   "page_number": 56,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1a0151 WYG @ KR1a0151_WYG_005-27b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1a0151_WYG_005-27b",
+    "url": "https://github.com/kanripo/KR1a0151/blob/WYG/KR1a0151_WYG_005.txt",
+    "coverage_note": "Kanripo alignment Dice 0.934 (runner-up 0.128); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c749c39b4508b04e57a77_00141",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c749c39b4508b04e57a77",
+   "page_number": 141,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1e0118 WYG @ KR1e0118_WYG_002-11b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1e0118_WYG_002-11b",
+    "url": "https://github.com/kanripo/KR1e0118/blob/WYG/KR1e0118_WYG_002.txt",
+    "coverage_note": "Kanripo alignment Dice 0.89 (runner-up 0.161); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c675caf3c49b59c5d2976_00126",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c675caf3c49b59c5d2976",
+   "page_number": 126,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3a0096 WYG @ KR3a0096_WYG_001-57b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3a0096_WYG_001-57b",
+    "url": "https://github.com/kanripo/KR3a0096/blob/WYG/KR3a0096_WYG_001.txt",
+    "coverage_note": "Kanripo alignment Dice 0.951 (runner-up 0.098); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6dc939b4508b04e4a49b_00017",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6dc939b4508b04e4a49b",
+   "page_number": 17,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1c0044 WYG @ KR1c0044_WYG_024-8a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1c0044_WYG_024-8a",
+    "url": "https://github.com/kanripo/KR1c0044/blob/WYG/KR1c0044_WYG_024.txt",
+    "coverage_note": "Kanripo alignment Dice 0.928 (runner-up 0.135); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3ce7be0a0011cb4bc0ab93_00064",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3ce7be0a0011cb4bc0ab93",
+   "page_number": 64,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1c0014 WYG @ KR1c0014_WYG_016-31b",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1c0014_WYG_016-31b",
+    "url": "https://github.com/kanripo/KR1c0014/blob/WYG/KR1c0014_WYG_016.txt",
+    "coverage_note": "Kanripo alignment Dice 0.848 (runner-up 0.07); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c71d339b4508b04e5551d_00132",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c71d339b4508b04e5551d",
+   "page_number": 132,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3d0010 WYG @ KR3d0010_WYG_069-31a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3d0010_WYG_069-31a",
+    "url": "https://github.com/kanripo/KR3d0010/blob/WYG/KR3d0010_WYG_069.txt",
+    "coverage_note": "Kanripo alignment Dice 0.951 (runner-up 0.082); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c6a2239b4508b04e3f381_00047",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c6a2239b4508b04e3f381",
+   "page_number": 47,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR1j0057 WYG @ KR1j0057_WYG_005-23a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR1j0057_WYG_005-23a",
+    "url": "https://github.com/kanripo/KR1j0057/blob/WYG/KR1j0057_WYG_005.txt",
+    "coverage_note": "Kanripo alignment Dice 0.681 (runner-up 0.171); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3cbfe8f9474f825c16c42f_00119",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3cbfe8f9474f825c16c42f",
+   "page_number": 119,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3h0070 WYG @ KR3h0070_WYG_325-25a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3h0070_WYG_325-25a",
+    "url": "https://github.com/kanripo/KR3h0070/blob/WYG/KR3h0070_WYG_325.txt",
+    "coverage_note": "Kanripo alignment Dice 0.852 (runner-up 0.066); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a3c75da39b4508b04e5e172_00096",
+   "track": "siku",
+   "lang": "Chinese",
+   "book_id": "6a3c75da39b4508b04e5e172",
+   "page_number": 96,
+   "reference_meta": {
+    "kind": "source_witness",
+    "title": "Kanripo kanripo/KR3a0116 WYG @ KR3a0116_WYG_005-8a",
+    "translator": "Kanripo project (WYG digital transcription, Chinese — a second witness of the source, not a translation)",
+    "year": null,
+    "licence": "CC BY-SA (Kanripo organisation statement)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "KR3a0116_WYG_005-8a",
+    "url": "https://github.com/kanripo/KR3a0116/blob/WYG/KR3a0116_WYG_005.txt",
+    "coverage_note": "Kanripo alignment Dice 0.915 (runner-up 0.036); aligned (>= 0.6)"
+   },
+   "arms": [
+    "lite",
+    "lite2",
+    "flash",
+    "flash2",
+    "deepseek",
+    "qwen"
+   ],
+   "canonical": false
+  }
+ ]
+}

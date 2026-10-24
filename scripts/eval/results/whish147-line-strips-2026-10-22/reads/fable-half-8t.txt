@@ -1,0 +1,20 @@
+===== PAGE p01 =====
+<warning>Palm-leaf folio (ola) incised in Malayalam script; the hand is a cursive, lightly inked palm-leaf hand with low contrast, a binding hole and cord obscuring the centre of lines 3–7, and the text runs off both left and right edges of the frame. The Malayalam-script characters cannot be reliably deciphered at this resolution, so the text is marked as untranscribed rather than approximated. Language is presumed Sanskrit written in Malayalam script, but this could not be confirmed from the reading.</warning>
+<scan-quality>poor</scan-quality>
+<language>Sanskrit (Malayalam script, presumed)</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Single palm leaf photographed against black; string-hole with cord at centre. Lines 1–2 and 8–9 run the full width of the leaf; lines 3–7 are written in two blocks to the left and right of the string-hole. Text continues beyond both the left and right edges of the image.</meta>
+
+<unclear>2 full-width lines of incised Malayalam-script text, not transcribed</unclear>
+
+<unclear>5 short lines of Malayalam-script text to the left of the string-hole, not transcribed</unclear>
+
+<column-break/>
+
+<unclear>5 short lines of Malayalam-script text to the right of the string-hole, not transcribed</unclear>
+
+<unclear>2 full-width lines of incised Malayalam-script text, not transcribed</unclear>
+
+<vocab>palm-leaf manuscript, ola, Malayalam script, Sanskrit, string-hole</vocab>

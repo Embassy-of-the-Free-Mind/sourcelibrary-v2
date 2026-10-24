@@ -100,6 +100,10 @@ export interface HomeStrings {
   /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
   beginnerShelfHeading: string;
   beginnerShelfSubtitle: string;
+  /** The `/la` "Nondum conversi" band (#6278): Latin books not readable in English. Rendered on `/la` only. */
+  untranslatedShelfHeading: string;
+  /** `n` is the live count, measured when the page is rendered. */
+  untranslatedShelfSubtitle: (n: number) => string;
   spanishSubtitle: string;
 
   // Gallery masonry (homepage)
@@ -203,7 +207,7 @@ const en: HomeStrings = {
   curatedExhibitions: 'Browse curated exhibitions',
   allCollections: 'All collections',
   showcaseEyebrow: 'Curated exhibitions',
-  showcaseSubtitle: 'Small selections with an argument to make: a few dozen books each, chosen and introduced by a curator.',
+  showcaseSubtitle: 'One subject per shelf, a few dozen books each, with a short introduction to what you will find.',
   allExhibitions: (n) => `All ${n} exhibitions`,
   featuredCollectionEyebrow: 'Featured Collection',
   exploreCollectionBooks: (n) => `Explore ${n} books`,
@@ -220,6 +224,8 @@ const en: HomeStrings = {
   nativeShelfAll: 'All Latin books',
   beginnerShelfHeading: 'For beginners',
   beginnerShelfSubtitle: 'Easier Latin: the schoolbooks, dialogues, fables and short histories that generations of pupils learned from.',
+  untranslatedShelfHeading: 'Not yet translated',
+  untranslatedShelfSubtitle: (n) => `Here are ${n.toLocaleString('en-US')} Latin books we have not yet translated into English, the most read first. Each opens on its page scans, and on its Latin text where that has been transcribed.`,
   spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
@@ -323,7 +329,7 @@ const es: HomeStrings = {
   curatedExhibitions: 'Explorar exposiciones comisariadas',
   allCollections: 'Todas las colecciones',
   showcaseEyebrow: 'Exposiciones comisariadas',
-  showcaseSubtitle: 'Selecciones breves con una tesis: unas docenas de libros cada una, elegidos y presentados por un comisario.',
+  showcaseSubtitle: 'Un tema por estante, unas docenas de libros cada uno, con una breve introducción a lo que contiene.',
   allExhibitions: (n) => `Las ${n} exposiciones`,
   featuredCollectionEyebrow: 'Colección destacada',
   exploreCollectionBooks: (n) => `Explorar ${n} libros`,
@@ -340,6 +346,8 @@ const es: HomeStrings = {
   nativeShelfAll: 'Todos los libros en latín',
   beginnerShelfHeading: 'Para principiantes',
   beginnerShelfSubtitle: 'Latín más fácil: los manuales, diálogos, fábulas e historias breves con que aprendieron generaciones de alumnos.',
+  untranslatedShelfHeading: 'Aún sin traducir',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('es-ES')} libros en latín que aún no hemos traducido al inglés, primero los más leídos.`,
   spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
@@ -450,7 +458,7 @@ const la: HomeStrings = {
   curatedExhibitions: 'Expositiones curatas perlustra',
   allCollections: 'Omnes collectiones',
   showcaseEyebrow: 'Expositiones curatae',
-  showcaseSubtitle: 'Delectus parvi, quisque cum suo argumento: libri pauci a curatore electi et praefatione instructi.',
+  showcaseSubtitle: 'Una materia in quoque pluteo, libri aliquot decades, cum brevi praefatione.',
   allExhibitions: (n) => `Omnes expositiones (${n})`,
   featuredCollectionEyebrow: 'Collectio insignis',
   exploreCollectionBooks: (n) => `Omnes libri (${n})`,
@@ -467,6 +475,8 @@ const la: HomeStrings = {
   nativeShelfAll: 'Omnes libri Latini',
   beginnerShelfHeading: 'Tironibus',
   beginnerShelfSubtitle: 'Libri faciliores, e quibus discipuli olim linguam Latinam discebant: libelli scholastici, colloquia, fabulae, historiae breves.',
+  untranslatedShelfHeading: 'Nondum conversi',
+  untranslatedShelfSubtitle: (n) => `Hic sunt ${n.toLocaleString('en-US')} libri Latini quos nondum Anglice convertimus. Primi stant qui plurimum leguntur. Quisque in imaginibus paginarum aperitur, et in textu Latino ubi iam transcriptus est.`,
   spanishSubtitle: 'Opera quae iam editionem Hispanicam habent, paginatim iuxta textum primigenium.',
   galleryHeading: 'Pinacotheca',
   gallerySubtitle: 'Tabulae, figurae, imagines aere incisae ex libris raris totius bibliothecae.',
@@ -576,7 +586,7 @@ const nl: HomeStrings = {
   curatedExhibitions: 'Bekijk de samengestelde tentoonstellingen',
   allCollections: 'Alle collecties',
   showcaseEyebrow: 'Samengestelde tentoonstellingen',
-  showcaseSubtitle: 'Kleine selecties met een eigen betoog: elk enkele tientallen boeken, gekozen en ingeleid door een curator.',
+  showcaseSubtitle: 'Eén onderwerp per plank, elk enkele tientallen boeken, met een korte inleiding.',
   allExhibitions: (n) => `Alle ${n} tentoonstellingen`,
   featuredCollectionEyebrow: 'Uitgelichte collectie',
   exploreCollectionBooks: (n) => `Bekijk ${n} boeken`,
@@ -593,6 +603,8 @@ const nl: HomeStrings = {
   nativeShelfAll: 'Alle Nederlandstalige boeken',
   beginnerShelfHeading: 'Om mee te beginnen',
   beginnerShelfSubtitle: 'Toegankelijk ouder Nederlands: de schoolboeken, samenspraken, fabels en korte geschiedenissen waaruit generaties leerlingen leerden lezen.',
+  untranslatedShelfHeading: 'Nog niet vertaald',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('nl-NL')} Latijnse boeken die we nog niet in het Engels hebben vertaald, de meest gelezen eerst.`,
   spanishSubtitle: 'De werken in de bibliotheek die al een Spaanse editie hebben, pagina voor pagina naast het origineel.',
   galleryHeading: 'Galerij',
   gallerySubtitle: 'Platen, figuren en gravures uit zeldzame boeken in de hele bibliotheek.',
@@ -703,7 +715,7 @@ const zh: HomeStrings = {
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
   showcaseEyebrow: '策展',
-  showcaseSubtitle: '每个策展都是一次有观点的小型精选：由策展人挑选并导读的几十部书。',
+  showcaseSubtitle: '每个专题一个主题，各收几十部书，附一篇简短导读。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -720,6 +732,8 @@ const zh: HomeStrings = {
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
+  untranslatedShelfHeading: '尚未翻译',
+  untranslatedShelfSubtitle: (n) => `${n.toLocaleString('zh-CN')} 部拉丁文书籍，我们尚未译成英文，按阅读量排列。`,
   spanishSubtitle: '馆内已有西班牙文版的作品，与原文逐页对照。',
   galleryHeading: '图库',
   gallerySubtitle: '中文古籍中的木刻插图与图版。',

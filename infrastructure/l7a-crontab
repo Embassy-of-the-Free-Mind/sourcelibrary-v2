@@ -39,3 +39,12 @@
 # At most 8 calls a run and 200 answers a day; skips the run when this box's Claude account is at >= 80% of its 5-hour
 # window or >= 90% of its week. Guarded on the file so it waits for the merge; flock -n so two never overlap; timeout 30m.
 */10 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/librarian-citation-fixer.ts; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/librarian-citation-fixer.lock timeout 30m systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/npx tsx --env-file=/root/sourcelibrary/.env.production.local $f >> /data/scratch/sl/logs/librarian-citation-fixer.log 2>&1  # citation fixer DRY-RUN, #6946
+
+# Refused pages (#7170): every 3 h at :20, read up to 80 pages Gemini refused (RECITATION / three-strike fail stamps) in
+# visible or held books, with the next reader the refused-pages row of scripts/lib/ocr-routing-table.json names (Sonnet or
+# Opus through claude -p on this box's subscription; a page the first reader fails goes to Opus), write them through
+# cli-ocr.mjs apply, then translate them with Opus (cli-translate.mjs apply) where the book already has translations.
+# No Gemini, no paid API. Skips the run when this box's Claude account is at >= 70% of its week. Backlog at install:
+# 4,568 pages in visible or held books (2026-10-23). Output per day under /data/scratch/sl/refused-pages/, resumable.
+# PATH carries /root/.local/bin, where claude lives on l7a: cron's bare PATH does not, and claude-ocr.mjs calls `claude`.
+20 */3 * * * export PATH=/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/batch/refused-pages.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/refused-pages.lock timeout 2h systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local $f run --out=/data/scratch/sl/refused-pages/$(date +\%F) --max-pages=80 --apply >> /data/scratch/sl/logs/refused-pages.log 2>&1  # #7170

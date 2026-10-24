@@ -1,0 +1,11 @@
+ROW 1 | ഹരിഃശ്രീഗണപത‖യെനമഃഅവിഘ്നമസ്തുഃ[illegible]യാഭി‖ഘാതാജ്ജിജ്ഞാസാത
+ROW 2 | ദഭിഘാതകെഹെ‖തൌദൃഷ്ടെസാപാൎത്ഥാചെന്നൈ‖കാന്താത്യന്തതൊ
+ROW 3 | ഭാവാൽ൧ദൃ‖ഷ്ടവദാനുശ്രവികസ്സഹ്യവിശു‖ദ്ധിക്ഷയാതിശയയു
+ROW 4 | ക്തഃതദ്വിപരി‖തശ്രെയാൻവ്യക്താവ്യക്തജ്ഞ‖വിജ്ഞാനാൽ൨മൂല
+ROW 5 | പ്രകൃതിരവികൃ‖തിൎമ്മഹദാദ്യാഃപ്രകൃതിവി‖കൃതയസ്സപ്ത
+ROW 6 | ഷൊഡശകസ്തുവി‖കാരൊനപ്രകൃതിൎന്നവികൃ‖തിഃപുരുഷഃ൩ദൃഷ്ട
+ROW 7 | മനുമാനമാ‖പ്തവചനഞ്ചസൎവ്വപ്രമാണ‖സിദ്ധത്വാൽത്രിവി
+ROW 8 | ധംപ്രമാണമിഷ്ടം‖പ്രമെയസിദ്ധിഃ[illegible]പ്ര[illegible]തിവി‖ഷയാദ്ധ്യവസായൊദൃ
+ROW 9 | ഷ്ടംത്രിവിധമ‖നുമാനമാഖ്യാതംതല്ലിംഗലിംഗി‖പൂൎവ്വക[illegible]
+ROW 10 | ‖[illegible]മാണാദി‖
+NOTE | About 85–90% read. Rows 1–9 run through all three columns; row 10 is only in the middle column, just before the right hole. Some readings are uncertain: in row 1, the cluster before യാഭി is a large looped glyph I couldn't resolve. In row 8, p03 shows an unclear glyph after the visarga, then പ്ര, then an underlined glyph before തി; I can't read either one, and I see no പ്രമാണാദ്ധി. The end of row 9 in p04 is partly uncertain. In row 2, I put the final ഭാ at the start of row 3. A numeral (൭?) in the left margin is not included.

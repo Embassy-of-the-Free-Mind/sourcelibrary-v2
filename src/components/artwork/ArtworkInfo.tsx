@@ -127,6 +127,14 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
   // hand-set rows and /identify's artwork resolution carry the page): a page
   // beats the book root — the reader wants the plate, not the title page.
   const sourceBook = (book as any).source_book as { id: string; slug: string; title: string; page_id?: string; page_number?: number } | undefined;
+  // One href for every "go to the book" control on this page (#7081). Only a
+  // record carrying a verified `source_book` (#4037) gets one; otherwise null
+  // and no control renders.
+  const sourceBookHref = sourceBook
+    ? sourceBook.page_id ? `/book/${sourceBook.slug}/page/${sourceBook.page_id}`
+      : sourceBook.page_number != null ? `/book/${sourceBook.slug}/page-number/${sourceBook.page_number}`
+      : `/book/${sourceBook.slug}`
+    : null;
   // What the <h1> is, and what may be cited (#4288). On ~12.2K artwork records
   // `display_title` holds a label a vision model wrote from the image.
   const titleInfo = resolveTitle(book);
@@ -154,6 +162,15 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
       {/* Metadata header */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-8 sm:py-10">
+          {sourceBookHref && (
+            <Link
+              href={sourceBookHref}
+              className="inline-flex w-full sm:w-auto justify-center items-center gap-2 px-5 py-3 mb-6 rounded-lg bg-accent-rust text-white text-base font-medium hover:bg-accent-rust/85 transition-colors"
+            >
+              <BookOpen className="w-5 h-5" aria-hidden />
+              Go to source
+            </Link>
+          )}
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
@@ -374,7 +391,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Source Manuscript — links artwork to its parent codex/book */}
         {sourceBook && (
           <Link
-            href={sourceBook.page_id ? `/book/${sourceBook.slug}/page/${sourceBook.page_id}` : sourceBook.page_number != null ? `/book/${sourceBook.slug}/page-number/${sourceBook.page_number}` : `/book/${sourceBook.slug}`}
+            href={sourceBookHref!}
             className="card p-6 sm:p-8 flex items-center gap-4 group hover:border-accent-rust/30 transition-colors"
             style={{ borderColor: 'var(--border-light)' }}
           >

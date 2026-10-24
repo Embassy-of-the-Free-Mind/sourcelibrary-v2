@@ -9,6 +9,7 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/pareto-6182/run-arms.mjs \
  *        --arm <LABEL> [--model <id>|prod] [--sets tib-ref113,xl] [--cap-usd 20] [--poll-minutes 9] [--dry-run]
+ *        [--work /root/pareto-6182] [--endpoint eval/pareto-6182] [--issue 6182]   (another study's units and ledger)
  *   ... --probe <model> [--n 2]      realtime, on xl pages that have no reference (never judged)
  *
  * --model prod sends each page to the engine production routes its book to (the A-vs-A arm), one job per model.
@@ -28,8 +29,12 @@ import { logUsage, completeBatchUsage, sumBatchResponseUsage } from '../../worke
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
-const W = '/root/pareto-6182';
-const ENDPOINT = 'eval/pareto-6182';
+// --work / --endpoint / --issue let another study reuse this runner on its own units (#7202: the Lite arms of the
+// classical Chinese cascade). Defaults are #6182's.
+const W = opt('work', '/root/pareto-6182');
+const ENDPOINT = opt('endpoint', 'eval/pareto-6182');
+const ISSUE = Number(opt('issue', 6182));
+const RUN = ENDPOINT.replace(/^eval\//, '');
 const CAP = Number(opt('cap-usd', 20));
 const PRO = 'gemini-3.1-pro-preview';
 const PRO_THINK = 128;
@@ -113,8 +118,8 @@ async function batchArm(label, modelOpt, sets) {
           await logUsage({ type: 'translation', mode: 'batch', model, page_count: us.length, input_tokens: 0, output_tokens: 0, status: 'submitted', batch_job_id: created.name, endpoint: ENDPOINT, prompt_version: '13', triggered_by: 'manual' });
           const { withMongo } = await import('../../lib/mongo.mjs');
           const { registerEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
-          await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `pareto-6182-${label}-${model}`, model, pageCount: us.length,
-            submittedAt: job.submitted_at, issue: 6182, submittedBy: 'scripts/eval/pareto-6182/run-arms.mjs' }));
+          await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `${RUN}-${label}-${model}`, model, pageCount: us.length,
+            submittedAt: job.submitted_at, issue: ISSUE, submittedBy: 'scripts/eval/pareto-6182/run-arms.mjs' }));
           console.log(`${key}: submitted ${created.name} (key ${k}), registered external_eval`);
           break;
         } catch (e) {

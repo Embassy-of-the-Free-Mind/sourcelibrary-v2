@@ -49,7 +49,7 @@ export const PREFIXED_LOCALES: Exclude<Locale, 'en'>[] = SUPPORTED_LOCALES.filte
  * locales read the English copy.
  *
  * Use it only where the surface cannot be reached under that locale's prefix
- * (`/support`, `/search`, `/librarian` and sign-in have no `/la` twin, #6254),
+ * (`/support`, `/librarian` and sign-in have no `/la` twin, #6254),
  * so the English is never shown under foreign chrome. A surface that IS mounted
  * on a localized route takes a full `Record<Locale, T>` literal instead, and
  * TypeScript then lists the dictionary when a language is added.
@@ -76,7 +76,8 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // EN base paths that have a real twin route, PER LOCALE. Keep each set in sync
 // with that locale's route folders (`src/app/es/**`, `src/app/la/**`). Spanish
 // has the homepage, the acquisition funnel (`/support`, `/auth/signin`), the
-// Librarian and search; Latin (#6254) has the homepage only. On a page with no
+// Librarian and search; Latin (#6254) and Chinese have the homepage and search
+// (#7175). On a page with no
 // twin the switch link falls back to that locale's homepage as a front door
 // rather than dead-ending on a 404 — the thin-i18n bargain (deep pages rely on
 // the browser's own translate).
@@ -86,9 +87,11 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // `/la/support`, which no route serves.
 export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
   es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search', '/articles/techniques-of-the-body']),
-  la: new Set<string>(['/']),
+  // `/search` on Latin and Chinese (#7175): books written in the language,
+  // quoted in it. Dutch has no search twin yet.
+  la: new Set<string>(['/', '/search']),
   nl: new Set<string>(['/']),
-  zh: new Set<string>(['/']),
+  zh: new Set<string>(['/', '/search']),
 };
 
 // Path SHAPES with a twin, per locale. One pattern per route under

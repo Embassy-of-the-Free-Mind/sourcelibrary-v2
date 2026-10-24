@@ -90,6 +90,12 @@ export interface SearchFilters {
    * result is openable in it (#4095, invariants/search-filters-and-lanes.md).
    */
   lang?: string;
+  /**
+   * `original` quotes each page in its own language (the OCR), never the
+   * English translation (#7175). What an original-text locale (`/la`, `/zh`)
+   * sends, beside `language=<native>` and instead of `lang`.
+   */
+  text?: 'original';
   language?: string;
   library?: string;
   date_from?: string;

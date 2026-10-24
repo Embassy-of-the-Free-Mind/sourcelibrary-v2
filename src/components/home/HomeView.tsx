@@ -31,7 +31,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelves } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, untranslatedShelf, subjectShelves } = data;
   const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
@@ -108,7 +108,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.nativeShelfHeading}
               </h2>
               <Link
-                href={`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`}
+                href={lp(`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.nativeShelfAll} &rarr;
@@ -135,6 +135,24 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               {t.beginnerShelfSubtitle}
             </p>
             <BookSlider books={beginnerShelf as unknown as MiniBook[]} lang={lang} />
+          </div>
+        </section>
+      )}
+
+      {/* Nondum conversi — the Latin books not readable in English, most read
+          first, with the live count (#6278). For a neo-Latinist the list of
+          work not yet done here. Scans-only books are in: a Latinist reads the
+          scan. Only `/la` fills it. Anchor: sourcelibrary.org/la#nondum-conversi. */}
+      {untranslatedShelf && untranslatedShelf.books.length > 0 && (
+        <section id="nondum-conversi" className="bg-white pb-10 md:pb-14 scroll-mt-20">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+              {t.untranslatedShelfHeading}
+            </h2>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.untranslatedShelfSubtitle(untranslatedShelf.total)}
+            </p>
+            <BookSlider books={untranslatedShelf.books as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}

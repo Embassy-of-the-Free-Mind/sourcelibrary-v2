@@ -325,3 +325,9 @@
 # a 7% blind Opus sample, writes through writePageTranslation, label seam-repair-6742; undo seam-repair.mjs undo).
 # Stops itself at the box account's 60% weekly. Approved 2026-10-16 (Derek); installed by hand on main 2026-10-16.
 30 1 * * * cd /root/sourcelibrary && flock -n /tmp/sl-seam-lean.lock bash -c 'export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; set -a; source .env.production.local; set +a; node scripts/maintenance/seam-repair-6742/lean.mjs night --out=/mnt/HC_Volume_105839809/seam-lean-6742 --max-joins=2500 --apply' >> /var/log/sourcelibrary/seam-lean.log 2>&1  # seam repair nightly, #6742, Derek yes 2026-10-16
+# Pre-OCR duplicate screen nightly (#4285): holds queued books whose page images match a copy already read or further
+# along (reason same-edition-copy-unread); never merges or hides. Approved 2026-10-22 (Derek); installed by hand on main.
+40 2 * * * flock -n /tmp/sl-pre-ocr-dupe-screen.lock /root/sourcelibrary/scripts/workers/pre-ocr-dupe-screen-nightly.sh >> /var/log/sourcelibrary/pre-ocr-dupe-screen.log 2>&1
+# Same-scan duplicate detector daily (#4285): reads only; pages ntfy when unreviewed same-object groups grow day on day.
+# Approved 2026-10-23 (Derek); installed by hand on main.
+20 6 * * * flock -n /tmp/sl-duplicate-detector.lock /root/sourcelibrary/scripts/workers/duplicate-detector-daily.sh >> /var/log/sourcelibrary/duplicate-detector.log 2>&1

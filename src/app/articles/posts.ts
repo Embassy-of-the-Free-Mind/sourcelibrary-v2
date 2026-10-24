@@ -220,7 +220,7 @@ export const posts: BlogPost[] = [
     summary:
       'Harmony as the fitting of unlike things: Xenophon’s armourer, Yan Ying’s soup, Miskawayh’s silent dinar, Hume, Smith’s concords, Spinoza, Wallace.',
     date: '22 October 2026',
-    readTime: '15 min read',
+    readTime: '18 min read',
     kind: 'stories',
     // A Palace Concert, anonymous, Tang style, National Palace Museum, Taipei (public domain, via Commons).
     image: 'https://images.sourcelibrary.org/artwork/art-a-palace-concert.jpg',
@@ -229,7 +229,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: 'harmony-map',
-    title: 'Harmony: Eleven Ideas and Their Sources',
+    title: 'Eleven Ideas About Harmony',
     subtitle:
       'What harmony is, where it fails, and what it would mean for people, machines and the natural world: eleven ideas from Derek Lomas’s research, each with the primary sources it rests on, its tensions and its open questions.',
     summary:

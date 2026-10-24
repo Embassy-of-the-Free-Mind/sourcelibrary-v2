@@ -15,10 +15,13 @@
  *                    pending (drawn, not yet repaired); Mongo reads
  *                    [--all-joins --top-books=N] every prose join of the N most-read books, not only the rule tranche
  *                    [--per-book=K] a seeded sample of K joins per book; [--skip-manifest=F,...] other runs' writes
+ *                    [--books=ID,ID] every prose join of the named books, readership aside (#7118; implies --all-joins)
  *   $N $S run        --out=DIR [--max-joins=N] [--repairer=gemini|opus|sonnet] [--pack=1|30] [--conc=4] [--verify-rate=0.07]
- *                    [--max-weekly=60] [--fallback=sonnet|opus|none] [--apply]   dry run (no writes) unless --apply;
+ *                    [--max-weekly=60] [--fallback=sonnet|opus|none] [--majors-wide] [--apply]   dry run (no writes) unless --apply;
  *                    --fallback (default sonnet): when agy is locked, the joins Gemini did not reach go to that Claude
- *                    arm, 30 per call, instead of the pool waiting out the lock (#7118)
+ *                    arm, 30 per call, instead of the pool waiting out the lock (#7118); --majors-wide (off by default):
+ *                    a major the edge bound refuses is placed under MAJORS_WIDE, and EVERY such repair goes to the
+ *                    blind Opus judge and is written only if preferred in both orders (#7118)
  *   $N $S night      --out=DIR --max-joins=N [--all-joins --top-books=N] [--apply]   candidates (topped up to N pending)
  *                    + run: the cron entry
  *   $N $S write      --out=DIR --run=ID [--apply]                re-plan / write a finished run's placed repairs, no model call
@@ -29,7 +32,8 @@
  * (2) tier 1 — joins whose signal Test A trusts get the rule repair, no model; (3) tier 2 — the rest go to the
  * repairer (Gemini 3.8 Flash low via agy, one join per call; or Opus, 30 per call) with tight windows: the last ~2
  * English sentences of N, the first ~2 of N+1, and the matching share of each source; (4) placement (edgeRefusal, and
- * lostWords: no more than 3 content words may vanish from the join);
+ * lostWords: no more than 3 content words may vanish from the join; a join whose only defect is drift is skipped,
+ * DRIFT_ONLY);
  * (5) a seeded 7% sample of placed repairs (≥ 20) goes to the blind Opus judge in both orders, with 2 A/A pairs. If
  * fewer than 90% of the sample are preferred in both orders, NOTHING is written and the run ends with a DECISION
  * line; (6) otherwise every placed repair not judged worse is written through writePageTranslation (source label
@@ -69,6 +73,17 @@ export const OPUS_PACK = 30;
  * a dedication with "[This page is blank.]"; a 7% sample cannot be relied on to catch those.
  */
 export const MAX_LOST = 3;
+
+/**
+ * --majors-wide (#7118, off by default). Putting a missing sentence back, or taking out a doubled clause rendered in
+ * other words, is usually bigger than the edge bound: on seam-tiers-7118's 1,000-join Sonnet dry run placement refused
+ * 120 of 183 majors. For a join labelled severity "major" that the edge bound or lostWords refuses, this bound is tried:
+ * up to 5 sentences and 200 words replaced per side, at most 2 sentences / 150 words restored, up to 24 content words
+ * lost. Measured on those 120 (Part B, 2026-10-22): 56 placed, the blind Opus judge preferred 55 in both orders, 0 worse.
+ * Every repair placed only under it is judged (not the 7% sample) and written only if preferred in both orders.
+ * Non-majors keep EDGE_BOUND and MAX_LOST.
+ */
+export const MAJORS_WIDE = { maxSentences: 5, maxOldWords: 200, maxGrowWords: 150, maxGrowSentences: 2, maxLost: 24 };
 export function lostWords(it, rep) {
   const fixed = applyRepair(it, rep);
   if (!fixed) return [];
@@ -78,6 +93,20 @@ export function lostWords(it, rep) {
   const lost = [];
   for (const w of bag(it)) { if (m.get(w)) m.set(w, m.get(w) - 1); else if (!have.has(w)) lost.push(w); }
   return lost;
+}
+
+/**
+ * Drift (source words rendered on the wrong side of the turn) is the one defect the reader cannot see: the continuous
+ * view (/book/[id]/read, #7138) runs the two pages together, so the English reads straight across whichever page holds
+ * it. A join whose ONLY defect label is drift gets a repairs.jsonl row marked `skipped` and is never placed or written
+ * (#7118): the edit would buy the reader nothing and still carries an edit's risk. Drift with any other label (a
+ * doubled clause, a dropped sentence) is repaired as before.
+ */
+export const DRIFT_ONLY = 'drift-only (invisible in the continuous view)';
+export function driftOnly(x) {
+  if (!x || x.label === 'ok') return false;
+  const ls = new Set([x.label, ...(Array.isArray(x.labels) ? x.labels : [])].filter(l => l && l !== 'ok'));
+  return ls.size === 1 && ls.has('drift');
 }
 
 async function mongo() { const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); return { client: c, db: c.db('bookstore') }; }
@@ -116,6 +145,17 @@ async function readership(db, days) {
     { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 1 }, $or: [{ slug: { $in: [...bySlug.keys()] } }, { id: { $in: [...bySlug.keys()] } }] },
     { projection: { _id: 0, id: 1, slug: 1, title: 1, language: 1, visible: 1, pages_count: 1, pipeline_auto: 1 } }).toArray();
   return books.filter(bookLive).map(b => ({ ...b, views: (bySlug.get(b.slug) || 0) + (bySlug.get(b.id) || 0) })).sort((a, b) => b.views - a.views);
+}
+
+/** The books named by --books, in the order given, held to the same live-and-translated test as readership(). */
+async function namedBooks(db, ids) {
+  const rows = await db.collection('books').find(
+    { id: { $in: ids }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 1 } },
+    { projection: { _id: 0, id: 1, slug: 1, title: 1, language: 1, visible: 1, pages_count: 1, pipeline_auto: 1 } }).toArray();
+  const by = new Map(rows.filter(bookLive).map(b => [b.id, { ...b, views: null }]));
+  const missing = ids.filter(id => !by.has(id));
+  if (missing.length) console.error(`--books: not live and translated, skipped: ${missing.join(', ')}`);
+  return ids.filter(id => by.has(id)).map(id => by.get(id));
 }
 
 // ── tight windows ────────────────────────────────────────────────────────────
@@ -164,7 +204,7 @@ const asPage = (r) => ({ id: r.id, p: r.page_number, type: r.page_type, ocr: r.o
 export const ALL_JOINS_SEED = 6742;
 /** The seeded per-book sample of join page numbers (N of each join N, N+1); the same book rank gives the same sample. */
 export const perBookSample = (pageNumbers, perBook, rank) => new Set(shuffle(pageNumbers, makeRng(ALL_JOINS_SEED + rank)).slice(0, perBook));
-async function candidates(out, maxJoins, days, { allJoins = false, topBooks = Infinity, perBook = Infinity, skipManifests = [] } = {}) {
+async function candidates(out, maxJoins, days, { allJoins = false, bookIds = [], topBooks = Infinity, perBook = Infinity, skipManifests = [] } = {}) {
   fs.mkdirSync(out, { recursive: true });
   const file = path.join(out, 'candidates.jsonl'), booksFile = path.join(out, 'books-done.jsonl');
   // Top up to maxJoins PENDING joins (drawn, not yet sent to a repairer). A book cut off at the cap is resumed.
@@ -178,7 +218,7 @@ async function candidates(out, maxJoins, days, { allJoins = false, topBooks = In
   const writtenJoins = new Set([...[path.join(out, 'manifest.jsonl'), ...skipManifests].flatMap(f => readJsonl(f)).filter(m => m.written).map(m => m.join),
     ...(fs.existsSync(pilotManifest) ? (await import('zlib')).gunzipSync(fs.readFileSync(pilotManifest)).toString().trim().split('\n').map(l => JSON.parse(l)).filter(m => m.written).map(m => m.join) : [])]);
   const { client, db } = await mongo();
-  const books = (await readership(db, days)).slice(0, topBooks);
+  const books = bookIds.length ? await namedBooks(db, bookIds) : (await readership(db, days)).slice(0, topBooks);
   fs.writeFileSync(path.join(out, 'readership.json'), JSON.stringify({ built_at: new Date().toISOString(), window_days: days, instrument: 'analytics_pageviews, distinct (ip, day) per book, human-filtered at write (ocr-convergence/driver.mjs frame)', books: books.length, top: books.slice(0, 20).map(b => ({ id: b.id, title: (b.title || '').slice(0, 80), views: b.views })) }, null, 1));
   console.log(`${books.length} live translated books with readers in ${days} days; top ${books[0]?.views} views`);
   let rank = 0;
@@ -280,7 +320,8 @@ async function run(out, o) {
       for (const it of pk) {
         const j = byId.get(it.id), parsed = j && LABELS.includes(j.label) ? j : null;
         if (parsed) ok++;
-        append(repFile, { id: it.id, run: runId, tier: 2, arm, parsed: !!parsed, ...(parsed || {}), repairCheck: parsed ? validRepair(it, parsed.repair) : null, model: r.model || model, cls: r.cls || undefined });
+        append(repFile, { id: it.id, run: runId, tier: 2, arm, parsed: !!parsed, ...(parsed || {}), repairCheck: parsed ? validRepair(it, parsed.repair) : null, model: r.model || model, cls: r.cls || undefined,
+          ...(driftOnly(parsed) ? { skipped: DRIFT_ONLY } : {}) });
         tally.tier2++;
       }
       return { ok: ok > 0, cls: r.cls };
@@ -297,13 +338,16 @@ async function run(out, o) {
   if (guardTripped) tally.guard = `stopped mid-run: ${guardTripped}`;
 
   // placement
-  const { placedRows, refusals } = placeRun(out, runId);
+  const { placedRows, refusals } = placeRun(out, runId, { majorsWide: o.majorsWide });
   tally.placed = placedRows.length; tally.placementRefused = refusals;
+  tally.skippedDriftOnly = refusals['skipped-drift-only'] || 0;
+  const wideRows = placedRows.filter(r => r.wide), normalRows = placedRows.filter(r => !r.wide);
 
   // verification sample: seeded 7% (≥ 20) of placed repairs, both orders in different calls, + 2 A/A pairs
   const rand = makeRng(Number(runId.replace(/\D/g, '').slice(-9)));
-  const nSample = Math.min(placedRows.length, Math.max(VERIFY_MIN, Math.ceil(placedRows.length * o.verifyRate)));
-  const sample = shuffle(placedRows, rand).slice(0, nSample);
+  // the 7% sample is drawn from the repairs the edge bound placed; every --majors-wide repair is judged on top of it
+  const nSample = Math.min(normalRows.length, Math.max(VERIFY_MIN, Math.ceil(normalRows.length * o.verifyRate)));
+  const sample = [...shuffle(normalRows, rand).slice(0, nSample), ...wideRows];
   const mk = (r, order) => { const cur = { enTailA: r.it.enTailA, enHeadB: r.it.enHeadB };
     return { pair: `${runId}-${r.id}-${order}`, id: r.id, order, srcTailA: r.it.srcTailA, srcHeadB: r.it.srcHeadB, P: order === 'cur-first' ? cur : order === 'rep-first' ? r.fixed : cur, Q: order === 'cur-first' ? r.fixed : cur }; };
   const aa = sample.slice(0, 1).flatMap(r => ['aa-1', 'aa-2'].map(order => mk(r, order)));
@@ -317,9 +361,10 @@ async function run(out, o) {
     for (const p of pk) { const v = byPair.get(p.pair); append(verFile, { run: runId, pair: p.pair, id: p.id, order: p.order, better: v?.better ?? null, note: v?.note }); }
     return { ok: byPair.size > 0, cls: r.cls };
   });
-  const sv = sampleVerdicts(out, runId);
+  const sv = sampleVerdicts(out, runId, new Set(wideRows.map(r => r.id)));
   const aaVerdicts = aa.length ? [sv.vs[aa[0].id]?.['aa-1'], sv.vs[aa[0].id]?.['aa-2']] : [];
-  tally.verify = { sampled: sample.length, ...sv.summary, aa: aaVerdicts };
+  tally.verify = { sampled: sample.length - wideRows.length, ...sv.summary, aa: aaVerdicts };
+  if (o.majorsWide) tally.majorsWide = { placed: wideRows.length, ...sv.wide };
   const arms = [...new Set(sample.map(r => r.arm))];
   if (arms.length > 1) tally.verify.byArm = Object.fromEntries(arms.map(a => { const ids = sample.filter(r => r.arm === a).map(r => r.id).filter(id => sv.vs[id]?.['cur-first'] && sv.vs[id]?.['rep-first']);
     return [a, { judged: ids.length, prefersBothOrders: ids.filter(id => sv.vs[id]['cur-first'] === 'Q' && sv.vs[id]['rep-first'] === 'P').length }]; }));
@@ -345,31 +390,38 @@ async function run(out, o) {
   }
 }
 
-/** Placement for one run's repairs: edgeRefusal + the content-conservation guard. */
-function placeRun(out, runId) {
+/** Placement for one run's repairs: edgeRefusal + the content-conservation guard; with `majorsWide`, a major they
+ *  refuse is tried under MAJORS_WIDE and placed with `wide: true`. */
+export function placeRun(out, runId, { majorsWide = false } = {}) {
   const cands = new Map(readJsonl(path.join(out, 'candidates.jsonl')).map(c => [c.id, c]));
   const placedRows = [], refusals = {};
   for (const x of readJsonl(path.join(out, 'repairs.jsonl')).filter(r => r.run === runId)) {
     const it = cands.get(x.id);
-    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
-    if (why) { refusals[why] = (refusals[why] || 0) + 1; continue; }
-    placedRows.push({ id: x.id, it, x, arm: x.arm, fixed: applyRepair(it, x.repair) });
+    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : x.skipped === DRIFT_ONLY || driftOnly(x) ? 'skipped-drift-only' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
+    const wide = why && majorsWide && x.severity === 'major' && !['reply-not-parsed', 'labelled-ok', 'skipped-drift-only'].includes(why)
+      && !(edgeRefusal(it, x.repair, MAJORS_WIDE) || lostWords(it, x.repair).length > MAJORS_WIDE.maxLost);
+    if (why && !wide) { refusals[why] = (refusals[why] || 0) + 1; continue; }
+    placedRows.push({ id: x.id, it, x, arm: x.arm, fixed: applyRepair(it, x.repair), ...(wide ? { wide: true, normalRefusal: why } : {}) });
   }
   return { placedRows, refusals };
 }
 /** The run's verification sample, from verify.jsonl: per-join verdicts, the both-orders tallies, and the floor test. */
-function sampleVerdicts(out, runId) {
+function sampleVerdicts(out, runId, wideIds = new Set()) {
   const vs = {}; for (const v of readJsonl(path.join(out, 'verify.jsonl')).filter(v => v.run === runId)) (vs[v.id] ||= {})[v.order] = v.better;
-  const ids = Object.keys(vs).filter(id => vs[id]['cur-first'] && vs[id]['rep-first']);
-  const prefers = ids.filter(id => vs[id]['cur-first'] === 'Q' && vs[id]['rep-first'] === 'P');
-  const worse = new Set(ids.filter(id => vs[id]['cur-first'] === 'P' && vs[id]['rep-first'] === 'Q'));
-  const summary = { judged: ids.length, prefersBothOrders: prefers.length, worseBothOrders: worse.size, rate: ids.length ? +(prefers.length / ids.length).toFixed(3) : null };
-  return { vs, worse, summary, belowFloor: !ids.length || prefers.length / ids.length < PREFER_FLOOR };
+  const both = Object.keys(vs).filter(id => vs[id]['cur-first'] && vs[id]['rep-first']);
+  const isPref = (id) => vs[id]['cur-first'] === 'Q' && vs[id]['rep-first'] === 'P';
+  const worse = new Set(both.filter(id => vs[id]['cur-first'] === 'P' && vs[id]['rep-first'] === 'Q'));
+  // the floor is the 7% sample of edge-bound repairs; the --majors-wide repairs are tallied apart and gated one by one
+  const ids = both.filter(id => !wideIds.has(id)), prefers = ids.filter(isPref), wide = both.filter(id => wideIds.has(id));
+  const summary = { judged: ids.length, prefersBothOrders: prefers.length, worseBothOrders: ids.filter(id => worse.has(id)).length, rate: ids.length ? +(prefers.length / ids.length).toFixed(3) : null };
+  return { vs, worse, preferred: new Set(both.filter(isPref)), summary, wide: { judged: wide.length, prefersBothOrders: wide.filter(isPref).length, worseBothOrders: wide.filter(id => worse.has(id)).length },
+    belowFloor: !ids.length || prefers.length / ids.length < PREFER_FLOOR };
 }
 /** Write (or, without --apply, plan) every placed repair of a run except those the sample judged worse. A split verdict
  *  is kept: the judge could not separate the two. */
 async function writeRun(out, runId, o, placedRows, sv) {
-  const accepted = placedRows.filter(r => !sv.worse.has(r.id)).map(r => ({ ...r, verdict: sv.vs[r.id] ? { sampled: true, ...sv.vs[r.id] } : { sampled: false } }));
+  // a --majors-wide repair is written only when the judge preferred it in both orders
+  const accepted = placedRows.filter(r => !sv.worse.has(r.id) && (!r.wide || sv.preferred.has(r.id))).map(r => ({ ...r, verdict: sv.vs[r.id] ? { sampled: true, ...sv.vs[r.id] } : { sampled: false } }));
   // One write per arm: a night that fell back from Gemini to a Claude arm records each repairer's own provenance.
   const byArm = {}; for (const r of accepted) (byArm[r.arm] ||= []).push(r);
   const { client, db } = await mongo();
@@ -387,9 +439,9 @@ async function writeRun(out, runId, o, placedRows, sv) {
 }
 /** Re-plan (or with --apply, write) a finished run's placed repairs — no model calls. Refuses a run below the floor. */
 async function writeOnly(out, runId, o) {
-  const sv = sampleVerdicts(out, runId);
+  const { placedRows, refusals } = placeRun(out, runId, { majorsWide: o.majorsWide });
+  const sv = sampleVerdicts(out, runId, new Set(placedRows.filter(r => r.wide).map(r => r.id)));
   if (sv.belowFloor) { console.log(JSON.stringify({ run: runId, refused: `sample below the ${PREFER_FLOOR * 100}% floor`, ...sv.summary })); return; }
-  const { placedRows, refusals } = placeRun(out, runId);
   const write = await writeRun(out, runId, o, placedRows, sv);
   const row = { run: runId, rewrite: true, at: new Date().toISOString(), placed: placedRows.length, placementRefused: refusals, verify: sv.summary, write };
   append(path.join(out, 'writes.jsonl'), row);
@@ -413,10 +465,13 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const fallback = repairer === 'gemini' && arg('fallback', 'sonnet') !== 'none' ? arg('fallback', 'sonnet') : null;
   if (fallback && !CLAUDE_MODEL[fallback]) { console.error(`--fallback=${fallback}: ${Object.keys(CLAUDE_MODEL).join(', ')} or none`); process.exit(2); }
   const o = { maxJoins: Number(arg('max-joins', 2000)), repairer, fallback, pack: Number(arg('pack', repairer === 'gemini' ? 1 : OPUS_PACK)), conc: Number(arg('conc', 4)),
-    verifyRate: Number(arg('verify-rate', VERIFY_RATE)), maxWeekly: Number(arg('max-weekly', MAX_WEEKLY)), apply: process.argv.includes('--apply') };
-  const allJoins = process.argv.includes('--all-joins');
-  if (allJoins && !arg('top-books')) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
-  const co = { allJoins, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
+    verifyRate: Number(arg('verify-rate', VERIFY_RATE)), maxWeekly: Number(arg('max-weekly', MAX_WEEKLY)), apply: process.argv.includes('--apply'), majorsWide: process.argv.includes('--majors-wide') };
+  // --books=ID,ID (#7118): every prose join of the named books, readership aside — a book about to be featured,
+  // exported, or found broken by a spot check. Implies --all-joins.
+  const bookIds = (arg('books', '') || '').split(',').map(x => x.trim()).filter(Boolean);
+  const allJoins = process.argv.includes('--all-joins') || bookIds.length > 0;
+  if (allJoins && !arg('top-books') && !bookIds.length) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
+  const co = { allJoins, bookIds, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
   const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60)), co), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
     // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first)
     night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60)), co); return run(out, o); } }[cmd];

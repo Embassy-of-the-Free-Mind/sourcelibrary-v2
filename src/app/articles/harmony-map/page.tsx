@@ -10,7 +10,7 @@ import SourceQuote from '@/components/articles/SourceQuote';
 // with "reports" or "argues"; findings that could not be checked are left out (#7079).
 // The ideas are Derek Lomas's research. The page sits beside the four harmony essays it links.
 
-const TITLE = 'Harmony: Eleven Ideas and Their Sources';
+const TITLE = 'Eleven Ideas About Harmony';
 const DESCRIPTION =
   'Eleven ideas about harmony, from diversity in wholeness to alignment between people and AI, each with its sources: Philolaus, Plato, Aristotle, Iamblichus, Huygens, Rameau and modern studies of consonance, synchrony and learning machines.';
 const HERO = 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/99.jpg';
@@ -314,6 +314,11 @@ export default function HarmonyMapPage() {
         </Quote>
 
         <p className={p}>
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link> follows this idea of harmony as
+          the fitting together of unlike things from Xenophon and Plato to Adam Smith.
+        </p>
+
+        <p className={p}>
           Aristotle reports the Pythagorean table of ten paired principles, &ldquo;Limit and Unlimited; Odd and
           Even; One and Plurality&rdquo; and the rest, in the{' '}
           <Link href={Q.metaphysics405}>
@@ -339,7 +344,9 @@ export default function HarmonyMapPage() {
           has been used that way: Bastiat called markets already harmonious, and in Chinese internet slang
           &ldquo;to be harmonized&rdquo; means to be censored (see{' '}
           <Link href="/articles/harmonic-justice">Harmonic Justice</Link>, &ldquo;Two uses of harmony&rdquo;). So the
-          definition is never stated without the clause.
+          definition is never stated without the clause. The older Chinese usage keeps it: the <em>Zuo zhuan</em>{' '}
+          sets <em>he</em> 和, harmony, against <em>tong</em> 同, sameness, as a soup against water flavoured with water (see{' '}
+          <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>).
         </p>
 
         <p className={p}>
@@ -1011,7 +1018,8 @@ export default function HarmonyMapPage() {
         <p className={p}>
           <Label>A reference pitch.</Label> Pairwise tuning drifts, as the comma shows, so two parties tuned only
           to each other build up error. Harmony across unlike parties needs a reference that neither owns, and
-          how the comma is shared out is a question of justice. The danger is one listener claiming to hold the
+          how the comma is shared out is a question of justice (on harmonic justice, from bells and pitch pipes to
+          coins, see <Link href="/articles/concords-not-unisons">Concords, Not Unisons</Link>). The danger is one listener claiming to hold the
           pitch for everyone, as Iamblichus says Pythagoras did:
         </p>
 

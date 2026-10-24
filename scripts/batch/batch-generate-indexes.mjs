@@ -265,7 +265,7 @@ Synthesize the above into compelling summaries that make readers WANT to explore
 2. **ABSTRACT** (1 paragraph, 4-6 sentences): What makes this text worth reading?
 3. **DETAILED** (2-4 paragraphs): Paint a picture of the journey through this text.
 4. **SECTIONS**: ${hasChapters ? 'Use the detected chapter structure.' : 'Group into 5-8 thematic sections.'} For each:
-   - Title and page range
+   - Title in English and page range. The reader reads this guide in English: when the book's own heading is in another language, translate it (e.g. "Vorwort" → "Preface") and put the heading as printed in "titleOriginal"; when the book is in English, omit "titleOriginal".
    - What it covers (2-3 sentences)
    - 2-4 notable quotes with page numbers and significance
    - Key concepts
@@ -277,7 +277,8 @@ Output as JSON:
   "detailed": "...",
   "sections": [
     {
-      "title": "Section Title",
+      "title": "Section Title (in English)",
+      "titleOriginal": "Heading as printed, if not English",
       "startPage": 1,
       "endPage": 10,
       "summary": "What this section covers...",

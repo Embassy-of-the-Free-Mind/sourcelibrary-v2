@@ -1,0 +1,54 @@
+{
+ "at": "2026-10-22T23:28:43.619Z",
+ "frame": "books.language ~ latin|lat|la, pages_count > 0, not duplicate_of; century from published",
+ "by_century": {
+  "other": {
+   "books": 10022,
+   "pages": 2663220,
+   "lite": 104958,
+   "flash_preview": 373316,
+   "other_engine": 5305,
+   "none": 2179641
+  },
+  "1600s": {
+   "books": 20344,
+   "pages": 5135416,
+   "lite": 302626,
+   "flash_preview": 507400,
+   "other_engine": 1600,
+   "none": 4323790
+  },
+  "1500s": {
+   "books": 13698,
+   "pages": 4187143,
+   "lite": 283215,
+   "flash_preview": 579991,
+   "other_engine": 1502,
+   "none": 3322435
+  },
+  "1400s": {
+   "books": 2583,
+   "pages": 733367,
+   "lite": 246925,
+   "flash_preview": 81657,
+   "other_engine": 349,
+   "none": 404436
+  },
+  "1700s": {
+   "books": 6302,
+   "pages": 1856990,
+   "lite": 136920,
+   "flash_preview": 134014,
+   "other_engine": 748,
+   "none": 1585308
+  }
+ },
+ "total": {
+  "books": 52949,
+  "pages": 14576136,
+  "lite": 1074644,
+  "flash_preview": 1676378,
+  "other_engine": 9504,
+  "none": 11815610
+ }
+}

@@ -107,12 +107,14 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/titlepage-model-pilot.mjs --n=100
  *   node --env-file=.env.production.local scripts/audit/titlepage-model-pilot.mjs --n=100 --models=lite,preview
+ *   node --env-file=.env.production.local scripts/audit/titlepage-model-pilot-v2.mjs --imprint --draw|--build|--submit|--collect   (#7201, see below)
  */
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
-import { attributionWindowOf } from '../lib/title-page-ocr.mjs';
+import { attributionWindow, attributionWindowOf } from '../lib/title-page-ocr.mjs';
 import { sameNameForm, foldOrtho } from '../lib/name-equivalence.mjs';
+import { quoteIsOnPage, quoteSupportsName } from '../lib/titlepage-imprint.mjs';
 
 const N = Number((process.argv.find((a) => a.startsWith('--n=')) || '').split('=')[1] || 100);
 const MODELS_ARG = (process.argv.find((a) => a.startsWith('--models=')) || '').split('=')[1] || 'lite,preview';
@@ -190,49 +192,7 @@ async function readTitlePage(model, prose, tries = 3) {
   return { names, usage: res.usageMetadata };
 }
 
-/**
- * A proposal must quote a line that is ACTUALLY ON THE PAGE. This is the guard
- * that makes the provenance real rather than decorative: a fabricated citation
- * is the exact failure mode a "cite your evidence" instruction invites, and
- * checking it costs a substring test.
- */
-function quoteIsOnPage(quote, prose) {
-  const norm = (s) => String(s ?? '').toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu, ' ').replace(/\s+/gu, ' ').trim();
-  const q = norm(quote);
-  if (q.length < 4) return false;
-  return norm(prose).includes(q);
-}
-
-/**
- * Does the quoted line actually NAME the person it is cited for?
- *
- * The on-page check above proves the quote is real. It does not prove the quote
- * is EVIDENCE. A line can be verbatim from the page and still not mention the
- * person: Francisco Hernández was cited to "Médico e Historiador de Su Majestad
- * Felipe II, Rey de España y de las Indias" — true text, no name in it. That is
- * worse than no citation, because it looks checkable.
- *
- * Returns true / false / null, and NULL IS NOT FALSE. The first cut of this
- * check flagged 7 rows and 5 were its own blindness, not bad citations —
- * "Boetii" vs "Boethius" (th/t), "ABDALLAH BEN AHMED" vs "Abd Allah ibn Ahmad"
- * (transliteration), and a Devanagari quote that folds to nothing. Rejecting
- * those would discard correct evidence for being written in another script,
- * which is the same mistake as reading an empty token set as disagreement.
- */
-function quoteSupportsName(quote, name) {
-  const latinShare = (x) => {
-    const L = String(x ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/\p{L}/gu) || [];
-    return L.length ? L.filter((ch) => /[a-zA-Z]/.test(ch)).length / L.length : 0;
-  };
-  // Either side substantially non-Latin: fold() empties it, so abstain.
-  if (latinShare(quote) < 0.6 || latinShare(name) < 0.6) return null;
-  const q = foldOrtho(quote);
-  const parts = foldOrtho(name).split(' ').filter((w) => w.length >= 4);
-  if (!q || !parts.length) return null;
-  // A 4-char prefix absorbs declension and abbreviation without merging people:
-  // "boethius" -> "boet" matches "opera boetii"; "allah" matches "abdallah".
-  return parts.some((p) => q.includes(p.slice(0, 4)));
-}
+// quoteIsOnPage / quoteSupportsName live in scripts/lib/titlepage-imprint.mjs (shared with --imprint, #7201).
 
 /**
  * THIS COMPARATOR CANNOT JUDGE A NON-LATIN CORPUS, and it will not tell you so.
@@ -260,6 +220,384 @@ function agrees(extracted, knownName, knownDoc) {
   const a = foldOrtho(extracted).split(' ');
   const b = foldOrtho(knownName).split(' ');
   return a.some((x) => x.length >= 5 && b.some((y) => y.length >= 5 && (x.startsWith(y.slice(0, 5)) || y.startsWith(x.slice(0, 5)))));
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * --imprint (#7201): the FULL imprint, and an IMAGE mode for books with no OCR.
+ *
+ * Same contract as the author pilot above: every field cites its page and its quoted line, and a field that
+ * cannot is dropped before anyone sees it (guards in scripts/lib/titlepage-imprint.mjs). Fields: title, names
+ * with role, date, place, printer/publisher, edition statement, and which page is the title page.
+ *
+ *   text   books with OCR: the typed attribution window (attributionWindowOf), as in the author pilot.
+ *   image  books with NO OCR: the first leaves as images (typed covers/blanks skipped where a type is known).
+ *
+ * Model: gemini-3.1-flash-lite only, through the Batch API. Steps, each re-runnable:
+ *   --imprint --draw [--seed=7201 --n-image=100 --n-text=100]   seeded draw, stratified by language × century
+ *   --imprint --build                                           window + images per book, request file, ESTIMATE
+ *   --imprint --submit [--cap=10]                               refuses if spent + estimate > cap
+ *   --imprint --collect                                         results → guards → evidence JSONL
+ *   --imprint --recheck                                         re-run the guards over stored replies (no model call)
+ *   --imprint --packet [--chunks=4]                             labelling sheets for the by-eye check
+ *   --imprint --score                                           precision / recall from labels-*.jsonl
+ * Output goes to --out-dir (default scripts/output/titlepage-imprint). WRITES NOTHING TO `books`: the only
+ * Mongo writes are the `batch_jobs` eval registration (eval-batch-registry.mjs) and the gemini_usage row.
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+if (process.argv.includes('--imprint')) {
+  const { IMPRINT_FIELDS: IMPRINT_FIELDS_LIST, GUARD_VERSION, imprintPrompt, IMPRINT_SCHEMA, IMPRINT_PROMPT_VERSION, parseImprintReply, checkImprint, imageWindow, boundedImageUrl } = await import('../lib/titlepage-imprint.mjs');
+  const { getPageSource } = await import('../lib/page-image-url.mjs');
+  const { makeRng } = await import('../eval/lib/paired-stats.mjs');
+  const { priceFor, BATCH_MULTIPLIER, noThinkingConfig } = await import('../lib/model-pricing.mjs');
+  const { uploadBatchInputFile, createThenDeleteInput, streamBatchResponses } = await import('../lib/gemini-batch-input-file.mjs');
+  const { registerEvalBatch, closeEvalBatch } = await import('../lib/eval-batch-registry.mjs');
+  const sharp = (await import('sharp')).default;
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+
+  const opt = (k, d) => { const a = process.argv.find((x) => x.startsWith(`--${k}=`)); return a ? a.split('=').slice(1).join('=') : d; };
+  const MODEL = 'gemini-3.1-flash-lite';
+  const ENDPOINT = 'scripts/audit/titlepage-model-pilot-v2.mjs --imprint';
+  const OUT = opt('out-dir', 'scripts/output/titlepage-imprint');
+  const SAMPLE = path.join(OUT, 'imprint-sample.json');
+  const MANIFEST = path.join(OUT, 'imprint-manifest.json');
+  const REQUESTS = path.join(OUT, 'imprint-requests.jsonl');
+  const LEDGER = path.join(OUT, 'imprint-ledger.json');
+  const EVIDENCE = path.join(OUT, 'imprint-evidence.jsonl');
+  const IMG_DIR = path.join(OUT, 'img');
+  const IMAGE_PAGES = Number(opt('image-pages', 8));
+  // Gemini 3.x bills an image at its default media resolution as ~1,120 input tokens; the estimate uses that and
+  // --collect reports what was actually billed.
+  const TOKENS_PER_IMAGE = 1120;
+  fs.mkdirSync(IMG_DIR, { recursive: true });
+  const readJson = (f, d) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d);
+  const ledger = () => readJson(LEDGER, { cap_usd: Number(opt('cap', 10)), jobs: [] });
+  const spentOf = (L) => L.jobs.reduce((s, j) => s + (j.cost_usd ?? j.estimate_usd ?? 0), 0);
+  const scansOnly = { $or: [{ pages_ocr: 0 }, { pages_ocr: { $exists: false } }, { pages_ocr: null }] };
+
+  const centuryOf = (b) => {
+    const y = Number.isInteger(b.year) ? b.year : Number((String(b.published ?? '').match(/(?<!\d)(1[0-9]{3}|20[0-2][0-9])(?!\d)/) || [])[1]);
+    if (!y) return 'undated';
+    if (y < 1500) return 'pre-1500';
+    if (y >= 1900) return '1900+';
+    return `${Math.floor(y / 100) + 1}c`;
+  };
+
+  /**
+   * Seeded, stratified by language × century, PROPORTIONAL to the pool (largest remainder), so the precision it
+   * measures is the precision a full run over that pool would see. Each stratum's shuffled tail is kept as its
+   * reserve: a book whose leaves cannot be fetched is replaced from its own stratum, not from anywhere.
+   */
+  function stratifiedDraw(pool, n, rng, langOf) {
+    const strata = new Map();
+    for (const b of pool) {
+      const k = `${langOf(b)}|${centuryOf(b)}`;
+      if (!strata.has(k)) strata.set(k, []);
+      strata.get(k).push(b);
+    }
+    const keys = [...strata.keys()].sort();
+    for (const k of keys) {
+      const a = strata.get(k);
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    }
+    const quota = keys.map((k) => ({ k, exact: (n * strata.get(k).length) / pool.length }));
+    for (const q of quota) q.take = Math.floor(q.exact);
+    let left = n - quota.reduce((s, q) => s + q.take, 0);
+    for (const q of [...quota].sort((x, y) => (y.exact - y.take) - (x.exact - x.take) || (x.k < y.k ? -1 : 1))) { if (left-- <= 0) break; q.take++; }
+    const picks = []; const reserve = {};
+    for (const q of quota) {
+      const a = strata.get(q.k);
+      for (const b of a.slice(0, q.take)) picks.push({ id: b.id, stratum: q.k });
+      reserve[q.k] = a.slice(q.take, q.take + 10).map((b) => b.id);
+    }
+    return { picks, reserve, strata: Object.fromEntries(keys.map((k) => [k, strata.get(k).length])) };
+  }
+
+  const fetchJpeg = async (url) => {
+    const res = await fetch(boundedImageUrl(url), { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) titlepage-imprint-7201' }, signal: AbortSignal.timeout(45000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    return sharp(buf).rotate().resize({ width: 1400, height: 1400, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();
+  };
+
+  const mc2 = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+
+  if (process.argv.includes('--draw')) {
+    await mc2.connect();
+    const B = mc2.db('bookstore').collection('books');
+    const proj = { projection: { _id: 0, id: 1, language: 1, year: 1, published: 1, visible: 1, 'pipeline_auto.hold.reason': 1 } };
+    const imagePool = await B.find({ pages_count: { $gte: 4 }, resource_type: { $exists: false }, ...scansOnly }, proj).toArray();
+    const textPool = await B.find({ visible: true, resource_type: { $exists: false }, pages_ocr: { $gt: 0 } }, proj).toArray();
+    await mc2.close();
+    // #7176 published the hidden Latin/Chinese scans-only books (16,266, held as `scans-only-publish-7176`).
+    const in7176 = (b) => b.pipeline_auto?.hold?.reason === 'scans-only-publish-7176' || (b.visible === true && /^(latin|chinese)$/i.test(b.language ?? ''));
+    const topLangs = (pool) => { const c = {}; for (const b of pool) c[b.language ?? 'unknown'] = (c[b.language ?? 'unknown'] ?? 0) + 1; return new Set(Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([l]) => l)); };
+    const seed = Number(opt('seed', 7201));
+    const rng = makeRng(seed);
+    const nImage = Number(opt('n-image', 100)); const nText = Number(opt('n-text', 100));
+    const n7176 = Number(opt('n-7176', Math.round(nImage * 0.4)));
+    const pool7176 = imagePool.filter(in7176); const poolOther = imagePool.filter((b) => !in7176(b));
+    const L1 = topLangs(pool7176), L2 = topLangs(poolOther), L3 = topLangs(textPool);
+    const langIn = (L) => (b) => (L.has(b.language ?? 'unknown') ? b.language ?? 'unknown' : 'other');
+    const d1 = stratifiedDraw(pool7176, n7176, rng, langIn(L1));
+    const d2 = stratifiedDraw(poolOther, nImage - n7176, rng, langIn(L2));
+    const d3 = stratifiedDraw(textPool, nText, rng, langIn(L3));
+    const sample = {
+      issue: 7201, seed, drawn_at: new Date().toISOString(),
+      pools: { image_7176: pool7176.length, image_other: poolOther.length, text: textPool.length },
+      image: [...d1.picks.map((p) => ({ ...p, group: '7176' })), ...d2.picks.map((p) => ({ ...p, group: 'scans-only-other' }))],
+      text: d3.picks.map((p) => ({ ...p, group: 'transcribed' })),
+      reserve: { '7176': d1.reserve, 'scans-only-other': d2.reserve, transcribed: d3.reserve },
+      strata: { '7176': d1.strata, 'scans-only-other': d2.strata, transcribed: d3.strata },
+    };
+    fs.writeFileSync(SAMPLE, JSON.stringify(sample, null, 1));
+    console.log(`pools: #7176 scans-only ${pool7176.length}, other scans-only ${poolOther.length}, transcribed ${textPool.length}`);
+    console.log(`drew ${sample.image.length} image + ${sample.text.length} text (seed ${seed}) → ${SAMPLE}`);
+    process.exit(0);
+  }
+
+  if (process.argv.includes('--build')) {
+    const sample = readJson(SAMPLE, null);
+    if (!sample) { console.error(`no sample at ${SAMPLE}; run --draw first`); process.exit(1); }
+    await mc2.connect();
+    const db2 = mc2.db('bookstore');
+    const B = db2.collection('books'); const P = db2.collection('pages');
+    const pproj = { projection: { _id: 0, id: 1, page_number: 1, page_type: 1, photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, 'ocr.data': 1, 'ocr.text': 1 } };
+    const manifest = { built_at: new Date().toISOString(), prompt_version: IMPRINT_PROMPT_VERSION, model: MODEL, books: [], skipped: [] };
+    const out = fs.createWriteStream(REQUESTS);
+    const genCfg = { temperature: 0, maxOutputTokens: 2500, responseMimeType: 'application/json', responseSchema: IMPRINT_SCHEMA, ...(noThinkingConfig(MODEL) ? { thinkingConfig: noThinkingConfig(MODEL) } : {}) };
+    let estIn = 0;
+    const saveImages = async (bookId, pages) => {
+      const got = [];
+      for (const p of pages) {
+        const f = path.join(IMG_DIR, bookId, `${p.page_number}.jpg`);
+        if (!fs.existsSync(f)) {
+          const url = getPageSource(p);
+          if (!url) continue;
+          try { const jpg = await fetchJpeg(url); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, jpg); } catch (e) { continue; }
+        }
+        got.push({ page_number: p.page_number, file: f, url: getPageSource(p) });
+      }
+      return got;
+    };
+    for (const mode of ['image', 'text']) {
+      const want = (mode === 'image' ? sample.image : sample.text).length;
+      const queue = (mode === 'image' ? sample.image : sample.text).map((x) => ({ ...x }));
+      const reserves = sample.reserve;
+      let kept = 0;
+      while (queue.length && kept < want) {
+        const s = queue.shift();
+        const book = await B.findOne({ id: s.id }, { projection: { _id: 0, id: 1, title: 1, author: 1, published: 1, year: 1, place_published: 1, publisher: 1, language: 1, pages_count: 1, pages_ocr: 1, slug: 1 } });
+        const replace = (why) => {
+          manifest.skipped.push({ id: s.id, mode, stratum: s.stratum, why });
+          const r = reserves[s.group]?.[s.stratum];
+          if (r?.length) queue.unshift({ ...s, id: r.shift(), replaced: s.id });
+        };
+        if (!book) { replace('book not found'); continue; }
+        const pages = await P.find({ book_id: book.id, page_number: { $gte: 1, $lte: 20 } }, pproj).sort({ page_number: 1 }).toArray();
+        if (mode === 'image') {
+          const win = imageWindow(pages, IMAGE_PAGES);
+          const imgs = await saveImages(book.id, win);
+          if (imgs.length < Math.min(3, win.length) || !imgs.length) { replace(`only ${imgs.length}/${win.length} leaves fetchable`); continue; }
+          const parts = [{ text: imprintPrompt('image') }];
+          for (const im of imgs) parts.push({ text: `PAGE ${im.page_number}` }, { inline_data: { mime_type: 'image/jpeg', data: fs.readFileSync(im.file).toString('base64') } });
+          out.write(JSON.stringify({ key: `${mode}:${book.id}`, request: { contents: [{ parts }], generationConfig: genCfg } }) + '\n');
+          estIn += 1400 + imgs.length * (TOKENS_PER_IMAGE + 5);
+          manifest.books.push({ ...s, mode, book, shown: imgs.map((i) => ({ page_number: i.page_number, url: i.url })), images: imgs.map((i) => i.page_number) });
+        } else {
+          const win = attributionWindow(pages, 5);
+          if (!win.length) { replace('no OCR window'); continue; }
+          // For the by-eye check: the image of every page the model read.
+          const imgs = await saveImages(book.id, pages.filter((p) => win.some((w) => w.page_number === p.page_number)));
+          const prose = tp_render(win);
+          const text = `${imprintPrompt('text')}\n\n${prose}`;
+          out.write(JSON.stringify({ key: `${mode}:${book.id}`, request: { contents: [{ parts: [{ text }] }], generationConfig: genCfg } }) + '\n');
+          estIn += Math.ceil(text.length / 3.2);
+          manifest.books.push({ ...s, mode, book, shown: win.map((w) => ({ page_number: w.page_number, page_type: w.page_type, prose: w.prose.slice(0, 2600) })), images: imgs.map((i) => i.page_number) });
+        }
+        kept++;
+        if (kept % 10 === 0) console.log(`  ${mode}: ${kept}/${want}`);
+      }
+    }
+    await new Promise((r) => out.end(r));
+    await mc2.close();
+    const p = priceFor(MODEL);
+    const estOut = manifest.books.length * 450;
+    const est = BATCH_MULTIPLIER * ((estIn / 1e6) * p.input + (estOut / 1e6) * p.output);
+    manifest.estimate = { requests: manifest.books.length, input_tokens: estIn, output_tokens: estOut, usd_batch: +est.toFixed(4), price: p };
+    fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 1));
+    console.log(`built ${manifest.books.length} requests (${manifest.skipped.length} replaced), ${(fs.statSync(REQUESTS).size / 1e6).toFixed(1)} MB`);
+    console.log(`ESTIMATE: ~${estIn.toLocaleString()} in / ~${estOut.toLocaleString()} out tokens → ~$${est.toFixed(3)} at Batch rates (${MODEL} $${p.input}/$${p.output} per M, ×${BATCH_MULTIPLIER})`);
+    process.exit(0);
+  }
+
+  if (process.argv.includes('--submit')) {
+    const m = readJson(MANIFEST, null);
+    if (!m) { console.error('run --build first'); process.exit(1); }
+    const L = ledger();
+    const est = m.estimate.usd_batch * 1.5; // 50% headroom on an estimate that has not met a bill yet
+    if (spentOf(L) + est > L.cap_usd) { console.error(`REFUSING: spent $${spentOf(L).toFixed(4)} + ~$${est.toFixed(4)} > cap $${L.cap_usd}`); process.exit(2); }
+    const keyEnv = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
+    const key = process.env[keyEnv];
+    const body = fs.readFileSync(REQUESTS);
+    const fileName = await uploadBatchInputFile(body, 'titlepage-imprint-7201', key);
+    const job = await createThenDeleteInput({ fileName, apiKey: key, create: async () => {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchGenerateContent?key=${key}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batch: { display_name: 'titlepage-imprint-7201', input_config: { file_name: fileName } } }) });
+      if (!r.ok) throw new Error(`batch create ${r.status} ${(await r.text()).slice(0, 500)}`);
+      return r.json();
+    } });
+    await mc2.connect();
+    await registerEvalBatch(mc2.db('bookstore'), { jobName: job.name, id: `titlepage-imprint-7201-${Date.now()}`, submittedBy: 'scripts/audit/titlepage-model-pilot-v2.mjs', model: MODEL, pageCount: m.books.length, issue: 7201 });
+    await mc2.close();
+    L.jobs.push({ job_name: job.name, key_env: keyEnv, model: MODEL, prompt_version: IMPRINT_PROMPT_VERSION, requests: m.books.length, estimate_usd: +est.toFixed(4), submitted_at: new Date().toISOString() });
+    fs.writeFileSync(LEDGER, JSON.stringify(L, null, 1));
+    console.log(`submitted ${job.name}: ${m.books.length} requests, estimate $${est.toFixed(4)} (cap $${L.cap_usd})`);
+    process.exit(0);
+  }
+
+  if (process.argv.includes('--collect')) {
+    const m = readJson(MANIFEST, null);
+    const byKey = new Map(m.books.map((b) => [`${b.mode}:${b.book.id}`, b]));
+    const L = ledger();
+    const p = priceFor(MODEL);
+    const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
+    for (const j of L.jobs) {
+      if (j.collected_at) continue;
+      const key = process.env[j.key_env];
+      const data = await (await fetch(`https://generativelanguage.googleapis.com/v1beta/${j.job_name}?key=${key}`)).json();
+      const state = data.metadata?.state || data.state;
+      console.log(`${j.job_name} ${state}`);
+      if (/FAILED|CANCELLED|EXPIRED/.test(state || '')) { j.collected_at = new Date().toISOString(); j.failed = state; j.cost_usd = 0; continue; }
+      const rf = data.metadata?.output?.responsesFile || data.response?.responsesFile;
+      if (!rf) continue;
+      const rows = [];
+      let inTok = 0, outTok = 0;
+      for await (const r of streamBatchResponses(rf, key)) {
+        const k = r.key || r.metadata?.key;
+        const b = byKey.get(k);
+        if (!b) continue;
+        const u = r.response?.usageMetadata || {};
+        inTok += u.promptTokenCount || 0; outTok += (u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0);
+        const text = (r.response?.candidates?.[0]?.content?.parts || []).filter((x) => !x.thought).map((x) => x.text || '').join('');
+        const parsed = parseImprintReply(text);
+        const row = { run_at: new Date().toISOString(), model: MODEL, prompt_version: j.prompt_version, job: j.job_name, mode: b.mode, group: b.group, stratum: b.stratum, book_id: b.book.id, catalogue: b.book, shown: b.shown.map((s) => s.page_number), usage: { in: u.promptTokenCount || 0, out: (u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0) } };
+        if (parsed.parse_failed) { row.parse_failed = true; row.raw = text.slice(0, 2000); row.finish = r.response?.candidates?.[0]?.finishReason ?? r.error ?? null; rows.push(row); continue; }
+        const pagesMap = new Map(b.shown.map((s) => [s.page_number, b.mode === 'text' ? s.prose : null]));
+        Object.assign(row, { raw_reply: parsed, guard_version: GUARD_VERSION }, checkImprint(parsed, { mode: b.mode, pages: pagesMap }));
+        rows.push(row);
+      }
+      fs.writeFileSync(EVIDENCE, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+      j.collected_at = new Date().toISOString(); j.responses = rows.length; j.in_tokens = inTok; j.out_tokens = outTok;
+      j.cost_usd = +(BATCH_MULTIPLIER * ((inTok / 1e6) * p.input + (outTok / 1e6) * p.output)).toFixed(5);
+      try { await logUsage({ type: 'eval', mode: 'batch', model: MODEL, page_count: rows.length, input_tokens: inTok, output_tokens: outTok, cost_usd: j.cost_usd, batch_job_id: j.job_name, endpoint: ENDPOINT, triggered_by: 'manual', prompt_version: j.prompt_version }); } catch (e) { console.warn(`logUsage failed: ${e.message}`); }
+      await mc2.connect();
+      await closeEvalBatch(mc2.db('bookstore'), j.job_name, { evidence: EVIDENCE, usage: { input_tokens: inTok, output_tokens: outTok, cost_usd: j.cost_usd } });
+      await mc2.close();
+      const pf = rows.filter((r) => r.parse_failed).length;
+      console.log(`collected ${rows.length} (${pf} parse failures): ${inTok.toLocaleString()} in / ${outTok.toLocaleString()} out → $${j.cost_usd}`);
+    }
+    fs.writeFileSync(LEDGER, JSON.stringify(L, null, 1));
+    console.log(`spent $${spentOf(L).toFixed(4)} of $${L.cap_usd}; pending ${L.jobs.filter((x) => !x.collected_at).length}`);
+    process.exit(0);
+  }
+
+
+  // --recheck: re-run the CURRENT guards over the stored replies. No model call; the replies are what was paid for.
+  if (process.argv.includes('--recheck')) {
+    const m = readJson(MANIFEST, null);
+    const byKey = new Map(m.books.map((b) => [`${b.mode}:${b.book.id}`, b]));
+    const rows = fs.readFileSync(EVIDENCE, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    let changed = 0;
+    for (const r of rows) {
+      if (r.parse_failed) continue;
+      const b = byKey.get(`${r.mode}:${r.book_id}`);
+      const before = JSON.stringify([r.fields, r.names]);
+      Object.assign(r, { guard_version: GUARD_VERSION }, checkImprint(r.raw_reply, { mode: r.mode, pages: new Map(b.shown.map((s) => [s.page_number, r.mode === 'text' ? s.prose : null])) }));
+      if (JSON.stringify([r.fields, r.names]) !== before) changed++;
+    }
+    fs.writeFileSync(EVIDENCE, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    console.log(`rechecked ${rows.length} replies with ${GUARD_VERSION}; ${changed} changed`);
+    process.exit(0);
+  }
+
+  // --packet: one labelling sheet per book for the by-eye check. The labeller opens every image listed and
+  // labels each field right / wrong / missed / absent (see LABELS below). Proposals the guards DROPPED are
+  // shown too, marked, so "missed" can be split into "the model never said it" and "a guard threw it away".
+  if (process.argv.includes('--packet')) {
+    const rows = fs.readFileSync(EVIDENCE, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    const m = readJson(MANIFEST, null);
+    const byId = new Map(m.books.map((b) => [`${b.mode}:${b.book.id}`, b]));
+    const chunks = Number(opt('chunks', 4));
+    const sheets = rows.map((r) => {
+      const b = byId.get(`${r.mode}:${r.book_id}`);
+      const imgs = (b.images || []).map((n) => `${n}: ${path.resolve(IMG_DIR, r.book_id, `${n}.jpg`)}`);
+      const f = (o, k) => (o ? JSON.stringify(o) : 'null');
+      return [
+        `### ${r.mode.toUpperCase()} ${r.book_id}  (${r.group}, ${r.stratum})`,
+        `reader: https://sourcelibrary.org/book/${r.book_id}?page=${r.title_page ?? r.shown[0]}`,
+        `catalogue: title=${JSON.stringify(String(r.catalogue.title ?? '').slice(0, 140))} author=${JSON.stringify(r.catalogue.author ?? null)} published=${JSON.stringify(r.catalogue.published ?? null)} year=${r.catalogue.year ?? null} language=${r.catalogue.language}`,
+        `pages shown to the model: ${r.shown.join(', ')}`,
+        `IMAGES TO OPEN (page: file):\n  ${imgs.join('\n  ') || '(none fetched)'}`,
+        r.parse_failed ? 'MODEL REPLY: PARSE FAILED' : [
+          `model title_page: ${r.title_page}`,
+          ...IMPRINT_FIELDS_LIST.map((k) => `KEPT ${k}: ${f(r.fields?.[k])}`),
+          ...(r.names || []).map((n, i) => `KEPT name[${i}]: ${JSON.stringify({ name: n.name_nominative, as_printed: n.name_as_printed, role: n.role, page: n.page, quoted_line: n.quoted_line })}`),
+          ...(r.rejected || []).map((x) => `DROPPED by guard (${x.reason}) ${x.field}: ${JSON.stringify(x.proposal)}`),
+        ].join('\n'),
+      ].join('\n');
+    });
+    for (let c = 0; c < chunks; c++) {
+      const part = sheets.filter((_, i) => i % chunks === c);
+      fs.writeFileSync(path.join(OUT, `packet-${c + 1}.md`), part.join('\n\n') + '\n');
+    }
+    console.log(`${sheets.length} sheets in ${chunks} packets under ${OUT}`);
+    process.exit(0);
+  }
+
+  // --score: precision / recall per field and mode from the by-eye labels (labels-*.jsonl in --out-dir; the rubric
+  // is in the experiment note). A field label is right | wrong | missed | absent for the KEPT value, plus
+  // `dropped_label` for a proposal a guard threw away; a name is right | role_error | wrong, `dropped` if a guard
+  // threw it away. Guarded precision counts kept values only; "no guard" adds the dropped ones back.
+  //   precision = right / (right + wrong)      recall = right / (right + missed + wrong-where-the-page-states-it)
+  if (process.argv.includes('--score')) {
+    const labels = fs.readdirSync(OUT).filter((f) => /^labels-.*\.jsonl$/.test(f)).sort()
+      .flatMap((f) => fs.readFileSync(path.join(OUT, f), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)));
+    const pct = (a, b) => (b ? `${((100 * a) / b).toFixed(1)}% (${a}/${b})` : 'n/a');
+    const wilsonLo = (a, b) => { if (!b) return ''; const z = 1.96, p = a / b; return (100 * (p + z * z / (2 * b) - z * Math.sqrt((p * (1 - p) + z * z / (4 * b)) / b)) / (1 + z * z / b)).toFixed(1); };
+    const table = [];
+    for (const mode of ['image', 'text', 'all']) {
+      const L = labels.filter((l) => mode === 'all' || l.mode === mode);
+      for (const k of IMPRINT_FIELDS_LIST) {
+        const c = { right: 0, wrong: 0, missed: 0, absent: 0, wrong_truth: 0, dropped_right: 0, dropped_wrong: 0 };
+        for (const l of L) {
+          const v = l.fields?.[k]; if (!v) continue;
+          c[v.label] = (c[v.label] ?? 0) + 1;
+          if (v.label === 'wrong' && v.truth_present) c.wrong_truth++;
+          if (v.dropped_label === 'right') c.dropped_right++; else if (v.dropped_label === 'wrong') c.dropped_wrong++;
+        }
+        table.push({ mode, field: k, right: c.right, wrong: c.wrong, missed: c.missed, absent: c.absent, precision: pct(c.right, c.right + c.wrong), lo95: wilsonLo(c.right, c.right + c.wrong), recall: pct(c.right, c.right + c.missed + c.wrong_truth), dropped: `${c.dropped_right} right / ${c.dropped_wrong} wrong`, no_guard_precision: pct(c.right + c.dropped_right, c.right + c.wrong + c.dropped_right + c.dropped_wrong) });
+      }
+      const a = { right: 0, role_error: 0, wrong: 0, missed: 0, dr: 0, dx: 0 };
+      const o = { right: 0, role_error: 0, wrong: 0 };
+      for (const l of L) {
+        for (const n of l.names || []) {
+          if (n.dropped) { if (n.role_proposed === 'author') { if (n.label === 'right') a.dr++; else a.dx++; } continue; }
+          if (n.role_proposed === 'author') a[n.label] = (a[n.label] ?? 0) + 1; else o[n.label] = (o[n.label] ?? 0) + 1;
+        }
+        a.missed += l.authors_missed?.length ?? 0;
+      }
+      table.push({ mode, field: 'author', right: a.right, wrong: a.wrong, role_error: a.role_error, missed: a.missed, precision: pct(a.right, a.right + a.role_error + a.wrong), lo95: wilsonLo(a.right, a.right + a.role_error + a.wrong), recall: pct(a.right, a.right + a.missed), dropped: `${a.dr} right / ${a.dx} wrong`, no_guard_precision: pct(a.right + a.dr, a.right + a.role_error + a.wrong + a.dr + a.dx) });
+      table.push({ mode, field: 'other roles', right: o.right, wrong: o.wrong, role_error: o.role_error, precision: pct(o.right, o.right + o.role_error + o.wrong) });
+    }
+    console.log(`labels: ${labels.length} books (${labels.filter((l) => l.mode === 'image').length} image, ${labels.filter((l) => l.mode === 'text').length} text)`);
+    console.table(table);
+    fs.writeFileSync(path.join(OUT, 'imprint-score.json'), JSON.stringify(table, null, 1));
+    process.exit(0);
+  }
+
+  console.error('--imprint needs one of --draw | --build | --submit | --collect | --recheck | --packet | --score');
+  process.exit(1);
 }
 
 const mc = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
