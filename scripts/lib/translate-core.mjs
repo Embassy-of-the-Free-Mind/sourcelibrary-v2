@@ -1078,6 +1078,50 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
   await persistRefusedTranslation(db, page, text, reason, { jobId, model });
 }
 
+/** The value recorded in `translation.fail_reason` when the model answered with nothing (#4685). */
+export const EMPTY_RESPONSE_REASON = 'empty_response';
+
+/** Is this model answer empty, or only whitespace? Such an answer is never stored as a translation (#4685). */
+export function isEmptyTranslation(text) {
+  return typeof text !== 'string' || !/\S/.test(text);
+}
+
+/**
+ * The fields `recordEmptyTranslation` stamps. A writer that $sets the whole `translation` object
+ * clears them by construction; a writer that $sets dotted `translation.*` paths must $unset these
+ * on a real write, so a page that later translates does not keep saying it failed.
+ */
+export const CLEAR_EMPTY_RESPONSE_UNSET = Object.freeze({ 'translation.fail_reason': '', 'translation.failed_at': '', 'translation.fail_count': '' });
+
+/**
+ * Record an empty model answer on the page instead of storing it (#4685). An empty answer used to
+ * be written as `translation.data: ''`: on a page that had English it replaced it with a blank page,
+ * and on one that had none it looked done and was never tried again (the collapse check that would
+ * catch it only fires on a long source).
+ *
+ * Not a refusal: `health_blocked` takes a page out of every selector, and an empty answer is
+ * usually one bad call. So it is a failure marker, the shape the OCR side uses (`ocr.fail_count`,
+ * `fail_reason`, #4674): `translation.fail_reason: 'empty_response'`, `failed_at`, `fail_count`.
+ * `translation.data` is never touched, and a page that already holds a translation is left alone
+ * entirely (the filter): the empty answer was a retry, and the real text stands. Never throws.
+ */
+export async function recordEmptyTranslation(db, page) {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      {
+        $set: { 'translation.fail_reason': EMPTY_RESPONSE_REASON, 'translation.failed_at': now, updated_at: now },
+        $inc: { 'translation.fail_count': 1 },
+      }
+    );
+  } catch (e) {
+    console.error(`[empty-response] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
+}
+
 /**
  * The stray-script gate for a writer that does not go through `writePageTranslation` (the batch
  * collectors, #5734). Repairs the measured Korean 그-for-"that"; refuses (stamp + evidence, via
@@ -1189,7 +1233,10 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   One refusal is NOT opt-in: a page hidden in its continuity <meta>
  *   (`hidesPageInMeta`, reason 'hidden-meta') is refused for every caller,
  *   stamped `translation.health_blocked` and kept in page_revisions (#5376).
- * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, reason?: string, text: string}}
+ *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
+ *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
+ *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
@@ -1248,6 +1295,14 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
   if (isHumanEdited && !overwriteHuman) {
     return { written: false, protected: true, text: existing.data };
+  }
+
+  // Always on (#4685): an empty answer is never stored, so it can neither blank a page that has
+  // English nor make one without it look done. Recorded as a failure; `text` is the page's
+  // existing translation, for continuity.
+  if (isEmptyTranslation(clean)) {
+    await recordEmptyTranslation(db, page);
+    return { written: false, protected: false, emptyResponse: true, reason: EMPTY_RESPONSE_REASON, text: existing?.data || '' };
   }
 
   // Always on, unlike the opt-in gate above (#5376): a translation whose continuity <meta> holds

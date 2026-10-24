@@ -25,7 +25,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
@@ -767,6 +767,13 @@ async function processOneJob(db, job) {
           });
         }
       } else {
+        // An empty answer is never stored (#4685). `!text` was dropped at parse; a whitespace-only
+        // one got here and was written as a blank page. Recorded as a failure instead.
+        if (isEmptyTranslation(text)) {
+          if (!DRY_RUN) await recordEmptyTranslation(db, { id: pageId });
+          failCount++; noteFail(EMPTY_RESPONSE_REASON); failedPageIds.set(pageId, EMPTY_RESPONSE_REASON);
+          continue;
+        }
         // The page's text inside its continuity <meta> is text no reader sees (#5376): write
         // nothing, stamp the page with the reason and keep the refused text as evidence.
         if (hidesPageInMeta(text)) {
@@ -818,7 +825,7 @@ async function processOneJob(db, job) {
                 })(),
                 updated_at: now,
               },
-              $unset: CLEAR_STALE_UNSET,
+              $unset: { ...CLEAR_STALE_UNSET, ...CLEAR_EMPTY_RESPONSE_UNSET }, // a real write ends the empty-response record (#4685)
             },
           },
         });
