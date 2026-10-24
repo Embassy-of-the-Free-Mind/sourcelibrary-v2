@@ -10,6 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { clean, nview, views, invention } from './score.mjs';
+import { makeRng } from '../lib/paired-stats.mjs';
 
 const [armsDir, refsDir, tilesDir, outDir] = process.argv.slice(2);
 const pages = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'pages.json'), 'utf8')).pages;
@@ -18,7 +19,9 @@ for (const f of fs.readdirSync(armsDir).filter((x) => /^[A-Za-z0-9]+\.jsonl$/.te
   const rows = {}; for (const l of fs.readFileSync(path.join(armsDir, f), 'utf8').split('\n')) { if (!l.trim()) continue; const r = JSON.parse(l); rows[r.page_id || r.uid] = r; }
   arms[f.split('.')[0]] = rows;
 }
-let seed = 7243; const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+// The #7243 grading ran on an LCG shuffle (replaced after the run for tests/unit/paired-stats-prng.test.ts); the letters actually
+// shown to the graders are in severity-blind-key.json, which is what sevagg.mjs reads.
+const rnd = makeRng(7243);
 const words = (t) => clean(t).replace(/[।॥|]/g, ' ').split(/\s+/).filter(Boolean);
 function spans(ref, hyp, cap = 40) {   // word-level LCS diff, non-equal runs with one word of context
   const a = words(ref), b = words(hyp); const n = a.length, m = b.length;

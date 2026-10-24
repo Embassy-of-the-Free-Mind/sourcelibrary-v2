@@ -45,6 +45,7 @@ for (const g of Object.keys(TAKE)) {
     if (!p) continue;
     picked.push({
       slug: `sa-${b.id.slice(-8)}-p${p.page_number}`, group: g, book_id: b.id, page_id: p.id, page_number: p.page_number,
+      // image-pick-ok: an eval draw records which stored field it fed; every page was checked by eye for split spreads (none in the 40)
       image_url: p.archived_photo || p.photo, image_field: p.archived_photo ? 'archived_photo' : 'photo',
       catalogue: { title: b.title, author: b.author, published: b.published ?? null, language: b.language, pages_count: n, pages_ocr: b.pages_ocr ?? 0, categories: b.categories ?? [], script: b.catalog_metadata?.script ?? null, creator: b.catalog_metadata?.creator ?? null, hidden_reason: b.hidden_reason ?? null },
     });
