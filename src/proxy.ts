@@ -16,6 +16,8 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { trustedClientIp } from '@/lib/client-ip';
+import { hasVerifiedCredential } from '@/lib/preview-credential';
 import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
@@ -175,18 +177,10 @@ export function looksLikeBot(request: NextRequest): boolean {
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 function getClientIp(request: NextRequest): string {
-  // cf-connecting-ip FIRST. Vercel rewrites x-forwarded-for with whatever
-  // connected to Vercel, which behind the CDN is a Cloudflare edge node — so
-  // the old order keyed this limiter on ~15 shared addresses. Every bot behind
-  // one edge node drew from the same 10-req/60s bucket while a bot on a quiet
-  // node ran free: over-blocking and under-blocking at once, from one wrong
-  // header. Same defect as PR #3487, in the proxy's own limiter.
-  return (
-    request.headers.get('cf-connecting-ip') ||
-    (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
-    request.headers.get('x-real-ip') ||
-    'unknown'
-  );
+  // cf-connecting-ip only when the request came through Cloudflare — behind
+  // the CDN, x-forwarded-for is an edge node (#3487), but off it the client
+  // writes cf-connecting-ip itself (#7155). See src/lib/client-ip.ts.
+  return trustedClientIp(request.headers);
 }
 
 function checkLimit(key: string, limit: number, windowSeconds: number): boolean {
@@ -730,10 +724,11 @@ export async function proxy(request: NextRequest) {
   }
 
   // Preview deployments sit outside Cloudflare and their URLs are public
-  // (the Vercel bot posts them on every PR of this public repo), so book
-  // content there is withheld from anonymous callers. A session cookie or an
-  // Authorization header passes — branch review by a signed-in dev, and any
-  // credentialed script, keep working. Placed HERE, before the embed-CORS
+  // (GitHub's deployments API lists every one), so book content there is
+  // withheld from anonymous callers. A VERIFIED session, API key or
+  // CRON_SECRET passes, so branch review by a signed-in dev and credentialed
+  // scripts keep working. Verified, not merely present: a presence check let
+  // `Authorization: Bearer x` through (#7155, src/lib/preview-credential.ts). Placed HERE, before the embed-CORS
   // branch, because that branch passes /api/books straight through on a
   // forgeable Origin header. See alias-host-scope.ts for why this is a loud
   // 403 and not a redirect.
@@ -741,11 +736,7 @@ export async function proxy(request: NextRequest) {
     aliasPolicyForHost(request.headers.get('host') || '') === 'preview' &&
     isPreviewGatedPath(pathname)
   ) {
-    const hasSession =
-      request.cookies.has('__Secure-authjs.session-token') ||
-      request.cookies.has('authjs.session-token');
-    const hasAuthHeader = Boolean(request.headers.get('authorization'));
-    if (!hasSession && !hasAuthHeader) {
+    if (!(await hasVerifiedCredential(request))) {
       return new NextResponse(previewGateResponse(pathname), {
         status: 403,
         headers: {

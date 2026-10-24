@@ -9,6 +9,7 @@
  */
 
 import { recordRateLimitDenial } from '@/lib/abuse-log';
+import { trustedClientIp } from '@/lib/client-ip';
 
 interface RateLimitEntry {
   count: number;
@@ -172,14 +173,9 @@ export async function checkRateLimitShared(
 }
 
 /**
- * Extract client IP from request headers.
- * Vercel sets x-forwarded-for; Cloudflare sets cf-connecting-ip.
+ * Extract client IP from request headers. `cf-connecting-ip` is honoured only
+ * when the request really came through Cloudflare; see src/lib/client-ip.ts.
  */
 export function getClientIp(request: Request): string {
-  return (
-    request.headers.get('cf-connecting-ip') ||
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    request.headers.get('x-real-ip') ||
-    'unknown'
-  );
+  return trustedClientIp(request.headers);
 }
