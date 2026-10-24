@@ -1,0 +1,64 @@
+{
+ "window": [
+  "2026-10-22T21:26:24.000Z",
+  "2026-10-24T21:26:24.000Z"
+ ],
+ "shadow": {
+  "writesSeen": 3013,
+  "writeSkips": {
+   "book-held-or-missing": 1543,
+   "agy-locked+claude-usage-limit": 423
+  },
+  "joinsChecked": 415,
+  "labelled": 415,
+  "defective": 214,
+  "shareDefective": 0.516,
+  "majors": 77,
+  "accepted": 161,
+  "refused": {
+   "drops-content-words": 24,
+   "head-old-not-at-edge": 3,
+   "edit-too-large": 23,
+   "touches-more-than-3-sentences": 1,
+   "no-repair": 2
+  },
+  "arms": {
+   "sonnet": 400,
+   "gemini": 15
+  },
+  "joinsSkippedByReason": {
+   "opus-translation": 785,
+   "agy-locked+claude-usage-limit": 423
+  },
+  "sonnetJoinsByDay": {
+   "2026-10-22": 41,
+   "2026-10-23": 359
+  },
+  "sonnetListUsd": 5.88
+ },
+ "merged": {
+  "writesSeen": 3744,
+  "writeSkips": {
+   "book-held-or-missing": 2387
+  },
+  "joinsChecked": 1064,
+  "labelled": 1064,
+  "defective": 414,
+  "shareDefective": 0.389,
+  "majors": 133,
+  "accepted": 319,
+  "refused": {
+   "no-repair": 18,
+   "drops-content-words": 55,
+   "tail-old-not-at-edge": 20,
+   "touches-more-than-3-sentences": 1,
+   "head-old-not-at-edge": 1
+  },
+  "arms": {
+   "gemini": 1064
+  },
+  "joinsSkippedByReason": {},
+  "sonnetJoinsByDay": {},
+  "sonnetListUsd": 0
+ }
+}
