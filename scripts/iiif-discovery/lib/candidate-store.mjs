@@ -118,6 +118,54 @@ export async function insertCandidates(db, candidates) {
 }
 
 /**
+ * Idempotent batch insert keyed on (source, source_id) — for harvesters that are
+ * re-run. `insertCandidates()` relies on a duplicate-key error, but no unique
+ * index backs it (see ensureIndexes), so a second run of those harvesters inserts
+ * every row again. This upserts with $setOnInsert: an existing row (and any
+ * status/dedupe marks on it) is never touched. Rows without a source_id are
+ * rejected, not inserted, because they cannot be made idempotent.
+ */
+export async function upsertCandidates(db, candidates) {
+  const ok = candidates.filter(c => c.source && c.source_id);
+  if (ok.length === 0) return { inserted: 0, skipped: candidates.length };
+  const now = new Date();
+  const ops = ok.map(c => ({
+    updateOne: {
+      filter: { source: c.source, source_id: String(c.source_id) },
+      update: {
+        $setOnInsert: {
+          manifest_url: c.manifest_url || null,
+          source: c.source,
+          origin_library: c.origin_library || c.source,
+          title: c.title || 'Unknown',
+          author: c.author || 'Unknown',
+          display_title: c.display_title || null,
+          language: c.language || 'Unknown',
+          date_text: c.date_text || null,
+          date_earliest: c.date_earliest || null,
+          date_latest: c.date_latest || null,
+          page_count: c.page_count || null,
+          categories: c.categories || [],
+          subjects: c.subjects || [],
+          provider_name: c.provider_name || c.source,
+          source_url: c.source_url || null,
+          source_id: String(c.source_id),
+          metadata: c.metadata || {},
+          status: 'discovered',
+          skip_reason: null,
+          book_id: null,
+          discovered_at: now,
+          imported_at: null,
+        },
+      },
+      upsert: true,
+    },
+  }));
+  const res = await db.collection('import_candidates').bulkWrite(ops, { ordered: false });
+  return { inserted: res.upsertedCount, skipped: candidates.length - res.upsertedCount };
+}
+
+/**
  * Get candidates ready for import.
  */
 export async function getCandidatesForImport(db, { source, limit = 100, minYear, maxYear, languages } = {}) {
