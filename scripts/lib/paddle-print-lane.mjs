@@ -312,6 +312,25 @@ export function stableRead(a, b) {
   return { ok: sim >= STABLE_SIM, sim: +sim.toFixed(3) };
 }
 
+/**
+ * Ditto / headword marks (丨, also read as ｜ or |) per 1,000 Han. Derek's spot-check (#6056 round 3, 2026-10-23):
+ * PaddleOCR-VL silently drops them on about half the pages of 韻府 / 類書-type works (佩文韻府: bimodal, 0 vs 40–100
+ * per 1k), and the translation then invents words for the gaps. In a book whose median page carries ≥ DITTO_BOOK_MIN
+ * per 1k, a page with ≥ 100 Han and none is not written (keyed on the book's own rate, not its title).
+ */
+export const DITTO_BOOK_MIN = 20;
+export function dittoRate(text) {
+  const t = String(text || '');
+  const han = (t.match(/\p{Script=Han}/gu) || []).length - (t.match(/丨/g) || []).length;
+  return han > 0 ? ((t.match(/[丨｜|]/g) || []).length / han) * 1000 : 0;
+}
+export function dittoDropped(texts) {
+  const big = texts.map((t, i) => ({ i, han: hanOf(t).length, rate: dittoRate(t) })).filter((x) => x.han >= 100);
+  const rates = big.map((x) => x.rate).sort((a, b) => a - b);
+  const med = rates.length ? rates[rates.length >> 1] : 0;
+  return { median: +med.toFixed(1), dropped: med >= DITTO_BOOK_MIN ? big.filter((x) => x.rate === 0).map((x) => x.i) : [] };
+}
+
 export function envelope(body, language) {
   return `<language>${language}</language>\n<script>printed</script>\n\n${String(body || '').trim()}`;
 }

@@ -40,7 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -477,6 +477,16 @@ async function apply() {
         writes.push({ pg, p, text, field, why: pol.why, han: a.han });
       }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
+      // a 韻府 / 類書-type book whose pages carry 丨 marks: a page where Paddle dropped them all is not written (#6056 r3)
+      const dd = dittoDropped(writes.map((w) => w.text));
+      if (dd.dropped.length) {
+        const drop = new Set(dd.dropped);
+        for (const i of dd.dropped) if (APPLY) append(F.rejected, { bid, pn: writes[i].pg.pn, pid: writes[i].pg.pid, reason: 'ditto_marks_missing', detail: { book_median_per_1k: dd.median } });
+        totals.rejected += drop.size; totals.why.ditto_marks_missing = (totals.why.ditto_marks_missing || 0) + drop.size;
+        log(`${bid} ditto marks: book median ${dd.median}/1k Han, ${drop.size} page(s) with none rejected`);
+        for (let i = writes.length - 1; i >= 0; i--) if (drop.has(i)) writes.splice(i, 1);
+        if (!writes.length) continue;
+      }
       const ks = kanaShare(writes.map((w) => w.text));
       if (ks >= MAX_KANA_SHARE) {
         log(`${bid} is ${(ks * 100).toFixed(0)} % kana — a Japanese edition, out of this lane; nothing written | ${String(book.title || '').slice(0, 40)}`);
