@@ -113,6 +113,8 @@ interface FeaturedPassage {
 
 interface LibrarianClientProps {
   featuredPassage: FeaturedPassage | null;
+  /** Live collection size (`getSiteStats().totalBooks`), shown rounded down to the thousand. */
+  bookCount: number;
   /**
    * The page's locale: `/librarian` → 'en', `/es/librarian` → 'es'. Picks the
    * chrome dictionary, prefixes every internal link, and travels to the chat
@@ -327,8 +329,9 @@ function looksLikeGoodQuestion(q: string): boolean {
     && QUESTION_START_RE.test(t);
 }
 
-export default function LibrarianClient({ featuredPassage, lang = 'en' }: LibrarianClientProps) {
+export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en' }: LibrarianClientProps) {
   const t = LIBRARIAN_STRINGS[lang];
+  const books = (Math.floor(bookCount / 1000) * 1000).toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
   const href = (path: string) => localePath(path, lang);
   const { data: session, status } = useSession();
   const params = useParams<{ tenant: string }>();
@@ -951,7 +954,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
             {t.title}
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
-            {t.intro}
+            {t.intro(books)}
           </p>
         </div>
       </div>
@@ -974,7 +977,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                     <div className="text-center py-8">
                       <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
                       <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
-                        {t.emptyLead}
+                        {t.emptyLead(books)}
                       </p>
                       <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
                         {t.emptyDisclaimer}

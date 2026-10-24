@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import LibrarianClient from './LibrarianClient';
+import { getSiteStats } from '@/lib/site-stats';
 import type { Locale } from '@/lib/locale-path';
 
 export const revalidate = 86400; // 24h ISR
@@ -163,11 +164,12 @@ async function getFeaturedPassage() {
  * which re-exports this component — one page, two locales, no drift.
  */
 export default async function LibrarianPage({ lang = 'en' }: { lang?: Locale } = {}) {
-  const featuredPassage = await getFeaturedPassage();
+  const [featuredPassage, stats] = await Promise.all([getFeaturedPassage(), getSiteStats()]);
 
   return (
     <LibrarianClient
       featuredPassage={featuredPassage}
+      bookCount={stats.totalBooks}
       lang={lang}
     />
   );
