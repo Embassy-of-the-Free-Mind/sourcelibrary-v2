@@ -52,6 +52,15 @@ jobs:
             "$(tail -40 report.txt)")
           printf '%s\n' "$BODY" > issue-body.md
           .github/scripts/file-or-update-issue.sh "Unmapped library providers on /libraries — " "$TITLE" issue-body.md pipeline
+      # A clean scheduled run closes what this detector filed (#7277). Manual
+      # runs can pass a looser threshold or a smaller sample, so they never close.
+      - name: Close the finding on a clean run
+        if: steps.run.outputs.fired == '0' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/scripts/file-or-update-issue.sh --close "Unmapped library providers on /libraries — " \
+            "Clean scheduled run on $(date -u +%F): every provider key over the threshold has a LIBRARY_PARTNERS entry. Closing (the detector closes what it files). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       - name: Fail if the audit could not run
         if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
         run: |

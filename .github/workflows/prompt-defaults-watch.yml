@@ -73,12 +73,17 @@ jobs:
           BODY=$(printf '%s\n\n```\n%s\n```\n' \
             "Either the \`prompts\` collection broke an invariant (two defaults for one type, or a non-numeric \`version\`) or the \"Current defaults\" table in \`.claude/docs/data-provenance.md\` no longer names the versions in production. Both are actionable and the report says which. Repair: \`node --env-file=.env.production.local scripts/maintenance/repair-prompt-defaults-3614.mjs\` for the rows, an edit for the table." \
             "$(cat report.txt)")
-          EXISTING=$(gh issue list --search "Prompt defaults drift in:title" --state open --json number --jq '.[0].number')
-          if [ -n "$EXISTING" ]; then
-            gh issue comment "$EXISTING" --body "$BODY"
-          else
-            gh issue create --title "$TITLE" --body "$BODY" --label pipeline
-          fi
+          printf '%s\n' "$BODY" > issue-body.md
+          .github/scripts/file-or-update-issue.sh "Prompt defaults drift — " "$TITLE" issue-body.md pipeline
+
+      # A clean scheduled run closes what this detector filed (#7277).
+      - name: Close the finding on a clean run
+        if: steps.run.outputs.fired == '0' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/scripts/file-or-update-issue.sh --close "Prompt defaults drift — " \
+            "Clean scheduled run on $(date -u +%F): one default per prompt type, numeric versions, and the data-provenance.md table names the versions in production. Closing (the detector closes what it files). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Fail if the audit could not run
         if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
