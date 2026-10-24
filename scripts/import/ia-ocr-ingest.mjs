@@ -517,7 +517,7 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
       // The book failed the digits gate (#5186) and this leaf prints a number: its numbers are not to
       // be quoted from this text. Absent (never false) otherwise, so the field means one thing.
       ...(agreementRef.numeric?.unreliable && carriesNumbers(leaves[k]) ? { digits_unreliable: true } : {}),
-      ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
+      ia: { ...iaProvenance(iaId, meta, { year: publicationYear(b) }), ingest_run: INGEST_RUN },
       content_hash: contentHash(leaves[k]),
     };
     const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },

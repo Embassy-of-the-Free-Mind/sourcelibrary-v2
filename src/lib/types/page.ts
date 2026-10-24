@@ -265,6 +265,19 @@ export interface OcrData extends ProcessingMetadata {
     item_url: string;
     /** Which run of scripts/import/ia-ocr-ingest.mjs copied it (#4613): `ia-ocr-ingest/<ISO>/<host>@<sha>`. */
     ingest_run?: string;
+    /** Rights of the text (`iaTextLicence` in scripts/lib/ia-ocr-meta.mjs). The `ia_*` fields are what the item says. */
+    licence?: {
+      rule: 'ia-text-licence/1';
+      status: 'publicdomain' | 'not_recorded';
+      licence_url: string | null;
+      basis: string;
+      jurisdiction: 'US';
+      publication_year: number | null;
+      ia_rights: string | null;
+      ia_licenseurl: string | null;
+      ia_copyright_status: string | null;
+      ia_access_restricted: boolean;
+    };
   };
   agreement_ref?: {
     median: number; n: number; min_agreement: number; offset?: number; offset_share?: number;
