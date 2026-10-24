@@ -229,12 +229,13 @@ async function main() {
       const workTitle = workTitleOf(book.title);
       const now = new Date();
       const writes = [];
-      let truncated = false;
+      let truncated = false, pending = false;
       for (const rec of recs) {
         if (budget <= 0) { truncated = true; break; }
         const p = byId.get(rec.page_id);
         if (rec.book_id !== bid) { skip('wrong_book', rec); continue; }
         const r = routePage(rec, p, flash.get(rec.page_id));
+        if (r.skip === 'flash_not_run') pending = true;
         if (r.skip) { skip(r.skip, rec); continue; }
         const route = r.route;
         const { text, body, set } = pageSet(rec, route, { run, flash: r.flash, now, codeVer, workTitle });
@@ -290,8 +291,8 @@ async function main() {
         );
         console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
       }
-      // a book cut short by --limit-pages is not done: the next run picks up its remaining pages
-      if (CHECKPOINT && !truncated) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
+      // a book cut short by --limit-pages, or with Flash pages not yet read, is not done: a later run picks them up
+      if (CHECKPOINT && !truncated && !pending) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
     }
   }, { timeoutMs: 4 * 3600 * 1000 });
   if (REPORT) {
