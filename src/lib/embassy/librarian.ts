@@ -43,6 +43,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import collectionRedirects from '@/lib/collection-redirects.json';
+import { quotedFindings } from '@/lib/embassy/notebook-autosave';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -253,6 +254,42 @@ async function saveNotebookFinding(threadId: string, finding: NotebookFinding, t
     { upsert: true, returnDocument: 'after' },
   );
   return result?.findings?.length || 1;
+}
+
+/** Save this answer's grounded quotations as findings; returns one notebook_update step per save. */
+async function autosaveQuotes(threadId: string, text: string, pages: GroundingPage[]): Promise<LibrarianStep[]> {
+  const existing = await loadNotebook(threadId);
+  const found = quotedFindings(text, pages, (existing?.findings ?? []).map(f => f.quote));
+  if (found.length === 0) return [];
+  const db = await getDb();
+  const authors = new Map(
+    (await db.collection('books')
+      .find({ id: { $in: [...new Set(found.map(f => f.bookId))] } })
+      .project({ id: 1, author: 1 })
+      .maxTimeMS(2000)
+      .toArray()).map(b => [b.id as string, (b.author as string) || '']),
+  );
+  const steps: LibrarianStep[] = [];
+  for (const f of found) {
+    const finding: NotebookFinding = {
+      quote: f.quote,
+      note: '',
+      source: { bookId: f.bookId, bookTitle: f.bookTitle, bookAuthor: authors.get(f.bookId) ?? '', bookSlug: f.bookSlug, pageNumber: f.page },
+      addedAt: new Date(),
+    };
+    const count = await saveNotebookFinding(threadId, finding);
+    steps.push({
+      type: 'notebook_update', name: 'autosave', summary: `Saved finding #${count}`,
+      notebook: {
+        findingCount: count,
+        finding: {
+          quote: finding.quote, note: '', bookId: f.bookId, bookTitle: f.bookTitle,
+          bookAuthor: finding.source.bookAuthor, bookSlug: f.bookSlug, pageNumber: f.page,
+        },
+      },
+    });
+  }
+  return steps;
 }
 
 function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
@@ -2139,7 +2176,7 @@ export async function* streamAgenticResponse(
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
   citationRouting?.finish(rawText);
-  const { edits, report: groundingReport, citations } = await groundTurn({
+  const { edits, report: groundingReport, citations, pages: supportPages } = await groundTurn({
     rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
     toolSupportText, userMessage, notebookSaved, routing: citationRouting,
   });
@@ -2152,6 +2189,16 @@ export async function* streamAgenticResponse(
   // turn, as the reader now sees it. Scanning the whole `contents` array would
   // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
   const fullText = applyGroundingEdits(rawText, edits);
+
+  // Every quotation that survived grounding goes into the notebook (#7253):
+  // the model's own add_to_notebook calls left most notebooks empty.
+  if (threadId) {
+    try {
+      for (const step of await autosaveQuotes(threadId, fullText, supportPages)) yield step;
+    } catch (err) {
+      console.warn('[Librarian] notebook autosave failed:', err instanceof Error ? err.message : err);
+    }
+  }
 
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
@@ -2307,6 +2354,8 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
   edits: GroundingEdit[];
   report: GroundingReport;
   citations: CitationPassReport;
+  /** The pages grounding read: what notebook autosave places quotes on. */
+  pages: GroundingPage[];
   /** The router's verdicts as they stood when the pass ran (null: routing off). */
   verdicts: RoutedClaims | null;
   timings: { supportMs: number; totalMs: number };
@@ -2360,6 +2409,7 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
     edits: citation.edits,
     report: grounding.report,
     citations: citation.report,
+    pages: support?.pages ?? [],
     verdicts,
     timings: { supportMs, totalMs: Date.now() - t0 },
   };
