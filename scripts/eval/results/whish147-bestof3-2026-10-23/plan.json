@@ -1,0 +1,3164 @@
+{
+ "todo": [
+  {
+   "n": 6,
+   "id": "6ada9a5785108f5f35c9ec0b",
+   "key": "4-t",
+   "hand": "A",
+   "what": "contents leaf, then a leaf of large loose letters before the text",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 7,
+   "id": "6ada9a5785108f5f35c9ec0c",
+   "key": "4-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 8,
+   "id": "6ada9a5885108f5f35c9ec0d",
+   "key": "5-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 9,
+   "id": "6ada9a5985108f5f35c9ec0e",
+   "key": "5-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 10,
+   "id": "6ada9a5985108f5f35c9ec0f",
+   "key": "6-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 11,
+   "id": "6ada9a5a85108f5f35c9ec10",
+   "key": "6-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 12,
+   "id": "6ada9a5b85108f5f35c9ec11",
+   "key": "7-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 13,
+   "id": "6ada9a5b85108f5f35c9ec12",
+   "key": "7-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 14,
+   "id": "6ada9a5c85108f5f35c9ec13",
+   "key": "8-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 15,
+   "id": "6ada9a5d85108f5f35c9ec14",
+   "key": "8-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 16,
+   "id": "6ada9a5d85108f5f35c9ec15",
+   "key": "9-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 17,
+   "id": "6ada9a5e85108f5f35c9ec16",
+   "key": "9-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 18,
+   "id": "6ada9a5f85108f5f35c9ec17",
+   "key": "10-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 19,
+   "id": "6ada9a5f85108f5f35c9ec18",
+   "key": "10-b",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 20,
+   "id": "6ada9a6085108f5f35c9ec19",
+   "key": "11-t",
+   "hand": "A",
+   "what": "Īśvarakṛṣṇa, Sāṅkhyakārikā (IA ff. 1–7)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 21,
+   "id": "6ada9a6185108f5f35c9ec1a",
+   "key": "11-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 22,
+   "id": "6ada9a6185108f5f35c9ec1b",
+   "key": "12-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 23,
+   "id": "6ada9a6285108f5f35c9ec1c",
+   "key": "12-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 24,
+   "id": "6ada9a6385108f5f35c9ec1d",
+   "key": "13-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 25,
+   "id": "6ada9a6385108f5f35c9ec1e",
+   "key": "13-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 26,
+   "id": "6ada9a6485108f5f35c9ec1f",
+   "key": "14-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 27,
+   "id": "6ada9a6585108f5f35c9ec20",
+   "key": "14-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 28,
+   "id": "6ada9a6585108f5f35c9ec21",
+   "key": "15-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 29,
+   "id": "6ada9a6685108f5f35c9ec22",
+   "key": "15-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 30,
+   "id": "6ada9a6685108f5f35c9ec23",
+   "key": "16-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 31,
+   "id": "6ada9a6785108f5f35c9ec24",
+   "key": "16-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 32,
+   "id": "6ada9a6885108f5f35c9ec25",
+   "key": "17-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 33,
+   "id": "6ada9a6985108f5f35c9ec26",
+   "key": "17-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 34,
+   "id": "6ada9a6985108f5f35c9ec27",
+   "key": "18-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 35,
+   "id": "6ada9a6a85108f5f35c9ec28",
+   "key": "18-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 36,
+   "id": "6ada9a6b85108f5f35c9ec29",
+   "key": "19-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 37,
+   "id": "6ada9a6b85108f5f35c9ec2a",
+   "key": "19-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 38,
+   "id": "6ada9a6c85108f5f35c9ec2b",
+   "key": "20-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 39,
+   "id": "6ada9a6c85108f5f35c9ec2c",
+   "key": "20-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 40,
+   "id": "6ada9a6d85108f5f35c9ec2d",
+   "key": "21-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 41,
+   "id": "6ada9a6e85108f5f35c9ec2e",
+   "key": "21-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 42,
+   "id": "6ada9a6e85108f5f35c9ec2f",
+   "key": "22-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 43,
+   "id": "6ada9a6f85108f5f35c9ec30",
+   "key": "22-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 44,
+   "id": "6ada9a7085108f5f35c9ec31",
+   "key": "23-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 45,
+   "id": "6ada9a7085108f5f35c9ec32",
+   "key": "23-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 46,
+   "id": "6ada9a7185108f5f35c9ec33",
+   "key": "24-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 47,
+   "id": "6ada9a7285108f5f35c9ec34",
+   "key": "24-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 48,
+   "id": "6ada9a7285108f5f35c9ec35",
+   "key": "25-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 49,
+   "id": "6ada9a7385108f5f35c9ec36",
+   "key": "25-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 50,
+   "id": "6ada9a7485108f5f35c9ec37",
+   "key": "26-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 51,
+   "id": "6ada9a7485108f5f35c9ec38",
+   "key": "26-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 52,
+   "id": "6ada9a7585108f5f35c9ec39",
+   "key": "27-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 53,
+   "id": "6ada9a7685108f5f35c9ec3a",
+   "key": "27-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 54,
+   "id": "6ada9a7685108f5f35c9ec3b",
+   "key": "28-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 55,
+   "id": "6ada9a7785108f5f35c9ec3c",
+   "key": "28-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 56,
+   "id": "6ada9a7885108f5f35c9ec3d",
+   "key": "29-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 57,
+   "id": "6ada9a7885108f5f35c9ec3e",
+   "key": "29-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 58,
+   "id": "6ada9a7985108f5f35c9ec3f",
+   "key": "30-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 59,
+   "id": "6ada9a7985108f5f35c9ec40",
+   "key": "30-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 60,
+   "id": "6ada9a7a85108f5f35c9ec41",
+   "key": "31-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 61,
+   "id": "6ada9a7b85108f5f35c9ec42",
+   "key": "31-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 62,
+   "id": "6ada9a7b85108f5f35c9ec43",
+   "key": "32-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 63,
+   "id": "6ada9a7c85108f5f35c9ec44",
+   "key": "32-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 64,
+   "id": "6ada9a7d85108f5f35c9ec45",
+   "key": "33-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 65,
+   "id": "6ada9a7d85108f5f35c9ec46",
+   "key": "33-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 66,
+   "id": "6ada9a7e85108f5f35c9ec47",
+   "key": "34-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 67,
+   "id": "6ada9a7f85108f5f35c9ec48",
+   "key": "34-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 68,
+   "id": "6ada9a7f85108f5f35c9ec49",
+   "key": "35-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 69,
+   "id": "6ada9a8085108f5f35c9ec4a",
+   "key": "35-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 70,
+   "id": "6ada9a8085108f5f35c9ec4b",
+   "key": "36-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 71,
+   "id": "6ada9a8185108f5f35c9ec4c",
+   "key": "36-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 72,
+   "id": "6ada9a8285108f5f35c9ec4d",
+   "key": "37-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 73,
+   "id": "6ada9a8285108f5f35c9ec4e",
+   "key": "37-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 74,
+   "id": "6ada9a8385108f5f35c9ec4f",
+   "key": "38-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 75,
+   "id": "6ada9a8485108f5f35c9ec50",
+   "key": "38-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 76,
+   "id": "6ada9a8485108f5f35c9ec51",
+   "key": "39-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 77,
+   "id": "6ada9a8585108f5f35c9ec52",
+   "key": "39-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 78,
+   "id": "6ada9a8685108f5f35c9ec53",
+   "key": "40-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 79,
+   "id": "6ada9a8685108f5f35c9ec54",
+   "key": "40-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 80,
+   "id": "6ada9a8785108f5f35c9ec55",
+   "key": "41-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 81,
+   "id": "6ada9a8885108f5f35c9ec56",
+   "key": "41-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 82,
+   "id": "6ada9a8885108f5f35c9ec57",
+   "key": "42-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 83,
+   "id": "6ada9a8985108f5f35c9ec58",
+   "key": "42-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 84,
+   "id": "6ada9a8985108f5f35c9ec59",
+   "key": "43-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 85,
+   "id": "6ada9a8a85108f5f35c9ec5a",
+   "key": "43-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 86,
+   "id": "6ada9a8b85108f5f35c9ec5b",
+   "key": "44-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 87,
+   "id": "6ada9a8b85108f5f35c9ec5c",
+   "key": "44-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 88,
+   "id": "6ada9a8c85108f5f35c9ec5d",
+   "key": "45-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 89,
+   "id": "6ada9a8d85108f5f35c9ec5e",
+   "key": "45-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 90,
+   "id": "6ada9a8d85108f5f35c9ec5f",
+   "key": "46-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 91,
+   "id": "6ada9a8e85108f5f35c9ec60",
+   "key": "46-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 92,
+   "id": "6ada9a8e85108f5f35c9ec61",
+   "key": "47-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 93,
+   "id": "6ada9a8f85108f5f35c9ec62",
+   "key": "47-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 94,
+   "id": "6ada9a9085108f5f35c9ec63",
+   "key": "48-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 95,
+   "id": "6ada9a9085108f5f35c9ec64",
+   "key": "48-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 96,
+   "id": "6ada9a9185108f5f35c9ec65",
+   "key": "49-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 97,
+   "id": "6ada9a9285108f5f35c9ec66",
+   "key": "49-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 98,
+   "id": "6ada9a9285108f5f35c9ec67",
+   "key": "50-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 99,
+   "id": "6ada9a9385108f5f35c9ec68",
+   "key": "50-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 100,
+   "id": "6ada9a9485108f5f35c9ec69",
+   "key": "51-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 101,
+   "id": "6ada9a9485108f5f35c9ec6a",
+   "key": "51-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 102,
+   "id": "6ada9a9585108f5f35c9ec6b",
+   "key": "52-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 103,
+   "id": "6ada9a9685108f5f35c9ec6c",
+   "key": "52-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 104,
+   "id": "6ada9a9685108f5f35c9ec6d",
+   "key": "53-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 105,
+   "id": "6ada9a9785108f5f35c9ec6e",
+   "key": "53-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 106,
+   "id": "6ada9a9785108f5f35c9ec6f",
+   "key": "54-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 107,
+   "id": "6ada9a9885108f5f35c9ec70",
+   "key": "54-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 108,
+   "id": "6ada9a9985108f5f35c9ec71",
+   "key": "55-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 109,
+   "id": "6ada9a9985108f5f35c9ec72",
+   "key": "55-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 110,
+   "id": "6ada9a9a85108f5f35c9ec73",
+   "key": "56-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 111,
+   "id": "6ada9a9b85108f5f35c9ec74",
+   "key": "56-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 112,
+   "id": "6ada9a9b85108f5f35c9ec75",
+   "key": "57-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 113,
+   "id": "6ada9a9c85108f5f35c9ec76",
+   "key": "57-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 114,
+   "id": "6ada9a9d85108f5f35c9ec77",
+   "key": "58-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 115,
+   "id": "6ada9a9d85108f5f35c9ec78",
+   "key": "58-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 116,
+   "id": "6ada9a9e85108f5f35c9ec79",
+   "key": "59-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 117,
+   "id": "6ada9a9f85108f5f35c9ec7a",
+   "key": "59-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 118,
+   "id": "6ada9a9f85108f5f35c9ec7b",
+   "key": "60-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 119,
+   "id": "6ada9aa085108f5f35c9ec7c",
+   "key": "60-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 120,
+   "id": "6ada9aa085108f5f35c9ec7d",
+   "key": "61-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 121,
+   "id": "6ada9aa185108f5f35c9ec7e",
+   "key": "61-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 122,
+   "id": "6ada9aa285108f5f35c9ec7f",
+   "key": "62-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 123,
+   "id": "6ada9aa285108f5f35c9ec80",
+   "key": "62-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 124,
+   "id": "6ada9aa385108f5f35c9ec81",
+   "key": "63-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 125,
+   "id": "6ada9aa485108f5f35c9ec82",
+   "key": "63-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 126,
+   "id": "6ada9aa485108f5f35c9ec83",
+   "key": "64-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 127,
+   "id": "6ada9aa585108f5f35c9ec84",
+   "key": "64-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 128,
+   "id": "6ada9aa685108f5f35c9ec85",
+   "key": "65-t",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 129,
+   "id": "6ada9aa685108f5f35c9ec86",
+   "key": "65-b",
+   "hand": "A",
+   "what": "Śaṅkara, Jayamaṅgalā (IA ff. 7–62; colophon p. 129)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 223,
+   "id": "6ada9ae185108f5f35c9ece4",
+   "key": "112-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 224,
+   "id": "6ada9ae185108f5f35c9ece5",
+   "key": "113-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 225,
+   "id": "6ada9ae285108f5f35c9ece6",
+   "key": "113-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 226,
+   "id": "6ada9ae385108f5f35c9ece7",
+   "key": "114-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 227,
+   "id": "6ada9ae385108f5f35c9ece8",
+   "key": "114-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 228,
+   "id": "6ada9ae485108f5f35c9ece9",
+   "key": "115-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 229,
+   "id": "6ada9ae585108f5f35c9ecea",
+   "key": "115-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 230,
+   "id": "6ada9ae585108f5f35c9eceb",
+   "key": "116-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 231,
+   "id": "6ada9ae685108f5f35c9ecec",
+   "key": "116-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 232,
+   "id": "6ada9ae685108f5f35c9eced",
+   "key": "117-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 233,
+   "id": "6ada9ae785108f5f35c9ecee",
+   "key": "117-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 234,
+   "id": "6ada9ae885108f5f35c9ecef",
+   "key": "118-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 235,
+   "id": "6ada9ae885108f5f35c9ecf0",
+   "key": "118-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 236,
+   "id": "6ada9ae985108f5f35c9ecf1",
+   "key": "119-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 237,
+   "id": "6ada9aea85108f5f35c9ecf2",
+   "key": "119-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 238,
+   "id": "6ada9aea85108f5f35c9ecf3",
+   "key": "120-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 239,
+   "id": "6ada9aeb85108f5f35c9ecf4",
+   "key": "120-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 240,
+   "id": "6ada9aec85108f5f35c9ecf5",
+   "key": "121-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 241,
+   "id": "6ada9aec85108f5f35c9ecf6",
+   "key": "121-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 242,
+   "id": "6ada9aed85108f5f35c9ecf7",
+   "key": "122-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 243,
+   "id": "6ada9aee85108f5f35c9ecf8",
+   "key": "122-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 244,
+   "id": "6ada9aee85108f5f35c9ecf9",
+   "key": "123-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 245,
+   "id": "6ada9aef85108f5f35c9ecfa",
+   "key": "123-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 246,
+   "id": "6ada9aef85108f5f35c9ecfb",
+   "key": "124-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 247,
+   "id": "6ada9af085108f5f35c9ecfc",
+   "key": "124-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 248,
+   "id": "6ada9af185108f5f35c9ecfd",
+   "key": "125-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 249,
+   "id": "6ada9af185108f5f35c9ecfe",
+   "key": "125-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 250,
+   "id": "6ada9af285108f5f35c9ecff",
+   "key": "126-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 251,
+   "id": "6ada9af385108f5f35c9ed00",
+   "key": "126-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 252,
+   "id": "6ada9af385108f5f35c9ed01",
+   "key": "127-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 253,
+   "id": "6ada9af485108f5f35c9ed02",
+   "key": "127-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 254,
+   "id": "6ada9af585108f5f35c9ed03",
+   "key": "128-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 255,
+   "id": "6ada9af585108f5f35c9ed04",
+   "key": "128-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 256,
+   "id": "6ada9af685108f5f35c9ed05",
+   "key": "129-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 257,
+   "id": "6ada9af685108f5f35c9ed06",
+   "key": "129-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 258,
+   "id": "6ada9af785108f5f35c9ed07",
+   "key": "130-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 259,
+   "id": "6ada9af885108f5f35c9ed08",
+   "key": "130-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 260,
+   "id": "6ada9af885108f5f35c9ed09",
+   "key": "131-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 261,
+   "id": "6ada9af985108f5f35c9ed0a",
+   "key": "131-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 262,
+   "id": "6ada9afa85108f5f35c9ed0b",
+   "key": "132-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 263,
+   "id": "6ada9afa85108f5f35c9ed0c",
+   "key": "132-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 264,
+   "id": "6ada9afb85108f5f35c9ed0d",
+   "key": "133-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 265,
+   "id": "6ada9afc85108f5f35c9ed0e",
+   "key": "133-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 266,
+   "id": "6ada9afc85108f5f35c9ed0f",
+   "key": "134-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 267,
+   "id": "6ada9afd85108f5f35c9ed10",
+   "key": "134-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 268,
+   "id": "6ada9afe85108f5f35c9ed11",
+   "key": "135-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 269,
+   "id": "6ada9afe85108f5f35c9ed12",
+   "key": "135-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 270,
+   "id": "6ada9aff85108f5f35c9ed13",
+   "key": "136-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 271,
+   "id": "6ada9aff85108f5f35c9ed14",
+   "key": "136-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 272,
+   "id": "6ada9b0085108f5f35c9ed15",
+   "key": "137-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 273,
+   "id": "6ada9b0185108f5f35c9ed16",
+   "key": "137-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 274,
+   "id": "6ada9b0185108f5f35c9ed17",
+   "key": "138-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 275,
+   "id": "6ada9b0285108f5f35c9ed18",
+   "key": "138-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 276,
+   "id": "6ada9b0385108f5f35c9ed19",
+   "key": "139-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 277,
+   "id": "6ada9b0385108f5f35c9ed1a",
+   "key": "139-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 278,
+   "id": "6ada9b0485108f5f35c9ed1b",
+   "key": "140-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 279,
+   "id": "6ada9b0585108f5f35c9ed1c",
+   "key": "140-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 280,
+   "id": "6ada9b0585108f5f35c9ed1d",
+   "key": "141-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 281,
+   "id": "6ada9b0685108f5f35c9ed1e",
+   "key": "141-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 282,
+   "id": "6ada9b0685108f5f35c9ed1f",
+   "key": "142-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 283,
+   "id": "6ada9b0785108f5f35c9ed20",
+   "key": "142-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 284,
+   "id": "6ada9b0885108f5f35c9ed21",
+   "key": "143-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 285,
+   "id": "6ada9b0885108f5f35c9ed22",
+   "key": "143-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgrahadīpikā (IA 32 ff.; opening p. 223, colophon with the Kollam date, partly in Malayalam, p. 285)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 286,
+   "id": "6ada9b0985108f5f35c9ed23",
+   "key": "144-t",
+   "hand": "A",
+   "what": "a short, faint leaf",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 287,
+   "id": "6ada9b0a85108f5f35c9ed24",
+   "key": "144-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 288,
+   "id": "6ada9b0a85108f5f35c9ed25",
+   "key": "145-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 289,
+   "id": "6ada9b0b85108f5f35c9ed26",
+   "key": "145-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 290,
+   "id": "6ada9b0c85108f5f35c9ed27",
+   "key": "146-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 291,
+   "id": "6ada9b0c85108f5f35c9ed28",
+   "key": "146-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 292,
+   "id": "6ada9b0d85108f5f35c9ed29",
+   "key": "147-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 293,
+   "id": "6ada9b0e85108f5f35c9ed2a",
+   "key": "147-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 294,
+   "id": "6ada9b0e85108f5f35c9ed2b",
+   "key": "148-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 295,
+   "id": "6ada9b0f85108f5f35c9ed2c",
+   "key": "148-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 296,
+   "id": "6ada9b0f85108f5f35c9ed2d",
+   "key": "149-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 297,
+   "id": "6ada9b1085108f5f35c9ed2e",
+   "key": "149-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 298,
+   "id": "6ada9b1185108f5f35c9ed2f",
+   "key": "150-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 299,
+   "id": "6ada9b1185108f5f35c9ed30",
+   "key": "150-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 300,
+   "id": "6ada9b1285108f5f35c9ed31",
+   "key": "151-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 301,
+   "id": "6ada9b1385108f5f35c9ed32",
+   "key": "151-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 302,
+   "id": "6ada9b1385108f5f35c9ed33",
+   "key": "152-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 303,
+   "id": "6ada9b1485108f5f35c9ed34",
+   "key": "152-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": true,
+   "skip": null
+  },
+  {
+   "n": 304,
+   "id": "6ada9b1585108f5f35c9ed35",
+   "key": "153-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 305,
+   "id": "6ada9b1585108f5f35c9ed36",
+   "key": "153-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 306,
+   "id": "6ada9b1685108f5f35c9ed37",
+   "key": "154-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 307,
+   "id": "6ada9b1785108f5f35c9ed38",
+   "key": "154-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 308,
+   "id": "6ada9b1785108f5f35c9ed39",
+   "key": "155-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 309,
+   "id": "6ada9b1885108f5f35c9ed3a",
+   "key": "155-b",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "edition-anchored",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 310,
+   "id": "6ada9b1985108f5f35c9ed3b",
+   "key": "156-t",
+   "hand": "A",
+   "what": "Annambhaṭṭa, Tarkasaṃgraha (IA 12 ff.)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 131,
+   "id": "6ada9aa785108f5f35c9ec88",
+   "key": "66-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 132,
+   "id": "6ada9aa885108f5f35c9ec89",
+   "key": "67-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 133,
+   "id": "6ada9aa985108f5f35c9ec8a",
+   "key": "67-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 134,
+   "id": "6ada9aa985108f5f35c9ec8b",
+   "key": "68-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 135,
+   "id": "6ada9aaa85108f5f35c9ec8c",
+   "key": "68-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 136,
+   "id": "6ada9aaa85108f5f35c9ec8d",
+   "key": "69-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 137,
+   "id": "6ada9aab85108f5f35c9ec8e",
+   "key": "69-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 138,
+   "id": "6ada9aac85108f5f35c9ec8f",
+   "key": "70-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 139,
+   "id": "6ada9aac85108f5f35c9ec90",
+   "key": "70-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 140,
+   "id": "6ada9aad85108f5f35c9ec91",
+   "key": "71-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 141,
+   "id": "6ada9aae85108f5f35c9ec92",
+   "key": "71-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 142,
+   "id": "6ada9aae85108f5f35c9ec93",
+   "key": "72-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 143,
+   "id": "6ada9aaf85108f5f35c9ec94",
+   "key": "72-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 144,
+   "id": "6ada9aaf85108f5f35c9ec95",
+   "key": "73-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 145,
+   "id": "6ada9ab085108f5f35c9ec96",
+   "key": "73-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 146,
+   "id": "6ada9ab185108f5f35c9ec97",
+   "key": "74-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 147,
+   "id": "6ada9ab185108f5f35c9ec98",
+   "key": "74-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 148,
+   "id": "6ada9ab285108f5f35c9ec99",
+   "key": "75-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 149,
+   "id": "6ada9ab385108f5f35c9ec9a",
+   "key": "75-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 150,
+   "id": "6ada9ab385108f5f35c9ec9b",
+   "key": "76-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 151,
+   "id": "6ada9ab485108f5f35c9ec9c",
+   "key": "76-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 152,
+   "id": "6ada9ab485108f5f35c9ec9d",
+   "key": "77-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 153,
+   "id": "6ada9ab585108f5f35c9ec9e",
+   "key": "77-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 154,
+   "id": "6ada9ab685108f5f35c9ec9f",
+   "key": "78-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 155,
+   "id": "6ada9ab685108f5f35c9eca0",
+   "key": "78-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 156,
+   "id": "6ada9ab785108f5f35c9eca1",
+   "key": "79-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 157,
+   "id": "6ada9ab885108f5f35c9eca2",
+   "key": "79-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 158,
+   "id": "6ada9ab885108f5f35c9eca3",
+   "key": "80-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 159,
+   "id": "6ada9ab985108f5f35c9eca4",
+   "key": "80-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 160,
+   "id": "6ada9ab985108f5f35c9eca5",
+   "key": "81-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 161,
+   "id": "6ada9aba85108f5f35c9eca6",
+   "key": "81-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 162,
+   "id": "6ada9abb85108f5f35c9eca7",
+   "key": "82-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 163,
+   "id": "6ada9abb85108f5f35c9eca8",
+   "key": "82-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 164,
+   "id": "6ada9abc85108f5f35c9eca9",
+   "key": "83-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 165,
+   "id": "6ada9abd85108f5f35c9ecaa",
+   "key": "83-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 166,
+   "id": "6ada9abd85108f5f35c9ecab",
+   "key": "84-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 167,
+   "id": "6ada9abe85108f5f35c9ecac",
+   "key": "84-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 168,
+   "id": "6ada9abe85108f5f35c9ecad",
+   "key": "85-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 169,
+   "id": "6ada9abf85108f5f35c9ecae",
+   "key": "85-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 170,
+   "id": "6ada9ac085108f5f35c9ecaf",
+   "key": "86-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 171,
+   "id": "6ada9ac085108f5f35c9ecb0",
+   "key": "86-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 172,
+   "id": "6ada9ac185108f5f35c9ecb1",
+   "key": "87-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 173,
+   "id": "6ada9ac285108f5f35c9ecb2",
+   "key": "87-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 174,
+   "id": "6ada9ac285108f5f35c9ecb3",
+   "key": "88-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 175,
+   "id": "6ada9ac385108f5f35c9ecb4",
+   "key": "88-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 176,
+   "id": "6ada9ac385108f5f35c9ecb5",
+   "key": "89-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 177,
+   "id": "6ada9ac485108f5f35c9ecb6",
+   "key": "89-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 178,
+   "id": "6ada9ac585108f5f35c9ecb7",
+   "key": "90-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 179,
+   "id": "6ada9ac585108f5f35c9ecb8",
+   "key": "90-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 180,
+   "id": "6ada9ac685108f5f35c9ecb9",
+   "key": "91-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 181,
+   "id": "6ada9ac685108f5f35c9ecba",
+   "key": "91-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 182,
+   "id": "6ada9ac785108f5f35c9ecbb",
+   "key": "92-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 183,
+   "id": "6ada9ac885108f5f35c9ecbc",
+   "key": "92-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 184,
+   "id": "6ada9ac885108f5f35c9ecbd",
+   "key": "93-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 185,
+   "id": "6ada9ac985108f5f35c9ecbe",
+   "key": "93-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 186,
+   "id": "6ada9ac985108f5f35c9ecbf",
+   "key": "94-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 187,
+   "id": "6ada9aca85108f5f35c9ecc0",
+   "key": "94-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 188,
+   "id": "6ada9acb85108f5f35c9ecc1",
+   "key": "95-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 189,
+   "id": "6ada9acb85108f5f35c9ecc2",
+   "key": "95-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 190,
+   "id": "6ada9acc85108f5f35c9ecc3",
+   "key": "96-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 191,
+   "id": "6ada9acd85108f5f35c9ecc4",
+   "key": "96-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 192,
+   "id": "6ada9acd85108f5f35c9ecc5",
+   "key": "97-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 193,
+   "id": "6ada9ace85108f5f35c9ecc6",
+   "key": "97-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 194,
+   "id": "6ada9ace85108f5f35c9ecc7",
+   "key": "98-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 195,
+   "id": "6ada9acf85108f5f35c9ecc8",
+   "key": "98-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 196,
+   "id": "6ada9ad085108f5f35c9ecc9",
+   "key": "99-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 197,
+   "id": "6ada9ad085108f5f35c9ecca",
+   "key": "99-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 198,
+   "id": "6ada9ad185108f5f35c9eccb",
+   "key": "100-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 199,
+   "id": "6ada9ad285108f5f35c9eccc",
+   "key": "100-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 200,
+   "id": "6ada9ad285108f5f35c9eccd",
+   "key": "101-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 201,
+   "id": "6ada9ad385108f5f35c9ecce",
+   "key": "101-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 202,
+   "id": "6ada9ad485108f5f35c9eccf",
+   "key": "102-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 203,
+   "id": "6ada9ad485108f5f35c9ecd0",
+   "key": "102-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 204,
+   "id": "6ada9ad585108f5f35c9ecd1",
+   "key": "103-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 205,
+   "id": "6ada9ad685108f5f35c9ecd2",
+   "key": "103-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 206,
+   "id": "6ada9ad685108f5f35c9ecd3",
+   "key": "104-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 207,
+   "id": "6ada9ad785108f5f35c9ecd4",
+   "key": "104-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 208,
+   "id": "6ada9ad785108f5f35c9ecd5",
+   "key": "105-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 209,
+   "id": "6ada9ad885108f5f35c9ecd6",
+   "key": "105-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 210,
+   "id": "6ada9ad985108f5f35c9ecd7",
+   "key": "106-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 211,
+   "id": "6ada9ad985108f5f35c9ecd8",
+   "key": "106-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 212,
+   "id": "6ada9ada85108f5f35c9ecd9",
+   "key": "107-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 213,
+   "id": "6ada9ada85108f5f35c9ecda",
+   "key": "107-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 214,
+   "id": "6ada9adb85108f5f35c9ecdb",
+   "key": "108-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 215,
+   "id": "6ada9adc85108f5f35c9ecdc",
+   "key": "108-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 216,
+   "id": "6ada9adc85108f5f35c9ecdd",
+   "key": "109-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 217,
+   "id": "6ada9add85108f5f35c9ecde",
+   "key": "109-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 218,
+   "id": "6ada9ade85108f5f35c9ecdf",
+   "key": "110-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 219,
+   "id": "6ada9ade85108f5f35c9ece0",
+   "key": "110-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 220,
+   "id": "6ada9adf85108f5f35c9ece1",
+   "key": "111-t",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  },
+  {
+   "n": 221,
+   "id": "6ada9adf85108f5f35c9ece2",
+   "key": "111-b",
+   "hand": "B",
+   "what": "Vācaspati Miśra, Tattvakaumudī (IA ff. 1–40), the unidentified fragment (IA f. 41) and a short note in Malayalam; the Tattvakaumudī colophon is on p. 131 and the scribe’s closing verse on p. 132, and no opening was found, so the order of the leaves in this stretch is not established",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": null
+  }
+ ],
+ "skipped": [
+  {
+   "n": 1,
+   "id": "6ad845ee6037414ddef152b2",
+   "key": null,
+   "hand": null,
+   "what": "wooden cover board",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (wooden cover board)"
+  },
+  {
+   "n": 2,
+   "id": "6ada9a5485108f5f35c9ec07",
+   "key": "2-t",
+   "hand": null,
+   "what": "blank board / leaf",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank board / leaf)"
+  },
+  {
+   "n": 3,
+   "id": "6ada9a5585108f5f35c9ec08",
+   "key": "2-b",
+   "hand": null,
+   "what": "blank board / leaf",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank board / leaf)"
+  },
+  {
+   "n": 4,
+   "id": "6ada9a5585108f5f35c9ec09",
+   "key": "3-t",
+   "hand": "later, in ink",
+   "what": "label in English (titles of the contents)",
+   "half": false,
+   "skip": "English label (later hand, Latin script)"
+  },
+  {
+   "n": 5,
+   "id": "6ada9a5685108f5f35c9ec0a",
+   "key": "3-b",
+   "hand": "A",
+   "what": "contents leaf, then a leaf of large loose letters before the text",
+   "half": false,
+   "skip": "contents leaf: kept as the #7106 read (lists, not running text), as apply-fresh did"
+  },
+  {
+   "n": 130,
+   "id": "6ada9aa785108f5f35c9ec87",
+   "key": "66-t",
+   "hand": null,
+   "what": "blank leaf",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank leaf)"
+  },
+  {
+   "n": 222,
+   "id": "6ada9ae085108f5f35c9ece3",
+   "key": "112-t",
+   "hand": null,
+   "what": "blank leaf",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank leaf)"
+  },
+  {
+   "n": 311,
+   "id": "6ada9b1985108f5f35c9ed3c",
+   "key": "156-b",
+   "hand": null,
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314))"
+  },
+  {
+   "n": 312,
+   "id": "6ada9b1a85108f5f35c9ed3d",
+   "key": "157-t",
+   "hand": null,
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314))"
+  },
+  {
+   "n": 313,
+   "id": "6ada9b1b85108f5f35c9ed3e",
+   "key": "157-b",
+   "hand": null,
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314))"
+  },
+  {
+   "n": 314,
+   "id": "6ada9b1b85108f5f35c9ed3f",
+   "key": "158-t",
+   "hand": null,
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314))"
+  },
+  {
+   "n": 315,
+   "id": "6ada9b1c85108f5f35c9ed40",
+   "key": "158-b",
+   "hand": null,
+   "what": "blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314)",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (blank or nearly blank leaves (faint, uninked writing on pp. 312 and 314))"
+  },
+  {
+   "n": 316,
+   "id": "6ad845ee6037414ddef15350",
+   "key": null,
+   "hand": null,
+   "what": "wooden cover board",
+   "primary": "fresh-opus-columns",
+   "half": false,
+   "skip": "no writing to read (wooden cover board)"
+  }
+ ]
+}

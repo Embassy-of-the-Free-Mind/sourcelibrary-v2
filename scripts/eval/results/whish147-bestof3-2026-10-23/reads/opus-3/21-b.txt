@@ -1,0 +1,10 @@
+ROW 1 | ഉഢണാപ്രണിഷ്ട്രാന‖ദഗ്ഗാൈകത്രിക്ഷച്യുക്താകരൈഠാഖ‖ാദണപലക്ഷ്യഃവൈരകൈ
+ROW 2 | ണനപലഭൂമാനാനാസ്‖ക്കിണ്ണഖത്ര്യവംഒകനപ്രകാരാനത‖ാത്വാനവിപ്രയാനപ്പുര
+ROW 3 | ക്ഷൈയ്യാഭിത്രുനപല‖ക്ഷ്മിവിത്രാഗാഖണഭഗ്ഗുാക്കദനഖ‖ലക്ഷ്മിഖത്രാദിഭ്രുകര
+ROW 4 | ഖഠകൾാഭാവാൽ.‖ക്കൃക്ഷ്ണക്ഷ്മഖാർസൈകാനഖഷ്വിര‖ൈഖാനസപലക്ഷ്മീഃ
+ROW 5 | നഖഭാ[illegible]ത്വാം‖ദവകാങ്കാദനനപലക്ഷ്മീഭവ‖ത്രയമാക്ഷടന്ത്രാ
+ROW 6 | ക്ഷപണക്ഷ്ണദ്രാക്ക്‖ഭിൽഗണദ്ദക്ഷയഃക്ഷൂദ്രഥേം‖സാഭൗവാൽഗമിവ്
+ROW 7 | ാഖഖങ്ഗാാൈഖ‖വാൈഗാമൈന്ത്യുതൈനനടാ‖വാൽപാന്ത്യാന്ദുക
+ROW 8 | ന്ദുവാത്രുകാഭാവാ‖വാദിത്രാഹ-നാടാവാദിതിഃചത്മിയ‖യാദിത്വാദ്ധ്യഃയമ്ദ്രവാംക
+ROW 9 | മൈനകമ്ക്ഷ്ണഭിഗന്ത്ര‖ൈതഇന്ദ്രാഹാക്കാഴ്ചകൻക്ഷ്ടപലമ്ലുന്തി‖നിയന്ത്രപ്രാന്ത്രാടയംപ്രകൃ
+NOTE | I opened all four pieces and found 9 rows. This transcription is low-confidence: I read many glyphs by shape alone, and conjuncts, vowel signs and reph marks are often unsure, so treat whole rows as tentative rather than letter-exact. Several readings (for example ക്ഷ്മി and ഖ) may be misidentifications. I joined p02 and p03 as one middle column and removed the overlap. The string crosses rows 1, 8 and 9 too, so I put ‖ there as well.

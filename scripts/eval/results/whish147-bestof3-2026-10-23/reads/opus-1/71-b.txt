@@ -1,0 +1,12 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I couldn't reliably read any of the text: I could see the leaf's layout (10 rows, two string holes, rows 5–7 shorter around the holes, several visarga-like marks), but at this resolution I couldn't tell the Malayalam letters apart with confidence, so I've written no guesses or text from memory. Higher-resolution or closer crops of each row would make a real transcription possible.

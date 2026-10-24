@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, E, D, B, A, F
+WHY | C reads as continuous, correct text of Sāṅkhyakārikā 17–22 from "saṃghātaparārthatvāt" through "pañcabhyaḥ pañcabhūtāni", with correct breaks between rows and verse numbers; E repeats syllables where rows meet ("kai/kaivalya"), D has more gaps and slips ("parārthāl", "bhavatīti"), B is mostly [illegible], and A and F are strings of syllables that are not real words.

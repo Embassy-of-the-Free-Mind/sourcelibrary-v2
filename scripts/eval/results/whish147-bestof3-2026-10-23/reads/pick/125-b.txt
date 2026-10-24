@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C matches the Dīpikā's argument for nirvikalpaka best, especially in rows 6–8 ("kiṃ pramāṇam iti…", "viśiṣṭajñānatvāt … jñānavad ity anumānasya pramāṇatvāt siddham"); A is fluent in rows 3–5 but breaks down later, and B is too fragmentary to read as continuous text.

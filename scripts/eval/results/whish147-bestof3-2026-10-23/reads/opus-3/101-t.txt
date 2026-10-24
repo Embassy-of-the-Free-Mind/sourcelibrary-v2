@@ -1,0 +1,13 @@
+ROW 1 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | ത്രി[illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could not reliably read this leaf. It has 12 rows: rows 1–4 and 9–12 run the full width, rows 5–8 are short column blocks between the holes, and there is a folio mark (ൿ-like, possibly a number) in the right margin. I can see where the visarga marks fall, and that row 3's opening is struck through. But at this resolution I cannot tell the letters apart well enough to transcribe them, and the only reading I'm fairly sure of is "ത്രി" at the start of row 9. I left everything else blank rather than guess or fill it in from the Kārikā. Higher-resolution crops of each row would help.

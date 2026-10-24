@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A reads most consistently as real Sāṅkhya commentary on the indriyas (e.g., "bhūtādyahaṅkārāt tanmā[tra]", "ubhayātmakam atra manaḥ", "iti lakṣaṇa", "guṇapariṇāmaviśe[ṣāt]", "prakṛtiviśeṣa"), while C has good Malayalam fragments ("śrotrādibuddhīndriyaṅṅaḷ", "prāpyaprāpyakāral") but breaks down more often, and B is mostly nonsense syllables with many gaps.

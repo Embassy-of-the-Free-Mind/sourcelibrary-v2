@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B has real Sanskrit and Malayalam phrases in most rows, such as "pradhānattinnu", "pratipattiḥkāryya", "puruṣasya" and "kiṃtalkkāryyamityāha". C's few readable pieces are accurate but mostly illegible, and A is mostly syllable strings that only look like words.

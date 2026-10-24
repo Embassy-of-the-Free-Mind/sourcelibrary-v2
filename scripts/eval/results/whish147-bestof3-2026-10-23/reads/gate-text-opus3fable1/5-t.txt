@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, D, A
+WHY | Transcription B reads as continuous, correct text of Sāṅkhyakārikā 6–10 ("sāmānyatas tu dṛṣṭād atīndriyāṇāṃ prasiddhir anumānāt…", "asadakaraṇād upādānagrahaṇāt…", "hetumad anityam avyāpi sakriyam anekam āśritaṃ liṅgam…"), with verse numbers, while C has only scattered correct pieces, and D and A are mostly broken syllable strings.

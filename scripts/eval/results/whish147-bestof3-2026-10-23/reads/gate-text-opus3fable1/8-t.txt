@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A, D
+WHY | C gives the most complete and grammatical text of Sāṅkhyakārikā 41–45 with commentary (for example "vinā yathā chāyā", "40", "jñānena cāpavargo", "rāgād aiśvaryād"), with only small vowel-splitting slips at the string holes; B is close but drops "vinā" and has more gaps, A is almost entirely illegible, and D is meaningless syllables.

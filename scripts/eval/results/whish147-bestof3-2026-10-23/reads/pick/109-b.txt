@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C fits the context of Sāṅkhyakārikā 53–56 best ("daivasargaṃ", "tatra jarāmaraṇa… duḥkhaṃ… cetana", "duḥkhatrayattāl", "vaiparītyād", "trividhaḥ", "uttarottaraṃ"), and its Malayalam gloss is coherent; A is readable in places, and B breaks down into syllable strings more often.

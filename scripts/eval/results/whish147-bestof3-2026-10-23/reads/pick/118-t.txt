@@ -1,0 +1,3 @@
+PICK | C
+RANK | CAB
+WHY | C has many gaps, but what it reads fits the Dīpikā's argument about whether perceptibility depends on manifest colour (*ghaṭapaṭādiviṣaya … udbhūtarūpavatvād*, *indriyajñānapratyakṣatvaṃ … sādhyavyāpakatvaṃ … avyāpakatvāṃ na*); A makes sense only in rows 2–3 and breaks down after that, and B is mostly strings of syllables.

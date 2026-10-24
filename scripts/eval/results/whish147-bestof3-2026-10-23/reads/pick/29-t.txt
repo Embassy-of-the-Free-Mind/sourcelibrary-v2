@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C has the most real text tied to the Sāṅkhyakārikā context (*cetanaṃ prasavadha[rmi]*, *traiguṇyādi*, *avyaktādi*, *pravṛttiḥ*, *prakāśa*, *pratipa…*), along with believable Malayalam (*vannu*, *ālkkeunnā*), while A and B are mostly runs of syllables with only scattered words.

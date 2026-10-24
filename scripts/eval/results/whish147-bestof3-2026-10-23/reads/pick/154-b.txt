@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A gives the most real text in context: Tarkasaṃgraha-style phrases about mithyājñāna, viparyaya, yāthārthya and pramā/apramā, plus a mention of nyāyavaiśeṣika, though it breaks down into fragments after row 3. C has the same words but is almost entirely [illegible], and B's extra syllables mostly don't form real words.

@@ -1,0 +1,9 @@
+CHECK | row 1: The leaf begins "ഷ്ദ്ദീയമെൎജ്ഞാനം.വി." and continues "…രാഗമൈക്ഷഷ്യം.സാക്ഷികമെൎക്രൂപം.…മസമസ്താദിപശ്യന്ത്രം…". B (ഷ്യദ്ദീയമെൎജ്ഞാനം.വി.രാഗമെൈക്ഷഷ്യം…പശ്യന്ത്രം) matches closely. A starts close (ഷ്ടീയമെള്ള…) but goes wrong later (കരകസമസ്താദിപ[illegible]ദ്വന്ദ്വ്യ). C (ബുദ്ധിൎധൎമ്മൊ…) is the correct kārikā text, but those letters are not what the leaf shows.
+
+CHECK | row 7: The leaf begins "ഉട്ടയാമെകിമ ‖ ത്രമനസ്സ്.കള്ളികമിന്ദ്രിയഞ്ചൊസ്ര ‖ യത്രാൽഗണചതി". B (ഉട്ടയാമെകിമ ‖ ത്രമനസ്സ്.കള്ളിക്കമിന്ദ്രിയഞ്ചൊസ്ര) matches. A (ഉദ്ദ്യാമക്രമ ‖ രമനാസ്സ്.കല്ലികിമിശ്ശ്രണ്ടൊസ്സാ) is only partly right. C (ഉഭയാത്മകമ) does not match the strokes.
+
+CHECK | row 9: The leaf begins "ഞാമരാലൊചനമ…" and ends "…ഹാനരൌഷ്ഠരാഷ്". B (ഞാമരാലെപാചനമ…സഖ്യാനരാക്ഷ്) is the closest. A (ഔരഭാവലാചനമ…അസ്സ്ലീനതാശി) gets the start wrong. C (നാമാലൊചന…രണൊത്സൎഗ്ഗാനന്ദാശ്ച) is the normalized text, not this leaf's letters.
+
+PICK | B
+RANK | B, A, C
+WHY | B follows this scribe's actual, error-filled letters stroke by stroke in all three rows checked; A garbles many of them; and C is a fluent, corrected Sāṅkhyakārikā text whose letters are not the ones written on the leaf.

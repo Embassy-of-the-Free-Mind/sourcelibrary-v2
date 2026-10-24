@@ -1,0 +1,3 @@
+PICK | B
+RANK | B C A
+WHY | B reads most consistently as a real śakti-grahaṇa discussion, with recognizable Sanskrit and Malayalam terms throughout (vyakti, śaktikaḻ, śaktigrahaṇa, pravṛttikaḻ, vṛttijñāna, siddhaśakti), while C is fluent only in rows 1–3 and A is mostly strings of syllables that only look like words.

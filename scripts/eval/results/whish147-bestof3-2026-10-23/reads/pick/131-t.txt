@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C reads most consistently as Tarkasaṃgraha-Dīpikā text on the hetvābhāsas, with "vyāpyatvāsiddha", "upādhilakṣaṇamāha", "pakṣāvacchinnasādhyavyāpaka", "avacchinna", "bādhita" and "satpratipakṣa…pratibandhaka"; B keeps some of these terms but garbles more, and A breaks apart most often (e.g. "upalakṣaṇa", "vyāpakamaṇḍalaṃ").

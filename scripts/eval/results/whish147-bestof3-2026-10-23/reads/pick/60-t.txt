@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most consistently as real Sāṅkhya commentary across its rows ("viramati duḥkhā…", "prekṣaka", "prakṛtiḥ… nṛttaṃ", "saṃskāraṃ pratyakṣa", "guṇasya", "prakṛtitattvam", "vyaktātmanā"); C has some real phrases ("tantrābhidhaiyatva", "upakaroti", "siddhiḥ siddhā upadeśā") but more broken stretches, and A is mostly strings that only look like syllables, with many gaps.

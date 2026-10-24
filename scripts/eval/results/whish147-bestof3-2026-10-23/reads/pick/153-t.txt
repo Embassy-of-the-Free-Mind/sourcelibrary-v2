@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B reads most consistently as real Dīpikā text across the rows (e.g., "saṃyoga…upādhiḥ sopādhikatvād dhūmatvaṃ vyāvṛtta", "sādṛśya", "pratyakṣa", "upamiti", "saṃjñāsaṃjñisaṃbandhajñāna"); C has some of these phrases but is broken elsewhere, and A is mostly strings of syllables that only look like words.

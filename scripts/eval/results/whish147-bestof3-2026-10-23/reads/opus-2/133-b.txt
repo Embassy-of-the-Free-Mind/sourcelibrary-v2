@@ -1,0 +1,10 @@
+ROW 1 | ഷാഃന്തുഞാംക്ഷേത്രിതു‖ഭാംക്ഷാഭിജ്ഞാനമിത്യൎത്ഥഃഅന്യശാസ്ത്രകാ‖രഭേദാൽശാസ്ത്രഭേദോ
+ROW 2 | നന്ദ്യാൽഏകാംക്ഷാ‖യാത്രിപദസ്യത്രിതയാഗൃതാലക്ഷണമാ‖നാ।അത്രിസന്നിധിലക്ഷണ
+ROW 3 | മാഹാപദാനാമിതി‖ത്ഥമിളംബെനപദാൎത്ഥോപസ്ഥി‖തിസ്തുഞ്ഞഖിഃഉച്ചാരണാന്ത
+ROW 4 | അല്പമയാഗതെ‖ദക്കൽഗൗരവഇതിഷ്ടകേഴു‖മിതിന്നാകാംക്ഷാ
+ROW 5 | ദാഹരണത്വംഗ്ര‖ഹ്യംവൈദികസ്യവിശേഷണമാഹ।‖വൈദികാദിതരൈരാക്ത
+ROW 6 | ത്വാദിതിസൂത്രപ‖ദസ്യാദനാദിത്വാൽകച്ചിത്വനാ‖ജ്ഞാസ്ഥിതിചേന।ഭൈ
+ROW 7 | ദൃശ്യപോദകേക്കയഃ‖വാക്യസമൂഹത്വാൽടാനഖാദിവൽ‖നചസ്വശ്ശമാണകൎത്തൃയ[illegible]
+ROW 8 | ഷ്ഠവാദിഃഗൗതമാദിദ്വി‖ാദിശ്രുപരംഃപരണാവേദകൎത്തൃഗരമണസ്യ‖നനുസാധനശ്ല്യാപ[illegible]
+ROW 9 | കത്രാൽഅന്ദ്രാരത്രപാത്രൎദ്രൈയാദെപട്ടാര‖ാഴ്മാത്രഇത്രക്ക്രൈ‖ത്രംഷ്ഫ।
+NOTE | All 9 rows have text, but my confidence in the reading is low. Rows 4–9 are especially uncertain, and so are most of the conjuncts and the vowel signs drawn like ൨. I only matched the overlaps between pieces roughly, and the right end of rows 7–9 is damaged by a crack in the leaf.

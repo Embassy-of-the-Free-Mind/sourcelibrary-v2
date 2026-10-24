@@ -1,0 +1,4 @@
+PICK | A
+RANK | A, B, C
+
+WHY | A has the most recognizable words for this part of the Sāṅkhyakārikā (dṛṣṭa, pratyakṣa, sāmānya, liṅga/liṅgi, tattva, pramāṇaṃ) and reads closest to real Sanskrit with Malayalam commentary, though it is still garbled in places; B is mostly broken syllables, and C is so full of [illegible] gaps that it barely forms continuous text.

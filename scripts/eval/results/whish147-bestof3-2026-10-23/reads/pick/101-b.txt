@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | None of the three reads as Sanskrit or Malayalam: B's fragments ("śra śra", "tha tha", "ra ra") are repetitive syllable noise that looks invented rather than read, while A and C are identical and fully illegible, which at least claims no false text (A is ranked above C only to break the tie).

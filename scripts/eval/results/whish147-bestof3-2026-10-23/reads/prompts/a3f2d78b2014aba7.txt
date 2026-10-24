@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. kānāṃsukhaduḥkhamohā ‖ tmakatvādekaika [illegible] kanākamā [illegible] yenabhūmi ‖ [illegible] ccraṃyata [illegible] ṣāṃsmṛtā
+2. yaḥtalkriyānamitisāmā ‖ ndrā [illegible] tāddhrāṃśaktitaḥpravṛtte [illegible] upa ‖ [illegible] kulālādiśaktivṛttikā
+3. ghaṭādināṃpravṛtte ‖ [illegible] nāśaktivyaktikā [illegible] kāmikā [illegible] ddhyā ‖ [illegible] kānāṃpravṛtti [illegible] dda
+4. [illegible] tantva [illegible] kṣa ‖ pravṛtta [illegible] kaṣmāśaktyādititṛ ‖ [illegible] sairaśaktiḥsai
+5. khāvyaktabhāvamā ‖ va [illegible] ka [illegible] sā [illegible] māndrā [illegible] kkaḥ ‖ kāraṇakārya [illegible] bhā [illegible]
+6. [illegible] dikāraṇasya ‖ [illegible] ṭāki [illegible] khāl [illegible] ḥ ‖ [illegible] cca [illegible]
+7. [illegible] kasyāntu ‖ [illegible] yataulpadrū [illegible] kaka [illegible] raṇaṃ ‖ [illegible] bhadraka [illegible]
+8. [illegible] ṣāmūlkiñca ‖ [illegible] ṭayojña [illegible] ñña [illegible] ka [illegible] ‖ gata [illegible] yāka [illegible] cca
+9. kibhāgairāddhva [illegible] klākha ‖ khāñcaṭādyā [illegible] kāsā [illegible] ṇā [illegible] yā [illegible] sāmūl ‖ [illegible] kiñcasyā [illegible] mūlkiñcasyāva
+10. sāñcaṭasyākhava [illegible] vyakta ‖ [illegible] sya [illegible] klāl [illegible] pra [illegible] bhāga [illegible] ‖ [illegible] khā [illegible] mūntibhaga [illegible]
+11. syakāraṇānābhaktika ‖ [illegible] vya [illegible] śrāvyakkāl [illegible] krin [illegible] syādyakkaḻ ‖ [illegible] lvyāpra [illegible] kāñca [illegible]
+
+TRANSCRIPTION B
+1. kānāṃnyakhaṭṭaḥkhaśaimūha ‖ ānnagatabhāredakeka [illegible] kanākaṣāmpiśenabhūmira ‖ ccvaṃśvataeṣāṃsmūdā
+2. yaḥtalkriyānammimasāmā ‖ trūṃrairādṛkṣmaṃśaktiraḥpravṛtteścatiṣṭaga ‖ kalālādiśaktivṛttikā
+3. jñaṭādināḥpravṛtte ‖ [illegible] ttināśaktivṛttikākikkāmibhārahyādya ‖ rtthikānāṃpravṛttidṛṣṭeṃdra
+4. trairatavabhabhrākṣa ‖ pravṛttakkaḻiyekai [illegible] kaṣāgatādibhamikavya ‖ ṣāsaiśaśaktiḥsai
+5. vāvyaktabhāvamā ‖ valdrākaibhasā [illegible] sāmārtthagyādṛṣṭaḥ ‖ kāraṇakāryyavibhāga
+6. ādibhiḥkāraṇānya ‖ ddiṣṭābhiṅṅabhā [illegible] bhālpṛśverapāraḥ ‖ ṣeḻāccāḥtavantvātma
+7. ipākantyāntra ‖ khaṃyataulpadra [illegible] draikakalkkāraṇaṃ ‖ yakeṣājñādrekakaikkā
+8. dvayaṣāmūlkiñca ‖ ghaṭayojñehrajñanakaikakhanarūpa ‖ gatṛkriyākalaṇācca
+9. kibhāgaigāmūbhṛḥkedyāga ‖ yājñaṭakrābhakkācāleṇṇiyāyānasāmūl ‖ kiñcenyāyāmūlkiñcenyāva
+10. sājñaṭanyahāvāṃpṛkka ‖ nyamaṃsadelekkāmai [illegible] jñālpṛgaśakkiiyā ‖ vākavaṇāmūttibhedaḥgaḥtentāda
+11. nyakāraṇainabhūmitanna ‖ tanvaṃkaccāvṛkkālkimaralnyābhatmamakki ‖ ssilvyākhyānekāśśatanya
+
+TRANSCRIPTION C
+1. kkānanāṃśyakhaṭṭukhamohā ‖ nmagatatatvādedakaikanākaphāsiyennabhūmira ‖ mimaccuṃyataeṣāṃsamūdā
+2. yatalkriyānamitisāmā ‖ nyaṃtodṛśyaṃgaktitapravṛttekatṛttiupa ‖ pakūlacālādiśaktipuṣṭikkā
+3. jñaṭādināpravṛtte ‖ [illegible] nāthaktivṛttikā [illegible] ṭāktikāmiki [illegible] dyū ‖ ktikānāṃpravṛttiddṛṣṭāṃda
+4. tvāletatajñaprākta ‖ pravṛttakkuḻokekayāśaktyābhavitakhya ‖ ṃyāsaitaśaktisai
+5. vāvyaktabhāvamahā ‖ varddikaraṇasāmānyotādṛśyaḥ ‖ kāraṇakāryavibhāga
+6. ābhikikāraṇatva ‖ gurddadākkimūkhyālgudderpādyākru ‖ ññāctantyāntṛbhya
+7. tvapākatyāntu ‖ kkaṃyataulpādyokatalkāraṇaṃ ‖ yatemājñadrākkako
+8. tryaṃkhaṣāmūlkiñca ‖ ghaṭayorjñagajñakaikakhyavṛṣa ‖ gatikriyākalaṇocca
+9. tbhādegādṛṣṭvatekrāga ‖ ṣāghaṭasyābhikkāsādeteṇṭiyāsyānasāmūl ‖ lkiñcintyāsāmūlkiñcintyāva
+10. sājñaṭasyaṣavaṃvyakta ‖ ktasyatadagodaśśailaṃvṛḻṛttālpraiśaktiyā ‖ vākkavaṇāccatibhaigattantrāda
+11. syakāraṇāṇabhūmitta ‖ tavyaṃtajñāpṛkkālkikimukhalsyāditiṅṅi ‖ ṅkilprālyānekāśśakanya
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

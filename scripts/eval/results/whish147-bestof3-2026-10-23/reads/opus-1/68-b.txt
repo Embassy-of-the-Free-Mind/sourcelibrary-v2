@@ -1,0 +1,16 @@
+I could not read this leaf reliably. At this resolution the incised strokes are too small and too faint for me to tell many similar akṣaras apart, such as ര/ന/ണ, ത/ത്ത, ക്ഷ/ഷ and ദ്വ/ദ്ദ. Rather than fill the gaps with guesses or with text I might remember from the Kārikā, I have marked almost everything as illegible and given only the few marks I'm fairly sure of.
+
+ROW 1 | ഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]ഃ
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]ഃ
+ROW 9 | [illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible]ഃ[illegible]ഃ[illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 12 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]ഃ[illegible]
+
+NOTE | 12 rows: rows 1–4 and 9–12 run the full width, and rows 5–8 are short blocks set between the holes. Each row ends at the right edge of piece p04; rows 7 and 8 end there with a visarga or verse-stop mark (ഃ/:). Apart from the visarga marks and the row layout, I could not confidently read any text (well under 10% of the leaf). The rows are fully inked, so a sharper or zoomed scan of each piece should make a real transcription possible.

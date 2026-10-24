@@ -1,0 +1,10 @@
+ROW 1 | ശ്രീന്ദ്ര[illegible]ാപ്രശെഷ്യന്ദ്രദൌന്ഥിതെഗ്ക്ഷീബം‖ഫ്ടഭമെതിഷ്ടി[illegible]ബൈമെഭാഷ്ട്രാണലക്ഷണ്ണാം‖ഋലെ
+ROW 2 | ദത്ര്യാസല്ലൂഷാന്ത്രാമ്നിദ്ഭി‖ഭിവിധാഞ്ജലപൃനഃപ്രനഃഉദഭദ്ര.സ്യതി[illegible]ഷ്ഠസ്വഭ്യാ‖ബൊദ്ധാബാ
+ROW 3 | യഞ്ജ്ഞദാ।ഹ്രാഃ‖ക്രൂഗണ്യപതരരസിന്ധമഃ।ശിശ്।ശ്ര‖ധിഃഗരതന്ത്രാലെദ
+ROW 4 | ണരൈലാരഞാര‖നവാദിനം.ലണ്ണൂഗ്ഗിമ്മശ്രീല‖രതസ്ത്രിതക്കാല
+ROW 5 | പഞ്ചിശാദൂയത്വം‖ഗലാപ്രാമുല്ലപ്ലക്കാചലന്താ‖നരന്ദ്രലെണ്ണാജ്ജ
+ROW 6 | ഒനദലചിൽപ്ര‖വൽതഭുരുപ്രപ്ലരജാദ്രനമൃഛ്യ‖രക-രലഭൂകാദസ
+ROW 7 | ദമാക്ഷഃഭയാദ‖ത്രവരലിംത്രശവിഃരരപ്രാഭംര‖വൽഡ്യലിം.ശ്രമതൈ
+ROW 8 | രജ്ഞാനഖല്ഗ്ഗഭാ‖ശ്രുദദതന്തഃജ്ഞടിമ്യത്ബിന്ദിവാപി‖ച്ചൈ.തമാത്ര.സം.ൽക്ക
+ROW 9 | സവഃഉദിനന്ദ്യവ‖ത്വജ്ഞിതുദ്രാദിഭുദ്യാഗരഞ്ജുഇതിഞ്ഞശ‖ലസവാൽഷജ്ഞിരദ്രൂ
+NOTE | All 9 rows are visible (the left column runs as p01, the middle as p02+p03, the right as p04), but I'm not confident in most of the readings above. They are best guesses at individual letter-shapes, and many syllables, especially conjuncts and vowel signs, are probably wrong. I couldn't tell where words break or match the text to any passage, so don't use this as a reliable transcription.

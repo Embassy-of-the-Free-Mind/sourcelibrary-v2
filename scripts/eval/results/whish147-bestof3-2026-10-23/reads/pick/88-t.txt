@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | All three are almost entirely [illegible], but C is the only one that offers any real text: "bhedena" is a genuine Sanskrit word (and "malaṃ" could be one), while B at least marks string holes consistently on every row and A gives none in rows 1–4 and 9–12.

@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, C, B
+WHY | A gives the most coherent Sāṅkhya commentary on kārikā 20 (e.g. "tasmāt tatsaṃyogād acetanaṃ cetanāvad iva bhavati", "guṇakartṛtve ca tathā kartā iva bhavaty udāsīna iti", "na puruṣasya yathā puruṣasaṃyogād acetanaliṅgam"), while C is partly right and B often garbles key words (e.g. "prakṛteryyathāprakṛṣṇa", "ṣetranāvadiva").

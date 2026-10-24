@@ -1,0 +1,10 @@
+ROW 1 | ഫിത്താദിനാമിവഛട്ടദിനാമവിസംകേതകിവശക്തിഃനരൂപദേത്മനാംഗിവാദ്ധ്യഃപട്ടാനാഞ്ജാത
+ROW 2 | ഉവെഫരക്ഷിപ്തിതെശക്ഷെണതയാജ്ഞാതെഃപ്രഥമക്ഷേവസിദ്ധത്വാൽഭ്രക്തിലാഭസ്വാക്ഷിവാദിനെതി
+ROW 3 | കൈശ്ചിൽതന്നഃഗാദമനൊധെയത്വാദേദണ്ഡ്വദ്രവ്യാവഹാരേണസർവ്വത്രാനഭ്യൂതനൊദേഷ്ടക്ഷാദെവവസിംഭര
+ROW 4 | ഖനജ്ഞാത്വിവിശക്കു ‖ വ്യക്ഷാഭെവവശക്ഷിക്കളനാൽഗ ‖ ക്ഷിഗ്രതബവ്യക്ഷവ്യാപവി
+ROW 5 | ഏവെണാവ്യാൽവിൽ ‖ സ്യജ്ഞാലൊഗാദ്മാനമെയുക്ത ‖ വ്യഷവാക്രുവണാന
+ROW 6 | ഖനംദിഭ്യാമവ്യദ്ധ ‖ സ്യപ്രകൃതിദ്ദേപലത്വഗവാതൌ ‖ നക്ഷേദിക്ഷാദിഭ്യാമവ്യ
+ROW 7 | ഝപ്രകൃതിജ്ഞാനര ‖ ജ്ഞാനസ്യാനാക്ഷായവ്യക്തിര്യെകാദ്രാ ‖ ാഃപാക്യജ്ഞതബന്ധിതാ
+ROW 8 | നഖഗൗംബെധാരെ[illegible] ‖ ൾവാക്യാണെവന്തുതാരഷ്യാദ്ദാവാദ്രു[illegible] ‖ ട്ടാചെഗാഛദന്യാചെധാബവി
+ROW 9 | ഭിക്ഷുഗക്ഷിൽണൈസ്വായ[illegible] ‖ സ്യാഗതാതാബ്ധിഗിങ്ങൾഗക്ഷിൽഭിങ്ങ്വൽപദ്മ[illegible] ‖ ദ്ഭതനസസാർവ്വത്രകാര്യ്യപര
+NOTE | The leaf has 9 rows: rows 1–3 run the full width above the holes, rows 4–6 are in three columns, row 7 runs across the right hole only, and rows 8–9 cross both holes where the string hides some letters. I only managed a rough glyph-by-glyph reading and couldn't make reliable Sanskrit sense of most of it. Many letters are uncertain guesses (for example ഫ/പ, ശ/ഗ, ഷ/ഛ, and conjunct forms), and I can't vouch for word division or sandhi, so treat this as a low-confidence draft to check against the leaf. In rows 1–3 I couldn't place the hole break, so I left out the ‖ there.

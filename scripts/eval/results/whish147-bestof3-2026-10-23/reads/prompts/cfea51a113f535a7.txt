@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. bhogajanakakatvāddyādi [illegible] haloke ‖ ṣukhaduḥkhānaṇeṣu ‖ na [illegible] yamāśa [illegible] ṇṇāne
+2. [illegible] diṣyāṃkhadaivasar ‖ ṣaṭādibhṛṣṭyāṃkadaidapal [illegible] ṣṭa ‖ dinākkādaṇādiśara
+3. ṣāṇmiyametanābha ‖ lupādānagrahaṇāddikiñjāha [illegible] ‖ [illegible] dakṣaṃupāddhiyā
+4. śatasyāṇḍalādā ‖ naṃkāṇḍaṃya [illegible] thātaitalasyāddi ‖ lāḥdṛṣṇṭaḥkṣīraṃ
+5. kraitalaṃdvi ‖ cayaddinasyālkathātantrā ‖ pādāntyādapādo
+6. nyagrahaṇaṃtra ‖ kṣṭeḥkṣiyatekakṣmādipādā ‖ nasaṃgrahalsana
+7. dvakīrttaṃāgra ‖ māndikannasampillayayāndi ‖ grahaṇaṃsyālsa
+8. ścaṭavarāṭarapāddi ‖ kṣayaddyāsalkkādṛścaṃṭavelkkadāsa ‖ saṣṭhyasyāsaṣṭhyasāṣṭhdara
+9. saṭavasyālnatai ‖ vakṣikṣṭālna [illegible] sadevakāddhraṃśaka ‖ kanyāśaktyākāraṇādda
+
+TRANSCRIPTION B
+1. bhāvaññabhedakanabbādra ‖ drādviuhādelākekṣiṇipakṣaḥkṣānaṇṭena ‖ na [illegible] yamāśaramitāṇṭe
+2. dvivaṃ0khaṭecasar ‖ ṣaṭadabhrul̤yūṃkaṭeṭacamlbijjā [illegible] ‖ [illegible] dvinākkāmabaṇāmiśekha
+3. ṣajñakliyaotanāpa ‖ lupādānamuruhāṇadvikiupāya ‖ [illegible] dakṣaṃupādiyā
+4. katastrataddapādā ‖ naṃkkāddhyaṇaṃyaeādaitalasyatri ‖ [illegible] lāḥdakṣṇaḥkṣmiraṃ
+5. kṛtaitalaṃdravi ‖ catuddinasyālkkapantamesyā ‖ vādadātasyādavāddā
+6. nasyagrahaṇaṃkada ‖ kṣaddaḥkliyakṛkañjāddicādā ‖ tsaṃgrahālsata
+7. davaṅṅāddhyaṃñjya ‖ mānikatāsasakhilabhaiyāsavi ‖ grahaṇaṃsyālsa
+8. jyasaṃddapāddāpādda ‖ ddikṣayadrāsalkkāddhyaṃṭavailkkadāsa ‖ savyasyasavyaktasākhyada
+9. saṃddavasyāltadai ‖ phevaññikkasthālnasadedavakkāddhyaṃśakki ‖ [illegible] kakasyaśaktyākāraṇādra
+
+TRANSCRIPTION C
+1. dohaṇbadakakanaṇo ‖ dryāddiuhalokekiñcipakaḥṣṭhānaṇe [illegible] ‖ nniścyamāśasamibbānne
+2. ddihyāyadaivasal ‖ ghaṭādirūpyaṃkadaivamṛlpiṇḍā ‖ [illegible] dināklāraṇāmiśeṣa
+3. ṣāñjikriyayatenāpa ‖ lupādānagrahaṇādditiupāda [illegible] ‖ dalupādiyā
+4. śatasyāddupādā ‖ naṃkkāryaṇāṃyathātailasyabhi ‖ lābhaḥda [illegible] kṣīraṃ
+5. takraitalaṃdadi ‖ cadadhinnasyālkācanname [illegible] ‖ pādatānasyādapādā
+6. nnyagrahaṇaṃkida ‖ kkiṃbhoḥkiyake [illegible] kantyādicādā ‖ nasaṃgrahālsana
+7. davaśāddhyaṃgra ‖ śāndikkanāsamiśralamaiyānami ‖ grahaṇaṃsyālsa
+8. ddhyasaṃṭṭacāṭṭanapāddi ‖ kkyadṛḍhasalkkā [illegible] tthiṃṭavelkkadāsa ‖ sarvvasyasarvvatrasarvvadābhā
+9. saṃbhavasyālnanme ‖ vakkiṃkasyālnasadaivakkāryyaṃśaka ‖ kkakasyaśaktyākāraṇād
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

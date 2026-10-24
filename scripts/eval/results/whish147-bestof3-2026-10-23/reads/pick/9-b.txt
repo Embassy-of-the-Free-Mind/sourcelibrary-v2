@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A has the most recognisable Sāṅkhya-commentary words, such as *pradhānattāl*, *vijñānapakṣa*, *kṣetra*, *dṛṣṭānta* and *saṃsārattile*, though no transcription is fully continuous; B has a few real words (*puruṣan*, *vijñānaṃ*, *saṃsāra*) among a lot of nonsense, and C's few fragments look plausible but are mostly [illegible].

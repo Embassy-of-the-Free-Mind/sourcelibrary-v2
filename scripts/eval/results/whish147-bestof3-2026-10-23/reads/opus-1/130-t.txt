@@ -1,0 +1,9 @@
+ROW 1 | സാങ്ഖ്യജ്ഞാനംഭാവാ ‖ ൽക[illegible]സിദ്ധേനമിത്തിവിം[illegible]ജ്ഞ ‖ ജ്ഞാനാദാവപവിശുദ്ധജ്ഞാ[illegible]
+ROW 2 | നാന[illegible]ൽപ്രവൃത്തിമയ ‖ യാദിജ്ഞാനാഭാവാൽപ്രവൃത്തിമേക്കിവൃദ്ധ ‖ ക്ഷിജ്ഞാനമവിനസ്യാദിതിമെ
+ROW 3 | ഷന്നു।ഇലാദ്ത്ര ‖ ഷോഡശാനൈദ്രാദ്രഭാവാനാത്ര ‖ യോഗേനസ്യുപ്രത്യേകം।പ്ര
+ROW 4 | സിദ്ധാനാനാമളുന ‖ ംപ്രവൃത്ത്യാംസാദ്യുരതേത്രൈയാദ ‖ ശാവപക്ഷിന്നസാദ്യൂരൈ
+ROW 5 | ദ്യൂകാദികാരണ ‖ പ്രത്ര്യാദാവാൽനാവത്തിത്വാ ‖ സായാനഞ്ജുപ്രത്യേകാ
+ROW 6 | തിതരഞ്ജനൈപ്രസി ‖ ദ്ധസാദ്ധ്യവിവിക്ഷാനമിത്തിവൃത്തിം ‖ നകാവൃദ്ധിരിന്ദ്രിയണാമെവ
+ROW 7 | ത്തിപക്ഷലക്ഷണമാവ ‖ സംഭവക്ഷേത്രിനന്ദ്രവണ്ണാന്തരേഡ ‖ വിമ്മനന്തമെലഅവ്യക്ത
+ROW 8 | ജ്ഞേത്രൈപടവാമെ ‖ ത്രഗാങ്കോനാത്രിമിതമെഷുസമെദഡാ ‖ ാദാവാൽഗ്ഗഃകെപ്രത്യകെ
+NOTE | Low confidence. All 8 rows show, but I could only read about half the letters with certainty. The rest of this text is my best guess from the stroke shapes, and some guesses may not be real words. The ‖ marks fall at the cuts between pieces 1|2 and 3|4. Rows 3–6 are the short ones broken by the holes; rows 1, 2, 7 and 8 run the full width.

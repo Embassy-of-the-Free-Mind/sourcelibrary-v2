@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. nāmodaka [illegible] haṃbhakṣayi ‖ [illegible] trāmitima [illegible] tetaddṛṣṭaṃjñātvāmanaḥpra ‖ [illegible] paraṃ0 [illegible] prāpakṣi [illegible] āmiti
+2. [illegible] jñākamitissaṃkalpa [illegible] yatitievaṃ0bāhyā ‖ [illegible] ārūpikāraṇe [illegible] bandhāṃ0 ‖ bandhāṃ0vṛttiṃ0pa [illegible] rākkuka
+3. [illegible] hātukkiṃ0pra [illegible] padru [illegible] itieto [illegible] kimā [illegible] ‖ [illegible] tmārtthaṃ0bandhāṃ0bandhāṃ0 ‖ [illegible] 0pra [illegible] padra [illegible] maṟṟu
+4. ākṣamitra [illegible] ‖ ārtthaṣivakka [illegible] ātuṣṭhi [illegible] nmyā ‖ [illegible] ākima [illegible] yopara
+5. bhāga [illegible] kkavattya ‖ [illegible] sadṛ [illegible] mevādra [illegible] ātu [illegible] śvaraḥkka ‖ [illegible] gata [illegible] eva [illegible]
+6. tyādikalāsāvāntyu ‖ [illegible] nāpṛlkṣa [illegible] kṣyāttsaṃpadru ‖ [illegible] etakovākiṃ0 [illegible]
+7. [illegible] ṣyara [illegible] śiro ‖ ga [illegible] snapra0 [illegible] 0vapaśubhṛmevavā ‖ iti [illegible] krādana [illegible] kko
+8. na [illegible] lkkāl̤cetakka ‖ raṇa [illegible] yā [illegible] ānaprākti [illegible] koṇṭa ‖ naka [illegible] l [illegible] ūṟāddha
+9. kāraṇaṃ0bandhāṃ0bandhāṃ0pṛ [illegible] iṃ0kārayati [illegible] ṃya [illegible] ‖ [illegible] ddha [illegible] rttāsvāl [illegible] ‖ [illegible] prakṛti [illegible] pakṣatenā
+10. [illegible] śya [illegible] pādra [illegible] prakṛ [illegible] raṇṭupagateva [illegible] ‖ [illegible] bandhālprakṛ [illegible] ‖ [illegible] tennuceytennāyiṭṭu
+11. [illegible] kkarttāpa [illegible] rogaveṟṟu [illegible] iti [illegible] celpuru [illegible] ‖ [illegible] evādhiṣṭhātāra ‖ [illegible] cetanyāprakṛtiḥ [illegible] me
+
+TRANSCRIPTION B
+1. nāmodakā [illegible] haṃbhakṣayi ‖ ṣyāmītimanyatetaddṛṣṭaṃjñātvāmanaḥpra ‖ [illegible] raṃśruta [illegible] prāpa [illegible] syāmīti
+2. [illegible] ṃ [illegible] jñākamitisṃkalpa ‖ yatievaṃbāhyābhyantara [illegible] ṇāṃ [illegible] nāṃ ‖ vṛttiṃparasparā [illegible]
+3. [illegible] tvakkiṃprakipa [illegible] ‖ [illegible] iti [illegible] mā [illegible] tmā [illegible] sthāṃsthāṃ ‖ [illegible] pra [illegible] pa [illegible] ma [illegible]
+4. ākṣitvālpuruṣa ‖ ār [illegible] vakkai [illegible] truṣimiṃ [illegible] ṣanyā ‖ [illegible] ā [illegible] yopa [illegible]
+5. bhāgaḥkaivalya ‖ [illegible] vṛttimesātrunenmiśvaraḥka ‖ rttājñagata [illegible] eva [illegible]
+6. tryādikalāpādya ‖ jjaindranāppal [illegible] kṣasvārtthasaṃvedya ‖ [illegible] e [illegible] co [illegible] ṃ
+7. [illegible] śvara [illegible] ‖ gamejjalsva [illegible] ṃva [illegible] śuddhamevavā ‖ [illegible] kruddhāna [illegible]
+8. namilkkāl̤cetakka ‖ [illegible] ṇa [illegible] śra [illegible] ā [illegible] ānastri [illegible] koṇṭa ‖ [illegible] kaścil [illegible]
+9. kāraṇeḥsthāṃsthāṃvṛttiṃ ‖ kārayatitrulpaḥya [illegible] karttāsvālkimma ‖ [illegible] kiṃprakṛtimapekṣatenā
+10. baiśyarapāmidrāprakṛ ‖ tira [illegible] pagave [illegible] ndribeba [illegible] ntyālprai ‖ pyatesva [illegible] nāyissyā
+11. [illegible] kkarttāparogaveḻḻa ‖ [illegible] ḻaḻ [illegible] celpuruṣassaevādhiṣṭhātāva ‖ āssacetanyāprakṛtiḥśru [illegible]
+
+TRANSCRIPTION C
+1. rāmodakāṟahaṃbhakṣayi [illegible] ‖ ccarāmitimaṟṟetadda [illegible] ādṛṣṭaṃjñātvāmanaḥpra ‖ [illegible] raṃdṛṣṭaprāpakṣiccāmiti
+2. kṣiṃcejñākamitisḥkalla [illegible] ‖ yatikṣievaṃbāhyāḻa [illegible] ādyapitānutondhāṃ ‖ [illegible] ndhāṃvṛttiṃparasparākruka
+3. hetukkiṃprakṛtipaddra [illegible] ‖ itietānikimā [illegible] ātmālndhāṃndhāṃ ‖ [illegible] triṃprakṛtipatretimaṟṟa
+4. ākṣamitvālpṛthakka ‖ ālevaṃkeetu [illegible] trumitipṛtaśśanyā ‖ daṣṭātitthayopada
+5. bhāgakaikkavalya ‖ khesavṛttirevādya [illegible] ātunoṣiśvaraḥka ‖ ltājñagatassaevavya
+6. trādikalāpānṟa ‖ jñarennāpṛlkṣā [illegible] dakṣaprālsaṃvedya ‖ śetakṣevacātthaṃ
+7. meśvaraprabhito ‖ gamaññalnayagliṃva [illegible] ddaṃvaddaśuddhamevavā ‖ itimakrāntānākā
+8. namilkāl̤cetakka ‖ naṇakkuprayāva [illegible] ānaprākkimatakoṇṭa ‖ nakaśilccandrūādya
+9. kāraṇaṃndhāṃndhāṃprakṛtiṃ [illegible] ‖ tiṃkāraṇatittveya [illegible] yabhikrāttrālkimiti [illegible] ‖ mitiprakṛtimapekṣatenā
+10. micelaśvaravādināṃpraka [illegible] ‖ tirandrapagavedavatri [illegible] tricebandhālpravṛ ‖ ttaressacetanoyissā
+11. kākkalttāparogaveṭṭa [illegible] ‖ ccuriḻḻicelppada [illegible] dakṣoevādhiṣṭātāra ‖ āracetanāprakṛtiḥmre
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

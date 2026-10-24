@@ -1,0 +1,3 @@
+PICK | A
+RANK | A, B, C
+WHY | A reads as coherent commentary on kārikās 57–58 in most rows ("vatsasya vivṛddhiḥ puṣṭis tannimittaṃ kṣīrasya yathā pravṛttir ajñasya… yathautsukyanivṛttyarthaṃ yathā kriyāsu lokaḥ pravartate tadvat pradhānaṃ puruṣavimokṣārthaṃ"); B's few readings are accurate but most of it is illegible, and C becomes garbled non-words from row 5 onward ("onyakṛtam", "kiṃkiṃnārtthakīna").

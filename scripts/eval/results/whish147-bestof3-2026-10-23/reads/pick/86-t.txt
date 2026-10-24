@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | None of the three has any readable text, since every row in all of them is [illegible], so none can be judged as real Sanskrit or Malayalam; the ranking is close to arbitrary and rests only on C marking string holes in the middle rows (5–8) alone, which fits how holes sit on a palm leaf better than A and B putting them in all twelve rows.

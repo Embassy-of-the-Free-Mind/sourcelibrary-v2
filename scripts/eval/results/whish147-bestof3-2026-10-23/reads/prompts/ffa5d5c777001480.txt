@@ -1,0 +1,52 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. [illegible] ktavacanañca ‖ osarvvapramāṇa [illegible] dakṣyāda [illegible] ddhyoyāna ‖ ṃprasiddhiranamānā
+2. lkaṣyādavicāni ‖ dyaṃpramāṇamāktāgamālsiddhaṃna ‖ nnakiściddṛbhedālsā
+3. [illegible] ṣyādiddīyai ‖ drakālakairanavaccādyālkkai ‖ sākṣyādrupayā
+4. nādibhirbheyatvāl ‖ samānādi [illegible] ntrāṣṭhādaila ‖ dakṣyākedanava
+5. labdhindrābhā ‖ vālkāṣṭhakaḻḻaddaivalabja ‖ mevaddādikaḻma
+6. kāryyaṃlakṣi ‖ ṣṭraddhavavidrupakogrāhya ‖ ndakanaṇoddapa
+7. udānagrahaṇā ‖ lsavvasaṃdevāddṛvyartthaga ‖ kkannastrakālabha
+8. ālkāraṇabhedāva ‖ jasalkāryyaṃnahaitumada ‖ damaprāvisaktiyamai
+9. nakamātrikaṃci ‖ ṃsvābhāvābhāvaṃcāvattvaṃlūkkaṃ ‖ caviśaivyakkaṃ4
+
+TRANSCRIPTION B
+1. aikkavacanantu 6 ‖ sāmānyatastudṛṣṭādatīndriyāṇāṃ ‖ pratītiranumānā
+2. ltasmādapicāsi ‖ ddhaṃparokṣamāptāgamālsiddhaṃ6 ‖ na [illegible] lsā
+3. [illegible] dīndriyāṇa ‖ āṃjña [illegible] navabodha [illegible] ‖ sāṃkhyā [illegible] cayā
+4. nā [illegible] l ‖ samāna [illegible] ṣṭi [illegible] bala ‖ [illegible] kedanava
+5. la [illegible] ‖ vārkkākṣu [illegible] la [illegible] ‖ [illegible] vādādikeṣu
+6. kā [illegible] ṃlakṣi ‖ [illegible] ṃvi [illegible] pa [illegible] ‖ [illegible]
+7. udā [illegible] haṇā ‖ lsa [illegible] lga ‖ [illegible]
+8. [illegible] kāraṇa [illegible] ‖ [illegible] salkāryyaṃna [illegible] ṝ ‖ [illegible]
+9. [illegible] ṃci ‖ ṃsvā [illegible] kkaṃ ‖ [illegible] kkaṃ7
+
+TRANSCRIPTION C
+1. [illegible] kkavacanatu ‖ dasāmānyatastudṛṣṭādatīndriyāṇāṃ ‖ prasiddhiranumānā
+2. ltasmādapicāsiddhaṃparokṣamā ‖ māptāgamālsiddhaṃna ‖ [illegible] ndriyālsā
+3. [illegible] ādindriyaira [illegible] ānnaina ‖ [illegible] navaccānākka ‖ sā [illegible]
+4. nādidṛṣṭa [illegible] samānadṛṣṭa ‖ [illegible] nāṣṭaira ‖ [illegible] mānādeva
+5. labhyantā [illegible] vālkāryaṅṅa ‖ ṅṅa [illegible] lakṣaṇṭa ‖ ḥmahadādika [illegible]
+6. kāryaṃliṃga [illegible] ṣṭṛntaṃvi [illegible] ‖ [illegible] pakoṇṭu [illegible] ‖ ndukananādṛ [illegible]
+7. dānandragrahaṇālsaptasaṃda ‖ dacāndruviddhalga ‖ kkasya [illegible] kkami
+8. ālkkāla [illegible] ddhasalkāryaṃna ‖ [illegible] paiśatamada [illegible] ‖ da [illegible] cisaktiyamai
+9. nakkamāttikkaṃciṃsāmānyaṃca ‖ caritrṛṃ [illegible] ktaṃna ‖ [illegible] maivyaktaṃ [illegible]
+
+TRANSCRIPTION D
+1. rāptavacanantu ‖ 5sāmānyatastudṛṣṭādatīndriyāṇāṃ ‖ prasiddhiranumānā
+2. ltasmādapicāsi ‖ ddhaṃparokṣamāptāgamālsiddhaṃ ‖ 6atidūrālsā
+3. mīpyādindriyaghā ‖ tānmanonavasthānāl ‖ saukṣmyādvyavadhā
+4. nādabhibhavāl ‖ samānālabhihārācca7sau ‖ kṣmyāttadanupala
+5. bdhirnnābhā ‖ vālkāryyatastadupalabdhe ‖ ḥmahadāditacca
+6. kāryyaṃprakṛti ‖ virūpaṃsarūpañca8a ‖ sadakaraṇādupā
+7. dānagrahaṇā ‖ lsarvvasaṃbhavābhāvāccha ‖ ktasyaśakyakaraṇā
+8. lkāraṇabhāvā ‖ ccasalkāryyaṃ9hetumadani ‖ tyamavyāpisakriyama
+9. nakamāśritaṃli ‖ gaṃsāvayavaṃparatantraṃvyaktaṃ ‖ viparītamavyaktaṃ10
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

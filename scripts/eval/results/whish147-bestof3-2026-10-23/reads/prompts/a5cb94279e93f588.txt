@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. gamantaḥkaraṇaṃbuddhyādi ‖ [illegible] ṭavakkidānājñābyāsaktikkukṣādeśa [illegible] ‖ [illegible] ññitucaṣṭiṅkindriyakaṅṅai [illegible]
+2. yantri [illegible] dvānāṅṅi [illegible] ccuna ‖ [illegible] trai [illegible] karantaḥkaraṇaṃviṣayānuṇṭākki [illegible] ‖ [illegible] caya [illegible] ntaḥkaraṇaṃbāhyaka
+3. [illegible] ddhā [illegible] saddhvaṃvi ‖ ciyamavagāga [illegible] tantrilkiṃlakṣaṇamityu ‖ [illegible] hāeka [illegible] trādiśrotrāda
+4. o [illegible] vāgādayo ‖ ṣallādamayo [illegible] mo [illegible] ko [illegible] ye ‖ edaśaguṇāviśeṣāḥ
+5. [illegible] ya [illegible] vagraṇāḥ [illegible] ‖ [illegible] dava [illegible] ṇaṇāpa [illegible] ‖ ṇarāḥśrotrādipra
+6. padedaśa [illegible] jjauttu ‖ ttuḥpratipakki [illegible] ḥ [illegible] pṛtyāni ‖ [illegible] yaspṛkkādaśatva
+7. lpa [illegible] kṣa ‖ ṇṭaḥ [illegible] kamukha [illegible] yatrāpṛkki [illegible] pa ‖ ṣe [illegible] kamekṣā
+8. maviyadintyā [illegible] datu ‖ tte [illegible] val̤ika [illegible] kayāvagāgana ‖ [illegible] dhaṃkimatennu [illegible]
+9. [illegible] jñi [illegible] kketra [illegible] lātra ‖ trāgama [illegible] ṣintyāddātrusūkṣmasthūlaviṣa ‖ viṣayalakṣaṇaṃ [illegible] trāli
+10. [illegible] kki [illegible] bā [illegible] ppādaha ‖ hakā [illegible] bhayābhādaga [illegible] dyu [illegible] paya [illegible] ‖ [illegible] sthāyapara [illegible] itu
+
+TRANSCRIPTION B
+1. gamantaḥkaraṇaṃbuddhyādi ‖ cāṣṭava [illegible] ddhāntājñābuddhyāsa [illegible] kṣārabhe [illegible] ‖ [illegible] ṇṇitu [illegible] kkandriyakarmmendri
+2. yantrīṇiddhārāṇi [illegible] ‖ laddhraikaikarantaḥkaraṇaṃviṣayāngṛhṇāti [illegible] ‖ [illegible] nnacayadrāntaḥkaraṇaṃbāhyaka
+3. raṇṭuddhākaraṇāsaddhyaṃvi ‖ ṣayamavagāhakaraṇantilkkaṃlakṣaṇamitu ‖ [illegible] hāekaiturādiśrotrāda
+4. oññāvāgādayo ‖ ṣallādayora [illegible] okṣmitṛkkraya ‖ daśaguṇaviśeṣāḥ
+5. trayappavaguṇāḥṇṇa ‖ ndrāndrādidevaṣākamaṇḍapari ‖ ṇātāḥśrotrādyopra
+6. pañcadaśādvājñāitu ‖ tthaḥpratipakṣa [illegible] kaḻḻāḥspṛhyāṣi ‖ tthyagrākyādraśca
+7. ālparajyarakkilakka ‖ traḥaikajya [illegible] yāvṛttidasra ‖ ṣecakaditakavarṣā
+8. mahiyadinyādaitra ‖ tadaivaṣikkayāvagāgana ‖ siddhaṃkimanteṣvanna
+9. tṛjñamitidaitadailātṛ ‖ tyāgataṃpṛthakṣasyātṛṃsūkṣmasthūlaviṣa ‖ viṣayalakṣaṇaṃpratisyādi
+10. prākkinibaipbādahaṃ ‖ kkāraddayobādagabbadandravya [illegible] ‖ bblakki [illegible] śvāpayatiutu
+
+TRANSCRIPTION C
+1. gamantakeraṇaṃbuddhyādicāṣṭavakkidānājñyahyaḥsaktikḷptāśara [illegible] ‖ ṇṇitṛpaṣṭiṅkklṛyakamaicci
+2. yaddgiddhānāṇikaṣicca [illegible] ‖ ladraikarantaḥkaraṇaṃviṣayānuṇṭāki [illegible] ‖ [illegible] nacayatvāntaḥkaraṇaṃbāhyaൿ
+3. raṇṭuddhākaraṇesadvyaṃviṣa ‖ ṣayamavagāhakaraṇṭi [illegible] ntriyalkkiṃlakṣaṇamitu ‖ [illegible] hāekanetrādiśrotrāda
+4. obbāvāgādayo ‖ ṣaḍjādayobaikkitrukaikkṛye ‖ ādaśaguṇāviśeṣāḥ
+5. trayapravṛttāḥkanna ‖ nyūnādidavalākaṇṇeṣupari ‖ ṇatāśrotrādipra
+6. pañcaśabdādīndru ‖ tthaḥpradīpakalpāḥpravṛttādi ‖ kiyantvṛkkāvayaṃtebba
+7. ālpannuravilakṣa ‖ ṇāḥekasyāvṛttilābhapa ‖ ṣennatabbittarenṣe
+8. miḥyaddvisyādaita ‖ ttainevarikkayāvagāhanaṃ ‖ nddhaṃkimatraitasthu
+9. kṣūṣṭiṅkiḻetralekkātu ‖ trāhakaṃpraviṣṭaṃtrātvaṃsūkṣmasthūlaviṣa ‖ viṣayalakṣaṇaṃprakṛtyādi
+10. prakkindriyaivaṣyādaha ‖ haṃkārādayobhādayaḥṣaṣṭhamodṛśyaṣṭa ‖ ṣṭi [illegible] trāyaṣṭitru
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

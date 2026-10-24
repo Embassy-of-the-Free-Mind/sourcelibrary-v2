@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | All three are almost entirely illegible, but B gives the most real Sanskrit, with "bheda" twice (a common term in both texts), C gives only the single plausible word "prāpte", and A gives no text at all.

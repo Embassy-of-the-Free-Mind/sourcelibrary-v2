@@ -1,0 +1,11 @@
+ROW 1 | ദാനൃമേവത്രയം ‖ ാവലസ്ക്രി[illegible]ന്യാ[illegible]നലക്ഷ്മൽകാശ്യകാ ‖ ാണണലക്ഷണസ്യംബന്ധഃ[illegible]
+ROW 2 | ദൃഷ്ടമനുമാന ‖ ട്രെക്തിചെലവാംശ[illegible]ശ്രു[illegible]ക്ഷേത്ര ‖ [illegible]ദ്രൗത്രന്നഭക്ഷേണദ്വ്യൽ
+ROW 3 | ദ്വപത്ഥിഃതകഎല ‖ നാരക്രൂരസ്യപ്രകിരനസമാാെന ‖ നാഭിദ്ധാകെഇടമെവച
+ROW 4 | ഗ്രഹ്യരസംവക്തി ‖ ന്രക്ഷേച്ചാരതക്കിംപ്രമാണത്രയലക്ഷ ‖ ണന്നരക്കാജ്ഞനമി
+ROW 5 | ത്തിഷചുടഃഹ-പ്ര ‖ മേമയസിദ്ധിഃപ്രമാണാദ്ധിക്കിയ ‖ ഷ്ടാൽപ്രമേയസ്യാ
+ROW 6 | ൽന്യാസിദ്ധിഃപ്ര ‖ മാണാൽനന്നുമാകാരണൽപ്ര ‖ ാജ്ഞിവദിവാദേ
+ROW 7 | [illegible]ന്യാരകുാംദ്ദ്ലേ ‖ ാദിപ്രമാണാാന്യാംലക്ഷിഞ്ഞമാഹ ‖ പ്രകൃതിവികൃത്യാ
+ROW 8 | വസായഇത്യാമ ‖ വിഷയംംവിക്ഷയംപ്രകൃതിവിഷ ‖ യംപ്രകൃതിവികൃയ
+ROW 9 | മക്ത്യവസായഃപ്രതി ‖ തിവികാര്യാദ്ധ്യവസായഃവിജ്ഞായാദ്ദ്രോ ‖ ദ്ദാദ്യഃഞദ്ധ്യവസായെയാ
+ROW 10 | ഷ്ടമിഃഗജേന്ദ്രവി ‖ ത്രുവനസഗദെന്ദ്രബയചാദിമംത്രൈാത്മ ‖ ത്മകൾചക്ഷുരിഹമ്ലോ
+NOTE | The leaf has 10 rows and every row runs through both holes. p02 and p03 together make the middle column, so I joined them without a ‖. Only about a third of the leaf reads reliably: the sequences around പ്രമാണ, പ്രമേയ, സിദ്ധിഃ, പ്രകൃതി/വികൃതി and ലക്ഷ. Much of the rest is my best reading of the strokes and has low confidence, especially rows 1–4 and 10. I couldn't fully tell where the overlaps at piece edges start and stop, so some letters may be doubled or missing there.

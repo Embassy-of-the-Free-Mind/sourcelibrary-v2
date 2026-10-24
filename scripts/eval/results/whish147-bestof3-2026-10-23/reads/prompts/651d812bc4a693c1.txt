@@ -1,0 +1,41 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣṛṇīyanāṅṅaḻe [illegible] ṣṭā ‖ ṣativyakta [illegible] nānnojñattinnādira [illegible] prati ‖ yogisamavāyikāraṇañ
+2. dṛṣṭiḥpratyayogajñaṃ ‖ koṇṭumikkativyavahārahetuḥprā ‖ gabhāvaḥkhaṃsaṃlakṣya [illegible]
+3. sādititoghaṭāddāratra ‖ vyāptipāraṇāyasananta [illegible] ttikkāśā ‖ dyādivyāptipāraṇāya
+4. sādattitipratiye ‖ ādijña [illegible] ḥpratiyogisamavāyi ‖ pratiḥ [illegible] ṃjña [illegible] tivyaṃpa
+5. hārahetuḥkhyaṃ ‖ saḥ [illegible] tunnādāhaṃlakṣyatiḥ ‖ [illegible] trakāmikkaḻa [illegible]
+6. jñājñāddaൗvaṃla ‖ kṣma [illegible] tikaṭāletrutilatiyogi ‖ tāpa [illegible] ṣṭakānāpya
+7. saṃsṛṣṭaṃkaṭe ‖ kapratiyogikakkakayoratyantābhā ‖ vānyonyābhāvayo
+8. jña [illegible] ṃkevalaṃdeva ‖ ṭatvādbhāva [illegible] bhāva [illegible] tiprakityā ‖ nyāviśiṣṭābhāvaḥekasa
+9. [illegible] ndrantya [illegible] divya ‖ tityāmittāpakṣinābhāvaḥsaṃyo ‖ gasaṃbandhoghaṭavati
+
+TRANSCRIPTION B
+1. ṣaൗṇṇāyanāṅṅaḻekṣaṭṭā ‖ ṣatrivṛttyāṇāno [illegible] lnādibhibha [illegible] pra [illegible] ‖ eyāgisamavāyikāraṇṇ
+2. prītiḥprītiyogajjaṃ ‖ ṃkobha [illegible] triḥ [illegible] vyativṛṣahāvahālpra ‖ gaṭṭāvaḥkhaḥsaṃlakṣyate
+3. sābhitiśikhaṭāṭṭāra ‖ tandrākṣipāraṇādya [illegible] lnantautbhi [illegible] kāga ‖ ṭṭāvativyāptipāraṇāya
+4. sādititipratiye ‖ ābhijñatraḥpratie [illegible] bheyāgisamavāyi ‖ pratiḥkhaṃjñautivyaṃpa
+5. gānavātuḥḍyaṃ ‖ saḥotunāṭā [illegible] ṭāphaṃlakṣyatie ‖ etukāmikautiṇe
+6. trātrāṭṭaṃvaṃla ‖ kṣakhatrakaṭāaitra [illegible] tubhilabhiaiyāgi ‖ tāvaiṣṭadakānāvya
+7. saṃsarggairabhe ‖ kraprattidayāgika [illegible] bhikkakayanuṭāda ‖ āpāretryāṟṟāṭāvayo
+8. jñyahyāṃvakkabalaṃdeva ‖ davaṭṭattāṭṭāvaśrakiṭṭuṭaṭṭāvattiprakittā ‖ tyāviśiṣṭaṃṭāvaḥekasa
+9. aitaibhairunāññutiprati ‖ vyatityāmiññāpaktinannāṭāvaḥsaṃvekhā ‖ āśasaṃkhekhākṣaṭapati
+
+TRANSCRIPTION C
+1. vṛṣaṇṇāyanākkaḻe [illegible] ṭā ‖ ṣatrivṛttikṣaṇānantārtthaṃssāditipra [illegible] ‖ yogisamavāyikāraṇañ
+2. pra [illegible] ḥpratiyogajñaṃ ‖ ṃkobhū [illegible] divṛṣaphāraṇavāttuḥpra ‖ gabhāvaḥkhaḥsaṃlakṣyate
+3. sādi [illegible] ṣaṭāṭṭāṃ [illegible] ‖ tvyāptipāraṇāya [illegible] ntājñi [illegible] kā [illegible] ‖ ṭṭāvativyāptipāraṇāya
+4. sāmititipratiye ‖ ādijñaguḥpratiyogisamavāyi ‖ pratiḥdhyaṃjñautivyaṃpa
+5. phādasamavattuḥḍyaṃ ‖ saḥśatrunādaṭāvaṃlakṣyate ‖ otrakāmikaḻatige
+6. nyānyābhibhavaṃca ‖ kṣabhitaṭāmetratilatimeyāgi ‖ tāpabhejñadakānāvṛ
+7. saṃsarggebhaveṭa ‖ kaprattibhayādikkakeyāsattuttābhā ‖ bhāpābheññājñābhāvayo
+8. jñaduḥkhaṃkevalaṃdeva ‖ ṭattābhūpañjitañjābhāvautiprakitvā ‖ viśiṣṭabhāvaḥekasa
+9. otaibheṣonantyapravṛ ‖ ttitvādityapakṣinābhāvaḥsaṃbandhā ‖ gasaṃbandhoṣaṭavati
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>
