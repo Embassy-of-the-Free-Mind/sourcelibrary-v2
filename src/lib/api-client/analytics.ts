@@ -6,7 +6,6 @@ import type {
   LoadingMetric,
   ProcessingOverviewResponse,
   PerformanceData,
-  PipelineData,
   SearchAnalyticsData,
   CanonData,
 } from './types/analytics';
@@ -56,15 +55,6 @@ export const analytics = {
     const tenant = getTenantSlug();
     const url = days ? `/api/${tenant}/analytics/search?days=${days}` : `/api/${tenant}/analytics/search`;
     return await apiClient.get(url);
-  },
-
-  /**
-   * Get pipeline observability data (snapshots, velocity, cron health, stalls)
-   */
-  pipeline: async (hours?: number): Promise<PipelineData> => {
-    const tenant = getTenantSlug();
-    const url = hours ? `/api/${tenant}/analytics/pipeline?hours=${hours}` : `/api/${tenant}/analytics/pipeline`;
-    return await apiClient.get(url, { timeout: 30000 });
   },
 
   /**

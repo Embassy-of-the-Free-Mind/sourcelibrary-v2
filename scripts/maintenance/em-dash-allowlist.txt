@@ -370,7 +370,6 @@ src/app/works/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it mer
 src/components/account/ProfilePhotoEditor.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/charts/MultiLineChart.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/tabs/BooksTab.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
-src/components/analytics/tabs/PipelineTab.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/analytics/TrafficDashboard.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkHero.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/artwork/ArtworkInfo.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
