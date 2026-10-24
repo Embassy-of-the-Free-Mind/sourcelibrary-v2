@@ -207,7 +207,9 @@ async function computeStats(f: CatalogFilters): Promise<CatalogStats> {
   ]);
   const langs = new Map<string, number>();
   for (const r of rows) if (r.language) langs.set(r.language, (langs.get(r.language) || 0) + 1);
-  const years = (span ?? rows).map((r) => r.year).filter((y): y is number => typeof y === 'number');
+  // A year past this one is not a print date (6957 is a Byzantine Anno Mundi year stored as AD); it would set the band's end.
+  const thisYear = new Date().getUTCFullYear();
+  const years = (span ?? rows).map((r) => r.year).filter((y): y is number => typeof y === 'number' && y <= thisYear);
   return {
     total: rows.length,
     translated: rows.filter(readable).length,

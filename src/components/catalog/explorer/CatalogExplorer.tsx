@@ -122,7 +122,8 @@ function statsOfRows(rows: CatalogRow[]): BandStats {
   const years: number[] = [];
   for (const r of rows) {
     if (r.language) langs.set(r.language, (langs.get(r.language) || 0) + 1);
-    if (typeof r.year === 'number' && r.year !== 0) years.push(r.year);
+    // Same rule as computeStats: a year past this one is not a print date.
+    if (typeof r.year === 'number' && r.year !== 0 && r.year <= new Date().getUTCFullYear()) years.push(r.year);
   }
   return {
     total: rows.length,
