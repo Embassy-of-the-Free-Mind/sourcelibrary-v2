@@ -33,7 +33,7 @@
 */10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collector.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/batch-collector.mjs' >> /var/log/sourcelibrary/collector.log 2>&1
 
 # Sync worker: refresh page counts and gallery images (every 2 hours)
-0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
+0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; timeout --kill-after=60s 3h node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
 
 # ── Individual pipeline phases (run independently to avoid blocking) ──
 

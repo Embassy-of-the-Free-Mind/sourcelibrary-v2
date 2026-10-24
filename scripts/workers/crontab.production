@@ -2,7 +2,7 @@
 0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 14 * * * /root/moltbook-poster.sh
 0 20 * * * /root/moltbook-poster.sh
-0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
+0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; timeout --kill-after=60s 3h node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
 0 3 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-full.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs --full" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
 0 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-hires-gallery.lock bash -c "set -a; source .env.production.local; set +a; node --import tsx scripts/workers/backfill-hires-gallery.mjs --batch=2000 --concurrency=3" >> /var/log/sourcelibrary/hires-gallery.log 2>&1
 0 */3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-social-post.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-post" >> /var/log/sourcelibrary/cron-caller.log 2>&1
