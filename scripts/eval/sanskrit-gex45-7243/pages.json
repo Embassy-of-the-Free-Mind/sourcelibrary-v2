@@ -323,42 +323,38 @@
    "in_test": true
   },
   {
-   "slug": "sa-82c808a7-p10",
+   "slug": "sa-5744775b-p139",
    "group": "ia",
-   "book_id": "6a94b96c56cac2f882c808a7",
-   "page_id": "6a94b96c56cac2f882c808b1",
-   "page_number": 10,
-   "image_url": "https://images.sourcelibrary.org/archived/6a94b96c56cac2f882c808a7/10.jpg",
+   "book_id": "6a9490e631b41d9c5744775b",
+   "page_id": "6a9490e631b41d9c574477e6",
+   "page_number": 139,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9490e631b41d9c5744775b/139.jpg",
    "image_field": "archived_photo",
    "catalogue": {
-    "title": "Shri Vishnu Sahasra Nama ( Padma Purana)",
+    "title": "Bhagavan Gopiinathji Birth Centenary Volume Bhagvaan Gopinath Trust",
     "author": "Unknown",
     "published": "Unknown",
     "language": "Sanskrit",
-    "pages_count": 13,
-    "pages_ocr": 13,
-    "categories": [
-     "purana",
-     "theology",
-     "vedanta",
-     "mysticism"
-    ],
+    "pages_count": 282,
+    "pages_ocr": 69,
+    "categories": [],
     "script": null,
-    "creator": "eGangotri Digital Preservation Trust",
+    "creator": "eGangotri",
     "hidden_reason": null
    },
-   "idx": 29,
+   "idx": 49,
    "observed": {
     "script": "devanagari",
-    "kind": "manuscript",
-    "lang": "sa",
-    "layout": "spread",
-    "hard": "two-leaf spread, small, red ink",
-    "canonical": true,
-    "cols": 2,
-    "note": "Vishnu Sahasranama"
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "hard": null,
+    "canonical": false,
+    "cols": 1,
+    "note": ""
    },
-   "in_test": true
+   "in_test": true,
+   "spare_for": "sa-82c808a7-p10"
   },
   {
    "slug": "sa-5d8bd83c-p21",
@@ -967,39 +963,44 @@
    "in_test": true
   },
   {
-   "slug": "sa-0f19d805-p339",
+   "slug": "sa-1697d8cb-p58",
    "group": "other",
-   "book_id": "6a91e1f1bb7a47bd0f19d805",
-   "page_id": "6a91e1f1bb7a47bd0f19d958",
-   "page_number": 339,
-   "image_url": "https://iiif.wellcomecollection.org/image/b2995292x_WT2895_OR_MS_Indic_Delta_2_0339.JP2/full/full/0/default.jpg",
-   "image_field": "photo",
+   "book_id": "6a308985eb59f1191697d8cb",
+   "page_id": "6a30898ceb59f1191697d905",
+   "page_number": 58,
+   "image_url": "https://images.sourcelibrary.org/books/6a308985eb59f1191697d8cb/pages/0057.jpg",
+   "image_field": "archived_photo",
    "catalogue": {
-    "title": "MS Indic delta 2.",
-    "author": "Vagbhata",
-    "published": "Unknown",
+    "title": "Mahābhārata (BORI Critical Edition) — Book 14: Aśvamedhikaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
     "language": "Sanskrit",
-    "pages_count": 921,
-    "pages_ocr": 21,
+    "pages_count": 323,
+    "pages_ocr": 25,
     "categories": [
-     "Medicine, Ayurvedic"
+     "sanskrit-literature",
+     "theology",
+     "philosophy",
+     "literature",
+     "history"
     ],
     "script": null,
     "creator": null,
     "hidden_reason": null
    },
-   "idx": 70,
+   "idx": 64,
    "observed": {
     "script": "devanagari",
-    "kind": "manuscript",
+    "kind": "print",
     "lang": "sa",
     "layout": "single",
     "hard": null,
-    "canonical": false,
+    "canonical": true,
     "cols": 1,
-    "note": ""
+    "note": "BORI Mahabharata, digital type"
    },
-   "in_test": true
+   "in_test": true,
+   "spare_for": "sa-0f19d805-p339"
   },
   {
    "slug": "sa-8eaa4560-p334",
@@ -1421,6 +1422,18 @@
     "note": ""
    },
    "in_test": true
+  }
+ ],
+ "excluded": [
+  {
+   "slug": "sa-0f19d805-p339",
+   "reason": "script-sharada (found by both readers)",
+   "replaced_by": "sa-1697d8cb-p58"
+  },
+  {
+   "slug": "sa-82c808a7-p10",
+   "reason": "script-newar; reference unusable (R1-R2 56%)",
+   "replaced_by": "sa-5744775b-p139"
   }
  ]
 }

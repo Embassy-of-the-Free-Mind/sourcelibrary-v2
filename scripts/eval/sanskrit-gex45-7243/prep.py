@@ -40,13 +40,16 @@ for p in d['pages']:
     tiles = []
     for ci, (x0, x1) in enumerate(cols):
         sub = g.crop((x0, 0, x1, H)); cw = x1 - x0
-        n = max(1, round(H / (cw * 0.55)))  # strips about half as tall as wide
-        n = min(n, 8)
+        k = 1 if cw <= 3500 else -(-cw // 2600)            # very wide columns: left-to-right pieces, 150 px overlap
+        pw = cw / k
+        n = min(8, max(1, round(H / (max(pw, 900) * 0.55))))  # strips about half as tall as a piece is wide
         cs = cuts(sub, n, H)
         for si in range(len(cs) - 1):
             y0, y1 = max(0, cs[si] - 25), min(H, cs[si + 1] + 25)
-            t = src.crop((x0, y0, x1, y1)); sc = 1500 / t.size[0]; t = t.resize((1500, max(1, round(t.size[1] * sc))), Image.LANCZOS)
-            fn = f"tiles/{p['slug']}-c{ci+1}-s{si+1}.jpg"; t.save(fn, quality=90); tiles.append(fn)
+            for hj in range(k):
+                px0 = x0 + max(0, round(hj * pw) - 75); px1 = x0 + min(cw, round((hj + 1) * pw) + 75)
+                t = src.crop((px0, y0, px1, y1)); sc = 1500 / t.size[0]; t = t.resize((1500, max(1, round(t.size[1] * sc))), Image.LANCZOS)
+                fn = f"tiles/{p['slug']}-c{ci+1}-s{si+1}" + (f"-h{hj+1}" if k > 1 else '') + ".jpg"; t.save(fn, quality=90); tiles.append(fn)
     ov = src.copy(); ov.thumbnail((1400, 1400)); ov.save(f"tiles/{p['slug']}-overview.jpg", quality=85)
     rows.append({'slug': p['slug'], 'url': p['image_url'], 'sha256_original': hashlib.sha256(raw).hexdigest(), 'original_size': [w, h],
                  'fed': {'sha256': hashlib.sha256(b).hexdigest(), 'size': list(fed.size), 'downscaled': s < 1}, 'tiles': tiles})

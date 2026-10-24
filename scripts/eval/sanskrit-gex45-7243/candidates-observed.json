@@ -1075,16 +1075,17 @@
    },
    "idx": 29,
    "observed": {
-    "script": "devanagari",
+    "script": "newar",
     "kind": "manuscript",
     "lang": "sa",
     "layout": "spread",
     "hard": "two-leaf spread, small, red ink",
     "canonical": true,
     "cols": 2,
-    "note": "Vishnu Sahasranama"
+    "note": "corrected 2026-10-24: adjudicator and job by eye found Nepalaksara (hooked-top Newar hand), not Devanagari; R1-R2 disagreement 56%"
    },
-   "in_test": true
+   "in_test": false,
+   "excluded": "script-newar; reference unusable (R1-R2 56%)"
   },
   {
    "slug": "sa-3fd9cc34-p27",
@@ -1798,7 +1799,8 @@
     "cols": 1,
     "note": ""
    },
-   "in_test": false
+   "in_test": true,
+   "spare_for": "sa-82c808a7-p10"
   },
   {
    "slug": "sa-c27d92aa-p221",
@@ -2336,7 +2338,8 @@
     "cols": 1,
     "note": "BORI Mahabharata, digital type"
    },
-   "in_test": false
+   "in_test": true,
+   "spare_for": "sa-0f19d805-p339"
   },
   {
    "slug": "sa-7c60b19b-p202",
@@ -2537,16 +2540,17 @@
    },
    "idx": 70,
    "observed": {
-    "script": "devanagari",
+    "script": "sharada",
     "kind": "manuscript",
     "lang": "sa",
     "layout": "single",
     "hard": null,
     "canonical": false,
     "cols": 1,
-    "note": ""
+    "note": "corrected 2026-10-24: both reference readers found Sharada, not Devanagari (thumbnail misread)"
    },
-   "in_test": true
+   "in_test": false,
+   "excluded": "script-sharada (found by both readers)"
   },
   {
    "slug": "sa-18cd706c-p280",
