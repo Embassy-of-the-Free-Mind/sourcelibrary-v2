@@ -31,6 +31,6 @@ const totalUsd = rows.reduce((s, r) => s + r.list_usd, 0);
 for (const r of rows) {
   const per = (x) => (r.pages_ok ? +(x * 100 / r.pages_ok).toFixed(2) : null);
   Object.assign(r, { list_usd_per_100p: per(r.list_usd), out_tokens_per_page: r.pages_ok ? Math.round(r.out_tokens / r.pages_ok) : null, secs_per_page: r.pages_ok ? +(r.secs / r.pages_ok).toFixed(1) : null,
-    ...(meter && { weekly_pct_per_100p_upper: per(meter.weekly_delta * (r.list_usd / totalUsd)) }) });
+    ...(meter && totalUsd > 0 && { weekly_pct_per_100p_upper: per(meter.weekly_delta * (r.list_usd / totalUsd)) }) });
 }
 console.log(JSON.stringify({ meter, rows }, null, 1));

@@ -82,6 +82,8 @@ if (CMD === 'run') {
         if (rc !== 0) { console.log(`[w${w}] ${b.book_id} read exited ${rc}; stopping`); stopping = true; exitCode = rc === 4 ? 4 : 5; break; }
       }
       const rc2 = await sh('node', [`--env-file=${ROOT}/.env.production.local`, 'scripts/batch/cli-translate.mjs', 'apply', `--out=${dir}`, `--reason=${REASON[LANG]}`, '--apply'], log);
+      // A crashed apply must not mark the book done: its reads stay in DIR and the next run applies them.
+      if (rc2 !== 0) { console.log(`[w${w}] ${b.book_id} apply exited ${rc2}; stopping`); stopping = true; exitCode = 6; break; }
       const tail = fs.readFileSync(log, 'utf8').split('\n').reverse().find((l) => /^written: \d+/.test(l)) || '';
       const written = Number(/^written: (\d+)/.exec(tail)?.[1] || 0);
       state = loadState();

@@ -300,7 +300,7 @@ if (CMD === 'score') {
     const n = (x) => (Array.isArray(t[x]) ? t[x].length : 0);
     rows.push({ ...k, answered: !!r, parsed: !!v, verdict: t.verdict || null, reversal: n('reversal'), invention: n('invention'), omission: n('omission'), wrong_leaf: n('wrong_leaf'), untranslated: n('untranslated'), chatter: n('chatter'), note: t.note || null,
       ocr_legible: v?.ocr?.legible ?? null, ocr_spans: Array.isArray(v?.ocr?.spans) ? v.ocr.spans.length : null, ocr_more: !!v?.ocr?.more, ocr_note: v?.ocr?.note || null,
-      caught: k.control ? caught(v, k.planted) : null, flagged: k.control ? null : undefined, secs: r?.secs ?? null });
+      caught: k.control ? caught(v, k.planted) : null, secs: r?.secs ?? null });
   }
   const real = rows.filter((r) => !r.control && r.parsed), ctl = rows.filter((r) => r.control);
   const rate = (xs, f) => { const k = xs.filter(f).length; const [lo, hi] = wilson(k, xs.length); return { k, n: xs.length, rate: xs.length ? +(k / xs.length).toFixed(3) : null, ci95: [lo && +lo.toFixed(3), hi && +hi.toFixed(3)] }; };
