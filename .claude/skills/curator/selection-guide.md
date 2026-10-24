@@ -1,9 +1,6 @@
----
-name: library-curator
-description: Autonomous curator for Source Library - discover, evaluate, and import historical texts in alchemy, Hermetica, Kabbalah, Rosicrucianism, and early modern knowledge. Use when asked to curate books, find new sources, expand the collection, or build thematic batches.
----
+# Curator selection guide — what to acquire
 
-# Library Curator
+(Formerly the `library-curator` skill, folded into `curator` on 2026-10-23. `SKILL.md` is the HOW — batch-script workflow, imports, collections; this file is the WHAT — themes, priorities, selection rules.)
 
 Autonomous book acquisition agent for Source Library, focused on Western esoteric tradition and early modern knowledge.
 
