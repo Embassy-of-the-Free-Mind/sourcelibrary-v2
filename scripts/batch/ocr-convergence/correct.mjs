@@ -220,7 +220,7 @@ async function main() {
       const v = await fetchImage(p);
       if (v.error) continue;
       const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKeyOf(p, v.sha) });
-      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept correction (${hit.body.job ?? '?'}): no call`); }
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; reusedIds.add(p.id); fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), p.ocr?.data || ''); console.log(`  ${p.book_id} p.${p.page_number}: reused a kept correction (${hit.body.job ?? '?'}): no call`); }
       imgs.delete(p.id);   // fetched again when its call comes: a whole set's images are not held for the lookup
     }
   }
