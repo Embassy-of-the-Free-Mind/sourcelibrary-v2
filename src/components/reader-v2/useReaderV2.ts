@@ -7,6 +7,7 @@ import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
 import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
+import { isEnglishBook } from '@/lib/translation-pane-state';
 
 // Shared state model for the v2 reader design previews (2a "Quiet Desk" and
 // 2c "Study Desk"). Owns: current page + cache + prefetch, page navigation
@@ -316,7 +317,15 @@ export function useReaderV2(
     // (.claude/docs/i18n.md rule 6): this is one stored choice PER site, not a
     // preference that crosses between them.
     const siteLocale = localeFromPathname(window.location.pathname);
-    const localeKeyBase = readsOriginal(siteLocale) ? `${viewsKeyBase}-${siteLocale}` : viewsKeyBase;
+    // An English edition is the same case one level down: the transcription IS
+    // the English text, and the English pane holds at most a legacy machine
+    // rewrite or an optional modernization (#4958, #5154). Its pane choice is
+    // kept apart too, so "English on" chosen on a Latin book does not open
+    // that pane over Westcott's own words.
+    const englishEdition = isEnglishBook(book.language);
+    const localeKeyBase = readsOriginal(siteLocale)
+      ? `${viewsKeyBase}-${siteLocale}`
+      : englishEdition ? `${viewsKeyBase}-english-edition` : viewsKeyBase;
     // `-m2`: under `-m`, every tap on the old one-pane picker was saved as a
     // one-pane choice, and those readers would keep a filtered column the
     // picker no longer makes (#5219). A new key gives them the whole stack.
@@ -355,7 +364,7 @@ export function useReaderV2(
       }
     }
     if (!hasScan && !stored.ocr && !stored.en) {
-      setViews({ ...stored, scan: false, ocr: !isPhone, en: true });
+      setViews({ ...stored, scan: false, ocr: !isPhone || englishEdition, en: !englishEdition });
       return;
     }
     // On a phone the panes stack in one scroller, so a reader who has never

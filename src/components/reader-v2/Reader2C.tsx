@@ -2569,8 +2569,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
-  // for (#6254). Everywhere else all three panes start on.
-  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: !readsOriginal(siteLocale), translit: false });
+  // for (#6254). An English edition opens the same way: its transcription is
+  // the English (#4958), so the English pane starts off (#5154). Everywhere
+  // else all three panes start on.
+  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, {
+    scan: true, ocr: true, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
+  });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
   // The title in the reader's bar follows the page's language, as it does on
