@@ -75,6 +75,7 @@ const used = new Set();
 for (const b of rBooks) {
   if (pages.filter((x) => x.group === 'R').length >= 20) break;
   const cands = await P.aggregate([{ $match: { book_id: b.id, 'ocr.recitation_count': { $gte: 1 } } },
+    // strlen-safe: strText() is { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] }
     { $project: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.recitation_count': 1, len: { $strLenCP: strText('$ocr.data') } } },
     { $match: { len: { $gte: 1200 }, 'ocr.model': { $not: /^ia-/ , $ne: null } } }, { $sort: { page_number: 1 } }]).toArray();
   let rp = null;
@@ -89,6 +90,7 @@ for (const b of rBooks) {
     const refused = await P.countDocuments({ book_id: m.id, 'ocr.recitation_count': { $gte: 1 } });
     if (refused) continue;
     const lite = await P.aggregate([{ $match: { book_id: m.id, 'ocr.model': /flash-lite/ } },
+      // strlen-safe: strText() is { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] }
       { $project: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, len: { $strLenCP: strText('$ocr.data') } } },
       { $match: { len: { $gte: 1500 } } }, { $sort: { page_number: 1 } }]).toArray();
     for (const p of shuffle(lite).slice(0, 6)) { const c = cut(p.ocr.data); if (c) { mp = { m, p, c }; break; } }
@@ -107,6 +109,7 @@ for (const b of shuffle(nb)) {
   if (pages.filter((x) => x.group === 'N').length >= 10) break;
   if (EXCLUDE_N[b.id] || /^English$/i.test(b.language || '')) continue;
   const tp = await P.aggregate([{ $match: { book_id: b.id, 'translation.updated_at': { $gte: CUTOFF } } },
+    // strlen-safe: strText() is { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] }
     { $project: { _id: 0, id: 1, page_number: 1, 'translation.data': 1, 'translation.model': 1, 'translation.updated_at': 1, len: { $strLenCP: strText('$translation.data') } } },
     { $match: { len: { $gte: 1500 }, 'translation.model': { $not: /claude|opus|sonnet|haiku/i } } }, { $sort: { page_number: 1 } }]).toArray();
   let np = null;
