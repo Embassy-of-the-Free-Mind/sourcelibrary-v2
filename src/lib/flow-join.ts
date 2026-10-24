@@ -29,6 +29,16 @@ export interface FlowPage {
 const escapeAttr = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const textOf = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
 
+/** The text at one edge of a paragraph, without notes and marginalia: a translator's note closing a page ends in
+ *  "…]", which would read as a finished sentence and break a sentence that runs on (Albigensians, Kindle EPUB:
+ *  "had to appear before [note] | the terrible tribunal"). The window is wide enough that a note cut by it lies far
+ *  from the edge being read. */
+function edgeText(html: string, side: 'start' | 'end'): string {
+  const window = side === 'end' ? html.slice(-2000) : html.slice(0, 2000);
+  const text = textOf(window.replace(/<span class="(?:note|margin)">[\s\S]*?<\/span>/g, ''));
+  return side === 'end' ? text.slice(-400) : text.slice(0, 400);
+}
+
 /** Ends a sentence: terminal punctuation, optionally closed by quotes or brackets. */
 const SENTENCE_END = /[.!?…:;][\s"'”’»)\]]*$/u;
 const STARTS_LOWER = /^[\s"'“‘«(\[]*(?:\.\.\.|…)?\s*\p{Ll}/u;
@@ -190,6 +200,21 @@ function cleanPage(html: string, heads: Set<string>, foots: Set<string>): string
   return html;
 }
 const isNoteBlock =(block: string) => { const first = textOf(linesOf(block)[0]); return NOTE_RULE.test(first) || NOTE_LINE.test(first); };
+/** A paragraph that is nothing but notes or marginalia — the page's printed footnotes, wrapped by the translator as
+ *  one <note> (Albigensians: "[1. Art. Laurac. 2. Du Mège, Hist. de Toul. …]"). */
+const NOTES_ONLY = /^\s*(?:<span class="(?:note|margin)">[\s\S]*?<\/span>\s*)+$/;
+/** The translator's whole-page notice on a blank leaf (0.2% of translated pages, sampled 2026-10-23). In one
+ *  continuous text it reads as a line of nothing between two sentences, so the page counts as having no text. A
+ *  "could not be translated" notice is NOT this: that marks text that is missing, and stays. */
+const BLANK_PAGE_NOTICE = /^\[(?:blank page|this page is blank|the page is blank)\b[^\]]*\]\.?$/i;
+const ZERO_WIDTH = /[\u200b-\u200f\u2060-\u2064\ufeff]/g;
+/** "[Left Column]", "[Column 2]", "[Right column continued]" alone on a line: the transcriber's account of the page
+ *  layout (206 in two books' indexes, 2026-10-23). Zero-width characters allowed: the provenance mark rides in them. The paged view keeps it beside the scan; read continuously it is a
+ *  stray bracket between entries. */
+const COLUMN_LABEL = /(<p>|<br\/>)[\s\u200b-\u200f\u2060-\u2064\ufeff]*(?:<(?:strong|em|b|i)>)?\[(?:(?:left|right|centre|center|middle|first|second|third)\s+)?column(?:\s+(?:\d+|[ivx]+))?(?:\s*[,(-]?\s*continued\)?)?\](?:<\/(?:strong|em|b|i)>)?[\s\u200b-\u200f\u2060-\u2064\ufeff]*(?:<br\/>|(?=<\/p>))/gi;
+const dropColumnLabels = (html: string) => (html.search(COLUMN_LABEL) !== -1
+  ? html.replace(COLUMN_LABEL, '$1').replace(/<br\/>\s*<\/p>/g, '</p>').replace(/<p>\s*<\/p>\n?/g, '')
+  : html);
 
 export function joinPagesHtml(pages: FlowPage[]): string {
   let out = '';
@@ -197,7 +222,7 @@ export function joinPagesHtml(pages: FlowPage[]): string {
   let pending = '';
   /** Figures and footnotes from earlier pages still waiting for a paragraph to close. */
   let carried = '';
-  const raw = pages.map(p => p.html?.trim() || '');
+  const raw = pages.map(p => dropColumnLabels(p.html?.trim() || '').trim()).map(h => (BLANK_PAGE_NOTICE.test(textOf(h).replace(ZERO_WIDTH, '').trim()) ? '' : h));
   const heads = furniture(raw.map(h => { const b = firstBlock(h); return b === null ? '' : textOf(linesOf(b)[0]); }));
   const foots = furniture(raw.map(h => { const b = lastBlock(h); return b === null ? '' : textOf(linesOf(b).slice(-1)[0]); }));
   const bodies = raw.map(h => (h ? cleanPage(h, heads, foots) : h));
@@ -225,7 +250,10 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     }
     let base = out;
     const stepBack = () => {
-      const before = base.slice(0, base.lastIndexOf('<p>')).trimEnd();
+      let before = base.slice(0, base.lastIndexOf('<p>')).trimEnd();
+      // The rule a translator set above the page's footnotes ("---", now an <hr/>) goes with them.
+      const rule = before.match(/<hr[^>]*\/>$/);
+      if (rule) before = before.slice(0, -rule[0].length).trimEnd();
       if (!before.endsWith('</p>')) return false;
       base = before;
       return true;
@@ -234,10 +262,13 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     if (lb !== null && foots.has(norm(textOf(lb)))) stepBack();
     // Footnotes the translation set as paragraphs of their own after the text (Leibniz, "(a) This printing …").
     const noteBlocks: string[] = [];
-    for (let nb = lastBlock(base); nb !== null && isNoteBlock(nb); nb = lastBlock(base)) {
-      const lines = linesOf(nb).filter(l => !NOTE_RULE.test(textOf(l)));
+    // A notes-only paragraph closing the page rides on the end of the sentence before it, where the page's notes
+    // belong; as its own paragraph it would cut that sentence in two.
+    let trailingNotes = '';
+    for (let nb = lastBlock(base); nb !== null && (isNoteBlock(nb) || NOTES_ONLY.test(nb)); nb = lastBlock(base)) {
       if (!stepBack()) break;
-      noteBlocks.unshift(...lines);
+      if (NOTES_ONLY.test(nb)) trailingNotes = nb.trim() + (trailingNotes ? ' ' + trailingNotes : '');
+      else noteBlocks.unshift(...linesOf(nb).filter(l => !NOTE_RULE.test(textOf(l))));
     }
 
     const prevStart = base.endsWith('</p>') ? base.lastIndexOf('<p>') + 3 : -1;
@@ -245,8 +276,8 @@ export function joinPagesHtml(pages: FlowPage[]): string {
     const foot = prevStart < 0 ? null : trimFoot(base.slice(prevStart, -4), foots);
     const nextPara = nextEnd < 0 ? null : trimHead(html.slice(3, nextEnd), heads);
     // Only the edges decide a join; testing whole paragraphs is quadratic on OCR's long runs of spaces.
-    const prevText = foot === null ? '' : textOf(foot.para.slice(-400));
-    const nextText = nextPara === null ? '' : textOf(nextPara.slice(0, 400));
+    const prevText = foot === null ? '' : edgeText(foot.para, 'end');
+    const nextText = nextPara === null ? '' : edgeText(nextPara, 'start');
     const join = !p.block && !outIsBlock && foot !== null && foot.para !== '' && nextPara !== null && continuesAcross(prevText, nextText);
 
     if (!join || foot === null || nextPara === null) {
@@ -259,7 +290,7 @@ export function joinPagesHtml(pages: FlowPage[]): string {
       return;
     }
 
-    let head = base.slice(0, prevStart) + trimEndBreaks(foot.para);
+    let head = base.slice(0, prevStart) + trimEndBreaks(foot.para) + (trailingNotes ? ' ' + trailingNotes : '');
     const lead = nextPara.replace(/^(?:\s|<br\/>)+/, '');
     const unelided = lead.replace(ELLIPSIS_START, '');
     const elided = unelided.length !== lead.length;

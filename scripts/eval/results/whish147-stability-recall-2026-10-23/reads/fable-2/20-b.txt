@@ -1,0 +1,9 @@
+ROW 1 | കാമെനിമിൽഞ്ഞഃദ്വ‖വിഷരാനവലബ്ധിമാത്രണാസഖം‖ഖകശഉള്ളഃപ്രകാരൈരബ്ദ
+ROW 2 | താമവിപദാഖ്യാമ‖നവലബ്ധിഭവിതരദശമദാമദ്രബ്ധി‖പദൊകാബ്ധിണ്ണഞ്ഞൊണ്ണ
+ROW 3 | ുദഖ്യാരാമദാഷ‖ാഷ്ടരാരരവരദൊദാനദൾഖാന്നാഗാ‖ബ്ധിണ്ണൂപ്പദ്ദാത്താദ
+ROW 4 | യമാദ്ദൂരൃല്ലതര‖ന്യയക്കിരണാരാനൊപലബ്ധിംസെ‖ാമഹ്യാമഠിഖഠി
+ROW 5 | ശരബ്ദാത്രാവിര‖ഖാഞ്ഞമിയഃബ്ധിതിനാമില്ലാദ‖ാതത്തചാലക്കൂന്നന്യ
+ROW 6 | ാഞ്ഞനന്യഉടല‖ത്രാ[illegible]ൗരദൊകതരാന‖പലബ്ധിഃഇന്നയഖാ
+ROW 7 | ഠാദഇഖരത്രാദാള‖നാംച്ചക്കിഇഖാഞാംദാഖാദൊ‖ഗ്രൊദശാവഷികാ
+ROW 8 | നാമവിശബ്ദാഇരാമ‖നവലബ്ധിഃമനവാരൊസിാനമന്മാന‖മസമാഹിതകാമി
+NOTE | All 8 rows located and joined across the two holes with overlaps removed, but the images are too coarse to resolve many conjuncts reliably: the recurring loop-ligature (read here as ബ്ധി/ബ്ദ) and several vowel-sign sequences are low-confidence, one scribbled glyph in row 6 is illegible, and a marginal folio mark (സ-like sign) on the left piece is not part of the text.

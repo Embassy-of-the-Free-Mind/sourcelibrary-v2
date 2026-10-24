@@ -1,0 +1,11 @@
+ROW 1 | ശ്രീഷം നവിന്ദ്രാവെവനലിം[illegible]ജ്ഞത്തേഃലിംപാദെവ്യാട്രാവാന്തുഃ‖[illegible]‖ഃകന്മാദിവിധഃപ്രവൃത്തകരെ
+ROW 2 | സൎഗ്ഗഃ[illegible]ഷ്ണവികരെണ്ണൊരൈദപ്രൈരെൎക്കൂ[illegible]ദെഹ്രാ[illegible]‖[illegible]‖ക്ഷയാട്ടേവകിമനസ്സൂരൈക്ക
+ROW 3 | [illegible]വിധഃശമാസ‖കൊരൈടെഇത്രികെ[illegible]കസ്ഥശ്ഃ।[illegible]‖സന്ധാവിനാലക്ഷണൈ
+ROW 4 | വിദാലന്തൂലഭ‖സ്പൃഹഃമൈബ്രൂപ[illegible]പൈജ്ഞാവിഗ്രാലൊവ്ര‖മൊദിൻകംബൊഷൂരൈ
+ROW 5 | ജ്ഞതൃജ്ഞാമരഭ‖ത്രരാദ്ദ്ഃഖെം[illegible]ത്രാരൈഷ്ണാത്തചെക‖നഃപൃത്തഷഃലിംഗന്ത്രാവി
+ROW 6 | രൈവൃതെൎക്കന്താ‖ദ്ദഃഖെസുദ്രാരെ[illegible]രൈവനഷ്ടപ്രെജ്ഞാക‖പ്രകൃതിഉപൈത്രാമഹദ്ദാ
+ROW 7 | ദിവിധൈരൈദ്ദരവ‖ഷ്യതഃപ്രതിഹ്രാ[illegible]ഭാവിതമാകമാ‖ത്വംന്യാദകൾഉപദേശാ
+ROW 8 | ബൊക്കുനാദ്ദൃഷ്ടാവ‖ല്ലവിവിത്ത്വിനിമിത്തംക്ഷിനന്ത്യ്യഭ‖ാപ്രവൃത്തിവഷ്കര്യചെ
+ROW 9 | ഷ്ടഷിവിദൈരക്ഷനിമി‖ത്തനഭാപ്രൈക്തി[illegible]വിപ്രേയാനന്ത്യ।ശ്രേഷ്ഠ[illegible]‖[illegible]ന്യൂത്രാവൃത്ത്യുൎഷംഷ
+ROW 10 | ഭാഭിയാന്തപ്രപ്പൂ‖ാതൈലൊകഃപ്പകനവിമെമാക്ഷണമിമി‖ിതംപ്രവൃത്തഭൈവതദവ്യ
+NOTE | I could only partly read this leaf, and most of the text above is low-confidence: I'd guess under half of the syllables are right. I found 10 rows; rows 1–2 and 9–10 run the full width and rows 3–8 sit in three columns. I didn't fill gaps from the Sāṅkhyakārikā or any commentary, and there is real doubt about the joins at the overlaps, especially around the holes in rows 1, 2 and 9. Check it against the original before relying on it.

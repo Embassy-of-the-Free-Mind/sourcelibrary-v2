@@ -59,6 +59,7 @@ you are about to pick `--model`, an engine, or a free lane by hand.
 | Persian, Sanskrit, Pali, Arabic | 3 Flash via agy | flash re-read lifts judged translation fidelity +1.00 / +0.75 / +0.58 / +0.39 (#5700, PR #5760) | `FLASH_OCR_FROM` |
 | Ge'ez | in the Flash list on agreement only; the issue marks it "not Flash" — open | #4729 agreement 0.47, 9/20 catastrophic | `FLASH_OCR_FROM.gez` |
 | Chinese print (woodblock) | 3 Flash via agy | median CER 5.2%, 0/198 catastrophic; lite 3/198; PaddleOCR-VL fails ~1 spread in 7 (#6101) | `FLASH_OCR_FROM.zho` (from 2026-10-21) |
+| Chinese / Japanese print outside the Siku, cursive and Meiji-typeset cohorts (woodblock, movable type, Chinese typeset) | **Paddle split-leaf lane** on gex45 for pages with no text, a flash-lite read or a whole-spread Paddle read; a stored Flash / Pro / Claude / typed / human read is kept | P1 median CER 0.061 vs lite 0.067, catastrophic 3/198 each; Flash 0.052 stays the better reader (PR #7184); blank-leaf + loop guard per leaf | `scripts/workers/paddle-print-lane.mjs`, books held `paddle-print-6101` |
 | Chinese manuscript | Paddle lane where the book is held for it; otherwise 3 Flash via agy until #4743 has a writer | #4743 | holds + `FLASH_OCR_FROM.zho` |
 | Syriac | Kraken; never Gemini | #4883 | own lane, books held |
 | Tibetan | BDRC/Yigdzin per-leaf; lite unusable | #4523, #5250 | own lane, books held |
@@ -101,6 +102,9 @@ A page (or book) needs text
 │     │                      the agy CLI. Books held for the Paddle lane keep the hold.  │
 │     ├─ Chinese print ───── 3 Flash via the agy CLI (#6101: median CER 5.2%, 0/198      │
 │     │                      catastrophic; lite 3/198; Paddle ~1 spread in 7). #7075.    │
+│     │                      The frame of print books outside Siku/cursive/Meiji (#6101 │
+│     │                      census) is read by the Paddle split-leaf lane instead, onto │
+│     │                      empty / lite / whole-spread-Paddle pages only (PR #7184).   │
 │     ├─ Greek, Persian, Sanskrit, Pali, Arabic ── 3 Flash via the agy CLI              │
 │     │                      (FLASH_OCR_FROM; #5575, #5700). Ge'ez is in the same list   │
 │     │                      on agreement only (#4729). Kraken passes on Greek 1450–1699 │
@@ -177,6 +181,7 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Opus one-read (Nahuatl / Maya, #6559) | `scripts/batch/claude-ocr.mjs` reads, `scripts/batch/cli-ocr.mjs apply` writes | `ai` | ✓ `anthropic` engine block (api `cli`) |
 | Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
 | Chinese guarded Paddle (held table + mixed residue, #6871 row 3) | `scripts/workers/paddle-zh-guarded-lane.mjs` (dry-run tested 2026-10-18; not applied) | `paddle`; `ai` on the Flash route | ✓ Paddle engine block (weights sha256, stack, serving, run, image sha256) or `gemini-engine/1` CLI block; `ocr.verdict` = the guard's verdict; first reads only, human-edit guard, revisions, sweep_log + book_events. Books stay held: their release is what queues paid translation |
+| Paddle split-leaf print (Chinese / Japanese, #6101) | `scripts/workers/paddle-print-lane.mjs apply` (`ocr.pipeline: paddle-print-2026-10`) | `paddle` | ✓ Paddle engine block (weights sha256, stack, serving, run) + `input.leaves` (crop box, ink, blank per leaf) + `replaced` (no_text / flash_lite / paddle_whole_spread); through `writePageText` (revision row with the whole prior field, `reason: reocr_paddle_print_6101`, `run_id`), human-edit guard, leaf blank/loop guards, sweep_log before and after, book_events. Books held `paddle-print-6101` before the first write |
 | Greek Kraken, Japanese NDL | eval only | — | — |
 | Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
 

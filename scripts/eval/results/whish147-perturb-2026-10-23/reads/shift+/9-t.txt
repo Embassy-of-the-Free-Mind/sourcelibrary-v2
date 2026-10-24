@@ -1,0 +1,11 @@
+ROW 1 | ദൃഷ്ടംനവിനുന്ദ്രാവെന്നാലിംപ്രത്തെണ്ണത്തെഃലിംപാംവ്യാദ്ദ്രാവാത്രുഃരന്ഥാദിവിയഃപ്ര[illegible]പ്രത്തക്ര
+ROW 2 | സൎക്ക[illegible]ശ്രൂണ്ണഷ്ഠവികള്ളാലെടെദപലെക്കക്കുലഗ്രാ[illegible]ക്ഷയാട്ടവക്കിമനു[illegible]ക്കാലൈക്കം
+ROW 3 | കവിയഃസമാസ ‖ ലെതാലെടദ്ദ്രിക[illegible]കസ്ഥശഃശാസ്ത്രഴും ‖ സഃവിനാലഃക്കമോ
+ROW 4 | വികാലന്ത്രൂലബ ‖ ഭിദ്ധിഃമൈ[illegible]ത്രുവലെജ്ജാവിസ്വാലൊൾ ‖ മൊദരിക്കംതൊ[illegible]തെ
+ROW 5 | ശ്ലൂതത്രുഷ്ഠസാമരഷ ‖ ത്രതംദ്ദഃയൊംഗ്രാഹ്യാലജ്ജാത്തിമെചത ‖ ണഃപൃതകഷഃലിംഗഗ്രാഹി
+ROW 6 | ത്രിപൃഥത്തക്കന്ത്ര ‖ ദ്ദഃഖസ്വദാക[illegible]ൈവനശ്ശഉത്രക ‖ ശ്രുകമുഖലെകാമപ്രൊ
+ROW 7 | ലവിശെഷേലവ ‖ ശ്രൂതഃപ്രതിവഃണ്വനമൈമാക്ഷൊ ‖ ത്വംസ്വാക്കുഉപലക്ഷ്യതാ
+ROW 8 | ബൊക്കനാംപ്പഃസ്രൂവ ‖ സ്ഥിതിനിൎദ്ദിതൊനിൎക്കംക്ഷിത്യാന്യഡ ‖ ാലവൃത്തിപ്പുക്കുാക്കന്യഷ
+ROW 9 | ന്ദ്രവ്യവിമെമാക്ഷാൻമിതത്തന്മാത്രെഷ്ടക്കിലേയാനസ്യഃസ്വാ[illegible]ണ്ണഗുത്രൈവൃത്ത[illegible]ത്വംഷ
+ROW 10 | മാത്രിയാന്ദ്രദൃപ്രൂരാതെലൊചാകഃഘക്കക്ഷണഖിമെമാക്ഷണമിരംപ്രവൃത്തെക്തതെടുദ്ദ്വ
+NOTE | Treat this as a rough glyph-by-glyph attempt, not a reliable reading. I'm fairly sure of the layout: 10 rows, with rows 1–2 and 9–10 running the full width and rows 3–8 split at the two holes. The individual letters are another matter. Many of the conjuncts, vowel signs and the joins across the overlaps are guesses, and I estimate less than half the akṣaras are correct. Most rows will not read as coherent Sanskrit, so every line needs checking against the original.

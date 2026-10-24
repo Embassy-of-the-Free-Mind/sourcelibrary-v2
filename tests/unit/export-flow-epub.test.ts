@@ -1,20 +1,27 @@
 import { describe, it, expect } from 'vitest';
-import { buildFlowEpub, footnotesFor, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
+import { buildFlowEpub, footnotesFor, rankHeadings, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
 
 /**
  * The continuous EPUB (#7118): one reading text in sections, not one chapter per page — on a Kindle every chapter
  * is a page break. Images are covered where they are decided: the scan licence gate (no images unless 'open', and
  * the edition then says so) — the fetch/recompress path is the export's shared, separately tested helper.
  */
-const db = (galleryRows = 0) => ({
+const db = (galleryRows = 0, rows: unknown[] = []) => ({
   collection: () => ({
-    find: () => ({ toArray: async () => [] }),
+    find: () => ({ toArray: async () => rows }),
     countDocuments: async () => galleryRows,
   }),
 });
 const pages = (n: number) => Array.from({ length: n }, (_, i) => ({
   id: `pg${i + 1}`, page_number: i + 1, translation: { data: i % 2 === 0 ? 'The stone was' : 'heated for days.' },
 }));
+
+describe('rankHeadings', () => {
+  it('maps a page\'s heading levels onto h3, h4, … in order, so none skips a level under the section h2', () => {
+    expect(rankHeadings('<h1>Book</h1><p>x</p><h3>Chapter</h3>')).toBe('<h3>Book</h3><p>x</p><h4>Chapter</h4>');
+    expect(rankHeadings('<h4>Only</h4>')).toBe('<h3>Only</h3>');
+  });
+});
 
 describe('footnotesFor', () => {
   it('turns notes and marginalia into EPUB 3 pop-up footnotes at the end of the section, ids unique across the book', () => {
@@ -25,6 +32,12 @@ describe('footnotesFor', () => {
     expect(out).toContain('<em>In the margin:</em> CHRIST.');
     expect(out).not.toContain('class="note"');
     expect(seq.n).toBe(6);
+  });
+  it('moves a footnote number stranded on its own line or paragraph to the end of the text before it', () => {
+    const line = footnotesFor('<p>the way to them?<br/><span class="margin">[a]</span><br/>For enemies</p>', { n: 0 });
+    expect(line).toContain('the way to them? <a epub:type="noteref"');
+    const para = footnotesFor('<p>the way to them?</p>\n<p><span class="margin">[a]</span> <span class="margin">[b]</span></p>\n<p>Next.</p>', { n: 0 });
+    expect(para).toMatch(/the way to them\? <a epub:type="noteref"[^>]*>1<\/a> <a epub:type="noteref"[^>]*>2<\/a>\s*<\/p>\n<p>Next\.<\/p>/);
   });
   it('leaves a section without notes untouched', () => {
     expect(footnotesFor('<p>Plain.</p>', { n: 0 })).toBe('<p>Plain.</p>');
@@ -45,10 +58,36 @@ describe('buildFlowEpub', () => {
     expect(flow.chapters[1].content.startsWith('<h2>Book II</h2>')).toBe(true);
   });
 
-  it('says inside the edition when the scans may not be redistributed, so the illustrations are left out', async () => {
-    const flow = await buildFlowEpub(db(12) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: false });
+  it('marks each illustration where it stands, with a link, when the scans may not be redistributed', async () => {
+    const rows = [{ page_number: 2, description: 'A furnace & bellows.' }, { page_number: 1, description: '' }];
+    const flow = await buildFlowEpub(db(0, rows) as never, { id: 'b' }, pages(2), { text: 'translation', baseUrl: 'https://x', includeImages: false });
     expect(flow.imagesIncluded).toBe(0);
-    expect(flow.imagesNote).toMatch(/text only.*12 illustrations are not included.*https:\/\/x\/book\/b/);
+    expect(flow.imagesNote).toMatch(/not released for redistribution, so its 2 illustrations are not reproduced here: each is marked where it stands.*https:\/\/x\/book\/b/);
+    const c = flow.chapters[0].content;
+    expect(c).toContain('<figcaption><a href="https://x/book/b?page=2">Illustration, p. 2</a>: A furnace &amp; bellows.</figcaption>');
+    expect(c).toContain('<figcaption><a href="https://x/book/b?page=1">Illustration, p. 1</a></figcaption>');
+    expect(c).not.toContain('<img');
+  });
+
+  it('says once per run that transcribed pages are not yet translated, instead of skipping them silently', async () => {
+    const ps = [
+      { id: 'a', page_number: 1, translation: { data: 'It begins.' } },
+      { id: 'b', page_number: 2, ocr: { data: 'Latina' } },
+      { id: 'c', page_number: 3, ocr: { data: 'Latina' } },
+      { id: 'd', page_number: 4, translation: { data: 'It goes on.' } },
+    ];
+    const flow = await buildFlowEpub(db() as never, { id: 'b' }, ps, { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    const c = flow.chapters[0].content;
+    expect(c.match(/not yet translated/g)).toHaveLength(1);
+    expect(c).toContain('Pages 2–3 are not yet translated; the original is at <a href="https://x/book/b?page=2">');
+  });
+
+  it('keeps a section whose pages are all untranslated, as its note — never drops it', async () => {
+    const book = { id: 'b', chapters: [{ title: 'Liber I', pageNumber: 1 }, { title: 'Liber II', pageNumber: 2 }] };
+    const ps = [{ id: 'a', page_number: 1, translation: { data: 'Done.' } }, { id: 'c', page_number: 2, ocr: { data: 'Latina' } }];
+    const flow = await buildFlowEpub(db() as never, book, ps, { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    expect(flow.chapters.map(c => c.title)).toEqual(['Liber I', 'Liber II']);
+    expect(flow.chapters[1].content).toContain('Page 2 is not yet translated');
   });
 
   it('says nothing about illustrations when the book has none', async () => {

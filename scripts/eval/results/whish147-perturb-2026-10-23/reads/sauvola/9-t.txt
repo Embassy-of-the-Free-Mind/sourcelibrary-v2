@@ -1,0 +1,11 @@
+ROW 1 | ശ്രീഃനവിശദ്രാവബ[illegible]വിംപര[illegible]ർത്ഥഃവിംപാരവ്യാദ്രാവാ[illegible]ഃ[illegible]ന്ദ്രാമിവിധഃപ്രബന്ധകര
+ROW 2 | ന[illegible]ശ്രു[illegible]ഷ്വികരെ[illegible]രദചരര[illegible]ല്പര[illegible]ന്താരവര[illegible]നയാദ്ര[illegible]മി[illegible]ത്രിതൈ
+ROW 3 | കവിധഃസാമാന്യ ‖ [illegible]രാന[illegible]പത്തക[illegible]ന[illegible]ഃ।[illegible]ഷ്ടം ‖ [illegible]ഃ[illegible]വിശേഷ[illegible]
+ROW 4 | വിശേഷസ്ഥൂലത ‖ [illegible]ഃ[illegible]ത്വ[illegible]ര[illegible]വിശ[illegible]നൈ[illegible] ‖ [illegible]ദി[illegible]ത[illegible]
+ROW 5 | [illegible]ത്ത[illegible]ഷേ[illegible] ‖ ത[illegible]ഃ[illegible]രു[illegible]ത്ത[illegible]ച[illegible] ‖ [illegible]ഃ[illegible]ലിംഗ[illegible]വി
+ROW 6 | [illegible]വൃത്തങ്ങൾ[illegible] ‖ [illegible]ഃ[illegible]ദ്ര[illegible]ര[illegible]ല[illegible] ‖ [illegible]ത്ത[illegible]രമി[illegible]
+ROW 7 | [illegible]വി[illegible]ക[illegible] ‖ [illegible]ഃ[illegible]ത്വ[illegible]വി[illegible]മാ[illegible] ‖ [illegible]ംസ്വര[illegible]
+ROW 8 | [illegible]ംഭ[illegible]സ്വ[illegible] ‖ [illegible]സി[illegible]ലി[illegible]ലി[illegible]ലം[illegible] ‖ [illegible]പ്ര[illegible]ച
+ROW 9 | [illegible]സാ[illegible]ര[illegible]മി[illegible] ‖ [illegible]ഗ[illegible]ര[illegible]ങ്ങ[illegible]ര[illegible]ഃ[illegible]ര[illegible]സ്വ[illegible]ര[illegible]ാ[illegible] ‖ [illegible]ത്ത[illegible]ംല
+ROW 10 | [illegible]ത്രി[illegible]ര[illegible] ‖ [illegible]ഃ[illegible]വ[illegible]മി[illegible]ഃ[illegible] ‖ ഃ[illegible]ര[illegible]ദ്വ
+NOTE | I count 10 rows (1–2 full width, holes at the p01/p02 and p03/p04 joins), but the heavy binarisation makes most aksharas unreadable: only short stretches are fairly secure (e.g. row 1 opening ശ്രീഃ, row 3 കവിധഃസാമാന്യ, row 4 വിശേഷസ്ഥൂലത), and the rest is tentative or marked illegible, so treat this as roughly 20–30% read and not reliable without a better image.

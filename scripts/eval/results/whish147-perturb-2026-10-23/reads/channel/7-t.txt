@@ -1,0 +1,10 @@
+ROW 1 | ദാശ്ചപഞ്ചാനാം൨൮।സ്വാലക്ഷണ്യം.വൃത്തിസ്ത്രയസ്യസൈഷാഭവത്യസാമാന്യാസാമാന്യകര
+ROW 2 | ണവൃത്തിഃപ്രാണാദ്യാവായവഃപഞ്ച।൨൯।യുഗപച്ചതുഷ്ടയസ്യതുവൃത്തിഃക്രമശശ്ചതസ്യനിൎദ്ദി
+ROW 3 | ഷ്ടാദൃഷ്ടേതഥാപ്യ ‖ ദൃഷ്ടേത്രയസ്യതൽപൂൎവ്വികാവൃ ‖ ത്തിഃ।൩൦സ്വാംസ്വാംപ്ര
+ROW 4 | തിപദ്യന്തേപര ‖ സ്പരാകൂതഹേതുകാം.വൃത്തിം. ‖ പുരുഷാൎത്ഥഏവഹേ
+ROW 5 | തുൎന്നകേനചി ‖ ൽകാൎയ്യതേകരണം।൩൧।ക ‖ രണം.ത്രയോദശവി
+ROW 6 | ധംതദാഹരണ ‖ ധാരണപ്രകാശകരം.കാൎയ്യം ‖ ചതസ്യദശധാഹാ
+ROW 7 | ൎയ്യംധാൎയ്യംപ്രക ‖ ാശ്യഞ്ച।൩൨।അന്തഃകരണന്ത്രി ‖ വിധം.ദശധാബാഹ്യ
+ROW 8 | ന്ത്രയസ്യവിഷയാഖ്യം.സാംപ്രതകാലംബാഹ്യംത്രികാലമാഭ്യന്തരംകരണം।൩൩।ബു
+ROW 9 | ദ്ധീന്ദ്രിയാണിതേഷാം.പഞ്ചവിശേഷാവിശേഷവിഷയാണി[illegible]വാൿഭവതിശബ്ദവിഷയ
+NOTE | All 9 rows are mostly readable, but some places are uncertain. The first letter of row 1 is a guess. The verse numbers (൨൮–൩൩) and the daṇḍas next to them are hard to make out. Row 9 is partly covered by the cord near the end, so "വാ" is inferred there. A few vowel signs, such as ൈ/െ in row 3 and the endings ഹ്യ/ഹ്യം and വിഷയ/വിഷയാ, are not certain. I recognised the passage as Sāṅkhyakārikā 28–34, and that helped me decide between unclear letters. The hole marks (‖) appear only in rows 3–7; rows 1–2 and 8–9 run the full width of the leaf.

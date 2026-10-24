@@ -1,0 +1,9 @@
+ROW 1 | രണംതജ്ഞഇതെസര‖ജ്ഞഇജ്ഞരകൊച്ചാപാരഃന്തെനമനമ‖പസംഹരതിതന്മാത്രിതിച്ചിം
+ROW 2 | ഗംവിഭജ്ഞരെതിംഗമ‖തിന്തന്ദ്രയച്ചകുരതിണ്ണംലക്ഷയതിനര‖ന്മയനെതിഹെതുസാച്ചു
+ROW 3 | യൊച്ചാഞ്ചര‖ച്ചയച്ചാഞ്ചിഃഉദാവതെയൊച്ചാ‖ക്കിച്ചുതരെകച്ചാഞ്ചഃ
+ROW 4 | കെവലാന്മി‖മാലക്ഷണദാവഃന്തന്മയതെന‖തികെവലാന്മകിസാ
+ROW 5 | ഷ്യകംകെവലാ‖ന്മയിന്മഞ്ചന്താഭാവാപ്രതിമ‖യാഗത്യംകെവലാന്മ
+ROW 6 | തിരുമിന്നരെപദായി‖തയഥംസഷ്ടവപദാഭിധയഥഞ്ചന‖സഷ്ടാന്തിതിത്യതരെ
+ROW 7 | കാഭാവെപ്രതിരന്തിണ്ണഉദാഹരതിത്രഷ്ടവിതിനന്തഇതരത‖രെദഃപ്രതിലൊനവാത്ത
+ROW 8 | ഉയൊഉരെന്തിഉന്തിക‖ക്രവെഉസതെബതിത്വമസത്വെന്തര‖ന്തസാധാരണഖംതികിരൊ
+NOTE | All eight rows read end to end at the resolution given, but several conjunct clusters (the ജ്ഞ/ഞ്ച-type knots, the repeated ച്ച/ച്ചു cluster, ന്മ versus മ്പ, ഉ versus ദ, ത്വ versus ത്യ) are uncertain at this image scale; rows 3 to 5 are short in every column (text stops before each string hole); a marginal siglum resembling ധ്യ stands left of rows 4 and 5 on p01 and is not included above.

@@ -1,0 +1,2235 @@
+{
+ "seed": 7202,
+ "input": "$JOB_SCRATCH/work/records-arms.jsonl",
+ "input_sha": "213ff2ba33aa6b89",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "6a3c74cc01fe4f593c1f2713_00157": {
+    "donor": "6a3c675caf3c49b59c5d2976_00126",
+    "donor_arm": "flash2",
+    "text": "<meta>continues from previous page</meta>\nRespectfully submitted.\n<header>Complete Book of the Four Months at the Gold Mine <note>original: \"金穴四月全書\"</note></header>\nis indeed the foremost and most essential undertaking.\n\nIn discussing principles, one must be precise and detailed. In discussing practical matters, one must be incisive and pertinent. In evaluating people, one must temper judgment with two or three parts generosity and tolerance. If one lays bare the raw truth of human emotions too sharply, others will inevitably find it unbearable. Therefore, the <term>junzi</term> <gloss>exemplary person</gloss> does not exhaustively expose another person's feelings, nor relentlessly pursue their faults. This is not merely to keep harm at a distance: it is also to leave others a path to conceal their shame, to give them an opportunity for remorse and awakening, and to foster what remains of their dignity. It also partakes in the tolerant, nurturing spirit of Heaven and Earth.\n\nSuppose one's parents are in mortal danger and a bandit manages to rescue them. Should one feel gratitude? The answer: This is an extraordinary kindness that occurs once in an age. How could one not feel grateful? But suppose one holds the authority to appoint officials, and this person seeks office: can one recommend them? The answer: How could one recommend them? Heaven ordains that office belongs to virtue; this is the impartial, public canon of emperors and kings. How could I dare corrupt it for the sake of private gratitude?\n\n<summary>Lü Kun reflects on tempering judgments of others with leniency to preserve their dignity, and distinguishes personal gratitude from the impartial standards required for public appointment.</summary>\n<keywords>Shenyin Yu, Lü Kun, moral philosophy, judging character, junzi, gratitude versus public duty, official appointments</keywords>"
+   },
+   "6a3cbfe8f9474f825c16c42f_00119": {
+    "donor": "6a3c678b39b4508b04e36d03_00168",
+    "donor_arm": "deepseek",
+    "text": "<warning>The OCR includes a Chinese header that belongs to the previous translation unit (钦定四库全书 御定孝经衍义) and a page number (25) that are metadata, not part of the translated narrative. The main text is a passage from a Chinese historical/biographical work about the scholar/official Yuan Yuan (淵).</warning>\n\n...and would not force himself to remain when forcibly ordered to take up an official post. He had the unjust legal cases of the nine commanderies of Jiangdong referred to all the imperial envoys, but they all requested that the cases be sent back to Yuan for reassignment. He was appointed as a clerical officer in the Zhexi Regional Administrative Office. When his father died, an imperial edict ordered him to resume his former post after the mourning period (<term>qifu</term> <gloss>resumption of office after mourning</gloss>). He strenuously declined, but his refusal was not permitted. He declined a second time, even writing a letter to the imperial government saying: \"The greatest of human obligations is to serve one's parents; the greatest of serving one's parents is to see them properly buried. If I shamelessly seek honor while in mourning, then my lifelong integrity would be utterly swept away. How could I later serve the sovereign?\" At that time, the Grand Councilor Shi Songzhi resumed his office after mourning. Some said: \"Would this not be an impediment for the current minister?\" Yuan paid no heed to this. The edict was obeyed.\n\n<note>Editorial commentary from the compiler:</note> My humble opinion: Historical records praise Yuan's outstanding talent and ability, but note his harshness and severity in numerous matters. How then could he have initially succeeded in overturning the unjust lawsuits of the nine commanderies? Could harshness and severity alone have made him equal to that task? This matter... <unclear>text continues, partially illegible or cut off</unclear>\n\n<header>Imperially Authorized Complete Library of the Four Treasuries</header>\n<header>Imperially Authorized Extended Meaning of the Classic of Filial Piety</header>\n<page-num>25</page-num>\n\n<summary>A Chinese historical account tells of an official named Yuan who refused to resume his post after his father's death, arguing in a letter that burying one's parents is the greatest filial duty and that seeking office during mourning would destroy his moral integrity. The page includes commentary questioning how a man praised as \"harsh and severe\" could have previously overturned so many unjust verdicts.</summary>\n<keywords>filial piety, mourning, refusal of office, Yuan Yuan, Shi Songzhi, imperial edict, historical biography, Confucian ethics, legal cases, Four Treasuries</keywords>"
+   },
+   "6a3cba973dce6cfad749d0bd_00138": {
+    "donor": "6a3c6192879008ba7e15f12e_00065",
+    "donor_arm": "flash2",
+    "text": "Question: What causes and conditions led to the composition of this treatise?\n\n△ In the answer there are three parts: stating the number, distinguishing the characteristics, and summarizing the conclusion.\n\nAnswer: These causes and conditions are eightfold. What are the eight?\n\n△ In distinguishing the characteristics, the first one is general and the remaining seven are specific. Why is this so? The general applies to both principal and secondary audiences, whereas the specific addresses particular faculties; therefore, it must be so.\n\nFirst is the general characteristic of causes and conditions: namely, to cause all sentient beings to abandon all suffering and attain ultimate bliss.\n\nWithin the general characteristic, \"to abandon all suffering\" means causing sentient beings to abandon the three kinds of suffering <note>suffering of pain, suffering of change, and suffering of conditioned existence</note> and the two forms of death <note>ordinary death by natural lifespan and the transformative death of advanced bodhisattvas</note>.\n\n\"To attain ultimate bliss\" means causing them to attain unsurpassable <term>bodhi</term> <gloss>awakening</gloss> and the bliss of great <term>nirvana</term> <gloss>liberation from cycle of rebirth</gloss>.\n\nRegarding \"not seeking worldly fame, profit, and the like\": there are two explanations. First, it is not intended that they seek the benefits and happiness of human and heavenly realms in future lives.\n\n<summary>This text introduces the eight causes and conditions for composing the Awakening of Faith treatise, distinguishing between a general intention to free sentient beings from suffering and seven specific reasons. It explains that ultimate bliss signifies awakening and nirvana rather than worldly fame, profit, or rebirth in higher realms.</summary>\n<keywords>causes and conditions, eight causes, sentient beings, three sufferings, two deaths, unsurpassable bodhi, great nirvana, worldly fame and profit, Awakening of Faith commentary</keywords>"
+   }
+  },
+  "planted": {
+   "6a3cbeafec254ff6cae0224d_00032": {
+    "base_arm": "flash2",
+    "text": "<header>Volume 100</header> <page-num>2</page-num>\n\nGold, treasure, bolts of silk, nuns, people, deceased.\n\n### <term>Lì</term> <gloss>Dripping / Leavings</gloss>\n<term>Tangyun</term> <gloss>Tang Rhymes</gloss>: <term>fanqie</term> spelling <note>original: \"郎擊切\"</note> l- + -(i)ek. <term>Jiyun</term> <gloss>Collected Rhymes</gloss>, <term>Yunhui</term> <gloss>Rhyme Corpus</gloss>, and <term>Zhengyun</term> <gloss>Correct Rhymes</gloss>: <term>fanqie</term> spelling <note>original: \"郎迪切\"</note> l- + -(i)ek.\n\n#### Supplementary Literary Quotations\n**<term>Cán lì</term> <gloss>remaining dregs</gloss>**\nOuyang Xiu, <term>Rhapsody on Hating Houseflies</term> <note>original: \"憎蒼蠅賦\"</note>: \"Your form is tiny in the extreme; your desires are easily satisfied. Stealing from cups and bowls, <note>the repetition marker 丨丨 represents \"cán lì\" (remaining dregs)</note>, on chopping blocks and small tables you feed on leftover foul smells.\"\n\n#### Supplementary Notes\n*Records of Dramatic Conversations of the Zong Sect* <note>original: \"宗歷劇談錄\", referencing the Tang dynasty work \"劇談錄\" by Kang Yu</note>: \"On an autumn dusk, overcast skies did not clear; a heavy rain poured steadily for over ten days.\"\n\n### <term>Lì</term> <gloss>Cold / Stern</gloss>\n<term>Tangyun</term> <gloss>Tang Rhymes</gloss>: <term>fanqie</term> spelling <note>original: \"郎擊切\"</note> l- + -(i)ek. <term>Jiyun</term> <gloss>Collected Rhymes</gloss>: <term>fanqie</term> spelling <note>original: \"郎迪切\"</note> l- + -(i)ek; both pronounced like <term>zuò</term> <gloss>sit</gloss> <note>noting phonological alignment</note>.\n\n#### Supplementary Literary Quotations\n**<term>Tiě jiàn</term> <gloss>Iron Mirror</gloss>**\n*Lost Records of Yue* <note>original: \"越絕書\"</note>: \"Piercing copper cauldrons, cutting through iron as if it were glutinous millet cakes; hence it was called <term>Juque</term> <gloss>Great Notch, a legendary sword</gloss>.\"\n\n#### Supplementary Notes\n**<term>Dǐng jiàn</term> <gloss>Cauldron Mirror</gloss>**\nWu Shu, <term>Rhapsody on Tea</term> <note>original: \"茶賦\"</note>: \"Awaiting the standard and the pennant <note>referring to early tea shoots</note>, pluck and select them in pairs; use <note>the repetition marker represents \"鼎鑑\" or bellows/hearth action</note> to blow and kindle the fire.\"\n\n### <term>Tì</term> <gloss>Fear / Apprehension</gloss>\n<term>Tangyun</term> <gloss>Tang Rhymes</gloss>, <term>Jiyun</term> <gloss>Collected Rhymes</gloss>, <term>Yunhui</term> <gloss>Rhyme Corpus</gloss>, and <term>Zhengyun</term> <gloss>Correct Rhymes</gloss>: all give the <term>fanqie</term> spelling <note>original: \"他虛切\"</note> t- + -ü; pronounced <term>tī</term>.\n\n#### Supplementary Literary Quotations\n**<term>Bào tì</term> <gloss>harboring apprehension</gloss>**\n*History of the Southern Dynasties* <note>original: \"南史\"</note>, <term>Biography of Wang Zao</term>: \"He harbored fear and worry, anxious that he would escape punishment.\"\n\n**<term>Sī tì</term> <gloss>thinking with cautious reverence</gloss>**\n*History of the Southern Dynasties* <note>original: \"南史\"</note>, <term>Biography of Prince Fan of Yuzhang</term>: \"His sons Pang and Que were both skilled in literary composition in their youth. Pang's younger brother Qian, courtesy name <note>the repetition marker represents his courtesy name</note>, possessed a dignified demeanor.\"\n\n<summary>This page from the Imperial Rhyme Dictionary Supplement records rhyme entries, phonological fanqie spellings, and literary citations for the characters Li (dregs/dripping), Li (cold/stern), and Ti (fear/apprehension). Citations include classical works by Ouyang Xiu, the Lost Records of Yue, and the History of the Southern Dynasties.</summary>\n<keywords>Imperial Rhyme Dictionary Supplement, Yunfu Shiyi, Chinese phonology, fanqie, Ouyang Xiu, Yue Jueshu, History of the Southern Dynasties, classical Chinese lexicography</keywords>",
+    "op": "drop-negation",
+    "from": "would not",
+    "to": "would",
+    "at": 2909,
+    "before_context": "term>Biography of Wang Zao</term>: \"He harbored fear and worry, anxious that he would not escape punishment.\"\n\n**<term>Sī tì</term> <gloss>thinking with cautious reveren",
+    "after_context": "term>Biography of Wang Zao</term>: \"He harbored fear and worry, anxious that he would escape punishment.\"\n\n**<term>Sī tì</term> <gloss>thinking with cautious reveren"
+   },
+   "6a3c6dc939b4508b04e4a49b_00017": {
+    "base_arm": "lite",
+    "text": "The jingling of jade pendants as one leaves the lord's side; King Kang and his queen were not like this, so the poet sighed and grieved for it. This is the explanation of the Lu School of Odes, which differs from the Mao School.\n\nOuyang Xiu said: \"The three schools of Qi, Lu, and Han all believe this is a poem lamenting the government of King Kang.\" The biography of Du Qin in the *History of the Former Han* says: \"The jingling of jade pendants, the sighing in *Guanju*.\" Zuan noted: \"This is the Lu School's interpretation of the Odes.\" The *History of the Later Han*, in the edict of Emperor Ming, says: \"Formerly, when the inner gate was neglected, *Guanju* was used to criticize the age.\" Xue Jun's *Han School Chapter and Sentence* notes: \"When the ruler retired from court, the queen and consorts had set times for attendance, and the drum guard would strike the watch at the inner gate. Now, because the ruler is tilted toward sensual pleasure, [the poet] sang *Guanju* to praise a virtuous lady, thereby criticizing the times.\" \n\nLü Zuqian said: \"The masters of the Lu, Qi, Han, and Mao schools have different readings and different interpretations. Since the three schools regard *Guanju*—the head of the Correct Airs—as a satire, the rest of their views can be inferred accordingly.\" \n\nWang Yinglin said: Xue Shilong said the theory that *Guanju* was composed as a satire is merely an interpretation of the poet's intent. If one infers this from the idea that it is \"grieving but not distressing,\" I fear that this reasoning may hold. But this can be known for sure. However, the *Book of Etiquette and Ceremonial* treats *Guanju* as the music for village drinking rituals and also as the music for the inner chambers, which means that when the Duke of Zhou established the ritual music, this poem already existed.\n\n<header>Imperially Commissioned Compilation of Commentaries and Legends on the Book of Odes · Odes Preface (Part 1)</header>\n<page-num>8</page-num>\n\n<summary>This page discusses historical debates regarding the interpretation of the poem \"Guanju,\" contrasting the views of the Qi, Lu, and Han schools with the Mao school, and examines the ceremonial context of the poem.</summary>\n<keywords>Guanju, Lu School, Odes, Duke of Zhou, ritual music, satire, Confucian interpretation</keywords>",
+    "op": "drop-negation",
+    "from": "cannot",
+    "to": "can",
+    "at": 1557,
+    "before_context": "s \"grieving but not distressing,\" I fear that this reasoning may hold. But this cannot be known for sure. However, the *Book of Etiquette and Ceremonial* treats *Guan",
+    "after_context": "s \"grieving but not distressing,\" I fear that this reasoning may hold. But this can be known for sure. However, the *Book of Etiquette and Ceremonial* treats *Guan"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "base_arm": "deepseek",
+    "text": "比李儒勸卓擢用名流以收人望從大都如是因薦蔡邕之才卓命徵之邕\n\n不赴初念卓怒使人謂邕曰如不來當滅汝族求賢之邕懼只得應命而\n\n至卓見邕大喜一月三遷其官拜為侍中甚見親厚 <gloss>永依託于王鳳揚雄</gloss>\n\n<gloss>夭身于薪葬崑山樵</gloss> 却說少帝與何太后唐妃困於永安宮中衣服飲食\n\n漸漸少缺少帝淚不曾乾 <gloss>又後王所云此中日月</gloss> 一日偶見雙燕飛於庭中\n\n遂吟詩一首 <gloss>空庭飛鳥在其翔舞冷官廢寺身孤年自</gloss> 其詩曰\n\n嫩草綠凝烟裊裊雙飛燕洛水一條青陌上人稱羨 <gloss>前半首詠燕遠望</gloss>\n\n碧雲深是吾舊居殿 <gloss>目斷舊宮不能奮飛誠不如雙燕之得反故巢矣傷哉</gloss> 何人仗忠義洩我心\n\n中怨 <gloss>後半首自願賦也。詩好</gloss>\n\n董卓時常使人探聽是日獲他得此詩來呈董卓卓曰怨望作詩殺之有\n\n名 <gloss>殺之有名肅教天下亦</gloss> 遂命李儒帶武士十八人入宮弒帝帝與后妃\n\n正在樓上宮女報李儒至帝大驚儒以鴈酒奉帝 <gloss>意味其詩賦有此飲酒最是雅事</gloss>\n\nLi Ru urged him to recruit famous scholars to win popular support, as was often done in such cases. He thus recommended Cai Yong's talent. Dong Zhuo ordered him summoned. Cai Yong did not go. At first, Dong Zhuo was furious, and sent a man to tell Cai Yong, \"If you do come, I will exterminate your clan!\" Cai Yong was frightened, and had to obey the summons. When he arrived, Dong Zhuo was overjoyed, and within a month promoted him three times, appoint him <term>Shizhong</term> <gloss>Imperial Attendant</gloss>. He was shown great favor. <gloss>Forever relying on Wang Feng and Yang Xiong</gloss> <gloss>His body laid to rest among the firewood of Mount Kun</gloss>\n\nIt is now told that the young Emperor, Empress Dowager He, and Consort Tang were confined in the Yong'an Palace. Their clothing and food gradually became scarce. The young Emperor's tears never dried. <gloss>As the later king said, \"The days and months within this place.\"</gloss> One day, he happened to see a pair of swallows flying in the courtyard, and composed a poem: <gloss>In the empty courtyard birds dance in flight; the cold official's abandoned temple, his body lonely, years passing by</gloss> The poem read:\n\nTender grass, green as congealed mist,\nTwo swallows dance gracefully together.\nThe Luo River, a single blue ribbon,\nOn its green path, all gaze with envy. <gloss>The first half praises the swallows from afar</gloss>\n\nDeep in the azure clouds lies my former palace hall. <gloss>His gaze cut off from the old palace, unable to take flight, truly he is less fortunate than the pair of swallows who can return to their old nest. How sad!</gloss> What loyal and righteous man will reveal the resentment in my heart? <gloss>The second half is his own personal lament. The poem is good.</gloss>\n\nDong Zhuo constantly sent men to spy. That day, they obtained this poem and presented it to Dong Zhuo. Dong Zhuo said, \"He writes poems full of resentment! To kill him for this will have a just cause.\" <gloss>To kill him with a just cause will also teach the world a lesson.</gloss> He then ordered Li Ru to lead eighteen armed men into the palace to murder the Emperor. The Emperor, Empress, and Consort were upstairs when the palace women reported Li Ru's arrival. The Emperor was terrified. Li Ru presented him with poisoned wine. <gloss>Meaning, since his poetry had this theme, drinking wine would be the most elegant affair.</gloss>\n\n<summary>Li Ru recommends Cai Yong to Dong Zhuo, who forces him into service. The deposed young Emperor, confined with his empress dowager and consort, composes a lamentful poem about swallows. Dong Zhuo, seeing the poem as seditious, orders Li Ru to poison him.</summary>\n<keywords>Li Ru, Dong Zhuo, Cai Yong, Shizhong, Young Emperor, Empress Dowager He, Consort Tang, Yong'an Palace, poem, swallows, poisoning, regicide, Luo River</keywords>",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "at": 768,
+    "before_context": "t go. At first, Dong Zhuo was furious, and sent a man to tell Cai Yong, \"If you do not come, I will exterminate your clan!\" Cai Yong was frightened, and had to obey t",
+    "after_context": "t go. At first, Dong Zhuo was furious, and sent a man to tell Cai Yong, \"If you do come, I will exterminate your clan!\" Cai Yong was frightened, and had to obey t"
+   }
+  },
+  "duplicate": {
+   "6a3cb9aa3dce6cfad7495af1_00105": {
+    "arm": "qwen"
+   },
+   "6a3c613840c88a541d8eeec0_00042": {
+    "arm": "lite"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "arm": "flash2"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69935b692c63944063133f67_00112": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "deepseek",
+    "T5": "lite2",
+    "T6": "flash2"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "lite",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "lite2",
+    "T5": "flash",
+    "T6": "qwen"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "flash",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "lite",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "flash"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "flash",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "deepseek",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "qwen",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "qwen",
+    "T4": "deepseek",
+    "T5": "lite2",
+    "T6": "lite"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "qwen",
+    "T2": "lite",
+    "T3": "flash2",
+    "T4": "lite2",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "flash",
+    "T5": "deepseek",
+    "T6": "flash2"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "flash",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "deepseek",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "flash2",
+    "T4": "lite",
+    "T5": "flash2#dup",
+    "T6": "flash",
+    "T7": "qwen"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "lite2",
+    "T2": "flash",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "lite2",
+    "T4": "flash",
+    "T5": "qwen",
+    "T6": "deepseek"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "flash",
+    "T2": "qwen",
+    "T3": "lite",
+    "T4": "flash2",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "flash",
+    "T2": "deepseek",
+    "T3": "qwen",
+    "T4": "lite2",
+    "T5": "flash2",
+    "T6": "lite"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "flash2",
+    "T2": "lite2",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "flash",
+    "T6": "lite"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "flash",
+    "T6": "lite"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "lite2",
+    "T2": "lite",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "flash",
+    "T6": "flash2"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "flash",
+    "T5": "flash2",
+    "T6": "lite"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "lite2",
+    "T6": "qwen"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "flash2",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "lite",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "flash2",
+    "T2": "deepseek",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "flash",
+    "T6": "qwen"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "lite2",
+    "T2": "flash",
+    "T3": "qwen",
+    "T4": "deepseek",
+    "T5": "flash2",
+    "T6": "lite"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "flash2",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "control:planted",
+    "T5": "flash",
+    "T6": "deepseek",
+    "T7": "lite"
+   },
+   "6a3c70cb01fe4f593c1d4e1d_00011": {
+    "T1": "deepseek",
+    "T2": "flash2",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3cbeafec254ff6cae0224d_00032": {
+    "T1": "deepseek",
+    "T2": "lite",
+    "T3": "control:planted",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "flash",
+    "T7": "flash2"
+   },
+   "6a3c777601fe4f593c2025e0_00112": {
+    "T1": "flash2",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3c613840c88a541d8eeec0_00042": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "deepseek",
+    "T4": "lite#dup",
+    "T5": "qwen",
+    "T6": "lite",
+    "T7": "flash"
+   },
+   "6a3cb70d3dce6cfad7485fa7_00171": {
+    "T1": "qwen",
+    "T2": "flash",
+    "T3": "flash2",
+    "T4": "lite",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3c74cc01fe4f593c1f2713_00157": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "deepseek",
+    "T5": "lite2",
+    "T6": "control:wrong_page",
+    "T7": "flash2"
+   },
+   "6a3c63d2af3c49b59c5c8e16_00106": {
+    "T1": "flash",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "lite",
+    "T6": "deepseek"
+   },
+   "6a3cb9aa3dce6cfad7495af1_00105": {
+    "T1": "qwen#dup",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "deepseek",
+    "T6": "qwen",
+    "T7": "flash2"
+   },
+   "6a3c61a7879008ba7e15f810_00094": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "flash2"
+   },
+   "6a3cb9ae3dce6cfad7495cc1_00081": {
+    "T1": "flash2",
+    "T2": "lite2",
+    "T3": "flash",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3c6ff501fe4f593c1cf4a8_00004": {
+    "T1": "deepseek",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3cbc04ec254ff6cadeceb9_00143": {
+    "T1": "flash2",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3c6f0601fe4f593c1c85a6_00129": {
+    "T1": "deepseek",
+    "T2": "flash",
+    "T3": "flash2",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "lite"
+   },
+   "6a3c6c9901fe4f593c1b2c94_00198": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash",
+    "T5": "flash2",
+    "T6": "lite"
+   },
+   "6a3c70ac39b4508b04e508d1_00050": {
+    "T1": "flash",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "lite",
+    "T6": "deepseek"
+   },
+   "6a3cb99f3dce6cfad74954ba_00080": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "qwen",
+    "T4": "lite2",
+    "T5": "deepseek",
+    "T6": "flash2"
+   },
+   "6a3c6ef201fe4f593c1c79f4_00090": {
+    "T1": "qwen",
+    "T2": "lite2",
+    "T3": "flash2",
+    "T4": "lite",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3c6aefaf3c49b59c5eb80b_00052": {
+    "T1": "lite2",
+    "T2": "deepseek",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "flash2",
+    "T6": "qwen"
+   },
+   "6a3c6853af3c49b59c5d7ea7_00016": {
+    "T1": "qwen",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "6a3c6a2639b4508b04e3f51a_00106": {
+    "T1": "lite2",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "flash2",
+    "T6": "deepseek"
+   },
+   "6a3c71b201fe4f593c1da00d_00074": {
+    "T1": "flash2",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "lite",
+    "T6": "deepseek"
+   },
+   "6a3c6e8a01fe4f593c1c3b93_00138": {
+    "T1": "flash",
+    "T2": "deepseek",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "flash2",
+    "T6": "qwen"
+   },
+   "6a3c69f339b4508b04e3e620_00091": {
+    "T1": "flash",
+    "T2": "qwen",
+    "T3": "lite",
+    "T4": "flash2",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3ce7760a0011cb4bc09b97_00118": {
+    "T1": "flash",
+    "T2": "qwen",
+    "T3": "lite",
+    "T4": "flash2",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3c72bc01fe4f593c1e24c0_00029": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "flash",
+    "T4": "deepseek",
+    "T5": "lite",
+    "T6": "qwen"
+   },
+   "6a3cbb5d3dce6cfad74a30b8_00080": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "flash2",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "6a3cba973dce6cfad749d0bd_00138": {
+    "T1": "flash",
+    "T2": "lite2",
+    "T3": "control:wrong_page",
+    "T4": "flash2",
+    "T5": "lite",
+    "T6": "qwen",
+    "T7": "deepseek"
+   },
+   "6a3c678b39b4508b04e36d03_00168": {
+    "T1": "lite",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite2",
+    "T6": "qwen"
+   },
+   "6a3cb8063dce6cfad748a51a_00074": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "deepseek",
+    "T4": "lite2",
+    "T5": "flash",
+    "T6": "flash2"
+   },
+   "6a3c776c01fe4f593c201f9c_00167": {
+    "T1": "flash",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3cb8753d799518cd71b52a_00028": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3cb5ec3dce6cfad7484149_00056": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "lite2",
+    "T4": "deepseek",
+    "T5": "flash2",
+    "T6": "qwen"
+   },
+   "6a3c749c39b4508b04e57a77_00141": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "6a3c675caf3c49b59c5d2976_00126": {
+    "T1": "flash2",
+    "T2": "lite2",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "deepseek",
+    "T6": "qwen"
+   },
+   "6a3c6dc939b4508b04e4a49b_00017": {
+    "T1": "lite",
+    "T2": "control:planted",
+    "T3": "lite2",
+    "T4": "flash2",
+    "T5": "deepseek",
+    "T6": "qwen",
+    "T7": "flash"
+   },
+   "6a3ce7be0a0011cb4bc0ab93_00064": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3c71d339b4508b04e5551d_00132": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "qwen",
+    "T6": "deepseek"
+   },
+   "6a3c6a2239b4508b04e3f381_00047": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "qwen",
+    "T5": "deepseek",
+    "T6": "lite2"
+   },
+   "6a3cbfe8f9474f825c16c42f_00119": {
+    "T1": "qwen",
+    "T2": "flash",
+    "T3": "deepseek",
+    "T4": "control:wrong_page",
+    "T5": "flash2",
+    "T6": "lite",
+    "T7": "lite2"
+   },
+   "6a3c75da39b4508b04e5e172_00096": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "lite",
+    "T6": "flash2"
+   }
+  },
+  "j2": {
+   "69935b692c63944063133f67_00112": {
+    "T1": "flash",
+    "T2": "qwen",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "flash2",
+    "T6": "deepseek"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "flash",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "qwen",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "deepseek",
+    "T4": "flash",
+    "T5": "flash2",
+    "T6": "lite2"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "flash2",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "qwen",
+    "T2": "lite2",
+    "T3": "flash2",
+    "T4": "deepseek",
+    "T5": "lite",
+    "T6": "flash"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "deepseek",
+    "T4": "flash",
+    "T5": "lite2",
+    "T6": "flash2"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "lite2",
+    "T4": "qwen",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "flash2"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "qwen",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "deepseek"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "deepseek",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "flash",
+    "T7": "flash2#dup"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "deepseek",
+    "T5": "lite2",
+    "T6": "flash"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "qwen",
+    "T2": "deepseek",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "lite2",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "flash2",
+    "T5": "qwen",
+    "T6": "deepseek"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "flash",
+    "T5": "deepseek",
+    "T6": "lite2"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "lite",
+    "T4": "flash2",
+    "T5": "qwen",
+    "T6": "flash"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "deepseek",
+    "T2": "flash",
+    "T3": "flash2",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "deepseek",
+    "T5": "flash",
+    "T6": "flash2"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "flash",
+    "T2": "lite2",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "flash2",
+    "T6": "qwen"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "flash2",
+    "T5": "deepseek",
+    "T6": "lite2"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "qwen",
+    "T2": "flash2",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "deepseek",
+    "T6": "lite2"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "qwen",
+    "T2": "flash",
+    "T3": "flash2",
+    "T4": "deepseek",
+    "T5": "lite",
+    "T6": "lite2"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "flash2",
+    "T2": "deepseek",
+    "T3": "flash",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "lite"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "flash",
+    "T4": "control:planted",
+    "T5": "deepseek",
+    "T6": "lite",
+    "T7": "qwen"
+   },
+   "6a3c70cb01fe4f593c1d4e1d_00011": {
+    "T1": "lite2",
+    "T2": "flash",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "flash2",
+    "T6": "lite"
+   },
+   "6a3cbeafec254ff6cae0224d_00032": {
+    "T1": "lite",
+    "T2": "deepseek",
+    "T3": "lite2",
+    "T4": "flash",
+    "T5": "qwen",
+    "T6": "control:planted",
+    "T7": "flash2"
+   },
+   "6a3c777601fe4f593c2025e0_00112": {
+    "T1": "deepseek",
+    "T2": "qwen",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "6a3c613840c88a541d8eeec0_00042": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "lite#dup",
+    "T6": "flash",
+    "T7": "lite"
+   },
+   "6a3cb70d3dce6cfad7485fa7_00171": {
+    "T1": "qwen",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "6a3c74cc01fe4f593c1f2713_00157": {
+    "T1": "deepseek",
+    "T2": "flash2",
+    "T3": "qwen",
+    "T4": "lite",
+    "T5": "control:wrong_page",
+    "T6": "lite2",
+    "T7": "flash"
+   },
+   "6a3c63d2af3c49b59c5c8e16_00106": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "deepseek",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3cb9aa3dce6cfad7495af1_00105": {
+    "T1": "deepseek",
+    "T2": "lite2",
+    "T3": "lite",
+    "T4": "qwen#dup",
+    "T5": "qwen",
+    "T6": "flash",
+    "T7": "flash2"
+   },
+   "6a3c61a7879008ba7e15f810_00094": {
+    "T1": "deepseek",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "lite2",
+    "T6": "flash"
+   },
+   "6a3cb9ae3dce6cfad7495cc1_00081": {
+    "T1": "lite",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3c6ff501fe4f593c1cf4a8_00004": {
+    "T1": "lite",
+    "T2": "lite2",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "deepseek",
+    "T6": "qwen"
+   },
+   "6a3cbc04ec254ff6cadeceb9_00143": {
+    "T1": "lite2",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3c6f0601fe4f593c1c85a6_00129": {
+    "T1": "deepseek",
+    "T2": "flash2",
+    "T3": "flash",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3c6c9901fe4f593c1b2c94_00198": {
+    "T1": "lite2",
+    "T2": "deepseek",
+    "T3": "lite",
+    "T4": "qwen",
+    "T5": "flash2",
+    "T6": "flash"
+   },
+   "6a3c70ac39b4508b04e508d1_00050": {
+    "T1": "flash2",
+    "T2": "lite2",
+    "T3": "flash",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "lite"
+   },
+   "6a3cb99f3dce6cfad74954ba_00080": {
+    "T1": "lite",
+    "T2": "flash2",
+    "T3": "lite2",
+    "T4": "qwen",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3c6ef201fe4f593c1c79f4_00090": {
+    "T1": "qwen",
+    "T2": "deepseek",
+    "T3": "lite2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "6a3c6aefaf3c49b59c5eb80b_00052": {
+    "T1": "lite2",
+    "T2": "qwen",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "flash",
+    "T6": "flash2"
+   },
+   "6a3c6853af3c49b59c5d7ea7_00016": {
+    "T1": "flash",
+    "T2": "flash2",
+    "T3": "deepseek",
+    "T4": "lite",
+    "T5": "qwen",
+    "T6": "lite2"
+   },
+   "6a3c6a2639b4508b04e3f51a_00106": {
+    "T1": "lite",
+    "T2": "qwen",
+    "T3": "lite2",
+    "T4": "flash2",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "6a3c71b201fe4f593c1da00d_00074": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "flash2",
+    "T6": "lite2"
+   },
+   "6a3c6e8a01fe4f593c1c3b93_00138": {
+    "T1": "qwen",
+    "T2": "deepseek",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "flash",
+    "T6": "flash2"
+   },
+   "6a3c69f339b4508b04e3e620_00091": {
+    "T1": "flash2",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3ce7760a0011cb4bc09b97_00118": {
+    "T1": "qwen",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "flash",
+    "T5": "lite2",
+    "T6": "deepseek"
+   },
+   "6a3c72bc01fe4f593c1e24c0_00029": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "lite2",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3cbb5d3dce6cfad74a30b8_00080": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "deepseek"
+   },
+   "6a3cba973dce6cfad749d0bd_00138": {
+    "T1": "control:wrong_page",
+    "T2": "lite2",
+    "T3": "lite",
+    "T4": "flash",
+    "T5": "qwen",
+    "T6": "flash2",
+    "T7": "deepseek"
+   },
+   "6a3c678b39b4508b04e36d03_00168": {
+    "T1": "lite",
+    "T2": "lite2",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "flash",
+    "T6": "deepseek"
+   },
+   "6a3cb8063dce6cfad748a51a_00074": {
+    "T1": "qwen",
+    "T2": "lite",
+    "T3": "lite2",
+    "T4": "deepseek",
+    "T5": "flash2",
+    "T6": "flash"
+   },
+   "6a3c776c01fe4f593c201f9c_00167": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "deepseek",
+    "T4": "qwen",
+    "T5": "lite2",
+    "T6": "flash2"
+   },
+   "6a3cb8753d799518cd71b52a_00028": {
+    "T1": "lite2",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "flash2",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "6a3cb5ec3dce6cfad7484149_00056": {
+    "T1": "lite2",
+    "T2": "deepseek",
+    "T3": "lite",
+    "T4": "flash",
+    "T5": "qwen",
+    "T6": "flash2"
+   },
+   "6a3c749c39b4508b04e57a77_00141": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "lite2"
+   },
+   "6a3c675caf3c49b59c5d2976_00126": {
+    "T1": "lite2",
+    "T2": "flash2",
+    "T3": "lite",
+    "T4": "deepseek",
+    "T5": "qwen",
+    "T6": "flash"
+   },
+   "6a3c6dc939b4508b04e4a49b_00017": {
+    "T1": "lite2",
+    "T2": "qwen",
+    "T3": "flash2",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "control:planted",
+    "T7": "deepseek"
+   },
+   "6a3ce7be0a0011cb4bc0ab93_00064": {
+    "T1": "flash",
+    "T2": "deepseek",
+    "T3": "qwen",
+    "T4": "lite2",
+    "T5": "lite",
+    "T6": "flash2"
+   },
+   "6a3c71d339b4508b04e5551d_00132": {
+    "T1": "flash2",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "lite2",
+    "T5": "qwen",
+    "T6": "deepseek"
+   },
+   "6a3c6a2239b4508b04e3f381_00047": {
+    "T1": "qwen",
+    "T2": "flash2",
+    "T3": "lite2",
+    "T4": "lite",
+    "T5": "deepseek",
+    "T6": "flash"
+   },
+   "6a3cbfe8f9474f825c16c42f_00119": {
+    "T1": "deepseek",
+    "T2": "flash",
+    "T3": "lite2",
+    "T4": "flash2",
+    "T5": "control:wrong_page",
+    "T6": "lite",
+    "T7": "qwen"
+   },
+   "6a3c75da39b4508b04e5e172_00096": {
+    "T1": "deepseek",
+    "T2": "lite",
+    "T3": "qwen",
+    "T4": "lite2",
+    "T5": "flash",
+    "T6": "flash2"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69935b692c63944063133f67_00112": {
+    "T1": "1bc729aef610e363",
+    "T2": "3a197dea6f626599",
+    "T3": "224bb2fb29e9e0bd",
+    "T4": "a0fe5e5cf2b4a945",
+    "T5": "d2e53e6fe45d49f4",
+    "T6": "103abe0974b84184"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "6e57c02e5ef68553",
+    "T2": "cf52d3d98247fdb5",
+    "T3": "0f3f10b16c5098a4",
+    "T4": "0954df5943911f53",
+    "T5": "67e28194d8044658",
+    "T6": "33f19549e795dfeb"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "3912d9ed822f411b",
+    "T2": "19617bda5007f1d4",
+    "T3": "5c7323561ab26022",
+    "T4": "4409c92267b095cc",
+    "T5": "f2956c0b08f2e9ab",
+    "T6": "4dd8682f942a60b9"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "f2251f12464fcfd6",
+    "T2": "ad88de6787544f06",
+    "T3": "c30e8ba4b91f2910",
+    "T4": "e5bca9af30f56151",
+    "T5": "39e0a965ddfb4398",
+    "T6": "dfe3a38dd4d211a8"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "9ad8fb6f42617fb7",
+    "T2": "5bf0dc7c3bcca557",
+    "T3": "f12f0ca33eaaee0f",
+    "T4": "d408d9f712f40c8a",
+    "T5": "8eb0045020071674",
+    "T6": "c46a662198bcfed1"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "35ac2c424c0fe736",
+    "T2": "558abe025c1f2df5",
+    "T3": "3a08706d96ad5221",
+    "T4": "290f079a8c954a4f",
+    "T5": "2b5ca7b78f430372",
+    "T6": "183cac00446a2bae"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "1318832448bfe60d",
+    "T2": "9f174c1441478444",
+    "T3": "d4b6047716db8cab",
+    "T4": "e046ccf641d787d9",
+    "T5": "46dca4d6d935fbad",
+    "T6": "4e87933718815885"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "0028a7afcd9a99b8",
+    "T2": "c093e0a0bdf70340",
+    "T3": "133ed694de5ef8e7",
+    "T4": "739f008c9d16cf10",
+    "T5": "ea4332a5e5f041c0",
+    "T6": "0523e5d24cb2ef1a"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "7113e850642ac8db",
+    "T2": "c553d254156a1772",
+    "T3": "27acdba15d34682d",
+    "T4": "9332ba8ea9c655e0",
+    "T5": "845c02aa3221456a",
+    "T6": "bd6a8023859e9fa8"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "168ca763f30ac2bc",
+    "T2": "cf32b40ddc8d7048",
+    "T3": "78c5dcd61c51391f",
+    "T4": "32ed0bde23ea2ed3",
+    "T5": "5cac3793fed1c71d",
+    "T6": "95a37451a97d2606"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "b2c9370643cce24f",
+    "T2": "670a6e7e99fb551b",
+    "T3": "0d751f6e4f792cab",
+    "T4": "d0663f7e8b25b5ff",
+    "T5": "0d751f6e4f792cab",
+    "T6": "238e4819cb8f8346",
+    "T7": "3b733f846c8f8e8c"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "c946b92aa792fcdf",
+    "T2": "8099d4fdcf107530",
+    "T3": "26199497991a48a7",
+    "T4": "ac0de45bfdb42670",
+    "T5": "95b81e4cf9c5cb60",
+    "T6": "9c2a9f5f94fbeea8"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "1e86d988abdca354",
+    "T2": "2430e8b840680f8e",
+    "T3": "922b6dcc075f36ac",
+    "T4": "7c0e5501c22105be",
+    "T5": "a9ac23bc15e2759a",
+    "T6": "a196e3778e9c59e4"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "540616e247466cf0",
+    "T2": "acf6a0289566a128",
+    "T3": "cfd0580a90a14c80",
+    "T4": "65cfea3a5ecb2422",
+    "T5": "5a62b379e362532b",
+    "T6": "0a5de2f3bb9c9497"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "9e6cea37df693e50",
+    "T2": "fa943223b4343f3d",
+    "T3": "2d084c04f94eaf47",
+    "T4": "92a255f61c8d2990",
+    "T5": "8baf4641d1c1a640",
+    "T6": "026445aba6472c7b"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "a96de9ae64382605",
+    "T2": "321799e408160d33",
+    "T3": "deb75ff8d560ccc7",
+    "T4": "52dc432021b014b6",
+    "T5": "261ddce6dadd3ee4",
+    "T6": "5c9b3e1713e09296"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "7b4ccde8f1a29468",
+    "T2": "9cbf75518165d5a0",
+    "T3": "90c3148d6d319860",
+    "T4": "395d169cb4e2c4a1",
+    "T5": "56c76c09e682f4c3",
+    "T6": "231f4329650781fd"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "567e0cb26cdc1795",
+    "T2": "e92e52dfe6f02160",
+    "T3": "8825b50b94486d55",
+    "T4": "f8a2a380a4c18a96",
+    "T5": "a0b41fca0007a7a0",
+    "T6": "16752c8486f46c20"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "3a388cbab2e6909c",
+    "T2": "330b38900817cf28",
+    "T3": "c1b31a7a27fca3de",
+    "T4": "82b87236d7ef38af",
+    "T5": "b3d6e3f222726873",
+    "T6": "952c3ca2b5231a89"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "cc45df18abbd1785",
+    "T2": "307c7dc03710823b",
+    "T3": "efe1267e8a189370",
+    "T4": "1e032eb2c8ac6a8b",
+    "T5": "be2974c88ae2cb45",
+    "T6": "3fb3ba6d504ec581"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "93763e1ac310d898",
+    "T2": "8cb1ba5483def56b",
+    "T3": "ef7ddd1a1855563c",
+    "T4": "63d99389f7d46817",
+    "T5": "52b24fecdfb7a867",
+    "T6": "4fac28a26392ab17"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "b438fee53814bd6d",
+    "T2": "9ad9bb9a3654c517",
+    "T3": "31fb870807dc9e81",
+    "T4": "29fe8fd436551763",
+    "T5": "00c9e02b7c80c1a2",
+    "T6": "893d844ddf1eb0f8"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "3a66608de6587292",
+    "T2": "034adb68aeb3c438",
+    "T3": "417f109a049704eb",
+    "T4": "5e0242cbd02f736c",
+    "T5": "8b565392a9c3e66e",
+    "T6": "efcad55c6c75582a"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "08eed34f5142e199",
+    "T2": "5729c627aec37584",
+    "T3": "423a596aa4470ea0",
+    "T4": "d1abe8ae27bc3be2",
+    "T5": "207f9099de31801c",
+    "T6": "be3830813178e3bb",
+    "T7": "97b606ccadf9d809"
+   },
+   "6a3c70cb01fe4f593c1d4e1d_00011": {
+    "T1": "02332a881bd0a8f5",
+    "T2": "6fe05f8000006f76",
+    "T3": "0974d382dafe2556",
+    "T4": "56984d747fc001cc",
+    "T5": "451297db7ee15eb3",
+    "T6": "20226fb399000f14"
+   },
+   "6a3cbeafec254ff6cae0224d_00032": {
+    "T1": "6c10cb7ab7ccdd36",
+    "T2": "8118e8ae03fd2fa1",
+    "T3": "498d3af579be64e2",
+    "T4": "d7856838408286d6",
+    "T5": "3f4f79f170912b2a",
+    "T6": "28316314fd6532e1",
+    "T7": "418f06d7da08a41f"
+   },
+   "6a3c777601fe4f593c2025e0_00112": {
+    "T1": "d2322b9677d44d0d",
+    "T2": "06fa6a27ac79007d",
+    "T3": "1c00b082ae5a7378",
+    "T4": "3954a89b11d61981",
+    "T5": "12022c57a7695214",
+    "T6": "732d18853d666de8"
+   },
+   "6a3c613840c88a541d8eeec0_00042": {
+    "T1": "972dcc49fff03e9d",
+    "T2": "911edb9ab435a9a7",
+    "T3": "877ffc672cd8fba8",
+    "T4": "e471b5df0c70aa70",
+    "T5": "317cd6e44478815b",
+    "T6": "e471b5df0c70aa70",
+    "T7": "75bd8f22f8c95534"
+   },
+   "6a3cb70d3dce6cfad7485fa7_00171": {
+    "T1": "00d568584b96b8cc",
+    "T2": "ae10eea94d13fc0b",
+    "T3": "97dd317666c83c20",
+    "T4": "94689809e1a84618",
+    "T5": "fd8d79e9ce934470",
+    "T6": "f2201c2f4ea768a9"
+   },
+   "6a3c74cc01fe4f593c1f2713_00157": {
+    "T1": "f402d26c82c5da45",
+    "T2": "0870ffb260dba734",
+    "T3": "771d84d9d69178a1",
+    "T4": "61f8cebfbde227ab",
+    "T5": "0ea83ac244919289",
+    "T6": "79ad1b66be640b9e",
+    "T7": "ff25174394034333"
+   },
+   "6a3c63d2af3c49b59c5c8e16_00106": {
+    "T1": "b9345d47a4a70093",
+    "T2": "89446870b8bfd5c0",
+    "T3": "b9b7643846c2712d",
+    "T4": "09416600fef4cc82",
+    "T5": "07ed6ba3c51f363e",
+    "T6": "d92d0b4eadce8ec1"
+   },
+   "6a3cb9aa3dce6cfad7495af1_00105": {
+    "T1": "22994eb7f4a65fb8",
+    "T2": "8c2c8d8d7d62e7d5",
+    "T3": "486c030073526c7e",
+    "T4": "3a9e9d3be7fc6560",
+    "T5": "ac6b9b33c9788fcd",
+    "T6": "22994eb7f4a65fb8",
+    "T7": "f051ef9fa7d060cd"
+   },
+   "6a3c61a7879008ba7e15f810_00094": {
+    "T1": "43b048605f7f87a0",
+    "T2": "6e09a225a98d5c31",
+    "T3": "143f33e8c2ef1b67",
+    "T4": "e3b0c44298fc1c14",
+    "T5": "a64d3aeb66336936",
+    "T6": "96d660c8633025f7"
+   },
+   "6a3cb9ae3dce6cfad7495cc1_00081": {
+    "T1": "a38e44d2f4cd0a3a",
+    "T2": "361aaf92b38dfee8",
+    "T3": "c86fafc7c4a48bf9",
+    "T4": "8b2ee2faaa27b3b0",
+    "T5": "e6f15571e2e679e8",
+    "T6": "4c5799cf8d551257"
+   },
+   "6a3c6ff501fe4f593c1cf4a8_00004": {
+    "T1": "20ed9ce40b283992",
+    "T2": "9e1316efe1bf1f90",
+    "T3": "240ea153f4262e69",
+    "T4": "55f6e3fbe5c51cb5",
+    "T5": "f2fa5d5e97276184",
+    "T6": "3bdcb49769d96c1e"
+   },
+   "6a3cbc04ec254ff6cadeceb9_00143": {
+    "T1": "345378b8d349bc82",
+    "T2": "3e016c556c794c6d",
+    "T3": "fb7c8b193d413ebe",
+    "T4": "4161c60b6aaf9413",
+    "T5": "125009ca9109b71f",
+    "T6": "c22a802e206f64a3"
+   },
+   "6a3c6f0601fe4f593c1c85a6_00129": {
+    "T1": "666edad0ea98de61",
+    "T2": "b5aac118fd89c37b",
+    "T3": "d9739ea639389ca0",
+    "T4": "24e2d93d60764528",
+    "T5": "e01239b14e2d0714",
+    "T6": "657cb8bf7d82f271"
+   },
+   "6a3c6c9901fe4f593c1b2c94_00198": {
+    "T1": "20eed4ee97f312e4",
+    "T2": "9664c27e7a679bec",
+    "T3": "272da7d5e5912f22",
+    "T4": "b2cd8cea304be899",
+    "T5": "089c16c6bcd861b2",
+    "T6": "30e1de706455e68f"
+   },
+   "6a3c70ac39b4508b04e508d1_00050": {
+    "T1": "2e5ad50110972d7b",
+    "T2": "13311231343d29b0",
+    "T3": "bd2d4b2e944258fe",
+    "T4": "d3b180b1b39e5f14",
+    "T5": "33529f43d9bdc073",
+    "T6": "350266c83aceeab0"
+   },
+   "6a3cb99f3dce6cfad74954ba_00080": {
+    "T1": "538c7267ce843c0c",
+    "T2": "d3157b9cad50ef5f",
+    "T3": "cc2e5055185b9472",
+    "T4": "a01de79c03a44821",
+    "T5": "d2f9073b71a08be7",
+    "T6": "df72278b7127f6ed"
+   },
+   "6a3c6ef201fe4f593c1c79f4_00090": {
+    "T1": "eb4cbb1d01e264bf",
+    "T2": "b14f38523d1a052b",
+    "T3": "89d30119e8af3afc",
+    "T4": "940b16867edc2ed7",
+    "T5": "6fabd7f519aa6a3f",
+    "T6": "490d27ba2dbd2673"
+   },
+   "6a3c6aefaf3c49b59c5eb80b_00052": {
+    "T1": "26035e23d99acd59",
+    "T2": "b2325d1594670b85",
+    "T3": "837716bc2f62e27e",
+    "T4": "7d7497b4b12ed2fd",
+    "T5": "df0e5474ef3f861d",
+    "T6": "5b4d9716b9e44001"
+   },
+   "6a3c6853af3c49b59c5d7ea7_00016": {
+    "T1": "cd4a87bd514c92c8",
+    "T2": "221aca9c5d7f96d1",
+    "T3": "3b4548f3d5bbc979",
+    "T4": "b4f180fdb19a58c1",
+    "T5": "be8357463037589a",
+    "T6": "02147e0041ba7066"
+   },
+   "6a3c6a2639b4508b04e3f51a_00106": {
+    "T1": "547c4345fd3e5360",
+    "T2": "57ca433bdaae557b",
+    "T3": "9998174036564873",
+    "T4": "1aeaa9422912b344",
+    "T5": "cedbe23deeafceb5",
+    "T6": "c0d810d5d3615e8f"
+   },
+   "6a3c71b201fe4f593c1da00d_00074": {
+    "T1": "fed6949187e274d8",
+    "T2": "dd95e8078480e21a",
+    "T3": "d85f545c77683798",
+    "T4": "39e787a9387de1d8",
+    "T5": "0039c9c21d1cb0ad",
+    "T6": "055a1085429343ab"
+   },
+   "6a3c6e8a01fe4f593c1c3b93_00138": {
+    "T1": "ad1e59ec56b969de",
+    "T2": "e130621e609e5a63",
+    "T3": "24cf6eab85935421",
+    "T4": "3b575ff8a453aaa5",
+    "T5": "103f296bc2d8fa48",
+    "T6": "6f4c3c60e8fe66e7"
+   },
+   "6a3c69f339b4508b04e3e620_00091": {
+    "T1": "e27ba8538b69f697",
+    "T2": "a3990a31a6065280",
+    "T3": "57e14a758d402fc0",
+    "T4": "fd125da6f4a40d05",
+    "T5": "7ef0fefd0e6f7414",
+    "T6": "96f5ce19bc8e0c5a"
+   },
+   "6a3ce7760a0011cb4bc09b97_00118": {
+    "T1": "bb0b705d2da68c86",
+    "T2": "93a8cbee2403b5c3",
+    "T3": "ca156f0d167f3748",
+    "T4": "80c8610e6669525d",
+    "T5": "ba469b64de981611",
+    "T6": "fe27d7005bde97cb"
+   },
+   "6a3c72bc01fe4f593c1e24c0_00029": {
+    "T1": "edba9b41cb52f16f",
+    "T2": "23b4db2d93e30c4d",
+    "T3": "868ab1de181a5edf",
+    "T4": "7c277dd4174c1bd6",
+    "T5": "1d5ef376067fc006",
+    "T6": "4262014b62294ffb"
+   },
+   "6a3cbb5d3dce6cfad74a30b8_00080": {
+    "T1": "c0a917dffb7b34d2",
+    "T2": "c41e8063c5b5ec19",
+    "T3": "b56d7f039bac3408",
+    "T4": "8ec68d2a56db2a05",
+    "T5": "283f23b6a12ce5f9",
+    "T6": "065cc69c546c60f8"
+   },
+   "6a3cba973dce6cfad749d0bd_00138": {
+    "T1": "dbb93d72e15510e7",
+    "T2": "25f1d9624cb73849",
+    "T3": "8baf4641d1c1a640",
+    "T4": "e8e52991724f09d6",
+    "T5": "3895cde8a1e3ea10",
+    "T6": "65045325d9a620d2",
+    "T7": "04549a9cfc5a1ced"
+   },
+   "6a3c678b39b4508b04e36d03_00168": {
+    "T1": "60f0b37d765e083b",
+    "T2": "839b20f45bbbd76a",
+    "T3": "bf7929d485e3b580",
+    "T4": "37bfb9db4927c916",
+    "T5": "9a02618f4d93f746",
+    "T6": "f815ac33770675b1"
+   },
+   "6a3cb8063dce6cfad748a51a_00074": {
+    "T1": "7c3e3fc024a287cb",
+    "T2": "6d83da193931b297",
+    "T3": "16daac2a7cd2e9e6",
+    "T4": "f8ff33e477b922f4",
+    "T5": "62a1cb677cfce12b",
+    "T6": "8aae061d178c49e0"
+   },
+   "6a3c776c01fe4f593c201f9c_00167": {
+    "T1": "876e4bc7f45f424f",
+    "T2": "63be219f130d4c63",
+    "T3": "43f1ee08db58a676",
+    "T4": "24458b36740d0aaf",
+    "T5": "5b6db43c36910537",
+    "T6": "83afb8f23efd3fe9"
+   },
+   "6a3cb8753d799518cd71b52a_00028": {
+    "T1": "07772d1fdcf59a95",
+    "T2": "ea522337e12c4d14",
+    "T3": "0fdfb42d6f9b6a69",
+    "T4": "dfd2b65038facf13",
+    "T5": "4f4ead9f92948737",
+    "T6": "a5a11c2310d03c59"
+   },
+   "6a3cb5ec3dce6cfad7484149_00056": {
+    "T1": "11d26b9dffbff00d",
+    "T2": "0f3aa83a08e04e31",
+    "T3": "f4e3707f59a545a2",
+    "T4": "92356884c2169a61",
+    "T5": "b005d36c6e9351ee",
+    "T6": "83290cc36242d497"
+   },
+   "6a3c749c39b4508b04e57a77_00141": {
+    "T1": "133f8fe44371b9cb",
+    "T2": "8a3f2da4b2cd1ff2",
+    "T3": "ea7b195a0629a0a6",
+    "T4": "32d70e42622cde9b",
+    "T5": "cb3e6fce71833e13",
+    "T6": "180f04f877b0c87b"
+   },
+   "6a3c675caf3c49b59c5d2976_00126": {
+    "T1": "79ad1b66be640b9e",
+    "T2": "54ae002b6fb331d8",
+    "T3": "43337dc764d707d7",
+    "T4": "00ece9542aa9ce33",
+    "T5": "aadb20f2e08cf081",
+    "T6": "4561505fcdb85d22"
+   },
+   "6a3c6dc939b4508b04e4a49b_00017": {
+    "T1": "0e44d1d7dc3383e1",
+    "T2": "567cb1aee1e1bde7",
+    "T3": "3279965147fb0390",
+    "T4": "6de5d4399a53f265",
+    "T5": "3b8a89679d61a040",
+    "T6": "1c7e46df0b1fe898",
+    "T7": "e9dad93e90e092a4"
+   },
+   "6a3ce7be0a0011cb4bc0ab93_00064": {
+    "T1": "1b8f98bf72b3f6f7",
+    "T2": "5cde6db52a45bd71",
+    "T3": "0c2254cd953a29f0",
+    "T4": "e3e10c2a6dee9d78",
+    "T5": "9ecc9b84ae56dea2",
+    "T6": "bbeb923593ade35a"
+   },
+   "6a3c71d339b4508b04e5551d_00132": {
+    "T1": "d8f86251d5982876",
+    "T2": "7d7b4f0130e4ebc5",
+    "T3": "8e7a1f77bb8f89ec",
+    "T4": "757fc96077b044bd",
+    "T5": "2b7c91e7ba77a38d",
+    "T6": "00f9a98b60830c69"
+   },
+   "6a3c6a2239b4508b04e3f381_00047": {
+    "T1": "85a3859d56b3010a",
+    "T2": "1950aecbf15c02c5",
+    "T3": "df4a7c374c8b3902",
+    "T4": "8d7648378b4ec32e",
+    "T5": "c5dedb66f81cb95d",
+    "T6": "fab59be3f591127b"
+   },
+   "6a3cbfe8f9474f825c16c42f_00119": {
+    "T1": "313f6a01169089f8",
+    "T2": "1984b4a326ea3e35",
+    "T3": "f8c38fd00de05d31",
+    "T4": "839b20f45bbbd76a",
+    "T5": "44807de63e38c0f6",
+    "T6": "5f4f20ef7b9fb04d",
+    "T7": "4143a0a3fd19ba45"
+   },
+   "6a3c75da39b4508b04e5e172_00096": {
+    "T1": "51ade6ab7a2fc34d",
+    "T2": "1a5b3448de09d365",
+    "T3": "4d08acc15b2f0894",
+    "T4": "fc1fbad148d94d1f",
+    "T5": "ab22d7b6e258b6fa",
+    "T6": "409bd018b3b2d721"
+   }
+  },
+  "j2": {
+   "69935b692c63944063133f67_00112": {
+    "T1": "224bb2fb29e9e0bd",
+    "T2": "3a197dea6f626599",
+    "T3": "1bc729aef610e363",
+    "T4": "d2e53e6fe45d49f4",
+    "T5": "103abe0974b84184",
+    "T6": "a0fe5e5cf2b4a945"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "67e28194d8044658",
+    "T2": "cf52d3d98247fdb5",
+    "T3": "0f3f10b16c5098a4",
+    "T4": "33f19549e795dfeb",
+    "T5": "6e57c02e5ef68553",
+    "T6": "0954df5943911f53"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "19617bda5007f1d4",
+    "T2": "5c7323561ab26022",
+    "T3": "4dd8682f942a60b9",
+    "T4": "4409c92267b095cc",
+    "T5": "3912d9ed822f411b",
+    "T6": "f2956c0b08f2e9ab"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "f2251f12464fcfd6",
+    "T2": "e5bca9af30f56151",
+    "T3": "dfe3a38dd4d211a8",
+    "T4": "c30e8ba4b91f2910",
+    "T5": "39e0a965ddfb4398",
+    "T6": "ad88de6787544f06"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "5bf0dc7c3bcca557",
+    "T2": "f12f0ca33eaaee0f",
+    "T3": "c46a662198bcfed1",
+    "T4": "d408d9f712f40c8a",
+    "T5": "8eb0045020071674",
+    "T6": "9ad8fb6f42617fb7"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "3a08706d96ad5221",
+    "T2": "290f079a8c954a4f",
+    "T3": "2b5ca7b78f430372",
+    "T4": "183cac00446a2bae",
+    "T5": "35ac2c424c0fe736",
+    "T6": "558abe025c1f2df5"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "e046ccf641d787d9",
+    "T2": "d4b6047716db8cab",
+    "T3": "1318832448bfe60d",
+    "T4": "9f174c1441478444",
+    "T5": "4e87933718815885",
+    "T6": "46dca4d6d935fbad"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "133ed694de5ef8e7",
+    "T2": "c093e0a0bdf70340",
+    "T3": "739f008c9d16cf10",
+    "T4": "0028a7afcd9a99b8",
+    "T5": "0523e5d24cb2ef1a",
+    "T6": "ea4332a5e5f041c0"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "9332ba8ea9c655e0",
+    "T2": "7113e850642ac8db",
+    "T3": "845c02aa3221456a",
+    "T4": "c553d254156a1772",
+    "T5": "27acdba15d34682d",
+    "T6": "bd6a8023859e9fa8"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "cf32b40ddc8d7048",
+    "T2": "95a37451a97d2606",
+    "T3": "78c5dcd61c51391f",
+    "T4": "168ca763f30ac2bc",
+    "T5": "5cac3793fed1c71d",
+    "T6": "32ed0bde23ea2ed3"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "b2c9370643cce24f",
+    "T2": "0d751f6e4f792cab",
+    "T3": "d0663f7e8b25b5ff",
+    "T4": "670a6e7e99fb551b",
+    "T5": "3b733f846c8f8e8c",
+    "T6": "238e4819cb8f8346",
+    "T7": "0d751f6e4f792cab"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "9c2a9f5f94fbeea8",
+    "T2": "95b81e4cf9c5cb60",
+    "T3": "ac0de45bfdb42670",
+    "T4": "26199497991a48a7",
+    "T5": "c946b92aa792fcdf",
+    "T6": "8099d4fdcf107530"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "a9ac23bc15e2759a",
+    "T2": "a196e3778e9c59e4",
+    "T3": "1e86d988abdca354",
+    "T4": "7c0e5501c22105be",
+    "T5": "2430e8b840680f8e",
+    "T6": "922b6dcc075f36ac"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "5a62b379e362532b",
+    "T2": "cfd0580a90a14c80",
+    "T3": "540616e247466cf0",
+    "T4": "65cfea3a5ecb2422",
+    "T5": "acf6a0289566a128",
+    "T6": "0a5de2f3bb9c9497"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "8baf4641d1c1a640",
+    "T2": "026445aba6472c7b",
+    "T3": "2d084c04f94eaf47",
+    "T4": "9e6cea37df693e50",
+    "T5": "fa943223b4343f3d",
+    "T6": "92a255f61c8d2990"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "deb75ff8d560ccc7",
+    "T2": "321799e408160d33",
+    "T3": "5c9b3e1713e09296",
+    "T4": "a96de9ae64382605",
+    "T5": "52dc432021b014b6",
+    "T6": "261ddce6dadd3ee4"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "7b4ccde8f1a29468",
+    "T2": "56c76c09e682f4c3",
+    "T3": "395d169cb4e2c4a1",
+    "T4": "9cbf75518165d5a0",
+    "T5": "90c3148d6d319860",
+    "T6": "231f4329650781fd"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "e92e52dfe6f02160",
+    "T2": "f8a2a380a4c18a96",
+    "T3": "567e0cb26cdc1795",
+    "T4": "8825b50b94486d55",
+    "T5": "a0b41fca0007a7a0",
+    "T6": "16752c8486f46c20"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "82b87236d7ef38af",
+    "T2": "c1b31a7a27fca3de",
+    "T3": "952c3ca2b5231a89",
+    "T4": "3a388cbab2e6909c",
+    "T5": "b3d6e3f222726873",
+    "T6": "330b38900817cf28"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "efe1267e8a189370",
+    "T2": "3fb3ba6d504ec581",
+    "T3": "307c7dc03710823b",
+    "T4": "cc45df18abbd1785",
+    "T5": "1e032eb2c8ac6a8b",
+    "T6": "be2974c88ae2cb45"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "ef7ddd1a1855563c",
+    "T2": "93763e1ac310d898",
+    "T3": "4fac28a26392ab17",
+    "T4": "63d99389f7d46817",
+    "T5": "52b24fecdfb7a867",
+    "T6": "8cb1ba5483def56b"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "893d844ddf1eb0f8",
+    "T2": "00c9e02b7c80c1a2",
+    "T3": "b438fee53814bd6d",
+    "T4": "9ad9bb9a3654c517",
+    "T5": "31fb870807dc9e81",
+    "T6": "29fe8fd436551763"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "8b565392a9c3e66e",
+    "T2": "5e0242cbd02f736c",
+    "T3": "034adb68aeb3c438",
+    "T4": "417f109a049704eb",
+    "T5": "3a66608de6587292",
+    "T6": "efcad55c6c75582a"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "423a596aa4470ea0",
+    "T2": "08eed34f5142e199",
+    "T3": "207f9099de31801c",
+    "T4": "d1abe8ae27bc3be2",
+    "T5": "be3830813178e3bb",
+    "T6": "97b606ccadf9d809",
+    "T7": "5729c627aec37584"
+   },
+   "6a3c70cb01fe4f593c1d4e1d_00011": {
+    "T1": "56984d747fc001cc",
+    "T2": "0974d382dafe2556",
+    "T3": "02332a881bd0a8f5",
+    "T4": "451297db7ee15eb3",
+    "T5": "6fe05f8000006f76",
+    "T6": "20226fb399000f14"
+   },
+   "6a3cbeafec254ff6cae0224d_00032": {
+    "T1": "8118e8ae03fd2fa1",
+    "T2": "6c10cb7ab7ccdd36",
+    "T3": "d7856838408286d6",
+    "T4": "28316314fd6532e1",
+    "T5": "3f4f79f170912b2a",
+    "T6": "498d3af579be64e2",
+    "T7": "418f06d7da08a41f"
+   },
+   "6a3c777601fe4f593c2025e0_00112": {
+    "T1": "732d18853d666de8",
+    "T2": "06fa6a27ac79007d",
+    "T3": "12022c57a7695214",
+    "T4": "1c00b082ae5a7378",
+    "T5": "3954a89b11d61981",
+    "T6": "d2322b9677d44d0d"
+   },
+   "6a3c613840c88a541d8eeec0_00042": {
+    "T1": "972dcc49fff03e9d",
+    "T2": "911edb9ab435a9a7",
+    "T3": "877ffc672cd8fba8",
+    "T4": "317cd6e44478815b",
+    "T5": "e471b5df0c70aa70",
+    "T6": "75bd8f22f8c95534",
+    "T7": "e471b5df0c70aa70"
+   },
+   "6a3cb70d3dce6cfad7485fa7_00171": {
+    "T1": "00d568584b96b8cc",
+    "T2": "97dd317666c83c20",
+    "T3": "94689809e1a84618",
+    "T4": "fd8d79e9ce934470",
+    "T5": "f2201c2f4ea768a9",
+    "T6": "ae10eea94d13fc0b"
+   },
+   "6a3c74cc01fe4f593c1f2713_00157": {
+    "T1": "61f8cebfbde227ab",
+    "T2": "ff25174394034333",
+    "T3": "0870ffb260dba734",
+    "T4": "f402d26c82c5da45",
+    "T5": "79ad1b66be640b9e",
+    "T6": "0ea83ac244919289",
+    "T7": "771d84d9d69178a1"
+   },
+   "6a3c63d2af3c49b59c5c8e16_00106": {
+    "T1": "09416600fef4cc82",
+    "T2": "b9345d47a4a70093",
+    "T3": "d92d0b4eadce8ec1",
+    "T4": "89446870b8bfd5c0",
+    "T5": "b9b7643846c2712d",
+    "T6": "07ed6ba3c51f363e"
+   },
+   "6a3cb9aa3dce6cfad7495af1_00105": {
+    "T1": "ac6b9b33c9788fcd",
+    "T2": "3a9e9d3be7fc6560",
+    "T3": "8c2c8d8d7d62e7d5",
+    "T4": "22994eb7f4a65fb8",
+    "T5": "22994eb7f4a65fb8",
+    "T6": "486c030073526c7e",
+    "T7": "f051ef9fa7d060cd"
+   },
+   "6a3c61a7879008ba7e15f810_00094": {
+    "T1": "143f33e8c2ef1b67",
+    "T2": "6e09a225a98d5c31",
+    "T3": "e3b0c44298fc1c14",
+    "T4": "96d660c8633025f7",
+    "T5": "a64d3aeb66336936",
+    "T6": "43b048605f7f87a0"
+   },
+   "6a3cb9ae3dce6cfad7495cc1_00081": {
+    "T1": "4c5799cf8d551257",
+    "T2": "361aaf92b38dfee8",
+    "T3": "e6f15571e2e679e8",
+    "T4": "a38e44d2f4cd0a3a",
+    "T5": "c86fafc7c4a48bf9",
+    "T6": "8b2ee2faaa27b3b0"
+   },
+   "6a3c6ff501fe4f593c1cf4a8_00004": {
+    "T1": "240ea153f4262e69",
+    "T2": "55f6e3fbe5c51cb5",
+    "T3": "3bdcb49769d96c1e",
+    "T4": "9e1316efe1bf1f90",
+    "T5": "20ed9ce40b283992",
+    "T6": "f2fa5d5e97276184"
+   },
+   "6a3cbc04ec254ff6cadeceb9_00143": {
+    "T1": "fb7c8b193d413ebe",
+    "T2": "125009ca9109b71f",
+    "T3": "4161c60b6aaf9413",
+    "T4": "c22a802e206f64a3",
+    "T5": "3e016c556c794c6d",
+    "T6": "345378b8d349bc82"
+   },
+   "6a3c6f0601fe4f593c1c85a6_00129": {
+    "T1": "666edad0ea98de61",
+    "T2": "d9739ea639389ca0",
+    "T3": "b5aac118fd89c37b",
+    "T4": "e01239b14e2d0714",
+    "T5": "24e2d93d60764528",
+    "T6": "657cb8bf7d82f271"
+   },
+   "6a3c6c9901fe4f593c1b2c94_00198": {
+    "T1": "9664c27e7a679bec",
+    "T2": "20eed4ee97f312e4",
+    "T3": "30e1de706455e68f",
+    "T4": "272da7d5e5912f22",
+    "T5": "089c16c6bcd861b2",
+    "T6": "b2cd8cea304be899"
+   },
+   "6a3c70ac39b4508b04e508d1_00050": {
+    "T1": "d3b180b1b39e5f14",
+    "T2": "13311231343d29b0",
+    "T3": "2e5ad50110972d7b",
+    "T4": "350266c83aceeab0",
+    "T5": "bd2d4b2e944258fe",
+    "T6": "33529f43d9bdc073"
+   },
+   "6a3cb99f3dce6cfad74954ba_00080": {
+    "T1": "538c7267ce843c0c",
+    "T2": "df72278b7127f6ed",
+    "T3": "a01de79c03a44821",
+    "T4": "cc2e5055185b9472",
+    "T5": "d3157b9cad50ef5f",
+    "T6": "d2f9073b71a08be7"
+   },
+   "6a3c6ef201fe4f593c1c79f4_00090": {
+    "T1": "eb4cbb1d01e264bf",
+    "T2": "490d27ba2dbd2673",
+    "T3": "b14f38523d1a052b",
+    "T4": "6fabd7f519aa6a3f",
+    "T5": "940b16867edc2ed7",
+    "T6": "89d30119e8af3afc"
+   },
+   "6a3c6aefaf3c49b59c5eb80b_00052": {
+    "T1": "26035e23d99acd59",
+    "T2": "5b4d9716b9e44001",
+    "T3": "7d7497b4b12ed2fd",
+    "T4": "b2325d1594670b85",
+    "T5": "837716bc2f62e27e",
+    "T6": "df0e5474ef3f861d"
+   },
+   "6a3c6853af3c49b59c5d7ea7_00016": {
+    "T1": "b4f180fdb19a58c1",
+    "T2": "3b4548f3d5bbc979",
+    "T3": "221aca9c5d7f96d1",
+    "T4": "be8357463037589a",
+    "T5": "cd4a87bd514c92c8",
+    "T6": "02147e0041ba7066"
+   },
+   "6a3c6a2639b4508b04e3f51a_00106": {
+    "T1": "1aeaa9422912b344",
+    "T2": "57ca433bdaae557b",
+    "T3": "547c4345fd3e5360",
+    "T4": "cedbe23deeafceb5",
+    "T5": "c0d810d5d3615e8f",
+    "T6": "9998174036564873"
+   },
+   "6a3c71b201fe4f593c1da00d_00074": {
+    "T1": "d85f545c77683798",
+    "T2": "0039c9c21d1cb0ad",
+    "T3": "055a1085429343ab",
+    "T4": "dd95e8078480e21a",
+    "T5": "fed6949187e274d8",
+    "T6": "39e787a9387de1d8"
+   },
+   "6a3c6e8a01fe4f593c1c3b93_00138": {
+    "T1": "6f4c3c60e8fe66e7",
+    "T2": "e130621e609e5a63",
+    "T3": "24cf6eab85935421",
+    "T4": "3b575ff8a453aaa5",
+    "T5": "ad1e59ec56b969de",
+    "T6": "103f296bc2d8fa48"
+   },
+   "6a3c69f339b4508b04e3e620_00091": {
+    "T1": "fd125da6f4a40d05",
+    "T2": "57e14a758d402fc0",
+    "T3": "e27ba8538b69f697",
+    "T4": "a3990a31a6065280",
+    "T5": "7ef0fefd0e6f7414",
+    "T6": "96f5ce19bc8e0c5a"
+   },
+   "6a3ce7760a0011cb4bc09b97_00118": {
+    "T1": "93a8cbee2403b5c3",
+    "T2": "80c8610e6669525d",
+    "T3": "ca156f0d167f3748",
+    "T4": "bb0b705d2da68c86",
+    "T5": "ba469b64de981611",
+    "T6": "fe27d7005bde97cb"
+   },
+   "6a3c72bc01fe4f593c1e24c0_00029": {
+    "T1": "1d5ef376067fc006",
+    "T2": "868ab1de181a5edf",
+    "T3": "edba9b41cb52f16f",
+    "T4": "7c277dd4174c1bd6",
+    "T5": "4262014b62294ffb",
+    "T6": "23b4db2d93e30c4d"
+   },
+   "6a3cbb5d3dce6cfad74a30b8_00080": {
+    "T1": "8ec68d2a56db2a05",
+    "T2": "b56d7f039bac3408",
+    "T3": "283f23b6a12ce5f9",
+    "T4": "065cc69c546c60f8",
+    "T5": "c41e8063c5b5ec19",
+    "T6": "c0a917dffb7b34d2"
+   },
+   "6a3cba973dce6cfad749d0bd_00138": {
+    "T1": "8baf4641d1c1a640",
+    "T2": "25f1d9624cb73849",
+    "T3": "3895cde8a1e3ea10",
+    "T4": "dbb93d72e15510e7",
+    "T5": "65045325d9a620d2",
+    "T6": "e8e52991724f09d6",
+    "T7": "04549a9cfc5a1ced"
+   },
+   "6a3c678b39b4508b04e36d03_00168": {
+    "T1": "60f0b37d765e083b",
+    "T2": "9a02618f4d93f746",
+    "T3": "f815ac33770675b1",
+    "T4": "bf7929d485e3b580",
+    "T5": "37bfb9db4927c916",
+    "T6": "839b20f45bbbd76a"
+   },
+   "6a3cb8063dce6cfad748a51a_00074": {
+    "T1": "6d83da193931b297",
+    "T2": "7c3e3fc024a287cb",
+    "T3": "f8ff33e477b922f4",
+    "T4": "16daac2a7cd2e9e6",
+    "T5": "8aae061d178c49e0",
+    "T6": "62a1cb677cfce12b"
+   },
+   "6a3c776c01fe4f593c201f9c_00167": {
+    "T1": "43f1ee08db58a676",
+    "T2": "876e4bc7f45f424f",
+    "T3": "83afb8f23efd3fe9",
+    "T4": "24458b36740d0aaf",
+    "T5": "5b6db43c36910537",
+    "T6": "63be219f130d4c63"
+   },
+   "6a3cb8753d799518cd71b52a_00028": {
+    "T1": "ea522337e12c4d14",
+    "T2": "dfd2b65038facf13",
+    "T3": "4f4ead9f92948737",
+    "T4": "a5a11c2310d03c59",
+    "T5": "07772d1fdcf59a95",
+    "T6": "0fdfb42d6f9b6a69"
+   },
+   "6a3cb5ec3dce6cfad7484149_00056": {
+    "T1": "f4e3707f59a545a2",
+    "T2": "92356884c2169a61",
+    "T3": "0f3aa83a08e04e31",
+    "T4": "11d26b9dffbff00d",
+    "T5": "83290cc36242d497",
+    "T6": "b005d36c6e9351ee"
+   },
+   "6a3c749c39b4508b04e57a77_00141": {
+    "T1": "ea7b195a0629a0a6",
+    "T2": "32d70e42622cde9b",
+    "T3": "cb3e6fce71833e13",
+    "T4": "133f8fe44371b9cb",
+    "T5": "8a3f2da4b2cd1ff2",
+    "T6": "180f04f877b0c87b"
+   },
+   "6a3c675caf3c49b59c5d2976_00126": {
+    "T1": "54ae002b6fb331d8",
+    "T2": "79ad1b66be640b9e",
+    "T3": "00ece9542aa9ce33",
+    "T4": "aadb20f2e08cf081",
+    "T5": "4561505fcdb85d22",
+    "T6": "43337dc764d707d7"
+   },
+   "6a3c6dc939b4508b04e4a49b_00017": {
+    "T1": "3279965147fb0390",
+    "T2": "1c7e46df0b1fe898",
+    "T3": "6de5d4399a53f265",
+    "T4": "e9dad93e90e092a4",
+    "T5": "0e44d1d7dc3383e1",
+    "T6": "567cb1aee1e1bde7",
+    "T7": "3b8a89679d61a040"
+   },
+   "6a3ce7be0a0011cb4bc0ab93_00064": {
+    "T1": "0c2254cd953a29f0",
+    "T2": "1b8f98bf72b3f6f7",
+    "T3": "9ecc9b84ae56dea2",
+    "T4": "5cde6db52a45bd71",
+    "T5": "e3e10c2a6dee9d78",
+    "T6": "bbeb923593ade35a"
+   },
+   "6a3c71d339b4508b04e5551d_00132": {
+    "T1": "d8f86251d5982876",
+    "T2": "7d7b4f0130e4ebc5",
+    "T3": "757fc96077b044bd",
+    "T4": "8e7a1f77bb8f89ec",
+    "T5": "2b7c91e7ba77a38d",
+    "T6": "00f9a98b60830c69"
+   },
+   "6a3c6a2239b4508b04e3f381_00047": {
+    "T1": "8d7648378b4ec32e",
+    "T2": "85a3859d56b3010a",
+    "T3": "fab59be3f591127b",
+    "T4": "1950aecbf15c02c5",
+    "T5": "c5dedb66f81cb95d",
+    "T6": "df4a7c374c8b3902"
+   },
+   "6a3cbfe8f9474f825c16c42f_00119": {
+    "T1": "f8c38fd00de05d31",
+    "T2": "1984b4a326ea3e35",
+    "T3": "4143a0a3fd19ba45",
+    "T4": "44807de63e38c0f6",
+    "T5": "839b20f45bbbd76a",
+    "T6": "5f4f20ef7b9fb04d",
+    "T7": "313f6a01169089f8"
+   },
+   "6a3c75da39b4508b04e5e172_00096": {
+    "T1": "51ade6ab7a2fc34d",
+    "T2": "ab22d7b6e258b6fa",
+    "T3": "1a5b3448de09d365",
+    "T4": "fc1fbad148d94d1f",
+    "T5": "4d08acc15b2f0894",
+    "T6": "409bd018b3b2d721"
+   }
+  }
+ },
+ "gate_items": [
+  "6a3c74cc01fe4f593c1f2713_00157",
+  "6a3cbfe8f9474f825c16c42f_00119",
+  "6a3cba973dce6cfad749d0bd_00138",
+  "6a3cbeafec254ff6cae0224d_00032",
+  "6a3c6dc939b4508b04e4a49b_00017",
+  "69e792fd80b52390feb1770f_00022",
+  "6a3cb9aa3dce6cfad7495af1_00105",
+  "6a3c613840c88a541d8eeec0_00042",
+  "6a3c5f05879008ba7e15291d_00045"
+ ],
+ "main_items": [
+  "69935b692c63944063133f67_00112",
+  "69e72c60a409200ea79f46f6_00141",
+  "69e72c65a409200ea79f47bd_00106",
+  "69e72c6ba409200ea79f484e_00102",
+  "69e72c70a409200ea79f48f9_00078",
+  "69e72c75a409200ea79f4976_00100",
+  "69e72c7da409200ea79f4a01_00053",
+  "69e7494885f786e884a4e57a_00024",
+  "69e8b2642ff2a8dc09e778a1_00439",
+  "69e8b26b2ff2a8dc09e77afc_00118",
+  "6a3c5f3b879008ba7e153836_00013",
+  "6a3c5f3c879008ba7e153862_00029",
+  "6a3c6191879008ba7e15f0b2_00070",
+  "6a3c6192879008ba7e15f12e_00065",
+  "6a3c61b1879008ba7e15fba1_00068",
+  "6a3c61b3879008ba7e15fc71_00112",
+  "6a3c61b5879008ba7e15fd28_00117",
+  "6a3c61db40c88a541d8f091d_00083",
+  "6a3c61ec40c88a541d8f0f4a_00018",
+  "69e7268ca409200ea79ef73b_00111",
+  "69e72698a409200ea79ef8c3_00129",
+  "69e792f880b52390feb17389_00344",
+  "6a3c70cb01fe4f593c1d4e1d_00011",
+  "6a3c777601fe4f593c2025e0_00112",
+  "6a3cb70d3dce6cfad7485fa7_00171",
+  "6a3c63d2af3c49b59c5c8e16_00106",
+  "6a3c61a7879008ba7e15f810_00094",
+  "6a3cb9ae3dce6cfad7495cc1_00081",
+  "6a3c6ff501fe4f593c1cf4a8_00004",
+  "6a3cbc04ec254ff6cadeceb9_00143",
+  "6a3c6f0601fe4f593c1c85a6_00129",
+  "6a3c6c9901fe4f593c1b2c94_00198",
+  "6a3c70ac39b4508b04e508d1_00050",
+  "6a3cb99f3dce6cfad74954ba_00080",
+  "6a3c6ef201fe4f593c1c79f4_00090",
+  "6a3c6aefaf3c49b59c5eb80b_00052",
+  "6a3c6853af3c49b59c5d7ea7_00016",
+  "6a3c6a2639b4508b04e3f51a_00106",
+  "6a3c71b201fe4f593c1da00d_00074",
+  "6a3c6e8a01fe4f593c1c3b93_00138",
+  "6a3c69f339b4508b04e3e620_00091",
+  "6a3ce7760a0011cb4bc09b97_00118",
+  "6a3c72bc01fe4f593c1e24c0_00029",
+  "6a3cbb5d3dce6cfad74a30b8_00080",
+  "6a3c678b39b4508b04e36d03_00168",
+  "6a3cb8063dce6cfad748a51a_00074",
+  "6a3c776c01fe4f593c201f9c_00167",
+  "6a3cb8753d799518cd71b52a_00028",
+  "6a3cb5ec3dce6cfad7484149_00056",
+  "6a3c749c39b4508b04e57a77_00141",
+  "6a3c675caf3c49b59c5d2976_00126",
+  "6a3ce7be0a0011cb4bc0ab93_00064",
+  "6a3c71d339b4508b04e5551d_00132",
+  "6a3c6a2239b4508b04e3f381_00047",
+  "6a3c75da39b4508b04e5e172_00096"
+ ]
+}

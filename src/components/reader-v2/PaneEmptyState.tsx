@@ -332,7 +332,7 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
         label="Ready to translate"
         body="OCR is complete for this page. It has not been translated into English yet."
       >
-        <a href={`/book/${book.id}/pipeline`} className={actionButtonClass} style={actionButtonStyle}>
+        <a href={`/book/${book.id}/pipeline?page=${encodeURIComponent(page.id)}`} className={actionButtonClass} style={actionButtonStyle}>
           Open pipeline
         </a>
       </EmptyPane>
