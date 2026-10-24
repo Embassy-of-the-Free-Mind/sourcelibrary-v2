@@ -37,6 +37,7 @@ import {
 } from '@/lib/further-reading';
 import { resolveReadingList, readingListBookIds, type ReadingListDoc } from '@/lib/reading-list';
 import { ObjectId } from 'mongodb';
+import { hasEsCollectionPage } from '@/lib/es-collections';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -1333,7 +1334,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 Shown only when the collection really has Spanish books — a link
                 into an empty Spanish page is the broken promise the route gate
                 exists to prevent. Tenants keep their own prefix and never get it. */}
-            {!tenantSlug && spanishBookCount > 0 && (
+            {!tenantSlug && spanishBookCount > 0 && hasEsCollectionPage(collection) && (
               <>
                 <span className="w-px h-4 bg-white/20" />
                 <Link

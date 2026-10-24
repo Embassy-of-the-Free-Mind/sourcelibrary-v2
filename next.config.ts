@@ -418,6 +418,12 @@ const nextConfig: NextConfig = {
       { source: '/articles/choreia', destination: '/articles/choreia-the-dance-of-the-cosmos', permanent: true },
       // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
       { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // Superseded posts (UNLISTED_PAGES in src/app/articles/posts.ts): send readers
+      // to the post that replaced each one. The page files are kept.
+      { source: '/blog/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/articles/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/blog/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
+      { source: '/articles/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
       { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
       // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
       // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
@@ -533,8 +539,10 @@ const nextConfig: NextConfig = {
         destination: '/press-releases',
         permanent: true,
       },
+      // ...except the unlisted English guide to the Trouw interview (#4049),
+      // a live page under /press/ that this catch-all was swallowing.
       {
-        source: '/press/:path*',
+        source: '/press/:path((?!trouw-interview-english$).*)',
         destination: '/press-releases',
         permanent: true,
       },
