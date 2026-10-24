@@ -29,6 +29,12 @@
  * --instructions-file=F: JSON { page_id: "one line" }, as in cli-translate.mjs read; a call appends each distinct line
  * of its pages once, before the reply rules (#6865: one column instruction given to every arm of a comparison).
  *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable page read is copied to R2 candidate-reads/
+ * (with the exact prompt its call sent) when it is made. Before planning the calls, each page asks for a kept read
+ * by the same --model on the same prompt template and variant, the same OCR (by hash) and the same instruction line,
+ * and uses it instead of calling (meta `reused_from`); the page-before context is not part of that key. `--fresh`
+ * always calls: a repeat-noise eval needs fresh reads.
+ *
  * HOW IT FAILS. A usage-limit reply stops the run (exit 3) with the pages done so far saved; re-running skips them.
  * Any other failed page gets an empty .txt and a non-zero `exit` in its meta, which `apply` skips and counts.
  */
@@ -44,6 +50,7 @@ import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
 const CLI = 'claude';
@@ -157,6 +164,20 @@ async function main() {
     if (same) { console.log(`  ${p.page_number} skipped: ${same}`); continue; }
     todo.push(p);
   }
+  // A kept read of the same page, model, prompt template, OCR and instruction is used instead of a call (#7075).
+  const FRESH = wantsFresh();
+  const refOf = new Map();
+  const reuseKeyOf = (p) => {
+    if (!refOf.has(p.book_id)) refOf.set(p.book_id, buildBlockTranslationPrompt({ prompts, book: books.get(p.book_id), pages: [p], pageBreak: PAGE_BREAK_SCOPED }).promptRef);
+    return translationReuseKey({ prompt_ref: refOf.get(p.book_id), ocr_hash: contentHash(p.ocr.data), prompt_variant: PROMPT_VARIANT, instruction: INSTRUCTIONS[p.id] || null });
+  };
+  let reused = 0;
+  if (!FRESH) {
+    for (const p of [...todo]) {
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKeyOf(p), derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
+      if (hit && await reuseInto(OUT, p.id, hit)) { reused++; todo.splice(todo.indexOf(p), 1); console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); }
+    }
+  }
   // Blocks: consecutive runs of one book (a gap in page numbers or a new book starts a run), cut by planBlocks.
   const runs = [];
   for (const p of todo) {
@@ -218,11 +239,17 @@ async function main() {
       for (const d of dropDriftedPages(group, texts).drifted) { again.add(d.prev); again.add(d.next); }
       for (const b of dropLeafSeamBreaches(group, texts).breached) again.add(b.page);
     }
-    const redo = [];
+    const redo = [], kept = [];
     group.forEach((p, i) => {
       if (again.has(p.page_number) || !texts.has(p.page_number)) { redo.push(p); return; }
       writePage(p, texts.get(p.page_number), { ...pageMeta(p, i), exit: 0, error_class: null });
+      kept.push(p);
     });
+    // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
+    for (const p of kept) {
+      const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'translation', text: texts.get(p.page_number), model: MODEL, prompt_hash: reuseKeyOf(p), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
     console.log(`  ${first.book_id} p.${first.page_number}-${lastP.page_number}: ok ${group.map((p) => (texts.get(p.page_number) || '').length).join('/')} chars${redo.length ? `; ${redo.length} to read alone (drift or seam)` : ''} (${Math.round(r.secs)}s)`);
     return redo;
   };
@@ -237,7 +264,7 @@ async function main() {
   }
   await client.close();
   const metas = todo.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
-  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached`);
+  console.log(`\nread ${metas.filter((m) => m.exit === 0).length} ok, ${metas.filter((m) => m.exit !== 0).length} failed, ${todo.length - metas.length} not reached; reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
 }
 

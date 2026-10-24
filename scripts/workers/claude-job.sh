@@ -412,6 +412,23 @@ Your PR $url has failing checks: $bad. A job owns its PR until it is green. Read
   touch "$JD/$name.done"
 }
 
+# Keep the job's unwritten reads (#7075): the backstop for a reader that ran before it kept its own reads, or whose
+# R2 write failed. Copies every <page_id>.txt + .meta.json read in $DATA/<name> to R2 candidate-reads/ (private bucket),
+# skipping what a page or page_revisions already holds; unknown shapes are only counted. Best effort: never blocks DONE.
+# Runs the script from the main checkout (on main), else the job's worktree, whichever has it.
+keep_reads() {
+  local name="$1" dir="$DATA/$1" script="" out
+  [ -d "$dir" ] || return 0
+  for c in "$SL" "$(wt_dir "$name")"; do
+    [ -f "$c/scripts/maintenance/archive-candidate-reads.mjs" ] && { script="$c/scripts/maintenance/archive-candidate-reads.mjs"; break; }
+  done
+  [ -n "$script" ] && [ -s "$SL/.env.production.local" ] || return 0
+  out=$(timeout 1800 node --env-file="$SL/.env.production.local" "$script" --roots="$dir" --apply \
+    --checkpoint="$dir/archive-candidate-reads.checkpoint.jsonl" 2>/dev/null | grep -E '^[0-9]+ meta files|^apply ' | tr '\n' ' ')
+  echo "[claude-job] kept reads: ${out:-none or failed} $(date -u +%FT%TZ)" >> "$LOGD/$name.log"
+  return 0
+}
+
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
@@ -461,6 +478,7 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
   done
   if [ -f "$JD/$name.done" ]; then
     echo "[claude-job] DONE $(date -u +%FT%TZ)" >> "$log"
+    keep_reads "$name"
     pr_fix_once "$name"
     land=$(landing_check "$name"); echo "[claude-job] landing: $land" >> "$log"
     # One line per finished job, for the morning digest: ntfy.sh keeps only ~12 h of the topic.
