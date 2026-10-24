@@ -320,11 +320,11 @@
       "kind": "Chinese pages of tables, and pages that mix prose with tables, scores or diagrams, in books that had no reader yet",
       "reader": "PaddleOCR-VL, with a check on its output; pages the check rejects are read by Gemini 3.8 Flash, and its reply is checked the same way",
       "why": "On 50 new pages from 50 books (18 October 2026), 25 tables and 25 mixed pages, this was no worse than Gemini 3.8 Flash alone: median difference 0.0 points in both kinds, against Opus reference readings. The check caught all 8 pages where PaddleOCR repeated or dropped text, and passed 34 of 35 good pages. Two works are not read this way, because neither reader gets them right: a five-script glossary and a book of qin tablature.",
-      "in_use": "In progress: being written to about 27,000 pages from 24 October 2026. Pages neither reader passes stay without text.",
-      "stored": null,
+      "in_use": "In use for these books from 24 October 2026. Pages neither reader passes stay without text, and the pages are not yet translated.",
+      "stored": "Counted 24 October 2026 over the 27,048 pages in scope: 22,220 pages read by PaddleOCR-VL, 1,733 by Gemini 3.8 Flash, and 3,095 with no text (Flash refused or failed the check twice on 1,063, the table check withheld 1,120, and 912 are near-blank or too short).",
       "status": "provisional",
       "routed": "partly",
-      "production": "scripts/workers/paddle-zh-guarded-lane.mjs (#6871 row 3, Derek yes 2026-10-23): first reads of the held table + mixed residue (27,048 pages, 190 books), from the gex45 read gpu-queue 50/51-zh-guarded-read (finished 2026-10-19) and scripts/gpu/zh-guarded-read-6871/flash.py (agy gemini-3.8-flash-low, $0). ocr.source 'paddle' or 'ai', ocr.pipeline paddle-zh-guarded-2026-10, ocr.verdict = the guard's verdict and code hashes. The #6388 table detector still withholds what it flags. Books stay held (gpu-backlog-5660 / zh-guarded-6871): translation is its own priced decision. Excluded and held: 欽定西域同文志, 琴譜合璧, the 清文鑑 titles.",
+      "production": "scripts/workers/paddle-zh-guarded-lane.mjs (#6871 row 3, Derek yes 2026-10-23): first reads of the held table + mixed residue (27,048 pages, 190 books; applied 2026-10-24: 22,220 Paddle + 1,733 Flash written, 3,095 left unread, 4 write runs revertible with scripts/maintenance/revert-run.mjs), from the gex45 read gpu-queue 50/51-zh-guarded-read (finished 2026-10-19) and scripts/gpu/zh-guarded-read-6871/flash.py (agy gemini-3.8-flash-low, $0). ocr.source 'paddle' or 'ai', ocr.pipeline paddle-zh-guarded-2026-10, ocr.verdict = the guard's verdict and code hashes. The #6388 table detector still withholds what it flags. Books stay held (gpu-backlog-5660 / zh-guarded-6871): translation is its own priced decision. Excluded and held: 欽定西域同文志, 琴譜合璧, the 清文鑑 titles.",
       "code": {
         "file": "scripts/workers/paddle-zh-guarded-lane.mjs"
       },
