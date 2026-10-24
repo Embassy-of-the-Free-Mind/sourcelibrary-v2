@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, EXCLUDED_WORKS, DOWNSTREAM_NOTE, pageSet, boxFromRun } from '../../scripts/workers/paddle-zh-guarded-lane.mjs';
+import { LANE, HOLD_REASON, HOLD_REASONS, APPLY_HOLD, REVISION_SOURCE, EXCLUDED_WORKS, DOWNSTREAM_NOTE, pageSet, boxFromRun, routePage, nextOcr } from '../../scripts/workers/paddle-zh-guarded-lane.mjs';
+// @ts-expect-error — plain .mjs module
+import { ocrRouteForKind } from '../../scripts/lib/ocr-routing.mjs';
 // @ts-expect-error — plain .mjs module
 import { missingProvenance } from '../../scripts/lib/write-provenance.mjs';
 
@@ -48,5 +50,55 @@ describe('paddle-zh-guarded-lane: what a page carries (#6871 row 3)', () => {
   });
   it('boxFromRun hands ocrSetFields the logged weights hash, not a pinned one', () => {
     expect(boxFromRun(RUN).weights_sha256).toBe(RUN.engine.revision.slice(7));
+  });
+});
+
+// The routing row for the held Chinese table + mixed classes (ocr-routing-table.json `chinese-held-tables-mixed`):
+// guard pass → Paddle; guard reject + Flash reply pass on the same bytes → Flash; everything else stays unread.
+describe('paddle-zh-guarded-lane: routing row (#6871 row 3)', () => {
+  const PAGE = { id: 'p1', book_id: 'b1', page_number: 26, photo_original: IMG.url };
+  const src = () => 'https://r2.example/archived/b1/26.jpg';
+  const FREC = { ...REC, route: 'FLASH', guard: { ...REC.guard, route: 'FLASH', flags: ['COLLAPSE'] } };
+  it('a guard-passed Paddle read goes to PADDLE', () => {
+    expect(routePage(REC, PAGE, undefined, { getSource: src })).toEqual({ route: 'PADDLE' });
+  });
+  it('a guard-rejected page goes to FLASH only when Flash passed its reply guard on the same image bytes', () => {
+    expect(routePage(FREC, PAGE, FLASH, { getSource: src })).toEqual({ route: 'FLASH', flash: FLASH });
+    expect(routePage(FREC, PAGE, undefined, { getSource: src })).toEqual({ skip: 'flash_not_run' });
+    expect(routePage(FREC, PAGE, { ...FLASH, route: 'HOLD' }, { getSource: src })).toEqual({ skip: 'flash_hold' });
+    expect(routePage(FREC, PAGE, { ...FLASH, image: { url: IMG.url, sha256: 'c'.repeat(64) } }, { getSource: src })).toEqual({ skip: 'flash_read_another_image' });
+  });
+  it('a near-blank page (guard HOLD) is never written, by either engine', () => {
+    expect(routePage({ ...REC, route: 'HOLD' }, PAGE, FLASH, { getSource: src })).toEqual({ skip: 'route_hold' });
+  });
+  it('never a human-edited page, never a page already read, never another image or another book', () => {
+    expect(routePage(REC, { ...PAGE, ocr: { edited_by: 'derek' } }, undefined, { getSource: src })).toEqual({ skip: 'human_edited' });
+    expect(routePage(REC, { ...PAGE, ocr: { source: 'manual' } }, undefined, { getSource: src })).toEqual({ skip: 'human_edited' });
+    expect(routePage(REC, { ...PAGE, ocr: { data: 'x', source: 'ai' } }, undefined, { getSource: src })).toEqual({ skip: 'already_read' });
+    expect(routePage(REC, { ...PAGE, photo_original: 'https://archive.org/other.jpg' }, undefined, { getSource: src })).toEqual({ skip: 'image_not_the_pages' });
+    expect(routePage(REC, { ...PAGE, book_id: 'b2' }, undefined, { getSource: src })).toEqual({ skip: 'wrong_book' });
+    expect(routePage(REC, undefined, undefined, { getSource: src })).toEqual({ skip: 'page_gone' });
+    // the R2 copy (what getPageSource returns) is the same page too
+    expect(routePage({ ...REC, image: { ...IMG, url: src() } }, { ...PAGE, photo_original: undefined }, undefined, { getSource: src })).toEqual({ route: 'PADDLE' });
+  });
+  it('the ocr object written drops stale failure keys and keeps nothing of a prior text', () => {
+    const { set } = pageSet(REC, 'PADDLE', ctx);
+    const o = nextOcr({ fail_count: 3, fail_blocked: true, fail_reason: 'x', note: 'keep' }, set);
+    expect(o.fail_count).toBeUndefined();
+    expect(o.fail_blocked).toBeUndefined();
+    expect(o.note).toBe('keep');
+    expect(o).toMatchObject({ source: 'paddle', pipeline: LANE });
+    expect(missingProvenance('ocr', o).missing).toEqual([]);
+  });
+  it('the apply holds an unheld book under its own reason, and accepts the backlog hold', () => {
+    expect(APPLY_HOLD.reason).toBe('zh-guarded-6871');
+    expect(APPLY_HOLD.release).toMatch(/priced decision/);
+    expect(HOLD_REASONS).toEqual(['gpu-backlog-5660', 'zh-guarded-6871']);
+    expect(REVISION_SOURCE).toBe('paddle-zh-guarded-6871');
+  });
+  it('the routing table names this lane for the held classes', () => {
+    const row = ocrRouteForKind('chinese-held-tables-mixed');
+    expect(row?.code?.file).toBe('scripts/workers/paddle-zh-guarded-lane.mjs');
+    expect(row?.evidence?.map((e: { file: string }) => e.file)).toContain('2026-10-18-zh-guarded-paddle-6871.md');
   });
 });

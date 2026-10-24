@@ -46,15 +46,23 @@
  *     paid and is not decided by this writer. The release stays a separate, priced decision; this writer adds no bypass.
  *
  *   node --env-file=.env.production.local scripts/workers/paddle-zh-guarded-lane.mjs \
- *     --books DIR --run run.json --flash flash.jsonl [--book <id>] [--limit-pages N] [--report FILE] [--apply]
+ *     --books DIR --run run.json --flash flash.jsonl [--book <id>] [--limit-pages N] [--limit-books N]
+ *     [--checkpoint FILE] [--report FILE] [--apply]
  * Dry run unless --apply. The dry run reads Mongo and prints what it would write; it writes nothing anywhere
  * except the --report file.
+ *
+ * APPLY, per book (#6871 row 3, Derek yes 2026-10-23): a book with no hold is held (APPLY_HOLD, zh-guarded-6871)
+ * BEFORE its first page write; a sweep_log `first_ocr_start` row; then each page through writePageText (one
+ * page_revisions row per page, source REVISION_SOURCE, one run_id per invocation so scripts/maintenance/revert-run.mjs
+ * can undo a batch); then recount, sweep_log `first_ocr`, book_events. --checkpoint lists finished books, so a batch
+ * resumes where the last stopped.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { writePageText, newRunId } from '../lib/page-text-writer.mjs';
+import { holdBook } from '../lib/pipeline-hold.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
@@ -68,7 +76,16 @@ import {
 export const LANE = 'paddle-zh-guarded-2026-10';
 export const LANE_ISSUE = 6871;
 export const HOLD_REASON = 'gpu-backlog-5660';
+/** The apply's own hold (#6871, Derek yes 2026-10-23): put on any frame book that carries no hold before its first
+ * page write, so no gap-fill re-translation is queued. A book already held keeps its hold (holdBook records one). */
+export const APPLY_HOLD = {
+  reason: 'zh-guarded-6871', issue: LANE_ISSUE, source: 'scripts/workers/paddle-zh-guarded-lane.mjs',
+  release: 'translation of the guarded-Paddle Chinese table + mixed pages is approved as its own priced decision (#6871 row 3 is OCR only); release with --to ocr_complete',
+};
+export const HOLD_REASONS = [HOLD_REASON, APPLY_HOLD.reason];
 export const REVISION_REASON = 'ocr_paddle_zh_guarded_6871';
+/** page_revisions.source on every row this lane writes: one label per lane, so the rows segment cleanly. */
+export const REVISION_SOURCE = 'paddle-zh-guarded-6871';
 export const BOOK_EVENT = 'paddle_zh_guarded_ocr';
 const CALL_SITE = 'scripts/workers/paddle-zh-guarded-lane.mjs';
 /** Works no engine reads (#6910, zh-residue-refs-6871): never written, whatever a file says. */
@@ -80,7 +97,39 @@ const arg = (n, d) => { const i = argv.indexOf(n); return i >= 0 && argv[i + 1] 
 const APPLY = argv.includes('--apply');
 const BOOKS = arg('--books'), RUNF = arg('--run'), FLASHF = arg('--flash');
 const ONLY = arg('--book', null), LIMIT = Number(arg('--limit-pages', 0)) || 0;
+const LIMIT_BOOKS = Number(arg('--limit-books', 0)) || 0;
 const REPORT = arg('--report', null);
+const CHECKPOINT = arg('--checkpoint', null);
+
+/**
+ * Which route writes this page, or why none does. Pure: the GPU record, the page as stored now, and Flash's row.
+ * The ROUTING ROW for these held classes (ocr-routing-table.json `chinese-held-tables-mixed`):
+ *   Paddle's read passed guard.py + ink.py           → PADDLE
+ *   the guard rejected it, Flash's reply passed its own reply guard, on the same image bytes → FLASH
+ *   near-blank (guard HOLD), Flash failed twice or not run, anything unexpected → not written (page stays unread)
+ * @returns {{ route: 'PADDLE'|'FLASH', flash?: object } | { skip: string }}
+ */
+export function routePage(rec, page, flashRec, { getSource = getPageSource } = {}) {
+  if (!page) return { skip: 'page_gone' };
+  if (page.book_id !== rec.book_id) return { skip: 'wrong_book' };
+  if (!rec.image?.url || (rec.image.url !== page.photo_original && rec.image.url !== getSource(page))) return { skip: 'image_not_the_pages' };
+  if (isHumanEdited(page.ocr)) return { skip: 'human_edited' };
+  if (page.ocr?.data) return { skip: 'already_read' };
+  if (rec.route === 'PADDLE') return { route: 'PADDLE' };
+  if (rec.route !== 'FLASH') return { skip: `route_${String(rec.route).toLowerCase()}` };
+  if (!flashRec) return { skip: 'flash_not_run' };
+  if (flashRec.route !== 'FLASH') return { skip: `flash_${String(flashRec.route).toLowerCase()}` };
+  if (!rec.image.sha256 || flashRec.image?.sha256 !== rec.image.sha256) return { skip: 'flash_read_another_image' };
+  return { route: 'FLASH', flash: flashRec };
+}
+
+/** The whole `ocr` object written: the page's prior non-stale keys (none carry text: first reads only), then the lane's. */
+export function nextOcr(priorOcr, set) {
+  const stale = new Set(STALE_OCR_FIELDS.map((k) => k.replace(/^ocr\./, '')));
+  const kept = priorOcr && typeof priorOcr === 'object' ? Object.fromEntries(Object.entries(priorOcr).filter(([k]) => !stale.has(k) && k !== 'data')) : {};
+  const mine = Object.fromEntries(Object.entries(set).filter(([k]) => k.startsWith('ocr.')).map(([k, v]) => [k.slice(4), v]));
+  return { ...kept, ...mine };
+}
 
 /** The guard's verdict on the page, as `ocr.verdict` (the shape apply-reocr-verdicts.mjs writes). */
 export function verdictBlock(rec, route, run, flash, now) {
@@ -144,45 +193,51 @@ async function main() {
   const flash = new Map(fs.existsSync(FLASHF) ? readJsonl(FLASHF).map((r) => [r.page_id, r]) : []);
   const files = fs.readdirSync(BOOKS).filter((f) => f.endsWith('.jsonl')).sort().filter((f) => !ONLY || f === `${ONLY}.jsonl`);
   const codeVer = await codeVersion();
-  const T = { books: 0, books_refused: 0, written: 0, would_write: 0, by_route: {}, skipped: {}, refused_loop: 0, stale_marked: 0, aborted: 0 };
+  const runId = newRunId('paddle-zh-guarded-lane');
+  // resumable: a book is listed in the checkpoint once its writes are done; a re-run skips it (and the write filter
+  // skips any page already read, so a crash mid-book is safe too)
+  const done = new Set(CHECKPOINT && fs.existsSync(CHECKPOINT) ? readJsonl(CHECKPOINT).map((r) => r.book_id) : []);
+  const T = { books: 0, books_refused: 0, books_checkpointed: 0, books_held_now: 0, would_hold: 0, written: 0, would_write: 0, by_route: {}, skipped: {}, refused_loop: 0, conflicts: 0, stale_marked: 0 };
   const report = [], skipped = [];
   // every page not written is listed with its reason (--report <f> → <f>.skipped.jsonl): the held tail a later lane picks up
   const skip = (why, rec) => { T.skipped[why] = (T.skipped[why] || 0) + 1; if (rec) skipped.push({ book_id: rec.book_id, page_id: rec.page_id, page_number: rec.page_number, route: rec.route, skipped: why }); };
-  let budget = LIMIT || Infinity;
-  console.log(`${APPLY ? 'APPLY' : 'DRY RUN'} ${LANE} (#${LANE_ISSUE}) run ${run.run}, ${files.length} book files, ${flash.size} Flash rows`);
+  let budget = LIMIT || Infinity, booksLeft = LIMIT_BOOKS || Infinity;
+  console.log(`${APPLY ? 'APPLY' : 'DRY RUN'} ${LANE} (#${LANE_ISSUE}) run ${run.run}, write run ${runId}, ${files.length} book files, ${flash.size} Flash rows, ${done.size} books checkpointed`);
   console.log(`DOWNSTREAM: ${DOWNSTREAM_NOTE}`);
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const f of files) {
-      if (budget <= 0) break;
+      if (budget <= 0 || booksLeft <= 0) break;
       const recs = readJsonl(path.join(BOOKS, f));
       const bid = recs[0]?.book_id;
-      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
+      if (done.has(bid)) { T.books_checkpointed++; continue; }
+      let book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
       if (!book) { console.log(`${bid} not found: skipped`); T.books_refused++; continue; }
-      // the hold is what keeps paid re-translation from following the write; it stays on
-      if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { console.log(`${bid} NOT held for ${HOLD_REASON}: refusing`); T.books_refused++; continue; }
       if (EXCLUDED_WORKS.test(book.title || '')) { console.log(`${bid} is an excluded work: refusing | ${book.title}`); T.books_refused++; continue; }
-      const pages = await P.find({ id: { $in: recs.map((r) => r.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1 } }).toArray();
+      // HOLD BEFORE WRITE: the hold is what keeps paid re-translation from following the write; it stays on
+      if (!book.pipeline_auto?.hold) {
+        if (!APPLY) { T.would_hold++; console.log(`${bid} carries no hold: --apply holds it (${APPLY_HOLD.reason}) before writing`); }
+        else {
+          const h = await holdBook(db, bid, APPLY_HOLD);
+          book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
+          if (h.outcome === 'held') T.books_held_now++;
+          if (!HOLD_REASONS.includes(book.pipeline_auto?.hold?.reason)) { console.log(`${bid} hold failed (${h.outcome}): refusing`); T.books_refused++; continue; }
+        }
+      } else if (!HOLD_REASONS.includes(book.pipeline_auto.hold.reason)) { console.log(`${bid} held for ${book.pipeline_auto.hold.reason}, not ${HOLD_REASONS.join(' / ')}: refusing`); T.books_refused++; continue; }
+      const pages = await P.find({ id: { $in: recs.map((r) => r.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, translation: 1 } }).toArray();
       const byId = new Map(pages.map((p) => [p.id, p]));
       const workTitle = workTitleOf(book.title);
       const now = new Date();
       const writes = [];
+      let truncated = false;
       for (const rec of recs) {
-        if (budget <= 0) break;
+        if (budget <= 0) { truncated = true; break; }
         const p = byId.get(rec.page_id);
-        if (!p) { skip('page_gone', rec); continue; }
-        if (p.book_id !== bid || rec.book_id !== bid) { skip('wrong_book', rec); continue; }
-        if (rec.image?.url !== p.photo_original && rec.image?.url !== getPageSource(p)) { skip('image_not_the_pages', rec); continue; }
-        if (isHumanEdited(p.ocr)) { skip('human_edited', rec); continue; }
-        if (p.ocr?.data) { skip('already_read', rec); continue; }
-        let route = rec.route, fl = null;
-        if (route === 'FLASH') {
-          fl = flash.get(rec.page_id);
-          if (!fl) { skip('flash_not_run', rec); continue; }
-          if (fl.route !== 'FLASH') { skip(`flash_${String(fl.route).toLowerCase()}`, rec); continue; }
-          if (fl.image?.sha256 !== rec.image?.sha256) { skip('flash_read_another_image', rec); continue; }
-        } else if (route !== 'PADDLE') { skip(`route_${String(route).toLowerCase()}`, rec); continue; }
-        const { text, body, set } = pageSet(rec, route, { run, flash: fl, now, codeVer, workTitle });
+        if (rec.book_id !== bid) { skip('wrong_book', rec); continue; }
+        const r = routePage(rec, p, flash.get(rec.page_id));
+        if (r.skip) { skip(r.skip, rec); continue; }
+        const route = r.route;
+        const { text, body, set } = pageSet(rec, route, { run, flash: r.flash, now, codeVer, workTitle });
         if (bodyHanCount(body) < MIN_HAN) { skip(`${route.toLowerCase()}_textless`, rec); continue; }
         if (route === 'PADDLE') {
           const risk = paddleTableRisk(text, { title: book.title }, TABLE_RULE);
@@ -200,42 +255,43 @@ async function main() {
         writes.push({ p, rec, route, text, set });
         budget--;
       }
-      T.books++;
+      T.books++; booksLeft--;
       for (const w of writes) {
         T.by_route[w.route] = (T.by_route[w.route] || 0) + 1;
         report.push({ book_id: bid, title: book.title, page_id: w.p.id, page_number: w.p.page_number, route: w.route, before: w.p.ocr ?? null,
           after: Object.fromEntries(Object.entries(w.set).map(([k, val]) => [k, val])) });
       }
-      if (!APPLY) { T.would_write += writes.length; console.log(`${bid} would write ${writes.length}/${recs.length} (${writes.filter((w) => w.route === 'PADDLE').length} Paddle, ${writes.filter((w) => w.route === 'FLASH').length} Flash) | ${String(book.title).slice(0, 40)}`); continue; }
-      if (!writes.length) continue;
-      // first reads only, so there should be nothing to snapshot; counted anyway, as every lane does
-      const withText = writes.filter((w) => w.p.ocr?.data).length;
-      const nRev = await saveRevisionsBeforeOverwrite(db, writes.map((w) => w.p.id), 'ocr', { reason: REVISION_REASON, keepMeta: true });
-      if (nRev !== withText) { console.log(`ABORT ${bid}: saved ${nRev} revisions for ${withText} pages with text`); T.aborted++; continue; }
-      const unset = Object.fromEntries([...STALE_OCR_FIELDS, 'translation.health_blocked', 'translation.health_blocked_at'].map((k) => [k, '']));
-      let modified = 0;
-      for (const w of writes) {
-        const literal = Object.fromEntries(Object.entries(w.set).map(([k, val]) => [k, { $literal: val }]));
-        const res = await P.updateOne(
-          { id: w.p.id, book_id: bid, 'ocr.data': { $exists: false }, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' } },
-          [{ $set: { ocr: { $cond: { if: { $eq: [{ $type: '$ocr' }, 'object'] }, then: '$ocr', else: {} } } } }, { $set: literal }, { $unset: Object.keys(unset) }],
-        );
-        modified += res.modifiedCount;
-      }
-      T.written += modified;
-      const stale = await markTranslationsStale(db, writes.map((w) => ({ id: w.p.id, text: w.text })), now, LANE);
-      T.stale_marked += stale;
-      const { after: counts } = await recountBook(db, bid, { reason: LANE, now });
       const nP = writes.filter((w) => w.route === 'PADDLE').length, nF = writes.length - nP;
-      await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr', detail: { issue: LANE_ISSUE, run: run.run, engine: PADDLE.model, revision: run.engine.revision, pages_written: modified, paddle: nP, flash: nF, translations_marked_stale: stale, downstream: DOWNSTREAM_NOTE } });
-      await db.collection('book_events').updateOne(
-        { book_id: bid, type: BOOK_EVENT },
-        { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LANE, 'details.issue': LANE_ISSUE, 'details.engine': PADDLE.model, 'details.repo': PADDLE.repo },
-          $set: { 'details.last_apply_at': now, 'details.run': run.run, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.downstream': DOWNSTREAM_NOTE },
-          $inc: { 'details.pages_written': modified, 'details.paddle': nP, 'details.flash': nF } },
-        { upsert: true },
-      );
-      console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
+      if (!APPLY) { T.would_write += writes.length; console.log(`${bid} would write ${writes.length}/${recs.length} (${nP} Paddle, ${nF} Flash) | ${String(book.title).slice(0, 40)}`); continue; }
+      if (writes.length) {
+        // sweep-log BEFORE the write: a crash mid-book still leaves the intent on record
+        await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr_start', detail: { issue: LANE_ISSUE, run: run.run, write_run: runId, planned: writes.length, paddle: nP, flash: nF } });
+        // one page_revisions row per page (writePageText: prior state 'absent', source REVISION_SOURCE, run_id for
+        // revert-run.mjs), compare-and-set on the empty prior, and the human-edit guard in the update filter
+        let modified = 0;
+        const landed = [];
+        for (const w of writes) {
+          const res = await writePageText(db, w.p.id, 'ocr', nextOcr(w.p.ocr, w.set), { by: CALL_SITE, reason: REVISION_REASON, run_id: runId, revision_source: REVISION_SOURCE, now });
+          if (res.status === 'written') { modified++; landed.push(w); } else { T.conflicts++; skip(`write_${res.status}`, w.rec); }
+        }
+        // a blocked-translation flag set by an earlier failure does not apply to the new text
+        await P.updateMany({ id: { $in: landed.map((w) => w.p.id) }, 'translation.health_blocked': { $exists: true } }, { $unset: { 'translation.health_blocked': '', 'translation.health_blocked_at': '' } });
+        T.written += modified;
+        const stale = await markTranslationsStale(db, landed.map((w) => ({ id: w.p.id, text: w.text })), now, LANE);
+        T.stale_marked += stale;
+        const { after: counts } = await recountBook(db, bid, { reason: LANE, now });
+        await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr', detail: { issue: LANE_ISSUE, run: run.run, write_run: runId, engine: PADDLE.model, revision: run.engine.revision, pages_written: modified, paddle: nP, flash: nF, translations_marked_stale: stale, downstream: DOWNSTREAM_NOTE } });
+        await db.collection('book_events').updateOne(
+          { book_id: bid, type: BOOK_EVENT },
+          { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LANE, 'details.issue': LANE_ISSUE, 'details.engine': PADDLE.model, 'details.repo': PADDLE.repo },
+            $set: { 'details.last_apply_at': now, 'details.run': run.run, 'details.write_run': runId, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.downstream': DOWNSTREAM_NOTE },
+            $inc: { 'details.pages_written': modified, 'details.paddle': nP, 'details.flash': nF } },
+          { upsert: true },
+        );
+        console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
+      }
+      // a book cut short by --limit-pages is not done: the next run picks up its remaining pages
+      if (CHECKPOINT && !truncated) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
     }
   }, { timeoutMs: 4 * 3600 * 1000 });
   if (REPORT) {
