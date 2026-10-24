@@ -1,0 +1,7 @@
+{
+ "calls": 263,
+ "flagged_by_guards": 7,
+ "guarded_misleading": 17,
+ "guarded_worse": 4,
+ "median_seconds": 18.81
+}
