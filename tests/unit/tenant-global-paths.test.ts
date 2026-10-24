@@ -334,6 +334,8 @@ describe('wiring', () => {
       // The site-feature registry: matchKnownEntity drops refused features on
       // a tenant host (tests/unit/known-entities.test.ts).
       'src/lib/site-features.json',
+      // Page names in the cleanup triage table, printed as text.
+      'src/app/admin/page-cleanup/data.ts',
     ]);
     // Rendered only by HomeView, i.e. the apex home and its locale twins; the
     // proxy serves the partner's own home at `/` and 308s locale prefixes.
