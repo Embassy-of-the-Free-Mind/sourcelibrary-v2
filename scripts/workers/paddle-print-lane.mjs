@@ -222,7 +222,8 @@ async function plan() {
       for (const p of pages) {
         const pol = storedPolicy(p.ocr, { spread: isSpread(p.image_width, p.image_height) });
         if (pol.action !== 'read') { tally.keep[pol.why] = (tally.keep[pol.why] || 0) + 1; continue; }
-        const src = getPageSource(p);
+        // a stored URL can carry whitespace (4 frame pages had a newline inside it): it would split the manifest row
+        const src = getPageSource(p)?.replace(/\s+/g, '') || null;
         if (!src) { tally.no_image++; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, why: pol.why });
       }
@@ -347,7 +348,7 @@ async function prep() {
       if (r.spread) t.spreads++;
       if (r.ruler_row != null) t.ruler++;
       if (r.gutter_how === 'image-centre') t.centre++;
-      for (const lf of r.leaves) { t.leaves++; if (lf.blank) { t.blank++; continue; } man.push(`${bid}\t${r.pn}-${lf.side}\t${r.src}\t${lf.box.join(',')}`); }
+      for (const lf of r.leaves) { t.leaves++; if (lf.blank) { t.blank++; continue; } man.push(`${bid}\t${r.pn}-${lf.side}\t${String(r.src).replace(/\s+/g, '')}\t${lf.box.join(',')}`); }
     }
     // the prep file is the book's checkpoint: written after the manifest lines, so a crash re-preps the whole book
     // and the runner skips leaves already read (its output file is its checkpoint)
@@ -380,7 +381,7 @@ function recheck() {
         if (!(n > 0 && n < SHORT_LEAF)) continue;
         short++;
         if (listed.has(`${pr.bid}/${p.pn}-${lf.side}`)) continue;
-        man.push(`${pr.bid}\t${p.pn}-${lf.side}\t${p.src}\t${lf.box.join(',')}`);
+        man.push(`${pr.bid}\t${p.pn}-${lf.side}\t${String(p.src).replace(/\s+/g, '')}\t${lf.box.join(',')}`);
       }
     }
   }
