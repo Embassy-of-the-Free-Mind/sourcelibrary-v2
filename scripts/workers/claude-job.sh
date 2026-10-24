@@ -32,6 +32,9 @@ set -u
 # Jobs started from cron (the spare lane) get cron's bare PATH, so `sl-tsc` in /root/bin was
 # "not installed" to them and two l7a jobs on 2026-10-11 skipped the type check (#6360).
 case ":$PATH:" in *:/root/bin:*) ;; *) export PATH="/root/bin:$PATH" ;; esac
+# The same for the Claude CLI: a brief that calls bare `claude` (run-readers.sh, claude-ocr) found none
+# under cron's PATH, and spare-audit rounds stopped on a false "this claude CLI has no --restricted" (#6781).
+case ":$PATH:" in *:/root/.local/bin:*) ;; *) export PATH="$PATH:/root/.local/bin" ;; esac
 # ---- HOST block ----
 if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/dev/null 2>&1; then
   HOST=cloudlayer; SL=/data/scratch/sl/sourcelibrary; LOGD=/data/scratch/sl/logs/claude-jobs; JD=/data/scratch/sl/claude-jobs
@@ -541,6 +544,8 @@ job_state() {
 case "${1:-status}" in
   start)
     name="$2"; brief="$3"; [ -f "$brief" ] || { echo "no brief file $brief"; exit 2; }
+    # An empty brief launched harmony-authors-a and -b on 2026-10-21: each ran with only the HEADLESS RULES.
+    grep -q '[^[:space:]]' "$brief" || { echo "REFUSED: brief file $brief is empty"; exit 2; }
     # Preflight (#6223): a job started on a full root disk dies silently with an empty log.
     free=$(root_free_gb)
     if [ "${free:-0}" -lt "$MIN_ROOT_FREE_GB" ] && [ -z "${JOB_IGNORE_DISK:-}" ]; then
