@@ -1,7 +1,7 @@
 # Linking books from a collection description
 
 **Read this when** you write or edit a collection's `description` or
-`expanded_description` — in `/curator`, `/library-curator`, `/curate-collection`, or by
+`expanded_description` — in `/curator`, `/curate-collection`, or by
 hand. This is the single source of truth for how those strings become links; the skills
 route here rather than restating it.
 

@@ -1,6 +1,6 @@
 ---
 name: status
-description: Quick canon + pipeline health check. Use when asked "how's it going?", "status?", "how's the db?", or any quick health check. Lighter than /progress — focuses on mission metrics, not job debugging.
+description: Quick mission-level health check — canon size, readable/translated books, is anything on fire. Use when asked "status?", "how's it going?", or "how's the db?". For whether a specific pipeline phase is moving or stuck, use /progress instead.
 ---
 
 # Quick Status Check

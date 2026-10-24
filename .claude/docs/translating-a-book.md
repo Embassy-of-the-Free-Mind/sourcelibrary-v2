@@ -28,7 +28,7 @@ run a one-off batch job for your single book instead.**
 - **Already imported (most common).** It has a `sourcelibrary.org/book/<slug>`
   page but no/partial translation. Skip to "Translate one book" below.
 - **Not in the library yet.** Import it first (use `/curator` or
-  `/library-curator`, follow `.claude/docs/import-workflow.md` — enumerate →
+  `/curator`, follow `.claude/docs/import-workflow.md` — enumerate →
   dedupe → import hidden → process → QA → visible). Then translate it.
 
 Don't guess which case you're in — check the book's state first (next section).
@@ -95,7 +95,7 @@ by its `book_id`.
 
 - `/batch-translate` skill (`.claude/skills/batch-translate/`) — the full
   crop → OCR → translate workflow with exact commands.
-- `memory/pipeline-ops.md` (or the `/pipeline-context` skill) — pipeline, cron,
+- `memory/pipeline-ops.md` — pipeline, cron,
   Lambda, OCR/translation internals.
 - `.claude/docs/import-workflow.md` — acquiring a book that isn't in the library.
 - The top-level `CLAUDE.md` — project invariants (visibility, quote integrity,
