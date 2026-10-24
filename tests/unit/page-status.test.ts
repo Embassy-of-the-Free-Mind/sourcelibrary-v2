@@ -126,6 +126,7 @@ describe('the real PAGE_STATUS list', () => {
   it('keeps listed pages out of the header, footer and user menus', () => {
     const files = [
       'src/components/layout/SiteHeader.tsx',
+      'src/components/layout/SiteMenuPanel.tsx',
       'src/components/layout/GlobalFooter.tsx',
       'src/lib/footer-nav.ts',
       'src/components/layout/SectionsNav.tsx',
