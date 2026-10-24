@@ -1,0 +1,207 @@
+[
+  {
+    "book_id": "6ad191b942debc9626925467", "slot": 1,
+    "title": "Chilam Balam Texts, vol. 1: Chumayel, Calkiní, Libro de los Médicos", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "19th-century hand copy of the Chilam Balam of Chumayel (Yucatec Maya prophetic/calendrical text); a genuine primary source, though the book carries no collection or tradition tag.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 109 is explained by the leaf numbering: rectos carry a blue ink number (22 on p45, 23 on p47) and versos repeat it in pencil (22 on p46), plus a second pencil series (25, 26). Not a defect. 70 of 294 pages untranslated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Numen: chuc: numen Ce lem", "english": "of Numen: chuc: numen Ce lem", "problem": "phrase left untranslated in the running English", "severity": "minor" },
+          { "source": "tenel ahau.", "english": "tenel ahau.", "problem": "first words of the page left in Maya; meta claims the previous page ended '...and was seated: Kan', which I could not verify", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 46, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "tu chun nicte: pis 26 yax bac", "image": "'26' is a later pencil numeral written into the gap in the line", "problem": "later-hand foliation read as part of the text", "severity": "moderate", "class": "O13" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "pis 26 yax bac", "english": "measure 26 first bone", "problem": "pencil folio number translated as a numeral in the prophecy", "severity": "moderate", "class": "O13" }
+        ],
+        "other": [
+          { "note": "the OCR's <meta>, <warning> and <unclear>faint pencil note</unclear> block (a description of the scan) is copied verbatim to the top of the translation", "severity": "minor", "class": "O15" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 47, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "çatal u naat çicnal u yum çicnal u naa", "image": "çatal u naat yicnal u yum yicnal u naa", "problem": "yicnal ('beside') misread as çicnal; the translation still gives 'beside'", "severity": "minor" },
+          { "ocr": "katan u uich", "image": "kaxan u uich", "problem": "x read as t; the translation 'bandaged' follows kaxan anyway", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "çauin u chi", "english": "Greedy is his mouth", "problem": "the same word çauin is 'crooked' in the run that ends on p46 and 'greedy' here, inconsistent across the page break", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean, careful transcription of a hard cursive Maya manuscript, with a literal translation that holds up. The one real slip is the pencil folio '26' read and translated as part of the text on p46."
+  },
+  {
+    "book_id": "6a40efd67f8d954eada8b8ab", "slot": 2,
+    "title": "儒林外史(二十): The Scholars, vol 20", "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Wu Jingzi's 18th-century novel in a woodblock edition (ch. 55). Shelved only in the generic 'universallibrary' collection, which is fine, but it lies outside the library's core esoteric/early-science traditions.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 75, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [ { "note": "OCR tag <script>handwritten</script> on a woodblock-printed page", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 76, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "第五十五", "image": "第五十五回 in the block margin (chapter 55), with leaf number 五", "problem": "margin chapter label transcribed as running text, not tagged as furniture", "severity": "moderate", "class": "O11" },
+          { "ocr": "過恬", "image": "過活", "problem": "misread; the translation still says 'for his livelihood'", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "第五十五", "english": "Page 55", "problem": "the margin label means chapter 55, not page 55; a false page number appears in the reader text", "severity": "moderate", "class": "O11" }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 77, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "兩邉西條石磯", "image": "兩邉四條石磯", "problem": "四 'four' misread as 西; the translation drops the number of benches", "severity": "minor", "class": "O6" }
+        ],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "An accurate OCR and a fluent, faithful translation of The Scholars, ch. 55. The only things a reader would notice are the margin chapter label rendered as 'Page 55' and the wrong 'handwritten' tag."
+  },
+  {
+    "book_id": "6a3cebe08642f0445b157ef6", "slot": 3,
+    "title": "易原·卷四~卷五 (vol 2)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Cheng Dachang's Yi yuan, a Song Yijing treatise, in the Siku Quanshu manuscript copy (欽定四庫全書 in the margin). Correct for a Yijing/cosmology shelf.",
+    "rights_flag": null,
+    "structure_note": "Only 4 printed numbers detected. The Siku leaves carry folio numbers in the centre fold, mostly cut off at the frame edge, so the low count is expected. 3 of 122 pages untranslated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 13, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "晉人孟景翼", "english": "Meng Jingyi <note>Meng Yi, a fourth-century Jin dynasty scholar</note>", "problem": "the note adds an unsupported alternative name and date (Meng Jingyi is usually placed in Southern Qi); invented gloss", "severity": "moderate", "class": "T10" },
+          { "source": "六子役於乾坤", "english": "Qian and Kun <note>Heaven and Earth, the two primary hexagrams</note>", "problem": "in the context of the six children these are trigrams, not hexagrams", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "故信善美大自二中四下者積而上之", "english": "from the two central qualities of trustworthiness and goodness down to beauty and greatness, one accumulates upward", "problem": "'自二中四下' (from the second ... the four below) is forced into a reading the source does not clearly give; the Mencius note is reasonable", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "An excellent OCR of a clean Siku manuscript copy, with a careful translation. One invented biographical note on Meng Jingyi."
+  },
+  {
+    "book_id": "6a40efac7f8d954eada8b72d", "slot": 4,
+    "title": "儒林外史(十六): The Scholars, vol 16", "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Wu Jingzi's novel (ch. 42, the examination-ghost story), the same edition as slot 2. Generic 'universallibrary' shelf, outside the core traditions.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 49, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [ { "note": "OCR tag <script>handwritten</script> on a woodblock print", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 50, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "大爺道", "english": "The Eldest Master said", "problem": "the same character is 'The First Young Master' on p49; inconsistent naming", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 51, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4, "tr_errors": [],
+        "other": [
+          { "note": "the block-margin title 儒林外史 (transcribed as a bare first line) becomes a Markdown heading '# The Scholars' in the middle of the story", "severity": "moderate", "class": "O11" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Essentially perfect text and translation. The one blemish is the margin title rendered as an invented mid-narrative heading on p51."
+  },
+  {
+    "book_id": "6a3cc0c0f9474f825c171eab", "slot": 5,
+    "title": "三易備遺·卷六~卷十 (vol 7)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Zhu Yuansheng's San Yi bei yi (Song Yijing numerology: Lianshan, Guicang, Zhouyi), Siku Quanshu copy. Fits a Yijing/cosmology shelf.",
+    "rights_flag": null,
+    "structure_note": "p92 is a chapter-end leaf with two lines of text and blank columns, correctly transcribed as short. The single backstep is probably a misread centre-fold folio. 17 of 216 pages untranslated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 90, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 91, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "為周易之六六則之 | (p92) 河圖乾坤縱而六子衡也", "english": "becomes the principle of six-by-six pairs in the Zhouyi. | (p92) In the Hetu, Qian and Kun are vertical", "problem": "the closing '則之' ('takes as its model [the Hetu]') runs across the page break and is dropped, so the link between the 6x6 scheme and the Hetu is lost", "severity": "minor", "class": "T6" }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 92, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "An accurate OCR and a faithful, well-glossed translation. The only issue is a small seam loss of '則之' across the page break between p91 and p92."
+  }
+]
