@@ -242,13 +242,14 @@ async function main() {
       const workTitle = workTitleOf(book.title);
       const now = new Date();
       const writes = [];
-      let truncated = false;
+      let truncated = false, pending = false;
       for (const rec of recs) {
         if (budget <= 0) { truncated = true; break; }
         const p = byId.get(rec.page_id);
         if (rec.book_id !== bid) { skip('wrong_book', rec); continue; }
         const fl = flash.get(rec.page_id);
         const r = routePage(rec, p, fl);
+        if (r.skip === 'flash_not_run') pending = true;
         if (r.skip) {
           skip(r.skip, rec);
           // the two skips where the engine did not read the page (#7378): a route that is neither engine, Flash held by its reply guard
@@ -314,8 +315,8 @@ async function main() {
         );
         console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
       }
-      // a book cut short by --limit-pages is not done: the next run picks up its remaining pages
-      if (CHECKPOINT && !truncated) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
+      // a book cut short by --limit-pages, or with Flash pages not yet read, is not done: a later run picks them up
+      if (CHECKPOINT && !truncated && !pending) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
     }
     T.failed_reads = failedRows.length;
     if (APPLY && failedRows.length) T.failed_reads_stamped = (await recordFailedReads(db, failedRows)).stamped;
