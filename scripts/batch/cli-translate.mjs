@@ -56,6 +56,7 @@ import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
@@ -124,7 +125,15 @@ if (STAGE === 'read') {
     }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
-    const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    let r = await call();
+    // #5055: a reply the write guard calls cut (a tag left open at its tail, the text ending inside a tag, English far
+    // shorter than its source) is read once more; apply's door refuses it if the second read is cut too.
+    if (!r.cls && !r.problem && checkWrittenText(r.answer, { kind: 'translation', source: p.ocr.data, lang: book?.language, type: p.page_type }).verdict === 'truncated') {
+      console.log(`  ${p.page_number} read looks cut (write guard): reading once more`);
+      const again = await call();
+      r = { ...again, calls: (r.calls || 1) + (again.calls || 1) };
+    }
     if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
     // The raw reply is kept beside the translation; `.txt` holds only what was between the markers.
     const text = r.cls ? '' : r.answer;
@@ -163,6 +172,9 @@ for (const m of metas) {
   if (m.error_class) { skip(m, `cli ${m.error_class}`); continue; }
   // #6523: text outside the markers, or a reply cut before <<<END>>> (often a recitation-filter cut), is never written
   if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
+  // #5055: a claude-translate / twopass-review read whose raw reply the write guard called cut (its .txt is already
+  // tag-repaired, so only the meta can say); a Gemini read's raw .txt is checked by the door itself.
+  if (m.write_guard === 'truncated') { skip(m, `write-guard:truncated:${(m.write_guard_reasons || [])[0]?.replace(/[:(].*$/, '') ?? ''}`); continue; }
   // the backstop, for every read: chatter where the translation should be
   const chatter = cliChatterReason(text);
   if (chatter) { skip(m, `not a translation: ${chatter}`); continue; }
@@ -187,6 +199,7 @@ for (const m of metas) {
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });
   if (res.protected) { skip(m, 'human-edited translation'); continue; }
+  if (res.truncated) { skip(m, res.reason); continue; }
   if (res.unhealthy) { skip(m, `refused by the door: ${res.reason}`); continue; }
   await recordSweepAction(db, { sweep: 'cli-translate', book_id: page.book_id, action: 'translated-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.translation?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);

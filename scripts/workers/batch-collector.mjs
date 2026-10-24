@@ -25,7 +25,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET, recordTruncatedTranslation } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
@@ -34,6 +34,7 @@ const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
 import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
+import { checkWrittenText, writeGuardReason } from '../lib/write-text-guard.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -562,6 +563,11 @@ async function processOneJob(db, job) {
       for (const r of pageResults) r.text = foldLongS(r.text);
     }
 
+    // #5055: the write guard needs each translated page's OCR (the length rule); one read per job.
+    const guardSource = job.type === 'ocr' || job.type === 'image_extraction' || !pageResults.length ? new Map()
+      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+    let writeGuardRepaired = 0;
+
     for (const { pageId, text: resultText, usage } of pageResults) {
       let text = resultText;
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
@@ -617,6 +623,16 @@ async function processOneJob(db, job) {
           blankRefusedCount++;
           continue;
         }
+        // The write guard (#5055): a tag left open in the last 15% of the page, or a text that ends inside a tag, is a
+        // cut read — a failed page, re-queued once (the give-up threshold for write-guard reasons is 2, below). A tag
+        // left open earlier is a forgotten close, repaired.
+        const guard = checkWrittenText(text, { kind: 'ocr' });
+        if (guard.verdict === 'truncated') {
+          const reason = writeGuardReason(guard);
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason);
+          continue;
+        }
+        if (guard.verdict === 'repaired_mid') { text = guard.repaired; writeGuardRepaired++; }
         // Validating, as this collector's private copy always did — but against
         // the current vocabulary rather than the 14-value set it had frozen at.
         // That set had lost `digitizer-insert`, so this collector could not
@@ -774,6 +790,15 @@ async function processOneJob(db, job) {
           failCount++; noteFail(EMPTY_RESPONSE_REASON); failedPageIds.set(pageId, EMPTY_RESPONSE_REASON);
           continue;
         }
+        // The write guard (#5055), on the reply as returned: a cut read is recorded (a failure marker; the page is asked
+        // for again, and blocked on the second cut read) and not written. A tag left open mid-text is repaired.
+        const guard = checkWrittenText(text, { kind: 'translation' });
+        if (guard.verdict === 'truncated') {
+          const reason = DRY_RUN ? writeGuardReason(guard) : await recordTruncatedTranslation(db, { id: pageId, book_id: job.book_id }, text, guard, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason);
+          continue;
+        }
+        if (guard.verdict === 'repaired_mid') { text = guard.repaired; writeGuardRepaired++; }
         // The page's text inside its continuity <meta> is text no reader sees (#5376): write
         // nothing, stamp the page with the reason and keep the refused text as evidence.
         if (hidesPageInMeta(text)) {
@@ -792,6 +817,14 @@ async function processOneJob(db, job) {
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { failCount++; noteFail(STRAY_SCRIPT_REASON); failedPageIds.set(pageId, STRAY_SCRIPT_REASON); continue; }
         text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+        // The guard's length rule (#5055), after the refusals above that name a defect more exactly.
+        const src = guardSource.get(pageId);
+        const short = checkWrittenText(text, { kind: 'translation', source: src?.ocr?.data, lang: job.language, type: src?.page_type });
+        if (short.verdict === 'truncated') {
+          const reason = DRY_RUN ? writeGuardReason(short) : await recordTruncatedTranslation(db, { id: pageId, book_id: job.book_id }, text, short, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason);
+          continue;
+        }
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
@@ -915,10 +948,12 @@ async function processOneJob(db, job) {
     // rather than folded into recitation_count because the two mean different
     // things to a human reading the page: one is a copyright refusal, the other is
     // "we tried three times and could not get a usable read".
+    if (writeGuardRepaired) console.log(`  WRITE GUARD: closed a tag left open mid-text on ${writeGuardRepaired} page(s) (#5055)`);
     if (failedPageIds.size > 0 && job.type === 'ocr') {
-      const OCR_FAIL_BLOCK_THRESHOLD = 3;
       const failNow = new Date();
-      const failOps = [...failedPageIds].map(([pageId, reason]) => ({
+      // A cut read the write guard refused (#5055) is re-queued ONCE: the second one blocks the page for that model.
+      const blockAt = (reason) => (String(reason).startsWith('write-guard:') ? 2 : 3);
+      const failOps = [...failedPageIds].map(([pageId, reason]) => { const OCR_FAIL_BLOCK_THRESHOLD = blockAt(reason); return {
         updateOne: {
           filter: { id: pageId },
           update: [
@@ -944,7 +979,7 @@ async function processOneJob(db, job) {
             },
           ],
         },
-      }));
+      }; });
       try {
         await db.collection('pages').bulkWrite(failOps, { ordered: false });
         console.log(`  Stamped OCR failure tracking on ${failOps.length} page(s) (book: ${job.book_id})`);

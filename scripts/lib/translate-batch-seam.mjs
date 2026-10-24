@@ -58,6 +58,7 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
+import { checkWrittenText } from './write-text-guard.mjs';
 import { isPaused } from './pause.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from '../workers/lib/selective-unpause.mjs';
 import { isHeld } from './pipeline-hold.mjs';
@@ -170,12 +171,22 @@ export function blockPrompt({ prompts, book, pages, folioMarkers = folioMarkersE
  * boundary whose opening clause landed on the previous page drops both its pages. A block of
  * one takes the whole response.
  */
-export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers = folioMarkersEnabled() } = {}) {
+export function parseBlockResponse(responseText, pages, { onDrift, onTruncated, lang, folioMarkers = folioMarkersEnabled() } = {}) {
   const out = new Map();
   if (!responseText) return out;
+  // #5055: the write guard on each page's text as returned, before sanitizeTranslationTags closes a cut tail tag. A
+  // truncated page gets no draft, so it goes back to the queue.
+  const cut = (p, raw) => {
+    if (!p) return false;
+    const g = checkWrittenText(raw, { kind: 'translation', source: p.ocr?.data, lang, type: p.page_type });
+    if (g.verdict !== 'truncated') return false;
+    if (onTruncated) onTruncated({ page_number: p.page_number, reasons: g.reasons });
+    return true;
+  };
   if (pages.length === 1) {
-    const text = sanitizeTranslationTags(String(responseText).trim());
-    if (text) out.set(pages[0].page_number, text);
+    const raw = String(responseText).trim();
+    const text = sanitizeTranslationTags(raw);
+    if (text && !cut(pages[0], raw)) out.set(pages[0].page_number, text);
     return out;
   }
   // Folio markers (#5678): each page takes its own span, the markers read by position. A page the
@@ -185,7 +196,7 @@ export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers 
     const parsed = parseFolioMarkedText(responseText, pages.map((p) => p.page_number));
     const overrun = new Set(parsed.overrun);
     for (const pg of parsed.pages) {
-      if (pg.span && !overrun.has(pg.page_number)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
+      if (pg.span && !overrun.has(pg.page_number) && !cut(pages.find((p) => p.page_number === pg.page_number), pg.span)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
     }
     return out;
   }
@@ -197,6 +208,7 @@ export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers 
     const n = parseInt(m[1], 10);
     const text = sanitizeTranslationTags(m[2].trim());
     if (tooShort(pages.find(p => p.page_number === n), text)) continue;
+    if (cut(pages.find(p => p.page_number === n), m[2].trim())) continue;
     out.set(n, text);
     entries.push(text);
   }
@@ -631,11 +643,12 @@ export async function advanceRun(db, run, deps) {
       const pages = b.pages.map(p => pageDocs.get(p.id)).filter(Boolean);
       const r = byKey.get(b.key);
       let drifted = null;
-      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages, { onDrift: (d) => { drifted = d; } });
+      const truncated = [];
+      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages, { onDrift: (d) => { drifted = d; }, onTruncated: (t) => truncated.push(`${t.page_number}:${t.reasons[0]}`) });
       for (const p of pages) if (parsed.has(p.page_number)) drafts.set(p.id, parsed.get(p.page_number));
       if (!r) blockNotes.push({ key: b.key, note: 'no-response' });
       else if (r.error) blockNotes.push({ key: b.key, note: 'request-error', error: r.error });
-      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason, ...(drifted ? { drifted } : {}) });
+      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason, ...(drifted ? { drifted } : {}), ...(truncated.length ? { truncated } : {}) });
     }
     // A SUCCEEDED job is a statement about the job, not about its requests. Every request can
     // come back as an error (2026-09-24: 3 jobs × "The operation was cancelled."), and a run
@@ -795,6 +808,8 @@ export async function writeRun(db, run, deps) {
       if (res.written) {
         counts.written++;
         if (deps.syncPage) deps.syncPage(page.id, { translation: { data: res.text, language: 'English', model: run.model, source: 'ai', prompt_version: String(promptRef?.version ?? ''), prompt_id: promptRef?.id, prompt_hash: promptRef?.content_hash, prompt_name: promptRef?.name, updated_at: new Date() } });
+      } else if (res.truncated) {
+        counts.truncated = (counts.truncated || 0) + 1; // #5055: recorded by the door; the page stays in the queue
       } else if (res.unhealthy) {
         counts.unhealthy++;
         // Same stamp the realtime worker puts on a refused page, so the page leaves the queue.
