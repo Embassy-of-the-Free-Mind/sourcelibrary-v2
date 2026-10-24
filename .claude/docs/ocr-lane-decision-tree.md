@@ -143,7 +143,7 @@ A page (or book) needs text
 │     │            page Gemini refuses (16/16 at median CER 0.21%), median 0.66% overall │
 │     │            vs lite 0.20%; 1820+ only — before 1820 it reads ſ as f (median 4.6%).│
 │     │            Its worst pages dropped footnotes → fixed in PR #5299.                │
-│     │    A page with a COMPLETE draft: correct it, don't re-read it (§ below).       │
+│     │    A page with a COMPLETE draft: correct it, don't re-read it (§ below).         │
 │     │    tier 3' the Archive's text for THAT leaf, under an accepted by-eye verdict   ─┘
 │     │            (branch 0) — the free refusal fallback DECISIONS.md still calls open.
 │     │    tier 4  read it by eye (Claude on the subscription, never an API call), or
