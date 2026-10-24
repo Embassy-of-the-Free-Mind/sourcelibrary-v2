@@ -396,6 +396,8 @@ export interface ReaderStrings {
     qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
     /** Follows qualityBook: the kinds of serious error that check found most often, commonest first (at most two). */
     qualityBookKinds: (clauses: string[]) => string;
+    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means, and to check the scan. */
+    qualitySeriousMeans: string;
     qualitySeeReview: string;
     qualityDetectorLink: string;
     licenceLink: string;
@@ -997,6 +999,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_english: 'part of the page is missing from the English',
         number_misread: 'a number, date or quantity is misread',
         word_misread: 'a word in the transcription is misread',
+        transcription_unsettled: 'two machine readings of the page disagree and the scan did not settle which is right',
         repeated_text: 'a passage is repeated that appears once on the page',
         serious_transcription: 'the transcription has a serious error',
         serious_english: 'the English has a serious error',
@@ -1009,9 +1012,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `A check by ${ai ? 'an AI reviewer' : 'a reviewer'} read ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date}`;
         if (serious === null) return `${start} and found serious errors.`;
-        return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
+        if (read === 1) return `${start} and found serious errors on it.`;
+        return `${start} and found serious errors on ${serious} of them${read > serious ? (read - serious === 1 ? '; the other page had none' : `; the other ${read - serious} had none`) : ''}.`;
       },
       qualityBookKinds: (clauses) => `Most often, ${clauses.join('; next, ')}.`,
+      qualitySeriousMeans: 'Serious means an error that changes what the text says, such as a wrong word, name or number, or a missing or invented passage, not a spelling slip. Before you quote a passage, compare it with the scan, which is the original.',
       qualitySeeReview: 'See the review',
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
@@ -1489,6 +1494,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_english: 'falta parte de la página en la traducción',
         number_misread: 'un número, una fecha o una cantidad están mal leídos',
         word_misread: 'una palabra de la transcripción está mal leída',
+        transcription_unsettled: 'dos lecturas automáticas de la página discrepan y la imagen no permitió decidir cuál es la correcta',
         repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
         serious_transcription: 'la transcripción tiene un error grave',
         serious_english: 'la traducción tiene un error grave',
@@ -1501,9 +1507,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `Una revisión hecha por ${ai ? 'un revisor de IA' : 'un revisor'} leyó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date}`;
         if (serious === null) return `${start} y encontró errores graves.`;
-        return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
+        if (read === 1) return `${start} y encontró errores graves en ella.`;
+        return `${start} y encontró errores graves en ${serious} de ellas${read > serious ? (read - serious === 1 ? '; la otra no tenía ninguno' : `; las otras ${read - serious} no tenían ninguno`) : ''}.`;
       },
       qualityBookKinds: (clauses) => `Lo más frecuente: ${clauses.join('; después, ')}.`,
+      qualitySeriousMeans: 'Grave significa un error que cambia lo que dice el texto, como una palabra, un nombre o un número equivocados, o un pasaje que falta o que se ha inventado, no una simple errata. Antes de citar un pasaje, compárelo con la imagen, que es el original.',
       qualitySeeReview: 'Ver la revisión',
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
@@ -2008,6 +2016,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_english: 'pars paginae in textu Anglico deest',
         number_misread: 'numerus, dies vel quantitas perperam lecta est',
         word_misread: 'verbum in transcriptione perperam lectum est',
+        transcription_unsettled: 'duae lectiones machinales paginae discrepant, nec imago utra recta sit diiudicavit',
         repeated_text: 'locus iteratur qui in pagina semel legitur',
         serious_transcription: 'transcriptio mendum grave habet',
         serious_english: 'textus Anglicus mendum grave habet',
@@ -2020,9 +2029,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date})`;
         if (serious === null) return `${start} et menda gravia invenit.`;
-        return `${start} et menda gravia ${read === 1 ? 'in ea' : `in ${serious} earum`} invenit.`;
+        if (read === 1) return `${start} et menda gravia in ea invenit.`;
+        return `${start} et menda gravia in ${serious} earum invenit${read > serious ? (read - serious === 1 ? '; reliqua nullum habet' : `; reliquae ${read - serious} nulla habent`) : ''}.`;
       },
       qualityBookKinds: (clauses) => `Saepissime: ${clauses.join('; deinde: ')}.`,
+      qualitySeriousMeans: 'Grave dicitur mendum quod sensum textus mutat, ut verbum, nomen vel numerus falsus, aut locus omissus vel fictus, non levis error scribendi. Antequam locum citas, cum imagine confer, quae archetypum est.',
       qualitySeeReview: 'Recensionem vide',
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
@@ -2507,6 +2518,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_english: 'een deel van de pagina in het Engels ontbreekt',
         number_misread: 'een getal, datum of hoeveelheid verkeerd is gelezen',
         word_misread: 'een woord in de transcriptie verkeerd is gelezen',
+        transcription_unsettled: 'twee machinale lezingen van de pagina verschillen en de scan niet uitwees welke juist is',
         repeated_text: 'een passage herhaald wordt die maar één keer op de pagina staat',
         serious_transcription: 'de transcriptie een ernstige fout bevat',
         serious_english: 'het Engels een ernstige fout bevat',
@@ -2519,9 +2531,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''}`;
         if (serious === null) return `${start} en vond ernstige fouten.`;
-        return `${start} en vond ernstige fouten ${read === 1 ? 'op die pagina' : `op ${serious} daarvan`}.`;
+        if (read === 1) return `${start} en vond ernstige fouten op die pagina.`;
+        return `${start} en vond ernstige fouten op ${serious} daarvan${read > serious ? (read - serious === 1 ? '; de andere had er geen' : `; de andere ${read - serious} hadden er geen`) : ''}.`;
       },
       qualityBookKinds: (clauses) => `Het vaakst: ${clauses.join('; daarna: ')}.`,
+      qualitySeriousMeans: 'Ernstig betekent een fout die verandert wat de tekst zegt, zoals een verkeerd woord, een verkeerde naam of een verkeerd getal, of een ontbrekende of verzonnen passage, geen spelfout. Vergelijk een passage met de scan voordat u haar citeert: de scan is het origineel.',
       qualitySeeReview: 'Bekijk de beoordeling',
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
@@ -3000,6 +3014,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         missing_english: '英文中缺了页面的一部分',
         number_misread: '数字、日期或数量识读有误',
         word_misread: '转录中有字词识读有误',
+        transcription_unsettled: '两次机器识读结果不一致，对照扫描图也无法确定哪个正确',
         repeated_text: '页面上只出现一次的段落被重复了',
         serious_transcription: '转录有严重错误',
         serious_english: '英文有严重错误',
@@ -3012,9 +3027,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBook: ({ ai, image, read, serious, date }) => {
         const start = `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页`;
         if (serious === null) return `${start}，发现了严重错误。`;
-        return `${start}，发现${read === 1 ? '该页' : `其中 ${serious} 页`}有严重错误。`;
+        if (read === 1) return `${start}，发现该页有严重错误。`;
+        return `${start}，发现其中 ${serious} 页有严重错误${read > serious ? `，其余 ${read - serious} 页没有` : ''}。`;
       },
       qualityBookKinds: (clauses) => `最常见的是：${clauses.join('；其次是：')}。`,
+      qualitySeriousMeans: '“严重错误”指改变文本意思的错误，例如字词、人名或数字有误，或段落缺失、凭空捏造，而不是一般的笔误。引用某段文字前，请对照扫描图核对，扫描图才是原件。',
       qualitySeeReview: '查看审校记录',
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
