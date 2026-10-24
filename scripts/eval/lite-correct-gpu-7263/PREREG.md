@@ -82,3 +82,28 @@ a sealed `claude -p` Opus reader.
 Chinese 110 pages × 2 arms + 10 repeats = 230 calls; Tibetan 40 × 2 + 10 = 90 calls; 320 calls. Chinese ≈ 7K input +
 1K output tokens a call, Tibetan ≈ 4K + 3K. At realtime price about $0.9 total; at Batch price about $0.45. Hard cap
 in the runner: 400 calls.
+
+## Amendment 1 (2026-10-24 ~05:10 UTC): a production-shaped prompt, P2
+
+The owner session's note (05:04 UTC; Derek: "the prompt matters, e.g. formatting and notes") arrived after the P1
+arms above had already run (calls 04:53–05:00 UTC). P1's rows stand as preregistered. This amendment is committed
+before any P2 call.
+
+- **P1** = the arms above (the set's own correction prompt; comparable to the old numbers).
+- **P2** = the PRODUCTION shape, lite WITH image, one page per call, the same call settings:
+  `liveOcrPrompt` (`scripts/lib/live-ocr-prompt.mjs`, auto-detect language slot) + `correctInstruction(1)` from
+  `scripts/batch/ocr-convergence/correct.mjs`, adapted to one inline page (the attached image instead of files; the
+  draft inline between `===DRAFT===` / `===END DRAFT===`; no page markers), + the Siku v2 rule
+  (`scripts/eval/stale-correct-6561/prompt-v2.mjs` `RULE_V2`, verbatim, for both languages). Built by `mkreq-p2.mjs`,
+  which asserts every replaced span so drift fails loudly. Pages: the same as P1 (Chinese 110 incl. plants, Tibetan
+  30 + 10 plants). Arm names `lite-p2-correct` (Chinese) and `lite-p2-corr` / `lite-p2-corr-anchor` (Tibetan).
+- **Answers:** `UNCHANGED` → scored as the draft; `CONTAIN: …` → counted, scored as not read; otherwise the reply is
+  the transcription.
+- **Accuracy:** the set's scorer on tag-stripped text, as for P1.
+- **Format compliance per page** (`p2-post.mjs`), for P2 and for P1's lite replies: exactly one `<page-type>`; no
+  restarted read / chatter / refusal / duplicated reply (`ocrReadProblem`); no extra headers (more `<header>` tags or
+  markdown heading lines than the draft has); no added `<vocab>`, `<gloss>`, `<warning>` or `<note>` the draft does not
+  carry. A page is compliant when all hold. Reported per language.
+- **A route candidate now needs P2 to pass** bars (a)–(c), since P2 is what production would write; P1 is reported for
+  comparability. Format compliance is reported beside the bars, not as a new bar.
+- Spend: +150 calls (~$0.4 realtime). Runner cap raised to 520.
