@@ -13,6 +13,7 @@
  *   node --env-file=.env.production.local scripts/eval/deposit-ft-dataset.mjs --dir scripts/output/ft-dataset-2026-08-09
  *   ... --publish            # actually publish (mints the DOI) — requires human sign-off first
  *   ZENODO_SANDBOX=true ...  # rehearse against sandbox.zenodo.org
+ *   ... --metadata scripts/eval/dataset/refusal-census-v1.zenodo.json   # another dataset's title/description/subjects
  *
  * Refuses a directory without the benchmark canary (CANARY.txt, #5524) —
  * export-ft-dataset.mjs writes it; see scripts/lib/dataset-canary.mjs.
@@ -70,7 +71,11 @@ async function fail(resp, context) {
   throw new Error(`Zenodo ${context}: HTTP ${resp.status} — ${text.slice(0, 400)}`);
 }
 
-const description = `
+// --metadata FILE: another dataset's {title, description, subjects} replaces the FT corpus's (the flow is the same).
+const META_FILE = getArg('--metadata');
+const override = META_FILE ? JSON.parse(readFileSync(resolve(META_FILE), 'utf8')) : null;
+
+const description = override ? override.description : `
 <p>The first-translation verification corpus of Source Library (sourcelibrary.org):
 documented <b>evidence of absence at scale</b>. ${manifest.counts.attempts.toLocaleString('en-US')} recorded
 verification attempts with per-attempt provenance (instrument, sources consulted, verbatim
@@ -125,6 +130,11 @@ const metadata = {
     },
   ],
 };
+if (override) {
+  metadata.title = override.title;
+  metadata.description = override.description;
+  metadata.subjects = override.subjects.map((subject) => ({ subject }));
+}
 
 // 1. Create the draft.
 const draftResp = await fetch(`${ZENODO_API}/records`, {
