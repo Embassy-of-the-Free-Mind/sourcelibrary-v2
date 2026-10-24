@@ -1,0 +1,1 @@
+Transcribe ALL text visible in this image using the appropriate Unicode script. The main text is Devanagari (Sanskrit, sometimes Hindi or Marathi). Output ONLY the raw text, line by line. No commentary, no translation, no transliteration, no labels, no markdown.

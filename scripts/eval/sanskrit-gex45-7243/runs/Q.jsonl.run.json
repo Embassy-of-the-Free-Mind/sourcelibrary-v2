@@ -1,0 +1,12 @@
+{
+ "mode": "deva",
+ "model": "m",
+ "pages_this_pass": 40,
+ "clients": 16,
+ "wall_secs": 634.7,
+ "pages_per_hour": 227,
+ "errors": 0,
+ "hit_cap": 11,
+ "out_tok": 110767,
+ "in_tok": 118660
+}

@@ -1,0 +1,20 @@
+You are making a ground-truth transcription of one page for an OCR evaluation (#7243). Your text will be the reference that OCR engines are scored against, so exactness matters more than speed. Work only from the images; do not search the web or read any other file.
+
+Page sa-30f2e4ed-p90. Catalogue: "Kavyamimamsa of Rajashekhara". By eye: print, language sa, layout single.
+
+Images (open each with the Read tool):
+  overview (whole page, orientation only, too small to read): /mnt/HC_Volume_105839809/jobs/gpu-sanskrit-7243/tiles/sa-30f2e4ed-p90-overview.jpg
+  tiles in reading order (full resolution):
+  /mnt/HC_Volume_105839809/jobs/gpu-sanskrit-7243/tiles/sa-30f2e4ed-p90-c1-s1.jpg
+  /mnt/HC_Volume_105839809/jobs/gpu-sanskrit-7243/tiles/sa-30f2e4ed-p90-c1-s2.jpg
+  /mnt/HC_Volume_105839809/jobs/gpu-sanskrit-7243/tiles/sa-30f2e4ed-p90-c1-s3.jpg
+Neighbouring strips overlap by a few pixels, so a line cut at a tile edge is whole on one of them: transcribe every line exactly once. 
+
+Rules:
+1. Write exactly what the page shows, character by character, in Unicode Devanagari (Latin-script text as printed). Do NOT correct misprints or scribal errors, expand abbreviations, split or join words differently, or fill anything from memory. Even if you recognise the text (scripture, a famous verse), copy the page, not the text you know.
+2. One output line per line on the page. Include the running head, page or folio numbers, verse numbers (Devanagari digits if printed so), footnotes and apparatus, catchwords, superscript footnote markers (as plain digits where they stand), and any stamps or digitiser captions in Devanagari. Skip digitiser captions in Latin script (e.g. "Digitized by eGangotri").
+3. Dandas as । and ॥. Vedic accent marks if printed (॑ udātta U+0951, ॒ anudātta U+0952). Avagraha ऽ. Keep virama, nukta, candrabindu ँ vs anusvāra ं exactly as written.
+4. Manuscripts: transcribe the main text line by line; additions written between lines or in the margin go on their own line starting "MARGIN: ". Write a scribe's deleted text only if it is still legible and not struck out.
+5. Unreadable: write your best reading; where you cannot guess at all, write [?] once per illegible akṣara.
+6. Write ONLY the transcription to /mnt/HC_Volume_105839809/jobs/gpu-sanskrit-7243/refwork/R1/sa-30f2e4ed-p90.txt with the Write tool (UTF-8, no headings, no commentary inside the file).
+Then reply with at most 4 lines: line count, overall confidence (high/medium/low), and the specific places you were unsure of.
