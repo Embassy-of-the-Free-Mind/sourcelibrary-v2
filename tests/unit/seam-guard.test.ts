@@ -86,6 +86,16 @@ describe('the box-wide switch (#7118)', () => {
     fs.rmSync(d, { recursive: true, force: true });
   });
 
+  it('ignores the box file under a test runner unless SEAM_GUARD is set', () => {
+    const d = tmp(), f = path.join(d, 'seam-guard');
+    fs.writeFileSync(f, 'dry');
+    expect(seamGuardOn({ VITEST: 'true' }, f)).toBe(false);
+    expect(guardMode({ VITEST: 'true' }, f)).toBeNull();
+    expect(guardMode({ VITEST: 'true', SEAM_GUARD: 'dry' }, f)).toBe('dry');
+    expect(seamGuardOn(process.env, f)).toBe(false);   // this very run
+    fs.rmSync(d, { recursive: true, force: true });
+  });
+
   it('translate-worker calls the guard after its own writes, inside the switch', () => {
     const src = fs.readFileSync(path.join(REPO, 'scripts/workers/translate-worker.mjs'), 'utf8');
     const helper = src.slice(src.indexOf('async function seamGuardPages'));
