@@ -390,6 +390,19 @@ function recheck() {
 
 // ── apply ──────────────────────────────────────────────────────────────────────────────
 
+/** Every READ run (not a recheck), oldest first: `{ name, box, t }` with `t` = its start in ms. */
+function readRuns() {
+  if (!fs.existsSync(F.runs)) return [];
+  return fs.readdirSync(F.runs).filter((x) => x.endsWith('.json')).map((x) => ({ name: x.slice(0, -5), box: readJson(path.join(F.runs, x), {}) }))
+    .filter((r) => !r.box.max_side).map((r) => ({ ...r, t: Date.parse(r.box.started_at) || 0 })).sort((a, b) => a.t - b.t);
+}
+/** The run that read a page: the last read run started before its newest leaf output was written. */
+function runOfPage(runs, bid, pg) {
+  const m = Math.max(0, ...pg.leaves.filter((lf) => !lf.blank).map((lf) => { try { return fs.statSync(leafOut(bid, pg.pn, lf.side, 'txt')).mtimeMs; } catch { return 0; } }));
+  let r = null; for (const x of runs) if (x.t <= m) r = x;
+  return r || runs.at(-1) || { name: 'unknown-run', box: {} };
+}
+
 /** The newest run.json a GPU task left (engine versions, weights hash, serving). */
 function latestRun() {
   if (!fs.existsSync(F.runs)) return { name: 'unknown-run', box: {} };
@@ -419,7 +432,8 @@ async function apply() {
   log(`${ready.length} books ready (${ready.reduce((s, b) => s + b.pages.length, 0)} pages)${APPLY ? '' : '  [DRY RUN]'}`);
   const totals = { books: 0, written: 0, conflicts: 0, textless: 0, rejected: 0, kept_now: 0, human_edited: 0, not_held: 0, stale_marked: 0, why: {} };
   if (!ready.length) { log(`APPLY ${JSON.stringify(totals)}`); return totals; }
-  const { name: runName, box } = latestRun();
+  const { name: runName } = latestRun();
+  const runs = readRuns();
   // --apply-tag names one apply pass inside a GPU run, so revert-run can undo that pass alone
   const runId = `${LANE}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
   await withMongo(async (db) => {
@@ -470,8 +484,10 @@ async function apply() {
           if (!c.ok) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: c.why, paddle: c.paddle, lite: c.lite, margin_recall: c.margin_recall }); totals[c.why] = (totals[c.why] || 0) + 1; continue; }
         }
         const text = envelope(a.body, language);
+        // the engine block names the GPU run that read this page's leaves; run_id (the revision) names this apply pass
+        const pr = runOfPage(runs, bid, pg);
         const field = ocrField(text, {
-          language, run: runId, imageUrl: pg.src, box, stats: a.stats, spread: pg.spread, why: pol.why,
+          language, run: `${LANE}/${pr.name}`, imageUrl: pg.src, box: pr.box, stats: a.stats, spread: pg.spread, why: pol.why,
           leaves: pg.leaves.map((lf) => ({ side: lf.side, box: lf.box, ink: lf.ink, blank: lf.blank })),
         });
         writes.push({ pg, p, text, field, why: pol.why, han: a.han });
