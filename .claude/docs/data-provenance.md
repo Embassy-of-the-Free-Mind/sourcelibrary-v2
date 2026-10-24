@@ -378,6 +378,8 @@ db.page_revisions.find({ page_id: pageId, field: 'ocr' }).sort({ created_at: -1 
 db.page_revisions.find({ page_id: pageId, field: 'translation' }).sort({ created_at: -1 })
 ```
 
+**Reads that were never written** (eval arms, failed gates, pilot reads) are not in `page_revisions`. They are in the private R2 bucket `sl-corpus-snapshots` under `candidate-reads/<book_id>/<page_id>/<ocr|translation>/<content_hash>.json` (text + the job's meta), written by `scripts/maintenance/archive-candidate-reads.mjs`. List a page's reads with `archive-candidate-reads.mjs list --page=<id> [--text]` (#7075).
+
 ## 3. Book Revisions — What Was on This Book Before?
 
 `book_revisions` collection stores prior values of book-level AI-generated fields when they're regenerated. Without this, the `/api/books/[id]/index` route would silently destroy summary and index content on every regeneration.
