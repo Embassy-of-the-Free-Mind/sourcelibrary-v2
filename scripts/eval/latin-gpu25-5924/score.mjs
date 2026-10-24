@@ -100,6 +100,22 @@ if (byBook.GW) {
   }
   const agree = (k, f = (v) => v.ok) => { const t = tab.filter((x) => x[k]); const m = { n: t.length, agree: 0, both_ok: 0, both_fail: 0, spread_ok_whole_fail: 0, spread_fail_whole_ok: 0 };
     for (const x of t) { const s = f(x[k]), w = f(x.whole); if (s === w) m.agree++; if (s && w) m.both_ok++; else if (!s && !w) m.both_fail++; else if (s) m.spread_ok_whole_fail++; else m.spread_fail_whole_ok++; } return m; };
+  // POST HOC (added after the preregistered rule passed none of the 20 whole books, so its 20/20 agreement is all
+  // both-fail and says nothing): a grid of bars, each applied the same way to the 25 pages and to the whole book. A
+  // catastrophic share replaces "no catastrophic page", which a long book fails by length alone; 4% = 1 page in 25.
+  const rk = (a) => { const o = a.map((v, i) => [v, i]).sort((p, q) => p[0] - q[0]); const r = []; o.forEach(([, i], k) => { r[i] = k; }); return r; };
+  const rho = (a, b) => { const A = rk(a), B = rk(b), n = a.length; let d = 0; for (let i = 0; i < n; i++) d += (A[i] - B[i]) ** 2; return r4(1 - 6 * d / (n * (n * n - 1))); };
+  const grid = [];
+  for (const med of [0.02, 0.03, 0.05, 0.1]) for (const cat of [0, 0.04, 0.1]) {
+    const pass = (v) => v.counted > 0 && v.median_N <= med && v.catastrophic / v.counted <= cat;
+    const m = { median_le: med, catastrophic_share_le: cat, agree: 0, both_ok: 0, spread_ok_whole_fail: 0, spread_fail_whole_ok: 0, first25_agree: 0 };
+    for (const x of tab) { const s = pass(x.spread_GS), w = pass(x.whole), f = pass(x.first25_GW); if (s === w) m.agree++; if (s && w) m.both_ok++; else if (s && !w) m.spread_ok_whole_fail++; else if (!s && w) m.spread_fail_whole_ok++; if (f === w) m.first25_agree++; }
+    grid.push(m);
+  }
+  const W = tab.map((x) => x.whole.median_N), Wc = tab.map((x) => x.whole.catastrophic / x.whole.counted);
+  out.posthoc = { grid,
+    spearman_median: { spread_GS: rho(tab.map((x) => x.spread_GS.median_N), W), first25_GW: rho(tab.map((x) => x.first25_GW.median_N), W) },
+    spearman_catastrophic_share: { spread_GS: rho(tab.map((x) => x.spread_GS.catastrophic / x.spread_GS.counted), Wc), first25_GW: rho(tab.map((x) => x.first25_GW.catastrophic / Math.max(1, x.first25_GW.counted)), Wc) } };
   out.whole_vs_spread = { books: tab,
     agreement: { spread_GS: agree('spread_GS'), spread_from_GW: agree('spread_from_GW'), first25_GW: agree('first25_GW'),
       median_only_spread_GS: agree('spread_GS', (v) => v.ok_median_only), median_only_first25: agree('first25_GW', (v) => v.ok_median_only) },
@@ -128,3 +144,4 @@ fs.writeFileSync(path.join(SCR, 'pages-scored.jsonl.gz'), zlib.gzipSync(pageRows
 for (const [a, s] of Object.entries(out.arms)) console.log(a, JSON.stringify({ ...s, per_book: undefined }));
 if (out.whole_vs_spread) console.log(JSON.stringify(out.whole_vs_spread.agreement), out.whole_vs_spread.median_abs_gap_spread_vs_whole, out.whole_vs_spread.median_abs_gap_first25_vs_whole);
 console.log(JSON.stringify(out.student_vs_stock || {}));
+if (out.posthoc) console.log(JSON.stringify(out.posthoc));
