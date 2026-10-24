@@ -90,8 +90,9 @@ section and `engine.mjs` change with them.
     150–500 for `pages_only`.
 - **Name variants** (`expandNameQuery` → `requireNameVariant`). When the query names a person
   `entities` knows, a second query must match one of up to 40 other spellings, plus one topic word
-  when there are any. The query's own words still score. Up to 10 pages are appended after the main
-  pages, minus duplicates. Not for a quoted phrase.
+  when there are any. The query's own words still score. Its top 10 pages are taken first, then those
+  already in the main list are dropped, and the rest are appended after the main pages. Not for a quoted
+  phrase.
 - **Roll-up** (#5905; not for `book_id` or `pages_only`):
   - `rollupTerms` gives up to 8 non-stopword terms.
   - `countMatchingPagesByBook` counts pages printing **EVERY** term, each as a phrase, faceted on
