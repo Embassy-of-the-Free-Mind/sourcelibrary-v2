@@ -88,10 +88,12 @@ export function failedReadFilter(pageId, at) {
  */
 export function failedReadUpdate(stamp) {
   return [
-    { $set: { ocr: { $cond: [{ $eq: [{ $type: '$ocr' }, 'object'] }, '$ocr', {}] } } },
+    { $set: { ocr: OCR_AS_OBJECT } },
     { $set: { 'ocr.last_skip': { $literal: stamp } } },
   ];
 }
+/** `ocr` unchanged when it is an object, else `{}`. It writes no text (the filter already excludes a string `ocr`). */
+const OCR_AS_OBJECT = Object.freeze({ $cond: [{ $eq: [{ $type: '$ocr' }, 'object'] }, '$ocr', {}] });
 
 /**
  * Stamp failed reads: rows = [{ pageId, reason, model, engine?, finishReason?, detail?, at? }].
