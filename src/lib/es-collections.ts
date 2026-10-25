@@ -170,6 +170,16 @@ export function spanishReaderHref(book: { slug?: string; id: string; pages_count
 const PUBLIC_COLLECTION = { visible: true, collection_type: { $ne: 'visual_art' } };
 
 /**
+ * The same rule as PUBLIC_COLLECTION, for a collection doc already in hand:
+ * does `/es/collections/<slug>` exist for it? The English page gates its
+ * "Leer en español" link on this, so it cannot link a visual-art collection
+ * (School of Athens) into a Spanish 404.
+ */
+export function hasEsCollectionPage(doc: { visible?: unknown; collection_type?: unknown }): boolean {
+  return doc.visible === true && doc.collection_type !== 'visual_art';
+}
+
+/**
  * Which of these slugs have a Spanish page (`/es/collections/<slug>`) — the
  * same filter `getEsCollection` applies, so a link built from it cannot 404.
  *

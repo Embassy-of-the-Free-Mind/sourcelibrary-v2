@@ -234,7 +234,7 @@ function agrees(extracted, knownName, knownDoc) {
  *   image  books with NO OCR: the first leaves as images (typed covers/blanks skipped where a type is known).
  *
  * Model: gemini-3.1-flash-lite only, through the Batch API. Steps, each re-runnable:
- *   --imprint --draw [--seed=7201 --n-image=100 --n-text=100]   seeded draw, stratified by language × century
+ *   --imprint --draw [--seed=7201 --n-image=100 --n-text=100 --exclude=<old imprint-sample.json>]   seeded draw, stratified by language × century
  *   --imprint --build                                           window + images per book, request file, ESTIMATE
  *   --imprint --submit [--cap=10]                               refuses if spent + estimate > cap
  *   --imprint --collect                                         results → guards → evidence JSONL
@@ -327,9 +327,14 @@ if (process.argv.includes('--imprint')) {
     await mc2.connect();
     const B = mc2.db('bookstore').collection('books');
     const proj = { projection: { _id: 0, id: 1, language: 1, year: 1, published: 1, visible: 1, 'pipeline_auto.hold.reason': 1 } };
-    const imagePool = await B.find({ pages_count: { $gte: 4 }, resource_type: { $exists: false }, ...scansOnly }, proj).toArray();
-    const textPool = await B.find({ visible: true, resource_type: { $exists: false }, pages_ocr: { $gt: 0 } }, proj).toArray();
+    // --exclude=<earlier imprint-sample.json>[,…]: a FRESH draw never re-reads a book an earlier draw labelled.
+    const excluded = new Set(String(opt('exclude', '')).split(',').filter(Boolean)
+      .flatMap((f) => { const x = readJson(f, null); if (!x) throw new Error(`--exclude: no sample at ${f}`); return [...x.image, ...x.text].map((p) => p.id); }));
+    const notExcluded = (b) => !excluded.has(b.id);
+    const imagePool = (await B.find({ pages_count: { $gte: 4 }, resource_type: { $exists: false }, ...scansOnly }, proj).toArray()).filter(notExcluded);
+    const textPool = (await B.find({ visible: true, resource_type: { $exists: false }, pages_ocr: { $gt: 0 } }, proj).toArray()).filter(notExcluded);
     await mc2.close();
+    if (excluded.size) console.log(`excluded ${excluded.size} books drawn before`);
     // #7176 published the hidden Latin/Chinese scans-only books (16,266, held as `scans-only-publish-7176`).
     const in7176 = (b) => b.pipeline_auto?.hold?.reason === 'scans-only-publish-7176' || (b.visible === true && /^(latin|chinese)$/i.test(b.language ?? ''));
     const topLangs = (pool) => { const c = {}; for (const b of pool) c[b.language ?? 'unknown'] = (c[b.language ?? 'unknown'] ?? 0) + 1; return new Set(Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([l]) => l)); };

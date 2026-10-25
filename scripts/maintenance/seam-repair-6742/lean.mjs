@@ -112,11 +112,13 @@ export function driftOnly(x) {
 async function mongo() { const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); return { client: c, db: c.db('bookstore') }; }
 
 // ── the weekly-usage guard (spare-lane.py account_limits) ────────────────────
-/** This box's Claude account usage: { email, weekly, session, checked_at } or null when unknown or stale. */
-export function claudeUsage() {
-  const LATEST = '/root/.claude-limits/latest.json';
+/** This box's Claude account usage: { email, weekly, session, checked_at } or null when unknown or stale. With
+ *  `pull: false` (the write-time guard, inside another lane's write) it never spawns the 90 s pull: a poll older than
+ *  45 min is unknown. */
+export function claudeUsage({ pull = true, latestFile = '/root/.claude-limits/latest.json' } = {}) {
   let latest = null;
-  try { latest = JSON.parse(fs.readFileSync(LATEST, 'utf8')); if (Date.now() - Date.parse(latest.checked_at) > 15 * 60e3) latest = null; } catch { latest = null; }
+  try { latest = JSON.parse(fs.readFileSync(latestFile, 'utf8')); if (Date.now() - Date.parse(latest.checked_at) > (pull ? 15 : 45) * 60e3) latest = null; } catch { latest = null; }
+  if (!latest && !pull) return null;
   if (!latest) {
     const r = spawnSync('node', ['--env-file=/root/sourcelibrary/.env.production.local', path.join(REPO, 'scripts/workers/claude-limits-share.mjs'), 'pull'], { encoding: 'utf8', timeout: 90e3 });
     try { latest = JSON.parse(r.stdout); if (Date.now() - Date.parse(latest.checked_at) > 45 * 60e3) return null; } catch { return null; }

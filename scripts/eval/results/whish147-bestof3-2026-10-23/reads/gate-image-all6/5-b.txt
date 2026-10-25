@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf reads ത്രിഗുണമവിവെകി ‖ വിഷയസ്സാമാന്യമചെതനംപ്രസവ ‖ ധൎമ്മിവ്യക്തന്തഥാപ്രധ. A, B, C, E and F all match this. A puts the second hole after "പ്രസവ" instead of after "ധ". F writes the vowel signs as െ→േ (വിവേകി, ചേതനം), but the leaf has the old െ form. D's "വ്യക്തം" is close.
+CHECK | row 6: The leaf starts with a clear അ: അവിവെക്യാദി/ദെ ‖ സിദ്ധ(ി)സ്ത്രൈഗുണ്യാത്തദ്വിപൎയ്യ ‖ യാഭാവാൽകാ. B and C match, and so does F apart from an extra സ്സ. A and E mark the readable അ as [illegible]. D does not match (ാശ്രികമന്യാദ…).
+CHECK | row 10: The leaf reads മുദയാച്ച plus an extra ള്ള-like mark, then പരിണാ ‖ മതസ്സലിലവൽപ്രതിപ്രതിഗുണാശ്രയ ‖ വിശെഷാൽ൧൬സംഘ(ാ). The ൧൬ numeral is visible. C is the only one that records the extra mark; the same kind of mark also shows in row 2 (ഥാചള്ളപുമാൻ൧൧), which C also records. B matches apart from that mark. E and F mark the readable ൧൬ as [illegible]. A starts the row with an extra സ. D is garbled.
+PICK | C
+RANK | C, B, F, E, A, D
+WHY | C and B both read the verse numerals (൧൧–൧൬) and the leading അ that the others drop, and C also records the extra marks visible in rows 2 and 10, though it leaves out the ൧൩ visible at the end of row 5.

@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has many gaps, but what it does read is real Sanskrit that fits a Sāṅkhyakārikā commentary on prakṛti acting for the puruṣa ("ekaikasya puruṣasya", "ārambhaḥ", "mokṣārthaṃ", "viṣayopabhogārthaṃ", "puruṣārthaṃ", "pravarttate"); B has only scattered real words ("upabhogārthaṃ", "kaściddevadatta", "pravarttanena paraspa-") among strings that just look like words, and A is mostly unreadable gibberish.

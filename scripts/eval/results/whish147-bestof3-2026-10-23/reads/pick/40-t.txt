@@ -1,0 +1,4 @@
+PICK | C
+RANK | C, B, A
+
+WHY | C reads most consistently as the Sāṅkhyakārikā commentary on the sense organs: it has "pariṇāmaviśeṣaḥ tatra", "indriyavyapadeśa", "pañcamahābhū[ta]", "ghrāṇarasanātvag iti buddhi[indriyāṇi]", "śabdādigu[ṇa]", "indriyāṇāṃ … ālocanamātraṃ vṛttir", while B gets some phrases right but is mostly [illegible], and A is largely broken syllables.

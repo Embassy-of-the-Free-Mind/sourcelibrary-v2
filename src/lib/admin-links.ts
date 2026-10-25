@@ -71,6 +71,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/catalog-coverage', label: 'Catalogue' },
       { href: '/admin/r2-coverage', label: 'R2 storage' },
       { href: '/admin/knowledge-graph', label: 'Knowledge graph' },
+      { href: '/admin/page-cleanup', label: 'Page cleanup' },
     ],
   },
   {
@@ -90,7 +91,6 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     links: [
       { href: '/admin/traffic', label: 'Traffic', menu: true },
       { href: '/analytics', label: 'Analytics', menu: true },
-      { href: '/platform/admin/metrics', label: 'Metrics', gate: 'superadmin' },
       { href: '/about/progress', label: 'Progress' },
       { href: '/admin/outreach', label: 'Outreach' },
       { href: '/admin/social', label: 'Social' },

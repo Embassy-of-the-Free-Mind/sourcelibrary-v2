@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | None of the three gives readable Sanskrit or Malayalam; C at least keeps the string holes consistent and invents nothing, while A's few fragments are non-words (e.g. "śaśeṣṭhaṃ") and B repeats "śra"/"jña" so often that it looks made up, and its first four rows have no string holes at all.

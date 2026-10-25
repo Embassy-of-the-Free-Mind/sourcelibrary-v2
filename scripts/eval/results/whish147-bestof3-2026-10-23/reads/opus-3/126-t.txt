@@ -1,0 +1,9 @@
+ROW 1 | ഷ്ടകസിദ്ധിഃസവികല്ലും.ലക്ഷണഷ്ടിസഗ്രകാരകമികിനാമജ്ഞാത്വാദ്ധിതരകക്ഷണാമിതരക്താനാഃ
+ROW 2 | ബാഹ്യഃവാഗാദിഷ്കാനമിത്യൎത്ഥഃസാധികളകഷ്കാമൃദാഹരണത്തിലൈഏകഇന്ദ്രിയാൎത്ഥസന്നിധിക്കും
+ROW 3 | ഷിഭൂജ്ഞത്തെപ്പറ്റും ‖ ക്ഷത്തസക്ഷേകം[illegible]കൈയൊഗസിദ്ധിക ‖ ഷ്ടദാഹരിച്ചതും
+ROW 4 | ക്ഷത്തി.ഉദ്യാമ്പഞ്ഞു ‖ ക്ഷസപ്തസ[illegible]പ.ചെയൊഗസ്സുതി ‖ കൾഇത്യൎത്ഥഃഞ്ഞമാ
+ROW 5 | മനസീഹസം[illegible] ‖ ചെതമനഇത്രിക[illegible]കയണഇന്ദ്രിയാമ ‖ ചെഷ്ടതതഃപ്രത്യക്ഷ
+ROW 6 | ജ്ഞാനമൂൽപത്തു ‖ ചെതസാക്ഷികന്ത്സമവായമൃദാ ‖ ഹരിച്ചുടത്തുചെപ്പിതി
+ROW 7 | കൈത്രക്കിമാവാചക[illegible]ഷ്ടംചൈക്ഷത്തസാക്ഷ്യകൃതസമവെതസമ[illegible]മായമൃദാഷത്തി.ദ്രുവതെ
+ROW 8 | ഖത്തിസമവായദൃഷ്ട[illegible]ധതത്തിചെക്രൂരതൈക്ഷത്തി!ക്കതദ്ദപപാക്ഷാത്തിതചെച്ചിതിസദൃശസ്യ
+NOTE | All 8 rows appear on all 4 pieces. Treat the reading as low-confidence throughout: I could only make out roughly half the aksharas with any certainty, and many are guesses based on letter shape. Rows 1–2 and 7–8 run the full width, so they have no ‖. In rows 3–6 the text stops short of the holes. I joined the overlaps between pieces where one or two aksharas repeat, but I may have joined them in the wrong place.

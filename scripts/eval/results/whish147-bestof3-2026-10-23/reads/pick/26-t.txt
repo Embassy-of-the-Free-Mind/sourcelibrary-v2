@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C matches the vocabulary of Sāṅkhyakārikā 10 (hetu, sakriya/niṣkriya, nānātva, āśrita, liṅga, sāvayava) inside a sensible Malayalam commentary frame using pṛthakkai; A keeps only scattered pieces like kāraṇam avyaktaṃ and liṅgam avyaktaṃ, and B is mostly garbled.

@@ -1,0 +1,14 @@
+I could only partly read this leaf, so treat everything below as a rough draft. At this resolution many glyphs are ambiguous, especially conjuncts and the vowel signs on the reph and chillu letters. I did not use the Sāṅkhyakārikā or any commentary to fill gaps. ‖ marks the two string-hole column breaks (p01 | p02+p03 | p04). I didn't put in [illegible] at every doubtful spot, and readings across the p02/p03 overlap may have doubled or dropped an akṣara.
+
+ROW 1 | ജ്ഞതിപാരാരാസ്ത്രുയഉത്രുക്കാ ‖ ംഉകാരുഖ്യാക്കിന്ത്യസ്സിദ്ധയഃതത്രപാവതയൊതെ ‖ ംഗൌണ്യഃപഞ്ചസിദ്ധയഃ
+ROW 2 | താക്ഷിദ്ധിമൊതുമതാശ്വാദ്യപ ‖ ഹിതാഭാക്രാത്രാദ്ധ്യാണാച്ചക്കാണാസിദ്ധിംഭൊഗുരൊ ‖ [illegible]മുഖ്യാന്ത്യസിദ്ധയൊവിശിഷ്ട
+ROW 3 | ത്രുക്കപമദ്ധ്യമചന്ദ്രഹൈതുതെ ‖ ഹെതുമന്ത്രഃന്നിമിത്തവൽഹൃദമവാദ്ദുഃഖാഭിഘാതാനാംത്രി ‖ ത്രിതയസ്യാത്ഥപ്രഹാണമുഖ്യത്വാന്മു
+ROW 4 | ഫലസിദ്ധിക്കാരണമുച്യതെതൽ ‖ കായ്യസ്യഷ്ട്രഃഗൗണ്യഉത്തരാഗൗഷ്ട്ദ്ധ്യൊതൽജ്ഞാനാംഉ ‖ പഞ്ചൊക്കയൊഗികാഭിക്കാരണ
+ROW 5 | ാപചൌരാൻസാമ്പ്രിയ ‖ ാനിമ്മുക്താരമുച്യതെ — ഉഭപത്ത് ‖ ത്തൊഃഇതിഹാസാഭിധെയാനാ്യ
+ROW 6 | ായെനാത്ഥപരിക്കാ ‖ ണാംപരിക്കണൊഭൊസംശയ്യ്തൃ ‖ പക്ഷപിരാകരണെന
+ROW 7 | ഉത്തരപക്ഷവ്യപദെ ‖ ാപണാംതദ്ദെശനമാചക്ഷതെഗ ‖ ണ്ണിതഃസാരജ്ഞിയാത്വാ
+ROW 8 | രാത്താരമുച്യതെന്യനിൽ ‖ ലൊകൃദ്ധ്യൂഹരാമായെന്ദുഃഖിത്തിതൊപ്പ്യത്ഥാന ‖ ത്ഥിയതെതാപൽയാ
+ROW 9 | വനാഭ്യുദ്ധിഷ്ടു,സൌപ്ലംചാ ‖ ദിങ്ങ്ഡ്ഡിസാം,പാദ്ദതെതത്തത്ത്വകാം,ഉദ്ധിക്ക്യ,സൌ ‖ സൌപ്ലംചാമിനാംസംപാദകാ
+ROW 10 | നാം,ഖൊക്കിജ്ഞാസനാമിത് ‖ ശിഖ്യാളഹീരതൃക്കമുഖ്യതെദ്ദാനം,മൊക്ഷഭൂതിബദ്ധെവക്കിഖ ‖ ക്ഷാനന്യത്തൈദെണായനാള്ളു
+ROW 11 | സ്ഥാൽദ്ധാനപദല്ലുൽപ ‖ പമെത്തുഃയഥാവിധിട്ടൊൽപതജ്ജ്ഞിഃഖിവൈകല്യാ ‖ ത്തിരഭിഷ്ടപാദിനൊപാ
+NOTE | All 11 rows are present, but only about 40–50% of the akṣaras are confidently read: rows 4–7 are the most legible and rows 1–2 and 9–11 the least; the left margin has a mark at row 6 (probably a leaf number), not transcribed.

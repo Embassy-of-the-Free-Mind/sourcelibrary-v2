@@ -16,7 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, CLEAR_EMPTY_RESPONSE_UNSET } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
@@ -309,6 +309,12 @@ async function processOneJob(db, job) {
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
       } else {
+        // #4685 — an empty answer is never stored; same failure record as batch-collector.mjs.
+        if (isEmptyTranslation(text)) {
+          console.warn(`  EMPTY RESPONSE: not writing page ${pageId} — the answer is only whitespace`);
+          if (!DRY_RUN) await recordEmptyTranslation(db, { id: pageId });
+          failCount++; continue;
+        }
         // The page's text inside its continuity <meta> is text no reader sees (#5376) — same
         // refusal as batch-collector.mjs: write nothing, stamp the reason, keep the text.
         if (hidesPageInMeta(text)) {
@@ -355,7 +361,7 @@ async function processOneJob(db, job) {
                 })(),
                 updated_at: now,
               },
-              $unset: CLEAR_STALE_UNSET,
+              $unset: { ...CLEAR_STALE_UNSET, ...CLEAR_EMPTY_RESPONSE_UNSET }, // a real write ends the empty-response record (#4685)
             },
           }
         });

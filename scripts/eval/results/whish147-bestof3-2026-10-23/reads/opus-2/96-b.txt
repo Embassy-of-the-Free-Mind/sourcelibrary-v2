@@ -1,0 +1,12 @@
+ROW 1 | ഹേയ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 2 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+NOTE | I could make out the layout but almost none of the text: 11 rows, written across both holes. Rows 1–4 and 8–11 run through both holes. In rows 5–7 the left column stops short of the first hole, and rows 5–8 of the right column start indented after the second hole. The only letters I could read with any confidence are ഹേയ at the start of row 1. I couldn't reliably tell apart the conjuncts, the dot-reph and the chillu forms at this resolution, so I put [illegible] everywhere else rather than guess or fill in text from the known Sāṅkhyakārikā. Higher-resolution crops of each row would be needed for a real transcription.

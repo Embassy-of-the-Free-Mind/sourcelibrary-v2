@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. oāsthaiḍāthavatau [illegible] ‖ [illegible] jñāva [illegible] ṃhavarai [illegible] vātrā [illegible] ṃnnūral ‖ [illegible] gānārūnnaṃpattha [illegible] keṭa
+2. nantana [illegible] saൗgava ‖ [illegible] ñjeyācyutta [illegible] ddhiupamattiṅṅalppūā [illegible] ‖ [illegible] nāttvātrāṃ [illegible] [illegible] [illegible]
+3. uṣkantūśamātyalaka [illegible] ‖ [illegible] ḥvāttuṃpadasanma [illegible] siḥyamāgāmānara [illegible] ‖ [illegible] śakkaṃpadyaṃ [illegible] [illegible] ntū
+4. jñajñedadayamatti ‖ bhairajācyui [illegible] ttintaraśabarisaṃra ‖ karaṣṣa [illegible] ḥttakāṃ
+5. kkal̤aiyāgraṇās ‖ [illegible] dhiṣṭavātru [illegible] trāṅkjiṇānaipha ‖ [illegible] ḥpadantraladānaka [illegible]
+6. bhraikapracyakkā ‖ [illegible] yānanadra [illegible] ṭṭāpakabamākā [illegible] ‖ [illegible] kkāḥ [illegible] tvābāaiya
+7. āññaiyāgṛṇāvādā [illegible] ‖ [illegible] nāmavitraṃ [illegible] jñāṇarāṃ [illegible] bdidhi ‖ [illegible] ḥttakāṃ [illegible] diramaiṃ
+8. lākramapramāṇaiya ‖ [illegible] yathāregaൗna [illegible] ntṛttabhaivāpha [illegible] te ‖ [illegible] ttakāraṃ [illegible] virahāl
+
+TRANSCRIPTION B
+1. hosthaiśāyavatrai ‖ trāvaeṃharabhāvākrāṣṭhaṃ [illegible] ral ‖ ṃgāsaൗdruṃvatrabhikkada
+2. na [illegible] ṣaresvagava ‖ [illegible] haṇṭeyācyaibhiupamatridelcādyabhai ‖ na [illegible] ṣkavākraṃbha [illegible] ḻḻaḥ
+3. trṛṣkandṛjamātryalaka ‖ āvādyuṃpadasabhūgūndhyaṣāgāmānabha ‖ bhibhiśakkaṃpadraṃbha [illegible] ntrā
+4. jjrādayamatraൗ ‖ bhobhyūibhinanaśabaḍasaṃbha ‖ kataṣṭukkitrakāṃ
+5. kkūbhaiyograbhās ‖ tradhiṣṇuvātrāśrejñānabhapha ‖ traḥpadantraladrānabhantra
+6. tribhaikaprabbakkā ‖ nnayānanaṭṭāpakatramākā ‖ kkāśratrābābhaya
+7. ābhaiyāgrabhāvādā ‖ ānāmavidraṃbhaiāṣṭānatraṃsabbavi ‖ viḥtrakāṃjhāṭṭirahibhaṃ
+8. phākrūmaśramātrabhaiya ‖ phābhagaitabbadṛdyadrabhaiāhanmitrabha ‖ trakāṃkkāvirahāl
+
+TRANSCRIPTION C
+1. gosthaiḍāyavatthau ‖ bhijñāhāntaṃgagamairavātrātmaṃsūral ‖ [illegible] gāstāddyaṃvandikrada
+2. ntitaṃṣaṭhesiൗguva ‖ paśaṇṭevācyaiṣṭiupamattilpadrā ‖ taināntthakṣvapātraṃśa [illegible] jñu
+3. traṣṭhandukhamātthalaka ‖ dāvāñchaṃpadasmṛṣaryaṣāgāmāname ‖ lei [illegible] śaktaṃvaddaṃja [illegible] tthā
+4. jjrodayamantrā ‖ bobhāvyaittinanalabasaṃ ‖ kāraṣṭhakkitrukāṃ
+5. kṣūdaiyāgrās ‖ jñadhiśvapātrārjñitonakepa ‖ ṛpadasyaladāntaketrū
+6. śrantikapracyakṣā ‖ nmayānanadāvākṛbamākā7 ‖ kmāśitthābāreya
+7. gaiyāgrāravādāra ‖ hannāmaviṣṇaṃkhoūtāraṇaṃsandi ‖ litrukā2ṝādirutakaṃ
+8. lākramaśramānṟeya ‖ ghadhāogaṇavabbakrūtmakaibāhannitte ‖ trukā2kṣāvibhavāl
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

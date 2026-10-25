@@ -1,0 +1,10 @@
+ROW 1 | നാന്നിവൃത്ത്യസ്യതന്നിക്കിണംഏക്ഷീന്യപാരമിത്യച്ചനതപിംഷണാന്നജ്ഞീത്വംനക്ഷിത്രാക്യനബ
+ROW 2 | പ്രഖിമിധ്യാത്രംശക്യാഃക്കിന്തഉപദ്രജ്ഞ്യാമാനാമഹാത്മിമാത്മസത്ത്വംഭവ്യന്നിതദ്രപ്രാകജ്ഞാനച
+ROW 3 | മഹാദ്ദേഃഖമിക്കിസംഗാദെദ്രാഷ്ടദശ്‌നാദ്രിപരത്തെന്യാഷ്ടമിത്യുക്കിനന്തമാംഭഉച്ചതെസവ്വം
+ROW 4 | ശക്ത്യംക്കിത്ഥാനവ ‖ ഹത്യഭ്ദ്രതൈതിനാഭാഗസ്സംഭവതി ‖ ദ്രതത്വപക്ഷാത്താൽ
+ROW 5 | മഹാദ്ദിശ്യഫല ‖ മിഭിഹിംസാദദംഷദശ്‌നാദ്ദ ‖ പരക്ഷ്യത്രക്ഷിവിധം
+ROW 6 | ന്യവമിഉത്തമ ‖ ാംഭളത്വച്ചരത്തെക്കത്തുവെച്ചെ ‖ വിഷയിദ്ധാരെരണ്ണ
+ROW 7 | ത്തിദ്ദപത്തിതിത്തെ ‖ ബാഹ്യാഃത്തെൽദൃഷ്ടികാരണാ ‖ ദ്ദ്യാത്തികാഃവിഷമെ
+ROW 8 | യത്തക്ഷരസ്യാദ്യാന്തി ‖ കഉദ്യാസംഭവാൽതത്രൈകത്തു ‖ കൊദ്ദാനകാലാനമമ
+ROW 9 | ക്കെൽപായാഉത്ത ‖ ഷിക്ഷമവിക്കയാകകവമ്മച്ചനാല ‖ ലിയദ്ധതെതസ്യാല്യ
+NOTE | I can only partly read this leaf, so please check every row against the images before relying on it. Nine rows are written; rows 1–3 run the full width, and rows 4–9 are split at the two holes. Many syllables are best guesses, conjuncts and chillus are especially doubtful, and the joins between pieces may be off by a syllable. I did not compare the text with the Sāṅkhyakārikā or any commentary.

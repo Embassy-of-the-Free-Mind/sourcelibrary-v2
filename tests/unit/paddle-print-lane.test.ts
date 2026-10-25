@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, dittoRate, dittoDropped, underRead, bookMedians, kanaShare, MAX_KANA_SHARE, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -192,5 +192,28 @@ describe('Japanese editions inside the Chinese frame (first frame chunk, 2026-10
   it('a dense typeset page is not rejected for length alone', () => {
     const dense = fx('text-leaf-R.txt').repeat(1).split('\n').map((l, i) => l + '其' + i).join('\n');
     expect(leafLoop(dense.repeat(1)).loop).toBe(false);
+  });
+});
+
+describe('under-read leaves (first frame chunk, 2026-10-24)', () => {
+  it('a full-ink leaf with a fifth of the book\'s median text is an under-read; a low-ink short leaf is not', () => {
+    const med = { chars: 1450, ink: 0.18 };
+    expect(underRead(14, 0.17, med)).toBe(true);
+    expect(underRead(14, 0.05, med)).toBe(false);
+    expect(underRead(900, 0.17, med)).toBe(false);
+    expect(underRead(14, 0.17, { chars: 60, ink: 0.18 })).toBe(false);
+    const L = fx('text-leaf-L.txt');
+    expect(assemblePage([{ side: 'S', blank: false, ink: 0.17, raw: '知是爲魔事復次須菩提說法者欲', recheck: '知是爲魔事復次須菩提說法者欲' }], { med })).toMatchObject({ verdict: 'reject', reason: 'under_read' });
+    expect(bookMedians([{ raw: L, ink: 0.1 }, { raw: L, ink: 0.2 }, { raw: '', ink: null }]).ink).toBe(0.2);
+  });
+});
+
+describe('ditto marks (Derek, #6056 round 3, 2026-10-23)', () => {
+  const body = fx('text-leaf-R.txt').replace(/\s+/g, '');
+  const withMarks = body.split('').map((c, i) => (i % 12 === 0 ? '丨' : c)).join('');
+  it('in a book whose pages carry 丨, a page with none is dropped; a book without them is untouched', () => {
+    expect(dittoRate(withMarks)).toBeGreaterThan(20);
+    expect(dittoDropped([withMarks, withMarks, body, withMarks]).dropped).toEqual([2]);
+    expect(dittoDropped([body, body, body]).dropped).toEqual([]);
   });
 });

@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most coherent Sāṅkhya commentary, with readable terms like "udāharanti", "sāṃsiddhikaṃ", "naimittika", "traiguṇya" and "tanmātrādi", and Malayalam forms like "kāraṇattāl"; C has some of the same terms but breaks up under many illegible marks, and A is mostly syllables that only look like words ("svāhesiddhikaṃ", "uṭāgaൗtriṇṇ…").

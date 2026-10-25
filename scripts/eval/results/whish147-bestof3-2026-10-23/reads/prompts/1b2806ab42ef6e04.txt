@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣaḥ avagāhanaphalametal ‖ kasyābhekinneṅkāvadhāraṇāva ‖ parakkākhābhye [illegible]
+2. upalabhetaketra ‖ diśuddhametaccaṭṭyādyāvarttamatarṃkye ‖ tra [illegible] jñātaśyarajñakkinanna
+3. caturvvyākāraṇākepaki ‖ khyatrāhaṃkādādebhayā [illegible] ‖ ṣṭramahrāyāññālbhaidava
+4. dalannādibhissaṣṭa ‖ mitrādiupakebhogaṃumebho ‖ gaṃpratipratyuṣakabho
+5. gaṃdaivamanu ‖ tteṣṭhemrādi [illegible] ndiykkukoṇṭāmiva ‖ kanyālabhetagaḥkaṃpra
+6. tiśavvetre ‖ pātragatā [illegible] nnikṣāmaṃpatreka ‖ nyasādhayatiṣavalu
+7. uddattiyaccāl ‖ ṣabhiḥprayānatratanāsaktinā ‖ nnrkīltapyrāl
+8. bhānakaraṇātriṣṭa ‖ bhāmrābhruphaṣkakiṣṭruprayāṇaitṛṣyāstarāva ‖ tityālbhebhāgavatraṣa
+9. itimesvachaphibhi ‖ naṣṭibhūṣabharatrabhamandapadijñabbṣṭidbhavbhita ‖ āsaṣṭhamaṣhitaṃsṃcā
+10. dehakipatthādhikāre ‖ lekkiṭṭavarimetādvāntāsaṃgatādṛdaya ‖ ānavṛṣṭaṣṭādatṛkki
+
+TRANSCRIPTION B
+1. ṣṭaḥavagāhanaphalametalkasyācekinnameñāvadhānopalakkā [illegible] ṣye [illegible]
+2. ulalabhetakotra [illegible] ṣṭretacaityādyāva [illegible] malḥkṛta [illegible] ṣkṛ [illegible] rauṅkinana
+3. ca [illegible] llyakālakovakūkriyamuhūṃkiādādaiyāṣyata [illegible] magnamiśrāyātrālbhaidava
+4. dal [illegible] nāraśāsalla ‖ mitrāmeulabhogaṃulabhā ‖ gaṃpratipratyucabheā
+5. gaṃkhedavamanāṣṭa ‖ tteṣu [illegible] guāditkākhokhāvivaka ‖ khanyālabhebhaṃgaḥtapra
+6. tsavallakotte ‖ pākkugatadikhikkāsaṃpabhūr ‖ nṛsādhayatimabal
+7. hadattatyayajñāl ‖ ṣabhiḥpradhānatṛtaisaktinā ‖ nūrkkamiltattvāl
+8. toātrikaraṇādrayoḻuha [illegible] pravaddhakṣipradhānatadṛāslāvattiṣālbhogavataya
+9. iṣṭradesvacapirināptimavadātamanaskkiṣṭamidṛplitamāsaptamauritaṃsvaṃcā
+10. dalaṣisatvāyikālehiṣṇavatimedāḻḻūānasaṃgatāprayānacṛṣṇadatalahmi
+
+TRANSCRIPTION C
+1. ṣṭaḥttavagāhanāpalaimetalkkasyāṣekinnakaiñcāvayākenāvanakkākhyātyemauḍhadṛṣṭa
+2. upalabhetatakaitrṛdaśyanitaibuddhyādṛśyavalbhinnamal [illegible] ñcaṣkṛ [illegible] talaññekkinanna
+3. candrallyakṣañjakaikṣakigrahāṃkiādādeyāñjaimaൗḍhyabhrā [illegible] ādṛṣyabhrāyādyālbhaidava
+4. dalbhūtāgrāgyāsṛṣṭi ‖ mitādiupalabhogaṃupalabhya ‖ gaṃpratiprajñāpabheda
+5. gaṃbaiddhamantra ‖ ddhyaidṛgaṃviṣkayoviṣaya ‖ bandhālabhedagaḥ [illegible]
+6. tvavlaivaitṛai ‖ pātṛgatā [illegible] viṣayaṃprakā ‖ nyasādṛśyatayā [illegible]
+7. ābhūtiyantrāl ‖ ṣadiḥprayā [illegible] nṛtanāsaṃtinā ‖ ntrakṣilgandhāl
+8. tānikaraṇāntare [illegible] ṣyaḍūdṛśya [illegible] prayāṇenadṛśyāstravastutayālbhedagavataya
+9. itimaisvacaviśi [illegible] ṣṭitayāditamainābhinnaṃdṛṣṭivattatā [illegible] sapramāṇitaṃspā
+10. dañāniḥśrīsṛṣṭvāyikkābhye [illegible] dṛṣṭikkaḻedālggānāsaṃgatāprayānadṛṣṭāntatā [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

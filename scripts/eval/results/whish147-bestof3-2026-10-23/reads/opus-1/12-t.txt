@@ -1,0 +1,10 @@
+ROW 1 | ഋഗപത്തിസന്തിസ്യപസ്മാ ‖ പന്നാഇവ്വിക്ഷതൃ[illegible]ഭപത്തിതഭാധിതെഭ ‖ ൗത്തികാ.ഖാക്ഷിതെനഗ്രഹാമെ
+ROW 2 | പന്ന[illegible]ത്തിരെെദപാജ ‖ ഇധിതൃതൃടപത്തിരെഭാധിെെഭഷ്ടികെ ‖ മിത്ഥക്കതൽദ്ദേചത്തഞ്ചെ
+ROW 3 | ത്വെപ്പിത്തി[illegible]ഠൽ ‖ ഷിഖനഠരതുരകാക്ഷക്ഷാസാ ‖ ജ്ഞാതമിക്ഷാഭവത്തിത്ത
+ROW 4 | ജിൽമിക്ഷയത്മിഉ ‖ ഗഹാ:തടപല്ലാരാതരെകരെഹാതാവി ‖ ത്തിനപല്ലാരരത്രപ
+ROW 5 | നയത്തിന്ത്രപല്ലൂ ‖ രക്കന്നന്യദ്ദെപത്രയന്ന്യാപപ്ല ‖ ാരക്കന്നടപല്ലാര
+ROW 6 | ക്കേതൃജ്ജക്കാദ്ദ്രാ ‖ ക്ഷ്ടിസമാനാസപ്രത്തിെക്കധം ‖ ഗ്രൽപ്രെയാജെകാ
+ROW 7 | തെഹതെബത്തിന ‖ ടപത്തെകിനക്ഷ[illegible]നജ്ജക്ഷിക്ഷേഖലി ‖ മാത്തദ്ദേല്ലാജ്ജ്യക്ത
+ROW 8 | ദ്രെൻ.ഉത്തമ ‖ ദചലാക്കികാ[illegible]ാെഹാത്രക്ഷക്ഷാാെ ‖ മപ്രാക്ക്ഷേഭപത്തിദ്ദോ
+ROW 9 | പാനൂപ്ഠാം.ഷമക്ക ‖ ംപ്രതിക്കാമതെഞ്ഞ[illegible]ചജ്ഞനനാത്തിെപ്ര ‖ ന്തചാഡാദ:സപപ
+NOTE | I couldn't read this leaf reliably, so treat everything above as a rough guess at individual letters, not a usable transcription. The letters are written large, but at this image resolution I can't confidently tell apart many similar Malayalam shapes (ത/ഭ/ദ, ക്ഷ/ജ്ഞ, ന്ന/ന്ത, the dot-reph, vowel signs), and the overlaps where the pieces join are uncertain. I'm fairly confident only of the layout: 9 physical rows, with rows 3–7 broken at both string holes. Please check every row against the original or a higher-resolution scan.

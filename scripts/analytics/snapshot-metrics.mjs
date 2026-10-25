@@ -4,8 +4,8 @@
 // Computes the headline audience + usage + engagement numbers (the same
 // aggregations the /metrics skill runs across audience-metrics.mjs,
 // usage-deepdive.mjs, and engagement-metrics.mjs) and writes ONE structured
-// document to system_config.metrics_snapshot. The protected admin page at
-// /platform/admin/metrics reads that doc and renders instantly — it never runs
+// document to system_config.metrics_snapshot. The Readers section of the /admin
+// dashboard reads that doc and renders instantly — it never runs
 // these aggregations on page load (the deep-dive scans are too slow for that).
 //
 // Same pattern as system_config.homepage_stats (refreshed daily by
@@ -157,7 +157,7 @@ await withMongo(async (db) => {
   // ─── READING DEPTH (page_read events, 7d) ─────────────────────────────────
   // Shared with engagement-metrics.mjs via scripts/lib/reading-depth.mjs so a
   // correction can't land in one and miss the other. This snapshot feeds
-  // /platform/admin/metrics AND the weekly digest, so a wrong number here is a
+  // the /admin dashboard AND the weekly digest, so a wrong number here is a
   // number that gets emailed.
   const ev = db.collection('analytics_events');
   let reading = null;

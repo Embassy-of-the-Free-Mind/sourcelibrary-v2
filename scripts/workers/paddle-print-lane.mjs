@@ -40,7 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
-  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE,
+  storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
 } from '../lib/paddle-print-lane.mjs';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
@@ -222,7 +222,8 @@ async function plan() {
       for (const p of pages) {
         const pol = storedPolicy(p.ocr, { spread: isSpread(p.image_width, p.image_height) });
         if (pol.action !== 'read') { tally.keep[pol.why] = (tally.keep[pol.why] || 0) + 1; continue; }
-        const src = getPageSource(p);
+        // a stored URL can carry whitespace (4 frame pages had a newline inside it): it would split the manifest row
+        const src = getPageSource(p)?.replace(/\s+/g, '') || null;
         if (!src) { tally.no_image++; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, why: pol.why });
       }
@@ -347,7 +348,7 @@ async function prep() {
       if (r.spread) t.spreads++;
       if (r.ruler_row != null) t.ruler++;
       if (r.gutter_how === 'image-centre') t.centre++;
-      for (const lf of r.leaves) { t.leaves++; if (lf.blank) { t.blank++; continue; } man.push(`${bid}\t${r.pn}-${lf.side}\t${r.src}\t${lf.box.join(',')}`); }
+      for (const lf of r.leaves) { t.leaves++; if (lf.blank) { t.blank++; continue; } man.push(`${bid}\t${r.pn}-${lf.side}\t${String(r.src).replace(/\s+/g, '')}\t${lf.box.join(',')}`); }
     }
     // the prep file is the book's checkpoint: written after the manifest lines, so a crash re-preps the whole book
     // and the runner skips leaves already read (its output file is its checkpoint)
@@ -380,7 +381,7 @@ function recheck() {
         if (!(n > 0 && n < SHORT_LEAF)) continue;
         short++;
         if (listed.has(`${pr.bid}/${p.pn}-${lf.side}`)) continue;
-        man.push(`${pr.bid}\t${p.pn}-${lf.side}\t${p.src}\t${lf.box.join(',')}`);
+        man.push(`${pr.bid}\t${p.pn}-${lf.side}\t${String(p.src).replace(/\s+/g, '')}\t${lf.box.join(',')}`);
       }
     }
   }
@@ -389,6 +390,19 @@ function recheck() {
 }
 
 // ── apply ──────────────────────────────────────────────────────────────────────────────
+
+/** Every READ run (not a recheck), oldest first: `{ name, box, t }` with `t` = its start in ms. */
+function readRuns() {
+  if (!fs.existsSync(F.runs)) return [];
+  return fs.readdirSync(F.runs).filter((x) => x.endsWith('.json')).map((x) => ({ name: x.slice(0, -5), box: readJson(path.join(F.runs, x), {}) }))
+    .filter((r) => !r.box.max_side).map((r) => ({ ...r, t: Date.parse(r.box.started_at) || 0 })).sort((a, b) => a.t - b.t);
+}
+/** The run that read a page: the last read run started before its newest leaf output was written. */
+function runOfPage(runs, bid, pg) {
+  const m = Math.max(0, ...pg.leaves.filter((lf) => !lf.blank).map((lf) => { try { return fs.statSync(leafOut(bid, pg.pn, lf.side, 'txt')).mtimeMs; } catch { return 0; } }));
+  let r = null; for (const x of runs) if (x.t <= m) r = x;
+  return r || runs.at(-1) || { name: 'unknown-run', box: {} };
+}
 
 /** The newest run.json a GPU task left (engine versions, weights hash, serving). */
 function latestRun() {
@@ -419,7 +433,8 @@ async function apply() {
   log(`${ready.length} books ready (${ready.reduce((s, b) => s + b.pages.length, 0)} pages)${APPLY ? '' : '  [DRY RUN]'}`);
   const totals = { books: 0, written: 0, conflicts: 0, textless: 0, rejected: 0, kept_now: 0, human_edited: 0, not_held: 0, stale_marked: 0, why: {} };
   if (!ready.length) { log(`APPLY ${JSON.stringify(totals)}`); return totals; }
-  const { name: runName, box } = latestRun();
+  const { name: runName } = latestRun();
+  const runs = readRuns();
   // --apply-tag names one apply pass inside a GPU run, so revert-run can undo that pass alone
   const runId = `${LANE}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
   await withMongo(async (db) => {
@@ -435,6 +450,7 @@ async function apply() {
       const workTitle = workTitleOf(book.title);
       const live = new Map((await P.find({ id: { $in: prepped.map((p) => p.pid) } }, { projection: { id: 1, page_number: 1, book_id: 1, ocr: 1, image_width: 1, image_height: 1 } }).toArray()).map((p) => [p.id, p]));
       const writes = [];
+      const med = bookMedians(prepped.flatMap((pg) => pg.leaves.filter((lf) => !lf.blank && fs.existsSync(leafOut(bid, pg.pn, lf.side, 'txt'))).map((lf) => ({ ink: lf.ink, raw: fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'txt'), 'utf8') }))));
       for (const pg of prepped) {
         const p = live.get(pg.pid);
         if (!p || p.book_id !== bid || p.page_number !== pg.pn) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'page_moved_or_gone' }); continue; }
@@ -448,7 +464,7 @@ async function apply() {
           err: lf.blank ? null : (fs.existsSync(leafOut(bid, pg.pn, lf.side, 'err')) ? fs.readFileSync(leafOut(bid, pg.pn, lf.side, 'err'), 'utf8') : null),
           recheck: !lf.blank && fs.existsSync(recheckOut(bid, pg.pn, lf.side, 'txt')) ? fs.readFileSync(recheckOut(bid, pg.pn, lf.side, 'txt'), 'utf8') : null,
         }));
-        const a = assemblePage(leaves, { workTitle });
+        const a = assemblePage(leaves, { workTitle, med });
         if (a.verdict === 'textless') {
           // never store an empty reading: a stored reading is kept, a page with none stays unread
           if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'paddle_textless_kept', chars: a.han, blank_leaves: pg.leaves.filter((l) => l.blank).length });
@@ -469,13 +485,25 @@ async function apply() {
           if (!c.ok) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: c.why, paddle: c.paddle, lite: c.lite, margin_recall: c.margin_recall }); totals[c.why] = (totals[c.why] || 0) + 1; continue; }
         }
         const text = envelope(a.body, language);
+        // the engine block names the GPU run that read this page's leaves; run_id (the revision) names this apply pass
+        const pr = runOfPage(runs, bid, pg);
         const field = ocrField(text, {
-          language, run: runId, imageUrl: pg.src, box, stats: a.stats, spread: pg.spread, why: pol.why,
+          language, run: `${LANE}/${pr.name}`, imageUrl: pg.src, box: pr.box, stats: a.stats, spread: pg.spread, why: pol.why,
           leaves: pg.leaves.map((lf) => ({ side: lf.side, box: lf.box, ink: lf.ink, blank: lf.blank })),
         });
         writes.push({ pg, p, text, field, why: pol.why, han: a.han });
       }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
+      // a 韻府 / 類書-type book whose pages carry 丨 marks: a page where Paddle dropped them all is not written (#6056 r3)
+      const dd = dittoDropped(writes.map((w) => w.text));
+      if (dd.dropped.length) {
+        const drop = new Set(dd.dropped);
+        for (const i of dd.dropped) if (APPLY) append(F.rejected, { bid, pn: writes[i].pg.pn, pid: writes[i].pg.pid, reason: 'ditto_marks_missing', detail: { book_median_per_1k: dd.median } });
+        totals.rejected += drop.size; totals.why.ditto_marks_missing = (totals.why.ditto_marks_missing || 0) + drop.size;
+        log(`${bid} ditto marks: book median ${dd.median}/1k Han, ${drop.size} page(s) with none rejected`);
+        for (let i = writes.length - 1; i >= 0; i--) if (drop.has(i)) writes.splice(i, 1);
+        if (!writes.length) continue;
+      }
       const ks = kanaShare(writes.map((w) => w.text));
       if (ks >= MAX_KANA_SHARE) {
         log(`${bid} is ${(ks * 100).toFixed(0)} % kana — a Japanese edition, out of this lane; nothing written | ${String(book.title || '').slice(0, 40)}`);

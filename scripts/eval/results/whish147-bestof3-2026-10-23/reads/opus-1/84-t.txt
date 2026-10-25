@@ -1,0 +1,14 @@
+ROW 1 | ശശേഷ്ഠം[illegible]ഗേഷ്ട്ര[illegible]ദ്ധ[illegible] ‖ [illegible]ത്ര[illegible]ദ്ധ[illegible] ‖ [illegible]
+ROW 2 | ത്ത[illegible]ച്ഛ[illegible]ഗേ[illegible] ‖ [illegible]പ്ര[illegible]ച്ഛ[illegible] ‖ [illegible]
+ROW 3 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 4 | [illegible]ഭിഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]ഃ[illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible]ത്തിഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]ഃ[illegible]
+ROW 9 | [illegible]ഃ[illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 11 | [illegible]ഃ[illegible] ‖ [illegible]ഃ[illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | I couldn't read this leaf reliably. There are 12 rows. Rows 1–4 and 9–12 run the full width, and rows 5–8 are split into three columns at the two holes. Apart from the visarga marks (ഃ) and a few short groups, which are themselves uncertain, I can't confidently identify the cursive letters at this resolution. I didn't guess or fill anything in from the known text. I'd need sharper or zoomed-in scans, ideally one per row, to give a real transcription. The right margin also has a leaf number or folio mark that I couldn't read.

@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ñānapṛkṣādayassaṃkṣita ‖ ārttadaivasyaṣṭaṃ darśitātantrāpavargga [illegible] ‖ [illegible] yānavaiṣā [illegible] āpada
+2. yāginniduḥkhitāmāha ta ‖ ttajñarāmaraṇādduḥkhaṃ itaraṃprāptātiṣetanāma [illegible] ‖ [illegible] ṣṭhakṣayataśśītālduḥkhassa
+3. gdhaspaṭṭāpepareyādrimiṣa [illegible] ‖ trividhajñāuoṣṭāleṣutiyatakkuronākkiya [illegible] ‖ yagrasthitileṟakkeṭṭatatta
+4. kkunnatayātuprakṛ ‖ jñāvinasaraiddatiṣṭhāṇenadirai ‖ sapacakālapari
+5. pākamapekṣyasiddha ‖ mutaiyoḻaṃeṣutiyaeṭilnnaṃ ‖ minoparipākā
+6. lṭapakṣitiuprakā ‖ raṃeṣutiuṭakṣeyaeṭilnnāme ‖ pantiṭaetraki
+7. ṭakonmakaṭeruṅṅa ‖ ominkuṭeyalāṃkkuṭiteminkāṭṭera ‖ kkupethinuṭṭirikkunnu
+
+TRANSCRIPTION B
+1. eñanavṛkṣādyāssaṃkṣita ‖ tāḥtadaivasyaggraṃdaśśitāttrṛāṣapaṅkti [illegible] ‖ [illegible] yānareviṅṅāññāpara
+2. yāginniduḥkhaṅṅāmāṟāḥ ‖ ttajñarāmaṇendraḥkhaṃjñāṃprājñātiśeyatanāka [illegible] ‖ [illegible] duḥkhayuktanmālduḥkhassa
+3. ggḥsvāṭṭāvepareyānmima ‖ ttividhaḥjñāḥukṣepālel̤utiyatakkuṟinol̤ikkiya ‖ [illegible] grasthileṟakkeṭṭatannu
+4. kkunnatayātuprakṛ ‖ trāvinasandreṣṭhāṇanadinai ‖ savacakālapari
+5. pākamavekṣyasiddhi ‖ uttareñāuṃprakṛtiyapritanāṃ ‖ minoparipākā
+6. lṭavapakṣiteḻaprakā ‖ raṃprakṛtiḻaṭakkālyapritanāṃmai ‖ vannatinuenneki
+7. ṭakoḻkkeṭṭāraṅṅa ‖ ṭiṅkilkkumpalāṃkkiṭetilkāṭṭata ‖ kkuveḻiludikkunnu
+
+TRANSCRIPTION C
+1. ñoraprakṣādyāssaṃjñitā ‖ tāḥtadaivasarggaṃdarśitāta [illegible] pavargga ‖ [illegible] yānavaiṣṇā [illegible] pa
+2. yāginduḥkhitāmāhaḥta ‖ ttajjanāmaraṇa [illegible] ḥkhaṃ kṣeṃ prācīntātiṣetanāma ‖ [illegible] duḥkhaḥtrayattālduḥkhassa
+3. ṣṭaḥspaṣṭāvaiparītyādvāmi ‖ trividhaḥjāḥevaṣṭālel̤utiyatakkūṭanokkiya ‖ [illegible] ssaṃtilenakkuṃtannu
+4. kkunnatayāiprakṛ ‖ illāvinasadyartthāṇadravya ‖ sapacakālapari
+5. pākamavaikṣyasiddhi ‖ uttarottaraṃel̤utiyaeṭṭil00 ‖ ṣinoparipākā
+6. ttṭepariṇiññiprakā ‖ raṃel̤utiyauṭakkiyaeṭil0āme ‖ vattinṟeennuka
+7. ṭakorkkoṭetāratte ‖ ṭekilkūṭṭalāṃkūṭiotilkāṭṭeta ‖ ṭuparitiluddharikkunnū
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

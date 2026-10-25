@@ -1,0 +1,19 @@
+2026-10-24T20:45:01Z [queue] start; GPU 2 MiB
+2026-10-24T20:45:01Z [PV] start; GPU 2 MiB
+2026-10-24T20:46:43Z [PV] PV wall 67 s {"arm":"sanskrit7243-pv","backend":"server","workers":8,"max_side":0,"layout":0,"page_batch":1,"pages":40,"errors":0,"wall_secs":66.2,"load_secs_max":3.2,"wall_secs_after_load":63.0} peak 9448 MiB
+2026-10-24T20:46:51Z [Q] start; GPU 2 MiB
+2026-10-24T20:48:11Z [Q] up after 80 s
+2026-10-24T20:58:46Z [Q] {"mode":"deva","model":"m","pages_this_pass":40,"clients":16,"wall_secs":634.7,"pages_per_hour":227,"errors":0,"hit_cap":11,"out_tok":110767,"in_tok":118660} peak 19684 MiB
+2026-10-24T20:58:54Z [D] start; GPU 2 MiB
+2026-10-24T20:59:39Z [D] up after 45 s
+2026-10-24T21:03:27Z [D] {"mode":"dotsocr","model":"m","pages_this_pass":40,"clients":16,"wall_secs":228.3,"pages_per_hour":631,"errors":0,"hit_cap":5,"out_tok":88519,"in_tok":152250} peak 19422 MiB
+2026-10-24T21:03:36Z [P5] start; GPU 2 MiB
+2026-10-24T21:03:54Z [P5] {"pages":40,"wall_secs":15.0,"pages_per_hour":9581,"device":"gpu:0"} peak 9154 MiB
+2026-10-24T21:03:54Z [C] start; GPU 2 MiB
+2026-10-24T21:05:14Z [C] up after 80 s
+2026-10-24T21:21:08Z [C] {"pages":40,"wall_secs":952.9,"pages_per_hour":151,"workers":8} peak 20978 MiB
+2026-10-24T21:21:16Z [S] start; GPU 2 MiB
+2026-10-24T21:22:26Z [S] up after 70 s
+2026-10-24T21:25:30Z [S] S wall 184 s peak 21600 MiB 40 rows
+2026-10-24T21:25:38Z [all] DRIVE-END GPU 2 MiB
+2026-10-24T21:25:38Z [queue] end; outputs: C.jsonl D.jsonl P5.jsonl PV.jsonl Q.jsonl S.jsonl 

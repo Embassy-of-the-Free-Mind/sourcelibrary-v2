@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf begins ഷ്യദ്ധീയമെ്മജ്ഞാനം.വി.രാഗമൈക്ഷഷ്യം.സാക്ഷികമെ…ക്രൂപം.തേമസമസ്താദിപശ്യന്ത്രം. E matches this nearly stroke for stroke. C is close but garbles the middle (ഷ്ടീയമെള്ള…, കരകസമ…). B departs from the leaf (ഷ്ടിധമ്മാങ്കാനം…). A, D and F give the standard kārikā text (ബുദ്ധിർധർമ്മോ…), which is not what the strokes show.
+
+CHECK | row 5: The leaf shows യഃ…ഃഷ്ടെകി ‖ ദ്രിയാണിചക്ഷു…ശ്രൊത്ര…ദ്രി ‖ രസനാഖഗാഖ്യാ. E matches it closely, with two small gaps marked [illegible]. C is near but has ഭി, ജ്ജൈ and ബസനാാഘ. B is loosely related. A, D and F normalize to ബുദ്ധീന്ദ്രിയാണി… and do not match.
+
+CHECK | row 9: The leaf shows ഞാമരാലൊചനമ…ത്രമിശ്രമെ…ഃപചനാദദസവിഹാ‖ഗലൈജാഃസഖ്യാനരാക്ഷ്. E matches it (ഞാമരാലെപാചനമ…ത്രമിശ്രമേ…പചസാദന്ദസവിഹാഗൈജാഃസഖ്യാനരാക്ഷ്). C drifts badly (ഔരഭാവലാചന…അസ്സ്ലീനതാശി). B is partly right (…പചനാദദ…വിഹാ…). A, D and F give the textbook നാമാലോചനമാത്രം…, which is not on the leaf.
+
+PICK | E
+
+RANK | E, C, B, F, A, D
+
+WHY | The leaf is written in idiosyncratic, distorted letterforms; E follows those actual strokes most faithfully across rows 1, 5 and 9, while A, D and F replace them with the fluent standard Sāṅkhyakārikā text that the leaf does not show.

@@ -1,0 +1,14 @@
+ROW 1 | ത്രിഗുണ[illegible]വിഷയഃ [illegible]ചേതനം [illegible]ധൎമ്മി[illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | [illegible]
+ROW 5 | [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 9 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 10 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 11 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 12 | [illegible] ‖ [illegible] ‖ [illegible]
+
+NOTE | The leaf has 12 rows: p01 is the left column, p02 and p03 are the middle column, p04 is the right column; there is a mark in the right margin I couldn't identify. I could read only a few fragments of row 1, and only tentatively: the dot-reph in ധൎമ്മി near the p03/p04 join is visible. I couldn't separate the rest of the handwriting into syllables reliably at this resolution, so I left it [illegible] rather than fill it in from memory of the text. Rows 1–5 run unbroken over the holes. Rows 6–8 stop short on both sides of each hole. Rows 9–12 run on under the cord, so I put ‖ there too.

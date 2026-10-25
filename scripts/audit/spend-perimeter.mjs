@@ -72,6 +72,8 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
  */
 const UNATTENDED = [
   // ── Hetzner crontab ──
+  { match: 'ia-ocr-nightly.mjs', spends: false, gated: false,
+    note: 'copies the Internet Archive\'s own OCR text into empty pages through ia-ocr-ingest gates; archive.org only, no model call (#4763)' },
   { match: 'climits check', spends: false, gated: false,
     note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
   { match: 'edge-crawl-alert.mjs', spends: false, gated: false,

@@ -56,6 +56,11 @@
  * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
  * `engine.input.by_eye`.
  *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ the
+ * moment it is made. Before calling, `read` asks for a kept read of the same page by the same model on the same prompt
+ * sent and the same image bytes (correct mode: the same draft, in the prompt), and uses it instead of calling; the meta
+ * then carries `reused_from`. `--fresh` always calls (a repeat-noise eval needs fresh reads; kept ones are its noise).
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -77,8 +82,10 @@ import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } f
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
-import { diffSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
+import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
+import { checkWrittenText, writeGuardReason } from '../lib/write-text-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
+import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -119,6 +126,12 @@ const NUDGE = 'Running commands is not available here. Answer directly from the 
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = arg('job') || 'cli-ocr';
 const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, kind: 'ocr', ...row }) + '\n'); } catch { /* the meter is advisory */ } };
+// The reuse key of a read (#7075): the prompt sent (it names the page's image file, and in correct mode carries the
+// draft), the image bytes, and the mode. `readReuseKey` rebuilds it from a kept meta for reads kept before readers
+// stamped their own.
+const variantOf = (mode, lane, promptVariant) => (mode === 'correct' ? `correct:${lane}` : promptVariant ?? null);
+const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant) }) : null);
+const FRESH = wantsFresh();
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -148,7 +161,7 @@ if (STAGE === 'read') {
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
-  let quotaUntil = 0;
+  let quotaUntil = 0, reused = 0;
   const readOne = async (p) => {
     const key = p.id;
     if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); return; }
@@ -167,6 +180,12 @@ if (STAGE === 'read') {
     // Correct mode: the #6560 request exactly — template with the draft in its slot, then the attachment.
     const sent = CORRECT_PROMPT ? `${base.split('{draft}').join(p.ocr.data)} @./${path.basename(img)}` : base + extra + imageInstruction(img);
     if (CORRECT_PROMPT) fs.writeFileSync(path.join(OUT, `${key}.prompt.txt`), sent);
+    const imageSha = createHash('sha256').update(buf).digest('hex');
+    const reuseKey = reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(CORRECT_PROMPT ? 'correct' : null, LANE, PROMPT_VARIANT) });
+    if (!FRESH) {
+      const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKey, derive: readReuseKey });
+      if (hit && await reuseInto(OUT, key, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); return; }
+    }
     const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
@@ -175,7 +194,10 @@ if (STAGE === 'read') {
     let r, nudged = false, rereads = 0, calls = 0;
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img)); calls++;
+      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
+      // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
+      if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
+      calls++;
       logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
@@ -183,26 +205,33 @@ if (STAGE === 'read') {
         r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++;
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       }
-      if (!r.cls && (unwrapRead(r.text).problem || ocrReadProblem(unwrapRead(r.text).text, { header: !CORRECT_PROMPT })) && rereads === 0) { rereads++; continue; }
+      // #5055: a read the write guard calls truncated (a tag left open at its tail, a text ending inside a tag) is read
+      // once more too; apply refuses it if the second read is cut as well.
+      if (!r.cls && (unwrapRead(r.text).problem || ocrReadProblem(unwrapRead(r.text).text, { header: !CORRECT_PROMPT }) || checkWrittenText(unwrapRead(r.text).text, { kind: 'ocr' }).verdict === 'truncated') && rereads === 0) { rereads++; continue; }
       break;
     }
     // The raw reply is kept beside the transcription; `.txt` holds only what was between the markers.
     const { text, problem: wrapper } = unwrapRead(r.text);
     fs.writeFileSync(path.join(OUT, `${key}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify({
+    const meta = {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
       chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
+      write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
-      image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
+      image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
-    }, null, 1));
+    };
+    fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
+    // Kept the moment it is paid for (#7075); best effort, never fails the read.
+    if (meta.exit === 0 && !meta.error_class && !meta.wrapper) await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, prompt_text: CORRECT_PROMPT ? sent : null, source_path: path.join(OUT, `${key}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
   };
   const queue = [...pages];
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readOne(queue.shift()); }));
+  console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   await client.close();
   process.exit(0);
 }
@@ -232,6 +261,15 @@ const MIN_SHARED = 0.4;
 // Correct mode: a correction keeps most of its draft. Over this share of the draft's syllables changed, it is a
 // re-transcription (or an invention), not a correction, and a person looks first.
 const MAX_CORRECTED = 0.25;
+// The 25% is counted in syllables on a Tibetan draft and in words (whitespace tokens, tags out) on any other: the
+// syllable tokenizer keeps only Tibetan syllables, so on Latin it counted 0 of 0 and passed every correction (#7269).
+const wordTokens = (t) => String(t).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean);
+function changedUnits(draft, next) {
+  if (/[\u0F00-\u0FFF]/u.test(draft)) return { ...diffSyllables(draft, next), unit: 'syllables' };
+  const A = wordTokens(draft), B = wordTokens(next);
+  const same = alignSyllables(A, B).filter(([i, j]) => i !== null && j !== null && A[i] === B[j]).length;
+  return { draftN: A.length, changed: Math.max(A.length, B.length) - same, unit: 'words' };
+}
 // --yatags-verdicts=FILE: the leaf checks of the ya-btags guard, one JSON row per page {page_id, hits, keep}.
 const YATAGS = new Map();
 if (arg('yatags-verdicts')) for (const l of fs.readFileSync(arg('yatags-verdicts'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); YATAGS.set(r.page_id, r); }
@@ -254,7 +292,7 @@ const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : 
 const bookCache = new Map();
 const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
-const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [] };
+const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [] };
 const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
 const books = {};
 
@@ -270,12 +308,19 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (!correct && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
   // The CLI is an agent, not an endpoint: a refusal arrives as exit 0 with prose. Aldine 1516 p.34 came back as two
   // false starts and then "I cannot provide a verbatim transcription ... Summary of the Page Content" (2026-10-08).
-  if (correct ? /<page-type>|<scan-quality>/.test(text) : (text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1) { skip(m, 'more than one transcription header: restarted or refused read'); continue; }
+  // A correction keeps its draft's header (a Latin draft carries one; a Tibetan one does not): checked against the draft
+  // once the page is read, below (#7269: refusing any header refused every correction of a headed draft).
+  if (!correct && ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1)) { skip(m, 'more than one transcription header: restarted or refused read'); continue; }
   if (REFUSAL.test(text)) { skip(m, 'refusal or summary in place of a transcription'); continue; }
   const chatter = ocrReadProblem(text, { header: !correct });
   if (chatter) { skip(m, `chatter guard: ${chatter}`); continue; }
   const loop = loopVerdict(text);
   if (loop.refuse) { skip(m, 'repetition loop'); continue; }
+  // The write guard (#5055): a tag left open in the read's last 15%, or a read ending inside a tag, is a cut read and
+  // is not written (the read stage already read it twice). A tag left open earlier is a forgotten close: repaired.
+  const guard = checkWrittenText(text, { kind: 'ocr' });
+  if (guard.verdict === 'truncated') { skip(m, writeGuardReason(guard)); tally.write_guard_refused.push({ page_id: m.page_id ?? m.key, page_number: m.page_number, reasons: guard.reasons }); continue; }
+  if (guard.verdict === 'repaired_mid') { text = guard.repaired; tally.write_guard_repaired++; }
   const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
   if (!page) { skip(m, 'page not found'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
@@ -288,8 +333,10 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let yat = null, byEye = null;
   if (correct) {
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
-    const d = diffSyllables(page.ocr.data, text);
-    if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's syllables: check by eye`); continue; }
+    const headers = (t) => (t.match(/<page-type>|<scan-quality>/g) || []).length;
+    if (headers(text) > headers(page.ocr.data)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
+    const d = changedUnits(page.ocr.data, text);
+    if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
     // writing the canonical spelling over the leaf's. Kept only where a leaf check confirmed it; the rest go back.
     const hits = yatagsHits(page.ocr.data, text);

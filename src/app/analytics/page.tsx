@@ -19,9 +19,8 @@ const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), {
 const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), { ssr: false, loading: LoadingBar });
 const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { ssr: false, loading: LoadingBar });
 const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false, loading: LoadingBar });
-const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false, loading: LoadingBar });
 const BooksTab = dynamic(() => import('@/components/analytics/tabs/BooksTab'), { ssr: false, loading: LoadingBar });
-type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search' | 'pipeline';
+type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search';
 
 const TABS: { key: Tab; label: string }[] = [
   { key: 'books', label: 'Books' },
@@ -29,14 +28,12 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'performance', label: 'Performance' },
   { key: 'logs', label: 'Logs' },
   { key: 'search', label: 'Search' },
-  { key: 'pipeline', label: 'Pipeline' },
 ];
 
 export default function AnalyticsPage() {
   const [activeTab, setActiveTab] = useState<Tab>('books');
   const [days, setDays] = useState(30);
   const [hours, setHours] = useState(24);
-  const [pipelineHours, setPipelineHours] = useState(24);
   const [refreshKey, setRefreshKey] = useState(0);
 
   // The "Books" tab is admin-only. Everyone reaching /analytics is editor+, so
@@ -75,6 +72,16 @@ export default function AnalyticsPage() {
             >
               Jobs
             </Link>
+            {/* The Pipeline tab lived here until it was folded into /admin/pipeline and the /admin dashboard. */}
+            {isAdmin && (
+              <Link
+                href="/admin/pipeline"
+                className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+              >
+                Pipeline
+              </Link>
+            )}
           </div>
           <div className="flex items-center gap-4">
             {/* Tab toggle */}
@@ -95,22 +102,6 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Time controls */}
-            {activeTab === 'pipeline' && (
-              <select
-                value={pipelineHours}
-                onChange={(e) => setPipelineHours(parseInt(e.target.value))}
-                className="px-3 py-1.5 rounded-lg text-sm"
-                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
-              >
-                <option value={1}>Last hour</option>
-                <option value={6}>Last 6 hours</option>
-                <option value={24}>Last 24 hours</option>
-                <option value={72}>Last 3 days</option>
-                <option value={168}>Last 7 days</option>
-                <option value={336}>Last 14 days</option>
-                <option value={720}>Last 30 days</option>
-              </select>
-            )}
             {(activeTab === 'usage' || activeTab === 'search') && (
               <select
                 value={days}
@@ -156,7 +147,6 @@ export default function AnalyticsPage() {
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}
         {activeTab === 'search' && <SearchTab key={refreshKey} days={days} />}
-        {activeTab === 'pipeline' && <PipelineTab key={refreshKey} hours={pipelineHours} />}
       </main>
     </div>
   );

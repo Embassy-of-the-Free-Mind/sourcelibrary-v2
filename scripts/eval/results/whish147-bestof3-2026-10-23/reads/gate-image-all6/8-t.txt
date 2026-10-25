@@ -1,0 +1,6 @@
+CHECK | row 1: The leaf begins സൂക്ഷ്മപൎയ്യന്തംസംസര‖തിനിരുപഭോഗംഭാവൈരധിവാസി‖തംലിംഗം।൪൦।ചിത്രംയഥാ. A matches all of it, including the verse number ൪൦ at the third piece. C matches but marks the verse number [illegible]. F matches the first two pieces, then marks the rest [illegible]. B, D and E begin ആക്ഷി/സൃഷ്ടി/ഗ്രുക്ഷി, which are not the strokes on the leaf.
+CHECK | row 5: The leaf begins ലിംഗം।൪൨।സ‖ാംസിദ്ധികാശ്ചഭാവാഃ, then a blank gap, then പ്ര‖ാകൃതികാവൈകൃത. Row 6 then begins ികാശ്ചധൎമ്മാദ്യാഃദൃ. A matches, and it marks the gap. C is close, but it ends the row വൈകൃതാ and drops ികാ from the start of row 6. F reads only സിദ്ധി. B, D and E give വിംഗം/ത്സ്ല and സാംസാണ്ടി-type garble.
+CHECK | row 9: The leaf begins സംസാരോഭവതിരാ‖ജസാദ്രാഗാദൈശ്വൎയ്യാദവി‖ഘാതോവിപൎയ്യയാത്ത. A and C both match (C writes ൽഐ for ദൈ). F marks the whole row [illegible]. B, D and E give സംസൊാരരാ…/ാഠാതാകിചത്തായാത, which are not the leaf's letters.
+PICK | A
+RANK | A, C, F, B, D, E
+WHY | Only A follows the leaf stroke by stroke and keeps the row breaks right (row 2 ends തിഷ്ഠ and row 3 begins തിനിരാശ്രയം). C misplaces that break and leaves readable spots [illegible], F reads only row 1, and B, D and E are garbled readings that don't match the leaf's letters.

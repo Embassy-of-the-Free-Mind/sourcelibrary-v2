@@ -1,0 +1,12 @@
+ROW 1 | [illegible]
+ROW 2 | [illegible]
+ROW 3 | [illegible]
+ROW 4 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 5 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 6 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 7 | [illegible] ‖ [illegible] ‖ [illegible]
+ROW 8 | [illegible]
+ROW 9 | [illegible]
+ROW 10 | [illegible]
+ROW 11 | [illegible]
+NOTE | I couldn't read any of the text, so this is only the layout: 11 rows, with rows 4–7 broken at both string holes and rows 1–3 and 8–11 running the full width. Each line is about 15 px tall in the images, too small to tell similar letters apart (ത/ന/ന്ന, ഗ/ശ, ദ/ഭ, ര/ൎ) with confidence. I could only have guessed, or filled gaps from memory of the text, so I left every row as [illegible]. Higher-resolution crops of single rows (about 3–4× zoom) would let me attempt a real reading.

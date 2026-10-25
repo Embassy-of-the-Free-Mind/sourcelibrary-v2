@@ -6,6 +6,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { spawn, spawnSync } from 'node:child_process';
+import { claudeBlocked, noteLimitHit, waitWhileBlocked } from '../../lib/model-limits.mjs';
 
 // The first claude CLI that has --restricted (the seal). A stale ~/.local/bin/claude (2.1.31 on main, 2026-10-16) lacks
 // it and failed every call in 2 s with "unknown option"; /usr/bin/claude is the current one there.
@@ -16,6 +17,9 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 
 /** One sealed text-only `claude -p` call, the prompt on stdin. Resolves {text, model, usage, code, cls, err, secs}. */
 export function claudeCall(prompt, model = 'opus') {
+  // A spent account is not called (model-limits.mjs); the caller sees the same usage_limit it would have got.
+  const blocked = claudeBlocked();
+  if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   const cwd = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'seams-6742-'));
   return new Promise((resolve) => {
     const t0 = Date.now();
@@ -35,6 +39,7 @@ export function claudeCall(prompt, model = 'opus') {
       const resolved = models.find((m) => m.includes(String(model).replace(/^claude-/, ''))) || models[0] || null;
       const failed = j.is_error || code !== 0;
       const cls = failed && USAGE_LIMIT.test(text + out + err) ? 'usage_limit' : code === null ? 'timeout' : failed ? `exit_${code}${j.subtype ? `_${j.subtype}` : ''}` : !text ? 'empty' : null;
+      if (cls === 'usage_limit') noteLimitHit('claude', { reason: (err || text).slice(-200) });
       resolve({ text, model: resolved, usage: j.usage ? { input: j.usage.input_tokens, output: j.usage.output_tokens, cache_read: j.usage.cache_read_input_tokens, list_cost_usd: j.total_cost_usd } : null, code, cls, err: (err || (failed ? text : '')).slice(-300), secs: (Date.now() - t0) / 1000 });
     });
   });
@@ -61,18 +66,20 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 /**
  * Run `task(item)` over items with at most `conc` in flight. task resolves { ok, cls }. Every 20 finished calls the
- * last 20 are checked: ≥ 6 hard failures stops the run. A usage_limit pauses every worker and probes every 15 min
- * (up to maxWaitH hours) — the account's 5-hour window — then the item is retried.
+ * last 20 are checked: ≥ 6 hard failures stops the run. A usage_limit pauses every worker until the limit clears
+ * (up to maxWaitH hours), then the item is retried. The wait reads the meters only and never calls a model to find
+ * out (model-limits.mjs): `probe` returns { cls: 'usage_limit' } while blocked and must not call either.
  */
 export async function pool(items, conc, task, { log = console.log, maxWaitH = 6, probe } = {}) {
   let i = 0, finished = 0, stop = null;
   const recent = [];
   async function waitWindow() {
+    if (!probe) return waitWhileBlocked(() => claudeBlocked(), { log, maxWaitH });
     const t0 = Date.now();
     while (Date.now() - t0 < maxWaitH * 3600e3) {
       log(`usage limit — waiting 15 min (since ${new Date(t0).toISOString()})`);
       await sleep(15 * 60e3);
-      const r = await (probe ? probe() : claudeCall('Reply with exactly: OK', 'sonnet'));
+      const r = await probe();
       if (r.cls !== 'usage_limit') return true;
     }
     return false;

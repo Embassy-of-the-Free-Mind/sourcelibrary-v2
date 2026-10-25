@@ -1,0 +1,10 @@
+ROW 1 | കഥിക്കണങ്ങൾക്കൂടാദമൾ‖ഹേതു.വ്യക്തഹേതു[illegible]വ്യക്തം.പൃഥക്കൈമാഹ‖ഹേതുത്വംകൈക്കിട്ടുൾക്കു[illegible]
+ROW 2 | ാൽണൈണ്യാവില്യുമകം.വ്യ‖വ്യാവ്യവ്യക്തം.പൃഥകൈ[illegible]കൈഷാവിച്യ്രാദ്ഷീഘടാ‖ദാവൃകത്രാ[illegible]വ്യക്തകൈ
+ROW 3 | ഷൽവ്യാക്കെന‖സന്ദേഹപ്ര[illegible]വ്യഥ്യാനെനവ്യസ‖[illegible]ദാദെവാദിക്കപ്ര
+ROW 4 | ദ്യതകമേകസക്രിയ‖ംവ്യക്തം.ത്രിഷ്ക്രിയമവ്യക്തം.നിസ‖ംസാവിതാൽവൃഥക്കൈ
+ROW 5 | ാനിഷ്ക്രിയകോ‖ത്ത്യാൽഭാവവാ[illegible]ലാൽനിരൈവകം.വ്യ‖ക്കം.[illegible]മവ്യക്തം.ഏ
+ROW 6 | ങ്ങളെജാതെ‖കൈാബഹുത്വാ[illegible]ത്വാൽനാനാത്വ‖ത്വം.[illegible]പാദകിണ്ണാ
+ROW 7 | ക്കപ്രയാരെന‖ന്ദ്രൈവസാദൃ[illegible]ാദൃശ്യാതൈര‖ന്ദ്രിയാൽ[illegible]ത്ത്ുക്കം.
+ROW 8 | വ്യക്തം.ഷിണാദ്ധി[illegible]‖മവ്യക്തം.പൃഥക്കൈതാപ്രാദിശ്രിതകേര‖ാവിദനജനകാൽലിംഗ.
+ROW 9 | വ്യക്തം.സാവിം.ഗ[illegible]‖മവ്യക്തം.പൃഥക്കൈാനാവയവം.ശൈാനന്തിക്കെ‖ദെനനലിംഗ്രകൈന
+NOTE | This is a low-confidence, character-by-character reading of 9 rows: about half the letters are unsure, the strings at the holes hide text in rows 5–9, and there is a small interlinear correction under row 5 (right column) that I left out. Words like സക്രിയ, വ്യക്തം and ലിംഗ are fairly clear; most other words are tentative.

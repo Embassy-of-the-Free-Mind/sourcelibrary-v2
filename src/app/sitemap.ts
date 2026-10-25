@@ -3,6 +3,8 @@ import { getReadDb } from '@/lib/mongodb';
 import { posts as blogPostList, BLOG_KINDS } from '@/app/articles/posts';
 import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
+import { languageSlug } from '@/lib/language-utils';
+import { isLivePath } from '@/lib/page-status';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -165,11 +167,11 @@ export default async function sitemap({
   const chunkId = typeof rawId === 'string' ? parseInt(rawId, 10) : rawId;
 
   if (chunkId === 0) {
-    return [
+    return livePagesOnly([
       ...staticPages(),
       ...blogPosts(),
       ...categoryPages(),
-    ];
+    ]);
   }
 
   if (chunkId === 1) {
@@ -180,7 +182,7 @@ export default async function sitemap({
       getWorks(),
       getAuthors(),
     ]);
-    return [...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages];
+    return livePagesOnly([...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages]);
   }
 
   // Offset ranges — highest first, since each test is only a lower bound.
@@ -203,6 +205,13 @@ export default async function sitemap({
   return getBooks(bookChunkIndex);
 }
 
+// Internal, draft and archived pages (src/lib/page-status.ts) never go in the
+// sitemap. Applied to the hand-written and named-page chunks; the book, page,
+// gallery and artwork chunks are per-record and are not listed there.
+function livePagesOnly(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  return entries.filter((e) => isLivePath(new URL(e.url).pathname));
+}
+
 // --- Static content ---
 
 function staticPages(): MetadataRoute.Sitemap {
@@ -223,7 +232,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/libraries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/explore`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/explore/map`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/explore/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/gallery/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
@@ -515,7 +524,7 @@ async function getLanguages(): Promise<MetadataRoute.Sitemap> {
     ], { maxTimeMS: 10000 }).toArray();
 
     return languages.map((lang) => ({
-      url: `${BASE_URL}/languages/${(lang._id as string).toLowerCase().replace(/\s+/g, '-')}`,
+      url: `${BASE_URL}/languages/${languageSlug(lang._id as string)}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,

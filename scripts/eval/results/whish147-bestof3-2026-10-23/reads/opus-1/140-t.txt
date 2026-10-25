@@ -1,0 +1,10 @@
+ROW 1 | പ്രവൃത്തി[illegible]ത്രയ[illegible]ന്നാന[illegible]രഖ്യരമാഹാര ‖ ദൃ[illegible]ഃനദശ[illegible]ഷ്ടാര ‖ [illegible]ദൈഖഷൈാമന്ദ്യഃഭെമാഹിശ്ശദി
+ROW 2 | ഭാദാദപാണ്ഡമഃപ്രത്യാടാദേവാദി[illegible]ണ്ണം.ഷ ‖ ഷല്ലം.ഒദാഗഃണ്ണപവ ‖ പഗ്ലാമൊക്ഷഃ[illegible]സ്വസ
+ROW 3 | മാനായികരണേഭ്യഃഖപ്രാഗദേവാസ്മദന്ദ്ദ ‖ ദന്ദ്ദാ[illegible]നാദ്ദഃഖദ്ധം ‖ ം.സഃപ്രയൊജ്ഞനംന്യ[illegible]ംട്ടഃ
+ROW 4 | ഖഷാദിത്വ।ദ്ദ ‖ ാ[illegible]വാദഹിവനവാഭ്രപ്രാമാണ്ണ ‖ കൈതാനാദ്രുവഗതൊ
+ROW 5 | തദ്ദ്ജിദ്ധാനന്ദ്രോ ‖ ജ്ഞവൈാവിധ്യയഃപ്രമാണെഷല ‖ ॰।തത്ഥേഭ്രക്ഷൈഭ്യാഃ
+ROW 6 | ഷാഞാവാദഃഉട ‖ യസ്ഥായനവക്തിവിജ്ഞചിഷ്ഠക്രാഗ ‖ ജ്ഞഷ്ടഃ[illegible]വക്തി[illegible]ഹി
+ROW 7 | [illegible]ക്ഷിനാവിത്തബ്ധാക്ഷ ‖ ക്ഷാനാമനാവത്ര[illegible]കാഫെഭ്രാനവയ ‖ [illegible]മവാഭ്രസഭട്ടാം.കഭ്ര
+ROW 8 | ഭ്രഖാകവരണ്ണപ്രദേ ‖ ഭെണ്ണാക്ഷ്മാനമ.പ്രക്ഷ്ണേ[illegible]ാനെം.ഴ ‖ ലം.ണ്ണാശവമാത്ഥരജ്ഞാ
+ROW 9 | ത്ഥഃ।സ്വായത്തൈമൈവ ‖ വൈഭ്രാജ്ജഷ്ടവക്ര[illegible]ക്കഷ്ടവണ്ഡ്രാവണ്ഡ്ര ‖ ഭ്ര[illegible]കളെസാഭൃപ്രാപ്പൃ
+NOTE | I found 9 rows: rows 1–3 and 7–9 run the full width, and rows 4–6 are split by the holes; many letters are low-confidence guesses (maybe half the leaf is reliable), so check this against the original before using it.

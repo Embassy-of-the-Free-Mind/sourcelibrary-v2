@@ -212,7 +212,23 @@ export function dropRepeats(lines) {
  *   { verdict: 'textless', han }              — the leaves carry fewer than MIN_HAN Han + kana outside the margin marks
  *   { verdict: 'reject', reason, side, ... }  — a leaf failed on the box, or looped
  */
-export function assemblePage(leaves, { workTitle = null } = {}) {
+/**
+ * An UNDER-READ leaf (first frame chunk, 2026-10-24: a dense three-register 大正藏 page came back as 14 characters):
+ * well under the book's median text while carrying about the book's median ink. A real short leaf (a chapter end,
+ * a title) has little ink, so it is not one. `med` = `{ chars, ink }` over the book's read leaves.
+ */
+export function underRead(chars, ink, med) {
+  if (!med || !(med.chars >= 100) || ink == null || med.ink == null) return false;
+  return chars < 0.2 * med.chars && ink >= 0.6 * med.ink;
+}
+
+/** The book's median characters and ink per read leaf, for underRead. */
+export function bookMedians(leaves) {
+  const mid = (xs) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[s.length >> 1] : null; };
+  return { chars: mid(leaves.map((l) => hanOf(convertLeaf(l.raw).body).length)), ink: mid(leaves.map((l) => l.ink)) };
+}
+
+export function assemblePage(leaves, { workTitle = null, med = null } = {}) {
   const bodies = [];
   const stats = { leaves: leaves.length, blank_leaves: 0, label_lines_dropped: 0, header_lines: 0, page_num_lines: 0, img_dropped: 0, tables_flattened: 0, non_han_lines_dropped: 0 };
   for (const lf of leaves) {
@@ -226,6 +242,7 @@ export function assemblePage(leaves, { workTitle = null } = {}) {
       if (!st.ok) return { verdict: 'reject', reason: 'short_leaf_unstable', side: lf.side, sim: st.sim };
       stats.short_leaves_stable = (stats.short_leaves_stable || 0) + 1;
     }
+    if (underRead(hanOf(body).length, lf.ink, med)) return { verdict: 'reject', reason: 'under_read', side: lf.side, chars: hanOf(body).length, med_chars: med.chars };
     const l = leafLoop(body);
     if (l.loop) return { ...l, verdict: 'reject', reason: `leaf_loop:${l.reason}`, side: lf.side };
     for (const k of ['label_lines_dropped', 'header_lines', 'page_num_lines', 'img_dropped', 'tables_flattened', 'non_han_lines_dropped']) stats[k] += s[k] || 0;
@@ -293,6 +310,25 @@ export function stableRead(a, b) {
   for (let i = 1; i <= x.length; i++) { const cur = [i]; for (let j = 1; j <= y.length; j++) cur.push(Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] !== y[j - 1]))); prev = cur; }
   const sim = 1 - prev[y.length] / Math.max(x.length, y.length);
   return { ok: sim >= STABLE_SIM, sim: +sim.toFixed(3) };
+}
+
+/**
+ * Ditto / headword marks (丨, also read as ｜ or |) per 1,000 Han. Derek's spot-check (#6056 round 3, 2026-10-23):
+ * PaddleOCR-VL silently drops them on about half the pages of 韻府 / 類書-type works (佩文韻府: bimodal, 0 vs 40–100
+ * per 1k), and the translation then invents words for the gaps. In a book whose median page carries ≥ DITTO_BOOK_MIN
+ * per 1k, a page with ≥ 100 Han and none is not written (keyed on the book's own rate, not its title).
+ */
+export const DITTO_BOOK_MIN = 20;
+export function dittoRate(text) {
+  const t = String(text || '');
+  const han = (t.match(/\p{Script=Han}/gu) || []).length - (t.match(/丨/g) || []).length;
+  return han > 0 ? ((t.match(/[丨｜|]/g) || []).length / han) * 1000 : 0;
+}
+export function dittoDropped(texts) {
+  const big = texts.map((t, i) => ({ i, han: hanOf(t).length, rate: dittoRate(t) })).filter((x) => x.han >= 100);
+  const rates = big.map((x) => x.rate).sort((a, b) => a - b);
+  const med = rates.length ? rates[rates.length >> 1] : 0;
+  return { median: +med.toFixed(1), dropped: med >= DITTO_BOOK_MIN ? big.filter((x) => x.rate === 0).map((x) => x.i) : [] };
 }
 
 export function envelope(body, language) {

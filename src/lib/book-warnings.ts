@@ -18,7 +18,7 @@ import { CHECK_METHODS } from './check-methods';
 /** What is wrong, in the order a reader should hear it (most consequential first). */
 export const WARNING_KINDS = [
   'wrong_page', 'english_other_page', 'invented_transcription', 'model_notes', 'garble_translated', 'meaning_reversed',
-  'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english', 'number_misread', 'word_misread', 'repeated_text',
+  'misread_meaning', 'unsupported_notes', 'missing_transcription', 'missing_english', 'number_misread', 'word_misread', 'transcription_unsettled', 'repeated_text',
   'serious_transcription', 'serious_english', 'serious_other',
 ] as const;
 export type WarningKind = (typeof WARNING_KINDS)[number];
@@ -44,6 +44,7 @@ const KIND_OF_CLASS: Record<string, WarningKind> = {
  */
 const KIND_OF_NAMED_CLASS: Record<string, WarningKind> = {
   'ocr-misread': 'word_misread',
+  'ocr-unsettled': 'transcription_unsettled',
   'ocr-wrong-leaf': 'wrong_page',
   'other:translation-not-of-page': 'english_other_page',
 };

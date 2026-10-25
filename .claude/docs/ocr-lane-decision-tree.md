@@ -143,6 +143,7 @@ A page (or book) needs text
 │     │            page Gemini refuses (16/16 at median CER 0.21%), median 0.66% overall │
 │     │            vs lite 0.20%; 1820+ only — before 1820 it reads ſ as f (median 4.6%).│
 │     │            Its worst pages dropped footnotes → fixed in PR #5299.                │
+│     │    A page with a COMPLETE draft: correct it, don't re-read it (§ below).         │
 │     │    tier 3' the Archive's text for THAT leaf, under an accepted by-eye verdict   ─┘
 │     │            (branch 0) — the free refusal fallback DECISIONS.md still calls open.
 │     │    tier 4  read it by eye (Claude on the subscription, never an API call), or
@@ -160,6 +161,29 @@ A page (or book) needs text
       pipeline (#4958) — and as read, an English book strands at `ocr_complete` (#5271).
       Hold first if retranslation needs approval; release with an explicit `--to`.
 ```
+
+## A page that already has a complete draft: correct it, don't re-read it
+
+Experiment files are in `scripts/eval/experiments/`. When a page has a complete transcription and the
+alternative reader is a generalist that drops or invents lines, correct the draft against the image
+(`scripts/batch/ocr-convergence/correct.mjs`, Opus) instead of re-reading it.
+- **Wins:** #6694, preferred to Gemini read + adjudication 158–6 (Opus judge) / 148–21 (Gemini), adopted
+  (`2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md`). Paddle tables, median CER 4.0% vs Paddle 6.4% vs Opus
+  redo 5.8% (`2026-10-12-paddle-zh-correct-vs-redo-6561.md`). Tibetan: redo 0.70 vs draft 0.945; correct +0.015
+  (`2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md`). Florentine (#6865 comments, 2026-10-24): the re-read
+  gate went 29/1, failing on a dropped half-line; the correction gate went 30/0/0, Getty Nahuatl CER
+  0.571 → 0.069, 130 pages written.
+- **Loses:** near-perfect drafts whose "errors" are variant forms, 12–15% made worse
+  (`2026-10-15-stale-siku-opus-correct-pilot-6561.md`); weaker correctors
+  (`2026-10-13-sonnet-haiku-correct-vs-opus-6667.md`); the corrector is chosen per language (Tibetan: 3.8 Flash
+  low beats Opus, `2026-10-13-tibetan-flash38-correct-6560.md`; Argon NO-GO,
+  `2026-10-15-tibetan-g4l-pass-gate-6560.md`); translation, where correcting stored English helps less than an
+  Opus retranslation (`2026-10-12-pro-opus-correction-hardest-languages-6545.md`).
+- **Conditions:** screen first and correct only weak pages; run a blind made-worse gate on held-out pages before
+  writing. A correction costs about a read in quota (the image still goes in): it buys accuracy, not savings.
+- **Known gap (open):** `cli-ocr.mjs apply` takes `correct.mjs` output as a plain read (no `mode: 'correct'`),
+  so the correction-mode 25%-changed cap does not run (Florentine job, 2026-10-24).
+- **Pending:** the Latin lite arm (job opus-correct-latin-5924, #5924).
 
 ## Writer registry — what each lane stamps (checked 2026-09-30)
 

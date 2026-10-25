@@ -1,0 +1,35 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. ṣṭyayāḥśaṅkatmanviddhya ‖ lyāityādinma [illegible] bhaiṣajyai [illegible] ‖ [illegible] kkṛtyākāṅkṣitatrainyā
+2. [illegible] mimiguññyāṣi ‖ kāravibhaṣitaiḥpra [illegible] lavādapipakṣjñatraiṣṭu ‖ āukiññuṣyābhikkāryā
+3. hyānandaddibabhitāḥ ‖ paramaikhāddyaṃtanayivakṣitāḥgrukha ‖ āḥkevalāḥprosaṃbandha
+4. aimāaikṣāyai ‖ āśiyanāddhādraṣitāḥukkika ‖ ntrālsaṃdṛṣṭyaiṣyaṃ
+5. saṣṭatarakiṇṭuḥ ‖ itiśrīmalparamahaṃsaparivra ‖ jakācāryyaśrīgo
+6. vindabhagavalpū ‖ jyapādaśiṣyeṇaśrīśaṃkara ‖ bhagavatākṛtāsā
+7. ṃkhyasaptatiṭī ‖ kāsamāptāśrī [illegible] ‖ āyanamaḥśrīkṛṣṇāyanamaḥ
+
+TRANSCRIPTION B
+1. ṣṭhyayā 71 śāstraprasiddhya ‖ āityādinā [illegible] tyeṣemayyertthāste ‖ rtthāḥkṛtsnasyaṣaṣṭhitantrasya
+2. [illegible] mityākhyāyi ‖ kāvirahitāḥparavādavivarjjitāścā ‖ pi 72 iti [illegible] vyākhyākālpyā
+3. khyānandirahitāḥ ‖ paravaikhādyaṃtenavivarjjitāḥśruta ‖ āḥkevalāḥphalaṃbandha
+4. menneṇṇārayeya ‖ āśiṣyānārtthādarśitāḥukta ‖ nmālsaṃkṣepaṇṇoyaṃ
+5. saptatiriti [illegible] ḥ ‖ ulkṛṣṭamalparamahaṃsaparivra ‖ jācāryyaśrīgo
+6. vindabhagavalpū ‖ jyapādaśiṣyeṇaśrīśaṅkara ‖ bhagavatākṛtāsā
+7. ṃkhyasaptatibhā ‖ ṣyaṃsamāptāśrīnārāyaṇāyetra ‖ namaḥśrīkṛṣṇāyanamaḥ
+
+TRANSCRIPTION C
+1. ṣṭayāḥgaṇa [illegible] gurubhya ‖ bhyāityādināgrantha [illegible] ṣaṇai [illegible] yukta [illegible] ‖ [illegible] kṛtyātyakā [illegible] tattvā
+2. [illegible] mi [illegible] nduddhya [illegible] ‖ kkā [illegible] vinataivapera [illegible] vādapipakṣi [illegible] ṣu ‖ [illegible] itiṅṅaḻucya [illegible] kkālpā
+3. [illegible] danantadina [illegible] tāḥ ‖ paravaikhādyaṃ [illegible] tana [illegible] vidhyakṣitāḥ [illegible] ‖ [illegible] ḥkepalāḥpenaṃbandha
+4. [illegible] rābhe [illegible] rayaveya ‖ āśiṣya [illegible] āra [illegible] daṣitāḥ [illegible] ‖ ntrālsaṃkṣipteyaṃ
+5. saptatiriti [illegible] ‖ itiśrīmalparamahaṃsaparivra ‖ jācāryaśrīgo
+6. vindabhagavalpū ‖ jyapādaśiṣyeṇaśrīśaṃkara ‖ bhagavatākṛtāsā
+7. ṃkhyasaptatiṭī ‖ kāsamāptāśrī [illegible] ‖ [illegible] namaḥśrīkṛṣṇāyanamaḥ
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

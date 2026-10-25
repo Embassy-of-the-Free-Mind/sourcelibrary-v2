@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B has the most rows that read as real, coherent Sāṅkhya Sanskrit, such as "tamādiguṇānāṃ svātmāvasthā", "sūkṣmakaraṇam iti", "sarvaprakṛtir ātmānaṃ prakāśayati" and "vairāgyādika jñānād bandhamuktādi"; A is fluent only here and there and C breaks down into strings of syllables in most rows.

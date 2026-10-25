@@ -1,0 +1,9 @@
+ROW 1 | ലക്ഷ്യപ്രതിരൂപപ്രാപ്ടഗ്രഹവംശൈവലോനൃഫാന്വിദ്ധിനെതരന്ദ്രൂഷ്ട്രിയംകാരണത്വംകാര ‖ ‖
+ROW 2 | ക്ഷ്ലക്ഷണമാഹകാക്ഷ്മമതികാരണംവിഭജ്ഞെനകക്ഷ്മമിതിസദ്മവ ‖ ‖ പാദികാരണലക്ഷണമാഹ।
+ROW 3 | യൽസമവെതമിതിയന്ദിൽസമവെതമിത്രൂൽഃസമവായിക ‖ ‖ കാരണംലക്ഷയതികാരണേഷ്ണ
+ROW 4 | ഒണ്ണിഷെതട്ടദ്വാഹ ‖ ന്തിതന്ത്രസംയോഗഇതികാരണ ‖ ഷ്ഠേനപടേനകിക്കാന്ത്ര
+ROW 5 | ൽതന്ത്രാണാസമവെ ‖ തന്ത്വാന്തന്ത്രസംയോഗ്രപടസ്യ ‖ സമവായികാരണ
+ROW 6 | മിത്യൎഥഃകാരണെ ‖ തന്ത്രദ്വാരതിതന്ത്രൂപമിതി ‖ കാനെനപടെ
+ROW 7 | ൻസാഹയെകത്രിൽതെതന ‖ ന്നസമവെതത്വാരാതന്തുരൂപംപടഗര ‖ രൂപസ്യാസമവായികാ
+ROW 8 | ശ്ശമിത്യൎത്ഥഃനിമിത്ത ‖ ത്താനംലക്ഷണാനിതാദൃശഭിമിഷത്തി[illegible] ‖ സമവാദ്യസമവായാദി
+NOTE | I could make out roughly 60–70% of the strokes with confidence. Rows 1–2 and 4 contain many guessed ligatures, so treat them as provisional. Rows 1–3 and 7–8 run the full width, but I placed the ‖ marks only where I could judge the hole positions, and in rows 1–3 that placement is approximate. An interlinear insertion (ജ്ജ?) below row 8 in the right column is not included.

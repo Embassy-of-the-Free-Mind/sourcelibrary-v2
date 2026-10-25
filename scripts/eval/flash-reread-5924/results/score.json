@@ -1,0 +1,223 @@
+{
+ "pages": 250,
+ "books": 10,
+ "misleading": {
+  "stepA_L": [
+   83,
+   [
+    27.7,
+    39.3
+   ]
+  ],
+  "stepC_L": [
+   102,
+   [
+    34.9,
+    47
+   ]
+  ],
+  "stepC_F": [
+   20,
+   [
+    5.2,
+    12
+   ]
+  ]
+ },
+ "bar1_halves": true,
+ "worse_pages": 7,
+ "bar2_no_page_worse": false,
+ "pass": false,
+ "worse_breakdown": {
+  "F_misleading_L_not": 7,
+  "L_misleading_F_not": 89,
+  "L_preferred_material": 7,
+  "F_preferred_material": 106,
+  "F_unread": 0
+ },
+ "prefer": {
+  "F": 201,
+  "L": 23,
+  "tie": 26
+ },
+ "agreement_A_vs_C_on_L": {
+  "both_misleading": 80,
+  "A_only": 3,
+  "C_only": 22
+ },
+ "F_filter_cut_pages": 7,
+ "F_filter_cut_by_book": {
+  "69b51e7f9a81ef7feb3d64c8": 1,
+  "69af0a0a4c57359b8d2d0f49": 2,
+  "69bd9d056120d54bd0372a3a": 4
+ },
+ "strip": {
+  "visible": 65,
+  "in_L": 8,
+  "in_F": 0
+ },
+ "excluding_wrong_leaf_book": {
+  "pages": 225,
+  "L": [
+   77,
+   [
+    28.3,
+    40.6
+   ]
+  ],
+  "F": [
+   15,
+   [
+    4.1,
+    10.7
+   ]
+  ],
+  "worse": 7
+ },
+ "books_failing_25_check": {
+  "stepC_L_ge2": 10,
+  "stepA_L_ge2": 9
+ },
+ "by_book": [
+  {
+   "book_id": "69dc557bcb6f7429748b8d13",
+   "year": 1500,
+   "title": "Problemata (Text beginning: Omnes homines). Add: De vita et morte Aris",
+   "n": 25,
+   "A_L": 8,
+   "C_L": 19,
+   "C_F": 4,
+   "prefF": 24,
+   "prefL": 0,
+   "tie": 1,
+   "F_material_loss": 0,
+   "L_material_loss": 19
+  },
+  {
+   "book_id": "69b51e67768235dc65992a5f",
+   "year": 1661,
+   "title": "Confessio catholica. 1",
+   "n": 25,
+   "A_L": 5,
+   "C_L": 5,
+   "C_F": 1,
+   "prefF": 19,
+   "prefL": 3,
+   "tie": 3,
+   "F_material_loss": 1,
+   "L_material_loss": 9
+  },
+  {
+   "book_id": "69b51e18efd8df28f2db058d",
+   "year": 1586,
+   "title": "Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rossel",
+   "n": 25,
+   "A_L": 6,
+   "C_L": 9,
+   "C_F": 3,
+   "prefF": 21,
+   "prefL": 2,
+   "tie": 2,
+   "F_material_loss": 1,
+   "L_material_loss": 8
+  },
+  {
+   "book_id": "69b51eba47b06ecd581960d3",
+   "year": 1554,
+   "title": "Sebastiani Foxij Morzilli Hispalensis, in Platonis Timaeum Commentarij",
+   "n": 25,
+   "A_L": 15,
+   "C_L": 17,
+   "C_F": 2,
+   "prefF": 22,
+   "prefL": 2,
+   "tie": 1,
+   "F_material_loss": 1,
+   "L_material_loss": 18
+  },
+  {
+   "book_id": "69c81aed6c6f3cc53c849851",
+   "year": 1708,
+   "title": "Fides et ratio collatae",
+   "n": 25,
+   "A_L": 8,
+   "C_L": 11,
+   "C_F": 0,
+   "prefF": 22,
+   "prefL": 2,
+   "tie": 1,
+   "F_material_loss": 0,
+   "L_material_loss": 11
+  },
+  {
+   "book_id": "69bd9d726120d54bd0376d18",
+   "year": 1598,
+   "title": "Alberti Magni, de secretis mulierum libellus, scholiis auctus, &amp; a",
+   "n": 25,
+   "A_L": 6,
+   "C_L": 5,
+   "C_F": 0,
+   "prefF": 17,
+   "prefL": 4,
+   "tie": 4,
+   "F_material_loss": 0,
+   "L_material_loss": 5
+  },
+  {
+   "book_id": "69b51e7f9a81ef7feb3d64c8",
+   "year": 1616,
+   "title": "Trithemius sui ipsius vindex : sine Steganographiae admodum rever. ...",
+   "n": 25,
+   "A_L": 1,
+   "C_L": 2,
+   "C_F": 1,
+   "prefF": 14,
+   "prefL": 3,
+   "tie": 8,
+   "F_material_loss": 1,
+   "L_material_loss": 2
+  },
+  {
+   "book_id": "69af0a0a4c57359b8d2d0f49",
+   "year": 1665,
+   "title": "Arithmologia sive De abditis numerorum mysteriis",
+   "n": 25,
+   "A_L": 7,
+   "C_L": 6,
+   "C_F": 2,
+   "prefF": 14,
+   "prefL": 6,
+   "tie": 5,
+   "F_material_loss": 2,
+   "L_material_loss": 7
+  },
+  {
+   "book_id": "69b638be1c1c21a373839d77",
+   "year": 1522,
+   "title": "Opera nuper in lucem prodeuntia : Liber gratie spiritualis visionum & ",
+   "n": 25,
+   "A_L": 2,
+   "C_L": 3,
+   "C_F": 2,
+   "prefF": 23,
+   "prefL": 1,
+   "tie": 1,
+   "F_material_loss": 1,
+   "L_material_loss": 2
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "year": 1561,
+   "title": "Verae alchemiae artisque metallicae, citra aenigmata, doctrina certusq",
+   "n": 25,
+   "A_L": 25,
+   "C_L": 25,
+   "C_F": 5,
+   "prefF": 25,
+   "prefL": 0,
+   "tie": 0,
+   "F_material_loss": 0,
+   "L_material_loss": 25
+  }
+ ]
+}

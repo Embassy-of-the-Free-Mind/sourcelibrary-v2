@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | A and B are blank, while C's lone repeated "śakti" is a real Sanskrit word that fits Sāṅkhya or Dīpikā contexts, though it could be a hallucinated row-start repeat, so the evidence is very thin.

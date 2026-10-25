@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, A, B
+WHY | C and A share the same recurring phrases (e.g. "…tāpayarotikka / yāvarameyāuktiḥ", "pāramṛtyate"), but C marks the string holes consistently in every row and reads a little more like real words in places (e.g. "utpattibhāvi", "tattvijñaijñāni", "sthitāḥ"); A misses the holes in rows 1–3 and leaves unconverted Malayalam characters, while B is the most broken throughout.

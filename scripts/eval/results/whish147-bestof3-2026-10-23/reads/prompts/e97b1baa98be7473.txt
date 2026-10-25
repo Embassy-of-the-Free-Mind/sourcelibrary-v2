@@ -1,0 +1,52 @@
+Below are 4 machine transcriptions (A, B, C, D) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. sūkṣmaparyyantaṃsaṃsara ‖ tinirupabhogaṃbhāvairadhivāsi ‖ taṃliṃgaṃ [illegible]
+2. [illegible] ‖ [illegible] ‖ [illegible]
+3. [illegible] ‖ [illegible] ‖ [illegible]
+4. [illegible] ‖ [illegible] ‖ [illegible]
+5. [illegible] ‖ [illegible] siddhi [illegible] ‖ [illegible]
+6. [illegible] ‖ [illegible] ‖ [illegible]
+7. [illegible] ‖ [illegible] ‖ [illegible]
+8. [illegible] ‖ [illegible] ‖ [illegible]
+9. [illegible] ‖ [illegible] ‖ [illegible]
+
+TRANSCRIPTION B
+1. sūkṣmaparyyantaṃsaṃsarati ‖ nirupabhogaṃbhāvairadhivāsitaṃ ‖ liṃgaṃ [illegible] citraṃyathā
+2. śrayamṛtesthāṇvādi ‖ bhyo [illegible] thācchāyātadvadvinā ‖ viśeṣairnnatiṣṭhati
+3. nirāśrayaṃliṃ ‖ gaṃ41puruṣārtthahetukami ‖ daṃnimittanaimi
+4. ttikaprasaṃge ‖ naprakṛtervvibhutvayogānna ‖ ṭavadvyavatiṣṭhate
+5. liṃgaṃ42sā ‖ ṃsiddhikāścabhāvāḥ prā ‖ kṛtikāvaikṛtā
+6. ścadharmmādyāḥdṛ ‖ ṣṭāḥkaraṇāśrayiṇaḥkāryyā ‖ śrayiṇaścakalalā
+7. dyāḥ43dharmme ‖ ṇagamanamūrddhvaṃgamanamadhastāl ‖ bhavatyadharmmeṇa [illegible]
+8. [illegible] nenacāpavarggo ‖ viparyyayādiṣyatebandhaḥ44vai ‖ rāgyālprakṛtilayaḥ
+9. saṃsārobhavatirā ‖ jasādrāgālaiśvaryyādavi ‖ ghātoviparyyayātta
+
+TRANSCRIPTION C
+1. sūkṣmaparyyantaṃsaṃsa ‖ ratinirupabhogaṃbhāvairadhivāsi ‖ taṃliṃgaṃ40citraṃyathā
+2. śrayamṛtesthāṇvā ‖ dibhyovināyathāchāyātadvadvi ‖ nāviśeṣairnnatiṣṭha
+3. tinirāśrayaṃliṃ ‖ gaṃ41puruṣārtthahetukami ‖ daṃnimittanaimi
+4. ttikaprasaṃge ‖ naprakṛtervvibhutvayogānnaṭa ‖ vadvyavatiṣṭhate
+5. liṃgaṃ42sa ‖ āṃsiddhikāścabhāvāḥ [illegible] pra ‖ ākṛtikāvaikṛta
+6. ikāścadharmmādyāḥdṛ ‖ ṣṭāḥkaraṇāśrayiṇaḥkāryya ‖ āśrayiṇaścakalalā
+7. dyāḥ43dharmme ‖ ṇagamanamūrddhvaṃgamanamadhastā ‖ dbhavatyadharmmeṇa
+8. jñānenacāpavarggo ‖ viparyyayādiṣyatebandhaḥ44vai ‖ rāgyālprakṛtilayaḥ
+9. saṃsārobhavatirā ‖ jasādrāgādaiśvaryyādavi ‖ ghātoviparyyayātta
+
+TRANSCRIPTION D
+1. grukṣipakṣantaṃsaṃsata ‖ ntatiruvaoṭṭāgaṃṭa ṭāaivaradhivānita ‖ taṃliṃgaṃsaḥcitrāyathā
+2. śayyamataibbābbāu ‖ oṭṭāyaśāhiṭhā ājjāyāramaṭiṭhabha ‖ āviairaiṣartakṣara
+3. todākkayaṃhiṃ ‖ gaṃāllaccaghabā ālkaphadrakatama ‖ daṃntamintananaimi
+4. ākāśananai ‖ nadrakrairakka ttudutaiyāgācca ‖ ṭavadyāvatighnaika
+5. tiṃgaṃnlasa ‖ āṃsīṭikāra āyā pāpra ‖ āddhakāaivattuta
+6. āntathadmāḻāḥdū ‖ ḻḻāḥkaraṇā ākruḻiṇaḥkāḻḻa ‖ āśrutiṇaśākāla
+7. ādyāḥdhathaiba ‖ namanaddhaddhāṃ ṃgamanamadhantāl ‖ ṭacatyadhaiṇakka
+8. ānanaṭhāācākṣa ‖ vicayyayāiññā ātaibandhaḥāḥoai ‖ ānālprautilayaḥ
+9. saṃsoānarābhavagru ‖ ājasāṭṭāgāl loaiśāññāduvi ‖ āaikākicattāyāta
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

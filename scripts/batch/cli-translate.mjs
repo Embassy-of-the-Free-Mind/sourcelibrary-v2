@@ -35,6 +35,12 @@
  * markers. `apply` refuses a reply with text outside the markers or cut before <<<END>>>, and still runs the chatter
  * guard on every read.
  *
+ * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ when it
+ * is made, and `read` first asks for a kept read of the same page by the same model on the same prompt template and
+ * variant, the same OCR (by hash) and the same --instructions-file line, and uses it instead of calling (meta
+ * `reused_from`). The neighbouring context (the page before's English) is not part of that key. `--fresh` always
+ * calls: a repeat-noise eval needs fresh reads.
+ *
  * HOW IT FAILS: a CLI that is not signed in, out of quota or timing out leaves an empty .txt and a non-zero `exit`
  * (up to 3 attempts in place); a quota error is logged to agy-calls.jsonl and the run STOPS rather than burning the
  * other jobs' quota. `apply` skips what it refuses and says why. Nothing is retried silently.
@@ -50,6 +56,8 @@ import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
+import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -71,6 +79,7 @@ const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
+const FRESH = wantsFresh();
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -89,6 +98,7 @@ if (STAGE === 'read') {
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
   const books = new Map();
+  let reused = 0;
   for (const id of ids) {   // the file's order, which is page order
     const p = found.get(id);
     if (!p) continue;
@@ -108,15 +118,28 @@ if (STAGE === 'read') {
     const built = buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const instruction = INSTRUCTIONS[id] || null;
     const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CLI_SUFFIX;
+    const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(p.ocr.data), prompt_variant: PROMPT_VARIANT, instruction });
+    if (!FRESH) {
+      const hit = await findRead({ page_id: id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKey, derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
+      if (hit && await reuseInto(OUT, id, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); continue; }
+    }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
-    const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    let r = await call();
+    // #5055: a reply the write guard calls cut (a tag left open at its tail, the text ending inside a tag, English far
+    // shorter than its source) is read once more; apply's door refuses it if the second read is cut too.
+    if (!r.cls && !r.problem && checkWrittenText(r.answer, { kind: 'translation', source: p.ocr.data, lang: book?.language, type: p.page_type }).verdict === 'truncated') {
+      console.log(`  ${p.page_number} read looks cut (write guard): reading once more`);
+      const again = await call();
+      r = { ...again, calls: (r.calls || 1) + (again.calls || 1) };
+    }
     if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
     // The raw reply is kept beside the translation; `.txt` holds only what was between the markers.
     const text = r.cls ? '' : r.answer;
     fs.writeFileSync(path.join(OUT, `${id}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
-    fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify({
+    const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
       prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
@@ -124,9 +147,13 @@ if (STAGE === 'read') {
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
       stderr_tail: r.err,
-    }, null, 1));
+    };
+    fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify(meta, null, 1));
+    // Kept the moment it is paid for (#7075); best effort, never fails the read.
+    if (!meta.error_class && !meta.wrapper && meta.exit === 0) await keepRead({ page_id: id, book_id: p.book_id, page_number: p.page_number, field: 'translation', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, source_path: path.join(OUT, `${id}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || r.problem || 'ok'} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
   }
+  console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   await client.close();
   process.exit(0);
 }
@@ -145,6 +172,9 @@ for (const m of metas) {
   if (m.error_class) { skip(m, `cli ${m.error_class}`); continue; }
   // #6523: text outside the markers, or a reply cut before <<<END>>> (often a recitation-filter cut), is never written
   if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
+  // #5055: a claude-translate / twopass-review read whose raw reply the write guard called cut (its .txt is already
+  // tag-repaired, so only the meta can say); a Gemini read's raw .txt is checked by the door itself.
+  if (m.write_guard === 'truncated') { skip(m, `write-guard:truncated:${(m.write_guard_reasons || [])[0]?.replace(/[:(].*$/, '') ?? ''}`); continue; }
   // the backstop, for every read: chatter where the translation should be
   const chatter = cliChatterReason(text);
   if (chatter) { skip(m, `not a translation: ${chatter}`); continue; }
@@ -169,6 +199,7 @@ for (const m of metas) {
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });
   if (res.protected) { skip(m, 'human-edited translation'); continue; }
+  if (res.truncated) { skip(m, res.reason); continue; }
   if (res.unhealthy) { skip(m, `refused by the door: ${res.reason}`); continue; }
   await recordSweepAction(db, { sweep: 'cli-translate', book_id: page.book_id, action: 'translated-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.translation?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);

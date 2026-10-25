@@ -1,0 +1,38 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. āśruddhepāntukkiṃsakṣa ‖ autratisvāśrāntyakanaṭepralayājñanamā ‖ ṣṭitracataṃcentrā
+2. dimṛdanabdhānyabibdhānraka ‖ naḥpaśrogicāṅṅachāgaṅkagegaൗraramagraṭa ‖ khentāmakaṃgruhanā
+3. śvānatrajñanāmānaṃpa ‖ cbigrajñakamainākhāṣitrāpanapana ‖ khāgritajñāhamaṣarya
+4. aipaññāgaśaśoṃsiddha ‖ ākkaṃcāṭṭiśvagruānyāddhijñā ‖ yasaṃkṣijñaṃcātri
+5. tatraṃpaṣṭhiddhiṃ ‖ gaśritatrāccaṃjñānamitrāl ‖ ḥtryamitaḥtadi
+6. gatajñānatattva ‖ kaṣāṣṭamattiḥtritrābhinata ‖ saddhetratteṭṭaḥ
+7. cetragrabhakkātā [illegible] ‖ datalpabitramitrattisakṣatrābhrintra ‖ ṣaṃbandhaṣṭhikantracā
+8. aivāṣokhendratracai [illegible] ‖ ākkāittāgisakkatrāmitrābheṣa ‖ cāgratrayāsaśloākipa
+
+TRANSCRIPTION B
+1. āṅṅūḻevāntukkiṃsakkaletrūtrindhāgāntukanaipra [illegible] jñanamāḥṣitra [illegible] ṇaṃāletrā
+2. ṭhṛmanandāsyabināndalenaḥpabodhibikkūeāthaṅkuhegaൗrabhamadraṭabhintāmataṃgṛhanā
+3. śvānatrūjñānāmānāṃpadgrajñakamitrūānakhābitrūāpanapanakhābhratrijñānamaṣṭru
+4. ophaṇṇāgagaṃnviḻā ‖ ātthaṃphlibhrūābyūbijñā ‖ khasaṃkṣijñaṃblū
+5. andraṃpakṣebiṃ ‖ śrībhrabāāccuṃjñāānamitruḻ ‖ ḥtrūśramakkiḥbhadhi
+6. gatjñāānattva ‖ ooāṣmatriḥśtrūślūābhinabha ‖ khadraotrūttraddaḥ
+7. letrakhabhikkūāntā [illegible] ‖ dratalpabitrumitbhilbhisakkatrūābhragrabha ‖ bhaṃbatruṣakkikaletrūboga
+8. levāṣāleślūtrule [illegible] ‖ ākkāāitrūtruāgasakkatrāmitrārbhaṣa ‖ ṣavratrūbasaleślāāvipa
+
+TRANSCRIPTION C
+1. āññaivāntakkiṃsakkaitṛttindhyaśāstra ‖ kanareprañayojñanamā ‖ ḥśiṣyatrabyaṃcaitrā
+2. bhūyanannāsyaṣināsurainaraḥpañcaśikha ‖ kkaphādhakkaigaൗramapraṭa ‖ bhantāmataṃgrṛhanā
+3. śvarakruṣṇanāmānāṃpriprajñakamatrā ‖ nakhyāṣṭatrāpanaipana ‖ kṣāutrajñānamaprū
+4. paiṇṇāgajjaṃnviḻa ‖ ākṣaṃṣiptruāntrumiṅkā ‖ ṣasaṃkṣiptaṃṣati
+5. tantraṃpañcaviṃ ‖ śattitanāccuṃjñānamityār ‖ ḥāryamatiḥbuddhi
+6. gatajñānatatva ‖ takhāṣṭamattiḥāryābhirate ‖ siddhaitarttheddaḥ
+7. ṣatrayaphabhikkātrā [illegible] datalpavitramityisakkatrābhihi ‖ ṣaṃbatraṣṭitaitrābādhā
+8. vaiṣāskaitra [illegible] ākkāādatratrāḍasakkatrāmitrābhika ‖ pratrabāsaiśśāvipa
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

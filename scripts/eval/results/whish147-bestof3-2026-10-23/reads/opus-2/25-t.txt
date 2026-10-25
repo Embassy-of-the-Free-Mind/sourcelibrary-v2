@@ -1,0 +1,11 @@
+ROW 1 | ഭി[illegible]ണെശഹംകാര ‖ [illegible]ഥ.ശേഷംകാരണാമ[illegible]മഹ[illegible]മഹാൽപ്രയാ ‖ [illegible]ദ്ധിവിഷയിത[illegible]ക്കം.ന
+ROW 2 | ഷ്ട്ര[illegible]ദം.ശിഖക ‖ [illegible]കെഹതൂത്താൽസാവ[illegible]വയമിമിൽ[illegible]ദകൊവ ‖ ാവ[illegible]യാ[illegible]കെകയ
+ROW 3 | സ്ത്രാലിങ്കം.ബൊഹ്രാഖൊവ്യ ‖ ക്തം.[illegible]ക്തം.നി[illegible]മവ്യക്തം.തൈതനെ ‖ [illegible]ത്താൽപരത[illegible]
+ROW 4 | [illegible]ത്ര[illegible]ദൂജ്ജ്ര ‖ [illegible]കെകൈവാന[illegible]ക[illegible] ‖ ജ്ഞനങ്ങളി[illegible]ദ്ധ്രതി
+ROW 5 | [illegible]ണ്ണി[illegible]ദർ ‖ നാ[illegible]ം.[illegible]ഗ്ഗാന[illegible]മി[illegible]ന ‖ നൈവല[illegible]തും
+ROW 6 | [illegible]നി[illegible]മേകം ‖ [illegible]മേവ ‖ വിപരീതമവ്യക്കം.ഘ
+ROW 7 | ത[illegible]ം.[illegible] ‖ [illegible]സാ[illegible]പ്രാമ[illegible] ‖ [illegible]ഗുണമി[illegible]
+ROW 8 | [illegible]ദേശൌ ‖ ഗുണ[illegible]വ്രാക്കം.[illegible] ‖ [illegible]പ്രധാനമധി[illegible]
+ROW 9 | [illegible]ം.ക[illegible]ാൽ.ജബിചെക്കി[illegible]മെ[illegible]വബിച ‖ [illegible]വ്യക്തം.അവിചെക[illegible]
+ROW 10 | [illegible]മാനമൃമരൊ:[illegible]സ[illegible]ടാ[illegible]വിചെക്കിത[illegible] ‖ [illegible]പ്രധാനമധി[illegible]
+NOTE | I could read only about 30–40% of the leaf, and even the parts I gave as text are low-confidence. Many characters are uncertain (the dot-reph and chillu letters especially), and the row and hole matching across the four pieces is my best estimate. I put the holes between p01 and p02 and between p03 and p04, with p02 and p03 together forming the middle column.

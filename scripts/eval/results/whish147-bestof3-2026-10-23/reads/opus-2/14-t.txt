@@ -1,0 +1,10 @@
+ROW 1 | വാ[illegible]രാണ്യവികൈഃ[illegible]ത്ര്യാ[illegible]ഭിഃ ദു[illegible]ല്യാ[illegible]ഷ്ടവൽകൃത്യാവിതൊദാകാദ
+ROW 2 | ൽനെൽ[illegible]ടഗാസൂ്യാവി[illegible]യാ[illegible]ൾശെ[illegible]കദൃ[illegible]യഷ്ടൂ[illegible]ടാന്മ്രൂകി[illegible]കാഭെഹു
+ROW 3 | തമി[illegible]ഭെ ‖ [illegible]ഭെദ്ദ്രാ[illegible]ൈ[illegible]കൈഃ[illegible] ‖ [illegible]വിത്രാദെദ
+ROW 4 | പ[illegible]ാച[illegible] ‖ ൽ[illegible]വാ[illegible]ദേവി[illegible]ല്ല ‖ [illegible]കൈഃ[illegible]ൽഭ
+ROW 5 | [illegible]ലിഭി ‖ [illegible]യ[illegible]കൈ‘ [illegible]ാലാ[illegible] ‖ ഭി[illegible]സ്വാ[illegible]ല്ലിഭി
+ROW 6 | [illegible]യാ ‖ ഒഫഭ്ര[illegible]സഗ[illegible]ഭെ[illegible]വൃ[illegible] ‖ ദെവാദ[illegible]കി
+ROW 7 | [illegible]ന[illegible]മ ‖ വാൽദ്ദഃ[illegible]ട[illegible]ത്ര[illegible]ഗ ‖ യ[illegible]കൈഃ[illegible]
+ROW 8 | ല[illegible]ത്ര[illegible]ല ‖ [illegible]മവാ[illegible]ദ[illegible]യ ‖ [illegible]പാഭ്രാം[illegible]ക
+ROW 9 | [illegible]ഭിഭെ[illegible]ൽ ‖ [illegible]ാസ[illegible]വിഭെ[illegible]പൽപ ‖ [illegible]ത്രാ[illegible]കൈ[illegible]ഭെ
+NOTE | Very low confidence. There are 9 rows. Rows 1, 2, 8 and 9 run the full width, and rows 3–7 are split at the two holes. I could only guess at about a third of the glyphs, mostly in rows 1–2 and the right column. Most conjuncts and the middle-column text are unread or uncertain, so I don't recommend relying on this without checking it against the original.

@@ -1,0 +1,13 @@
+ROW 1 | ംബത്ര[illegible]ത ബനന്ദിലത്ര[illegible] ലബ ംലന്ദി യനബ[illegible]ശ്രൂയാലില ‖ തായ ംനിയശ്രൂയ ഷ്ഠയ ംയി ശ്യ[illegible]ശ്രുത്വം ഭ ണീ സ്യംബ  
+ROW 2 | ശ[illegible]ംമ്രി ഗ്രൂദ്വേയ ംനി അഗ്രിയ ശ്രൂയ ം ശ്ശി ലായ ഷം ‖ ശംലേ ംഭ്രൊ[illegible]ശ്രൂംയദ്വേ പ്രയ[illegible]ദത[illegible]ഃലദ്ദേംലേത്രി  
+ROW 3 | ര ഗ്രൂലാ ംബ ശ്രി ലൃലലേ ഗ്ര[illegible]ഗ്രൂലാ യായലദയഗ്ദൂഭരലഗ ‖ ലഗ ംദ്ദ ലേ[illegible]ഗ്രൂലാ ംബ ശ്രൂ[illegible]ഗ്ര ംയായ[illegible]ഃലദ്ദേ  
+ROW 4 | ലഗ്രൂ ംയഗ നംതയി[illegible]ഃലല ംബ[illegible]ലംലയലലഗ്രൂ ‖ യലഗ്രൂലൃ[illegible]ഗ്രൂ ംശ്ശി ദയ ംദ്ദ[illegible]ഗ്രൂയംല[illegible] ംയ  
+ROW 5 | ശ്രു[illegible]ലിയ ‖ ലലര[illegible]ഗ്രൂലാ ംല ബശ്രു[illegible]ലൃ ‖ ഗ്രൂ ം[illegible]യ[illegible]  
+ROW 6 | ശ്രൂ[illegible]ലയര[illegible]ശ്രു ‖ [illegible]ഗ്രൂ ം[illegible]ലശ്രു[illegible]ലല ‖ [illegible]ലല[illegible]ശ്രു[illegible]  
+ROW 7 | [illegible]ലലലേ[illegible]യ ‖ ശ്രുലയ[illegible]ലല[illegible]ലല ‖ [illegible]യഃബ[illegible]ല  
+ROW 8 | ലഗ്രൂലലര[illegible] ‖ [illegible]ശ്രു[illegible]ലല ‖ ലയ[illegible]ലല[illegible]  
+ROW 9 | [illegible]യലയലലലല[illegible] ‖ [illegible]ലയ[illegible]ലല[illegible]ശ്രു[illegible] ‖ [illegible]ലല[illegible]ശ്രു[illegible]  
+ROW 10 | ഗ്രൂലല[illegible]യ[illegible]യശ്രു ‖ [illegible]ശ്രു[illegible]ലയ[illegible]ലല[illegible] ‖ [illegible]ശ്രു[illegible]ലല[illegible]  
+ROW 11 | ംന[illegible]ലയ[illegible]ശ്രു[illegible] ‖ [illegible]ലല[illegible]ലൃ ‖ [illegible]യയ[illegible]ലല[illegible]  
+ROW 12 | ണിനി[illegible]ശ്രു[illegible]ശ്രു[illegible] ‖ [illegible]ലല ംലയ[illegible] ‖ [illegible]ശ്രു[illegible]ംലല[illegible] ‖ [illegible]ഗ്ര[illegible]  
+NOTE | This reading is mostly unreliable. I could pick out the layout (12 rows: rows 1–4 and 9–12 run the full width, rows 5–8 are in three columns), but I could read only about 10–15% of the letters, and even those are low-confidence guesses at single shapes. Treat everything above as a placeholder, not a transcription. The right margin also has a separate mark that looks like "ശ്രീ"/"ഷ്ണ", which may be a leaf number.

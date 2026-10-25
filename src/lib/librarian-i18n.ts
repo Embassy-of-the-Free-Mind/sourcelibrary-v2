@@ -17,9 +17,10 @@ export interface LibrarianStrings {
   metaDescription: string;
   /** Hero */
   title: string;
-  intro: string;
+  /** `books` is the live collection size, already rounded and formatted. */
+  intro: (books: string) => string;
   /** Empty chat state */
-  emptyLead: string;
+  emptyLead: (books: string) => string;
   emptyDisclaimer: string;
   /** Composer */
   placeholder: string;
@@ -79,8 +80,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     metaTitle: 'The Librarian | Source Library',
     metaDescription: 'Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy: thousands of rare books, many translated into English for the first time.',
     title: 'The Librarian',
-    intro: 'Your research agent for over 10,000 rare books. Ask a question, and the Librarian will search the collection, cross-reference sources, and build up findings you can export.',
-    emptyLead: 'The Librarian searches the collection, Wikipedia, and semantic search to find answers in over 10,000 rare books.',
+    intro: (books) => `Your research agent for over ${books} rare books. Ask a question, and the Librarian will search the collection, cross-reference sources, and build up findings you can export.`,
+    emptyLead: (books) => `The Librarian searches the collection, Wikipedia, and semantic search to find answers in over ${books} rare books.`,
     emptyDisclaimer: 'Responses may contain errors. Always verify against the source page.',
     placeholder: 'Ask the Librarian...',
     send: 'Send',
@@ -196,8 +197,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFa
     metaTitle: 'El Bibliotecario | Source Library',
     metaDescription: 'Pregunta al Bibliotecario sobre cualquier texto de la colección. Alquimia, Hermetismo, Cábala, astrología, filosofía natural: miles de libros raros, y una edición en español que crece.',
     title: 'El Bibliotecario',
-    intro: 'El Bibliotecario es tu agente de investigación sobre más de 10.000 libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.',
-    emptyLead: 'El Bibliotecario busca en la colección, en Wikipedia y por semejanza de sentido para encontrar respuestas en más de 10.000 libros raros.',
+    intro: (books) => `El Bibliotecario es tu agente de investigación sobre más de ${books} libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.`,
+    emptyLead: (books) => `El Bibliotecario busca en la colección, en Wikipedia y por semejanza de sentido para encontrar respuestas en más de ${books} libros raros.`,
     emptyDisclaimer: 'Las respuestas pueden contener errores: comprueba siempre la página de origen.',
     placeholder: 'Pregunta al Bibliotecario...',
     send: 'Enviar',

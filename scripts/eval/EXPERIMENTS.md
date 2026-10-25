@@ -902,6 +902,62 @@ Paddle's runners are CPU-bound, so its run-2 rate is low for that reason. The GP
 
 No write to `pages`, `books` or any production store, and no lane changed.
 
+## 2026-10-23 · Books catalogued Latin whose pages are another language, text-only (#5924)
+<!-- PRIOR ART: 2026-10-04-relabel-4884.md (the writer shape: sweep_log row, field_provenance.language, live-job skip, --undo); scripts/audit/detect-book-languages.mjs and scripts/audit/language-vs-ocr.mjs (#4117, #4654: per-page <language> tag aggregation, used here as the second instrument); scripts/lib/language-content-classify.mjs (#2534: stopword density, not used because its lists share words across languages). -->
+
+**Question.** The #5924 spot check found 2 of 3 "gothic Latin" books were German Fraktur. Across every book catalogued `Latin` with ≥ 20 OCR pages, which are really another language, and can `language` / `languages[]` be corrected from stored OCR alone at ≥ 90% precision by eye?
+
+**Design.** `scripts/maintenance/relabel-latin-function-words-5924.mjs`, $0, no model call.
+
+1. **Frame.** `language: 'Latin'`, `pages_ocr ≥ 20`: **27,487 books** (the brief's ~3,923 was the census sub-frame).
+2. **Sample.** 6 spread pairs of consecutive OCR'd interior leaves per book (up to 12 leaves with ≥ 60 words).
+3. **Instrument 1.** Counts of function words *exclusive* to one of Latin, German, French, Italian, Spanish, Dutch, English. Shared words (et, est, de, in, la, non, per, qui, die, den, des, als, en) are left out. Model-authored blocks (`<image-desc>`, `<detected-images>`, `<meta>`, `<warning>`, `<vocab>`) are stripped. A page counts for a language when that language holds ≥ 60% of its function words.
+4. **Instrument 2.** The OCR model's own per-page `<language>` / `<lang>` tag on the same leaves.
+5. **Flag.** Latin < 50% of the sample's function words.
+6. **Decision.**
+   - **flip:** Latin ≤ 15%, ≤ 1 Latin page, ≥ 70% of judged pages in the other language, and ≥ 70% of tagged pages tagged it.
+   - **mixed:** ≥ 2 Latin pages, ≥ 2 other-language pages, and both languages present in the tags. `language` stays Latin, `languages[]` becomes `[Latin, X]` and `language_multi` is set to true (language-fields.md rule 4; the catalogued language stays first).
+   - **review:** everything else, including any sample spanning < 30% of the book.
+7. **Gate.** 20 flags drawn with seed 5924 (9 flip, 11 mixed). For each book, the page image(s) were read by eye against the OCR.
+
+**Three instrument faults found before writing:**
+- **Positional sampling.** Spreading samples over `pages_count` landed on unread leaves for 11,197 books, because OCR covers only part of them. Fix: spread over the leaves that have OCR.
+- **One-parity sampling.** Evenly stepped samples on Loebs hit only English rectos and proposed Latin → English flips. Fix: sample consecutive pairs.
+- **Partial OCR.** A Loeb with OCR on leaves 1–25 is its English introduction. Fix: the span gate (< 30% of the book → review).
+
+Separately, Bodleian Latin MSS scored "English" because of the English in `<detected-images>`. The tag instrument had already held them in review; stripping those blocks moved 33 rows and changed no gate verdict.
+
+**Result.**
+
+| | books |
+|---|---:|
+| scanned | 27,487 |
+| Latin ≥ 50% | 22,654 |
+| thin (< 4 leaves or < 150 function words) | 3,870 |
+| flagged | 963 |
+| → flip (written) | 110 (German 62, English 21, French 12, Italian 8, Dutch 6, Spanish 1) |
+| → mixed (written) | 144 (+German 62, +English 49, +French 22, +Italian 9, +Dutch 1, +Spanish 1) |
+| → review (not written) | 709 (503 partial-OCR span, 206 instruments disagree) |
+| by-eye gate | **20 / 20 correct** |
+
+- **Written:** 254 books (183 visible, 71 hidden), with no live-job skips.
+- **Review queue:** 49 flips landed on the language that the #3958 `language_review` queue had already detected, and that flag was cleared. This includes Welling's *Opus mago-cabalisticum* (`6991d64e`) and the *Thesaurus … medico-chymicum* (`69c82e67`).
+- **Routing:** unchanged for every target language (flash-lite for OCR and translation).
+- **One by-eye caveat:** *Storia Letteraria d'Italia* (`69b51e8d`) is an Italian journal that quotes Latin documents. The mixed rule keeps Latin first. Which language such an edition principally is remains a curatorial call (language-fields.md).
+
+**Manuscripts catalogued as print (report only).**
+- 48 books have `book_class.class: printed` while ≥ 60% of their sampled leaves are `handwritten`, by `pages.script_type` or the OCR `<script>` tag.
+- In 9 of them, every sampled leaf is handwritten: the Vatican *Corpus Hermeticum*, BPH PH337 and PH164, Harvard *Flores temporum*, *Antidoti in Pogium*, and others. Listed in `manuscript-filed-as-print.jsonl`.
+- The other 39 are mostly SBB occasional prints, where the leaf-level tag mixes printed and handwritten. They are not verified.
+
+**Out of scope.**
+- `original_language` is not set on any book; no translation-role book needed it.
+- `Law French` / `Anglo-Norman` refinement: the Harvard Law MSS are written as `French`, matching their catalogued siblings.
+- The 709 review rows. The 503 partial-OCR rows need OCR before this instrument can judge them.
+- Books with compound Latin labels (`Latin-German` etc.).
+
+**Files.** `scripts/eval/results/relabel-5924/`: gate, eye sample, `proposals.jsonl.gz`, `written.jsonl`, `manuscript-filed-as-print.jsonl`, `longs-skip-5924.tsv` (the skip list given to the long-s apply job). Undo: `node --env-file=… scripts/maintenance/relabel-latin-function-words-5924.mjs --undo --commit` with `RELABEL_5924_DIR` pointing at a directory (it reads only `sweep_log`).
+
 ## 2026-10-23 · Burst 2 scored: the Greek-manuscript LoRA invents fluent Greek and is not a lane (#5730)
 <!-- PRIOR ART: 2026-10-22-greek-ms-lora-prereg-5730.md (the preregistration this scores, superseded by this file);
 2026-10-04-kraken-latin-ft-5730.md (burst 1, which won in distribution only); 2026-10-20-latin-print-distill-glm-ocr-6871.md
@@ -1071,6 +1127,57 @@ As the brief required, nothing was re-run or retuned.
   - no repetition penalty at read time.
 - A further burst would need line-level labels, or a base model that already reads some Greek minuscule, and a new
   prereg.
+
+## 2026-10-23 · Does a Flash re-read halve the misleading pages of lite-read Latin books? (#5924)
+<!-- PRIOR ART: 2026-10-22-latin-served-pages-by-eye-and-facing-bleed-5924.md (the spot check this tests: lite 3/12 misleading vs flash 2/24) and 2026-10-22-latin-ocr-repair-census-5924.md (PR #7173: 25 spread pages decide the book). -->
+
+**Question.** The 2026-10-22 spot check found misleading pages on lite OCR at 3/12, against 2/24 on flash. Ranked
+improvement #1 on #5924 was therefore to re-read a lite book with Flash when an image check of 25 spread pages fails.
+Derek approved the recommendation 2026-10-23. This is the test of it.
+
+**Design** (`scripts/eval/flash-reread-5924/PREREGISTRATION.md`, committed f9a56e374 before the draw).
+- **Books.** 10 fresh books, `draw.mjs` with Mulberry32(51023):
+  - visible, Latin, 1500–1800, ≥ 100 OCR pages, ≥ 70% of pages read by flash-lite;
+  - every id in a prior #5924 eval file excluded;
+  - a format screen by one Opus reader (14/14 printed Latin; the first 10 taken).
+- **Pages.** 25 spread body pages per book.
+- **Arm L.** The stored lite OCR, as served (long-s pass of PR #7223 included).
+- **Arm F.** `gemini-3.8-flash-low` through `agy` 1.4.6, using `cli-ocr.mjs read` unchanged: plan mode, one page per call, tool gate, the #6331 nudge. 263 calls for 250 pages, 0 nudged, 0 unread. Run on the main box, because l7a's agy is not signed in.
+- **Step A.** Unblind by-eye check of L, one Opus reader per book.
+- **Step C.** Blind pairwise with fresh Opus readers, X/Y order from Mulberry32(1023). Each read gets a misleading / flawed / sound verdict, then a preference, with "material" marking a loss that changes meaning.
+
+**Result** (`results/score.json`; Wilson 95%)
+
+| | misleading pages | |
+|---|---|---|
+| L, Step A (unblind) | 83 / 250 (28–39%) | agrees with Step C on L: both 80, A only 3, C only 22 |
+| **L, Step C (blind)** | **102 / 250 (35–47%)** | |
+| **F, Step C (blind)** | **20 / 250 (5–12%)** | **bar 1, halves: pass** |
+| without the wrong-leaf book | L 77/225 · F 15/225 | |
+
+- **Preference:** F 201 · L 23 · tie 26. A material loss for L on 106 pages, for F on 7.
+- **Bar 2, "no page worse": FAIL, 7 pages.**
+  - 3 Flash reads stop mid-line with "This request was blocked by Gemini's filters…" spliced into the text: `69b51e7f` p238, `69af0a0a` p60 and p116. All 7 filter-cut reads in the run (4 more are on the wrong-leaf book, where L was misleading anyway) carry `chatter: refusal` and `wrapper: reply cut before <<<END>>>`, so `cli-ocr apply` would keep the old text.
+  - 4 are real Flash misreads:
+    - `69b51e67` p131: *lib. 2* → *lib. 1*;
+    - `69b51e18` p353: about 4 lines of Jerome's gloss skipped;
+    - `69b51eba` p49: *intelligentem* → *intelligibilem*;
+    - `69b638be` p174: the last printed line dropped.
+- **Post hoc, guarded** (F where the guards pass, else L; not a verdict): misleading 17/250, worse 4.
+- **Facing strip:** visible on 65 pages. L read it in on 8, F on 0, which replicates the spot check's 11/11.
+- **The 25-page check:** every one of the 10 books has ≥ 2 misleading L pages (Step C; 9/10 by Step A). On lite-read Latin, the check does not separate books. Lite misleads on 8–76% of pages per book.
+- **Containment.** `69bd9d056120d54bd0372a3a` (*Verae alchemiae*, 1561) serves the NEXT leaf's OCR and English on 25/25 pages. The offset is +1 throughout: image p.220, text p.221, verified by eye on the served image too. It was held (`wrong-leaf-text-5924`) and its English withheld on 575 pages (revisions saved; 15 quotes withdrawn). Flash read the right leaf there, apart from 4 filter cuts.
+- **Instrument note.** On 2026-10-23 agy self-updated to 1.4.6, which opens images with `read_file`. The #6523 tool gate denied it, so the model never saw the page and wrote an invented one (#4763). The first dispatch of this run stopped on it. The gate fix is PR #7237. Every read here logged the image opened.
+
+**Price if Derek accepts a net bar** (not adopted; nothing written):
+- **Frame:** 992 lite-read books, 444K lite pages (`frame-size.mjs`, 2026-10-24). At 1.05 calls a page that is about 467K agy calls: **about 85 days** of the shared account's measured ~5,500 calls/24 h. It would compete with every other agy lane, including the pending Siku decision.
+- **Gap-fill:** an OCR write marks the translation stale and retranslates it. At lite Batch $0.00102 a page (#5700) that is **about $450**, or about $970 on Flash.
+- **Alternative:** a paid Flash Batch re-OCR at $0.00283 a page (#5700) is about $1,260 plus retranslation, in about days, not months.
+
+**Grade.** Exploratory (10 books). Readers were Opus subagents, with no human calibration.
+
+Files: `scripts/eval/flash-reread-5924/` (`draw.mjs`, `pairs.mjs`, `score.mjs`, `frame-size.mjs`, `crop.mjs`;
+`results/`: sample, format screen, Flash reads, Step A and Step C verdicts, score). Cost $0: agy subscription calls and Claude subagents.
 
 ## 2026-10-22 · Does reading Whish 147 one text row at a time beat the half-leaf read? (#7119)
 
@@ -1878,6 +1985,170 @@ from `published`.
   (sha256 in the run record).
 
 No writes to `pages`, `books` or any production store.
+
+## 2026-10-22 · Do 25 spread pages predict whether a Latin book can go to GPU OCR? (#5924)
+<!-- PRIOR ART: 2026-10-22-latin-ocr-repair-census-5924.md (PR #7173: the 54 printed books, their Opus format labels, and the finding that 25 spread pages predict the text-defect rate while the first 25 do not; gpu-plan.json copied from it unchanged); 2026-10-18-latin-gex45-bakeoff-5924.md (#6912 arm G: stock GLM-OCR serve flags, read.py, score.mjs views, reused unchanged); scripts/eval/latin-distill-6871 (the distilled adapter, PR #6871 item 2). -->
+
+**Question.** Derek, 2026-10-22, to the census job: "also test whether 25 pages predict whether a book can go to GPU
+OCR." The census found that 25 pages spread through a book predict its text-defect rate. This asks the same of a
+go / no-go decision for the GEX45: read the 25 pages on the GPU, and does that verdict match the one from reading the
+whole book?
+
+**Design (committed before any read was scored).**
+- **Books and pages.** `gpu-plan.json` from the census, unchanged. Spread: 54 printed Latin books × 25 pages spread
+  evenly through the OCR'd pages (1,348 pages: one book has two page numbers held by two page documents each, so we drop
+  both). Whole: 20 of those books, filled by format quota (gothic 5, two-column 4, Greek 4, side-notes 4, any 3). That
+  is 10,274 pages, every page with stored OCR.
+- **Images.** `getPageSource` (scripts/lib/page-image-url.mjs), the leaf the stored OCR read. All 11,622 are on
+  images.sourcelibrary.org. Long side is capped at 2,400 px, as in #6912 (`fetch-chunk.py`).
+- **Arms** (one gpu-queue task on gex45; it ran as `644-latin-gpu25`, with files in `/root/jobs/gpu-queue/79-latin-gpu25/`):
+  - **GS.** Stock GLM-OCR 0.9B on the spread pages, with #6912 arm G's flags (MTP speculative decoding, 6,000 tokens).
+  - **DS.** The distilled GLM-OCR (#6871 `run/merged`) on the same pages.
+  - **GW.** Stock GLM-OCR on the 20 whole books.
+- **Comparison text.** `pages.ocr.data` as of 2026-10-22, read only and frozen in `refs.jsonl.gz` (scratch). Metadata
+  blocks the engine never prints are dropped with their content: language, page-type, vocab, meta, image-desc,
+  scan-quality, warning, note, columns, figure, detected-images (the list in benchmark-score.mjs). Every other tag
+  loses its markup and keeps its text: margin, header, page-num, sig, term.
+- **Measure.** **Agreement CER, not accuracy**: the stored text is itself OCR, and the census found it wrong on many
+  pages. View N of `latin-bakeoff-5924/score.mjs` (latin-norm@1, marks dropped, v→u, j→i, letters only, order
+  tolerant). We use it with `--fold-f`, so ſ and f both fold to s and lite's ſ→f habit does not count as a
+  disagreement.
+- **Loops.** `loopVerdict` (scripts/lib/ocr-loop-guard.mjs), unchanged. Pages that hit the 6,000-token cap are
+  counted too.
+
+**The rule (stated before scoring).**
+- A page **counts** if its stored text has ≥ 100 letters in view N. Blank leaves and plates are excluded.
+- A counted page is **catastrophic** if the GPU text is empty or its N disagreement is > 50%.
+- A book is **GPU-OK** if its median disagreement over counted pages is ≤ 2 points (0.02) and it has **no**
+  catastrophic page.
+- For each of the 20 whole books we take two verdicts: one from GS on its 25 spread pages, and one from GW on all its
+  pages. **Decision agreement** is the number of books where the two verdicts match, reported as a 2×2 table.
+- We also report two secondary views: the spread verdict from GW's own rows at the spread page numbers (the same
+  engine pass), and a first-25 verdict, as a contrast with the census.
+- **Formats.** For each format flag (gothic, two-column, Greek, side-notes) we report the GPU-fail rate with and
+  without the flag, over the 54 GS books and over the 20 GW books.
+- **Student vs stock.** DS against GS on the same 1,348 pages: GPU-OK books, and per-book medians.
+- **By eye.** An Opus reader looks at 6 high-disagreement pages, with the image and both texts, and says which engine
+  is right.
+
+## Results (2026-10-23)
+
+**Run.** The task ran as gpu-queue `644-latin-gpu25`, renamed twice so that it ran between 24 h chunks that other
+sessions queued after it. GW did not fit its 7.5 h slice, so `6441-latin-gpu25-gw` resumed it. All files are in
+gex45 `/root/jobs/gpu-queue/79-latin-gpu25/`. Wall time and output:
+
+| arm | pages | pages/h | errors | hit 6,000-token cap | loops (`loopVerdict`) | catastrophic | median disagreement |
+|---|---|---|---|---|---|---|---|
+| GS stock, spread | 1,348 | 1,355 | 0 | 77 | 66 | 146 | 4.4% |
+| DS distilled, spread | 1,348 | 1,194 | 0 | 127 | 86 | 163 | 3.8% |
+| GW stock, whole | 10,274 | ~990 (looping books) | 0 | 2,063 | 1,707 | 3,302 | 12.1% |
+
+**The preregistered rule.** Five spread books pass under GS and 7 under DS (of 54). None of the 20 whole books
+passes. The best whole-book median is 2.7%, and 19 of the 20 have at least one catastrophic page.
+Decision agreement on the 20 whole books:
+
+| spread verdict from | agree | both OK | both fail | spread OK, whole fail | spread fail, whole OK |
+|---|---|---|---|---|---|
+| GS on the 25 spread pages | **20/20** | 0 | 20 | 0 | 0 |
+| GW rows at the same 25 pages | 20/20 | 0 | 20 | 0 | 0 |
+| GW first 25 pages (contrast) | 20/20 | 0 | 20 | 0 | 0 |
+
+The rule cannot tell the two samples apart, because nothing passes. The informative evidence is the numbers behind it.
+
+**Do 25 spread pages predict the book? Yes, as a number.** Over the 20 whole books:
+
+| | spread 25 (GS) | first 25 (GW) |
+|---|---|---|
+| Spearman ρ with whole-book median disagreement | **0.89** | 0.46 |
+| Median absolute gap to whole-book median | **0.8 pts** | 4.0 pts |
+| Spearman ρ with whole-book catastrophic share | **0.75** | 0.69 |
+
+**Post hoc grid** (chosen after the preregistered rule passed nothing). Each bar is applied the same way to the 25
+pages and to the whole book. A catastrophic **share** replaces "no catastrophic page", because a long book fails
+"no catastrophic page" by its length alone; 4% is 1 page in 25.
+
+| median ≤ | catastrophic ≤ | whole books OK | spread agrees | first 25 agrees |
+|---|---|---|---|---|
+| 3 pts | 4% | 2 | 18/20 | 18/20 |
+| 3 pts | 10% | 2 | 18/20 | 16/20 |
+| 5 pts | 4% | 3 | **20/20** | 17/20 |
+| 5 pts | 10% | 4 | 18/20 | 14/20 |
+| 10 pts | 0 | 1 | 15/20 | 17/20 |
+| 10 pts | 4% | 6 | 17/20 | 12/20 |
+| 10 pts | 10% | 7 | 16/20 | 12/20 |
+
+There are 7 cells where at least one whole book passes (the full 12-cell grid is in `results/summary.json`
+`posthoc`). In 6 of them the spread verdict matches as well as or better than the first 25. The exception is the
+zero-tolerance cell, where only 1 book passes, so "fail" is right for nearly every book whichever 25 pages are read.
+
+**Per book, whole vs spread** (median disagreement; catastrophic share; loop share):
+
+| book | quota | pages | whole median | whole cat. | whole loops | spread median (GS) | spread cat. | first-25 median |
+|---|---|---|---|---|---|---|---|---|
+| 69b62f861c… | two-col + side-notes | 1,436 | 91.6% | 97% | 74% | 92.9% | 25/25 | 69.7% |
+| 69b21c3c42… | Greek + side-notes | 602 | 97.9% | 61% | 55% | 100% | 17/25 | 96.7% |
+| 69b631ba1c… | gothic two-col | 1,136 | 77.6% | 99% | 3% | 77.4% | 24/25 | 12.5% |
+| 69b51ebdff… | Greek | 184 | 15.1% | 35% | 26% | 64.5% | 13/22 | 23.7% |
+| 69b4cd08d5… | two-col | 230 | 10.2% | 34% | 12% | 22.6% | 8/23 | 87.1% |
+| 69bd9dc461… | Greek | 146 | 8.1% | 29% | 16% | 18.0% | 9/23 | 19.0% |
+| 6990616cef… | two-col + Greek | 452 | 17.1% | 4% | 1% | 10.2% | 0/25 | 1.0% |
+| 69a9570865… | side-notes | 746 | 14.3% | 2% | 1% | 14.6% | 0/25 | 2.1% |
+| 69dbc94010… | gothic | 253 | 13.9% | 0.4% | 0.4% | 14.0% | 0/24 | 9.0% |
+| 69dbc9f310… | gothic | 323 | 12.6% | 4% | 3% | 12.2% | 1/25 | 8.6% |
+| 69dbc9b110… | gothic | 124 | 10.8% | 3% | 3% | 10.0% | 2/25 | 8.3% |
+| 69dbca0d10… | Greek | 157 | 9.4% | 0% | 0% | 9.5% | 0/23 | 8.0% |
+| 69dbcb8610… | gothic | 314 | 7.8% | 20% | 8% | 6.8% | 0/7 | 4.2% |
+| 6ff1a28b… | side-notes | 898 | 7.7% | 3% | 2% | 10.3% | 0/23 | 6.7% |
+| 6a08551d15… | two-col + side-notes | 719 | 6.2% | 2% | 1% | 6.3% | 0/25 | 4.2% |
+| 6952d05477… | side-notes | 856 | 4.3% | 8% | 0.1% | 5.8% | 1/25 | 32.1% |
+| 69af106e26… | any | 251 | 3.8% | 1% | 1% | 3.0% | 0/25 | 1.5% |
+| 69b2ff6a55… | side-notes | 829 | 3.4% | 12% | 12% | 3.9% | 2/25 | 5.4% |
+| 69de992d1b… | any | 174 | 2.9% | 2% | 0% | 3.1% | 0/23 | 2.0% |
+| 6a08525b49… | any | 444 | 2.7% | 0.5% | 0% | 2.8% | 0/24 | 6.7% |
+
+The three books that loop or collapse are flagged by their 25 spread pages (17–25 catastrophic of 25). The first 25
+misses one of them: 69b631ba1c… reads 12.5% on its first 25 pages and 77.6% over the whole book.
+
+**Which formats predict GPU failure** (GS, 54 books; median of the per-book median disagreement):
+
+| format | with: books, fail, median | without: books, fail, median |
+|---|---|---|
+| gothic | 10, 10 fail, 11.8% | 44, 39 fail, 3.0% |
+| two-column | 8, 7 fail, 14.9% | 46, 42 fail, 3.4% |
+| side-notes | 9, 9 fail, 10.3% | 45, 40 fail, 3.1% |
+| Greek | 10, 9 fail, 7.5% | 44, 40 fail, 3.8% |
+
+Under the strict bar nearly every book fails, so fail counts separate the formats poorly; the median separates them.
+Gothic, two-column and side-note books disagree 3–4× more than plain books. The loop and collapse cases are
+two-column or Greek with side-notes. No gothic or side-note book passed under either GPU arm. One two-column book passed under GS (median 1.9%, no catastrophic page).
+
+**Distilled vs stock** (same 1,348 pages): GPU-OK books 7 vs 5; the distilled arm has the lower median on 41 of 54
+books; loops 86 vs 66; catastrophic 163 vs 146. The distilled model was trained on stored flash-preview text. Its
+higher *agreement* with stored Gemini text is partly built in, and is not evidence that it reads better. It also
+loops more.
+
+**By eye** (6 pages: 4 at 5–50% disagreement and 2 catastrophic, distinct books, Mulberry32(5927); Opus subagent,
+image vs both texts; `latin-gpu25-5924/results/by-eye-pages.json`):
+
+| # | page | disagreement | right | why |
+|---|---|---|---|---|
+| 1 | 69c835706c…-p41 | 7.4% | GLM | scan crops the right edge; the stored text invents the cut-off word endings ("laudat", "numero") |
+| 2 | 69dbcc270f…-p124 | 16.6% | stored | incunable abbreviations: GLM maps the marks to junk ("scd£m", "ērto") |
+| 3 | 69dbc94010…-p97 | 14.2% | stored | gothic textura: GLM "Dec" for the red "Hec", "Pullus" for "Nullus" |
+| 4 | 69c82de66c…-p180 | 40.7% | stored | GLM skipped the whole Hebrew column |
+| 5 | 69b631ba1c…-p848 | 77.3% | GLM | **the stored text is another leaf** (2 Macc 14–15 for the end of 2 Macc 15); GLM has many gothic letter errors |
+| 6 | 69bd9e6761…-p774 | 76.1% | GLM | **the stored text is another index leaf** (O–P for the printed R–S entries) |
+
+The stored Gemini text reads better on incunables, gothic type and Hebrew. GLM-OCR stays on the right leaf. A
+catastrophic disagreement can therefore be a stored-text failure as easily as a GPU failure, which is why this
+measures agreement, not accuracy.
+
+**Containment not done.** Pages 5 and 6 are wrong-leaf stored text, found with the image open. Page 6 (Mylius,
+*Philosophia reformata*, visible) carries an English translation of the wrong leaf. The brief made this job read-only
+("NO writes to pages/books"), so it did not hold or withhold anything. They are reported on #5924 for containment.
+
+**Limits.** The comparison text is OCR, not a reference. n = 20 whole books, and only 3–7 pass under any post hoc
+bar. The by-eye check is 6 pages from one reader. The grid was chosen after the preregistered rule passed nothing.
 
 ## 2026-10-22 · Image gain as a guessed-text detector: the full preregistered run (#6871 row A)
 

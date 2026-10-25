@@ -1,6 +1,6 @@
 'use client';
 
-// /admin/pipeline (client half; page.tsx is the server wrapper) — the control page: funnel with re-enroll actions, cron health, stalls, cron decisions, needs-attention books, error categories, velocity. 30s refresh.
+// /admin/pipeline (client half; page.tsx is the server wrapper) — the control page: funnel with re-enroll actions, cron health, stalls, cron decisions, needs-attention books, error categories, enrichment coverage, velocity. 30s refresh.
 // /admin/realtime is the live tape: each running job's page progress, batch jobs, last-hour calls and cost by type, 30-min throughput, 5-min activity feed.
 // Both read /api/admin/realtime; this page uses only its counts and adds /api/analytics/pipeline (#5501).
 
@@ -13,6 +13,7 @@ import {
   Undo, ArrowDown, ArrowUp, TrendingUp,
 } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
+import type { EnrichmentCoverage } from '@/lib/api-client/types/analytics';
 
 // ─── Types ───────────────────────────────────────────────────────────────
 
@@ -42,6 +43,7 @@ interface PipelineData {
   }[];
   recentErrors: { type: string; category: string; count: number; lastError: string; lastAt: string }[];
   recentDecisions: { cron: string; timestamp: string; type: string; reason: string; data?: Record<string, unknown> }[];
+  enrichmentCoverage?: EnrichmentCoverage;
 }
 
 interface EnrollStatus {
@@ -583,6 +585,11 @@ export default function PipelineDashboard({ nextStep }: { nextStep?: React.React
             )}
           </div>
 
+          {/* ── Enrichment coverage (moved from the retired /analytics Pipeline tab) ── */}
+          {pipeline?.enrichmentCoverage && pipeline.enrichmentCoverage.total > 0 && (
+            <EnrichmentCoverageSection cov={pipeline.enrichmentCoverage} />
+          )}
+
           {/* ── Velocity Summary ── */}
           {pipeline && pipeline.velocity.period_hours > 0 && (
             <Section title={`Velocity (${pipeline.velocity.period_hours}h window)`}>
@@ -609,6 +616,44 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       </h2>
       {children}
     </section>
+  );
+}
+
+/** How many books with pages have each pipeline stage's output, from the 2h pipeline snapshot. */
+function EnrichmentCoverageSection({ cov }: { cov: EnrichmentCoverage }) {
+  const stages = [
+    { label: 'OCR', count: cov.ocr },
+    { label: 'Translation', count: cov.translation },
+    { label: 'Metadata enrichment', count: cov.metadata },
+    { label: 'First-translation check', count: cov.ftVerification },
+    { label: 'Summary and index', count: cov.summary },
+    { label: 'Chapters', count: cov.chapters },
+    { label: 'Collection classification', count: cov.collections },
+    { label: 'Quality score', count: cov.qualityScore },
+    { label: 'Image extraction', count: cov.imageExtraction },
+    { label: 'Faceted tags', count: cov.facetedTags },
+    { label: 'Author entity linking', count: cov.authorEntity },
+    { label: 'Pipeline complete', count: cov.pipelineComplete },
+  ];
+  return (
+    <Section title={`Enrichment coverage (${cov.total.toLocaleString('en-US')} books with pages · ${cov.galleryImages.toLocaleString('en-US')} gallery images)`}>
+      <div className="space-y-1.5">
+        {stages.map(({ label, count }) => {
+          const pct = Math.round((count / cov.total) * 100);
+          return (
+            <div key={label} className="flex items-center gap-3 text-xs">
+              <div className="w-28 sm:w-44 shrink-0 text-right" style={{ color: 'var(--text-muted)' }}>{label}</div>
+              <div className="flex-1 h-4 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                <div className="h-full rounded-full" style={{ width: `${Math.max(1, pct)}%`, background: 'var(--accent-sage)', opacity: 0.8 }} />
+              </div>
+              <div className="w-24 shrink-0 text-right tabular-nums" style={{ color: 'var(--text-secondary)' }}>
+                {count.toLocaleString('en-US')} <span style={{ color: 'var(--text-muted)' }}>({pct}%)</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Section>
   );
 }
 

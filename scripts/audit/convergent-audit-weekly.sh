@@ -28,14 +28,17 @@ GEM_MODELS="${AUDIT_GEMINI_MODELS:-gemini-3.8-flash-low}"
 QUOTA_WAIT="${AUDIT_QUOTA_WAIT:-1800}"
 QUOTA_RETRIES="${AUDIT_QUOTA_RETRIES:-8}"
 # Appended, not prepended: cron's PATH is /usr/bin:/bin either way, and the test puts its stubs first.
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin" TMPDIR="$BASE/tmp"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/root/.local/bin" TMPDIR="$BASE/tmp"
 mkdir -p "$BASE/tmp"
 exec 9>"${AUDIT_LOCK:-/tmp/sl-convergent-audit.lock}"; flock -n 9 || { echo "$(date -u +%FT%TZ) another audit is running"; exit 0; }
 cd "$REPO" || exit 1
 echo "== $(date -u +%FT%TZ) convergent audit $RUN"
 [ -d "$RUN/packets" ] || node --env-file="$ENV" scripts/audit/convergent-audit-weekly.mjs draw --run "$RUN" ${AUDIT_SEED:+--seed "$AUDIT_SEED"} || exit 1
 # Opus: sealed folder per page, Read/Write only (run-readers.sh), 4 at a time, on the box's Claude account.
-scripts/eval/second-reader/run-readers.sh "$RUN" opus claude opus read 4
+# A refusal (exit 2: no claude CLI, or one without --restricted) read no page. Say so and stop, so the
+# round does not print the "done" line a finished run prints (#6420, spare-audit-20261021-1).
+scripts/eval/second-reader/run-readers.sh "$RUN" opus claude opus read 4 || {
+  rc=$?; echo "== $(date -u +%FT%TZ) STOPPED: the Opus reader did not run (exit $rc)"; exit "$rc"; }
 if [ "${AUDIT_OPUS_ONLY:-0}" = 1 ]; then
   node scripts/audit/convergent-audit-weekly.mjs score --run "$RUN"
   echo "== $(date -u +%FT%TZ) done (Opus only, not posted)"

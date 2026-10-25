@@ -1,0 +1,44 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. śraddhādipravṛttikairanta ‖ ḥ saeānddharkapramanasyanatḥ saṃkalpābhimā ‖ nāddhyavasāyābhavanti [illegible]
+2. calamedakaṣṇauṣṇayaṃ tāra ‖ lkiṃ [illegible] gaval [illegible] pakṣa [illegible] bra vaipakṣyaṃ ‖ svāṃsvāṃvṛttiṃpratipadya
+3. kekiṃvā [illegible] vepakṣa ‖ mityāha sāṃ [illegible] āmityā [illegible] āma ‖ āmātmīyāṃvṛttiṃvarañcana
+4. ākkevaihātukkimma ‖ traparaṅṅunasya [illegible] yadākkuraṃ [illegible] vṛtti ‖ bhedā [illegible] kkedavahaituḥ [illegible]
+5. dra [illegible] ṃ parasparākku ‖ bhavehatukkiṃ vṛttiṃ catasrāḥka ‖ [illegible] ṇāndipratipadyate
+6. natucakṣuḥśca ‖ dyādrayasyākkuraṃ jñātvā ‖ prakāraṇaṃ pratipadya
+7. te [illegible] vaṃ śce ‖ nahāṃkāra [illegible] nāmanaśca trayāṇā ‖ mākkuraṃjñātvāddhya
+8. vasāyamabhimāna ‖ ṃ saṃkalpana [illegible] nakepratipadyate ‖ kramaśaścaparasparākku
+9. bhavaihatukkiṃ kkinu du ‖ ṣṭahetukkidṛṣṭadrāya [illegible] kṣe ‖ ālāciddupasimantraṇaṃ [illegible]
+10. kacaratetātrṛtti ‖ l̤ikkātvā [illegible] cidmamanāyāddhyavasita ‖ [illegible] kkiṃ jñātvā sāṃkāra [illegible]
+
+TRANSCRIPTION B
+1. śrartrādivṛṣṭikekāryyatthaḥ yaḥ eānnrkkabuddhya [illegible] na [illegible] naḥ saṃkalpābhimānāddhyavasāyābhavantiṅṅa
+2. pralaledakaṣṭattiṣṭayaṃtālkiṃtrṛgaval [illegible] paṇa [illegible] npuṣṭanasabdyavaikaṣyaṃna [illegible] ṃsvāṃsvāṃvṛttiṃpratipadya
+3. okakiṃvātri [illegible] vaikakṣamitrāhaḥsthāṃtyāmitryādiḥ [illegible] mbhināmātthiyāṃvṛttiṃvarttanta
+4. ākkuraihatukkimi ‖ triparajjarasyayadākruraṃbovṛttime ‖ bhogārtthaṃdevahetuḥkū
+5. drūrabhaṃparabbanākrū ‖ daihatukiṃvṛttiṃcatādika ‖ suṇānnilaprativadye
+6. ṇarabhracakkuḥbya ‖ dyṛāditrayasyākruraṃjñātvā ‖ prakāraṇaṃpratipadya
+7. eraevaṃbbi ‖ nahaṃkārarāmanastutrayāṇāṃ ‖ mākrūraṃjñātvāddhya
+8. vasāyamabhimāna ‖ ṃsaṃkalpanakebratipadyate ‖ kramaśśaḥparapparākrū
+9. oaihatukiṃkiṃtrū ‖ ccṛścaihatukindriṣṭadyāyapākkala ‖ lacciddapannimantrāṇaṃkrūṭa
+10. ṇaparaoetrātravṛtti ‖ rkkātācaikiṃśramarmanāyāddhyavasikamma ‖ mmūrkkiṃjñātvāsāṃkārāl
+
+TRANSCRIPTION C
+1. śrotrādivṛtti [illegible] tthaḥ ‖ yaḥ [illegible] ttva [illegible] na [illegible] nasvanakaḥsaṃkalpābhi ‖ mānāddhyavasāyābhavanti [illegible]
+2. [illegible] kaṣṭarū [illegible] yaṃtāl ‖ kkiṃ [illegible] gaval [illegible] pañca [illegible] na [illegible] svavyapekṣāṃ [illegible] ‖ ṃsvāṃsvāṃvṛttiṃpratipadya
+3. kekiṃvāni [illegible] pekṣa ‖ mityāha svāṃsvāmityādiindriyā ‖ ṇāmātmīyāṃvṛttiṃ [illegible]
+4. ākrūtahetukkami ‖ tiparasparasya [illegible] yadākrūtaṃ [illegible] vṛttiṃ ‖ [illegible] bhoga [illegible] davahetuḥ [illegible]
+5. krūtaṃparasparākrū ‖ tahetukkaṃvṛttiṃcatvārika ‖ raṇānipratipadya [illegible]
+6. [illegible] cakṣuḥ [illegible] ‖ [illegible] ditrayasyākrūtaṃjñātvā ‖ [illegible] kāraṇaṃpratipadya
+7. [illegible] vaṃbuddhi ‖ rahaṃkārāmanaścatrayāṇā ‖ mākrūtaṃjñātvāddhya
+8. vasāyamabhimāna ‖ ṃ [illegible] kalpanaṃcapratipadyante ‖ kramaśaścaparasparākrū
+9. tahetukkaṃki [illegible] ‖ [illegible] dṛṣṭa [illegible] hetukki [illegible] yathākāla ‖ [illegible] pantima [illegible] ṇaṃ [illegible]
+10. [illegible] vṛtti ‖ [illegible] jñātvā [illegible] ddhiścama [illegible] yāddhyavasita [illegible] ‖ [illegible] kkiṃjñātvāsāṃkā [illegible]
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

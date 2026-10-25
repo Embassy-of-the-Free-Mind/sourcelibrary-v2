@@ -38,14 +38,21 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  recordTruncatedTranslation,
+  isEmptyTranslation,
+  recordEmptyTranslation,
+  EMPTY_RESPONSE_REASON,
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
   dropLeafSeamBreaches,
   isEnglishBook,
+  seamGuardOn,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
+import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
 import { strayScriptVerdict } from '../lib/stray-script.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
@@ -334,11 +341,17 @@ async function translatePage(db, page, book, prevTranslation) {
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
 
-  const text = sanitizeTranslationTags(result.response.text());
+  const raw = result.response.text();
+  const text = sanitizeTranslationTags(raw);
   const usage = result.response.usageMetadata || {};
+  // #5055: the write guard on the reply as returned — sanitizeTranslationTags closes a cut tail tag — and on the
+  // provider's word that it stopped at the output cap (truncated-response.mjs).
+  const cand = result.response?.candidates?.[0];
+  const cut = checkWrittenText(raw, { kind: 'translation', finishReason: isTruncatedCandidate(cand) ? cand.finishReason : null });
 
   return {
     text,
+    cut,
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: outputTokensFrom(usage),
     durationMs,
@@ -374,6 +387,12 @@ function looksCollapsed(ocrData, text) {
 }
 async function translatePageGuarded(db, page, book, prevTranslation) {
   let result = await translatePage(db, page, book, prevTranslation);
+  // #5055: a truncated read is read once more; a second truncated read goes to the write, which records it.
+  if (result.cut?.verdict === 'truncated') {
+    console.log(`  [write-guard] ${book.id} p${page.page_number}: truncated (${result.cut.reasons.join(', ')}) — re-reading once`);
+    const retry = await translatePage(db, page, book, prevTranslation);
+    result = retry;
+  }
   if (looksCollapsed(page.ocr?.data, result.text)) {
     const retry = await translatePage(db, page, book, prevTranslation);
     if (strippedBodyLen(retry.text) > strippedBodyLen(result.text)) result = retry;
@@ -422,8 +441,11 @@ async function translateBatch(db, pages, book, prevTranslation) {
   // Parse (translate-core parseBlockTranslations: the 15% truncation check, the positional
   // fallback, and the BLOCK-SHIFT guard — a block that came back short is discarded whole, since
   // its page labels cannot be trusted; every page then takes the missing-from-batch path below).
-  const parsed = parseBlockTranslations(responseText, pages);
+  const parsed = parseBlockTranslations(responseText, pages, { lang: book?.language });
   const { translations } = parsed;
+  if (parsed.truncated?.length) {
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: truncated ${parsed.truncated.map((t) => `p${t.page_number} (${t.reasons[0]})`).join(', ')} — re-translating single-page (#5055)`);
+  }
   if (parsed.discarded) {
     console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: returned ${parsed.returned}/${pages.length} entries — ${parsed.discarded}, labels untrusted, re-translating all ${pages.length} pages single-page`);
   }
@@ -500,8 +522,18 @@ function engineFor(page, book, promptRef, call) {
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
-async function writePageTranslation(db, page, text, book, promptRef, call) {
+async function writePageTranslation(db, page, text, book, promptRef, call, cut = null) {
+  // #5055: the write guard. `cut` is its verdict on the raw reply (translatePage: a tag left open at the tail, MAX_TOKENS).
+  if (cut?.verdict === 'truncated') return refuseCut(db, page, text, book, cut);
   text = unwrapForWrite(page, text, book);
+  // Empty-response guard (#4685): the health gate's collapse tier needs a long source, so an empty
+  // answer on a short page used to be written as `translation.data: ''` — over the English when
+  // the page was a retranslation. Never stored; recorded as a failure (recordEmptyTranslation).
+  if (isEmptyTranslation(text)) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+    return { written: false, reason: EMPTY_RESPONSE_REASON };
+  }
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -518,6 +550,9 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
     console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused, evidence kept`);
     return { written: false, reason: health.reason };
   }
+  // #5055: the guard's length rule, after the health gate's named refusals.
+  const short = checkWrittenText(text, { kind: 'translation', source: page.ocr?.data, lang: book?.language, type: page.page_type });
+  if (short.verdict === 'truncated') return refuseCut(db, page, text, book, short);
   const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
@@ -538,7 +573,27 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
+  await seamGuardPages(db, [page], book);
   return { written: true };
+}
+
+// #5055: a cut read is recorded (translate-core recordTruncatedTranslation: a failure marker, blocked on the second
+// cut read, the text kept as evidence) and not written.
+async function refuseCut(db, page, text, book, v) {
+  const reason = await recordTruncatedTranslation(db, page, text, v, { jobId: book?.job?.job_id, model: getModelForBook(book) });
+  console.log(`  [write-guard] ${page.id} p${page.page_number}: ${v.reasons.join(', ')} — not written, recorded`);
+  return { written: false, reason };
+}
+
+// The write-time seam guard (#7118). This worker writes through its own door, not translate-core's, so it calls the
+// guard itself, after the commit: off unless SEAM_GUARD or the box file (translate-core SEAM_GUARD_FILE) says dry|apply,
+// bounded per page, and never the write's failure. Loaded only when on.
+async function seamGuardPages(db, pages, book) {
+  if (!seamGuardOn()) return;
+  try {
+    const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
+    for (const page of pages) await runSeamGuard(db, { page, book, note: 'translate_worker' });
+  } catch { /* never the translation write's failure */ }
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -558,6 +613,14 @@ function unwrapForWrite(page, text, book) {
 
 async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text, book) }));
+  // Empty-response guard (#4685), as in writePageTranslation: a page the block answer left empty
+  // is recorded as a failure, never written.
+  const empty = entries.filter(({ text }) => isEmptyTranslation(text));
+  entries = entries.filter(({ text }) => !isEmptyTranslation(text));
+  for (const { page } of empty) {
+    await recordEmptyTranslation(db, page);
+    console.log(`  [empty-response] ${page.id} p${page.page_number}: empty model answer — not written, marked`);
+  }
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -575,11 +638,20 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       console.log(`  [health-gate] ${u.page.id} p${u.page.page_number}: ${u.reason} (${u.len} chars) — write refused, evidence kept`);
     }
   }
+  // #5055: the write guard's length rule, after the health gate (the block parse already sent pages it called cut
+  // single-page).
+  const cutEntries = [];
+  entries = entries.filter((e) => {
+    const g = checkWrittenText(e.text, { kind: 'translation', source: e.page.ocr?.data, lang: book?.language, type: e.page.page_type });
+    if (g.verdict === 'truncated') { cutEntries.push({ ...e, g }); return false; }
+    return true;
+  });
+  for (const { page, text, g } of cutEntries) await refuseCut(db, page, text, book, g);
   // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
-  if (entries.length === 0) return { refused: unhealthy.length };
+  if (entries.length === 0) return { refused: unhealthy.length + empty.length + cutEntries.length };
   if (entries.length === 1) {
     const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
-    return { refused: unhealthy.length + (one.written ? 0 : 1) };
+    return { refused: unhealthy.length + empty.length + cutEntries.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -639,7 +711,8 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       updated_at: now,
     },
   })));
-  return { refused: unhealthy.length };
+  await seamGuardPages(db, entries.map(({ page }) => page), book);
+  return { refused: unhealthy.length + empty.length + cutEntries.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
@@ -902,7 +975,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       try {
         const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
-        const write = await writePageTranslation(db, page, result.text, book, result.promptRef, result.call);
+        const write = await writePageTranslation(db, page, result.text, book, result.promptRef, result.call, result.cut);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await logUsage({
@@ -1010,7 +1083,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
+              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call, singleResult.cut);
               batchTranslated++;
               if (write.written) translated++;
               globalCounter.count++;
@@ -1087,7 +1160,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
+              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call, singleResult.cut);
               if (write.written) translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;

@@ -1,0 +1,46 @@
+The files p01.jpg, p02.jpg, p03.jpg, p04.jpg are pieces of ONE palm leaf, cut left to right at its two string holes (left column | middle column | right column; a wide column may come as two pieces; neighbouring pieces overlap slightly). Open every file with the Read tool and look at them at full size.
+
+Below are 3 machine transcriptions (A, B, C) of this leaf in Malayalam script, as the readers wrote them. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+Which transcription matches what is written on the leaf? Before choosing, check three rows (row 1, a middle row, and the last full row) letter by letter against the image, for every transcription. Judge by the strokes: a fluent text whose letters are not the ones on the leaf is wrong, and a transcription that marks a readable row [illegible] loses that row. Do not prefer a transcription only because it is longer.
+
+TRANSCRIPTION A
+1. ശൈഷീരണീദംഫലഫ്യ।ന്ധാ ‖ ലക്ഷണം[illegible]സ്ത്രൈഖന്യരൈരൊഷീാടപത്ര ‖ ന്ത്രാന്താമാത്രാസ്പൊമാത്രികിര
+2. ത്വൃത്തിഃപ്രാണാദ്യാവ ‖ ായവച്ഛേദേതി।ഭൂഃഭുഗവച്ഛതുഷ്ടിയന്ത്യതുല്യ ‖ ത്വക്കിഃക്രി[illegible]ഖകന്ത്യന്തി
+3. ഷ്ടാദശൈഷ്ടിതഷാഢ്യ ‖ ദൈഷ്ടു[illegible]വന്ദ്രകൾക്രുസ്തിന്മാന്യ ‖ പൃക്തിഃ।ബധാം[illegible]ശ്രു
+4. ശ്രൈയഗ്രൈനിവന ‖ ജ്ഞനാക്കുകംഒെഹക്കിം.പൂക്കിം ‖ പ്പങ്കിമാത്മഎവഒ
+5. ഗതൃഞ്ഛൈക്കനാദ്യി ‖ ൾകാഴ്ചെക്കിനയി।[illegible]।ക ‖ നനം.ത്രൈയാടശവി
+6. ഗംഭൂദ്വിഹാന്ദ്ര ‖ കിനന്ദ്രകാഗകാന.കാരുള്ള ‖ ഖദുഃഖഭഗയാഗ്ര
+7. ഝ്യായാത്ര്യേഷ ‖ ഴുത്തിജ്ഞാഃഒനഃകനള്ളി ‖ വിധം.ദശാചാഹി
+8. ത്രഖ്യന്യവികയാഴ്യാം ‖ ംസസ്യം[illegible]ക്കാലക്ഷാഹ്യം.ത്രൈകാല ‖ [illegible]ത്രന്നംകിന്ദ്രഷ്യപ്ഷ
+9. ദ്വിത്രിയാദിദൈവാം ‖ ചക്ഷുവിശേഷാ.വിശേഷവിഷയാണാ ‖ ക്ഷടപദിശഷ്ടവിഷയ
+
+TRANSCRIPTION B
+1. ൈശഷിാണ്ണാംലഘു।ഝാലക്ഷണ്യം[illegible] ‖ [illegible]ഷ്യൈനാഷിാദിവത്ര ‖ നാമാത്രാസ്ഥാമാത്ര[illegible]
+2. ജാഗൃത്തിഃപ്രാണ്ണാദ്വാവാക്യവിശേഷേ।ബുദ്ധ്യൃഗ ‖ ാവച്ഛത്രി[illegible]ത്രവൃ ‖ ത്തിഃക്രമശ[illegible]
+3. ഷ്ട്രാദൈഷ്ട്ര[illegible]ദ്വാവ്യ ‖ ദൈഷ്ട്രക്രിയസ്വ[illegible]ക്ഷ്വതികാാവ ‖ വൃത്തിഃ।[illegible]
+4. [illegible]വ്യൈദരി[illegible] ‖ ജ്ഞനാക്രി[illegible]ൈഹ[illegible]ംവൃത്തിം ‖ [illegible]ത്മൈ[illegible]
+5. സാര്യൈകാനമി ‖ [illegible]ക്കാഭ്യാഭക്കൈ[illegible]।ഷ്ണാ।ക ‖ നോം[illegible]ദേശവി
+6. യംതദ്രാസ[illegible] ‖ ക്കസണോക്രക്കാഗക്കരം[illegible] ‖ [illegible]ദശയായാ
+7. [illegible]ായാ[illegible]ക്ക ‖ ാസ്ത്രാൈക്ക[illegible]ജ്ഞ[illegible] ‖ വിയം[illegible]ദശാാബാ[illegible]
+8. ക്രയന്ത്രവിക്ഷയാജ്ഞാം ‖ സസ്ാം।ക്ക്കാപ്രദ്വാാ[illegible]കുാാപ ‖ [illegible]ക്രനന്ത[illegible]
+9. [illegible]ാഷൈരൈവ്ാം ‖ ഭക്ഷവിഭെൎക്കാവി[illegible]മുഖ്യാണി ‖ [illegible]ാക്ഷൈ[illegible]വിക്ഷയ
+
+TRANSCRIPTION C
+1. [illegible]।സ്വാലക്ഷണ്യംവൃത്തിസ്ത്രയസ്യസൈഷാഭവത്യസാമാന്യാസാമാന്യകരണ
+2. [illegible]വൃത്തിഃപ്രാണാദ്യാവായവഃപഞ്ച।യുഗപച്ചതുഷ്ടയസ്യതുവൃത്തിഃക്രമശശ്ചതസ്യനിൎദ്ദി
+3. ഷ്ടാദൃഷ്ടേതഥാപ്യ ‖ ദൃഷ്ടേത്രയസ്യതൽപൂൎവ്വികാവൃ ‖ ത്തിഃ।സ്വാംസ്വാംപ്ര
+4. തിപദ്യന്തേപര ‖ സ്പരാകൂതഹേതുകാം।വൃത്തിം ‖ പുരുഷാൎത്ഥഏവ[illegible]
+5. [illegible]തുൎന്നകേനചി ‖ ൽകാൎയ്യതേകരണം।[illegible]।ക ‖ രണംത്രയോദശവി
+6. ധംതദാഹരണ ‖ ധാരണപ്രകാശകരം।കാൎയ്യ ‖ ഞ്ചതസ്യദശധാഹാ
+7. ൎയ്യംധാൎയ്യംപ്രകാ ‖ ശ്യഞ്ച।[illegible]।അന്തഃകരണംത്രി ‖ വിധംദശധാബാഹ്യം
+8. ത്രയസ്യവിഷയാഖ്യം।സാമ്പ്രതകാലംബാഹ്യംത്രികാലമാഭ്യന്തരംകരണം।ബുദ്ധീ
+9. ന്ദ്രിയാണിതേഷാംപഞ്ചവിശേഷാവിശേഷവിഷയാണി।വാൿഭവതിശബ്ദവിഷയ
+
+Answer only:
+CHECK | row <n>: <what the leaf shows at the start of that row, and which transcriptions match it>
+CHECK | row <n>: ...
+CHECK | row <n>: ...
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

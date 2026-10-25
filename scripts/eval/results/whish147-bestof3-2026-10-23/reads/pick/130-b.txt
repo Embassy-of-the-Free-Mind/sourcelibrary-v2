@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C fits the Tarkasaṃgraha-Dīpikā section on fallacious reasons best ("niścitetivipakṣalakṣaṇamāha", "evaṃsandigdha", "viruddhaṃlakṣayati", "satpratipakṣaṃlakṣayati", "asiddhaṃvibhajyate"); B keeps some of this ("niścite", "lakṣayati") but is broken elsewhere, and A's "viśinaṣṭi" and the garbled strings around it don't fit the context.

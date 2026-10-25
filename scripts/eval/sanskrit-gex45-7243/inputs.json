@@ -1,0 +1,908 @@
+{
+ "pages": [
+  {
+   "slug": "sa-30f2e4ed-p90",
+   "url": "https://images.sourcelibrary.org/archived/69ef2b5885daccce30f2e4ed/90.jpg",
+   "sha256_original": "a0aa24fa14bac7c06b4c8ca5328db9812bd61f909d2d072e4958124925df5793",
+   "original_size": [
+    1433,
+    2262
+   ],
+   "fed": {
+    "sha256": "a0aa24fa14bac7c06b4c8ca5328db9812bd61f909d2d072e4958124925df5793",
+    "size": [
+     1433,
+     2262
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-30f2e4ed-p90-c1-s1.jpg",
+    "tiles/sa-30f2e4ed-p90-c1-s2.jpg",
+    "tiles/sa-30f2e4ed-p90-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-ee26ada9-p538",
+   "url": "https://images.sourcelibrary.org/archived/69af0c37067c0c26ee26ada9/538.jpg",
+   "sha256_original": "e93761c21062d7ad31ee1ad336c08306e8e246916bbc2a0af31ad7647db33657",
+   "original_size": [
+    1714,
+    2528
+   ],
+   "fed": {
+    "sha256": "8956cdd6999d6a6f485c445d0c918b76ca0870679741bde044e7bbbbf8b0a766",
+    "size": [
+     1627,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-ee26ada9-p538-c1-s1.jpg",
+    "tiles/sa-ee26ada9-p538-c1-s2.jpg",
+    "tiles/sa-ee26ada9-p538-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-5d8c038d-p99",
+   "url": "https://images.sourcelibrary.org/archived/6a94a8aebf723b215d8c038d/99.jpg",
+   "sha256_original": "0f1dffa7e619cf9aad08deab69095653a650c23e26e6cfea735d095af42f04dd",
+   "original_size": [
+    1540,
+    2485
+   ],
+   "fed": {
+    "sha256": "c2e021fd719d1622fe045f0b8a70b7f0d5b22b474e53d38e2b272c0a131c86da",
+    "size": [
+     1487,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-5d8c038d-p99-c1-s1.jpg",
+    "tiles/sa-5d8c038d-p99-c1-s2.jpg",
+    "tiles/sa-5d8c038d-p99-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-7b76611e-p276",
+   "url": "https://images.sourcelibrary.org/archived/69d7e24ce08c70307b76611e/276.jpg",
+   "sha256_original": "b8e4dc307415db7c21ada8ad2d392c0e0f966a0568f483a36f2c36e28adce073",
+   "original_size": [
+    1651,
+    2475
+   ],
+   "fed": {
+    "sha256": "a246413369ad571ee3c6834ef8d226520889e2f63105d78e2b4b721508dec010",
+    "size": [
+     1601,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-7b76611e-p276-c1-s1.jpg",
+    "tiles/sa-7b76611e-p276-c1-s2.jpg",
+    "tiles/sa-7b76611e-p276-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-347d21b6-p187",
+   "url": "https://images.sourcelibrary.org/archived/699066f5249ce014347d21b6/187.jpg",
+   "sha256_original": "44585cac3e904c3ba79ff081f2c21b54e4201f5a2089fedf26049a86d4e84966",
+   "original_size": [
+    2976,
+    4729
+   ],
+   "fed": {
+    "sha256": "6e3606d27fd82813ce91a6e1e98dae1363abafebf62f6114b9a8ed9a2f3a10ab",
+    "size": [
+     1510,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-347d21b6-p187-c1-s1.jpg",
+    "tiles/sa-347d21b6-p187-c1-s2.jpg",
+    "tiles/sa-347d21b6-p187-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-7bd9afc5-p393",
+   "url": "https://images.sourcelibrary.org/archived/69d91e423a50087f7bd9afc5/393.jpg",
+   "sha256_original": "347e882abb1a7d764461e25bcc65febbe7c56a811e283f75ac03d83d1d9c60c1",
+   "original_size": [
+    1938,
+    3000
+   ],
+   "fed": {
+    "sha256": "743e5c8b45be96991a07e291bd65b227addbffa4624ad7793ec643bafaf4de76",
+    "size": [
+     1550,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-7bd9afc5-p393-c1-s1.jpg",
+    "tiles/sa-7bd9afc5-p393-c1-s2.jpg",
+    "tiles/sa-7bd9afc5-p393-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-d69433d6-p121",
+   "url": "https://images.sourcelibrary.org/archived/6991d44321124c9ad69433d6/121.jpg",
+   "sha256_original": "45ff06fbbe526658fad0a2ddfa412f94e1e03d61af9b3d56b8298c75fb701033",
+   "original_size": [
+    3111,
+    4876
+   ],
+   "fed": {
+    "sha256": "1fbd03547cf150bb00a8507980aba79fab419dc968636f06f7dfb717d34869ac",
+    "size": [
+     1531,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-d69433d6-p121-c1-s1.jpg",
+    "tiles/sa-d69433d6-p121-c1-s2.jpg",
+    "tiles/sa-d69433d6-p121-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e5a9d99f-p487",
+   "url": "https://images.sourcelibrary.org/archived/6a31c8f84400787ae5a9d99f/487.jpg",
+   "sha256_original": "e9653fbb2dd072dd5815b61fd415ae2262edfc371e77131ef6da1d79f959d2ae",
+   "original_size": [
+    931,
+    1437
+   ],
+   "fed": {
+    "sha256": "e9653fbb2dd072dd5815b61fd415ae2262edfc371e77131ef6da1d79f959d2ae",
+    "size": [
+     931,
+     1437
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-e5a9d99f-p487-c1-s1.jpg",
+    "tiles/sa-e5a9d99f-p487-c1-s2.jpg",
+    "tiles/sa-e5a9d99f-p487-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-024f76ae-p621",
+   "url": "https://images.sourcelibrary.org/archived/6955831757e3b773024f76ae/621.jpg",
+   "sha256_original": "5306ec5e3244f87945cb52f3fdcd0e47ca3ace367cc4517849f08126c418f51c",
+   "original_size": [
+    3002,
+    4352
+   ],
+   "fed": {
+    "sha256": "883a1fd3143a3252c8bd5d1c613b9ff85299e422b69d6e6c0aa1d23b307da356",
+    "size": [
+     1656,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-024f76ae-p621-c1-s1.jpg",
+    "tiles/sa-024f76ae-p621-c1-s2.jpg",
+    "tiles/sa-024f76ae-p621-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-5744775b-p139",
+   "url": "https://images.sourcelibrary.org/archived/6a9490e631b41d9c5744775b/139.jpg",
+   "sha256_original": "e5efc9f6f43b7e525cf98b4eba9919dac85f14dd06bada7d9296e7ab3feed47b",
+   "original_size": [
+    3484,
+    5340
+   ],
+   "fed": {
+    "sha256": "8126a567ee6a3cc990783caa6f6910e2b9346896bd75cf25a9192843da2969f8",
+    "size": [
+     1566,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-5744775b-p139-c1-s1.jpg",
+    "tiles/sa-5744775b-p139-c1-s2.jpg",
+    "tiles/sa-5744775b-p139-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-5d8bd83c-p21",
+   "url": "https://images.sourcelibrary.org/archived/6a94a33fbf723b215d8bd83c/21.jpg",
+   "sha256_original": "a7a98398ea96c6917437424970fe22abe0279b71732e22f7ad4d8392fc84f941",
+   "original_size": [
+    3283,
+    4950
+   ],
+   "fed": {
+    "sha256": "f46679c06305af135383f417dde793dbcc1eff8d9f083854098e07ad260a111a",
+    "size": [
+     1592,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-5d8bd83c-p21-c1-s1.jpg",
+    "tiles/sa-5d8bd83c-p21-c1-s2.jpg",
+    "tiles/sa-5d8bd83c-p21-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e625ae62-p64",
+   "url": "https://images.sourcelibrary.org/archived/6a942f0b52baa7aee625ae62/64.jpg",
+   "sha256_original": "a56f471313b2587dcd607e3fde493c14ea70ff34c94497450a0d6c4a594a5b7c",
+   "original_size": [
+    5057,
+    2691
+   ],
+   "fed": {
+    "sha256": "b9cdf1b09a66c7cf7c4bc281d9521792d9302b2440b040061bfb6f46055eee99",
+    "size": [
+     2400,
+     1277
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-e625ae62-p64-c1-s1-h1.jpg",
+    "tiles/sa-e625ae62-p64-c1-s1-h2.jpg",
+    "tiles/sa-e625ae62-p64-c1-s2-h1.jpg",
+    "tiles/sa-e625ae62-p64-c1-s2-h2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e5a9d0dc-p668",
+   "url": "https://images.sourcelibrary.org/archived/6a31b3fa4400787ae5a9d0dc/668.jpg",
+   "sha256_original": "169f78502d8e4fcbb839de36fb0f03565248fa45c45ff7a23d56ecdb3d7616d0",
+   "original_size": [
+    686,
+    1133
+   ],
+   "fed": {
+    "sha256": "169f78502d8e4fcbb839de36fb0f03565248fa45c45ff7a23d56ecdb3d7616d0",
+    "size": [
+     686,
+     1133
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-e5a9d0dc-p668-c1-s1.jpg",
+    "tiles/sa-e5a9d0dc-p668-c1-s2.jpg",
+    "tiles/sa-e5a9d0dc-p668-c2-s1.jpg",
+    "tiles/sa-e5a9d0dc-p668-c2-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-05c7c5f3-p196",
+   "url": "https://images.sourcelibrary.org/archived/6a30905cd8c6b8a005c7c5f3/196.jpg",
+   "sha256_original": "8f27b4f36cf5ce94b4951545cda332cf23fdeaa1e60c3469840b937ebd5c545b",
+   "original_size": [
+    2048,
+    3000
+   ],
+   "fed": {
+    "sha256": "b272cec848980867b610079451d92e55c699e0cc1896e881f59bef1fe1a331f1",
+    "size": [
+     1638,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-05c7c5f3-p196-c1-s1.jpg",
+    "tiles/sa-05c7c5f3-p196-c1-s2.jpg",
+    "tiles/sa-05c7c5f3-p196-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-91d25f36-p187",
+   "url": "https://images.sourcelibrary.org/archived/6a94cb2b8e2a2ffc91d25f36/187.jpg",
+   "sha256_original": "d98dec43341a1fa254fd406172bf50558dc0835f1fef09e3b6c7d3dc6f472006",
+   "original_size": [
+    1825,
+    2630
+   ],
+   "fed": {
+    "sha256": "356c289154eeb06e00ef2956709a64cedef176a3c9637a7e10db748d17451280",
+    "size": [
+     1665,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-91d25f36-p187-c1-s1.jpg",
+    "tiles/sa-91d25f36-p187-c1-s2.jpg",
+    "tiles/sa-91d25f36-p187-c1-s3.jpg",
+    "tiles/sa-91d25f36-p187-c1-s4.jpg",
+    "tiles/sa-91d25f36-p187-c1-s5.jpg",
+    "tiles/sa-91d25f36-p187-c2-s1.jpg",
+    "tiles/sa-91d25f36-p187-c2-s2.jpg",
+    "tiles/sa-91d25f36-p187-c2-s3.jpg",
+    "tiles/sa-91d25f36-p187-c2-s4.jpg",
+    "tiles/sa-91d25f36-p187-c2-s5.jpg"
+   ]
+  },
+  {
+   "slug": "sa-a9a96a43-p165",
+   "url": "https://images.sourcelibrary.org/archived/6ad8544bd38af690a9a96a43/165.jpg",
+   "sha256_original": "a636bc9639ef19ee930e533b9bda96400b3c78acefc53746752fee9f14951298",
+   "original_size": [
+    1612,
+    2612
+   ],
+   "fed": {
+    "sha256": "2481d739ee0e66af799bd03967f678930523bd376303f94be7c969a2e07deaa1",
+    "size": [
+     1481,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-a9a96a43-p165-c1-s1.jpg",
+    "tiles/sa-a9a96a43-p165-c1-s2.jpg",
+    "tiles/sa-a9a96a43-p165-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e625b010-p5",
+   "url": "https://images.sourcelibrary.org/archived/6a942f4f52baa7aee625b010/5.jpg",
+   "sha256_original": "cf59f4e6d3064e4f7bd9086abc68b6f3dc990046ffeffd147ab73bdf6294c0bd",
+   "original_size": [
+    1286,
+    1834
+   ],
+   "fed": {
+    "sha256": "cf59f4e6d3064e4f7bd9086abc68b6f3dc990046ffeffd147ab73bdf6294c0bd",
+    "size": [
+     1286,
+     1834
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-e625b010-p5-c1-s1.jpg",
+    "tiles/sa-e625b010-p5-c1-s2.jpg",
+    "tiles/sa-e625b010-p5-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-91d24943-p9",
+   "url": "https://images.sourcelibrary.org/archived/6a94c6268e2a2ffc91d24943/9.jpg",
+   "sha256_original": "ecce417fd21aa7f61b6bead946fafceb91122c56c4f9bd80c6b6c7fc62b5d578",
+   "original_size": [
+    3000,
+    1833
+   ],
+   "fed": {
+    "sha256": "4330c7c0a7f008983cc5fe13e723f8a70c80894dc1d538ea4c600d2c633efff1",
+    "size": [
+     2400,
+     1466
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-91d24943-p9-c1-s1.jpg"
+   ]
+  },
+  {
+   "slug": "sa-de21a71e-p163",
+   "url": "https://images.sourcelibrary.org/archived/69b99f3676b9bab2de21a71e/163.jpg",
+   "sha256_original": "78b97f5322f90857500aa96ddcd044796a99470cc9e96149e29a5d8e22b7cded",
+   "original_size": [
+    2014,
+    3000
+   ],
+   "fed": {
+    "sha256": "1941b44932d444c89d67f2b4616e3a51b80d120ecc4a315ac24983e16152a22f",
+    "size": [
+     1611,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-de21a71e-p163-c1-s1.jpg",
+    "tiles/sa-de21a71e-p163-c1-s2.jpg",
+    "tiles/sa-de21a71e-p163-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-9ba76960-p555",
+   "url": "https://images.sourcelibrary.org/archived/69dea59e4d19ec2e9ba76960/555.jpg",
+   "sha256_original": "85ab986e5e56bbcb311cad99e7fedeaf0f9da59a9f7f97b27fc1606ff9aa84b6",
+   "original_size": [
+    1918,
+    2885
+   ],
+   "fed": {
+    "sha256": "bcc02b1ede91f5806e5bd0a8442503d7f2af60ddc21e00e6797ba207ef032765",
+    "size": [
+     1596,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-9ba76960-p555-c1-s1.jpg",
+    "tiles/sa-9ba76960-p555-c1-s2.jpg",
+    "tiles/sa-9ba76960-p555-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1697c6ed-p499",
+   "url": "https://images.sourcelibrary.org/books/6a3088edeb59f1191697c6ed/pages/0498.jpg",
+   "sha256_original": "d70768ceb0ffba5e79385ad8a7462c035dda8b44b7af06a7abb619a5588f29a7",
+   "original_size": [
+    875,
+    1241
+   ],
+   "fed": {
+    "sha256": "d70768ceb0ffba5e79385ad8a7462c035dda8b44b7af06a7abb619a5588f29a7",
+    "size": [
+     875,
+     1241
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1697c6ed-p499-c1-s1.jpg",
+    "tiles/sa-1697c6ed-p499-c1-s2.jpg",
+    "tiles/sa-1697c6ed-p499-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1697bec1-p584",
+   "url": "https://images.sourcelibrary.org/books/6a3088abeb59f1191697bec1/pages/0583.jpg",
+   "sha256_original": "dd792208871ae7627d12fd64946b9b7c1b48f6ae21e183818c88854634f3aad4",
+   "original_size": [
+    875,
+    1241
+   ],
+   "fed": {
+    "sha256": "dd792208871ae7627d12fd64946b9b7c1b48f6ae21e183818c88854634f3aad4",
+    "size": [
+     875,
+     1241
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1697bec1-p584-c1-s1.jpg",
+    "tiles/sa-1697bec1-p584-c1-s2.jpg",
+    "tiles/sa-1697bec1-p584-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1697c43d-p421",
+   "url": "https://images.sourcelibrary.org/books/6a3088d7eb59f1191697c43d/pages/0420.jpg",
+   "sha256_original": "e715503856e90de9f2b1aa14e0db3d91713aee1aa25ee0a79d0ff5acc6519b2a",
+   "original_size": [
+    875,
+    1241
+   ],
+   "fed": {
+    "sha256": "e715503856e90de9f2b1aa14e0db3d91713aee1aa25ee0a79d0ff5acc6519b2a",
+    "size": [
+     875,
+     1241
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1697c43d-p421-c1-s1.jpg",
+    "tiles/sa-1697c43d-p421-c1-s2.jpg",
+    "tiles/sa-1697c43d-p421-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e0f809e3-p1393",
+   "url": "https://images.sourcelibrary.org/archived/6a8f621eddd2f57fe0f809e3/1393.jpg",
+   "sha256_original": "47e2418e0f8015c230db46403e758212f7cb76f912e46f8964e05cf87c609f58",
+   "original_size": [
+    3753,
+    5556
+   ],
+   "fed": {
+    "sha256": "3c4f66fb87790c2758c8e0ee4e9c66474da964db0654bcb466475caa5ad0c01e",
+    "size": [
+     1621,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-e0f809e3-p1393-c1-s1-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s1-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s2-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s2-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s3-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s3-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s4-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s4-h2.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s5-h1.jpg",
+    "tiles/sa-e0f809e3-p1393-c1-s5-h2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-487f33e3-p412",
+   "url": "https://images.sourcelibrary.org/books/6a30912abec66f86487f33e3/pages/0411.jpg",
+   "sha256_original": "2b91d477434f9c7ce579fce828612f8b6ca717fb3fe257aad26acf734b292e54",
+   "original_size": [
+    843,
+    1216
+   ],
+   "fed": {
+    "sha256": "2b91d477434f9c7ce579fce828612f8b6ca717fb3fe257aad26acf734b292e54",
+    "size": [
+     843,
+     1216
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-487f33e3-p412-c1-s1.jpg",
+    "tiles/sa-487f33e3-p412-c1-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-7c60b19b-p202",
+   "url": "https://images.sourcelibrary.org/archived/69af0c1986d6cf307c60b19b/202.jpg",
+   "sha256_original": "06eb9e98b90bfa33c71b170083285c61e8a2b8ff53b52068a54ba5c27ecbcf25",
+   "original_size": [
+    1964,
+    3000
+   ],
+   "fed": {
+    "sha256": "4db886ee4be899401e457db28e6221b23863a4af198721d0246c5de1a363ea51",
+    "size": [
+     1571,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-7c60b19b-p202-c1-s1.jpg",
+    "tiles/sa-7c60b19b-p202-c1-s2.jpg",
+    "tiles/sa-7c60b19b-p202-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-2380f313-p419",
+   "url": "https://images.sourcelibrary.org/archived/69bd0230f403a9ca2380f313/419.jpg",
+   "sha256_original": "f53edf2fbd16ace390a79d51f6534c1099a8112becc6f29523626819bc56a2af",
+   "original_size": [
+    1847,
+    2852
+   ],
+   "fed": {
+    "sha256": "bc329ed1c5bcb30d4d64d3150d3158842447ca0653f1e8a38c22389f9c4d071e",
+    "size": [
+     1554,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-2380f313-p419-c1-s1.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1697d8cb-p58",
+   "url": "https://images.sourcelibrary.org/books/6a308985eb59f1191697d8cb/pages/0057.jpg",
+   "sha256_original": "36ac5eaa12b3366794c4727e6496bd5db15a0edf586af0bd870e49f2479adab7",
+   "original_size": [
+    875,
+    1241
+   ],
+   "fed": {
+    "sha256": "36ac5eaa12b3366794c4727e6496bd5db15a0edf586af0bd870e49f2479adab7",
+    "size": [
+     875,
+     1241
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1697d8cb-p58-c1-s1.jpg",
+    "tiles/sa-1697d8cb-p58-c1-s2.jpg",
+    "tiles/sa-1697d8cb-p58-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-8eaa4560-p334",
+   "url": "https://iiif.wellcomecollection.org/image/b30094768_0001_0336.jp2/full/full/0/default.jpg",
+   "sha256_original": "7eb761f54c7bcde47d2d74dc17e6ea3fbc6df1932d2c40c069fa75bceba5fd63",
+   "original_size": [
+    2480,
+    4240
+   ],
+   "fed": {
+    "sha256": "93c8194567ebe0c0f0aef1ab87b9c774a1eb77779a0ca7cfb4d04e8b32a21ca5",
+    "size": [
+     1404,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-8eaa4560-p334-c1-s1.jpg",
+    "tiles/sa-8eaa4560-p334-c1-s2.jpg",
+    "tiles/sa-8eaa4560-p334-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-8eaa58d0-p117",
+   "url": "https://iiif.wellcomecollection.org/image/b3009432x_0117.jp2/full/full/0/default.jpg",
+   "sha256_original": "70e8e9c75b5ef4558626cbff09145cf3f67d20f907f5b8b5587fb6894ac91aa2",
+   "original_size": [
+    3388,
+    5185
+   ],
+   "fed": {
+    "sha256": "4e519db3600340b28a172820814606fb18a8d466b580d136c05b97bfaf642e3d",
+    "size": [
+     1568,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-8eaa58d0-p117-c1-s1.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s2.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s3.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s4.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s5.jpg",
+    "tiles/sa-8eaa58d0-p117-c1-s6.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s1.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s2.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s3.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s4.jpg",
+    "tiles/sa-8eaa58d0-p117-c2-s5.jpg"
+   ]
+  },
+  {
+   "slug": "sa-0f19de12-p607",
+   "url": "https://iiif.wellcomecollection.org/image/b3288199x_0607.jp2/full/full/0/default.jpg",
+   "sha256_original": "014df16150fcd4ddcc8b8ad039f7c0bc9059127c7002ea81498fa846cb39eab0",
+   "original_size": [
+    4111,
+    5343
+   ],
+   "fed": {
+    "sha256": "44461a16f761c09d3c1bf03a568369ca3f8b1dffa7455ab0c6ca62520c1a3fe9",
+    "size": [
+     1847,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-0f19de12-p607-c1-s1.jpg",
+    "tiles/sa-0f19de12-p607-c1-s2.jpg",
+    "tiles/sa-0f19de12-p607-c1-s3.jpg",
+    "tiles/sa-0f19de12-p607-c1-s4.jpg",
+    "tiles/sa-0f19de12-p607-c1-s5.jpg",
+    "tiles/sa-0f19de12-p607-c2-s1.jpg",
+    "tiles/sa-0f19de12-p607-c2-s2.jpg",
+    "tiles/sa-0f19de12-p607-c2-s3.jpg",
+    "tiles/sa-0f19de12-p607-c2-s4.jpg"
+   ]
+  },
+  {
+   "slug": "sa-8eaa2441-p684",
+   "url": "https://iiif.wellcomecollection.org/image/b30094720_0684.jp2/full/full/0/default.jpg",
+   "sha256_original": "61b66595653b6c5296fedd2165a2edcff532b1feb65cd40e38d7a3a1a0e1839f",
+   "original_size": [
+    2168,
+    3768
+   ],
+   "fed": {
+    "sha256": "b96de78da68f717a1b09e0c1a6135a9813a3aac287d021d5a433c922d910a278",
+    "size": [
+     1381,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-8eaa2441-p684-c1-s1.jpg",
+    "tiles/sa-8eaa2441-p684-c1-s2.jpg",
+    "tiles/sa-8eaa2441-p684-c1-s3.jpg"
+   ]
+  },
+  {
+   "slug": "sa-2a4369ae-p548",
+   "url": "https://images.sourcelibrary.org/pages/6a91935a5732dd632a4369ae/0548.jpg",
+   "sha256_original": "98f0b7d7de41f3f83f7f07a6d15d3103505ff1956add9f70a8e9429736be20be",
+   "original_size": [
+    1821,
+    3085
+   ],
+   "fed": {
+    "sha256": "052357be0e2cf686de6551e6382315041b30c67d1bf74144724556509c64a378",
+    "size": [
+     1417,
+     2400
+    ],
+    "downscaled": true
+   },
+   "tiles": [
+    "tiles/sa-2a4369ae-p548-c1-s1.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s2.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s3.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s4.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s5.jpg",
+    "tiles/sa-2a4369ae-p548-c1-s6.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s1.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s2.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s3.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s4.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s5.jpg",
+    "tiles/sa-2a4369ae-p548-c2-s6.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1a8dfbde-p5",
+   "url": "https://images.sourcelibrary.org/archived/6ac7617c492b9d701a8dfbde/5.jpg",
+   "sha256_original": "cd9d8f408221c51e62f2782d50e85771c3aa07d38f8ce14ed51bcab518a62196",
+   "original_size": [
+    1800,
+    891
+   ],
+   "fed": {
+    "sha256": "cd9d8f408221c51e62f2782d50e85771c3aa07d38f8ce14ed51bcab518a62196",
+    "size": [
+     1800,
+     891
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1a8dfbde-p5-c1-s1.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1a8e15ca-p1",
+   "url": "https://images.sourcelibrary.org/archived/6ac76726492b9d701a8e15ca/1.jpg",
+   "sha256_original": "8f2345d1d98ef85b31970024ab5273963be99e67a457527a79872bdecdd49bdb",
+   "original_size": [
+    1800,
+    1794
+   ],
+   "fed": {
+    "sha256": "8f2345d1d98ef85b31970024ab5273963be99e67a457527a79872bdecdd49bdb",
+    "size": [
+     1800,
+     1794
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1a8e15ca-p1-c1-s1.jpg",
+    "tiles/sa-1a8e15ca-p1-c1-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e6c258c2-p2",
+   "url": "https://images.sourcelibrary.org/archived/6ac787c84bf5025fe6c258c2/2.jpg",
+   "sha256_original": "9595dc5693f87659848c9ab4997ac0daadec6b1d19cbf30a756003a2f1aae076",
+   "original_size": [
+    1800,
+    1553
+   ],
+   "fed": {
+    "sha256": "9595dc5693f87659848c9ab4997ac0daadec6b1d19cbf30a756003a2f1aae076",
+    "size": [
+     1800,
+     1553
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-e6c258c2-p2-c1-s1.jpg",
+    "tiles/sa-e6c258c2-p2-c1-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-87c61f7c-p2",
+   "url": "https://images.sourcelibrary.org/archived/6ac778815aac1f9687c61f7c/2.jpg",
+   "sha256_original": "5a621781bfc37a48f2b2e25f81df5fae7c2cf55b6c472952a0057921e3c9876c",
+   "original_size": [
+    1796,
+    1800
+   ],
+   "fed": {
+    "sha256": "5a621781bfc37a48f2b2e25f81df5fae7c2cf55b6c472952a0057921e3c9876c",
+    "size": [
+     1796,
+     1800
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-87c61f7c-p2-c1-s1.jpg",
+    "tiles/sa-87c61f7c-p2-c1-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-1a8e17d4-p5",
+   "url": "https://images.sourcelibrary.org/archived/6ac76760492b9d701a8e17d4/5.jpg",
+   "sha256_original": "7a1966b65212de298bd329b5ee7df145fcbaf563c3e53116ef9d55111aef1d4e",
+   "original_size": [
+    1800,
+    1519
+   ],
+   "fed": {
+    "sha256": "7a1966b65212de298bd329b5ee7df145fcbaf563c3e53116ef9d55111aef1d4e",
+    "size": [
+     1800,
+     1519
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-1a8e17d4-p5-c1-s1.jpg",
+    "tiles/sa-1a8e17d4-p5-c1-s2.jpg"
+   ]
+  },
+  {
+   "slug": "sa-e64f2efd-p5",
+   "url": "https://images.sourcelibrary.org/archived/6ac7744c541cd556e64f2efd/5.jpg",
+   "sha256_original": "b1426d0aa0aa4cec9f01ef1eeba7a51843723bc2ca008d0eb0a3f7806e048849",
+   "original_size": [
+    1800,
+    884
+   ],
+   "fed": {
+    "sha256": "b1426d0aa0aa4cec9f01ef1eeba7a51843723bc2ca008d0eb0a3f7806e048849",
+    "size": [
+     1800,
+     884
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-e64f2efd-p5-c1-s1.jpg"
+   ]
+  },
+  {
+   "slug": "sa-23bfb025-p5",
+   "url": "https://images.sourcelibrary.org/archived/6ac76de986dad48523bfb025/5.jpg",
+   "sha256_original": "75c37997b527c23829ac6b5d142e546cc61df570acc1b23a524d697cc187e05e",
+   "original_size": [
+    1800,
+    680
+   ],
+   "fed": {
+    "sha256": "75c37997b527c23829ac6b5d142e546cc61df570acc1b23a524d697cc187e05e",
+    "size": [
+     1800,
+     680
+    ],
+    "downscaled": false
+   },
+   "tiles": [
+    "tiles/sa-23bfb025-p5-c1-s1.jpg"
+   ]
+  }
+ ]
+}

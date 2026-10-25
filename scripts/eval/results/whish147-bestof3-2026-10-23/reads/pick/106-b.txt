@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B gives the most recognizable Sāṅkhya commentary vocabulary across most rows (grāhya/upadeśa, bāhyābhyantarāṇām, pravṛtti, uparamaḥ, jñānopāyāḥ); C has some good readings but many gaps, and A drifts into syllable strings that aren't real words in most rows.

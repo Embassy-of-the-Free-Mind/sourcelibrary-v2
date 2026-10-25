@@ -14,6 +14,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { unwrapSentinels, TRANSLATION_SENTINEL_INSTRUCTION } from './cli-chatter.mjs';
+import { agyBlocked, agyResetFromText, noteLimitHit } from './model-limits.mjs';
 
 export const CLI = 'agy';
 export const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
@@ -94,8 +95,13 @@ export function ledgerGate(model, { dir = JOB_LEDGER, cap = HEAVY_DAILY_CAP, job
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
 export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
   assertGeminiModel(args);
-  const capped = ledgerGate(String(args[args.indexOf('--model') + 1]));
+  const model = String(args[args.indexOf('--model') + 1] || '');
+  const capped = ledgerGate(model);
   if (capped) return Promise.resolve({ text: '', conversation: null, denied: [], code: null, cls: 'quota', err: capped, secs: 0, usage: null, capped: true });
+  // A locked model is never called, not even to see whether it has reset (model-limits.mjs): the reply is a quota
+  // result made here, with `locked_until`, and agy is not started.
+  const blocked = agyBlocked(model);
+  if (blocked) return Promise.resolve({ text: '', conversation: null, denied: [], code: null, cls: 'quota', err: blocked.reason, secs: 0, usage: null, locked_until: blocked.until || null, not_called: true });
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -112,6 +118,8 @@ export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
       // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
       const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
       // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
+      // The first quota reply stops every later call on this box until Google's quoted reset (or one hour).
+      if (cls === 'quota') noteLimitHit(`agy-${model}`, { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
       resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
     });
   });

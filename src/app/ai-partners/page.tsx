@@ -1,187 +1,258 @@
 import type { Metadata } from 'next';
-import SiteHeader from '@/components/layout/SiteHeader';
-import './partners.css';
+import Link from 'next/link';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
-// Lab-facing overview of the corpus (Derek, 2026-10-23). The copy was drafted and edited by
-// Derek in a review artifact; figures were measured 2026-10-23 (ops: outreach/2026-10-23-market-value.md).
-// Static on purpose: the numbers are a dated snapshot, stated as such on the page.
+// Lab-facing overview of the corpus (Derek, 2026-10-23). Copy drafted with Derek in a review
+// artifact. Figures measured 2026-10-23 and stated as dated on the page: a snapshot, not live stats.
 
 export const metadata: Metadata = {
   title: 'AI Partners | Source Library',
   description:
-    'A digital archive of 129,000 books in more than fifty languages, over 20,000 of them translated into English, each translation set beside its original page.',
+    'A digital archive of 129,000 historical books in more than fifty languages, over 20,000 of them translated into English, each translation set beside its original page.',
   alternates: { canonical: '/ai-partners' },
   robots: { index: false, follow: true },
 };
 
+const POINTS = [
+  { label: 'Collected', fact: '129,000 books from more than 30 libraries' },
+  { label: 'Transcribed', fact: '9.4 million pages in the original language' },
+  { label: 'Translated', fact: '5.7 million pages in English' },
+  { label: 'Community-reviewed', fact: 'Scholars and 1,465 volunteers' },
+  { label: 'Rights cleared', fact: 'Checked book by book' },
+  { label: 'Immediately available', fact: 'Through our API and MCP server' },
+];
+
+const HOLDINGS = [
+  { label: 'Books digitally archived', value: '129,166' },
+  { label: 'Public on the site', value: '58,531' },
+  { label: 'Readable in English', value: '20,203' },
+  { label: 'Translated into English for the first time', value: '4,561' },
+  { label: 'Page images', value: '28.9 million' },
+  { label: 'Books from the Ritman Library, found only here', value: '2,347' },
+];
+
+// Translated pages by the date of the book, in millions.
+const CENTURIES = [
+  { label: 'Before 1400', pages: 0.17 },
+  { label: '1400s', pages: 0.4 },
+  { label: '1500s', pages: 1.0 },
+  { label: '1600s', pages: 0.9 },
+  { label: '1700s', pages: 0.9 },
+  { label: '1800s', pages: 0.9 },
+  { label: '1900–1930', pages: 0.5 },
+];
+
+const EXAMPLES = [
+  { href: '/book/history-of-both-worlds-macrocosm-fludd', title: 'History of the Two Worlds', by: 'Robert Fludd', note: 'Latin, 1617' },
+  { href: '/book/mundus-subterraneus-kircher', title: 'Mundus Subterraneus', by: 'Athanasius Kircher', note: 'Latin, 1678' },
+  { href: '/book/imperial-collection-of-mathematical-essentials-vol-2', title: 'Collected Essentials of Mathematics', by: 'compiled for the Kangxi emperor', note: 'Chinese, 1723' },
+  { href: '/book/siddhanta-tattva-viveka-bhatta', title: 'Discernment of the Principles of Astronomy', by: 'Kamalākara', note: 'Sanskrit, 1658' },
+  { href: '/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822', title: 'Collected Works', by: 'the eighth Gyalwang Drukpa', note: 'Tibetan, c. 1800' },
+];
+
+const PROGRESS = [
+  { label: 'translated into English', millions: 5.7, className: 'bg-[#9e4a3a]' },
+  { label: 'transcribed, awaiting translation', millions: 3.7, className: 'bg-[#c9a86c]' },
+  { label: 'scanned, waiting to be read', millions: 19.6, className: 'bg-[#e4dccd]' },
+];
+
+const OFFERS = [
+  { title: 'An open release', body: 'A partner’s support funds the reading of the remaining pages and their release to the public, as AI laboratories have done for other major libraries.' },
+  { title: 'Early access', body: 'The partner receives each release in advance, with held-back test sets and scholarly review in the languages it needs.' },
+  { title: 'Acknowledgement', body: 'The partner is credited on each release, alongside the Embassy of the Free Mind and the contributing libraries.' },
+];
+
+const label = 'text-xs uppercase tracking-[0.15em] text-[#999] mb-6';
+const prose = 'text-[#444] leading-[1.75] mb-6 max-w-2xl';
+
 export default function AiPartnersPage() {
+  const maxCentury = Math.max(...CENTURIES.map((c) => c.pages));
+  const totalPages = PROGRESS.reduce((sum, p) => sum + p.millions, 0);
+
   return (
-    <>
-      <SiteHeader variant="light" />
-      <div className="slp">
-      <section className="hero">
-        <div className="wrap">
-          <div>
-            <p className="eyebrow">AI Partners · A Wisdom Frontiers project</p>
-            <h1>The world's <em>wisdom</em>, translated beside the original page</h1>
-            <p>A digital archive of 129,000 books in more than fifty languages, over 20,000 of them transcribed and translated into English, with every translation set opposite the page from which it was made, so that any line may be verified at its source.</p>
-          </div>
-          <figure>
-            <img src="/ai-partners/ottoman-celestial.jpg" alt="Ottoman celestial map, 1583: the zodiac and planetary spheres held by angels" />
-            <figcaption><a href="/book/art-ottoman-celestial-map">Ottoman celestial map, 1583 · Source Library</a></figcaption>
-          </figure>
-        </div>
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="AI Partners"
+          subtitle="A digital archive of 129,000 historical books in more than fifty languages, over 20,000 of them translated into English, each translation set beside the page it came from."
+        />
+      }
+      maxWidth="standard"
+      bg="bg-[#faf9f7]"
+    >
+      <section className="mb-20">
+        <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-2xl">
+          Source Library is the largest library of translated historical sources. Every line of
+          English can be checked against the scan of the original page.
+        </p>
       </section>
 
-      <nav className="pillars" aria-label="What the corpus is">
-        <div className="wrap">
-          <ol>
-            <li><a href="#collected"><strong>Collected</strong><span>129,000 books from 30+ libraries</span></a></li>
-            <li><a href="#transcribed"><strong>Transcribed</strong><span>9.4M pages in the original script</span></a></li>
-            <li><a href="#translated"><strong>Translated</strong><span>5.7M pages into English</span></a></li>
-            <li><a href="#reviewed"><strong>Community-reviewed</strong><span>Scholars and 1,465 volunteers</span></a></li>
-            <li><a href="#rights"><strong>Rights cleared</strong><span>Checked book by book</span></a></li>
-            <li><a href="#available"><strong>Immediately available</strong><span>Streaming API and MCP</span></a></li>
-          </ol>
-        </div>
-      </nav>
-
-      <section className="band dark">
-        <div className="wrap why">
-          <div>
-            <p className="eyebrow">The untranslated record</p>
-            <h2>Much of the world's written wisdom has never been translated</h2>
-            <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet 90% of Renaissance Latin itself has never been translated, and the gaps in Chinese, Sanskrit, Tibetan, Arabic and Hebrew are wider still.</p>
-
-
-          </div>
-          <figure style={{ margin: '0' }}>
-            <div className="frame"><img src="/ai-partners/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola" /></div>
-            <figcaption className="cap" style={{ color: 'var(--night-muted)' }}>An early printed page naming Marsilio Ficino and Giovanni Pico della Mirandola.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section className="proof" id="collected">
-        <div className="wrap pf">
-          <h2 className="pword">Collected</h2>
-          <div>
-            <p className="lede">Assembled from more than thirty of the world's great libraries, and catalogued by work, edition and author.</p>
-            <table className="ledger">
-              <tr><td>Books digitally archived</td><td className="n">129,166</td></tr>
-              <tr><td>Public on the site</td><td className="n">58,531</td></tr>
-              <tr><td>Readable in English</td><td className="n">20,203</td></tr>
-              <tr><td>Page images held</td><td className="n">28.9M</td></tr>
-              <tr><td>Ritman Library books, found only here</td><td className="n">2,347</td></tr>
-            </table>
-            <p className="note">30.7 TB of scans. Counted 23 October 2026.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="proof alt" id="transcribed">
-        <div className="wrap pf">
-          <h2 className="pword">Transcribed</h2>
-          <div>
-            <p className="lede">9.4 million pages transcribed in their original language and script. Latin and classical Chinese predominate, alongside German, French, Italian, Greek, Hebrew, Arabic, Syriac, Sanskrit, Tibetan and Yucatec Maya.</p>
-            <p>Each page is annotated where the reading is difficult, and indexed by the people, places and ideas it names, so that a single idea may be traced across books, centuries and languages.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="proof" id="translated">
-        <div className="wrap pf">
-          <h2 className="pword">Translated</h2>
-          <div>
-            <p className="lede">5.7 million pages in English, each aligned with its original. Of these books, 4,561 appear in English for the first time.</p>
-            <h3 style={{ marginTop: '8px' }}>Translated pages, by century</h3>
-            <p className="note" style={{ marginBottom: '18px' }}>By date of the book.</p>
-            <div className="bar"><span>before 1400</span><i style={{ width: '17%' }}></i><span>0.17M</span></div>
-            <div className="bar"><span>1400s</span><i style={{ width: '40%' }}></i><span>0.4M</span></div>
-            <div className="bar"><span>1500s</span><i style={{ width: '100%' }}></i><span>1.0M</span></div>
-            <div className="bar"><span>1600s</span><i style={{ width: '90%' }}></i><span>0.9M</span></div>
-            <div className="bar"><span>1700s</span><i style={{ width: '90%' }}></i><span>0.9M</span></div>
-            <div className="bar"><span>1800s</span><i style={{ width: '90%' }}></i><span>0.9M</span></div>
-            <div className="bar"><span>1900–1930</span><i style={{ width: '50%' }}></i><span>0.5M</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="proof alt" id="reviewed">
-        <div className="wrap pf">
-          <h2 className="pword">Community-reviewed</h2>
-          <div>
-            <p className="lede">The most demanding material is reviewed by scholars; the Mayanist David Stuart has recently examined our Yucatec Maya readings. A further 1,465 volunteers correct pages, and readers report what they find.</p>
-            <p>Translations are tested against published human translations in fourteen languages, and error rates are published.</p>
-            <div className="photos">
-              <img src="/ai-partners/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam" />
-              <img src="/ai-partners/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica" />
+      <section className="mb-20">
+        <dl className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-6">
+          {POINTS.map((p) => (
+            <div key={p.label} className="border-t border-[#e8e6e3] pt-3">
+              <dt className="font-serif text-xl text-[#1a1a18]">{p.label}</dt>
+              <dd className="text-[#666] text-[15px] mt-1">{p.fact}</dd>
             </div>
-            <p className="cap">The Embassy of the Free Mind, Amsterdam, home of the Ritman Library.</p>
-          </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="mb-20 grid md:grid-cols-[3fr_2fr] gap-10 items-start">
+        <div>
+          <p className={label}>The untranslated record</p>
+          <p className={prose}>
+            The translation of ancient texts in fifteenth-century Florence helped give rise to the
+            Renaissance. Yet 90% of Renaissance Latin itself has never been translated, and the gaps
+            in Chinese, Sanskrit, Tibetan, Arabic and Hebrew are wider still.
+          </p>
+        </div>
+        <figure>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/ai-partners/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola" className="w-full border border-[#e8e6e3]" />
+          <figcaption className="text-[#999] text-xs mt-2">An early printed page naming Marsilio Ficino and Giovanni Pico della Mirandola.</figcaption>
+        </figure>
+      </section>
+
+      <section className="mb-20" id="collected">
+        <p className={label}>Collected</p>
+        <p className={prose}>
+          Assembled from more than thirty of the world’s great libraries, and catalogued by work,
+          edition and author.
+        </p>
+        <div className="max-w-xl">
+          {HOLDINGS.map((h) => (
+            <div key={h.label} className="flex justify-between items-baseline border-b border-[#e8e6e3] py-2">
+              <span className="text-[#1a1a18] text-[15px]">{h.label}</span>
+              <span className="text-[#1a1a18] text-[15px] tabular-nums">{h.value}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-[#999] text-sm mt-4">30.7 TB of scans. Counted 23 October 2026.</p>
+      </section>
+
+      <section className="mb-20" id="transcribed">
+        <p className={label}>Transcribed</p>
+        <p className={prose}>
+          9.4 million pages transcribed in their original language and script, mostly Latin and
+          classical Chinese, with German, French, Italian, Greek, Hebrew, Arabic, Syriac, Sanskrit,
+          Tibetan and Yucatec Maya. Each page is indexed by the people, places and ideas it names,
+          so an idea can be followed from book to book.
+        </p>
+      </section>
+
+      <section className="mb-20" id="translated">
+        <p className={label}>Translated</p>
+        <p className={prose}>
+          5.7 million pages in English, each aligned with its original. 4,561 books appear in English
+          for the first time.
+        </p>
+        <div className="max-w-xl">
+          <p className="text-[#666] text-sm mb-3">Translated pages, by date of the book</p>
+          {CENTURIES.map((c) => (
+            <div key={c.label} className="grid grid-cols-[96px_1fr_48px] items-center gap-3 mb-2 text-sm">
+              <span className="text-[#444]">{c.label}</span>
+              <span className="block h-3 bg-[#9e4a3a] rounded-sm" style={{ width: `${(c.pages / maxCentury) * 100}%` }} />
+              <span className="text-[#999] text-right tabular-nums">{c.pages}M</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="proof" id="rights">
-        <div className="wrap pf">
-          <h2 className="pword">Rights cleared</h2>
-          <div>
-            <p className="lede">The original texts are in the public domain. Each book's date and imprint are examined, and any work of uncertain status is withheld.</p>
-            <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Other uses may be licensed directly.</p>
-          </div>
+      <section className="mb-20 grid md:grid-cols-[3fr_2fr] gap-10 items-start" id="reviewed">
+        <div>
+          <p className={label}>Community-reviewed</p>
+          <p className={prose}>
+            The most demanding material is reviewed by scholars; the Mayanist David Stuart has
+            recently examined our Yucatec Maya readings. A further 1,465 volunteers correct pages, and
+            readers report what they find. Translations are tested against published human
+            translations in fourteen languages, and error rates are published.
+          </p>
+        </div>
+        <figure>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/ai-partners/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica" className="w-full aspect-[4/3] object-cover" />
+          <figcaption className="text-[#999] text-xs mt-2">The Embassy of the Free Mind, Amsterdam, home of the Ritman Library.</figcaption>
+        </figure>
+      </section>
+
+      <section className="mb-20" id="rights">
+        <p className={label}>Rights cleared</p>
+        <p className={prose}>
+          The original texts are in the public domain. Each book’s date and imprint are examined,
+          and any work of uncertain status is withheld. Translations, notes and indexes are original
+          to Source Library and published under a Creative Commons share-alike licence; other uses
+          may be licensed directly.
+        </p>
+      </section>
+
+      <section className="mb-20" id="available">
+        <p className={label}>Immediately available</p>
+        <p className={prose}>
+          The public corpus is available now through our streaming API and MCP server, with a stable
+          citation link for every passage: about 18 billion tokens, 11.5 billion of them
+          transcription and translation aligned to the page. A sample of ten books is available on
+          request. A few of the books:
+        </p>
+        <ul className="max-w-xl">
+          {EXAMPLES.map((e) => (
+            <li key={e.href} className="flex justify-between items-baseline gap-6 border-b border-[#e8e6e3] py-2 text-[15px]">
+              <span>
+                <Link href={e.href} className="text-[#1a1a18] underline decoration-[#ccc] underline-offset-4 hover:decoration-[#9e4a3a]">
+                  {e.title}
+                </Link>
+                <span className="text-[#666]">, {e.by}</span>
+              </span>
+              <span className="text-[#999] text-sm whitespace-nowrap">{e.note}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="text-[#999] text-sm mt-4">
+          More on the data format and access: <Link href="/dataset" className="underline">the dataset</Link>.
+        </p>
+      </section>
+
+      <section className="mb-20">
+        <p className={label}>The remaining work</p>
+        <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.4] max-w-2xl mb-6">
+          19.6 million pages remain to be read. They are scanned, catalogued and ready.
+        </p>
+        <div
+          className="flex h-4 rounded-sm overflow-hidden max-w-3xl"
+          role="img"
+          aria-label="Of 28.9 million scanned pages: 5.7 million translated, 3.7 million transcribed, 19.6 million waiting"
+        >
+          {PROGRESS.map((p) => (
+            <span key={p.label} className={p.className} style={{ flex: p.millions / totalPages }} />
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-x-8 gap-y-2 mt-3 text-sm text-[#666]">
+          {PROGRESS.map((p) => (
+            <span key={p.label} className="inline-flex items-center gap-2">
+              <span className={`inline-block w-3 h-3 rounded-sm ${p.className}`} />
+              <b className="text-[#1a1a18] font-medium tabular-nums">{p.millions}M</b> {p.label}
+            </span>
+          ))}
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 mt-12">
+          {OFFERS.map((o) => (
+            <div key={o.title} className="border-t border-[#e8e6e3] pt-3">
+              <p className="font-serif text-xl text-[#1a1a18] mb-2">{o.title}</p>
+              <p className="text-[#444] text-[15px] leading-[1.7]">{o.body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="proof alt" id="available">
-        <div className="wrap pf">
-          <h2 className="pword">Immediately available</h2>
-          <div>
-            <p className="lede">The public corpus is available now through our streaming API and MCP server, with a stable citation link for every passage. It comprises some 18 billion tokens, of which 11.5 billion are transcription and translation aligned to the page.</p>
-            <p>A sample of ten books, with scans, transcriptions, translations and notes, is available on request. Representative works include Robert Fludd's <a href="/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="/dataset">the dataset</a> is also available.</p>
-          </div>
-        </div>
+      <section className="mb-8 border-t border-[#e8e6e3] pt-10 max-w-2xl">
+        <p className={prose}>
+          Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind
+          in Amsterdam. We welcome conversations with partners who wish to see the remaining pages
+          read and released.
+        </p>
+        <p className="font-serif text-xl text-[#1a1a18]">Derek Lomas</p>
+        <p className="text-[#666] text-sm">Founder, Source Library · derek@sourcelibrary.org</p>
       </section>
-
-      <section className="band dark">
-        <div className="wrap">
-          <p className="eyebrow">The remaining work</p>
-          <h2>19.6 million pages remain to be read</h2>
-          <p className="narrow">They are scanned, catalogued and ready for transcription and translation.</p>
-          <div className="progress" role="img" aria-label="Of 28.9 million scanned pages: 5.7 million translated, 3.7 million transcribed, 19.6 million waiting">
-            <i className="seg tr" style={{ flex: 5.7 }}></i><i className="seg tc" style={{ flex: 3.7 }}></i><i className="seg wt dk" style={{ flex: 19.6 }}></i>
-          </div>
-          <div className="legend dk">
-            <span><i className="sw tr"></i><b>5.7M</b> translated into English</span>
-            <span><i className="sw tc"></i><b>3.7M</b> transcribed, awaiting translation</span>
-            <span><i className="sw wt dk"></i><b>19.6M</b> scanned, waiting to be read</span>
-          </div>
-          <div className="offer dk">
-            <div><h3>An open release</h3><p>A partner's support would fund the reading of the remaining pages and their release to the public, as AI laboratories have done for other major libraries.</p></div>
-            <div><h3>Early access</h3><p>The partner receives each release in advance, together with held-back test sets and scholarly review in the languages of its choosing.</p></div>
-            <div><h3>Acknowledgement</h3><p>The partner is credited on each release, alongside the Embassy of the Free Mind and the contributing libraries.</p></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="summary">
-        <div className="wrap">
-          <div className="letter">
-            <p className="eyebrow">Summary</p>
-            <p>Source Library is the largest library of translated historical sources: a digital archive of 129,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 4,561 books translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
-            <p>Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind. We welcome conversations with partners who wish to see the remaining 19.6 million pages read and released.</p>
-            <p className="sig">Derek Lomas<span>Founder, Source Library</span></p>
-            <p className="addr">derek@sourcelibrary.org</p>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <div className="wrap">
-          <span><span className="tri" aria-hidden="true" style={{ marginRight: '8px', verticalAlign: '-1px' }}></span>Source Library is a Wisdom Frontiers project, with the <a href="https://embassyofthefreemind.com">Embassy of the Free Mind</a>, Amsterdam.</span>
-          <span><a href="https://sourcelibrary.org">sourcelibrary.org</a> · <a href="https://wisdomfrontiers.org">wisdomfrontiers.org</a></span>
-        </div>
-      </footer>
-      </div>
-    </>
+    </ContentPageLayout>
   );
 }

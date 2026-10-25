@@ -1,0 +1,11 @@
+ROW 1 | ണൈവൈകല്യാദിഭിഃകാന[illegible] ‖ ത്.ചെദ്ദൃമാദൃതരക്ഷ[illegible]ക്ഷഭെദൊന്ദിഭെവക്ക[illegible] ‖ ല്യാദഷ്ടാഃവിംശതിഭെദായ
+ROW 2 | ന്ധ്യാന്ധശക്തികന്നത്വാ[illegible] ‖ വത്വപി[illegible]ഭക്ഷിചതി[illegible]ന്ദ്രൊമെനക്ഷാജ്ഞ[illegible] ‖ [illegible]നൈവൈകല്യഷഗുണവൈ
+ROW 3 | പക്ഷമൃതിമന്ദ്രനടബധിര[illegible] ‖ ത്വലിൻവധാഭിധ[illegible]ബുദ്ധിസഹിതാ[illegible] ‖ പ്രകാരഃസിദ്ധിസഹിതാഷ്ടു
+ROW 4 | പ്രകാരമൊഭവതിതു ‖ ഷ്ടഃചൈവതൃഷ്ട[illegible]ഷ്ടഭാഗയനവക്ഷാർ ‖ ൽഭെദാഇതിതൃനൂ
+ROW 5 | ഷാനതരഭേദസമ ‖ താദൾയനാഃവ[illegible]ഹാനെഭെദഃഷ്ടമസഇ ‖ ത്യാദിഃകമഇത്യാദി
+ROW 6 | ദ്ദൃഷ്ടഥത്സ്വാമ്യാ ‖ അക്ഷരഷ്ടാംത്രിസ[illegible]സംവർദ്ധമിഃഹാചപ്രകൃ ‖ തിസ്തുഷ്ടയശ്ചത്വാഃ
+ROW 7 | സത്യംനിമിചൈവതാ ‖ മെതൃനാമായെൾ[illegible]ഉത്തമ്മൊനസ്ര ‖ ഭാവാത്മകാതുഷ്ടയ
+ROW 8 | ഷാദഗഷ്ഠാദ്ഗൃഹപൂർവ്വൾ ‖ ഇത്തിസ്ഥലഭ്യാഭ[illegible]ദ്രവതിതുഷ്ടിധാ ‖ നാമ്പിവിദ്യാദിതരം
+ROW 9 | ന്ധ്യാന്ധ്യതിഭവത്സരാതെമാ ‖ മാവിസ്വാചെതിശരഭെ[illegible]ജ്ഞെനാരശ്മിവിദ്യൊകഭ ‖ ഭെദാഇത്യഷ്ടതെവമ
+ROW 10 | ഹഃതുന്ദൃതൈശ്ചരത ‖ താദെവാന്തഃവിമിന[illegible]നാഡിവനാമിതാരുമ്പു ‖ ഷ്ടഗുണൈവമശ്ലൊമാത്രിതഃ
+NOTE | I opened all four pieces: 10 rows, with p02 and p03 together forming the middle column. Rows 4–8 are short in the left column. I'm only confident of a few words (e.g. ഭെദാ, തുഷ്ടി, സിദ്ധി, വിംശതി). Most aksharas are low-confidence guesses and may not form real Sanskrit. Where the p02/p03 overlap and the hole edges meet, I couldn't line the pieces up reliably, so I marked [illegible] there. Treat this as a rough draft that needs checking against the leaf at higher magnification.

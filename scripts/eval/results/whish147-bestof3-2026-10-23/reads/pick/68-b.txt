@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | None of the three has any readable Sanskrit or Malayalam, so B ranks first: it marks the whole leaf illegible with two string holes in every row, and only its rows 7–8 end in a stray ḥ, which A and C also show. A keeps the same two-hole layout but adds more lone ḥ marks that carry no meaning, and C also drops a string hole in several rows.

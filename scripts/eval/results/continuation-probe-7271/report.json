@@ -1,0 +1,243 @@
+{
+ "issue": 7271,
+ "gates": {
+  "P": {
+   "run": 40,
+   "sh": 0.5
+  },
+  "N": {
+   "run": 8,
+   "sh": 0.02
+  }
+ },
+ "engines": {
+  "opus": {
+   "groups": {
+    "P": {
+     "n": 5,
+     "errors": 0,
+     "run_median": 200,
+     "run_ci": [
+      130,
+      205
+     ],
+     "sh_median": 1,
+     "sh_ci": [
+      0.959,
+      1
+     ],
+     "sh_mean": 0.983,
+     "sh_mean_ci": [
+      0.967,
+      1
+     ],
+     "run_ge_20": 5,
+     "sh_ge_10pct": 5,
+     "run_max": 205
+    },
+    "N": {
+     "n": 10,
+     "errors": 0,
+     "run_median": 4,
+     "run_ci": [
+      2,
+      13
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0.039
+     ],
+     "sh_mean": 0.104,
+     "sh_mean_ci": [
+      0,
+      0.297
+     ],
+     "run_ge_20": 2,
+     "sh_ge_10pct": 1,
+     "run_max": 151
+    },
+    "R": {
+     "n": 20,
+     "errors": 0,
+     "run_median": 3,
+     "run_ci": [
+      3,
+      4
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0
+     ],
+     "sh_mean": 0.002,
+     "sh_mean_ci": [
+      0,
+      0.006
+     ],
+     "run_ge_20": 0,
+     "sh_ge_10pct": 0,
+     "run_max": 14
+    },
+    "M": {
+     "n": 20,
+     "errors": 0,
+     "run_median": 3.5,
+     "run_ci": [
+      2,
+      10
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0.019
+     ],
+     "sh_mean": 0.118,
+     "sh_mean_ci": [
+      0.014,
+      0.247
+     ],
+     "run_ge_20": 4,
+     "sh_ge_10pct": 3,
+     "run_max": 133
+    }
+   },
+   "gate": {
+    "P": true,
+    "N": true
+   },
+   "probe_is_a_measure": true,
+   "contrast": {
+    "run_median_diff": -0.5,
+    "run_median_diff_ci": [
+     -7,
+     1.5
+    ],
+    "sh_mean_diff": -0.115,
+    "sh_mean_diff_ci": [
+     -0.245,
+     -0.014
+    ],
+    "run_mean_diff": -16.65,
+    "run_mean_diff_ci": [
+     -35.6,
+     -1.8
+    ]
+   }
+  },
+  "gemini": {
+   "groups": {
+    "P": {
+     "n": 5,
+     "errors": 0,
+     "run_median": 200,
+     "run_ci": [
+      79,
+      205
+     ],
+     "sh_median": 1,
+     "sh_ci": [
+      0.747,
+      1
+     ],
+     "sh_mean": 0.941,
+     "sh_mean_ci": [
+      0.84,
+      1
+     ],
+     "run_ge_20": 5,
+     "sh_ge_10pct": 5,
+     "run_max": 205
+    },
+    "N": {
+     "n": 10,
+     "errors": 0,
+     "run_median": 3,
+     "run_ci": [
+      2,
+      5
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0
+     ],
+     "sh_mean": 0.001,
+     "sh_mean_ci": [
+      0,
+      0.002
+     ],
+     "run_ge_20": 0,
+     "sh_ge_10pct": 0,
+     "run_max": 8
+    },
+    "R": {
+     "n": 20,
+     "errors": 0,
+     "run_median": 3.5,
+     "run_ci": [
+      2.5,
+      4
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0
+     ],
+     "sh_mean": 0.003,
+     "sh_mean_ci": [
+      0,
+      0.008
+     ],
+     "run_ge_20": 0,
+     "sh_ge_10pct": 0,
+     "run_max": 14
+    },
+    "M": {
+     "n": 20,
+     "errors": 0,
+     "run_median": 3,
+     "run_ci": [
+      2,
+      4
+     ],
+     "sh_median": 0,
+     "sh_ci": [
+      0,
+      0
+     ],
+     "sh_mean": 0.001,
+     "sh_mean_ci": [
+      0,
+      0.004
+     ],
+     "run_ge_20": 0,
+     "sh_ge_10pct": 0,
+     "run_max": 11
+    }
+   },
+   "gate": {
+    "P": true,
+    "N": true
+   },
+   "probe_is_a_measure": true,
+   "contrast": {
+    "run_median_diff": 0.5,
+    "run_median_diff_ci": [
+     -1,
+     2
+    ],
+    "sh_mean_diff": 0.001,
+    "sh_mean_diff_ci": [
+     -0.003,
+     0.007
+    ],
+    "run_mean_diff": 0.55,
+    "run_mean_diff_ci": [
+     -1,
+     2.25
+    ]
+   }
+  }
+ }
+}

@@ -23,6 +23,7 @@
  */
 
 import { createHash, randomBytes } from 'crypto';
+import { existsSync } from 'fs';
 import { recountBook } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
@@ -31,6 +32,7 @@ import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
+import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { createRequire } from 'node:module';
@@ -947,30 +949,46 @@ export function echoExempt(ocrText, lang) {
  *
  * @returns {{ translations: Map<number,string>, returned: number, discarded: null|'short-block'|'over-block' }}
  */
-export function parseBlockTranslations(responseText, pages) {
+export function parseBlockTranslations(responseText, pages, { lang } = {}) {
   const translations = new Map();
   const regex = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
   const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
   // A translation under 15% of its OCR is a truncation (a stray closing tag) — the page falls back.
   const tooShort = (p, text) => p && ocrOf(p).length > 100 && text.length < ocrOf(p).length * 0.15;
+  // #5055: the write guard, asked of the entry AS RETURNED — sanitizeTranslationTags would close a cut tail tag. A
+  // truncated entry is left out, so the page falls back to a single-page request: its one re-read.
+  const truncated = [];
+  const cut = (p, raw) => {
+    if (!p) return false;
+    const g = checkWrittenText(raw, { kind: 'translation', source: ocrOf(p), lang, type: p.page_type });
+    if (g.verdict !== 'truncated') return false;
+    truncated.push({ page_number: p.page_number, reasons: g.reasons });
+    return true;
+  };
   const entries = []; // in order, for the positional fallback
+  const raws = [];
   let match;
   while ((match = regex.exec(responseText || '')) !== null) {
     const pageNum = parseInt(match[1], 10);
-    const text = sanitizeTranslationTags(match[2].trim());
+    const raw = match[2].trim();
+    const text = sanitizeTranslationTags(raw);
     entries.push(text);
-    if (tooShort(pages.find((p) => p.page_number === pageNum), text)) continue;
+    raws.push(raw);
+    const p = pages.find((x) => x.page_number === pageNum);
+    if (tooShort(p, text)) continue;
+    if (cut(p, raw)) continue;
     translations.set(pageNum, text);
   }
-  if (entries.length < pages.length) return { translations: new Map(), returned: entries.length, discarded: 'short-block' };
-  if (entries.length > pages.length) return { translations: new Map(), returned: entries.length, discarded: 'over-block' };
+  if (entries.length < pages.length) return { translations: new Map(), returned: entries.length, discarded: 'short-block', truncated: [] };
+  if (entries.length > pages.length) return { translations: new Map(), returned: entries.length, discarded: 'over-block', truncated: [] };
   // Positional fallback: the model renumbered the pages (1–8 for 491–498); the count matches, so
   // the order is trusted and each entry is checked against its own page's length.
-  if (entries.length === pages.length && pages.filter((p) => translations.has(p.page_number)).length < pages.length) {
+  if (entries.length === pages.length && pages.filter((p) => translations.has(p.page_number) || truncated.some((t) => t.page_number === p.page_number)).length < pages.length) {
     translations.clear();
-    pages.forEach((p, i) => { if (!tooShort(p, entries[i])) translations.set(p.page_number, entries[i]); });
+    truncated.length = 0;
+    pages.forEach((p, i) => { if (!tooShort(p, entries[i]) && !cut(p, raws[i])) translations.set(p.page_number, entries[i]); });
   }
-  return { translations, returned: entries.length, discarded: null };
+  return { translations, returned: entries.length, discarded: null, truncated };
 }
 
 // Refused output is stored truncated — a 350K-char loop is evidence of a loop,
@@ -1058,6 +1076,37 @@ export function isDegenerateSource(ocrText) {
 }
 
 /**
+ * Record a translation the write guard called truncated (#5055) instead of storing it. Like the empty answer, a
+ * failure marker and not a refusal, so the page is asked for once more: `translation.fail_reason` =
+ * `write-guard:truncated:…`, `failed_at`, `fail_count` + 1. When the page's previous failure was the guard's too, this is
+ * the second cut read and `health_blocked: 'truncated'` takes it out of the selectors (a person, or the #5055 repair
+ * lane, picks it up). A page that holds a translation is never stamped — the cut read was a retry, and the stored
+ * English stands. The text is kept as evidence either way (page_revisions, source 'health-gate-refused'). Never throws.
+ */
+export const TRUNCATED_REASON = 'truncated';
+export async function recordTruncatedTranslation(db, page, text, verdict, { jobId, model } = {}) {
+  const reason = writeGuardReason(verdict);
+  try {
+    const now = new Date();
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      [{ $set: {
+        'translation.health_blocked': { $cond: [{ $eq: [{ $substrCP: [{ $ifNull: ['$translation.fail_reason', ''] }, 0, 12] }, 'write-guard:'] }, TRUNCATED_REASON, { $ifNull: ['$translation.health_blocked', '$$REMOVE'] }] },
+        'translation.fail_reason': reason,
+        'translation.failed_at': now,
+        'translation.fail_count': { $add: [{ $ifNull: ['$translation.fail_count', 0] }, 1] },
+        updated_at: now,
+      } }]
+    );
+  } catch (e) {
+    console.error(`[write-guard] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
+  await persistRefusedTranslation(db, page, text, reason, { jobId, model });
+  return reason;
+}
+
+/**
  * Record a refused translation on the page and keep its text — the two steps every health-gate
  * refusal takes, for a writer that does not go through `writePageTranslation`. The stamp
  * (`translation.health_blocked` + `_at`) is the recorded skip: the page stays untranslated and
@@ -1076,6 +1125,50 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
     console.error(`[health-gate] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
   }
   await persistRefusedTranslation(db, page, text, reason, { jobId, model });
+}
+
+/** The value recorded in `translation.fail_reason` when the model answered with nothing (#4685). */
+export const EMPTY_RESPONSE_REASON = 'empty_response';
+
+/** Is this model answer empty, or only whitespace? Such an answer is never stored as a translation (#4685). */
+export function isEmptyTranslation(text) {
+  return typeof text !== 'string' || !/\S/.test(text);
+}
+
+/**
+ * The fields `recordEmptyTranslation` stamps. A writer that $sets the whole `translation` object
+ * clears them by construction; a writer that $sets dotted `translation.*` paths must $unset these
+ * on a real write, so a page that later translates does not keep saying it failed.
+ */
+export const CLEAR_EMPTY_RESPONSE_UNSET = Object.freeze({ 'translation.fail_reason': '', 'translation.failed_at': '', 'translation.fail_count': '' });
+
+/**
+ * Record an empty model answer on the page instead of storing it (#4685). An empty answer used to
+ * be written as `translation.data: ''`: on a page that had English it replaced it with a blank page,
+ * and on one that had none it looked done and was never tried again (the collapse check that would
+ * catch it only fires on a long source).
+ *
+ * Not a refusal: `health_blocked` takes a page out of every selector, and an empty answer is
+ * usually one bad call. So it is a failure marker, the shape the OCR side uses (`ocr.fail_count`,
+ * `fail_reason`, #4674): `translation.fail_reason: 'empty_response'`, `failed_at`, `fail_count`.
+ * `translation.data` is never touched, and a page that already holds a translation is left alone
+ * entirely (the filter): the empty answer was a retry, and the real text stands. Never throws.
+ */
+export async function recordEmptyTranslation(db, page) {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id, 'translation.data': { $not: /\S/ } },
+      {
+        $set: { 'translation.fail_reason': EMPTY_RESPONSE_REASON, 'translation.failed_at': now, updated_at: now },
+        $inc: { 'translation.fail_count': 1 },
+      }
+    );
+  } catch (e) {
+    console.error(`[empty-response] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
 }
 
 /**
@@ -1165,6 +1258,16 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
 }
 
 /**
+ * The box-wide switch for the write-time seam guard (#7118): a file holding `dry` or `apply`. One file reaches every
+ * lane that writes a translation on the box (scheduler workers, cron lanes, cli-translate inside jobs) without editing
+ * each launch line. SEAM_GUARD in the environment wins over it (`off` turns the guard off for one process).
+ */
+export const SEAM_GUARD_FILE = '/etc/sourcelibrary/seam-guard';
+// Under a test runner the box file is ignored: a test that drives writePageTranslation with a mock db would otherwise run
+// the guard (and could call Claude) on any box that has the file (#7118, 2026-10-24: a vitest run logged a guard check).
+export const seamGuardOn = (env = process.env, file = SEAM_GUARD_FILE) => (env.SEAM_GUARD ? env.SEAM_GUARD !== 'off' : !env.VITEST && existsSync(file));
+
+/**
  * Snapshot the page's current translation into page_revisions, then write the
  * new one with full provenance. Promise 3 lives here so no caller can forget
  * it. Non-fatal revision failure is logged, never blocks the write (matching
@@ -1189,11 +1292,14 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   One refusal is NOT opt-in: a page hidden in its continuity <meta>
  *   (`hidesPageInMeta`, reason 'hidden-meta') is refused for every caller,
  *   stamped `translation.health_blocked` and kept in page_revisions (#5376).
- * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, reason?: string, text: string}}
+ *   An empty or whitespace-only `text` is never stored either (#4685): the page is stamped
+ *   `translation.fail_reason: 'empty_response'` (recordEmptyTranslation) and the result carries
+ *   {written:false, emptyResponse:true, reason:'empty_response'}, `text` = the existing translation.
+ * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, emptyResponse?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine, finishReason, partial, writeGuard = true }) {
   // What produced this text (#4613) — required, one of:
   //   call:   { call_site, api?, model?, promptText, generationConfig, run?, context?, response?,
   //             prompt_sent_hash?, prompt_sent_chars? } — the door builds the engine block here,
@@ -1217,6 +1323,17 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     input: translationInput({ ocrText: page?.ocr?.data ?? '', ocrUpdatedAt: page?.ocr?.updated_at, context: call.context }),
     response: call.response,
   });
+  // #5055: the write guard, on the text as the caller holds it — before sanitizeTranslationTags closes a cut tail tag.
+  // Always on (writeGuard: false only for a restore of text whose shape is not this run's): a tag left open at the tail,
+  // a text ending inside a tag, the provider's MAX_TOKENS, the CLI's partial flag. Its length rule is part of the
+  // opt-in health gate below, after the refusals that name a defect more exactly (collapsed, reasoning-leak, …).
+  if (writeGuard) {
+    const g = checkWrittenText(text, { kind: 'translation', finishReason, partial });
+    if (g.verdict === 'truncated') {
+      const reason = await recordTruncatedTranslation(db, page, text, g, { jobId, model: resolvedModel });
+      return { written: false, protected: false, unhealthy: true, truncated: true, reason, text };
+    }
+  }
   // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page.
   // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
   let clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: guardTranslationText(sanitizeTranslationTags(text)), type: page?.page_type }).text;
@@ -1234,6 +1351,12 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       await persistRefusedTranslation(db, page, clean, health.reason, { jobId, model });
       return { written: false, protected: false, unhealthy: true, reason: health.reason, text: clean };
     }
+    // #5055: English under 0.35× its source, in a language whose census allows that rule — a cut page, asked for again.
+    const short = writeGuard ? checkWrittenText(clean, { kind: 'translation', source: page?.ocr?.data, lang: book?.language, type: page?.page_type }) : null;
+    if (short?.verdict === 'truncated') {
+      const reason = await recordTruncatedTranslation(db, page, clean, short, { jobId, model: resolvedModel });
+      return { written: false, protected: false, unhealthy: true, truncated: true, reason, text: clean };
+    }
   }
 
   // Human-edit guard (#3734): a translation a person wrote or corrected by
@@ -1248,6 +1371,14 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
   if (isHumanEdited && !overwriteHuman) {
     return { written: false, protected: true, text: existing.data };
+  }
+
+  // Always on (#4685): an empty answer is never stored, so it can neither blank a page that has
+  // English nor make one without it look done. Recorded as a failure; `text` is the page's
+  // existing translation, for continuity.
+  if (isEmptyTranslation(clean)) {
+    await recordEmptyTranslation(db, page);
+    return { written: false, protected: false, emptyResponse: true, reason: EMPTY_RESPONSE_REASON, text: existing?.data || '' };
   }
 
   // Always on, unlike the opt-in gate above (#5376): a translation whose continuity <meta> holds
@@ -1301,9 +1432,10 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply. It runs after the commit, is bounded and
-  // fail-open, and skips its own writes; loaded only when on, so this door does not depend on it otherwise.
-  if (process.env.SEAM_GUARD) {
+  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
+  // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
+  // depend on it otherwise.
+  if (seamGuardOn()) {
     try {
       const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
       await runSeamGuard(db, { page, book, note, jobId });

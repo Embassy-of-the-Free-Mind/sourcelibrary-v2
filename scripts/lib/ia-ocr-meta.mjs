@@ -56,16 +56,40 @@ export async function iaOcrMeta(id) {
     contributor: m.contributor || null,
     detected_lang: m.ocr_detected_lang || null,
     imagecount: m.imagecount ? +m.imagecount : null,
+    // What the item itself says about rights. Most 1880–1930 items say nothing (null).
+    rights: m.rights ? String(m.rights).slice(0, 500) : null,
+    licenseurl: m.licenseurl || null,
+    copyright_status: m['possible-copyright-status'] || null,
+    access_restricted: String(m['access-restricted-item'] || '').toLowerCase() === 'true',
     has_djvu_xml: !!xmlFile,
     djvu_xml_files: xmlFiles.map((f) => f.name),
   };
 }
 
+/**
+ * The rights record for the Archive's OCR text of one item (`ocr.ia.licence`). A machine
+ * transcription adds no authorship of its own, so the text carries the WORK's status: US public
+ * domain when the edition was published more than 95 years before this year (1930 and earlier in
+ * 2026). Any other case is recorded as not_recorded with the reason, never guessed. The item's own
+ * rights fields are kept beside the verdict so a later reader can see what the Archive said.
+ */
+const PD_MARK = 'https://creativecommons.org/publicdomain/mark/1.0/';
+export function iaTextLicence(meta, year, now = new Date()) {
+  const lastPdYear = now.getUTCFullYear() - 96;
+  const fromItem = { ia_rights: meta.rights || null, ia_licenseurl: meta.licenseurl || null, ia_copyright_status: meta.copyright_status || null, ia_access_restricted: !!meta.access_restricted };
+  const base = { rule: 'ia-text-licence/1', jurisdiction: 'US', publication_year: year ?? null, ...fromItem };
+  if (year && year <= lastPdYear) {
+    return { ...base, status: 'publicdomain', licence_url: PD_MARK, basis: `published ${year}, before ${lastPdYear + 1}: US public domain (95-year term); a machine transcription adds no copyright` };
+  }
+  return { ...base, status: 'not_recorded', licence_url: null, basis: year ? `published ${year}: not yet US public domain by date alone; rights not assessed by this writer` : 'publication year unknown; rights not assessed by this writer' };
+}
+
 /** The `ocr.ia` block written on every ia_djvu page (see src/lib/types/page.ts OcrData.ia). */
-export function iaProvenance(iaId, meta) {
+export function iaProvenance(iaId, meta, { year } = {}) {
   return {
     item: iaId, engine: meta.engine || null, module_version: meta.version || null, converter: meta.converter || null,
     ocr_date: meta.ocr_date || null, scandate: meta.scandate || null, contributor: meta.contributor || null,
     detected_lang: meta.detected_lang || null, item_url: `https://archive.org/details/${iaId}`,
+    licence: iaTextLicence(meta, year),
   };
 }

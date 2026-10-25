@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, C, A
+WHY | B keeps the clearest Dīpikā wording in most rows, such as "āśrayāsiddhasvarūpāsiddhāyāḥ", "vyabhicārajñānadvārā", "pakṣadharmatāvighaṭakatayā" and "upamānaṃ lakṣaṇa…"; C has good stretches but many gaps and misreadings ("vṛddhica", "niṣṭakatayā"); A breaks down into nonsense syllables in rows 1–2 and 7–9.

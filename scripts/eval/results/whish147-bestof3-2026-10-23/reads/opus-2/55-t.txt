@@ -1,0 +1,11 @@
+ROW 1 | കൈകശ്യാ°ദ്ധ്യയഃനകൈഹാതുകാറൻദ്ധ്യയമനനഹിതൽപരിജ്ഞാനാൽഹിമാതൃഷ്ടിയാകാരമിതു
+ROW 2 | ത്രച്ര്യകൈട്ടഃബാധിഷാതകാസ്രൂയഇതിൈയാദ്ര്യാത്തികൈകനായിദൈട്ടനിതകൈഡായിതെ
+ROW 3 | ദഷികൈകനവാഭാവിതന്ത്രദിഷ്ടാതാൽഃജ്ഞാനംപരമൃഷ്ടകിഉദഹോനങ്ങൾഞ്ജനാദ്ധ്യ
+ROW 4 | യൈനനഷാകണ്ട്യ ‖ തഷിഷ്ടാതവഹതുകാപ്രമൈഷാദ ‖ പ്രകൃതൈമൈഷദനാവ്യ
+ROW 5 | ഛഷ്ഠിത്ര°ഉപായ ‖ ന്ദ്രത്ത്വാദിതിവൃഷ്ടായാൽക്ക ‖ സംസിദ്ധായഃകോനദ്ദഃ
+ROW 6 | ബൈഹതുക്കാള ‖ തൈബാദ്ധാന്യാദഃസസർപ്ര ‖ ാഖിതികൈയായി
+ROW 7 | ഹതതബഃത്രൂന്യ ‖ ഷ്ട°ഭ്രമ്യൂത്യജ്ഞാനമയിഗള ‖ ഭിത്യസ്യസർപ്ര
+ROW 8 | ാക്ഷദൃഷ്ടികായമിത്ര ‖ ഷിൈടഹാൽജ്ഞാനംപ്രകാശയ ‖ യദഇഷ്ടംസജ്ഞമിതൃക
+ROW 9 | മിത്രച്യ്രഷ്ടദാനക ‖ ചെസിദ്ധിഹേതുഃദാനൈനസഹ്യാനായി ‖ ദകാജ്ഞാഭിജ്ഞാനം
+ROW 10 | ഭിയഷ്ടിതൈദ്യമ ‖ ച്ചുമിസാദാൽദ്വിദ്രതമിത്രുച്യ്രതത ‖ താധിപതിതാഃശസിദ്ധായഃ
+NOTE | All four pieces and all ten rows are transcribed, but most aksharas are uncertain, so treat this as a rough reading of the strokes rather than a reliable text. Rows 1–3 run full width, so they have no ‖. In rows 8–10 the writing reaches the holes, so I split them there. I joined the overlaps by eye and left out the duplicated text, but some joins may be wrong.

@@ -1,0 +1,11 @@
+ROW 1 | ഉദ്ധാരെണയുഃപരിണാമശി ‖ ലെശഷഃതത[illegible]വൈവപ[illegible]ാനാത്വതഷ്ട[illegible] ‖ ൈവഭിഗുണാഃപരിണാമശിലി
+ROW 2 | ഷ്ടാഇന്ദ്രിയവൃപതെദശട്ടാ ‖ ാരജ്ഞാനാനാധിഷ്ഠ[illegible]ധ്യാടപക്ഷെഷെരുശ ‖ ശ[illegible]മെതാദൃശ്[illegible]യമശക്യ
+ROW 3 | ശ്രുതിഇത്യുഃസർവ്വഗശരീരസ്ഥി ‖ സ്ഥിതബാഹ്യാന്തരകര[illegible]വൃത്തിചക്ഷു[illegible]ത്ര ‖ ത്രാണാര[illegible]നാനരിശിരസ്ഥിവെ
+ROW 4 | ഹിഃസ്യഏകല്ലകഗപ ‖ സ്ഥിതാഹിബൊദ്ധ്യ[illegible]ാഹ്യാവൃത്തിർവാഗ ‖ ാദൃഷ്ടിതാവാഞ്ചാ
+ROW 5 | ദത്വശബവിഗരധസ്ത ‖ ാൽസ്യഏകൽസ്യ[illegible]ഗവസ്ഥിതാവെത ‖ ഃ[illegible]മ്പിശ്ചാഇത്ര
+ROW 6 | ഹാബാഹ്യരെങ്കട്ടദാ ‖ ൈശക്തിലെഖാ[illegible]ൊഗ്യകിമയരെട ‖ ദാദെശഗ്രലമദൃക്കെ
+ROW 7 | ഇയമാദ്യാംരെ ‖ വിഗുണാവരിണാമവിശെഷാരെദ ‖ പനാദ്രാത്ഥവായര
+ROW 8 | നൊനതരമ്ബിഃശെ ‖ ഷാദിന്ദ്രിയാണാംസ്വ[illegible]കാവൃത്തി ‖ വിതൃാഹ[illegible]ശക്തൊദ്ദി[illegible]
+ROW 9 | ഷിദ്ധ്യാദിഭിഃശ്രൈശംഗ ‖ ണ്ടനാദ്ദർശ്രൂപനസി[illegible]സഗതവാതെസ്മ്പൃഷ്ടപ്രായ്മി ‖ ത്രിഃപകാനാംരെത്രാത്രാന്ദി
+ROW 10 | നോംഷ്ടവിദ്ധ്യാനേം ‖ മ്രാലൊചനമാത്രംവൃ[illegible]ദിഷ്യനമസ ‖ സംജ്ഞാചരെദ്ധ്യഃശ്രൗത
+NOTE | I could only read about a third of the leaf with any confidence. The photos are low resolution for this script, so most akṣaras above are tentative. Short clusters with only a few readable strokes are marked [illegible]. Rows 4–8 stop well before the left hole and so are short in the left column, but each row's text still runs straight across. I think the passage is from around Kārikā 27–28 (guṇa-pariṇāma, indriya-vṛtti, ālocana-mātra), but I didn't use the known text to fill any gaps. Treat every row as a draft and check it against higher-resolution images before using it.

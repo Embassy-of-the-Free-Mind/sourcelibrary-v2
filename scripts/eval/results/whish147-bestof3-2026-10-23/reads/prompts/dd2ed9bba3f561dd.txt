@@ -1,0 +1,47 @@
+Below are 3 machine transcriptions (A, B, C) of the same palm leaf, converted from Malayalam script to IAST. The leaf is from a Kerala palm-leaf manuscript (Malayalam script, Calicut 1822) holding Sanskrit works: the Sāṅkhyakārikā with its commentaries, and Annambhaṭṭa's Tarkasaṃgraha with the Dīpikā; some commentary passages are in Malayalam. Each row is one physical row of the leaf; ‖ marks a string hole, and the row continues straight across it. The scribe leaves no spaces, and a row may begin or end mid-word. [illegible] marks where the transcriber could not read.
+
+You see no image and no edition. Which transcription is the most plausible text that a scribe actually wrote: continuous, grammatical Sanskrit (or Malayalam) that makes sense in context, rather than strings of syllables that only look like words? Rank a transcription that reads as real language in most rows above one that is fluent in a few rows and broken elsewhere. Do not prefer a transcription only because it is longer or has fewer [illegible] marks.
+
+TRANSCRIPTION A
+1. kṣaratvamānguṇāṃścaramābhi [illegible] ratāpipaśi ‖ ṣitedaḻ [illegible] vāṃkā [illegible] ‖ rāmitrā [illegible] bhrama [illegible]
+2. tṛ [illegible] kṣajñikara [illegible] bra [illegible] vi [illegible] ya [illegible] nandrayā [illegible] ‖ ṣya [illegible] kṣayoḥkiṃ [illegible] tra [illegible] ‖ [illegible] trātma [illegible] syaṃ [illegible]
+3. [illegible] gaḥkiṃvā [illegible] tra [illegible] trāhaḥ [illegible] ṣanyatrā [illegible] ‖ [illegible] kṣanyā [illegible] bi ‖ [illegible] yaḥvi [illegible] yoga [illegible] bhoga [illegible]
+4. kavalyā [illegible] bhayaṃ ‖ pradhāna [illegible] saṃ [illegible] pādyaṃ [illegible] bhāpa ‖ [illegible] bhoga [illegible] pradhānavi [illegible]
+5. [illegible] mana [illegible] jñānasaṃ ‖ [illegible] daḻ [illegible] nātthaṃ [illegible] praya ‖ [illegible] syaṃ [illegible]
+6. [illegible] tidra [illegible] ‖ daḻ [illegible] ma [illegible] tthāl [illegible] ‖ [illegible] jña [illegible]
+7. [illegible] kil [illegible] kṣaṃ [illegible] ‖ [illegible] kkā [illegible] di [illegible] ḥ ‖ pradhāna [illegible] jñā [illegible]
+8. [illegible] kavalyāmi ‖ [illegible] daḻ [illegible] tvaṃkaivalyārttha ‖ [illegible] yānavi [illegible] yā
+9. [illegible] ma [illegible] kṣi [illegible] ‖ [illegible] kāva [illegible] vaṃ [illegible] ‖ [illegible] gu [illegible] cakṣuḥ [illegible]
+10. [illegible] ‖ [illegible] vi [illegible] śru [illegible] tva [illegible] naṃ [illegible] yā ‖ [illegible] brahma [illegible]
+11. [illegible] bha [illegible] tāḥ [illegible] ‖ [illegible] gu [illegible] jñāna [illegible] gu [illegible] māna [illegible] ‖ [illegible] yi [illegible] ntān [illegible]
+
+TRANSCRIPTION B
+1. krūkheraṇimānguṇāṃkṣaramādradratāpiparītraidalśaḥbāhāṃkarairāmitryapparaṣṭābhramanuṣya
+2. tṛññyakṣūṣṇikanaṇaipraviṣṇiyanatrūnnunaprayānāpparukṣaveyoḥṣṇiṃkirttanatukhakhaibindrādvameḍaskhai
+3. bāgaḥkriṃvāgyātmamitrāhāḥpṛthamaiñcutrādivṛkṣañcāreṣṭādiviyaḥvidyayāyovabhogaḥkhe
+4. kāvalyāñcetṛṭṭuṭaṅṅaṃ ‖ prayānenasaṃcādriṃṣikkareyāpa ‖ bhogakhapradhānaviddhi
+5. śramantakheññānasaṃ ‖ ṭapakrīkridarnātthaṃṣṛkṣeḥpraya ‖ ālenassaṃjñyātema
+6. ānaṃṣyūdāviddhitva ‖ daḻṣitrumaഩmadarṣālṣṛkṣaiṇai ‖ saṃjñyārekaṣṭāssa
+7. ṣyāṃkriddraśśaṃrina ‖ druṣapinasakkādinakkindrekṣaḥ ‖ prayānaññatrājñārekatra
+8. jñanantyakaikavalyami ‖ tryaretādarnādvagruṃkaikavalyātma ‖ ccedaṃyonamisareyā
+9. gairāmaitryādūṣikūṭṭaka ‖ ṭṭuddaṃcaramakhakāvalyaṣvaṃgabacaddhiddī ‖ ājāgaḥvaṃguññacakkuḥpaśratripañña
+10. ṛjjaṃnasvaccabhikṣayairā ‖ pisabodhatrunavajñritrūpanmānāṃgadeyossa ‖ sthātmadravyayogrāmagrākrīr
+11. jñaṃśovayodditaḥtrepa ‖ paṃgṛhīśrusāmabhirābhāruṃhṛgatimānavasvaḥ ‖ hapīgaddiyinyonīlṣṭuddi
+
+TRANSCRIPTION C
+1. krakharāṣimānguṇāṃścaramābhibhūtopipari ‖ ṣitedalna [illegible] hāṃkārarāmitra [illegible] lobhramaṟṟurekha ‖ [illegible]
+2. tva [illegible] kṣajñikanaraṇaipyaviṣṭiyantra [illegible] naprayānapu ‖ [illegible] āpṛtakṣayoḥ [illegible] ṃṣittukhekhai [illegible] trāddhamevastraṃ ‖ [illegible]
+3. lāgaḥ [illegible] ṃvāntrā [illegible] mamitrāhāḥpṛtha [illegible] nyatrādya ‖ pṛtakṣanyā [illegible] ṣiviyaḥvi [illegible] yovabhogaḥ ‖ [illegible]
+4. kāvalyāṣe [illegible] bhayaṃ ‖ [illegible] yārenasaṃpādyaṃ [illegible] kaḻeyāpa ‖ bhedāgaścapradhānavibhra
+5. [illegible] mantare [illegible] nasaṃ ‖ [illegible] pakki [illegible] ḻnādattṃpṛṣamāḥpraya ‖ ālananasraṃ [illegible] tama
+6. āna [illegible] dāvibhrata ‖ daḻ [illegible] trumaṇamagamatālpṛṣareoṇa ‖ saṃ [illegible] rekada [illegible] sta
+7. [illegible] āṃhi [illegible] maṃñena ‖ [illegible] vivasakkādiraktadehṛṣaḥ ‖ prayāraṇana [illegible] jñārekatra
+8. [illegible] nyārekakavalyāmi ‖ tyo [illegible] daḻnāditṛṃ [illegible] kavalyād ‖ ṣedaṃreyāgamisareyā
+9. gaumentrāda [illegible] ki ‖ [illegible] ddaṃcetammakāval̤ccapaṃ [illegible] pabhibhraddī ‖ [illegible] aḥvaṃgu [illegible] cakṣuḥpa [illegible] pakka
+10. [illegible] ṃna [illegible] kṣe [illegible] āpisatau [illegible] napṛṣṭa ‖ [illegible] pana [illegible] karakhāst ‖ [illegible] bhra [illegible] yoḥ [illegible] maprā [illegible]
+11. jjiṃrevareḍābhratāḥtatrapaṃgu [illegible] jñā [illegible] māṅka ‖ ṃhra [illegible] kkimānara [illegible] mi ‖ [illegible] dhīvijñānāl [illegible] ddakṣi
+
+Answer only:
+PICK | <one letter>
+RANK | <all letters, best to worst>
+WHY | <one sentence>

@@ -1,0 +1,11 @@
+CHECK | row 1: The leaf starts "ശൈഷിാണാംലഘു।സ്വാലക്ഷണ്യംവൃത്തിസ്ത്ര(യസ്യ)…" and the right end reads "…ന്യാസാമാന്യകരണ". C marks the opening [illegible] but has every letter from "।സ്വാലക്ഷണ്യംവൃത്തിസ്ത്രയസ്യ…" through "…സാമാന്യകരണ" correct. B gets "ൈശഷിാണ്ണാംലഘു।ഝാലക്ഷണ്യം" roughly right, then loses the rest. A ("ശൈഷീരണീദംഫലഫ്യ…") does not match the strokes.
+
+CHECK | row 5: The leaf starts "ഹേതുൎന്നകേനചി ‖ ൽകാൎയ്യതേകരണം।…।ക ‖ രണംത്രയോദശവി". C matches this, with only the first letter marked [illegible]. A ("ഗതൃഞ്ഛൈക്കനാദ്യി") and B ("സാര്യൈകാനമി") do not.
+
+CHECK | row 9: The leaf starts "ന്ദ്രിയാണിതേഷാം ‖ പഞ്ചവിശേഷാവിശേഷവിഷയാണി ‖ ।വാൿഭവതിശബ്ദവിഷയ". C matches. A ("ദ്വിത്രിയാദിദൈവാം…") does not. B is mostly [illegible] or wrong letters ("ഭക്ഷവിഭെൎക്കാവി…").
+
+PICK | C
+
+RANK | C, B, A
+
+WHY | Only C's letters match the strokes on the leaf, and its text is Sāṅkhyakārikā 29–33 (svālakṣaṇyaṃ vṛttis trayasya… karaṇaṃ trayodaśavidham… buddhīndriyāṇi teṣāṃ pañca viśeṣāviśeṣaviṣayāṇi). B reads a few stretches right but marks most of the rest [illegible], and A is fluent-looking text whose letters aren't on the leaf.

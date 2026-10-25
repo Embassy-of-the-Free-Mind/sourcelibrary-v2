@@ -1,0 +1,3 @@
+PICK | B
+RANK | B, A, C
+WHY | B is mostly unread, but the words it does give (dṛṣṭādṛṣṭa, lakṣaṇa, uddiṣṭa, guṇa, bheda) are real Sāṅkhya terms that fit the context; A records nothing, and C is a full stream of syllables that never forms Sanskrit or Malayalam.

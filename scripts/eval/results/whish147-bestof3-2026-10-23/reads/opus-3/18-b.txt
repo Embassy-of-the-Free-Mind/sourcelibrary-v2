@@ -1,0 +1,10 @@
+ROW 1 | സ്വപ്നാക്ഷൃഷ്ണവദ ‖ ലോഭം.ദൃഷ്ട.ഷ്ഷം.തിം.ശം.ഗന്ദ്യാക്ഷിതൊദൃപ്രവ ‖ വർഷതൊണക്കൂലയപ്പൂ
+ROW 2 | ജ്ജാപൃഥ്വിർമ്മിഷ്ടകി ‖ ത്രന്ത്രിയരൊക്കൊണക്കിതരാക്ഷസ്വായനാരഭ ‖ ഭശബ്ദയൽഭശബ്ദംഭശ
+ROW 3 | മമന്ത്യാസ്ഥികധ ‖ ഷാസ്യാഇത്യാഉപലബ്ധിർക്കൊ ‖ ന്ദ്യാഃബാഹ്യകൊടക
+ROW 4 | ംഭൈഷജ്യംലിംഗ ‖ മിതിധർമ്മാനനാനാക്ഷസ്വായനാ ‖ ഷസ്രമാണങ്ങൊക്കാട്ട
+ROW 5 | ണ്ണംസ്വാമാന്യ ‖ നലിം.ഗിദ്ദ്രൈഖാർ.യഭാദൈ ‖ വടങ്ങൾഗന്ധളീക
+ROW 6 | പ്രമടശാന്തദൃ ‖ ാപ്രത്യക്ഷാക്ഷിമാഌഷ്ട്യാഭിന്നാം ‖ സാദമാണ്യഷദൈശാ
+ROW 7 | ഷദൃഷ്ടാത്പ്രാഗ ‖ ത്വംസംഖ്യകെഒംതത്ത്വം.ഗലിം.ഗി ‖ ദൃഷ്ടമിതിവിധ
+ROW 8 | മഭമാണം.കടാചി ‖ മിം.ഗൃഷ്ടക.ങ്ങത്ഥതംജലോകടൃ ‖ ൻഗ്രാതെതദ്ദൃമാശ്രാവ്യ
+ROW 9 | ത്രവിലത്തെഞ്ഞകടാ ‖ മിൽതൊഴിലെലാന്മിയതെകടാ ‖ ചിൽതൊഴിലംലി
+NOTE | Low confidence throughout. I placed the holes at the p01/p02 and p03/p04 joins and merged p02 and p03 into one middle column. Most conjuncts are uncertain guesses, row 1 is struck through and very hard to read, and many ligatures are probably misread. Treat this as a rough draft, not a reliable transcription.

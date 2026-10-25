@@ -43,6 +43,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import collectionRedirects from '@/lib/collection-redirects.json';
+import { quotedFindings } from '@/lib/embassy/notebook-autosave';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -227,6 +228,12 @@ export interface TurnUsage {
   cachedTokens: number;
   /** Cite-by-ID accounting (#6946): pages given an ID, IDs rendered as links, unknown IDs dropped. */
   citeIds?: CiteIdStats & { pages: number };
+  /**
+   * Grounding counts for EVERY turn (#7190). embassy_errors keeps a `grounding`
+   * row only when an edit was made, so it has no denominator; this is the
+   * per-turn removal rate: blockquotesRemoved / quotesChecked over turns.
+   */
+  grounding?: Pick<GroundingReport, 'checkable' | 'quotesChecked' | 'quotesUnquoted' | 'blockquotesRemoved' | 'sentencesDropped'>;
 }
 
 interface ConversationMessage {
@@ -253,6 +260,42 @@ async function saveNotebookFinding(threadId: string, finding: NotebookFinding, t
     { upsert: true, returnDocument: 'after' },
   );
   return result?.findings?.length || 1;
+}
+
+/** Save this answer's grounded quotations as findings; returns one notebook_update step per save. */
+async function autosaveQuotes(threadId: string, text: string, pages: GroundingPage[]): Promise<LibrarianStep[]> {
+  const existing = await loadNotebook(threadId);
+  const found = quotedFindings(text, pages, (existing?.findings ?? []).map(f => f.quote));
+  if (found.length === 0) return [];
+  const db = await getDb();
+  const authors = new Map(
+    (await db.collection('books')
+      .find({ id: { $in: [...new Set(found.map(f => f.bookId))] } })
+      .project({ id: 1, author: 1 })
+      .maxTimeMS(2000)
+      .toArray()).map(b => [b.id as string, (b.author as string) || '']),
+  );
+  const steps: LibrarianStep[] = [];
+  for (const f of found) {
+    const finding: NotebookFinding = {
+      quote: f.quote,
+      note: '',
+      source: { bookId: f.bookId, bookTitle: f.bookTitle, bookAuthor: authors.get(f.bookId) ?? '', bookSlug: f.bookSlug, pageNumber: f.page },
+      addedAt: new Date(),
+    };
+    const count = await saveNotebookFinding(threadId, finding);
+    steps.push({
+      type: 'notebook_update', name: 'autosave', summary: `Saved finding #${count}`,
+      notebook: {
+        findingCount: count,
+        finding: {
+          quote: finding.quote, note: '', bookId: f.bookId, bookTitle: f.bookTitle,
+          bookAuthor: finding.source.bookAuthor, bookSlug: f.bookSlug, pageNumber: f.page,
+        },
+      },
+    });
+  }
+  return steps;
 }
 
 function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
@@ -1723,7 +1766,7 @@ In your FIRST round, write your opening sentences (Step 1) and then issue every 
 
 ${languageSection(lang, citeIds)}## The collection
 
-Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
+Source Library holds tens of thousands of rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
 ${collectionSection}## Formatting
 
@@ -2139,7 +2182,7 @@ export async function* streamAgenticResponse(
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
   citationRouting?.finish(rawText);
-  const { edits, report: groundingReport, citations } = await groundTurn({
+  const { edits, report: groundingReport, citations, pages: supportPages } = await groundTurn({
     rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
     toolSupportText, userMessage, notebookSaved, routing: citationRouting,
   });
@@ -2152,6 +2195,16 @@ export async function* streamAgenticResponse(
   // turn, as the reader now sees it. Scanning the whole `contents` array would
   // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
   const fullText = applyGroundingEdits(rawText, edits);
+
+  // Every quotation that survived grounding goes into the notebook (#7253):
+  // the model's own add_to_notebook calls left most notebooks empty.
+  if (threadId) {
+    try {
+      for (const step of await autosaveQuotes(threadId, fullText, supportPages)) yield step;
+    } catch (err) {
+      console.warn('[Librarian] notebook autosave failed:', err instanceof Error ? err.message : err);
+    }
+  }
 
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
@@ -2277,6 +2330,8 @@ export async function* streamAgenticResponse(
   });
 
   if (cite && citeStream) usage.citeIds = { pages: cite.size, ...citeStream.stats };
+  const { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped } = grounding.report;
+  usage.grounding = { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped };
   yield { type: 'usage', usage };
 }
 
@@ -2307,6 +2362,8 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
   edits: GroundingEdit[];
   report: GroundingReport;
   citations: CitationPassReport;
+  /** The pages grounding read: what notebook autosave places quotes on. */
+  pages: GroundingPage[];
   /** The router's verdicts as they stood when the pass ran (null: routing off). */
   verdicts: RoutedClaims | null;
   timings: { supportMs: number; totalMs: number };
@@ -2360,6 +2417,7 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
     edits: citation.edits,
     report: grounding.report,
     citations: citation.report,
+    pages: support?.pages ?? [],
     verdicts,
     timings: { supportMs, totalMs: Date.now() - t0 },
   };

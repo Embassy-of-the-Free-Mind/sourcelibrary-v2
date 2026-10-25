@@ -1,0 +1,3 @@
+PICK | C
+RANK | C, B, A
+WHY | C has the most recognisable Sāṅkhya vocabulary fitting the context (svātantrya, guṇārthi, draṣṭā, rajastamasī, sattvam, kleśa), though it is still corrupt in places; B keeps a few real words (pravṛtti, sāmānya), and A breaks down into repeated loops like "bhaindrāndrāndra".

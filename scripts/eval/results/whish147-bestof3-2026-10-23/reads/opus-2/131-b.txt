@@ -1,0 +1,10 @@
+ROW 1 | ക്രൂടമിശ്രാധാരണത്വ്യാ‖ശ്ചാരാദാരവത്തയാമിദ്ധന്യസാമാന്യാ‖ധികരണ്യാഭാവത്തയാവ്യ
+ROW 2 | ാപ്യത്വാസിദ്ധാന്യാമിശ‖ജ്ഞവ്യാത്തുദാവത്തയാസാധാരണാനവ‖സഹാനിമണെവ്യാപ്തിസംശ
+ROW 3 | യാസാധകത്വാ‖നചവ്യാപ്തിജ്ഞാനപ്രതിബന്ധകത്വ‖ാശ്രയാസിദ്ധസ്വരൂപാ
+ROW 4 | സിദ്ധായായാപേക്ഷ‖യമുത്താജ്ഞാനപ്രതിബന്ധകത്വം‖ഉപാധിക്കാന്തുവ്യഭിച
+ROW 5 | ാരജ്ഞാനദ്ധാര‖ാവ്യാപ്തിജ്ഞാനപ്രതിബന്ധകാഃ‖സിദ്ധസാധനക്കുകാന്തു
+ROW 6 | പക്ഷധൎമ്മതാക്ക‖വിഘടകതയാശ്രയാസിദ്ധേഃ‖ഷട്പത്തി।നിഗ്രഹസ്ഥാ
+ROW 7 | ാനാനാമത്രിന‖മിനഃഉപമാനാംലക്ഷണത്തിഉ‖ഷമിതിതി;ഒ।ശങ്കം
+ROW 8 | ലക്ഷയതിഅത്രവൎത്ത‖ത്തി।യദ്ലക്ഷണമാഹ।ശക്ഷമിതിഞ്ജ്ഞസ്യഞ്ജ‖ജ്ഞതന്ത്രൂലവദ്ധപദാൎത്ഥസ
+ROW 9 | ംചെശസൃഷ്ടിക്കിഃസ്വാചാ‖യദൃഷ്ടാന്തമിതിമീമാംസകാദേശേന‖സ്വാത്മാഭിഹിന്ത്യാമിതി
+NOTE | Nine rows. They all read straight across both holes, with rows 3–7 indented on each side of the holes. The wording is a low-confidence reading of the strokes, not a checked transcription. The general shape is clear, but many conjuncts and vowel signs are guesses, especially at the joins between pieces, in rows 7–9 and in the right column. Treat it as a draft that needs checking against the images. There is also a marginal mark "ഖ" at the left of row 6 (possibly a leaf number), which I left out of the rows.
