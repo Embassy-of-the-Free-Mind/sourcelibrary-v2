@@ -139,8 +139,19 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect([lane.channel, lane.engine, lane.reader, lane.row.id]).toEqual(['cli', 'claude-opus-5-5', 'scripts/batch/claude-translate.mjs', 'pali-test']);
     expect(translateEngineFor(t, { language: 'Pali' })).toBe(MODEL_FLASH);
     expect(tableRowFor(t, { language: 'Pali' })?.id).toBe('flash-measured');
-    expect(translateLaneForBook(t, { language: 'Greek' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
+    expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
     expect(translateLaneForBook(t, { language: 'Latin' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
+  });
+
+  // #7075 (2026-10-25): Greek and Ancient Greek go to the agy reader; every other flash-measured language stays on Batch.
+  it('the live table sends Greek to the agy cli lane and leaves the rest of flash-measured on Batch', () => {
+    const t = TRANSLATION_ROUTING_TABLE;
+    for (const language of ['Greek', 'Ancient Greek', 'Greek, Latin']) {
+      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli' });
+      expect(translateEngineFor(t, { language })).toBe(MODEL_FLASH);
+    }
+    for (const language of ['Hebrew', 'Arabic', 'Sanskrit', 'Latin; Greek']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    expect(translateLaneForBook(t, { language: 'Pali' })).toMatchObject({ channel: 'cli', engine: 'claude-opus-5-5' });
   });
 
   it('a cli row must name a CLI reader and carry its blind sample; a batch row may not name one', () => {
