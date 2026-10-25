@@ -1,0 +1,625 @@
+{
+ "usable_definition": "stricter judge: USABLE or NOTICEABLE",
+ "cells": {
+  "ar-ms": {
+   "lite|claude": {
+    "usable": [
+     0.654,
+     0.423,
+     0.885,
+     26
+    ],
+    "strict_usable": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ],
+    "misleading": [
+     0.346,
+     0.115,
+     0.577,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   },
+   "lite|gemini": {
+    "usable": [
+     0.462,
+     0.231,
+     0.692,
+     26
+    ],
+    "strict_usable": [
+     0.077,
+     0.0,
+     0.192,
+     26
+    ],
+    "misleading": [
+     0.538,
+     0.308,
+     0.769,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   },
+   "lite|worse": {
+    "usable": [
+     0.423,
+     0.192,
+     0.654,
+     26
+    ],
+    "strict_usable": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ],
+    "misleading": [
+     0.577,
+     0.346,
+     0.808,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   },
+   "f38l|claude": {
+    "usable": [
+     0.308,
+     0.115,
+     0.5,
+     26
+    ],
+    "strict_usable": [
+     0.192,
+     0.077,
+     0.308,
+     26
+    ],
+    "misleading": [
+     0.077,
+     0.0,
+     0.192,
+     26
+    ],
+    "failed": [
+     0.615,
+     0.346,
+     0.846,
+     26
+    ]
+   },
+   "f38l|gemini": {
+    "usable": [
+     0.346,
+     0.115,
+     0.577,
+     26
+    ],
+    "strict_usable": [
+     0.077,
+     0.0,
+     0.192,
+     26
+    ],
+    "misleading": [
+     0.038,
+     0.0,
+     0.115,
+     26
+    ],
+    "failed": [
+     0.615,
+     0.346,
+     0.846,
+     26
+    ]
+   },
+   "f38l|worse": {
+    "usable": [
+     0.308,
+     0.115,
+     0.5,
+     26
+    ],
+    "strict_usable": [
+     0.077,
+     0.0,
+     0.192,
+     26
+    ],
+    "misleading": [
+     0.077,
+     0.0,
+     0.192,
+     26
+    ],
+    "failed": [
+     0.615,
+     0.346,
+     0.846,
+     26
+    ]
+   },
+   "opus|claude": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     26
+    ],
+    "strict_usable": [
+     0.885,
+     0.692,
+     1.0,
+     26
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   },
+   "opus|gemini": {
+    "usable": [
+     0.808,
+     0.615,
+     0.962,
+     26
+    ],
+    "strict_usable": [
+     0.346,
+     0.192,
+     0.5,
+     26
+    ],
+    "misleading": [
+     0.154,
+     0.0,
+     0.346,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   },
+   "opus|worse": {
+    "usable": [
+     0.846,
+     0.654,
+     1.0,
+     26
+    ],
+    "strict_usable": [
+     0.385,
+     0.192,
+     0.577,
+     26
+    ],
+    "misleading": [
+     0.154,
+     0.0,
+     0.346,
+     26
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     26
+    ]
+   }
+  },
+  "ar-print": {
+   "lite|claude": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "lite|gemini": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.5,
+     0.5,
+     0.5,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "lite|worse": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "f38l|claude": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.5,
+     0.5,
+     0.5,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "f38l|gemini": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.5,
+     0.5,
+     0.5,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "f38l|worse": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     0.5,
+     0.5,
+     0.5,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "opus|claude": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "opus|gemini": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   },
+   "opus|worse": {
+    "usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "strict_usable": [
+     1.0,
+     1.0,
+     1.0,
+     4
+    ],
+    "misleading": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ],
+    "failed": [
+     0.0,
+     0.0,
+     0.0,
+     4
+    ]
+   }
+  }
+ },
+ "cost": {
+  "lite_usd_per_page_batch": 0.00148,
+  "lite_usd_per_page_realtime_paid": 0.00185,
+  "lite_usd_paid_total": 0.0556,
+  "agy_calls_per_page": 1.53,
+  "agy_month_share_per_page": 6.69024e-06,
+  "opus_list_usd_equiv_per_page": 0.0698,
+  "opus_weekly_points_per_page": [
+   0.0028,
+   0.014
+  ],
+  "points_per_list_usd_range": [
+   0.04,
+   0.2
+  ]
+ },
+ "routes": {
+  "ar-ms": {
+   "opus_alone": {
+    "P_usable": 0.846,
+    "weekly_points_per_page": [
+     0.0028,
+     0.014
+    ],
+    "weekly_points_per_usable_page": [
+     0.0033,
+     0.0165
+    ],
+    "weekly_points_all_pages": [
+     6.3,
+     31.4
+    ]
+   },
+   "lite_alone": {
+    "P_usable": 0.423,
+    "usd_per_page": 0.00148,
+    "usd_per_usable_page": 0.0035,
+    "usd_all_pages": 3.33
+   },
+   "agy_alone": {
+    "P_usable": 0.308,
+    "agy_month_share_per_usable_page": 2.1721558441558442e-05,
+    "agy_month_share_all_pages": 0.0151
+   },
+   "lite_then_opus": {
+    "usd": 0.0035,
+    "weekly_points": [
+     0.0016,
+     0.008
+    ]
+   },
+   "agy_then_opus": {
+    "agy_month_share": 2.1721558441558442e-05,
+    "weekly_points": [
+     0.0019,
+     0.0097
+    ]
+   },
+   "pages": 2252
+  },
+  "ar-print": {
+   "opus_alone": {
+    "P_usable": 1.0,
+    "weekly_points_per_page": [
+     0.0028,
+     0.014
+    ],
+    "weekly_points_per_usable_page": [
+     0.0028,
+     0.014
+    ],
+    "weekly_points_all_pages": [
+     1.6,
+     8.1
+    ]
+   },
+   "lite_alone": {
+    "P_usable": 1.0,
+    "usd_per_page": 0.00148,
+    "usd_per_usable_page": 0.00148,
+    "usd_all_pages": 0.86
+   },
+   "agy_alone": {
+    "P_usable": 1.0,
+    "agy_month_share_per_usable_page": 6.69024e-06,
+    "agy_month_share_all_pages": 0.0039
+   },
+   "lite_then_opus": {
+    "usd": 0.00148,
+    "weekly_points": [
+     0.0,
+     0.0
+    ]
+   },
+   "agy_then_opus": {
+    "agy_month_share": 6.69024e-06,
+    "weekly_points": [
+     0.0,
+     0.0
+    ]
+   },
+   "pages": 582
+  }
+ },
+ "judges": {
+  "agreement": {
+   "n": 73,
+   "exact": 44,
+   "usable_vs_not": 53,
+   "confusion": {
+    "NOTICEABLE/USABLE": 3,
+    "USABLE/USABLE": 17,
+    "NOTICEABLE/NOTICEABLE": 18,
+    "MISLEADING/MISLEADING": 9,
+    "USABLE/NOTICEABLE": 14,
+    "NOTICEABLE/MISLEADING": 8,
+    "MISLEADING/USABLE": 1,
+    "USABLE/MISLEADING": 2,
+    "MISLEADING/NOTICEABLE": 1
+   }
+  },
+  "plants": {
+   "claude": {
+    "by_kind": {
+     "swap|caught": 6,
+     "invented|caught": 6,
+     "dropped|caught": 6
+    },
+    "caught": 18,
+    "total": 18
+   },
+   "gemini": {
+    "by_kind": {
+     "swap|caught": 5,
+     "invented|missed": 1,
+     "dropped|caught": 6,
+     "invented|caught": 5,
+     "swap|missed": 1
+    },
+    "caught": 16,
+    "total": 18
+   }
+  },
+  "unparsed": {
+   "claude": 0,
+   "gemini": 1
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "passage": "Kraus 1935 p.20 l.8 – p.22 l.7",
+ "ref_letters_skel": 978,
+ "cer": {
+  "lite": {
+   "marks": 13.1,
+   "skel": 3.7
+  },
+  "f38l": {
+   "marks": 11.0,
+   "skel": 2.1
+  },
+  "opus": {
+   "marks": 10.4,
+   "skel": 1.5
+  },
+  "KEY-O": {
+   "marks": 10.4,
+   "skel": 1.7
+  },
+  "KEY-G": {
+   "marks": 11.0,
+   "skel": 2.1
+  }
+ }
+}
