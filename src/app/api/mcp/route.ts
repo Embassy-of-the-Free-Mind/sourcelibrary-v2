@@ -24,7 +24,7 @@ import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
-import { MCP_HEADERS, mcpApiGet, type McpCaller } from '@/lib/mcp-inprocess';
+import { MCP_HEADERS, mcpApiGet, mcpApiGetText, type McpCaller } from '@/lib/mcp-inprocess';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -59,7 +59,8 @@ const SERVER_VERSION = '4.12.1';
 //
 // The search tools no longer self-call: they run the search routes in this
 // function through mcpApiGet (src/lib/mcp-inprocess.ts, #6853), carrying the
-// caller's identity (#4307). The rest still go over HTTP.
+// caller's identity (#4307), and so do the text tools' quote and /text routes.
+// The rest still go over HTTP.
 
 const API_BASE = 'https://sourcelibrary.org/api';
 
@@ -68,13 +69,6 @@ async function apiGet(path: string, params?: URLSearchParams) {
   const res = await fetch(url, { headers: MCP_HEADERS });
   if (!res.ok) throw new Error(`API ${res.status}: ${await res.text().catch(() => res.statusText)}`);
   return res.json();
-}
-
-async function apiGetText(path: string, params?: URLSearchParams) {
-  const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
-  const res = await fetch(url, { headers: MCP_HEADERS });
-  if (!res.ok) throw new Error(`API ${res.status}: ${await res.text().catch(() => res.statusText)}`);
-  return res.text();
 }
 
 async function apiPost(path: string, body: unknown) {
@@ -606,7 +600,7 @@ async function listEditions(args: Record<string, unknown>) {
   };
 }
 
-async function getBookText(args: Record<string, unknown>) {
+async function getBookText(args: Record<string, unknown>, caller?: McpCaller) {
   const params = new URLSearchParams();
   if (args.chapter !== undefined) params.set('chapter', String(args.chapter));
   if (args.part !== undefined) params.set('part', String(args.part));
@@ -618,9 +612,9 @@ async function getBookText(args: Record<string, unknown>) {
   const format = String(args.format || 'json');
   params.set('format', format);
 
-  if (format === 'plain') return apiGetText(`/books/${args.book_id}/text`, params);
+  if (format === 'plain') return mcpApiGetText(`/books/${args.book_id}/text`, params, caller);
 
-  const result = await apiGet(`/books/${args.book_id}/text`, params) as Record<string, unknown>;
+  const result = await mcpApiGet(`/books/${args.book_id}/text`, params, caller) as Record<string, unknown>;
   const book = result.book as Record<string, unknown> | undefined;
   const slug = book?.slug || book?.id || args.book_id;
   const pages = result.pages as Array<Record<string, unknown>> | undefined;
@@ -797,7 +791,7 @@ function quotableText(quote: Record<string, unknown> | undefined): string | null
   return null;
 }
 
-async function getQuote(args: Record<string, unknown>) {
+async function getQuote(args: Record<string, unknown>, caller?: McpCaller) {
   const params = new URLSearchParams({ page: String(args.page) });
   // The quote API has always accepted this; the MCP tool never passed it, so
   // every client got exactly one page and no way to ask for the rest of the
@@ -810,7 +804,7 @@ async function getQuote(args: Record<string, unknown>) {
   const quoteLang = langArg(args);
   if (quoteLang !== 'en') params.set('lang', quoteLang);
 
-  const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
+  const result = await mcpApiGet(`/books/${args.book_id}/quote`, params, caller) as Record<string, unknown>;
 
   // The flags are the actual fix. Access was never the problem — a caller cannot
   // tell a fragment from a whole sentence, so it never knows to ask. Computed
@@ -884,7 +878,7 @@ async function getQuote(args: Record<string, unknown>) {
 
 // Assemble a multi-passage dossier in one round-trip: fetch several pages of a
 // single book by explicit list (pages:[...]) or inclusive range (from/to).
-async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?: boolean }) {
+async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?: boolean; caller?: McpCaller }) {
   // Past QUOTE_CLEAN_PAGES_PER_DAY quote-lane pages in 24h the zero-width
   // provenance marks stay in the text: at that volume this is a corpus pull,
   // not citation work. The text remains verbatim-correct either way.
@@ -911,7 +905,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         const quoteParams = new URLSearchParams({ page: String(page) });
         if (args.include_image === true) quoteParams.set('include_image', 'true');
         if (batchLang !== 'en') quoteParams.set('lang', batchLang);
-        const result = await apiGet(`/books/${bookId}/quote`, quoteParams) as Record<string, unknown>;
+        const result = await mcpApiGet(`/books/${bookId}/quote`, quoteParams, opts?.caller) as Record<string, unknown>;
         // Same continuity signal get_quote returns. This is the tool where it
         // matters MOST — a batch is how a caller assembles a multi-page dossier,
         // which is exactly where a sentence running across a leaf gets quoted as
@@ -1866,10 +1860,9 @@ const TOOLS: Tool[] = [
 type ToolArgs = Record<string, unknown>;
 
 // ── Page-budget enforcement for the text-bearing tools ─────────────
-// The MCP route proxies to its own REST API server-side, so downstream
-// per-identity gates (e.g. /text's daily page budget) see the PROXY as the
-// caller — one shared anonymous identity for every MCP user — and can never
-// bite per-caller. The only place the real caller identity exists is here.
+// The text tools run /quote and /text in-process with the caller's identity
+// (#4307), but through the route body without its logging gate, so the
+// budget is checked here and the pages are logged here, once, as the caller.
 // Enforced on the three tools that return page text at volume; searches and
 // snippets stay ungated. See #4288-adjacent harvesting notes and the ops
 // strategy memo 2026-08-27.
@@ -1922,8 +1915,8 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'list_editions': return listEditions(args);
     case 'check_duplicate': return checkDuplicate(args);
     case 'get_locus': return getLocus(args);
-    case 'get_book_text': return getBookText(args);
-    case 'get_quote': return getQuote(args);
+    case 'get_book_text': return getBookText(args, caller);
+    case 'get_quote': return getQuote(args, caller);
     case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
     case 'list_image_facets': return listImageFacets(args);
