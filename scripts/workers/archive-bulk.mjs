@@ -31,6 +31,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf, positionalFallbackRefusal } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
@@ -728,7 +729,8 @@ async function main() {
     : { $match: {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         // bulk_unsuitable books have IA JP2 zips that don't align with photo URLs
         // (archive drift, #1504) — leave them to archive-ocr's per-page IIIF path.
         // Exception: books marked only for lacking an identifier, which a manifest URL now

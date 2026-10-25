@@ -217,3 +217,29 @@ attempted". `gemini_usage` rows carry their own `job_id` and cannot be overwritt
 by those, the same population was 40/40 fully paid. **When measuring what a past run did,
 use a record that is append-only per run, never a last-write-wins field on the object the
 run touched.**
+
+## Archiving ignores the hold (#5448, 2026-10-25)
+
+A hold stops **paid** work: OCR, translation, enrichment. Fetching a book's page images to R2
+costs storage only, and a held book still needs its images preserved — if the source goes down,
+a held book is lost exactly like a live one. Containment holds (wrong leaf, invented text) are
+about the TEXT; the image is the evidence that settles them. So **no archiver filters on the hold**
+(`lanes.mjs` records `respectsHold: false` for every archive lane, with this reason).
+
+The trap was a second flag. The importers of held waves also set `archive_metadata.blocked` —
+the archivers' own "never fetch this book" flag — with a reason naming the hold (tier A, #7343:
+"… pipeline hold acquisition-wave-2026-10b … do not archive until released"; `wave-import.mjs`:
+"… hidden acquisition, images hot-linked"). That kept **5,196 held books / 1.43M pages** out of
+every archiver (measured 2026-10-25), while the lanes registry said the archivers ignore holds.
+
+- **Rule:** an archive selector spreads `ARCHIVE_NOT_BLOCKED` (`scripts/lib/pipeline-hold.mjs`),
+  never a bare `'archive_metadata.blocked': { $ne: true }`. It admits a book that is unblocked or
+  blocked only by a hold, and still refuses every other block (401/403, a dead source, five failed
+  bulk runs — an archiver that fails overwrites the reason with its own).
+- **Only the archive selectors change.** The hold marker, the status, and every paid lane are
+  untouched. Archivers write `archive_status` and page fields, never `pipeline_auto.status`, so
+  archiving a held book cannot lift its hold. A direct status writer must still filter `NOT_HELD`
+  (the #6122 rule above).
+- **Do not widen the reason pattern to "make a book archivable".** A block with a real failure
+  reason means the source refused or broke; clear it with `archive-auto-unblock.mjs` or by hand,
+  after reading `archive-fetch-failures.md`.

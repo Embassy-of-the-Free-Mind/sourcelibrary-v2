@@ -81,7 +81,7 @@ export const LANES = [
   { name: 'archive-bulk', serves: 'archive', files: ['scripts/workers/archive-bulk.mjs'],
     selects: 'IA books, not bulk_unsuitable, first translations first', trigger: 'scheduler, 10 min',
     budget: 'unmetered', respectsHold: false, pause: 'archive',
-    reason: 'Fetches page images to R2 and spends no model money. A hold keeps a book out of the paid lanes; a held book still needs its images preserved (preservation-policy.md). Adding NOT_HELD would change selection — not done in #5480.' },
+    reason: 'Fetches page images to R2 and spends no model money. A hold keeps a book out of the paid lanes; a held book still needs its images preserved (preservation-policy.md). Its selector admits a book blocked only BECAUSE it is held (ARCHIVE_NOT_BLOCKED, #5448).' },
   { name: 'archive-ocr', serves: 'archive', files: ['scripts/workers/archive-ocr.mjs'],
     selects: 'priority / IIIF / warehouse books', trigger: 'scheduler, 10 min',
     budget: 'unmetered', respectsHold: false, pause: 'archive',
