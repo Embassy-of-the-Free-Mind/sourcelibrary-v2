@@ -84,6 +84,15 @@ jobs:
             "$(tail -60 report.txt)")
           printf '%s\n' "$BODY" > issue-body.md
           .github/scripts/file-or-update-issue.sh "Field sprawl breach on books — " "$TITLE" issue-body.md pipeline
+      # A clean scheduled run closes what this detector filed (#7277). Manual
+      # runs can pass a looser threshold or a smaller sample, so they never close.
+      - name: Close the finding on a clean run
+        if: steps.run.outputs.fired == '0' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/scripts/file-or-update-issue.sh --close "Field sprawl breach on books — " \
+            "Clean scheduled run on $(date -u +%F): the books field count is under its ceiling and no retired field has reappeared. Closing (the detector closes what it files). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       - name: Fail if the census could not run
         if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
         run: |

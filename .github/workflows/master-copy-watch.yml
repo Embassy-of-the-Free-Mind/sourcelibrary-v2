@@ -65,6 +65,15 @@ jobs:
             "$(cat report.txt)")
           printf '%s\n' "$BODY" > issue-body.md
           .github/scripts/file-or-update-issue.sh "Pages served from R2 with no master held — " "$TITLE" issue-body.md archive
+      # A clean scheduled run closes what this detector filed (#7277). Manual
+      # runs can pass a looser threshold or a smaller sample, so they never close.
+      - name: Close the finding on a clean run
+        if: steps.run.outputs.fired == '0' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/scripts/file-or-update-issue.sh --close "Pages served from R2 with no master held — " \
+            "Clean scheduled run on $(date -u +%F): no page is served from R2 without a master held. Closing (the detector closes what it files). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       # Exit 2 means the detector never reached the database. Fail loudly: a
       # silent green run is indistinguishable from "checked, found nothing"
       # (#4071 — three detectors sat blind behind a missing secret).
