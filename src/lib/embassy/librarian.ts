@@ -228,6 +228,12 @@ export interface TurnUsage {
   cachedTokens: number;
   /** Cite-by-ID accounting (#6946): pages given an ID, IDs rendered as links, unknown IDs dropped. */
   citeIds?: CiteIdStats & { pages: number };
+  /**
+   * Grounding counts for EVERY turn (#7190). embassy_errors keeps a `grounding`
+   * row only when an edit was made, so it has no denominator; this is the
+   * per-turn removal rate: blockquotesRemoved / quotesChecked over turns.
+   */
+  grounding?: Pick<GroundingReport, 'checkable' | 'quotesChecked' | 'quotesUnquoted' | 'blockquotesRemoved' | 'sentencesDropped'>;
 }
 
 interface ConversationMessage {
@@ -2324,6 +2330,8 @@ export async function* streamAgenticResponse(
   });
 
   if (cite && citeStream) usage.citeIds = { pages: cite.size, ...citeStream.stats };
+  const { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped } = grounding.report;
+  usage.grounding = { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped };
   yield { type: 'usage', usage };
 }
 
