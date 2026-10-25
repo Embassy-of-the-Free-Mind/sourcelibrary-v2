@@ -16,7 +16,10 @@
  * THE MARKER. `books.pages_state` — one field, an object:
  *   { state: 'manifest_only' | 'materializing' | 'materialized',
  *     since, lease_at?, lease_by?, trigger?, materialized_at?, pages_written?,
- *     manifest_pages?, error?, failed_at? }
+ *     manifest_pages?, pages_from_ledger?, ledger_mismatch?, error?, failed_at? }
+ * `pages_from_ledger` / `ledger_mismatch`: how many pages were born pointing at R2 from the
+ * manifest archive ledger (#5448, scripts/lib/manifest-ledger.mjs), or that the ledger described
+ * a different canvas list and was not applied.
  * ABSENT means what every book before #7343 is: its pages exist. Only importers
  * that choose manifest-only write it. `pages_count` keeps the TRUE page count the
  * whole time (the reconciler must not zero it: see lazyPageCounters()).
@@ -42,6 +45,7 @@ import { makePageDoc } from './book-docs.mjs';
 import { recountBook, VISIBLE_PAGE_MATCH } from './page-counts.mjs';
 import { getCanvases, extractCanvasImage } from '../iiif-discovery/lib/manifest-store.mjs';
 import { LAZY_PAGES_FILTER, isLazyPagesBook } from './pages-state.mjs';
+import { LEDGER_FIELD, ledgerFieldsFor } from './manifest-ledger.mjs';
 
 export {
   PAGES_STATES, LAZY_STATES, LAZY_PAGES_FILTER, PAGES_MATERIALIZED_FILTER, isLazyPagesBook, initialPagesState,
@@ -75,13 +79,15 @@ export function pageIdFor(bookId, pageNumber) {
  * A canvas with no image keeps its place in the sequence with an empty photo,
  * exactly as the importer does, so page N is always canvas N.
  */
-export function buildPageDocs(bookId, manifest, { now = new Date() } = {}) {
+export function buildPageDocs(bookId, manifest, { now = new Date(), archived = null } = {}) {
   const canvases = getCanvases(manifest);
   return canvases.map((canvas, i) => {
     const pageNumber = i + 1;
     const hex = pageIdFor(bookId, pageNumber);
     const { photo, thumbnail } = extractCanvasImage(canvas);
     return makePageDoc({
+      // Already on R2 from the manifest ledger (#5448): see ledgerFieldsFor.
+      ...nestDotted(archived?.get(pageNumber)),
       _id: new ObjectId(hex),
       id: hex,
       book_id: bookId,
@@ -93,6 +99,35 @@ export function buildPageDocs(bookId, manifest, { now = new Date() } = {}) {
       updated_at: now,
     });
   });
+}
+
+/** `{ 'iiif_info.width': w }` → `{ iiif_info: { width: w } }`, for an insert (dotted keys are $set syntax). */
+function nestDotted(fields) {
+  const out = {};
+  for (const [k, v] of Object.entries(fields ?? {})) {
+    const [head, ...rest] = k.split('.');
+    if (rest.length === 0) out[head] = v;
+    else (out[head] ??= {})[rest.join('.')] = v;
+  }
+  return out;
+}
+
+/**
+ * Point a just-materialized book's page docs at the objects its manifest ledger proves are on R2
+ * (#5448 step 2), where they do not already point somewhere. Run AFTER finish(): a page the
+ * archiver flushed while we were inserting is in the ledger by then, and one it stores after the
+ * flip goes to the page doc directly (manifest-archive.mjs). `photos` is this materialization's
+ * canvas list; a ledger built from a different manifest applies nothing.
+ */
+async function applyLateLedger(db, bookId, photos, appliedAlready) {
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { [LEDGER_FIELD]: 1 } });
+  const { fields } = ledgerFieldsFor(book?.archive_metadata?.manifest_ledger, bookId, photos);
+  const late = [...fields].filter(([p]) => !appliedAlready.has(p));
+  if (late.length === 0) return 0;
+  const r = await db.collection('pages').bulkWrite(late.map(([p, f]) => ({
+    updateOne: { filter: { _id: new ObjectId(pageIdFor(bookId, p)), book_id: bookId, archived_photo: { $exists: false } }, update: { $set: f } },
+  })), { ordered: false });
+  return r.modifiedCount;
 }
 
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
@@ -154,7 +189,7 @@ export async function materializePages(db, bookId, opts = {}) {
 
   const books = db.collection('books');
   const pages = db.collection('pages');
-  const projection = { id: 1, pages_state: 1, pages_count: 1, image_source: 1 };
+  const projection = { id: 1, pages_state: 1, pages_count: 1, image_source: 1, [LEDGER_FIELD]: 1 };
 
   const book = await books.findOne({ id: bookId }, { projection });
   if (!book) return { status: 'not_found', book_id: bookId };
@@ -236,7 +271,11 @@ export async function materializePages(db, bookId, opts = {}) {
       return { status: 'failed', book_id: bookId, error };
     }
 
-    const docs = buildPageDocs(bookId, manifest, { now: new Date() });
+    // Pages the manifest archiver already put on R2 (#5448) are born pointing at them — but only
+    // when the ledger was built from THIS canvas list (paired-artifacts.md: fail closed).
+    const photos = getCanvases(manifest).map(c => extractCanvasImage(c).photo || '');
+    const ledger = ledgerFieldsFor(claimedDoc.archive_metadata?.manifest_ledger, bookId, photos);
+    const docs = buildPageDocs(bookId, manifest, { now: new Date(), archived: ledger.fields });
     if (docs.length === 0) {
       await release({ 'pages_state.error': 'manifest has no canvases', 'pages_state.failed_at': new Date() });
       return { status: 'failed', book_id: bookId, error: 'manifest has no canvases' };
@@ -253,7 +292,15 @@ export async function materializePages(db, bookId, opts = {}) {
       if (!isDuplicateKeyOnly(e)) throw e;
     }
 
-    await finish(db, bookId, token, now, { pages_written: docs.length, manifest_pages: docs.length });
+    await finish(db, bookId, token, now, {
+      pages_written: docs.length, manifest_pages: docs.length,
+      ...(ledger.fields.size ? { pages_from_ledger: ledger.fields.size } : {}),
+      ...(ledger.mismatch ? { ledger_mismatch: true } : {}),
+    });
+    if (!ledger.mismatch) {
+      const late = await applyLateLedger(db, bookId, photos, new Set(ledger.fields.keys()));
+      if (late) await recountBook(db, bookId, { reason: 'materialize-pages-ledger', now: new Date() });
+    }
     return { status: 'materialized', book_id: bookId, pages: docs.length };
   } catch (e) {
     await release({ 'pages_state.error': String(e?.message ?? e), 'pages_state.failed_at': new Date() }).catch(() => {});
