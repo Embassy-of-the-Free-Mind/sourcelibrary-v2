@@ -20,7 +20,21 @@ OCR text alone, with no defect tags. `scripts/eval/route-judge-6740/judge.mjs` e
 reads one output at a time against the page image and tags defects with the 44 classes of
 `.claude/docs/page-error-taxonomy.md`.
 
-### What the instrument is (after Derek's note of 2026-10-25 22:19Z)
+### Design change, 2026-10-26: the image is the key, not an Opus read
+Derek changed the design after the evidence check, and the harness now follows it. Opus stays the one judge. It shows
+no measurable self-preference: estimator v2 fits −0.11 to −0.13, and every interval includes 0. It also catches the
+most planted errors: 43/46, against Pro's 37/46 (#6545). But as a reader, Opus is not a safe key. From the image it
+invented text on 23/100 Chinese table reads (#6388). It was worse than the specialist on 27/30 Tibetan pages. It is not
+the measured leader for Latin, German/French, Greek or Chinese print OCR (estimator v1). So the judge now reads each
+output against the page image, plus the source OCR for a translation. It is never shown an Opus text as a reference.
+The Opus corrections are blind candidates, scored like the other routes and priced as the Opus route: #5924 for Latin,
+the served #6561 for Chinese, #6560 for Tibetan, and this run's own German reads. External references score every
+candidate, and the judge's agreement with them is reported. For Tibetan that is Derge. The cell moved from one volume
+with no reference to the 30 one-per-book Kangyur folios that hold Derge windows and the committed #6560 correction
+reads. For Chinese it is the Kanripo leaf, where it aligns. In Tibetan, 10 Yigdzin drafts carry one planted syllable
+each. Below an 80% catch rate, Derge decides the Tibetan cell, not the judge.
+
+### What the instrument was (after Derek's note of 2026-10-25 22:19Z; superseded by the change above)
 - **One judge: Opus 5.5 through `claude -p`.** The image is in the call's workspace, and Read is its only tool. **Opus
   is the reference. This is ASSUMED, by Derek** ("I dont even believe in the judge family effect. Assume Opus is ok;
   we are mostly looking for enhanced cost"). The Gemini 3.8 Flash High judge and the A/A repeat in the original brief
