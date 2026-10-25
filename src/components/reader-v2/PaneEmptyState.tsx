@@ -160,6 +160,17 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
   // been taken out of service. No request-translation CTA — the retranslation
   // is already owed, and offering a button that queues what is queued would be
   // a second untruth on a pane that exists to stop telling the first.
+  // A leaf now read as blank whose old English translated show-through (#5813,
+  // withhold reason `blank_source`) is simply a blank page to the reader —
+  // "translation withdrawn, a new one will follow" promises English that
+  // will never come.
+  if (withheld && page.page_type === 'blank') {
+    return (
+      <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
+        {t.blankPage}
+      </p>
+    );
+  }
   if (withheld) {
     return (
       <EmptyPane

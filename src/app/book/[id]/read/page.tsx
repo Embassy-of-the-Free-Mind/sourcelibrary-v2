@@ -309,7 +309,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     if (translationHtml) return { n, html: translationHtml, href: pageHref };
     if (!originalHtml) return { n, html: null, href: pageHref };
     // No English for this page: show its original as a set-off block, never run into the English.
-    const note = p.translation_withheld ? 'Translation withheld' : 'Not yet translated';
+    const note = p.page_type === 'blank' ? 'Blank page' : p.translation_withheld ? 'Translation withheld' : 'Not yet translated';
     const label = `<p class="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">${note} · original (${escapeHtml(languageLabel)})</p>`;
     const attrs = `lang="${escapeHtml(originalLang || '')}"${originalDir ? ` dir="${originalDir}"` : ''}`;
     return { n, html: `<div class="my-4 pl-4 border-l-2" style="border-color: var(--border-light)">${label}<div ${attrs}>${originalHtml}</div></div>`, href: pageHref, block: true };
@@ -452,11 +452,13 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
           const translationHtml = pageHtml(translationRaw, pageLevel);
           const originalHtml = pageHtml(p.ocr?.data, pageLevel);
-          const withheld = !translationHtml && !!p.translation_withheld;
+          // A leaf re-read as blank is a blank page, not a withdrawn translation (#5813).
+          const blank = !translationHtml && p.page_type === 'blank';
+          const withheld = !translationHtml && !blank && !!p.translation_withheld;
 
           const translationBlock = translationHtml
             ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: translationHtml }} />
-            : <p className="text-muted italic">{withheld ? 'Translation withheld: it was made from an earlier reading of this page.' : originalHtml ? 'Not yet translated.' : null}</p>;
+            : <p className="text-muted italic">{blank ? 'Blank page.' : withheld ? 'Translation withheld: it was made from an earlier reading of this page.' : originalHtml ? 'Not yet translated.' : null}</p>;
           const originalBlock = originalHtml
             ? <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />
             : <p className="text-muted italic">Not transcribed.</p>;

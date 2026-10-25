@@ -454,7 +454,7 @@ export interface TranslationData extends ProcessingMetadata {
  */
 export type WithheldTranslationReason =
   | 'stale_after_reocr' | 'ocr_unreadable' | 'source_loop' | 'unverified_script_ocr'
-  | 'illegible_source' | 'invented_by_eye';
+  | 'illegible_source' | 'invented_by_eye' | 'blank_source';
 
 export interface WithheldTranslation extends Omit<TranslationData, 'data'> {
   reason: WithheldTranslationReason;
