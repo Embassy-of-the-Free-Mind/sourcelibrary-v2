@@ -1,0 +1,231 @@
+{
+ "date": "2026-10-25",
+ "languages": {
+  "German": {
+   "books": 7435,
+   "pages": 2114118,
+   "by_model": {
+    "no_text": 1334450,
+    "gemini-3-flash-preview": 353152,
+    "gemini-3.1-flash-lite-preview": 311535,
+    "gemini-3.1-flash-lite": 106475,
+    "gemini-2.5-flash": 2974,
+    "ia-ocr/0.0.14": 2706,
+    "claude-opus-5-5": 1624,
+    "ia-ocr/0.0.21": 689,
+    "ia-ocr/ABBYY FineReader 8.0": 280,
+    "ia-ocr/unknown": 124,
+    "gemini-3.8-flash-low": 77,
+    "gemini-3.7-flash-low": 12,
+    "claude-sonnet-4-6": 9,
+    "manual": 4,
+    "claude-opus-4": 3,
+    "gemini": 2,
+    "ia-ocr/0.0.15": 2
+   }
+  },
+  "English": {
+   "books": 5211,
+   "pages": 1705755,
+   "by_model": {
+    "gemini-3-flash-preview": 503256,
+    "no_text": 502398,
+    "gemini-3.1-flash-lite": 241224,
+    "gemini-3.1-flash-lite-preview": 172855,
+    "ia-ocr/0.0.21": 106213,
+    "ia-ocr/0.0.14": 100845,
+    "ia-ocr/ABBYY FineReader 8.0": 12580,
+    "ia-ocr/0.0.18": 12510,
+    "ia-ocr/unknown": 10800,
+    "gemini-2.5-flash": 10535,
+    "ia-ocr/0.0.20": 9165,
+    "ia-ocr/0.0.13": 4870,
+    "ia-ocr/0.0.15": 3057,
+    "ia-ocr/0.0.11": 2563,
+    "ia-ocr/0.0.17": 2444,
+    "mineru-pipeline": 2296,
+    "ia-ocr/0.0.12": 2059,
+    "claude-opus-5-5": 1234,
+    "ia-ocr/ABBYY FineReader 11.0": 979,
+    "ia-ocr/ABBYY FineReader 11.0 (Extended OCR)": 879,
+    "ia-ocr/0.0.16": 793,
+    "ia-ocr/0.0.6": 710,
+    "ia-ocr/ABBYY FineReader 9.0": 371,
+    "zai-org/GLM-OCR": 272,
+    "ia-legacy-ocr": 190,
+    "ia-ocr/0.0.19": 158,
+    "ia-ocr/0.0.10": 119,
+    "claude-sonnet-5-5": 102,
+    "ia-ocr/ABBYY FineReader 11.0 (Extended OCR) 0.0.14": 88,
+    "ABBYY FineReader 8.0": 69,
+    "claude-sonnet-4-6": 58,
+    "ia-abbyy-hocr": 46,
+    "claude-opus-4": 12,
+    "claude-opus-4-6": 4,
+    "manual": 1
+   }
+  },
+  "French": {
+   "books": 1923,
+   "pages": 782150,
+   "by_model": {
+    "no_text": 437119,
+    "gemini-3-flash-preview": 189468,
+    "gemini-3.1-flash-lite-preview": 117614,
+    "gemini-3.1-flash-lite": 33837,
+    "gemini-2.5-flash": 3302,
+    "claude-opus-5-5": 633,
+    "claude-sonnet-5-5": 82,
+    "gemini-3.8-flash-low": 51,
+    "ia-ocr/0.0.14": 38,
+    "ia-ocr/ABBYY FineReader 8.0": 3,
+    "manual": 2,
+    "ia-ocr/0.0.21": 1
+   }
+  },
+  "Italian": {
+   "books": 965,
+   "pages": 310814,
+   "by_model": {
+    "no_text": 143959,
+    "gemini-3-flash-preview": 118056,
+    "gemini-3.1-flash-lite-preview": 33302,
+    "gemini-3.1-flash-lite": 13648,
+    "ia-ocr/0.0.14": 906,
+    "ia-ocr/0.0.21": 741,
+    "gemini-2.5-flash": 105,
+    "ia-ocr/0.0.16": 86,
+    "claude-opus-5-5": 8,
+    "ia-ocr/ABBYY FineReader 11.0": 2,
+    "ia-ocr/ABBYY FineReader 9.0": 1
+   }
+  },
+  "Greek": {
+   "books": 1481,
+   "pages": 676073,
+   "by_model": {
+    "gemini-3-flash-preview": 419535,
+    "no_text": 210670,
+    "gemini-3.1-flash-lite-preview": 33869,
+    "gemini-3.1-flash-lite": 9047,
+    "claude-opus-5-5": 1583,
+    "gemini-2.5-flash": 757,
+    "gemini-4-argon-low": 354,
+    "mineru-pipeline": 144,
+    "gemini-3.8-flash-low": 106,
+    "claude-opus-4-6": 3,
+    "claude-sonnet-4-6": 2,
+    "gemini-3.7-flash-low": 2,
+    "manual": 1
+   }
+  },
+  "Arabic": {
+   "books": 388,
+   "pages": 105411,
+   "by_model": {
+    "no_text": 47044,
+    "gemini-3-flash-preview": 30421,
+    "gemini-3.1-flash-lite-preview": 18581,
+    "gemini-3.1-flash-lite": 9238,
+    "claude-opus-5-5": 99,
+    "gemini-2.5-flash": 21,
+    "human": 3,
+    "gemini-3.7-flash-low": 2,
+    "gemini-3.8-flash-low": 2
+   }
+  },
+  "Persian": {
+   "books": 196,
+   "pages": 74549,
+   "by_model": {
+    "no_text": 51806,
+    "gemini-3-flash-preview": 10473,
+    "gemini-3.1-flash-lite": 9228,
+    "gemini-3.1-flash-lite-preview": 3033,
+    "gemini-2.5-flash": 8,
+    "claude-opus-5-5": 1
+   }
+  },
+  "Sanskrit": {
+   "books": 507,
+   "pages": 143214,
+   "by_model": {
+    "gemini-3-flash-preview": 62054,
+    "no_text": 41000,
+    "gemini-3.1-flash-lite-preview": 30798,
+    "gemini-3.1-flash-lite": 8843,
+    "claude-opus-5-5": 422,
+    "claude-fable-5-1": 48,
+    "gemini-2.5-flash": 38,
+    "human": 5,
+    "claude-fable-5-1+claude-opus-5-5": 5,
+    "ia-legacy-ocr": 1
+   }
+  },
+  "Pali": {
+   "books": 49,
+   "pages": 17498,
+   "by_model": {
+    "gemini-3.1-flash-lite": 11994,
+    "no_text": 2989,
+    "gemini-3-flash-preview": 1539,
+    "gemini-3.1-flash-lite-preview": 973,
+    "gemini-2.5-flash": 3
+   }
+  },
+  "Chinese": {
+   "books": 12879,
+   "pages": 1943433,
+   "by_model": {
+    "PaddleOCR-VL-1.6-0.9B": 1599766,
+    "no_text": 214554,
+    "gemini-3-flash-preview": 103874,
+    "gemini-3.1-flash-lite": 13064,
+    "gemini-3.1-flash-lite-preview": 5656,
+    "claude-opus-5-5": 4521,
+    "gemini-3.8-flash-low": 1983,
+    "gemini-2.5-flash": 11,
+    "gemini-3.7-flash-low": 2,
+    "manual": 1,
+    "wikisource": 1
+   }
+  },
+  "Tibetan": {
+   "books": 1699,
+   "pages": 430518,
+   "by_model": {
+    "bdrc-yigdzin-v1": 280623,
+    "unrecorded": 137535,
+    "gemini-3.1-flash-lite-preview": 6162,
+    "gemini-3-flash-preview": 2886,
+    "bdrc-woodblock-easter2": 1836,
+    "no_text": 1172,
+    "gemini-3.1-flash-lite": 304
+   }
+  },
+  "Latin": {
+   "books": 31891,
+   "pages": 7874792,
+   "by_model": {
+    "no_text": 5693910,
+    "gemini-3-flash-preview": 1315741,
+    "gemini-3.1-flash-lite-preview": 668632,
+    "gemini-3.1-flash-lite": 190924,
+    "claude-opus-5-5": 2969,
+    "gemini-2.5-flash": 1467,
+    "ia-ocr/0.0.12": 627,
+    "ia-ocr/ABBYY FineReader 8.0": 205,
+    "gemini-3.8-flash-low": 91,
+    "ia-ocr/0.0.14": 85,
+    "gemini-3.7-flash-low": 49,
+    "ia-ocr/unknown": 29,
+    "ia-ocr/0.0.16": 27,
+    "ia-ocr/0.0.21": 26,
+    "manual": 6,
+    "human": 2,
+    "manual-correction": 1,
+    "claude-sonnet-4-6": 1
+   }
+  }
+ }
+}
