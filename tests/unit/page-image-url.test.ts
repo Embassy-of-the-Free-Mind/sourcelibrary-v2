@@ -244,6 +244,26 @@ describe('CSP renderability invariant', () => {
     expect(getPageImageUrl(nowhere, 'display')).toBe('https://blocked.example.org/iiif/x/full/1200,/0/default.jpg');
   });
 
+  it('hires never hands out a proxy URL for a host the proxy refuses (#3510)', () => {
+    // The real shape: a visible SLUB book whose later pages were never archived.
+    // display_photo is on R2; the source is on a CSP-allowed host the proxy
+    // will not fetch. The proxy URL was a 403 (zoom past 1.5x, page download).
+    const slub = 'https://digital.slub-dresden.de/data/kitodo/x/x_tif/jpegs/00000438.tif.original.jpg';
+    const unarchived: PageImageFields = {
+      photo: slub,
+      photo_original: slub,
+      display_photo: `${R2}/pages/${BOOK}/0438.jpg`,
+      image_thumb: `${R2}/pages/${BOOK}/0438-thumb.jpg`,
+    };
+    expect(getPageImageUrl(unarchived, 'hires')).toBe(slub);
+    // Neither list: fall back to the bounded display URL, not a dead proxy URL.
+    const nowhere: PageImageFields = {
+      photo: 'https://blocked.example.org/scans/x/0001.jpg',
+      display_photo: `${R2}/pages/${BOOK}/0001.jpg`,
+    };
+    expect(getPageImageUrl(nowhere, 'hires')).toBe(`${R2}/pages/${BOOK}/0001.jpg`);
+  });
+
   it('an allowlisted IIIF host still gets the free origin-side resize', () => {
     // digi.vatlib.it is in CSP_IMG_HOSTS — must NOT be pushed onto our proxy.
     expect(getPageImageUrl(fixtures.iiif, 'thumb')).toContain('digi.vatlib.it');

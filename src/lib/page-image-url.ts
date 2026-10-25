@@ -330,7 +330,13 @@ function resolveHires(page: PageImageFields): string | null {
     // either → it is still the only bounded URL that works at all.
     if (iiif && (isBrowserRenderableImageUrl(iiif) || !isProxyableUrl(base))) return iiif;
   }
-  return proxyUrl(base, HIRES_WIDTH, 85, crop);
+  if (isProxyableUrl(base)) return proxyUrl(base, HIRES_WIDTH, 85, crop);
+  // The proxy refuses this host, so a proxy URL is a guaranteed 403 (#3510: 499
+  // pages of a visible SLUB book, not yet re-hosted on R2, broke zoom and the
+  // page download). The browser may still load the source as-is; failing that,
+  // the display tier is the best bounded URL that works at all.
+  if (!crop && isBrowserRenderableImageUrl(base)) return base;
+  return resolveSized(page, 'display');
 }
 
 /**
