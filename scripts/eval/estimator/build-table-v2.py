@@ -8,13 +8,15 @@ Two outputs:
                judge, both A/B orders).
   --summaries  CELL-MEAN rows, one per (experiment round, language, arm, judge): the experiments whose per-item
                judge scores were never committed, only their panel means with a by-work bootstrap interval.
-               #6545 r1s1 / r1s2 / r2s1 (Opus, Gemini 3.1 Pro and Fable judges) and #6690 O1 (Gemini 3.8 Flash High).
+               #6545 r1s1 / r1s2 / r2s1 (Opus, Gemini 3.1 Pro and Fable judges), #6690 O1 (Gemini 3.8 Flash High)
+               and #6729 (G4L, OPUS, C38S on the #6545 panels; fresh Opus and Gemini 3.8 Flash High judges, each
+               cell the mean of both candidate orders).
                Each row carries the page ids it averages over, so the model can use the pages' own effects.
 
 Not added, and why (listed on #6740):
   #6667  Sonnet/Haiku CORRECT OCR drafts: an OCR experiment (CER), not translation. Goes to the OCR estimator.
   #6361  Tengyur CLI: serious-error counts and A/B preference, not the 1-5 fidelity scale.
-  #6729  not landed when this was built.
+  #6729  not landed when the v2 fit of 15 Oct was built; added 25 Oct (#6871) as cell means, below.
   #6690  O10 (10 pages per call) is a lever on Opus, kept out of the fit like v1's xlref variant arms.
   #6545  CF/CO/DF/DO correction arms: correction of a stored draft, not an engine as routed (v1 left xlref's
          check-and-fix arms out the same way).
@@ -35,12 +37,16 @@ OPUS10_REF = 'a6cafd0b8bd4a1033477518aedd294cb7dd735c1'
 JUDGES = {  # judge label in a result file -> (judge model, judge family)
     'opus': ('claude-opus-5.5', 'claude'), 'pro': ('gemini-3.1-pro', 'gemini'),
     'fable': ('claude-fable-5.1', 'claude'), 'g38high': ('gemini-3.8-flash-high', 'gemini'),
+    'g38': ('gemini-3.8-flash-high', 'gemini'),
 }
 # #6545 arm -> v1 arm code (model, family, route). C38 is the stored #6331 CLI output; C38S/C38S2 are fresh CLI runs
 # of the same model; PRO is the CLI's gemini-3.1-pro-high with full thinking (a new model id in the gemini-pro family).
 ARM6545 = {'FP': 'FP-stored', 'C38': 'C38', 'C38S': 'C38', 'C38S2': 'C38', 'PRO': 'PROCLI', 'OPUS': 'O'}
 EXTRA_ARMS = {'FP-stored': ('gemini-3-flash-preview', 'gemini-flash', 'stored'),
-              'PROCLI': ('gemini-3.1-pro-high', 'gemini-pro', 'cli')}
+              'PROCLI': ('gemini-3.1-pro-high', 'gemini-pro', 'cli'),
+              'G4L': ('gemini-4-argon-low', 'gemini-argon', 'cli')}
+# #6729 arm -> arm code. OPUS and C38S are the stored #6545 runs, re-judged; G4L is Gemini 4 Argon low through agy.
+ARM6729 = {'G4L': 'G4L', 'OPUS': 'O', 'C38S': 'C38'}
 SE_FLOOR = 0.6   # a cell-mean's standard error is at least 0.6/sqrt(n): a [5.0, 5.0] bootstrap interval is not certainty
 
 
@@ -113,6 +119,23 @@ def pro6545(summ):
                                      v['fidelity'], v['ci_by_work'], sorted(pg)))
 
 
+def g4translate6729(summ):
+    d = json.load(open(f'{R}/g4-translate-6729/scores.json'))
+    key = json.load(open(f'{R}/g4-translate-6729/key.json'))
+    items = dict(key['items'])
+    pages = collections.defaultdict(set)
+    for v in items.values():
+        if v['kind'] in ('ORD1', 'ORD2'):
+            pages[v['lang']].add(v['page_id'])
+    for lang, p in d['panels'].items():
+        for jl, j in p['by_judge'].items():
+            for arm, v in j['arms'].items():
+                if arm not in ARM6729 or not v.get('n'):
+                    continue
+                summ.append(cell('6729-g4', 'r6729', lang, arm, ARM6729[arm], jl, v['n'], v['fidelity'],
+                                 v['ci_by_book'], sorted(pages[lang])))
+
+
 def opus10(summ):
     show = lambda p: subprocess.run(['git', 'show', f'{OPUS10_REF}:{p}'], capture_output=True, check=True).stdout
     d = json.loads(show(f'{R}/opus10-6690/scores.json'))
@@ -155,6 +178,7 @@ def main():
     summ = []
     pro6545(summ)
     opus10(summ)
+    g4translate6729(summ)
     with open(a.out, 'w') as f:
         for r in v1 + new:
             f.write(json.dumps(r) + '\n')

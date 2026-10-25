@@ -44,7 +44,7 @@ import model_v1  # noqa: E402
 from model_v1 import INSTRUMENT_CLASS as IC1, CLASSES  # noqa: E402
 
 INSTRUMENT_CLASS = dict(IC1, **{'6545-r1s1': 'packet', '6545-r1s2': 'packet', '6545-r2s1': 'packet',
-                                '6559-nah': 'packet', '6690-o1': 'packet'})
+                                '6559-nah': 'packet', '6690-o1': 'packet', '6729-g4': 'packet'})
 JUDGES = ['claude-opus-5.5', 'claude-sonnet-5.5', 'claude-fable-5.1', 'gemini-3.1-pro', 'gemini-3.8-flash-high']
 JUDGE_FAMILY = {j: ('gemini' if j.startswith('gemini') else 'claude') for j in JUDGES}
 MAKERS = ['claude', 'gemini']
