@@ -77,7 +77,7 @@ for (const b of todo) {
       tr_has: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
       tr_blocked: { $or: [{ $eq: ['$translation.recitation_blocked', true] }, { $eq: ['$translation.safety_blocked', true] }, { $ne: [{ $type: '$translation.health_blocked' }, 'missing'] }] },
     } },
-  ]);
+  ]).batchSize(1000);
   for await (const p of cur) {
     pages += 1;
     if (['handwritten', 'printed', 'mixed'].includes(p.script_type)) profile[p.script_type] += 1;

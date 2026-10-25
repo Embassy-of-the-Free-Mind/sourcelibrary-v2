@@ -70,7 +70,7 @@ const proj = {
   },
 };
 
-const cursor = LIMIT ? pages.find(filter, proj).limit(LIMIT) : pages.find(filter, proj);
+const cursor = LIMIT ? pages.find(filter, proj).batchSize(1000).limit(LIMIT) : pages.find(filter, proj).batchSize(1000);
 
 let scanned = 0;
 let provenanceDrift = 0;

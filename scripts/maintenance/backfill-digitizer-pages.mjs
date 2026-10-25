@@ -55,7 +55,7 @@ const bookQuery = BOOK_ID
   : { pages_count: { $gt: 0 } };
 
 const booksCursor = db.collection('books')
-  .find(bookQuery, { projection: { id: 1, title: 1, pages_count: 1, _id: 0 } })
+  .find(bookQuery, { projection: { id: 1, title: 1, pages_count: 1, _id: 0 } }).batchSize(1000)
   .sort({ _id: -1 });
 
 let booksChecked = 0, pagesTagged = 0, booksAffected = 0;

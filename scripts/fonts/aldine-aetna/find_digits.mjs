@@ -12,7 +12,7 @@ console.error('candidate books', cands.length);
 const bad = /ProQuest|Nencini|©|inc\.|Early European|Copyright|Biblioteca|Ex Libris|shelfmark|pencil|manuscript|handwritten|note|Latin\s+text\s+\d|title-page|\b1[89]\d\d\b|\b20\d\d\b/i;
 const out = [];
 for (const b of cands) {
-  const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 4 } }, { projection: { page_number: 1, 'ocr.data': 1 } });
+  const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 4 } }, { projection: { page_number: 1, 'ocr.data': 1 } }).batchSize(1000);
   let n = 0;
   for await (const p of cur) {
     const t = ((p.ocr && p.ocr.data) || '');

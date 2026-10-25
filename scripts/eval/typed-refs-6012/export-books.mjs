@@ -12,7 +12,7 @@ const cur = c.db('bookstore').collection('books').find({ pages_count: { $gt: 0 }
   id: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1, original_language: 1, languages: 1, pages_count: 1, pages_ocr: 1,
   pages_translated: 1, visible: 1, work_id: 1, edition_key: 1, edition_external_ids: 1, author_id: 1, text_role: 1, ia_identifier: 1,
   'image_source.provider': 1, 'image_source.identifier': 1, 'image_source.source_url': 1, 'image_source.shelfmark': 1, ustc_id: 1, duplicate_of: 1,
-  place_of_publication: 1, publisher: 1, translator: 1, categories: 1 } });
+  place_of_publication: 1, publisher: 1, translator: 1, categories: 1 } }).batchSize(1000);
 const out = fs.createWriteStream(`${WORK}/books.jsonl`); let n = 0;
 for await (const b of cur) { b._id = String(b._id); out.write(JSON.stringify(b) + '\n'); n++; }
 out.end(); await new Promise((r) => out.on('finish', r)); console.log('books', n); await c.close();

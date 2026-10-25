@@ -83,7 +83,7 @@ async function phaseCandidates() {
       id: 1, title: 1, language: 1, languages: 1, language_multi: 1, original_language: 1, text_role: 1, visible: 1, created_at: 1,
       pages_count: 1, pages_ocr: 1, 'image_source.provider': 1, 'book_class.class': 1, 'book_class.script_family': 1,
       'book_class.evidence.family_source': 1, 'book_class.evidence.secondary_family': 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1,
-    } });
+    } }).batchSize(1000);
     const out = fs.createWriteStream(inDir('candidates.jsonl'));
     const T = {}; let n = 0, total = 0;
     for await (const b of cur) {

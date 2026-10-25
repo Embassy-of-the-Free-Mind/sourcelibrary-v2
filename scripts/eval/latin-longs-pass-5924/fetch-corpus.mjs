@@ -43,7 +43,7 @@ try {
   const gz = zlib.createGzip(); const ws = fs.createWriteStream(OUT); gz.pipe(ws);
   let pages = 0, books = 0;
   for (let i = 0; i < ids.length; i += 50) {
-    const cur = db.collection('pages').find({ book_id: { $in: ids.slice(i, i + 50) }, 'ocr.model': 'gemini-3-flash-preview' }, { projection: { _id: 0, id: 1, book_id: 1, 'ocr.data': 1 } });
+    const cur = db.collection('pages').find({ book_id: { $in: ids.slice(i, i + 50) }, 'ocr.model': 'gemini-3-flash-preview' }, { projection: { _id: 0, id: 1, book_id: 1, 'ocr.data': 1 } }).batchSize(1000);
     const seen = new Set();
     for await (const p of cur) {
       const text = stripTags(p.ocr?.data); if (text.trim().length < 200) continue;

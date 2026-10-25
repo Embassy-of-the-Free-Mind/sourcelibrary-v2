@@ -130,7 +130,7 @@ async function main() {
   const cursor = books.find(
     { ...vis, field_provenance: { $exists: true, $ne: {} } },
     { projection: { field_provenance: 1, field_provenance_history: 1, image_source: 1, contributing_library: 1, slug: 1 } },
-  );
+  ).batchSize(1000);
 
   let entries = 0, withScript = 0, withPrev = 0, withDate = 0, noSource = 0, withHistory = 0;
   const shapes = new Map<string, number>();

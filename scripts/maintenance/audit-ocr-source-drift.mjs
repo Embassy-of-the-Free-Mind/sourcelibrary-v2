@@ -45,7 +45,7 @@ const ocrTotal = await pages.countDocuments({ 'ocr.data': { $exists: true, $ne: 
 const cursor = pages.find(
   { 'ocr.source_url': { $exists: true, $ne: null } },
   { projection: PROJ }
-);
+).batchSize(1000);
 
 const drifted = [];
 let scanned = 0;

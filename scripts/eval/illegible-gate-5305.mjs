@@ -243,7 +243,7 @@ async function phaseCorpus() {
   const counts = { books: books.length, pages: 0, translated: 0, fired: 0, fired_translated: 0, by_kind: {}, by_language: {} };
   const flags = [];
   for (const b of books) {
-    const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, photo: 1, archived_photo: 1, display_photo: 1 } });
+    const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, photo: 1, archived_photo: 1, display_photo: 1 } }).batchSize(1000);
     for await (const p of cur) {
       counts.pages++;
       const tr = !!p.translation?.data; if (tr) counts.translated++;

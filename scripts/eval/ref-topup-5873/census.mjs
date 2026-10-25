@@ -10,7 +10,7 @@ if (process.argv[1]?.endsWith('census.mjs')) {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const out = {};
   try {
-    const cur = c.db('bookstore').collection('books').find({ language: { $regex: /^\s*(persian|hebrew|heb|aramaic|arabic|pali|chinese|classical\s+chinese|sanskrit)\b/i } }, { projection: { id: 1, language: 1, visible: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1 } });
+    const cur = c.db('bookstore').collection('books').find({ language: { $regex: /^\s*(persian|hebrew|heb|aramaic|arabic|pali|chinese|classical\s+chinese|sanskrit)\b/i } }, { projection: { id: 1, language: 1, visible: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1 } }).batchSize(1000);
     for await (const b of cur) {
       const l = langOf(b.language); if (!l) continue;
       const o = (out[l] ||= { books: 0, live_books: 0, live_translated_books: 0, pages: 0, pages_translated: 0, pages_untranslated: 0 });

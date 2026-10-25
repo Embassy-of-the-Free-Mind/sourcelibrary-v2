@@ -75,7 +75,7 @@ if (COVERS) {
   const q = BOOK ? { $or: [{ id: BOOK }, { _id: BOOK }] } : {};
   const cur = db.collection('books').find(q, {
     projection: { id: 1, title: 1, visible: 1, ...Object.fromEntries(COVER_FIELDS.map(f => [f, 1])) },
-  });
+  }).batchSize(1000);
   let n = 0;
   for await (const b of cur) {
     n++;
@@ -113,7 +113,7 @@ let checkedPages = 0, checkedBooks = 0;
 for (const bid of bookIds) {
   const cur = pages.find({ book_id: bid }, {
     projection: { id: 1, book_id: 1, page_number: 1, ...Object.fromEntries(FIELDS.map(f => [f, 1])) },
-  });
+  }).batchSize(1000);
   for await (const p of cur) {
     checkedPages++;
     for (const f of FIELDS) {

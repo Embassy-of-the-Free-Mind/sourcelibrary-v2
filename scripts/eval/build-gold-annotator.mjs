@@ -53,7 +53,7 @@ function fam(l) {
 
 // catalogue keys for density proxy
 const catKeys = new Set();
-for await (const r of TC.find({}, { projection: { author: 1, author_normalized: 1 } })) {
+for await (const r of TC.find({}, { projection: { author: 1, author_normalized: 1 } }).batchSize(1000)) {
   for (const k of lastnames(r.author)) catKeys.add(k);
   for (const k of lastnames(r.author_normalized)) catKeys.add(k);
 }

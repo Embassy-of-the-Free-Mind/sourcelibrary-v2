@@ -59,7 +59,7 @@ const cursor = db.collection('books').find(
     thumbnail: { $exists: true, $ne: null },
   },
   { projection: { id: 1, title: 1, thumbnail: 1, 'image_source.provider': 1 } }
-);
+).batchSize(1000);
 
 const books = [];
 for await (const b of cursor) {

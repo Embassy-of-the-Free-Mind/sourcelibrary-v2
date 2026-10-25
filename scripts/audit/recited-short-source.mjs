@@ -48,7 +48,7 @@ await withMongo(async (db) => {
   const t = { scanned: 0, translated: 0, short_source: 0, flagged: 0, flagged_books: new Set(), human_edited: 0 };
   const flags = [];
   const cur = pages.find({ ...filter, 'translation.data': { $type: 'string' } },
-    { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.model': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.updated_at': 1 } });
+    { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.model': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.updated_at': 1 } }).batchSize(1000);
   for await (const p of cur) {
     t.scanned++;
     const ocr = p.ocr?.data || '', tr = p.translation.data;

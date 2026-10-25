@@ -161,7 +161,7 @@ async function main() {
   const db = c.db('bookstore');
   const pages = db.collection('pages'), revs = db.collection('page_revisions');
 
-  const cur = revs.find({ field: 'ocr' }, { projection: { page_id: 1, data: 1 }, limit: 14000 })
+  const cur = revs.find({ field: 'ocr' }, { projection: { page_id: 1, data: 1 }, limit: 14000 }).batchSize(1000)
     .sort({ _id: -1 }).maxTimeMS(180000);
 
   const seen = new Set();

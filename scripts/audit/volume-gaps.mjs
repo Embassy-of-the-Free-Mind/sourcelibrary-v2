@@ -113,7 +113,7 @@ const cursor = db.collection('books').find(
       pages_ocr: 1, visible: 1, 'image_source.provider': 1, ia_identifier: 1,
     },
   }
-);
+).batchSize(1000);
 
 const series = new Map();
 let scanned = 0;

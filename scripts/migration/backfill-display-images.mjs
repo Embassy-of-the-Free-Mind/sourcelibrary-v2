@@ -347,7 +347,7 @@ async function main() {
       const q = phaseQuery(phase);
       if (lastBookMongoId) q._id = { $gt: lastBookMongoId };
       const bookCursor = db.collection('books')
-        .find(q, { projection: { _id: 1, id: 1 } }).sort({ _id: 1 });
+        .find(q, { projection: { _id: 1, id: 1 } }).batchSize(1000).sort({ _id: 1 });
 
       for await (const book of bookCursor) {
         if (stats.booksWithGap >= BOOK_LIMIT || stats.processed >= LIMIT) { limitHit = true; break outer; }

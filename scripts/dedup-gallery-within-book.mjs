@@ -29,7 +29,7 @@ const cursor = db.collection('gallery_images').aggregate([
   { $match: { book_provider: PROVIDER, image_url: { $ne: null, $ne: '' } } },
   { $group: { _id: { book_id: '$book_id', page_id: '$page_id', image_url: '$image_url' }, count: { $sum: 1 }, ids: { $push: { id: '$_id', updated_at: '$updated_at' } } } },
   { $match: { count: { $gt: 1 } } },
-], { allowDiskUse: true });
+], { allowDiskUse: true }).batchSize(1000);
 
 let groups = 0;
 let toHide = 0;

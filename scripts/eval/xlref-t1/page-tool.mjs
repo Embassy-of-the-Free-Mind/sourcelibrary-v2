@@ -18,7 +18,7 @@ try {
     const b = await db.collection('books').findOne({ $or: [{ id: BOOK }, { _id: BOOK }] }, { projection: { id: 1, title: 1, author: 1, year: 1, language: 1, pages_count: 1, pages_translated: 1, image_source: 1, image_license: 1, contributing_library: 1, publisher: 1, place_published: 1 } });
     console.log(JSON.stringify(b, null, 1));
   } else if (cmd === 'list') {
-    const cur = db.collection('pages').find({ book_id: BOOK }, { projection: { page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1 } }).sort({ page_number: 1 });
+    const cur = db.collection('pages').find({ book_id: BOOK }, { projection: { page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1 } }).batchSize(1000).sort({ page_number: 1 });
     for await (const p of cur) {
       const o = strip(p.ocr?.data); const t = p.translation?.data || '';
       console.log(`${p.page_number}\t${p.page_type || ''}\tocr=${o.length}\ttr=${t.length}\t${o.slice(0, 90)}`);

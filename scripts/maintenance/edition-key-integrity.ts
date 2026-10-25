@@ -64,7 +64,7 @@ async function main() {
       visible: 1, work_id: 1, ustc_id: 1, 'ustc_match.ustc_year': 1, 'ustc_match.confidence': 1,
       edition_key: 1, edition_key_quality: 1, edition_external_ids: 1,
     } }
-  );
+  ).batchSize(1000);
 
   let scanned = 0, drift = 0, qualityDrift = 0, missing = 0, unkeyable = 0, staleUstc = 0;
   const clusters = new Map<string, { ids: string[]; visible: string[]; works: Set<string>; trusted: boolean }>();

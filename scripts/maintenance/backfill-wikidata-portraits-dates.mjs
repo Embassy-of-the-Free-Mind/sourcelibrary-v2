@@ -68,7 +68,7 @@ console.log(`${total} entities need enrichment${DRY ? ' (dry run)' : ''}; proces
 
 const cursor = entities.find(query, {
   projection: { wikidata_id: 1, portrait_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1 },
-});
+}).batchSize(1000);
 
 let processed = 0, portraitsFixed = 0, datesFixed = 0, errors = 0;
 for await (const ent of cursor) {

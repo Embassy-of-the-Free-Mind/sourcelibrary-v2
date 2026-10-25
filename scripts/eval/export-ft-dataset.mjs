@@ -222,7 +222,7 @@ const ATTEMPT_FIELDS = [
 ];
 const attemptRows = [];
 let excludedAttempts = 0;
-const attemptCursor = db.collection('first_translation_attempts').find({});
+const attemptCursor = db.collection('first_translation_attempts').find({}).batchSize(1000);
 for await (const a of attemptCursor) {
   if (excludedIds.has(String(a.book_id))) {
     excludedAttempts++;

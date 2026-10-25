@@ -159,12 +159,12 @@ export function sleep(ms) {
 export async function loadLiveBookIds(db) {
   const live = new Set();
   const add = (v) => { if (v != null) live.add(String(v)); };
-  for await (const b of db.collection('books').find({}, { projection: { id: 1 } })) {
+  for await (const b of db.collection('books').find({}, { projection: { id: 1 } }).batchSize(1000)) {
     add(b.id); add(b._id);
   }
   for (const coll of ['deleted_books', 'failed_imports']) {
     try {
-      for await (const d of db.collection(coll).find({}, { projection: { id: 1, book_id: 1 } })) {
+      for await (const d of db.collection(coll).find({}, { projection: { id: 1, book_id: 1 } }).batchSize(1000)) {
         add(d.id); add(d._id); add(d.book_id);
       }
     } catch { /* collection may not exist */ }

@@ -220,7 +220,7 @@ async function main() {
     // (display_title not set, or no attribution_qualifier extracted)
   }
 
-  const cursor = books.find(query, { projection });
+  const cursor = books.find(query, { projection }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   let total = 0, titleFixed = 0, slugFixed = 0, authorFixed = 0, skipped = 0;

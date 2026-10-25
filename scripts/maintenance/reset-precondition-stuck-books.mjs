@@ -90,7 +90,7 @@ async function main() {
   let updated = 0;
 
   // Process each book individually to preserve error history
-  const cursor = db.collection('books').find(baseQ).project({ _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pipeline_auto: 1 });
+  const cursor = db.collection('books').find(baseQ).batchSize(1000).project({ _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pipeline_auto: 1 });
   for await (const book of cursor) {
     const isDone = (book.pages_ocr || 0) >= (book.pages_count || 0);
     const newStatus = isDone ? 'complete' : 'archive_complete';

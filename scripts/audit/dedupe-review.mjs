@@ -126,7 +126,7 @@ async function snapshot() {
     };
     const out = fs.createWriteStream(SNAP + '.tmp');
     let n = 0;
-    for await (const b of db.collection('books').find({}, { projection: proj })) {
+    for await (const b of db.collection('books').find({}, { projection: proj }).batchSize(1000)) {
       b._id = String(b._id);
       out.write(JSON.stringify(b) + '\n');
       n++;

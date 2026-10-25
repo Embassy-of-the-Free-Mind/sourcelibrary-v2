@@ -113,7 +113,7 @@ async function main() {
   let scalarFolds = 0, arrayChanges = 0, ops = [];
   const flush = async () => { if (ops.length) { await B.bulkWrite(ops); ops = []; } };
 
-  for await (const d of B.find({}, { projection: { language: 1, languages: 1, language_raw: 1 } })) {
+  for await (const d of B.find({}, { projection: { language: 1, languages: 1, language_raw: 1 } }).batchSize(1000)) {
     const raw = d.language;
     const scalarCanon = (typeof raw === 'string' && CODE[raw]) ? CODE[raw] : raw; // fold scalar code only
     const { langs, flag } = parse(raw);

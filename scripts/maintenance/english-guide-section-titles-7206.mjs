@@ -70,7 +70,7 @@ if (stage === 'propose') {
   ).toArray();
   const byId = new Map(books.map((b) => [b.id, b]));
   const cands = [];
-  for await (const d of db.collection('book_indexes').find({ 'sectionSummaries.0': { $exists: true } }, { projection: { _id: 0, book_id: 1, 'sectionSummaries.title': 1, 'sectionSummaries.titleOriginal': 1 } })) {
+  for await (const d of db.collection('book_indexes').find({ 'sectionSummaries.0': { $exists: true } }, { projection: { _id: 0, book_id: 1, 'sectionSummaries.title': 1, 'sectionSummaries.titleOriginal': 1 } }).batchSize(1000)) {
     const b = byId.get(d.book_id);
     if (!b || done.has(d.book_id)) continue;
     const s = d.sectionSummaries;

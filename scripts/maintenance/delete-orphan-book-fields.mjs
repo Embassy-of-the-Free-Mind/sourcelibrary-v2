@@ -125,7 +125,7 @@ if (!APPLY) {
 // Preserve first, delete second — and one row per BOOK, carrying every value.
 const findOpts = { projection: Object.fromEntries([['id', 1], ...FIELDS.map((f) => [f, 1])]) };
 if (LIMIT) findOpts.limit = LIMIT;
-const cursor = books.find({ $or: FIELDS.map((f) => ({ [f]: { $exists: true } })) }, findOpts);
+const cursor = books.find({ $or: FIELDS.map((f) => ({ [f]: { $exists: true } })) }, findOpts).batchSize(1000);
 if (LIMIT) console.log(`\nCANARY: limiting to ${LIMIT} books.`);
 
 let rows = 0, unset = 0;

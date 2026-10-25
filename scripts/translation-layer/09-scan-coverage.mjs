@@ -47,7 +47,7 @@ async function pullCandidates() {
   const cur = col.find(
     { language: 'Latin', manifest_url: { $ne: null } },
     { projection: { title: 1, author: 1, author_surname: 1, source: 1, manifest_url: 1, date_earliest: 1 } }
-  );
+  ).batchSize(1000);
   const out = [];
   for await (const d of cur) {
     if (!d.title) continue;

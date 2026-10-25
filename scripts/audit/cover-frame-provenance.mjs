@@ -60,7 +60,7 @@ function coverFrameFromPages(book, pages) {
 
 // A. cover URL shape over every live book.
 const shape = {}, books = [];
-for await (const b of db.collection('books').find(LIVE, { projection: BOOK_PROJ })) {
+for await (const b of db.collection('books').find(LIVE, { projection: BOOK_PROJ }).batchSize(1000)) {
   books.push(b);
   const url = cover(b), ident = url && r2PageIdentity(url);
   const k = !url ? 'none'

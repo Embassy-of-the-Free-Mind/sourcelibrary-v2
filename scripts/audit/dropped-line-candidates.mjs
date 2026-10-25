@@ -211,7 +211,7 @@ async function main() {
   const byPage = new Map();
   if (CORPUS) {
     let seen = 0;
-    for await (const r of revC.find({ field: 'ocr' }, { projection: { _id: 1, page_id: 1, source: 1, model: 1, created_at: 1 } })) {
+    for await (const r of revC.find({ field: 'ocr' }, { projection: { _id: 1, page_id: 1, source: 1, model: 1, created_at: 1 } }).batchSize(1000)) {
       if (!byPage.has(r.page_id)) byPage.set(r.page_id, []);
       byPage.get(r.page_id).push(r);
       if (++seen % 200000 === 0) console.error(`  revision rows read ${seen}`);

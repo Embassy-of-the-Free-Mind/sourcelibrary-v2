@@ -55,7 +55,7 @@ const B = mc.db('bookstore').collection('books');
 const cursor = B.find(
   { 'ai_metadata.language': { $exists: true, $ne: '' }, language: { $exists: true, $ne: '' } },
   { projection: { id:1, title:1, author:1, language:1, text_role:1, visible:1, 'ai_metadata.language':1, 'ai_metadata.confidence':1, 'ai_metadata.secondary_languages':1 } }
-);
+).batchSize(1000);
 
 // placeholder / non-single-language catalog values that aren't real mislabels
 const PLACEHOLDER = new Set(['visual','und','unknown','undetermined','multiple','various','']);

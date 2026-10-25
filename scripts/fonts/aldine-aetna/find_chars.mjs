@@ -14,7 +14,7 @@ const c = await new MongoClient(process.env.MONGODB_URI).connect();
 const pages = c.db('bookstore').collection('pages');
 const hits = { K: [], X: [], Y: [], Z: [], J: [], U: [], W: [], z: [], k: [], v: [], w: [], j: [], digit: [] };
 for (const [bid, ia] of Object.entries(BOOKS)) {
-  const cur = pages.find({ book_id: bid }, { projection: { page_number: 1, 'ocr.data': 1 } });
+  const cur = pages.find({ book_id: bid }, { projection: { page_number: 1, 'ocr.data': 1 } }).batchSize(1000);
   for await (const p of cur) {
     const t = (p.ocr && p.ocr.data) || '';
     if (!t) continue;

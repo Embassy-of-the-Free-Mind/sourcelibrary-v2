@@ -114,7 +114,7 @@ async function main() {
   const cursor = col.find(
     query,
     { projection: { _id: 0, id: 1, title: 1, author: 1, year: 1, published: 1, original_work_year: 1, language: 1, original_language: 1, is_translation: 1, text_role_source: 1, read_count: 1 } },
-  );
+  ).batchSize(1000);
 
   const dist = { original: 0, 'period-translation': 0, 'modern-translation': 0 };
   let loebCount = 0, processed = 0, written = 0;

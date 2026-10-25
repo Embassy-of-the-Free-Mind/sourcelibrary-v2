@@ -165,7 +165,7 @@ async function labels() {
   const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
   const db = client.db('bookstore');
   const books = [];
-  const cur = db.collection('books').find({ pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, pages_count: 1, visible: 1, shelfmark: 1, resource_type: 1, contributing_library: 1, 'image_source.provider': 1, 'pipeline_auto.hold.reason': 1, 'pipeline_auto.status': 1 } });
+  const cur = db.collection('books').find({ pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, pages_count: 1, visible: 1, shelfmark: 1, resource_type: 1, contributing_library: 1, 'image_source.provider': 1, 'pipeline_auto.hold.reason': 1, 'pipeline_auto.status': 1 } }).batchSize(1000);
   for await (const b of cur) if (b.id && !done.has(b.id)) books.push(b);
   console.log(`books to label ${books.length}`);
   const out = fs.createWriteStream(LABELS_FILE, { flags: 'a' });

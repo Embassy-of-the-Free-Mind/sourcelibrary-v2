@@ -39,7 +39,7 @@ export async function computeUstcAuthorCoverage(db) {
     const k = canonicalKey(v);
     if (k) cluster.add(k);
   };
-  for await (const a of db.collection('authors').find({}, { projection: { variants: 1, canonical_name: 1 } })) {
+  for await (const a of db.collection('authors').find({}, { projection: { variants: 1, canonical_name: 1 } }).batchSize(1000)) {
     add(a.canonical_name);
     for (const v of a.variants || []) add(v);
   }
@@ -48,7 +48,7 @@ export async function computeUstcAuthorCoverage(db) {
   const cursor = db.collection('catalog_coverage').aggregate([
     { $match: { author: { $type: 'string', $nin: ['', null] } } },
     { $group: { _id: '$author', editions: { $sum: 1 } } },
-  ], { allowDiskUse: true });
+  ], { allowDiskUse: true }).batchSize(1000);
 
   const out = {
     census_distinct_authors: 0,

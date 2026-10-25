@@ -565,7 +565,7 @@ async function stageCoverage() {
   const out = { at: new Date().toISOString(), live_filter: 'books: visible && pages_count > 0', model_read_sources: MODEL_READ };
   await withMongo(async (db) => {
     const live = new Map(); let pages = 0, ocr = 0, tr = 0; const ia = { books: 0, pages: 0, ocr: 0, translated: 0 };
-    for await (const b of db.collection('books').find({ visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, ia_identifier: 1, 'image_source.provider': 1 } })) {
+    for await (const b of db.collection('books').find({ visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, ia_identifier: 1, 'image_source.provider': 1 } }).batchSize(1000)) {
       live.set(b.id, b); pages += b.pages_count || 0; ocr += b.pages_ocr || 0; tr += b.pages_translated || 0;
       if (b.ia_identifier || b.image_source?.provider === 'internet_archive') { ia.books++; ia.pages += b.pages_count || 0; ia.ocr += b.pages_ocr || 0; ia.translated += b.pages_translated || 0; }
     }

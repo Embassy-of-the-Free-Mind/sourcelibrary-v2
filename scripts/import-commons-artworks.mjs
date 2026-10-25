@@ -489,7 +489,7 @@ async function main() {
       const cursor = coll.find(
         { slug: /^art-/ },
         { projection: { slug: 1, commons_title: 1 }, maxTimeMS: 120000 }
-      );
+      ).batchSize(1000);
       for await (const doc of cursor) {
         if (doc.slug) existingSlugs.add(doc.slug);
         if (doc.commons_title) existingCommonsTitles.add(doc.commons_title);

@@ -107,7 +107,7 @@ async function main() {
 
   const cursor = pages.find(query, {
     projection: { _id: 1, book_id: 1, page_number: 1, image_thumb: 1, thumbnail_blob: 1 },
-  });
+  }).batchSize(1000);
 
   let scanned = 0, fixable = 0, written = 0, missingThumb = 0;
   let queue = [];

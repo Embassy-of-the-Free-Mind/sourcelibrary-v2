@@ -76,7 +76,7 @@ async function stampCollection(coll) {
         _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
         normalized_title: 1, normalized_author: 1, edition_key: 1, edition_key_quality: 1,
       },
-    })
+    }).batchSize(1000)
     .limit(LIMIT);
 
   let stamped = 0;

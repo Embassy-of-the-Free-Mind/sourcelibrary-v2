@@ -140,7 +140,7 @@ const strata = new Map();
 let poolN = 0;
 const cursor = books.find(POOL, {
   projection: { id: 1, title: 1, author: 1, language: 1, is_first_translation: 1, work_id: 1 },
-});
+}).batchSize(1000);
 for await (const b of cursor) {
   poolN++;
   const id = String(b.id || b._id);

@@ -256,7 +256,7 @@ if (mode === 'baseline') {
   // The corpus's own shape: pages of live books by century of the work, same dating rule. Every strip leans where
   // the library leans; this is the denominator a reader compares against.
   const byC = {}; const byCEd = {}; const basis = {}; let n = 0;
-  const cur = db.collection('books').find({ visible: true, hidden: { $ne: true }, pages_count: { $gt: 0 } }, { projection: { id: 1, year: 1, published: 1, source_work_dates: 1, source_work_dates_meta: 1, original_work_year: 1, pages_count: 1 } });
+  const cur = db.collection('books').find({ visible: true, hidden: { $ne: true }, pages_count: { $gt: 0 } }, { projection: { id: 1, year: 1, published: 1, source_work_dates: 1, source_work_dates_meta: 1, original_work_year: 1, pages_count: 1 } }).batchSize(1000);
   for await (const b of cur) {
     const w = workDate(b); n++; if (w.year == null || w.year < -1500 || w.year > 2030) continue;
     const c = Math.floor(w.year / 100) * 100; byC[c] = (byC[c] || 0) + b.pages_count; basis[w.basis] = (basis[w.basis] || 0) + b.pages_count;

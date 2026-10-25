@@ -44,7 +44,7 @@ const books = mongo.db('bookstore').collection('books');
 const cur = books.find(
   { pages_count: { $gt: 0 } },
   { projection: { title: 1, language: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, visible: 1 } },
-);
+).batchSize(1000);
 
 const holdings = [];
 let scanned = 0;

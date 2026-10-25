@@ -138,7 +138,7 @@ async function plan() {
   const skipped = { notFound: ids.length - books.length, humanEdited: 0, alreadyUnreadable: 0, noImage: 0 };
   for (const b of books) {
     const cur = db.collection('pages').find({ book_id: b.id },
-      { projection: { id: 1, page_number: 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.unreadable': 1 } });
+      { projection: { id: 1, page_number: 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.unreadable': 1 } }).batchSize(1000);
     for await (const p of cur) {
       const why = storedLoops(p.ocr?.data);
       if (!why) continue;

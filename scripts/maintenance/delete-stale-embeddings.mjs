@@ -41,7 +41,7 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: fa
 
 console.log('Loading book_ids from Mongo…');
 const validIds = new Set();
-const cursor = db.collection('books').find({}, { projection: { id: 1, _id: 1 } });
+const cursor = db.collection('books').find({}, { projection: { id: 1, _id: 1 } }).batchSize(1000);
 for await (const b of cursor) {
   if (b.id) validIds.add(String(b.id));
   if (b._id) validIds.add(String(b._id));

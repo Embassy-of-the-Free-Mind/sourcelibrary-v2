@@ -327,7 +327,7 @@ async function admit(o, report) {
   const stateColl = db.collection(BOOKS_COLL);
   const filter = gapFilter(o.scopeFilter);
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
-  const cursor = booksOf(db).find(filter)
+  const cursor = booksOf(db).find(filter).batchSize(1000)
     .sort({ read_count: -1, pages_translated: -1 })
     .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
 

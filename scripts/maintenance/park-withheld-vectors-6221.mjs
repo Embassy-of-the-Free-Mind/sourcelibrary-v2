@@ -83,7 +83,7 @@ const targets = new Map();
 if (!ONLY_CLASS || ONLY_CLASS === 'withheld') {
   const cur = db.collection('pages').find(
     { 'translation_withheld.reason': { $exists: true }, ...(ONLY_BOOK ? { book_id: ONLY_BOOK } : {}) },
-    { projection: { _id: 0, id: 1, book_id: 1, 'translation_withheld.reason': 1, translation: 1 } });
+    { projection: { _id: 0, id: 1, book_id: 1, 'translation_withheld.reason': 1, translation: 1 } }).batchSize(1000);
   const ids = new Map();
   for await (const p of cur) {
     const live = typeof p.translation === 'string' ? p.translation : p.translation?.data;

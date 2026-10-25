@@ -37,7 +37,7 @@ const cursor = db.collection('books').find(
     $or: [{ erara_doi: { $exists: false } }, { erara_doi: null }],
   },
   { projection: { _id: 1, title: 1, erara_id: 1 } }
-);
+).batchSize(1000);
 
 let scanned = 0, noOcr = 0, noMatch = 0, wouldWrite = 0, written = 0;
 const samples = [];

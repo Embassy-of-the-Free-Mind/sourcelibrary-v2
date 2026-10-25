@@ -127,7 +127,7 @@ async function main() {
   // -----------------------------------------------------------------
   print(`## 1. Overall traffic`);
   const pvAll = await db.collection('analytics_pageviews').countDocuments({ timestamp: { $gte: SINCE } });
-  const pvCursor = db.collection('analytics_pageviews').find({ timestamp: { $gte: SINCE } });
+  const pvCursor = db.collection('analytics_pageviews').find({ timestamp: { $gte: SINCE } }).batchSize(1000);
 
   // Fingerprints the hourly detector has flagged as a residential proxy pool.
   // These wear a real browser UA — BOT_RE cannot see them, which is why on

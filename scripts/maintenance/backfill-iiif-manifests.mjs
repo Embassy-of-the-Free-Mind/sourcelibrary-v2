@@ -61,13 +61,13 @@ const totalMatching = await db.collection('books').countDocuments(filter);
 // Already-stored manifest URLs without an error → skip unless --refetch.
 const storedOk = new Set();
 if (!REFETCH) {
-  const cur = db.collection('iiif_manifests').find({ error: null }, { projection: { manifest_url: 1 } });
+  const cur = db.collection('iiif_manifests').find({ error: null }, { projection: { manifest_url: 1 } }).batchSize(1000);
   for await (const d of cur) storedOk.add(d.manifest_url);
 }
 
 // Build the work list (dedupe manifest URLs — page-range imports share one).
 const projection = { 'image_source.iiif_manifest': 1, 'image_source.provider': 1, id: 1 };
-let cursor = db.collection('books').find(filter, { projection });
+let cursor = db.collection('books').find(filter, { projection }).batchSize(1000);
 if (LIMIT) cursor = cursor.limit(LIMIT);
 
 const seen = new Set();

@@ -65,7 +65,7 @@ const benign = { script_pair: 0, institutional: 0 };
 let totalVariants = 0; let cleanCount = 0; let docsAffected = 0;
 
 for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
-  { projection: { canonical_name: 1, variants: 1, wikidata_id: 1 } })) {
+  { projection: { canonical_name: 1, variants: 1, wikidata_id: 1 } }).batchSize(1000)) {
   let touched = false;
   for (const v of a.variants) {
     totalVariants++;
@@ -125,7 +125,7 @@ const booksCarrying = flat.reduce((s, r) => s + r.books_carrying, 0);
 // because this audit is already walking every variant.
 const claimants = new Map();
 for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
-  { projection: { canonical_name: 1, variants: 1, wikidata_id: 1 } })) {
+  { projection: { canonical_name: 1, variants: 1, wikidata_id: 1 } }).batchSize(1000)) {
   for (const v of a.variants) {
     if (!claimants.has(v)) claimants.set(v, []);
     claimants.get(v).push({ slug: a._id, wikidata_id: a.wikidata_id ?? null });
