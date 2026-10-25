@@ -1,0 +1,565 @@
+{
+ "note": "experiment cells = chart x engine placed on src/data/ocr-pareto.json; production cells = chart x stored engine with >= 20 live pages (did-not-read) or >= 1 scored reference page (accuracy). Engine ids mapped by paretoKey().",
+ "did_not_read_production_only": [
+  {
+   "cell": "latin|gemini-3.1-flash-lite-preview",
+   "pages": 764175
+  },
+  {
+   "cell": "latin-script-other|gemini-3.1-flash-lite-preview",
+   "pages": 557984
+  },
+  {
+   "cell": "english|ia-djvu",
+   "pages": 297907
+  },
+  {
+   "cell": "english|gemini-3.1-flash-lite-preview",
+   "pages": 191397
+  },
+  {
+   "cell": "other:cyrillic|gemini-3-flash-preview",
+   "pages": 86670
+  },
+  {
+   "cell": "other:indic|gemini-3-flash-preview",
+   "pages": 84230
+  },
+  {
+   "cell": "other:other|gemini-3-flash-preview",
+   "pages": 81880
+  },
+  {
+   "cell": "other:indic|gemini-3.1-flash-lite",
+   "pages": 62713
+  },
+  {
+   "cell": "hebrew|gemini-3-flash-preview",
+   "pages": 59064
+  },
+  {
+   "cell": "other:arabic|gemini-3-flash-preview",
+   "pages": 51548
+  },
+  {
+   "cell": "other:other|gemini-3.1-flash-lite-preview",
+   "pages": 46621
+  },
+  {
+   "cell": "other:indic|gemini-3.1-flash-lite-preview",
+   "pages": 45768
+  },
+  {
+   "cell": "other:korean|gemini-3-flash-preview",
+   "pages": 40480
+  },
+  {
+   "cell": "greek|gemini-3.1-flash-lite-preview",
+   "pages": 35385
+  },
+  {
+   "cell": "other:other|gemini-3.1-flash-lite",
+   "pages": 29719
+  },
+  {
+   "cell": "other:arabic|gemini-3.1-flash-lite-preview",
+   "pages": 26384
+  },
+  {
+   "cell": "other:arabic|gemini-3.1-flash-lite",
+   "pages": 20298
+  },
+  {
+   "cell": "other:korean|gemini-3.1-flash-lite",
+   "pages": 15544
+  },
+  {
+   "cell": "other:cyrillic|gemini-3.1-flash-lite-preview",
+   "pages": 15349
+  },
+  {
+   "cell": "other:unknown|gemini-3-flash-preview",
+   "pages": 14622
+  },
+  {
+   "cell": "hebrew|gemini-3.1-flash-lite-preview",
+   "pages": 14605
+  },
+  {
+   "cell": "armenian|gemini-3.1-flash-lite-preview",
+   "pages": 13636
+  },
+  {
+   "cell": "japanese|gemini-3.1-flash-lite-preview",
+   "pages": 12126
+  },
+  {
+   "cell": "english|gemini-2.5-flash",
+   "pages": 10843
+  },
+  {
+   "cell": "other:ethiopic|gemini-3.1-flash-lite-preview",
+   "pages": 7619
+  },
+  {
+   "cell": "latin-script-other|ia-djvu",
+   "pages": 7307
+  },
+  {
+   "cell": "other:unknown|gemini-3.1-flash-lite",
+   "pages": 7166
+  },
+  {
+   "cell": "latin-script-other|gemini-2.5-flash",
+   "pages": 6991
+  },
+  {
+   "cell": "chinese-print|gemini-3.1-flash-lite-preview",
+   "pages": 6816
+  },
+  {
+   "cell": "other:ethiopic|gemini-3-flash-preview",
+   "pages": 5696
+  },
+  {
+   "cell": "hebrew|gemini-3.1-flash-lite",
+   "pages": 5470
+  },
+  {
+   "cell": "syriac|gemini-3.1-flash-lite-preview",
+   "pages": 4716
+  },
+  {
+   "cell": "other:cyrillic|gemini-3.1-flash-lite",
+   "pages": 4420
+  },
+  {
+   "cell": "latin|ia-djvu",
+   "pages": 4246
+  },
+  {
+   "cell": "japanese|gemini-3-flash-preview",
+   "pages": 3263
+  },
+  {
+   "cell": "other:unknown|gemini-3.1-flash-lite-preview",
+   "pages": 2852
+  },
+  {
+   "cell": "other:tibetan|gemini-3.1-flash-lite",
+   "pages": 2674
+  },
+  {
+   "cell": "japanese|gemini-3.1-flash-lite",
+   "pages": 2407
+  },
+  {
+   "cell": "english|mineru-pipeline",
+   "pages": 2381
+  },
+  {
+   "cell": "latin|gemini-2.5-flash",
+   "pages": 1973
+  },
+  {
+   "cell": "other:coptic|gemini-3-flash-preview",
+   "pages": 1779
+  },
+  {
+   "cell": "other:korean|gemini-3.1-flash-lite-preview",
+   "pages": 1650
+  },
+  {
+   "cell": "other:georgian|gemini-3.1-flash-lite-preview",
+   "pages": 1247
+  },
+  {
+   "cell": "other:cuneiform|gemini-3.1-flash-lite-preview",
+   "pages": 1110
+  },
+  {
+   "cell": "other:tibetan|gemini-3.1-flash-lite-preview",
+   "pages": 1079
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3.1-flash-lite-preview",
+   "pages": 861
+  },
+  {
+   "cell": "other:cuneiform|gemini-3-flash-preview",
+   "pages": 841
+  },
+  {
+   "cell": "greek|gemini-2.5-flash",
+   "pages": 757
+  },
+  {
+   "cell": "other:coptic|gemini-3.1-flash-lite-preview",
+   "pages": 676
+  },
+  {
+   "cell": "other:tibetan|gemini-3-flash-preview",
+   "pages": 533
+  },
+  {
+   "cell": "other:cuneiform|gemini-3.1-flash-lite",
+   "pages": 533
+  },
+  {
+   "cell": "other:coptic|gemini-3.1-flash-lite",
+   "pages": 429
+  },
+  {
+   "cell": "other:ethiopic|gemini-3.1-flash-lite",
+   "pages": 326
+  },
+  {
+   "cell": "armenian|gemini-2.5-flash",
+   "pages": 277
+  },
+  {
+   "cell": "greek|mineru-pipeline",
+   "pages": 144
+  },
+  {
+   "cell": "other:georgian|gemini-3-flash-preview",
+   "pages": 75
+  },
+  {
+   "cell": "other:other|gemini-2.5-flash",
+   "pages": 69
+  },
+  {
+   "cell": "other:indic|gemini-2.5-flash",
+   "pages": 45
+  },
+  {
+   "cell": "other:other|mineru-pipeline",
+   "pages": 35
+  },
+  {
+   "cell": "hebrew|gemini-2.5-flash",
+   "pages": 26
+  },
+  {
+   "cell": "other:arabic|gemini-2.5-flash",
+   "pages": 24
+  },
+  {
+   "cell": "syriac|gemini-2.5-flash",
+   "pages": 22
+  }
+ ],
+ "did_not_read_both": [
+  {
+   "cell": "latin|gemini-3.1-flash-lite",
+   "pages": 331572
+  },
+  {
+   "cell": "chinese-print|gemini-3.1-flash-lite",
+   "pages": 8410
+  },
+  {
+   "cell": "english|gemini-3.1-flash-lite",
+   "pages": 251324
+  },
+  {
+   "cell": "greek|gemini-3-flash-preview",
+   "pages": 451459
+  },
+  {
+   "cell": "chinese-print|gemini-3-flash-preview",
+   "pages": 27779
+  },
+  {
+   "cell": "greek|gemini-3.1-flash-lite",
+   "pages": 16370
+  },
+  {
+   "cell": "english|gemini-3-flash-preview",
+   "pages": 541865
+  },
+  {
+   "cell": "latin|gemini-3-flash-preview",
+   "pages": 1679908
+  },
+  {
+   "cell": "latin-script-other|gemini-3-flash-preview",
+   "pages": 865600
+  },
+  {
+   "cell": "latin-script-other|gemini-3.1-flash-lite",
+   "pages": 194796
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3-flash-preview",
+   "pages": 79267
+  },
+  {
+   "cell": "armenian|gemini-3-flash-preview",
+   "pages": 17978
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3.1-flash-lite",
+   "pages": 8735
+  },
+  {
+   "cell": "syriac|gemini-3-flash-preview",
+   "pages": 9979
+  },
+  {
+   "cell": "syriac|gemini-3.1-flash-lite",
+   "pages": 444
+  },
+  {
+   "cell": "armenian|gemini-3.1-flash-lite",
+   "pages": 1079
+  }
+ ],
+ "accuracy_production_only": [
+  {
+   "cell": "hebrew|gemini-3-flash-preview",
+   "pages": 5
+  },
+  {
+   "cell": "other:indic|gemini-3-flash-preview",
+   "pages": 4
+  },
+  {
+   "cell": "other:arabic|gemini-3-flash-preview",
+   "pages": 6
+  },
+  {
+   "cell": "hebrew|gemini-3.1-flash-lite-preview",
+   "pages": 1
+  },
+  {
+   "cell": "other:arabic|gemini-3.1-flash-lite-preview",
+   "pages": 14
+  },
+  {
+   "cell": "other:indic|gemini-3.1-flash-lite-preview",
+   "pages": 10
+  },
+  {
+   "cell": "other:arabic|gemini-3.1-flash-lite",
+   "pages": 4
+  },
+  {
+   "cell": "chinese-print|gemini-3.1-flash-lite-preview",
+   "pages": 2
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3.1-flash-lite-preview",
+   "pages": 1
+  },
+  {
+   "cell": "english|gemini-3.1-flash-lite-preview",
+   "pages": 31
+  },
+  {
+   "cell": "latin|gemini-3.1-flash-lite-preview",
+   "pages": 23
+  },
+  {
+   "cell": "latin|gemini-2.5-flash",
+   "pages": 4
+  },
+  {
+   "cell": "english|gemini-2.5-flash",
+   "pages": 2
+  },
+  {
+   "cell": "english|ia-djvu",
+   "pages": 21
+  },
+  {
+   "cell": "greek|gemini-3.1-flash-lite-preview",
+   "pages": 13
+  },
+  {
+   "cell": "volunteer|gemini-3.1-flash-lite-preview",
+   "pages": 7
+  },
+  {
+   "cell": "volunteer|gemini-3-flash-preview",
+   "pages": 3
+  }
+ ],
+ "accuracy_both": [
+  {
+   "cell": "chinese-manuscript|paddleocr-vl-1.6",
+   "pages": 67
+  },
+  {
+   "cell": "chinese-print|gemini-3.1-flash-lite",
+   "pages": 10
+  },
+  {
+   "cell": "chinese-print|paddleocr-vl-1.6",
+   "pages": 18
+  },
+  {
+   "cell": "chinese-print|gemini-3-flash-preview",
+   "pages": 5
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3-flash-preview",
+   "pages": 14
+  },
+  {
+   "cell": "chinese-manuscript|gemini-3.1-flash-lite",
+   "pages": 2
+  },
+  {
+   "cell": "english|gemini-3-flash-preview",
+   "pages": 89
+  },
+  {
+   "cell": "latin|gemini-3-flash-preview",
+   "pages": 151
+  },
+  {
+   "cell": "english|gemini-3.1-flash-lite",
+   "pages": 28
+  },
+  {
+   "cell": "latin|gemini-3.1-flash-lite",
+   "pages": 27
+  },
+  {
+   "cell": "greek|gemini-3-flash-preview",
+   "pages": 33
+  },
+  {
+   "cell": "greek|gemini-3.1-flash-lite",
+   "pages": 1
+  }
+ ],
+ "experiment_only": [
+  "armenian|chandra-ocr-2",
+  "armenian|claude-sonnet-5-5",
+  "armenian|deepseek-ocr",
+  "armenian|gemini-3.6-flash+antigravity-cli",
+  "armenian|gemini-3.7-flash+antigravity-cli",
+  "armenian|gemini-3.8-flash+antigravity-cli",
+  "armenian|mistral-ocr-4-1",
+  "armenian|qwen3-vl-8b",
+  "armenian|surya2",
+  "armenian|tesseract-hye",
+  "armenian|tesseract-hye_calfa",
+  "chinese-manuscript|chandra-ocr-2",
+  "chinese-manuscript|claude-opus-5-5",
+  "chinese-manuscript|claude-sonnet-5-5",
+  "chinese-manuscript|deepseek-ocr",
+  "chinese-manuscript|dots-mocr",
+  "chinese-manuscript|gemini-3.6-flash+antigravity-cli",
+  "chinese-manuscript|gemini-3.7-flash+antigravity-cli",
+  "chinese-manuscript|gemini-3.8-flash+antigravity-cli",
+  "chinese-manuscript|gemini-4-argon-low+antigravity-cli",
+  "chinese-manuscript|mistral-ocr-4-1",
+  "chinese-manuscript|ndlkotenocr-v3",
+  "chinese-manuscript|paddleocr-vl-1.6",
+  "chinese-manuscript|qwen3-vl-8b",
+  "chinese-manuscript|surya2",
+  "chinese-manuscript|tesseract-chi_tra_vert",
+  "chinese-print|chandra-ocr-2",
+  "chinese-print|claude-opus-5-5",
+  "chinese-print|claude-sonnet-5-5",
+  "chinese-print|deepseek-ocr",
+  "chinese-print|gemini-3.6-flash+antigravity-cli",
+  "chinese-print|gemini-3.7-flash+antigravity-cli",
+  "chinese-print|gemini-3.8-flash+antigravity-cli",
+  "chinese-print|gemini-4-argon-low+antigravity-cli",
+  "chinese-print|mistral-ocr-4-1",
+  "chinese-print|paddleocr-vl-1.6",
+  "chinese-print|qwen3-vl-8b",
+  "english|chandra-ocr-2",
+  "english|claude-sonnet-5-5",
+  "english|deepseek-ocr",
+  "english|gemini-3.6-flash+antigravity-cli",
+  "english|gemini-3.7-flash+antigravity-cli",
+  "english|gemini-3.8-flash+antigravity-cli",
+  "english|gemini-3.8-flash-high+antigravity-cli",
+  "english|mistral-ocr-4-1",
+  "english|olmocr-2-7b-fp8",
+  "english|paddleocr-vl-1.6",
+  "english|qwen3-vl-8b",
+  "greek-manuscript|claude-opus-5-5+claude-cli",
+  "greek-manuscript|gemini-3.8-flash+antigravity-cli",
+  "greek-manuscript|gemini-4-argon-low+antigravity-cli",
+  "greek-manuscript|kraken-greek-cllg",
+  "greek-manuscript|production-stored",
+  "greek|chandra-ocr-2",
+  "greek|claude-opus-5-5",
+  "greek|cllg-qwen3vl-8b",
+  "greek|deepseek-ocr",
+  "greek|dots-mocr",
+  "greek|gemini-3.6-flash+antigravity-cli",
+  "greek|gemini-3.7-flash+antigravity-cli",
+  "greek|gemini-3.8-flash+antigravity-cli",
+  "greek|kraken-greek-cllg",
+  "greek|mistral-ocr-4-1",
+  "greek|olmocr-2-7b-fp8",
+  "greek|paddleocr-vl-1.6",
+  "greek|qwen3-vl-8b",
+  "greek|surya2",
+  "greek|tesseract-grc",
+  "latin-script-other|chandra-ocr-2",
+  "latin-script-other|claude-sonnet-5-5",
+  "latin-script-other|deepseek-ocr",
+  "latin-script-other|gemini-3.6-flash+antigravity-cli",
+  "latin-script-other|gemini-3.7-flash+antigravity-cli",
+  "latin-script-other|gemini-3.8-flash+antigravity-cli",
+  "latin-script-other|kraken-austriannewspapers",
+  "latin-script-other|kraken-catmus",
+  "latin-script-other|mistral-ocr-4-1",
+  "latin-script-other|olmocr-2-7b-fp8",
+  "latin-script-other|paddleocr-vl-1.6",
+  "latin-script-other|qwen3-vl-8b",
+  "latin-script-other|surya2",
+  "latin-script-other|tesseract-deu",
+  "latin-script-other|tesseract-frk",
+  "latin|chandra-ocr-2",
+  "latin|claude-sonnet-5-5",
+  "latin|deepseek-ocr",
+  "latin|gemini-3.6-flash+antigravity-cli",
+  "latin|gemini-3.7-flash+antigravity-cli",
+  "latin|gemini-3.8-flash+antigravity-cli",
+  "latin|gemini-3.8-flash-high+antigravity-cli",
+  "latin|kraken-catmus",
+  "latin|mistral-ocr-4-1",
+  "latin|olmocr-2-7b-fp8",
+  "latin|paddleocr-vl-1.6",
+  "latin|qwen3-vl-8b",
+  "latin|surya2",
+  "latin|tesseract-lat",
+  "rashi|claude-opus-5-5+claude-cli",
+  "rashi|gemini-3.8-flash+antigravity-cli",
+  "rashi|gemini-4-argon-low+antigravity-cli",
+  "rashi|production-stored",
+  "syriac-print|gemini-3.1-flash-lite",
+  "syriac-print|gemini-3.6-flash+antigravity-cli",
+  "syriac-print|gemini-3.7-flash+antigravity-cli",
+  "syriac-print|gemini-3.8-flash+antigravity-cli",
+  "syriac-print|gemini-4-argon-low+antigravity-cli",
+  "syriac-print|mineru",
+  "syriac-print|omnisyr",
+  "syriac-print|omnisyr-nosplit",
+  "syriac-print|qoruyo-eastern",
+  "syriac-print|qoruyo-estrangela",
+  "syriac-print|sophro-mhiro",
+  "syriac|chandra-ocr-2",
+  "syriac|deepseek-ocr",
+  "syriac|gemini-3.6-flash+antigravity-cli",
+  "syriac|gemini-3.7-flash+antigravity-cli",
+  "syriac|gemini-3.8-flash+antigravity-cli",
+  "syriac|gemini-4-argon-low+antigravity-cli",
+  "syriac|mistral-ocr-4-1",
+  "syriac|omnisyr",
+  "syriac|qoruyo-eastern",
+  "syriac|qoruyo-estrangela",
+  "syriac|qwen3-vl-8b",
+  "syriac|sophro-defaultseg"
+ ]
+}

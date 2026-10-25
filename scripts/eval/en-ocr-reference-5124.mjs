@@ -297,7 +297,7 @@ function trimToRef(refW, hypW) {
   return { hypW: hypW.slice(headIns, hypW.length - tailIns), trimmedHead: headIns, trimmedTail: tailIns };
 }
 const r4 = (x) => (x == null || Number.isNaN(x) ? null : +x.toFixed(4));
-function scorePage(refText, hypText) {
+export function scorePage(refText, hypText) {
   const r = normalise(refText), h0 = normalise(hypText);
   const refW = words(r), hyp0 = words(h0);
   const { hypW, trimmedHead, trimmedTail } = trimToRef(refW, hyp0);
@@ -1528,4 +1528,5 @@ async function main() {
   if (STAGE === 'mineru-report') return stageMineruReport();
   throw new Error(`unknown stage ${STAGE}`);
 }
-await main();
+// Imported for scorePage by scripts/eval/estimator/ocr/route-census.mjs (#6740): run the stages only when executed.
+if (import.meta.url === `file://${process.argv[1]}`) await main();
