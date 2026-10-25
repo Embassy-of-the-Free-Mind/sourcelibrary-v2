@@ -237,7 +237,7 @@ async function stageRevisions(db) {
     const cur = db.collection('page_revisions').aggregate([{ $match: c.match }, { $project: {
       page_id: 1, book_id: 1, field: 1, source: 1, model: 1, reason: { $substrCP: [{ $ifNull: ['$reason', ''] }, 0, 160] }, by: 1,
       created_at: 1, original_date: 1, hash: '$content_hash', cs: { $ifNull: ['$engine.call_site', '$engine.name'] },
-      len: { $cond: [{ $eq: [{ $type: '$data' }, 'string'] }, { $strLenCP: '$data' }, -1] } } }], { maxTimeMS: 3600000, allowDiskUse: true });
+      len: { $cond: [{ $eq: [{ $type: '$data' }, 'string'] }, { $strLenCP: '$data' }, -1] } } }], { maxTimeMS: 3600000, allowDiskUse: true }).batchSize(1000);
     for await (const r of cur) {
       rows.push(REV_COLS.map((k) => (k === 'created_at' || k === 'original_date' ? iso(r[k] instanceof Date ? r[k] : r[k] ? new Date(r[k]) : null)
         : k === '_id' ? String(r._id) : tsv(r[k] && typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]))).join('\t'));
