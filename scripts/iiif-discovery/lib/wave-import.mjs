@@ -160,6 +160,7 @@ export async function importCandidate(db, c, o) {
   const title = str(c.title) || str(c.display_title);
   const slug = await uniqueSlug(db, slugify(title) || slugify(`${c.source}-${c.source_id || c.oai_id || c._id}`));
   const fields = buildWaveBook(c, manifest, { language, campaign, hold, slug, now, bookId: new ObjectId() });
+  if (fields.pages_state?.state !== 'manifest_only') throw new Error('importCandidate: a wave book must be born manifest_only');
   const acquired = await insertBookIfNew(db, fields, { importer: IMPORTER, sourceIdentifier: fields.source_fingerprint, sourceUrl: c.manifest_url });
   if (!acquired.inserted) return { outcome: 'gate_declined', reason: acquired.reason, error: acquired.message };
   const bookId = acquired.bookId;
@@ -169,7 +170,6 @@ export async function importCandidate(db, c, o) {
   await db.collection('audit_log').insertOne({ action: 'pipeline_status_changed', book_id: bookId, book_title: fields.title, metadata: { from: 'none', to: HOLD_STATUS, source: IMPORTER, reason: hold.reason }, timestamp: now }).catch(() => {});
   await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: bookId, imported_at: now } });
 
-  if (acquired.doc?.pages_state?.state !== 'manifest_only') throw new Error(`importCandidate: ${bookId} inserted without pages_state`);
   if (manifestOnly) return { outcome: 'imported', book_id: bookId, pages: n };
   // Not lazy: create the pages now, through the one materializer, from the manifest already in hand.
   const m = await materializePages(db, bookId, { trigger: 'import', fetchManifest: async () => manifest, cooldownMs: 0 });

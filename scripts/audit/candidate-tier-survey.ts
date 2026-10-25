@@ -60,8 +60,8 @@ const LABEL = arg('--label', INPUT ? path.basename(INPUT).replace(/\..*$/, '') :
 const PD_BEFORE = parseInt(arg('--pd-before', '1900')!, 10);
 // Which tiers' survivors go to the survivor file. AB by default; the lazy-pages
 // import of tier C (#7343) needs ABC.
-const EMIT_TIERS = arg('--emit-tiers', 'AB')!.toUpperCase();
-const SURVIVOR_FILE = `${LABEL}-survivors-${EMIT_TIERS}.jsonl.gz`;
+const EMIT_TIERS = new Set(arg('--emit-tiers', 'AB')!.toUpperCase().split('').filter(t => 'ABC'.includes(t)));
+const SURVIVOR_FILE = `${LABEL}-survivors-${[...EMIT_TIERS].sort().join('')}.jsonl.gz`;
 const TERMS_FILE = arg('--terms', path.join(__dirname, 'acquisition-tier-terms.json'))!;
 
 // ── Language: one canonical name per record ─────────────────────────────────
@@ -307,7 +307,7 @@ async function main() {
       if (v === 'OTHER_COPY') cell.other_copy++;
       if (transl) cell.transl_flag++;
     }
-    if ((v === 'NEW' || v === 'OTHER_ED' || UNRESOLVED.has(v as Verdict)) && EMIT_TIERS.includes(tier) && bucket !== 'post') {
+    if ((v === 'NEW' || v === 'OTHER_ED' || UNRESOLVED.has(v as Verdict)) && EMIT_TIERS.has(tier) && bucket !== 'post') {
       outA.write(JSON.stringify({ tier, verdict: v, translation_of_held_author: transl, key: cls.key, matched: tier === 'C' ? '' : matchedTerm(tier, c.language, `${c.title} ; ${c.subjects}`, c.author), dated: bucket === 'pd', ...c }) + '\n');
       const sk = `${c.language}|${tier}`;
       samples[sk] ??= [];
