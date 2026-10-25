@@ -31,6 +31,17 @@ era t) read by engine e of family F.
    page_o carries the overdispersion (pages of numbers fail together) and is shared by the engines. A cell's rate is
    per number printed over the stratum's measured pages (number-weighted, as a reader meets them).
 
+Script-family extension (`ext=True`, #7341): the Arabic charts are new, and a new chart's effect drawn from the
+spread of every chart is what made the #4763 holdout centre on 0.2-0.3 CER (2026-10-24 file, section 7). With ext,
+both parts 1 and 2 add
+     + grp[g] + kind[k] + eg[e, g] + ek[e, k]
+   g = the chart's script group (GROUP_OF: Arabic, Hebrew and Syriac are one group of right-to-left abjads), k =
+   manuscript | print; eg / ek let an engine's strength on that group and on handwriting carry to a chart it has
+   not read. Part 1 adds the key: + kt[key_type] + b_self * key_self (kt = 0 for an expert or published reference;
+   model keys and corrected-served keys get a shift, and a read the key was built from gets b_self). Part 2 adds
+   + alchemy * (b_alch + ba[F]): Gemini's CLI safety filter cut alchemical recipes on 16 of 26 Jabir pages.
+A cell's prediction is for an expert key and a read the key did not come from (key_type = reference, key_self = 0).
+
 Inference: stochastic variational inference (AutoNormal) for 1 and 2, which have ~12K rows and ~2K page effects (v0's
 NUTS fit of 1 alone took 5.9 h on 3 cores); NUTS for 3, which is small. SVI intervals run narrow; the held-out check
 in fit_ocr_v1.py is the test of whether they are honest.
@@ -48,14 +59,31 @@ from numpyro.infer import MCMC, NUTS, SVI, Trace_ELBO, Predictive  # noqa: E402
 from numpyro.infer.autoguide import AutoNormal  # noqa: E402
 from numpyro.optim import Adam  # noqa: E402
 
-LEVELS = ['fam', 'eng', 'chart', 'era', 'panel', 'work', 'page']
+LEVELS = ['fam', 'eng', 'chart', 'era', 'panel', 'work', 'page', 'grp', 'kind', 'ktype']
 COL = {'fam': 'engine_family', 'eng': 'engine', 'chart': 'chart', 'era': 'era', 'panel': 'panel', 'work': 'work',
-       'page': 'page'}
+       'page': 'page', 'grp': 'script_group', 'kind': 'kind', 'ktype': 'key_type'}
 HUNDRED = 0.999
+GROUPS = {'latin': 'Latn', 'latin-script-other': 'Latn', 'english': 'Latn', 'greek': 'Grek', 'chinese': 'Hani',
+          'armenian': 'Armn', 'hebrew': 'semitic-rtl', 'rashi': 'semitic-rtl', 'syriac': 'semitic-rtl',
+          'arabic': 'semitic-rtl'}
 
 
-def load(path):
+def GROUP_OF(chart):
+    """The script group of a chart, by its name's first part (english-1880-1930-dense -> english -> Latn)."""
+    c = chart if chart in GROUPS else chart.split('-')[0]
+    return GROUPS[c]
+
+
+def load(path, extra=None):
+    """v1's table, plus optional extra rows (the Arabic rows), with the extension's columns filled for old rows."""
     df = pd.read_json(path, lines=True)
+    if extra:
+        df = pd.concat([df, pd.read_json(extra, lines=True)], ignore_index=True)
+    df['script_group'] = df.chart.map(GROUP_OF)
+    for c, v in (('key_type', 'reference'), ('key_self', 0), ('alchemy', 0)):
+        df[c] = df[c].fillna(v) if c in df else v
+    df['key_self'] = df.key_self.astype(int)
+    df['alchemy'] = df.alchemy.astype(int)
     df['n'] = df.n_ref.clip(lower=20).astype(int)
     df['k'] = np.where(df.scored, np.minimum(df.n, np.round(df.cer.fillna(0).clip(0, 1) * df.n)), 0).astype(int)
     df['z'] = (df.scored & (df.cer >= HUNDRED)).astype(int)
@@ -64,7 +92,8 @@ def load(path):
 
 
 class Index:
-    def __init__(self, df):
+    def __init__(self, df, ext=False):
+        self.ext = ext
         self.lv = {f: sorted(set(df[COL[f]])) for f in LEVELS}
         self.fam_of = dict(df[['engine', 'engine_family']].drop_duplicates().itertuples(index=False))
         ci = self.i('chart')
@@ -77,9 +106,11 @@ class Index:
         return {x: j for j, x in enumerate(self.lv[f])}
 
     def enc(self, df):
-        e = {f: jnp.array(df[COL[f]].map(self.i(f)).values) for f in LEVELS}
+        e = {f: jnp.array(df[COL[f]].map(self.i(f)).values) for f in LEVELS if f in self.lv}  # a v1 pickle has no grp
         e['dense'] = jnp.array(df.dense.values, dtype=float)
         e['web'] = jnp.array(df.fame_web.values, dtype=float)
+        e['self'] = jnp.array(df.key_self.values, dtype=float)
+        e['alch'] = jnp.array(df.alchemy.values, dtype=float)
         return e
 
     def fam_of_eng(self):
@@ -111,6 +142,20 @@ def _effects(p, ix, x, refusal=False):
         W = det('W', tw[ix.chart_of_work] * z('work', (N['work'],)))
         P = det('P', tp[ix.chart_of_page] * z('page', (N['page'],)))
     eta = a + E[x['eng']] + C[x['chart']] + EC[x['eng'], x['chart']] + T[x['era']] + W[x['work']] + P[x['page']]
+    if ix.ext:
+        G = det('G', hn('grp', 1.0) * z('grp', (N['grp'],)))
+        K = det('K', hn('kind', 1.0) * z('kind', (N['kind'],)))
+        EG = det('EG', hn('eg', 0.7) * z('eg', (N['eng'], N['grp'])))
+        EK = det('EK', hn('ek', 0.7) * z('ek', (N['eng'], N['kind'])))
+        eta = eta + G[x['grp']] + K[x['kind']] + EG[x['eng'], x['grp']] + EK[x['eng'], x['kind']]
+        if refusal:
+            ba = numpyro.sample(f'{p}b_alch', dist.Normal(0, 1.5))
+            BA = det('BA', hn('ba', 1.0) * z('ba', (N['fam'],)))
+            eta = eta + x['alch'] * (ba + BA[x['fam']])
+        else:
+            ref = jnp.array([k == 'reference' for k in ix.lv['ktype']])
+            KT = det('KT', jnp.where(ref, 0.0, numpyro.sample(f'{p}kt', dist.Normal(0, 1.0).expand((N['ktype'],)).to_event(1))))
+            eta = eta + KT[x['ktype']] + numpyro.sample(f'{p}b_self', dist.Normal(0, 1.0)) * x['self']
     if refusal:
         FT = det('FT', hn('fe', 1.0) * z('fe', (N['fam'], N['era'])))
         bfame = numpyro.sample(f'{p}b_fame', dist.Normal(0, 1.5))
@@ -165,16 +210,16 @@ def svi_fit(model, seed, steps, lr=0.01, draws=400, **kw):
     return post, diag
 
 
-def fit_accuracy(df, hurdle=True, seed=0, steps=20000):
+def fit_accuracy(df, hurdle=True, seed=0, steps=20000, ext=False):
     s = df[df.scored].reset_index(drop=True)
-    ix = Index(s)
+    ix = Index(s, ext)
     post, diag = svi_fit(accuracy_model, seed, steps, ix=ix, x=ix.enc(s), n=jnp.array(s.n.values),
                          k=jnp.array(s.k.values), z=jnp.array(s.z.values), hurdle=hurdle)
     return ix, post, diag
 
 
-def fit_refusal(df, seed=0, steps=20000):
-    ix = Index(df)
+def fit_refusal(df, seed=0, steps=20000, ext=False):
+    ix = Index(df, ext)
     post, diag = svi_fit(refusal_model, seed, steps, ix=ix, x=ix.enc(df), fail=jnp.array(df.fail.values))
     return ix, post, diag
 
@@ -185,6 +230,12 @@ def row_eta(post, p, ix, d, refusal=False):
     g = lambda n: post[p + n]
     eta = (g('a')[:, None] + g('E')[:, e['eng']] + g('C')[:, e['chart']] + g('EC')[:, e['eng'], e['chart']]
            + g('T')[:, e['era']] + g('W')[:, e['work']] + g('P')[:, e['page']])
+    if getattr(ix, 'ext', False):
+        eta = eta + g('G')[:, e['grp']] + g('K')[:, e['kind']] + g('EG')[:, e['eng'], e['grp']] + g('EK')[:, e['eng'], e['kind']]
+        if refusal:
+            eta = eta + e['alch'] * (g('b_alch')[:, None] + g('BA')[:, e['fam']])
+        else:
+            eta = eta + g('KT')[:, e['ktype']] + g('b_self')[:, None] * e['self']
     if refusal:
         eta = eta + g('FT')[:, e['fam'], e['era']] + e['web'] * (g('b_fame')[:, None] + g('BF')[:, e['fam']]) \
             + e['dense'] * (g('b_dense')[:, None] + g('BD')[:, e['fam']])
@@ -200,9 +251,10 @@ def _lvl(post, p, ix, name, f, key, rng, tau):
     return post[p + name][:, j] if j is not None else rng.normal(0, 1, post[p + 'a'].shape[0]) * post[p + 'tau_' + tau]
 
 
-def cell_eta(post, p, ix, engine, family, chart, era, panel, dense, web, rng, refusal=False):
+def cell_eta(post, p, ix, engine, family, chart, era, panel, dense, web, rng, refusal=False, kind=None, alchemy=0,
+             key_type='reference', key_self=0):
     """Per-draw linear predictor for an average NEW page and work of a cell, as a (draws,) array without the
-    work/page terms (integrate those with `spread`)."""
+    work/page terms (integrate those with `spread`). kind / alchemy / key_* are read only by an `ext` fit."""
     S = post[p + 'a'].shape[0]
     f = ix.i('fam').get(family)
     Fe = post[p + 'F'][:, f] if f is not None else rng.normal(0, 1, S) * post[p + 'tau_fam']
@@ -217,6 +269,20 @@ def cell_eta(post, p, ix, engine, family, chart, era, panel, dense, web, rng, re
         EC = rng.normal(0, 1, S) * post[p + 'tau_ec']
     eta = post[p + 'a'] + E + EC + _lvl(post, p, ix, 'C', 'chart', chart, rng, 'chart') + \
         _lvl(post, p, ix, 'T', 'era', era, rng, 'era')
+    if getattr(ix, 'ext', False):
+        g = GROUP_OF(chart)
+        eta = eta + _lvl(post, p, ix, 'G', 'grp', g, rng, 'grp') + _lvl(post, p, ix, 'K', 'kind', kind, rng, 'kind')
+        gi, ki = ix.i('grp').get(g), ix.i('kind').get(kind)
+        eta = eta + (post[p + 'EG'][:, j, gi] if j is not None and gi is not None else rng.normal(0, 1, S) * post[p + 'tau_eg'])
+        eta = eta + (post[p + 'EK'][:, j, ki] if j is not None and ki is not None else rng.normal(0, 1, S) * post[p + 'tau_ek'])
+        if refusal:
+            BA = post[p + 'BA'][:, f] if f is not None else rng.normal(0, 1, S) * post[p + 'tau_ba']
+            eta = eta + alchemy * (post[p + 'b_alch'] + BA)
+        else:
+            if key_type != 'reference':  # a key type the fit never saw: its N(0, 1) prior
+                kj = ix.i('ktype').get(key_type)
+                eta = eta + (post[p + 'KT'][:, kj] if kj is not None else rng.normal(0, 1, S))
+            eta = eta + key_self * post[p + 'b_self']
     if refusal:
         t = ix.i('era').get(era)
         FT = post[p + 'FT'][:, f, t] if f is not None and t is not None else rng.normal(0, 1, S) * post[p + 'tau_fe']
