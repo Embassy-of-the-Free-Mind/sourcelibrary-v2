@@ -337,3 +337,23 @@ describe('WITHHOLD_LANES', () => {
     expect(WITHHOLD_LANES).toContain('syriac-kraken-2026-09');
   });
 });
+
+describe('staleTranslationReason — arm 6, re-read typed the leaf blank (#5813)', () => {
+  const BLANK = '<scan-quality>good</scan-quality>\n<page-type>blank</page-type>\n<warning>Show-through only.</warning>';
+  const blank = (over: Record<string, unknown> = {}) => page({ ocr: { model: 'gemini-3-flash-preview', updated_at: OCR_AT, data: BLANK }, ...over });
+  const ARM = { blankArm: true };
+
+  it('withholds English made before the read that found the page blank', () => {
+    expect(staleTranslationReason(blank(), ARM)).toBe(WITHHOLD_REASONS.BLANK_SOURCE);
+  });
+  it('is opt-in: without the arm a blank stale page only flags', () => {
+    expect(staleTranslationReason(blank())).toBe(null);
+  });
+  it('keeps English made from the blank read itself (not stale)', () => {
+    expect(staleTranslationReason(blank({ translation: { data: 'This page is blank.', updated_at: AFTER } }), ARM)).toBe(null);
+  });
+  it('reads the page_type field too, and leaves a stale page with text to the other arms', () => {
+    expect(staleTranslationReason(blank({ ocr: { updated_at: OCR_AT, data: '<page-type>text</page-type>\nκαὶ' }, page_type: 'blank' }), ARM)).toBe(WITHHOLD_REASONS.BLANK_SOURCE);
+    expect(staleTranslationReason(blank({ ocr: { updated_at: OCR_AT, data: '<page-type>text</page-type>\nκαὶ' } }), ARM)).toBe(null);
+  });
+});

@@ -58,6 +58,8 @@
  *   … --illegible-arm     also withhold translations made from an ILLEGIBLE transcription
  *                         (#5305: no legible body, or the OCR says it could not read the
  *                         page); needs --book/--books-file, see ILLEGIBLE_ARM below
+ *   … --blank-arm         also withhold English made before a re-read typed the page blank
+ *                         (#5813: show-through translated as text); needs --book/--books-file
  *   … --by-eye-pages=100,101,102|all  withhold the named pages of ONE book because a person
  *                         opened the images and the English is not what is on the leaf (#6048);
  *                         needs --book, --evidence="…" and a pipeline hold on the book, see BY_EYE
@@ -116,6 +118,11 @@ const COHORT_SCRIPT = ARG('--cohort-script', null);
  */
 const ILLEGIBLE_ARM = process.argv.includes('--illegible-arm');
 /**
+ * Arm 6 (#5813): also withhold English made BEFORE a re-read typed the page `blank` (show-through
+ * only) — it translates bleed-through from the facing leaf. Book-scoped like arm 5.
+ */
+const BLANK_ARM = process.argv.includes('--blank-arm');
+/**
  * BY EYE (#6048): withhold named pages of one book because a person read them against the image.
  * Unlike every arm above this is a verdict, not a predicate — a fluent English page built on a
  * recited or guessed transcription carries no marker — so it takes a page list (or `all`, when
@@ -149,13 +156,14 @@ const CANDIDATE_FILTER = {
     ...(LOOP_ARM ? [LOOP_CANDIDATE_FILTER] : []),
     ...(UNVERIFIED_SCRIPT_ARM ? [UNVERIFIED_SCRIPT_CANDIDATE_FILTER] : []),
     ...(ILLEGIBLE_ARM ? [LOOP_CANDIDATE_FILTER] : []),  // same shape: every translated page with OCR
+    ...(BLANK_ARM ? [LOOP_CANDIDATE_FILTER] : []),
     ...(BY_EYE_ALL ? [{ translation: { $exists: true } }] : []),
     ...(BY_EYE ? [{ page_number: { $in: [...BY_EYE] }, translation: { $exists: true } }] : []),
   ],
 };
 for (const [on, flag, filter] of [[LOOP_ARM, '--loop-arm', 'LOOP_CANDIDATE_FILTER'],
   [UNVERIFIED_SCRIPT_ARM, '--unverified-script-arm', 'UNVERIFIED_SCRIPT_CANDIDATE_FILTER'],
-  [ILLEGIBLE_ARM, '--illegible-arm', 'LOOP_CANDIDATE_FILTER']]) {
+  [ILLEGIBLE_ARM, '--illegible-arm', 'LOOP_CANDIDATE_FILTER'], [BLANK_ARM, '--blank-arm', 'LOOP_CANDIDATE_FILTER']]) {
   if (on && !ONLY_BOOK && !BOOKS_FILE) {
     console.error(`${flag} needs --book or --books-file: nothing indexed narrows its candidate set (see ${filter}).`);
     process.exit(2);
@@ -322,7 +330,7 @@ for (const bookId of bookIds) {
   for (const p of candidates) {
     if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
     const reason = (byEyeNamed(p) && translationText(p.translation) ? WITHHOLD_REASONS.INVENTED_BY_EYE : null)
-      ?? staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT, illegibleArm: ILLEGIBLE_ARM });
+      ?? staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT, illegibleArm: ILLEGIBLE_ARM, blankArm: BLANK_ARM });
     if (!reason) {
       // Arm 4 keeps the English on other-script pages of the same books (Latin,
       // Hebrew, Arabic in a Syriac book). Count them, so the report shows what

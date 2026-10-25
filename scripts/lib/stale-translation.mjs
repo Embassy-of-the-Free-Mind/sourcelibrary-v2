@@ -230,6 +230,13 @@ export const WITHHOLD_REASONS = {
    * untranslated one and would pay to translate the same bad transcription again.
    */
   INVENTED_BY_EYE: 'invented_by_eye',
+  /**
+   * Arm 6 (#5813): a re-read typed the leaf `blank` (show-through only), and the English still
+   * served was made from the older read, before the blank verdict — so it translates bleed-through
+   * from the facing leaf. The translate lanes skip a blank page, so nothing replaces it; withholding
+   * is the repair. Self-healing like the other predicate arms: a later read that finds text ends it.
+   */
+  BLANK_SOURCE: 'blank_source',
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */
@@ -247,7 +254,7 @@ export const STALE_PREDICATE_PROJECTION = {
   // degeneration loop is only visible in the transcription itself. Leaving it out
   // would not make arm 3 cheap — it would make it silently never fire.
   'ocr.data': 1,
-  'ocr.pipeline': 1, 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
+  'ocr.pipeline': 1, 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1, page_type: 1,
   'translation.updated_at': 1, 'translation.edited_at': 1, 'translation.source': 1,
   translation_withheld: 1,
 };
@@ -421,7 +428,13 @@ export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
  * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|'samaritan'|null, illegibleArm?: boolean }} [opts]
  * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|'illegible_source'|null}
  */
-export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null, illegibleArm = false } = {}) {
+/** The current transcription types the leaf blank (the OCR header, or the page's own `page_type`). */
+export function isBlankSourcePage(page) {
+  if (page?.page_type === 'blank') return true;
+  return /<page-type>\s*blank\s*<\/page-type>/i.test(String(page?.ocr?.data ?? '').slice(0, 2000));
+}
+
+export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null, illegibleArm = false, blankArm = false } = {}) {
   if (cohortScript && !Object.hasOwn(UNVERIFIED_SCRIPTS, cohortScript)) {
     throw new Error(`cohortScript must be one of ${Object.keys(UNVERIFIED_SCRIPTS).join(', ')}; got ${cohortScript}`);
   }
@@ -455,6 +468,12 @@ export function staleTranslationReason(page, { unverifiedScriptArm = false, coho
   // same predicate that refuses a NEW translation before the call; self-healing on a better read.
   if (illegibleArm && illegibleSourceVerdict(page?.ocr?.data, { pageType: page?.page_type }).illegible) {
     return WITHHOLD_REASONS.ILLEGIBLE_SOURCE;
+  }
+
+  // Arm 6 (#5813): the page was re-read as blank AFTER this English was made. Stale only: an
+  // English made from the blank read itself ("This page is blank.") describes the page and stays.
+  if (blankArm && isBlankSourcePage(page) && translationStaleness(page).stale) {
+    return WITHHOLD_REASONS.BLANK_SOURCE;
   }
   return null;
 }
