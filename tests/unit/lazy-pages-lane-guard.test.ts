@@ -56,7 +56,6 @@ const SWEEPS: Record<string, RegExp[]> = {
     /:\s*\{\s*'pipeline_auto\.status': 'archiving'/,
   ],
   'scripts/workers/archive-erara.mjs': [/const eraraFilter = \{/],
-  'scripts/catalog-coverage/archive-acquired.ts': [/const bookModeFilter: Record<string, unknown> = \{/],
   // Phase 0 enrol (window + convergence tail) and Phase 1 queued → archiving.
   'scripts/workers/pipeline-orchestrator.mjs': [
     /let newBooks = await db\.collection\('books'\)\s*\.find\(\{/,
@@ -98,6 +97,20 @@ describe('lazy pages: lane selectors (#7343)', () => {
     ]) {
       expect(spreadsFilter(selectorAt(src, anchor), '...NEEDS_ARCHIVE_EXPR'), String(anchor)).toBe(true);
     }
+  });
+
+  it('archive-acquired.ts selects manifest-only books ONLY to archive them from the manifest (#5448)', () => {
+    const src = read('scripts/catalog-coverage/archive-acquired.ts');
+    // Its book-mode selector admits lazy books on purpose (no PAGES_MATERIALIZED_FILTER) …
+    expect(spreadsFilter(selectorAt(src, /const bookModeFilter: Record<string, unknown> = \{/))).toBe(false);
+    // … so processBook must route every lazy book away from the page-doc path.
+    const i = src.indexOf('if (isLazyPagesBook(b)) {');
+    expect(i).toBeGreaterThan(-1);
+    const block = src.slice(i, src.indexOf('}', src.indexOf('else { lazySkipped++', i)) + 1);
+    expect(block).toContain('ensurePages(db, w.book_id');
+    expect(block).toContain('processLazyBook(w, b)');
+    expect(block).toContain('lazySkipped++; return;');
+    expect(src).toMatch(/archiveFromManifest\(db, w\.book_id, \{/);
   });
 
   it('the orchestrator never reads "no pages to OCR" as done for a lazy book', () => {

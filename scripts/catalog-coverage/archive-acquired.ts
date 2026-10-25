@@ -43,7 +43,9 @@ import {
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 import { assertNotQuotaPlaceholder } from '../lib/archive-failure-class.mjs';
 import { recountBook } from '../../src/lib/page-counts';
-import { ensurePages, isLazyPagesBook, PAGES_MATERIALIZED_FILTER } from '../lib/lazy-pages.mjs';
+import { ensurePages, isLazyPagesBook } from '../lib/lazy-pages.mjs';
+import { archiveFromManifest } from '../lib/manifest-archive.mjs';
+import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import {
   isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
@@ -414,9 +416,10 @@ async function main() {
     ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
     ...(BOOK_IDS ? {} : { archive_status: { $nin: ['archive_complete', 'archive_complete_with_gaps'] } }),
-    // #7343: a provider/campaign sweep never selects a manifest-only book (it has
-    // no pages to archive); a book named with --book is materialized in processBook.
-    ...(BOOK_IDS ? {} : PAGES_MATERIALIZED_FILTER),
+    // A manifest-only book (#7343) IS selected: processBook archives it straight from its manifest
+    // into the book's ledger, creating no page docs (#5448 step 2). One whose ledger says nothing is
+    // left to fetch is not drawn again. A book named with --book is materialized in processBook.
+    ...(BOOK_IDS ? {} : { [`${LEDGER_FIELD}.exhausted`]: { $ne: true } }),
   };
 
   // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
@@ -433,7 +436,11 @@ async function main() {
   // `source` label is not the host — "iiif" rows point at MDZ, IA, Gallica and
   // e-rara alike). A book with NO un-archived page left belongs to every lane:
   // it fetches nothing and only needs its completion recorded.
-  const laneOf = async (bookId: string): Promise<string | null> => {
+  const laneOf = async (bookId: string, doc?: any): Promise<string | null> => {
+    // A manifest-only book has no pages to ask: its lane is the image host its ledger recorded,
+    // else the manifest's host (the same host on every IIIF provider measured but NB Norway, whose
+    // lane names both). Never null: null means "every lane", and a lazy book is not done.
+    if (doc && isLazyPagesBook(doc)) return doc.archive_metadata?.manifest_ledger?.host || hostOf(doc.image_source?.iiif_manifest || '');
     const p0 = await pages.findOne({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { photo: 1, photo_original: 1 } });
     return p0 ? hostOf(p0.photo_original || p0.photo || '') : null;
   };
@@ -445,7 +452,7 @@ async function main() {
     for await (const r of cursor) {
       if (out.length >= BATCH || scanned >= SCAN_CAP) break;
       scanned++;
-      if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r)))) out.push(r);
+      if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r), r.pages_state ? r : undefined))) out.push(r);
     }
     return out;
   };
@@ -459,7 +466,7 @@ async function main() {
     // lane-heidelberg drew the same 40 books 108,133 times (#5448).
     // processBook now stamps `archive_metadata.last_attempt_at` (an existing
     // subdocument, not a new column) on every attempt that asked the source.
-    const cur = books.find(bookModeFilter, { projection: { id: 1 } }).sort(ROTATION_SORT);
+    const cur = books.find(bookModeFilter, { projection: { id: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } }).sort(ROTATION_SORT);
     const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
     await cur.close();
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
@@ -479,7 +486,7 @@ async function main() {
     await cur.close();
     if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
-  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0;
+  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0, lazyArchived = 0, manifestPages = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -490,15 +497,53 @@ async function main() {
     if (w.sn == null) return;
     await queue.updateOne({ sn: w.sn }, { $set: set });
   };
+  /** A manifest-only book in book mode: archive it from its manifest, no page docs (#5448 step 2). */
+  async function processLazyBook(w: any, b: any) {
+    if (HOST_FILTER && !inLane(await laneOf(w.book_id, b))) { hostSkipped++; return; }
+    let block: Error | null = null;
+    const r = await archiveFromManifest(db, w.book_id, {
+      put: storagePut, breaker, missGuard, pageConcurrency: PAGE_CONCURRENCY,
+      shouldStop: () => !!(block || blocked),
+      log: (m: string) => log(m),
+      onPage: (ev: any) => {
+        currentHost = ev.host;
+        if (ev.outcome === 'ok') { pagesDone++; manifestPages++; hostFailures.clear(); }
+        else if (ev.outcome === 'miss') pagesMissed++;
+        else if (ev.outcome === 'skipped') pagesSkipped++;
+        else if (ev.outcome === 'local') { pagesFailed++; localFailures++; if (localFailures <= 5) log(`local failure after a good fetch: ${ev.error}`); }
+        else if (ev.outcome === 'failed') {
+          pagesFailed++;
+          // Same verdicts as noteFailure: 429 throttles, a 401/403 streak stops the run.
+          if (ev.code === '429') { hostThrottles.set(ev.host, (hostThrottles.get(ev.host) ?? 0) + 1); return; }
+          if (ev.code !== '401' && ev.code !== '403') return;
+          const n = (hostFailures.get(ev.host) ?? 0) + 1;
+          hostFailures.set(ev.host, n);
+          if (n >= FAIL_ABORT) block = new HostBlocked(`${ev.host}: ${n} consecutive auth/block responses (HTTP ${ev.code}). Stopping — do NOT auto-retry a 403.`);
+        }
+      },
+    });
+    if (r.requested > 0 || r.status === 'manifest_failed') {
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } }); }
+      catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
+    }
+    if (r.status === 'manifest_failed') log(`book ${w.book_id}: manifest fetch failed (${r.error})`);
+    if (r.status === 'complete') { if (r.verdict === 'complete') ok++; else gapped++; }
+    else partial++;
+    lazyArchived++;
+    if (block) throw block;
+  }
+
   async function processBook(w: any) {
-    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1, pages_state: 1 } });
+    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } });
     if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
     if (isLazyPagesBook(b)) {
       // A manifest-only book (#7343). Named with --book, archiving it is the
-      // decision to create its pages; otherwise leave the queue row exactly as it
-      // is (no attempt counted) — a queue sweep is not a reason to materialize.
-      if (!BOOK_IDS) { lazySkipped++; return; }
-      await ensurePages(db, w.book_id, { trigger: 'archive' });
+      // decision to create its pages. In a provider/campaign sweep it is archived
+      // from its manifest without creating any (#5448). A queue row is left
+      // exactly as it is (no attempt counted): queue mode never meant lazy books.
+      if (BOOK_IDS) await ensurePages(db, w.book_id, { trigger: 'archive' });
+      else if (BOOK_MODE) return processLazyBook(w, b);
+      else { lazySkipped++; return; }
     }
     if (HOST_FILTER && !inLane(await laneOf(w.book_id))) {
       // Selection already filtered by lane; this re-check catches a book whose
@@ -612,7 +657,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${lazyArchived ? `, ${lazyArchived} manifest-only books archived from the manifest (${manifestPages} pages, #5448)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.

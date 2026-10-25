@@ -171,6 +171,9 @@ export const PAGE_FIELDS = Object.freeze([
   'photo', 'photo_original', 'display_photo', 'archived_photo',
   'thumbnail', 'image_thumb', 'thumbnail_blob',
   'image_width', 'image_height', 'width', 'height',
+  // What the source says native is, and how many tiles were stitched (#4406; written by
+  // archive-acquired / archive-eap, and at materialize from the manifest ledger, #5448).
+  'iiif_info', 'stitched_tiles',
   // #5876: where the page sits inside the scan (fractions of the display image).
   'page_frame',
   // text
