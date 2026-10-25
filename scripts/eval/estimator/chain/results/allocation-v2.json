@@ -1,0 +1,2669 @@
+{
+ "as_of": "2026-10-25",
+ "harm_weight": 2.0,
+ "threshold": 0.9,
+ "provisional": 0.5,
+ "horizons": [
+  1,
+  2,
+  3,
+  4,
+  6,
+  8,
+  10,
+  13,
+  17,
+  21,
+  26,
+  34,
+  43,
+  52,
+  65,
+  78,
+  104,
+  130,
+  156,
+  208,
+  260
+ ],
+ "capacity": {
+  "claude": {
+   "unit": "account-week",
+   "per_week": 4,
+   "free_share": 0.5,
+   "basis": "4 accounts in climits (/root/.claude-limits/latest.json, 2026-10-25T20:30Z: team@ 86% weekly, dereklomas@ 51%, derek@sourcelibrary 64%, derek@playpowerlabs not read: its refresh token is invalid, job zh-translate-route-6871). One account-week = 100 weekly points. free_share 0.5: half of each account is the lanes and sessions already running, the planner_v0 assumption; the measured weekly levels above (51-86% on the three read) say the free share is lower this week."
+  },
+  "agy": {
+   "unit": "call",
+   "per_week": 78116,
+   "free_share": 0.5,
+   "basis": "78,116 successful calls in the 7 days before the 2026-10-19 lock, /root/agy-quota on Hetzner main (brief for job estimator-v2-6740; #7263). Main's logs only, so a lower bound for the Google account. Second reading: meter_quota_share.py over calls.csv 2026-10-13 to 10-24, 229,190 calls per 30 days = 53,478 a week (route-costs.json). This box (cloudlayer) cannot read main's meter, so neither was re-read today. Every agy model counts as one call of one pool, as the meter counts them. Sensitivity: +-30%."
+  },
+  "gpu-gex45": {
+   "unit": "card-hour",
+   "per_week": 168,
+   "free_share": 0.5,
+   "basis": "one RTX PRO 4000 SFF card on gex45 (2026-10-18-gex45-capability-card-6871.md). Not drawn by any correction route here: their drafts already exist."
+  },
+  "batch": {
+   "unit": "usd",
+   "per_week": 35.0,
+   "free_share": 1.0,
+   "basis": "set-dial.mjs --show 2026-10-25: daily_budget_usd $5 (paused=false). Envelopes add to it: spend_daily ledger paid $24.47 a day over 2026-10-11..24 (14 days), $18.33 over the last 7. The dial is the standing weekly figure; envelopes are approved one by one."
+  }
+ },
+ "channels": {
+  "agy": {
+   "free_week": 39058.0,
+   "reserved_for_tests": 448.8,
+   "quarter_used": 0.999
+  },
+  "claude": {
+   "free_week": 2.0,
+   "reserved_for_tests": 0.036,
+   "quarter_used": 0.999
+  }
+ },
+ "tests": [
+  {
+   "cell": "latin-lite",
+   "corrector": "opus-5.5",
+   "basis": "measured",
+   "p_clears_now": 0.829,
+   "n": 80,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0032,
+    "agy": 81.6
+   },
+   "why": "P(worse <= 0.05) at n=80 with k = n x 0.028"
+  },
+  {
+   "cell": "chinese-flash3",
+   "corrector": "opus-5.5",
+   "basis": "measured",
+   "p_clears_now": 0.844,
+   "n": 40,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0016,
+    "agy": 40.8
+   },
+   "why": "P(worse <= 0.05) at n=40 with k = n x 0.022"
+  },
+  {
+   "cell": "arabic-flash3",
+   "corrector": "opus-5.5",
+   "basis": "pooled",
+   "p_clears_now": 0.877,
+   "n": 40,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0016,
+    "agy": 40.8
+   },
+   "why": "P(worse <= 0.05) at n=40 with k = n x 0.014"
+  },
+  {
+   "cell": "hebrew-flash3",
+   "corrector": "opus-5.5",
+   "basis": "pooled",
+   "p_clears_now": 0.769,
+   "n": 80,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0032,
+    "agy": 81.6
+   },
+   "why": "P(worse <= 0.05) at n=80 with k = n x 0.019"
+  },
+  {
+   "cell": "german-lite",
+   "corrector": "opus-5.5",
+   "basis": "pooled",
+   "p_clears_now": 0.694,
+   "n": 80,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0032,
+    "agy": 81.6
+   },
+   "why": "P(worse <= 0.05) at n=80 with k = n x 0.024"
+  },
+  {
+   "cell": "french-lite",
+   "corrector": "opus-5.5",
+   "basis": "pooled",
+   "p_clears_now": 0.77,
+   "n": 40,
+   "instrument": "blind-judge",
+   "judge": "agy@1",
+   "draw": {
+    "claude": 0.0016,
+    "agy": 40.8
+   },
+   "why": "P(worse <= 0.05) at n=40 with k = n x 0.017"
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "corrector": "agy-3.8-flash-high",
+   "basis": "measured",
+   "p_clears_now": 0.796,
+   "n": 80,
+   "instrument": "mechanical",
+   "judge": null,
+   "draw": {
+    "agy": 81.6
+   },
+   "why": "P(worse <= 0.05) at n=80 with k = n x 0.027"
+  },
+  {
+   "cell": "tibetan-yigdzin",
+   "corrector": "opus-5.5",
+   "basis": "measured",
+   "p_clears_now": 0.742,
+   "n": 80,
+   "instrument": "leaf-audit-tiles",
+   "judge": "opus-5.5@1",
+   "draw": {
+    "claude": 0.0216
+   },
+   "why": "P(worse <= 0.05) at n=80 with k = n x 0.024"
+  }
+ ],
+ "scenarios": {
+  "5924: Opus corrects lite Latin (by reads)": {
+   "cell": "latin-lite",
+   "corrector": "opus-5.5",
+   "decision": "#5924 DECISION",
+   "first": false,
+   "share_week1": {},
+   "quarter_pages": 173392,
+   "weeks_top_read_weighted": {
+    "0.1": 2,
+    "0.25": 3,
+    "0.5": 10,
+    "1.0": 52
+   },
+   "weeks_to_drain": 52,
+   "whole_cell_draw": {
+    "claude": 41.395
+   },
+   "displaced_in_quarter": {
+    "chinese-flash3": {
+     "pages": -5397,
+     "net_pages_improved": -2242
+    },
+    "latin-flash3": {
+     "pages": -99309,
+     "net_pages_improved": -78633
+    },
+    "zh-paddle-dice-lt090": {
+     "pages": 453715,
+     "net_pages_improved": 124273
+    }
+   },
+   "weeks_top_if_alone_on_channel": {
+    "0.1": 0.1,
+    "0.25": 0.61,
+    "0.5": 2.85,
+    "1.0": 20.7
+   },
+   "channel": "claude"
+  },
+  "5924: Opus corrects lite Latin, ahead of every other cell": {
+   "cell": "latin-lite",
+   "corrector": "opus-5.5",
+   "decision": "#5924 DECISION",
+   "first": true,
+   "share_week1": {
+    "claude": 0.982
+   },
+   "quarter_pages": 540354,
+   "weeks_top_read_weighted": {
+    "0.1": 1,
+    "0.25": 1,
+    "0.5": 3,
+    "1.0": 21
+   },
+   "weeks_to_drain": 21,
+   "whole_cell_draw": {
+    "claude": 41.395
+   },
+   "displaced_in_quarter": {
+    "chinese-flash3": {
+     "pages": -10628,
+     "net_pages_improved": -4416
+    },
+    "latin-flash3": {
+     "pages": -447856,
+     "net_pages_improved": -354613
+    }
+   },
+   "weeks_top_if_alone_on_channel": {
+    "0.1": 0.1,
+    "0.25": 0.61,
+    "0.5": 2.85,
+    "1.0": 20.7
+   },
+   "channel": "claude"
+  },
+  "6560: Flash-low correction pass over Yigdzin Tibetan, now": {
+   "cell": "tibetan-yigdzin",
+   "corrector": "agy-3.8-flash-low",
+   "decision": "#6560 Flash-low pass",
+   "first": true,
+   "share_week1": {
+    "agy": 0.9885,
+    "claude": 0.1299
+   },
+   "quarter_pages": 280623,
+   "weeks_top_read_weighted": {
+    "0.1": 1,
+    "0.25": 1,
+    "0.5": 2,
+    "1.0": 8
+   },
+   "weeks_to_drain": 8,
+   "whole_cell_draw": {
+    "agy": 286235.46,
+    "claude": 1.926
+   },
+   "displaced_in_quarter": {
+    "latin-lite": {
+     "pages": -237490,
+     "net_pages_improved": -178113
+    },
+    "latin-flash3": {
+     "pages": -36202,
+     "net_pages_improved": -28665
+    }
+   },
+   "weeks_top_if_alone_on_channel": {
+    "0.1": 0.1,
+    "0.25": 0.37,
+    "0.5": 1.23,
+    "1.0": 7.33
+   },
+   "channel": "agy"
+  },
+  "6561/6871: Opus corrects the newly read Paddle tables (by reads)": {
+   "cell": "zh-frame-6871",
+   "corrector": "opus-5.5",
+   "decision": "Paddle -> Opus for the new Chinese tables",
+   "first": false,
+   "share_week1": {},
+   "quarter_pages": 0,
+   "weeks_top_read_weighted": {
+    "0.1": 52,
+    "0.25": 52,
+    "0.5": 52,
+    "1.0": 52
+   },
+   "weeks_to_drain": 52,
+   "whole_cell_draw": {
+    "claude": 2.204
+   },
+   "displaced_in_quarter": {},
+   "weeks_top_if_alone_on_channel": {
+    "0.1": 0.11,
+    "0.25": 0.27,
+    "0.5": 0.55,
+    "1.0": 1.1
+   },
+   "channel": "claude"
+  },
+  "6561/6871: Opus corrects the newly read Paddle tables, now": {
+   "cell": "zh-frame-6871",
+   "corrector": "opus-5.5",
+   "decision": "Paddle -> Opus for the new Chinese tables",
+   "first": true,
+   "share_week1": {
+    "claude": 0.982
+   },
+   "quarter_pages": 22220,
+   "weeks_top_read_weighted": {
+    "0.1": 1,
+    "0.25": 1,
+    "0.5": 1,
+    "1.0": 2
+   },
+   "weeks_to_drain": 2,
+   "whole_cell_draw": {
+    "claude": 2.204
+   },
+   "displaced_in_quarter": {
+    "latin-flash3": {
+     "pages": -45874,
+     "net_pages_improved": -36323
+    }
+   },
+   "weeks_top_if_alone_on_channel": {
+    "0.1": 0.11,
+    "0.25": 0.27,
+    "0.5": 0.55,
+    "1.0": 1.1
+   },
+   "channel": "claude"
+  }
+ },
+ "proposed_rows": [
+  {
+   "id": "correct-latin-lite",
+   "kind": "Latin print read by Flash-Lite",
+   "draft": "flash-lite",
+   "corrector": "agy-3.8-flash-low",
+   "stage": "agy@1",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 5% at the blind-judge instrument; P(clears) 0.68",
+   "why": "P(worse) 0.039 [0.014, 0.085], net pages improved per page 0.76; 861,506 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5",
+   "allocation_route": "agy-3.8-flash-low",
+   "note": "the allocation uses a different route from the \u00a73a choice because the choice's channel is full"
+  },
+  {
+   "id": "correct-latin-flash3",
+   "kind": "Latin print read by Gemini 3 Flash (most-read books)",
+   "draft": "stored-mixed",
+   "corrector": "opus-5.5",
+   "stage": "opus-5.5@10",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "settled",
+   "routed": "no",
+   "check": "made-worse bar 5% at the blind-judge instrument; P(clears) 0.94",
+   "why": "P(worse) 0.024 [0.009, 0.052], net pages improved per page 0.81; 1,317,806 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5",
+   "allocation_route": "opus-5.5",
+   "note": null
+  },
+  {
+   "id": "correct-chinese-flash3",
+   "kind": "Chinese read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "corrector": "opus-5.5",
+   "stage": "opus-5.5@10",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 5% at the blind-judge instrument; P(clears) 0.84",
+   "why": "P(worse) 0.022 [0.005, 0.066], net pages improved per page 0.40; 103,878 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5",
+   "allocation_route": "opus-5.5",
+   "note": null
+  },
+  {
+   "id": "correct-zh-frame-6871",
+   "kind": "Chinese tables and mixed pages newly read by guarded Paddle (#6871)",
+   "draft": "paddleocr-vl",
+   "corrector": "opus-5.5",
+   "stage": "opus-5.5@1",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 5% at the mechanical instrument; P(clears) 0.62",
+   "why": "P(worse) 0.041 [0.013, 0.104], net pages improved per page 0.66; 22,220 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5",
+   "allocation_route": "opus-5.5",
+   "note": null
+  },
+  {
+   "id": "correct-zh-paddle-dice-lt090",
+   "kind": "Chinese Paddle pages whose Kanripo screen is below 0.90 dice",
+   "draft": "paddleocr-vl",
+   "corrector": "agy-3.8-flash-high",
+   "stage": "agy@1",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 5% at the mechanical instrument; P(clears) 0.80",
+   "why": "P(worse) 0.027 [0.005, 0.083], net pages improved per page 0.28; 453,715 pages waiting; most-read first",
+   "section_3a_choice": "agy-3.8-flash-high",
+   "allocation_route": "agy-3.8-flash-high",
+   "note": null
+  },
+  {
+   "id": "correct-zh-siku-stale",
+   "kind": "Stale Siku pages, high old-vs-new change (#6561 item 1)",
+   "draft": "paddleocr-vl",
+   "corrector": "opus-5.5+siku-v2",
+   "stage": "opus-5.5@1",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 10% at the mechanical instrument; P(clears) 0.62",
+   "why": "P(worse) 0.091 [0.051, 0.144], net pages improved per page 0.27; 24,834 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5+siku-v2",
+   "allocation_route": "opus-5.5+siku-v2",
+   "note": null
+  },
+  {
+   "id": "correct-tibetan-yigdzin",
+   "kind": "Tibetan read by Yigdzin",
+   "draft": "yigdzin",
+   "corrector": "opus-5.5",
+   "stage": "opus-5.5@1",
+   "retranslate": "Opus CLI (claude-translate.mjs) where the page has English",
+   "status": "provisional",
+   "routed": "no",
+   "check": "made-worse bar 5% at the leaf-audit-tiles instrument; P(clears) 0.74",
+   "why": "P(worse) 0.024 [0.003, 0.141], net pages improved per page 0.43; 280,623 pages waiting; most-read first",
+   "section_3a_choice": "opus-5.5",
+   "allocation_route": "opus-5.5",
+   "note": null
+  }
+ ],
+ "cells": [
+  {
+   "id": "latin-lite",
+   "title": "Latin print read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "latin",
+   "kind": "print",
+   "served": "the lite text (Flash-Lite Batch read)",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 861506,
+   "pages_waiting_read_weighted": 1568440,
+   "books": 4832,
+   "decision": "#5924",
+   "note": null,
+   "choice": "opus-5.5",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {
+    "agy": 0.9885,
+    "claude": 0.1524
+   },
+   "pages_week1": 37852,
+   "quarter": {
+    "pages": 497358,
+    "read_weighted": 1385838,
+    "by_route": {
+     "agy-3.8-flash-low": 497358
+    }
+   },
+   "weeks_to_drain": 26,
+   "weeks_top_read_weighted": {
+    "0.1": 1,
+    "0.25": 1,
+    "0.5": 4,
+    "1.0": 26
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 34,
+     "quarter_pages": 359331,
+     "quarter_by_route": {
+      "opus-5.5": 11313,
+      "agy-3.8-flash-low": 348019
+     }
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 21,
+     "quarter_pages": 646306,
+     "quarter_by_route": {
+      "agy-3.8-flash-low": 646306
+     }
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 21,
+     "quarter_pages": 646306,
+     "quarter_by_route": {
+      "opus-5.5": 148948,
+      "agy-3.8-flash-low": 497358
+     }
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 497358,
+     "quarter_by_route": {
+      "agy-3.8-flash-low": 497358
+     }
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 497358,
+     "quarter_by_route": {
+      "agy-3.8-flash-low": 497358
+     }
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 497358,
+     "quarter_by_route": {
+      "agy-3.8-flash-low": 497358
+     }
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0079,
+      0.028,
+      0.0757
+     ],
+     "p_better": [
+      0.7941,
+      0.8663,
+      0.9192
+     ],
+     "gain": [
+      0.694,
+      0.8046,
+      0.8792
+     ],
+     "gain_mean": 0.7976,
+     "p_clears": 0.829,
+     "draw_per_page": {
+      "claude": 4.805e-05
+     },
+     "share_per_page": 2.4025e-05,
+     "cost_per_net_page": {
+      "claude": 6.0244950943463284e-05
+     },
+     "share_per_net_page": 3.0122475471731642e-05,
+     "p_best": 0.641,
+     "tier": "provisional",
+     "test": {
+      "n": 80,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0032,
+       "agy": 81.6
+      },
+      "why": "P(worse <= 0.05) at n=80 with k = n x 0.028"
+     }
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0142,
+      0.0394,
+      0.0848
+     ],
+     "p_better": [
+      0.7728,
+      0.8463,
+      0.9057
+     ],
+     "gain": [
+      0.6506,
+      0.7624,
+      0.8484
+     ],
+     "gain_mean": 0.7573,
+     "p_clears": 0.678,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.05e-06
+     },
+     "share_per_page": 3.0140008448973322e-05,
+     "cost_per_net_page": {
+      "agy": 1.3468655021939158,
+      "claude": 1.0629673816334332e-05
+     },
+     "share_per_net_page": 3.979856628995619e-05,
+     "p_best": 0.269,
+     "tier": "provisional",
+     "test": {
+      "n": 800,
+      "instrument": "blind-judge",
+      "judge": "opus-5.5@1",
+      "draw": {
+       "agy": 816.0,
+       "claude": 0.07200000000000001
+      },
+      "why": "P(worse <= 0.05) at n=800 with k = n x 0.039"
+     }
+    },
+    {
+     "corrector": "redo:agy-3.8-flash-low",
+     "stage": "agy-redo@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0121,
+      0.0368,
+      0.0823
+     ],
+     "p_better": [
+      0.7134,
+      0.7976,
+      0.8639
+     ],
+     "gain": [
+      0.5976,
+      0.7192,
+      0.8107
+     ],
+     "gain_mean": 0.7128,
+     "p_clears": 0.707,
+     "draw_per_page": {
+      "agy": 1.05,
+      "claude": 8.05e-06
+     },
+     "share_per_page": 3.090809693276666e-05,
+     "cost_per_net_page": {
+      "agy": 1.4730160961094159,
+      "claude": 1.129312340350552e-05
+     },
+     "share_per_net_page": 4.336011836388129e-05,
+     "p_best": 0.089,
+     "tier": "provisional",
+     "test": {
+      "n": 500,
+      "instrument": "blind-judge",
+      "judge": "opus-5.5@1",
+      "draw": {
+       "agy": 525.0,
+       "claude": 0.045000000000000005
+      },
+      "why": "P(worse <= 0.05) at n=500 with k = n x 0.037"
+     }
+    },
+    {
+     "corrector": "agy-gemini-4-argon-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0036,
+      0.0454,
+      0.4045
+     ],
+     "p_better": [
+      0.4208,
+      0.9002,
+      0.9916
+     ],
+     "gain": [
+      -0.0694,
+      0.7353,
+      0.9571
+     ],
+     "gain_mean": 0.6268,
+     "p_clears": 0.521,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.05e-06
+     },
+     "share_per_page": 3.0140008448973322e-05,
+     "cost_per_net_page": {
+      "agy": 1.6273626584339875,
+      "claude": 1.28434013729349e-05
+     },
+     "share_per_net_page": 4.808698458308242e-05,
+     "tier": "provisional",
+     "test": {
+      "n": null,
+      "why": "the posterior median is too close to the bar for 800 pages to settle it"
+     }
+    },
+    {
+     "corrector": "sonnet-5.5",
+     "stage": "sonnet-5.5@1",
+     "channel": "claude",
+     "measured": false,
+     "p_worse": [
+      0.0033,
+      0.0374,
+      0.3082
+     ],
+     "p_better": [
+      0.1954,
+      0.7548,
+      0.9785
+     ],
+     "gain": [
+      -0.06,
+      0.607,
+      0.9315
+     ],
+     "gain_mean": 0.533,
+     "p_clears": 0.583,
+     "draw_per_page": {
+      "claude": 5.805e-05
+     },
+     "share_per_page": 2.9025e-05,
+     "cost_per_net_page": {
+      "claude": 0.00010891654445909701
+     },
+     "share_per_net_page": 5.445827222954851e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 500,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.025,
+       "agy": 510.0
+      },
+      "why": "P(worse <= 0.05) at n=500 with k = n x 0.037"
+     }
+    }
+   ]
+  },
+  {
+   "id": "latin-flash3",
+   "title": "Latin print read by Gemini 3 Flash (most-read books)",
+   "draft": "stored-mixed",
+   "language": "latin",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 1317806,
+   "pages_waiting_read_weighted": 4949396,
+   "books": 14295,
+   "decision": null,
+   "note": null,
+   "choice": "opus-5.5",
+   "tier": "routable",
+   "hold": null,
+   "share_week1": {
+    "claude": 0.8296
+   },
+   "pages_week1": 34533,
+   "quarter": {
+    "pages": 447856,
+    "read_weighted": 4351319,
+    "by_route": {
+     "opus-5.5": 447856
+    }
+   },
+   "weeks_to_drain": 43,
+   "weeks_top_read_weighted": {
+    "0.1": 1,
+    "0.25": 1,
+    "0.5": 2,
+    "1.0": 43
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 461563,
+     "quarter_by_route": {
+      "opus-5.5": 461563
+     }
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 422891,
+     "quarter_by_route": {
+      "opus-5.5": 422891
+     }
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 733656,
+     "quarter_by_route": {
+      "opus-5.5": 733656
+     }
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 296162,
+     "quarter_by_route": {
+      "opus-5.5": 296162
+     }
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 447856,
+     "quarter_by_route": {
+      "opus-5.5": 447856
+     }
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 447856,
+     "quarter_by_route": {
+      "opus-5.5": 447856
+     }
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0086,
+      0.0237,
+      0.0516
+     ],
+     "p_better": [
+      0.6192,
+      0.8679,
+      0.9852
+     ],
+     "gain": [
+      0.566,
+      0.8147,
+      0.9437
+     ],
+     "gain_mean": 0.7918,
+     "p_clears": 0.941,
+     "draw_per_page": {
+      "claude": 4.805e-05
+     },
+     "share_per_page": 2.4025e-05,
+     "cost_per_net_page": {
+      "claude": 6.068543887198374e-05
+     },
+     "share_per_net_page": 3.034271943599187e-05,
+     "p_best": 1.0,
+     "tier": "routable"
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0036,
+      0.0442,
+      0.3429
+     ],
+     "p_better": [
+      0.2876,
+      0.8701,
+      0.99
+     ],
+     "gain": [
+      -0.0269,
+      0.7026,
+      0.9518
+     ],
+     "gain_mean": 0.6048,
+     "p_clears": 0.531,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.05e-06
+     },
+     "share_per_page": 3.0140008448973322e-05,
+     "cost_per_net_page": {
+      "agy": 1.6866199954707237,
+      "claude": 1.3311069572097378e-05
+     },
+     "share_per_net_page": 4.9837981287936234e-05,
+     "tier": "provisional",
+     "test": {
+      "n": null,
+      "why": "the posterior median is too close to the bar for 800 pages to settle it"
+     }
+    }
+   ]
+  },
+  {
+   "id": "german-flash3",
+   "title": "German read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "german",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 353186,
+   "pages_waiting_read_weighted": 1359293,
+   "books": 3892,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": null,
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0295,
+      0.0753,
+      0.1557
+     ],
+     "p_better": [
+      0.2201,
+      0.7493,
+      0.9788
+     ],
+     "gain": [
+      0.0443,
+      0.5777,
+      0.8548
+     ],
+     "gain_mean": 0.5285,
+     "p_clears": 0.208,
+     "draw_per_page": {
+      "claude": 4.85192e-05
+     },
+     "share_per_page": 2.42596e-05,
+     "cost_per_net_page": {
+      "claude": 9.18005584960181e-05
+     },
+     "share_per_net_page": 4.590027924800905e-05,
+     "p_best": 1.0,
+     "tier": "no"
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0052,
+      0.0599,
+      0.4723
+     ],
+     "p_better": [
+      0.159,
+      0.8069,
+      0.9879
+     ],
+     "gain": [
+      -0.3026,
+      0.5628,
+      0.9328
+     ],
+     "gain_mean": 0.4683,
+     "p_clears": 0.444,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.5192e-06
+     },
+     "share_per_page": 3.037460844897332e-05,
+     "cost_per_net_page": {
+      "agy": 2.178260533350885,
+      "claude": 1.8193173662473392e-05
+     },
+     "share_per_net_page": 6.486648117684797e-05,
+     "tier": "no"
+    }
+   ]
+  },
+  {
+   "id": "greek-flash3",
+   "title": "Greek read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "greek",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 419150,
+   "pages_waiting_read_weighted": 894950,
+   "books": 1191,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": "held",
+   "hold": "Derek 2026-10-14 (#6694): Greek stays on lane A; the q300 write audit's 3 Gemini-judged worse pages were all Greek, a count this estimator does not hold by language",
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0013,
+      0.0114,
+      0.0522
+     ],
+     "p_better": [
+      0.1449,
+      0.7378,
+      0.9794
+     ],
+     "gain": [
+      0.1127,
+      0.703,
+      0.9547
+     ],
+     "gain_mean": 0.6341,
+     "p_clears": 0.94,
+     "draw_per_page": {
+      "claude": 4.8730800000000004e-05
+     },
+     "share_per_page": 2.4365400000000002e-05,
+     "cost_per_net_page": {
+      "claude": 7.685316464028825e-05
+     },
+     "share_per_net_page": 3.8426582320144125e-05,
+     "p_best": 1.0,
+     "tier": "routable"
+    }
+   ]
+  },
+  {
+   "id": "chinese-flash3",
+   "title": "Chinese read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "chinese",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 103878,
+   "pages_waiting_read_weighted": 121280,
+   "books": 10800,
+   "decision": null,
+   "note": null,
+   "choice": "opus-5.5",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 10628,
+    "read_weighted": 71673,
+    "by_route": {
+     "opus-5.5": 10628
+    }
+   },
+   "weeks_to_drain": 43,
+   "weeks_top_read_weighted": {
+    "0.1": 4,
+    "0.25": 4,
+    "0.5": 13,
+    "1.0": 43
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 10628,
+     "quarter_by_route": {
+      "opus-5.5": 10628
+     }
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 10628,
+     "quarter_by_route": {
+      "opus-5.5": 10628
+     }
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 20793,
+     "quarter_by_route": {
+      "opus-5.5": 20793
+     }
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 5231,
+     "quarter_by_route": {
+      "opus-5.5": 5231
+     }
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 10628,
+     "quarter_by_route": {
+      "opus-5.5": 10628
+     }
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 10628,
+     "quarter_by_route": {
+      "opus-5.5": 10628
+     }
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0047,
+      0.0218,
+      0.0661
+     ],
+     "p_better": [
+      0.0547,
+      0.4582,
+      0.9211
+     ],
+     "gain": [
+      0.002,
+      0.4015,
+      0.8721
+     ],
+     "gain_mean": 0.4155,
+     "p_clears": 0.844,
+     "draw_per_page": {
+      "claude": 4.1472000000000005e-05
+     },
+     "share_per_page": 2.0736000000000003e-05,
+     "cost_per_net_page": {
+      "claude": 9.980185181864832e-05
+     },
+     "share_per_net_page": 4.990092590932416e-05,
+     "p_best": 1.0,
+     "tier": "provisional",
+     "test": {
+      "n": 40,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0016,
+       "agy": 40.8
+      },
+      "why": "P(worse <= 0.05) at n=40 with k = n x 0.022"
+     }
+    }
+   ]
+  },
+  {
+   "id": "arabic-flash3",
+   "title": "Arabic read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "arabic",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 30244,
+   "pages_waiting_read_weighted": 201378,
+   "books": 231,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": null,
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": false,
+     "p_worse": [
+      0.0015,
+      0.0136,
+      0.0716
+     ],
+     "p_better": [
+      0.1479,
+      0.7346,
+      0.9796
+     ],
+     "gain": [
+      0.0937,
+      0.6867,
+      0.9542
+     ],
+     "gain_mean": 0.6202,
+     "p_clears": 0.877,
+     "draw_per_page": {
+      "claude": 4.8878e-05
+     },
+     "share_per_page": 2.4439e-05,
+     "cost_per_net_page": {
+      "claude": 7.881000492469779e-05
+     },
+     "share_per_net_page": 3.9405002462348894e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 40,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0016,
+       "agy": 40.8
+      },
+      "why": "P(worse <= 0.05) at n=40 with k = n x 0.014"
+     }
+    }
+   ]
+  },
+  {
+   "id": "hebrew-flash3",
+   "title": "Hebrew read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "hebrew",
+   "kind": "most-read",
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 51360,
+   "pages_waiting_read_weighted": 290359,
+   "books": 237,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": null,
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": false,
+     "p_worse": [
+      0.0018,
+      0.019,
+      0.1421
+     ],
+     "p_better": [
+      0.146,
+      0.7381,
+      0.979
+     ],
+     "gain": [
+      0.0509,
+      0.6567,
+      0.945
+     ],
+     "gain_mean": 0.592,
+     "p_clears": 0.769,
+     "draw_per_page": {
+      "claude": 4.80316e-05
+     },
+     "share_per_page": 2.40158e-05,
+     "cost_per_net_page": {
+      "claude": 8.1129593504938e-05
+     },
+     "share_per_net_page": 4.0564796752469e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 80,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0032,
+       "agy": 81.6
+      },
+      "why": "P(worse <= 0.05) at n=80 with k = n x 0.019"
+     }
+    }
+   ]
+  },
+  {
+   "id": "german-lite",
+   "title": "German read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "german",
+   "kind": "print",
+   "served": "the lite text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 418603,
+   "pages_waiting_read_weighted": 843556,
+   "books": 2363,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": null,
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": false,
+     "p_worse": [
+      0.0021,
+      0.0241,
+      0.2166
+     ],
+     "p_better": [
+      0.1797,
+      0.811,
+      0.9882
+     ],
+     "gain": [
+      0.0325,
+      0.7018,
+      0.9558
+     ],
+     "gain_mean": 0.6144,
+     "p_clears": 0.694,
+     "draw_per_page": {
+      "claude": 4.85192e-05
+     },
+     "share_per_page": 2.42596e-05,
+     "cost_per_net_page": {
+      "claude": 7.897552374115079e-05
+     },
+     "share_per_net_page": 3.948776187057539e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 80,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0032,
+       "agy": 81.6
+      },
+      "why": "P(worse <= 0.05) at n=80 with k = n x 0.024"
+     }
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0037,
+      0.0507,
+      0.4249
+     ],
+     "p_better": [
+      0.212,
+      0.8564,
+      0.9922
+     ],
+     "gain": [
+      -0.2203,
+      0.6561,
+      0.9479
+     ],
+     "gain_mean": 0.5447,
+     "p_clears": 0.494,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.5192e-06
+     },
+     "share_per_page": 3.037460844897332e-05,
+     "cost_per_net_page": {
+      "agy": 1.872461726117201,
+      "claude": 1.5639094056017312e-05
+     },
+     "share_per_net_page": 5.576008996715559e-05,
+     "tier": "no"
+    }
+   ]
+  },
+  {
+   "id": "french-lite",
+   "title": "French read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "french",
+   "kind": "print",
+   "served": "the lite text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "pages_waiting": 151443,
+   "pages_waiting_read_weighted": 473237,
+   "books": 571,
+   "decision": null,
+   "note": null,
+   "choice": null,
+   "tier": null,
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": null,
+   "weeks_top_read_weighted": {
+    "0.1": null,
+    "0.25": null,
+    "0.5": null,
+    "1.0": null
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": null,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@10",
+     "channel": "claude",
+     "measured": false,
+     "p_worse": [
+      0.0014,
+      0.0171,
+      0.1703
+     ],
+     "p_better": [
+      0.1543,
+      0.8087,
+      0.9866
+     ],
+     "gain": [
+      0.0471,
+      0.7214,
+      0.9605
+     ],
+     "gain_mean": 0.6319,
+     "p_clears": 0.77,
+     "draw_per_page": {
+      "claude": 4.860200000000001e-05
+     },
+     "share_per_page": 2.4301000000000003e-05,
+     "cost_per_net_page": {
+      "claude": 7.6913099207418e-05
+     },
+     "share_per_net_page": 3.8456549603709e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 40,
+      "instrument": "blind-judge",
+      "judge": "agy@1",
+      "draw": {
+       "claude": 0.0016,
+       "agy": 40.8
+      },
+      "why": "P(worse <= 0.05) at n=40 with k = n x 0.017"
+     }
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0026,
+      0.0378,
+      0.3704
+     ],
+     "p_better": [
+      0.1897,
+      0.8523,
+      0.9921
+     ],
+     "gain": [
+      -0.1047,
+      0.6799,
+      0.9555
+     ],
+     "gain_mean": 0.5722,
+     "p_clears": 0.567,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 8.602e-06
+     },
+     "share_per_page": 3.041600844897332e-05,
+     "cost_per_net_page": {
+      "agy": 1.782567695966081,
+      "claude": 1.503298756931395e-05
+     },
+     "share_per_net_page": 5.315548441310905e-05,
+     "tier": "provisional",
+     "test": {
+      "n": 500,
+      "instrument": "blind-judge",
+      "judge": "opus-5.5@1",
+      "draw": {
+       "agy": 510.0,
+       "claude": 0.045000000000000005
+      },
+      "why": "P(worse <= 0.05) at n=500 with k = n x 0.038"
+     }
+    }
+   ]
+  },
+  {
+   "id": "zh-frame-6871",
+   "title": "Chinese tables and mixed pages newly read by guarded Paddle (#6871)",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "table",
+   "served": "the guarded Paddle text, Opus-translated by job zh-translate-route-6871",
+   "bind": "mechanical",
+   "bar_worse": 0.05,
+   "pages_waiting": 22220,
+   "pages_waiting_read_weighted": 7410,
+   "books": 190,
+   "decision": "#6871 / #6561",
+   "note": "the frame is table and mixed pages; the evidence is the 40 withheld table pages of #6561 set A, so the mixed pages are priced as tables",
+   "choice": "opus-5.5",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": 52,
+   "weeks_top_read_weighted": {
+    "0.1": 52,
+    "0.25": 52,
+    "0.5": 52,
+    "1.0": 52
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 34,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 52,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0125,
+      0.0411,
+      0.1037
+     ],
+     "p_better": [
+      0.6331,
+      0.7487,
+      0.8442
+     ],
+     "gain": [
+      0.4993,
+      0.6564,
+      0.7823
+     ],
+     "gain_mean": 0.6503,
+     "p_clears": 0.62,
+     "draw_per_page": {
+      "claude": 9.92e-05
+     },
+     "share_per_page": 4.96e-05,
+     "cost_per_net_page": {
+      "claude": 0.0001525359698666291
+     },
+     "share_per_net_page": 7.626798493331455e-05,
+     "p_best": 0.927,
+     "tier": "provisional",
+     "test": {
+      "n": null,
+      "why": "the posterior median is too close to the bar for 800 pages to settle it"
+     }
+    },
+    {
+     "corrector": "agy-3.8-flash-high",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0213,
+      0.0609,
+      0.1341
+     ],
+     "p_better": [
+      0.4584,
+      0.5888,
+      0.7058
+     ],
+     "gain": [
+      0.2728,
+      0.4583,
+      0.609
+     ],
+     "gain_mean": 0.4532,
+     "p_clears": 0.369,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 9.2e-06
+     },
+     "share_per_page": 3.0715008448973326e-05,
+     "cost_per_net_page": {
+      "agy": 2.250621296155802,
+      "claude": 2.0299721494738604e-05
+     },
+     "share_per_net_page": 6.777240404594583e-05,
+     "p_best": 0.073,
+     "tier": "no"
+    },
+    {
+     "corrector": "sonnet-5.5",
+     "stage": "sonnet-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.1463,
+      0.2433,
+      0.3649
+     ],
+     "p_better": [
+      0.375,
+      0.5004,
+      0.6245
+     ],
+     "gain": [
+      -0.2529,
+      0.0132,
+      0.2405
+     ],
+     "gain_mean": 0.0052,
+     "p_clears": 0.0,
+     "draw_per_page": {
+      "claude": 5.92e-05
+     },
+     "share_per_page": 2.96e-05,
+     "cost_per_net_page": {
+      "claude": 0.011281554162214947
+     },
+     "share_per_net_page": 0.005640777081107474,
+     "p_best": 0.0,
+     "tier": "no"
+    },
+    {
+     "corrector": "flash-lite-p2",
+     "stage": "lite-batch",
+     "channel": "batch",
+     "measured": true,
+     "p_worse": [
+      0.5523,
+      0.6804,
+      0.7845
+     ],
+     "p_better": [
+      0.0137,
+      0.0457,
+      0.1128
+     ],
+     "gain": [
+      -1.5219,
+      -1.3081,
+      -1.0471
+     ],
+     "gain_mean": -1.2997,
+     "p_clears": 0.0,
+     "draw_per_page": {
+      "batch": 0.0015,
+      "claude": 9.2e-06
+     },
+     "share_per_page": 4.745714285714285e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "p_best": 0.0,
+     "tier": "no"
+    },
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0268,
+      0.2127,
+      0.744
+     ],
+     "p_better": [
+      0.0679,
+      0.4141,
+      0.8811
+     ],
+     "gain": [
+      -1.1093,
+      -0.0361,
+      0.6314
+     ],
+     "gain_mean": -0.1164,
+     "p_clears": 0.106,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 9.2e-06
+     },
+     "share_per_page": 3.0715008448973326e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "tier": "no"
+    },
+    {
+     "corrector": "agy-gemini-4-argon-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": false,
+     "p_worse": [
+      0.0274,
+      0.2573,
+      0.7993
+     ],
+     "p_better": [
+      0.0662,
+      0.4175,
+      0.8934
+     ],
+     "gain": [
+      -1.2175,
+      -0.111,
+      0.6064
+     ],
+     "gain_mean": -0.196,
+     "p_clears": 0.096,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 9.2e-06
+     },
+     "share_per_page": 3.0715008448973326e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "tier": "no"
+    }
+   ]
+  },
+  {
+   "id": "zh-paddle-dice-lt090",
+   "title": "Chinese Paddle pages whose Kanripo screen is below 0.90 dice",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "ordinary",
+   "served": "the Paddle text",
+   "bind": "mechanical",
+   "bar_worse": 0.05,
+   "pages_waiting": 453715,
+   "pages_waiting_read_weighted": 166906,
+   "books": 10114,
+   "decision": null,
+   "note": "priced on #6561 set B random (ordinary pages, mostly above 0.90 dice); on the 15 flagged pages there Opus was 4 better / 0 worse, so this understates the gain",
+   "choice": "agy-3.8-flash-high",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": 34,
+   "weeks_top_read_weighted": {
+    "0.1": 21,
+    "0.25": 26,
+    "0.5": 34,
+    "1.0": 34
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 391,
+     "quarter_by_route": {
+      "agy-3.8-flash-high": 391
+     }
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 26,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 34,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 34,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 34,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.02,
+      0.0631,
+      0.1482
+     ],
+     "p_better": [
+      0.2591,
+      0.3962,
+      0.5421
+     ],
+     "gain": [
+      0.0527,
+      0.2605,
+      0.4385
+     ],
+     "gain_mean": 0.256,
+     "p_clears": 0.352,
+     "draw_per_page": {
+      "claude": 9.147200000000001e-05
+     },
+     "share_per_page": 4.5736000000000004e-05,
+     "cost_per_net_page": {
+      "claude": 0.00035737902082536054
+     },
+     "share_per_net_page": 0.00017868951041268027,
+     "p_best": 0.46,
+     "tier": "no"
+    },
+    {
+     "corrector": "agy-3.8-flash-high",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0053,
+      0.0266,
+      0.0829
+     ],
+     "p_better": [
+      0.2097,
+      0.3367,
+      0.4792
+     ],
+     "gain": [
+      0.117,
+      0.2756,
+      0.4296
+     ],
+     "gain_mean": 0.2739,
+     "p_clears": 0.796,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 1.472e-06
+     },
+     "share_per_page": 2.6851008448973323e-05,
+     "cost_per_net_page": {
+      "agy": 3.7237838023652943,
+      "claude": 5.373931134393837e-06
+     },
+     "share_per_net_page": 9.802681405829464e-05,
+     "p_best": 0.535,
+     "tier": "provisional",
+     "test": {
+      "n": 80,
+      "instrument": "mechanical",
+      "judge": null,
+      "draw": {
+       "agy": 81.6
+      },
+      "why": "P(worse <= 0.05) at n=80 with k = n x 0.027"
+     }
+    },
+    {
+     "corrector": "sonnet-5.5",
+     "stage": "sonnet-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0941,
+      0.1854,
+      0.3138
+     ],
+     "p_better": [
+      0.1701,
+      0.2842,
+      0.4274
+     ],
+     "gain": [
+      -0.3614,
+      -0.0891,
+      0.1401
+     ],
+     "gain_mean": -0.0941,
+     "p_clears": 0.002,
+     "draw_per_page": {
+      "claude": 5.1472000000000005e-05
+     },
+     "share_per_page": 2.5736000000000002e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "p_best": 0.004,
+     "tier": "no"
+    },
+    {
+     "corrector": "flash-lite-p2",
+     "stage": "lite-batch",
+     "channel": "batch",
+     "measured": true,
+     "p_worse": [
+      0.1751,
+      0.2929,
+      0.4363
+     ],
+     "p_better": [
+      0.0774,
+      0.1639,
+      0.2863
+     ],
+     "gain": [
+      -0.7182,
+      -0.4203,
+      -0.1556
+     ],
+     "gain_mean": -0.4273,
+     "p_clears": 0.0,
+     "draw_per_page": {
+      "batch": 0.0015,
+      "claude": 1.472e-06
+     },
+     "share_per_page": 4.359314285714286e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "p_best": 0.0,
+     "tier": "no"
+    }
+   ]
+  },
+  {
+   "id": "zh-siku-stale",
+   "title": "Stale Siku pages, high old-vs-new change (#6561 item 1)",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "siku-stale",
+   "served": "the Paddle text",
+   "bind": "mechanical",
+   "bar_worse": 0.1,
+   "pages_waiting": 24834,
+   "pages_waiting_read_weighted": 9448,
+   "books": 1,
+   "decision": null,
+   "note": "24,834 pages (2026-10-15 census in the Siku write-up); the bar is that gate's 10%; read weight = the census mean of Chinese Paddle pages",
+   "choice": "opus-5.5+siku-v2",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": 65,
+   "weeks_top_read_weighted": {
+    "0.1": 65,
+    "0.25": 65,
+    "0.5": 65,
+    "1.0": 65
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 104,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 78,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0784,
+      0.1394,
+      0.2226
+     ],
+     "p_better": [
+      0.3119,
+      0.4136,
+      0.519
+     ],
+     "gain": [
+      -0.055,
+      0.1334,
+      0.3
+     ],
+     "gain_mean": 0.1281,
+     "p_clears": 0.161,
+     "draw_per_page": {
+      "claude": 9.147200000000001e-05
+     },
+     "share_per_page": 4.5736000000000004e-05,
+     "cost_per_net_page": {
+      "claude": 0.000714061626615991
+     },
+     "share_per_net_page": 0.0003570308133079955,
+     "p_best": 0.143,
+     "tier": "no"
+    },
+    {
+     "corrector": "opus-5.5+siku-v2",
+     "stage": "opus-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0511,
+      0.0912,
+      0.1444
+     ],
+     "p_better": [
+      0.3761,
+      0.4543,
+      0.5361
+     ],
+     "gain": [
+      0.1409,
+      0.2696,
+      0.3849
+     ],
+     "gain_mean": 0.2676,
+     "p_clears": 0.625,
+     "draw_per_page": {
+      "claude": 9.147200000000001e-05
+     },
+     "share_per_page": 4.5736000000000004e-05,
+     "cost_per_net_page": {
+      "claude": 0.00034186421680957853
+     },
+     "share_per_net_page": 0.00017093210840478926,
+     "p_best": 0.857,
+     "tier": "provisional",
+     "test": {
+      "n": null,
+      "why": "the posterior median is too close to the bar for 800 pages to settle it"
+     }
+    }
+   ]
+  },
+  {
+   "id": "tibetan-yigdzin",
+   "title": "Tibetan read by Yigdzin",
+   "draft": "yigdzin",
+   "language": "tibetan",
+   "kind": "kangyur",
+   "served": "the Yigdzin text",
+   "bind": "leaf-audit-tiles",
+   "bar_worse": 0.05,
+   "pages_waiting": 280623,
+   "pages_waiting_read_weighted": 194496,
+   "books": 1464,
+   "decision": "#6560 Flash-low pass",
+   "note": null,
+   "choice": "opus-5.5",
+   "tier": "provisional",
+   "hold": null,
+   "share_week1": {},
+   "pages_week1": 0,
+   "quarter": {
+    "pages": 0,
+    "read_weighted": 0,
+    "by_route": {}
+   },
+   "weeks_to_drain": 65,
+   "weeks_top_read_weighted": {
+    "0.1": 26,
+    "0.25": 26,
+    "0.5": 43,
+    "1.0": 65
+   },
+   "sensitivity": {
+    "agy x0.7": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "agy x1.3": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw low": {
+     "weeks_to_drain": 43,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "Opus@10 draw high": {
+     "weeks_to_drain": 78,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 1": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    },
+    "harm weight 4": {
+     "weeks_to_drain": 65,
+     "quarter_pages": 0,
+     "quarter_by_route": {}
+    }
+   },
+   "routes": [
+    {
+     "corrector": "agy-3.8-flash-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.019,
+      0.0825,
+      0.2377
+     ],
+     "p_better": [
+      0.53,
+      0.7516,
+      0.8941
+     ],
+     "gain": [
+      0.2155,
+      0.5591,
+      0.7866
+     ],
+     "gain_mean": 0.5383,
+     "p_clears": 0.267,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 6.8632e-06
+     },
+     "share_per_page": 2.954660844897332e-05,
+     "cost_per_net_page": {
+      "agy": 1.8950145518673633,
+      "claude": 1.2750846933702047e-05
+     },
+     "share_per_net_page": 5.4893385263854535e-05,
+     "p_best": 0.488,
+     "tier": "no"
+    },
+    {
+     "corrector": "agy-gemini-4-argon-low",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0371,
+      0.1298,
+      0.3186
+     ],
+     "p_better": [
+      0.4589,
+      0.6789,
+      0.8495
+     ],
+     "gain": [
+      -0.0316,
+      0.3988,
+      0.6878
+     ],
+     "gain_mean": 0.3755,
+     "p_clears": 0.098,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 6.8632e-06
+     },
+     "share_per_page": 2.954660844897332e-05,
+     "cost_per_net_page": {
+      "agy": 2.7166976646565364,
+      "claude": 1.8279646482422295e-05
+     },
+     "share_per_net_page": 7.869529624690874e-05,
+     "p_best": 0.09,
+     "tier": "no"
+    },
+    {
+     "corrector": "opus-5.5",
+     "stage": "opus-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0028,
+      0.0236,
+      0.1411
+     ],
+     "p_better": [
+      0.2309,
+      0.5038,
+      0.778
+     ],
+     "gain": [
+      0.1057,
+      0.4255,
+      0.7167
+     ],
+     "gain_mean": 0.4183,
+     "p_clears": 0.742,
+     "draw_per_page": {
+      "claude": 9.686320000000001e-05
+     },
+     "share_per_page": 4.8431600000000006e-05,
+     "cost_per_net_page": {
+      "claude": 0.0002315413122617477
+     },
+     "share_per_net_page": 0.00011577065613087385,
+     "p_best": 0.132,
+     "tier": "provisional",
+     "test": {
+      "n": 80,
+      "instrument": "leaf-audit-tiles",
+      "judge": "opus-5.5@1",
+      "draw": {
+       "claude": 0.0216
+      },
+      "why": "P(worse <= 0.05) at n=80 with k = n x 0.024"
+     }
+    },
+    {
+     "corrector": "agy-3.1-pro",
+     "stage": "agy@1",
+     "channel": "agy",
+     "measured": true,
+     "p_worse": [
+      0.0713,
+      0.2528,
+      0.5878
+     ],
+     "p_better": [
+      0.2887,
+      0.5948,
+      0.8491
+     ],
+     "gain": [
+      -0.6383,
+      0.0672,
+      0.5434
+     ],
+     "gain_mean": 0.0221,
+     "p_clears": 0.023,
+     "draw_per_page": {
+      "agy": 1.02,
+      "claude": 6.8632e-06
+     },
+     "share_per_page": 2.954660844897332e-05,
+     "cost_per_net_page": {
+      "agy": 46.246016183908466,
+      "claude": 0.00031117221399352995
+     },
+     "share_per_net_page": 0.001339620522069438,
+     "p_best": 0.005,
+     "tier": "no"
+    },
+    {
+     "corrector": "flash-lite-p2",
+     "stage": "lite-batch",
+     "channel": "batch",
+     "measured": true,
+     "p_worse": [
+      0.0079,
+      0.0593,
+      0.269
+     ],
+     "p_better": [
+      0.3428,
+      0.657,
+      0.8857
+     ],
+     "gain": [
+      0.034,
+      0.4939,
+      0.7961
+     ],
+     "gain_mean": 0.4673,
+     "p_clears": 0.438,
+     "draw_per_page": {
+      "batch": 0.0015,
+      "claude": 6.8632e-06
+     },
+     "share_per_page": 4.628874285714286e-05,
+     "cost_per_net_page": {
+      "batch": 0.0032096686428554825,
+      "claude": 1.4685731886430498e-05
+     },
+     "share_per_net_page": 9.904768431051475e-05,
+     "p_best": 0.285,
+     "tier": "no"
+    },
+    {
+     "corrector": "sonnet-5.5",
+     "stage": "sonnet-5.5@1",
+     "channel": "claude",
+     "measured": true,
+     "p_worse": [
+      0.0052,
+      0.0379,
+      0.1964
+     ],
+     "p_better": [
+      0.0063,
+      0.028,
+      0.0966
+     ],
+     "gain": [
+      -0.3648,
+      -0.0428,
+      0.0472
+     ],
+     "gain_mean": -0.0864,
+     "p_clears": 0.231,
+     "draw_per_page": {
+      "claude": 5.68632e-05
+     },
+     "share_per_page": 2.84316e-05,
+     "cost_per_net_page": null,
+     "share_per_net_page": null,
+     "p_best": 0.0,
+     "tier": "no"
+    }
+   ]
+  }
+ ],
+ "note": "capacity in channel units (Claude account-weeks, agy calls, Batch dollars); plan fees are not used"
+}

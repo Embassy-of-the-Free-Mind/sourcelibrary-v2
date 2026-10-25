@@ -9,8 +9,9 @@
 
 Inputs:
   --table  build-ocr-table.py's output (one row per page x engine of the Pareto charts)
-  --gate   the #4763 gate scores: per page x engine (ia-djvu, lite, agy = gemini-3.8-flash-low via the agy CLI),
-           scored by en-ocr-reference-5124.mjs scorePage; cer=null means the engine did not read the page
+  --gate   the #4763 gate scores: per page x engine (ia-djvu, lite, agy = gemini-3.8-flash-low via the agy CLI, and
+           the GPU arms of gex45 task 15-en-numbers-4763), scored by en-ocr-reference-5124.mjs scorePage; cer=null
+           means the engine did not read the page. Several files may be given, comma-separated
   --bench  the 122 referenced pages (slug, stratum, book_id, page_id). S1 pre-1880 prose, S2 pre-1880 date-dense,
            S3 1880-1930 prose, S4 1880-1930 date-dense
   --meta   the books' catalogue rows (year, published, editions held of the work), read from Mongo by hand
@@ -34,7 +35,11 @@ from provenance import label_legacy  # noqa: E402  every row says where it came 
 
 GATE_ENGINE = {'agy': ('gemini-3.8-flash+antigravity-cli', 'gemini-cli'),
                'lite': ('gemini-3.1-flash-lite', 'gemini-lite'),
-               'ia-djvu': ('ia-djvu', 'archive-text')}
+               'ia-djvu': ('ia-djvu', 'archive-text'),
+               # the GPU arms of the same 122 pages (gex45 task 15-en-numbers-4763, 2026-10-24; estimator v2, #6740)
+               'glm-ocr': ('glm-ocr', 'open-vlm'), 'mineru2.5': ('mineru', 'open-vlm'),
+               'olmocr-2': ('olmocr-2-7b-fp8', 'open-vlm'), 'paddle-vl (no layout)': ('paddleocr-vl-1.6', 'open-vlm'),
+               'paddle-vl (layout)': ('paddleocr-vl-1.6-layout', 'open-vlm')}
 WEB_PANELS = {'ref-ws', 'english-ia-5124'}
 
 
@@ -65,7 +70,7 @@ def main():
         out.append(r)
     bench = {b['page_id']: b for b in json.load(open(a.bench))}
     meta = {m['book_id']: m for m in json.load(open(a.meta))}
-    gate = [json.loads(l) for l in open(a.gate)]
+    gate = [json.loads(l) for f in a.gate.split(',') for l in open(f) if l.strip()]
     ref_chars = {g['page_id']: g['chars'] for g in gate if g['chars']}  # the reference's length, from any read
     for g in gate:
         b = bench[g['page_id']]

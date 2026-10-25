@@ -1,0 +1,296 @@
+{
+ "generated_by": "scripts/eval/estimator/chain/volumes-by-draft.mjs (read-only census, 2026-10-25)",
+ "weight": "(book read_count + 1) / (corpus mean 2.011 + 1)",
+ "cells": {
+  "Arabic|agy": {
+   "books": 4,
+   "pages": 4,
+   "read_weighted": 375
+  },
+  "Arabic|claude": {
+   "books": 11,
+   "pages": 99,
+   "read_weighted": 2781
+  },
+  "Arabic|flash3": {
+   "books": 231,
+   "pages": 30244,
+   "read_weighted": 201378
+  },
+  "Arabic|lite": {
+   "books": 146,
+   "pages": 27659,
+   "read_weighted": 89232
+  },
+  "Arabic|none": {
+   "books": 89,
+   "pages": 7638,
+   "read_weighted": 9551
+  },
+  "Arabic|other": {
+   "books": 10,
+   "pages": 24,
+   "read_weighted": 615
+  },
+  "Chinese|agy|dice none": {
+   "books": 3,
+   "pages": 252,
+   "read_weighted": 268
+  },
+  "Chinese|agy|zh-guarded|dice none": {
+   "books": 128,
+   "pages": 1733,
+   "read_weighted": 576
+  },
+  "Chinese|claude|dice none": {
+   "books": 802,
+   "pages": 4521,
+   "read_weighted": 2680
+  },
+  "Chinese|flash3|dice none": {
+   "books": 10800,
+   "pages": 103878,
+   "read_weighted": 121280
+  },
+  "Chinese|lite|dice none": {
+   "books": 377,
+   "pages": 18720,
+   "read_weighted": 25774
+  },
+  "Chinese|none|dice none": {
+   "books": 7364,
+   "pages": 202538,
+   "read_weighted": 78622
+  },
+  "Chinese|other|dice none": {
+   "books": 5,
+   "pages": 13,
+   "read_weighted": 22
+  },
+  "Chinese|paddle|dice 0.90-0.95": {
+   "books": 9717,
+   "pages": 428901,
+   "read_weighted": 149782
+  },
+  "Chinese|paddle|dice ge0.95": {
+   "books": 9264,
+   "pages": 570892,
+   "read_weighted": 195729
+  },
+  "Chinese|paddle|dice lt0.90": {
+   "books": 10114,
+   "pages": 453715,
+   "read_weighted": 166906
+  },
+  "Chinese|paddle|dice none": {
+   "books": 8132,
+   "pages": 124038,
+   "read_weighted": 173235
+  },
+  "Chinese|paddle|zh-guarded|dice none": {
+   "books": 190,
+   "pages": 22220,
+   "read_weighted": 7410
+  },
+  "French|agy": {
+   "books": 4,
+   "pages": 51,
+   "read_weighted": 33
+  },
+  "French|claude": {
+   "books": 16,
+   "pages": 736,
+   "read_weighted": 3184
+  },
+  "French|flash3": {
+   "books": 918,
+   "pages": 189470,
+   "read_weighted": 704050
+  },
+  "French|lite": {
+   "books": 571,
+   "pages": 151443,
+   "read_weighted": 473237
+  },
+  "French|none": {
+   "books": 505,
+   "pages": 97557,
+   "read_weighted": 72585
+  },
+  "French|other": {
+   "books": 166,
+   "pages": 3346,
+   "read_weighted": 6622
+  },
+  "German|agy": {
+   "books": 28,
+   "pages": 103,
+   "read_weighted": 387
+  },
+  "German|claude": {
+   "books": 124,
+   "pages": 1724,
+   "read_weighted": 6980
+  },
+  "German|flash3": {
+   "books": 3892,
+   "pages": 353186,
+   "read_weighted": 1359293
+  },
+  "German|lite": {
+   "books": 2363,
+   "pages": 418603,
+   "read_weighted": 843556
+  },
+  "German|none": {
+   "books": 2673,
+   "pages": 652542,
+   "read_weighted": 282480
+  },
+  "German|other": {
+   "books": 206,
+   "pages": 6781,
+   "read_weighted": 10051
+  },
+  "Greek|agy": {
+   "books": 65,
+   "pages": 462,
+   "read_weighted": 661
+  },
+  "Greek|claude": {
+   "books": 23,
+   "pages": 1588,
+   "read_weighted": 1868
+  },
+  "Greek|flash3": {
+   "books": 1191,
+   "pages": 419150,
+   "read_weighted": 894950
+  },
+  "Greek|lite": {
+   "books": 431,
+   "pages": 42916,
+   "read_weighted": 73722
+  },
+  "Greek|none": {
+   "books": 611,
+   "pages": 90260,
+   "read_weighted": 53100
+  },
+  "Greek|other": {
+   "books": 145,
+   "pages": 902,
+   "read_weighted": 2823
+  },
+  "Hebrew|agy": {
+   "books": 3,
+   "pages": 11,
+   "read_weighted": 89
+  },
+  "Hebrew|claude": {
+   "books": 9,
+   "pages": 53,
+   "read_weighted": 409
+  },
+  "Hebrew|flash3": {
+   "books": 237,
+   "pages": 51360,
+   "read_weighted": 290359
+  },
+  "Hebrew|lite": {
+   "books": 94,
+   "pages": 17128,
+   "read_weighted": 48253
+  },
+  "Hebrew|none": {
+   "books": 116,
+   "pages": 7831,
+   "read_weighted": 8469
+  },
+  "Hebrew|other": {
+   "books": 16,
+   "pages": 90,
+   "read_weighted": 413
+  },
+  "Italian|claude": {
+   "books": 1,
+   "pages": 8,
+   "read_weighted": 242
+  },
+  "Italian|flash3": {
+   "books": 601,
+   "pages": 118006,
+   "read_weighted": 266154
+  },
+  "Italian|lite": {
+   "books": 323,
+   "pages": 46950,
+   "read_weighted": 49688
+  },
+  "Italian|none": {
+   "books": 282,
+   "pages": 51439,
+   "read_weighted": 30795
+  },
+  "Italian|other": {
+   "books": 29,
+   "pages": 1841,
+   "read_weighted": 762
+  },
+  "Latin|agy": {
+   "books": 50,
+   "pages": 140,
+   "read_weighted": 1251
+  },
+  "Latin|claude": {
+   "books": 377,
+   "pages": 2970,
+   "read_weighted": 21545
+  },
+  "Latin|flash3": {
+   "books": 14295,
+   "pages": 1317806,
+   "read_weighted": 4949396
+  },
+  "Latin|lite": {
+   "books": 4832,
+   "pages": 861506,
+   "read_weighted": 1568440
+  },
+  "Latin|none": {
+   "books": 9089,
+   "pages": 770778,
+   "read_weighted": 446765
+  },
+  "Latin|other": {
+   "books": 439,
+   "pages": 2477,
+   "read_weighted": 5078
+  },
+  "Tibetan|flash3": {
+   "books": 789,
+   "pages": 2881,
+   "read_weighted": 1976
+  },
+  "Tibetan|lite": {
+   "books": 727,
+   "pages": 6466,
+   "read_weighted": 6843
+  },
+  "Tibetan|none": {
+   "books": 379,
+   "pages": 138707,
+   "read_weighted": 50913
+  },
+  "Tibetan|other": {
+   "books": 179,
+   "pages": 1836,
+   "read_weighted": 829
+  },
+  "Tibetan|yigdzin": {
+   "books": 1464,
+   "pages": 280623,
+   "read_weighted": 194496
+  }
+ }
+}

@@ -1,0 +1,364 @@
+{
+ "_about": "The routing cells allocate_v2.py plans (#6740): a kind of page that already has a draft, the pages waiting in it (volumes-by-draft.mjs census), the route it is served on meanwhile, and the candidate correction routes. A route is a chain: draft engine (already run) -> corrector `stage` -> retranslation where the page has English. `bind` is the instrument whose made-worse rate the bar is set on: the instrument of the cell's own preregistered gate (#6694 rule: the cross-family blind judge; #6560 gate: the Opus span audit with tiles; #6561: the score against the Kanripo leaf). Only a route whose cell is MEASURED (>= 20 pages of made-worse evidence on that draft x corrector x language x kind) is routed; the others are listed with their pooled estimate as candidates to test.",
+ "threshold": 0.9,
+ "harm_weight": 2.0,
+ "harm_weight_note": "net gain per corrected page = P(better) - harm_weight x P(worse). A page made worse is text a reader already trusted, and nothing flags it; 2 is a choice, with 1 and 4 in the sensitivity table",
+ "cells": [
+  {
+   "id": "latin-lite",
+   "title": "Latin print read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "latin",
+   "kind": "print",
+   "census": {
+    "language": "Latin",
+    "draft": "lite"
+   },
+   "served": "the lite text (Flash-Lite Batch read)",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "decision": "#5924",
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ],
+    [
+     "redo:agy-3.8-flash-low",
+     "agy-redo@1"
+    ],
+    [
+     "agy-gemini-4-argon-low",
+     "agy@1"
+    ],
+    [
+     "sonnet-5.5",
+     "sonnet-5.5@1"
+    ]
+   ]
+  },
+  {
+   "id": "latin-flash3",
+   "title": "Latin print read by Gemini 3 Flash (most-read books)",
+   "draft": "stored-mixed",
+   "language": "latin",
+   "kind": "most-read",
+   "census": {
+    "language": "Latin",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ]
+   ]
+  },
+  {
+   "id": "german-flash3",
+   "title": "German read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "german",
+   "kind": "most-read",
+   "census": {
+    "language": "German",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ]
+   ]
+  },
+  {
+   "id": "greek-flash3",
+   "title": "Greek read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "greek",
+   "kind": "most-read",
+   "census": {
+    "language": "Greek",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ]
+   ],
+   "hold": "Derek 2026-10-14 (#6694): Greek stays on lane A; the q300 write audit's 3 Gemini-judged worse pages were all Greek, a count this estimator does not hold by language"
+  },
+  {
+   "id": "chinese-flash3",
+   "title": "Chinese read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "chinese",
+   "kind": "most-read",
+   "census": {
+    "language": "Chinese",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ]
+   ]
+  },
+  {
+   "id": "arabic-flash3",
+   "title": "Arabic read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "arabic",
+   "kind": "most-read",
+   "census": {
+    "language": "Arabic",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ]
+   ]
+  },
+  {
+   "id": "hebrew-flash3",
+   "title": "Hebrew read by Gemini 3 Flash",
+   "draft": "stored-mixed",
+   "language": "hebrew",
+   "kind": "most-read",
+   "census": {
+    "language": "Hebrew",
+    "draft": "flash3"
+   },
+   "served": "the Gemini 3 Flash text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ]
+   ]
+  },
+  {
+   "id": "german-lite",
+   "title": "German read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "german",
+   "kind": "print",
+   "census": {
+    "language": "German",
+    "draft": "lite"
+   },
+   "served": "the lite text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ]
+   ]
+  },
+  {
+   "id": "french-lite",
+   "title": "French read by Flash-Lite",
+   "draft": "flash-lite",
+   "language": "french",
+   "kind": "print",
+   "census": {
+    "language": "French",
+    "draft": "lite"
+   },
+   "served": "the lite text",
+   "bind": "blind-judge",
+   "bar_worse": 0.05,
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@10"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ]
+   ]
+  },
+  {
+   "id": "zh-frame-6871",
+   "title": "Chinese tables and mixed pages newly read by guarded Paddle (#6871)",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "table",
+   "census": {
+    "language": "Chinese",
+    "draft": "paddle",
+    "zh_guarded": true
+   },
+   "served": "the guarded Paddle text, Opus-translated by job zh-translate-route-6871",
+   "bind": "mechanical",
+   "bar_worse": 0.05,
+   "translated_share_key": "chinese-frame-6871",
+   "decision": "#6871 / #6561",
+   "note": "the frame is table and mixed pages; the evidence is the 40 withheld table pages of #6561 set A, so the mixed pages are priced as tables",
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@1"
+    ],
+    [
+     "agy-3.8-flash-high",
+     "agy@1"
+    ],
+    [
+     "sonnet-5.5",
+     "sonnet-5.5@1"
+    ],
+    [
+     "flash-lite-p2",
+     "lite-batch"
+    ],
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ],
+    [
+     "agy-gemini-4-argon-low",
+     "agy@1"
+    ]
+   ]
+  },
+  {
+   "id": "zh-paddle-dice-lt090",
+   "title": "Chinese Paddle pages whose Kanripo screen is below 0.90 dice",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "ordinary",
+   "census": {
+    "language": "Chinese",
+    "draft": "paddle",
+    "zh_guarded": false,
+    "dice": "lt0.90"
+   },
+   "served": "the Paddle text",
+   "bind": "mechanical",
+   "bar_worse": 0.05,
+   "note": "priced on #6561 set B random (ordinary pages, mostly above 0.90 dice); on the 15 flagged pages there Opus was 4 better / 0 worse, so this understates the gain",
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@1"
+    ],
+    [
+     "agy-3.8-flash-high",
+     "agy@1"
+    ],
+    [
+     "sonnet-5.5",
+     "sonnet-5.5@1"
+    ],
+    [
+     "flash-lite-p2",
+     "lite-batch"
+    ]
+   ]
+  },
+  {
+   "id": "zh-siku-stale",
+   "title": "Stale Siku pages, high old-vs-new change (#6561 item 1)",
+   "draft": "paddleocr-vl",
+   "language": "chinese",
+   "kind": "siku-stale",
+   "fixed_pages": 24834,
+   "served": "the Paddle text",
+   "bind": "mechanical",
+   "bar_worse": 0.1,
+   "note": "24,834 pages (2026-10-15 census in the Siku write-up); the bar is that gate's 10%; read weight = the census mean of Chinese Paddle pages",
+   "routes": [
+    [
+     "opus-5.5",
+     "opus-5.5@1"
+    ],
+    [
+     "opus-5.5+siku-v2",
+     "opus-5.5@1"
+    ]
+   ]
+  },
+  {
+   "id": "tibetan-yigdzin",
+   "title": "Tibetan read by Yigdzin",
+   "draft": "yigdzin",
+   "language": "tibetan",
+   "kind": "kangyur",
+   "census": {
+    "language": "Tibetan",
+    "draft": "yigdzin"
+   },
+   "served": "the Yigdzin text",
+   "bind": "leaf-audit-tiles",
+   "bar_worse": 0.05,
+   "decision": "#6560 Flash-low pass",
+   "routes": [
+    [
+     "agy-3.8-flash-low",
+     "agy@1"
+    ],
+    [
+     "agy-gemini-4-argon-low",
+     "agy@1"
+    ],
+    [
+     "opus-5.5",
+     "opus-5.5@1"
+    ],
+    [
+     "agy-3.1-pro",
+     "agy@1"
+    ],
+    [
+     "flash-lite-p2",
+     "lite-batch"
+    ],
+    [
+     "sonnet-5.5",
+     "sonnet-5.5@1"
+    ]
+   ]
+  }
+ ]
+}
