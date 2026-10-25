@@ -12,7 +12,8 @@
       --private-md $S/ocr-v1-routes-usd.md
 
 Cell = chart x page kind (prose / number-dense, where measured) x fame (the text is a public web transcription or
-not; English charts only, the others at their panels' majority). For each route with a cost row whose engine is
+not; English charts only, the others at their panels' majority) x alchemy (only charts with alchemical rows, #7341:
+the alchemical books at their own panel, every other book of the chart as a new panel). For each route with a cost row whose engine is
 measured (>= 5 pages read in the chart) or pooled (a family sibling is measured; general models only) in the cell:
   P(read)            1 - did-not-read, a new page of the cell
   E[CER]             among reads, the 100%-error point mass included
