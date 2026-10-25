@@ -154,24 +154,33 @@ def main():
     ap.add_argument('--md', required=True)
     ap.add_argument('--fees', required=True, help='PRIVATE plan-fee file (agy_month_usd, claude_usd_per_weekly_point)')
     ap.add_argument('--private-md', required=True, help='the same table in dollars; write it outside the repo')
+    ap.add_argument('--arabic', help='extra rows (build-arabic-rows.py) for a fit made with fit_ocr_v1_arabic.py (#7341)')
+    ap.add_argument('--charts', help='comma list: route only these charts')
+    ap.add_argument('--min-pages', type=int, default=MIN_PAGES, help='pages read in the chart for a route to be measured')
     a = ap.parse_args()
+    globals()['MIN_PAGES'] = a.min_pages
     fees = json.load(open(a.fees))
-    df = load(a.table)
+    df = load(a.table, extra=a.arabic)
     costs, bars = json.load(open(a.costs)), json.load(open(a.bars))
     full = pickle.load(open(os.path.join(a.fit_dir, 'full.pkl'), 'rb'))
     ixa, pa, _ = full['acc']
     ixq, pq, _ = full['ref']
-    lvn, pn, _ = pickle.load(open(os.path.join(a.fit_dir, 'numbers.pkl'), 'rb'))
-    spn = stratum_pages(df, lvn)
+    has_num = os.path.exists(os.path.join(a.fit_dir, 'numbers.pkl'))  # an Arabic-only route run needs no numbers fit
+    lvn, pn, _ = pickle.load(open(os.path.join(a.fit_dir, 'numbers.pkl'), 'rb')) if has_num else ({'eng': []}, None, None)
+    spn = stratum_pages(df, lvn) if has_num else {}
     S = pa['mu_a'].shape[0]
-    pick_n = np.linspace(0, pn['sub_a'].shape[0] - 1, S).astype(int)
+    pick_n = np.linspace(0, pn['sub_a'].shape[0] - 1, S).astype(int) if has_num else None
     fam_of = dict(df[['engine', 'engine_family']].drop_duplicates().itertuples(index=False))
     cells_out, md, md_usd = [], [], []
-    for chart in sorted(df.chart.unique()):
+    charts = a.charts.split(',') if a.charts else sorted(df.chart.unique())
+    # a chart with alchemical rows (#7341) is two cells: the alchemical books at their own panel, and every other
+    # book of the chart as a new panel (content 0); a chart without them is one cell at its majority panel
+    cells_of = lambda d: ([(1, mode(d[d.alchemy == 1].panel)), (0, None)] if d.alchemy.any() else [(0, mode(d.panel))])
+    for chart in charts:
         d = df[df.chart == chart]
-        era, panel = mode(d.era), mode(d.panel)
+        era, kind_ = mode(d.era), mode(d.kind)
         webs = [0, 1] if chart.startswith('english') else [int(round(d.fame_web.mean()))]
-        for dense in [int(chart.endswith('-dense'))]:
+        for (alch, panel), dense in [(c, int(chart.endswith('-dense'))) for c in cells_of(d)]:
             strata = (GATE_CHARTS[chart],) if chart in GATE_CHARTS else None
             for web in webs:
                 rows = []
@@ -181,12 +190,13 @@ def main():
                     if b is None or e not in fam_of:
                         continue
                     rng = np.random.default_rng(6740)
-                    cell = dict(engine=e, family=fam_of[e], chart=chart, era=era, dense=dense, web=web, rng=rng)
+                    cell = dict(engine=e, family=fam_of[e], chart=chart, era=era, dense=dense, web=web, rng=rng,
+                                kind=kind_, alchemy=alch)
                     cer = cell_cer(pa, ixa, panel=panel, **cell)
                     cell['rng'] = np.random.default_rng(6741)
                     fail = cell_fail(pq, ixq, panel=None, **cell)
                     num = None
-                    if strata and e in lvn['eng']:
+                    if strata and has_num and e in lvn['eng']:
                         num = sum(number_rate(lvn, pn, o, e, strata[0], spn) for o in NUM)[pick_n]
                     rows.append(dict(route=r['route'], engine=e, basis=b, enabled=r['enabled'], cost=call_cost(r, costs),
                                      cer=cer, fail=fail, num=num))
@@ -201,8 +211,8 @@ def main():
                     sens[f'margin x{f}'] = ch['route'] if ch else None
                 choice = decide(rows, bars, th, mc, mn, dense, fees)
                 kind = 'number-dense' if dense else 'prose'
-                fame = 'web transcription' if web else 'no web transcription'
-                pages = int(d[(d.dense == dense) & (d.fame_web == web)].page.nunique())
+                fame = ('web transcription' if web else 'no web transcription') + ('; alchemy' if alch else '')
+                pages = int(d[(d.dense == dense) & (d.fame_web == web) & (d.alchemy == alch)].page.nunique())
                 route_rows = []
                 for r in sorted(rows, key=lambda r: float(r['cost_usable_draws'].mean())):
                     route_rows.append(dict(route=r['route'], engine=r['engine'], basis=r['basis'], enabled=r['enabled'],
@@ -215,7 +225,7 @@ def main():
                                            _usd=float(r['cost_usable_draws'].mean()), _usd_call=price(r['cost'], fees)))
                 best = max(route_rows, key=lambda r: r['p_best'] or 0.0)
                 ch = next((r for r in route_rows if r['route'] == (choice or {}).get('route')), None)
-                cells_out.append(dict(chart=chart, kind=kind, fame=fame, era=era, panel=panel, pages_in_cell=pages,
+                cells_out.append(dict(chart=chart, kind=kind, fame=fame, era=era, panel=panel, pages_in_cell=pages, alchemy=alch,
                                       choice=ch['route'] if ch else None, sensitivity=sens, best_quality=best['route'],
                                       routes=route_rows))
                 for out, dollars in ((md, False), (md_usd, True)):

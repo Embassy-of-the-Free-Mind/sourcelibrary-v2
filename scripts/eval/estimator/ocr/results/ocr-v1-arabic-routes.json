@@ -1,0 +1,644 @@
+{
+ "bars": {
+  "_about": "The quality bar a route must clear in a cell, read by route_ocr_v1.py (#6740, .claude/docs/quality-research-system.md \u00a73a). A route clears the bar on a posterior draw when its expected error is within the margin of the measured, enabled route with the lowest posterior mean error (that route's draw, so the comparison is paired) (and under `absolute_max` if one is set). A margin rather than an absolute number, because levels differ by script and reference set far more than readers' tolerance does: the bar is 'a reader would not notice the difference from the best route we can run'. Prose cells need the character bar; number-dense cells need both.",
+  "threshold": 0.9,
+  "character": {
+   "metric": "E[CER] among reads, the 100%-error point mass included",
+   "margin": 0.01,
+   "absolute_max": null,
+   "margin_relative": 0.15
+  },
+  "numbers": {
+   "metric": "misread + dropped + spurious numbers per number printed",
+   "margin": 0.02,
+   "absolute_max": null,
+   "margin_relative": 0.15
+  },
+  "_margins_note": "The margin is max(margin, margin_relative x the best route's error): 0.01 CER is about one wrong character per line of 100, and on a chart whose best route is at 10% CER a reader cannot tell 10% from 11%, so there the margin is 15% of the best. 0.02 per number is one more wrong number in fifty. Both are judgment calls, set here so they can be changed without code; the router prints how the choice moves at half and double the margins."
+ },
+ "gpu_state": "idle",
+ "units": [
+  "usd",
+  "agy_plan_share",
+  "claude_weekly_points"
+ ],
+ "quota_shares": {
+  "agy_share_per_call": 4.3632e-06,
+  "agy_derivation": "meter_quota_share.py over /root/agy-quota/calls.csv, 2026-10-13T07:01 to 2026-10-24T05:30 (10.94 days): 83,551 calls succeeded and 1,936 hit the cap (so the stretch used the whole allowance) = 229,190 calls per 30 days. Cross-check: median 1,578 calls in the 5 h before a 429 burst = 227,232 per 30 days. Every agy model is counted as one call of one pool, as the meter counts them. A second reading, the median calls in the 24 h before a lock (status.json past_bursts prev24h: 5,771), gives 173K per 30 days: the share is between 4.4e-6 and 5.8e-6 a call.",
+  "claude_points_per_call": 0.0303,
+  "claude_derivation": "One point = 1% of an account's weekly limit. 66 sealed claude -p Sonnet text calls (about 15K in / 5K out) = +2 weekly points on one account (2026-10-14, #6721). NOT an OCR reading: an image call has not been metered. Re-measure before a Claude route decides a cell.",
+  "unused_quota_value": 1.0,
+  "unused_quota_note": "1.0 = a call is worth its full share. Quota left unused at a reset is worth nothing, so near a reset with quota to spare this falls toward 0 (set it per run)."
+ },
+ "note": "costs are in units (paid dollars, agy plan-month share, Claude weekly points); the choice was made in dollars with the private plan fees",
+ "cells": [
+  {
+   "chart": "arabic-manuscript",
+   "kind": "prose",
+   "fame": "no web transcription; alchemy",
+   "era": "unknown",
+   "panel": "jabir-7341",
+   "pages_in_cell": 26,
+   "alchemy": 1,
+   "choice": "claude -p Opus 5.5",
+   "sensitivity": {
+    "margin x0.5": "claude -p Opus 5.5",
+    "margin x2.0": "claude -p Opus 5.5"
+   },
+   "best_quality": "claude -p Opus 5.5",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9371,
+      0.9896,
+      0.9991
+     ],
+     "cer": [
+      0.1688,
+      0.2057,
+      0.2584
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.005,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0015082685425421114,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0005577333750322932
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.6005,
+      0.9254,
+      0.9927
+     ],
+     "cer": [
+      0.1407,
+      0.1831,
+      0.2543
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.037,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 5.1442299374868765e-06,
+      "claude_weekly_points": 0.0036146608348444926
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.3442,
+      0.7743,
+      0.9607
+     ],
+     "cer": [
+      0.1112,
+      0.1375,
+      0.182
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.44,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 6.874783700449221e-06,
+      "claude_weekly_points": 0.008363159699174094
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.277,
+      0.6609,
+      0.8915
+     ],
+     "cer": [
+      0.1125,
+      0.1424,
+      0.1916
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.357,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 7.911690461619451e-06,
+      "claude_weekly_points": 0.011163811963853
+     },
+     "p_best": 0.155
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.1772,
+      0.4342,
+      0.6778
+     ],
+     "cer": [
+      0.1199,
+      0.1483,
+      0.1842
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.282,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 1.2370971162597847e-05,
+      "claude_weekly_points": 0.01749961087477237
+     },
+     "p_best": 0.037
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.962,
+      0.9979,
+      0.9999
+     ],
+     "cer": [
+      0.0856,
+      0.1168,
+      0.1592
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.03088499233983675
+     },
+     "p_best": 0.807
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9666,
+      0.9985,
+      1.0
+     ],
+     "cer": [
+      0.1178,
+      0.1536,
+      0.2188
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.168,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030895026314105525
+     },
+     "p_best": null
+    }
+   ]
+  },
+  {
+   "chart": "arabic-manuscript",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": null,
+   "pages_in_cell": 24,
+   "alchemy": 0,
+   "choice": "claude -p Opus 5.5",
+   "sensitivity": {
+    "margin x0.5": "claude -p Opus 5.5",
+    "margin x2.0": "claude -p Opus 5.5"
+   },
+   "best_quality": "claude -p Opus 5.5",
+   "routes": [
+    {
+     "route": "agy Gemini 3.6 Flash low (CLI)",
+     "engine": "gemini-3.6-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9735,
+      0.9971,
+      0.9997
+     ],
+     "cer": [
+      0.2566,
+      0.3095,
+      0.3656
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.048,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.394825894038527e-06,
+      "claude_weekly_points": 0.0002123351375305898
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.7 Flash low (CLI)",
+     "engine": "gemini-3.7-flash+antigravity-cli",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9036,
+      0.9871,
+      0.9981
+     ],
+     "cer": [
+      0.2058,
+      0.243,
+      0.2941
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.463,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.495545202065061e-06,
+      "claude_weekly_points": 0.0008422975690896972
+     },
+     "p_best": null
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "engine": "gemini-3.8-flash-high+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9058,
+      0.9718,
+      0.9938
+     ],
+     "cer": [
+      0.2117,
+      0.2488,
+      0.2972
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.388,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.53963241201107e-06,
+      "claude_weekly_points": 0.0011504410066101403
+     },
+     "p_best": 0.13
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9506,
+      0.9843,
+      0.994
+     ],
+     "cer": [
+      0.3003,
+      0.3449,
+      0.3917
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.01,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0015102343097607974,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.000602076494985562
+     },
+     "p_best": 0.0
+    },
+    {
+     "route": "agy Gemini 3.8 Flash low (CLI)",
+     "engine": "gemini-3.8-flash+antigravity-cli",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 4.3632e-06,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.845,
+      0.917,
+      0.9559
+     ],
+     "cer": [
+      0.2211,
+      0.2571,
+      0.2966
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.318,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 4.799236844944629e-06,
+      "claude_weekly_points": 0.0027217340320005957
+     },
+     "p_best": 0.037
+    },
+    {
+     "route": "claude -p Sonnet 5.5",
+     "engine": "claude-sonnet-5-5",
+     "basis": "pooled",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9876,
+      0.9988,
+      0.9999
+     ],
+     "cer": [
+      0.2179,
+      0.2679,
+      0.3438
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.188,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.030486420985350905
+     },
+     "p_best": null
+    },
+    {
+     "route": "claude -p Opus 5.5",
+     "engine": "claude-opus-5-5",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0303
+     },
+     "p_read": [
+      0.9897,
+      0.9984,
+      0.9998
+     ],
+     "cer": [
+      0.1654,
+      0.2107,
+      0.2606
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "claude -p Opus 5.5",
+     "cost_per_usable_page": {
+      "usd": 0.0,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.03049397485438432
+     },
+     "p_best": 0.833
+    }
+   ]
+  },
+  {
+   "chart": "arabic-print",
+   "kind": "prose",
+   "fame": "no web transcription; alchemy",
+   "era": "unknown",
+   "panel": "jabir-7341",
+   "pages_in_cell": 4,
+   "alchemy": 1,
+   "choice": "Gemini 3.1 Flash-Lite, Batch API",
+   "sensitivity": {
+    "margin x0.5": "Gemini 3.1 Flash-Lite, Batch API",
+    "margin x2.0": "Gemini 3.1 Flash-Lite, Batch API"
+   },
+   "best_quality": "Gemini 3 Flash, realtime API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9638,
+      0.9967,
+      0.9998
+     ],
+     "cer": [
+      0.0489,
+      0.0771,
+      0.1314
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.001510214241645812,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.115
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.8035,
+      0.9844,
+      0.9993
+     ],
+     "cer": [
+      0.0319,
+      0.0505,
+      0.1117
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.945,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.003742519752826326,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.885
+    }
+   ]
+  },
+  {
+   "chart": "arabic-print",
+   "kind": "prose",
+   "fame": "no web transcription",
+   "era": "unknown",
+   "panel": null,
+   "pages_in_cell": 11,
+   "alchemy": 0,
+   "choice": "Gemini 3.1 Flash-Lite, Batch API",
+   "sensitivity": {
+    "margin x0.5": "Gemini 3.1 Flash-Lite, Batch API",
+    "margin x2.0": "Gemini 3.1 Flash-Lite, Batch API"
+   },
+   "best_quality": "Gemini 3 Flash, realtime API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "engine": "gemini-3.1-flash-lite",
+     "basis": "measured",
+     "enabled": true,
+     "cost_per_call": {
+      "usd": 0.00148,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9692,
+      0.9946,
+      0.9991
+     ],
+     "cer": [
+      0.0992,
+      0.1426,
+      0.2018
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.001507908551783442,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.083
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "engine": "gemini-3-flash-preview",
+     "basis": "measured",
+     "enabled": false,
+     "cost_per_call": {
+      "usd": 0.00342,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_read": [
+      0.9661,
+      0.9938,
+      0.9991
+     ],
+     "cer": [
+      0.0651,
+      0.0994,
+      0.1455
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.973,
+     "next_route": "Gemini 3.1 Flash-Lite, Batch API",
+     "cost_per_usable_page": {
+      "usd": 0.0034723294893631708,
+      "agy_plan_share": 0.0,
+      "claude_weekly_points": 0.0
+     },
+     "p_best": 0.917
+    }
+   ]
+  }
+ ]
+}
