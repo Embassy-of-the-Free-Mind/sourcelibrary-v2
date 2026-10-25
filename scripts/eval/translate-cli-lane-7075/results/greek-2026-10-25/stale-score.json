@@ -1,0 +1,129 @@
+{
+ "frame": {
+  "greek_books": 1527,
+  "stale_pages": 70762,
+  "stale_books": 411,
+  "looked": 34,
+  "no_revision": 1,
+  "minor": 20,
+  "identical": 8,
+  "below": 5
+ },
+ "judges": {
+  "gemini": {
+   "n": 20,
+   "change": {
+    "same": 0,
+    "wording": 1,
+    "meaning": 19
+   },
+   "more_faithful": {
+    "new": 14,
+    "old": 6,
+    "tie": 0
+   },
+   "pages": {
+    "6953a8a477f38f6761bd2691": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "In Psalm 80 (81):7, Translation A faithfully renders the Greek third-person verb and 'labored at the basket' (ἐδούλευσαν), whereas Translation B uses the first person ('I removed') and states that the hands were 'freed from the basket'."
+    },
+    "6955742ef63a75710917326e": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B accurately includes the ancient Greek musical notation symbols (𝄴 and 𝄵) present in the current source, whereas Translation A reflects the older OCR misreadings of U and C."
+    },
+    "695aa97dbe4023bd34bd6917": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation A accurately renders axle GD and the simple negation 'not visible' from the Greek source (ΓΔ and οὐ φαίνονται), whereas Translation B names the axle CD and translates the negation as 'no longer visible'."
+    },
+    "69937973b0a84a5763964f55": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B accurately translates 'enemies' (πολεμίους) and 'not contesting' (οὐκ ἀντιποιουμένους), whereas Translation A omits 'enemies' and misidentifies citizens and foreigners as rivals and non-rivals."
+    },
+    "69938e49d5a98fd66f431394": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A is missing the entire second column of text, cutting off mid-sentence halfway through the passage."
+    },
+    "69ad72c5a999d314266dbc26": {
+     "change": "wording",
+     "more_faithful": "new",
+     "reason": "Translation A translates the Greek text more literally and preserves nuances such as 'slightly' and the passive voice of 'ἠξιοῦτο', whereas Translation B paraphrases more freely."
+    },
+    "69ae953814ec9b78c4cede68": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A correctly records the citation 40 b under physis matching the current Greek source, whereas Translation B gives 40 c."
+    },
+    "69aeb589e43bbf40ffe04be9": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A correctly translates 'λίθῳ κίονι' as a stone pillar and 'sensu orbatum' as devoid of sense perception, whereas Translation B renders them as a snow-white stone and perceived through the senses."
+    },
+    "69aebfe651d30e6c1f6c9177": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B correctly translates the Greek term σκεπεῶνας as skepeones rather than skepai and renders prokensos as a procession rather than a forecourt."
+    },
+    "69b008ddbfca0364b2a09583": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B translates the comparison to putrid temperaments (τῶν σηπεδονωδῶν) present in the source Greek, whereas Translation A omits it."
+    },
+    "69b51e16efd8df28f2db0533": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B translates 'prudentia' as 'prudence', whereas Translation A renders it as 'moderation'."
+    },
+    "69b6521a18b87551bfcafbc1": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B introduces an erroneous negation regarding Naso's intent and contains OCR misreadings of proper names such as Orpheus and Anchisiades."
+    },
+    "69cf7c36878f40c5945f2a27": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B correctly renders the hypaspist bringing bread to Alexander and his remark that all men live pleasantly, whereas Translation A reverses the giver and recipient and states that he died gladly."
+    },
+    "69d13b3e1c2a66dc094b1546": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation A includes the author name Iamblichus from the current source, whereas translation B omits it entirely."
+    },
+    "69e8b2352ff2a8dc09e77007": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B includes the opening verses and the Latin verse translations by Grotius and Lipsius that are omitted in Translation A."
+    },
+    "69ee9386f2c6312502f6a05d": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B translates the catchword quae as 'which' at the end of the page, whereas Translation A omits it."
+    },
+    "6a084e4315c643eb1af41253": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B correctly describes the image as a circular library stamp as in the current source, whereas translation A describes it as the Aldine printer's mark."
+    },
+    "6a089bcb2b703903f58e7a49": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation A includes the translation of the first column of Greek text as well as the second column, whereas Translation B omits the entire first column."
+    },
+    "6a3f024697e91e1768f66bcc": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B accurately reflects the CURRENT SOURCE's references to the Greek letters \"ει\" in numbers 270 and 275, whereas Translation A incorrectly translates them as the \"n\" sound."
+    },
+    "6a3f02e297e91e1768f68a18": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B translates 'τῆς αἰτίας τῶν νόμων' as the cause of the laws in accordance with the current Greek text, whereas Translation A introduces the 'establishment' of the laws."
+    }
+   }
+  }
+ }
+}

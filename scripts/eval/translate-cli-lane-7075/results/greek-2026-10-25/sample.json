@@ -1,0 +1,193 @@
+{
+ "lang": "greek",
+ "old": "current",
+ "n": 20,
+ "drawn_at": "2026-10-25T17:38:21.316Z",
+ "frame": {
+  "books": 1527,
+  "eligible_pages": 373112,
+  "books_with_eligible": 1114
+ },
+ "pages": [
+  {
+   "page_id": "6953a96577f38f6761bd6380",
+   "book_id": "6953a96577f38f6761bd61d8",
+   "page_number": 424,
+   "title": "Nicephori Gregorae Byzantina Historia",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-24T07:03:01.679Z"
+  },
+  {
+   "page_id": "6955742bf63a757109172f98",
+   "book_id": "6955742bf63a757109172ca1",
+   "page_number": 759,
+   "title": "Antiquae Musicae Auctores Septem (Graece et Latine)",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-24T13:32:26.838Z"
+  },
+  {
+   "page_id": "699379bfb0a84a5763965fdc",
+   "book_id": "699379bfb0a84a5763965ed6",
+   "page_number": 262,
+   "title": "Xenophontis Historia Graeca",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-18T12:12:53.189Z"
+  },
+  {
+   "page_id": "6993881c74305116d72cf36c",
+   "book_id": "6993881c74305116d72cf2f3",
+   "page_number": 121,
+   "title": "Ptolemy, Handy Tables (Procheiroi Kanones)",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-14T01:49:30.949Z"
+  },
+  {
+   "page_id": "6993892b74305116d72d118d",
+   "book_id": "6993892b74305116d72d1169",
+   "page_number": 36,
+   "title": "Proclus, Elements of Theology",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-02T06:02:51.679Z"
+  },
+  {
+   "page_id": "6993895d0f04c37dcfa60eb5",
+   "book_id": "6993895d0f04c37dcfa60d2e",
+   "page_number": 391,
+   "title": "Galen, De simplicium medicamentorum facultatibus",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T16:09:44.289Z"
+  },
+  {
+   "page_id": "69942f3eb2f6748db4ac0001",
+   "book_id": "69942f3eb2f6748db4abff0b",
+   "page_number": 246,
+   "title": "Maximus Confessor Quaestiones ad Thalassium",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-19T01:34:08.953Z"
+  },
+  {
+   "page_id": "69a5e5c91d73f9668388ee35",
+   "book_id": "69a5e5c91d73f9668388ed68",
+   "page_number": 205,
+   "title": "Plotini Enneades (Ficino Working Copy)",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-09T13:52:23.652Z"
+  },
+  {
+   "page_id": "69ad7105c5001c07fa84704b",
+   "book_id": "69ad7105c5001c07fa846f0a",
+   "page_number": 321,
+   "title": "Philostratus and Eunapius: Lives of the Sophists",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T19:02:34.100Z"
+  },
+  {
+   "page_id": "69ad72c5a999d314266dbd11",
+   "book_id": "69ad72c5a999d314266dbb70",
+   "page_number": 417,
+   "title": "The Geography of Strabo, Vol. 1",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T19:08:08.950Z"
+  },
+  {
+   "page_id": "69b21edfa66227125eb0638b",
+   "book_id": "69b21edfa66227125eb0632d",
+   "page_number": 94,
+   "title": "Plutarch's Lives, Vol. 7 (Loeb 99: Demosthenes, Cicero, Alexander, Caesar)",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-01T13:59:49.412Z"
+  },
+  {
+   "page_id": "69b2fed665b9d6bf89925227",
+   "book_id": "69b2fed665b9d6bf89925159",
+   "page_number": 206,
+   "title": "Historiae (editio princeps)",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T01:39:39.459Z"
+  },
+  {
+   "page_id": "69b52c823dd6d94230280d48",
+   "book_id": "69b52c823dd6d94230280c5a",
+   "page_number": 238,
+   "title": "Galeni De morborum differentiis",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T08:13:51.587Z"
+  },
+  {
+   "page_id": "69b630611c1c21a3738015b1",
+   "book_id": "69b630611c1c21a37380114a",
+   "page_number": 1127,
+   "title": "Lexicon graecolatinum recentissimum. Ad formam ab Henr. Stephano, et post hunc a Io. Scapula observatam, et jam admodum omnibus probatam, diligenter expressum : id est, duplici methodo constans : una naturali, eaque ditissimis Graecae linguae thesauris brevi facileque, comparandis aptissima, qua ex primitivorum et simplicium fontibus derivata atque composita dilucide deducuntur : altera mere alphabetica adscriptis numeris, qua, tanquam indice, minus exercitatis ostenditur, ubi in illa naturali methodo singulae voces inveniantur : ut Epistola ad lectorem mox plenius declarabit. Accesserunt opuscula perquam necessaria, de dialectis, de investigatione thematum, et alia.",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-10-06T16:00:37.701Z"
+  },
+  {
+   "page_id": "69bfcc6d355e52cf7837cbeb",
+   "book_id": "69bfcc6d355e52cf7837cbea",
+   "page_number": 1,
+   "title": "Bodleian Library MS. Gr. liturg. g. 3",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-03-24T22:27:54.998Z"
+  },
+  {
+   "page_id": "69bfce6c8ab50eb88e8c85b0",
+   "book_id": "69bfce6c8ab50eb88e8c85ab",
+   "page_number": 5,
+   "title": "Bodleian Library MS. Roe 5",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-02T09:13:46.317Z"
+  },
+  {
+   "page_id": "69cf7c36878f40c5945f29be",
+   "book_id": "69cf7c36878f40c5945f2994",
+   "page_number": 42,
+   "title": "The Oxyrhynchus Papyri, Part 15",
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-10-06T16:53:57.097Z"
+  },
+  {
+   "page_id": "69dbc9d51040d1d5e20a76c3",
+   "book_id": "69dbc9d51040d1d5e20a75a2",
+   "page_number": 289,
+   "title": "Epistolae diversorum philosophorum, oratorum, rhetorum [Greek]. Ed: Marcus Musurus",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-05-01T18:11:20.280Z"
+  },
+  {
+   "page_id": "69f32edc876dd827cbc449ec",
+   "book_id": "69f32edc876dd827cbc449dd",
+   "page_number": 15,
+   "title": "Liturgy of St. Basil in Greek",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-05-27T13:25:05.997Z"
+  },
+  {
+   "page_id": "6a089ba1cb70c5c62b7a9af6",
+   "book_id": "6a089ba1cb70c5c62b7a9a48",
+   "page_number": 174,
+   "title": "Dio's Roman History, Vol. III (Loeb 53)",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-06-26T23:44:11.866Z"
+  }
+ ]
+}

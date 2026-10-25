@@ -1,0 +1,61 @@
+597 <term>verborum et rerum</term> <gloss>of words and things</gloss> <term>physis</term> <gloss>nature</gloss> Index
+
+<term>hymen</term> <gloss>membrane</gloss> 197
+<term>hyperbole</term> <gloss>excess/extravagance</gloss> 422
+<term>hyperousios</term> <gloss>beyond being/transcendent</gloss> 662
+<term>hypodoche</term> <gloss>receptacle</gloss> (of all becoming) 329. 329 c
+<term>hypothesis</term> <gloss>hypothesis/foundation</gloss> 248. 447
+<term>hypothetikos tropos</term> <gloss>hypothetical mode</gloss> 590
+<term>to hypokeimenon</term> <gloss>the substratum/underlying subject</gloss> 378 b. 405. (external substratum) 487. 492. 493 c
+<term>hypokrites</term> <gloss>actor/dissembler</gloss> 478 b. 581
+<term>hypolepsis</term> <gloss>conception/judgment</gloss> 461. 469. 585 b. (dogmatic) 589
+<term>hypomnestikon semeion</term> <gloss>commemorative sign</gloss> 593
+<term>hypomone</term> <gloss>endurance/perseverance</gloss> 517 c
+<term>hypotassein</term> <gloss>to subordinate</gloss>. subordinate virtues 517
+<term>hypoteles</term> <gloss>subject to tribute/subordinate</gloss> 478 c
+<term>hypochorein</term> <gloss>to withdraw/recede</gloss> 145 a
+<term>to hyph' hou</term> <gloss>the agent/that by which</gloss> 394. 606 a
+<term>phainesthai</term> <gloss>to appear</gloss> 228. 450; phenomena/appearances 461
+<term>phalakros</term> <gloss>bald</gloss> (bald man fallacy) 292
+<term>phantasia</term> <gloss>mental impression/presentation</gloss> 199. 289. 313 b. 415 e. 450. 483. 484. 485 c. 486. 506 a. 511. 512. 540. 546. 548. 550. 579 a
+<term>to phantasioumenon</term> <gloss>the imagined object/content of presentation</gloss> 548
+<term>phantasma</term> <gloss>phantasm/apparition</gloss> (of the mad) 459 a. 485
+<term>phantastikos</term> <gloss>imaginative/pertaining to appearances</gloss>. (application of the intellect) 459 a. 460. 484 f
+<term>phantastos</term> <gloss>capable of being imagined/represented</gloss> 484 f. 548
+<term>phaulos</term> <gloss>bad/foolish</gloss> 522. 540
+<term>pheuktos</term> <gloss>to be avoided</gloss> 265
+<term>phthartos</term> <gloss>perishable/corruptible</gloss>. (animals) 415 d. (intellect) 417. (the cosmos) 497. (soul) 508
+<term>phthisis</term> <gloss>decay/wasting away</gloss> 405
+<term>phthongos</term> <gloss>voice/vocal sound</gloss> 462
+<term>phthonos</term> <gloss>envy/malice</gloss> 65
+<term>phthora</term> <gloss>destruction/corruption</gloss> 16 a. (twofold) 84 a. 142. 165 a-d. 193. 397. (definition) 405
+<term>phtheiresthai</term> <gloss>to be destroyed/perish</gloss> 289
+<term>philaletheis philosophoi</term> <gloss>truth-loving philosophers</gloss> 6
+<term>philia</term> <gloss>friendship/love</gloss> 164. 167. 168 a. 173 d. 175 c. 273. 276. 474. 524. 558
+<term>philomythos</term> <gloss>lover of myth</gloss> 368
+<term>ho philos</term> <gloss>the friend</gloss> 270
+
+<column-break/>
+
+<term>philotes</term> <gloss>friendship/love</gloss> 166. 168. 169
+<term>philosophein</term> <gloss>to philosophize</gloss> 3 c. 312. 368. 473. 576 a. 597
+<term>philosophia</term> <gloss>philosophy</gloss> 2. 3. (origin of philosophy) 312 c (368). 313 a. (starting points of philosophy) 357. (parts of philosophy) 357 b. 368. (first philosophy) 370. (second) 371. 457. 473. 481. (parts) 482. 533. 558. 559. 576. (topics of philosophy) 578. 597. 605 c. 647 b
+<term>philosophos</term> <gloss>philosopher</gloss> 3. 285 b. 345. 347 a. 368. 369. 390. 579 c. 622 a. 659 c
+<term>phleps</term> <gloss>vein</gloss> 212 b. 411
+<term>phobos</term> <gloss>fear</gloss> 334. 521
+<term>phora</term> <gloss>locomotion/motion</gloss> 405. 406. 407. 408
+<term>phreantles</term> <gloss>drawer of well-water</gloss> 478 e
+<term>phronein</term> <gloss>to think/be wise</gloss> 177. 214. 237. 642
+<term>phronesis</term> <gloss>practical wisdom/prudence</gloss> 129. 178. 213. 250. (of God) 253. 270. 273. 282. 290. 342. 363. 422 c. 472 b. 473. 501 a. 516. 517. 542. 559. 636. 642
+<term>phronimos</term> <gloss>prudent/wise</gloss>. man is the wisest animal 412
+<term>phroura</term> <gloss>watch/prison</gloss> 69 c. 90 b
+<term>phyge</term> <gloss>flight/escape</gloss> (from here to there) 339. (opposite choice) 542. 613. 642
+<term>phylakikon genos ton politon</term> <gloss>guardian class of citizens</gloss> 347
+<term>physike</term> <gloss>physics/natural philosophy</gloss> 370. 371. 401 b. 556 a. 560. 573 a
+<term>physikos</term> <gloss>physical/natural philosopher</gloss>. (part of philosophy) 7. 216. 265. 316. 458. 481. 482. 558 c; (argument) 66 c. (topic) 279. 478 b; natural philosophers (branch of the Pythagoreans) 56 b
+<term>physikos noeisthai</term> <gloss>to be conceived according to nature</gloss> 490 a
+<term>physiologia</term> <gloss>study of nature/natural science</gloss> 457
+<term>physis</term> <gloss>nature</gloss> 30. 30 b. 34 f. 40 b. 60 c. 63 b. 65. 65 d. 67. 97 b. 165. 234 a. 235. 318. (inquiry concerning nature) 325. 330 b. 389 a. 395 d. 399. 401. (twofold) 402. (transitions continuously) 415 b. (end/goal) 424. 442. (parts of nature) 472. (common) 482 b. 494 a. 495. 500 a. (opposite disposition, soul) 506.
+
+<summary>This page contains an index of Greek philosophical terms spanning from hypodoche and hypokeimenon through phantasia, philia, philosophia, and physis. The entries catalog citations to core metaphysical, epistemological, and physical concepts across classical Greek philosophy.</summary>
+<keywords>hypokeimenon, phantasia, phthora, philia, philosophia, phronesis, physis, Greek philosophical vocabulary, index</keywords>

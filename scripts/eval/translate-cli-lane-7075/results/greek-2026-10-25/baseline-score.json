@@ -1,0 +1,109 @@
+{
+ "frame": {
+  "books": 1527,
+  "eligible_pages": 373112,
+  "books_with_eligible": 1114
+ },
+ "judges": {
+  "gemini": {
+   "n": 17,
+   "change": {
+    "same": 0,
+    "wording": 1,
+    "meaning": 16
+   },
+   "more_faithful": {
+    "new": 11,
+    "old": 5,
+    "tie": 1
+   },
+   "pages": {
+    "6953a96577f38f6761bd6380": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B translates the source's opening word πλείστοις ('...to many') and διαφόρους ('various'), both of which are omitted in Translation A."
+    },
+    "6955742bf63a757109172f98": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B leaves the final sentence incomplete by omitting the Oxford manuscripts' variant reading (ὥσ-)."
+    },
+    "699379bfb0a84a5763965fdc": {
+     "change": "wording",
+     "more_faithful": "tie",
+     "reason": "none"
+    },
+    "6993881c74305116d72cf36c": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A accurately reflects the numerical entries and includes all rows from the source table, whereas Translation B misreads numerous numbers and omits the final three rows."
+    },
+    "6993895d0f04c37dcfa60eb5": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B omits text with ellipses and alters the meaning of multiple clauses, whereas Translation A fully translates the current Greek OCR transcription."
+    },
+    "69942f3eb2f6748db4ac0001": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A translates the Greek text concerning whether gods could be fearful and praise for the use of wealth, whereas Translation B describes gods being temperate and exercising self-restraint."
+    },
+    "69a5e5c91d73f9668388ee35": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B accurately renders 'ἐφ' ᾧ οὐκ ἔστι μὲν ἐν ᾧ δὲ τὸ εἶναι' as 'upon which it does not exist, yet in which being exists', whereas Translation A inverts the meaning by stating 'in which there is no being'."
+    },
+    "69b21edfa66227125eb0638b": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation A includes text from the previous page ('strange and violent measure for') and ends abruptly at 'inferior', whereas Translation B faithfully translates the Greek text of this page from start to finish."
+    },
+    "69b2fed665b9d6bf89925227": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B translates the opening clause from the page's first line which Translation A omits, and they interpret the suspicion of overthrowing the democracy differently."
+    },
+    "69b52c823dd6d94230280d48": {
+     "change": "meaning",
+     "more_faithful": "old",
+     "reason": "Translation B directly follows the current OCR text by rendering the second-person verb πέπονθας and the duplicated phrase πίπτοντα καὶ πίπτοντα, whereas Translation A translates a third-person subject suffering under an obstruction with only a single mention of falling."
+    },
+    "69b630611c1c21a3738015b1": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B correctly translates Notos as south wind and euros as breadth, distinguishes eurein from heurein, and retains all entries including the duplicated euroeō, whereas Translation A mistranslates key terms and omits text."
+    },
+    "69bfcc6d355e52cf7837cbeb": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B specifies the spatial positions of the front cover on the right and the spine on the left, whereas Translation A omits them."
+    },
+    "69bfce6c8ab50eb88e8c85b0": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A interprets the Greek phrase as the power of the unlearned, whereas Translation B renders it as swiftly understanding the power."
+    },
+    "69cf7c36878f40c5945f29be": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B reflects the current OCR transcription by including the characters in line 3 and matching the musical notation count in line 5, whereas Translation A omits those characters and contains an extra musical note."
+    },
+    "69dbc9d51040d1d5e20a76c3": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation A faithfully follows the current source text, reflecting readings such as causes governing 'my nature' rather than the 'human race' and miners destroyed by collapsing earth rather than on the earth's surface."
+    },
+    "69f32edc876dd827cbc449ec": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B faithfully follows the current Greek source with 'to God and Father' and 'set before him' (αὐτῷ), whereas Translation A inserts the second-person pronoun 'to you' and omits 'before him'."
+    },
+    "6a089ba1cb70c5c62b7a9af6": {
+     "change": "meaning",
+     "more_faithful": "new",
+     "reason": "Translation B includes extra text mentioning Faustus that is not present in the current source."
+    }
+   }
+  }
+ }
+}

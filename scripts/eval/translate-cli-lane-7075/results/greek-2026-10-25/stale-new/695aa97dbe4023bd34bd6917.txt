@@ -1,0 +1,14 @@
+<meta>continues from previous page</meta>
+# HERO OF ALEXANDRIA: ON AUTOMATA-MAKING
+
+The little dolphin will be fastened into the axle in such a way that <unclear>...</unclear> on which the letter K is marked, being perpendicular to the axle, and the axle CD being perpendicular to the chest-wall <note>original: "θωρακίῳ"</note>.
+
+<margin>XXVIII</margin>
+When the sailing past of the fleet has reached its end, the doors will be closed again. The drawn cord will pull out the pin and let fall the cloth curtain on which Nauplius will be painted holding up the torch, as well as Athena. When the panel is opened, the ships are no longer visible, <margin>272</margin> but rather the things described above. It will also be necessary for the torch <margin>2</margin> to be ignited immediately. We will therefore arrange the mechanism for the torch in this way: on top of the architrave and the triglyphs, we will have a board covering the entire panel, which will conceal both the winding roller that carries the sailing scene and the mechanism for the fire, as well as the raising of the machine, so that none of the aforesaid mechanisms may appear in the front part of the panel
+
+<note>A technical diagram (Fig. 106 a.) depicts a mechanical device with a horizontal axle, a gear or drum, vertical rods, and a suspended weight, labeled with Greek letters alpha through xi.</note>
+
+->Fig. 106 a.<-
+
+<summary>Hero details the mechanical transition ending the fleet's voyage, describing how falling curtains and hidden mechanisms reveal Nauplius and Athena while lighting a signal fire.</summary>
+<keywords>Hero of Alexandria, Automata, mechanical theater, Nauplius, Athena, stage mechanics, ancient engineering</keywords>

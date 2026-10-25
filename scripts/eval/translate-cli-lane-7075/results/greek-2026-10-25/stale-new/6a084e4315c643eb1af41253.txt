@@ -1,0 +1,10 @@
+->Aldus Manutius the Roman sends warm greetings to Antonio<-
+->Codro Urceo.<-
+<note>original: "Antonio Codro Urceo.S.P.D.", abbreviation for "salutem plurimam dicit"</note>
+
+Most learned Codrus, we have recently gathered as many Greek letters as we could obtain, and, printed with our type, we are publishing them in two volumes. This is aside from the many letters of Basil, Gregory, and Libanius, which we keep at home to print as soon as the opportunity arises. Indeed, the authors whose letters we present number about thirty-five, as can be seen in the volumes themselves. We send these as a gift to you, who publicly teach both Latin and Greek literature in the most renowned academy of Bologna. We do this both so that you may show them to your students, so they may be all the more inspired to pursue higher learning, and so that they may serve with you as a <term>mnemosynon</term> <gloss>memorial</gloss> <note>original: "μνημόσυνον"</note> and a pledge of love from your friend Aldus. Farewell. Venice, the fifteenth day before the Kalends of May <note>April 17</note>, 1499 <note>original: "M. ID.", an unconventional Roman numeral for 1499</note>.
+
+<note>A faint, circular library stamp or heraldic device features a crown atop a shield or globe, surrounded by a wreath.</note>
+
+<summary>Aldus Manutius dedicates his two-volume printed edition of Greek letters to the Bolognese humanist Antonio Codro Urceo. He explains the scope of the collection and hopes the texts will inspire Codro's students.</summary>
+<keywords>Aldus Manutius, Antonio Codro Urceo, Greek letters, epistolography, Venice, Bologna, Renaissance printing, Greek scholarship</keywords>

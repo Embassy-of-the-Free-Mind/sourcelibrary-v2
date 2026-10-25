@@ -1,0 +1,24 @@
+<meta>continues from previous page</meta>in succession <note>original: "ἐφεξῆς"</note>. Furthermore, it introduces false doctrine, since in the Diatonic genus three tones are placed in succession, from the diatonic *meson* to the *parameson*; yet not in one tetrachord. Hence I thought it should be read, *in one tetrachord* <note>original: "καθ᾿ ἕν τεράχορδον"</note>, as indicated in the translation.
+
+Line 19. *may persuade* <note>original: "πείσαται"</note>: So all three manuscripts read, but undoubtedly wrong. I rewrite it, *is presented* <note>original: "παρίσταται"</note>. It is brought into dissonance.
+
+Line 21. The Oxford manuscripts read, *are indeed* <note>original: "μὲν εἰσίν"</note>.
+
+Ibid. *the dense are indeed the smallest,* <note>original: "πυκνὰ μὲν τὰ ἐλάχιστα"</note>: Capella translates these less clearly at line 25: *Dense are those gathered by quarter-tones; rarer, those by tones.*
+
+Line 24. *of the one-tone* <note>original: "τᾶ δ᾿ ἑνόνος"</note>: So corruptly all three manuscripts, and in addition the manuscripts of the Royal Library at Paris. Yet the subject matter itself cries out that it must be read *ditone* <note>original: "δι-τόνου"</note>, as indicated in translating.
+
+Line 25. *the first indeed,* <note>original: "πρώτη μὲν"</note>: Here in easy doctrine is the greatest confusion, born only of the greatest ignorance. I shall set down the entire passage, as it is read in the Scaliger Codex, collated with the Royal and Oxford manuscripts: *the first indeed,* <insert>that into 24 twelfths; the second, that into 8 quarter-tones; the third, that into 6 thirds; the fourth, that into 4 semitones</insert> *that* <note>the article "ἡ" was absent from the Scaliger Codex</note> *into quarter-tones, namely quarter-tone intervals* <note>the Royal and Oxford codices add "intervals"</note>; *the second, that into a semitone, that is, half a tone; the third, that into 7 thirds* <note>yet all rightly in the margin: 6 thirds</note>; *the fourth, that into 4 semitones, that is, eight quarter-tones.* What is included in these brackets,
+
+<column-break/>
+
+one Royal manuscript and the Bodleian had in the margin. The Scaliger Codex, however, had them inserted into the text itself from the margin, as the omitted article *the* <note>original: "ἡ"</note> indicates. I will not touch upon minor faults, as when for *first* <note>original: "πρώτη"</note> Scaliger has *πρῶτον*, the Oxford has *πρώτῳ*; and for *second* <note>original: "δευτέρα"</note>, *δευτέραν* or *δευτέρας*. The phrase *a certain quarter-part interval* <note>original: "τεταρτημοριαία τινὰ διάστασις"</note> seems to me somewhat harsh; more customary would be *namely quarter-parts of a tone* <note>original: "ἤτοι τόνου τεταρτημόρια"</note>. Otherwise, one and the same doctrine is proposed here twice, which is this: that the ditone is divided into eight quarter-tone intervals, or enharmonic; into six third-part intervals, or chromatic; into four semitones. He could have shown the same in one tone, which has four quarter-tones, three third-parts, two semitones. Penultimate line: the Royal Codex and the Oxford had *smallest* <note>original: "σμικρότατον"</note>, as also on page 18, line 20.
+
+Page 15, line 1. *the first on account of magnitude* <note>original: "τὸ διὰ μέγεθος πρῶτον"</note>: Perhaps *the first* <note>original: "τὸ πρῶτον"</note> is better joined with the preceding *magnitude* <note>original: "μέγεθος"</note>. As if he means that spaces smaller than a tone are only certain minute dissolutions of the voice, but the first magnitude is the tone. And that all the more because the tone is contained by the difference of the first two consonances in a definite proportion, namely the sesquioctave <note>9:8 ratio</note>. Line 3: for *namely* <note>original: "ἤτοι"</note>, the Royal Codex and the Bodleian mistakenly have *ἤτοι*.
+
+Line 4. *similar to a tone* <note>original: "τόνῳ παραπλήσιον"</note>: See whether it should not rather be *similar to a half-tone* <note>original: "ἡμιτόνῳ, vel ἡμιτονίῳ παραπλήσιον"</note>, akin to a semitone.
+
+Line 5. *that this be cut into equal parts.* <note>original: "εἰς ἴσα τέμνεσθαι τοῦτον."</note>: The Scaliger Codex and one Royal have *of these* <note>original: "τούτων"</note>. Another Royal has *just as this equally* <note>original: "ὥσπερ τοῦτον ἴσως"</note>. The Oxford manuscripts,
+
+<summary>Marcus Meibom provides critical textual notes and manuscript collations on Aristides Quintilianus, discussing interval divisions of the ditone and tone into quarter-tones, thirds, and semitones.</summary>
+<keywords>Aristides Quintilianus, Marcus Meibom, Scaliger Codex, Bodleian Library, Royal Library, ditone, semitone, diesis, musical intervals, textual criticism</keywords>

@@ -1,0 +1,10 @@
+<header>GALEN ON THE METHOD OF HEALING</header>
+
+<meta>Ed. Chart. X. 196. Ed. Bas. IV. 126.</meta>
+
+<meta>continues from previous page: they suffer</meta> Constrictions of the skin primarily affect natures with corrupt humors <note>original: "κακοχύμων"</note>. Consequently, bitter-choleric constitutions are no less susceptible than putrid ones to fevers arising from constriction. On the other hand, moist and warm constitutions are more readily harmed by greasy, foul-smelling indigestions. I recently designated these constitutions putrid, because in them the humors putrefy with the greatest ease. As for obstructions, what need is there even to speak? For we have stated that obstructions especially kindle fevers for this reason: they produce putrefaction in bodies that do not undergo proper transpiration. But concerning such fevers we shall speak again later.
+
+All ephemeral fevers <note>original: "ἐφήμεροι"</note> arise most readily in the aforementioned constitutions, from all the causes that we mentioned a short while ago in the case of bitter-choleric natures. Their treatment is very similar to those, differing only in very few particulars. Because these natures are moister, they bear hunger and thirst better than the former. Therefore, they will be harmed less when subjected to starvation by the <term>diatritarian</term> <gloss>Methodist physicians who scheduled treatments around three-day critical intervals</gloss> doctors, provided only that their perspiration proceeds unhindered. And on account of this
+
+<summary>Galen explains how skin constriction, indigestion, and obstructions cause fevers in corrupt and moist-warm constitutions, noting that moister temperaments tolerate therapeutic starvation better during ephemeral fevers.</summary>
+<keywords>Galen, Method of Healing, ephemeral fevers, humors, constriction, perspiration, diatritarians, putrefaction</keywords>
