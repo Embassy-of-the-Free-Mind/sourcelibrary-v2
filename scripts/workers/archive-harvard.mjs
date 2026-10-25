@@ -24,6 +24,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -144,7 +145,8 @@ async function main() {
       'image_source.provider': 'harvard',
       pages_count: { $gt: 0 },
       $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
-      'archive_metadata.blocked': { $ne: true },
+      // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+      ...ARCHIVE_NOT_BLOCKED,
       ...SCOPE_FILTER,
       // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
       ...PAGES_MATERIALIZED_FILTER,

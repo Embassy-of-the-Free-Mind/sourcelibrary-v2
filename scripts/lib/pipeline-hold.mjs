@@ -35,6 +35,30 @@ export const HOLD_SWEEP = 'pipeline-hold-2026-09';
 /** Mongo filter fragment: spread into any status-writing `updateOne` filter so it cannot lift a hold. */
 export const NOT_HELD = { 'pipeline_auto.hold': { $exists: false } };
 
+/**
+ * ARCHIVING IGNORES THE HOLD (#5448 step 3). A hold stops paid OCR and translation; fetching a
+ * book's page images to R2 costs storage only, and a held book still needs its images preserved
+ * (preservation-policy.md). Containment holds are about TEXT, not images. So the archivers never
+ * filter on the hold. But the importers of held waves also set `archive_metadata.blocked` — the
+ * archivers' own "never fetch this book" flag — with a reason naming the hold, and that kept
+ * ~5.2K held books (1.43M pages, measured 2026-10-25) out of every archiver.
+ *
+ * This is the reason text of those two importers: the tier-A wave (#7343, "… pipeline hold
+ * acquisition-wave-2026-10b …") and wave-import.mjs ("<campaign>: hidden acquisition, images
+ * hot-linked"). A block for any other reason (401/403, a dead source, 5 failed bulk runs) still
+ * excludes the book: an archiver that fails overwrites the reason with its own.
+ */
+export const HOLD_ONLY_ARCHIVE_BLOCK = /pipeline hold|hidden acquisition, images hot-linked/;
+
+/**
+ * Spread into an ARCHIVE selector in place of `'archive_metadata.blocked': { $ne: true }`: the book
+ * is not blocked, or is blocked only because it is held. Uses `$nor` so it composes with a
+ * selector's own `$or` / `$and`.
+ */
+export const ARCHIVE_NOT_BLOCKED = Object.freeze({
+  $nor: [{ 'archive_metadata.blocked': true, 'archive_metadata.blocked_reason': { $not: HOLD_ONLY_ARCHIVE_BLOCK } }],
+});
+
 /** Does this book carry a hold marker? (The status alone is not the test — see holdViolation.) */
 export function isHeld(book) {
   return !!book?.pipeline_auto?.hold;

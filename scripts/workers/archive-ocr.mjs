@@ -21,6 +21,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
 import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize } from '../lib/archive-failure-class.mjs';
 
 const MAX_PAGES = 10_000;
@@ -315,7 +316,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
         ...NEEDS_ARCHIVE_EXPR,
         ...SCOPE_FILTER,
@@ -333,7 +335,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         // 'harvard' excluded: mps.lib.harvard.edu HTTP 429s every request from Hetzner
         // IPs (verified 2026-05-25 at AWS ELB layer, both v4 and v6, all UAs, all paces).
         // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
@@ -357,7 +360,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'archive_metadata.bulk_unsuitable': true,
         'image_source.provider': 'internet_archive',
         ...NEEDS_ARCHIVE_EXPR,
