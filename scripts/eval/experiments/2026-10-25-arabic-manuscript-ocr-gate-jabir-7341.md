@@ -26,6 +26,20 @@ manuscripts and Kraus's 1935 print edition. More generally, which route serves t
 manuscript". OCR estimator v1 has no Arabic chart. The routing table's `manuscripts` row (Opus, "not in use yet")
 rested on 6 Arabic pages under model keys (#6544 Set B).
 
+**Prior Arabic evidence, and where this gate leaves it.**
+- **Arabic manuscripts with expert keys:** #6544 Set A, RASAM, 18 Maghrebi pages. CER Opus 13.4, 3.8 Flash low 15.5,
+  3.1 Pro 17.1, Flash-Lite 24.0. This gate agrees: Opus first, Flash-Lite last.
+- **Our own Arabic manuscripts:** #6544 Set B, 6 pages, model keys, DIRECTIONAL. CER Pro 8.2, Opus 25.6, Flash-Lite
+  51.6. That ordering does not carry over. Pro is no longer on the agy CLI. Here Opus is usable on 22/26 pages,
+  under keys built so that Opus is never scored against itself alone.
+- **Arabic print:** #5700, 9 pages. 3 Flash beat Flash-Lite by +0.39 of 5 on the English, not clearly above zero.
+  Kraus (4 pages) is consistent: every reader is usable on print.
+- **Arabic translation, a separate decision:** estimator v2, `scripts/eval/estimator/results/report-v2-2026-10-15.json`
+  `what_we_know`. Opus 4.81 [4.69, 4.90] (thin, 7 pages), 3.8 Flash CLI 4.49, 3 Flash 4.12, Flash-Lite 3.84. The
+  planner already favours Opus for Arabic translation.
+- **New in this gate:** the safety filter cuts 3.8 Flash on 62% of alchemical manuscript pages. Neither #6544 nor any
+  earlier run saw this, because none had alchemical content.
+
 ### Draw
 - **Frame.** The 14 books held with reason `jabir-ocr-gate-7341`. Two pages per manuscript, four for Kraus.
 - **Seeded shuffle (7341).** For each book, the inner pages were shuffled (the first and last 5% skipped). The first
