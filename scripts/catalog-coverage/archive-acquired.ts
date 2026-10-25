@@ -42,6 +42,7 @@ import {
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 import { recountBook } from '../../src/lib/page-counts';
+import { ensurePages, isLazyPagesBook, PAGES_MATERIALIZED_FILTER } from '../lib/lazy-pages.mjs';
 const execFileP = promisify(execFile);
 /**
  * Read `--name <int>`, falling back to `dflt` when it is absent or unusable.
@@ -354,6 +355,9 @@ async function main() {
     ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
     ...(BOOK_IDS ? {} : { archive_status: { $ne: 'archive_complete' } }),
+    // #7343: a provider/campaign sweep never selects a manifest-only book (it has
+    // no pages to archive); a book named with --book is materialized in processBook.
+    ...(BOOK_IDS ? {} : PAGES_MATERIALIZED_FILTER),
   };
 
   // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
@@ -414,7 +418,7 @@ async function main() {
     await cur.close();
     if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
-  let ok = 0, partial = 0, stalled = 0, hostSkipped = 0;
+  let ok = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -426,8 +430,15 @@ async function main() {
     await queue.updateOne({ sn: w.sn }, { $set: set });
   };
   async function processBook(w: any) {
-    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
+    const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1, pages_state: 1 } });
     if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
+    if (isLazyPagesBook(b)) {
+      // A manifest-only book (#7343). Named with --book, archiving it is the
+      // decision to create its pages; otherwise leave the queue row exactly as it
+      // is (no attempt counted) — a queue sweep is not a reason to materialize.
+      if (!BOOK_IDS) { lazySkipped++; return; }
+      await ensurePages(db, w.book_id, { trigger: 'archive' });
+    }
     if (HOST_FILTER && !inLane(await laneOf(w.book_id))) {
       // Selection already filtered by lane; this re-check catches a book whose
       // remaining pages moved host since it was drawn. Leave the row untouched
@@ -518,7 +529,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.

@@ -99,6 +99,11 @@ export const BOOK_FIELDS = Object.freeze([
   'pages_translatable', 'pages_blank',
   // when recountBook() (scripts/lib/page-counts.mjs) last wrote all six counters (#5325)
   'page_counts_at',
+  // #7343 lazy pages: { state: manifest_only|materializing|materialized, since, … }.
+  // A manifest-only importer sets initialPagesState() from scripts/lib/pages-state.mjs
+  // and writes NO page docs; materializePages() (scripts/lib/lazy-pages.mjs) is the
+  // only other writer. Absent = the book's pages exist (every book before #7343).
+  'pages_state',
   // NOT here, deliberately: `translation_state` — { rung, english_original,
   // translated, translatable, whole, ocr, exact, version, computed_at }, the
   // translation-state ladder (#5284, .claude/docs/translation-state.md). Its

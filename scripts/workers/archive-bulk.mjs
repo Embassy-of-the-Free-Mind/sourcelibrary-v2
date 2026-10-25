@@ -30,6 +30,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf, positionalFallbackRefusal } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
@@ -745,6 +746,8 @@ async function main() {
         ],
         // Selective-unpause scope: confine to allowlisted books while paused.
         ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
+        // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+        ...PAGES_MATERIALIZED_FILTER,
       }};
   const iaBooks = await db.collection('books')
     .aggregate([

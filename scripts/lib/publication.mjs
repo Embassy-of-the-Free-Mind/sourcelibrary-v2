@@ -27,6 +27,7 @@
  */
 import { ObjectId } from 'mongodb';
 import { pingBooksPublic } from './indexnow.mjs';
+import { ensurePages, isLazyPagesBook } from './lazy-pages.mjs';
 import { revalidateBookPages, bookEvictionFollowUp } from './revalidate.mjs';
 
 export const PUBLICATION_STATES = Object.freeze(['public', 'unpublished', 'hidden', 'takedown']);
@@ -280,7 +281,7 @@ function bookRefsFilter(refs) {
   return { $or: [{ id: { $in: strs } }, { _id: { $in: [...strs, ...oids] } }] };
 }
 
-const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
+const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1, pages_state: 1 };
 
 const WITHDRAWN = new Set(['hidden', 'takedown']);
 
@@ -371,6 +372,9 @@ export async function setPublication(db, bookRef, opts) {
   if (opts.from && !opts.from.includes(from.state)) return { status: 'skipped', ...base };
   checkTransition(from.state, opts);
   if (isUnchanged(book, state, reason, opts.note ?? null)) return { status: 'unchanged', ...base };
+  // Publishing a manifest-only book (#7343) creates its pages first; if they
+  // cannot be created, ensurePages throws and the book is not published.
+  if (state === 'public' && isLazyPagesBook(book)) await ensurePages(db, base.book_id, { trigger: 'publish' });
 
   await books.updateOne({ _id: book._id }, buildUpdate(state, reason, opts, now));
   await db.collection('publication_events').insertOne(eventFor(book, from, state, reason, opts, now));
@@ -417,6 +421,15 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
         continue;
       }
       if (isUnchanged(book, state, reason, opts.note ?? null)) { out.unchanged.push(id); continue; }
+      // A manifest-only book (#7343) is published only once its pages exist.
+      if (state === 'public' && isLazyPagesBook(book)) {
+        try {
+          await ensurePages(db, id, { trigger: 'publish' });
+        } catch {
+          out.refused.push(id);
+          continue;
+        }
+      }
       toWrite.push(book._id);
       events.push(eventFor(book, from, state, reason, opts, now));
       out.written.push(id);

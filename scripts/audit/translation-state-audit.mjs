@@ -58,6 +58,7 @@ import {
   READABLE_IN_ENGLISH_FILTER, READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, TRANSLATION_RUNGS,
 } from '../lib/page-counts.mjs';
 import { parseContentRangeCount } from '../lib/stage-coverage.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import {
   compareRung, summarizeRecount, rungPositiveControl, checkHeadline, headlinePositiveControl,
   parseReadableFigures, carryForwardFilter, isCarryForwardShape, auditVerdict,
@@ -109,7 +110,8 @@ const BOOK_PROJECTION = { _id: 1, id: 1, title: 1, visible: 1, language: 1, cont
 
 async function sampleRecount(db) {
   const books = db.collection('books');
-  const frame = await books.find(LIVE, { projection: { _id: 1, id: 1 } }).toArray();
+  // A manifest-only book (#7343) has no pages to recount; its rung comes from its declared count.
+  const frame = await books.find({ ...LIVE, ...PAGES_MATERIALIZED_FILTER }, { projection: { _id: 1, id: 1 } }).toArray();
   const picked = seeded(frame, b => String(b.id || b._id)).slice(0, SAMPLE).map(b => b._id);
   const docs = await books.find({ _id: { $in: picked } }, { projection: BOOK_PROJECTION }).toArray();
   for (const id of INCLUDE) {

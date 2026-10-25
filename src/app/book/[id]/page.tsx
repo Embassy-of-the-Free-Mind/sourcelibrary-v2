@@ -2,7 +2,8 @@ import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
-import { getReadDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
+import { materializeForReader, LazyPagesNotReadyError } from '@/lib/lazy-pages';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
@@ -613,13 +614,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // or an error renders the legacy panel, never an error state.
   const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
 
-  // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
-    fullBookPromise,
-    // Use page_number >= 0 to skip archived-spread pages (negative numbers).
-    // This uses the {book_id, page_number} compound index efficiently.
-    // Digitizer-inserts are still filtered in JS (rare, no index benefit).
-    db.collection('pages')
+  // Use page_number >= 0 to skip archived-spread pages (negative numbers).
+  // This uses the {book_id, page_number} compound index efficiently.
+  // Digitizer-inserts are still filtered in JS (rare, no index benefit).
+  const loadPreviewPages = (pagesDb: typeof db) =>
+    pagesDb.collection('pages')
       .find({ book_id: bookId, page_number: { $gte: 0 } }, {
         projection: {
           _id: 0,
@@ -653,7 +652,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
       .toArray()
-      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
+      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100));
+
+  // All queries have maxTimeMS to fail fast during DB degradation
+  const [fullBookResult, pagesFirstRead, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
+    fullBookPromise,
+    loadPreviewPages(db),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     // Top 8 gallery images for preview row. Both this and the count below use
     // BOOK_GALLERY_SCOPE, which also builds the "view all" href — so the number
@@ -688,6 +692,15 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
   // Fall back to the catalog book (Supabase) if Atlas fetch failed
   const book = fullBookResult?.book ?? quickBook;
+
+  // A manifest-only book (#7343 lazy pages) has its count and no page docs:
+  // create them now, through the one materializer, and re-read from the primary.
+  // A book that is merely an empty shell pays one findOne. A failure THROWS
+  // (LazyPagesNotReadyError, rethrown by BookInfo) so ISR never caches an empty book.
+  let pagesRaw = pagesFirstRead;
+  if (pagesRaw.length === 0 && Number(book.pages_count ?? 0) > 0 && await materializeForReader(bookId)) {
+    pagesRaw = await loadPreviewPages(await getDb());
+  }
 
   // Author authority record (variants / VIAF / Wikidata) — only when the
   // book has been linked to an entity. Loaded in parallel with the index
@@ -821,6 +834,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   try {
     data = await getBook(id, tenantId, tenantSlug);
   } catch (err) {
+    // Never render (and cache for 24 h) a fallback for a book whose pages are being created.
+    if (err instanceof LazyPagesNotReadyError) throw err;
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
     return (
