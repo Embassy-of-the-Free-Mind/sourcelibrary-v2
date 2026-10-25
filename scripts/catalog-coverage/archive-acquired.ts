@@ -43,6 +43,9 @@ import {
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 import { recountBook } from '../../src/lib/page-counts';
 import { ensurePages, isLazyPagesBook, PAGES_MATERIALIZED_FILTER } from '../lib/lazy-pages.mjs';
+import {
+  isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+} from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
  * Read `--name <int>`, falling back to `dflt` when it is absent or unusable.
@@ -209,6 +212,8 @@ async function main() {
   let pagesDone = 0;
   let pagesFailed = 0;
   let pagesSkipped = 0;
+  let pagesMissed = 0;     // 404/410: the host answered, the page is not there (#5448)
+  let booksAbandoned = 0;  // gave up on a book this run: its pages kept missing before any was served
   let localFailures = 0;   // failed AFTER the bytes arrived: sharp, R2 or Mongo, never the source
   let booksDone = 0;
   let workTotal = 0;
@@ -228,8 +233,26 @@ async function main() {
   // Never let the heartbeat hold the process open past the work.
   if (typeof hb.unref === 'function') hb.unref();
 
-  async function archiveIiif(bookId: string) {
-    const ps = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1 } }).toArray();
+  // ── Page misses (#5448) ──────────────────────────────────────────────────
+  // A 404/410 used to go to the HOST breaker like any other failure, and five of
+  // them from one book of dead URLs paused the whole host. On lane-heidelberg
+  // that was 108,133 consecutive runs of "0 ok, 6 failed [404], 34373 skipped":
+  // the dead book was always first in line, so the 39 healthy books behind it
+  // were never asked for. A miss is now a fact about the page (recorded in the
+  // archive_metadata failure fields archive-ocr.mjs already keeps, keyed to the URL) and about this BOOK for this run (the guard below); the
+  // host hears about it only when whole books keep missing with nothing served.
+  const missGuard = createBookMissGuard();
+  const urlOf = (p: any) => upgradeToFullRes(p.photo_original || p.photo);
+
+  /** @returns how many pages were actually REQUESTED, and how many were skipped for a paused host. */
+  async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number }> {
+    const all = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1, ...MISS_PROJECTION } }).toArray();
+    // A page that has missed this exact URL MISS_LIMIT times is not asked again.
+    // A repaired URL is a different URL, so it is eligible again by construction.
+    const ps = retryMisses ? all : all.filter((p: any) => !isPermanentMiss(p, urlOf(p)));
+    let requested = 0;
+    let pausedSkips = 0;
+    let abandoned = false;
     // Pages ran in chunks of 6 behind `await Promise.all(chunk)`. That barrier
     // paces the whole chunk at its slowest member, and the slowest member of a
     // chunk is routinely a page burning 4 attempts × 30s of timeout — so five
@@ -239,15 +262,16 @@ async function main() {
     let pageBlocked: Error | null = null;
     const worker = async (): Promise<void> => {
       while (true) {
-        if (pageBlocked) return;
+        if (pageBlocked || abandoned) return;
         const p: any = ps[next++];
         if (!p) return;
-        const url = upgradeToFullRes(p.photo_original || p.photo);
+        const url = urlOf(p);
         const host = hostOf(url);
         currentHost = host;
         // A paused host is skipped without a request, and cheaply: the point is
         // to hand this worker back to the pool, not to fail faster.
-        if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; continue; }
+        if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; pausedSkips++; continue; }
+        requested++;
         // Did the bytes arrive? Everything after that point is OUR machinery —
         // sharp, R2, Mongo — and a failure there says nothing about the source.
         // Charging an R2 outage to the institution's breaker would pause every
@@ -288,6 +312,7 @@ async function main() {
           // settling it here (rather than after the write) is also what releases
           // a half-open probe slot on every path out of this block.
           breaker.success(host);
+          missGuard.ok(bookId);
 
           // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
           const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
@@ -315,6 +340,25 @@ async function main() {
           hostFailures.clear(); // a success clears the streak
         } catch (e) {
           if (e instanceof HostBlocked) { pageBlocked = e; return; }
+          const code = classifyFetchError(e);
+          if (!fetched && isMissCode(code)) {
+            pagesMissed++;
+            breaker.pageMiss(host, code);
+            missGuard.miss(bookId);
+            // Bookkeeping only: never let a failed Mongo write turn into a thrown
+            // error that reads as the source's fault.
+            try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            if (!abandoned && missGuard.abandoned(bookId)) {
+              abandoned = true;
+              booksAbandoned++;
+              log(`book ${bookId}: ${missGuard.stateOf(bookId)?.miss} page misses [${code}] and nothing served — leaving it for a later run`);
+              // A host that has served NOTHING this run while whole books 404 is
+              // the host-wide case (a URL scheme change): let the breaker's
+              // cold-start rule see one failure per such book.
+              if ((breaker.stateOf(host)?.ok ?? 0) === 0) breaker.failure(host, `dead-book-${code}`);
+            }
+            continue;
+          }
           pagesFailed++;
           if (!fetched) {
             try {
@@ -335,7 +379,17 @@ async function main() {
     };
     await Promise.all(Array.from({ length: Math.min(PAGE_CONCURRENCY, ps.length) }, () => worker()));
     if (pageBlocked) throw pageBlocked;
+    return { requested, pausedSkips };
   }
+
+  /** Pages of a book that are permanent misses at their CURRENT url. */
+  const countPermanentMisses = async (bookId: string): Promise<number> => {
+    const cand = await pages.find(
+      { book_id: bookId, archived_photo: { $exists: false }, 'archive_metadata.failure_count': { $gte: MISS_LIMIT } },
+      { projection: { photo: 1, photo_original: 1, ...MISS_PROJECTION } },
+    ).toArray();
+    return cand.filter((p: any) => isPermanentMiss(p, urlOf(p))).length;
+  };
 
   // Work list: acquisition_queue rows by default, or hidden imports of one
   // provider when --provider is passed. Provider rows are shaped like queue
@@ -354,7 +408,7 @@ async function main() {
     ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
     ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
-    ...(BOOK_IDS ? {} : { archive_status: { $ne: 'archive_complete' } }),
+    ...(BOOK_IDS ? {} : { archive_status: { $nin: ['archive_complete', 'archive_complete_with_gaps'] } }),
     // #7343: a provider/campaign sweep never selects a manifest-only book (it has
     // no pages to archive); a book named with --book is materialized in processBook.
     ...(BOOK_IDS ? {} : PAGES_MATERIALIZED_FILTER),
@@ -393,12 +447,14 @@ async function main() {
 
   let todo: any[];
   if (BOOK_MODE) {
-    // Least-recently-touched first. processBook stamps `updated_at` on every
-    // attempt, so a book that could not be finished this run goes to the back —
-    // the same rotation the queue gets from `archive_attempts`, without adding
-    // a field to `books`. Unsorted, provider mode re-drew the same head every
-    // run, which is the stall the queue-mode comment below describes.
-    const cur = books.find(bookModeFilter, { projection: { id: 1 } }).sort({ updated_at: 1 });
+    // Least-recently-ATTEMPTED first, so a book that could not be finished this
+    // run goes to the back — the rotation the queue gets from `archive_attempts`.
+    // This used to sort on `updated_at` alone, on the belief that every attempt
+    // stamped it; only a COMPLETION did. So a failing head stayed the head, and
+    // lane-heidelberg drew the same 40 books 108,133 times (#5448).
+    // processBook now stamps `archive_metadata.last_attempt_at` (an existing
+    // subdocument, not a new column) on every attempt that asked the source.
+    const cur = books.find(bookModeFilter, { projection: { id: 1 } }).sort(ROTATION_SORT);
     const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
     await cur.close();
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
@@ -418,7 +474,7 @@ async function main() {
     await cur.close();
     if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
-  let ok = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0;
+  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -446,19 +502,41 @@ async function main() {
       hostSkipped++; return;
     }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
-    if (have0 < (b.pages_count || 0) * (BOOK_IDS ? 1 : 0.99)) {
-      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
-      else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
+    // A named book (--book) retries its permanent misses too: a human asked.
+    const misses0 = BOOK_IDS ? 0 : await countPermanentMisses(w.book_id);
+    let attempted = false;
+    if (have0 + misses0 < (b.pages_count || 0) * (BOOK_IDS ? 1 : 0.99)) {
+      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') {
+        const r = await archiveIiif(w.book_id, { retryMisses: !!BOOK_IDS });
+        // Skipped ONLY because the host is paused: not an attempt, keep its place.
+        attempted = r.requested > 0 || r.pausedSkips === 0;
+      } else { attempted = true; try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
+    const misses = BOOK_IDS ? 0 : await countPermanentMisses(w.book_id);
     // The counters go through recountBook() (#5327), complete or partial, so
     // provider-mode runs are resumable and a later run can see how far it got.
     // `r2` stays the queue's own measure: it excludes `failed:` markers.
     await recountBook(db, w.book_id, { reason: 'archive-acquired' });
-    if (r2 >= (b.pages_count || 0) * 0.99 && r2 > 0) {
+    if (attempted) {
+      // The rotation key (see the book-mode draw). Stamped on every attempt that
+      // asked the source, success or not — that is the whole point of it.
+      // Never fatal: a failed stamp must not skip the completion write below.
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } }); }
+      catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
+    }
+    const verdict = bookVerdict({ pagesCount: b.pages_count || 0, archived: r2, misses });
+    if (verdict === 'complete') {
       await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', updated_at: new Date() } });
       await markQueue(w, { archived: true });
       ok++;
+    } else if (verdict === 'complete_with_gaps') {
+      // Every page the source still has is on R2; the rest answered 404/410 to
+      // the same URL MISS_LIMIT times. Not "complete" — the gap count says so —
+      // and not "partial", which would keep drawing it forever (#5448).
+      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete_with_gaps', 'archive_metadata.gaps': misses, updated_at: new Date() } });
+      await markQueue(w, { archived: true, archive_note: `gaps:${misses}/${b.pages_count}` });
+      gapped++;
     } else {
       // A book that archived NOTHING was being marked `archived: true` and
       // dropped from the queue for good, with the truth demoted to a note
@@ -529,7 +607,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.
