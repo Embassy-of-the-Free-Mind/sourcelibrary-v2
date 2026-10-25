@@ -53,3 +53,8 @@
 # Missing on l7a until 2026-10-24 (#7268): the board showed every box but this one, which ran most of that week's jobs.
 # Writes only ops_reports `work-board:l7a`; nothing else reads it, so it actuates nothing.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /data/scratch/sl/sourcelibrary && node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/work-board-push.mjs --box l7a' >> /data/scratch/sl/logs/work-board.log 2>&1  # /admin/work board (#5705), added 2026-10-24 #7268
+
+# Archiver host lanes (#5448 step 4): start every lane of box l7a in scripts/catalog-coverage/archive-lanes.json that has no tmux
+# session, inside sourcelibrary.slice (the 14 GB cap for all SL work on this box). A lane whose host refused us (exit 3) stays
+# down until /data/scratch/sl/archive-lanes/<name>.blocked is deleted. Logs: /data/scratch/sl/logs/lane-<name>.log.
+*/10 * * * * f=/data/scratch/sl/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh; [ -x $f ] && ARCHIVE_LANES_BOX=l7a ARCHIVE_LANES_SLICE=sourcelibrary.slice ARCHIVE_LANES_LOGDIR=/data/scratch/sl/logs ARCHIVE_LANES_STATE=/data/scratch/sl/archive-lanes $f >> /data/scratch/sl/logs/archive-lanes-revive.log 2>&1  # #5448

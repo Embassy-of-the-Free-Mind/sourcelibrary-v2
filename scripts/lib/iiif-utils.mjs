@@ -23,6 +23,10 @@ import { fetchWithStallTimeout } from './fetch-stall-timeout.mjs';
 export const DOMAIN_LIMITS = {
   'archive.org': 10,
   'gallica.bnf.fr': 3,
+  // BnF's API portal serves the same Gallica IIIF images (Image API 3.0) without the gallica.bnf.fr
+  // wall that 403s datacenter addresses (#5448). Same institution, so never above gallica's rate;
+  // 2/s per the 2026-10-25 plan. Reached only through gallicaOpenApiUrl() (a lane flag).
+  'openapi.bnf.fr': 2,
   // MDZ began 429-ing every archive run on 2026-08-29/30 (see #4395). The
   // nominal 5/s was never what we actually sent — the old bucket released
   // every waiter at once, so 60 in-flight callers produced 55 requests in a
@@ -445,6 +449,19 @@ export function upgradeToFullRes(url) {
  * Detect whether a URL appears to use a IIIF Image API path.
  * Used to decide whether the URL is even eligible for full-res upgrade.
  */
+/**
+ * A Gallica IIIF page image → the same image from BnF's unwalled API host (#5448). Measured from a
+ * Hetzner address 2026-10-25, one page each: gallica.bnf.fr `/full/full/0/default.jpg` 403 (HTML
+ * wall); openapi.bnf.fr `/iiif/image/v3/…/full/max/0/default.jpg` 200, 888 KB JPEG. The path is v3,
+ * so the size keyword is `max` (archive-fetch-failures.md: the size keyword belongs to the API
+ * version). Only a full-region Gallica page URL is rewritten; anything else is returned unchanged.
+ */
+export function gallicaOpenApiUrl(url) {
+  if (typeof url !== 'string') return url;
+  const m = /^https?:\/\/gallica\.bnf\.fr\/iiif\/(ark:\/12148\/[^/]+\/f\d+)\/full\/[^/]+\/0\/[a-z]+\.(?:jpg|jpeg)$/i.exec(url);
+  return m ? `https://openapi.bnf.fr/iiif/image/v3/${m[1]}/full/max/0/default.jpg` : url;
+}
+
 export function isIiifUrl(url) {
   if (!url || typeof url !== 'string') return false;
   return /\/iiif\/|\/full\/(?:pct:\d+|\d+,?\d*|full|max)\//.test(url);

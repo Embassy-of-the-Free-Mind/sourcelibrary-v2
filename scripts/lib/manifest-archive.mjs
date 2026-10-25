@@ -64,6 +64,8 @@ async function defaultFetchManifest(url) {
  * @param {object} [deps.missGuard]  a createBookMissGuard() instance shared with the run
  * @param {number} [deps.pageConcurrency=2]
  * @param {boolean} [deps.retryMisses=false]  ask again for pages that missed MISS_LIMIT times
+ * @param {(url: string) => string} [deps.fetchUrl]  where to GET a canvas image from (e.g. gallicaOpenApiUrl);
+ *   the ledger's fingerprint and miss record stay keyed to the manifest's own URL
  * @param {() => boolean} [deps.shouldStop]  checked between pages
  * @param {(event: object) => void} [deps.onPage]  per-page outcome, for the run's counters
  * @param {(msg: string) => void} [deps.log]
@@ -72,7 +74,7 @@ async function defaultFetchManifest(url) {
 export async function archiveFromManifest(db, bookId, deps) {
   const {
     put, fetchManifest = defaultFetchManifest, download = (u) => rateLimitedFetch(u),
-    breaker = null, missGuard = createBookMissGuard(), pageConcurrency = 2, retryMisses = false,
+    breaker = null, missGuard = createBookMissGuard(), pageConcurrency = 2, retryMisses = false, fetchUrl = (u) => u,
     shouldStop = () => false, onPage = () => {}, log = () => {},
   } = deps ?? {};
   if (typeof put !== 'function') throw new Error('archiveFromManifest: deps.put (storagePut) is required');
@@ -145,7 +147,7 @@ export async function archiveFromManifest(db, bookId, deps) {
     while (!abandoned && !shouldStop()) {
       const p = pending[next++];
       if (p === undefined) return;
-      const url = photos[p - 1];
+      const url = fetchUrl(photos[p - 1]);
       const h = hostOf(url);
       if (breaker && !breaker.allow(h)) { breaker.skipped(h); res.pausedSkips++; onPage({ outcome: 'skipped', host: h }); continue; }
       res.requested++;

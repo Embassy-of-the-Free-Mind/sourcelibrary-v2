@@ -54,7 +54,12 @@ while true; do
   rc=${PIPESTATUS[0]}
   case "$rc" in
     0|124|137|143) ;;
-    3) echo "$(stamp) lane $LANE: SOURCE BLOCKED (exit 3) — stopping this lane. Do not auto-retry a 403; ask the institution."; rm -f "$out"; exit 3 ;;
+    3) echo "$(stamp) lane $LANE: SOURCE BLOCKED (exit 3) — stopping this lane. Do not auto-retry a 403; ask the institution."
+       # Leave a marker archive-lanes-revive.sh honours: without it the watchdog restarted the lane ten
+       # minutes later, into the same refusal, every ten minutes (#5448). A human deletes it.
+       STATE="${ARCHIVE_LANES_STATE:-/var/tmp/sl-archive-lanes}"; mkdir -p "$STATE" 2>/dev/null
+       { echo "$(stamp) $(grep -m1 'ABORTED' "$out" | cut -c1-300)"; } > "$STATE/$LANE.blocked"
+       rm -f "$out"; exit 3 ;;
     *) echo "$(stamp) lane $LANE: run exited $rc — sleeping ${IDLE_SLEEP}s before retrying" ; sleep "$IDLE_SLEEP" ;;
   esac
   # A cycle that found nothing on this lane sleeps instead of re-scanning in a tight loop.

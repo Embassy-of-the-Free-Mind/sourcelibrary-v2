@@ -38,12 +38,12 @@ import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
 import {
   upgradeToFullRes, rateLimitedFetch, capDomainLimit,
-  fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
+  fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS, gallicaOpenApiUrl,
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 import { assertNotQuotaPlaceholder } from '../lib/archive-failure-class.mjs';
 import { recountBook } from '../../src/lib/page-counts';
-import { ensurePages, isLazyPagesBook } from '../lib/lazy-pages.mjs';
+import { ensurePages, isLazyPagesBook, LAZY_PAGES_FILTER } from '../lib/lazy-pages.mjs';
 import { archiveFromManifest } from '../lib/manifest-archive.mjs';
 import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import {
@@ -114,6 +114,10 @@ const HOST_FILTER = !!(HOSTS || EXCLUDE_HOSTS);
 // limiter is per process: a lane on a host the hourly cron also reaches must
 // take a share of the budget, and a host whose robots.txt asks for less than the
 // table says is honoured here. Raising a rate is a DOMAIN_LIMITS change.
+// `--gallica-openapi` fetches Gallica page images from BnF's unwalled API host (#5448; the
+// gallica.bnf.fr wall 403s datacenter addresses). A lane flag, so exactly one process does it.
+const GALLICA_OPENAPI = process.argv.includes('--gallica-openapi');
+const fetchUrlOf = (u: string) => (GALLICA_OPENAPI ? gallicaOpenApiUrl(u) : u);
 for (const spec of listArg('host-rate') ?? []) {
   const [h, r] = spec.split('=');
   capDomainLimit(h, Number(r));
@@ -245,7 +249,7 @@ async function main() {
   // archive_metadata failure fields archive-ocr.mjs already keeps, keyed to the URL) and about this BOOK for this run (the guard below); the
   // host hears about it only when whole books keep missing with nothing served.
   const missGuard = createBookMissGuard();
-  const urlOf = (p: any) => upgradeToFullRes(p.photo_original || p.photo);
+  const urlOf = (p: any) => fetchUrlOf(upgradeToFullRes(p.photo_original || p.photo));
 
   /** @returns how many pages were actually REQUESTED, and how many were skipped for a paused host. */
   async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number }> {
@@ -409,9 +413,17 @@ async function main() {
   const campIdx = process.argv.indexOf('--campaign');
   const CAMPAIGN = campIdx > -1 ? process.argv[campIdx + 1] : null;
   const BOOK_IDS = listArg('book');
-  const BOOK_MODE = !!(PROVIDER || CAMPAIGN || BOOK_IDS);
+  // `--providers a,b` is provider mode over several providers at once: a host lane from the lane
+  // table (archive-lanes.json, #5448) names every provider tag its host's books carry.
+  const PROVIDERS = listArg('providers');
+  // `--lazy-only`: only manifest-only books (#7343), archived from the manifest. For a lane on a host
+  // whose materialized books another archiver already drains (IA: archive-bulk's item zips).
+  const LAZY_ONLY = process.argv.includes('--lazy-only');
+  const BOOK_MODE = !!(PROVIDER || PROVIDERS || CAMPAIGN || BOOK_IDS);
   const bookModeFilter: Record<string, unknown> = {
     ...(PROVIDER ? { 'image_source.provider': PROVIDER } : {}),
+    ...(PROVIDERS ? { 'image_source.provider': { $in: [...PROVIDERS] } } : {}),
+    ...(LAZY_ONLY ? LAZY_PAGES_FILTER : {}),
     ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
     ...(BOOK_IDS ? { id: { $in: [...BOOK_IDS] } } : {}),
     pages_count: { $gt: 0 },
@@ -470,7 +482,7 @@ async function main() {
     const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
     await cur.close();
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
-    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, CAMPAIGN && `campaign ${CAMPAIGN}`, BOOK_IDS && `book ${[...BOOK_IDS].join(',')}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
+    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, PROVIDERS && `providers ${[...PROVIDERS].join(',')}`, LAZY_ONLY && 'manifest-only books', GALLICA_OPENAPI && 'gallica via openapi.bnf.fr', CAMPAIGN && `campaign ${CAMPAIGN}`, BOOK_IDS && `book ${[...BOOK_IDS].join(',')}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
   } else {
     // Least-attempted first. The selection had no sort, so it returned the same
     // head of the queue every hour — and once that head was a set of books on a
@@ -502,7 +514,7 @@ async function main() {
     if (HOST_FILTER && !inLane(await laneOf(w.book_id, b))) { hostSkipped++; return; }
     let block: Error | null = null;
     const r = await archiveFromManifest(db, w.book_id, {
-      put: storagePut, breaker, missGuard, pageConcurrency: PAGE_CONCURRENCY,
+      put: storagePut, breaker, missGuard, pageConcurrency: PAGE_CONCURRENCY, fetchUrl: fetchUrlOf,
       shouldStop: () => !!(block || blocked),
       log: (m: string) => log(m),
       onPage: (ev: any) => {
