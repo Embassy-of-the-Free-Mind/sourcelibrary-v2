@@ -26,6 +26,10 @@ draft; 'none' is the draft as served. Rates (rows of failure-observations.jsonl 
                    leaf-audit-frame (Opus span audit against the leaf, #6560 gate), by-eye
 A mixed-language count (pages better over six languages, #6694) is a mixture over its cells, weighted by its pages.
 
+--opus-reference (the ROUTING fit, Derek 2026-10-25 21:20Z: "Assume Opus is ok"): rows judged by Gemini are left out
+and the same-family term is off, so 'blind-judge' means an Opus reader with the image. The full fit (without the flag)
+stays as the model check; routing never reads it.
+
 Pages of one book move together. A count over n pages from b books enters with design effect 1 + (m - 1) rho,
 m = n / b, rho = RHO: n_eff = n / deff and k_eff = k n_eff / n (a binomial likelihood in k_eff, continuous).
 """
@@ -52,9 +56,14 @@ JUDGE_FAMILY = {'opus': 'claude', 'gemini-3.8-flash-high': 'agy', 'gemini-3.8-fl
 q = lambda x: [round(float(v), 4) for v in np.percentile(x, [5, 50, 95])]
 
 
+OPUS_REFERENCE = False   # --opus-reference: Derek 2026-10-25 21:20Z, Opus is the assumed reference (#6740)
+
+
 def load(path, drop_experiment=None):
     rows = [json.loads(l) for l in open(path) if not l.startswith('{"_doc"')]
     rows = [r for r in rows if r.get('corrector') and r['rate'] in RATES]
+    if OPUS_REFERENCE:   # Gemini judges stay in the file as data; they do not enter the routing fit
+        rows = [r for r in rows if not r['judge'].startswith('gemini')]
     if drop_experiment:
         rows = [r for r in rows if r['experiment'] != drop_experiment]
     return rows
@@ -123,7 +132,7 @@ def model(ix, d):
            + (t_d[:, None] * z_d)[:, ix.cell_d] + t_e[:, None] * z_e)
     numpyro.deterministic('eta', eta)
     inst0 = jnp.concatenate([jnp.zeros((nR, 1)), inst], 1)
-    off = inst0[d['R'], d['I']] + same[d['R']] * d['S']
+    off = inst0[d['R'], d['I']] + (0.0 if OPUS_REFERENCE else same[d['R']] * d['S'])
     p = (jax.nn.sigmoid(eta[d['R']] + off[:, None]) * d['W']).sum(1)
     p = jnp.clip(p, 1e-9, 1 - 1e-9)
     K, N = d['K'], d['N']
@@ -314,7 +323,11 @@ def main():
     ap.add_argument('--samples', type=int, default=1000)
     ap.add_argument('--chains', type=int, default=4)
     ap.add_argument('--reps', type=int, default=8)
+    ap.add_argument('--opus-reference', action='store_true',
+                    help='the routing fit: Opus judges only, no same-family term (Derek, 2026-10-25 21:20Z)')
     a = ap.parse_args()
+    global OPUS_REFERENCE
+    OPUS_REFERENCE = a.opus_reference
     {'fit': cmd_fit, 'loeo': cmd_loeo, 'sim': cmd_sim}[a.cmd](a)
 
 

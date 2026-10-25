@@ -12,25 +12,24 @@ No plan fee enters: capacity is allocated in each channel's own units (Claude ac
 so nothing private is read or written. Dollars per page, where wanted, are route_ocr_v1.py's job with the private
 fee file.
 
-Per cell (cells.json) and candidate route (corrector stage on the cell's existing draft):
-  P(worse)      posterior of the made-worse rate AS THE CELL'S GATE INSTRUMENT SEES IT (`bind`)
-  P(better)     same instrument
-  gain          P(better) - harm_weight x P(worse), per corrected page (net pages improved)
-  P(clears bar) share of draws with P(worse) <= bar_worse and gain > 0
-  draw          capacity per page, per channel (capacity.json stages), plus the retranslation the corrected page
-                needs where it has English (Opus CLI, Claude channel), for the cell's translated share
-  cost per usable page   draw / E[gain], in the channel's units, and as a share of the channel's free week
-Route chosen per cell: the cheapest MEASURED route clearing the bar with P >= threshold (cost = share of the channel's
-free week per net page improved, so a Claude week and an agy week weigh the same: a choice, stated).
-Tiers: P >= threshold (0.9) is ROUTABLE, §3a as written. The preregistered gates (#6694, #6560) were point-estimate
-rules, so a measured route whose posterior median P(worse) is under the bar with P(clears) >= 0.5 is PROVISIONAL: it is
-allocated, labelled, and its cell gets the test that would take it to 0.9 (n pages through the gate's instrument).
+Objective (Derek, 2026-10-25 21:20Z: "Assume Opus is ok; we are mostly looking for enhanced cost"): per cell, the
+CHEAPEST route whose output a reader would accept as matching Opus, priced per usable page and per unit of capacity;
+Opus is the reference (an assumption, not a measurement) and the fallback in every cell. Per route, as the cell's
+gate instrument sees it, in the Opus-reference fit (no Gemini-judged rows, no judge-family term):
+  P(worse), P(better)   pages made worse / better than the draft
+  net gain              P(better) - harm_weight x P(worse), per corrected page (net pages improved)
+  P(matches Opus)       share of draws with net gain >= Opus's - max(0.05, 10% of Opus's)
+  draw                  capacity per page per channel (capacity.json), plus retranslation of the cell's translated share
+'none' (serve the draft) is a route too: it costs nothing and matches Opus where Opus gains little.
+Route = the cheapest measured route with P(matches Opus) >= 0.9 (cost = share of the free week per page), else Opus.
+A cheaper route at P(matches Opus) 0.5-0.9 gets the route-judge-6740 test (30 pages, one Opus reader), reserved from
+the same budget.
 Allocation (a linear programme, scipy HiGHS, over horizons of 1 to 260 weeks):
   maximise  sum over (cell, route, read tier) of read weight x E[net gain] x pages
   subject to  each channel's free capacity x H weeks, less the tests reserved from it; each tier's pages
   read weight = (book read_count + 1) / (corpus mean + 1); a cell's books in 20 tiers of equal pages, most-read first
-i.e. reads x expected quality gain per unit of capacity. Every measured qualifying route of a cell enters, so a cell
-moves to another channel when its own is full. Weeks to drain = the first horizon at which 99% of the cell is done.
+Every route that matches Opus, and Opus, enters, so a cell moves to another channel when its own is full. Weeks to
+drain = the first horizon at which 99% of the cell is done.
 """
 import argparse, collections, json, os, sys
 import numpy as np
@@ -40,7 +39,8 @@ import chain_v2 as cv  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 q = lambda x: [round(float(v), 4) for v in np.percentile(x, [5, 50, 95])]
-PROVISIONAL = 0.5    # the preregistered rules (#6694, #6560) were point-estimate rules: median under the bar
+PROVISIONAL = 0.5    # a cheaper route at P(matches Opus) >= 0.5 is worth a test
+DELTA_ABS, DELTA_REL = 0.05, 0.10   # "matches Opus": net gain within max(0.05, 10% of Opus's) per page
 
 
 def load_volumes(path, mean_reads):
@@ -104,7 +104,11 @@ def free_week(cap, ch, scale=None):
     return c['per_week'] * c['free_share'] * ((scale or {}).get(ch, 1.0))
 
 
-def evaluate(cells, post, ix, measured, cap, harm, threshold, stage_scale=None):
+def evaluate(cells, post, ix, measured, cap, harm, threshold, stage_scale=None, scale=None):
+    """Per cell: every candidate route, the draft as served ('none'), and Opus as the reference and the fallback.
+    A route MATCHES OPUS when, in >= threshold of the posterior draws, its net gain is within DELTA of Opus's
+    (DELTA = max(0.05, 10% of Opus's gain): 5 pages in 100). The choice is the cheapest measured route that matches
+    Opus, by share of the free week per page; Opus when none does (Derek, 2026-10-25 21:20Z)."""
     out = []
     for cell in cells:
         tshare = cap['translated_share'].get(cell.get('translated_share_key', cell['language']), 0.0)
@@ -115,67 +119,54 @@ def evaluate(cells, post, ix, measured, cap, harm, threshold, stage_scale=None):
             draw = stage_draw(cap, stage, tshare)
             if stage_scale and stage in stage_scale:
                 draw = {k: v * (stage_scale[stage] if k == cap['stages'][stage]['channel'] else 1) for k, v in draw.items()}
-            prim = cap['stages'][stage]['channel']
-            share = sum(v / free_week(cap, k) for k, v in draw.items())
+            share = sum(v / free_week(cap, k, scale) for k, v in draw.items())
             eg = float(g.mean())
-            routes.append(dict(corrector=corr, stage=stage, channel=prim,
+            routes.append(dict(corrector=corr, stage=stage, channel=cap['stages'][stage]['channel'],
                                measured=(cell['draft'], corr, cell['language'], cell['kind']) in measured,
                                p_worse=q(pw), p_better=q(pb), gain=q(g), gain_mean=round(eg, 4),
-                               p_clears=round(float(((pw <= cell['bar_worse']) & (g > 0)).mean()), 3),
+                               p_worse_under_bar=round(float((pw <= cell['bar_worse']).mean()), 3),
                                draw_per_page=draw, share_per_page=share,
                                cost_per_net_page=({k: v / eg for k, v in draw.items()} if eg > 0 else None),
-                               share_per_net_page=(share / eg if eg > 0 else None), _g=g, _pm=pm, _pw=pw))
-        meas = [r for r in routes if r['measured']]
+                               share_per_net_page=(share / eg if eg > 0 else None), _g=g, _pw=pw))
+        S = routes[0]['_g'].shape[0]
+        routes.append(dict(corrector='none', stage='serve the draft', channel=None, measured=True,
+                           p_worse=[0.0] * 3, p_better=[0.0] * 3, gain=[0.0] * 3, gain_mean=0.0, p_worse_under_bar=1.0,
+                           draw_per_page={}, share_per_page=0.0, cost_per_net_page=None, share_per_net_page=None,
+                           _g=np.zeros(S), _pw=np.zeros(S)))
+        opus = [r for r in routes if r['corrector'].startswith('opus') and r['measured']] or \
+               [r for r in routes if r['corrector'].startswith('opus')]
+        ref = max(opus, key=lambda r: r['gain_mean'])
+        delta = np.maximum(DELTA_ABS, DELTA_REL * ref['_g'])
+        for r in routes:
+            r['p_matches_opus'] = 1.0 if r is ref else round(float((r['_g'] >= ref['_g'] - delta).mean()), 3)
+            r['tier'] = ('opus' if r is ref else
+                         'matches opus' if r['measured'] and r['p_matches_opus'] >= threshold else
+                         'to test' if r['p_matches_opus'] >= PROVISIONAL and r['corrector'] != 'none'
+                         and (r['share_per_page'] < ref['share_per_page'] or r['channel'] != ref['channel']) else 'no')
+        meas = [r for r in routes if r['measured'] and r['corrector'] != 'none']
         if meas:
             G = np.stack([r['_g'] for r in meas], 1)
             pbest = np.bincount(G.argmax(1), minlength=len(meas)) / G.shape[0]
             for r, p in zip(meas, pbest):
                 r['p_best'] = round(float(p), 3)
-        for r in routes:
-            r['tier'] = ('routable' if r['p_clears'] >= threshold and r['gain_mean'] > 0 else
-                         'provisional' if r['p_clears'] >= PROVISIONAL and r['p_worse'][1] <= cell['bar_worse'] and r['gain_mean'] > 0
-                         else 'no')
-            if r['tier'] == 'provisional' or (not r['measured'] and r['p_worse'][1] <= cell['bar_worse'] and r['gain_mean'] > 0):
-                r['test'] = size_test(r['_pw'], cell, r, cap, threshold)
-        tier = None
-        for t in ('routable', 'provisional'):
-            ok = [r for r in meas if r['tier'] == t]
-            if ok:
-                tier = t
-                break
-        choice = min(ok, key=lambda r: r['share_per_net_page']) if tier else None
-        if cell.get('hold'):
-            choice, tier = None, 'held'
-        out.append(dict(cell=cell, routes=routes, choice=choice, tier=tier))
+        ok = [r for r in routes if r['tier'] in ('opus', 'matches opus')]
+        choice = min(ok, key=lambda r: (r['share_per_page'], -r['gain_mean']))
+        tier = 'held' if cell.get('hold') else ('opus (fallback)' if choice is ref else 'cheaper route matches opus')
+        out.append(dict(cell=cell, routes=routes, choice=None if cell.get('hold') else choice, tier=tier, ref=ref))
     return out
 
 
-def size_test(pw, cell, r, cap, threshold):
-    """Pages the cell's gate instrument must see for P(made worse <= bar) to reach the threshold, if the rate is
-    what the posterior median says: the posterior as a beta (matched by moments), n pages with k = n x median added.
-    Priced as n new corrections plus the gate's reading of each (cross-family judge, leaf audit, or a score against a
-    reference text, which costs no model call)."""
-    m, v = float(pw.mean()), float(pw.var())
-    k0 = max(m * (1 - m) / max(v, 1e-9) - 1, 2.0)
-    a0, b0 = m * k0, (1 - m) * k0
-    med = float(np.median(pw))
-    from scipy.stats import beta
-    n_need = None
-    for n in (40, 80, 120, 200, 300, 500, 800):
-        k = n * med
-        if beta.cdf(cell['bar_worse'], a0 + k, b0 + n - k) >= threshold:
-            n_need = n
-            break
-    if n_need is None:
-        return dict(n=None, why='the posterior median is too close to the bar for 800 pages to settle it')
-    judge = ({'blind-judge': 'agy@1' if cv.FAMILY(r['corrector']).endswith('claude') else 'opus-5.5@1',
-              'leaf-audit-tiles': 'opus-5.5@1', 'mechanical': None}[cell['bind']])
+def route_test(e, r, cap):
+    """The route-judge-6740 design: 30 pages per route, judged by one Opus reader against Opus on the same page
+    (188 Opus calls for 150 pages in its pilot: 1.25 a page), plus the route's own 30 reads."""
+    n = 30
     draw = collections.Counter()
-    draw[cap['stages'][r['stage']]['channel']] += n_need * cap['stages'][r['stage']]['per_page']
-    if judge:
-        draw[cap['stages'][judge]['channel']] += n_need * cap['stages'][judge]['per_page'] * (2 if cell['bind'] == 'leaf-audit-tiles' else 1)
-    return dict(n=n_need, instrument=cell['bind'], judge=judge, draw=dict(draw),
-                why=f"P(worse <= {cell['bar_worse']}) at n={n_need} with k = n x {med:.3f}")
+    if r['channel']:
+        draw[r['channel']] += n * cap['stages'][r['stage']]['per_page']
+    draw['claude'] += n * 1.25 * cap['stages']['opus-5.5@1']['per_page']
+    return dict(cell=e['cell']['id'], corrector=r['corrector'], basis='measured' if r['measured'] else 'pooled',
+                p_matches_opus_now=r['p_matches_opus'], n=n, instrument='one Opus reader against Opus (route-judge-6740)',
+                draw=dict(draw))
 
 
 HORIZONS = [1, 2, 3, 4, 6, 8, 10, 13, 17, 21, 26, 34, 43, 52, 65, 78, 104, 130, 156, 208, 260]
@@ -198,15 +189,14 @@ def tiers(books, T=20):
 def lp(evals, tiers_of, cap, H, scale=None, reserve=None):
     """Maximise sum over (cell, route, tier) of read weight x E[net gain] x pages, subject to each channel's free
     capacity over H weeks (less the tests reserved from it) and each tier's pages. Routes: every MEASURED route of a
-    cell that is routable or provisional (not only the cell's §3a choice, so a cell can move to an idle channel)."""
+    cell that matches Opus, and Opus itself (not only the cell's choice, so a cell can move to an idle channel)."""
     from scipy.optimize import linprog
     var, cov = [], {}
     for e in evals:
-        if e['tier'] in (None, 'held') and not any(r.get('forced') for r in e['routes']):
-            continue
+        if (e['tier'] == 'held' or (e['choice'] and e['choice']['corrector'] == 'none')) and not any(r.get('forced') for r in e['routes']):
+            continue        # held, or the draft as served already matches Opus: no capacity needed
         rts = [r for r in e['routes'] if r.get('forced')] or [
-            r for r in e['routes'] if r['measured'] and r['tier'] in ('routable', 'provisional')
-            and (e['tier'] == 'provisional' or r['tier'] == 'routable')]
+            r for r in e['routes'] if r['tier'] in ('opus', 'matches opus') and r['corrector'] != 'none']
         for ti, (n, rw) in enumerate(tiers_of[e['cell']['id']]):
             cov[(e['cell']['id'], ti)] = n
             for r in rts:
@@ -224,7 +214,7 @@ def lp(evals, tiers_of, cap, H, scale=None, reserve=None):
         rows.append([v[2]['draw_per_page'].get(ch, 0.0) for v in var])
         b.append(max(free_week(cap, ch, scale) * H - (reserve or {}).get(ch, 0.0), 0.0))
     res = linprog(c, A_ub=np.array(rows), b_ub=np.array(b), bounds=[(0, None)] * len(var), method='highs')
-    assert res.status == 0, res.message
+    assert res.status == 0, (res.status, res.message, H)
     out = collections.defaultdict(lambda: dict(pages=0.0, rw=0.0, by_route=collections.Counter(),
                                                draw=collections.Counter()))
     for (cid, ti, r, w), x in zip(var, res.x):
@@ -263,6 +253,7 @@ def main():
     ap.add_argument('--md', required=True)
     ap.add_argument('--census-out', help='per language x draft totals of the volume census (committed summary)')
     a = ap.parse_args()
+    cv.OPUS_REFERENCE = True     # routing reads the Opus-reference fit (chain_v2.py fit --opus-reference)
     C = json.load(open(a.cells))
     cap = json.load(open(a.capacity))
     rows = cv.load(a.obs)
@@ -295,36 +286,36 @@ def main():
     H_, T = C['harm_weight'], C['threshold']
     base = evaluate(C['cells'], post, ix, measured, cap, H_, T)
 
-    # the planner's tests come out of the same budget: one per cell, for the route that would be chosen once it clears
-    # (the provisional choice), or for the most promising route where none is provisional
+    # the planner's tests come out of the same budget: in each cell, every route cheaper than Opus whose P(matches
+    # Opus) is 0.5 to 0.9 (measured) or >= 0.5 (pooled) gets the route-judge-6740 test
     tests, reserve = [], collections.Counter()
     for e in base:
         if e['tier'] == 'held':
             continue
-        cand = e['choice'] if e['tier'] == 'provisional' else None
-        if e['tier'] is None:
-            pool = [r for r in e['routes'] if r.get('test') and r['test']['n']]
-            cand = max(pool, key=lambda r: r['p_clears']) if pool else None
-        if cand and cand.get('test') and cand['test']['n']:
-            t = dict(cell=e['cell']['id'], corrector=cand['corrector'], basis='measured' if cand['measured'] else 'pooled',
-                     p_clears_now=cand['p_clears'], **cand['test'])
-            tests.append(t)
-            for k, v in t['draw'].items():
-                reserve[k] += v
+        for r in e['routes']:
+            if r['tier'] == 'to test':
+                t = route_test(e, r, cap)
+                tests.append(t)
+                for k, v in t['draw'].items():
+                    reserve[k] += v
 
     sched = schedule(base, tiers_of, cap, reserve=reserve)
     sens = {'agy x0.7': schedule(base, tiers_of, cap, scale={'agy': 0.7}, reserve=reserve),
             'agy x1.3': schedule(base, tiers_of, cap, scale={'agy': 1.3}, reserve=reserve)}
+    # what the tests would buy: every route under test taken as matching Opus
+    confirmed = [dict(e, routes=[dict(r, tier='matches opus') if r['tier'] == 'to test' else r for r in e['routes']]) for e in base]
+    sens['if every test confirms'] = schedule(confirmed, tiers_of, cap, reserve=reserve)
+    sens['tests confirm, agy x0.7'] = schedule(confirmed, tiers_of, cap, scale={'agy': 0.7}, reserve=reserve)
+    sens['tests confirm, agy x1.3'] = schedule(confirmed, tiers_of, cap, scale={'agy': 1.3}, reserve=reserve)
     lo, hi = cap['stages']['opus-5.5@10']['range']
     for nm, v in (('Opus@10 draw low', lo), ('Opus@10 draw high', hi)):
         e2 = evaluate(C['cells'], post, ix, measured, cap, H_, T, stage_scale={'opus-5.5@10': v / cap['stages']['opus-5.5@10']['per_page']})
         sens[nm] = schedule(e2, tiers_of, cap, reserve=reserve)
     for h in (1.0, 4.0):
         sens[f'harm weight {h:g}'] = schedule(evaluate(C['cells'], post, ix, measured, cap, h, T), tiers_of, cap, reserve=reserve)
-    sens['only P >= 0.9 routes'] = {Hh: {} for Hh in HORIZONS}   # nothing clears at 0.9 that is not held (reported below)
 
     def forced(cid, corr, first=False):
-        ev = [dict(x, routes=[dict(r, forced=(r['corrector'] == corr), priority=(1e6 if first else 1.0))
+        ev = [dict(x, routes=[dict(r, forced=(r['corrector'] == corr), priority=(1e3 if first else 1.0))
                               if x['cell']['id'] == cid else r for r in x['routes']]) for x in base]
         return schedule(ev, tiers_of, cap, reserve=reserve)
 
@@ -392,7 +383,7 @@ def main():
         row = dict(id=c['id'], title=c['title'], draft=c['draft'], language=c['language'], kind=c['kind'],
                    served=c['served'], bind=c['bind'], bar_worse=c['bar_worse'], pages_waiting=pages,
                    pages_waiting_read_weighted=round(rw), books=len(bk), decision=c.get('decision'), note=c.get('note'),
-                   choice=ch['corrector'] if ch else None, tier=e['tier'], hold=c.get('hold'),
+                   choice=ch['corrector'] if ch else None, tier=e['tier'], hold=c.get('hold'), opus_route=e['ref']['corrector'],
                    share_week1={k: round(v / free_week(cap, k), 4) for k, v in w1.get('draw', {}).items()},
                    pages_week1=round(w1.get('pages', 0)), quarter=dict(pages=round(q13.get('pages', 0)),
                                                                       read_weighted=round(q13.get('rw', 0)),
@@ -402,7 +393,7 @@ def main():
                    sensitivity={nm: dict(weeks_to_drain=weeks_until(s, c['id'], 0.99, pages),
                                          quarter_pages=round(s[13].get(c['id'], {}).get('pages', 0)),
                                          quarter_by_route={k: round(v) for k, v in s[13].get(c['id'], {}).get('by_route', {}).items()})
-                                for nm, s in sens.items() if nm != 'only P >= 0.9 routes'},
+                                for nm, s in sens.items()},
                    routes=[{k: v for k, v in r.items() if not k.startswith('_')} for r in e['routes']])
         out_cells.append(row)
     chans = sorted({k for r in out_cells for k in r['share_week1']} | {'claude', 'agy'})
@@ -412,23 +403,22 @@ def main():
     # proposed routing-table rows for #7170 (a proposal file; scripts/lib/ocr-routing-table.json is not edited here)
     proposals = []
     for r in out_cells:
-        ch = next((x for x in r['routes'] if x['corrector'] == r['choice']), None)
-        q13 = r['quarter']['by_route']
-        if not ch and not q13:
+        if r['hold']:
             continue
-        used = max(q13, key=q13.get) if q13 else ch['corrector']
-        u = next(x for x in r['routes'] if x['corrector'] == used)
+        ch = next(x for x in r['routes'] if x['corrector'] == r['choice'])
+        q13 = r['quarter']['by_route']
         proposals.append(dict(
-            id=f"correct-{r['id']}", kind=r['title'], draft=r['draft'], corrector=used, stage=u['stage'],
-            retranslate='Opus CLI (claude-translate.mjs) where the page has English',
-            status='provisional' if u['tier'] == 'provisional' else 'settled',
-            routed='no', check=f"made-worse bar {r['bar_worse']:.0%} at the {r['bind']} instrument; P(clears) {u['p_clears']:.2f}",
-            why=(f"P(worse) {u['p_worse'][1]:.3f} [{u['p_worse'][0]:.3f}, {u['p_worse'][2]:.3f}], net pages improved per page "
-                 f"{u['gain'][1]:.2f}; {r['pages_waiting']:,} pages waiting; most-read first"),
-            section_3a_choice=r['choice'], allocation_route=used,
-            note=('the allocation uses a different route from the §3a choice because the choice\'s channel is full'
-                  if r['choice'] and used != r['choice'] else None)))
-    res = dict(as_of=cap['as_of'], harm_weight=H_, threshold=T, provisional=PROVISIONAL, horizons=HORIZONS,
+            id=f"correct-{r['id']}", kind=r['title'], draft=r['draft'], corrector=ch['corrector'], stage=ch['stage'],
+            fallback=r['opus_route'], retranslate='Opus CLI (claude-translate.mjs) where the page has English',
+            status=('cheaper route matches Opus' if r['tier'] == 'cheaper route matches opus' else
+                    'Opus (the assumed reference; no cheaper route matches it at P >= 0.9 yet)'),
+            routed='no', check=f"matches Opus: net gain within max(0.05, 10%) of Opus's in {ch['p_matches_opus']:.2f} of draws ({r['bind']})",
+            why=(f"net pages improved per page {ch['gain'][1]:.2f} [{ch['gain'][0]:.2f}, {ch['gain'][2]:.2f}], P(worse) {ch['p_worse'][1]:.3f}; "
+                 f"{r['pages_waiting']:,} pages waiting; most-read first"),
+            first_quarter=q13))
+    res = dict(as_of=cap['as_of'], harm_weight=H_, threshold=T, provisional=PROVISIONAL, delta=[DELTA_ABS, DELTA_REL],
+               objective='cheapest route that matches Opus (Opus the assumed reference and the fallback; Derek 2026-10-25 21:20Z)',
+               horizons=HORIZONS,
                capacity=cap['channels'], channels=channels, tests=tests, scenarios=scenarios, proposed_rows=proposals, cells=out_cells,
                note='capacity in channel units (Claude account-weeks, agy calls, Batch dollars); plan fees are not used')
     json.dump(res, open(a.out, 'w'), indent=1, default=float)
@@ -442,30 +432,29 @@ def fmt_draw(d, per=1000):
 
 
 def render(res):
-    md = ['| cell | pages waiting (read-weighted) | route chosen (§3a) | P(worse) at the gate instrument [90%] | net gain / page | '
-          'P(clears bar) | capacity per 1K pages | share of the free week, week 1 | pages in the first quarter (by route) | '
-          'weeks to drain | top 10% / 50% of reads done by week | what waits meanwhile |', '|' + '---|' * 12]
+    md = ['| cell | pages waiting (read-weighted) | route (cheapest that matches Opus; else Opus) | P(matches Opus) | net gain / page [90%] | '
+          'P(worse) | capacity per 1K pages | share of the free week, week 1 | first quarter (pages by route) | weeks to drain | '
+          'top 10% / 50% of reads done by week | what waits meanwhile |', '|' + '---|' * 12]
     for r in res['cells']:
-        ch = next((x for x in r['routes'] if x['corrector'] == r['choice']), None)
+        if r['hold']:
+            ref = next(x for x in r['routes'] if x['corrector'] == r['opus_route'])
+            md.append(f"| {r['title']} | {r['pages_waiting']:,} ({r['pages_waiting_read_weighted']:,}) | **held**: {r['hold'].split(';')[0]} | — | "
+                      f"{ref['gain'][1]:.2f} (Opus) | {ref['p_worse'][1]:.3f} | {fmt_draw(ref['draw_per_page'])} | — | — | — | — | all on {r['served']} |")
+            continue
+        ch = next(x for x in r['routes'] if x['corrector'] == r['choice'])
         sw = ', '.join(f"{v:.0%} {k}" for k, v in r['share_week1'].items() if v >= 0.005) or '—'
         qr = '; '.join(f"{k} {v:,}" for k, v in r['quarter']['by_route'].items()) or '—'
         top = r['weeks_top_read_weighted']
-        if ch:
-            md.append(f"| {r['title']} | {r['pages_waiting']:,} ({r['pages_waiting_read_weighted']:,}) | **{ch['corrector']}**"
-                      f"{' (provisional)' if r['tier'] == 'provisional' else ''} | {ch['p_worse'][1]:.3f} [{ch['p_worse'][0]:.3f}, {ch['p_worse'][2]:.3f}] | "
-                      f"{ch['gain'][1]:.2f} | {ch['p_clears']:.2f} | {fmt_draw(ch['draw_per_page'])} | {sw} | {qr} | "
-                      f"{r['weeks_to_drain'] or '> 260'} | {top['0.1'] or '> 260'} / {top['0.5'] or '> 260'} | "
-                      f"{max(r['pages_waiting'] - r['quarter']['pages'], 0):,} pages after the quarter stay on {r['served']} |")
-        else:
-            best = max(r['routes'], key=lambda x: x['p_clears'])
-            lab = f"**held**: {r['hold'].split(';')[0]}" if r['hold'] else '**none clears**'
-            md.append(f"| {r['title']} | {r['pages_waiting']:,} ({r['pages_waiting_read_weighted']:,}) | {lab} (nearest: {best['corrector']}, "
-                      f"{'measured' if best['measured'] else 'pooled'}) | {best['p_worse'][1]:.3f} [{best['p_worse'][0]:.3f}, {best['p_worse'][2]:.3f}] | "
-                      f"{best['gain'][1]:.2f} | {best['p_clears']:.2f} | {fmt_draw(best['draw_per_page'])} | — | — | — | — | all on {r['served']} |")
-    md += ['', 'Tests reserved from the same budget (one per cell: n pages through the cell\'s gate instrument):', '',
-           '| cell | route under test | basis | P(clears) now | n | instrument | draw |', '|---|---|---|---|---|---|---|']
+        lab = ('**serve the draft** (it already matches Opus)' if ch['corrector'] == 'none' else
+               f"**{ch['corrector']}**" + (' (Opus fallback)' if r['tier'] == 'opus (fallback)' else ''))
+        md.append(f"| {r['title']} | {r['pages_waiting']:,} ({r['pages_waiting_read_weighted']:,}) | {lab} | {ch['p_matches_opus']:.2f} | "
+                  f"{ch['gain'][1]:.2f} [{ch['gain'][0]:.2f}, {ch['gain'][2]:.2f}] | {ch['p_worse'][1]:.3f} | {fmt_draw(ch['draw_per_page']) or '0'} | {sw} | {qr} | "
+                  f"{r['weeks_to_drain'] or ('0' if ch['corrector'] == 'none' else '> 260')} | {top['0.1'] or '—'} / {top['0.5'] or '—'} | "
+                  f"{max(r['pages_waiting'] - r['quarter']['pages'], 0) if ch['corrector'] != 'none' else 0:,} pages after the quarter stay on {r['served']} |")
+    md += ['', 'Tests reserved from the same budget (route-judge-6740 design: 30 pages per route, one Opus reader against Opus):', '',
+           '| cell | route under test | basis | P(matches Opus) now | n | draw |', '|---|---|---|---|---|---|']
     for t in res['tests']:
-        md.append(f"| {t['cell']} | {t['corrector']} | {t['basis']} | {t['p_clears_now']:.2f} | {t['n']} | {t['instrument']} | {fmt_draw(t['draw'], 1)} |")
+        md.append(f"| {t['cell']} | {t['corrector']} | {t['basis']} | {t['p_matches_opus_now']:.2f} | {t['n']} | {fmt_draw(t['draw'], 1)} |")
     md += ['', 'Decisions, in capacity terms (each forces one route on one cell; the LP re-plans everything else):', '',
            '| decision | cell, route | whole cell draws | top 10% / 25% / 50% / 100% of reads done by week (competing) | the same, with the channel to itself | pages in the first quarter | what it displaces in the quarter (pages; net pages improved) |',
            '|---|---|---|---|---|---|---|']
@@ -475,30 +464,30 @@ def render(res):
         md.append(f"| {nm} | {sc['cell']}, {sc['corrector']} | {fmt_draw(sc['whole_cell_draw'], 1)} | "
                   f"{' / '.join(str(t[k] or '>260') for k in ('0.1', '0.25', '0.5', '1.0'))} | "
                   f"{' / '.join(str(al.get(k, '—')) for k in ('0.1', '0.25', '0.5', '1.0'))} | {sc['quarter_pages']:,} | {dis} |")
-    md += ['', 'Sensitivity (weeks to drain; pages in the first quarter):', '',
-           '| cell | base | ' + ' | '.join(next(iter(res['cells']))['sensitivity']) + ' |',
-           '|' + '---|' * (2 + len(next(iter(res['cells']))['sensitivity']))]
+    sens_names = list(next(r for r in res['cells'] if not r['hold'])['sensitivity'])
+    md += ['', 'Sensitivity (weeks to drain; pages in the first quarter):', '', '| cell | base | ' + ' | '.join(sens_names) + ' |',
+           '|' + '---|' * (2 + len(sens_names))]
     for r in res['cells']:
-        if not r['choice']:
+        if r['hold'] or r['choice'] == 'none':
             continue
         cells = [f"{r['weeks_to_drain'] or '>260'} wk; {r['quarter']['pages']:,}"]
-        for nm, s in r['sensitivity'].items():
+        for nm in sens_names:
+            s = r['sensitivity'][nm]
             cells.append(f"{s['weeks_to_drain'] or '>260'} wk; {s['quarter_pages']:,}" +
                          (f" ({', '.join(f'{k} {v:,}' for k, v in s['quarter_by_route'].items())})" if len(s['quarter_by_route']) > 1 else ''))
         md.append(f"| {r['id']} | " + ' | '.join(cells) + ' |')
     md += ['', 'Proposed routing-table rows (for #7170; the tables are not edited here):', '',
-           '| id | draft → corrector (stage) | status | check | why |', '|---|---|---|---|---|']
+           '| id | draft → route (fallback) | status | check | why |', '|---|---|---|---|---|']
     for p in res['proposed_rows']:
-        md.append(f"| {p['id']} | {p['draft']} → {p['corrector']} ({p['stage']}) | {p['status']} | {p['check']} | {p['why']}"
-                  + (f"; {p['note']}" if p['note'] else '') + ' |')
+        md.append(f"| {p['id']} | {p['draft']} → {p['corrector']} ({p['fallback']}) | {p['status']} | {p['check']} | {p['why']} |")
     md += ['', 'Every route per cell:', '',
-           '| cell | corrector (stage) | basis | P(worse) [90%] | P(better) [90%] | net gain [90%] | P(clears) | tier | P(best) | capacity per 1K pages |',
+           '| cell | route (stage) | basis | P(worse) [90%] | P(better) [90%] | net gain [90%] | P(matches Opus) | tier | P(best) | capacity per 1K pages |',
            '|' + '---|' * 10]
     for r in res['cells']:
         for x in r['routes']:
             md.append(f"| {r['id']} | {x['corrector']} ({x['stage']}) | {'measured' if x['measured'] else 'pooled'} | "
                       f"{x['p_worse'][1]:.3f} [{x['p_worse'][0]:.3f}, {x['p_worse'][2]:.3f}] | {x['p_better'][1]:.2f} [{x['p_better'][0]:.2f}, {x['p_better'][2]:.2f}] | "
-                      f"{x['gain'][1]:.2f} [{x['gain'][0]:.2f}, {x['gain'][2]:.2f}] | {x['p_clears']:.2f} | {x['tier']} | {x.get('p_best', '—')} | {fmt_draw(x['draw_per_page'])} |")
+                      f"{x['gain'][1]:.2f} [{x['gain'][0]:.2f}, {x['gain'][2]:.2f}] | {x['p_matches_opus']:.2f} | {x['tier']} | {x.get('p_best', '—')} | {fmt_draw(x['draw_per_page']) or '0'} |")
     return '\n'.join(md)
 
 

@@ -31,12 +31,15 @@ def nuts_fit(model, seed, warmup, samples, chains, **kw):
     t0 = time.time()
     mc.run(jax.random.PRNGKey(seed), extra_fields=('diverging',), **kw)
     by = mc.get_samples(group_by_chain=True)
-    rh = max(float(np.nanmax(np.atleast_1d(summary({k: np.asarray(v)}, group_by_chain=True)[k]['r_hat']))) for k, v in by.items())
+    per = {k: float(np.nanmax(np.atleast_1d(summary({k: np.asarray(v)}, group_by_chain=True)[k]['r_hat']))) for k, v in by.items()}
+    rh = max(per.values())
+    worst = dict(sorted(per.items(), key=lambda kv: -kv[1])[:6])
     lat = mc.get_samples()
     det = Predictive(model, posterior_samples=lat)(jax.random.PRNGKey(seed + 2), **kw)
     post = {k: np.asarray(v) for k, v in {**lat, **det}.items() if k not in ('y', 'z', 'fail')}
     diag = dict(method='NUTS', chains=chains, warmup=warmup, draws_per_chain=samples, max_rhat=round(rh, 3),
-                divergences=int(np.asarray(mc.get_extra_fields()['diverging']).sum()), seconds=round(time.time() - t0))
+                divergences=int(np.asarray(mc.get_extra_fields()['diverging']).sum()), seconds=round(time.time() - t0),
+                worst_rhat={k: round(v, 3) for k, v in worst.items()})
     return post, diag
 
 
