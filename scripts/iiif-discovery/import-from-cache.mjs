@@ -56,6 +56,7 @@ import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { holdBook } from '../lib/pipeline-hold.mjs';
 import { appendFileSync } from 'node:fs';
 import { yearFromPublished } from '../lib/catalogue-year.mjs';
+import { workFirstTitle, decodeEntities } from '../lib/shelfmark-title.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -122,7 +123,9 @@ for (const c of cands) {
   }
 
   const isArtwork = pages.length === 1;
-  const title = (c.title || mc.label || `${c.source} item`).slice(0, 500);
+  // Work first, shelfmark after: "Heidelberg, Universitätsbibliothek Heidelberg, Cod. Pal. germ. 311: Buch der Natur"
+  // showed readers only the library on a card (#7270).
+  const title = workFirstTitle(decodeEntities(c.title || mc.label || `${c.source} item`)).slice(0, 500);
   const author = c.author && c.author !== 'Unknown' ? c.author : 'Unknown';
   const year = yearFromPublished(c.date_text); // Hijri-first "1303 [1885]" → the CE year (#6057)
 
