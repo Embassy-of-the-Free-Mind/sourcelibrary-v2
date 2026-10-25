@@ -105,6 +105,7 @@ These are built from the counters. `translation-state.md` owns their use, and th
 - It logs a per-counter mismatch tally (`count 3, ocr 12, translatable 40…`) instead of one number. A reconciler that fixes a lot of one counter is reporting a broken job-time writer, and today nobody can tell which counter it fixed.
 - It stays pause-exempt. The counters describe pages that exist whether or not the pipeline runs.
 - `--dry-run --counts-only` prints the same tally and writes nothing. That is how the first-run tally on the #5326 PR was made. A missing counter is a mismatch, not a zero (`diffPageCounters()`), and that is how the 10,282 books get their `pages_translatable`.
+- **A manifest-only book is the one exception to "no visible pages recounts to zeros" (#7343).** A book with `pages_state.state` `manifest_only` or `materializing` has no page docs by design: its pages are created on first need by `materializePages()` (`scripts/lib/lazy-pages.mjs`). While it is lazy, `diffPageCounters()` and both `recountBook()` twins give it `initialPageCounters(pages_count)`, its declared count with every page pending. Without that, this reconciler zeroed it within two hours and it fell out of every `pages_count > 0` filter. Once materialized it recounts like any other book.
 
 ## Freshness
 

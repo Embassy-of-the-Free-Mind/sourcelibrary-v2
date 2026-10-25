@@ -44,6 +44,7 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -361,6 +362,8 @@ async function processBook(db, book) {
       year: { $gte: 1820, $lt: 1929 },
       pages_count: { $gt: 0 },
       $expr: { $lt: ['$pages_ocr', { $multiply: [0.9, '$pages_count'] }] },
+      // #7343: a manifest-only book has no pages to OCR, and sorts first by pages_count.
+      ...PAGES_MATERIALIZED_FILTER,
     }).project({ _id: 1, title: 1, year: 1, pages_count: 1, pages_ocr: 1 }).sort({ pages_count: 1 }).limit(LIMIT * 3).toArray();
   }
 

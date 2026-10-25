@@ -20,6 +20,7 @@ import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize } from '../lib/archive-failure-class.mjs';
 
 const MAX_PAGES = 10_000;
@@ -308,7 +309,8 @@ async function main() {
   // dominated by fully-archived books and the per-book inner query returns 0
   // unarchived pages for nearly every book. Symptom is "Found 6 pages across
   // 3423 books" while the library has hundreds of thousands of unarchived pages.
-  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
+  // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] }, ...PAGES_MATERIALIZED_FILTER };
   const priorityBooks = await db.collection('books')
     .find(
       {

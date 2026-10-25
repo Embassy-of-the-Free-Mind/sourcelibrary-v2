@@ -25,6 +25,8 @@
 // condition, and it leaves a `book_events` row at both ends. Release restores exactly the status
 // the book was holding at.
 
+import { ensurePages, isLazyPagesBook } from './lazy-pages.mjs';
+
 export const HOLD_STATUS = 'held';
 export const HOLD_EVENT = 'pipeline_hold';
 export const RELEASE_EVENT = 'pipeline_release';
@@ -88,15 +90,28 @@ export async function holdBook(db, bookId, hold, { dryRun = false } = {}) {
  * Release one book: restore the status it was holding at, drop the marker, record the release.
  * `to` overrides the restored status (e.g. a book held at `complete` that must now re-flow from
  * `ocr_complete` because its pages changed underneath it).
+ *
+ * Releasing a manifest-only book (#7343 lazy pages) is the decision to dispatch it, so its pages
+ * are created first, through the one materializer; if they cannot be, the book stays held
+ * (`pages_not_ready`). Such a book was held before it ever enrolled, so with no prior status it
+ * re-enters at `queued` (archive first), never at the `ocr_complete` default.
  */
 export async function releaseBook(db, bookId, { note, to, source } = {}, { dryRun = false } = {}) {
   const B = db.collection('books');
-  const book = await B.findOne({ id: bookId }, { projection: { id: 1, title: 1, pipeline_auto: 1 } });
+  const book = await B.findOne({ id: bookId }, { projection: { id: 1, title: 1, pipeline_auto: 1, pages_state: 1 } });
   if (!book) return { outcome: 'not_found' };
   if (!isHeld(book)) return { outcome: 'not_held', status: book.pipeline_auto?.status ?? null };
   const h = book.pipeline_auto.hold;
-  const restore = to || h.held_from_status || 'ocr_complete';
-  if (dryRun) return { outcome: 'dry_run', to: restore, reason: h.reason };
+  const lazy = isLazyPagesBook(book);
+  const restore = to || h.held_from_status || (lazy || book.pages_state ? 'queued' : 'ocr_complete');
+  if (dryRun) return { outcome: 'dry_run', to: restore, reason: h.reason, ...(lazy ? { materialize: true } : {}) };
+  if (lazy) {
+    try {
+      await ensurePages(db, bookId, { trigger: 'ocr-dispatch' });
+    } catch (e) {
+      return { outcome: 'pages_not_ready', error: String(e?.message ?? e) };
+    }
+  }
   const now = new Date();
   const r = await B.updateOne(
     { id: bookId, 'pipeline_auto.hold': { $exists: true } },

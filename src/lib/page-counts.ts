@@ -16,6 +16,7 @@
  */
 
 import type { Db, Document } from 'mongodb';
+import { isLazyPagesBook } from '../../scripts/lib/pages-state.mjs';
 
 /** Match fragment selecting only visible (renderable) pages. */
 export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
@@ -195,10 +196,12 @@ export async function recountBook(
   if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
 
   const books = db.collection('books');
-  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1 };
+  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1, pages_state: 1 };
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate<PageCountStats>(buildVisiblePageCountPipeline(bookId)).toArray();
-  const after = pageCountersFromStats(row);
+  // A manifest-only book (#7343) keeps its declared count until its pages exist —
+  // same rule as diffPageCounters() in the .mjs twin.
+  const after = isLazyPagesBook(book) ? initialPageCounters(Number(book?.pages_count ?? 0)) : pageCountersFromStats(row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null])) as Record<PageCounter, number | null>;

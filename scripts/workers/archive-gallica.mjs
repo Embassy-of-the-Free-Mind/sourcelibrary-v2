@@ -20,6 +20,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -153,6 +154,8 @@ async function main() {
       'image_source.provider': { $in: ['gallica', 'iiif'] },
       pages_count: { $gt: 0 },
       ...SCOPE_FILTER,
+      // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+      ...PAGES_MATERIALIZED_FILTER,
     }, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1 } })
     .limit(1000)
     .maxTimeMS(30_000)

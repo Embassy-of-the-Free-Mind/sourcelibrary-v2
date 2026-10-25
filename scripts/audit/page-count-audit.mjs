@@ -80,7 +80,8 @@ async function pool(items, n, fn) {
   return out;
 }
 
-const BOOK_PROJECTION = { _id: 0, id: 1, title: 1, visible: 1, page_counts_at: 1, ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])) };
+// pages_state: a manifest-only book (#7343) is compared against its declared count (diffPageCounters).
+const BOOK_PROJECTION = { _id: 0, id: 1, title: 1, visible: 1, page_counts_at: 1, pages_state: 1, ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])) };
 
 // ── 1. sample recount ────────────────────────────────────────────────────────
 async function sampleRecount(db, now) {

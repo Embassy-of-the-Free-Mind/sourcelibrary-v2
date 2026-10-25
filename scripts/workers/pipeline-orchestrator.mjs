@@ -57,6 +57,7 @@ import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation, holdBook } from '../lib/pipeline-hold.mjs';
+import { PAGES_MATERIALIZED_FILTER, LAZY_PAGES_FILTER, isLazyPagesBook, ensurePages } from '../lib/lazy-pages.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
@@ -1609,6 +1610,12 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
     .toArray();
 
   if (pages.length === 0) {
+    // Zero pages to OCR is "done" only if the book's pages exist. A manifest-only
+    // book (#7343) has none yet; calling it done wrote ocr_complete and walked it
+    // down every later phase. Not ready, not done.
+    if (await db.collection('books').countDocuments({ id: book.id, ...LAZY_PAGES_FILTER }, { limit: 1 })) {
+      return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, skipReason: 'lazy pages not materialized (#7343)' };
+    }
     return { submitted: 0, jobName: null, alreadyDone: true };
   }
 
@@ -2737,6 +2744,9 @@ async function run() {
           pipeline_auto: { $exists: false },
           created_at: { $gte: cutoff },
           'image_source.provider': { $nin: ART_PROVIDERS },
+          // A manifest-only book (#7343 lazy pages) has no pages to archive or OCR;
+          // it enrols only once something has materialized them.
+          ...PAGES_MATERIALIZED_FILTER,
         })
         .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
@@ -2750,7 +2760,22 @@ async function run() {
       // ENROLL_WINDOW_DAYS before joining the back of an oldest-first queue of
       // thousands. Seven books imported 2026-09-20 had to be enrolled by hand
       // (#4948). A `--book` override still forces exactly one book through.
-      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
+      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1, pages_state: 1 });
+      // `--book` is an explicit dispatch: a manifest-only book named there gets its
+      // pages now, through the one materializer (#7343), or is not enrolled.
+      if (!DRY_RUN) {
+        const ready = [];
+        for (const book of newBooks) {
+          if (!isLazyPagesBook(book)) { ready.push(book); continue; }
+          try {
+            await ensurePages(db, book.id, { trigger: 'ocr-dispatch' });
+            ready.push(book);
+          } catch (e) {
+            console.warn(`  [lazy-pages] ${book.id} not enrolled: ${e.message}`);
+          }
+        }
+        newBooks = ready;
+      }
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
@@ -2794,6 +2819,7 @@ async function run() {
             pipeline_auto: { $exists: false },
             created_at: { $lt: cutoff },
             'image_source.provider': { $nin: ART_PROVIDERS },
+            ...PAGES_MATERIALIZED_FILTER,
           })
           .project({ id: 1, language: 1 })
           .sort({ created_at: 1 })
@@ -2859,7 +2885,7 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       let queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }] } },
+          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }], ...PAGES_MATERIALIZED_FILTER } },
           { $addFields: {
             _priority: {
               $switch: {

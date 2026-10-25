@@ -10,6 +10,7 @@ import sharp from 'sharp';
 // copies of this became a silent no-op.
 import { ARCHIVABLE_SOURCES_REGEX } from '@/lib/archivable-sources';
 import { recountBook } from '@/lib/page-counts';
+import { ensurePages, isLazyPagesBook } from '../../../../../../scripts/lib/lazy-pages.mjs';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -80,6 +81,14 @@ export const POST = withAuth(async (request, session, context) => {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+    // Archiving a manifest-only book (#7343) is the decision to create its pages.
+    if (!dryRun && isLazyPagesBook(book)) {
+      try {
+        await ensurePages(db, bookId, { trigger: 'archive' });
+      } catch (e) {
+        return NextResponse.json({ error: 'Pages not ready', details: String((e as Error)?.message ?? e) }, { status: 503 });
+      }
     }
 
     // Find pages that need archiving (from IA, Gallica, or MDZ)

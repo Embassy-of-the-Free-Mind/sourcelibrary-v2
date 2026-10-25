@@ -60,6 +60,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { eraraPdfLeafOffset, pdfIndexForPage } from './lib/erara-pdf-leaves.mjs';
 
 // CLI args
@@ -429,6 +430,8 @@ async function main() {
     ...(refused.length ? { id: { $nin: refused } } : {}),
     pages_count: { $gt: 0 },
     pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
+    // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+    ...PAGES_MATERIALIZED_FILTER,
   };
   const eraraProjection = { id: 1, title: 1, image_source: 1, pages_count: 1, language: 1, is_first_translation: 1 };
 

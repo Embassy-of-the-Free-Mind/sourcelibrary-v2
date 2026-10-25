@@ -28,6 +28,7 @@ import {
   READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { recoverLazyPages } from '../lib/lazy-pages.mjs';
 import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
 
 
@@ -82,7 +83,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
 
   const counterProjection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1, pages_state: 1 } })
     .toArray();
 
   // `pipeline_next` (#5477, .claude/docs/pipeline-next-step.md) needs to know whether `book.job` names a
@@ -103,7 +104,8 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
-    // A book with no visible pages recounts to zeros — its true count.
+    // A book with no visible pages recounts to zeros — its true count — unless it
+    // is a manifest-only book (#7343), which keeps its declared count (diffPageCounters).
     const { before, after: actual, changed } = diffPageCounters(book, statsMap.get(bookId));
     for (const c of changed) counterTally[c]++;
     if (before.pages_translatable === null) translatableMissing++;
@@ -959,6 +961,19 @@ async function run() {
   const phasesCompleted = [];
 
   if (!GALLERY_ONLY && !USAGE_ONLY) {
+    // Lazy pages (#7343, #7346 review 1): finish any book a crashed or partly
+    // failed materialization stranded, BEFORE the counts below read its pages.
+    // A free manifest GET per stranded book; no paid work.
+    try {
+      const r = await recoverLazyPages(db, { dryRun: DRY_RUN });
+      const tally = r.results.reduce((t, x) => ({ ...t, [x.status]: (t[x.status] || 0) + 1 }), {});
+      console.log(`[sync-worker] Lazy-pages recovery: ${r.stale} stale lease(s), ${r.partial} partial write(s) → ${JSON.stringify(tally)}`);
+      phasesCompleted.push('lazy_pages_recovery');
+    } catch (err) {
+      console.error(`[sync-worker] Lazy-pages recovery phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'lazy_pages_recovery', error: err.message });
+    }
+
     try {
       countsResult = await syncPageCounts(db);
       phasesCompleted.push('counts');

@@ -52,6 +52,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -194,11 +195,14 @@ async function main() {
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
+        // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+        ...PAGES_MATERIALIZED_FILTER,
       }
     : {
         'pipeline_auto.status': 'archiving',
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
+        ...PAGES_MATERIALIZED_FILTER,
       };
   if (BOOK_IDS.length) console.log(`[archive-iiif] Targeted run: ${BOOK_IDS.length} book(s) by --book-ids.`);
 

@@ -19,6 +19,8 @@
  * keeps new writers out: tests/unit/page-counter-writers.test.ts.
  */
 
+import { isLazyPagesBook } from './pages-state.mjs';
+
 /** Match fragment selecting only visible (renderable) pages. */
 export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } };
 
@@ -361,7 +363,11 @@ export function initialPageCounters(n) {
  * reconciler fills `pages_translatable` on the books created without it (#5326).
  */
 export function diffPageCounters(book, stats) {
-  const after = pageCountersFromStats(stats);
+  // A manifest-only book (#7343 lazy pages) has no page docs BY DESIGN, or only
+  // part of them while materializePages() is writing. Its true count is the
+  // declared one, every page pending — never a recount of what exists yet, which
+  // would zero it and drop it from every `pages_count > 0` filter within 2 h.
+  const after = isLazyPagesBook(book) ? initialPageCounters(book.pages_count) : pageCountersFromStats(stats);
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book?.[c] ?? null]));
   const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
   return { before, after, changed };
@@ -421,7 +427,7 @@ export async function recountBook(db, bookId, { reason, now = new Date() } = {})
   if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
 
   const books = db.collection('books');
-  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1 };
+  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1, pages_state: 1 };
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   const { before, after, changed } = diffPageCounters(book, row);
