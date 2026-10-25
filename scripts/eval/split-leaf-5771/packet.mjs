@@ -8,8 +8,10 @@
 /**
  * packet.mjs — no model call. Job split-leaves-5771 (#5771) step 4.
  *   node --env-file=.env.production.local scripts/eval/split-leaf-5771/packet.mjs --frames=frames.jsonl \
- *        --txt=DIR(leaf reads) --english=DIR(leaf-translate OUT/frames) --plants=<6948>/audit/plants.json \
- *        --req=REQ.jsonl --key=KEY.json [--seed=5771]
+ *        --arms=cut:TXTDIR:ENDIR,reread:TXTDIR:ENDIR --plants=<6948>/audit/plants.json --req=REQ.jsonl --key=KEY.json [--seed=5771]
+ * Every arm's 80 frames and the 15 controls go in ONE shuffled request set with opaque uids (s001…), so the auditor
+ * cannot tell arms apart. key[uid] carries frame (the #6948 uid), arm, and stratum (SEAM / RECUT / SAME, fixed in the
+ * pre-registration from the stored read metadata and the contact-sheet recuts).
  * Images are cached under $JOB_SCRATCH/images/<page_id>/ as in #6948.
  */
 import fs from 'node:fs';
@@ -22,7 +24,8 @@ const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=')
 const S = process.env.JOB_SCRATCH;
 const frames = fs.readFileSync(arg('frames'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const plants = Object.values(JSON.parse(fs.readFileSync(arg('plants'), 'utf8'))).filter((p) => p.english);
-const TXT = arg('txt'), EN = arg('english');
+const ARMS = arg('arms').split(',').map((a) => { const [name, txt, en] = a.split(':'); return { name, txt, en }; });
+const stratumOf = (f) => (f.stored.read_mode === 'page' ? 'SEAM' : f.ledger_cut ? 'RECUT' : 'SAME');
 
 /** The split-leaf transcription of a frame: its leaf reads in frame order, joined as a leaf-mode read is stored. */
 export function leafTranscription(dir, uid) {
@@ -36,9 +39,12 @@ const pages = new Map((await c.db('bookstore').collection('pages').find({ id: { 
 await c.close();
 
 const items = [
-  ...frames.map((f) => ({ uid: f.uid, page_id: f.page_id, lang: 'bo', stratum: f.stratum, arm: `after-${f.stored.read_mode}`, ocr: leafTranscription(TXT, f.uid), english: fs.existsSync(path.join(EN, `${f.uid}.txt`)) ? fs.readFileSync(path.join(EN, `${f.uid}.txt`), 'utf8').trim() : null })),
+  ...ARMS.flatMap((a) => frames.map((f) => ({ frame: f.uid, page_id: f.page_id, lang: 'bo', stratum: stratumOf(f), canon: f.stratum, arm: a.name, ocr: leafTranscription(a.txt, f.uid), english: fs.existsSync(path.join(a.en, `${f.uid}.txt`)) ? fs.readFileSync(path.join(a.en, `${f.uid}.txt`), 'utf8').trim() : null }))),
   ...plants.map((p) => ({ ...p, control: p.kind, ocr: pages.get(p.page_id)?.ocr?.data })),
 ];
+// Opaque uids: controls keep their #6948 uids' role but are renumbered with the rest, in a seeded random order.
+const order = shuffle(items.map((_, i) => i), rng(Number(arg('seed') || 5771) + 1));
+order.forEach((ix, n) => { items[ix].uid = `s${String(n + 1).padStart(3, '0')}`; });
 const reqs = [], key = {};
 for (const it of items) {
   const p = pages.get(it.page_id);
@@ -54,7 +60,7 @@ for (const it of items) {
     if (it3) t = it3;
   } catch (e) { console.log(`  ${it.uid}: tile failed ${e.message}`); key[it.uid] = { uid: it.uid, page_id: it.page_id, no_image: true }; continue; }
   reqs.push({ uid: it.uid, prompt: auditPrompt(it.lang, t.tiles, it.ocr, it.english), image: path.join(dir, 'page.jpg'), extra_images: t.tiles.map((x) => path.join(dir, x)) });
-  key[it.uid] = { uid: it.uid, page_id: it.page_id, book_id: p.book_id, page_number: p.page_number, lang: it.lang, arm: it.arm || null, stratum: it.stratum || null, control: it.control || null, anchor: it.anchor || null, planted: it.planted || null, image_from: got, W: t.W, H: t.H, tiles: t.tiles.length, ocr_chars: it.ocr.length, english_chars: it.english.length };
+  key[it.uid] = { uid: it.uid, frame: it.frame || null, canon: it.canon || null, page_id: it.page_id, book_id: p.book_id, page_number: p.page_number, lang: it.lang, arm: it.arm || null, stratum: it.stratum || null, control: it.control || null, anchor: it.anchor || null, planted: it.planted || null, image_from: got, W: t.W, H: t.H, tiles: t.tiles.length, ocr_chars: it.ocr.length, english_chars: it.english.length };
 }
 shuffle(reqs, rng(Number(arg('seed') || 5771)));
 fs.writeFileSync(arg('req'), reqs.map((r) => JSON.stringify(r)).join('\n') + '\n');
