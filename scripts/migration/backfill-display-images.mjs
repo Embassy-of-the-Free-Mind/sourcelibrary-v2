@@ -315,7 +315,13 @@ async function main() {
     // already backfilled — only ~5% of the gap is pages ≤10 — so page-level
     // ordering buys little either).
     const PHASES = ['visible', 'rest'];
-    const phaseQuery = (phase) => (phase === 'visible' ? { visible: true } : { visible: { $ne: true } });
+    // `archive_metadata.blocked` is the book-level "do not fetch this book's images" flag that
+    // archive-ocr and archive-bulk already honour. Without it here, a book imported images-only
+    // and blocked from archiving still had every page fetched from its provider by this walk (#7343).
+    const phaseQuery = (phase) => ({
+      ...(phase === 'visible' ? { visible: true } : { visible: { $ne: true } }),
+      'archive_metadata.blocked': { $ne: true },
+    });
 
     let phase = 'visible';
     let cursor = null;
