@@ -79,7 +79,10 @@ For a new class, the order is:
 Detectors that exist (use them): `headword-mark-drop.mjs` (丨 in 韻府/類書), `translation-reasoning-leak.mjs`,
 `leaked-markup-census.mjs`, `detect-fabricated-ocr.mjs` + `blank-page-guard` (blank leaves), `scan-title-mismatch.mjs`
 (Latin titles; CJK needs title-pair matching inside one import campaign — see #6660), `page-count-audit.mjs`.
-Does not work: the English/OCR length ratio as a general screen (experiments/2026-10-23-length-ratio-screen-6056.md).
+Does not work: the English/OCR length ratio as a general screen (experiments/2026-10-23-length-ratio-screen-6056.md);
+classical *ae* spelling in early Latin OCR as a paraphrase screen (experiments/2026-10-25-classicized-spelling-screen-6056.md);
+a corpus-lexicon non-word score as a page gate (experiments/2026-09-30-can-a-0-per-page-garble-score-find-the-5313.md).
+Before building a $0 screen for a class, read `scripts/eval/experiments/` for it — most have been tried.
 
 ## 6. Ship and report
 - Commit the run dir + `sprint-clusters.json` by path, `git commit -s`; PR body starts `Part of #6056` (the
