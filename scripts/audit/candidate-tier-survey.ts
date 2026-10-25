@@ -37,6 +37,7 @@
  *   npx tsx --env-file=.env.production.local scripts/audit/candidate-tier-survey.ts --out $JOB_SCRATCH/survey
  *   … --source bsb                    one import_candidates source
  *   … --exclude-source a,b           every source except these (e.g. a fresh harvest)
+ *   … --emit-tiers ABC               survivor file for these tiers (default AB)
  *   … --input sample.jsonl --label x  dedupe + tier a probe sample (one JSON record
  *                                     per line: title, author, language, year,
  *                                     manifest_url?, source_url?, subjects?)
@@ -57,6 +58,10 @@ const EXCLUDE = (arg('--exclude-source') || '').split(',').filter(Boolean);
 const INPUT = arg('--input');
 const LABEL = arg('--label', INPUT ? path.basename(INPUT).replace(/\..*$/, '') : (SOURCE || 'import_candidates'))!;
 const PD_BEFORE = parseInt(arg('--pd-before', '1900')!, 10);
+// Which tiers' survivors go to the survivor file. AB by default; the lazy-pages
+// import of tier C (#7343) needs ABC.
+const EMIT_TIERS = arg('--emit-tiers', 'AB')!.toUpperCase();
+const SURVIVOR_FILE = `${LABEL}-survivors-${EMIT_TIERS}.jsonl.gz`;
 const TERMS_FILE = arg('--terms', path.join(__dirname, 'acquisition-tier-terms.json'))!;
 
 // ── Language: one canonical name per record ─────────────────────────────────
@@ -265,7 +270,7 @@ async function main() {
   // scanned one printing), counted as other_copy and never as a second survivor.
   // Which copy is the better scan is an import-time choice, not made here.
   const keptKeys = new Map<string, string>();
-  const outA = createGzip(); outA.pipe(createWriteStream(path.join(OUT, `${LABEL}-survivors-AB.jsonl.gz`)));
+  const outA = createGzip(); outA.pipe(createWriteStream(path.join(OUT, SURVIVOR_FILE)));
   let seen = 0;
   for await (const { c, excluded: ex } of candidates(db)) {
     seen++;
@@ -302,8 +307,8 @@ async function main() {
       if (v === 'OTHER_COPY') cell.other_copy++;
       if (transl) cell.transl_flag++;
     }
-    if ((v === 'NEW' || v === 'OTHER_ED' || UNRESOLVED.has(v as Verdict)) && (tier === 'A' || tier === 'B') && bucket !== 'post') {
-      outA.write(JSON.stringify({ tier, verdict: v, translation_of_held_author: transl, key: cls.key, matched: matchedTerm(tier, c.language, `${c.title} ; ${c.subjects}`, c.author), dated: bucket === 'pd', ...c }) + '\n');
+    if ((v === 'NEW' || v === 'OTHER_ED' || UNRESOLVED.has(v as Verdict)) && EMIT_TIERS.includes(tier) && bucket !== 'post') {
+      outA.write(JSON.stringify({ tier, verdict: v, translation_of_held_author: transl, key: cls.key, matched: tier === 'C' ? '' : matchedTerm(tier, c.language, `${c.title} ; ${c.subjects}`, c.author), dated: bucket === 'pd', ...c }) + '\n');
       const sk = `${c.language}|${tier}`;
       samples[sk] ??= [];
       if (samples[sk].length < 5 && SURVIVOR.has(v as Verdict)) samples[sk].push(`${c.year ?? '?'} ${c.author.slice(0, 30)} — ${c.title.slice(0, 80)}`);
@@ -333,7 +338,7 @@ async function main() {
   for (const [k, cells] of order(byLang).slice(0, 40)) console.log(line(k, cells));
   console.log('source | A | B | C | other copies | translation flag | undated | post');
   for (const [k, cells] of order(bySource)) console.log(line(k, cells));
-  console.error(`wrote ${path.join(OUT, `${LABEL}-summary.json`)} and ${LABEL}-survivors-AB.jsonl.gz`);
+  console.error(`wrote ${path.join(OUT, `${LABEL}-summary.json`)} and ${SURVIVOR_FILE}`);
 }
 
 main().catch(e => { console.error('FATAL', e); process.exit(1); });
