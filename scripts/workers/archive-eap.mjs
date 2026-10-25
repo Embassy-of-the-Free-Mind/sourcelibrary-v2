@@ -35,6 +35,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -108,8 +109,9 @@ async function main() {
   const bookQuery = BOOK_ID
     ? { id: BOOK_ID }
     : UPGRADE
-      ? { 'image_source.provider': 'bl', pages_count: { $gt: 0 } }
-      : { tenantId: BHUTAN_TENANT_ID, pages_count: { $gt: 0 } };
+      // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+      ? { 'image_source.provider': 'bl', pages_count: { $gt: 0 }, ...PAGES_MATERIALIZED_FILTER }
+      : { tenantId: BHUTAN_TENANT_ID, pages_count: { $gt: 0 }, ...PAGES_MATERIALIZED_FILTER };
 
   const eapBooks = await db.collection('books')
     .find(bookQuery, { projection: { id: 1, title: 1, pages_count: 1 } })

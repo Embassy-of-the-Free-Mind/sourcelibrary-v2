@@ -2,8 +2,8 @@ import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
-import { getDb, getReadDb } from '@/lib/mongodb';
-import { materializeForReader, LazyPagesNotReadyError } from '@/lib/lazy-pages';
+import { getReadDb } from '@/lib/mongodb';
+import { resolveReaderPages, LazyPagesNotReadyError } from '@/lib/lazy-pages';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
@@ -693,14 +693,19 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // Fall back to the catalog book (Supabase) if Atlas fetch failed
   const book = fullBookResult?.book ?? quickBook;
 
-  // A manifest-only book (#7343 lazy pages) has its count and no page docs:
-  // create them now, through the one materializer, and re-read from the primary.
-  // A book that is merely an empty shell pays one findOne. A failure THROWS
-  // (LazyPagesNotReadyError, rethrown by BookInfo) so ISR never caches an empty book.
-  let pagesRaw = pagesFirstRead;
-  if (pagesRaw.length === 0 && Number(book.pages_count ?? 0) > 0 && await materializeForReader(bookId)) {
-    pagesRaw = await loadPreviewPages(await getDb());
-  }
+  // A manifest-only book (#7343 lazy pages) has its count and no (or only some)
+  // page docs: create them now, through the one materializer, and re-read from
+  // the primary. Only a book that is lazy — or, when the doc came from the
+  // catalog without `pages_state`, may be — pays anything. A lazy book whose
+  // pages cannot be created THROWS (LazyPagesNotReadyError, rethrown by
+  // BookInfo) so ISR never caches an empty or partial book.
+  const pagesRaw = await resolveReaderPages({
+    bookId,
+    book: book as { pages_count?: unknown; pages_state?: unknown },
+    bookDocIsComplete: Boolean(fullBookResult?.book) || !fromCatalog,
+    firstRead: pagesFirstRead,
+    reread: loadPreviewPages,
+  });
 
   // Author authority record (variants / VIAF / Wikidata) — only when the
   // book has been linked to an entity. Loaded in parallel with the index

@@ -51,6 +51,13 @@ export {
 export const DEFAULT_LEASE_MS = 5 * 60_000;
 
 /**
+ * After a failed attempt (`pages_state.failed_at`), how long every trigger is
+ * refused a new claim. Without it a dead manifest is re-fetched on every reader
+ * request, each one claiming, writing and waiting up to 20 s (#7346 review 2).
+ */
+export const DEFAULT_FAILURE_COOLDOWN_MS = 60 * 60_000;
+
+/**
  * Deterministic page id for page `n` (1-based) of a lazy book. A 24-hex string,
  * so it is a valid ObjectId like every other page `_id` and `id` in the corpus.
  * The book id is part of the hash: two books can never share a page id.
@@ -131,14 +138,16 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * @param {(url: string) => Promise<object>} [opts.fetchManifest]  injected for tests and rate-limited lanes
  * @param {number} [opts.leaseMs]  claim lifetime (default 5 min)
  * @param {number} [opts.waitMs]   how long a caller that lost the claim waits for the winner (default 0)
+ * @param {number} [opts.cooldownMs]  refuse a claim this long after a failed attempt (default 1 h; 0 disables)
  * @param {Date} [opts.now]
- * @returns {Promise<{ status: 'not_found'|'not_lazy'|'materialized'|'in_progress'|'failed',
- *   book_id: string, pages?: number, error?: string, existing?: number }>}
+ * @returns {Promise<{ status: 'not_found'|'not_lazy'|'materialized'|'in_progress'|'failed'|'cooling_down',
+ *   book_id: string, pages?: number, error?: string, existing?: number, retry_at?: Date }>}
  *   `materialized` means THIS call (or the winner it waited for) left the book's pages in place;
- *   `not_lazy` means the book never was, or already is, materialized — nothing to do.
+ *   `not_lazy` means the book never was, or already is, materialized — nothing to do;
+ *   `cooling_down` means the last attempt failed less than `cooldownMs` ago and no claim was made.
  */
 export async function materializePages(db, bookId, opts = {}) {
-  const { trigger, leaseMs = DEFAULT_LEASE_MS, waitMs = 0 } = opts;
+  const { trigger, leaseMs = DEFAULT_LEASE_MS, waitMs = 0, cooldownMs = DEFAULT_FAILURE_COOLDOWN_MS } = opts;
   const fetchManifest = opts.fetchManifest ?? manifestFetcherOverride ?? defaultFetchManifest;
   if (typeof bookId !== 'string' || bookId === '') throw new Error('materializePages: bookId must be a non-empty string');
   if (typeof trigger !== 'string' || trigger === '') throw new Error('materializePages: pass { trigger } naming the caller');
@@ -153,25 +162,42 @@ export async function materializePages(db, bookId, opts = {}) {
 
   const now = opts.now ?? new Date();
   const token = new ObjectId().toHexString();
+  const cooldownCutoff = new Date(now.getTime() - cooldownMs);
+  /** The `cooling_down` result for a book whose last attempt failed inside the cooldown, else null. */
+  const coolingDown = (doc) => {
+    const failedAt = doc?.pages_state?.failed_at;
+    if (doc?.pages_state?.state !== 'manifest_only' || !(failedAt instanceof Date) || failedAt < cooldownCutoff) return null;
+    return { status: 'cooling_down', book_id: bookId, error: doc.pages_state.error, retry_at: new Date(failedAt.getTime() + cooldownMs) };
+  };
   // Driver 6: findOneAndUpdate resolves to the document itself, or null.
   const claimedDoc = await books.findOneAndUpdate(
     {
       id: bookId,
-      $or: [
-        { 'pages_state.state': 'manifest_only' },
-        { 'pages_state.state': 'materializing', 'pages_state.lease_at': { $lt: new Date(now.getTime() - leaseMs) } },
+      $and: [
+        { $or: [
+          { 'pages_state.state': 'manifest_only' },
+          { 'pages_state.state': 'materializing', 'pages_state.lease_at': { $lt: new Date(now.getTime() - leaseMs) } },
+        ] },
+        // A failed attempt is not retried until its cooldown has passed (#7346 review 2).
+        { $or: [{ 'pages_state.failed_at': { $exists: false } }, { 'pages_state.failed_at': { $lt: cooldownCutoff } }] },
       ],
     },
-    { $set: { 'pages_state.state': 'materializing', 'pages_state.lease_at': now, 'pages_state.lease_by': token, 'pages_state.trigger': trigger } },
+    {
+      $set: { 'pages_state.state': 'materializing', 'pages_state.lease_at': now, 'pages_state.lease_by': token, 'pages_state.trigger': trigger },
+      $inc: { 'pages_state.attempts': 1 },
+    },
     { returnDocument: 'after', projection },
   );
 
   if (!claimedDoc) {
-    // Someone else holds the claim (or just finished). Wait for them if asked to.
+    // Someone else holds the claim (or just finished), or the last attempt failed
+    // inside the cooldown. Wait for a live claim if asked to; never for a cooldown.
     const deadline = Date.now() + waitMs;
     for (;;) {
       const cur = await books.findOne({ id: bookId }, { projection: { pages_state: 1 } });
       if (!isLazyPagesBook(cur)) return { status: 'materialized', book_id: bookId };
+      const cooling = coolingDown(cur);
+      if (cooling) return cooling;
       if (Date.now() >= deadline) return { status: 'in_progress', book_id: bookId };
       await sleep(Math.min(250, Math.max(10, deadline - Date.now())));
     }
@@ -264,4 +290,48 @@ export async function ensurePages(db, bookId, opts) {
   const res = await materializePages(db, bookId, { waitMs: 60_000, ...opts });
   if (res.status === 'materialized' || res.status === 'not_lazy') return res;
   throw new Error(`ensurePages(${bookId}): ${res.status}${res.error ? ` — ${res.error}` : ''}`);
+}
+
+/**
+ * The sync-worker pass that un-strands a lazy book (#7346 review 1). Two shapes
+ * never reach a trigger again on their own:
+ *   - `materializing` past its lease: the writer crashed between its claim (or
+ *     its insertMany) and finish(); nothing else ever re-claims it.
+ *   - `manifest_only` WITH page docs: an attempt failed after inserting part of
+ *     the set and released the claim. The reader renders the partial book, the
+ *     counters stay frozen at the declared count, and PAGES_MATERIALIZED_FILTER
+ *     keeps the book out of enrolment for ever.
+ * Both are finished by calling materializePages() again: the page ids are
+ * deterministic, so the pages already written are refused as duplicates and the
+ * missing ones are added. A `manifest_only` book with NO pages is left alone —
+ * that is simply a lazy book, and fetching every one would defeat the point.
+ * The failure cooldown still applies; the next run picks the book up after it.
+ *
+ * @returns {Promise<{ stale: number, partial: number, results: object[] }>}
+ */
+export async function recoverLazyPages(db, { leaseMs = DEFAULT_LEASE_MS, limit = 200, dryRun = false, fetchManifest, now = new Date() } = {}) {
+  const books = db.collection('books');
+  const stale = await books
+    .find({ 'pages_state.state': 'materializing', 'pages_state.lease_at': { $lt: new Date(now.getTime() - leaseMs) } }, { projection: { id: 1 } })
+    .limit(limit).toArray();
+  // Only an attempt that failed can leave pages behind on a manifest_only book.
+  const failed = await books
+    .find({ 'pages_state.state': 'manifest_only', 'pages_state.failed_at': { $exists: true } }, { projection: { id: 1 } })
+    .toArray();
+  const partialIds = [];
+  for (let i = 0; i < failed.length && partialIds.length < limit; i += 500) {
+    const ids = failed.slice(i, i + 500).map(b => b.id).filter(id => typeof id === 'string' && id);
+    partialIds.push(...(await db.collection('pages').distinct('book_id', { book_id: { $in: ids } })));
+  }
+  const targets = [...new Set([...stale.map(b => b.id), ...partialIds.slice(0, limit)])].filter(id => typeof id === 'string' && id);
+  const results = [];
+  for (const bookId of targets) {
+    if (dryRun) { results.push({ status: 'dry_run', book_id: bookId }); continue; }
+    try {
+      results.push(await materializePages(db, bookId, { trigger: 'sync-recover', leaseMs, now, ...(fetchManifest ? { fetchManifest } : {}) }));
+    } catch (e) {
+      results.push({ status: 'failed', book_id: bookId, error: String(e?.message ?? e) });
+    }
+  }
+  return { stale: stale.length, partial: Math.min(partialIds.length, limit), results };
 }

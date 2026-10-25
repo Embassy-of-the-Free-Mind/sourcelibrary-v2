@@ -28,6 +28,7 @@ import {
   READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { recoverLazyPages } from '../lib/lazy-pages.mjs';
 import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
 
 
@@ -960,6 +961,19 @@ async function run() {
   const phasesCompleted = [];
 
   if (!GALLERY_ONLY && !USAGE_ONLY) {
+    // Lazy pages (#7343, #7346 review 1): finish any book a crashed or partly
+    // failed materialization stranded, BEFORE the counts below read its pages.
+    // A free manifest GET per stranded book; no paid work.
+    try {
+      const r = await recoverLazyPages(db, { dryRun: DRY_RUN });
+      const tally = r.results.reduce((t, x) => ({ ...t, [x.status]: (t[x.status] || 0) + 1 }), {});
+      console.log(`[sync-worker] Lazy-pages recovery: ${r.stale} stale lease(s), ${r.partial} partial write(s) → ${JSON.stringify(tally)}`);
+      phasesCompleted.push('lazy_pages_recovery');
+    } catch (err) {
+      console.error(`[sync-worker] Lazy-pages recovery phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'lazy_pages_recovery', error: err.message });
+    }
+
     try {
       countsResult = await syncPageCounts(db);
       phasesCompleted.push('counts');

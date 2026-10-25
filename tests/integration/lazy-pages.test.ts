@@ -155,7 +155,9 @@ describe('materializePages (#7343)', () => {
     expect(after?.pages_state?.error).toMatch(/503/);
     expect(after?.pages_count).toBe(N);
     expect(await pageCount(db)).toBe(0);
-    await expect(ensurePages(db, BOOK, { trigger: 'ocr-dispatch', fetchManifest, waitMs: 0 })).rejects.toThrow(/failed/);
+    // Inside the failure cooldown (#7346 review 2) the retry is refused without a fetch; after it, it fails again.
+    await expect(ensurePages(db, BOOK, { trigger: 'ocr-dispatch', fetchManifest, waitMs: 0 })).rejects.toThrow(/cooling_down/);
+    await expect(ensurePages(db, BOOK, { trigger: 'ocr-dispatch', fetchManifest, waitMs: 0, cooldownMs: 0 })).rejects.toThrow(/failed/);
   });
 
   it('LAZY_PAGES_FILTER / PAGES_MATERIALIZED_FILTER split lazy books from every other book', async () => {

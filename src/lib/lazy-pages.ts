@@ -12,8 +12,10 @@
  * been created yet would cache an empty book for a day. A throw is never cached:
  * ISR keeps serving the last good render, and a cold miss reaches error.tsx.
  */
+import type { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import { materializePages } from '../../scripts/lib/lazy-pages.mjs';
+import { isLazyPagesBook } from '../../scripts/lib/pages-state.mjs';
 
 /** Thrown when a manifest-only book's pages could not be created for a reader. */
 export class LazyPagesNotReadyError extends Error {
@@ -27,19 +29,49 @@ export class LazyPagesNotReadyError extends Error {
 const READER_WAIT_MS = 8_000;
 
 /**
- * Called by the reader when a book with `pages_count > 0` came back with no page
- * docs. Returns true when the caller should re-read the pages from the primary:
- * they were just created (by this call or a concurrent one), or the book is not
- * lazy (an empty shell, or one materialized a moment ago — the re-read decides).
- * Throws LazyPagesNotReadyError when the book is lazy and its pages are still
- * not there.
+ * The reader's pages for a book, materializing a lazy book's first.
+ *
+ * WHEN it acts (#7346 review 1 and 3):
+ *   - the book doc says it is lazy (`pages_state` manifest_only/materializing),
+ *     even with SOME pages: a partly written set must be finished, not rendered
+ *     and cached for 24 h as if it were the book;
+ *   - or, when `bookDocIsComplete` is false (the doc came from the Supabase
+ *     catalog, which does not carry `pages_state`), the book came back with no
+ *     pages and a positive count — it may be lazy.
+ * Any other book returns `firstRead` untouched and costs nothing.
+ *
+ * FAILURE. For a book known to be lazy, anything short of its pages THROWS
+ * LazyPagesNotReadyError (never cached by ISR). For a book only suspected of
+ * being lazy, an ERROR (the primary is down) falls back to `firstRead`: a legacy
+ * empty book must render exactly as it did before #7343, not as "unavailable".
  */
-export async function materializeForReader(bookId: string): Promise<boolean> {
-  // The primary, not the read pool: the claim is a write, and the caller re-reads
-  // the pages it just created.
-  const db = await getDb();
-  const res = await materializePages(db, bookId, { trigger: 'reader', waitMs: READER_WAIT_MS });
-  if (res.status === 'materialized' || res.status === 'not_lazy') return true;
-  if (res.status === 'not_found') return false;
-  throw new LazyPagesNotReadyError(bookId, res.status, res.error);
+export async function resolveReaderPages<T>(opts: {
+  bookId: string;
+  book: { pages_count?: unknown; pages_state?: unknown };
+  bookDocIsComplete: boolean;
+  firstRead: T[];
+  reread: (db: Db) => Promise<T[]>;
+  /** Injected for tests; the primary, not the read pool — the claim is a write and the re-read must see it. */
+  getPrimaryDb?: () => Promise<Db>;
+}): Promise<T[]> {
+  const { bookId, book, bookDocIsComplete, firstRead, reread, getPrimaryDb = getDb } = opts;
+  const knownLazy = isLazyPagesBook(book);
+  const maybeLazy = !bookDocIsComplete && firstRead.length === 0 && Number(book.pages_count ?? 0) > 0;
+  if (!knownLazy && !maybeLazy) return firstRead;
+  try {
+    const db = await getPrimaryDb();
+    const res = await materializePages(db, bookId, { trigger: 'reader', waitMs: READER_WAIT_MS });
+    if (res.status === 'not_found') return firstRead;
+    if (res.status !== 'materialized' && res.status !== 'not_lazy') {
+      throw new LazyPagesNotReadyError(bookId, res.status, res.error);
+    }
+    // Materialized just now (by this call or a concurrent one), or a moment ago.
+    return await reread(db);
+  } catch (err) {
+    if (err instanceof LazyPagesNotReadyError) throw err;
+    const detail = err instanceof Error ? err.message : String(err);
+    if (knownLazy) throw new LazyPagesNotReadyError(bookId, 'error', detail);
+    console.warn(`[lazy-pages] reader check for ${bookId} failed; serving the first read: ${detail}`);
+    return firstRead;
+  }
 }
