@@ -41,6 +41,7 @@ import {
   fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
+import { assertNotQuotaPlaceholder } from '../lib/archive-failure-class.mjs';
 import { recountBook } from '../../src/lib/page-counts';
 import { ensurePages, isLazyPagesBook, PAGES_MATERIALIZED_FILTER } from '../lib/lazy-pages.mjs';
 import {
@@ -307,6 +308,10 @@ async function main() {
           } else {
             buf = await rateLimitedFetch(url);
           }
+          // BSB/MDZ answer an over-quota request with a 1×1 JPEG at 200 OK. Stored, it becomes the
+          // master and hides the page from every later run (archived_photo is the work queue), so it
+          // must fail here as a throttle — before `fetched`, so it is charged to the host as a 429.
+          await assertNotQuotaPlaceholder(buf, (b: Buffer) => sharp(b).metadata());
           fetched = true;
           // The host served us: that is the breaker's whole question, and
           // settling it here (rather than after the write) is also what releases

@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 // @ts-expect-error — plain .mjs helper, no types
-import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize, THROTTLED_FAILURE_REASON } from '../../scripts/lib/archive-failure-class.mjs';
+import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize, THROTTLED_FAILURE_REASON, assertNotQuotaPlaceholder } from '../../scripts/lib/archive-failure-class.mjs';
 
 describe('throttle helpers', () => {
   it('429 and 503 are throttles; 404 and 403 are not', () => {
@@ -34,6 +34,27 @@ describe('throttle helpers', () => {
     expect(isQuotaPlaceholderSize(1200, 1800)).toBe(false);
     expect(isQuotaPlaceholderSize(8, 400)).toBe(false); // a thin strip is still an image of something
     expect(isQuotaPlaceholderSize(undefined, undefined)).toBe(false);
+  });
+
+  it('assertNotQuotaPlaceholder refuses a 1×1 as a 429 throttle and passes a page', async () => {
+    // archive-acquired.ts had no such check: 435 of the 1,535 stored 1×1 BSB masters found on
+    // 2026-10-25 carry no archived_at, the signature of that writer (#5448).
+    const read = (b: Buffer) => sharp(b).metadata();
+    const tiny = await sharp({ create: { width: 1, height: 1, channels: 3, background: '#fff' } }).jpeg().toBuffer();
+    const page = await sharp({ create: { width: 60, height: 90, channels: 3, background: '#eee' } }).jpeg().toBuffer();
+    const err = await assertNotQuotaPlaceholder(tiny, read).then(() => null, (e: any) => e);
+    expect(err?.throttled).toBe(true);
+    expect(err?.message).toMatch(/\b429\b/); // archive-acquired's noteFailure files it as a throttle, not a block
+    expect(THROTTLED_FAILURE_REASON.test(err.message)).toBe(true);
+    await expect(assertNotQuotaPlaceholder(page, read)).resolves.toBeUndefined();
+    await expect(assertNotQuotaPlaceholder(Buffer.from('not an image'), read), 'undecodable is not judged here').resolves.toBeUndefined();
+  });
+
+  it('archive-acquired.ts checks for the placeholder before it marks the bytes fetched', () => {
+    const src = fs.readFileSync(path.resolve(__dirname, '../../scripts/catalog-coverage/archive-acquired.ts'), 'utf8');
+    const check = src.indexOf('await assertNotQuotaPlaceholder(buf');
+    expect(check, 'archive-acquired.ts stores whatever BSB sends').toBeGreaterThan(-1);
+    expect(check).toBeLessThan(src.indexOf('fetched = true;'));
   });
 
   it('the re-queue matches throttle reasons, old and new, and never a 404', () => {
