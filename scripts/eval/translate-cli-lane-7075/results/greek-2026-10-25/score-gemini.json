@@ -1,0 +1,133 @@
+{
+ "judges": {
+  "gemini": {
+   "n": 18,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 14,
+    "old": 4,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1.11,
+   "ci95": [
+    0.39,
+    1.72
+   ],
+   "pages": {
+    "699379bfb0a84a5763965fdc": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Translation Y correctly translates the opening sentence and includes the page number and vocabulary list that Translation X omits."
+    },
+    "69f32edc876dd827cbc449ec": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X faithfully follows the source text as written and preserves the marginal descriptions, whereas Translation Y erroneously adds a second-person address ('to you, his God and Father') not found in the Greek and omits the marginal image descriptions entirely."
+    },
+    "69bfcc6d355e52cf7837cbeb": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation Y introduces extensive extraneous content not present in the source, including fabricated references to liturgical text and the Bodleian Library, added definitions, and duplicated text."
+    },
+    "69b630611c1c21a3738015b1": {
+     "new": 5,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X correctly renders the frequent bibliographical abbreviation 'cum d.' as 'with derivatives' and translates all entries, whereas Translation Y systematically mistranslates it as 'with the entry', omits the signature line, drops source words, and confuses etymologies such as translating εὖρος under Εὐρύς as 'east wind'."
+    },
+    "69a5e5c91d73f9668388ee35": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X faithfully preserves the source text and its negations without interpolation, whereas Translation Y introduces extraneous explanatory notes and headers and distorts key negations."
+    },
+    "69bfce6c8ab50eb88e8c85b0": {
+     "new": 3,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X accurately conveys the meaning of the Greek text and accounts for OCR errors, whereas Translation Y mistranslates the text, deletes the marginal content, and contains malformed markup."
+    },
+    "6953a96577f38f6761bd6380": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation X faithfully translates all elements on the page without additions, whereas Translation Y omits the page header and opening word while adding extraneous explanatory notes, glosses, a summary, and keywords."
+    },
+    "69b52c823dd6d94230280d48": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X accurately conveys the Greek medical terminology and syntax despite adding extraneous summary metadata, whereas Translation Y distorts key statements through nonsensical literalisms and leaves the final clause incomplete."
+    },
+    "6993881c74305116d72cf36c": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "X includes all rows and accurately transliterates the Greek numerals, whereas Y omits the final three rows of the table and systematically misreads the numerical values."
+    },
+    "6955742bf63a757109172f98": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X fully translates the Greek quotations and textual variants into English, whereas Translation Y leaves the lengthy Greek passage in line 25 and several manuscript readings completely untranslated."
+    },
+    "69dbc9d51040d1d5e20a76c3": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y is far more complete and faithful, correctly rendering the collapsing earth in the mines and translating key terms like 'fools' and 'slaughter', whereas X omits multiple words and erroneously claims miners perish on the earth's surface."
+    },
+    "69b21edfa66227125eb0638b": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation Y completely translates the Greek text on this page through to the end of the final sentence, whereas Translation X cuts off mid-sentence at the end and includes extraneous text and notes from outside the Greek passage."
+    },
+    "6993895d0f04c37dcfa60eb5": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y translates the entire passage completely and accurately, whereas Translation X leaves untranslated gaps marked by ellipses and produces nonsensical mistranslations such as saliva that has not yet eaten."
+    },
+    "69b2fed665b9d6bf89925227": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X accurately translates the Greek syntax and Athenian motives regarding the overthrow of democracy and prospective naval movements, whereas Y mistranslates the democracy clause as an independent event and contains tense and omission errors."
+    },
+    "6a089ba1cb70c5c62b7a9af6": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X accurately translates the Greek text without additions, whereas Translation Y introduces external facts not found in the source (naming Faustus), creates a grammatical sentence fragment, and redundantly duplicates the page."
+    },
+    "6993892b74305116d72d118d": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X preserves the syntactic coherence and philosophical meaning of the text despite adding unprompted metadata, whereas Translation Y is an unreadable word-for-word gloss fragmented by pervasive commas that distorts the syntax and reverses the meaning of the marginal note."
+    },
+    "69cf7c36878f40c5945f29be": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y translates the complete page including the header and lacuna fragments, whereas Translation X omits the header, drops preserved text, and introduces hallucinated metadata."
+    },
+    "69942f3eb2f6748db4ac0001": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Translation X accurately conveys the affirmative requirement of external goods and coherently resolves OCR corruptions, whereas Translation Y introduces an erroneous negation reversing the statement on needing favor and stumbles on recognition errors."
+    }
+   }
+  }
+ },
+ "rule": {
+  "controls": false,
+  "non_inferior": false,
+  "by_eye": "recorded separately (rule 3)"
+ }
+}

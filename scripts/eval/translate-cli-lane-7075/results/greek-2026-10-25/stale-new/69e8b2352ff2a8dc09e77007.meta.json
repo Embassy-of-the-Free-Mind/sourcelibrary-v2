@@ -1,0 +1,36 @@
+{
+ "page_id": "69e8b2352ff2a8dc09e77007",
+ "book_id": "69e8b2352ff2a8dc09e76de6",
+ "page_number": 545,
+ "cli": "agy",
+ "cli_version": "1.4.7",
+ "model": "gemini-3.8-flash-low",
+ "started_at": "2026-10-25T17:48:35.580Z",
+ "finished_at": "2026-10-25T17:48:54.526Z",
+ "exit": 0,
+ "error_class": null,
+ "attempts": 1,
+ "chars": 7402,
+ "prompt_variant": "sentinels-6523",
+ "wrapper": null,
+ "tool_calls": [],
+ "ocr_hash": "96fd0ae45284b0ca",
+ "ocr_updated_at": "2026-10-06T12:16:55.696Z",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "is_english_book": false,
+ "prompt_sent_chars": 16333,
+ "prompt_sent_hash": "cde7aa5a5c9e1773",
+ "context": {
+  "previous_translation": true,
+  "previous_from": "stored",
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": "scoped"
+ },
+ "stderr_tail": ""
+}

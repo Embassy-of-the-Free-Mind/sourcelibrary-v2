@@ -1,0 +1,27 @@
+<warning>The image is a partial crop of a manuscript page; text on the left margin is cut off.</warning>
+
+<margin>
+<unclear>...πολα</unclear>
+<unclear>...υζη=</unclear>
+<unclear>...ονου:</unclear>
+<unclear>...λην=</unclear>
+<unclear>...δην</unclear>
+<unclear>...ιζας</unclear>
+<unclear>...αγορας</unclear>
+<unclear>...ασευ</unclear>
+<unclear>...παυ=</unclear>
+<unclear>...κοιλε</unclear>
+</margin>
+
+<meta>continues from previous page</meta> we have grasped its meaning: <insert>87</insert>
+
+<note>A line drawing within a rectangular frame depicting three figures in an architectural setting. On the left, a standing figure gestures towards two seated men on the right. The seated men have beards and wear head coverings, appearing to be in discussion. The background features an arched doorway and simplified buildings with small windows.</note>
+
+<insert>
+<note>A small decorative rubricated initial or character in red ink marks the beginning of the section.</note>
+</insert>
+near those swiftly to understand the power
+<unclear>...ου παιδιου αυτω... περ... δυνάμεως</unclear>
+
+<summary>This fragmentary folio concludes a thought on grasping a concept before illustrating a discussion among three figures and introducing a passage concerning understanding and spiritual or natural power.</summary>
+<keywords>comprehension, spiritual power, dialogue, monastic treatise, John of Damascus, Ephrem the Syrian</keywords>

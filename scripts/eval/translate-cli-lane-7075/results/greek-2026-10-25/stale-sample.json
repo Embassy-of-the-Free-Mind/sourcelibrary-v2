@@ -1,0 +1,394 @@
+{
+ "n": 20,
+ "drawn_at": "2026-10-25T17:43:10.159Z",
+ "frame": {
+  "greek_books": 1527,
+  "stale_pages": 70762,
+  "stale_books": 411,
+  "looked": 34,
+  "no_revision": 1,
+  "minor": 20,
+  "identical": 8,
+  "below": 5
+ },
+ "looked": [
+  {
+   "page_id": "699379bfb0a84a5763966119",
+   "agreement": 1
+  },
+  {
+   "page_id": "69ad7105c5001c07fa847038",
+   "agreement": 1
+  },
+  {
+   "page_id": "69cf7c36878f40c5945f2a27",
+   "agreement": 0.9828
+  },
+  {
+   "page_id": "6a089ba1cb70c5c62b7a9b50",
+   "agreement": 1
+  },
+  {
+   "page_id": "69b630611c1c21a3738011d4",
+   "agreement": 0.1802
+  },
+  {
+   "page_id": "69ad72c5a999d314266dbc26",
+   "agreement": 0.9966
+  },
+  {
+   "page_id": "6a3f02e297e91e1768f68a18",
+   "agreement": 0.9807
+  },
+  {
+   "page_id": "69a5e5e385fa13e734e419e3",
+   "agreement": 0.7468
+  },
+  {
+   "page_id": "69de132a8a46d0c97eedc993",
+   "agreement": 1
+  },
+  {
+   "page_id": "69b52cceb3537347e51e33ad",
+   "agreement": 1
+  },
+  {
+   "page_id": "69f659f41b653c6d6294ce87",
+   "agreement": 0.922
+  },
+  {
+   "page_id": "69d36d8d499088577a993d3f",
+   "agreement": 0.0476
+  },
+  {
+   "page_id": "69b51e16efd8df28f2db0533",
+   "agreement": 0.9741
+  },
+  {
+   "page_id": "69ee9386f2c6312502f6a05d",
+   "agreement": 0.9935
+  },
+  {
+   "page_id": "69938e49d5a98fd66f431394",
+   "agreement": 0.9535
+  },
+  {
+   "page_id": "69aebfe651d30e6c1f6c9177",
+   "agreement": 0.9903
+  },
+  {
+   "page_id": "6953a8a477f38f6761bd2691",
+   "agreement": 0.9938
+  },
+  {
+   "page_id": "69aeb589e43bbf40ffe04be9",
+   "agreement": 0.9956
+  },
+  {
+   "page_id": "6a08a3c48fae3d3f19b792ab",
+   "agreement": 1
+  },
+  {
+   "page_id": "6a084e4315c643eb1af41253",
+   "agreement": 0.9884
+  },
+  {
+   "page_id": "69aead2e66bcc9447837cce7",
+   "agreement": 0.8878
+  },
+  {
+   "page_id": "6a089bcb2b703903f58e7a49",
+   "agreement": 0.9845
+  },
+  {
+   "page_id": "695aa97dbe4023bd34bd6917",
+   "agreement": 0.9941
+  },
+  {
+   "page_id": "6a3f024697e91e1768f66bcc",
+   "agreement": 0.9819
+  },
+  {
+   "page_id": "69b008ddbfca0364b2a09583",
+   "agreement": 0.994
+  },
+  {
+   "page_id": "6953a93a77f38f6761bd5970",
+   "agreement": 1
+  },
+  {
+   "page_id": "69d13b3e1c2a66dc094b1546",
+   "agreement": 0.9921
+  },
+  {
+   "page_id": "6955742ef63a75710917326e",
+   "agreement": 0.98
+  },
+  {
+   "page_id": "69937944b0a84a5763964394",
+   "skip": "no OCR revision"
+  },
+  {
+   "page_id": "69ae953814ec9b78c4cede68",
+   "agreement": 0.9978
+  },
+  {
+   "page_id": "69b00bac6650806ce915cef2",
+   "agreement": 1
+  },
+  {
+   "page_id": "69937973b0a84a5763964f55",
+   "agreement": 0.9755
+  },
+  {
+   "page_id": "69e8b2352ff2a8dc09e77007",
+   "agreement": 0.9652
+  },
+  {
+   "page_id": "69b6521a18b87551bfcafbc1",
+   "agreement": 0.9802
+  }
+ ],
+ "pages": [
+  {
+   "page_id": "6953a8a477f38f6761bd2691",
+   "book_id": "6953a8a477f38f6761bd2334",
+   "page_number": 861,
+   "agreement": 0.9938,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-10-04T08:20:05.962Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T08:23:35.927Z",
+   "title": "Greek Old Testament (Tischendorf)"
+  },
+  {
+   "page_id": "6955742ef63a75710917326e",
+   "book_id": "6955742ef63a757109173030",
+   "page_number": 574,
+   "agreement": 0.98,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-11T15:31:38.781Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T08:58:17.580Z",
+   "title": "Musici Scriptores Graeci"
+  },
+  {
+   "page_id": "695aa97dbe4023bd34bd6917",
+   "book_id": "695aa97dbe4023bd34bd6715",
+   "page_number": 514,
+   "agreement": 0.9941,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-11T14:49:23.391Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T08:57:54.002Z",
+   "title": "Heronis Alexandrini Opera quae supersunt omnia Vol. 1 (Teubner 1899)"
+  },
+  {
+   "page_id": "69937973b0a84a5763964f55",
+   "book_id": "69937973b0a84a5763964d43",
+   "page_number": 530,
+   "agreement": 0.9755,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-12T05:59:56.980Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T10:47:41.713Z",
+   "title": "Aristotelis Opera, Vol. 2 (Bekker Edition, Reimer 1831)"
+  },
+  {
+   "page_id": "69938e49d5a98fd66f431394",
+   "book_id": "69938e49d5a98fd66f4311b0",
+   "page_number": 484,
+   "agreement": 0.9535,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-14T21:29:22.163Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T12:00:42.883Z",
+   "title": "Homeri quae extant omnia (Sponde, with Hymns)"
+  },
+  {
+   "page_id": "69ad72c5a999d314266dbc26",
+   "book_id": "69ad72c5a999d314266dbb70",
+   "page_number": 182,
+   "agreement": 0.9966,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-01T16:34:28.986Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T12:50:57.128Z",
+   "title": "The Geography of Strabo, Vol. 1"
+  },
+  {
+   "page_id": "69ae953814ec9b78c4cede68",
+   "book_id": "69ae953814ec9b78c4cedc05",
+   "page_number": 611,
+   "agreement": 0.9978,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-08T13:05:11.790Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T13:45:53.889Z",
+   "title": "Historia Philosophiae Graecae: Testimonia Auctorum"
+  },
+  {
+   "page_id": "69aeb589e43bbf40ffe04be9",
+   "book_id": "69aeb589e43bbf40ffe04937",
+   "page_number": 690,
+   "agreement": 0.9956,
+   "ocr_model": "gemini-3.8-flash-low",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-03T15:45:14.322Z",
+   "prev_ocr_model": "gemini-3-flash-preview",
+   "prev_ocr_superseded": "2026-10-13T08:16:02.795Z",
+   "title": "Doxographi Graeci"
+  },
+  {
+   "page_id": "69aebfe651d30e6c1f6c9177",
+   "book_id": "69aebfe651d30e6c1f6c8eaf",
+   "page_number": 712,
+   "agreement": 0.9903,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-12T13:16:12.626Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T16:23:59.955Z",
+   "title": "De cerimoniis aulae Byzantinae libri duo"
+  },
+  {
+   "page_id": "69b008ddbfca0364b2a09583",
+   "book_id": "69b008dabfca0364b2a09314",
+   "page_number": 623,
+   "agreement": 0.994,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-12T06:42:24.312Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T13:24:47.157Z",
+   "title": "Claudii Galeni Opera Omnia, Vol. 10"
+  },
+  {
+   "page_id": "69b51e16efd8df28f2db0533",
+   "book_id": "69b51e16efd8df28f2db050d",
+   "page_number": 36,
+   "agreement": 0.9741,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-14T19:11:24.388Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T19:35:57.014Z",
+   "title": "Platōnōs Erastai, Ē Peri Philosophias : = Platonis Dialogvs De Philosophia Vel Amatores"
+  },
+  {
+   "page_id": "69b6521a18b87551bfcafbc1",
+   "book_id": "69b6521a18b87551bfcafb90",
+   "page_number": 49,
+   "agreement": 0.9802,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-14T17:31:26.320Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T19:14:04.459Z",
+   "title": "De Abusu linguae Graecae : in quibusdam vocibus quas Latina usurpat"
+  },
+  {
+   "page_id": "69cf7c36878f40c5945f2a27",
+   "book_id": "69cf7c36878f40c5945f2994",
+   "page_number": 147,
+   "agreement": 0.9828,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite",
+   "old_updated_at": "2026-10-01T06:17:23.078Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite",
+   "prev_ocr_superseded": "2026-10-06T13:00:30.493Z",
+   "title": "The Oxyrhynchus Papyri, Part 15"
+  },
+  {
+   "page_id": "69d13b3e1c2a66dc094b1546",
+   "book_id": "69d13b3e1c2a66dc094b151a",
+   "page_number": 44,
+   "agreement": 0.9921,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-04-04T20:10:54.616Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T12:51:43.312Z",
+   "title": "De Mysteriis liber (editio princeps Graeca)"
+  },
+  {
+   "page_id": "69e8b2352ff2a8dc09e77007",
+   "book_id": "69e8b2352ff2a8dc09e76de6",
+   "page_number": 545,
+   "agreement": 0.9652,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3.1-flash-lite-preview",
+   "old_updated_at": "2026-05-11T11:23:58.510Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T12:16:55.930Z",
+   "title": "Τὰ εἰς ἑαυτόν (Meditationes)"
+  },
+  {
+   "page_id": "69ee9386f2c6312502f6a05d",
+   "book_id": "69ee9386f2c6312502f69fd9",
+   "page_number": 132,
+   "agreement": 0.9935,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-05-27T02:32:42.705Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T12:16:27.477Z",
+   "title": "Homeri Hymnus in Cererem (Hymn to Demeter, Ruhnken Critical Edition)"
+  },
+  {
+   "page_id": "6a084e4315c643eb1af41253",
+   "book_id": "6a084e4315c643eb1af41246",
+   "page_number": 13,
+   "agreement": 0.9884,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-05-27T02:25:25.063Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite-preview",
+   "prev_ocr_superseded": "2026-10-06T16:24:22.197Z",
+   "title": "Ἐπιστολαὶ διαφόρων φιλοσόφων ῥητόρῶν σοφιστῶν; ἑξ πρὸς τοῖς είκοσι. ὧν τὰ ὀνόματα ἐν τᾖ ἑξῆς εὑρήσεις σελίδι [...]"
+  },
+  {
+   "page_id": "6a089bcb2b703903f58e7a49",
+   "book_id": "6a089bcb2b703903f58e7a0c",
+   "page_number": 61,
+   "agreement": 0.9845,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-06-27T00:24:06.446Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite",
+   "prev_ocr_superseded": "2026-10-06T12:06:31.837Z",
+   "title": "Dio's Roman History, Vol. IX (Loeb 177)"
+  },
+  {
+   "page_id": "6a3f024697e91e1768f66bcc",
+   "book_id": "6a3f024697e91e1768f66b92",
+   "page_number": 58,
+   "agreement": 0.9819,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-07-07T01:43:51.549Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite",
+   "prev_ocr_superseded": "2026-10-06T12:05:51.725Z",
+   "title": "Inscriptiones Graecae (Volume 4)"
+  },
+  {
+   "page_id": "6a3f02e297e91e1768f68a18",
+   "book_id": "6a3f02e297e91e1768f689e8",
+   "page_number": 48,
+   "agreement": 0.9807,
+   "ocr_model": "gemini-3-flash-preview",
+   "old_model": "gemini-3-flash-preview",
+   "old_updated_at": "2026-07-07T01:28:04.792Z",
+   "prev_ocr_model": "gemini-3.1-flash-lite",
+   "prev_ocr_superseded": "2026-10-06T12:05:51.822Z",
+   "title": "In Porphyrii Isagogen et Aristotelis Categorias commentaria ..."
+  }
+ ]
+}
