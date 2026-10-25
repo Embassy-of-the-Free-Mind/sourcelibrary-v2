@@ -1,0 +1,108 @@
+{
+  "_comment": [
+    "THE archiver host-lane table (#5448 step 4). One row per lane: which box runs it, which image hosts",
+    "and provider tags it owns, the per-host rate it may use, and pages in flight.",
+    "scripts/catalog-coverage/archive-lanes-revive.sh (cron, every 10 min, on each box) starts every lane",
+    "whose `box` is this box and that has no tmux session; archive-lanes.mjs turns a row into the",
+    "archive-acquired.ts flags. tests/unit/archive-lanes-table.test.ts refuses: a rate above the host's",
+    "DOMAIN_LIMITS entry, a host in two lanes (one host = one lane = one egress address; never add an",
+    "address to raise a host's rate), an MDZ lane (the MDZ rate waits on BSB's reply, #5448), and a box",
+    "over its page budget.",
+    "",
+    "`rate` is LOWER-ONLY (capDomainLimit): a lane takes a share of a host's polite rate, never more.",
+    "Hosts other archivers also reach (archive-ocr on main reaches SBB, Gottingen, NB, Vatican,",
+    "Heidelberg) get 1/s or less here so the two together stay near the host's existing rate.",
+    "`box: mac` lanes are listed for completeness and started by nothing on the boxes."
+  ],
+  "box_page_budget": {
+    "main": 4,
+    "l7a": 12,
+    "gex45": 16,
+    "mac": 8
+  },
+  "lanes": [
+    {
+      "name": "heidelberg",
+      "box": "main",
+      "hosts": ["digi.ub.uni-heidelberg.de"],
+      "providers": ["heidelberg"],
+      "rate": { "digi.ub.uni-heidelberg.de": 1 },
+      "page_concurrency": 2,
+      "note": "Was hand-listed in /etc/sourcelibrary/archive-lanes.conf (campaign acquisition-wave-2026-10); now every Heidelberg book."
+    },
+    {
+      "name": "vatican",
+      "box": "main",
+      "hosts": ["digi.vatlib.it"],
+      "providers": ["vatican"],
+      "rate": { "digi.vatlib.it": 0.1 },
+      "page_concurrency": 1,
+      "note": "0.1/s as in the /etc conf it replaces."
+    },
+    {
+      "name": "sbb",
+      "box": "l7a",
+      "hosts": ["content.staatsbibliothek-berlin.de"],
+      "providers": ["sbb"],
+      "rate": { "content.staatsbibliothek-berlin.de": 1 },
+      "page_concurrency": 2,
+      "note": "Staatsbibliothek zu Berlin. 200 from l7a, 2026-10-25."
+    },
+    {
+      "name": "goettingen",
+      "box": "l7a",
+      "hosts": ["images.sub.uni-goettingen.de", "manifests.sub.uni-goettingen.de"],
+      "providers": ["goettingen"],
+      "rate": { "images.sub.uni-goettingen.de": 1, "manifests.sub.uni-goettingen.de": 1 },
+      "page_concurrency": 2,
+      "note": "SUB Gottingen. A manifest-only book's lane is its manifest host until its ledger records the image host, so both are listed."
+    },
+    {
+      "name": "nb-norway",
+      "box": "l7a",
+      "hosts": ["www.nb.no", "api.nb.no"],
+      "providers": ["nb_norway"],
+      "rate": { "www.nb.no": 1, "api.nb.no": 1 },
+      "page_concurrency": 2,
+      "note": "Nasjonalbiblioteket: manifests on api.nb.no, images on www.nb.no."
+    },
+    {
+      "name": "e-rara",
+      "box": "l7a",
+      "hosts": ["www.e-rara.ch"],
+      "providers": ["e-rara", "erara"],
+      "rate": { "www.e-rara.ch": 1 },
+      "page_concurrency": 2,
+      "note": "e-rara 403s main's address (tier-A import, 2026-10-25) and archive-ocr excludes it; 200 from l7a the same day. 1/s, half its table rate, because the hourly cron on main also reaches it."
+    },
+    {
+      "name": "gallica",
+      "box": "l7a",
+      "hosts": ["gallica.bnf.fr"],
+      "providers": ["gallica"],
+      "rate": { "openapi.bnf.fr": 2 },
+      "page_concurrency": 2,
+      "flags": ["--gallica-openapi"],
+      "note": "gallica.bnf.fr 403s datacenter addresses; the same IIIF image is served by openapi.bnf.fr (Image API 3.0). Lane chosen by the page's gallica.bnf.fr URL, fetched from openapi.bnf.fr."
+    },
+    {
+      "name": "ia-lazy",
+      "box": "l7a",
+      "hosts": ["iiif.archive.org"],
+      "providers": ["internet_archive", "ia_language", "ia_microfilm", "ia"],
+      "rate": { "iiif.archive.org": 5 },
+      "page_concurrency": 2,
+      "flags": ["--lazy-only"],
+      "note": "Manifest-only IA books, per page over IIIF (JPEG, no JP2 decode). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main). Item zips for manifest-only books are a follow-up: archive-ia-bulk writes page docs."
+    },
+    {
+      "name": "harvard",
+      "box": "mac",
+      "hosts": ["mps.lib.harvard.edu"],
+      "providers": ["harvard"],
+      "rate": { "mps.lib.harvard.edu": 1 },
+      "page_concurrency": 2,
+      "note": "Harvard's ELB 429s every Hetzner address (archive-ocr note, 2026-05-25); archive-harvard.mjs runs on the Mac. Listed so the table names every host; no box starts it."
+    }
+  ]
+}
