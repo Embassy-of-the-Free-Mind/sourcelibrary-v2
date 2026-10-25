@@ -14,7 +14,7 @@ import path from 'path';
 import {
   catchwordBoundary, parseCatchword, pageNumberBreaks, parsePageNum, duplicateScan,
   truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
-  parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
+  parseVocab, vocabAbsent, repeatedBlocks, duplicateSlots, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
   metaPayload, continuityMeta,
   translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -33,6 +33,7 @@ const PN = fx('page-numbers.json').cases as any[];
 const DUP = fx('duplicate-scans.json').cases as any[];
 const TR = fx('translations.json');
 const MP = fx('meta-payload.json').cases as any[];
+const DS = fx('duplicate-slots.json').cases as Record<string, any>;
 
 describe('catchword continuity', () => {
   it('reads the catchword out of <meta>, and refuses a CJK fore-edge title', () => {
@@ -251,6 +252,35 @@ describe('O4 · a block repeated inside one page (#5135)', () => {
   });
   it('is unjudgeable under two shingles of text', () => {
     expect(repeatedBlocks('only a few words here')).toEqual({ judged: false, why: 'short' });
+  });
+});
+
+describe('a block reused in a second slot (#3591)', () => {
+  it('flags Kitab al-Bulhan p.41: the <margin> is the body paragraph word for word', () => {
+    // repeatedBlocks is blind to it: sourceProse strips <margin> before it looks
+    expect(repeatedBlocks(DS['bulhan-p41-margin-copies-body'].ocr)).toMatchObject({ flag: false });
+    const r = duplicateSlots(DS['bulhan-p41-margin-copies-body'].ocr);
+    expect(r).toMatchObject({ judged: true, flag: true, repeatedHeads: [] });
+    expect(r.copiedSlots).toHaveLength(1);
+    expect(r.copiedSlots[0]).toMatchObject({ tag: 'margin' });
+    expect(r.copiedSlots[0].share).toBeGreaterThan(0.9);
+  });
+  it('flags p.159: two headings transcribed identically while its own image-descs say one dot, then two', () => {
+    const r = duplicateSlots(DS['bulhan-p159-heading-twice'].ocr);
+    expect(r).toMatchObject({ judged: true, flag: true, copiedSlots: [] });
+    expect(r.repeatedHeads).toEqual([{ text: 'قارعت الاثنين قارعت خمسة انا', count: 2, descsDiffer: true }]);
+  });
+  it('does not flag p.60 (one heading, no slot), nor headings that recur by design', () => {
+    expect(duplicateSlots(DS['bulhan-p60-torn-grid'].ocr)).toMatchObject({ flag: false });
+    // "A L I U D." twice: a letter-spaced label is ONE word, under HEADING_MIN_UNITS
+    expect(duplicateSlots(DS['aliud-p17-spaced-label-twice'].ocr)).toEqual({ judged: false, why: 'no-slots' });
+    // "Deinde cum dicit." — a commentary formula, three words
+    expect(duplicateSlots(DS['commentary-p47-formula-heading'].ocr)).toEqual({ judged: false, why: 'no-slots' });
+  });
+  it('flags a <note> copied from an earlier slot, and passes a short marginal citation', () => {
+    const para = 'Nihil est in intellectu quod non prius fuerit in sensu, ut dicunt philosophi omnes qui de anima scripserunt';
+    expect(duplicateSlots(`<margin>${para}</margin>\n\nAliud corpus paginae.\n\n<note>${para}</note>`).copiedSlots).toMatchObject([{ tag: 'note', share: 1 }]);
+    expect(duplicateSlots('<margin>Matth. ult.</margin>\n\nEuntes docete omnes gentes. Matth. ult.')).toEqual({ judged: false, why: 'no-slots' });
   });
 });
 

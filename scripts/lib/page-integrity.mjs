@@ -1046,6 +1046,81 @@ export function repeatedBlocks(ocr) {
   };
 }
 
+// ── 7b. one block reused in a second slot (#3591) ──────────────────────────────────────────
+
+export const SLOT_TAGS = ['margin', 'insert', 'note', 'footnote'];
+export const SLOT_MIN_UNITS = 12;          // words (segmented) a slot needs before it is judged
+export const SLOT_MIN_UNITS_CJK = 30;      // characters (unsegmented)
+export const SLOT_SHINGLE = 6;             // words per shingle; 20 characters unsegmented
+export const SLOT_SHINGLE_CJK = 20;
+export const SLOT_COPIED_SHARE = 0.8;      // share of a slot's shingles found in the body
+export const HEADING_MIN_UNITS = 4;        // words; at 3, commentary formulae ("Deinde cum dicit.") recur by design
+
+const slotText = (t) => String(t || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/[ \t]+/g, ' ').trim();
+const shingles = (units, k) => { const s = new Set(); for (let i = 0; i + k <= units.length; i++) s.add(units.slice(i, i + k).join('\u0001')); return s; };
+
+/**
+ * Has the OCR put one block of text into a second slot? The #3591 shape: where the model cannot
+ * read a marginal note or a second heading, it fills the slot with text it already transcribed —
+ * Kitāb al-Bulhān p.41's `<margin>` is the body paragraph word for word; p.159's two headings
+ * (one dot, then two dots, in the model's OWN image descriptions) are transcribed identically.
+ * repeatedBlocks() cannot see either: sourceProse() strips the slot tags before it looks, and a
+ * heading is shorter than its shingle.
+ *
+ *   copiedSlots    a `<margin>`/`<insert>`/`<note>`/`<footnote>` of ≥ SLOT_MIN_UNITS whose
+ *                  shingles are ≥ SLOT_COPIED_SHARE present in the body (or in an earlier slot)
+ *   repeatedHeads  a markdown heading of ≥ HEADING_MIN_UNITS words (letter-spaced labels joined
+ *                  first: "O R A T I O" / "E X P L A N A T I O" alternate by design) set twice;
+ *                  `descsDiffer` when the `<image-desc>` right after each copy says different
+ *                  things — the page contradicting itself, checkable in a script nobody reads
+ *
+ * UNJUDGEABLE: no slot and no heading long enough to judge; a REFRAIN_SCRIPTS page.
+ */
+export function duplicateSlots(ocr) {
+  const o = String(ocr || '');
+  const body = proseOf(o);
+  if (REFRAIN_SCRIPTS.has(dominantScript(body))) return { judged: false, why: 'refrain-script' };
+  const { units: bodyUnits, unsegmented } = repeatUnits(body);
+  const k = unsegmented ? SLOT_SHINGLE_CJK : SLOT_SHINGLE;
+  const minUnits = unsegmented ? SLOT_MIN_UNITS_CJK : SLOT_MIN_UNITS;
+  const unitsOf = (t) => (unsegmented
+    ? [...String(t).normalize('NFC').replace(/\s+/g, '')].filter(c => /[\p{L}\p{N}\p{M}]/u.test(c))
+    : repeatUnits(t).units);
+  const seen = shingles(bodyUnits, k);
+  let judgedSlots = 0;
+  const copiedSlots = [];
+  const re = new RegExp(`<(${SLOT_TAGS.join('|')})\\b[^>]*>([\\s\\S]*?)</\\1>`, 'gi');
+  for (const m of o.matchAll(re)) {
+    const units = unitsOf(slotText(m[2]));
+    if (units.length < minUnits) continue;
+    judgedSlots++;
+    const sh = shingles(units, k);
+    let hit = 0; for (const s of sh) if (seen.has(s)) hit++;
+    const share = +(hit / Math.max(1, sh.size)).toFixed(3);
+    if (share >= SLOT_COPIED_SHARE) copiedSlots.push({ tag: m[1].toLowerCase(), units: units.length, share, sample: slotText(m[2]).slice(0, 120) });
+    for (const s of sh) seen.add(s);
+  }
+  const heads = new Map();
+  let judgedHeads = 0;
+  for (const m of o.matchAll(/^#{1,6}[ \t]+(.+)$/gm)) {
+    // "A L I U D." / "E X P L A N A T I O" are one word: a printed label that recurs by design
+    const units = unsegmented ? unitsOf(slotText(m[1])) : joinSpacedLetters(unitsOf(slotText(m[1])));
+    if (units.length < (unsegmented ? HEADING_MIN_UNITS * 2 : HEADING_MIN_UNITS)) continue;
+    judgedHeads++;
+    const key = units.join('\u0001');
+    const after = o.slice(m.index + m[0].length, m.index + m[0].length + 600);
+    const desc = after.match(/^\s*<image-desc>([\s\S]*?)<\/image-desc>/i)?.[1]?.trim() ?? null;
+    const h = heads.get(key) || heads.set(key, { text: m[1].trim().slice(0, 120), count: 0, descs: [] }).get(key);
+    h.count++; h.descs.push(desc);
+  }
+  if (!judgedSlots && !judgedHeads) return { judged: false, why: 'no-slots' };
+  const repeatedHeads = [...heads.values()].filter(h => h.count > 1).map(h => {
+    const descs = h.descs.filter(Boolean);
+    return { text: h.text, count: h.count, descsDiffer: descs.length > 1 && new Set(descs).size > 1 };
+  });
+  return { judged: true, slots: judgedSlots, heads: judgedHeads, copiedSlots, repeatedHeads, flag: copiedSlots.length > 0 || repeatedHeads.length > 0 };
+}
+
 // ── 8. text hidden in the continuity <meta> ────────────────────────────────────────────────
 
 export const META_PAYLOAD_MIN_WORDS = 8;
