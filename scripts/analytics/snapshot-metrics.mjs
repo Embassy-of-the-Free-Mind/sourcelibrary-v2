@@ -182,7 +182,7 @@ await withMongo(async (db) => {
   } catch { /* noop */ }
 
   // ─── TRAFFIC SHAPE / TOP CONTENT / REFERRERS (last DAYS, human-filtered) ──
-  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } });
+  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } }).batchSize(1000);
   let humanPvs = 0, botPvs = 0;
   const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), referrers = new Map(), countries = new Map();
   while (await pvCursor.hasNext()) {

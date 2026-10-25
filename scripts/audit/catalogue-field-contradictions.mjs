@@ -79,7 +79,7 @@ const hits = Object.fromEntries(['language-vs-script', 'language-stamp-mismatch'
 let scanned = 0;
 const cur = books.find(FRAME, { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, original_language: 1,
   text_role: 1, published: 1, year: 1, 'book_class.script_family': 1, 'field_provenance.language': 1, 'source_work_dates_meta.edition': 1,
-  'image_source.provider': 1 } });
+  'image_source.provider': 1 } }).batchSize(1000);
 for await (const b of cur) {
   scanned++;
   const row = (extra) => ({ id: b.id, provider: b.image_source?.provider ?? null, title: String(b.title || '').slice(0, 90), ...extra });

@@ -56,7 +56,7 @@ export async function loadClipRows(sb, { sourceType = null, log = () => {} } = {
 /** Load every book's `id` and `_id` (both are valid keys) with title/author/visible for hydration. */
 export async function loadBookMap(db) {
   const byKey = new Map();
-  const cur = db.collection('books').find({}, { projection: { _id: 1, id: 1, title: 1, display_title: 1, author: 1, visible: 1 } });
+  const cur = db.collection('books').find({}, { projection: { _id: 1, id: 1, title: 1, display_title: 1, author: 1, visible: 1 } }).batchSize(1000);
   for await (const b of cur) {
     const rec = { id: b.id || String(b._id), title: b.display_title || b.title, author: b.author, visible: b.visible };
     if (b.id) byKey.set(String(b.id), rec);
@@ -158,7 +158,7 @@ export async function findMissingFromIndex(db, clipRows) {
   const cur = db.collection('gallery_images').find(
     { extracted_url: { $exists: true, $ne: null } },
     { projection: { _id: 0, id: 1, book_id: 1, book_visible: 1 } },
-  );
+  ).batchSize(1000);
   let withCrop = 0;
   const missing = [];
   for await (const g of cur) {

@@ -49,7 +49,7 @@ async function main() {
   console.log(`${total} gallery images need dhash. Processing up to ${LIMIT}.`);
 
   const cursor = db.collection('gallery_images')
-    .find(filter)
+    .find(filter).batchSize(1000)
     .project({ _id: 1, id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1 })
     .limit(LIMIT);
 

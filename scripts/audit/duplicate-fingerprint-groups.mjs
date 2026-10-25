@@ -63,7 +63,7 @@ const PROJECTION = {
 const byFingerprint = new Map();
 const info = new Map();
 let scanned = 0;
-for await (const b of db.collection('books').find({}, { projection: PROJECTION })) {
+for await (const b of db.collection('books').find({}, { projection: PROJECTION }).batchSize(1000)) {
   scanned++;
   const id = b.id || String(b._id);
   const fps = Array.isArray(b.source_fingerprints) && b.source_fingerprints.length

@@ -59,7 +59,7 @@ await withMongo(async (db) => {
   const cur = db.collection('books').find(
     { text_role: 'original' },
     { projection: { title: 1, author: 1, language: 1, original_language: 1, work_id: 1, is_first_translation: 1 } },
-  );
+  ).batchSize(1000);
 
   const queue = [];
   const backup = [];

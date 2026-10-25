@@ -135,7 +135,7 @@ await withMongo(async (db) => {
     { projection: proj },
   ).toArray();
 
-  const cursor = books.find(query, { projection: proj });
+  const cursor = books.find(query, { projection: proj }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   const candidates = [];

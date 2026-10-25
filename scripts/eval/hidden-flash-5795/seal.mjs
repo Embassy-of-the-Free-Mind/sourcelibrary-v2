@@ -34,7 +34,7 @@ const shuffle = (a, rng) => { for (let i = a.length - 1; i > 0; i--) { const j =
 const client = new MongoClient(process.env.MONGODB_URI); await client.connect(); const db = client.db('bookstore');
 const pop = Object.fromEntries(FAMILIES.map((f) => [f, []])); const heldOut = Object.fromEntries(FAMILIES.map((f) => [f, 0]));
 for await (const b of db.collection('books').find({ visible: { $ne: true }, created_at: { $lt: CUTOFF }, pages_count: { $gt: 0 } },
-  { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'image_source.provider': 1, created_at: 1 } })) {
+  { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'image_source.provider': 1, created_at: 1 } }).batchSize(1000)) {
   const first = toLanguageCodes(b.language).codes[0]; const fam = first ? codeFamily(first) : null;
   if (!pop[fam] || !((b.pages_count || 0) > (b.pages_ocr || 0))) continue;
   if (b.pipeline_auto?.hold || b.pipeline_auto?.status === 'held') { heldOut[fam]++; continue; }

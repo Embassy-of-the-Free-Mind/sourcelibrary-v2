@@ -86,7 +86,7 @@ async function main() {
 
   const cursor = books.find(query, {
     projection: { _id: 1, slug: 1, author: 1, title: 1, commons_full_url: 1, commons_width: 1, commons_height: 1 },
-  }).limit(LIMIT);
+  }).batchSize(1000).limit(LIMIT);
 
   console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Archiving full-res originals to R2...`);
 

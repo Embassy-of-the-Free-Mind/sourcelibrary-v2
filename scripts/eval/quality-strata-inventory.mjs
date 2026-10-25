@@ -69,7 +69,7 @@ let totals = { books: 0, pages: 0, ocr_pages: 0, translated_pages: 0 };
 const cur = books.find(
   { visible: true, hidden: { $ne: true }, pages_count: { $gt: 0 } },
   { projection: { _id: 0, language: 1, published: 1, year: 1, year_estimated: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 } },
-);
+).batchSize(1000);
 for await (const b of cur) {
   const k = `${normLang(b.language)}||${periodOfBook(b)}`;
   const r = frame.get(k) || { books: 0, pages: 0, ocr_pages: 0, translated_pages: 0, books_with_text: 0 };
@@ -123,7 +123,7 @@ async function catalogueOf(ids) {
   const { ObjectId } = await import('mongodb');
   const oids = ids.filter(i => /^[0-9a-f]{24}$/.test(i)).map(i => new ObjectId(i));
   const found = new Map();
-  const cur = books.find({ $or: [{ id: { $in: ids } }, { _id: { $in: oids } }] }, { projection: { id: 1, language: 1, published: 1, year: 1, year_estimated: 1 } });
+  const cur = books.find({ $or: [{ id: { $in: ids } }, { _id: { $in: oids } }] }, { projection: { id: 1, language: 1, published: 1, year: 1, year_estimated: 1 } }).batchSize(1000);
   for await (const b of cur) { found.set(String(b.id || b._id), b); found.set(String(b._id), b); }
   return found;
 }

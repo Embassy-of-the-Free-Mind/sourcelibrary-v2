@@ -118,7 +118,7 @@ const byKey = new Map();
 const usedIds = new Set();
 const byId = new Map();
 const byQid = new Map();
-for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, wikidata_id: 1 } })) {
+for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, wikidata_id: 1 } }).batchSize(1000)) {
   byId.set(a._id, a);
   if (a.wikidata_id) byQid.set(a.wikidata_id, a._id);
   usedIds.add(a._id);

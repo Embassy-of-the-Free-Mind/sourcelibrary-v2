@@ -42,7 +42,7 @@ async function main() {
   };
 
   // legacy_rp — already structured
-  for await (const a of c.find({ notes: { $regex: '\\[legacy_rp\\]' }, result: 'found', 'priors.0': { $exists: true } }) as any) {
+  for await (const a of c.find({ notes: { $regex: '\\[legacy_rp\\]' }, result: 'found', 'priors.0': { $exists: true } }).batchSize(1000) as any) {
     for (const p of a.priors || []) {
       if (p.english_title && !/^[A-Z][a-z]+ \(translator\)/.test(p.english_title)) {
         add(a.book_id, { english_title: p.english_title, translator: p.translator, pub_year: p.pub_year, publisher: p.publisher, completeness: p.completeness, source_url: p.source_url });
@@ -51,7 +51,7 @@ async function main() {
   }
   // legacy_tc — parse prose
   let tcParsed = 0, tcSkipped = 0;
-  for await (const a of c.find({ notes: { $regex: '\\[legacy_tc\\]' }, result: 'found', 'priors.0': { $exists: true } }) as any) {
+  for await (const a of c.find({ notes: { $regex: '\\[legacy_tc\\]' }, result: 'found', 'priors.0': { $exists: true } }).batchSize(1000) as any) {
     for (const p of a.priors || []) {
       const parsed = parseProse(String(p.english_title || ''));
       if (parsed) { add(a.book_id, parsed); tcParsed++; } else tcSkipped++;

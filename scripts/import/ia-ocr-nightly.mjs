@@ -48,7 +48,7 @@ await withMongo(async (db) => {
     $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] },
     hidden_reason: { $in: [null, ''] },
     $or: [{ ia_identifier: { $exists: true, $ne: null } }, { 'image_source.provider': 'internet_archive' }],
-  }, { projection: { id: 1 } }).sort({ processing_priority: -1, visible: -1 });
+  }, { projection: { id: 1 } }).batchSize(1000).sort({ processing_priority: -1, visible: -1 });
   for await (const b of cur) {
     if (ids.length >= MAX) break;
     considered++;

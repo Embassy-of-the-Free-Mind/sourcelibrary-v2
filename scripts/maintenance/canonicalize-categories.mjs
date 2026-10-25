@@ -38,7 +38,7 @@ async function doMongo() {
   const cursor = db.collection('books').find(
     { categories: { $exists: true, $ne: [] } },
     { projection: { categories: 1 } }
-  );
+  ).batchSize(1000);
   let scanned = 0, changed = 0;
   const ops = [];
   for await (const b of cursor) {

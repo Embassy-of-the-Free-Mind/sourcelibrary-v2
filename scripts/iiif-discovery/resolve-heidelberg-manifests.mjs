@@ -54,7 +54,7 @@ const { client, db } = await getScriptClient({ noTimeout: true });
 const col = db.collection('import_candidates');
 const filter = { source: 'heidelberg', status: 'discovered', heidelberg_resolved_at: { $exists: false } };
 const total = await col.countDocuments(filter);
-const cur = col.find(filter, { projection: { oai_id: 1, manifest_url: 1, title: 1, language: 1 } }).sort({ _id: 1 });
+const cur = col.find(filter, { projection: { oai_id: 1, manifest_url: 1, title: 1, language: 1 } }).batchSize(1000).sort({ _id: 1 });
 console.log(`[resolve-heidelberg] ${total} unresolved candidates${LIMIT ? `, limit ${LIMIT}` : ''}${DRY ? ' (dry run)' : ''}, 1 req / ${DELAY}ms`);
 
 let n = 0, ok = 0, noManifest = 0, err = 0, dupUrl = 0;

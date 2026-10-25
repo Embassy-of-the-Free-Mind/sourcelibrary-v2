@@ -110,7 +110,7 @@ async function main() {
       visible: 1, ustc_id: 1, 'ustc_match.ustc_year': 1, 'ustc_match.confidence': 1,
       edition_key: 1, edition_key_quality: 1, edition_external_ids: 1,
     },
-  });
+  }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   // ---- pass 1: compute -----------------------------------------------------

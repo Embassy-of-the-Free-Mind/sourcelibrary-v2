@@ -95,7 +95,7 @@ if (LANE === 'stored' || LANE === 'all') {
   // --force re-folds only what THIS lane wrote; it never clobbers a manifest read
   if (FORCE) q['image_source.rights_normalized.source'] = 'importer-license-field'; // never a manifest read
   else q['image_source.rights_normalized'] = { $exists: false };
-  const cursor = books.find(q, { projection: { id: 1, image_source: 1 } });
+  const cursor = books.find(q, { projection: { id: 1, image_source: 1 } }).batchSize(1000);
   let n = 0, written = 0;
   const ops = [];
   const flush = async () => { if (!ops.length) return; const r = await books.bulkWrite(ops, { ordered: false }); written += r.modifiedCount; ops.length = 0; };

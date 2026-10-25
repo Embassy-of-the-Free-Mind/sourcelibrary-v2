@@ -30,7 +30,7 @@ const out = OUT ? fs.createWriteStream(OUT) : null;
 const tally = { books: bookRows.length, pages: 0, pagesWithPhrases: 0, phrases: 0, glossed: 0, judged: 0, compound: 0, compoundMismatch: 0, small: 0, smallMismatch: 0 };
 for (const b of bookRows) {
   const cur = db.collection('pages').find({ book_id: b.id, 'ocr.data': { $exists: true, $ne: '' }, 'translation.data': { $exists: true, $ne: '' } },
-    { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.model': 1 } }).sort({ page_number: 1 });
+    { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.model': 1 } }).batchSize(1000).sort({ page_number: 1 });
   for await (const p of cur) {
     tally.pages++;
     const ocr = cleanMayaOcr(p.ocr.data);

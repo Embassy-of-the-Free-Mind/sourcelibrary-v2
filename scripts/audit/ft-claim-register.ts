@@ -35,7 +35,7 @@ const cur = books.find(
       pages_translated: 1, pages_ocr: 1, pages_blank: 1, pages_count: 1,
     },
   },
-);
+).batchSize(1000);
 
 const tally: Record<string, number> = {};
 const reasons: Record<string, number> = {};

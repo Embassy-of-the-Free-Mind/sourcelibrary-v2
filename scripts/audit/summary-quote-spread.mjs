@@ -86,7 +86,7 @@ async function main() {
     const cursor = db.collection('books').find(
       { visible: true, pages_count: { $gte: MIN_PAGES }, 'reading_summary.quotes.0': { $exists: true } },
       { projection: { _id: 0, id: 1, pages_count: 1, 'reading_summary.quotes.page': 1, 'reading_summary.pages_sampled': 1, 'reading_summary.generated_at': 1 } },
-    );
+    ).batchSize(1000);
     rows = [];
     for await (const b of cursor) { const r = quoteReach(b); if (r) rows.push(r); }
   } finally {

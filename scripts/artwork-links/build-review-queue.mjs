@@ -46,7 +46,7 @@ console.error(`  ${targets.length} books indexed, ${index.byTitle.size} distinct
 const cursor = books.find(
   { content_type: 'artwork', visible: true, 'enrichment.cross_references.0': { $exists: true } },
   { projection: { id: 1, slug: 1, title: 1, display_title: 1, source_book: 1, 'enrichment.cross_references': 1 } },
-);
+).batchSize(1000);
 
 const rows = [];
 const stats = { artworks: 0, withWorkLink: 0, withAuthorOnly: 0, unresolved: 0, refs: 0, alreadyHasSourceBook: 0 };

@@ -46,7 +46,7 @@ const byKey = new Map();
 let iaCount = 0;
 const cur = col.find(
   { source: IA_SOURCE, 'metadata.discovery_query': DISCOVERY_QUERY, manifest_url: { $ne: null } },
-  { projection: { title: 1, manifest_url: 1, source_id: 1, 'metadata.access_restricted': 1 } });
+  { projection: { title: 1, manifest_url: 1, source_id: 1, 'metadata.access_restricted': 1 } }).batchSize(1000);
 for await (const d of cur) {
   const n = normalizeCjk(d.title);
   if (n.length < 2) continue;

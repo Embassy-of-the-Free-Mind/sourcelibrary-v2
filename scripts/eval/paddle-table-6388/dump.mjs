@@ -11,7 +11,7 @@ const out = zlib.createGzip(); out.pipe(fs.createWriteStream('paddle-pages.jsonl
 let n = 0, np = 0; const t0 = Date.now();
 for (let i = 0; i < ids.length; i += 100) {
   const chunk = ids.slice(i, i + 100);
-  const cur = db.collection('pages').find({ book_id: { $in: chunk }, 'ocr.source': 'paddle' }, { projection: { book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.engine.postprocess': 1, 'ocr.engine.issue': 1, 'ocr.engine.run': 1 } });
+  const cur = db.collection('pages').find({ book_id: { $in: chunk }, 'ocr.source': 'paddle' }, { projection: { book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.engine.postprocess': 1, 'ocr.engine.issue': 1, 'ocr.engine.run': 1 } }).batchSize(1000);
   for await (const p of cur) { out.write(JSON.stringify({ pid: String(p._id), bid: p.book_id, pn: p.page_number, text: p.ocr?.data, pp: p.ocr?.engine?.postprocess || null, iss: p.ocr?.engine?.issue, run: p.ocr?.engine?.run }) + '\n'); np++; }
   n += chunk.length; if (i % 1000 === 0) console.log(n, np, ((Date.now() - t0) / 1000).toFixed(0) + 's');
 }

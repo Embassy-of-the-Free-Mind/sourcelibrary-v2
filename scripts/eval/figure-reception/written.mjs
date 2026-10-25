@@ -35,7 +35,7 @@ for (const l of fs.readFileSync(path.join(process.env.HOME, 'sl-corpus/catalog.j
 const client = await MongoClient.connect(process.env.MONGODB_URI);
 const slugs = [...new Set([...cat.values()].map((d) => d.author_id).filter(Boolean))];
 const authors = new Map();
-for await (const a of client.db('bookstore').collection('authors').find({ slug: { $in: slugs } }, { projection: { slug: 1, wikidata_id: 1, wikidata_death_year: 1, canonical_name: 1 } })) authors.set(a.slug, a);
+for await (const a of client.db('bookstore').collection('authors').find({ slug: { $in: slugs } }, { projection: { slug: 1, wikidata_id: 1, wikidata_death_year: 1, canonical_name: 1 } }).batchSize(1000)) authors.set(a.slug, a);
 await client.close();
 
 // Wikidata for authors the thesaurus has no death year for. Earliest P570 value; BCE years come back negative.

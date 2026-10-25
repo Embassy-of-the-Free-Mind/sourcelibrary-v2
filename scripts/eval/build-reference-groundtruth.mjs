@@ -98,7 +98,7 @@ for (const w of cfg.works) {
     const pageQuery = { book_id: bookId, 'ocr.data': { $exists: true } };
     if (w.book_id && w.page_number) pageQuery.page_number = w.page_number;
     const cursor = P.find(pageQuery,
-      { projection: { page_number: 1, 'ocr.data': 1 }, sort: { page_number: 1 } });
+      { projection: { page_number: 1, 'ocr.data': 1 }, sort: { page_number: 1 } }).batchSize(1000);
     for await (const pg of cursor) {
       if (!pageQuery.page_number && !pageNorm(pg.ocr?.data || '').includes(probe)) continue;
       const r = scoreAgainstReference(reference, pg.ocr.data, script);

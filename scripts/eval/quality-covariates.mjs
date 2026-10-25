@@ -452,7 +452,7 @@ async function profileWalk(db, base) {
   if (!fs.existsSync(booksFile)) {
     // The book list first, streamed to disk; the cursor is closed before any page lookup.
     const tmp = `${booksFile}.tmp`, w = fs.createWriteStream(tmp);
-    const cur = db.collection('books').find({ visible: true, pages_count: { $gt: 4 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, year: 1, pages_count: 1, 'image_source.provider': 1 } }).sort({ id: 1 });
+    const cur = db.collection('books').find({ visible: true, pages_count: { $gt: 4 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, year: 1, pages_count: 1, 'image_source.provider': 1 } }).batchSize(1000).sort({ id: 1 });
     for await (const b of cur) if (!w.write(JSON.stringify({ id: b.id, title: String(b.title || '').slice(0, 80), language: b.language ?? null, published: b.published ?? null, year: b.year ?? null, pages_count: b.pages_count, provider: b.image_source?.provider ?? null }) + '\n')) await new Promise((r) => w.once('drain', r));
     await new Promise((r) => w.end(r));
     fs.renameSync(tmp, booksFile);

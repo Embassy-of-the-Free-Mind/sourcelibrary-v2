@@ -16,7 +16,7 @@ const books = await db.collection('books').find({ 'catalog_ids.derge_tengyur_vol
 const out = fs.createWriteStream(OUT);
 let n = 0, en = 0;
 for (const b of books) {
-  const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 } }, { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.edited_at': 1, 'translation.model': 1 } });
+  const cur = db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 } }, { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.edited_at': 1, 'translation.model': 1 } }).batchSize(1000);
   for await (const p of cur) {
     n++; if (p.translation?.data) en++;
     out.write(JSON.stringify({ id: p.id, book_id: b.id, vol: b.catalog_ids.derge_tengyur_volume, section: sectionOf(b.title), pn: p.page_number, bo: p.ocr?.data || '', en: p.translation?.data || '', src: p.translation?.source, ed: !!(p.translation?.edited_by || p.translation?.edited_at), model: p.translation?.model }) + '\n');

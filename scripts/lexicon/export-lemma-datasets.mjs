@@ -60,11 +60,11 @@ async function main() {
 
   // ── Greek ──
   const grcHeads = new Map();
-  for await (const e of db.collection('lexicon_entries_grc').find({}, { projection: { key: 1, headword: 1 } })) {
+  for await (const e of db.collection('lexicon_entries_grc').find({}, { projection: { key: 1, headword: 1 } }).batchSize(1000)) {
     grcHeads.set(e.key, e.headword);
   }
   const grcForms = new Set();
-  for await (const d of db.collection('lexicon_lemma_map_grc').find({}, { projection: { form: 1 } })) {
+  for await (const d of db.collection('lexicon_lemma_map_grc').find({}, { projection: { form: 1 } }).batchSize(1000)) {
     grcForms.add(d.form);
   }
   // Attestation counts: normalize the corpus enumeration down onto map forms.
@@ -78,7 +78,7 @@ async function main() {
     }
   }
   async function* grcRows() {
-    const cur = db.collection('lexicon_lemma_map_grc').find({}).sort({ form: 1 });
+    const cur = db.collection('lexicon_lemma_map_grc').find({}).batchSize(1000).sort({ form: 1 });
     for await (const d of cur) {
       const lemmas = d.keys.map((k) => ({ headword: grcHeads.get(k) ?? null, lsj: k })).filter((l) => l.headword);
       if (!lemmas.length) continue;
@@ -103,13 +103,13 @@ async function main() {
     latRows.set(form, set);
   };
   const latByNorm = new Map();
-  for await (const e of db.collection('lexicon_entries').find({}, { projection: { key: 1, key_normalized: 1 } })) {
+  for await (const e of db.collection('lexicon_entries').find({}, { projection: { key: 1, key_normalized: 1 } }).batchSize(1000)) {
     addLat(e.key_normalized, [e.key]);
     const arr = latByNorm.get(e.key_normalized) ?? [];
     arr.push(e.key);
     latByNorm.set(e.key_normalized, arr);
   }
-  for await (const d of db.collection('lexicon_lemma_map').find({})) addLat(d.form, d.keys);
+  for await (const d of db.collection('lexicon_lemma_map').find({}).batchSize(1000)) addLat(d.form, d.keys);
   for (const [form, lemmas] of irregularEntries()) {
     const keys = lemmas.flatMap((l) => latByNorm.get(l.replace(/[0-9]+$/, '')) ?? (latByNorm.has(l) ? latByNorm.get(l) : []));
     if (keys.length) addLat(form, keys);

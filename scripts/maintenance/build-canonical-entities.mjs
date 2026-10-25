@@ -97,7 +97,7 @@ for (const field of SLIVER_FIELDS) {
     [{ $match: { [field]: { $exists: true, $ne: null } } }, shapeStage],
     // offline nightly builder — cache-cold sliver scans have blown a 5-min cap (#2979); 15 min is fine here
     { maxTimeMS: 900000, allowDiskUse: true },
-  );
+  ).batchSize(1000);
   for await (const doc of cursor) rowsById.set(String(doc._id), doc);
 }
 const rows = [...rowsById.values()];
@@ -152,7 +152,7 @@ console.log(`book language map: ${langByBook.size}/${allBookIds.size} referenced
 // #2979 occupation/tradition slice). Missing docs are fine — fields stay null/[]
 // and the timeline falls back to the book-language tradition rollup.
 const claimsById = new Map();
-for await (const c of db.collection('wikidata_claims').find({})) claimsById.set(c._id, c);
+for await (const c of db.collection('wikidata_claims').find({}).batchSize(1000)) claimsById.set(c._id, c);
 console.log(`wikidata_claims: ${claimsById.size} QIDs cached`);
 
 // ── 5. Assemble one doc per canonical entity.

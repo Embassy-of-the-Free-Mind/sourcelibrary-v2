@@ -149,7 +149,7 @@ async function run() {
         id: 1, book_id: 1, page_number: 1, crop: 1,
         archived_photo: 1, photo_original: 1,
       },
-    })
+    }).batchSize(1000)
     // Process pages with detections first (sort by detected_images existence)
     .sort({ 'detected_images.0': -1 });
 

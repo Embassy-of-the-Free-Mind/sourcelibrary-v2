@@ -194,7 +194,7 @@ async function main() {
   const bookProj = { id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 };
   const bookSource = RANDOM_BOOKS > 0
     ? (await db.collection('books').aggregate([{ $match: bookFilter }, { $sample: { size: RANDOM_BOOKS } }, { $project: bookProj }]).toArray())[Symbol.iterator]()
-    : db.collection('books').find(bookFilter, { projection: bookProj }).sort({ _id: 1 });
+    : db.collection('books').find(bookFilter, { projection: bookProj }).batchSize(1000).sort({ _id: 1 });
 
   const candidates = [];
   let booksScanned = 0;
@@ -380,7 +380,7 @@ async function reconcile(db) {
     return;
   }
   console.log('[reconcile] scanning Case-3 books for recovered pages missing gallery docs…');
-  const cursor = db.collection('books').find({ visible: true, detected_images_count: { $gt: 0 } }, { projection: { id: 1 } }).sort({ _id: 1 });
+  const cursor = db.collection('books').find({ visible: true, detected_images_count: { $gt: 0 } }, { projection: { id: 1 } }).batchSize(1000).sort({ _id: 1 });
   let scanned = 0, gapBooks = 0, fixed = 0, failed = 0;
   for await (const book of cursor) {
     scanned++;

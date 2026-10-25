@@ -46,7 +46,7 @@ const db = mc.db('bookstore');
 
 // canonical variant map: norm(variant) -> count of docs claiming it
 const variantDocs = new Map();
-for await (const a of db.collection('authors').find({}, { projection: { variants: 1, canonical_name: 1, merged_into: 1 } })) {
+for await (const a of db.collection('authors').find({}, { projection: { variants: 1, canonical_name: 1, merged_into: 1 } }).batchSize(1000)) {
   if (a.merged_into) continue;
   for (const v of new Set([...(a.variants || []), a.canonical_name].filter(Boolean).map(norm))) {
     variantDocs.set(v, (variantDocs.get(v) || 0) + 1);

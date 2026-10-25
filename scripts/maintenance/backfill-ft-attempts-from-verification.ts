@@ -53,7 +53,7 @@ async function main() {
   const cursor = books.find(
     { 'translation_verification.disposition': { $exists: true } },
     { projection: { id: 1, 'translation_verification': 1 } },
-  );
+  ).batchSize(1000);
 
   let scanned = 0, built = 0, skippedNoId = 0;
   let ops: any[] = [];

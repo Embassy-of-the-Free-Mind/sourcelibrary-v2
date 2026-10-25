@@ -221,7 +221,7 @@ async function main() {
         } else inserted += batch.length;
         batch = [];
       };
-      for await (const p of PW.find({ book_id: id }).sort({ _id: 1 })) {
+      for await (const p of PW.find({ book_id: id }).batchSize(1000).sort({ _id: 1 })) {
         const { page, poisoned } = transformPage(p);
         if (poisoned) { poisonedPages++; poisonLog.write(JSON.stringify({ book_id: id, page_id: String(p._id), page_number: p.page_number, dropped: poisoned }) + '\n'); }
         if (typeof page.archived_photo === 'string' && /^https?:\/\//.test(page.archived_photo)) archived++;

@@ -14,7 +14,7 @@ if (!bookId || !arg) { console.error('usage: page-dump.mjs <book_id> --scan | <p
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const pages = c.db('bookstore').collection('pages');
 if (arg === '--scan') {
-  for await (const p of pages.find({ book_id: bookId }, { projection: { _id: 0, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).sort({ page_number: 1 })) {
+  for await (const p of pages.find({ book_id: bookId }, { projection: { _id: 0, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).batchSize(1000).sort({ page_number: 1 })) {
     const t = p.ocr?.data || '';
     const pt = (t.match(/<page-type>([^<]*)<\/page-type>/) || [])[1] || '';
     const body = t.replace(/<[^>]+>[^<]*<\/[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();

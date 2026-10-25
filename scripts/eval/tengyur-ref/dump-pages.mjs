@@ -31,7 +31,7 @@ for (const b of books) {
   const lines = [];
   const cur = db.collection('pages').find({ book_id: b.id }, {
     projection: { id: 1, book_id: 1, page_number: 1, page_label: 1, page_type: 1, photo: 1, archived_photo: 1, ocr: 1, 'translation.data': 1, 'translation.model': 1, 'translation.prompt_version': 1 },
-  }).sort({ page_number: 1 });
+  }).batchSize(1000).sort({ page_number: 1 });
   for await (const p of cur) {
     lines.push(JSON.stringify({
       vol, book_id: b.id, page_id: p.id, page_number: p.page_number, page_label: p.page_label, page_type: p.page_type || null,

@@ -185,7 +185,7 @@ async function buildEdition(db, ed) {
 
   const cursor = db
     .collection('pages')
-    .find({ book_id: bookId }, { projection: { _id: 0, page_number: 1, 'ocr.data': 1 } })
+    .find({ book_id: bookId }, { projection: { _id: 0, page_number: 1, 'ocr.data': 1 } }).batchSize(1000)
     .sort({ page_number: 1 });
 
   const pairs = [];

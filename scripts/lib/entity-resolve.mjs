@@ -39,7 +39,7 @@ export async function loadResolver(supaGet, db, { dfMax = 30 } = {}) {
   const byViaf = new Map();
   const byName = new Map();
   const cur = db.collection('entities').find(
-    { type: 'person' }, { projection: { name: 1, viaf_id: 1 } });
+    { type: 'person' }, { projection: { name: 1, viaf_id: 1 } }).batchSize(1000);
   for await (const e of cur) {
     if (e.viaf_id) byViaf.set(String(e.viaf_id), String(e._id));
     const n = norm(e.name);

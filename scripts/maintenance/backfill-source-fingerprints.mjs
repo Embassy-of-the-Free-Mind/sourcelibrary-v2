@@ -77,7 +77,7 @@ for (const name of COLLECTIONS) {
     bulk = [];
   };
 
-  const cursor = coll.find(filter, { projection: PROJECTION });
+  const cursor = coll.find(filter, { projection: PROJECTION }).batchSize(1000);
   for await (const doc of cursor) {
     scanned++;
     const fps = sourceFingerprints(doc);

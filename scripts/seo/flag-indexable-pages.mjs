@@ -280,7 +280,7 @@ console.log(`\nset seo_indexable on ${qualified.length} pages (${modified} newly
 // of ids that query document approaches Mongo's 16MB BSON limit. The partial
 // index makes streaming the flagged ids cheap.
 const stale = [];
-if (!NO_RECONCILE) for await (const p of pages.find({ seo_indexable: true }, { projection: { _id: 0, id: 1 } })) {
+if (!NO_RECONCILE) for await (const p of pages.find({ seo_indexable: true }, { projection: { _id: 0, id: 1 } }).batchSize(1000)) {
   if (!qualifiedIds.has(p.id)) stale.push(p.id);
 }
 let unset = 0;

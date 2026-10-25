@@ -210,7 +210,7 @@ let cursor = db.collection('import_candidates').find(filter, {
     _id: 1, manifest_url: 1, title: 1, author: 1, source: 1,
     date_earliest: 1, date_text: 1, language: 1, source_id: 1,
   },
-});
+}).batchSize(1000);
 
 if (SAMPLE_SIZE) {
   // Random sample via aggregation

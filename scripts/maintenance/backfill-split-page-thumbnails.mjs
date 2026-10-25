@@ -207,7 +207,7 @@ async function main() {
   }
 
   // --apply: process candidates with bounded concurrency.
-  const cursor = p.find(filter).project(proj);
+  const cursor = p.find(filter).batchSize(1000).project(proj);
   const r2 = getR2Client();
   const counts = { written: 0, 'skip-no-source': 0, 'skip-no-dimensions': 0, errored: 0 };
   let processed = 0;

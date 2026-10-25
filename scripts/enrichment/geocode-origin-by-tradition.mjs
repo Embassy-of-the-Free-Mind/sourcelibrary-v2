@@ -190,7 +190,7 @@ async function main() {
       id: 1, language: 1, languages: 1, language_multi: 1,
       author: 1, place_published: 1, place_of_publication: 1, collections: 1,
     } },
-  );
+  ).batchSize(1000);
 
   const counts = {};
   let scanned = 0, matched = 0, updated = 0;

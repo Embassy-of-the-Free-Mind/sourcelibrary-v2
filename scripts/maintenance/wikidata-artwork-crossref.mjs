@@ -181,7 +181,7 @@ async function main() {
 
   const cursor = db.collection('books').find(query, {
     projection: { title: 1, author: 1, 'enrichment.ulan_artist': 1 },
-  }).limit(limit);
+  }).batchSize(1000).limit(limit);
 
   let processed = 0, matched = 0, ulanCorrected = 0, skipped = 0;
 

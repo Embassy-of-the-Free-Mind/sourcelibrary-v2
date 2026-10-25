@@ -84,7 +84,7 @@ async function main() {
 
   const cursor = db.collection('books').find(query, {
     projection: { title: 1, thumbnail: 1, commons_description: 1, commons_categories: 1 },
-  }).limit(limit);
+  }).batchSize(1000).limit(limit);
 
   let processed = 0, updated = 0, failed = 0;
 

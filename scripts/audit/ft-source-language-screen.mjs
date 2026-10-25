@@ -110,7 +110,7 @@ await withMongo(async (db) => {
     // the failure that killed the demote packet after 31 of 33 works, having
     // written nothing.
     noCursorTimeout: true,
-  });
+  }).batchSize(1000);
 
   const tally = { english_source: 0, foreign_source: 0, undetermined: 0, no_ocr: 0 };
   const englishHits = [];

@@ -481,7 +481,7 @@ async function phase6(db) {
     // Set-if-empty copy; the top-level twin stays for now — removing a field
     // 3,860 rows' READERS may still expect is its own change, not a side
     // effect of a backfill.
-    const cursor = db.collection('books').find(filter, { projection: { _id: 1, id: 1, [from.split('.')[0]]: 1 } });
+    const cursor = db.collection('books').find(filter, { projection: { _id: 1, id: 1, [from.split('.')[0]]: 1 } }).batchSize(1000);
     for await (const book of cursor) {
       const value = book[from];
       if (typeof value !== 'string' || !value.trim()) continue;

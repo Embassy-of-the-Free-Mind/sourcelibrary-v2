@@ -31,7 +31,7 @@ function detectScript(s){
 const c=new MongoClient(process.env.MONGODB_URI); await c.connect();
 const tc=c.db('bookstore').collection('translation_catalogs');
 const dist={}; let ops=[],applied=0,total=0;
-for await (const r of tc.find({},{projection:{source:1,original_title:1,source_language:1}})){
+for await (const r of tc.find({},{projection:{source:1,original_title:1,source_language:1}}).batchSize(1000)){
   total++;
   const sd=detectScript(r.original_title);
   let lang,prov;

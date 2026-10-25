@@ -195,7 +195,7 @@ async function main() {
   const cursor = books.find(
     { 'image_source.provider': 'getty' },
     { projection: { 'image_source.identifier': 1 }, maxTimeMS: 30000 }
-  );
+  ).batchSize(1000);
   for await (const doc of cursor) {
     if (doc.image_source?.identifier) existingIds.add(doc.image_source.identifier);
   }
