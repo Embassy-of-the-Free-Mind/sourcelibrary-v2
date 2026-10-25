@@ -32,6 +32,8 @@ off the GPU job's cores).
 | 20:39 | C: every unrouted cell with its smallest gate test | §6 |
 | 21:07 | D: route-census-6740 rows | §10 |
 | 22:19 | **Override** (Derek, 21:20Z: "I don't even believe in the judge family effect. Assume Opus is ok; we are mostly looking for enhanced cost") | the router objective is now the cheapest route a reader would accept as matching Opus; Opus is the fallback in every cell; the judge-family term and Gemini-judged rows do not move routing; route-judge-6740's qualitative rates are an outcome where they land (none had landed: §10). §3–§7 are the post-override routing |
+| 23:27 | CLI pricing: Opus and Sonnet priced separately, per page; image OCR unmetered until metered; quota share in the repo, dollars only in the issue comment | §2; `ocr/route-costs.json` and `route_ocr_v1.py` |
+| 23:29 | Idle quota is free: fill each account's projected-unused share first; this week and the steady state; `spare-lane.py`'s fallback | §3b |
 
 ### What was built (`scripts/eval/estimator/chain/`)
 
@@ -139,6 +141,10 @@ truth. Counts were simulated at the evidence's own design, the model refit, 8 ti
   - Opus OCR wrote 32,526 pages (busiest day 11,843);
   - Opus translation wrote 22,722 pages;
   - agy Flash-low translation wrote 88,320 pages.
+- **Claude is priced per page and per model** (inbox note 23:27Z). The stages above use the measured Opus rates. In
+  v1's `ocr/route-costs.json`, the old 0.0303 points a call (66 Sonnet text calls) is gone: each Claude OCR route
+  carries `claude_points_per_page`. Opus and Sonnet image OCR are **null: unmetered, never routed on cost** until
+  route-judge-run-6740 posts points per image call. `route_ocr_v1.py` reads that.
 - **Opus correction vs agy, per free week.** At 10 pages a call, Opus correction costs less of the free week per page
   than an agy one-page-a-call corrector: 1/41,600 against 1/38,300 before retranslation, and 1/33,000 with it.
   Batching makes Claude the cheaper channel per page.
@@ -181,6 +187,33 @@ P(matches Opus):
   "Correct everything with Opus" is about two years of half of four accounts.
 - **The 3-Flash cells are extrapolations.** Their evidence is #6694's most-read books (queue ranks 201–300). The
   read-weighted LP reaches the most-read books first, which is where that evidence is.
+
+### 3b. This week: the idle quota, priced at 0 (`results/allocation-v2.md`, inbox note 23:29Z)
+
+Idle = the share of an account's week projected to go unused at its reset, at the current pace (1 − used ÷ elapsed
+share of the week). It is perishable: worth nothing after the reset. Calls inside it cost nothing; beyond it they cost
+the full share. The snapshot is `results/claude-weekly-2026-10-25.json`: climits at 23:35Z, and cloudlayer's own
+usage endpoint for its account, which climits cannot refresh.
+
+| account (box) | used | resets | projected at reset | idle | spent on, in the order the LP fills it |
+|---|---|---|---|---|---|
+| gex45 (GM) | 52% | 10-27 11:00Z (35 h) | 66% | **0.34 account-weeks** | the §6 tests' Claude share (0.037), then Opus correction of the most-read pages: Hebrew 3 Flash 2,653, 3-Flash Latin 2,106, Arabic 3 Flash 1,560 (about 6,300 pages, $0) |
+| main (team@) | 88% | 10-27 14:00Z | 114% | 0 | — |
+| l7a (SLd) | 66% | 10-29 22:00Z | 150% | 0 | — |
+| cloudlayer (PP) | 20% | 10-31 15:00Z | 103% | 0 | — |
+
+- **Where the idle work runs:** on gex45's Claude login, the only account with idle this week.
+- **agy's idle share is not readable here** (main's meter), so agy is shown at 0.
+- **The steady state is §3:** half of each account.
+- **Proposal for `spare-lane.py` (#6395), in place of its #6781 fallback.** In an account's last 48 hours, with no issue
+  eligible, it now runs a #6420 convergent-audit round. It should spend that window on the router's cells instead, in
+  this order:
+  1. any §6 test not yet run (route-judge-6740's packet; 30 pages, about 0.003 account-weeks each);
+  2. the next `correct.mjs` batch of the most-read stored-text books: #6694 arm B's `queue-next` ranks, which are
+     exactly the 3-Flash cells most-read first, reads only, applied through the existing gate;
+  3. lite Latin (#5924), most-read first.
+
+  All three are reads that a gated apply writes later. They ask nobody anything, and they never run dry.
 
 ### 4. The decisions, in capacity terms (proposals; nothing was acted on)
 

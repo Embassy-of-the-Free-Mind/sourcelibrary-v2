@@ -31,7 +31,7 @@ Allocation (a linear programme, scipy HiGHS, over horizons of 1 to 260 weeks):
 Every route that matches Opus, and Opus, enters, so a cell moves to another channel when its own is full. Weeks to
 drain = the first horizon at which 99% of the cell is done.
 """
-import argparse, collections, json, os, sys
+import argparse, collections, datetime as dt, json, os, sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -186,7 +186,7 @@ def tiers(books, T=20):
     return [tuple(t) for t in out if t[0] > 0]
 
 
-def lp(evals, tiers_of, cap, H, scale=None, reserve=None):
+def lp(evals, tiers_of, cap, H, scale=None, reserve=None, absolute=None):
     """Maximise sum over (cell, route, tier) of read weight x E[net gain] x pages, subject to each channel's free
     capacity over H weeks (less the tests reserved from it) and each tier's pages. Routes: every MEASURED route of a
     cell that matches Opus, and Opus itself (not only the cell's choice, so a cell can move to an idle channel)."""
@@ -212,7 +212,8 @@ def lp(evals, tiers_of, cap, H, scale=None, reserve=None):
         b.append(cov[key])
     for ch in chans:
         rows.append([v[2]['draw_per_page'].get(ch, 0.0) for v in var])
-        b.append(max(free_week(cap, ch, scale) * H - (reserve or {}).get(ch, 0.0), 0.0))
+        b.append(max((absolute or {}).get(ch, 0.0) if absolute is not None else
+                     free_week(cap, ch, scale) * H - (reserve or {}).get(ch, 0.0), 0.0))
     res = linprog(c, A_ub=np.array(rows), b_ub=np.array(b), bounds=[(0, None)] * len(var), method='highs')
     assert res.status == 0, (res.status, res.message, H)
     out = collections.defaultdict(lambda: dict(pages=0.0, rw=0.0, by_route=collections.Counter(),
@@ -234,6 +235,23 @@ def schedule(evals, tiers_of, cap, scale=None, reserve=None):
     return {H: lp(evals, tiers_of, cap, H, scale, reserve) for H in HORIZONS}
 
 
+def idle_shares(path):
+    """Per account: the share of its week projected to go unused at the reset at the current pace (used / elapsed
+    share of the week), and when it expires. Perishable: worth nothing after the reset."""
+    d = json.load(open(path))
+    now = dt.datetime.fromisoformat(d['as_of'])
+    out = []
+    for a in d['accounts']:
+        reset = dt.datetime.fromisoformat(a['resets_at'])
+        left = (reset - now).total_seconds() / (7 * 86400)
+        elapsed = max(1 - left, 1e-3)
+        projected = a['weekly_percent'] / elapsed
+        out.append(dict(account=a['account'], used_percent=a['weekly_percent'], resets_at=a['resets_at'],
+                        week_elapsed=round(elapsed, 3), projected_percent_at_reset=round(projected, 1),
+                        idle_account_weeks=round(max(0.0, 1 - projected / 100), 3), hours_left=round(left * 7 * 24, 1)))
+    return out
+
+
 def weeks_until(sched, cid, frac, total, key='pages'):
     for H in HORIZONS:
         if sched[H].get(cid, {}).get(key, 0.0) >= frac * total - 1e-6 * total:
@@ -252,6 +270,8 @@ def main():
     ap.add_argument('--out', required=True)
     ap.add_argument('--md', required=True)
     ap.add_argument('--census-out', help='per language x draft totals of the volume census (committed summary)')
+    ap.add_argument('--weekly', default=os.path.join(HERE, 'results/claude-weekly-2026-10-25.json'),
+                    help='per-account weekly use and reset (climits), for the idle share (Derek, 2026-10-26)')
     a = ap.parse_args()
     cv.OPUS_REFERENCE = True     # routing reads the Opus-reference fit (chain_v2.py fit --opus-reference)
     C = json.load(open(a.cells))
@@ -372,6 +392,23 @@ def main():
         scenarios[name]['weeks_top_if_alone_on_channel'] = alone
         scenarios[name]['channel'] = prim
 
+    # THIS WEEK: idle quota is free (Derek, 2026-10-26: "use the idle quota near resets as free"). Each account's idle
+    # share goes first to the tests (they decide which cells can leave Claude), then to the highest value per unit
+    # of capacity, on that account only. agy's idle share is not readable from this box (main's meter): 0 here.
+    idle = idle_shares(a.weekly)
+    idle_plan = []
+    t_claude = reserve.get('claude', 0.0)
+    for acc in sorted(idle, key=lambda x: x['hours_left']):
+        left = acc['idle_account_weeks']
+        if left <= 0:
+            continue
+        to_tests = min(left, t_claude)
+        t_claude -= to_tests
+        p = lp(base, tiers_of, cap, 1, absolute={'claude': left - to_tests, 'agy': 0.0, 'batch': 0.0})
+        idle_plan.append(dict(account=acc['account'], idle_account_weeks=left, expires=acc['resets_at'], to_tests=round(to_tests, 4),
+                              cells={cid: dict(pages=round(v['pages']), read_weighted=round(v['rw']),
+                                               by_route={k: round(x) for k, x in v['by_route'].items()}) for cid, v in p.items()}))
+
     out_cells = []
     for e in base:
         c, ch = e['cell'], e['choice']
@@ -419,7 +456,9 @@ def main():
     res = dict(as_of=cap['as_of'], harm_weight=H_, threshold=T, provisional=PROVISIONAL, delta=[DELTA_ABS, DELTA_REL],
                objective='cheapest route that matches Opus (Opus the assumed reference and the fallback; Derek 2026-10-25 21:20Z)',
                horizons=HORIZONS,
-               capacity=cap['channels'], channels=channels, tests=tests, scenarios=scenarios, proposed_rows=proposals, cells=out_cells,
+               capacity=cap['channels'], channels=channels, idle_this_week=dict(accounts=idle, plan=idle_plan,
+               note='idle = 1 - (used / elapsed share of the week), at the current pace; calls inside it cost 0, beyond it the full share'),
+               tests=tests, scenarios=scenarios, proposed_rows=proposals, cells=out_cells,
                note='capacity in channel units (Claude account-weeks, agy calls, Batch dollars); plan fees are not used')
     json.dump(res, open(a.out, 'w'), indent=1, default=float)
     open(a.md, 'w').write(render(res) + '\n')
@@ -455,6 +494,14 @@ def render(res):
            '| cell | route under test | basis | P(matches Opus) now | n | draw |', '|---|---|---|---|---|---|']
     for t in res['tests']:
         md.append(f"| {t['cell']} | {t['corrector']} | {t['basis']} | {t['p_matches_opus_now']:.2f} | {t['n']} | {fmt_draw(t['draw'], 1)} |")
+    md += ['', 'This week: idle quota (projected unused at the reset, at the current pace), priced at 0:', '',
+           '| account | used | resets | projected at reset | idle (account-weeks) | to the tests | then (pages, by cell) |', '|---|---|---|---|---|---|---|']
+    plan = {p['account']: p for p in res['idle_this_week']['plan']}
+    for acc in res['idle_this_week']['accounts']:
+        p = plan.get(acc['account'])
+        fill = '; '.join(f"{cid} {v['pages']:,}" for cid, v in (p['cells'].items() if p else []) if v['pages']) or '—'
+        md.append(f"| {acc['account']} | {acc['used_percent']}% | {acc['resets_at'][:16]}Z ({acc['hours_left']} h) | {acc['projected_percent_at_reset']}% | "
+                  f"{acc['idle_account_weeks']} | {p['to_tests'] if p else '—'} | {fill} |")
     md += ['', 'Decisions, in capacity terms (each forces one route on one cell; the LP re-plans everything else):', '',
            '| decision | cell, route | whole cell draws | top 10% / 25% / 50% / 100% of reads done by week (competing) | the same, with the channel to itself | pages in the first quarter | what it displaces in the quarter (pages; net pages improved) |',
            '|---|---|---|---|---|---|---|']

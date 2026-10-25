@@ -56,8 +56,9 @@ def call_cost(r, c):
         v[0] = 0.0 if c['gpu_state'] == 'idle' else r['busy_usd_per_1k'] / 1000
     elif r['plan'] == 'agy':
         v[1] = sh['agy_share_per_call'] * sh['unused_quota_value']
-    else:
-        v[2] = sh['claude_points_per_call'] * sh['unused_quota_value']
+    else:   # Claude: points per PAGE, per model (a call may carry several pages); None = unmetered (#6740, 2026-10-26)
+        pts = r.get('claude_points_per_page')
+        v[2] = np.nan if pts is None else pts * sh['unused_quota_value']
     return v
 
 
@@ -96,7 +97,8 @@ def mode(s):
 
 def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0):
     """rows: per route dict with draws cer, fail, num (or None). Adds p_bar, cost_usable, p_best; returns choice."""
-    routable = [r for r in rows if r['enabled']]
+    # a route with no metered price (a Claude image read, until it is metered) is never routed on cost
+    routable = [r for r in rows if r['enabled'] and not np.isnan(r['cost']).any()]
     measured = [r for r in routable if r['basis'] == 'measured']
     if not measured:
         return None

@@ -6,10 +6,9 @@
  "quota_shares": {
   "agy_share_per_call": 4.3632e-06,
   "agy_derivation": "meter_quota_share.py over /root/agy-quota/calls.csv, 2026-10-13T07:01 to 2026-10-24T05:30 (10.94 days): 83,551 calls succeeded and 1,936 hit the cap (so the stretch used the whole allowance) = 229,190 calls per 30 days. Cross-check: median 1,578 calls in the 5 h before a 429 burst = 227,232 per 30 days. Every agy model is counted as one call of one pool, as the meter counts them. A second reading, the median calls in the 24 h before a lock (status.json past_bursts prev24h: 5,771), gives 173K per 30 days: the share is between 4.4e-6 and 5.8e-6 a call.",
-  "claude_points_per_call": 0.0303,
-  "claude_derivation": "One point = 1% of an account's weekly limit. 66 sealed claude -p Sonnet text calls (about 15K in / 5K out) = +2 weekly points on one account (2026-10-14, #6721). NOT an OCR reading: an image call has not been metered. Re-measure before a Claude route decides a cell.",
   "unused_quota_value": 1.0,
-  "unused_quota_note": "1.0 = a call is worth its full share. Quota left unused at a reset is worth nothing, so near a reset with quota to spare this falls toward 0 (set it per run)."
+  "unused_quota_note": "1.0 = a call is worth its full share. Quota left unused at a reset is worth nothing, so near a reset with quota to spare this falls toward 0 (set it per run).",
+  "claude_pricing": "Per PAGE and per model (Derek, 2026-10-26, #6740): the old 0.0303 points a call, from 66 Sonnet TEXT calls, priced Opus as Sonnet and an image call as a text call. Each Claude route now carries claude_points_per_page; null = UNMETERED, never routed on cost. Opus and Sonnet image OCR are unmetered until job route-judge-run-6740 posts points per image call on #6740. Measured Opus rates, for the stages that use them (estimator v2, scripts/eval/estimator/chain/capacity.json): correction (correct.mjs, 10 pages a call) 1% of an account-week per 250 Latin pages = 0.004 points a page (#5924, 2026-10-24); translation (10 pages a call) 3% per 3,250 pages = 0.00092 points a page (#7263)."
  },
  "gpu_state": "idle",
  "routes": [
@@ -79,7 +78,9 @@
    "engine": "claude-sonnet-5-5",
    "kind": "subscription",
    "plan": "claude",
-   "enabled": true
+   "enabled": true,
+   "claude_points_per_page": null,
+   "note": "UNMETERED: an image OCR call has not been metered (route-judge-run-6740 will post it)"
   },
   {
    "route": "claude -p Opus 5.5",
@@ -87,7 +88,8 @@
    "kind": "subscription",
    "plan": "claude",
    "enabled": true,
-   "note": "same points-per-call placeholder as Sonnet; an Opus image call costs more of the week (unmetered)"
+   "note": "UNMETERED: an image OCR call has not been metered (route-judge-run-6740 will post it)",
+   "claude_points_per_page": null
   },
   {
    "route": "Mistral OCR 4.1 API",

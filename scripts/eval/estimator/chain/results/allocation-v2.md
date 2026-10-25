@@ -30,15 +30,24 @@ Tests reserved from the same budget (route-judge-6740 design: 30 pages per route
 | tibetan-yigdzin | agy-gemini-4-argon-low | measured | 0.54 | 30 | 30.6 agy calls + 0.00338 acct-wk |
 | tibetan-yigdzin | flash-lite-p2 | measured | 0.72 | 30 | 0.045 $ + 0.00338 acct-wk |
 
+This week: idle quota (projected unused at the reset, at the current pace), priced at 0:
+
+| account | used | resets | projected at reset | idle (account-weeks) | to the tests | then (pages, by cell) |
+|---|---|---|---|---|---|---|
+| main (team@) | 88% | 2026-10-27T14:00Z (38.3 h) | 114.0% | 0.0 | — | — |
+| gex45 (GM) | 52% | 2026-10-27T11:00Z (35.3 h) | 65.8% | 0.342 | 0.0371 | latin-flash3 2,106; arabic-flash3 1,560; hebrew-flash3 2,653 |
+| l7a (SLd) | 66% | 2026-10-29T22:00Z (94.3 h) | 150.5% | 0.0 | — | — |
+| cloudlayer (PP) | 20% | 2026-10-31T15:00Z (135.3 h) | 102.9% | 0.0 | — | — |
+
 Decisions, in capacity terms (each forces one route on one cell; the LP re-plans everything else):
 
 | decision | cell, route | whole cell draws | top 10% / 25% / 50% / 100% of reads done by week (competing) | the same, with the channel to itself | pages in the first quarter | what it displaces in the quarter (pages; net pages improved) |
 |---|---|---|---|---|---|---|
 | 5924: Opus corrects lite Latin (by reads) | latin-lite, opus-5.5 | 41.4 acct-wk | 4 / 4 / 17 / 78 | 0.1 / 0.61 / 2.85 / 20.7 | 87,293 | nothing |
-| 5924: Opus corrects lite Latin, ahead of every other cell | latin-lite, opus-5.5 | 41.4 acct-wk | 1 / 1 / 3 / 21 | 0.1 / 0.61 / 2.85 / 20.7 | 540,330 | latin-flash3 -264,356 (-214,763); german-flash3 -93,127 (-64,453); hebrew-flash3 -15,537 (-10,043); french-lite -24,078 (-16,424); german-lite -42,094 (-29,108); chinese-flash3 -5,231 (-2,637); arabic-flash3 -7,608 (-4,958) |
-| 6560: Flash-low correction pass over Yigdzin Tibetan, now | tibetan-yigdzin, agy-3.8-flash-low | 2.86e+05 agy calls + 1.93 acct-wk | 1 / 1 / 2 / 8 | 0.1 / 0.37 / 1.23 / 7.33 | 280,623 | latin-flash3 -2,809 (-2,282); german-flash3 -22,441 (-15,532); hebrew-flash3 -4,568 (-2,953); french-lite -8,539 (-5,824); arabic-flash3 -1,386 (-903) |
+| 5924: Opus corrects lite Latin, ahead of every other cell | latin-lite, opus-5.5 | 41.4 acct-wk | 1 / 1 / 3 / 21 | 0.1 / 0.61 / 2.85 / 20.7 | 540,330 | latin-flash3 -264,356 (-214,763); hebrew-flash3 -15,537 (-10,043); chinese-flash3 -5,231 (-2,637); german-flash3 -93,127 (-64,453); arabic-flash3 -7,608 (-4,958); french-lite -24,078 (-16,424); german-lite -42,094 (-29,108) |
+| 6560: Flash-low correction pass over Yigdzin Tibetan, now | tibetan-yigdzin, agy-3.8-flash-low | 2.86e+05 agy calls + 1.93 acct-wk | 1 / 1 / 2 / 8 | 0.1 / 0.37 / 1.23 / 7.33 | 280,623 | latin-flash3 -2,809 (-2,282); hebrew-flash3 -4,568 (-2,953); german-flash3 -22,441 (-15,532); arabic-flash3 -1,386 (-903); french-lite -8,539 (-5,824) |
 | 6561/6871: Opus corrects the newly read Paddle tables (by reads) | zh-frame-6871, opus-5.5 | 2.2 acct-wk | 104 / 104 / 104 / 104 | 0.11 / 0.27 / 0.55 / 1.1 | 0 | nothing |
-| 6561/6871: Opus corrects the newly read Paddle tables, now | zh-frame-6871, opus-5.5 | 2.2 acct-wk | 1 / 1 / 1 / 2 | 0.11 / 0.27 / 0.55 / 1.1 | 22,220 | latin-flash3 -8,600 (-6,987); german-flash3 -22,441 (-15,532); hebrew-flash3 -4,568 (-2,953); french-lite -8,539 (-5,824); arabic-flash3 -1,386 (-903) |
+| 6561/6871: Opus corrects the newly read Paddle tables, now | zh-frame-6871, opus-5.5 | 2.2 acct-wk | 1 / 1 / 1 / 2 | 0.11 / 0.27 / 0.55 / 1.1 | 22,220 | latin-flash3 -8,600 (-6,987); hebrew-flash3 -4,568 (-2,953); german-flash3 -22,441 (-15,532); arabic-flash3 -1,386 (-903); french-lite -8,539 (-5,824) |
 
 Sensitivity (weeks to drain; pages in the first quarter):
 
