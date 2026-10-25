@@ -49,6 +49,7 @@ import { pathToFileURL } from 'node:url';
 import { readPageIdsFile, parseBookIds } from '../lib/ocr-targeting.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
@@ -275,11 +276,12 @@ async function main() {
       if (r !== 'ok' && !stop) r = await readGroup(group, 1);
       // Still refused: each page alone, so one hard page does not cost its neighbours.
       if (r !== 'ok' && !stop && group.length > 1) for (const p of group) { if (stop) break; await readGroup([p], 2); }
-      // A page whose text fails the chatter guard is read once more alone (#6420 rule 4); apply refuses it otherwise.
+      // A page whose text fails the chatter guard, or that the write guard calls truncated (#5055: a tag left open at
+      // its tail, a text ending inside a tag), is read once more alone (#6420 rule 4); apply refuses it otherwise.
       for (const p of group) {
         if (stop || !fs.existsSync(path.join(OUT, `${p.id}.txt`))) continue;
         const t = fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8');
-        if (t && ocrReadProblem(t) && !JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8')).call_id?.endsWith('-3')) await readGroup([p], 3);
+        if (t && (ocrReadProblem(t) || checkWrittenText(t, { kind: 'ocr' }).verdict === 'truncated') && !JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8')).call_id?.endsWith('-3')) await readGroup([p], 3);
       }
     }
   }));

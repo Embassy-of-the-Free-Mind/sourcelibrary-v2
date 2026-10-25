@@ -1,0 +1,17 @@
+{
+ "_about": "The quality bar a route must clear in a cell, read by route_ocr_v1.py (#6740, .claude/docs/quality-research-system.md §3a). A route clears the bar on a posterior draw when its expected error is within the margin of the measured, enabled route with the lowest posterior mean error (that route's draw, so the comparison is paired) (and under `absolute_max` if one is set). A margin rather than an absolute number, because levels differ by script and reference set far more than readers' tolerance does: the bar is 'a reader would not notice the difference from the best route we can run'. Prose cells need the character bar; number-dense cells need both.",
+ "threshold": 0.9,
+ "character": {
+  "metric": "E[CER] among reads, the 100%-error point mass included",
+  "margin": 0.01,
+  "absolute_max": null,
+  "margin_relative": 0.15
+ },
+ "numbers": {
+  "metric": "misread + dropped + spurious numbers per number printed",
+  "margin": 0.02,
+  "absolute_max": null,
+  "margin_relative": 0.15
+ },
+ "_margins_note": "The margin is max(margin, margin_relative x the best route's error): 0.01 CER is about one wrong character per line of 100, and on a chart whose best route is at 10% CER a reader cannot tell 10% from 11%, so there the margin is 15% of the best. 0.02 per number is one more wrong number in fifty. Both are judgment calls, set here so they can be changed without code; the router prints how the choice moves at half and double the margins."
+}

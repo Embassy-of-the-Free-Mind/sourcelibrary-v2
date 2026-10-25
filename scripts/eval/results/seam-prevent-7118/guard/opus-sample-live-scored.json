@@ -1,0 +1,91 @@
+{
+ "all": {
+  "n": 60,
+  "prefers": 56,
+  "worse": 2,
+  "rate": 0.933
+ },
+ "missingVerdict": 0,
+ "bySample": {
+  "opus-sample-live": {
+   "n": 60,
+   "prefers": 56,
+   "worse": 2,
+   "rate": 0.933
+  }
+ },
+ "byTranslator": {
+  "gemini-translated join": {
+   "n": 60,
+   "prefers": 56,
+   "worse": 2,
+   "rate": 0.933
+  }
+ },
+ "byModelA": {
+  "gemini-3.1-flash-lite": {
+   "n": 53,
+   "prefers": 49,
+   "worse": 2,
+   "rate": 0.925
+  },
+  "gemini-3-flash-preview": {
+   "n": 7,
+   "prefers": 7,
+   "worse": 0,
+   "rate": 1
+  }
+ },
+ "bySeverity": {
+  "minor": {
+   "n": 46,
+   "prefers": 42,
+   "worse": 2,
+   "rate": 0.913
+  },
+  "major": {
+   "n": 14,
+   "prefers": 14,
+   "worse": 0,
+   "rate": 1
+  }
+ },
+ "byLabel": {
+  "broken_syntax": {
+   "n": 20,
+   "prefers": 18,
+   "worse": 1,
+   "rate": 0.9
+  },
+  "omission": {
+   "n": 14,
+   "prefers": 14,
+   "worse": 0,
+   "rate": 1
+  },
+  "catchword": {
+   "n": 10,
+   "prefers": 10,
+   "worse": 0,
+   "rate": 1
+  },
+  "duplication": {
+   "n": 7,
+   "prefers": 7,
+   "worse": 0,
+   "rate": 1
+  },
+  "other": {
+   "n": 9,
+   "prefers": 7,
+   "worse": 1,
+   "rate": 0.778
+  }
+ },
+ "excludingOpusJoins": {
+  "n": 60,
+  "prefers": 56,
+  "worse": 2,
+  "rate": 0.933
+ }
+}

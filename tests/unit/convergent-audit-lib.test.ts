@@ -80,7 +80,7 @@ describe('planted controls', () => {
 
 describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an empty reader', () => {
   // A stand-in repo: the real wrapper, with every command it calls replaced by a stub that logs its call.
-  function run(quotaExits: number, env: Record<string, string> = {}) {
+  function run(quotaExits: number, env: Record<string, string> = {}, readersExit = 0) {
     const repo = mkdtempSync(join(tmpdir(), 'audit-sh-'));
     const base = join(repo, 'base'), bin = join(repo, 'bin'), log = join(repo, 'calls.log');
     for (const d of ['scripts/audit', 'scripts/eval/second-reader', 'scripts/eval', 'bin', 'base']) mkdirSync(join(repo, d), { recursive: true });
@@ -88,13 +88,16 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     const stub = (file: string, body: string) => { writeFileSync(file, `#!/usr/bin/env bash\n${body}\n`); chmodSync(file, 0o755); };
     stub(join(bin, 'node'), `echo "node $*" >> ${log}`);
     stub(join(bin, 'flock'), 'exit 0');
-    stub(join(repo, 'scripts/eval/second-reader/run-readers.sh'), `echo "readers $2" >> ${log}`);
+    stub(join(repo, 'scripts/eval/second-reader/run-readers.sh'), `echo "readers $2" >> ${log}; exit ${readersExit}`);
     // python3 = run-cli-arm.py: exit 3 (quota) for the first N calls, then 0.
     stub(join(bin, 'python3'), `n=$(grep -c '^cli ' ${log} 2>/dev/null); m=$(echo "$*" | sed -n 's/.*--model \\([^ ]*\\).*/\\1/p'); echo "cli $m$(echo "$*" | grep -q -- '--kind review .*--no-tool-gate' || echo ' GATED')" >> ${log}; [ "$n" -lt ${quotaExits} ] && exit 3; exit 0`);
-    const out = execFileSync('bash', [join(repo, 'scripts/audit/convergent-audit-weekly.sh'), '2099-01-05'], {
-      encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', ...env },
-    });
-    return { out, calls: readFileSync(log, 'utf8').trim().split('\n') };
+    let out: string, status = 0;
+    try {
+      out = execFileSync('bash', [join(repo, 'scripts/audit/convergent-audit-weekly.sh'), '2099-01-05'], {
+        encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', ...env },
+      });
+    } catch (e) { const err = e as { stdout: string; status: number }; out = err.stdout; status = err.status; }
+    return { out, status, calls: readFileSync(log, 'utf8').trim().split('\n') };
   }
   it('no quota trouble: one Gemini pass, then assemble and score', () => {
     const { calls } = run(0);
@@ -115,6 +118,13 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     expect(out).toContain('every model is out of quota: wait 0s (retry 1 of 8)');
     expect(out).toContain('(retry 2 of 8)');
     expect(calls.at(-1)).toContain('score');
+  });
+  it('a reader that refused to run stops the round instead of printing "done" (#6420)', () => {
+    const { out, status, calls } = run(0, { AUDIT_OPUS_ONLY: '1' }, 2);
+    expect(status).toBe(2);
+    expect(out).toContain('STOPPED: the Opus reader did not run (exit 2)');
+    expect(out).not.toContain('done (Opus only');
+    expect(calls.some((c) => c.includes('score'))).toBe(false);
   });
   it('gives up after the retries and still scores, so the report can say why', () => {
     const { out, calls } = run(99, { ...TWO, AUDIT_QUOTA_RETRIES: '2' });

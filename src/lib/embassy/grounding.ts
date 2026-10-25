@@ -573,7 +573,15 @@ export function blockquoteWords(body: string): string {
   return cite > 0 ? t.slice(0, cite) : t;
 }
 
-const REMOVED_QUOTE_NOTE = '*A quotation stood here that I could not find on any page I read, so I removed it.*';
+/**
+ * A removed blockquote leaves nothing behind (#7190). The italic note that
+ * used to stand in its place ("A quotation stood here that I could not find…")
+ * read to readers as the Librarian failing, and the sourcing footer already
+ * says a statement was removed. Most removed quotes follow a lead-in ending in
+ * a colon ("…describes it as follows:"); left as it is, that colon points at
+ * nothing, so it becomes a full stop.
+ */
+const LEAD_IN_COLON = /:(\s*)$/;
 
 export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; report: GroundingReport } {
   const { text, pages, siteBase } = input;
@@ -588,7 +596,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
   const topicNames = new Set((input.question.match(/(?<=\s)\p{Lu}[\p{L}]{3,}/gu) ?? []).flatMap(n => foldWords(n)));
   const units = answerUnits(text);
 
-  units.forEach(u => {
+  units.forEach((u, i) => {
     // Remove a whole unit together with the blank line after it.
     const removal = (): GroundingEdit['find'] => {
       const after = text.slice(u.end).match(/^\n+/)?.[0] ?? '';
@@ -623,7 +631,16 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
       report.quotesChecked++;
       if (checkQuote(quote, idx) !== 'unsupported') return;
-      edits.push({ find: u.raw, replace: `> ${REMOVED_QUOTE_NOTE}`, at: u.start, reasons: ['drop_blockquote'] });
+      const prev = units[i - 1];
+      if (prev && (prev.kind === 'prose' || prev.kind === 'list')) {
+        const prevEdit = edits.length > 0 && edits[edits.length - 1].at === prev.start ? edits[edits.length - 1] : undefined;
+        if (prevEdit) {
+          if (prevEdit.replace && LEAD_IN_COLON.test(prevEdit.replace)) prevEdit.replace = prevEdit.replace.replace(LEAD_IN_COLON, '.$1');
+        } else if (LEAD_IN_COLON.test(prev.raw)) {
+          edits.push({ find: prev.raw, replace: prev.raw.replace(LEAD_IN_COLON, '.$1'), at: prev.start, reasons: ['drop_blockquote'] });
+        }
+      }
+      edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_blockquote'] });
       report.blockquotesRemoved++;
       report.details.push(`blockquote not on any page read: ${quote.slice(0, 120)}`);
       return;

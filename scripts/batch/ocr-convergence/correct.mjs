@@ -39,6 +39,7 @@ import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { contentHash } from '../../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../../lib/write-text-guard.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
 import { splitPages } from '../claude-ocr.mjs';
@@ -117,6 +118,9 @@ export function parseAnswer(ans) {
   if (!a) return { outcome: 'no-answer', reason: 'empty answer' };
   const problem = ocrReadProblem(a);
   if (problem) return { outcome: 'no-answer', reason: `chatter guard: ${problem}` };
+  // #5055: a correction cut off (a tag left open at its tail, a text ending inside a tag) is no answer: tried again.
+  const cut = checkWrittenText(a, { kind: 'ocr' });
+  if (cut.verdict === 'truncated') return { outcome: 'no-answer', reason: `write guard: ${cut.reasons[0]}` };
   return { outcome: 'corrected', text: a };
 }
 

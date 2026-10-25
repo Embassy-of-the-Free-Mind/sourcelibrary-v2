@@ -329,7 +329,7 @@ async function admit(o, report) {
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
   const cursor = booksOf(db).find(filter)
     .sort({ read_count: -1, pages_translated: -1 })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
+    .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
 
   const known = new Map((await stateColl.find({}, { projection: { stage: 1, attempts: 1 } }).toArray()).map(r => [r._id, r]));
   const lines = [];

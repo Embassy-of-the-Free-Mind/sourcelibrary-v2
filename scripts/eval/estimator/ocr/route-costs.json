@@ -1,0 +1,173 @@
+{
+ "_about": "Cost of one OCR call per route, the input route_ocr_v1.py prices cells with (#6740, .claude/docs/quality-research-system.md §3a). Data, not code: change a fee or a share here and re-run the router. Kinds: paid_api = list price per page; subscription = the share of the plan's quota one call uses (from the meters, scripts/eval/estimator/ocr/meter_quota_share.py), priced at run time by the PRIVATE plan-fee file route_ocr_v1.py --fees reads (ops cost ledger; never committed here, so this file and the committed results carry quota shares, not dollars); gpu = $0 on an idle card, busy_usd_per_1k when the card is busy (the compute-basis figure from scripts/eval/ocr-engine-gpu-costs.json, a stand-in for the queue delay it causes); free = no marginal cost. `engine` is the engine name in the estimator's table. `enabled: false` keeps a route in P(best) but never routes to it.",
+ "fees": {
+  "_note": "Plan fees are private (Derek, 2026-10-24). route_ocr_v1.py --fees <file> reads agy_month_usd and claude_usd_per_weekly_point from the private fee file (on the job box: /root/claude-jobs/est-v1-6740/plan-fees.json). Without --fees the router stops."
+ },
+ "quota_shares": {
+  "agy_share_per_call": 4.3632e-06,
+  "agy_derivation": "meter_quota_share.py over /root/agy-quota/calls.csv, 2026-10-13T07:01 to 2026-10-24T05:30 (10.94 days): 83,551 calls succeeded and 1,936 hit the cap (so the stretch used the whole allowance) = 229,190 calls per 30 days. Cross-check: median 1,578 calls in the 5 h before a 429 burst = 227,232 per 30 days. Every agy model is counted as one call of one pool, as the meter counts them. A second reading, the median calls in the 24 h before a lock (status.json past_bursts prev24h: 5,771), gives 173K per 30 days: the share is between 4.4e-6 and 5.8e-6 a call.",
+  "claude_points_per_call": 0.0303,
+  "claude_derivation": "One point = 1% of an account's weekly limit. 66 sealed claude -p Sonnet text calls (about 15K in / 5K out) = +2 weekly points on one account (2026-10-14, #6721). NOT an OCR reading: an image call has not been metered. Re-measure before a Claude route decides a cell.",
+  "unused_quota_value": 1.0,
+  "unused_quota_note": "1.0 = a call is worth its full share. Quota left unused at a reset is worth nothing, so near a reset with quota to spare this falls toward 0 (set it per run)."
+ },
+ "gpu_state": "idle",
+ "routes": [
+  {
+   "route": "Internet Archive text (djvu)",
+   "engine": "ia-djvu",
+   "kind": "free",
+   "usd_per_page": 0.0,
+   "enabled": true,
+   "note": "The Archive's own OCR, fetched by ia-ocr-ingest.mjs; one metadata request per book. Only exists for Archive books."
+  },
+  {
+   "route": "Gemini 3.1 Flash-Lite, Batch API",
+   "engine": "gemini-3.1-flash-lite",
+   "kind": "paid_api",
+   "usd_per_page": 0.00148,
+   "enabled": true,
+   "source": ".claude/docs/paper-corpus-certification-4916.md E1: measured lite-batch image OCR rate $0.00148/page = $1.48/1K (EXPERIMENTS.md 2026-09-12). Realtime lite measured at $3.02/1K."
+  },
+  {
+   "route": "Gemini 3 Flash, realtime API",
+   "engine": "gemini-3-flash-preview",
+   "kind": "paid_api",
+   "usd_per_page": 0.00342,
+   "enabled": false,
+   "source": "paper-corpus-certification-4916.md E1: $3.42/1K measured on flash realtime (125,585 pages / $429.85, 30 d)",
+   "note": "disabled: the paid Gemini API is for flash-lite only (rule since 2026-10-08, #6331)"
+  },
+  {
+   "route": "agy Gemini 3.8 Flash low (CLI)",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "kind": "subscription",
+   "plan": "agy",
+   "enabled": true
+  },
+  {
+   "route": "agy Gemini 3.8 Flash high (CLI)",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "kind": "subscription",
+   "plan": "agy",
+   "enabled": true
+  },
+  {
+   "route": "agy Gemini 3.7 Flash low (CLI)",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "kind": "subscription",
+   "plan": "agy",
+   "enabled": true
+  },
+  {
+   "route": "agy Gemini 3.6 Flash low (CLI)",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "kind": "subscription",
+   "plan": "agy",
+   "enabled": false,
+   "note": "superseded by 3.7 / 3.8 in the CLI lanes"
+  },
+  {
+   "route": "agy Gemini 4 Argon low (CLI)",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "kind": "subscription",
+   "plan": "agy",
+   "enabled": true
+  },
+  {
+   "route": "claude -p Sonnet 5.5",
+   "engine": "claude-sonnet-5-5",
+   "kind": "subscription",
+   "plan": "claude",
+   "enabled": true
+  },
+  {
+   "route": "claude -p Opus 5.5",
+   "engine": "claude-opus-5-5",
+   "kind": "subscription",
+   "plan": "claude",
+   "enabled": true,
+   "note": "same points-per-call placeholder as Sonnet; an Opus image call costs more of the week (unmetered)"
+  },
+  {
+   "route": "Mistral OCR 4.1 API",
+   "engine": "mistral-ocr-4-1",
+   "kind": "paid_api",
+   "usd_per_page": 0.004,
+   "enabled": true,
+   "source": "scripts/eval/ocr-engine-gpu-costs.json metered-api $4.0/1K (2026-10-06-untried-ocr-engines-wave1-6011.md)"
+  },
+  {
+   "route": "PaddleOCR-VL 1.6 (GPU)",
+   "engine": "paddleocr-vl-1.6",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.091,
+   "enabled": true
+  },
+  {
+   "route": "olmOCR 2 (GPU)",
+   "engine": "olmocr-2-7b-fp8",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.26,
+   "enabled": true
+  },
+  {
+   "route": "Chandra OCR 2 (GPU)",
+   "engine": "chandra-ocr-2",
+   "kind": "gpu",
+   "busy_usd_per_1k": 7.55,
+   "enabled": true
+  },
+  {
+   "route": "DeepSeek-OCR (GPU)",
+   "engine": "deepseek-ocr",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.96,
+   "enabled": true
+  },
+  {
+   "route": "Qwen3-VL 8B (GPU)",
+   "engine": "qwen3-vl-8b",
+   "kind": "gpu",
+   "busy_usd_per_1k": 3.43,
+   "enabled": true
+  },
+  {
+   "route": "MinerU (GPU)",
+   "engine": "mineru",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.38,
+   "enabled": true
+  },
+  {
+   "route": "Kraken OmniSyr (GPU/CPU)",
+   "engine": "omnisyr",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.11,
+   "enabled": true
+  },
+  {
+   "route": "Sophro (GPU/CPU)",
+   "engine": "sophro-defaultseg",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.11,
+   "enabled": true
+  },
+  {
+   "route": "Surya 2 (GPU)",
+   "engine": "surya2",
+   "kind": "gpu",
+   "busy_usd_per_1k": 1.09,
+   "enabled": true,
+   "note": "busy cost: €0.00094/page x 1.1636 USD/EUR (ocr-engine-gpu-costs.json)"
+  },
+  {
+   "route": "NDL Koten OCR v3 (GPU)",
+   "engine": "ndlkotenocr-v3",
+   "kind": "gpu",
+   "busy_usd_per_1k": 1.18,
+   "enabled": true,
+   "note": "busy cost: €1.10 / 1,087 pages x 1.1636 USD/EUR (ocr-engine-gpu-costs.json)"
+  }
+ ]
+}

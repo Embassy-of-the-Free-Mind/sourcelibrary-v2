@@ -49,6 +49,7 @@ import { PAGE_BREAK_SCOPED, buildBlockTranslationPrompt, loadTranslationPrompts,
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
@@ -231,10 +232,20 @@ async function main() {
       console.log(`  ${first.book_id} p.${first.page_number}-${lastP.page_number}: ${r.cls || 'translation tags do not match the pages: call refused'} (${Math.round(r.secs)}s)`);
       return null;
     }
+    // #5055: the write guard on each page as returned, before sanitizeTranslationTags closes a cut tail tag. Its verdict
+    // goes in the meta (`write_guard`), which `cli-translate.mjs apply` refuses; a cut page of a block is read alone.
+    const cut = new Map();
+    for (const p of group) {
+      const raw = texts.get(p.page_number);
+      if (raw == null) continue;
+      const g = checkWrittenText(raw, { kind: 'translation', source: p.ocr?.data, lang: book?.language, type: p.page_type });
+      if (g.verdict === 'truncated') cut.set(p.page_number, g.reasons);
+    }
     for (const [n, t] of texts) texts.set(n, sanitizeTranslationTags(t));
     // The production block guards: a clause moved across an in-block break, or a bridged leaf seam, leaves both pages
     // of that boundary to be read again alone rather than written from this block.
     const again = new Set();
+    if (group.length > 1) for (const n of cut.keys()) again.add(n);
     if (group.length > 1) {
       for (const d of dropDriftedPages(group, texts).drifted) { again.add(d.prev); again.add(d.next); }
       for (const b of dropLeafSeamBreaches(group, texts).breached) again.add(b.page);
@@ -242,7 +253,7 @@ async function main() {
     const redo = [], kept = [];
     group.forEach((p, i) => {
       if (again.has(p.page_number) || !texts.has(p.page_number)) { redo.push(p); return; }
-      writePage(p, texts.get(p.page_number), { ...pageMeta(p, i), exit: 0, error_class: null });
+      writePage(p, texts.get(p.page_number), { ...pageMeta(p, i), exit: 0, error_class: null, ...(cut.has(p.page_number) && { write_guard: 'truncated', write_guard_reasons: cut.get(p.page_number) }) });
       kept.push(p);
     });
     // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
@@ -261,6 +272,13 @@ async function main() {
     // Still refused: each page alone, so one hard page does not cost its neighbours.
     if (redo === null && !stop && group.length > 1) redo = group;
     for (const p of redo || []) { if (stop) break; if (!done(p)) await readGroup([p], 2); }
+    // #5055: a page read alone whose read is still cut gets one more alone read (attempt 3); apply refuses it otherwise.
+    for (const p of group) {
+      if (stop) break;
+      const f = path.join(OUT, `${p.id}.meta.json`);
+      const m = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null;
+      if (m?.write_guard === 'truncated' && m.call_pages === 1 && !/-[23]$/.test(m.call_id || '')) await readGroup([p], 3);
+    }
   }
   await client.close();
   const metas = todo.map((p) => path.join(OUT, `${p.id}.meta.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));

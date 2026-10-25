@@ -61,12 +61,14 @@ import {
   isTranslatablePage,
   sameLanguageReason,
   writePageTranslation,
+  recordTruncatedTranslation,
   syncBookTranslationCounters,
   getTranslateModelForBook,
   contentHash,
   BLOCK_TAGS,
 } from './translate-core.mjs';
 import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
+import { checkWrittenText } from './write-text-guard.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
@@ -603,6 +605,9 @@ async function writeRoundPage(db, run, book, page, text, deps, unit) {
   if (res.written) {
     run.counts.written++;
     if (deps.syncPage) deps.syncPage(page.id, { translation: { data: res.text, language: 'English', model: run.model, source: 'ai', prompt_version: String(run.prompt_ref?.version ?? ''), prompt_id: run.prompt_ref?.id, prompt_hash: run.prompt_ref?.content_hash, prompt_name: run.prompt_ref?.name, updated_at: new Date() } });
+  } else if (res.truncated) {
+    // #5055: the door recorded it (a failure marker, blocked on the second); the page stays in the queue.
+    run.counts.truncated = (run.counts.truncated || 0) + 1;
   } else if (res.unhealthy) {
     run.counts.unhealthy++;
     // Same stamp the realtime worker puts on a refused page, so the page leaves the queue.
@@ -665,8 +670,11 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   if (round.kind === 'block') {
     const r = answerOf(0);
     summary.finish_reason = r.finishReason;
-    const parsed = parseBlockTranslations(r.text, pages);
+    const parsed = parseBlockTranslations(r.text, pages, { lang: book?.language });
     const { translations } = parsed;
+    // #5055: an entry the write guard calls truncated is left out of the block's translations, so its page goes
+    // single-page below — the one re-read.
+    if (parsed.truncated?.length) summary.truncated = parsed.truncated.map((t) => `${t.page_number}:${t.reasons[0]}`);
     // Echo-shift guard (#4681 by-eye, 2026-10-01): a block in which the model handed one page's
     // SOURCE back as its "translation" is a block whose other entries are one slot off. Seen on
     // book 69b6307b…, block p16–23: p16 came back as its own Latin, and p17–23 each carried the
@@ -721,7 +729,8 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     const page = pageDocs.get(unit.pages[0].id);
     const r = answerOf(i);
     if (!r || r.error) { outcomes.push('error'); continue; }
-    let text = sanitizeTranslationTags(String(r.text || '').trim());
+    const raw = String(r.text || '').trim();
+    let text = sanitizeTranslationTags(raw);
     const finish = r.finishReason || '';
     if (!text && /RECITATION|SAFETY|PROHIBITED/i.test(finish)) {
       if (page) await markRefused(db, page, finish, deps);
@@ -732,6 +741,24 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
       continue;
     }
     if (!text) { outcomes.push(`empty ${finish}`); continue; }
+    // #5055: the write guard on the reply as returned (sanitizeTranslationTags closes a cut tail tag). A truncated read
+    // is asked for once more, next round; a second one is recorded on the page (blocked) and leaves the plan. Its
+    // length rule runs at the door, after the collapse retry below and the health gate, which name a thin page better.
+    const cut = page ? checkWrittenText(raw, { kind: 'translation', finishReason: finish }) : null;
+    if (cut?.verdict === 'truncated') {
+      if (!unit.retry) {
+        retries.push({ page_id: page.id, first_text: null });
+        outcomes.push('truncated-retry');
+        log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} truncated (${cut.reasons.join(', ')}) — retrying once`);
+        continue;
+      }
+      await recordTruncatedTranslation(db, page, raw, cut, { jobId: run.id, model: run.model });
+      run.counts.truncated = (run.counts.truncated || 0) + 1;
+      resolved.add(page.id);
+      outcomes.push('truncated');
+      log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} truncated again (${cut.reasons.join(', ')}) — recorded, not written`);
+      continue;
+    }
     if (page && looksCollapsed(page.ocr?.data, text) && !unit.retry) {
       // Retry once, next round; keep this text to compare.
       retries.push({ page_id: page.id, first_text: text });
@@ -745,7 +772,7 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     resolved.add(unit.pages[0].id);
     outcomes.push('done');
   }
-  const moved = resolved.size + outcomes.filter((o) => o === 'collapsed-retry').length;
+  const moved = resolved.size + outcomes.filter((o) => o === 'collapsed-retry' || o === 'truncated-retry').length;
   if (!moved) return strike(db, run, deps, `singles: ${[...new Set(outcomes)].join(', ')}`);
   summary.outcomes = outcomes;
   await setRun(db, run, {

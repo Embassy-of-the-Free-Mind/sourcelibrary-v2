@@ -1,0 +1,369 @@
+{
+ "date": "2026-10-24",
+ "pages": 40,
+ "fidelity_opus": {
+  "n": 40,
+  "unparsed": 0,
+  "T": {
+   "mean": 4.6,
+   "ci": [
+    4.43,
+    4.75
+   ]
+  },
+  "S": {
+   "mean": 4.72,
+   "ci": [
+    4.58,
+    4.88
+   ]
+  },
+  "P": {
+   "mean": 4.63,
+   "ci": [
+    4.45,
+    4.8
+   ]
+  },
+  "S_minus_T": {
+   "mean": 0.13,
+   "ci": [
+    -0.05,
+    0.3
+   ],
+   "wins": 9,
+   "losses": 4,
+   "ties": 27
+  },
+  "P_minus_T": {
+   "mean": 0.03,
+   "ci": [
+    -0.17,
+    0.25
+   ],
+   "wins": 8,
+   "losses": 8,
+   "ties": 24
+  },
+  "S_minus_P": {
+   "mean": 0.1,
+   "ci": [
+    -0.12,
+    0.3
+   ],
+   "wins": 11,
+   "losses": 6,
+   "ties": 23
+  },
+  "errors": {
+   "T": {
+    "omission": 5,
+    "reversal": 1,
+    "invention": 3,
+    "gloss": 4,
+    "major_spans": 1,
+    "pages": 40
+   },
+   "S": {
+    "omission": 3,
+    "reversal": 1,
+    "invention": 2,
+    "gloss": 1,
+    "major_spans": 1,
+    "pages": 40
+   },
+   "P": {
+    "omission": 2,
+    "reversal": 0,
+    "invention": 0,
+    "gloss": 1,
+    "major_spans": 1,
+    "pages": 40
+   }
+  },
+  "plant": {
+   "n": 7,
+   "caught": 7,
+   "lower_than_T": 7
+  },
+  "by_language": {
+   "Latin": {
+    "n": 10,
+    "T": 4.2,
+    "S": 4.6,
+    "P": 4.6
+   },
+   "German": {
+    "n": 10,
+    "T": 4.8,
+    "S": 4.9,
+    "P": 4.7
+   },
+   "Greek": {
+    "n": 10,
+    "T": 4.7,
+    "S": 4.5,
+    "P": 4.6
+   },
+   "Chinese": {
+    "n": 10,
+    "T": 4.7,
+    "S": 4.9,
+    "P": 4.6
+   }
+  }
+ },
+ "fidelity_gemini": {
+  "n": 20,
+  "unparsed": 0,
+  "T": {
+   "mean": 4.75,
+   "ci": [
+    4.5,
+    4.95
+   ]
+  },
+  "S": {
+   "mean": 4.9,
+   "ci": [
+    4.75,
+    5
+   ]
+  },
+  "P": {
+   "mean": 4.55,
+   "ci": [
+    4.25,
+    4.8
+   ]
+  },
+  "S_minus_T": {
+   "mean": 0.15,
+   "ci": [
+    -0.05,
+    0.35
+   ],
+   "wins": 4,
+   "losses": 1,
+   "ties": 15
+  },
+  "P_minus_T": {
+   "mean": -0.2,
+   "ci": [
+    -0.45,
+    0.05
+   ],
+   "wins": 1,
+   "losses": 4,
+   "ties": 15
+  },
+  "S_minus_P": {
+   "mean": 0.35,
+   "ci": [
+    0.1,
+    0.6
+   ],
+   "wins": 6,
+   "losses": 0,
+   "ties": 14
+  },
+  "errors": {
+   "T": {
+    "omission": 0,
+    "reversal": 1,
+    "invention": 0,
+    "gloss": 3,
+    "major_spans": 1,
+    "pages": 20
+   },
+   "S": {
+    "omission": 0,
+    "reversal": 0,
+    "invention": 0,
+    "gloss": 1,
+    "major_spans": 0,
+    "pages": 20
+   },
+   "P": {
+    "omission": 0,
+    "reversal": 1,
+    "invention": 0,
+    "gloss": 1,
+    "major_spans": 1,
+    "pages": 20
+   }
+  },
+  "plant": {
+   "n": 4,
+   "caught": 4,
+   "lower_than_T": 4
+  },
+  "by_language": {
+   "Latin": {
+    "n": 5,
+    "T": 4.4,
+    "S": 4.6,
+    "P": 4.2
+   },
+   "German": {
+    "n": 5,
+    "T": 4.8,
+    "S": 5,
+    "P": 4.6
+   },
+   "Greek": {
+    "n": 5,
+    "T": 4.8,
+    "S": 5,
+    "P": 4.8
+   },
+   "Chinese": {
+    "n": 5,
+    "T": 5,
+    "S": 5,
+    "P": 4.6
+   }
+  }
+ },
+ "s_form": {
+  "replies": 40,
+  "valid_json": 40,
+  "json_after_strip": 0,
+  "markup_left_pages": 0,
+  "markup_left_tags": {},
+  "annotations": 490,
+  "by_type": {
+   "meta": 42,
+   "note": 208,
+   "summary": 40,
+   "keywords": 40,
+   "original": 51,
+   "definition": 44,
+   "unclear": 20,
+   "image": 16,
+   "margin": 16,
+   "insert": 5,
+   "gloss": 8
+  },
+  "anchored": 367,
+  "exact_not_in_text": 0,
+  "resolved": 367,
+  "resolved_by": {
+   "offset": 361,
+   "quote": 6
+  },
+  "ambiguous_exact": 17,
+  "empty_exact_commentary": 1,
+  "page_level": {
+   "summary": 40,
+   "keywords": 40,
+   "meta": 42
+  }
+ },
+ "t_form": {
+  "replies": 40,
+  "pages_malformed": 0,
+  "malformed": {},
+  "commentary": 258,
+  "by_type": {
+   "note": 145,
+   "definition": 60,
+   "original": 53
+  }
+ },
+ "tokens": {
+  "T": {
+   "pages": 40,
+   "input_tokens": 2,
+   "cache_read": 1467,
+   "cache_creation": 4795.4,
+   "output_tokens": 1850.9,
+   "secs": 20.33,
+   "body_chars": 1703.13
+  },
+  "S": {
+   "pages": 40,
+   "input_tokens": 2,
+   "cache_read": 1467,
+   "cache_creation": 5384.8,
+   "output_tokens": 4793.55,
+   "secs": 44.03,
+   "body_chars": 1648.65
+  },
+  "P": {
+   "pages": 40,
+   "input_tokens": 2,
+   "cache_read": 1467,
+   "cache_creation": 3791.73,
+   "output_tokens": 1122.53,
+   "secs": 13.23,
+   "body_chars": 1696.15
+  }
+ },
+ "notes": {
+  "T": {
+   "notes": 258,
+   "judged": 258,
+   "right": 244,
+   "wrong": 12,
+   "invented": 2,
+   "misattached": 36,
+   "by_type": {
+    "definition": {
+     "n": 60,
+     "right": 58,
+     "wrong": 2,
+     "invented": 0
+    },
+    "note": {
+     "n": 145,
+     "right": 136,
+     "wrong": 7,
+     "invented": 2
+    },
+    "original": {
+     "n": 53,
+     "right": 50,
+     "wrong": 3,
+     "invented": 0
+    }
+   }
+  },
+  "S": {
+   "notes": 319,
+   "judged": 319,
+   "right": 291,
+   "wrong": 20,
+   "invented": 8,
+   "misattached": 5,
+   "by_type": {
+    "note": {
+     "n": 208,
+     "right": 188,
+     "wrong": 12,
+     "invented": 8
+    },
+    "original": {
+     "n": 51,
+     "right": 50,
+     "wrong": 1,
+     "invented": 0
+    },
+    "definition": {
+     "n": 44,
+     "right": 42,
+     "wrong": 2,
+     "invented": 0
+    },
+    "image": {
+     "n": 16,
+     "right": 11,
+     "wrong": 5,
+     "invented": 0
+    }
+   },
+   "unresolved_anchor": 1
+  },
+  "pages_judged": 40
+ }
+}
