@@ -71,25 +71,44 @@ describe('per-book guard: give up on a book for this run, not on the host', () =
 });
 
 describe('permanent miss: recorded on the page, keyed to the URL', () => {
+  /** Apply a $set of dotted archive_metadata keys to a page, as Mongo would. */
+  const apply = (page: any, set: Record<string, unknown>) => {
+    const am = { ...(page.archive_metadata ?? {}) };
+    for (const [k, v] of Object.entries(set)) am[k.replace('archive_metadata.', '')] = v;
+    return { ...page, archive_metadata: am };
+  };
+
   it('counts consecutive misses of the same URL up to the limit', () => {
     let page: any = {};
     for (let i = 1; i <= MISS_LIMIT; i++) {
       expect(isPermanentMiss(page, URL_A), `after ${i - 1} misses`).toBe(false);
       const set = missUpdate(page, URL_A, '404', new Date(0));
-      expect(set['archive_metadata.miss'].count).toBe(i);
-      page = { archive_metadata: { miss: set['archive_metadata.miss'] } };
+      expect(set['archive_metadata.failure_count']).toBe(i);
+      page = apply(page, set);
     }
     expect(isPermanentMiss(page, URL_A)).toBe(true);
   });
 
   it('a repaired URL is eligible again, with no cleanup step', () => {
-    const page = { archive_metadata: { miss: { url: URL_A, status: '404', count: MISS_LIMIT } } };
+    const page = { archive_metadata: { failure_count: MISS_LIMIT, last_failure_reason: 'HTTP 404', last_failure_source_url: URL_A } };
+    expect(isPermanentMiss(page, URL_A)).toBe(true);
     expect(isPermanentMiss(page, URL_B)).toBe(false);
-    expect(missUpdate(page, URL_B, '404')['archive_metadata.miss'].count, 'a new URL starts its own count').toBe(1);
+    expect(missUpdate(page, URL_B, '404')['archive_metadata.failure_count'], 'a new URL starts its own count').toBe(1);
   });
 
-  it('never writes archived_photo — the field is the work queue (archive-fetch-failures.md)', () => {
-    expect(Object.keys(missUpdate({}, URL_A, '404'))).toEqual(['archive_metadata.miss']);
+  it('archive-ocr timeouts on the same fields are not evidence a URL is gone', () => {
+    // archive-ocr.mjs counts every failure in failure_count. Three timeouts must
+    // not let a single 404 finish the page off.
+    const page = { archive_metadata: { failure_count: 3, last_failure_reason: 'fetch aborted: stalled', last_failure_source_url: URL_A } };
+    expect(isPermanentMiss(page, URL_A)).toBe(false);
+    expect(missUpdate(page, URL_A, '404')['archive_metadata.failure_count']).toBe(1);
+  });
+
+  it('writes only the existing archive_metadata failure fields — never archived_photo, the work queue', () => {
+    expect(Object.keys(missUpdate({}, URL_A, '410')).sort()).toEqual([
+      'archive_metadata.failure_count', 'archive_metadata.last_failure_at',
+      'archive_metadata.last_failure_reason', 'archive_metadata.last_failure_source_url',
+    ]);
   });
 });
 

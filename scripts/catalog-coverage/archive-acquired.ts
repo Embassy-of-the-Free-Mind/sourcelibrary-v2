@@ -44,7 +44,7 @@ import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 import { recountBook } from '../../src/lib/page-counts';
 import { ensurePages, isLazyPagesBook, PAGES_MATERIALIZED_FILTER } from '../lib/lazy-pages.mjs';
 import {
-  isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT,
+  isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
@@ -238,15 +238,15 @@ async function main() {
   // them from one book of dead URLs paused the whole host. On lane-heidelberg
   // that was 108,133 consecutive runs of "0 ok, 6 failed [404], 34373 skipped":
   // the dead book was always first in line, so the 39 healthy books behind it
-  // were never asked for. A miss is now a fact about the page (recorded on it,
-  // keyed to its URL) and about this BOOK for this run (the guard below); the
+  // were never asked for. A miss is now a fact about the page (recorded in the
+  // archive_metadata failure fields archive-ocr.mjs already keeps, keyed to the URL) and about this BOOK for this run (the guard below); the
   // host hears about it only when whole books keep missing with nothing served.
   const missGuard = createBookMissGuard();
   const urlOf = (p: any) => upgradeToFullRes(p.photo_original || p.photo);
 
   /** @returns how many pages were actually REQUESTED, and how many were skipped for a paused host. */
   async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number }> {
-    const all = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1, 'archive_metadata.miss': 1 } }).toArray();
+    const all = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1, ...MISS_PROJECTION } }).toArray();
     // A page that has missed this exact URL MISS_LIMIT times is not asked again.
     // A repaired URL is a different URL, so it is eligible again by construction.
     const ps = retryMisses ? all : all.filter((p: any) => !isPermanentMiss(p, urlOf(p)));
@@ -385,8 +385,8 @@ async function main() {
   /** Pages of a book that are permanent misses at their CURRENT url. */
   const countPermanentMisses = async (bookId: string): Promise<number> => {
     const cand = await pages.find(
-      { book_id: bookId, archived_photo: { $exists: false }, 'archive_metadata.miss.count': { $gte: MISS_LIMIT } },
-      { projection: { photo: 1, photo_original: 1, 'archive_metadata.miss': 1 } },
+      { book_id: bookId, archived_photo: { $exists: false }, 'archive_metadata.failure_count': { $gte: MISS_LIMIT } },
+      { projection: { photo: 1, photo_original: 1, ...MISS_PROJECTION } },
     ).toArray();
     return cand.filter((p: any) => isPermanentMiss(p, urlOf(p))).length;
   };
