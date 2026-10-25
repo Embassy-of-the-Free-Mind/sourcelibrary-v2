@@ -4,8 +4,8 @@
 # run unattended across the GPU queue and a weekly reset; each step is resumable and skips what is done.
 # run.sh  — needs JOB_SCRATCH; logs to $JOB_SCRATCH/run.log; writes $JOB_SCRATCH/run.state (the last step finished).
 #   1 pull   wait for gex45's 81-split-leaf-5771 task to finish; rsync its leaf reads to $JOB_SCRATCH/leafread/txt
-#   2 translate  leaf-translate.mjs (Opus), waits at the caps (80% 5-hour / 85% week)
-#   3 packet     packet.mjs (the #6948 auditor's requests, same images, same 15 controls)
+#   2 translate  cut.mjs (arm 2), then leaf-translate.mjs (Opus) for arms 2 and 3, waits at the caps (80% 5-hour / 85% week)
+#   3 packet     packet.mjs: both arms + the #6948 controls in one shuffled set (same images, same prompt)
 #   4 audit      run-claude-arm.py, Opus, parallel 3, in chunks of 24, waiting at the caps
 #   5 score + attribute (audit.mjs, unchanged)
 set -uo pipefail
@@ -24,17 +24,21 @@ n=$(ls $S/leafread/txt | grep -c '\.txt$'); log "leaf reads pulled: $n"
 [ "$n" -ge 180 ] || { log "too few leaf reads ($n); stopping"; state pull-short; exit 2; }
 state pulled
 
-# 2 translate
-for i in $(seq 1 30); do
-  waitcap || exit 4
-  node --env-file=.env.production.local scripts/eval/split-leaf-5771/leaf-translate.mjs --frames=$S/frames.jsonl --txt=$S/leafread/txt --out=$S/translate
-  rc=$?; [ $rc -eq 0 ] && break; [ $rc -eq 3 ] || { log "translate rc=$rc"; sleep 300; }
+# 2 translate: arm 2 (CUT: the stored read cut at its seams, cut.mjs) and arm 3 (REREAD: the leaf reads)
+node scripts/eval/split-leaf-5771/cut.mjs --frames=$S/frames.jsonl --req=$P6948/req.jsonl --out=$S/arm2/txt
+for arm in cut:$S/arm2/txt reread:$S/leafread/txt; do
+  name=${arm%%:*}; txt=${arm#*:}
+  for i in $(seq 1 30); do
+    waitcap || exit 4
+    node --env-file=.env.production.local scripts/eval/split-leaf-5771/leaf-translate.mjs --frames=$S/frames.jsonl --txt=$txt --out=$S/translate-$name
+    rc=$?; [ $rc -eq 0 ] && break; [ $rc -eq 3 ] || { log "translate $name rc=$rc"; sleep 300; }
+  done
 done
 state translated
 
 # 3 packet
 mkdir -p $S/audit
-node --env-file=.env.production.local scripts/eval/split-leaf-5771/packet.mjs --frames=$S/frames.jsonl --txt=$S/leafread/txt --english=$S/translate/frames --plants=$P6948/plants.json --req=$S/audit/req.jsonl --key=$S/audit/key.json || exit 5
+node --env-file=.env.production.local scripts/eval/split-leaf-5771/packet.mjs --frames=$S/frames.jsonl --arms=cut:$S/arm2/txt:$S/translate-cut/frames,reread:$S/leafread/txt:$S/translate-reread/frames --plants=$P6948/plants.json --req=$S/audit/req.jsonl --key=$S/audit/key.json || exit 5
 state packeted
 
 # 4 audit
