@@ -43,6 +43,7 @@
  */
 import { execSync, spawnSync } from 'node:child_process';
 import { appendFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -190,6 +191,8 @@ function main() {
   sh(`gh pr comment ${pr.number} --body "Auto-merged by auto-merge.yml: tier:auto, test+DCO green, interlock clear, main quiet ${gap.toFixed(0)} min. Rules: scripts/maintenance/pr-tier-rules.json"`);
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
+  // The merge has landed; a failed close must not fail the run.
+  try { closeLinkedIssues(pr.number); } catch (e) { console.log(`::warning::closing linked issues failed: ${e.message}`); }
   dispatchLedgers(pr.number);
   return ready.length > 1 ? BUILD_GAP_MIN + 1 : null;
 }
@@ -220,4 +223,25 @@ function dispatchLedgers(number) {
   console.log('dispatched eval-ledgers-regenerate.yml (scripts/eval/ changed)');
 }
 
-emitRetry(main());
+// GitHub does not apply closing keywords when the merger is github-actions, so
+// a tier:auto PR saying `Closes #N` merged and left #N open (#7288: 32 of 38
+// linked issues from bot merges 2026-10-01..24 stayed open; 0 of 9 from human
+// merges). Close them ourselves. closingIssuesReferences is GitHub's own parse
+// of the keywords, so `Part of #N` is not in it. Same-repo issues only; an
+// issue already closed (by hand, or by GitHub) is left alone.
+export function closeLinkedIssues(number, run = sh) {
+  const { closingIssuesReferences: refs } = JSON.parse(run(`gh pr view ${number} --json closingIssuesReferences`));
+  const repo = JSON.parse(run('gh repo view --json name,owner --jq \'{name: .name, owner: .owner.login}\''));
+  const closed = [];
+  for (const ref of refs || []) {
+    if (ref.repository && (ref.repository.name !== repo.name || ref.repository.owner?.login !== repo.owner)) continue;
+    const state = run(`gh issue view ${ref.number} --json state --jq .state`).trim();
+    if (state !== 'OPEN') continue;
+    run(`gh issue close ${ref.number} --reason completed --comment "Closed by #${number} (merged by auto-merge; GitHub skips closing keywords for github-actions merges, #7288)."`);
+    console.log(`closed #${ref.number} (linked from #${number})`);
+    closed.push(ref.number);
+  }
+  return closed;
+}
+
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) emitRetry(main());
