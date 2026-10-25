@@ -131,13 +131,26 @@ describe('quotes', () => {
     const bad = 'He saw "a furnace that I have seen … that never once went out at night" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     expect(ground(bad).report.quotesUnquoted).toBe(1);
   });
-  it('removes a blockquote no page supports, with a visible note', () => {
+  it('removes a blockquote no page supports, leaving no note in its place (#7190)', () => {
     const text = 'Intro.\n\n> "Mercury purified by the eight processes becomes like a wish-fulfilling gem."\n> — *[Rasaratna Samuccaya](https://sourcelibrary.org/book/rasaratna-samuccaya-vagbhata)*, [Page 45](https://sourcelibrary.org/book/rasaratna-samuccaya-vagbhata?page=45)\n\nAfter.';
     const { out, report } = ground(text);
     expect(report.blockquotesRemoved).toBe(1);
     expect(out).not.toContain('wish-fulfilling');
-    expect(out).toContain('could not find on any page I read');
-    expect(out).toContain('After.');
+    expect(out).not.toContain('could not find');
+    expect(out).toBe('Intro.\n\nAfter.');
+  });
+  it('turns the colon of a lead-in into a full stop when the quote it introduced is removed (#7190)', () => {
+    // The live shape: the reader writes Spanish, the model translates the English page into a blockquote.
+    const quote = '> La virtud es un medio entre dos vicios, uno que peca por exceso y otro por defecto.\n> — [Página 12](https://sourcelibrary.org/es/book/ethica-aristoteles?page=12)';
+    const { out } = ground(`Aristóteles trata la virtud como un término medio:\n\n${quote}\n\n### Siguiente`);
+    expect(out).toBe('Aristóteles trata la virtud como un término medio.\n\n### Siguiente');
+    // A list item lead-in, and a lead-in this pass already edited (unquoted), both get the stop.
+    expect(ground(`* **Ética:** el texto dice:\n${quote}`).out).toBe('* **Ética:** el texto dice.\n');
+    const edited = ground(`He called it "a furnace that never once went out at night" and wrote:\n\n${quote}`).out;
+    expect(edited).toBe('He called it a furnace that never once went out at night and wrote.\n\n');
+    // A kept quote leaves its lead-in alone.
+    const kept = 'Monconys wrote:\n\n> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
+    expect(ground(kept).out).toBe(kept);
   });
   it('keeps a blockquote that is on the page', () => {
     const text = '> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
