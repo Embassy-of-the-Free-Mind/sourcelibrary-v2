@@ -24,6 +24,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write    # to close the issues a merged PR names: GitHub skips `Closes #N` for github-actions merges (#7288)
   actions: write   # to dispatch post-deploy-warm.yml after a merge (a GITHUB_TOKEN push does not trigger it)
 
 concurrency:
