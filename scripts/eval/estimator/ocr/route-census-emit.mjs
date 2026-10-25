@@ -58,25 +58,37 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
     const kind = kindOf(b);
     const script = b.script_family ?? b.script;
     const chart = chartOf(b.language, b.script, kind);
+    const countOcr = (m, f, n) => {
+      const route = routeName(m);
+      if (!route || TEXT_NOT_ENGINE.test(route)) return;
+      const meta = { stage: 'ocr', route, chart, script, language: b.language ?? 'unknown', era: b.era, kind };
+      add(JSON.stringify(meta), meta, f, n, b.id);
+    };
     for (const [m0, s, , , st, rm, n] of b.ocr) {
       pagesSeen += n;
       if (st === 'none' || st === 'unreadable' || NOT_MODEL.test(s ?? '')) continue;
-      const stampModel = (st === 'refused' || st === 'failed') && rm ? rm : m0;
-      const route = routeName(stampModel);
-      if (st === 'read_after_refusal' && !GEMINI.test(m0 ?? '')) {
+      const after = st === 'read_after_refusal' || st === 'read_after_failure';
+      if (after && rm && rm !== m0) {
+        // The stamping route (ocr.last_skip.model / fail_blocked_model) did not read the page, and another engine's
+        // text now stands (#7378: a Paddle, CLI or Claude re-read that failed over a stored read). The failure is the
+        // stamping route's; the standing read counts for its own engine as a plain read.
+        countOcr(rm, st === 'read_after_refusal' ? { n: 1, k_refused: 1 } : { n: 1, k_failed: 1 }, n);
+        countOcr(m0, { n: 1 }, n);
+        continue;
+      }
+      if (st === 'read_after_refusal' && !rm && !GEMINI.test(m0 ?? '')) {
         // RECITATION is a Gemini refusal: a non-Gemini engine read the page after an unrecorded Gemini route refused it.
         const k = `${b.language}|${b.era}`; unattributed.set(k, (unattributed.get(k) ?? 0) + n);
       }
-      if (!route || TEXT_NOT_ENGINE.test(route)) continue;
-      const meta = { stage: 'ocr', route, chart, script, language: b.language ?? 'unknown', era: b.era, kind };
-      const key = JSON.stringify(meta);
+      // A refused, failed or empty page with no standing read belongs to the route that stamped it.
+      const stampModel = (st === 'refused' || st === 'failed' || st === 'empty') && rm ? rm : m0;
       const f = { n: 1 };
       if (st === 'refused') f.k_refused = 1;
       else if (st === 'failed') f.k_failed = 1;
       else if (st === 'empty') f.k_empty = 1;
       else if (st === 'read_after_refusal') f.read_after_refusal = 1;
       else if (st === 'read_after_failure') f.read_after_failure = 1;
-      add(key, meta, f, n, b.id);
+      countOcr(stampModel, f, n);
     }
     for (const [m, s, , st, hb, n] of b.tr) {
       if (st === 'none') continue;
@@ -92,9 +104,11 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
       add(JSON.stringify(meta), meta, f, n, b.id);
     }
   }
-  // A route whose writer never stamps a refusal or failure on the page (cli-ocr and the specialist lanes write nothing
-  // when a read fails; only the Gemini API writers, batch-collector and realtime-ocr, stamp) reads 0 of n here by
-  // construction. The absence of the stamp is not the absence of the failure: such routes get no failed_read row.
+  // A route whose writer never stamps a refusal or failure on the page reads 0 of n here by construction. Until #7378
+  // only the Gemini API writers (batch-collector, realtime-ocr) stamped; since then cli-ocr (agy, Claude), the Paddle,
+  // Kraken and NDL lanes and the Yigdzin apply stamp `ocr.last_skip` too (scripts/lib/ocr-failed-read.mjs), but only
+  // for reads made after it shipped. The absence of the stamp is not the absence of the failure: such routes get no
+  // failed_read row.
   const stamped = new Map();
   for (const c of cells.values()) { const k = `${c.stage}|${c.route}`;
     stamped.set(k, (stamped.get(k) ?? 0) + c.k_refused + c.k_failed + c.k_guard + c.read_after_failure

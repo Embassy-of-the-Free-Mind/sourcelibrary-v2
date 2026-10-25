@@ -2,7 +2,8 @@
 
 **Read this when:** writing or changing a pipeline phase, calling `setPipelineStatus`,
 advancing `pipeline_auto.status` from anywhere, adding a guard that asserts some stage
-"really did its job," or **bulk-writing OCR onto books that are already translated**.
+"really did its job," **bulk-writing OCR onto books that are already translated**, or
+**writing a new OCR lane** (it must stamp a failed read, below).
 
 *Added 2026-08-08 from #3740 / PR #3765.*
 
@@ -243,3 +244,29 @@ every archiver (measured 2026-10-25), while the lanes registry said the archiver
 - **Do not widen the reason pattern to "make a book archivable".** A block with a real failure
   reason means the source refused or broke; clear it with `archive-auto-unblock.mjs` or by hand,
   after reading `archive-fetch-failures.md`.
+
+## Every OCR writer stamps a failed read (#7378, 2026-10-25)
+
+The route census (#6740) prices each OCR route by its own record: the pages it wrote, and the
+pages it left refused or failed. Only the two Gemini API writers (`batch-collector.mjs`,
+`realtime-ocr.mjs`) stamped a failure. Paddle (1.66M pages), Yigdzin (680K), Kraken, NDL, the
+agy CLI lanes and the Claude lanes wrote nothing when a read failed. So the census read them as
+0 of n and the router priced them as if every call returned a page. **A route with no failure
+stamp reads as a route that never fails.**
+
+- **Rule:** a writer that does not get a usable read back from its engine calls
+  `recordFailedReads()` (`scripts/lib/ocr-failed-read.mjs`) under its write mode. That covers a
+  refusal, an empty read, a timeout, and an engine error or `.err` file. The stamp is
+  realtime-ocr's `ocr.last_skip` shape: `{ reason, finish_reason, at, model, engine, detail }`.
+  `model` is the id the lane writes to `ocr.model` on success, because the census charges the
+  failure to that route. `at` is when the read failed, not when the stamp was written.
+- **What is not stamped:** our own guards refusing a read the engine did return. That covers a
+  loop (already a `page_revisions` row via `recordLoopRefusal`, counted as `guard_refused`), the
+  write guard, the shared-words floor, a faint or under-read leaf, and a table detector. An image
+  fetch failure is not stamped either, because it is not the engine's failure.
+- **It changes no routing.** The helper writes only `ocr.last_skip`. It never writes `fail_count`,
+  `fail_blocked` or `recitation_*`, which the orchestrator and the selectors read to stop sending a
+  page. The human-edit guard and the bare-string guard are in its update filter. A stamp never
+  overwrites one at the same time or later, so a rerun of an apply is a no-op.
+- **Enforced:** `tests/unit/ocr-failed-read.test.ts` fails if a listed writer stops calling the
+  helper, or calls it outside `APPLY`. Add a new lane to its `WRITERS` list.
