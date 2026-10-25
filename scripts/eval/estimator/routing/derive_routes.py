@@ -52,7 +52,7 @@ LITE, FLASH = 'gemini-3.1-flash-lite', 'gemini-3-flash-preview'
 
 # Planner display names -> engine ids the tables use.
 TR_NAME = {'Flash-Lite 3.1': LITE, '3 Flash': FLASH, '3.8 Flash CLI': 'gemini-3.8-flash+agy-cli',
-           'Opus 5.5': 'claude-opus-5-5', 'Sonnet 5.5': 'claude-sonnet-5-5'}
+           'Opus 5.5': 'claude-opus-5-5', 'Sonnet 5.5': 'claude-sonnet-5-5', 'G4L CLI': 'gemini-4-argon-low+agy-cli'}
 # Engines a Batch router can run, and the channel each must use (DECISIONS.md "All Gemini OCR (channel)").
 BATCH_API_OK = {LITE}
 CLI_LANES = {
@@ -215,9 +215,15 @@ def main():
         else:
             inc, row_id = None, None
         v = verdict_for(r, inc, constants, stage) if stage in ('ocr', 'translation') else {'verdict': 'KEEP', 'why': 'correction lanes are not routed by a table', 'leader': r['leader']}
+        pa = r.get('p_best_all_engines')
+        if pa and r.get('not_feasible_at_this_volume'):
+            top = max(pa, key=pa.get)
+            if top != r['leader']:   # the leader with every engine back in, for a decision small enough to fit (#6871)
+                v['why'] += f"; with the capacity-filtered engines back in, {top} leads (P(best) {pa[top]:.2f}): a held frame small enough to fit can route there"
         rows.append({'stage': stage, 'decision': r['decision'], 'table_row': row_id, 'table_engine': inc,
                      'p_leader_beats_incumbent': r.get('p_leader_beats_incumbent'), 'p_not_best': r.get('p_not_best'),
-                     'el_per_page': r.get('el_per_page'), 'pages': r.get('pages'), 'p_best': r.get('p_best'), **v})
+                     'el_per_page': r.get('el_per_page'), 'pages': r.get('pages'), 'p_best': r.get('p_best'),
+                     'p_best_all_engines': r.get('p_best_all_engines'), **v})
 
     result = {'date': a.date, 'issue': 7170, 'plan': os.path.relpath(plan_path, ROOT), 'ocr_estimator': os.path.relpath(ocr_path, ROOT),
               'tables': ['scripts/lib/ocr-routing-table.json', 'scripts/lib/translation-routing-table.json'],

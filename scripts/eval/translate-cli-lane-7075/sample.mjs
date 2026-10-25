@@ -22,7 +22,11 @@
  *
  * DRAW. Visible books whose FIRST language label is --lang; pages with OCR of at least 300 characters, a translatable
  * page type, and `translation.model` = --old. One page per book (a book is one observation), seeded by page id; a
- * second round per book only if there are fewer books than --n.
+ * second round per book only if there are fewer books than --n. Optional: --ocr-source=paddle keeps pages whose OCR
+ * came from that source, and --english-after-ocr keeps only pages whose stored English is newer than their OCR (an
+ * English made from an earlier transcription would be judged against a source it never saw; #6871). --title=REGEX and
+ * --exclude-title=REGEX narrow the books to the kind the row will translate (a frame of tables and music is not a
+ * frame of rhyme dictionaries).
  *
  * PACKET. Per page the source text (stored OCR) and two English candidates, X and Y, the side chosen by a seeded coin.
  * Two CONTROLS: the stored English of the page against the stored English of a different page of the same language.
@@ -65,19 +69,25 @@ async function draw() {
   const { MongoClient } = await import('mongodb');
   const { prefixRegex } = await import('../../lib/translation-routing.mjs');
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
-  const lang = arg('lang'), old = arg('old'), n = Number(arg('n') || 20);
+  const lang = arg('lang'), old = arg('old'), n = Number(arg('n') || 20), ocrSource = arg('ocr-source');
+  const afterOcr = process.argv.includes('--english-after-ocr');
+  const titleRe = arg('title') && new RegExp(arg('title')), exclRe = arg('exclude-title') && new RegExp(arg('exclude-title'));
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
   const re = prefixRegex([lang], ['ancient']);
   // The label regex is the router's (prefixRegex); Mongo only narrows by substring, so "Ancient Greek" is not lost.
-  const books = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: lang, $options: 'i' } }, { projection: { id: 1, title: 1, language: 1 } }).toArray()).filter((b) => re.test(b.language));
+  const books = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: lang, $options: 'i' } }, { projection: { id: 1, title: 1, language: 1 } }).toArray()).filter((b) => re.test(b.language))
+    .filter((b) => (!titleRe || titleRe.test(b.title || '')) && (!exclRe || !exclRe.test(b.title || '')));
   // Length and freshness are computed in the database so the OCR text never leaves it.
   const toDate = (f) => ({ $convert: { input: f, to: 'date', onError: null, onNull: null } });
   const pages = await db.collection('pages').aggregate([
     { $match: { book_id: { $in: books.map((b) => b.id) }, page_number: { $gt: 0 }, ...(old === CURRENT ? {} : { 'translation.model': old }),
-      page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' }, 'translation.data': { $type: 'string' } } },
+      page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' }, 'translation.data': { $type: 'string' },
+      ...(ocrSource ? { 'ocr.source': ocrSource } : {}) } },
     { $match: { $expr: { $and: [{ $gte: [{ $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] }, 300] },
-      ...(old === CURRENT ? [{ $gt: [toDate('$translation.updated_at'), toDate('$ocr.updated_at')] }] : [])] } } },
+      ...(old === CURRENT ? [{ $gt: [toDate('$translation.updated_at'), toDate('$ocr.updated_at')] }] : []),
+      // --english-after-ocr (#6871): the stored English was made from this OCR, not an earlier one
+      ...(afterOcr ? [{ $gte: [toDate('$translation.updated_at'), toDate('$ocr.updated_at')] }] : [])] } } },
     { $project: { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.model': 1, 'translation.model': 1, 'translation.updated_at': 1 } },
   ], { allowDiskUse: true }).toArray();
   await c.close();
@@ -91,7 +101,7 @@ async function draw() {
   picked.sort((a, b) => a.book_id.localeCompare(b.book_id) || a.page_number - b.page_number);
   const title = new Map(books.map((b) => [b.id, b.title]));
   fs.mkdirSync(OUT, { recursive: true });
-  W('sample.json', { lang, old, n, drawn_at: new Date().toISOString(), frame: { books: books.length, eligible_pages: ok.length, books_with_eligible: byBook.size },
+  W('sample.json', { lang, old, n, ocr_source: ocrSource ?? null, english_after_ocr: afterOcr, title: arg('title') ?? null, exclude_title: arg('exclude-title') ?? null, drawn_at: new Date().toISOString(), frame: { books: books.length, eligible_pages: ok.length, books_with_eligible: byBook.size },
     pages: picked.map((p) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, title: title.get(p.book_id), ocr_model: p.ocr?.model ?? null,
       old_model: p.translation?.model ?? null, old_updated_at: p.translation?.updated_at ?? null })) });
   W('page-ids.json', picked.map((p) => p.id));
