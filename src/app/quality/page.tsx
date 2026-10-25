@@ -419,7 +419,7 @@ export default function QualityCenterPage() {
           <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
             The reader for new pages is not always the one that wrote the text you see. Many pages were read earlier, by
             another engine. The third column says what is stored now, in pages: every page of every published book in
-            that language, counted on {longDate(ocrRouting.census.date)}. Chinese and Tibetan were counted on 13 October 2026.
+            that language, counted on {longDate(ocrRouting.census.date)}.
           </p>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
