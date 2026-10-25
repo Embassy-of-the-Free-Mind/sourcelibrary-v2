@@ -66,7 +66,6 @@ __INTRO__
   <div class="controls" id="controls"></div>
   <svg id="map" role="img" aria-label="Timeline of passages on aliveness in four lanes"></svg>
   <p id="count"></p>
-  <p class="hint" id="map-note" hidden>Placed by edition, a column appears at 1700 in the bottom lane: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>).</p>
   <div id="detail"><p class="hint">Tap or hover a mark to read the passage.</p></div>
 </div>
 
@@ -78,7 +77,7 @@ __ANIM_INTRO__
 <div class="statrow" id="anim-stats"></div>
 <div class="pairs" id="anim-lists"></div>
 <h4>Who speaks, by century of edition</h4>
-<p class="cap">The insider passages in the 1700s are almost all from Tibetan and Bhutanese editions whose year of 1700 is a placeholder for an unknown date.</p>
+<p class="cap">Tibetan and Bhutanese editions without a printed date are placed by a model’s estimate of when they were printed.</p>
 <div class="tablewrap"><table class="t" id="tbl-anim-cent"></table></div>
 <h4>By tradition</h4>
 <div class="tablewrap"><table class="t" id="tbl-anim-trad"></table></div>
@@ -209,7 +208,6 @@ __DATA_NOTE__
       .style('pointer-events', function(d){ return on(d) ? 'all' : 'none'; })
       .on('mouseenter click', function(ev,d){ show(d); d3.select(this).attr('r', 6).raise(); })
       .on('mouseleave', function(){ d3.select(this).attr('r', W < 560 ? 2.6 : 3.2); });
-    document.getElementById('map-note').hidden = document.getElementById('f-date').value !== 'e';
     var shown = P.filter(on).length, nd = P.filter(function(d){ return on(d) && when(d)==null; }).length;
     document.getElementById('count').textContent = fmt(shown)+' passages match'+(nd ? ' ('+nd+' undated, listed in the data file but not plotted)' : '')+'.';
   }
@@ -229,7 +227,7 @@ __DATA_NOTE__
     return function(d){ return ls[d.l] && (d.p==='alive' ? al : de) && (!tr || d.tr===tr) && (!lg || d.lg===lg) && (!q || (d.q+' '+d.t+' '+d.a).toLowerCase().indexOf(q) >= 0); };
   }
   function show(d){
-    document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+esc(d.lg)+'<br>Written '+(d.yw!=null ? esc(d.wd || yr(d.yw))+' <span class="cap">('+esc(BASIS[d.wb]||'estimated')+')</span>' : 'date unknown')+' · this edition '+yr(d.y)+
+    document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+esc(d.lg)+'<br>Written '+(d.yw!=null ? esc(d.wd || yr(d.yw))+' <span class="cap">('+esc(BASIS[d.wb]||'estimated')+')</span>' : 'date unknown')+' · this edition '+(d.ye ? 'c. '+yr(d.y)+' <span class="cap">(estimated by a model)</span>' : yr(d.y))+
       '<br>'+(d.l==='inhabited'
         ? '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+(d.p==='alive'?'spirit present':'denied')+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">where: '+esc(lbl(d.c))+'</span><span class="tag">who: '+esc(lbl(d.s))+'</span><span class="tag">relation: '+esc(lbl(d.rel))+'</span><span class="tag">voice: '+esc(d.v)+'</span>'
         : '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+d.p+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">what: '+esc(d.c)+'</span><span class="tag">life from: '+esc(d.s)+'</span>'+(d.fp?'<span class="tag">first person</span>':''))+

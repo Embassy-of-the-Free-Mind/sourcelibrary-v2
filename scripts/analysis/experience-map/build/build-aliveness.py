@@ -26,8 +26,26 @@ LAYERS = ['felt', 'world', 'made']
 EXCLUDED_PHRASES = {'the sky is our father'}
 EXCLUDED = set(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'probes', 'excluded-pages.json')))['pages'])
 
+# books readers cannot open (hidden, duplicate, under rights review): their passages would link to a 404, and some are
+# withheld for rights, so they are never shown. build/export-work-dates.mjs writes the list; without it the build stops.
+VIS = os.path.join(D, 'book-visibility.json')
+if not os.path.exists(VIS): sys.exit(f'{VIS} missing: run build/export-work-dates.mjs first')
+HIDDEN = json.load(open(VIS))['hidden']
+
+# undated Tibetan and Bhutanese editions carry book_year 1700 as a placeholder (#3307), which drew a false column at 1700
+# on the edition axis and in the century tables; where the dating run (#6721) estimated the edition, use that estimate
+WD0 = json.load(open(os.path.join(D, 'work-dates.json'))) if os.path.exists(os.path.join(D, 'work-dates.json')) else {}
+def edition_year(r):
+    w = WD0.get(r.get('book_id')) or {}
+    if r.get('book_year') == 1700 and r.get('book_language') in ('Tibetan', 'Dzongkha') and w.get('ey') and w['ey'] != 1700:
+        r['book_year'] = w['ey']; r['book_year_basis'] = w.get('eb') or 'estimate'
+    return r
+
 def load(p):
-    return [r for r in (json.loads(l) for l in open(os.path.join(D, p)) if l.strip()) if r.get('page_id') not in EXCLUDED]
+    # the random baseline keeps every page: it measures the translated library, not what the map links to
+    keep_hidden = p.startswith('baseline')
+    return [edition_year(r) for r in (json.loads(l) for l in open(os.path.join(D, p)) if l.strip())
+            if r.get('page_id') not in EXCLUDED and (keep_hidden or r.get('book_id') not in HIDDEN)]
 
 def confirmed(screen, judged):
     J = {j['page_id']: j for j in judged}
@@ -191,7 +209,7 @@ for r in hits:
     for L in LAYERS:
         p = r[L + '_final']
         if not p: continue
-        pts.append({'l': L, 'p': p, 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110], 'a': (r.get('book_author') or '')[:60],
+        pts.append({'l': L, 'p': p, 'y': r.get('book_year'), 'ye': r.get('book_year_basis'), 't': (r.get('book_title') or '')[:110], 'a': (r.get('book_author') or '')[:60],
                     'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other', 'c': r.get('carrier'), 's': r.get('source_of_life'),
                     'q': r[L + '_quote'], 'why': (r[L + '_reason'] or '')[:220], 'fp': r.get('first_person'),
                     # front matter has a negative page_number in the mirror and the reader cannot open it by ?page=:
@@ -289,7 +307,7 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
     b4 = {r['page_id'] for r in base if any(r[L + '_final'] for L in LAYERS)} | {r['page_id'] for r in AB if r['inh_final']}
     N['baseline_any4'] = {'confirmed': len(b4), 'rate': wilson(len(b4), nb)}
     for r in cf:
-        pts.append({'l': 'inhabited', 'p': 'alive' if r['inh_final'] == 'person' else 'dead', 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110],
+        pts.append({'l': 'inhabited', 'p': 'alive' if r['inh_final'] == 'person' else 'dead', 'y': r.get('book_year'), 'ye': r.get('book_year_basis'), 't': (r.get('book_title') or '')[:110],
                     'a': (r.get('book_author') or '')[:60], 'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other',
                     'c': r.get('dwelling'), 's': r.get('being'), 'v': r['voice_final'], 'rel': r.get('relation'),
                     'q': r['inhabited_quote'], 'why': (r['inh_reason'] or '')[:220], 'fp': False,
