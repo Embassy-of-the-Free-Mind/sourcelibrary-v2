@@ -35,7 +35,8 @@
  *   --ia-concurrency=N      parallel manifest fetches for archive.org hosts (default 4; others 1)
  *   --park-after=N          park a host after N identical 401/403 in a row (default 2)
  *   --checkpoint=<file>     one JSON line per row; rows already in it are not retried
- *                           (except fetch_failed on a host that was parked)
+ *                           (except errors, and fetch_failed on a host that was parked)
+ *   --retry-failed          also retry rows whose manifest fetch failed (5xx, timeout)
  *   --stop-file=<file>      stop cleanly when this file exists
  *   --dry-run               fetch and count, write nothing
  */
@@ -66,6 +67,7 @@ const PARK_AFTER = parseInt(args['park-after'], 10) || 2;
 const CHECKPOINT = args.checkpoint || null;
 const STOP_FILE = args['stop-file'] || null;
 const DRY_RUN = !!args['dry-run'];
+const RETRY_FAILED = !!args['retry-failed'];
 const MANIFEST_ONLY = !!args['manifest-only'];
 const CAMPAIGN = args.campaign;
 const HOLD = { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue'], 10) || null };
@@ -97,6 +99,8 @@ if (CHECKPOINT && existsSync(CHECKPOINT)) {
     if (!line.trim()) continue;
     const r = JSON.parse(line);
     if (r.outcome === 'fetch_failed' && r.parked) continue; // the host was walled: retry on a later run
+    if (r.outcome === 'error') continue; // an unexpected throw (e.g. a slug race): retry
+    if (r.outcome === 'fetch_failed' && RETRY_FAILED) continue;
     done.add(r.manifest_url);
   }
 }
