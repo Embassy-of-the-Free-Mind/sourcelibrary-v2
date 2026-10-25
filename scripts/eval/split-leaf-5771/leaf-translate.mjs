@@ -58,7 +58,7 @@ for (const f of frames) {
       const dir = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'leaf-tr-'));
       r = await claudeCall(sent, 'opus', dir);
       fs.rmSync(dir, { recursive: true, force: true });
-      calls++;
+      if (!r.not_called) calls++;
       if (r.cls === 'usage_limit') { stop = r.err || 'usage limit'; break; }
       const t = r.cls ? null : splitBlockReply(r.text, [f.page_number]);
       if (t) text = sanitizeTranslationTags(t.get(Number(f.page_number)));
