@@ -69,7 +69,7 @@ export function classifyApiError(err: unknown): McpErrorPayload {
   if (lower.includes('no approval received') || status === 429) {
     return {
       error: 'rate_limited',
-      message: 'The anonymous request budget for this window is exhausted. This is temporary and not a statement about the corpus.',
+      message: 'A request or page budget is exhausted for now. This is temporary and not a statement about the corpus.',
       retry_after: 3600,
       recovery: 'Wait and retry the identical call, or reduce page range size. Do NOT tell the user the text could not be retrieved — it exists.',
     };
