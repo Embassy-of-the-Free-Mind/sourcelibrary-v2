@@ -1,0 +1,169 @@
+/**
+ * The archive lanes must not spin on books they cannot advance (#5448).
+ *
+ * lane-heidelberg ran 108,133 times in nine days, each run "0 ok, 6 failed
+ * [404], 34373 skipped". Three faults made that loop, and each has a test here:
+ *   1. a 404 tripped the HOST breaker, so one book of dead URLs paused a host
+ *      that serves the other books fine;
+ *   2. a page that 404s forever was asked for forever, and its book could never
+ *      leave the "partial" set;
+ *   3. the lane only slept when the batch was EMPTY, never when a run archived
+ *      nothing.
+ * Negative controls run when written: feeding `pageMiss` through `failure`
+ * turns "a book of dead URLs does not pause the host" red; dropping the
+ * `m.url === url` check turns "a repaired URL is eligible again" red; removing
+ * the `pages 0 ok` branch from archive-lane.sh turns the idle-sleep test red.
+ */
+import { describe, it, expect } from 'vitest';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, mkdirSync, copyFileSync, writeFileSync, readFileSync, chmodSync, existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+// @ts-expect-error — plain .mjs helper, no types
+import { createHostBreaker, BREAKER_DEFAULTS } from '../../scripts/lib/host-breaker.mjs';
+import {
+  isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, isMissCode, MISS_LIMIT, ROTATION_SORT,
+  // @ts-expect-error — plain .mjs helper, no types
+} from '../../scripts/lib/archive-miss.mjs';
+
+const H = 'digi.ub.uni-heidelberg.de';
+const URL_A = `https://${H}/iiif/2/x%3A001.jpg/full/full/0/default.jpg`;
+const URL_B = `https://${H}/iiif/2/x%3A001r.jpg/full/full/0/default.jpg`;
+
+describe('a 404 is a fact about a page, not a host', () => {
+  it('a book of dead URLs does not pause the host', () => {
+    const b = createHostBreaker({ now: () => 1_000_000 });
+    for (let i = 0; i < BREAKER_DEFAULTS.coldStartFails * 4; i++) b.pageMiss(H, '404');
+    expect(b.isOpen(H), 'twenty 404s from one book paused the host — the #5448 loop').toBe(false);
+    expect(b.allow(H)).toBe(true);
+    expect(b.report()).toMatch(/page-miss 20 \[404:20\]/);
+  });
+
+  it('negative control: the same count of real failures still trips it', () => {
+    const b = createHostBreaker({ now: () => 1_000_000 });
+    for (let i = 0; i < BREAKER_DEFAULTS.coldStartFails; i++) b.failure(H, 'timeout');
+    expect(b.isOpen(H)).toBe(true);
+  });
+
+  it('only 404 and 410 are misses — 400, 403, 429 keep their own handling', () => {
+    expect(isMissCode('404')).toBe(true);
+    expect(isMissCode('410')).toBe(true);
+    for (const c of ['400', '401', '403', '429', '500', 'timeout', 'network']) expect(isMissCode(c), c).toBe(false);
+  });
+});
+
+describe('per-book guard: give up on a book for this run, not on the host', () => {
+  it('abandons a book whose pages keep missing before any is served', () => {
+    const g = createBookMissGuard({ streak: 5 });
+    for (let i = 0; i < 4; i++) g.miss('dead');
+    expect(g.abandoned('dead')).toBe(false);
+    g.miss('dead');
+    expect(g.abandoned('dead')).toBe(true);
+    expect(g.abandoned('other'), 'one book\'s misses are not another\'s').toBe(false);
+  });
+
+  it('keeps going on a book that has served pages: a missing leaf costs one request, not the book', () => {
+    const g = createBookMissGuard({ streak: 5 });
+    g.ok('b');
+    for (let i = 0; i < 20; i++) g.miss('b');
+    expect(g.abandoned('b')).toBe(false);
+  });
+});
+
+describe('permanent miss: recorded on the page, keyed to the URL', () => {
+  it('counts consecutive misses of the same URL up to the limit', () => {
+    let page: any = {};
+    for (let i = 1; i <= MISS_LIMIT; i++) {
+      expect(isPermanentMiss(page, URL_A), `after ${i - 1} misses`).toBe(false);
+      const set = missUpdate(page, URL_A, '404', new Date(0));
+      expect(set['archive_metadata.miss'].count).toBe(i);
+      page = { archive_metadata: { miss: set['archive_metadata.miss'] } };
+    }
+    expect(isPermanentMiss(page, URL_A)).toBe(true);
+  });
+
+  it('a repaired URL is eligible again, with no cleanup step', () => {
+    const page = { archive_metadata: { miss: { url: URL_A, status: '404', count: MISS_LIMIT } } };
+    expect(isPermanentMiss(page, URL_B)).toBe(false);
+    expect(missUpdate(page, URL_B, '404')['archive_metadata.miss'].count, 'a new URL starts its own count').toBe(1);
+  });
+
+  it('never writes archived_photo — the field is the work queue (archive-fetch-failures.md)', () => {
+    expect(Object.keys(missUpdate({}, URL_A, '404'))).toEqual(['archive_metadata.miss']);
+  });
+});
+
+describe('book verdict', () => {
+  it('complete at the 99% bar, as before', () => {
+    expect(bookVerdict({ pagesCount: 100, archived: 99, misses: 0 })).toBe('complete');
+    expect(bookVerdict({ pagesCount: 100, archived: 98, misses: 0 })).toBe('partial');
+  });
+
+  it('done-with-gaps when every page the source still has is archived', () => {
+    expect(bookVerdict({ pagesCount: 800, archived: 780, misses: 20 })).toBe('complete_with_gaps');
+  });
+
+  it('a book that is MOSTLY misses stays partial — that is a URL problem, not lost leaves', () => {
+    // The Bodleian-through-Heidelberg proxy book: every page 404s.
+    expect(bookVerdict({ pagesCount: 790, archived: 0, misses: 790 })).toBe('partial');
+    expect(bookVerdict({ pagesCount: 100, archived: 80, misses: 20 })).toBe('partial');
+  });
+
+  it('missing pages that are NOT permanent misses still leave it partial', () => {
+    expect(bookVerdict({ pagesCount: 800, archived: 700, misses: 6 })).toBe('partial');
+  });
+});
+
+describe('rotation', () => {
+  it('book mode orders by last attempt first, so a failed head goes to the back', () => {
+    expect(Object.keys(ROTATION_SORT)[0]).toBe('archive_metadata.last_attempt_at');
+  });
+});
+
+describe('archive-lane.sh sleeps after a run that archived nothing', () => {
+  /**
+   * Runs the real wrapper in a scratch tree with `npx` and `sleep` stubbed:
+   * npx prints a canned archiver summary, sleep records that it was called and
+   * stops the loop. Returns the run index at which the lane first slept.
+   */
+  function firstSleepAfter(summaries: string[]): number | null {
+    const root = mkdtempSync(path.join(tmpdir(), 'lane-'));
+    mkdirSync(path.join(root, 'scripts/catalog-coverage'), { recursive: true });
+    const lane = path.join(root, 'scripts/catalog-coverage/archive-lane.sh');
+    copyFileSync(path.resolve(__dirname, '../../scripts/catalog-coverage/archive-lane.sh'), lane);
+    writeFileSync(path.join(root, '.env.production.local'), '');
+    const bin = path.join(root, 'bin');
+    mkdirSync(bin);
+    summaries.forEach((s, i) => writeFileSync(path.join(root, `run${i}`), s));
+    // npx: print the next canned run; past the end, stop the lane outright.
+    writeFileSync(path.join(bin, 'npx'), `#!/usr/bin/env bash
+n=$(cat "${root}/count" 2>/dev/null || echo 0); echo $((n+1)) > "${root}/count"
+[ -f "${root}/run$n" ] || { kill -TERM $(cat "${root}/lanepid"); exit 0; }
+cat "${root}/run$n"
+`);
+    writeFileSync(path.join(bin, 'sleep'), `#!/usr/bin/env bash
+cat "${root}/count" > "${root}/slept"; kill -TERM $(cat "${root}/lanepid")
+`);
+    chmodSync(path.join(bin, 'npx'), 0o755);
+    chmodSync(path.join(bin, 'sleep'), 0o755);
+    try {
+      execFileSync('bash', ['-c', `echo $$ > "${root}/lanepid"; exec "${lane}"`], {
+        env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, LANE: `t${process.pid}${Date.now()}`, ARCHIVE_ARGS: '--hosts example.org', ARCHIVE_IDLE_SLEEP: '1' },
+        stdio: 'ignore', timeout: 20_000,
+      });
+    } catch { /* the stub ends the loop with SIGTERM */ }
+    return existsSync(path.join(root, 'slept')) ? Number(readFileSync(path.join(root, 'slept'), 'utf8')) : null;
+  }
+
+  const busy = '00:00:01 archive-acquired (finished): complete 1, with gaps 0, partial 0, stalled 0 | books 1/1 | pages 12 ok, 0 failed, 0 missed [404/410], 0 skipped in 0.1m (2.00 pages/s)\n';
+  const spun = '00:00:01 archive-acquired (finished): complete 0, with gaps 0, partial 40, stalled 0 | books 40/40 | pages 0 ok, 6 failed, 0 missed [404/410], 34373 skipped in 0.1m (0.00 pages/s)\n';
+  const killed = '00:50:00 archive-acquired (stopped by SIGTERM): complete 0, with gaps 0, partial 0, stalled 0 | books 0/40 | pages 0 ok, 0 failed, 0 missed [404/410], 0 skipped in 50.0m (0.00 pages/s)\n';
+
+  it('a run that archived 0 pages is followed by the idle sleep', () => {
+    expect(firstSleepAfter([busy, busy, spun])).toBe(3);
+  });
+
+  it('busy runs and a run stopped at the ceiling do not sleep', () => {
+    expect(firstSleepAfter([busy, killed, busy])).toBe(null);
+  });
+});
