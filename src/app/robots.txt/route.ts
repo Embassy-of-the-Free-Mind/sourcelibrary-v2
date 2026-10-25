@@ -123,6 +123,12 @@ type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 // scraping); the rest get the public docs + blog only. None get the full text.
 const GROUPS: Group[] = [
   { userAgent: '*', allow: ['/'], disallow: DEFAULT_DISALLOW },
+  // Sogou: a real search engine, but on 2026-10-25 it walked ~9K reader pages
+  // an hour (/book/<slug>/page/<id>). Those are noindex by default (#2688), so
+  // every fetch was a Vercel render it could not index. It keeps the book
+  // landing pages, which are what it can index; reader pages are disallowed.
+  // A named group replaces '*' for this crawler, so it repeats the defaults.
+  { userAgent: 'Sogou web spider', allow: ['/'], disallow: [...DEFAULT_DISALLOW, '/book/*/page/'] },
   { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },

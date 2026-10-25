@@ -53,6 +53,15 @@ describe('robots.txt content signals', () => {
     }
   });
 
+  it('keeps Sogou on book landing pages, off the noindex reader pages', async () => {
+    const text = await body();
+    const sogou = text.split(/\n\n/).find((b) => b.startsWith('User-agent: Sogou web spider\n'))!;
+    expect(sogou).toBeTruthy();
+    expect(sogou).toMatch(/^Disallow: \/book\/\*\/page\/$/m);
+    expect(sogou).toMatch(/^Disallow: \/api\/$/m);
+    expect(sogou).not.toMatch(/^Disallow: \/book\/$/m);
+  });
+
   // The tripwire (#5995) is only evidence if EVERY crawler was told to stay
   // out: a group that may fetch it turns a polite crawler into a "scraper".
   it('disallows the tripwire for every user-agent group', async () => {
