@@ -1,6 +1,6 @@
 {
   "_doc": "PRIOR ART: scripts/lib/ocr-routing-table.json (the OCR side, by page kind, #6688; its `route` fields are read by ocr-routing.mjs since #7170). Before #7170 the translation policy lived only as two regexes in scripts/lib/translate-core.mjs and their TS twin in src/lib/types/ai-models.ts. This file is that policy, READ by both routers (getTranslateModelForBook): the first row whose `match` fits the book gives the engine, else `default`. A `language_prefix` matches the FIRST language label, case-insensitively, as a whole word, with any run of spaces for a space (\"greek\" matches \"Greek, Latin\" and not \"Latin; Greek\"); `optional_lead` words may stand before any prefix (\"Ancient Hebrew\"). A row is `channel: \"batch\"` (the default) or `channel: \"cli\"` (#7075). A batch row names one of the two Batch models (gemini-3.1-flash-lite, gemini-3-flash-preview). A cli row names a subscription reader (CLI_TRANSLATE_LANES in translation-routing.mjs: claude-opus-5-5, gemini-3.8-flash+agy-cli), carries `adoption` (the blind sample against the reader it replaces) and OVERLAYS the batch rows: the Batch routers never see it, and the pipeline orchestrator holds its books (CLI_TRANSLATE_HOLD) for scripts/batch/cli-translate-lane.mjs. Any other engine or channel fails the test. Changes are proposed by scripts/eval/estimator/routing/derive_routes.py and land as a reviewed edit of this file with the evidence that justifies them. tests/unit/translate-core-parity.test.ts pins the two routers to each other and to this file.",
-  "as_of": "2026-10-23",
+  "as_of": "2026-10-25",
   "issue": 7170,
   "default": {
     "engine": "gemini-3.1-flash-lite",
@@ -29,6 +29,16 @@
       "match": { "language_prefix": ["tibetan"] },
       "engine": "gemini-3-flash-preview",
       "evidence": [{ "issue": 4742, "n": "21 Kanjur pages judged blind against the 84000 English", "date": "2026-09-25" }]
+    },
+    {
+      "id": "greek-cli-gemini38",
+      "channel": "cli",
+      "match": { "optional_lead": ["ancient"], "language_prefix": ["greek"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "adoption": { "sample": "scripts/eval/experiments/2026-10-25-greek-cli-lane-sample-7075.md", "replaces": "gemini-3-flash-preview / gemini-3.1-flash-lite", "date": "2026-10-25" },
+      "evidence": [
+        { "issue": 7075, "n": "18 Greek pages in 18 books + 2 controls, blind, Gemini judge +1.11 and Opus judge +0.39", "date": "2026-10-25" }
+      ]
     },
     {
       "id": "flash-measured",

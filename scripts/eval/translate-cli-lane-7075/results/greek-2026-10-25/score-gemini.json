@@ -1,5 +1,129 @@
 {
  "judges": {
+  "opus": {
+   "n": 18,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 12,
+    "old": 5,
+    "tie": 1
+   },
+   "mean_new_minus_old": 0.39,
+   "ci95": [
+    0,
+    0.78
+   ],
+   "pages": {
+    "699379bfb0a84a5763965fdc": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Both render the Greek text accurately and completely, but Y adds material not on the page: an invented account of the previous page in its meta, interpretive notes such as the 'Spartan mirage' and mothers celebrating, and 'to lead' after Agesilaus's illness, whereas X stays close to the source with only brief glosses."
+    },
+    "69f32edc876dd827cbc449ec": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y adds 'to you, his God and Father' where the page has only 'to God and Father', and it drops 'himself' (αὐτὸς) and 'to him' (αὐτῷ); X follows the page closely, and its only additions are a clearly marked gloss and marginal notes, though both end by rendering 'δεσποτικῆς σωτηρίας' loosely as 'saving passion'."
+    },
+    "69bfcc6d355e52cf7837cbeb": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Y adds content not on the page (a claim that a liturgical text follows, a 'Bodleian Library' keyword, and a duplicated warning paragraph), while X only drops minor details such as 'intricate', 'braided or' and 'heavily'."
+    },
+    "69b630611c1c21a3738015b1": {
+     "new": 3,
+     "old": 3,
+     "better": "new",
+     "reason": "Both add many English glosses that the source does not contain, but Y renders 'cum d.' (cum derivatis, 'with derivatives') as 'with the entry' throughout, wrongly glosses euronos and euros as 'east wind', drops the signature mark, and alters 'eurein' to 'heurein', while X's main faults are its speculative added glosses (e.g. euradamangys) and a Henri Estienne attribution not on the page."
+    },
+    "69a5e5c91d73f9668388ee35": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X tracks the garbled Greek clause by clause, while Y adds interpretive material not on the page (notes on the light metaphor, otherness receding from the One, a framing meta paragraph) and alters some clauses, e.g. rendering 'ἐπὶ πάντα τὰ ζῶα μὴ μετέχειν' as 'not all living things participate' and dropping the 'ἐν ᾧ δὲ τὸ εἶναι' contrast."
+    },
+    "69bfce6c8ab50eb88e8c85b0": {
+     "new": 3,
+     "old": 3,
+     "better": "tie",
+     "reason": "X keeps the margin fragments but adds content not on the page (the invented 'to understand', a 'continues from previous page' note, and the unsupported names John of Damascus and Ephrem the Syrian), while Y renders the main line more literally ('we have made its meaning', 'the power of the unlearned', and the unclear line) but empties all ten margin fragments and states the uncertain 'servant' as fact."
+    },
+    "6953a96577f38f6761bd6380": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "X renders the Greek text and page apparatus closely with nothing added, while Y drops the header and opening word 'to many', mislabels the margin 'V. 507' as 'Vol.', and adds an editorial note, summary and keywords that are not on the page (both omit the Latin parallel version)."
+    },
+    "69b52c823dd6d94230280d48": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Y renders the garbled source literally and marks its own supplements and gaps (e.g. 'you have suffered from the...', 'falling and falling'), while X smooths over corruptions with invented content such as 'under an obstruction' and 'throbbing ceases', and adds a summary attributing the text to Galen, who is not named on the page."
+    },
+    "6993881c74305116d72cf36c": {
+     "new": 3,
+     "old": 2,
+     "better": "new",
+     "reason": "Y leaves out the last three rows (ΑΥΚΣ, ΑΥΗΛ, ΑΥΟΣ), turns the unclear left-column labels into invented readings like 'SUN' and arbitrary numbers, and has more numeral errors; X is more complete and closer on the numerals, but it wrongly renders the final entry ΡΛΒ Λ-θ- as '132 of Ares (Mars)'."
+    },
+    "6955742bf63a757109172f98": {
+     "new": 4,
+     "old": 5,
+     "better": "old",
+     "reason": "Both render the Latin commentary and its numbers accurately, but X drops the running header and turns the quoted Greek collation into English, blurring the textual readings under discussion, while Y keeps the header and the Greek forms intact."
+    },
+    "69dbc9d51040d1d5e20a76c3": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X makes several substantive errors that Y gets right: it says some miners perished 'upon the surface of the earth' instead of when the earth collapsed on them, it drops 'being called fools', and it renders the self-mastery clause as 'unable to differ even from themselves'; X also adds invented text in its continuation note."
+    },
+    "69b21edfa66227125eb0638b": {
+     "new": 4,
+     "old": 4,
+     "better": "old",
+     "reason": "Y renders the whole Greek page, including the final clause 'ἐνδεέστερος αὑτοῦ φανῆναι' ('inferior to his usual self'); X copies the printed English facing page, so it stops at 'thought inferior' and opens with 'strange and violent measure', a phrase from the previous page's Greek; Y in turn omits the editorial footnote dating the event to 52 B.C."
+    },
+    "6993895d0f04c37dcfa60eb5": {
+     "new": 3,
+     "old": 3,
+     "better": "new",
+     "reason": "Y renders more of the page, including the 'instead of acacia' clause and the bread/blood line that X omits or replaces with ellipses, and it keeps the negation of 'never resort to any extreme' that X weakens to 'not always', though Y's summary wrongly adds a 'Galen' attribution that is not in the source."
+    },
+    "69b2fed665b9d6bf89925227": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y misrenders the clause about the Athenians partly marching out from suspicion of a plot against the democracy as 'some came under suspicion of planning to dissolve the democracy', while X renders it correctly; X's errors are smaller: an invented continuation note blaming a 'Lacedaemonian' rupture, 'mercenaries' for ἐπικούρους, and 'fruit trees' for δένδρα."
+    },
+    "6a089ba1cb70c5c62b7a9af6": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "X renders the page once and accurately, with only minor liberties such as 'insult Pompey and Cicero' for 'those men'; Y translates the page twice, adds 'Faustus, the son of Sulla', which is not on the page, garbles some apparatus notes, and mistranslates ἐκρίνετο as 'being criticized'."
+    },
+    "6993892b74305116d72d118d": {
+     "new": 3,
+     "old": 3,
+     "better": "old",
+     "reason": "X adds material not on the page, namely a summary and keywords that attribute the text to Proclus and assert an argument the garbled source does not clearly make; Y's comma-separated word-by-word rendering is hard to read and misplaces the margin note, but it covers the page and invents nothing."
+    },
+    "69cf7c36878f40c5945f29be": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X adds a fabricated 'continues from previous page: ...double time' line, mistranslates πρ]υτανηω as the building 'prytaneion', drops the header, and has its diagram lyrics invent 'while all the rushing rivers hymn' in contradiction of its own main text; Y keeps the header and reads consistently, though it pads the Greek with 'while we sing to the Ruler of all' and 'in their courses'."
+    },
+    "69942f3eb2f6748db4ac0001": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X inserts content absent from the page: it adds 'without action', recasts the honor clause as 'not the same as choosing to act rightly', and invents the explanation that gods have 'no base desires to overcome'; Y stays close to the source, with only a stray duplicated opening fragment and some literal awkwardness."
+    }
+   }
+  },
   "gemini": {
    "n": 18,
    "controls_passed": "2/2",
@@ -126,8 +250,8 @@
   }
  },
  "rule": {
-  "controls": false,
-  "non_inferior": false,
+  "controls": true,
+  "non_inferior": true,
   "by_eye": "recorded separately (rule 3)"
  }
 }

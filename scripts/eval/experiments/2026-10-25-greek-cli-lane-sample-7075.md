@@ -6,9 +6,9 @@ scripts: [Grek]
 canons: []
 n_books: 18
 n_pages: 18
-verdict: "Gemini 3.8 Flash (agy) beats the served Greek English under the Gemini judge: 14 of 18 pages, +1.11 fidelity points (1-5) [0.39, 1.72], both controls passed; +1.38 over lite, +0.90 over 3 Flash. The Opus arm and the Opus judge are PENDING (the Claude account was at 83-86% weekly, over the 70% stop), so no row is written. Re-reading the minor-stale pages changes the meaning on 19 of 20, but 16 of 17 change on a re-read where the OCR did not change at all: the change comes from the reader, not the OCR edit."
-status: undecided
-decision: null
+verdict: "Gemini 3.8 Flash (agy) beats the served Greek English under both judges: Gemini judge 14 of 18 pages, +1.11 fidelity points (1-5) [0.39, 1.72]; Opus judge 12 of 18 (5 old, 1 tie), +0.39 [0.00, 0.78]; both judges passed both wrong-page controls; two-judge mean +0.75. The rule passes and Greek / Ancient Greek move to the agy CLI lane (row greek-cli-gemini38). Re-reading the minor-stale pages changes the meaning on 19 of 20, but 16 of 17 change on a re-read where the OCR did not change at all: the change comes from the reader, not the OCR edit."
+status: adopted
+decision: "greek-cli-gemini38 row added to scripts/lib/translation-routing-table.json above flash-measured (#7075)"
 superseded_by: null
 issue: [7075, 5813]
 ---
@@ -29,20 +29,29 @@ into its header before the first run: `--old=current` and `--arm`.
 - **New readers:** Gemini 3.8 Flash low through `cli-translate.mjs read` (agy, the lane's own reader). Opus through
   `claude-translate.mjs read` was **not run**: the box's Claude account (team@) was at 83% weekly at the start and 86%
   later, over the brief's 70% stop.
-- **Judges:** Gemini 3.8 Flash high (agy) ran. The Opus judge (`claude -p`) is pending for the same reason.
+- **Judges:** Gemini 3.8 Flash high (agy), then the Opus judge (`claude -p`, sealed, no tools) on the same packet,
+  run 2026-10-25 by job greek-judge-7075 on the derek@ account (~9% weekly).
 - **Rule:** fixed in the header before the first run. Pali's three rules apply per arm, and each arm also needs the
   other family's judge alone at ≥ 0. An arm with one judge is PENDING.
 
-**Result: Gemini arm, Gemini judge.**
+**Result: Gemini arm, both judges.**
 
 | judge | n | controls | new wins / old / tie | new − old (1-5) | 95% CI |
 |---|---|---|---|---|---|
 | Gemini 3.8 high | 18 | 2/2 | 14 / 4 / 0 | +1.11 | [0.39, 1.72] |
-| Opus | — | — | pending | — | — |
+| Opus 5.5 | 18 | 2/2 | 12 / 5 / 1 | +0.39 | [0.00, 0.78] |
 
-- Split by the old reader: against lite, 7 of 8 wins and +1.38; against 3 Flash, 7 of 10 wins and +0.90.
-- This is a **same-family judge**: Gemini judging a Gemini reader. The rule does not count it alone, and that is why
-  no row is written.
+- Split by the old reader. Gemini judge: against lite, 7 of 8 wins and +1.38; against 3 Flash, 7 of 10 and +0.90.
+  Opus judge: against lite, 4 of 8 and +0.13; against 3 Flash, 8 of 10 and +0.60.
+- The Gemini judge is **same-family** (Gemini judging a Gemini reader), so the rule needed the Opus judge alone at
+  ≥ 0. It is: +0.39, with the lower end of the interval at 0.00. The two judges pick the same winner on 12 of 18.
+- The Opus judge is stricter about anything added to the page. 9 of its 20 reasons cite an added note, summary,
+  keywords or "continues from the previous page" line. Both sides of the packet carry `<summary>`/`<keywords>`
+  blocks, so this is not a packet asymmetry; it marks the new reader down for bracketed notes and for smoothing
+  over garbled OCR (Galen, *De morborum differentiis* p.238: "under an obstruction").
+- Of Opus's five old wins, two are the Gregoras and Proclus pages read by eye below (the running head; the OCR loop,
+  contained). One, Plutarch Loeb p.94, says the new read "copies the printed English facing page". The same page is
+  one of the Gemini judge's errors, so it is worth a look by eye before the lane runs on Loeb editions.
 - Two of the four old wins are judge errors:
   - Plutarch Loeb p.94: the "cut off mid-sentence" read ends where the leaf ends.
   - Gregoras p.424: the new read leaves out the running head, and by eye the rest is right.
@@ -89,15 +98,18 @@ a better reader, so it should be priced and sequenced with that, lite pages firs
 quarter of the date-stale pages have identical OCR and need no translation at all: a `--stale` marker heal covers
 them at no charge. At ~17 s a page, one agy stream would need ~270 hours for 57,575 pages. Nothing was run on them.
 
-**Owed before a row:**
-1. The Opus judge on `packet-gemini.json`:
-   `node scripts/eval/translate-cli-lane-7075/sample.mjs judge --arm=gemini --judge=opus --out=…/greek-2026-10-25`
-2. The Opus arm, on a Claude account under 70% weekly:
-   `claude-translate.mjs read --page-ids-file=…/page-ids.json --out=…/new-opus`, then `packet --arm=opus` and both
-   judges.
+**Decision (rule fixed in the tool's header before the first run).** (1) Both judges passed both controls.
+(2) Under each judge new − old ≥ 0: Gemini +1.11, Opus +0.39. (3) By eye, three Gemini reads were faithful against
+the image, and none invents a passage. The other-family judge is ≥ 0. **Adopted:** row `greek-cli-gemini38`
+(`channel: "cli"`, `gemini-3.8-flash+agy-cli`, Greek / Ancient Greek as the first language label, replaces
+`gemini-3-flash-preview / gemini-3.1-flash-lite`), placed above `flash-measured`. Every other language in
+`flash-measured` stays on Batch. Once this is on main, the orchestrator's Phase 4 holds Greek books with untranslated
+pages (`CLI_TRANSLATE_HOLD`) for `scripts/batch/cli-translate-lane.mjs` instead of sending them to paid Batch.
+Nothing was applied to Greek here.
 
-If the Opus judge gives the Gemini arm ≥ 0, the row is `greek-cli-gemini38` (`channel: "cli"`,
-`gemini-3.8-flash+agy-cli`, replaces `gemini-3-flash-preview`), split out of `flash-measured`. It does not need the
-Opus arm unless Opus wins by more than 0.25.
+**Not run, and not needed for the row:** the Opus arm. Under the header's tie rule the agy reader is adopted unless
+Opus's two-judge mean beats it by more than 0.25. That comparison can still be run later on a Claude account under
+70% weekly: `claude-translate.mjs read --page-ids-file=…/page-ids.json --out=…/new-opus`, then `packet --arm=opus` and
+both judges.
 
 Results: `scripts/eval/translate-cli-lane-7075/results/greek-2026-10-25/`.
