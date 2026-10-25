@@ -521,7 +521,9 @@ async function main() {
     if (attempted) {
       // The rotation key (see the book-mode draw). Stamped on every attempt that
       // asked the source, success or not — that is the whole point of it.
-      await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } });
+      // Never fatal: a failed stamp must not skip the completion write below.
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } }); }
+      catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
     }
     const verdict = bookVerdict({ pagesCount: b.pages_count || 0, archived: r2, misses });
     if (verdict === 'complete') {
