@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { listExperiments, latestCanonStatus, typedPages, sampleAudit } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, typedPages, sampleAudit, CANON_STATUS_FILE } from '@/lib/quality-center';
 import { EXPERIMENTS, experiment, type ExperimentRecord } from '@/lib/experiments-index';
 // @ts-expect-error -- plain ESM script, no types
 import { digest, render, unfitRows, dropReason, OUT as DIGEST } from '../../scripts/eval/build-pareto-sample-digest.mjs';
@@ -54,6 +54,13 @@ describe('experiment write-ups (from the #5939 index)', () => {
 });
 
 describe('canon status', () => {
+  it('imports the newest status file on disk (#7318: a static import, so a new month must move it)', () => {
+    const dir = 'scripts/catalog-coverage/results';
+    const newest = fs.readdirSync(dir).filter(f => /^canon-gap-status-\d{4}-\d{2}\.json$/.test(f)).sort().pop();
+    expect(CANON_STATUS_FILE).toBe(`${dir}/${newest}`);
+    expect(latestCanonStatus().generated_at).toBe(JSON.parse(fs.readFileSync(CANON_STATUS_FILE, 'utf8')).generated_at);
+  });
+
   it('reads the newest status file and counts typed pages', () => {
     const c = latestCanonStatus();
     expect(c.traditions.length).toBeGreaterThan(0);
