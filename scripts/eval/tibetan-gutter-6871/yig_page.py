@@ -30,6 +30,8 @@ ap.add_argument("--mode", choices=["page", "bands"], default="page")
 ap.add_argument("--bands", type=int, default=3, help="target band count in bands mode")
 ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--max-new", type=int, default=4096)
+ap.add_argument("--shard", type=int, default=0, help="this process reads rows shard, shard+nshards, ...")
+ap.add_argument("--nshards", type=int, default=1, help="run N processes side by side: the read is CPU-bound (one core, DRY logits processor) at ~2.3 GB VRAM each")
 a = ap.parse_args()
 os.makedirs(a.out, exist_ok=True)
 
@@ -75,7 +77,8 @@ def read(im):
 rows = [json.loads(l) for l in open(a.manifest) if l.strip()]
 if a.limit:
     rows = rows[: a.limit]
-tl = open(os.path.join(a.out, "timings.jsonl"), "a")
+rows = rows[a.shard :: a.nshards]
+tl = open(os.path.join(a.out, "timings.jsonl" if a.nshards == 1 else f"timings-{a.shard}.jsonl"), "a")
 done = 0
 for r in rows:
     dst = os.path.join(a.out, f"{r['id']}.txt")
