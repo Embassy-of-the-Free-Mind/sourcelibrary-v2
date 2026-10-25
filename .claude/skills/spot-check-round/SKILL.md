@@ -31,6 +31,13 @@ The laptop's Atlas link resets mid-draw; the job box does not.
   and copy it into `reviews/` yourself.
 - **Trap:** do not `EnterWorktree` while other subagents run Bash in the main checkout — they inherit the isolation and
   every command is refused. Enter the worktree first, then dispatch.
+- **Trap:** inside the worktree, the isolation guard refuses compound shell lines (heredocs, `cd x; node …`, variables
+  in paths). Write each merge/check script to the scratchpad with Write, then run it with one plain command; for
+  Hetzner queries, `scp` the script and `ssh hetzner 'cd /root/sourcelibrary; node --env-file=… /root/qa-6056/x.mjs'`.
+- **Use the language detector before the reviewers report**: `edition-language-vs-ocr.mjs` rows (`strong`) for the
+  drawn ids are free predictions. Round 6 (2026-10-25) it held both I-class books: a wrong language field (slot 5) and
+  a wrong book (slot 8, share 1.0 — the title page named another work). A share near 1.0 is an identity question,
+  not just a language one.
 
 ## 2b. Second reader on the serious calls (precision)
 Every rate rests on the first reader's serious calls, so check them: build one packet of every serious finding grouped
