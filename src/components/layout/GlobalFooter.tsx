@@ -27,9 +27,9 @@ type Partner = {
 // Logo PNGs are trimmed to their content (no internal transparent padding) so
 // every logo fills the shared h-12/h-16 box and they all appear equally tall.
 const PARTNERS: Partner[] = [
-  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
-  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
-  { name: 'Frond Studio', src: '/partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
+  { name: 'Embassy of the Free Mind', src: '/ai-partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
+  { name: 'TU Delft', src: '/ai-partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
+  { name: 'Frond Studio', src: '/ai-partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
 ];
 
 // Folium shows on sourcelibrary.org only. Partner subdomains keep exactly the
@@ -38,7 +38,7 @@ const PARTNERS: Partner[] = [
 // keeps some transparent space above and below, so the long one-line
 // wordmark sits at the same visual weight as the stacked logos beside it.
 const GLOBAL_PARTNERS: Partner[] = [
-  { name: 'Folium', src: '/partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
+  { name: 'Folium', src: '/ai-partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
 ];
 
 // Source Library's own accounts. Kept beside PARTNERS so the two lists that

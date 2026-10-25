@@ -283,7 +283,7 @@ export default async function AboutPage() {
             className="inline-block hover:opacity-80 transition-opacity"
           >
             <img
-              src="/partners/gambrell-foundation.svg"
+              src="/ai-partners/gambrell-foundation.svg"
               alt="The Gambrell Foundation"
               className="h-16 w-auto object-contain"
             />
