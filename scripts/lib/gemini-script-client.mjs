@@ -136,9 +136,6 @@ export async function callGemini(opts = {}) {
     triggeredBy = 'manual',
     apiKey,
     safetySettings,
-    // 'application/json' makes the model emit parseable JSON (no prose, no
-    // half-written keys); optional, omitted from the request when unset
-    responseMimeType,
   } = opts;
 
   if (!endpoint) throw new Error('gemini-script-client: `endpoint` is required — label who is spending');
@@ -149,7 +146,7 @@ export async function callGemini(opts = {}) {
   const images = imageParts == null ? [] : (Array.isArray(imageParts) ? imageParts : [imageParts]);
   const parts = [{ text: prompt }, ...images.map(toImagePart)];
 
-  const generationConfig = { temperature, maxOutputTokens, ...(responseMimeType ? { responseMimeType } : {}) };
+  const generationConfig = { temperature, maxOutputTokens };
   if (typeof thinkingBudget === 'number') {
     generationConfig.thinkingConfig = { thinkingBudget };
   } else if (!allowThinking && noThinkingConfig(model)) {

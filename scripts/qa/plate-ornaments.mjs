@@ -16,10 +16,12 @@
  * TRACTATUS …) and pages the gallery records as a headpiece or tailpiece.
  *
  * Usage:
- *   node --env-file=.env.production.local scripts/qa/plate-ornaments.mjs <bookId> [--pages a,b] [--refresh]
+ *   node --env-file=.env.production.local scripts/qa/plate-ornaments.mjs <bookId> [--pages a,b] [--refresh] [--model …]
  *
- *   … --batch      submit every uncached candidate as ONE Gemini Batch job (half price; the default for a whole book)
- *   … --collect    collect that job into the cache
+ * Runs through the Gemini CLI on the subscription (`agy -p`, scan attached), never
+ * the paid API (only flash-lite may run there; Derek, 2026-10-08), with no API
+ * fallback: a quota stop ends the run with the cache saved, and the next run asks
+ * only the pages still missing.
  *
  * Writes scripts/output/plate-ornaments/<bookId>.json (gitignored scratch).
  */
@@ -27,14 +29,14 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { callGemini } from '../lib/gemini-script-client.mjs';
+import { gatedImageCall } from '../lib/agy-cli.mjs';
 import { spreadPageNumbers } from '../lib/scholarly-typst.mjs';
-import { buildRequest, submitBatch, collectBatch } from '../lib/gemini-rest-batch.mjs';
 
-const MODEL = 'gemini-3-flash-preview';
 const args = process.argv.slice(2);
-const bookId = args.find(a => !a.startsWith('--'));
 const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : null; };
+const bookId = args.find((a, i) => !a.startsWith('--') && !args[i - 1]?.startsWith('--'));
+const MODEL = opt('model') || 'gemini-3.8-flash-low';
+const CONCURRENCY = Number(opt('concurrency')) || 3;
 if (!bookId) { console.error('usage: plate-ornaments.mjs <bookId> [--pages a,b] [--refresh]'); process.exit(1); }
 
 const outDir = join('scripts', 'output', 'plate-ornaments');
@@ -51,7 +53,9 @@ const PROMPT = `This is one page of an early modern printed book. Find its print
 - "tailpiece": a decorative woodcut printed after the end of a section (a vignette, cul-de-lampe, basket of fruit, mask).
 Do NOT include: decorated initial letters, illustrations or diagrams, rules or lines of type, text of any kind, page numbers.
 
-For each ornament return {"kind": "headpiece" | "tailpiece", "box_2d": [ymin, xmin, ymax, xmax]} on a 0–1000 scale of the whole page, TIGHT around the ornament's printed ink. Return {"ornaments": []} if there are none.`;
+For each ornament return {"kind": "headpiece" | "tailpiece", "box_2d": [ymin, xmin, ymax, xmax]} on a 0–1000 scale of the whole page, TIGHT around the ornament's printed ink. Return {"ornaments": []} if there are none.
+
+Return only that JSON, written between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers. Do not use any tool except to view the attached page image.`;
 
 // A book or treatise heading in the page's first lines (a running head may come first)
 // Latin first (Fludd), then the vernaculars the collection holds most: German,
@@ -95,58 +99,32 @@ try {
     return { p, scanUrl, image: await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer() };
   }
   const accept = (n, scanUrl, text) => {
-    const ornaments = (JSON.parse(text).ornaments || []).filter(o => ['headpiece', 'tailpiece'].includes(o.kind) && Array.isArray(o.box_2d) && o.box_2d.length === 4);
-    cache.pages[n] = { scan_url: scanUrl, ornaments };
+    const json = text.match(/\{[\s\S]*\}/);
+    if (!json) throw new Error(`no JSON in reply: ${text.slice(0, 200)}`);
+    const ornaments = (JSON.parse(json[0]).ornaments || []).filter(o => ['headpiece', 'tailpiece'].includes(o.kind) && Array.isArray(o.box_2d) && o.box_2d.length === 4);
+    cache.pages[n] = { scan_url: scanUrl, model: MODEL, ornaments };
     console.log(`p${n}: ${ornaments.map(o => o.kind).join(', ') || 'none'}`);
   };
 
-  if (args.includes('--collect')) {
-    if (!cache.batch) throw new Error('no batch job recorded in the cache; run --batch first');
-    const res = await collectBatch(cache.batch, { endpoint: 'scripts/qa/plate-ornaments.mjs', bookId });
-    if (!res) { console.log(`${cache.batch.job_name}: still running`); process.exitCode = 3; }
-    else {
-      let failed = 0;
-      for (const row of res.rows) {
-        try {
-          if (row.outcome !== 'text') throw new Error(`${row.outcome}${row.error ? ` ${row.error}` : ''}`);
-          accept(Number(row.key), cache.batch.pages[row.key], row.text);
-        } catch (err) { failed++; console.warn(`p${row.key}: ${err.message}`); }
-      }
-      console.log(`${res.state}: ${res.rows.length} replies, ${failed} failed (re-ask those realtime), $${res.cost_usd.toFixed(4)}`);
-      const { pages, ...job } = cache.batch;
-      cache.batches = [...(cache.batches || []), { ...job, collected_at: new Date().toISOString(), state: res.state, cost_usd: res.cost_usd, failed }];
-      delete cache.batch;
-      writeFileSync(outFile, JSON.stringify(cache, null, 1));
-    }
-  } else if (args.includes('--batch')) {
-    if (cache.batch) throw new Error(`batch ${cache.batch.job_name} already submitted; --collect it first`);
-    const lines = [], pages = {};
-    for (let i = 0; i < candidates.length; i += 8) {
-      for (const c of await Promise.all(candidates.slice(i, i + 8).map(p => prepare(p).catch(err => { console.warn(`p${p.page_number}: ${err.message}`); return null; })))) {
-        if (!c) continue;
-        lines.push({ key: String(c.p.page_number), request: buildRequest({ model: MODEL, prompt: PROMPT, images: [c.image], maxOutputTokens: 1000, responseMimeType: 'application/json' }) });
-        pages[c.p.page_number] = c.scanUrl;
-      }
-      console.log(`prepared ${Math.min(i + 8, candidates.length)}/${candidates.length}`);
-    }
-    const job = await submitBatch({ model: MODEL, name: `plate-ornaments-${bookId}-${Date.now()}`, lines, issue: 5849, note: 'illustrated-edition ornament pass (scripts/qa/plate-ornaments.mjs); results go to scripts/output only, never to pages' });
-    cache.batch = { ...job, pages };
-    writeFileSync(outFile, JSON.stringify(cache, null, 1));
-    console.log(`submitted ${job.job_name}: ${job.requests} pages, ${(job.bytes / 1e6).toFixed(0)} MB`);
-  } else for (const p of candidates) {
-    const c = await prepare(p);
-    if (!c) continue;
+  let quota = null, failed = 0;
+  async function find(p) {
+    const c = await prepare(p).catch(err => { console.warn(`p${p.page_number}: ${err.message}`); return null; });
+    if (!c || quota) return;
+    const r = await gatedImageCall(PROMPT, c.image, { model: MODEL });
+    if (r.cls === 'quota') { quota = r.err || 'quota'; return; }
     try {
-      const { text } = await callGemini({
-        model: MODEL, prompt: PROMPT, imageParts: c.image, responseMimeType: 'application/json',
-        endpoint: 'scripts/qa/plate-ornaments.mjs', type: 'image_extraction', bookId, pageIds: [String(p._id)], maxOutputTokens: 1000,
-      });
-      accept(p.page_number, c.scanUrl, text);
+      if (r.cls) throw new Error(`${r.cls} ${r.err || ''}`.trim());
+      accept(p.page_number, c.scanUrl, r.answer);
+      writeFileSync(outFile, JSON.stringify(cache, null, 1));
     } catch (err) {
+      failed++;
       console.warn(`p${p.page_number}: ${err.message}`);
     }
-    writeFileSync(outFile, JSON.stringify(cache, null, 1));
   }
+  const queue = [...candidates];
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length && !quota) await find(queue.shift()); }));
+  if (failed) console.log(`${failed} page(s) failed and stay uncached; run again to re-ask them`);
+  if (quota) { console.log(`QUOTA: stopped (${quota.slice(0, 160)}); the cache is saved, run again after the reset`); process.exitCode = 3; }
 } finally {
   await client.close();
 }

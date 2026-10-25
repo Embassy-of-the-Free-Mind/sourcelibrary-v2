@@ -16,29 +16,30 @@
  * English edition must be able to read every word on the plate from the caption.
  *
  * Usage:
- *   node --env-file=.env.production.local scripts/qa/plate-captions.mjs <bookId> [--limit N] [--pages 23,74] [--refresh]
+ *   node --env-file=.env.production.local scripts/qa/plate-captions.mjs <bookId> [--limit N] [--pages 23,74] [--refresh] [--model gemini-3.8-flash-medium]
  *
- *   … --batch      submit every uncached page as ONE Gemini Batch job (half price; the default for a whole book)
- *   … --collect    collect that job into the cache; pages that failed stay uncached for a realtime re-ask
+ * The model runs through the Gemini CLI on the subscription (`agy -p`, the scan
+ * attached), never the paid API: only flash-lite may run on the API (Derek,
+ * 2026-10-08), and a caption needs Flash. A quota stop ends the run with the cache
+ * saved; the next run asks only the pages still missing. There is no API fallback.
  *
  * Writes scripts/output/plate-captions/<bookId>.json (gitignored scratch); a page
- * already in the cache is not re-asked unless --refresh. Every call is metered
- * (realtime through gemini-script-client, Batch through gemini-rest-batch).
+ * already in the cache is not re-asked unless --refresh, so a captioned book costs
+ * nothing to render again.
  */
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { callGemini } from '../lib/gemini-script-client.mjs';
-import { buildRequest, submitBatch, collectBatch } from '../lib/gemini-rest-batch.mjs';
+import { gatedImageCall } from '../lib/agy-cli.mjs';
 import { normalizeCaptionFigure, illustrationQuery, spreadPageNumbers } from '../lib/scholarly-typst.mjs';
 
-const MODEL = 'gemini-3-flash-preview';
 const args = process.argv.slice(2);
-const bookId = args.find(a => !a.startsWith('--'));
 const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : null; };
-// A dense labelled table can need more than the default (Fludd UCH I, p. 440); --max-tokens for its re-ask
-const MAX_TOKENS = Number(opt('max-tokens')) || 4000;
+const bookId = args.find((a, i) => !a.startsWith('--') && !args[i - 1]?.startsWith('--'));
+const MODEL = opt('model') || 'gemini-3.8-flash-low';
+// Pages in flight at once; the shared account's quota, not the box, is the limit
+const CONCURRENCY = Number(opt('concurrency')) || 3;
 if (!bookId) { console.error('usage: plate-captions.mjs <bookId> [--limit N] [--pages a,b] [--refresh]'); process.exit(1); }
 
 const outDir = join('scripts', 'output', 'plate-captions');
@@ -75,7 +76,7 @@ English translation of the page:
 ${translation.slice(0, 6000)}
 """
 
-Return only JSON: {"figures": [ ... ]}`;
+Return only JSON: {"figures": [ ... ]}. Write the JSON between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary. Do not use any tool except to view the attached page image.`;
 
 function parseJson(text) {
   const m = text.match(/\{[\s\S]*\}/);
@@ -121,68 +122,35 @@ try {
   }
   const accept = (n, { scanUrl, scanWidth, scanHeight }, text) => {
     const figures = parseJson(text).figures.map(normalizeCaptionFigure);
-    cache.pages[n] = { scan_url: scanUrl, scan_width: scanWidth, scan_height: scanHeight, figures };
+    cache.pages[n] = { scan_url: scanUrl, scan_width: scanWidth, scan_height: scanHeight, model: MODEL, figures };
     console.log(`p${n}: ${figures.length} figure(s) — ${figures.map(f => `${f.title} [${(f.inscriptions || []).length} insc, ${(f.key || []).length} key]`).join(' | ')}`);
   };
 
-  if (args.includes('--collect')) {
-    if (!cache.batch) throw new Error('no batch job recorded in the cache; run --batch first');
-    const res = await collectBatch(cache.batch, { endpoint: 'scripts/qa/plate-captions.mjs', bookId });
-    if (!res) { console.log(`${cache.batch.job_name}: still running`); process.exitCode = 3; }
-    else {
-      let failed = 0;
-      for (const row of res.rows) {
-        try {
-          if (row.outcome !== 'text') throw new Error(`${row.outcome}${row.error ? ` ${row.error}` : ''}`);
-          accept(Number(row.key), cache.batch.pages[row.key], row.text);
-        } catch (err) { failed++; console.warn(`p${row.key}: ${err.message}`); }
-      }
-      console.log(`${res.state}: ${res.rows.length} replies, ${failed} failed (re-ask those realtime), $${res.cost_usd.toFixed(4)}`);
-      const { pages, ...job } = cache.batch;
-      cache.batches = [...(cache.batches || []), { ...job, collected_at: new Date().toISOString(), state: res.state, cost_usd: res.cost_usd, failed }];
-      delete cache.batch;
-      writeFileSync(outFile, JSON.stringify(cache, null, 1));
-    }
-  } else if (args.includes('--batch')) {
-    if (cache.batch) throw new Error(`batch ${cache.batch.job_name} already submitted; --collect it first`);
-    const lines = [], pages = {};
-    // Eight scans at a time: the fetch, not the model, is the slow part of building the job
-    for (let i = 0; i < pageNumbers.length; i += 8) {
-      // A page whose scan will not download is left uncached for the next run, not fatal
-      for (const p of await Promise.all(pageNumbers.slice(i, i + 8).map(n => prepare(n).catch(err => { console.warn(`p${n}: ${err.message}`); return null; })))) {
-        if (!p) continue;
-        lines.push({ key: String(p.n), request: buildRequest({ model: MODEL, prompt: p.prompt, images: [p.image], maxOutputTokens: MAX_TOKENS, responseMimeType: 'application/json' }) });
-        pages[p.n] = { scanUrl: p.scanUrl, scanWidth: p.scanWidth, scanHeight: p.scanHeight };
-      }
-      console.log(`prepared ${Math.min(i + 8, pageNumbers.length)}/${pageNumbers.length}`);
-    }
-    const job = await submitBatch({ model: MODEL, name: `plate-captions-${bookId}-${Date.now()}`, lines, issue: 5849, note: 'illustrated-edition caption pass (scripts/qa/plate-captions.mjs); results go to scripts/output only, never to pages' });
-    cache.batch = { ...job, pages };
-    writeFileSync(outFile, JSON.stringify(cache, null, 1));
-    console.log(`submitted ${job.job_name}: ${job.requests} pages, ${(job.bytes / 1e6).toFixed(0)} MB`);
-  } else for (const n of pageNumbers) {
-    const p = await prepare(n);
-    if (!p) continue;
+  let quota = null, failed = 0;
+  async function caption(n) {
+    if (quota) return;
+    // A page whose scan will not download is left uncached for the next run, not fatal
+    const p = await prepare(n).catch(err => { console.warn(`p${n}: ${err.message}`); return null; });
+    if (!p || quota) return;
     // Malformed JSON is the common failure and a second ask usually clears it
-    for (let attempt = 1; attempt <= 2; attempt++) try {
-      const { text } = await callGemini({
-        model: MODEL,
-        prompt: p.prompt,
-        imageParts: p.image,
-        endpoint: 'scripts/qa/plate-captions.mjs',
-        type: 'image_extraction',
-        bookId,
-        pageIds: p.pageId ? [p.pageId] : undefined,
-        maxOutputTokens: MAX_TOKENS,
-        responseMimeType: 'application/json',
-      });
-      accept(n, p, text);
-      break;
-    } catch (err) {
-      console.warn(`p${n} (attempt ${attempt}): ${err.message}`);
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const r = await gatedImageCall(p.prompt, p.image, { model: MODEL });
+      if (r.cls === 'quota') { quota = r.err || 'quota'; return; }
+      try {
+        if (r.cls) throw new Error(`${r.cls} ${r.err || ''}`.trim());
+        accept(n, p, r.answer);
+        writeFileSync(outFile, JSON.stringify(cache, null, 1));
+        return;
+      } catch (err) {
+        console.warn(`p${n} (attempt ${attempt}): ${err.message}`);
+      }
     }
-    writeFileSync(outFile, JSON.stringify(cache, null, 1));
+    failed++;
   }
+  const queue = [...pageNumbers];
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length && !quota) await caption(queue.shift()); }));
+  if (failed) console.log(`${failed} page(s) failed twice and stay uncached; run again to re-ask them`);
+  if (quota) { console.log(`QUOTA: stopped (${quota.slice(0, 160)}); the cache is saved, run again after the reset`); process.exitCode = 3; }
 } finally {
   await client.close();
 }

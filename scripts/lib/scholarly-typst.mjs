@@ -27,6 +27,7 @@ import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
 import { repairLeakedMarkup } from './leaked-markup.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
@@ -525,7 +526,7 @@ const SKIP_PAGE_TYPES = new Set(['blank', 'digitizer-insert']);
 // words alone are not enough (real pages mention a flyleaf), so this applies
 // only before the work's title page, and to very short pages at the back.
 const COPY_MATTER = /\b(fly-?leaf|end-?paper|paste-?down|shelf-?mark|bookplate|ex-?libris|library stamp|catalog(ue)? (description|slip|entry|clipping)|collation (mark|note)|digiti[sz]ation (target|card)|colou?r (chart|checker|calibration)|scale bar|call number)\b/i;
-const bodyText = page => String(page.translation?.data || '').replace(/<(note|gloss|image-desc|summary|keywords|meta|page-num|header|sig|vocab|lang|language|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const bodyText = page => stripMarkupTags(String(page.translation?.data || '').replace(/<(note|gloss|image-desc|summary|keywords|meta|page-num|header|sig|vocab|lang|language|margin)\b[^>]*>[\s\S]*?<\/\1>/g, ''), '').replace(/\s+/g, ' ').trim();
 /**
  * A split book keeps its original two-page photographs as `archived-spread`
  * pages (numbered below 1) beside the single pages cut from them, and both
@@ -541,10 +542,10 @@ const bodyText = page => String(page.translation?.data || '').replace(/<(note|gl
  * (pp. 228, 383, 483, 591, 648 …, each checked against the scan). The page
  * keeps its place, so its plate still prints, but the text goes.
  */
-const sourceText = s => String(s || '').replace(/->|<-/g, ' ')
+const sourceText = s => stripMarkupTags(String(s || '').replace(/->|<-/g, ' ')
   .replace(/<detected-images>[\s\S]*?<\/detected-images>/g, '')
-  .replace(/<(note|meta|vocab|summary|keywords|image-desc|lang|language|page-num|header|sig|page-type|scan-quality|script|warning|columns|gloss|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '')
-  .replace(/<[^>]+>/g, '').replace(/[#*|:\-\s>]+/g, ' ').trim();
+  .replace(/<(note|meta|vocab|summary|keywords|image-desc|lang|language|page-num|header|sig|page-type|scan-quality|script|warning|columns|gloss|margin)\b[^>]*>[\s\S]*?<\/\1>/g, ''), '')
+  .replace(/[#*|:\-\s>]+/g, ' ').trim();
 export function isUngroundedTranslation(page) {
   if (!page.ocr?.data || !page.translation?.data) return false;
   return sourceText(page.ocr.data).length < 30 && sourceText(page.translation.data).length > 200;

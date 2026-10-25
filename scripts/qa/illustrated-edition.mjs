@@ -10,9 +10,9 @@
  *
  *   node --env-file=.env.production.local scripts/qa/illustrated-edition.mjs <bookId> <step> [opts]
  *
- *   check     is the book ready (translated, plates, title page)? what will the passes cost?
- *   submit    caption + ornament passes as Gemini Batch jobs (half price)
- *   collect   collect both; re-ask the pages that failed, in realtime, with a larger token cap
+ *   check     is the book ready (translated, plates, title page)? how many pages will the passes ask?
+ *   caption   caption + ornament passes through the Gemini CLI on the subscription ($0; never the
+ *             paid API). Pages already cached are not asked again; after a quota stop, run it again
  *   sheet     ornament crops as numbered contact sheets, to check by eye
  *   verify    --reject 0,3,11   mark every ornament verified except those numbers (from the sheet)
  *   texts     write edition-texts/<id>/methodology.md from the page records, and facts.md
@@ -28,19 +28,18 @@ import { spawnSync } from 'child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { illustrationQuery, spreadPageNumbers } from '../lib/scholarly-typst.mjs';
+import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
 
 const [bookId, step] = process.argv.slice(2);
 const args = process.argv.slice(4);
 const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : null; };
-const STEPS = ['check', 'submit', 'collect', 'sheet', 'verify', 'texts', 'render'];
+const STEPS = ['check', 'caption', 'sheet', 'verify', 'texts', 'render'];
 if (!bookId || !STEPS.includes(step)) { console.error(`usage: illustrated-edition.mjs <bookId> <${STEPS.join('|')}>`); process.exit(1); }
 
 const captionsFile = join('scripts', 'output', 'plate-captions', `${bookId}.json`);
 const ornamentsFile = join('scripts', 'output', 'plate-ornaments', `${bookId}.json`);
 const textsDir = join('scripts', 'qa', 'edition-texts', bookId);
 const readJson = f => (existsSync(f) ? JSON.parse(readFileSync(f, 'utf-8')) : null);
-// Measured on Fludd UCH I at Batch price, gemini-3-flash: $0.782 / 494 caption pages, $0.087 / 245 ornament pages
-const USD_PER_CAPTION_PAGE = 0.0016, USD_PER_ORNAMENT_PAGE = 0.00036;
 
 /** Run one of the pass scripts, streaming its output; returns its exit code. */
 function run(script, extra = []) {
@@ -66,29 +65,25 @@ async function check() {
     const titlePages = await db.collection('pages').countDocuments({ book_id: bookId, page_type: 'title-page' });
     console.log(`${book.display_title || book.title} — ${book.author}, ${book.published} (${book.language})`);
     console.log(`pages ${pages}, translated ${translated} (${Math.round((100 * translated) / pages)}%), plate pages ${platePages}, typed title pages ${titlePages}`);
-    console.log(`estimate at Batch price: captions ~$${(platePages * USD_PER_CAPTION_PAGE).toFixed(2)}, ornaments ~$${(pages * 0.25 * USD_PER_ORNAMENT_PAGE).toFixed(2)} (if ~1 page in 4 is a candidate)`);
+    console.log(`CLI calls (subscription, $0): ~${platePages} caption pages, ~${Math.round(pages * 0.25)} ornament candidates (if ~1 page in 4 is one), fewer what is cached`);
     if (translated / pages < 0.95) console.log('NOT READY: under 95% translated — the edition would have gaps');
     if (!platePages) console.log('NOT READY: no gallery records at quality ≥ 0.7 — run image extraction first');
     console.log(`caption cache: ${readJson(captionsFile) ? Object.keys(readJson(captionsFile).pages).length + ' pages' : 'none'}; ornament cache: ${readJson(ornamentsFile) ? Object.keys(readJson(ornamentsFile).pages).length + ' pages' : 'none'}`);
   });
 }
 
-function collect() {
-  const a = run('plate-captions.mjs', ['--collect']);
-  const b = run('plate-ornaments.mjs', ['--collect']);
-  if (a === 3 || b === 3) { console.log('still running — collect again later'); return; }
-  // Only after a clean collect: with no batch behind it, a realtime pass would
-  // caption the whole book at full price
-  if (a !== 0) { console.log('caption collect failed — not re-asking'); return; }
-  // Pages that failed in the batch stay uncached; a realtime pass with a larger cap
-  // asks only those (dense tables run past the default 4,000 tokens)
-  run('plate-captions.mjs', ['--max-tokens', '16000']);
+/** Both passes; a quota stop (exit 3) in the first skips the second, and the next run resumes from the caches. */
+function caption() {
+  const a = run('plate-captions.mjs');
+  if (a === 3) { console.log('caption pass stopped at the quota — run caption again after the reset'); return; }
+  const b = run('plate-ornaments.mjs');
+  if (b === 3) console.log('ornament pass stopped at the quota — run caption again after the reset');
 }
 
 /** Numbered crops of every ornament the finder boxed, 24 to a sheet. */
 async function sheet() {
   const cache = readJson(ornamentsFile);
-  if (!cache) throw new Error('no ornament cache; submit and collect first');
+  if (!cache) throw new Error('no ornament cache; run caption first');
   const items = Object.entries(cache.pages).flatMap(([n, p]) => (p.ornaments || []).map((o, k) => ({ n, k, url: p.scan_url, ...o })));
   const W = 360, H = 170, COLS = 4, PER = 24;
   const tiles = [];
@@ -162,7 +157,7 @@ Corrections are welcome at sourcelibrary.org, and later versions of this edition
 `;
     // Title pages in the book's own words: what an introduction can cite without outside help
     const titlePages = await db.collection('pages').find({ book_id: bookId, $or: [{ page_type: 'title-page' }, { 'ocr.data': /<page-type>\s*title/i }] }, { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).sort({ page_number: 1 }).limit(6).toArray();
-    const plain = s => String(s || '').replace(/<(image-desc|lang|language|page-type|scan-quality|script|summary|keywords|vocab|meta|warning)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const plain = s => stripMarkupTags(String(s || '').replace(/<(image-desc|lang|language|page-type|scan-quality|script|summary|keywords|vocab|meta|warning)\b[^>]*>[\s\S]*?<\/\1>/g, '')).replace(/\s+/g, ' ').trim();
     const facts = `# Facts for the introduction — ${book.display_title || book.title}
 
 Every claim in introduction.md must come from this file (our own scans and records) or from a source named beside it. Read the title page in the IMAGE, not only the OCR, before citing a date or imprint, and say so.
@@ -201,5 +196,5 @@ function render() {
   if (r.status) process.exit(r.status);
 }
 
-const actions = { check, submit: () => { run('plate-captions.mjs', ['--batch']); run('plate-ornaments.mjs', ['--batch']); }, collect, sheet, verify, texts, render };
+const actions = { check, caption, sheet, verify, texts, render };
 await actions[step]();
