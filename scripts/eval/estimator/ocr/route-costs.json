@@ -107,6 +107,15 @@
    "enabled": true
   },
   {
+   "route": "Yigdzin 1 split-leaf reread (GPU)",
+   "engine": "bdrc-yigdzin-v1",
+   "kind": "gpu",
+   "busy_usd_per_1k": 0.045,
+   "enabled": true,
+   "unit": "leaves",
+   "source": "gex45 (flat $249/mo = $0.34/h), yig_leaf_worker.py on vLLM 0.29 at 2.10 leaves/s over 188 leaf crops (job yig-vllm-6871 run L-graph, 2026-10-26); the HF transformers port of the same reader measured ~200 s/leaf alone on the card (job split-leaves-5771). Per 1K LEAVES; a two-leaf frame is ~2.3 leaves. No Tibetan CER chart exists in ocr-table-v1, so route_ocr_v1.py does not price this route yet (scripts/eval/experiments/2026-10-25-split-leaf-reread-gate-5771.md)"
+  },
+  {
    "route": "olmOCR 2 (GPU)",
    "engine": "olmocr-2-7b-fp8",
    "kind": "gpu",
