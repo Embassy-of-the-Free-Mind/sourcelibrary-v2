@@ -39,7 +39,9 @@ you are about to pick `--model`, an engine, or a free lane by hand.
    `tests/unit/ocr-api-channel-guard.test.ts`.
 3. **No Tesseract**, as an engine or as a free reference (Derek). Never Gemini below v3.
 4. **Split spreads before any read** (`needs_splitting` / `split_completed`, Phase 3.1); a
-   two-leaf page is two discontinuous halves (#5260 `<leaf-break/>`).
+   two-leaf page is two discontinuous halves (#5260 `<leaf-break/>`). A photo of several pecha
+   leaves is split into one page per leaf before any OCR or translation lane runs: see
+   "Multi-leaf photos" below (#5771).
 5. **The book's language field is the EDITION's language** (`language-fields.md`); routing
    reads it, so fix a wrong language before routing, not after.
 6. **Cost is decided where the writer is dispatched**, not where the text lands: a held book
@@ -164,6 +166,34 @@ A page (or book) needs text
       pipeline (#4958) — and as read, an English book strands at `ocr_complete` (#5271).
       Hold first if retranslation needs approval; release with an explicit `--to`.
 ```
+
+## Multi-leaf photos: split into one page per leaf before any lane runs (#5771)
+
+**Rule (Derek, 2026-10-24: "need to split the leaves always").** A photo that holds more than one
+leaf (EAP pecha frames: two to six leaves on one photo) is split into one page per leaf **before**
+any OCR or translation lane runs on it, and every lane then reads and translates one leaf at a time.
+- **Why.** In the #6948 gate, 18 of 28 bad Tibetan pages were bad because of the transcription.
+  The Yigdzin read invented, duplicated or truncated lines where two leaves meet (a019: 19 lines for
+  two 7-line leaves), and the English rendered them. Those frames carried the 2026-09-15 **whole-page**
+  read. Re-read per leaf (#5771, 80 frames, same blind auditor, 15/15 controls), the frames served
+  from a whole-page read went from 21/28 to 6/28 bad translations, with 0 invented seam lines in 20
+  leaves by eye. Frames already read per leaf did not change (5/40 → 5/40).
+  Write-up: `scripts/eval/experiments/2026-10-25-split-leaf-reread-gate-5771.md`.
+- **Never prefer a whole-photo read over its own leaf reads because it is longer.** The #4523
+  step-2 pass kept the whole-page read when the leaf read had `fewer-syllables` (39,283 pages). The
+  extra syllables were the invented seam lines.
+- **Cutting a stored whole-page read is not a split.** Cutting at `<leaf-break/>` or at the ledger's
+  line counts, with no re-OCR, left the frames as bad as before (23/28). The inventions sit inside
+  the text. Re-read the leaf; a free cut only fits a read that was already made per leaf.
+- **Check the cut, not just the count.** 12 of 76 ledger cuts were wrong: a cut through a leaf's
+  text, two or three leaves in one crop, or a sliver of a leaf as its own band. Put a contact sheet
+  in front of a human for every new book shape before an apply.
+- **A per-leaf read needs a blank- and title-leaf guard.** Read alone, a near-blank or title leaf made
+  Yigdzin invent repeated title formulas or Latin letters (5 frames), and the translator rendered
+  them. Translated alone, a leaf's keywords picked up catalogue facts. Hold such a leaf, as the
+  Paddle split lane does.
+- **Engine.** Use `yig_leaf_worker.py` on vLLM 0.29 on gex45 (2.10 leaves/s). The HF port is about
+  200 s per leaf.
 
 ## A page that already has a complete draft: correct it, don't re-read it
 

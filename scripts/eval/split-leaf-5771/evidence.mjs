@@ -41,7 +41,7 @@ const base = { script: 'tibetan', note: '', unit: 'books (1 page each)', one_pag
 const out = [];
 for (const arm of ['seam', 'cut', 'reread']) {
   const a = cmp.arms[arm].all;
-  out.push({ rate: 'bad_translation', route: `${ROUTE[arm]} + Opus translation (1 per call)`, ...base, judge: 'opus', source: '5771 split-leaf gate, blind image-grounded audit', k: a.bad.k, n: a.bad.n, books: a.bad.n, quote: `${arm}: bad ${a.bad.k}/${a.bad.n}, OCR-caused ${a.bad_ocr_caused.k}, translator-caused ${a.bad_translator_caused.k}`, raw_route: RAW[arm], note: 'not fitted by failures_v0.py (its RATES are not_of_leaf, failed_read, made_worse)' });
+  out.push({ rate: 'bad_translation', route: `${ROUTE[arm]} + Opus translation (${arm === "seam" ? "per frame, 1 or 10 per call" : "per leaf, 1 per call"})`, ...base, judge: 'opus', source: '5771 split-leaf gate, blind image-grounded audit', k: a.bad.k, n: a.bad.n, books: a.bad.n, quote: `${arm}: bad ${a.bad.k}/${a.bad.n}, OCR-caused ${a.bad_ocr_caused.k}, translator-caused ${a.bad_translator_caused.k}`, raw_route: RAW[arm], note: 'not fitted by failures_v0.py (its RATES are not_of_leaf, failed_read, made_worse)' });
   if (rep[arm]) out.push({ rate: 'not_of_leaf', route: ROUTE[arm], ...base, judge: 'opus', source: '5771 split-leaf gate, auditor OCR spans of kind line_repeated', k: rep[arm].k, n: rep[arm].n, books: rep[arm].n, quote: `${arm}: ${rep[arm].k} of ${rep[arm].n} audited frames have a transcription line the leaf has once (line_repeated)`, raw_route: RAW[arm], note: 'invented_seam_line proxy: a repeated line, wherever it falls on the frame' });
 }
 if (arg('byeye')) {
