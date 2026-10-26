@@ -182,6 +182,18 @@
 .atlas-map .detail .kindtag{font-size:12px;padding:1px 8px;border-radius:10px;color:#fff;background:var(--k-none)}
 .atlas-map .detail .kindtag.k-ratio{background:var(--k-ratio)} .atlas-map .detail .kindtag.k-opposites{background:var(--k-opposites)} .atlas-map .detail .kindtag.k-order{background:var(--k-order)}
 .atlas-map .detail .kindtag.k-balance{background:var(--k-balance)} .atlas-map .detail .kindtag.k-concord{background:var(--k-concord)} .atlas-map .detail .kindtag.k-resonance{background:var(--k-resonance)}
+/* the Map of Magic's kinds (#7402), the same four rules per kind as above */
+.atlas-map{--k-natural:var(--accent-sage);--k-celestial:var(--accent-gold-dark);--k-spirit:var(--accent-violet);--k-verbal:var(--annotation-teal);--k-divination:var(--trace-blue);--k-demonology:var(--rust);--k-mathematical:var(--ink);--k-mental:var(--gold)}
+.atlas-map .k-natural .sw{background:var(--k-natural)} .atlas-map .k-celestial .sw{background:var(--k-celestial)} .atlas-map .k-spirit .sw{background:var(--k-spirit)} .atlas-map .k-verbal .sw{background:var(--k-verbal)}
+.atlas-map .k-divination .sw{background:var(--k-divination)} .atlas-map .k-demonology .sw{background:var(--k-demonology)} .atlas-map .k-mathematical .sw{background:var(--k-mathematical)} .atlas-map .k-mental .sw{background:var(--k-mental)}
+.atlas-map svg.map .mk.readable.k-natural{fill:var(--k-natural)} .atlas-map svg.map .mk.readable.k-celestial{fill:var(--k-celestial)} .atlas-map svg.map .mk.readable.k-spirit{fill:var(--k-spirit)} .atlas-map svg.map .mk.readable.k-verbal{fill:var(--k-verbal)}
+.atlas-map svg.map .mk.readable.k-divination{fill:var(--k-divination)} .atlas-map svg.map .mk.readable.k-demonology{fill:var(--k-demonology)} .atlas-map svg.map .mk.readable.k-mathematical{fill:var(--k-mathematical)} .atlas-map svg.map .mk.readable.k-mental{fill:var(--k-mental)}
+.atlas-map svg.map .mk.held.k-natural,.atlas-map svg.map .mk.absent.k-natural{stroke:var(--k-natural)} .atlas-map svg.map .mk.held.k-celestial,.atlas-map svg.map .mk.absent.k-celestial{stroke:var(--k-celestial)}
+.atlas-map svg.map .mk.held.k-spirit,.atlas-map svg.map .mk.absent.k-spirit{stroke:var(--k-spirit)} .atlas-map svg.map .mk.held.k-verbal,.atlas-map svg.map .mk.absent.k-verbal{stroke:var(--k-verbal)}
+.atlas-map svg.map .mk.held.k-divination,.atlas-map svg.map .mk.absent.k-divination{stroke:var(--k-divination)} .atlas-map svg.map .mk.held.k-demonology,.atlas-map svg.map .mk.absent.k-demonology{stroke:var(--k-demonology)}
+.atlas-map svg.map .mk.held.k-mathematical,.atlas-map svg.map .mk.absent.k-mathematical{stroke:var(--k-mathematical)} .atlas-map svg.map .mk.held.k-mental,.atlas-map svg.map .mk.absent.k-mental{stroke:var(--k-mental)}
+.atlas-map .detail .kindtag.k-natural{background:var(--k-natural)} .atlas-map .detail .kindtag.k-celestial{background:var(--k-celestial)} .atlas-map .detail .kindtag.k-spirit{background:var(--k-spirit)} .atlas-map .detail .kindtag.k-verbal{background:var(--k-verbal)}
+.atlas-map .detail .kindtag.k-divination{background:var(--k-divination)} .atlas-map .detail .kindtag.k-demonology{background:var(--k-demonology)} .atlas-map .detail .kindtag.k-mathematical{background:var(--k-mathematical)} .atlas-map .detail .kindtag.k-mental{background:var(--k-mental)}
 .atlas-map .detail .counternote,.atlas-map .detail .ideanote{margin:4px 0 8px;padding-left:10px;border-left:2px solid var(--rust);font-family:var(--body);font-size:15px;color:var(--ink)}
 .atlas-map .detail .ideanote{border-left-color:var(--accent-violet)}
 .atlas-map .detail .argue{margin:6px 0}
