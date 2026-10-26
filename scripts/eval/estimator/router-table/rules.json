@@ -24,7 +24,8 @@
     "within": 0.05,
     "p": 0.9,
     "wrong_text_max": 0.02,
-    "wrong_text_relative_sensitivity": true
+    "wrong_text_bar": "relative",
+    "_wrong_text_bar": "relative (Derek, 2026-10-26: cost is part of the measure): a route passes when its wrong-text rate is at most the best route's rate + wrong_text_max, so the cheaper of two equally good routes wins. absolute: at most wrong_text_max outright, which keeps the current route whenever every route misses 2% (Tibetan: 3/30 on both correctors). The other bar is reported as a sensitivity."
   },
   "hold": { "_about": "HOLD when no measured route has P(acceptance >= hold.acc) >= hold.p.", "acc": 0.8, "p": 0.9 },
   "test_next": {
