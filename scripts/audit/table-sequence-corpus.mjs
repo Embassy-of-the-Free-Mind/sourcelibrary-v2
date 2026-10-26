@@ -58,7 +58,10 @@ if (fs.existsSync(CATALOG)) {
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 const sink = fs.createWriteStream(OUT, { flags: 'w' });
-const stats = { books: 0, pages: 0, ordered_pages: 0, sequence_pages: 0, repeated_pages: 0 };
+const stats = { books: 0, pages: 0, ordered_pages: 0, sequence_pages: 0, hours_pages: 0, repeated_pages: 0 };
+/** A full planetary-hours column: 12+ names stepping +1. Short planet lists are mostly enumerations
+ *  in a non-Chaldean order (Sun, Moon, then the five), which the loose check flags too. */
+const isHoursColumn = (x) => x.kind === 'sequence' && x.step === 1 && x.length >= 12;
 const byBook = new Map();
 
 const files = fs.readdirSync(MIRROR).filter((f) => f.endsWith('.jsonl'))
@@ -74,7 +77,7 @@ for (const f of files) {
     if (!line) continue;
     let d; try { d = JSON.parse(line); } catch { continue; }
     stats.pages++;
-    let ordered = false, seqHit = false, repHit = false;
+    let ordered = false, seqHit = false, hoursHit = false, repHit = false;
     for (const field of ['ocr', 'tr']) {
       const text = d[field];
       if (!text) continue;
@@ -82,11 +85,13 @@ for (const f of files) {
       const findings = [...sequenceFindings(text), ...repeatedRowFindings(text)];
       for (const x of findings) {
         if (x.kind === 'sequence') seqHit = true; else repHit = true;
-        sink.write(JSON.stringify({ book_id: bookId, title: titles.get(bookId) ?? null, page: d.p, field, ...x }) + '\n');
+        if (isHoursColumn(x)) hoursHit = true;
+        sink.write(JSON.stringify({ book_id: bookId, title: titles.get(bookId) ?? null, page: d.p, field, hours: isHoursColumn(x), ...x }) + '\n');
       }
     }
     if (ordered) stats.ordered_pages++;
     if (seqHit) stats.sequence_pages++;
+    if (hoursHit) stats.hours_pages++;
     if (repHit) stats.repeated_pages++;
     if (seqHit || repHit) {
       const b = byBook.get(bookId) || { sequence: 0, repeated: 0 };
@@ -102,6 +107,7 @@ sink.end();
 console.log(`\nBooks ${stats.books}  pages ${stats.pages}`);
 console.log(`Pages with an ordered planet column (7+ names on one step): ${stats.ordered_pages}`);
 console.log(`  of which a column breaks its order: ${stats.sequence_pages}`);
+console.log(`  of which a full planetary-hours column (12+, step +1) breaks: ${stats.hours_pages}  <- start here`);
 console.log(`Pages with an identical adjacent digit row: ${stats.repeated_pages}`);
 const worst = [...byBook.entries()].sort((a, b) => (b[1].sequence + b[1].repeated) - (a[1].sequence + a[1].repeated)).slice(0, 25);
 if (worst.length) console.log('\nBooks with the most flagged pages (sequence / repeated row):');

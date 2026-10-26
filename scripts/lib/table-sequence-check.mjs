@@ -27,14 +27,15 @@
 export const PLANETS = ['Saturn', 'Jupiter', 'Mars', 'Sun', 'Venus', 'Mercury', 'Moon'];
 
 const NAMES = [
-  // English, Latin (common case forms), German, Arabic, astronomical symbols.
-  ['Saturn', 'Saturnus', 'Saturni', 'Saturno', 'Saturnum', 'زحل', '♄'],
-  ['Jupiter', 'Iupiter', 'Iuppiter', 'Iovis', 'Jovis', 'Iove', 'Jove', 'المشتري', 'المشترى', '♃'],
+  // English, Latin (common case forms), German, French, Italian, Arabic, astronomical symbols.
+  // A form missing here reads as a gap and can fake a break, so add forms before trusting a book's flags.
+  ['Saturn', 'Saturnus', 'Saturni', 'Saturno', 'Saturnum', 'Saturne', 'زحل', '♄'],
+  ['Jupiter', 'Iupiter', 'Iuppiter', 'Iovis', 'Jovis', 'Iove', 'Jove', 'Giove', 'المشتري', 'المشترى', '♃'],
   ['Mars', 'Martis', 'Marte', 'المريخ', '♂'],
-  ['Sun', 'Sol', 'Solis', 'Sole', 'Sonne', 'الشمس', '☉'],
+  ['Sun', 'Sol', 'Solis', 'Sole', 'Sonne', 'Soleil', 'الشمس', '☉'],
   ['Venus', 'Veneris', 'Venere', 'الزهرة', 'الزهره', '♀'],
-  ['Mercury', 'Mercurius', 'Mercurii', 'Mercurio', 'Merkur', 'عطارد', 'العطارد', '☿'],
-  ['Moon', 'Luna', 'Lunae', 'Mond', 'القمر', '☽', '☾'],
+  ['Mercury', 'Mercurius', 'Mercurii', 'Mercurio', 'Merkur', 'Mercure', 'عطارد', 'العطارد', '☿'],
+  ['Moon', 'Luna', 'Lunae', 'Lunæ', 'Lune', 'Mond', 'القمر', '☽', '☾'],
 ];
 
 const NAME_TO_INDEX = new Map();
