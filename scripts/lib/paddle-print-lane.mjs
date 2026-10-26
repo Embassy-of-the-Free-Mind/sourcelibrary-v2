@@ -369,6 +369,25 @@ export function ocrField(text, { language, run, now = new Date(), imageUrl = nul
   };
 }
 
+/**
+ * Where a page this lane did not write goes next (the routing row's fallback, job paddle-rejects-flash-6101):
+ *   'flash'        Gemini Flash through agy (scripts/batch/cli-ocr.mjs), the reader row `chinese-print` names for rejects
+ *   'blank'        left unread: a blank leaf is not a Flash job (readers invent text on show-through)
+ *   'unfetchable'  no image to read: the archive-fetch lane's
+ *   null           not a fallback page (written, kept, human-edited, out of the lane)
+ * By eye 2026-10-26 (#6101): 12/12 textless pages whose every leaf was under INK_FAINT were covers and endpapers; 6 of 8
+ * pages turned away for a faint leaf carried text (thin strokes on tinted paper, a captioned bronze), so a faint leaf
+ * goes to Flash; the two leaf errors were transient (both images fetched again).
+ */
+export function fallbackRoute({ verdict, reason, leaves = [], prepError = null }) {
+  if (prepError) return 'unfetchable';
+  if (verdict === 'reject') return 'flash';
+  if (verdict === 'textless' || reason === 'paddle_textless_kept') {
+    return leaves.every((lf) => lf.blank || (lf.ink != null && lf.ink < INK_FAINT)) ? 'blank' : 'flash';
+  }
+  return null;
+}
+
 /** Write one page through the one writer (#7058): revision with the whole prior field, CAS on the prior text. */
 export async function writeLanePage(db, pageId, field, { run }) {
   return writePageText(db, pageId, 'ocr', field, { by: `${LANE} (scripts/workers/paddle-print-lane.mjs)`, reason: REVISION_REASON, run_id: run });
