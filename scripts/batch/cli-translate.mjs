@@ -19,7 +19,8 @@
  *
  *   apply  node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page refuses: a CLI failure, an empty read, chatter or a refusal in place of a
- *          translation, a page whose OCR changed since the read, and (inside the door) a human-edited translation or a
+ *          translation, a page whose OCR changed since the read, a read that is mostly English already printed on the
+ *          page (a Loeb's facing translation, #7075), and (inside the door) a human-edited translation or a
  *          read that fails the health check. Writes through writePageTranslation (translate-core: snapshot to
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
  *          sweep_log row per page and one book_events row per book, and recounts the book.
@@ -57,6 +58,7 @@ import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
+import { copiesPrintedEnglish } from '../lib/page-integrity.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
@@ -182,6 +184,10 @@ for (const m of metas) {
   if (!page) { skip(m, 'page not found'); continue; }
   if (contentHash(page.ocr?.data || '') !== m.ocr_hash) { skip(m, 'OCR changed since the read'); continue; }
   const book = await db.collection('books').findOne({ id: page.book_id });
+  // #7075: on a bilingual page whose facing side is printed English (a Loeb), a read can hand that English back instead
+  // of translating (Plutarch Loeb 99 p.94: 77% of the read was one verbatim run of the page). The door's echo tier
+  // exempts English already in the source, so it is asked here, for the CLI readers only.
+  if (copiesPrintedEnglish({ ocr: page.ocr?.data || '', tr: text, lang: book?.language })) { skip(m, 'copies the English printed on the page'); continue; }
   const sentHash = m.prompt_sent_hash;
   // A claude-translate.mjs read names the file holding the exact prompt its call sent: hash that, not the meta's word.
   if (m.prompt_sent_file && contentHash(fs.readFileSync(path.join(OUT, m.prompt_sent_file), 'utf8')) !== sentHash) { skip(m, 'prompt sent does not match its recorded hash'); continue; }

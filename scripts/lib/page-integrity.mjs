@@ -856,6 +856,17 @@ export function echoedSource({ ocr, tr, lang }) {
   return { judged: true, len: run.len, share: +share.toFixed(3), echo, wholePage: echo && share >= ECHO_WHOLE_PAGE_SHARE, listLike, englishInSource, proseLike, text: run.text.slice(0, 200) };
 }
 
+/**
+ * Does the "translation" hand back English already printed on the page? (#7075) On a bilingual page whose facing side is
+ * an English translation (a Loeb), a reader can return that English instead of translating: on Plutarch Loeb 99 p.94
+ * 77% of the 3.8 Flash read was one verbatim run of the printed English. echoedSource does not call that an echo
+ * (English in the source is exempt, for a quoted note or caption), so a writer that must not pass it asks this.
+ */
+export function copiesPrintedEnglish({ ocr, tr, lang }) {
+  const e = echoedSource({ ocr, tr, lang });
+  return !!(e.judged && e.englishInSource && e.share >= ECHO_WHOLE_PAGE_SHARE);
+}
+
 // ══════════════════════════════════════════════════════════════════════════════════════════
 // Page-error taxonomy quick wins (2026-09-25, .claude/docs/page-error-taxonomy.md):
 //   6. vocabAbsent()        O5 · #5136 — the page's own <vocab> names words its body lacks

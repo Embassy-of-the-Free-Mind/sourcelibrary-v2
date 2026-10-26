@@ -18,8 +18,13 @@
  * scripts/batch/cli-translate-lane.mjs, and never falls to the API.
  *
  * A `match` is { provider } (books.image_source.provider) or { language_prefix: [...] } (the FIRST language label,
- * case-insensitive, whole word, any run of spaces for a space). validateTranslationTable throws on a row the routers
- * cannot run, so a bad edit fails the tests and the import instead of routing somewhere nobody chose.
+ * case-insensitive, whole word, any run of spaces for a space). A row may also carry `unless: { title_words: [...],
+ * publisher_words: [...] }`: a book whose title or publisher holds one of those words (whole word, case-insensitive)
+ * skips the row and falls to the next one. A caller must project `title` and `publisher` for it to see them.
+ * The Greek cli row skips Loebs this way (#7075, 2026-10-26): the facing page is printed English, and on Plutarch
+ * Loeb 99 p.94 the 3.8 Flash read reproduced that English word for word instead of translating the Greek.
+ * validateTranslationTable throws on a row the routers cannot run, so a bad edit fails the tests and the import
+ * instead of routing somewhere nobody chose.
  */
 
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -61,7 +66,12 @@ const compiled = new WeakMap();
 function compile(table) {
   let rows = compiled.get(table);
   if (!rows) {
-    rows = (table?.rows ?? []).map((row) => ({ row, re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix, row.match.optional_lead ?? []) : null }));
+    rows = (table?.rows ?? []).map((row) => ({
+      row,
+      re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix, row.match.optional_lead ?? []) : null,
+      unlessTitle: row.unless?.title_words?.length ? new RegExp(`\\b(${words(row.unless.title_words)})\\b`, 'i') : null,
+      unlessPublisher: row.unless?.publisher_words?.length ? new RegExp(`\\b(${words(row.unless.publisher_words)})\\b`, 'i') : null,
+    }));
     compiled.set(table, rows);
   }
   return rows;
@@ -69,8 +79,11 @@ function compile(table) {
 
 function firstFit(table, book, channel) {
   const language = String(book?.language ?? '');
-  for (const { row, re } of compile(table)) {
+  const title = String(book?.title ?? '');
+  const publisher = String(book?.publisher ?? '');
+  for (const { row, re, unlessTitle, unlessPublisher } of compile(table)) {
     if (channelOf(row) !== channel) continue;
+    if (unlessTitle?.test(title) || unlessPublisher?.test(publisher)) continue;
     if (row.match?.provider && book?.image_source?.provider === row.match.provider) return row;
     if (re && re.test(language)) return row;
   }
@@ -119,6 +132,11 @@ export function validateTranslationTable(table, engines) {
     const kinds = ['provider', 'language_prefix'].filter((k) => row.match?.[k] != null);
     if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix`);
     if (row.match.language_prefix && (!Array.isArray(row.match.language_prefix) || !row.match.language_prefix.length)) throw new Error(`translation-routing-table: row ${row.id} has an empty language_prefix`);
+    if (row.unless != null) {
+      const lists = ['title_words', 'publisher_words'].filter((k) => row.unless[k] != null);
+      const bad = (l) => !Array.isArray(l) || !l.length || l.some((w) => typeof w !== 'string' || !w.trim());
+      if (!lists.length || lists.some((k) => bad(row.unless[k])) || Object.keys(row.unless).some((k) => !lists.includes(k))) throw new Error(`translation-routing-table: row ${row.id} has an unless that is not { title_words?, publisher_words? } with non-empty word lists`);
+    }
     if (!row.evidence?.length) throw new Error(`translation-routing-table: row ${row.id} has no evidence`);
   }
   return table;

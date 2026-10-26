@@ -34,10 +34,12 @@
       "id": "greek-cli-gemini38",
       "channel": "cli",
       "match": { "optional_lead": ["ancient"], "language_prefix": ["greek"] },
+      "unless": { "title_words": ["loeb"], "publisher_words": ["loeb", "heinemann"] },
       "engine": "gemini-3.8-flash+agy-cli",
       "adoption": { "sample": "scripts/eval/experiments/2026-10-25-greek-cli-lane-sample-7075.md", "replaces": "gemini-3-flash-preview / gemini-3.1-flash-lite", "date": "2026-10-25" },
       "evidence": [
-        { "issue": 7075, "n": "18 Greek pages in 18 books + 2 controls, blind, Gemini judge +1.11 and Opus judge +0.39", "date": "2026-10-25" }
+        { "issue": 7075, "n": "18 Greek pages in 18 books + 2 controls, blind, Gemini judge +1.11 and Opus judge +0.39", "date": "2026-10-25" },
+        { "issue": 7075, "n": "unless Loeb/Heinemann: Plutarch Loeb 99 p.94, by eye, the read copied the facing printed English verbatim", "date": "2026-10-26" }
       ]
     },
     {

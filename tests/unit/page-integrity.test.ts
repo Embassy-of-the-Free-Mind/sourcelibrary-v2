@@ -13,7 +13,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   catchwordBoundary, parseCatchword, pageNumberBreaks, parsePageNum, duplicateScan,
-  truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
+  truncationRatio, echoedSource, copiesPrintedEnglish, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
   parseVocab, vocabAbsent, repeatedBlocks, duplicateSlots, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
   metaPayload, continuityMeta,
   translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER,
@@ -418,5 +418,21 @@ describe('a stored translation the write door would refuse as a runaway (#4098)'
     const { lines } = scanBookForOverlong('b', rows, { bookLang: 'Latin' });
     expect(lines.at(-1).overlong).toEqual({ judged: 2, flagged: 1, shapes: { padding: 1 } });
     expect(lines.filter((l: { kind: string }) => l.kind === 'overlong').map((l: { p: number }) => l.p)).toEqual([2]);
+  });
+});
+
+// #7075: a Loeb's facing English handed back as the translation (Plutarch Loeb 99 p.94).
+describe('a read that copies the English printed on the page', () => {
+  const L = fx('loeb-facing-english-7075.json');
+  it('refuses the read that is the facing English, which echoedSource exempts', () => {
+    expect(echoedSource({ ocr: L.ocr, tr: L.copied, lang: 'Greek' }).echo).toBe(false);
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.copied, lang: 'Greek' })).toBe(true);
+  });
+  it('passes a translation of the same page, and a page that shares a shorter run with its English', () => {
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.translated, lang: 'Greek' })).toBe(false);
+    expect(copiesPrintedEnglish({ ocr: L.other_ocr, tr: L.other_tr, lang: 'Greek' })).toBe(false);
+  });
+  it('never judges an English book, whose pages are modernised, not translated', () => {
+    expect(copiesPrintedEnglish({ ocr: L.ocr, tr: L.copied, lang: 'English' })).toBe(false);
   });
 });

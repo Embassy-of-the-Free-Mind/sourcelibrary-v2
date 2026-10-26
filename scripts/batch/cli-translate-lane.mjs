@@ -73,7 +73,7 @@ async function heldBooks(db) {
   return db.collection('books').find(
     // The status first: it is indexed, and a held book carries both (pipeline-hold.mjs).
     { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason },
-    { projection: { id: 1, title: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
+    { projection: { id: 1, title: 1, publisher: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
   ).sort({ visible: -1, 'pipeline_auto.hold.held_at': 1 }).toArray();
 }
 
