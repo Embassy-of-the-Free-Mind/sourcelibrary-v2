@@ -89,6 +89,8 @@ function onePerBook(rows, n, salt) {
   return out;
 }
 
+// The #6560 reads keep the reply's <<<BEGIN>>>/<<<END>>> sentinels (#6523); its score.py reads the text between them.
+const sentinelBody = (t) => { const b = t.indexOf('<<<BEGIN>>>'), e = t.lastIndexOf('<<<END>>>'); return b < 0 ? t : t.slice(b + 11, e > b ? e : undefined).trim(); };
 const tibManifest = () => fs.readFileSync(TIB_MANIFEST, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.stratum === 'kangyur');
 
 async function draw() {
@@ -189,7 +191,7 @@ async function packet() {
   await c.close();
   const oc = new Map(jsonl(gz(LATIN_READS)).map((r) => [r.page_id, r]));
   const tibM = new Map(tibManifest().map((r) => [r.id, r]));
-  const tibOut = Object.fromEntries(Object.entries(TIB_ARMS).filter(([, a]) => a !== 'baseline').map(([route, a]) => [route, new Map(jsonl(gz(path.join(TIB, 'out', `${a}.jsonl.gz`))).filter((r) => r.text && !r.error).map((r) => [r.uid, r.text]))]));
+  const tibOut = Object.fromEntries(Object.entries(TIB_ARMS).filter(([, a]) => a !== 'baseline').map(([route, a]) => [route, new Map(jsonl(gz(path.join(TIB, 'out', `${a}.jsonl.gz`))).filter((r) => r.text && !r.error).map((r) => [r.uid, sentinelBody(r.text)]))]));
   const deOpus = (id) => { const m = path.join(OUT, DE_OPUS_DIR, `${id}.meta.json`); try { return JSON.parse(fs.readFileSync(m, 'utf8')).exit === 0 ? fs.readFileSync(path.join(OUT, DE_OPUS_DIR, `${id}.txt`), 'utf8') : null; } catch { return null; } };
   const lite = (p) => (LITE.includes(p?.ocr?.model) ? p.ocr.data : null);
 
@@ -508,10 +510,17 @@ function score() {
   if (fs.existsSync(kanFile)) {
     const kan = new Map(jsonl(fs.readFileSync(kanFile, 'utf8')).filter((a) => a.status === 'aligned').map((a) => [a.key, a]));
     const pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
-    const fold = (t) => String(t || '').replace(/<[^>]+>/g, '').replace(/[^\p{Script=Han}]/gu, '');
-    const cer = (k) => { const a = kan.get(k.page_id); if (!a) return null; const ref = fold(a.kanripo_text); return ref.length ? +(lev(fold(pk.get(k.judged_as)?.text), ref) / ref.length).toFixed(4) : null; };
+    // Apparatus (the library's tags whose CONTENT is not the page's text) goes before the compare; the leaf's own
+    // small-character notes stay (<gloss>, <unclear> keep their text), as Kanripo carries them inline.
+    const APP = 'vocab|warning|meta|note|header|summary|keywords|image-desc|page-num|sig|scan-quality|language|script|page-type|columns';
+    const fold = (t) => String(t || '').replace(new RegExp(`<(${APP})\\b[^>]*>[\\s\\S]*?</\\1>`, 'g'), '').replace(/<[^>]+>/g, '').replace(/[^\p{Script=Han}]/gu, '');
+    const rawCer = (k) => { const a = kan.get(k.page_id); if (!a) return null; const ref = fold(a.kanripo_text); return ref.length ? +(lev(fold(pk.get(k.judged_as)?.text), ref) / ref.length).toFixed(4) : null; };
+    // A neighbour-rule leaf can be one leaf off: where no candidate comes within CER 0.5 of it, the leaf is not this page.
+    const best = new Map(); for (const k of keyRows.filter((x) => x.cell === 'chinese' && x.kind === 'item')) { const c2 = rawCer(k); if (c2 != null) best.set(k.page_id, Math.min(best.get(k.page_id) ?? 9, c2)); }
+    const misplaced = [...best].filter(([, c2]) => c2 > 0.5).map(([id]) => id);
+    const cer = (k) => (misplaced.includes(k.page_id) ? null : rawCer(k));
     const st = {}; for (const a of jsonl(fs.readFileSync(kanFile, 'utf8'))) st[a.status + (a.leaf ? `:${a.leaf}` : '')] = (st[a.status + (a.leaf ? `:${a.leaf}` : '')] ?? 0) + 1;
-    report.cells.chinese.reference = { name: 'Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)', align_status: st, ...agreement('chinese', cer, 0.01, false) };
+    report.cells.chinese.reference = { name: 'Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)', align_status: st, leaf_misplaced: misplaced.length, ...agreement('chinese', cer, 0.01, false) };
   }
 
   // Planted errors (Tibetan): the judge's catch rate. Below 80%, Derge decides the cell, not the judge.
