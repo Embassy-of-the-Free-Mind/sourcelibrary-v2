@@ -1,4 +1,16 @@
 {
+ "/articles/aliveness/fludd-microcosm.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1920.avif",
+    "w": 1400
+   }
+  ]
+ },
  "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
   "srcset": [
    {
@@ -368,18 +380,6 @@
    {
     "src": "/articles/heroes/29a2c0984334-1920.avif",
     "w": 1076
-   }
-  ]
- },
- "https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/1.jpg": {
-  "srcset": [
-   {
-    "src": "/articles/heroes/6b09ef12879e-1280.avif",
-    "w": 1280
-   },
-   {
-    "src": "/articles/heroes/6b09ef12879e-1920.avif",
-    "w": 1543
    }
   ]
  },
