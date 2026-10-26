@@ -88,6 +88,23 @@ export function laneTableProblems(table, { domainLimitOf } = {}) {
   return out;
 }
 
+/**
+ * Selection ORDER inside a lane (#5448 step 5): books readers can open now, then tier A (the #7343
+ * wave ranked most interesting), then the rest. The filters partition the lane's books (visible or
+ * not; tier-A campaign or not), so drawing them in sequence never draws a book twice. Each is drawn
+ * with the rotation sort, so an unfinished book goes to the back of ITS tier.
+ *
+ * Small institutions before large hosts is decided a level up, by this table: every small host has
+ * its own lane and its own rate, so it never waits behind IA or MDZ.
+ */
+export function laneSelectionTiers({ tierACampaign = 'acquisition-wave-2026-10b' } = {}) {
+  return [
+    { name: 'live', filter: { visible: true } },
+    { name: 'tier-a', filter: { visible: { $ne: true }, acquisition_campaign: tierACampaign } },
+    { name: 'rest', filter: { visible: { $ne: true }, acquisition_campaign: { $ne: tierACampaign } } },
+  ];
+}
+
 /** The archive-acquired.ts flags for one lane. */
 export function laneArgs(lane) {
   const rates = Object.entries(lane.rate ?? {}).map(([h, r]) => `${h}=${r}`).join(',');

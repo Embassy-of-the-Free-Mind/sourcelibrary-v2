@@ -46,6 +46,7 @@ import { recountBook } from '../../src/lib/page-counts';
 import { ensurePages, isLazyPagesBook, LAZY_PAGES_FILTER } from '../lib/lazy-pages.mjs';
 import { archiveFromManifest } from '../lib/manifest-archive.mjs';
 import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
+import { laneSelectionTiers } from './archive-lanes.mjs';
 import {
   isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
@@ -420,6 +421,13 @@ async function main() {
   // whose materialized books another archiver already drains (IA: archive-bulk's item zips).
   const LAZY_ONLY = process.argv.includes('--lazy-only');
   const BOOK_MODE = !!(PROVIDER || PROVIDERS || CAMPAIGN || BOOK_IDS);
+  // The tier-A campaign (#7343) that step 5 ranks second, after live books.
+  const TIER_A_CAMPAIGN = (() => { const i = process.argv.indexOf('--tier-a-campaign'); return i > -1 ? process.argv[i + 1] : 'acquisition-wave-2026-10b'; })();
+  // Lane mode (`--providers`, the lane table) draws live → tier A → the rest (laneSelectionTiers);
+  // every other book mode keeps its single draw. A --campaign run already names its campaign.
+  const selectionTiers = (): Array<{ name: string; filter: Record<string, unknown> }> => (PROVIDERS && !CAMPAIGN && !BOOK_IDS
+    ? laneSelectionTiers({ tierACampaign: TIER_A_CAMPAIGN })
+    : [{ name: 'all', filter: {} }]);
   const bookModeFilter: Record<string, unknown> = {
     ...(PROVIDER ? { 'image_source.provider': PROVIDER } : {}),
     ...(PROVIDERS ? { 'image_source.provider': { $in: [...PROVIDERS] } } : {}),
@@ -459,10 +467,10 @@ async function main() {
   const inLane = (h: string | null) => h == null || ((!HOSTS || HOSTS.has(h)) && !EXCLUDE_HOSTS?.has(h));
   const SCAN_CAP = intArg('scan-cap', BATCH * 25);
   let scanned = 0;
-  const draw = async (cursor: AsyncIterable<any>, bookIdOf: (r: any) => string): Promise<any[]> => {
+  const draw = async (cursor: AsyncIterable<any>, bookIdOf: (r: any) => string, want = BATCH): Promise<any[]> => {
     const out: any[] = [];
     for await (const r of cursor) {
-      if (out.length >= BATCH || scanned >= SCAN_CAP) break;
+      if (out.length >= want || scanned >= SCAN_CAP) break;
       scanned++;
       if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r), r.pages_state ? r : undefined))) out.push(r);
     }
@@ -478,9 +486,22 @@ async function main() {
     // lane-heidelberg drew the same 40 books 108,133 times (#5448).
     // processBook now stamps `archive_metadata.last_attempt_at` (an existing
     // subdocument, not a new column) on every attempt that asked the source.
-    const cur = books.find(bookModeFilter, { projection: { id: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } }).sort(ROTATION_SORT);
-    const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
-    await cur.close();
+    // Selection ORDER inside a lane (#5448 step 5): books readers can open now, then tier A (the
+    // #7343 wave ranked most interesting), then the rest. Each tier keeps the rotation, so a book that
+    // could not be finished goes to the back of ITS tier. Small institutions before large hosts is the
+    // lane table's job: each small host has its own lane, so it never waits behind IA or MDZ.
+    const cand: any[] = [];
+    const drawnPerTier: string[] = [];
+    for (const tier of selectionTiers()) {
+      const want = BATCH - cand.length;
+      if (want <= 0 || scanned >= SCAN_CAP) break;
+      const cur = books.find({ ...bookModeFilter, ...tier.filter }, { projection: { id: 1, pages_state: 1, 'image_source.iiif_manifest': 1, [`${LEDGER_FIELD}.host`]: 1 } }).sort(ROTATION_SORT);
+      const got = await draw(HOST_FILTER ? cur : cur.limit(want), (b: any) => b.id, want);
+      await cur.close();
+      cand.push(...got);
+      if (tier.name !== 'all') drawnPerTier.push(`${tier.name} ${got.length}`);
+    }
+    if (drawnPerTier.length) log(`selection order: ${drawnPerTier.join(', ')}`);
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
     log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, PROVIDERS && `providers ${[...PROVIDERS].join(',')}`, LAZY_ONLY && 'manifest-only books', GALLICA_OPENAPI && 'gallica via openapi.bnf.fr', CAMPAIGN && `campaign ${CAMPAIGN}`, BOOK_IDS && `book ${[...BOOK_IDS].join(',')}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
   } else {
