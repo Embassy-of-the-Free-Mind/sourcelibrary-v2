@@ -62,8 +62,12 @@ const dir = resolve(DIR);
 const manifest = JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8'));
 console.log(`Depositing ${manifest.dataset} v${manifest.version} (git ${manifest.git_sha.slice(0, 8)}) → ${ZENODO_URL}`);
 
+// Zenodo's firewall answers Node's default User-Agent with 403 "unusual traffic" (measured 2026-10-26: same token,
+// 403 bare, 200 named). Same string as src/lib/zenodo.ts and scripts/batch/batch-mint-doi.mjs.
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+
 function headers(extra = {}) {
-  return { Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, ...extra };
+  return { Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
 }
 
 async function fail(resp, context) {
