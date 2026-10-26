@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 import { reportError } from '@/components/providers/ErrorReporter';
+import { isStaleBuildError, reloadOnceForStaleBuild } from '@/lib/stale-build-reload';
 
 export default function GlobalError({
   error,
@@ -17,8 +18,9 @@ export default function GlobalError({
     reportError({
       message: error.digest ? `${error.message} [digest:${error.digest}]` : error.message,
       stack: error.stack,
-      source: 'app_error_boundary',
+      source: isStaleBuildError(error) ? 'app_error_boundary:stale_build' : 'app_error_boundary',
     });
+    reloadOnceForStaleBuild(error);
   }, [error]);
 
   return (

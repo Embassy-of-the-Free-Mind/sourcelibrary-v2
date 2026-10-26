@@ -79,6 +79,31 @@ to be disabled during the #3645 audit on the basis that `next.config.ts` and `ve
 mention it. It had been enabled all along. Read the platform's own API before concluding a platform
 feature is off.
 
+## Cloudflare must never cache an RSC payload, and the bypass rule must come LAST
+
+A client-side navigation fetches `/<route>?_rsc=<hash>` with an `rsc: 1` header. Cloudflare ignores
+`Vary: rsc`, so a cached flight payload from build A is served to a tab running build B. Since
+Next 16.4.2 (#7340) the same turbopack module id carries **differently-mangled export names** in
+each build (`e.i(475254).default` in one, `.f` in the next), so the mixed tab crashes:
+`(0, e.i(...).default) is not a function`, shown to the reader as the root **"Something went
+wrong"** screen. Before 16.4, mixing builds mostly worked, so the leak stayed invisible.
+
+The leak itself was rule ORDER. The zone's cache rules (`http_request_cache_settings`) had
+"Bypass cache for RSC" *above* "Cache page routes (host eq sourcelibrary.org)". In Cloudflare
+cache rules **the last matching rule wins**, so the catch-all switched caching back on and RSC
+payloads sat at the edge for 24h. The `next.config.ts` `CDN-Cache-Control: no-store` rule for
+`rsc` requests did not save it: the cached Vercel response carried the HTML variant's `public,
+max-age=86400`. Fixed 2026-10-26: the RSC bypass now sits after the catch-all and also matches
+the `_rsc` query arg. As a client-side net, `src/lib/stale-build-reload.ts` reloads a crashed
+page once per URL per minute when the error looks like a build mismatch.
+
+- **Check:** `curl -sD- -o/dev/null 'https://sourcelibrary.org/book/<slug>?_rsc=x' -H 'rsc: 1'`
+  must show `cf-cache-status: DYNAMIC`. `HIT` or `MISS` means the bypass is shadowed again.
+- **Tell:** a burst of `app_error_boundary` "is not a function" rows in `application_errors`
+  starting at a release, across unrelated routes, whose stack names a chunk the current HTML
+  does not reference.
+- Any new catch-all cache rule must be added ABOVE the bypass rules, never below.
+
 ## Purging and invalidating are workarounds, not requirements
 
 `purge_everything` (`post-deploy-warm.yml`, `scripts/deploy-prod.sh`) and the blanket
