@@ -55,6 +55,7 @@ for (const language of [...new Set(Object.values(CELLS).map(([l]) => l))]) {
   for (const b of books) {
     const rows = await db.collection('pages').aggregate([
       { $match: { book_id: b.id, 'ocr.data': { $type: 'string' } } }, { $sample: { size: PB } },
+      // strlen-safe: the $match above keeps only pages whose ocr.data is a string
       { $project: { _id: 0, m: '$ocr.model', pipe: '$ocr.pipeline', dice: '$ocr.qa_screen.dice', tm: '$translation.model',
         chars: { $strLenCP: '$ocr.data' }, tchars: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $strLenCP: '$translation.data' }, null] },
         gout: '$ocr.output_tokens', w: '$image_width', h: '$image_height', pt: '$page_type',
@@ -65,6 +66,7 @@ for (const language of [...new Set(Object.values(CELLS).map(([l]) => l))]) {
   console.error(`${language}: ${books.length} books sampled`);
 }
 // two Chinese cells are too rare in random books: sample their pages directly instead
+// strlen-safe: every $match that uses PROJ requires 'ocr.data': { $type: 'string' }
 const PROJ = { _id: 0, book: '$book_id', m: '$ocr.model', pipe: '$ocr.pipeline', dice: '$ocr.qa_screen.dice', chars: { $strLenCP: '$ocr.data' },
   gout: '$ocr.output_tokens', w: '$image_width', h: '$image_height', pt: '$page_type',
   cols: { $regexFind: { input: '$ocr.data', regex: /<columns>\s*(\d+)\s*<\/columns>/i } } };
