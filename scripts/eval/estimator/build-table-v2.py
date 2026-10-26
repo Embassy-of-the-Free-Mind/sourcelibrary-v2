@@ -179,6 +179,8 @@ def main():
     pro6545(summ)
     opus10(summ)
     g4translate6729(summ)
+    # every row says where it came from: what the experiment's own files state (#6740)
+    v1, new, summ = ([bt1.label_legacy(r, 'translation', [f"{r['experiment']}|{r['arm']}", r['experiment']]) for r in rows] for rows in (v1, new, summ))
     with open(a.out, 'w') as f:
         for r in v1 + new:
             f.write(json.dumps(r) + '\n')

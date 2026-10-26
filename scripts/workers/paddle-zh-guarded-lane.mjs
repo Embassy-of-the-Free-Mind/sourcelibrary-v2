@@ -60,7 +60,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { paddleTableRisk, T as TABLE_RULE } from '../lib/paddle-table-detect.mjs';
-import { geminiEngine, imageInput, ocrProvenance, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, imageInput, ocrProvenance, notRecorded, codeVersion, host, NOT_RECORDED } from '../lib/write-provenance.mjs';
 import {
   PADDLE, MIN_HAN, MAX_CHAR_RUN, convertPaddle, envelope, bodyHanCount, longestCharRun, workTitleOf,
   ocrSetFields, isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
@@ -124,7 +124,11 @@ export function pageSet(rec, route, { run, flash, now, codeVer, workTitle }) {
   const text = envelope(body);
   const engine = geminiEngine({
     call_site: CALL_SITE, api: 'cli', cli: flash.cli, model: flash.model,
-    prompt: { id: 'zh-residue-bakeoff-6871/read.py:PROMPT', name: 'zh bake-off plain transcription prompt + #6523 markers', version: '2026-10-18', text: flash.prompt_sent },
+    // hash: the TEMPLATE's (read.py PROMPT), which flash.py records as its full sha256 — contentHash is that sha256's
+    // first 16 hex. Left null until #6740, so 66% of agy 3.8 Flash low OCR pages in the 14 days to 2026-10-26 had no
+    // template hash and the estimator could not tell this prompt from cli-ocr's v19.1.
+    prompt: { id: 'zh-residue-bakeoff-6871/read.py:PROMPT', name: 'zh bake-off plain transcription prompt + #6523 markers', version: '2026-10-18',
+      hash: /^[0-9a-f]{64}$/.test(flash.prompt_sha256 ?? '') ? flash.prompt_sha256.slice(0, 16) : NOT_RECORDED, text: flash.prompt_sent },
     generationConfig: notRecorded('agy -p exposes no temperature, output cap or thinking setting; the model id names the tier'),
     run: { job_id: run.run.replace(/^zh-guarded-read-6871/, 'zh-guarded-read-6871/flash'), code_version: codeVer, host: host(), read_at: flash.date ? new Date(flash.date) : null, reason: 'guard rejected Paddle (#6871)' },
     input,

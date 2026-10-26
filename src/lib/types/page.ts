@@ -288,7 +288,8 @@ export interface OcrData extends ProcessingMetadata {
   digits_unreliable?: true;
   /**
    * Set when a specialist open OCR model read the page, because the general model cannot
-   * read its script. Describes the model that produced `data` — nothing else.
+   * read its script — and, since #6740, on the Archive's own text (`source === 'ia_djvu'`,
+   * built by `iaEngine` in scripts/lib/ia-ocr-meta.mjs). Describes the model that produced `data` — nothing else.
    * - `source === 'kraken'` (Syriac, #4883 — scripts/lib/syriac-kraken-lane.mjs is the table):
    *   `model_doi` is the Zenodo record of the weights; the Kraken-only fields are set.
    * - `source === 'bdrc'` (Tibetan, #4523/#4722 — scripts/maintenance/apply-reocr-verdicts.mjs
@@ -376,6 +377,11 @@ export interface SpecialistEngine {
     run: string;                  // lane id + date
     issue: number;
     secs?: number | null;         // CPU seconds this page took
+    /** What the engine read: our image (`image_url`), or for the Archive's text the `_djvu.xml` leaf (`source_url`, `leaf`). */
+    input?: Record<string, unknown>;
+    /** The Archive's text only (`iaEngine`, scripts/lib/ia-ocr-meta.mjs): its hOCR converter, and an explicit no-prompt marker. */
+    converter?: string;
+    prompt?: { status: 'n/a' | 'not_recorded'; reason: string };
 }
 
 /**

@@ -19,7 +19,12 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { labelLegacy, legacyStated } from '../provenance.mjs';
 
+/** These rows key a route on the engine only: each is labelled legacy with what the census states (#6740). The
+ *  prompt-keyed twin is route-census-prov-emit.mjs. */
+const legacyLines = (file, rows) => { const st = legacyStated('route-census-6740', file);
+  return rows.map((r) => JSON.stringify(labelLegacy(r, st))).join('\n') + (rows.length ? '\n' : ''); };
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const median = (a) => { const s = a.filter((x) => x != null).sort((x, y) => x - y); return s.length ? s[Math.floor((s.length - 1) / 2)] : null; };
 const q = (a, p) => { const s = a.filter((x) => x != null).sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : null; };
@@ -150,7 +155,7 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
       quote: `${c.k} of ${c.n} pages that have a page_revisions history: ${c.route}'s output refused by a blank / loop / health gate and replaced`,
       note: 'denominator is pages WITH a revision history only (pages never rewritten are not in page_revisions), so this overstates the rate; books summed over kinds may double count' });
   }
-  fs.writeFileSync(F('out', 'failures.jsonl'), failures.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  fs.writeFileSync(F('out', 'failures.jsonl'), legacyLines('failures.jsonl', failures));
   summary.part1 = { rows: failures.length, ocr_rows: failures.filter((r) => r.rate === 'failed_read').length,
     translation_rows: failures.filter((r) => r.rate === 'translation_failed_read').length, guard_rows: failures.filter((r) => /guard/.test(r.rate)).length,
     pages_walked: pagesSeen, unstamped_routes: Object.fromEntries([...unstamped].sort((a, b) => b[1] - a[1])), unattributed_refusals: [...unattributed].sort((a, b) => b[1] - a[1]).slice(0, 15),
@@ -203,7 +208,7 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
         draft_cer: a.cer, next_cer: c.cer, verdict: c.cer < a.cer - 0.005 ? 'better' : c.cer > a.cer + 0.005 ? 'worse' : 'same', fame_web: r.fame_web });
     }
   }
-  fs.writeFileSync(F('out', 'ocr-table.jsonl'), table.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  fs.writeFileSync(F('out', 'ocr-table.jsonl'), legacyLines('ocr-table.jsonl', table));
   summary.part2 = { reference_pages: refs.length, pages_with_page: refs.filter((r) => !r.missing).length, rows: table.length,
     scored: table.filter((r) => r.scored).length, by_ref_kind: count(table, (r) => r.ref_kind), by_engine: count(table, (r) => r.engine),
     by_chart: count(table, (r) => r.chart), fame_web: count(table, (r) => String(r.fame_web)), anchored: count(table, (r) => String(r.anchored)) };
@@ -235,8 +240,8 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
       worse: withRef.filter((p) => p.verdict === 'worse').length });
   }
   corrections.sort((a, b) => b.pairs - a.pairs);
-  fs.writeFileSync(F('out', 'corrections.jsonl'), corrections.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  fs.writeFileSync(F('out', 'reference-pairs.jsonl'), refPairs.map((r) => JSON.stringify(r)).join('\n') + (refPairs.length ? '\n' : ''));
+  fs.writeFileSync(F('out', 'corrections.jsonl'), legacyLines('corrections.jsonl', corrections));
+  fs.writeFileSync(F('out', 'reference-pairs.jsonl'), legacyLines('reference-pairs.jsonl', refPairs));
   summary.part3 = { cells: corrections.length, by_class: count(corrections, (r) => r.cls, (r) => r.pairs), sampled: change.length,
     reference_pairs: refPairs.length, reference_verdicts: count(refPairs, (r) => r.verdict),
     pair_classes_all: count(pairs.cells, (r) => `${r.field}:${r.cls}`, (r) => r.pairs) };
@@ -265,7 +270,7 @@ export async function emit({ OUT, NOW, DAYS, helpers }) {
       pages_per_active_hour: v.hours.size ? Math.round(v.n / v.hours.size) : null,
       call_sites: [...v.call_sites].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, n]) => `${c || '(none)'}:${n}`) }; })
     .filter((r) => r.day >= from && r.day < NOW.toISOString().slice(0, 10)).sort((a, b) => (a.field + a.route + a.day).localeCompare(b.field + b.route + b.day));
-  fs.writeFileSync(F('out', 'throughput.jsonl'), tpRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  fs.writeFileSync(F('out', 'throughput.jsonl'), legacyLines('throughput.jsonl', tpRows));
   const routes = new Map();
   for (const r of tpRows) { const k = [r.field, r.route, r.source].join('|'); if (!routes.has(k)) routes.set(k, []); routes.get(k).push(r); }
   const nd = DAYS;
