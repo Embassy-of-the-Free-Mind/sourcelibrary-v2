@@ -581,6 +581,216 @@
    "engine_stated": "claude-opus-5-5 (read); judge gemini-3.8-flash-high",
    "judge": "gemini-3.8-flash-high via agy on the main box, 'judge-prompt.md' (scripts/eval/results/opus-ocr-calibration-6559/judge-prompt.md, named, no hash); the false positive was checked by eye",
    "quote": "Gemini through `agy` on the main box (`judge-prompt.md`)"
+  },
+  "5924 Step C2 lite": {
+   "source": "scripts/eval/experiments/2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md (results: scripts/eval/flash-reread-5924/results/oc-step-c2.json)",
+   "prompt": "the served Flash-Lite text; the file does not state its OCR prompt",
+   "read_mode": "image",
+   "access": "api (batch)",
+   "engine_stated": "gemini-3.1-flash-lite (stored)",
+   "judge": "blind Opus reader subagents, one per book, original VERDICTS.md / C-TASK.md and reader prompt verbatim (Step C2)",
+   "quote": "| lite (L), Step C2 | **111** |",
+   "note": ""
+  },
+  "5924 Opus correction C2": {
+   "source": "scripts/eval/experiments/2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md",
+   "prompt": "correct.mjs --model=opus --per-call=10: the live OCR prompt plus its correction block, sealed claude -p --restricted --tools Read",
+   "read_mode": "image + stored draft",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "blind Opus reader subagents (Step C2), same protocol",
+   "quote": "| **Opus correction (O), Step C2** | **31** | **1** | **O 201 · L 2 · tie 47** |",
+   "note": ""
+  },
+  "5924 Flash re-read Step C": {
+   "source": "scripts/eval/experiments/2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md (the re-read is #7242: 2026-10-23-flash-reread-lite-latin-books-5924.md)",
+   "prompt": "the live OCR prompt as sent by cli-ocr.mjs read (results/F-prompt-base.txt)",
+   "read_mode": "image",
+   "access": "cli",
+   "engine_stated": "gemini-3.8-flash-low via agy",
+   "judge": "blind Opus reader subagents (original Step C)",
+   "quote": "| Flash re-read (F), original Step C | 20 (5–12%) | **7** | F 201 · L 23 · tie 26 |",
+   "note": ""
+  },
+  "5924 Flash correction C4": {
+   "source": "scripts/eval/experiments/2026-10-24-latin-lite-flash-correct-four-arms-5924.md",
+   "prompt": "cli-ocr.mjs read --correct-prompt: live OCR prompt v19.1 plus correct.mjs's correctInstruction(1) adapted to one inline draft; template hash 0601ef30e816f7a7 (results/FC-correct-prompt.txt)",
+   "read_mode": "image + stored draft",
+   "access": "cli",
+   "engine_stated": "gemini-3.8-flash-low via agy",
+   "judge": "blind Opus reader subagents (Step C4), C-TASK.md rebuilt from the prereg (committed)",
+   "quote": "| **Flash correction (FC)** | **30** (8.5–16.6%) | **11** | FC 210 · L 11 · tie 29 |",
+   "note": ""
+  },
+  "5924 second-family judge on O vs L": {
+   "source": "scripts/eval/experiments/2026-10-24-latin-lite-flash-correct-four-arms-5924.md (results/fc-judge.json)",
+   "prompt": "the corrector prompt as in 5924 Opus correction C2",
+   "read_mode": "image + stored draft",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 (corrector)",
+   "judge": "agy gemini-3.8-flash-low, blind, one page per call with the image (fc-judge.mjs)",
+   "quote": "| Gemini 3.8 Flash-low | 56 | 3 | 0 | 0 | 27 |",
+   "note": ""
+  },
+  "6560 G4 Argon low 30 folios": {
+   "source": "scripts/eval/experiments/2026-10-15-tibetan-gemini4-argon-correct-6560.md",
+   "prompt": "#6560's correction request, as the Flash 3.8 arm sent it; the file names the model change only",
+   "read_mode": "image + Yigdzin draft",
+   "access": "cli",
+   "engine_stated": "gemini-4-argon-low via agy",
+   "judge": "mechanical: syllable identity against the Derge text",
+   "quote": "| **G4 Argon low correct** | ... | **26 / 3** |",
+   "note": ""
+  },
+  "6560 pass gate leaf-audit-tiles": {
+   "source": "scripts/eval/experiments/2026-10-15-tibetan-g4l-pass-gate-6560.md and scripts/eval/experiments/2026-10-15-tibetan-flash-pass-gate-6560.md",
+   "prompt": "pass/run-volume.sh's CORR request (corr-prompt.txt), lane, guard and dry apply; only the model and job name are parameters",
+   "read_mode": "image + Yigdzin draft",
+   "access": "cli",
+   "engine_stated": "gemini-3.8-flash-low (Flash gate) and gemini-4-argon-low (G4L gate) via agy",
+   "judge": "Opus via claude -p: leafcheck.mjs audit, judge B = full frame + 4 full-resolution tiles (tiles-req), every changed span, 2 known-answer controls a page",
+   "quote": "worse / same / better (of 40): Flash 10 / 6 / 24; G4L 5 / 6 / 29",
+   "note": ""
+  },
+  "6560 pass gate leaf-audit-frame": {
+   "source": "scripts/eval/experiments/2026-10-15-tibetan-g4l-pass-gate-6560.md and scripts/eval/experiments/2026-10-15-tibetan-flash-pass-gate-6560.md",
+   "prompt": "pass/run-volume.sh's CORR request (corr-prompt.txt)",
+   "read_mode": "image + Yigdzin draft",
+   "access": "cli",
+   "engine_stated": "gemini-3.8-flash-low and gemini-4-argon-low via agy",
+   "judge": "Opus via claude -p: leafcheck.mjs audit, judge A = the full frame only",
+   "quote": "worse / same / better (of 40): Flash 2 / 16 / 22; G4L 0 / 15 / 25",
+   "note": ""
+  },
+  "6560 tibetan folios better": {
+   "source": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md; scripts/eval/experiments/2026-10-13-tibetan-flash38-correct-6560.md; scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
+   "prompt": "#6560's correction request (image + Yigdzin draft) per corrector; the redo arms read the image only; #6667 reused the prompt bytes",
+   "read_mode": "image + Yigdzin draft (redo: image)",
+   "access": "cli",
+   "engine_stated": "Opus, Sonnet, Haiku via claude -p; gemini-3.1-pro, gemini-3.8-flash low / high via agy",
+   "judge": "mechanical: syllable identity against the Derge text",
+   "quote": "folios better / worse per arm, e.g. | **Flash 3.8 low correct** | ... | **30 / 0** |",
+   "note": ""
+  },
+  "6561/6667 paddle zh set table": {
+   "source": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md; scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
+   "prompt": "#6561's correct prompt: the #6388 pilot's read prompt byte for byte (OCR v19.1 plus the counting-rod, count-don't-estimate and drawing lines) with a draft block added; no error count, planted errors or reference text named. #6667 reused the same prompt bytes for Sonnet and Haiku. The redo arm is the pilot's read prompt without the draft",
+   "read_mode": "image + Paddle draft (redo: image)",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5, agy gemini-3.1-pro high, agy gemini-3.8-flash-high (#6561); claude-sonnet-5-5, claude-haiku-4-5 (#6667); one page per call",
+   "judge": "mechanical: Han CER against the Kanripo leaf (score.mjs), better / worse > 0.5 pt",
+   "quote": "set A (40 withheld table pages): better / worse vs Paddle per arm",
+   "note": ""
+  },
+  "6561/6667 paddle zh set ordinary": {
+   "source": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md; scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
+   "prompt": "#6561's correct prompt: the #6388 pilot's read prompt byte for byte (OCR v19.1 plus the counting-rod, count-don't-estimate and drawing lines) with a draft block added; no error count, planted errors or reference text named. #6667 reused the same prompt bytes for Sonnet and Haiku. The redo arm is the pilot's read prompt without the draft",
+   "read_mode": "image + Paddle draft (redo: image)",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5, agy gemini-3.1-pro high, agy gemini-3.8-flash-high (#6561); claude-sonnet-5-5, claude-haiku-4-5 (#6667); one page per call",
+   "judge": "mechanical: Han CER against the Kanripo leaf, > 0.5 pt",
+   "quote": "set B random (30 ordinary pages)",
+   "note": ""
+  },
+  "6561/6667 paddle zh set disagree": {
+   "source": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md; scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
+   "prompt": "#6561's correct prompt: the #6388 pilot's read prompt byte for byte (OCR v19.1 plus the counting-rod, count-don't-estimate and drawing lines) with a draft block added; no error count, planted errors or reference text named. #6667 reused the same prompt bytes for Sonnet and Haiku. The redo arm is the pilot's read prompt without the draft",
+   "read_mode": "image + Paddle draft (redo: image)",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5, agy gemini-3.1-pro high, agy gemini-3.8-flash-high (#6561); claude-sonnet-5-5, claude-haiku-4-5 (#6667); one page per call",
+   "judge": "mechanical: Han CER against the Kanripo leaf, > 0.5 pt",
+   "quote": "set B disagree (30 pages, 29 scored)",
+   "note": ""
+  },
+  "6694 q300 blind judge, by language": {
+   "source": "scripts/eval/experiments/2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md (scripts/batch/ocr-convergence/results/run/q300/arm-b/judge/result.json.gz)",
+   "prompt": "correct.mjs (arm B): the live OCR prompt plus a correction block; one sealed claude -p --model opus --restricted --tools Read call per book with its 10 images and stored texts",
+   "read_mode": "image + stored text",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "blind, two families: fresh Opus (sealed, chunks of 5) and gemini-3.8-flash-high via agy (one page a call), JUDGE.md v1",
+   "quote": "| Latin | 116 | 1 / 98 | 3 / 98 | ... (by-language rows of the judge table)",
+   "note": ""
+  },
+  "6865 fl-correct-v3 gate": {
+   "source": "issue #6865 comment 2026-10-24T00:38:02Z (job florentine-correct-6865)",
+   "prompt": "correct.mjs --model=opus --per-call=10 (the #6694 arm B prompt), 14 sealed claude -p calls",
+   "read_mode": "image + stored lite text",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "blind Opus judge.py: corrected vs stored lite against the image; 30 drawn + 5 planted controls (draw.mjs seed 6865, tag fl-correct-v3)",
+   "quote": "| sample | **30 better / 0 same / 0 worse** | 0 worse |",
+   "note": ""
+  },
+  "6865 Getty CER pages": {
+   "source": "issue #6865 comment 2026-10-24T00:38:02Z (job florentine-correct-6865)",
+   "prompt": "correct.mjs --model=opus --per-call=10",
+   "read_mode": "image + stored lite text",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "mechanical: CER against the Getty transcription (2 pages)",
+   "quote": "Getty CER, Nahuatl (p.645, p.971) lite 0.571 → corrected 0.069",
+   "note": ""
+  },
+  "7263 lite corrects Paddle": {
+   "source": "scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md",
+   "prompt": "P1: the set's own correction prompt (#6561); P2 (amendment 1): the live OCR prompt + correctInstruction + the Siku v2 rule; no-image control on the P1 prompt",
+   "read_mode": "image + Paddle draft (control: draft only)",
+   "access": "api (realtime)",
+   "engine_stated": "gemini-3.1-flash-lite",
+   "judge": "mechanical: Han CER against the Kanripo leaf, > 0.5 pt",
+   "quote": "better / worse (> 0.5 pt) per prompt, tables and ordinary pages",
+   "note": ""
+  },
+  "7263 lite corrects Yigdzin": {
+   "source": "scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md",
+   "prompt": "P1: #6560's correction request; P2: the production shape (live OCR prompt + correctInstruction); no-image control",
+   "read_mode": "image + Yigdzin draft (control: draft only)",
+   "access": "api (realtime)",
+   "engine_stated": "gemini-3.1-flash-lite",
+   "judge": "mechanical: syllable identity against the Derge text",
+   "quote": "folios better / worse: P1 26 / 2, P2 26 / 0, no image 27 / 0",
+   "note": ""
+  },
+  "7263 lite Tibetan invented/duplicated lines": {
+   "source": "scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md",
+   "prompt": "as 7263 lite corrects Yigdzin",
+   "read_mode": "image + Yigdzin draft",
+   "access": "api (realtime)",
+   "engine_stated": "gemini-3.1-flash-lite",
+   "judge": "by eye (byeye-req.mjs), the worst folios only",
+   "quote": "with each prompt one folio in 30 gets whole lines invented or duplicated (by eye)",
+   "note": ""
+  },
+  "siku v1 pilot+supplement": {
+   "source": "scripts/eval/experiments/2026-10-15-stale-siku-opus-correct-pilot-6561.md (scripts/eval/stale-correct-6561/results/overcorrect-pilot-v1.json)",
+   "prompt": "claude -p --model opus, one page a call, image + current Paddle text: the #6561 correct prompt, hash-checked (v1)",
+   "read_mode": "image + Paddle draft",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p (CLI 2.1.286)",
+   "judge": "mechanical: overcorrect.mjs, Kanripo CER against the page's own leaf; worse = after − before > 0.005",
+   "quote": "| v1, pilot + supplement | 60 | 9 (15.0%) | 8.1–26.1% | 25 |",
+   "note": ""
+  },
+  "siku v2 same 60 pages (rule written from them)": {
+   "source": "scripts/eval/experiments/2026-10-15-stale-siku-opus-correct-pilot-6561.md (results/overcorrect-pilot-v2.json)",
+   "prompt": "v1 plus one paragraph before the reply format (prompt-v2.mjs, rule sha 0695a637bbfdf388): keep the page's own character forms; no notes of your own",
+   "read_mode": "image + Paddle draft",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "mechanical: overcorrect.mjs, as v1",
+   "quote": "| v2, same 60 pages | 60 | 4 (6.7%) | 2.6–15.9% | 28 |",
+   "note": "the v2 rule was written from these 60 pages: in-sample"
+  },
+  "siku v2 held-out draw": {
+   "source": "scripts/eval/experiments/2026-10-15-stale-siku-opus-correct-pilot-6561.md (results/overcorrect-holdout-v2.json)",
+   "prompt": "the v2 prompt (rule sha 0695a637bbfdf388)",
+   "read_mode": "image + Paddle draft",
+   "access": "cli",
+   "engine_stated": "claude-opus-5-5 via claude -p",
+   "judge": "mechanical: overcorrect.mjs, as v1",
+   "quote": "| v2, held-out | 40 | 5 (12.5%) | 5.5–26.1% | 18 |",
+   "note": ""
   }
  },
  "arabic-rows": {
@@ -761,6 +971,56 @@
    "judge": "reference scorer: en-ocr-reference-5124.mjs scorePage against the english-ia-5124 references",
    "quote": "the Archive text = the located `_djvu.xml` leaf, dehyphenated",
    "note": "The only file matching scripts/eval/experiments/*4763* is the 2026-09-24 IA x-confidence entry, which is about the Archive's word confidence and describes none of the three gate reads. The gate itself is written up only in issue #4763 comment 2026-10-23T23:44 (agy arm) and, for the stored Archive and lite texts it re-scores, in scripts/eval/experiments/2026-09-28-for-which-english-ia-books-may-the-archive-s-5124.md."
+  },
+  "gate-4763|glm-ocr": {
+   "source": "gex45:/root/jobs/en-numbers-4763/ (code/15-en-numbers-4763.sh, code/drive.sh, code/read.py; scores.jsonl; results.md, posted on #4763)",
+   "prompt": "GLM-OCR's own prompt 'Text Recognition:' (read.py mode glm)",
+   "read_mode": "image",
+   "access": "local GPU (vLLM, gex45)",
+   "engine_stated": "zai-org/GLM-OCR, MTP speculative decoding, max 6,000 tokens",
+   "judge": "mechanical: en-ocr-reference-5124.mjs scorePage, unchanged",
+   "quote": "| ALL | glm-ocr | 122/122 | 2.62% | 886 | 48 | 38 | 79 | 0 |",
+   "note": ""
+  },
+  "gate-4763|mineru": {
+   "source": "gex45:/root/jobs/en-numbers-4763/ (code/15-en-numbers-4763.sh, code/drive.sh, code/read.py; scores.jsonl; results.md, posted on #4763)",
+   "prompt": "MinerU2.5's own two-step pipeline prompts (read.py mode mineru, mineru-vl-utils)",
+   "read_mode": "image",
+   "access": "local GPU (vLLM, gex45)",
+   "engine_stated": "MinerU2.5-Pro",
+   "judge": "mechanical: scorePage, unchanged",
+   "quote": "| ALL | mineru2.5 | 122/122 | 2.22% | 886 | 43 | 23 | 94 | 0 |",
+   "note": ""
+  },
+  "gate-4763|olmocr-2-7b-fp8": {
+   "source": "gex45:/root/jobs/en-numbers-4763/ (code/15-en-numbers-4763.sh, code/drive.sh, code/read.py; scores.jsonl; results.md, posted on #4763)",
+   "prompt": "olmOCR-2's own v4 prompt (build_no_anchoring_v4_yaml_prompt), sent after the image (read.py mode olmocr), 1,288 px images",
+   "read_mode": "image",
+   "access": "local GPU (vLLM, gex45)",
+   "engine_stated": "allenai/olmOCR-2-7B-1025-FP8",
+   "judge": "mechanical: scorePage, unchanged",
+   "quote": "| ALL | olmocr-2 | 122/122 | 1.81% | 886 | 42 | 26 | 93 | 0 |",
+   "note": ""
+  },
+  "gate-4763|paddleocr-vl-1.6": {
+   "source": "gex45:/root/jobs/en-numbers-4763/ (code/15-en-numbers-4763.sh, code/drive.sh, code/read.py; scores.jsonl; results.md, posted on #4763)",
+   "prompt": "PaddleOCR-VL's default pipeline, layout off (scripts/gpu/paddle-zh-box.sh arm, unchanged; arm P0)",
+   "read_mode": "image",
+   "access": "local GPU (genai server, gex45)",
+   "engine_stated": "PaddleOCR-VL-1.6-0.9B",
+   "judge": "mechanical: scorePage, unchanged",
+   "quote": "| ALL | paddle-vl (no layout) | 122/122 | 3.66% | 886 | 40 | 36 | 587 | 0 |",
+   "note": ""
+  },
+  "gate-4763|paddleocr-vl-1.6-layout": {
+   "source": "gex45:/root/jobs/en-numbers-4763/ (code/15-en-numbers-4763.sh, code/drive.sh, code/read.py; scores.jsonl; results.md, posted on #4763)",
+   "prompt": "PaddleOCR-VL's default pipeline, layout on (paddle-zh-box.sh arm; arm P1)",
+   "read_mode": "image",
+   "access": "local GPU (genai server, gex45)",
+   "engine_stated": "PaddleOCR-VL-1.6-0.9B with layout",
+   "judge": "mechanical: scorePage, unchanged",
+   "quote": "| ALL | paddle-vl (layout) | 122/122 | 7.79% | 886 | 47 | 31 | 922 | 0 |",
+   "note": ""
   }
  },
  "ocr-pareto": {

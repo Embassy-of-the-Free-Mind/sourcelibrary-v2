@@ -1,0 +1,1430 @@
+{
+ "diagnostics": {
+  "divergences": 0,
+  "max_rhat": 1.004,
+  "chains": 4,
+  "draws_per_chain": 1000
+ },
+ "rho": 0.1,
+ "rows": 115,
+ "cells": 49,
+ "instrument": {
+  "made_worse": {
+   "blind-judge": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mechanical": [
+    -0.7473,
+    0.3463,
+    1.3538
+   ],
+   "leaf-audit-tiles": [
+    -0.2513,
+    1.0089,
+    2.2518
+   ],
+   "leaf-audit-frame": [
+    -1.736,
+    -0.3066,
+    0.9773
+   ],
+   "by-eye": [
+    -1.6158,
+    -0.0115,
+    1.6078
+   ]
+  },
+  "made_better": {
+   "blind-judge": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mechanical": [
+    -0.4875,
+    0.4881,
+    1.5337
+   ],
+   "leaf-audit-tiles": [
+    -1.8335,
+    -0.7173,
+    0.3725
+   ],
+   "leaf-audit-frame": [
+    -2.0923,
+    -0.9976,
+    0.0664
+   ],
+   "by-eye": [
+    -1.6353,
+    0.0114,
+    1.6289
+   ]
+  },
+  "misleading": {
+   "blind-judge": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mechanical": [
+    -1.5994,
+    0.0198,
+    1.6631
+   ],
+   "leaf-audit-tiles": [
+    -1.6752,
+    -0.0007,
+    1.7333
+   ],
+   "leaf-audit-frame": [
+    -1.6706,
+    0.0348,
+    1.6272
+   ],
+   "by-eye": [
+    -1.6892,
+    -0.0017,
+    1.6958
+   ]
+  }
+ },
+ "same_family": {
+  "made_worse": [
+   -2.4611,
+   -1.4431,
+   -0.5379
+  ],
+  "made_better": [
+   -0.6327,
+   -0.0989,
+   0.333
+  ],
+  "misleading": [
+   -1.5528,
+   -0.1156,
+   1.3762
+  ]
+ },
+ "corrector_family": {
+  "made_worse": {
+   "agy": [
+    -2.2194,
+    -0.7362,
+    0.7255
+   ],
+   "claude": [
+    -2.3186,
+    -0.9126,
+    0.5231
+   ],
+   "lite": [
+    -1.3257,
+    0.1506,
+    1.6315
+   ],
+   "none": [
+    -2.5311,
+    0.0219,
+    2.534
+   ],
+   "redo-agy": [
+    -0.5503,
+    1.2242,
+    3.019
+   ],
+   "redo-claude": [
+    -0.978,
+    0.7699,
+    2.4824
+   ]
+  },
+  "made_better": {
+   "agy": [
+    -0.3435,
+    0.9663,
+    2.2355
+   ],
+   "claude": [
+    -0.9668,
+    0.2706,
+    1.4816
+   ],
+   "lite": [
+    -1.449,
+    -0.0804,
+    1.2334
+   ],
+   "none": [
+    -2.388,
+    -0.031,
+    2.3684
+   ],
+   "redo-agy": [
+    -2.629,
+    -1.024,
+    0.62
+   ],
+   "redo-claude": [
+    -1.4915,
+    0.0252,
+    1.4949
+   ]
+  },
+  "misleading": {
+   "agy": [
+    -1.9959,
+    -0.3493,
+    1.2128
+   ],
+   "claude": [
+    -2.0589,
+    -0.2748,
+    1.5165
+   ],
+   "lite": [
+    -2.5398,
+    0.0324,
+    2.5624
+   ],
+   "none": [
+    -0.713,
+    1.0049,
+    2.5419
+   ],
+   "redo-agy": [
+    -2.3405,
+    -0.7306,
+    0.9567
+   ],
+   "redo-claude": [
+    -2.501,
+    -0.0115,
+    2.4304
+   ]
+  }
+ },
+ "taus": {
+  "tau_corr": {
+   "made_worse": [
+    0.3445,
+    0.999,
+    1.7958
+   ],
+   "made_better": [
+    0.0606,
+    0.5118,
+    1.1922
+   ],
+   "misleading": [
+    0.0473,
+    0.5383,
+    1.6179
+   ]
+  },
+  "tau_lang": {
+   "made_worse": [
+    0.0471,
+    0.4721,
+    1.2605
+   ],
+   "made_better": [
+    0.0972,
+    0.8582,
+    1.7413
+   ],
+   "misleading": [
+    0.0428,
+    0.4577,
+    1.3265
+   ]
+  },
+  "tau_kind": {
+   "made_worse": [
+    0.0417,
+    0.3764,
+    0.9579
+   ],
+   "made_better": [
+    0.0261,
+    0.2642,
+    0.8695
+   ],
+   "misleading": [
+    0.0428,
+    0.4544,
+    1.3135
+   ]
+  },
+  "tau_draft": {
+   "made_worse": [
+    0.0591,
+    0.5423,
+    1.3295
+   ],
+   "made_better": [
+    0.0661,
+    0.6874,
+    1.537
+   ],
+   "misleading": [
+    0.0409,
+    0.4497,
+    1.3429
+   ]
+  },
+  "tau_cell": {
+   "made_worse": [
+    0.8433,
+    1.1107,
+    1.4445
+   ],
+   "made_better": [
+    0.9747,
+    1.2138,
+    1.5024
+   ],
+   "misleading": [
+    0.0284,
+    0.3145,
+    0.9273
+   ]
+  }
+ },
+ "cell_rates": [
+  {
+   "cell": {
+    "draft": "flash-lite",
+    "corrector": "agy-3.8-flash-low",
+    "language": "latin",
+    "kind": "print"
+   },
+   "made_worse": [
+    0.0142,
+    0.0394,
+    0.0848
+   ],
+   "made_better": [
+    0.7728,
+    0.8463,
+    0.9057
+   ],
+   "misleading": [
+    0.0679,
+    0.119,
+    0.1879
+   ]
+  },
+  {
+   "cell": {
+    "draft": "flash-lite",
+    "corrector": "none",
+    "language": "latin",
+    "kind": "print"
+   },
+   "made_worse": [
+    0.002,
+    0.0832,
+    0.8159
+   ],
+   "made_better": [
+    0.0718,
+    0.7676,
+    0.9926
+   ],
+   "misleading": [
+    0.3456,
+    0.4353,
+    0.5336
+   ]
+  },
+  {
+   "cell": {
+    "draft": "flash-lite",
+    "corrector": "opus-5.5",
+    "language": "latin",
+    "kind": "print"
+   },
+   "made_worse": [
+    0.0079,
+    0.028,
+    0.0757
+   ],
+   "made_better": [
+    0.7941,
+    0.8663,
+    0.9192
+   ],
+   "misleading": [
+    0.031,
+    0.1302,
+    0.4179
+   ]
+  },
+  {
+   "cell": {
+    "draft": "flash-lite",
+    "corrector": "opus-5.5",
+    "language": "nahuatl-spanish",
+    "kind": "manuscript-two-column"
+   },
+   "made_worse": [
+    0.0013,
+    0.0177,
+    0.1643
+   ],
+   "made_better": [
+    0.7942,
+    0.9516,
+    0.9951
+   ],
+   "misleading": [
+    0.0125,
+    0.1485,
+    0.728
+   ]
+  },
+  {
+   "cell": {
+    "draft": "flash-lite",
+    "corrector": "redo:agy-3.8-flash-low",
+    "language": "latin",
+    "kind": "print"
+   },
+   "made_worse": [
+    0.0121,
+    0.0368,
+    0.0823
+   ],
+   "made_better": [
+    0.7134,
+    0.7976,
+    0.8639
+   ],
+   "misleading": [
+    0.0395,
+    0.0803,
+    0.1421
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.1-pro",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.113,
+    0.2958,
+    0.5927
+   ],
+   "made_better": [
+    0.0446,
+    0.1428,
+    0.354
+   ],
+   "misleading": [
+    0.0088,
+    0.1517,
+    0.8139
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.1-pro",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0583,
+    0.1767,
+    0.4285
+   ],
+   "made_better": [
+    0.1234,
+    0.3115,
+    0.5818
+   ],
+   "misleading": [
+    0.0089,
+    0.1504,
+    0.8122
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.1-pro",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.1941,
+    0.43,
+    0.7154
+   ],
+   "made_better": [
+    0.0928,
+    0.2475,
+    0.4999
+   ],
+   "misleading": [
+    0.0085,
+    0.148,
+    0.811
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.8-flash-high",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.0427,
+    0.1337,
+    0.3544
+   ],
+   "made_better": [
+    0.0664,
+    0.1926,
+    0.4332
+   ],
+   "misleading": [
+    0.009,
+    0.1468,
+    0.8048
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.8-flash-high",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0029,
+    0.0186,
+    0.0879
+   ],
+   "made_better": [
+    0.0856,
+    0.2344,
+    0.4957
+   ],
+   "misleading": [
+    0.0086,
+    0.149,
+    0.819
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "agy-3.8-flash-high",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.0102,
+    0.0425,
+    0.1606
+   ],
+   "made_better": [
+    0.216,
+    0.466,
+    0.7308
+   ],
+   "misleading": [
+    0.0079,
+    0.145,
+    0.8197
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.1563,
+    0.379,
+    0.6767
+   ],
+   "made_better": [
+    0.0333,
+    0.1053,
+    0.2874
+   ],
+   "misleading": [
+    0.0051,
+    0.2235,
+    0.9292
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.4913,
+    0.7635,
+    0.9191
+   ],
+   "made_better": [
+    0.01,
+    0.041,
+    0.1419
+   ],
+   "misleading": [
+    0.0052,
+    0.2089,
+    0.9205
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite-noimage",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0689,
+    0.2073,
+    0.4668
+   ],
+   "made_better": [
+    0.0239,
+    0.0875,
+    0.2475
+   ],
+   "misleading": [
+    0.0057,
+    0.2098,
+    0.9256
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite-noimage",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.3728,
+    0.6526,
+    0.8683
+   ],
+   "made_better": [
+    0.0093,
+    0.0398,
+    0.132
+   ],
+   "misleading": [
+    0.0051,
+    0.2087,
+    0.921
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite-p2",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0788,
+    0.2257,
+    0.5088
+   ],
+   "made_better": [
+    0.0306,
+    0.1065,
+    0.2805
+   ],
+   "misleading": [
+    0.0057,
+    0.2089,
+    0.9221
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "flash-lite-p2",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.3235,
+    0.6,
+    0.8329
+   ],
+   "made_better": [
+    0.0057,
+    0.0277,
+    0.1067
+   ],
+   "misleading": [
+    0.0057,
+    0.2125,
+    0.9211
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "haiku-4.5",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.0621,
+    0.1905,
+    0.4452
+   ],
+   "made_better": [
+    0.0166,
+    0.069,
+    0.208
+   ],
+   "misleading": [
+    0.0082,
+    0.1583,
+    0.8371
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "haiku-4.5",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.119,
+    0.3036,
+    0.6098
+   ],
+   "made_better": [
+    0.0117,
+    0.0492,
+    0.1631
+   ],
+   "misleading": [
+    0.0082,
+    0.1591,
+    0.8448
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "haiku-4.5",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.274,
+    0.546,
+    0.802
+   ],
+   "made_better": [
+    0.0057,
+    0.0275,
+    0.1035
+   ],
+   "misleading": [
+    0.0081,
+    0.1589,
+    0.8414
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "opus-5.5",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.0184,
+    0.0684,
+    0.2211
+   ],
+   "made_better": [
+    0.0547,
+    0.1621,
+    0.386
+   ],
+   "misleading": [
+    0.0106,
+    0.1543,
+    0.791
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "opus-5.5",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0107,
+    0.0446,
+    0.1609
+   ],
+   "made_better": [
+    0.1118,
+    0.2855,
+    0.5496
+   ],
+   "misleading": [
+    0.0105,
+    0.1584,
+    0.7849
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "opus-5.5",
+    "language": "chinese",
+    "kind": "siku-stale"
+   },
+   "made_worse": [
+    0.0332,
+    0.1033,
+    0.2767
+   ],
+   "made_better": [
+    0.123,
+    0.3009,
+    0.5559
+   ],
+   "misleading": [
+    0.0104,
+    0.1523,
+    0.7784
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "opus-5.5",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.0066,
+    0.0292,
+    0.1067
+   ],
+   "made_better": [
+    0.3609,
+    0.6462,
+    0.8546
+   ],
+   "misleading": [
+    0.01,
+    0.1528,
+    0.7822
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "opus-5.5+siku-v2",
+    "language": "chinese",
+    "kind": "siku-stale"
+   },
+   "made_worse": [
+    0.0207,
+    0.0659,
+    0.1889
+   ],
+   "made_better": [
+    0.1469,
+    0.341,
+    0.5869
+   ],
+   "misleading": [
+    0.008,
+    0.162,
+    0.8381
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "redo:opus-5.5",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.3003,
+    0.5754,
+    0.83
+   ],
+   "made_better": [
+    0.0324,
+    0.1084,
+    0.2971
+   ],
+   "misleading": [
+    0.0049,
+    0.1992,
+    0.9212
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "redo:opus-5.5",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0936,
+    0.257,
+    0.5376
+   ],
+   "made_better": [
+    0.096,
+    0.2693,
+    0.5379
+   ],
+   "misleading": [
+    0.0055,
+    0.1959,
+    0.9181
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "redo:opus-5.5",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.1314,
+    0.3213,
+    0.6053
+   ],
+   "made_better": [
+    0.1765,
+    0.4052,
+    0.6717
+   ],
+   "misleading": [
+    0.0049,
+    0.1968,
+    0.9218
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "sonnet-5.5",
+    "language": "chinese",
+    "kind": "disagree"
+   },
+   "made_worse": [
+    0.079,
+    0.2213,
+    0.4907
+   ],
+   "made_better": [
+    0.0249,
+    0.0883,
+    0.2514
+   ],
+   "misleading": [
+    0.0079,
+    0.1612,
+    0.8498
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "sonnet-5.5",
+    "language": "chinese",
+    "kind": "ordinary"
+   },
+   "made_worse": [
+    0.0402,
+    0.1392,
+    0.371
+   ],
+   "made_better": [
+    0.0675,
+    0.1952,
+    0.4365
+   ],
+   "misleading": [
+    0.0071,
+    0.1618,
+    0.8562
+   ]
+  },
+  {
+   "cell": {
+    "draft": "paddleocr-vl",
+    "corrector": "sonnet-5.5",
+    "language": "chinese",
+    "kind": "table"
+   },
+   "made_worse": [
+    0.0651,
+    0.1835,
+    0.4378
+   ],
+   "made_better": [
+    0.1631,
+    0.3817,
+    0.6472
+   ],
+   "misleading": [
+    0.007,
+    0.1639,
+    0.8465
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "arabic",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0015,
+    0.0136,
+    0.0716
+   ],
+   "made_better": [
+    0.1479,
+    0.7346,
+    0.9796
+   ],
+   "misleading": [
+    0.0101,
+    0.1513,
+    0.7638
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "chinese",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0047,
+    0.0218,
+    0.0661
+   ],
+   "made_better": [
+    0.0547,
+    0.4582,
+    0.9211
+   ],
+   "misleading": [
+    0.0112,
+    0.1507,
+    0.7724
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "german",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0295,
+    0.0753,
+    0.1557
+   ],
+   "made_better": [
+    0.2201,
+    0.7493,
+    0.9788
+   ],
+   "misleading": [
+    0.0098,
+    0.1504,
+    0.7614
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "greek",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0013,
+    0.0114,
+    0.0522
+   ],
+   "made_better": [
+    0.1449,
+    0.7378,
+    0.9794
+   ],
+   "misleading": [
+    0.0105,
+    0.1511,
+    0.7636
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "hebrew",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0018,
+    0.019,
+    0.1421
+   ],
+   "made_better": [
+    0.146,
+    0.7381,
+    0.979
+   ],
+   "misleading": [
+    0.0102,
+    0.1567,
+    0.7751
+   ]
+  },
+  {
+   "cell": {
+    "draft": "stored-mixed",
+    "corrector": "opus-5.5",
+    "language": "latin",
+    "kind": "most-read"
+   },
+   "made_worse": [
+    0.0086,
+    0.0237,
+    0.0516
+   ],
+   "made_better": [
+    0.6192,
+    0.8679,
+    0.9852
+   ],
+   "misleading": [
+    0.0119,
+    0.144,
+    0.7024
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "agy-3.1-pro",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0318,
+    0.109,
+    0.312
+   ],
+   "made_better": [
+    0.4685,
+    0.7534,
+    0.9135
+   ],
+   "misleading": [
+    0.0087,
+    0.1523,
+    0.8165
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "agy-3.8-flash-high",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0029,
+    0.0182,
+    0.0888
+   ],
+   "made_better": [
+    0.3928,
+    0.6769,
+    0.8772
+   ],
+   "misleading": [
+    0.0082,
+    0.148,
+    0.8102
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "agy-3.8-flash-low",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0077,
+    0.0311,
+    0.1048
+   ],
+   "made_better": [
+    0.6795,
+    0.8636,
+    0.9489
+   ],
+   "misleading": [
+    0.0114,
+    0.1404,
+    0.7144
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "agy-gemini-4-argon-low",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0144,
+    0.0502,
+    0.1489
+   ],
+   "made_better": [
+    0.6065,
+    0.8152,
+    0.928
+   ],
+   "misleading": [
+    0.0077,
+    0.1507,
+    0.8248
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "flash-lite",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0143,
+    0.0622,
+    0.2106
+   ],
+   "made_better": [
+    0.486,
+    0.7662,
+    0.9203
+   ],
+   "misleading": [
+    0.0054,
+    0.212,
+    0.9219
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "flash-lite-noimage",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0035,
+    0.0225,
+    0.103
+   ],
+   "made_better": [
+    0.5433,
+    0.804,
+    0.9405
+   ],
+   "misleading": [
+    0.0055,
+    0.2128,
+    0.9237
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "flash-lite-p2",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0034,
+    0.0225,
+    0.1025
+   ],
+   "made_better": [
+    0.533,
+    0.7995,
+    0.9392
+   ],
+   "misleading": [
+    0.0054,
+    0.2067,
+    0.9198
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "haiku-4.5",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0171,
+    0.0682,
+    0.2301
+   ],
+   "made_better": [
+    0.3259,
+    0.6152,
+    0.8421
+   ],
+   "misleading": [
+    0.0079,
+    0.1613,
+    0.8454
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "opus-5.5",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.0012,
+    0.0088,
+    0.0476
+   ],
+   "made_better": [
+    0.3745,
+    0.6779,
+    0.8738
+   ],
+   "misleading": [
+    0.01,
+    0.1528,
+    0.7881
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "redo:agy-3.1-pro",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.681,
+    0.9011,
+    0.9796
+   ],
+   "made_better": [
+    0.0075,
+    0.0396,
+    0.144
+   ],
+   "misleading": [
+    0.006,
+    0.1086,
+    0.7425
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "redo:opus-5.5",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.4982,
+    0.7866,
+    0.9355
+   ],
+   "made_better": [
+    0.0267,
+    0.0929,
+    0.2555
+   ],
+   "misleading": [
+    0.005,
+    0.2049,
+    0.9175
+   ]
+  },
+  {
+   "cell": {
+    "draft": "yigdzin",
+    "corrector": "sonnet-5.5",
+    "language": "tibetan",
+    "kind": "kangyur"
+   },
+   "made_worse": [
+    0.002,
+    0.0144,
+    0.0746
+   ],
+   "made_better": [
+    0.0134,
+    0.0562,
+    0.1804
+   ],
+   "misleading": [
+    0.0076,
+    0.1626,
+    0.8471
+   ]
+  }
+ ],
+ "ppc_in_sample": {
+  "rows": 115,
+  "inside_90": 115,
+  "misses": []
+ }
+}
