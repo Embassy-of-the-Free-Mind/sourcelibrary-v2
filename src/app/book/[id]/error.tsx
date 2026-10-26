@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, ArrowLeft } from 'lucide-react';
+import { reportError } from '@/components/providers/ErrorReporter';
+import { isStaleBuildError, reloadOnceForStaleBuild } from '@/lib/stale-build-reload';
 
 export default function BookError({
   error,
@@ -13,6 +15,14 @@ export default function BookError({
 }) {
   useEffect(() => {
     console.error('Book page error:', error);
+    // This boundary used to log only to the console, so book-page crashes it
+    // caught never reached application_errors.
+    reportError({
+      message: error.digest ? `${error.message} [digest:${error.digest}]` : error.message,
+      stack: error.stack,
+      source: isStaleBuildError(error) ? 'book_error_boundary:stale_build' : 'book_error_boundary',
+    });
+    reloadOnceForStaleBuild(error);
   }, [error]);
 
   return (
