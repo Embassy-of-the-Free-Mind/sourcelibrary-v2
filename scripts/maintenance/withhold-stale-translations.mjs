@@ -134,11 +134,12 @@ const BLANK_ARM = process.argv.includes('--blank-arm');
 const BY_EYE_RAW = ARG('--by-eye-pages', null);
 const BY_EYE_ALL = BY_EYE_RAW === 'all';
 const BY_EYE = BY_EYE_RAW === null || BY_EYE_ALL ? null
-  : new Set(BY_EYE_RAW.split(',').map((n) => Number(n.trim())));
+  : new Set(BY_EYE_RAW.split(',').map((n) => n.trim()).filter(Boolean).map(Number));
 const EVIDENCE = ARG('--evidence', null);
 const ISSUE = Number(ARG('--issue', '0')) || null;
 if (BY_EYE_RAW !== null) {
-  const bad = BY_EYE && (!BY_EYE.size || [...BY_EYE].some((n) => !Number.isInteger(n) || n < 1));
+  const bad = BY_EYE && (!BY_EYE.size || [...BY_EYE].some((n) => !Number.isInteger(n)));
+  // Front matter is numbered below 1 (Curiositez p.-128, #7447), so any integer is a page number.
   if (!ONLY_BOOK || !EVIDENCE || bad) {
     console.error('--by-eye-pages needs --book=<id>, --evidence="what the image shows", and a list of page numbers or `all`.');
     process.exit(2);
