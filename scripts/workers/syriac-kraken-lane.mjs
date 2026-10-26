@@ -46,6 +46,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { recordFailedReads, fromKrakenFail, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -110,6 +111,7 @@ function log(msg) {
 const append = (file, row) => fs.appendFileSync(file, JSON.stringify({ ...row, at: new Date().toISOString() }) + '\n');
 const readJsonl = (file) => fs.existsSync(file) ? fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
 const key = (r) => `${r.bid}/${r.pn}`;
+const FAILED_READ_ENGINE = 'scripts/workers/syriac-kraken-lane.mjs';
 const bookId = (b) => b.id || String(b._id);
 
 // ── plan ───────────────────────────────────────────────────────────────────────────────
@@ -346,6 +348,15 @@ async function apply() {
   const totals = { books: 0, written: 0, stale_marked: 0, textless_kept: 0, refused: 0, human_edited: 0, unchanged: 0 };
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
+    // pages Kraken failed in `work` (fail.jsonl, stage 'kraken'; a fetch failure is not the engine's): a failed read
+    // each (#7378), timed by the fail row, so a rerun stamps nothing new
+    const planBy = new Map(plan.map((r) => [key(r), r]));
+    const failedRows = readJsonl(F.fail).filter((f) => !BOOK || f.bid === BOOK).map((f) => {
+      const r = planBy.get(key(f));
+      return r && !fs.existsSync(outTxt(f.bid, f.pn)) ? fromKrakenFail(f, { pageId: r.pid, model: `kraken/${r.engine}`, engine: FAILED_READ_ENGINE }) : null;
+    }).filter(Boolean);
+    if (failedRows.length && APPLY) { const fr = await recordFailedReads(db, failedRows); totals.failed_stamped = fr.stamped; log(`failed reads (fail.jsonl): stamped ${fr.stamped} of ${fr.rows}`); }
+    else if (failedRows.length) log(`would stamp ${failedRows.length} failed read(s) (fail.jsonl)  [DRY RUN]`);
     for (const bid of bids) {
       const rows = byBook.get(bid);
       const book = await B.findOne({ $or: [{ id: bid }, { _id: bid }] }, { projection: { id: 1, title: 1, hidden_reason: 1, pipeline_auto: 1, pages_count: 1 } });
@@ -365,6 +376,8 @@ async function apply() {
           // Kraken read nothing on a page the model read something on: keep the reading
           // and say so — a blank Kraken file replacing prose would be withholding by accident.
           append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'kraken_textless_kept', letters, old_letters: letterCount(p.ocr.data) });
+          // Kraken returned no text on a page that has some: a failed read (#7378)
+          if (APPLY) await recordFailedReads(db, [fromTextless({ pageId: p.id, model: `kraken/${r.engine}`, engine: FAILED_READ_ENGINE, chars: letters, at: fs.statSync(outTxt(bid, r.pn)).mtime })]);
           totals.textless_kept++; continue;
         }
         const text = envelope(raw, r.route);

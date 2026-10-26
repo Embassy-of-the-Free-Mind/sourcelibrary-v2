@@ -155,14 +155,21 @@ const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\
 
 // ---------------------------------------------------------------- stage: books
 const HAS_TEXT = (f) => ({ $and: [{ $eq: [{ $type: `$${f}.data` }, 'string'] }, { $regexMatch: { input: `$${f}.data`, regex: '\\S' } }] });
+// `ocr.last_skip` is the failed-read stamp every OCR writer leaves (scripts/lib/ocr-failed-read.mjs, #7378):
+// realtime-ocr's reasons and the shared helper's refused / empty / timeout / error. 'refused' and 'safety' are refusals;
+// an 'empty' stamp is a failure only where another read shows the page has text (else it may be a blank leaf, and
+// stays in `empty`); 'no-image' is not a read.
+const SKIP = { $ifNull: ['$ocr.last_skip.reason', null] };
 const OCR_REFUSED = { $or: [{ $gte: [{ $ifNull: ['$ocr.recitation_count', 0] }, 1] }, { $eq: ['$ocr.recitation_blocked', true] },
-  { $eq: ['$ocr.last_skip.reason', 'recitation'] }] };
-const OCR_FAILED = { $or: [{ $eq: ['$ocr.fail_blocked', true] }, { $gt: [{ $ifNull: ['$ocr.fail_count', 0] }, 0] }, { $ne: [{ $ifNull: ['$ocr.fail_reason', null] }, null] }] };
-const OCR_STATUS = { $switch: { branches: [
+  { $in: [SKIP, ['recitation', 'refused', 'safety']] }] };
+const OCR_FAILED = { $or: [{ $eq: ['$ocr.fail_blocked', true] }, { $gt: [{ $ifNull: ['$ocr.fail_count', 0] }, 0] }, { $ne: [{ $ifNull: ['$ocr.fail_reason', null] }, null] },
+  { $in: [SKIP, ['timeout', 'error', 'max-tokens-no-text', 'hallucination']] }] };
+const OCR_EMPTY_STAMP = { $eq: [SKIP, 'empty'] };
+export const OCR_STATUS = { $switch: { branches: [
   { case: { $ne: [{ $type: '$ocr' }, 'object'] }, then: 'none' },
   { case: { $eq: ['$ocr.unreadable', true] }, then: 'unreadable' },
   { case: { $and: [HAS_TEXT('ocr'), OCR_REFUSED] }, then: 'read_after_refusal' },
-  { case: { $and: [HAS_TEXT('ocr'), OCR_FAILED] }, then: 'read_after_failure' },
+  { case: { $and: [HAS_TEXT('ocr'), { $or: [OCR_FAILED, OCR_EMPTY_STAMP] }] }, then: 'read_after_failure' },
   { case: HAS_TEXT('ocr'), then: 'read' },
   { case: OCR_REFUSED, then: 'refused' },
   { case: OCR_FAILED, then: 'failed' },

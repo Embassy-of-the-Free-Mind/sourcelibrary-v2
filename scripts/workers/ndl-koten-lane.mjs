@@ -39,6 +39,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { recordFailedReads, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -225,7 +226,11 @@ async function apply() {
           // NDL saw no text: never store an empty reading. Where the page has a stored reading it is
           // kept (a picture page, or text NDL missed); where it has none it stays unread. A textless
           // read replaces only a loop, which is not a reading of anything.
-          if (APPLY) append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'ndl_textless_kept', chars, old_chars: charCount(p.ocr?.data) });
+          if (APPLY) {
+            append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'ndl_textless_kept', chars, old_chars: charCount(p.ocr?.data) });
+            // NDL returned no text: a failed read (#7378); on a blank leaf it stays an `empty` stamp, not a failure
+            await recordFailedReads(db, [fromTextless({ pageId: p.id, model: `ndl-koten/v${NDL.version}`, engine: 'scripts/workers/ndl-koten-lane.mjs', chars, at: fs.statSync(outTxt(bid, r.pn)).mtime })]);
+          }
           totals.textless_kept++; continue;
         }
         const text = envelope(raw, r.route);

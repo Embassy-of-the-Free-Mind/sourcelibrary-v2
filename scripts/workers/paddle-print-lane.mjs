@@ -38,6 +38,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
   storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
@@ -72,6 +73,12 @@ const F = {
 const planFile = (bid) => path.join(F.planDir, `${bid}.json`);
 const prepFile = (bid) => path.join(F.prepDir, `${bid}.json`);
 const leafOut = (bid, pn, side, ext) => path.join(F.outDir, bid, `${pn}-${side}.${ext}`);
+const FAILED_READ_ENGINE = 'scripts/workers/paddle-print-lane.mjs';
+/** Newest mtime of a page's read leaf files of this extension (when its read came back), or null. */
+const leafTime = (bid, pg, ext) => {
+  const t = Math.max(0, ...pg.leaves.filter((lf) => !lf.blank).map((lf) => { try { return fs.statSync(leafOut(bid, pg.pn, lf.side, ext)).mtimeMs; } catch { return 0; } }));
+  return t ? new Date(t) : null;
+};
 const recheckOut = (bid, pn, side, ext) => path.join(F.recheckDir, 'out', bid, `${pn}-${side}.${ext}`);
 function log(msg) {
   const line = `${new Date().toISOString()} [${CMD}] ${msg}`;
@@ -467,12 +474,18 @@ async function apply() {
         const a = assemblePage(leaves, { workTitle, med });
         if (a.verdict === 'textless') {
           // never store an empty reading: a stored reading is kept, a page with none stays unread
-          if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'paddle_textless_kept', chars: a.han, blank_leaves: pg.leaves.filter((l) => l.blank).length });
+          if (APPLY) {
+            append(F.skipped, { bid, pn: pg.pn, why: 'paddle_textless_kept', chars: a.han, blank_leaves: pg.leaves.filter((l) => l.blank).length });
+            // Paddle returned no text: a failed read (#7378), unless every leaf was blank and none was sent
+            if (pg.leaves.some((l) => !l.blank)) await recordFailedReads(db, [fromTextless({ pageId: pg.pid, model: PADDLE.model, engine: FAILED_READ_ENGINE, chars: a.han, at: leafTime(bid, pg, 'txt') })]);
+          }
           totals.textless++; continue;
         }
         if (a.verdict === 'reject') {
           if (APPLY) {
             append(F.rejected, { bid, pn: pg.pn, pid: pg.pid, reason: a.reason, side: a.side, detail: a });
+            // a leaf the box failed (.err) is a failed read (#7378); the other rejects are this lane's own guards
+            if (a.reason === 'leaf_error') await recordFailedReads(db, [fromErrFile({ pageId: pg.pid, text: a.err, mtime: leafTime(bid, pg, 'err'), model: PADDLE.model, engine: FAILED_READ_ENGINE })]);
             if (a.reason.startsWith('leaf_loop')) {
               const raw = leaves.find((l) => l.side === a.side)?.raw || '';
               await recordLoopRefusal(db, { pageId: pg.pid, bookId: bid, pageNumber: pg.pn, text: raw, model: PADDLE.model, verdict: { share: a.share ?? 1, body: raw.length, period: a.period ?? 0, reps: a.reps ?? a.run ?? 0 } });

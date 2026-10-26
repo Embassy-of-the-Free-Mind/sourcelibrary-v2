@@ -44,6 +44,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { juanRange } from '../eval/zh-cohort-5547-duplicates.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, MIN_HAN, PADDLE,
@@ -75,6 +76,7 @@ const F = {
 const outTxt = (bid, pn) => path.join(F.outDir, bid, `${pn}.txt`);
 const outErr = (bid, pn) => path.join(F.outDir, bid, `${pn}.err`);
 const planFile = (bid) => path.join(F.planDir, `${bid}.json`);
+const FAILED_READ_ENGINE = 'scripts/workers/paddle-zh-lane.mjs';
 function log(msg) {
   const line = `${new Date().toISOString()} [${CMD}] ${msg}`;
   console.log(line);
@@ -263,6 +265,7 @@ async function apply() {
   // back from a box (.txt, or .err for a page the box failed), and is applied as one pass.
   const back = (bid, p) => fs.existsSync(outTxt(bid, p.pn)) || fs.existsSync(outErr(bid, p.pn));
   const ready = [];
+  const failedRows = [];
   for (const bid of planned) {
     if (BOOK && bid !== BOOK) continue;
     const pl = readJson(planFile(bid));
@@ -271,11 +274,18 @@ async function apply() {
       const ps = pl.pages.filter((p) => !!p.first_write === wave);
       if (!ps.length || !ps.every((p) => back(bid, p))) continue;
       rows.push(...ps.filter((p) => !done.has(`${bid}/${p.pn}`) && fs.existsSync(outTxt(bid, p.pn)) && !fs.existsSync(outErr(bid, p.pn))));
+      // a page the box failed (.err) is a failed read, stamped as one (#7378). Its time is the .err file's, so the
+      // fleet's next cycle stamps nothing new; a wave-3 retry that fails again writes a newer .err and a newer stamp.
+      for (const p of ps) if (fs.existsSync(outErr(bid, p.pn))) failedRows.push(fromErrFile({ pageId: p.pid, text: fs.readFileSync(outErr(bid, p.pn), 'utf8'), mtime: fs.statSync(outErr(bid, p.pn)).mtime, model: PADDLE.model, engine: FAILED_READ_ENGINE }));
     }
     if (rows.length) ready.push({ pl, rows });
   }
   log(`${ready.length} books ready (${ready.reduce((s, b) => s + b.rows.length, 0)} read pages)${APPLY ? '' : '  [DRY RUN]'}`);
   const totals = { books: 0, written: 0, stale_marked: 0, textless_kept: 0, refused: 0, human_edited: 0, not_held: 0, qa_screened: 0, qa_flagged: 0, aborted: 0 };
+  if (failedRows.length) {
+    if (APPLY) await withMongo(async (db) => { const r = await recordFailedReads(db, failedRows); log(`failed reads (.err): stamped ${r.stamped} of ${r.rows}`); totals.failed_stamped = r.stamped; });
+    else log(`would stamp ${failedRows.length} failed read(s) (.err)  [DRY RUN]`);
+  }
   if (!ready.length) { log(`APPLY ${JSON.stringify(totals)}`); return totals; }
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
@@ -302,7 +312,10 @@ async function apply() {
         if (han < MIN_HAN && !oldLoop) {
           // Paddle saw no text (a plate, a blank leaf): never store an empty reading. A stored reading is
           // kept; a page with none stays unread. A textless read replaces only a loop.
-          if (APPLY) append(F.skipped, { bid, pn: r.pn, why: 'paddle_textless_kept', han, old_chars: hanCount(p.ocr?.data) });
+          if (APPLY) {
+            append(F.skipped, { bid, pn: r.pn, why: 'paddle_textless_kept', han, old_chars: hanCount(p.ocr?.data) });
+            await recordFailedReads(db, [fromTextless({ pageId: p.id, model: PADDLE.model, engine: FAILED_READ_ENGINE, chars: han, at: fs.statSync(outTxt(bid, r.pn)).mtime })]);
+          }
           totals.textless_kept++; continue;
         }
         const text = envelope(body);

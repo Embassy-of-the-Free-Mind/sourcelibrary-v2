@@ -78,6 +78,7 @@ import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
+import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
 import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
@@ -294,24 +295,28 @@ const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await d
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
 const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [] };
 const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
+// A read the engine did not deliver (exit, empty, refusal, a cut or chattering wrapper) is stamped on the page as a
+// failed read (#7378), so the route census sees this route's did-not-read rate. Our own guards' skips are not.
+const failedReads = [];
+const failed = (m, why, kind) => { skip(m, why); const row = fromCliRead(m, kind, CALL_SITE); if (row) failedReads.push(row); };
 const books = {};
 
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   const correct = m.mode === 'correct';
-  if (m.exit !== 0) { skip(m, `cli exit ${m.exit}`); continue; }
+  if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
   // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
   // written even when the text inside looks like a transcription: it is usually a partial page.
-  if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
-  if (text.length < 5) { skip(m, 'empty read (refusal or blank)'); continue; }
+  if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
+  if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
   if (!correct && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
   // The CLI is an agent, not an endpoint: a refusal arrives as exit 0 with prose. Aldine 1516 p.34 came back as two
   // false starts and then "I cannot provide a verbatim transcription ... Summary of the Page Content" (2026-10-08).
   // A correction keeps its draft's header (a Latin draft carries one; a Tibetan one does not): checked against the draft
   // once the page is read, below (#7269: refusing any header refused every correction of a headed draft).
-  if (!correct && ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1)) { skip(m, 'more than one transcription header: restarted or refused read'); continue; }
-  if (REFUSAL.test(text)) { skip(m, 'refusal or summary in place of a transcription'); continue; }
+  if (!correct && ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1)) { failed(m, 'more than one transcription header: restarted or refused read', 'refused'); continue; }
+  if (REFUSAL.test(text)) { failed(m, 'refusal or summary in place of a transcription', 'refused'); continue; }
   const chatter = ocrReadProblem(text, { header: !correct });
   if (chatter) { skip(m, `chatter guard: ${chatter}`); continue; }
   const loop = loopVerdict(text);
@@ -414,6 +419,12 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   tally.written_page_ids.push(page.id);
 }
 
+tally.failed_reads = failedReads.length;
+if (APPLY && failedReads.length) {
+  const r = await recordFailedReads(db, failedReads);
+  tally.failed_reads_stamped = r.stamped;
+  console.log(`stamped ${r.stamped} of ${failedReads.length} failed read(s) on their pages (ocr.last_skip, #7378)`);
+}
 if (APPLY) {
   for (const [bookId, { nums, models }] of Object.entries(books)) {
     // The one counter writer (#5325): three of these pages may have had no OCR before.

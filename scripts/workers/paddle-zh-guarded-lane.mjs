@@ -54,6 +54,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { recordFailedReads, fromGuardedRead, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -148,6 +149,11 @@ async function main() {
   const report = [], skipped = [];
   // every page not written is listed with its reason (--report <f> → <f>.skipped.jsonl): the held tail a later lane picks up
   const skip = (why, rec) => { T.skipped[why] = (T.skipped[why] || 0) + 1; if (rec) skipped.push({ book_id: rec.book_id, page_id: rec.page_id, page_number: rec.page_number, route: rec.route, skipped: why }); };
+  // pages the engine did not read (Paddle error, Flash held by its reply guard after both rounds, a textless read):
+  // stamped as failed reads after each book under --apply (#7378); this lane's own guards' skips are not
+  const failedRows = [];
+  const failed = (row) => { if (row) failedRows.push(row); };
+  const flashAt = fs.existsSync(FLASHF) ? fs.statSync(FLASHF).mtime : null;
   let budget = LIMIT || Infinity;
   console.log(`${APPLY ? 'APPLY' : 'DRY RUN'} ${LANE} (#${LANE_ISSUE}) run ${run.run}, ${files.length} book files, ${flash.size} Flash rows`);
   console.log(`DOWNSTREAM: ${DOWNSTREAM_NOTE}`);
@@ -179,11 +185,15 @@ async function main() {
         if (route === 'FLASH') {
           fl = flash.get(rec.page_id);
           if (!fl) { skip('flash_not_run', rec); continue; }
-          if (fl.route !== 'FLASH') { skip(`flash_${String(fl.route).toLowerCase()}`, rec); continue; }
+          if (fl.route !== 'FLASH') { skip(`flash_${String(fl.route).toLowerCase()}`, rec); failed(fromGuardedRead({ rec, flash: fl, paddleModel: PADDLE.model, engine: CALL_SITE, flashAt: flashAt })); continue; }
           if (fl.image?.sha256 !== rec.image?.sha256) { skip('flash_read_another_image', rec); continue; }
-        } else if (route !== 'PADDLE') { skip(`route_${String(route).toLowerCase()}`, rec); continue; }
+        } else if (route !== 'PADDLE') { skip(`route_${String(route).toLowerCase()}`, rec); failed(fromGuardedRead({ rec, paddleModel: PADDLE.model, engine: CALL_SITE })); continue; }
         const { text, body, set } = pageSet(rec, route, { run, flash: fl, now, codeVer, workTitle });
-        if (bodyHanCount(body) < MIN_HAN) { skip(`${route.toLowerCase()}_textless`, rec); continue; }
+        if (bodyHanCount(body) < MIN_HAN) {
+          skip(`${route.toLowerCase()}_textless`, rec);
+          failed(fromTextless({ pageId: p.id, model: set['ocr.model'], engine: CALL_SITE, chars: bodyHanCount(body), at: route === 'FLASH' ? (fl?.date || flashAt) : rec.at }));
+          continue;
+        }
         if (route === 'PADDLE') {
           const risk = paddleTableRisk(text, { title: book.title }, TABLE_RULE);
           if (risk.flag) { skip('table_detector_6388', rec); continue; }
@@ -237,6 +247,8 @@ async function main() {
       );
       console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
     }
+    T.failed_reads = failedRows.length;
+    if (APPLY && failedRows.length) T.failed_reads_stamped = (await recordFailedReads(db, failedRows)).stamped;
   }, { timeoutMs: 4 * 3600 * 1000 });
   if (REPORT) {
     fs.writeFileSync(REPORT, report.map((r) => JSON.stringify(r)).join('\n') + '\n');

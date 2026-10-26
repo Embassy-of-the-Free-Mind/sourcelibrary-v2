@@ -45,6 +45,8 @@ fs.mkdirSync(OUT, { recursive: true });
 const BOOKS = path.join(OUT, 'books.jsonl');
 const done = new Set(fs.existsSync(BOOKS) ? fs.readFileSync(BOOKS, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).id) : []);
 
+// RECITATION only, on purpose: this census models lite's recitation refusal against fame. The other failed-read stamps
+// in `ocr.last_skip` (refused / empty / timeout / error from every writer, #7378) are counted per route by route-census.mjs.
 const REFUSED = { $or: [{ $gte: [{ $ifNull: ['$ocr.recitation_count', 0] }, 1] }, { $eq: ['$ocr.recitation_blocked', true] },
   { $eq: ['$ocr.last_skip.reason', 'recitation'] }] };
 const LITE = { $regexMatch: { input: { $ifNull: [{ $toString: '$ocr.model' }, ''] }, regex: 'flash-lite' } };
