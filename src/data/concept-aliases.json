@@ -10,7 +10,8 @@
   "caveat": "single CJK characters (占, 卜, 德, 夢) need word-boundary handling on the search side; never substring-match them",
   "body": "2026-09-13: 41 body-practice concepts (theme \"body\") from 8 Sonnet judges over scripts/graph/body-vocab-gather.mjs output; finalised by body-vocab-finalize.mjs (floor 0.7)",
   "daimon": "2026-10-12: one concept (theme \"spirits\") for #4251 — candidates from the issue's worked node, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-daimon-2026-10-12.mjs",
-  "psychoactives": "2026-10-26: thirteen concepts (theme \"psychoactives\") for #7398 — candidates from the period vocabulary of a visionary-plants research session, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-psychoactives-2026-10-26.mjs"
+  "psychoactives": "2026-10-26: thirteen concepts (theme \"psychoactives\") for #7398 — candidates from the period vocabulary of a visionary-plants research session, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-psychoactives-2026-10-26.mjs",
+  "harmony_magic": "2026-10-26: nine concepts (themes \"harmony\" and \"magic\") for #7408 — candidates from the harmony-kb lexicon and the occult-philosophy vocabulary, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-harmony-magic-2026-10-26.mjs"
  },
  "concepts": [
   {
@@ -11738,6 +11739,491 @@
    ],
    "related": [],
    "rejected": 0
+  },
+  {
+   "concept": "harmony",
+   "theme": "harmony",
+   "variants": [
+    {
+     "term": "harmony",
+     "confidence": 0.95,
+     "reason": "Headword: \"OF HARMONY AND MELODY\" (Hindu Music); Schelling \"Harmony Melody Rhythm\"; Capella's Harmonia."
+    },
+    {
+     "term": "harmonious",
+     "confidence": 0.85,
+     "reason": "Adjective: Pernety \"Magnete Naturæ Sympathicè Harmonico\"; the Peiwen yunfu entry for 和 rendered \"Harmonious\"."
+    },
+    {
+     "term": "harmonia",
+     "confidence": 0.95,
+     "reason": "Latin/Greek transliteration: Kircher's Ars magna consoni \"harmonic temperament of all things\"; Capella."
+    },
+    {
+     "term": "ἁρμονία",
+     "confidence": 0.95,
+     "reason": "The Greek word: Philo index \"ἁρμονία harmony\"; a Byzantine miscellany \"πᾶσα πόλις ἁρμονία τίς ἐστιν\"."
+    },
+    {
+     "term": "harmonie",
+     "confidence": 0.9,
+     "reason": "French/German: Kepler's Opera index \"Harmony of aspects\"; Harmonices mundi V."
+    },
+    {
+     "term": "гармония",
+     "confidence": 0.7,
+     "reason": "Russian loan of ἁρμονία: Eckartshausen in Russian \"Supreme harmony ... like musical tones\"; the other rows are fuzzy English."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "armonia",
+     "confidence": 0.75,
+     "reason": "Italian: rows render \"Harmony\"; one row is Boccaccio's Armonia, daughter of Gelo, a person.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "和諧",
+     "confidence": 0.7,
+     "reason": "Chinese héxié: the Pianzi leibian heading \"Harmony of the Multitudes\"; weak rows, so labelled."
+    },
+    {
+     "term": "Zusammenstimmung",
+     "confidence": 0.7,
+     "reason": "German \"tuning together\", Wolff's and Kant's word for harmony (harmony-kb lexicon); the rows are Swedenborg and Meier on Disharmonie."
+    }
+   ],
+   "related": [
+    {
+     "term": "συναρμογή",
+     "confidence": 0.8,
+     "reason": "A fitting-together, the joinery root of harmonia: Iamblichus's Nicomachus \"συναρμογά τις a certain harmony\". A translation trap, not the word."
+    },
+    {
+     "term": "Einklang",
+     "confidence": 0.75,
+     "reason": "\"One-sound\", unison: Gleichen \"Einklang unison or resonance\"; Eckartshausen \"strings tuned alike\". The foil to harmony, not harmony."
+    },
+    {
+     "term": "太和",
+     "confidence": 0.8,
+     "reason": "Supreme Harmony, a name for the Way (Zhang Zai), and the Hall of Supreme Harmony (Doré). A specific concept, not the general word."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "concord",
+   "theme": "harmony",
+   "variants": [
+    {
+     "term": "concord",
+     "confidence": 0.95,
+     "reason": "Headword: Aristotle NE IX.6 \"CONCORD likewise appears to pertain to friendship\"; the Paradise of the Soul chapter on Concord."
+    },
+    {
+     "term": "concordia",
+     "confidence": 0.95,
+     "reason": "Latin: Alciato's emblem CONCORDIA; Wissowa on the cult of Concordia; Albert's De concordia."
+    },
+    {
+     "term": "concorde",
+     "confidence": 0.8,
+     "reason": "French: Omnis ars \"concord is a union\"; one row is the concordat with Rome."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "ὁμόνοια",
+     "confidence": 0.9,
+     "reason": "Greek \"same mind\": Beza's lexicon \"ὁμονοέω I agree\"; the Corona glossary \"concordia ... ὁμόνοια\"."
+    },
+    {
+     "term": "homonoia",
+     "confidence": 0.9,
+     "reason": "Transliteration: Aristotle MS \"a definition of concord homonoia\"; a Greek-Latin dictionary."
+    },
+    {
+     "term": "Eintracht",
+     "confidence": 0.8,
+     "reason": "German: Alciato's \"Insurmountable Concord\"; masonic lodge names."
+    }
+   ],
+   "related": [
+    {
+     "term": "Übereinstimmung",
+     "confidence": 0.65,
+     "reason": "Agreement or correspondence in general (Lipps, Jaspers); concord only in some rows."
+    },
+    {
+     "term": "согласие",
+     "confidence": 0.65,
+     "reason": "Russian co-voicing: rows are \"by common consent\" and Khomyakov; consent as often as concord (harmony-kb lexicon trap 1)."
+    },
+    {
+     "term": "concordance",
+     "confidence": 0.75,
+     "reason": "Llull's concordantia \"needs plurality\" and Bible concordances (Glauch): a homograph split."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "consonance",
+   "theme": "harmony",
+   "variants": [
+    {
+     "term": "consonance",
+     "confidence": 0.95,
+     "reason": "Headword: Euler's Tentamen on degrees of harmony; Mersenne; Bragdon \"THE LAW OF CONSONANCE\"."
+    },
+    {
+     "term": "consonantia",
+     "confidence": 0.9,
+     "reason": "Latin: Ptolemy's Harmonics \"the excesses of the consonantiae\"; Praetorius."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "Konsonanz",
+     "confidence": 0.85,
+     "reason": "German: Lipps \"Das Wesen der musikalischen Konsonanz\"; Autolycus volume \"De consonantiis\".",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "symphonia",
+     "confidence": 0.85,
+     "reason": "Arbeau: \"this Greek word symphonia means consonance\"; Macrobius \"symphoniae consonances\"; Guido."
+    },
+    {
+     "term": "συμφωνία",
+     "confidence": 0.75,
+     "reason": "Greek, but it also means agreement (Bonitz's Aristotle index \"uno ore perhibent\"); musical rows in Wallis and Meibom."
+    }
+   ],
+   "related": [
+    {
+     "term": "concentus",
+     "confidence": 0.65,
+     "reason": "Singing together, the sound of mixed voices (harmony-kb lexicon); the rows are dictionary entries."
+    },
+    {
+     "term": "consonant intervals",
+     "confidence": 0.75,
+     "reason": "A phrase for the intervals themselves (Helmholtz, Iamblichus's fourth, Bragdon's ratios)."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "music of the spheres",
+   "theme": "harmony",
+   "variants": [
+    {
+     "term": "music of the spheres",
+     "confidence": 0.95,
+     "reason": "Headword: Cicero's Dream of Scipio \"this loud and sweet sound\"; Macrobius' commentary; Hall."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "harmony of the spheres",
+     "confidence": 0.9,
+     "reason": "The same idea in other words: Shakespeare quoted \"Such harmony is in immortal souls\"; Heath on Aristarchus."
+    },
+    {
+     "term": "musica mundana",
+     "confidence": 0.9,
+     "reason": "Boethius's term: Fludd \"On the Music of the Spheres (De Musica mundana)\"; Roger Bacon; Agrippa."
+    },
+    {
+     "term": "celestial harmony",
+     "confidence": 0.8,
+     "reason": "Ficino \"the heavens are composed with harmonic reason and move harmonically\"; Beaumont on Apollonius hearing it."
+    },
+    {
+     "term": "harmonia mundi",
+     "confidence": 0.75,
+     "reason": "Giorgi's De harmonia mundi; Capella. The phrase also means the world's harmony in general, so labelled."
+    }
+   ],
+   "related": [
+    {
+     "term": "harmonices mundi",
+     "confidence": 0.75,
+     "reason": "Kepler's title (Harmonices mundi liber III), a work rather than the concept."
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "sympathy",
+   "theme": "magic",
+   "variants": [
+    {
+     "term": "sympathy",
+     "confidence": 0.9,
+     "reason": "Headword in the cosmological sense (Libavius, Saltzmann); many English rows mean compassion (The Mental Cure), which the related list does not fix."
+    },
+    {
+     "term": "sympathia",
+     "confidence": 0.95,
+     "reason": "Latin: Saltzmann's De sympathia \"two things joined by a bond of love\"; the 1665 disputation on occult qualities."
+    },
+    {
+     "term": "sympatheia",
+     "confidence": 0.9,
+     "reason": "Transliteration: Scott's Hermetica notes \"sympathy toward the second god\"; Plotinus."
+    },
+    {
+     "term": "συμπάθεια",
+     "confidence": 0.9,
+     "reason": "Greek: Libavius \"The word συμπαθείας is used differently by physicians and natural philosophers\"; Sextus in Scott."
+    },
+    {
+     "term": "sympathie",
+     "confidence": 0.85,
+     "reason": "French/German: Reinhardt's Kosmos und Sympathie cited by Bidez; Eckartshausen; also human sympathy (Nudow)."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "antipathy",
+     "confidence": 0.85,
+     "reason": "The opposite pole: Goclenius \"Antipathy ... consensus\"; Sibly's Key to Physic."
+    },
+    {
+     "term": "antipathia",
+     "confidence": 0.85,
+     "reason": "Latin: Libavius \"DE ANTIPATHIA QVADAM RARA\"; Erasmus Francisci on sympathies and antipathies."
+    },
+    {
+     "term": "sympathy and antipathy",
+     "confidence": 0.8,
+     "reason": "The paired doctrine: Meindl's disputation \"What is the cause of Antipathy and Sympathy?\"; the Geoponika book XV."
+    },
+    {
+     "term": "occult qualities",
+     "confidence": 0.8,
+     "reason": "The scholastic explanation sympathy was filed under: Charleton \"OCCULT QUALITIES made MANIFEST\"; the Diadem of the Sages."
+    },
+    {
+     "term": "qualitates occultae",
+     "confidence": 0.8,
+     "reason": "Latin: the 1665 Disputatio qua qualitates occultae; Thomasius."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "resonance",
+   "theme": "harmony",
+   "variants": [
+    {
+     "term": "resonance",
+     "confidence": 0.95,
+     "reason": "Headword: Helmholtz \"PHASES OF WAVES CAUSED BY RESONANCE\"; Tyndall \"CONDITIONS OF RESONANCE\"; Tesla."
+    },
+    {
+     "term": "resonantia",
+     "confidence": 0.85,
+     "reason": "Latin: Augustine De musica commentary; Kircher's Magnes \"magnetism of music\"."
+    },
+    {
+     "term": "Resonanz",
+     "confidence": 0.9,
+     "reason": "German: Helmholtz \"Analysis of sounds by sympathetic resonance\"; Tesla in German."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "sympathetic vibration",
+     "confidence": 0.85,
+     "reason": "Tyndall \"SYMPATHETIC VIBRATIONS\"; Schott \"Sympathetic harmony through a Musical instrument\"; Malcolm on Galileo."
+    },
+    {
+     "term": "同聲相應",
+     "confidence": 0.85,
+     "reason": "Yijing \"Like sounds respond to each other\" (Lülü chanwei); the Huainanzi strings: strike the gong and the other gong answers."
+    },
+    {
+     "term": "感應",
+     "confidence": 0.75,
+     "reason": "Stimulus and response (ganying): Zhu Xi \"like wind comes, the tree moves\"; Liu Zongzhou \"resonance and response\"."
+    }
+   ],
+   "related": [
+    {
+     "term": "ganying",
+     "confidence": 0.65,
+     "reason": "Transliteration of 感應; most rows are the Taishang ganying pian title and Legge's bibliography."
+    },
+    {
+     "term": "mitklingen",
+     "confidence": 0.6,
+     "reason": "German \"sounding with\": Helmholtz and Chladni rows, but only partly the word."
+    },
+    {
+     "term": "echo",
+     "confidence": 0.6,
+     "reason": "Reflected sound, not answering vibration (Schott on Echo, Bacon's Sylva); also the nymph."
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "magic",
+   "theme": "magic",
+   "variants": [
+    {
+     "term": "magic",
+     "confidence": 0.95,
+     "reason": "Headword: Thorndike \"Definition of magic\"; Böhme's Clavis \"The Magia, or Magic, is the Spirit of the Will\"."
+    },
+    {
+     "term": "magia",
+     "confidence": 0.95,
+     "reason": "Latin: Abramelin \"what the true Magia is\"; Porta \"What Magia means by name\"; Summum bonum."
+    },
+    {
+     "term": "magie",
+     "confidence": 0.9,
+     "reason": "French/German: Doutté \"Magie et religion\"; Windelband."
+    },
+    {
+     "term": "μαγεία",
+     "confidence": 0.8,
+     "reason": "Greek: Lectius' dissertation on Eusebius \"MAGIC\"; Psellus' Chronographia \"used ... for magic\". One row is an amulet book."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "Zauberei",
+     "confidence": 0.85,
+     "reason": "German: Paracelsus \"Sorcery original: Zauberey is also good and highly esteemed\"; Bodin's Demonomania."
+    },
+    {
+     "term": "سحر",
+     "confidence": 0.85,
+     "reason": "Arabic siḥr: Wellhausen \"The Arabic term for magic is sihr\"; the Infancy Gospel \"manifest sorcery\"."
+    },
+    {
+     "term": "sihr",
+     "confidence": 0.85,
+     "reason": "Transliteration: Wellhausen; Doutté \"Islamisation of magic\"; Zwemer."
+    }
+   ],
+   "related": [
+    {
+     "term": "sorcery",
+     "confidence": 0.8,
+     "reason": "The malefic branch: Lea \"SORCERY AND OCCULT ARTS\"; Bodin. Narrower than magic."
+    },
+    {
+     "term": "goetia",
+     "confidence": 0.85,
+     "reason": "Agrippa \"ON GOETIA AND NECROMANCY\"; the Lesser Key. A kind of magic."
+    },
+    {
+     "term": "witchcraft",
+     "confidence": 0.8,
+     "reason": "The 1736 Witchcraft Act; Talbot \"OJJE OR WITCHCRAFT\". Adjacent, and a legal category."
+    },
+    {
+     "term": "enchantment",
+     "confidence": 0.75,
+     "reason": "Lévi \"ENCHANTMENTS AND SPELLS\"; Swedenborg. A kind of magical act."
+    },
+    {
+     "term": "巫術",
+     "confidence": 0.7,
+     "reason": "Chinese shamanic arts: de Groot \"SORCERY AMONG THE NATIVES OF HAINAN\"; leishu entries on 巫."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "natural magic",
+   "theme": "magic",
+   "variants": [
+    {
+     "term": "natural magic",
+     "confidence": 0.95,
+     "reason": "Headword: Agrippa \"ON NATURAL MAGIC ... the highest peak of natural philosophy\"; Barrett's Magus; Porta."
+    },
+    {
+     "term": "magia naturalis",
+     "confidence": 0.95,
+     "reason": "Latin title of Porta's and Hildebrand's books; Posner."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "magie naturelle",
+     "confidence": 0.9,
+     "reason": "French: the 1571 Magie naturelle; the French Agrippa."
+    },
+    {
+     "term": "natürliche Magie",
+     "confidence": 0.75,
+     "reason": "German: the Rosicrucian Exposed \"natural magic and ... divine magic\"; rows show the sense more than the spelling."
+    }
+   ],
+   "related": [
+    {
+     "term": "occult philosophy",
+     "confidence": 0.8,
+     "reason": "Agrippa's frame, wider than natural magic (it adds celestial and ceremonial magic)."
+    },
+    {
+     "term": "philosophia occulta",
+     "confidence": 0.8,
+     "reason": "Latin title of Agrippa; Holberg's satire."
+    },
+    {
+     "term": "secrets of nature",
+     "confidence": 0.7,
+     "reason": "The books-of-secrets genre (Lemnius, Alexis): adjacent, often the same content."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "doctrine of signatures",
+   "theme": "magic",
+   "variants": [
+    {
+     "term": "doctrine of signatures",
+     "confidence": 0.95,
+     "reason": "Headword: Croll's \"ON SIGNATURES\"; Gaffarel's Curiosities on Crollius."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "signatura rerum",
+     "confidence": 0.95,
+     "reason": "Böhme's De signatura rerum; Paracelsus \"DE SIGNATVRA RERVM Naturalium\"."
+    },
+    {
+     "term": "signatures of things",
+     "confidence": 0.85,
+     "reason": "English Böhme \"Signatura Rerum: or the signature of all things\"; Henry More."
+    }
+   ],
+   "related": [
+    {
+     "term": "signatura",
+     "confidence": 0.7,
+     "reason": "Mostly Böhme and Paracelsus, but also the printer's signature (Beardsley)."
+    },
+    {
+     "term": "Signatur",
+     "confidence": 0.6,
+     "reason": "Paracelsus' Astronomia magna on the kinds of signature; other rows are seals and blank pages."
+    }
+   ],
+   "rejected": 1
   }
  ]
 }
