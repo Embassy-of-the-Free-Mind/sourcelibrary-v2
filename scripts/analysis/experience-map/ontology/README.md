@@ -19,6 +19,8 @@ Cost: $0. Mongo and Atlas Search read-only; judging by Claude subagents.
 | `packets.py` | cuts judge packets, eight slices |
 | `JUDGING.md` | what the judges decide (terms by `.claude/docs/concept-aliases/JUDGE-RUBRIC.md`; passages; edges) |
 | `verdicts/` | the judges' record; `edges-lead.jsonl` holds the session lead's overrides |
+| `recuts.json` | quotes the exact verify failed, each re-cut from the page as served or dropped (#7458); `build.py` applies it |
+| `recut-manual.json` | spans chosen by eye where a re-translated page says the same thing in other words; `measure.mjs recut` reads it |
 | `build.py` | writes `ontology.json` and the page |
 
 ## Rebuild
@@ -29,7 +31,13 @@ Cost: $0. Mongo and Atlas Search read-only; judging by Claude subagents.
     python3 terms.py $ONTO_OUT && python3 packets.py $ONTO_OUT 8      # then judge (JUDGING.md) into verdicts/
     mkdir -p $ONTO_OUT/site && curl -sL https://experience-atlas.vercel.app/peace -o $ONTO_OUT/site/peace.html
     python3 build.py $ONTO_OUT $ONTO_OUT/site [--patch-nav]
-    node --env-file=$E measure.mjs verify                              # exit 1 if any quote has left its page
+    node --env-file=$E measure.mjs verify                              # exit 1 if any quote is not an exact span of the page
+    node --env-file=$E measure.mjs recut                               # if it failed: proposals in $ONTO_OUT/recut-proposals.json;
+                                                                       # review, copy into recuts.json, rebuild, verify again
+
+The page is served at https://aliveness-atlas.vercel.app/vocabulary (Vercel project `aliveness-atlas`, CLI deploys, no
+git link). Build with the live atlas `index.html` saved as `SITE/peace.html`; the deployed page also points the
+"Atlas of Aliveness" link at `/` and marks Vocabulary as the current nav item.
 
 `--patch-nav` adds the Vocabulary link to the other site pages present in the site directory.
 
@@ -52,5 +60,10 @@ Cost: $0. Mongo and Atlas Search read-only; judging by Claude subagents.
   with that caveat.
 - **Every strip leans to the 16th–17th centuries partly because the library does.** `baseline` is the denominator,
   shown at the top of the page.
+- **A quote is exact or it is not a quote (#7458).** `verify` compares against what the page SERVES: the
+  transcription on an English original's English leaf (#7100), where the stored `translation` is a model's rewording
+  ("color" for Podmore's "colour"), else the translation. Only whitespace and tags are normalised; translator notes
+  stay in, so a quote that jumps a note fails. The first check matched the stored translation with notes cut out
+  and passed 69 quotes that were not on the page as a reader sees it.
 - **An edge is `passage` only if a judge found one page that states it.** Co-occurrence alone never counts. The
   rest are `background`, with the claim and the model named.

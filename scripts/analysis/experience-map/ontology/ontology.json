@@ -1,13 +1,13 @@
 {
  "about": {
   "issue": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6720",
-  "built": "2026-10-16",
+  "built": "2026-10-26",
   "what": "Concepts, doctrines, practices, states and opposites of aliveness, with the terms the library uses for them, corpus counts by work date and tradition, verbatim passages, and typed relations each carrying provenance.",
   "counts": "Pages that print any of a node's search phrases (Atlas Search phrase match, translation and OCR text, page_number > 0, case-folded, not accent-folded). The book facet returns the top 1,000 books by matching pages; dates and traditions are computed over live books in that facet. `pages_translation` counts the English translation alone.",
   "work_dates": "Per book, books.source_work_dates_meta.work.year (schema 2, #6721), the date the work was written; its basis is wikidata, author_lifespan, title_page or colophon (sourced) or model_knowledge. A book without one falls back to /root/aliveness/dated-works.jsonl, books.source_work_dates (one composition, no compilation), books.original_work_year, then the edition year. Each count records its basis; `sourced_pages` counts the dated pages with a sourced basis, and `by_century_edition` places the same pages by the printed edition.",
   "gloss_and_edges": "Node glosses, traditions and eras, and every edge claim, are scholarly background written by claude-opus-5-5. An edge is `passage` only when a judge found a page in the library that states it; the passage is quoted verbatim and linked.",
   "terms": "Forms are the seed spellings with their tagged-page counts in the page-terms harvest (#4695). Variants, equivalents and related terms come from src/data/concept-aliases.json where the node is a curated concept, otherwise from term-gloss bridges judged under .claude/docs/concept-aliases/JUDGE-RUBRIC.md. Related terms are never merged.",
-  "quotes": "Every quote is a verbatim substring of the page's English translation after editorial wrappers and translator notes are removed; [square brackets] are the translator's inline glosses."
+  "quotes": "Every quote is an exact span of the text the page serves to a reader: the English translation, or the transcription where the leaf is an English original (#7100). Editorial wrappers are removed and whitespace collapsed; nothing else is normalised. Translator notes stay in (they are on the page); [square brackets] are the translator's inline glosses. `measure.mjs verify` checks every quote against the live page (#7458)."
  },
  "senses": {
   "felt": "Feeling alive",
@@ -27,8 +27,8 @@
   "nodes": 108,
   "edges": 158,
   "edges_by_provenance": {
-   "passage": 65,
-   "background": 93
+   "passage": 61,
+   "background": 97
   },
   "edges_by_type": {
    "translates": 10,
@@ -45,8 +45,8 @@
    "practice": 31,
    "state": 6
   },
-  "nodes_with_passages": 106,
-  "passages": 382
+  "nodes_with_passages": 105,
+  "passages": 377
  },
  "baseline": {
   "what": "pages of live books by century of the work, same dating rule",
@@ -2542,11 +2542,11 @@
      "chosen_because": "Petrus de Abano: natural heat is the soul's instrument and resists poisons."
     },
     {
-     "quote": "This virtue is that calidum innatum [innate heat], or natural heat, by whose power every creature exists. The volatile vehicle in which it is carried is that humidum radicale [radical moisture], or humidity.",
-     "quote_marked": "This virtue is that \u0001calidum innatum\u0002 \u0003innate heat\u0004, or natural heat, by whose power every creature exists. The volatile vehicle in which it is carried is that \u0001humidum radicale\u0002 \u0003radical moisture\u0004, or humidity.",
+     "quote": "vertue is that Calidum innatum, or Naturall heate, by whose vertue euery creature doth exist, and the volatile vehicle, in which it is carried, is that Humidum Radicale, or Radicall Moisture, or Humidity,",
+     "quote_marked": "vertue is that Calidum innatum, or Naturall heate, by whose vertue euery creature doth exist, and the volatile vehicle, in which it is carried, is that Humidum Radicale, or Radicall Moisture, or Humidity,",
      "cut": [
-      false,
-      false
+      true,
+      true
      ],
      "url": "https://sourcelibrary.org/book/69c8125f6c6f3cc53c847b72?page=162",
      "book_id": "69c8125f6c6f3cc53c847b72",
@@ -4215,8 +4215,8 @@
      "chosen_because": "Augustine via scholastic: Levi was in his fathers' loins through seminal reasons"
     },
     {
-     "quote": "That which to the senses and sensibility is a deceptive appearance contains for reason ‘a reflection of the Idea,’ according to Plato, or ‘the seed of Reason,’ according to the Stoics (λόγοι σπερματικοί [seminal reasons]).",
-     "quote_marked": "That which to the senses and sensibility is a deceptive appearance contains for reason ‘a reflection of the Idea,’ according to Plato, or ‘the seed of Reason,’ according to the Stoics (\u0001λόγοι σπερματικοί\u0002 \u0003seminal reasons\u0004).",
+     "quote": "That which to the senses and sensibility is a deceptive appearance contains for reason ‘a reflection of the Idea,’ according to Plato, or ‘the seed of Reason,’ according to the Stoics (λόγοι σπερματικοί).",
+     "quote_marked": "That which to the senses and sensibility is a deceptive appearance contains for reason ‘a reflection of the Idea,’ according to Plato, or ‘the seed of Reason,’ according to the Stoics (\u0001λόγοι σπερματικοί\u0002).",
      "cut": [
       false,
       false
@@ -4748,8 +4748,8 @@
    },
    "passages": [
     {
-     "quote": "> \"Therefore, since all things are not produced by pure chance or by the unguided mechanics of matter, and since God Himself cannot reasonably be thought to do all things directly and through constant miracles, it may well be concluded that there is a Plastic Nature an unconscious but purposeful creative power within the material world that acts as an instrument of divine will beneath Him.",
-     "quote_marked": "> \"Therefore, since all things are not produced by pure chance or by the unguided mechanics of matter, and since God Himself cannot reasonably be thought to do all things directly and through constant miracles, it may well be concluded that there is a Plastic Nature \u0001an unconscious but purposeful creative power within the material world that acts as an instrument of divine will\u0002 beneath Him.",
+     "quote": "> \"Therefore, since neither all things are produced fortuitously, or by the unguided mechanism of matter, nor God himself may be reasonably thought to do all things immediately and miraculously, it may well be concluded that there is a Plastic Nature under him, which, as an inferior and subordinate instrument, doth grudgingly execute that part of his providence which consists in the regular and orderly motion of matter;",
+     "quote_marked": "> \"Therefore, since neither all things are produced fortuitously, or by the unguided mechanism of matter, nor God himself may be reasonably thought to do all things immediately and miraculously, it may well be concluded that there is a Plastic Nature under him, which, as an inferior and subordinate instrument, doth grudgingly execute that part of his providence which consists in the regular and orderly motion of matter;",
      "cut": [
       false,
       false
@@ -5934,8 +5934,8 @@
    },
    "passages": [
     {
-     "quote": "The entire soul and the entire body are contained in the hands as a medium of influence.\" Mesmerism or Animal Magnetism.—In the latter half of the eighteenth century, a new era began regarding the doctrine of a magnetic fluid.",
-     "quote_marked": "The entire soul and the entire body are contained in the hands as a medium of influence.\" Mesmerism or Animal Magnetism.—In the latter half of the eighteenth century, a new era began regarding the doctrine of a magnetic fluid.",
+     "quote": "The whole soul and the whole body are contained in the hands as a medium of influence.\" Mesmerism or Animal Magnetism.—In the latter half of the eighteenth century a new era was inaugurated in connection with the doctrine of a magnetic fluid.",
+     "quote_marked": "The whole soul and the whole body are contained in the hands as a medium of influence.\" Mesmerism or Animal Magnetism.—In the latter half of the eighteenth century a new era was inaugurated in connection with the doctrine of a magnetic fluid.",
      "cut": [
       false,
       false
@@ -6273,8 +6273,8 @@
    },
    "passages": [
     {
-     "quote": "For the effluence assumed to produce these sensations he proposed the name odyle, or odic force. The sensations were broadly of two kinds—vague feelings of temperature, which were either pleasant or unpleasant, and quite definite perceptions of light and color.",
-     "quote_marked": "For the effluence assumed to produce these sensations he proposed the name odyle, or odic force. The sensations were broadly of two kinds—vague feelings of temperature, which were either pleasant or unpleasant, and quite definite perceptions of light and color.",
+     "quote": "For the effluence assumed to produce these sensations he proposed the name odyle, or odic force. The sensations were broadly of two kinds—vague feelings of temperature, which were either pleasant or unpleasant, and quite definite perceptions of light and colour.",
+     "quote_marked": "For the effluence assumed to produce these sensations he proposed the name odyle, or odic force. The sensations were broadly of two kinds—vague feelings of temperature, which were either pleasant or unpleasant, and quite definite perceptions of light and colour.",
      "cut": [
       false,
       false
@@ -6307,8 +6307,8 @@
      "chosen_because": "Reichenbach himself on the polarity of odic light in sunbeams."
     },
     {
-     "quote": "for though experiments of recent date seem to supply concurrent evidence, and the phenomena of Mesmerism have helped to force again on the minds of the more observing portion of mankind the supposition of a \"New Imponderable,\" or \"Odic Force,\" yet few believe;",
-     "quote_marked": "for though experiments of recent date seem to supply concurrent evidence, and the phenomena of Mesmerism have helped to force again on the minds of the more observing portion of mankind the supposition of a \"New Imponderable,\" or \"Odic Force,\" yet few believe;",
+     "quote": "for though experiments of recent date seem to supply concurrent evidence, and the phenomena of Mesmerism have helped to force again on the minds of the more observing portion of mankind the supposition of a \"New Imponderable,\" or \"Od-ic Force,\" yet, few believe;",
+     "quote_marked": "for though experiments of recent date seem to supply concurrent evidence, and the phenomena of Mesmerism have helped to force again on the minds of the more observing portion of mankind the supposition of a \"New Imponderable,\" or \"Od-ic Force,\" yet, few believe;",
      "cut": [
       false,
       false
@@ -6468,11 +6468,11 @@
      "chosen_because": "Guaita: the fluid governing instincts, dispenser of elementary life, agent of birth and death"
     },
     {
-     "quote": "” The reader must not confuse it with the ASTRAL SOUL, which is another name for the lower Manas, or the so-called Kama-Manas, the reflection of the HIGHER Ego. Astral Light (Occult). The invisible region that surrounds our globe, just as it surrounds every other.",
-     "quote_marked": "” The reader must not confuse it with the ASTRAL SOUL, which is another name for the lower Manas, or the so-called Kama-Manas, the reflection of the HIGHER Ego. Astral Light (Occult). The invisible region that surrounds our globe, just as it surrounds every other.",
+     "quote": "The reader must not confuse it with the ASTRAL SOUL, another name for the lower Manas, or Kama-Manas so-called, the reflection of the HIGHER Ego. Astral Light (Occult.). The invisible region that surrounds our globe, as it does every other,",
+     "quote_marked": "The reader must not confuse it with the ASTRAL SOUL, another name for the lower Manas, or Kama-Manas so-called, the reflection of the HIGHER Ego. Astral Light (Occult.). The invisible region that surrounds our globe, as it does every other,",
      "cut": [
       false,
-      false
+      true
      ],
      "url": "https://sourcelibrary.org/book/6953e33f77f38f6761bec67d?page=43",
      "book_id": "6953e33f77f38f6761bec67d",
@@ -7017,8 +7017,8 @@
      "chosen_because": "1545: 'breath of lives' plural means every kind of life was contained in it"
     },
     {
-     "quote": "breathed into his nostrils (spiraculum vitae) the breath of life, and man was made a living soul.\" Here, the \"breath of life\" inspired by God signifies only that God gave him life.",
-     "quote_marked": "breathed into his nostrils (spiraculum vitae) the breath of life, and man was made a living soul.\" Here, the \"breath of life\" inspired by God signifies only that God gave him life.",
+     "quote": "breathed into his nostrils (spiraculum vitæ) the breath of life, and man was made a living soul. There the breath of life inspired by God, signifies no more, but that God gave him life;",
+     "quote_marked": "breathed into his nostrils (spiraculum vitæ) the breath of life, and man was made a living soul. There the breath of life inspired by God, signifies no more, but that God gave him life;",
      "cut": [
       false,
       false
@@ -7756,8 +7756,8 @@
      "chosen_because": "1615: sages refine jing, qi and shen to preserve their bodies"
     },
     {
-     "quote": "The scripture says: Jing, Qi, and Shen [Essence, Vital Energy, and Spirit] are the three internal treasures. The ears, eyes, and mouth are the three external treasures.",
-     "quote_marked": "The scripture says: \u0001Jing, Qi, and Shen\u0002 \u0003Essence, Vital Energy, and Spirit\u0004 are the three internal treasures. The ears, eyes, and mouth are the three external treasures.",
+     "quote": "The scripture says: essence, qi [vital energy], and spirit form the three inner treasures; the ears, eyes, and mouth form the three outer treasures.",
+     "quote_marked": "The scripture says: essence, \u0001qi\u0002 \u0003vital energy\u0004, and spirit form the three inner treasures; the ears, eyes, and mouth form the three outer treasures.",
      "cut": [
       false,
       false
@@ -8069,23 +8069,6 @@
      "date_basis": "work:model_knowledge",
      "edition_year": 1982,
      "chosen_because": "Tibetan tantric commentary: the life-force breath rising from the navel produces speech"
-    },
-    {
-     "quote": "\"Prāṇa and others\" refers to the ten well-known vital airs: prāṇa, apāna, udāna, samāna, vyāna, nāga, kūrma, kṛkara, devadatta, and dhanañjaya.",
-     "quote_marked": "\"Prāṇa and others\" refers to the ten well-known vital airs: \u0001prāṇa, apāna, udāna, samāna, vyāna, nāga, kūrma, kṛkara, devadatta, and dhanañjaya\u0002.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69d7e24ce08c70307b76611e?page=365",
-     "book_id": "69d7e24ce08c70307b76611e",
-     "page": 365,
-     "title": "The Heart of the Yogini",
-     "author": "Vraj Vallabha Dwivedi (ed.)",
-     "work_year": 1000,
-     "date_basis": "work:model_knowledge",
-     "edition_year": 1965,
-     "chosen_because": "lists the ten vital airs headed by prana"
     }
    ]
   },
@@ -8243,8 +8226,8 @@
      "chosen_because": "Sushruta on the nature of ojas: cool, white, oily, the best seat of life."
     },
     {
-     "quote": "The whole body with its limbs and members is permeated with Ojas, and a loss or diminution in its natural quantity leads to the gradual emaciation and ultimate dissolution of the organism.",
-     "quote_marked": "The whole body with its limbs and members is permeated with Ojas, and a loss or diminution in its natural quantity leads to the gradual emaciation and ultimate dissolution of the organism.",
+     "quote": "The whole body with its limbs and members is permeated with Ojas, and a loss or diminution in its natural quantity leads to the gradual emaciation (and ultimate dissolution) of organism.",
+     "quote_marked": "The whole body with its limbs and members is permeated with Ojas, and a loss or diminution in its natural quantity leads to the gradual emaciation (and ultimate dissolution) of organism.",
      "cut": [
       false,
       false
@@ -8277,8 +8260,8 @@
      "chosen_because": "Ojas as the quintessence of all bodily tissues, identified with vital power."
     },
     {
-     "quote": "In the eighth month the foetus draws from the mother, and the mother draws from the foetus, through the juice-bearing ducts, again and again, that ingredient dhatu [bodily constituent] which is called ojas [vital essence].",
-     "quote_marked": "In the eighth month the foetus draws from the mother, and the mother draws from the foetus, through the juice-bearing ducts, again and again, that ingredient \u0001dhatu\u0002 \u0003bodily constituent\u0004 which is called \u0001ojas\u0002 \u0003vital essence\u0004.",
+     "quote": "In the eighth month the fœtus draws from the mother, and the mother draws from the fœtus, through the juice-bearing ducts, again and again, that ingredient (dhatu) which is called ojas.",
+     "quote_marked": "In the eighth month the fœtus draws from the mother, and the mother draws from the fœtus, through the juice-bearing ducts, again and again, that ingredient (\u0001dhatu\u0002) which is called \u0001ojas\u0002.",
      "cut": [
       false,
       false
@@ -8868,8 +8851,8 @@
    },
    "passages": [
     {
-     "quote": "‘Mana’ This power is beyond the ordinary ability of men and outside the common processes of nature. It is present in the very atmosphere of life, attaches itself to people and to objects, and is revealed through results that can only be explained by its influence.",
-     "quote_marked": "‘Mana’ This power is beyond the ordinary ability of men and outside the common processes of nature. It is present in the very atmosphere of life, attaches itself to people and to objects, and is revealed through results that can only be explained by its influence.",
+     "quote": "‘Mana.’ beyond the ordinary power of men, outside the common processes of nature; it is present in the atmosphere of life, attaches itself to persons and to things, and is manifested by results which can only be ascribed to its operation.",
+     "quote_marked": "‘Mana.’ beyond the ordinary power of men, outside the common processes of nature; it is present in the atmosphere of life, attaches itself to persons and to things, and is manifested by results which can only be ascribed to its operation.",
      "cut": [
       false,
       false
@@ -8902,8 +8885,8 @@
      "chosen_because": "Maori usage: the mana of the land obtained by the chief who took possession"
     },
     {
-     "quote": "These dragons possessed the mana, or magic power, of appearing as men or as dragons according to their desire. This dragon was named Pii-ka-lalau, or Pii...",
-     "quote_marked": "These dragons possessed the \u0001mana\u0002, or magic power, of appearing as men or as dragons according to their desire. This dragon was named Pii-ka-lalau, or Pii...",
+     "quote": "These dragons had the mana, or magic power of appearing as men or as dragons according to their desire. This dragon was named Pii-ka-lalau, or Pii,",
+     "quote_marked": "These dragons had the \u0001mana\u0002, or magic power of appearing as men or as dragons according to their desire. This dragon was named Pii-ka-lalau, or Pii,",
      "cut": [
       false,
       false
@@ -10176,8 +10159,8 @@
      "chosen_because": "Paracelsus himself names sylphs and pygmies against folk names."
     },
     {
-     "quote": "It will not be so with the Sylphs, the Gnomes, and the Nymphs; for since they live a shorter time, they have more need of us, and so their familiarity is easier to obtain.",
-     "quote_marked": "It will not be so with the Sylphs, the Gnomes, and the Nymphs; for since they live a shorter time, they have more need of us, and so their familiarity is easier to obtain.",
+     "quote": "It will not be so with the Sylphs, the Gnomes, and the Nymphs; For they living a less time, have more need of us: and so their familiarity is more easie to obtain.",
+     "quote_marked": "It will not be so with the Sylphs, the Gnomes, and the Nymphs; For they living a less time, have more need of us: and so their familiarity is more easie to obtain.",
      "cut": [
       false,
       false
@@ -10193,8 +10176,8 @@
      "chosen_because": "Comte de Gabalis: sylphs, gnomes and nymphs are short-lived and seek human company."
     },
     {
-     "quote": "as incorrect to call even the lowest and worst of the Elementals “devils,” as to say that a scorpion or an adder was really a fiend. Another and more difficult matter to grasp regarding the Elemental Spirits is that they partake only of the nature of one element respectively;",
-     "quote_marked": "as incorrect to call even the lowest and worst of the Elementals “devils,” as to say that a scorpion or an adder was really a fiend. Another and more difficult matter to grasp regarding the Elemental Spirits is that they partake only of the nature of one element respectively;",
+     "quote": "as incorrect to call even the lowest and worst of the Elementals “devils,” as to say that a Scorpion or an Adder was really a fiend. Another and more difficult matter to grasp, regarding the Elemental Spirits, is that they partake only of the nature of one Element respectively, and that in that Element they can live, breathe, and move ;",
+     "quote_marked": "as incorrect to call even the lowest and worst of the Elementals “devils,” as to say that a Scorpion or an Adder was really a fiend. Another and more difficult matter to grasp, regarding the Elemental Spirits, is that they partake only of the nature of one Element respectively, and that in that Element they can live, breathe, and move ;",
      "cut": [
       false,
       false
@@ -10689,11 +10672,11 @@
      "chosen_because": "sympatheia as the invisible thread joining the cosmos as one living organism"
     },
     {
-     "quote": "For this reason—due to the secret opposition of natures in the world, which originally proceeds from the streams of those variable properties springing from that one incomprehensible Fountain—Love and Hatred, and consequently Sympathy and Antipathy, were created to jostle and, as it were, shoulder one another in this world.",
-     "quote_marked": "For this reason—due to the secret opposition of natures in the world, which originally proceeds from the streams of those variable properties springing from that one incomprehensible Fountain—Love and Hatred, and consequently Sympathy and Antipathy, were created to jostle and, as it were, shoulder one another in this world.",
+     "quote": "the secret opposition of natures in the world, originally proceeding from the streams of those variable properties, which radically do spring from that one incomprehensible Fountain; Love and Hatred, and consequently Sympathy and Antipathy were created to justle, and as it were shoulder one another in this world,",
+     "quote_marked": "the secret opposition of natures in the world, originally proceeding from the streams of those variable properties, which radically do spring from that one incomprehensible Fountain; Love and Hatred, and consequently Sympathy and Antipathy were created to justle, and as it were shoulder one another in this world,",
      "cut": [
-      false,
-      false
+      true,
+      true
      ],
      "url": "https://sourcelibrary.org/book/698255f30fc1d3bd62674a04?page=212",
      "book_id": "698255f30fc1d3bd62674a04",
@@ -11637,11 +11620,11 @@
      "chosen_because": "1649: Hermes calls the world itself the Son of God"
     },
     {
-     "quote": "The result of our present discourse is this: that though some of the Trismegistic books were either wholly counterfeited or else had certain false passages inserted into them by some Christian hand, there are others which were originally Egyptian or which, as to their substance, contain Hermetic or Egyptian doctrines (in all of which One Supreme Deity is everywhere asserted).",
-     "quote_marked": "The result of our present discourse is this: that though some of the Trismegistic books were either wholly counterfeited or else had certain false passages inserted into them by some Christian hand, there are others which were originally Egyptian or which, as to their substance, contain Hermetic or Egyptian doctrines (in all of which One Supreme Deity is everywhere asserted).",
+     "quote": "The reſult of our preſent Diſcourſe is this, that though ſome of the Triſmegiſtick Books, were either wholly counterfeited, or elſe had certain ſuppoſititious Paſſages inſerted into them by ſome Chriſtian hand, yet there being others of them originally Egyptian, or which as to the ſubſtance of them, do contain Hermaical or Egyptian Doctrines (in all which One Supreme Deity is",
+     "quote_marked": "The reſult of our preſent Diſcourſe is this, that though ſome of the Triſmegiſtick Books, were either wholly counterfeited, or elſe had certain ſuppoſititious Paſſages inſerted into them by ſome Chriſtian hand, yet there being others of them originally Egyptian, or which as to the ſubſtance of them, do contain Hermaical or Egyptian Doctrines (in all which One Supreme Deity is",
      "cut": [
       false,
-      false
+      true
      ],
      "url": "https://sourcelibrary.org/book/69525874ab34727b1f045110?page=351",
      "book_id": "69525874ab34727b1f045110",
@@ -13471,25 +13454,8 @@
      "chosen_because": "Raphson 1702: the hylozoists and their supposed origin in Strato, as Cudworth framed it."
     },
     {
-     "quote": "Hylozoism the philosophical doctrine that all matter is in some sense alive, when philosophically understood, is the highest aspect of Pantheism.",
-     "quote_marked": "Hylozoism \u0001the philosophical doctrine that all matter is in some sense alive\u0002, when philosophically understood, is the highest aspect of Pantheism.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/695595e57bd6d2cd1d61f909?page=890",
-     "book_id": "695595e57bd6d2cd1d61f909",
-     "page": 890,
-     "title": "The Secret Doctrine Vol. I",
-     "author": "Helena Petrovna Blavatsky",
-     "work_year": 1867,
-     "date_basis": "work:author_lifespan",
-     "edition_year": 1888,
-     "chosen_because": "Blavatsky defines hylozoism as all matter being in some sense alive."
-    },
-    {
-     "quote": "Still, we do not meet a definite philosophical expression of it until the hylozoism [the doctrine that all matter has life] of the Ionian philosophers in the first half of the sixth century before Christ.",
-     "quote_marked": "Still, we do not meet a definite philosophical expression of it until the \u0001hylozoism\u0002 \u0003the doctrine that all matter has life\u0004 of the Ionian philosophers in the first half of the sixth century before Christ.",
+     "quote": "still, we do not meet a definite philosophical expression of it until the hylozoism of the Ionic philosophers, in the first half of the sixth century before Christ.",
+     "quote_marked": "still, we do not meet a definite philosophical expression of it until the \u0001hylozoism\u0002 of the Ionic philosophers, in the first half of the sixth century before Christ.",
      "cut": [
       false,
       false
@@ -13825,8 +13791,8 @@
    },
    "passages": [
     {
-     "quote": "Thus, Animism, in its full development, includes the belief in controlling deities, subordinate spirits, souls, and a future state, all of which practically result in some kind of active worship.",
-     "quote_marked": "Thus, Animism, in its full development, includes the belief in controlling deities, subordinate spirits, souls, and a future state, all of which practically result in some kind of active worship.",
+     "quote": "Thus Animism, in its full development, includes the belief in controlling deities and subordinate spirits, in souls, and in a future state, these doctrines practically resulting in some kind of active worship.",
+     "quote_marked": "Thus Animism, in its full development, includes the belief in controlling deities and subordinate spirits, in souls, and in a future state, these doctrines practically resulting in some kind of active worship.",
      "cut": [
       false,
       false
@@ -13842,8 +13808,8 @@
      "chosen_because": "Tylor's own definition in Primitive Culture"
     },
     {
-     "quote": "\"The vital question for the Animist,\" he says, \"is how to place his own soul in relation to the souls surrounding him, and to their powers, which are partly injurious and partly useful, with as little danger and as much advantage to himself as possible.",
-     "quote_marked": "\"The vital question for the Animist,\" he says, \"is how to place his own soul in relation to the souls surrounding him, and to their powers, which are partly injurious and partly useful, with as little danger and as much advantage to himself as possible.",
+     "quote": "\"The vital question for the Animist,\" he says, \"is how to place his own soul in relation to the souls surrounding him, and to their powers, which are partly injurious and and partly useful, with as little danger and as much advantage to himself as possible.",
+     "quote_marked": "\"The vital question for the Animist,\" he says, \"is how to place his own soul in relation to the souls surrounding him, and to their powers, which are partly injurious and and partly useful, with as little danger and as much advantage to himself as possible.",
      "cut": [
       false,
       false
@@ -13876,10 +13842,10 @@
      "chosen_because": "Jaina belief that earth, water, fire and wind have souls, labelled animistic"
     },
     {
-     "quote": "ISLAM AND ANIMISM Fingernails are connected with the soul and hold spiritual value. The same is true of teeth. Spittle, perspiration, tears, and other bodily excretions all contain \"soul-stuff,\" and one can see in all the superstitions of the animist the same practices that are attributed to the Prophet Muhammad and his companions in Muslim Tradition.",
-     "quote_marked": "ISLAM AND ANIMISM Fingernails are connected with the soul and hold spiritual value. The same is true of teeth. Spittle, perspiration, tears, and other bodily excretions all contain \"soul-stuff,\" and one can see in all the superstitions of the animist the same practices that are attributed to the Prophet Muhammad and his companions in Muslim Tradition.",
+     "quote": "ISLAM AND ANIMISM finger nails are connected with the soul and have spiritual value (p. 38). Also the teeth (p. 39). Spittle, perspira- tion, tears and the other excretions of the body all contain soul-stuff (pp. 40-47) and one may see in all the supersti- tions of the animist the same practices that are related of Mohammed the Prophet and his companions in Moslem Tradition.",
+     "quote_marked": "ISLAM AND ANIMISM finger nails are connected with the soul and have spiritual value (p. 38). Also the teeth (p. 39). Spittle, perspira- tion, tears and the other excretions of the body all contain soul-stuff (pp. 40-47) and one may see in all the supersti- tions of the animist the same practices that are related of Mohammed the Prophet and his companions in Moslem Tradition.",
      "cut": [
-      false,
+      true,
       false
      ],
      "url": "https://sourcelibrary.org/book/69907933b621b177c1af58ab?page=33",
@@ -14427,8 +14393,8 @@
      "chosen_because": "Erastus: univocal vs equivocal generation from decaying matter"
     },
     {
-     "quote": "Equivocal or spontaneous generation, that is, a production of plants without seeds, and of living creatures without any other parents but accident and putrefaction, however absurd it may seem to us, was an opinion that prevailed almost universally, till microscopes overturned it by demonstrating that all plants have their seeds, and all animals their eggs: whence other plants and other animals, exactly of the same species, are perpetually and unalterably produced.",
-     "quote_marked": "Equivocal or \u0001spontaneous generation\u0002, that is, a production of plants without seeds, and of living creatures without any other parents but accident and putrefaction, however absurd it may seem to us, was an opinion that prevailed almost universally, till \u0001microscopes\u0002 overturned it by demonstrating that all plants have their seeds, and all animals their eggs: whence other plants and other animals, exactly of the same species, are perpetually and unalterably produced.",
+     "quote": "Equivocal or spontaneous Generation, that is, a Production of Plants without Seeds, and of living Creatures without any other Parents but Accident and Putrefaction, however absurd it may seem to us, was an Opinion that prevailed, almost universally, till Microscopes overturn'd it; by demonstrating that all Plants have their Seeds, and all Animals their Eggs: whence other Plants and other Animals, exactly of the same Species, are perpetually and unalterably produced.",
+     "quote_marked": "Equivocal or spontaneous Generation, that is, a Production of Plants without Seeds, and of living Creatures without any other Parents but Accident and Putrefaction, however absurd it may seem to us, was an Opinion that prevailed, almost universally, till Microscopes overturn'd it; by demonstrating that all Plants have their Seeds, and all Animals their Eggs: whence other Plants and other Animals, exactly of the same Species, are perpetually and unalterably produced.",
      "cut": [
       false,
       false
@@ -15170,8 +15136,8 @@
      "chosen_because": "Svatmarama: dissolving breath and mind brings liberation."
     },
     {
-     "quote": "\" Bhagavad Gîtâ, VI, 19. 4. Hatha Yoga—an almost entirely physiological process, by which the body may be prepared for the higher forms of yoga,",
-     "quote_marked": "\" Bhagavad Gîtâ, VI, 19. 4. Hatha Yoga—an almost entirely physiological process, by which the body may be prepared for the higher forms of \u0001yoga\u0002,",
+     "quote": "Gîtâ, VI, 19. 4. Hatha Yoga—an almost entirely physiological process, by which the body may be prepared for the higher forms of yoga,",
+     "quote_marked": "Gîtâ, VI, 19. 4. Hatha Yoga—an almost entirely physiological process, by which the body may be prepared for the higher forms of \u0001yoga\u0002,",
      "cut": [
       false,
       false
@@ -15187,8 +15153,8 @@
      "chosen_because": "Hatha yoga as a physiological process preparing the body for higher yoga."
     },
     {
-     "quote": "Hatha Yoga was promoted and practiced by Matsendra Nath and Goraksh Nath and their followers, and by many sects of ascetics in this country (India).",
-     "quote_marked": "Hatha Yoga was promoted and practiced by Matsendra Nath and Goraksh Nath and their followers, and by many sects of ascetics in this country (India).",
+     "quote": "Hatha Yoga was promoted and practised by Matsendra Nath and Goraksh Nath and their followers, and by many sects of ascetics in this country (India).",
+     "quote_marked": "Hatha Yoga was promoted and practised by Matsendra Nath and Goraksh Nath and their followers, and by many sects of ascetics in this country (India).",
      "cut": [
       false,
       false
@@ -15592,8 +15558,8 @@
      "chosen_because": "mechanical philosophers' preformation answer to generation"
     },
     {
-     "quote": "> \"We may thus, with the greatest propriety, deny to the mechanical philosophers and mathematicians of recent times any authority with regard to their views of the administration of the universe;",
-     "quote_marked": "> \"We may thus, with the greatest propriety, deny to the mechanical philosophers and mathematicians of recent times any authority with regard to their views of the administration of the universe;",
+     "quote": "> “ We may thus, with the greatest propriety, deny to the mechanical philosophers and mathematicians of recent times any authority with regard to their views of the administra- tion of the universe ;",
+     "quote_marked": "> “ We may thus, with the greatest propriety, deny to the mechanical philosophers and mathematicians of recent times any authority with regard to their views of the administra- tion of the universe ;",
      "cut": [
       false,
       false
@@ -16211,8 +16177,8 @@
      "chosen_because": "Ficino: precepts avoiding resolution and suffocation"
     },
     {
-     "quote": "\" Gaozi [Master Gao] says: For those who know how to prevent harm to body and mind, the effects on prolonging life are twenty-fold: Regulating oneself according to the four seasons and protecting oneself at dawn and dusk can prolong life.",
-     "quote_marked": "\" \u0001Gaozi\u0002 \u0003Master Gao\u0004 says: For those who know how to prevent harm to body and mind, the effects on prolonging life are twenty-fold: Regulating oneself according to the four seasons and protecting oneself at dawn and dusk can prolong life.",
+     "quote": "Master Gao stated: \"Knowing what harms the body and mind brings the efficacy of extending one's years: Harmonizing and regulating oneself through the twenty-four hours, and protecting oneself morning and evening, can extend one's years.",
+     "quote_marked": "Master Gao stated: \"Knowing what harms the body and mind brings the efficacy of extending one's years: Harmonizing and regulating oneself through the twenty-four hours, and protecting oneself morning and evening, can extend one's years.",
      "cut": [
       false,
       false
@@ -16382,8 +16348,8 @@
      "chosen_because": "1798: the value of Hufeland's Art of Prolonging Human Life"
     },
     {
-     "quote": "Listen to the picture that the old, honest Hufeland paints of the masturbator in his Macrobiotics : \"Terrible is the stamp that nature places upon such a sinner!",
-     "quote_marked": "Listen to the picture that the old, honest Hufeland paints of the masturbator in his Macrobiotics : \"Terrible is the stamp that nature places upon such a sinner!",
+     "quote": "Listen to the picture that the old, honest Hufeland paints of the masturbator in his Macrobiotics: \"Terrible is the stamp that nature places upon such a sinner!",
+     "quote_marked": "Listen to the picture that the old, honest Hufeland paints of the masturbator in his Macrobiotics: \"Terrible is the stamp that nature places upon such a sinner!",
      "cut": [
       false,
       false
@@ -17076,8 +17042,8 @@
      "chosen_because": "Sendivogius: the red universal gold tincture for medicine"
     },
     {
-     "quote": "' In this theory, the two main goals of alchemy met: the Egyptian search for the art of making gold, and the Chinese search for the Elixir of Life, the universal medicine.",
-     "quote_marked": "' In this theory, the two main goals of alchemy met: the Egyptian search for the art of making gold, and the Chinese search for the Elixir of Life, the universal medicine.",
+     "quote": "In this theory the two main streams of alchemy met—the search for the art of making gold, coming from Egypt; the search for the elixir of life, the universal medicine, rising in China.",
+     "quote_marked": "In this theory the two main streams of alchemy met—the search for the art of making gold, coming from Egypt; the search for the elixir of life, the universal medicine, rising in China.",
      "cut": [
       false,
       false
@@ -18935,8 +18901,8 @@
      "chosen_because": "Fludd: natural magic seeks heavenly benefits for the body by natural means."
     },
     {
-     "quote": "Wolfgangi Hildebrandi MAGIA NATURALIS Magia Naturalis That is: A highly useful and proven Book of Arts , therein are contained many magnificent and secret arts , namely how one may perform all manner of miracles with the aid of natural things , which have never before been seen nor heard .",
-     "quote_marked": "Wolfgangi Hildebrandi MAGIA NATURALIS Magia Naturalis That is: A highly useful and proven Book of Arts , therein are contained many magnificent and secret arts , namely how one may perform all manner of miracles with the aid of natural things , which have never before been seen nor heard .",
+     "quote": "Wolfgangi Hildebrandi MAGIA NATURALIS Magia Naturalis That is: A highly useful and proven Book of Arts, therein are contained many magnificent and secret arts, namely how one may perform all manner of miracles with the aid of natural things, which have never before been seen nor heard.",
+     "quote_marked": "Wolfgangi Hildebrandi MAGIA NATURALIS Magia Naturalis That is: A highly useful and proven Book of Arts, therein are contained many magnificent and secret arts, namely how one may perform all manner of miracles with the aid of natural things, which have never before been seen nor heard.",
      "cut": [
       false,
       false
@@ -19246,8 +19212,8 @@
      "chosen_because": "Picatrix: making the talisman's members must follow nature"
     },
     {
-     "quote": "\" An inquirer. A term generally used for a student of divinity is Ṭālibu ’l-‘ilm. TALISMAN. Arabic (طلسم) ṭilsam; plural ṭalāsim. The English word is a corruption of the Arabic.",
-     "quote_marked": "\" An inquirer. A term generally used for a student of divinity is Ṭālibu ’l-‘ilm. TALISMAN. Arabic (طلسم) ṭilsam; plural ṭalāsim. The English word is a corruption of the Arabic.",
+     "quote": "An inquirer. A term generally used for a student of divinity, is Ṭālibu ’l-‘ilm. TALISMAN. Arabic (طلسم) ṭilsam; pl. ṭalāsim. The English word is a corruption of the Arabic.",
+     "quote_marked": "An inquirer. A term generally used for a student of divinity, is Ṭālibu ’l-‘ilm. TALISMAN. Arabic (طلسم) ṭilsam; pl. ṭalāsim. The English word is a corruption of the Arabic.",
      "cut": [
       false,
       false
@@ -19480,8 +19446,8 @@
      "chosen_because": "1467 Augustine's quotation of the Asclepius statues passage"
     },
     {
-     "quote": ", \"men-pillars\"), were considered Statuas animatas, sensu & spiritu plenas (animated statues, full of sense and spirit), as Trismegistus calls them, or ’Αγάλματα θείας μετουσίας ἀνάπλεα (idols filled with divine influence), as Jamblichus phrases it: \"Idols filled with divine influence, and animated statues furnished with something within them that has life and perception.",
-     "quote_marked": ", \"men-pillars\"), were considered Statuas animatas, sensu & spiritu plenas (animated statues, full of sense and spirit), as \u0001Trismegistus\u0002 calls them, or ’Αγάλματα θείας μετουσίας ἀνάπλεα (idols filled with divine influence), as \u0001Jamblichus\u0002 phrases it: \"Idols filled with divine influence, and animated statues furnished with something within them that has life and perception.",
+     "quote": "our men-pillars) they accounted Statuas animatas, sensu & spiritu plenas, as Trismegistus calls them; or ’Αγάλματα θείας μετουσίας ἀνάπλεα, as Jamblichus words it. i. e. \"Idols filled with divine influence, and animated statues furnished with something within them that hath life and perception.\"",
+     "quote_marked": "our men-pillars) they accounted Statuas animatas, sensu & spiritu plenas, as Trismegistus calls them; or ’Αγάλματα θείας μετουσίας ἀνάπλεα, as Jamblichus words it. i. e. \"Idols filled with divine influence, and animated statues furnished with something within them that hath life and perception.\"",
      "cut": [
       false,
       false
@@ -19675,23 +19641,6 @@
     }
    },
    "passages": [
-    {
-     "quote": "Sixth Chapter One should perform the prāṇapratiṣṭhā [infusion of life] there, with a focused mind. One should place the kalā-nature into the vessel again with the prāṇapratiṣṭhā mantra, while reciting the root-mantra.",
-     "quote_marked": "Sixth Chapter One should perform the \u0001prāṇapratiṣṭhā\u0002 \u0003infusion of life\u0004 there, with a focused mind. One should place the \u0001kalā\u0002-nature into the vessel again with the \u0001prāṇapratiṣṭhā\u0002 mantra, while reciting the root-mantra.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69d7e0f6e9e5e67989c3726a?page=101",
-     "book_id": "69d7e0f6e9e5e67989c3726a",
-     "page": 101,
-     "title": "The Essence of the Manifested World Tantra",
-     "author": "Shankaracharya (attr.)",
-     "work_year": 1100,
-     "date_basis": "work:model_knowledge",
-     "edition_year": 1935,
-     "chosen_because": "tantra: perform the prāṇapratiṣṭhā, placing the life-nature into the vessel with its mantra"
-    },
     {
      "quote": "Finally, the consecration [original: rab gnas]. This refers to the act of summoning and causing the syllable Hum to enter and remain firm.",
      "quote_marked": "Finally, the \u0001consecration\u0002 \u0003original: rab gnas\u0004. This refers to the act of summoning and causing the syllable \u0001Hum\u0002 to enter and remain firm.",
@@ -20064,8 +20013,8 @@
    },
    "passages": [
     {
-     "quote": "But we must by no means forget the generation of homunculi. For there is some truth in this matter, although for a long time it was held in a most occult manner and with secrecy, while there was no little doubt and questioning among some of the old Philosophers whether it was possible for Nature and Art to beget a man without the female body and the natural womb.",
-     "quote_marked": "But we must by no means forget the generation of \u0001homunculi\u0002. For there is some truth in this matter, although for a long time it was held in a most occult manner and with secrecy, while there was no little doubt and questioning among some of the old Philosophers whether it was possible for Nature and Art to beget a man without the female body and the natural womb.",
+     "quote": "But neither must we by any means forget the generation of homunculi. For there is some truth in this thing, although for a long time it was held in a most occult manner and with secrecy, while there was no little doubt and question among some of the old Philosophers, whether it was possible to Nature and Art, that a man should be begotten without the female body and the natural womb.",
+     "quote_marked": "But neither must we by any means forget the generation of homunculi. For there is some truth in this thing, although for a long time it was held in a most occult manner and with secrecy, while there was no little doubt and question among some of the old Philosophers, whether it was possible to Nature and Art, that a man should be begotten without the female body and the natural womb.",
      "cut": [
       false,
       false
@@ -20115,8 +20064,8 @@
      "chosen_because": "a 1705 dismissal of Paracelsus's homuncio as fable"
     },
     {
-     "quote": "We call it homunculus and it should then be brought up just like another child with great diligence and care until it comes to its days of understanding.",
-     "quote_marked": "We call it \u0001homunculus\u0002 and it should then be brought up just like another child with great diligence and care until it comes to its days of understanding.",
+     "quote": "We call it homunculus and it should then be brought up just like another child with great diligence and care till it comes to its days of understanding.",
+     "quote_marked": "We call it \u0001homunculus\u0002 and it should then be brought up just like another child with great diligence and care till it comes to its days of understanding.",
      "cut": [
       false,
       false
@@ -20313,8 +20262,8 @@
      "chosen_because": "1470: Alexander Severus performs morning rites in his lararium"
     },
     {
-     "quote": "a mystic term in alchemy, having a very different meaning from the one usually attributed to it. Lararium (Lat.). A room in the houses of ancient Romans where the Lares, or household gods, were kept along with other family relics.",
-     "quote_marked": "a mystic term in alchemy, having a very different meaning from the one usually attributed to it. \u0001Lararium\u0002 (Lat.). A room in the houses of ancient Romans where the Lares, or household gods, were kept along with other family relics.",
+     "quote": "a mystic term in alchemy, having quite a different meaning from that usually attributed to it. Lararium (Lat.). An apartment in the house of ancient Romans where the Lares or household gods were preserved, with other family relics.",
+     "quote_marked": "a mystic term in alchemy, having quite a different meaning from that usually attributed to it. \u0001Lararium\u0002 (Lat.). An apartment in the house of ancient Romans where the Lares or household gods were preserved, with other family relics.",
      "cut": [
       false,
       false
@@ -20556,23 +20505,6 @@
      "date_basis": "work:model_knowledge",
      "edition_year": 1904,
      "chosen_because": "Yoga Sutra 2.49: regulation of the flow of inhalation and exhalation is pranayama"
-    },
-    {
-     "quote": "Then, prāṇāyāma [breath control] must be performed, as it says \"the prāṇāyāma with nyāsa.\" First, having exhaled the limited air through the right nostril, and having inhaled through the left, one should contemplate the air-sphere located in the sun-sphere, with its seed, smoky-colored.",
-     "quote_marked": "Then, \u0001prāṇāyāma\u0002 \u0003breath control\u0004 must be performed, as it says \"the \u0001prāṇāyāma\u0002 with \u0001nyāsa\u0002.\" First, having exhaled the limited air through the right nostril, and having inhaled through the left, one should contemplate the air-sphere located in the sun-sphere, with its seed, smoky-colored.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69d7e0f6e9e5e67989c3726a?page=94",
-     "book_id": "69d7e0f6e9e5e67989c3726a",
-     "page": 94,
-     "title": "The Essence of the Manifested World Tantra",
-     "author": "Shankaracharya (attr.)",
-     "work_year": 1100,
-     "date_basis": "work:model_knowledge",
-     "edition_year": 1935,
-     "chosen_because": "tantric instruction: exhale through the right nostril, inhale through the left"
     },
     {
      "quote": "37 Second Instruction Root Text: Now, when the posture is firm, the yogi—having mastered the senses and consuming wholesome, moderate food—should practice breath control prāṇāyāma according to the path instructed by the guru.",
@@ -21166,25 +21098,7 @@
      "basis": "work:model_knowledge"
     }
    },
-   "passages": [
-    {
-     "quote": "\" In the Tantric way of life, this is referred to as kāyasādhanā, dehasiddhi, or kāyakalpa—a type of physical culture intended to make the body divine.",
-     "quote_marked": "\" In the Tantric way of life, this is referred to as kāyasādhanā, dehasiddhi, or kāyakalpa—a type of physical culture intended to make the body divine.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69d006e57d7491182a232833?page=6",
-     "book_id": "69d006e57d7491182a232833",
-     "page": 6,
-     "title": "Rasārṇavakalpa (English critical edition)",
-     "author": "Mira Roy (ed.)",
-     "work_year": 1300,
-     "date_basis": "work:model_knowledge",
-     "edition_year": 1976,
-     "chosen_because": "defines kayakalpa as physical culture to make the body divine"
-    }
-   ]
+   "passages": []
   },
   {
    "id": "chulen",
@@ -21583,8 +21497,8 @@
      "chosen_because": "Shen Kuo: nourishing-life practitioners say guarding the Yellow Court brings longevity"
     },
     {
-     "quote": "The Yangsheng Fang Daoyin Fa [Prescriptions for Nurturing Life: Methods of Guiding and Pulling] states: Sit straight and exert force on the waist and chest, lift the head, bring both hands together, and press them forward against the mat.",
-     "quote_marked": "The \u0001Yangsheng Fang Daoyin Fa\u0002 \u0003Prescriptions for Nurturing Life: Methods of Guiding and Pulling\u0004 states: Sit straight and exert force on the waist and chest, lift the head, bring both hands together, and press them forward against the mat.",
+     "quote": "Methods of nourishing vitality and daoyin [guiding and pulling exercises] state: Sit upright, extend the waist and chest, and look up, raising the head. Place the fingers of both hands facing each other, pressing firmly forward against the mat so that the body is taut.",
+     "quote_marked": "Methods of nourishing vitality and \u0001daoyin\u0002 \u0003guiding and pulling exercises\u0004 state: Sit upright, extend the waist and chest, and look up, raising the head. Place the fingers of both hands facing each other, pressing firmly forward against the mat so that the body is taut.",
      "cut": [
       false,
       false
@@ -21797,8 +21711,8 @@
      "chosen_because": "Baopuzi: emulate daoyin to extend years"
     },
     {
-     "quote": "The Dao Yin Fa [Method of Guiding and Pulling] of the Yang Sheng Fang states: Sit straight with the waist erect, raise the left hand with the palm facing upward, push back the right arm, and cover it with the right hand.",
-     "quote_marked": "The \u0001Dao Yin Fa\u0002 \u0003Method of Guiding and Pulling\u0004 of the \u0001Yang Sheng Fang\u0002 states: Sit straight with the waist erect, raise the left hand with the palm facing upward, push back the right arm, and cover it with the right hand.",
+     "quote": "The Prescriptions for Nourishing Life on daoyin [guiding and pulling exercises] state: Sit and straighten the waist. Raise the left hand with the palm facing upward. Draw back the right arm with the right hand facing downward.",
+     "quote_marked": "The Prescriptions for Nourishing Life on \u0001daoyin\u0002 \u0003guiding and pulling exercises\u0004 state: Sit and straighten the waist. Raise the left hand with the palm facing upward. Draw back the right arm with the right hand facing downward.",
      "cut": [
       false,
       false
@@ -21831,8 +21745,8 @@
      "chosen_because": "Zhuangzi: daoyin practitioners who nurture the form and seek Pengzu's age"
     },
     {
-     "quote": "The Lord said: If one consumes herbal medicines but does not know the methods of fangzhong [the arts of the bedchamber], as well as xingqi [circulating breath] and daoyin [guiding and pulling exercises], then taking the medicine is of no benefit.",
-     "quote_marked": "The Lord said: If one consumes herbal medicines but does not know the methods of \u0001fangzhong\u0002 \u0003the arts of the bedchamber\u0004, as well as \u0001xingqi\u0002 \u0003circulating breath\u0004 and \u0001daoyin\u0002 \u0003guiding and pulling exercises\u0004, then taking the medicine is of no benefit.",
+     "quote": "The Lord said: \"If one ingests herbs and botanical medicines but does not understand the arts of the bedchamber, and does not practice circulating the qi [vital energy] and gymnastic exercises daoyin [guiding and pulling exercises], taking medicine yields no benefit, and one will ultimately never attain the Way.",
+     "quote_marked": "The Lord said: \"If one ingests herbs and botanical medicines but does not understand the arts of the bedchamber, and does not practice circulating the \u0001qi\u0002 \u0003vital energy\u0004 and gymnastic exercises \u0001daoyin\u0002 \u0003guiding and pulling exercises\u0004, taking medicine yields no benefit, and one will ultimately never attain the Way.",
      "cut": [
       false,
       false
@@ -21996,10 +21910,10 @@
    },
    "passages": [
     {
-     "quote": "closing the breath and swallowing it, which is called Embryonic Breathing [a deep, internal meditation on breath]. Practice rinsing the spring beneath the tongue and swallowing it, which is called Embryonic Eating [the practice of swallowing saliva for nourishment].",
-     "quote_marked": "closing the breath and swallowing it, which is called \u0001Embryonic Breathing\u0002 \u0003a deep, internal meditation on breath\u0004. Practice rinsing the spring beneath the tongue and swallowing it, which is called \u0001Embryonic Eating\u0002 \u0003the practice of swallowing saliva for nourishment\u0004.",
+     "quote": "holding the qi [breath] and swallowing it is called taixi [embryonic breathing]. Rinsing the mouth with the spring beneath the tongue and swallowing it is called taishi [embryonic feeding].",
+     "quote_marked": "holding the \u0001qi\u0002 \u0003breath\u0004 and swallowing it is called \u0001taixi\u0002 \u0003embryonic breathing\u0004. Rinsing the mouth with the spring beneath the tongue and swallowing it is called \u0001taishi\u0002 \u0003embryonic feeding\u0004.",
      "cut": [
-      false,
+      true,
       false
      ],
      "url": "https://sourcelibrary.org/book/6a1d60cdd274b9630ccf8ff4?page=18",
@@ -22209,8 +22123,8 @@
    },
    "passages": [
     {
-     "quote": "In his youth, he loved the Dao and entered Mount Tai to gather herbs, practicing the arts of juegu [abstaining from grains], escaping the world, and preserving his life.",
-     "quote_marked": "In his youth, he loved the Dao and entered Mount Tai to gather herbs, practicing the arts of \u0001juegu\u0002 \u0003abstaining from grains\u0004, escaping the world, and preserving his life.",
+     "quote": "In his youth he loved the Dao, entering Mount Tai to gather herbs and cultivate the arts of juegu [abstaining from grain], retreating from worldly affairs, and preserving his bodily integrity.",
+     "quote_marked": "In his youth he loved the Dao, entering Mount Tai to gather herbs and cultivate the arts of \u0001juegu\u0002 \u0003abstaining from grain\u0004, retreating from worldly affairs, and preserving his bodily integrity.",
      "cut": [
       false,
       false
@@ -22653,8 +22567,8 @@
    },
    "passages": [
     {
-     "quote": "Once the Mysterious Embryo has formed, it generates its own body; this is the Neidan [Internal Elixir], the way of immortality. Energy breathes from within the formed embryo.",
-     "quote_marked": "Once the Mysterious Embryo has formed, it generates its own body; this is the \u0001Neidan\u0002 \u0003Internal Elixir\u0004, the way of immortality. Energy breathes from within the formed embryo.",
+     "quote": "Once the mysterious embryo has formed, it spontaneously generates the body; this is the way of the internal elixir and deathlessness.",
+     "quote_marked": "Once the mysterious embryo has formed, it spontaneously generates the body; this is the way of the internal elixir and deathlessness.",
      "cut": [
       false,
       false
@@ -22704,8 +22618,8 @@
      "chosen_because": "embryonic breathing is really the inner elixir; cures disease and extends years"
     },
     {
-     "quote": "At the beginning of cultivating the elixir [neidan/internal alchemy], use the Root of Heaven and Earth [the primal source] as the root of the medicine, and use the Mother of Yin and Yang [the origin of duality] as the mother of the elixir.",
-     "quote_marked": "At the beginning of \u0001cultivating the elixir\u0002 \u0003neidan/internal alchemy\u0004, use the \u0001Root of Heaven and Earth\u0002 \u0003the primal source\u0004 as the root of the medicine, and use the \u0001Mother of Yin and Yang\u0002 \u0003the origin of duality\u0004 as the mother of the elixir.",
+     "quote": "When beginning the cultivation of the elixir, one takes the root of Heaven and Earth as the root of the medicine, and takes the mother of yin [receptive cosmic force] and yang [active cosmic force] as the mother of the elixir.",
+     "quote_marked": "When beginning the cultivation of the elixir, one takes the root of Heaven and Earth as the root of the medicine, and takes the mother of \u0001yin\u0002 \u0003receptive cosmic force\u0004 and \u0001yang\u0002 \u0003active cosmic force\u0004 as the mother of the elixir.",
      "cut": [
       false,
       false
@@ -22911,8 +22825,8 @@
      "chosen_because": "1766 claim that a bodily liquor circulates fresh vigour"
     },
     {
-     "quote": "You will know when you are on the right track, and will be aware of your progress, by reason of your increasing sense of vigor, vitality, and energy.",
-     "quote_marked": "You will know when you are on the right track, and will be aware of your progress, by reason of your increasing sense of vigor, vitality, and energy.",
+     "quote": "You will know when you are on the right track, and will be aware of your progress, by reason of your increasing sense of vigor, vitality and vim.",
+     "quote_marked": "You will know when you are on the right track, and will be aware of your progress, by reason of your increasing sense of vigor, vitality and vim.",
      "cut": [
       false,
       false
@@ -23127,10 +23041,10 @@
      "chosen_because": "Croll: the spiritual medicine gives renewal of youth already lost"
     },
     {
-     "quote": "JASTROW-CLAY OLD BABYLONIAN GILGAMESH EPIC In the Epic, the story leads to another episode attached to Gilgamesh: the search for a magic plant growing in deep water that has the power of restoring youth to old age.",
-     "quote_marked": "JASTROW-CLAY OLD BABYLONIAN GILGAMESH EPIC In the Epic, the story leads to another episode attached to Gilgamesh: the search for a magic plant growing in deep water that has the power of restoring youth to old age.",
+     "quote": "Gilgamesh Epic.123 In the Epic the story leads to another episode attached to Gilgamesh, namely, the search for a magic plant growing in deep water, which has the power of restoring old age to youth.",
+     "quote_marked": "Gilgamesh Epic.123 In the Epic the story leads to another episode attached to Gilgamesh, namely, the search for a magic plant growing in deep water, which has the power of restoring old age to youth.",
      "cut": [
-      false,
+      true,
       false
      ],
      "url": "https://sourcelibrary.org/book/69ad66130b6018c6ed17a683?page=61",
@@ -23442,10 +23356,10 @@
      "chosen_because": "Longaevitas as the third stage of life; hardly twenty in a thousand Europeans reach 80"
     },
     {
-     "quote": "PEACHES CONFER LONGEVITY. \"And the Son of Heaven, having eaten his, put away the stones, saying he intended to sow them. But Wang-mu said: 'Those peach trees bear fruit only once in three thousand years;",
-     "quote_marked": "PEACHES CONFER LONGEVITY. \"And the Son of Heaven, having eaten his, put away the stones, saying he intended to sow them. But Wang-mu said: 'Those peach trees bear fruit only once in three thousand years;",
+     "quote": "PEACHES CONFER LONGEVITY. “ Heaven having eaten his, put away the stones, saying he intended “ to sow them. But Wang-mu said: ‘Those peach trees bear fruit “ only once in three thousand years;",
+     "quote_marked": "PEACHES CONFER LONGEVITY. “ Heaven having eaten his, put away the stones, saying he intended “ to sow them. But Wang-mu said: ‘Those peach trees bear fruit “ only once in three thousand years;",
      "cut": [
-      false,
+      true,
       false
      ],
      "url": "https://sourcelibrary.org/book/6990796db621b177c1af7000?page=324",
@@ -23680,8 +23594,8 @@
      "chosen_because": "the First Emperor seeking immortals at the sea"
     },
     {
-     "quote": "If taken for one to two years, one will \"return to youth\" [Fandao Huantong], with a complexion like a lotus flower and all illnesses removed. This was originally the technique of the transcendents. Believe it!",
-     "quote_marked": "If taken for one to two years, one will \"return to youth\" \u0003Fandao Huantong\u0004, with a complexion like a lotus flower and all illnesses removed. This was originally the technique of the transcendents. Believe it!",
+     "quote": "Take for one to two years, and you will return from old age to youth, your facial appearance becoming like a lotus flower, and all illnesses will be eliminated. This is fundamentally the method of the immortals. Believe in it, believe in it!",
+     "quote_marked": "Take for one to two years, and you will return from old age to youth, your facial appearance becoming like a lotus flower, and all illnesses will be eliminated. This is fundamentally the method of the immortals. Believe in it, believe in it!",
      "cut": [
       false,
       false
@@ -24187,8 +24101,8 @@
      "chosen_because": "Aquinas: acedia is sadness regarding a spiritual good"
     },
     {
-     "quote": "Such manual work was the hermit's great protection against the monastic sin of \"accidie\"—the restless misery and boredom that overcomes a person dedicated to prayer when their spiritual insight fails them.",
-     "quote_marked": "Such manual work was the hermit's great protection against the monastic sin of \"\u0001accidie\u0002\"—the restless misery and boredom that overcomes a person dedicated to prayer when their spiritual insight fails them.",
+     "quote": "Such manual work was the great protection of the hermit against the monastic sin of \"accidie\"; the restless misery and boredom which comes over the contemplative when his spiritual insight fails him,",
+     "quote_marked": "Such manual work was the great protection of the hermit against the monastic sin of \"\u0001accidie\u0002\"; the restless misery and boredom which comes over the contemplative when his spiritual insight fails him,",
      "cut": [
       false,
       false
@@ -24444,8 +24358,8 @@
      "chosen_because": "Hero's automaton theatres and why they were popular."
     },
     {
-     "quote": "From which foundation, subsequently, countless artificial automata [self-moving machines], or such machines that move themselves, have been invented, such as the automata of Daedalus, mentioned by Plato in the Meno .",
-     "quote_marked": "From which foundation, subsequently, countless artificial \u0001automata\u0002 \u0003self-moving machines\u0004, or such machines that move themselves, have been invented, such as the automata of Daedalus, mentioned by Plato in the Meno .",
+     "quote": "From which foundation, subsequently, countless artificial automata [self-moving machines], or such machines that move themselves, have been invented, such as the automata of Daedalus, mentioned by Plato in the Meno.",
+     "quote_marked": "From which foundation, subsequently, countless artificial \u0001automata\u0002 \u0003self-moving machines\u0004, or such machines that move themselves, have been invented, such as the automata of Daedalus, mentioned by Plato in the Meno.",
      "cut": [
       false,
       false
@@ -24777,11 +24691,11 @@
    },
    "passages": [
     {
-     "quote": "To speak more specifically, it is certain—despite all the empty claims of Lucretius and other atheists or semi-atheists to the contrary—that life and sense could never possibly spring out of dead and senseless matter as its only original source.",
-     "quote_marked": "To speak more specifically, it is certain—despite all the empty claims of \u0001Lucretius\u0002 and other \u0001atheists\u0002 or \u0001semi-atheists\u0002 to the contrary—that \u0001life and sense\u0002 could never possibly spring out of \u0001dead and senseless matter\u0002 as its only \u0001original\u0002 source.",
+     "quote": "to ſpeak more particularly, it is certain, notwithſtanding all the vain pretences of Lucretius and other Atheiſts, or Semi-Atheiſts, to the con- trary ; that Life and Senſe could never poſſibly ſpring, out of Dead and Senſleſs Matter, as its only Original,",
+     "quote_marked": "to ſpeak more particularly, it is certain, notwithſtanding all the vain pretences of \u0001Lucretius\u0002 and other \u0001Atheiſts\u0002, or \u0001Semi-Atheiſts\u0002, to the con- trary ; that \u0001Life and Senſe\u0002 could never poſſibly ſpring, out of \u0001Dead and Senſleſs Matter\u0002, as its only \u0001Original\u0002,",
      "cut": [
-      false,
-      false
+      true,
+      true
      ],
      "url": "https://sourcelibrary.org/book/69525874ab34727b1f045110?page=746",
      "book_id": "69525874ab34727b1f045110",
@@ -24828,11 +24742,11 @@
      "chosen_because": "Tantric objection that inert elements cannot yield spiritual fruits"
     },
     {
-     "quote": "That we owe the universe to the holy creative Trinity, called Inert Matter, Senseless Force, and Blind Chance. Of the real essence and nature of any of these three, Science knows nothing, but this is a trifling detail.",
-     "quote_marked": "That we owe the universe to the holy creative Trinity, called Inert Matter, Senseless Force, and Blind Chance. Of the real essence and nature of any of these three, Science knows nothing, but this is a trifling detail.",
+     "quote": "That we owe the universe to the holy creative Trinity, called Inert Matter, Senseless Force and Blind Chance Of the real essence and nature of any of these three, Science knows nothing, but this is a trifling detail",
+     "quote_marked": "That we owe the universe to the holy creative Trinity, called Inert Matter, Senseless Force and Blind Chance Of the real essence and nature of any of these three, Science knows nothing, but this is a trifling detail",
      "cut": [
-      false,
-      false
+      true,
+      true
      ],
      "url": "https://sourcelibrary.org/book/695595e57bd6d2cd1d61f909?page=543",
      "book_id": "695595e57bd6d2cd1d61f909",
@@ -25441,8 +25355,8 @@
     "judge": "claude-opus-5-5",
     "reason": "'Spirit, Rūḥ (روح), Hebrew Ruach' gives one as the equivalent of the other",
     "passage": {
-     "quote": "(6) Angel, Malak (ملك), Hebrew Mal'akh, an angel or messenger of God. (7) Spirit, Rūḥ (روح), Hebrew Ruach. A term used both for the angel Gabriel and for Jesus Christ.",
-     "quote_marked": "(6) Angel, Malak (ملك), Hebrew Mal'akh, an angel or messenger of God. (7) Spirit, Rūḥ (روح), Hebrew Ruach. A term used both for the angel Gabriel and for Jesus Christ.",
+     "quote": "(6) Angel, Malak, ملك, Heb. מַלְאָךְ, an angel or messenger of God. (7) Spirit, Rūḥ, روح, Heb. רוּחַ. A term used both for the angel Gabriel and for Jesus Christ.",
+     "quote_marked": "(6) Angel, Malak, ملك, Heb. מַלְאָךְ, an angel or messenger of God. (7) Spirit, Rūḥ, روح, Heb. רוּחַ. A term used both for the angel Gabriel and for Jesus Christ.",
      "cut": [
       false,
       false
@@ -25690,8 +25604,8 @@
     "judge": "claude-opus-5-5",
     "reason": "groups manitou and mana as words for one mysterious force",
     "passage": {
-     "quote": "Words like the Algonquian manitou, the Dakota wakan or wakanda, the Melanesian mana, the Fijian kalou, the Maori atua, the Malagasy ndriamanitra, are used to denote a mysterious force or something wonderful or divine.",
-     "quote_marked": "Words like the Algonquian manitou, the Dakota wakan or wakanda, the Melanesian mana, the Fijian kalou, the Maori atua, the Malagasy ndriamanitra, are used to denote a mysterious force or something wonderful or divine.",
+     "quote": "Words like the Algonkin manitou, the Dacotah wakan or wakanda, the Melanesian mana, the Fijian kalou, the Maori atua, the Malagasy ndriamanitra, are used to denote a mysterious force or something wonderful or divine.",
+     "quote_marked": "Words like the Algonkin manitou, the Dacotah wakan or wakanda, the Melanesian mana, the Fijian kalou, the Maori atua, the Malagasy ndriamanitra, are used to denote a mysterious force or something wonderful or divine.",
      "cut": [
       false,
       false
@@ -25884,23 +25798,10 @@
    "type": "descends",
    "cooccurring_pages": 41,
    "provenance": {
-    "kind": "passage",
+    "kind": "background",
+    "model": "claude-opus-5-5",
     "claim": "Mesmer's universal fluid restates cosmic sympathy as a physical medium.",
-    "judge": "claude-opus-5-5",
-    "reason": "the premises of animal magnetism: a universal fluid and sympathy and antipathy between animated bodies",
-    "passage": {
-     "quote": "Bell, surnamed \"the Ingenious,\" an early practitioner in animal magnetism, thus describes the premises upon which the science was built: \"There is a universal fluid which fills all space. Every body is endowed with a certain quantity of electric fluid. There exists an attraction, or sympathy and antipathy, between animated bodies.",
-     "quote_marked": "Bell, surnamed \"the Ingenious,\" an early practitioner in animal magnetism, thus describes the premises upon which the science was built: \"There is a universal fluid which fills all space. Every body is endowed with a certain quantity of electric fluid. There exists an attraction, or sympathy and antipathy, between animated bodies.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/6a35349ac8ce407afbe05226?page=183",
-     "title": "Man: The Grand Symbol of the Mysteries",
-     "author": "Manly P. Hall",
-     "work_year": 1944,
-     "date_basis": "work:author_lifespan"
-    }
+    "passage_dropped": "the judged passage is not on the page as served (#7458)"
    }
   },
   {
@@ -26300,8 +26201,8 @@
     "judge": "claude-opus-5-5",
     "reason": "Paracelsus grounds the homunculus in putrefaction as the beginning of generation",
     "passage": {
-     "quote": ") A consideration of the production of the homunculus appears important to me because it shows the main content of alchemical ideas in enlarged form and complete development, a content that gives, moreover, the very thing that psychoanalysis would here look for. Paracelsus begins with the fact that putrefaction transforms all things into their first shape and is the beginning of generation and multiplication.",
-     "quote_marked": ") A consideration of the production of the homunculus appears important to me because it shows the main content of alchemical ideas in enlarged form and complete development, a content that gives, moreover, the very thing that psychoanalysis would here look for. Paracelsus begins with the fact that putrefaction transforms all things into their first shape and is the beginning of generation and multiplication.",
+     "quote": "A consideration of the production of the homunculus appears important to me because it shows the main content of alchemistic ideas in enlarged form and complete development, a content that gives, moreover, the very thing that psychoanalysis would here look for. Paracelsus begins with the fact that putrefaction transforms all things into their first shape and is the beginning of generation and multiplication.",
+     "quote_marked": "A consideration of the production of the homunculus appears important to me because it shows the main content of alchemistic ideas in enlarged form and complete development, a content that gives, moreover, the very thing that psychoanalysis would here look for. Paracelsus begins with the fact that putrefaction transforms all things into their first shape and is the beginning of generation and multiplication.",
      "cut": [
       false,
       false
@@ -26422,8 +26323,8 @@
     "judge": "claude-opus-5-5",
     "reason": "'Statuas animatas, sensu & spiritu plenas ... as Trismegistus calls them' attributes them to Hermes",
     "passage": {
-     "quote": ", \"men-pillars\"), were considered Statuas animatas, sensu & spiritu plenas (animated statues, full of sense and spirit), as Trismegistus calls them, or ’Αγάλματα θείας μετουσίας ἀνάπλεα (idols filled with divine influence), as Jamblichus phrases it: \"Idols filled with divine influence, and animated statues furnished with something within them that has life and perception.",
-     "quote_marked": ", \"men-pillars\"), were considered Statuas animatas, sensu & spiritu plenas (animated statues, full of sense and spirit), as \u0001Trismegistus\u0002 calls them, or ’Αγάλματα θείας μετουσίας ἀνάπλεα (idols filled with divine influence), as \u0001Jamblichus\u0002 phrases it: \"Idols filled with divine influence, and animated statues furnished with something within them that has life and perception.",
+     "quote": "our men-pillars) they accounted Statuas animatas, sensu & spiritu plenas, as Trismegistus calls them; or ’Αγάλματα θείας μετουσίας ἀνάπλεα, as Jamblichus words it. i. e. \"Idols filled with divine influence, and animated statues furnished with something within them that hath life and perception.\"",
+     "quote_marked": "our men-pillars) they accounted Statuas animatas, sensu & spiritu plenas, as Trismegistus calls them; or ’Αγάλματα θείας μετουσίας ἀνάπλεα, as Jamblichus words it. i. e. \"Idols filled with divine influence, and animated statues furnished with something within them that hath life and perception.\"",
      "cut": [
       false,
       false
@@ -26555,10 +26456,10 @@
     "judge": "claude-opus-5-5",
     "reason": "Waite: 'the Spirits of the Air, who are the Sylphs of Paracelsian mythology'.",
     "passage": {
-     "quote": "A large portion of so-called angelical magic was actually devoted to the control of the Spirits of the Air, who are the Sylphs of Paracelsian mythology, and it is frequently difficult to distinguish between the angels and the \"elementaries\" of old writers because of this consistent confusion.",
-     "quote_marked": "A large portion of so-called angelical magic was actually devoted to the control of the Spirits of the Air, who are the Sylphs of Paracelsian mythology, and it is frequently difficult to distinguish between the angels and the \"elementaries\" of old writers because of this consistent confusion.",
+     "quote": "of so-called angelical magic was in reality devoted to the control of the Spirits of the Air, who are the Sylphs of Paracelsian mythology, and it is frequently hard to distinguish between the angels and the ‘elementaries’ of old writers on account of this uniform confusion.",
+     "quote_marked": "of so-called angelical magic was in reality devoted to the control of the Spirits of the Air, who are the Sylphs of Paracelsian mythology, and it is frequently hard to distinguish between the angels and the ‘elementaries’ of old writers on account of this uniform confusion.",
      "cut": [
-      false,
+      true,
       false
      ],
      "url": "https://sourcelibrary.org/book/6953c86c77f38f6761bdc275?page=58",
@@ -26630,8 +26531,8 @@
     "judge": "claude-opus-5-5",
     "reason": "Libavius: the cure of wounds by the weapon-salve used by Paracelsians",
     "passage": {
-     "quote": "No better commendation is given of it by Andreas Libavius, who calls it Impostoria vulnerum per unguentum armarium sanatio Paracelsis usitata [The deceitful cure of wounds by the weapon-salve used by Paracelsians].",
-     "quote_marked": "No better commendation is given of it by Andreas Libavius, who calls it \u0001Impostoria vulnerum per unguentum armarium sanatio Paracelsis usitata\u0002 \u0003The deceitful cure of wounds by the weapon-salve used by Paracelsians\u0004.",
+     "quote": "No better commendation is given of it by Andreas Libavius, who calles it Impostoria vulnerum per unguentum armarium sanatio Paracelsis usitata. The imposterous cure of wounds by the Weapon-Salve used by Paracelsians.",
+     "quote_marked": "No better commendation is given of it by Andreas Libavius, who calles it Impostoria vulnerum per unguentum armarium sanatio Paracelsis usitata. The imposterous cure of wounds by the Weapon-Salve used by Paracelsians.",
      "cut": [
       false,
       false
@@ -26783,23 +26684,10 @@
    "type": "belongs",
    "cooccurring_pages": 49,
    "provenance": {
-    "kind": "passage",
+    "kind": "background",
+    "model": "claude-opus-5-5",
     "claim": "Plastic nature is Cudworth's.",
-    "judge": "claude-opus-5-5",
-    "reason": "Cudworth in the True Intellectual System argues for a plastic nature",
-    "passage": {
-     "quote": "⁵ Ralph Cudworth, in The True Intellectual System of the Universe, argues for a \"plastic nature\" or an innate, unconscious force by which God orders the universe and sustains the harmony of all living things.",
-     "quote_marked": "⁵ Ralph Cudworth, in The True Intellectual System of the Universe, argues for a \"plastic nature\" or an innate, unconscious force by which God orders the universe and sustains the harmony of all living things.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69ad70b7c5001c07fa8461c8?page=174",
-     "title": "Nicene and Post-Nicene Fathers, Series 1, Vol. 8 (Augustine: Exposition on Psalms)",
-     "author": "Philip Schaff (ed.)",
-     "work_year": 370,
-     "date_basis": "work:model_knowledge"
-    }
+    "passage_dropped": "the judged passage is not on the page as served (#7458)"
    }
   },
   {
@@ -27010,23 +26898,10 @@
    "type": "belongs",
    "cooccurring_pages": 120,
    "provenance": {
-    "kind": "passage",
+    "kind": "background",
+    "model": "claude-opus-5-5",
     "claim": "Prāṇāyāma is a haṭha yoga practice.",
-    "judge": "claude-opus-5-5",
-    "reason": "defines Hatha Yoga as the practice of postures and breath control",
-    "passage": {
-     "quote": "Hatha Yoga: The physical practice of yoga involving postures and breath control. Nature’s Laws: The biological and spiritual rules that govern health and well-being.",
-     "quote_marked": "\u0001Hatha Yoga\u0002: The physical practice of yoga involving postures and breath control. \u0001Nature’s Laws\u0002: The biological and spiritual rules that govern health and well-being.",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/6991bd2070254d38471e2640?page=25",
-     "title": "The Science of Psychic Healing",
-     "author": "Yogi Ramacharaka (William Walker Atkinson)",
-     "work_year": 1893,
-     "date_basis": "work:author_lifespan"
-    }
+    "passage_dropped": "the judged passage is not on the page as served (#7458)"
    }
   },
   {
@@ -27170,8 +27045,8 @@
     "judge": "claude-opus-5-5",
     "reason": "practice daoyin to restore the blood and qi",
     "passage": {
-     "quote": "Since all these occur suddenly, causing the blood and qi to become isolated and unable to nourish the body together, it is necessary to properly bind and massage them and practice daoyin [guiding and pulling exercises] to restore the blood and qi.",
-     "quote_marked": "Since all these occur suddenly, causing the blood and qi to become isolated and unable to nourish the body together, it is necessary to properly bind and massage them and practice \u0001daoyin\u0002 \u0003guiding and pulling exercises\u0004 to restore the blood and qi.",
+     "quote": "These are all damages brought on suddenly. Consequently, blood and qi are cut off and obstructed, unable to circulate and nourish together. For this reason, one must skillfully apply bindings, massage, and practice daoyin [therapeutic exercise] to restore the blood and qi.",
+     "quote_marked": "These are all damages brought on suddenly. Consequently, blood and \u0001qi\u0002 are cut off and obstructed, unable to circulate and nourish together. For this reason, one must skillfully apply bindings, massage, and practice \u0001daoyin\u0002 \u0003therapeutic exercise\u0004 to restore the blood and \u0001qi\u0002.",
      "cut": [
       false,
       false
@@ -27195,8 +27070,8 @@
     "judge": "claude-opus-5-5",
     "reason": "the circulation of qi: its great essence is nothing more than embryonic breathing",
     "passage": {
-     "quote": "Qi [vital energy]; third, the ingestion of medicinal supplements. For these three matters, each has its own method; without true transmission, they are difficult to encounter even until death. Therefore, the techniques for preserving essence number in the hundreds, and the formulas for medicinal supplements are nearly a thousand. All take diligent effort and the avoidance of overexertion as their goal. Now, the circulation of energy can cure a hundred diseases, ward off plagues, forbid evil spirits, stop bleeding from wounds, allow one to dwell under water, avoid hunger and thirst, and prolong one's life. Its great essence is nothing more than embryonic breathing.",
-     "quote_marked": "\u0001Qi\u0002 \u0003vital energy\u0004; third, the ingestion of medicinal supplements. For these three matters, each has its own method; without true transmission, they are difficult to encounter even until death. Therefore, the techniques for preserving essence number in the hundreds, and the formulas for medicinal supplements are nearly a thousand. All take diligent effort and the avoidance of overexertion as their goal. Now, the circulation of energy can cure a hundred diseases, ward off plagues, forbid evil spirits, stop bleeding from wounds, allow one to dwell under water, avoid hunger and thirst, and prolong one's life. Its great essence is nothing more than embryonic breathing.",
+     "quote": "qi [vital energy]; third, ingest medicinal substances. In all these three matters, each possesses its own particular method. If one does not receive the authentic transmission, they are exceedingly difficult to encounter. Therefore, the arts of preserving jing [vital essence] number in the hundreds, and the recipes for ingesting medicinal substances number approximately one thousand. All take diligent effort without excessive strain as their duty. Circulating qi can cure the hundred ailments, expel epidemics, ward off demonic apparitions, halt bleeding from sores, allow one to dwell under water, stave off hunger and thirst, and prolong the lifespan. Its primary and essential point is simply taixi [embryonic breathing].",
+     "quote_marked": "qi \u0003vital energy\u0004; third, ingest medicinal substances. In all these three matters, each possesses its own particular method. If one does not receive the authentic transmission, they are exceedingly difficult to encounter. Therefore, the arts of preserving \u0001jing\u0002 \u0003vital essence\u0004 number in the hundreds, and the recipes for ingesting medicinal substances number approximately one thousand. All take diligent effort without excessive strain as their duty. Circulating \u0001qi\u0002 can cure the hundred ailments, expel epidemics, ward off demonic apparitions, halt bleeding from sores, allow one to dwell under water, stave off hunger and thirst, and prolong the lifespan. Its primary and essential point is simply \u0001taixi\u0002 \u0003embryonic breathing\u0004.",
      "cut": [
       false,
       false
@@ -27256,11 +27131,11 @@
     "judge": "claude-opus-5-5",
     "reason": "Zunsheng bajian: those who seek to become immortals but lack the Great Elixirs take this compounded pill, which presupposes the elixirs make immortals.",
     "passage": {
-     "quote": "Those who seek to become immortals but have not yet obtained the Great Elixirs should all take this pill. If one cannot abstain from sexual activity or grain consumption, simply taking this will still eliminate all diseases and allow for long life without aging. When compounding the medicine, it must be done on a Dragon day [Chen day] at the Dragon hour [7-9 AM] in an empty room. One’s clothing must be clean, and one must not allow chickens, dogs, women, or those in mourning to see the process. Li Babo’s Apricot Golden Elixir Formula Take five dou [approximately 50 liters] of plump,",
-     "quote_marked": "Those who seek to become immortals but have not yet obtained the Great Elixirs should all take this pill. If one cannot abstain from sexual activity or grain consumption, simply taking this will still eliminate all diseases and allow for long life without aging. When compounding the medicine, it must be done on a Dragon day \u0003Chen day\u0004 at the Dragon hour \u00037-9 AM\u0004 in an empty room. One’s clothing must be clean, and one must not allow chickens, dogs, women, or those in mourning to see the process. Li Babo’s Apricot Golden Elixir Formula Take five \u0001dou\u0002 \u0003approximately 50 liters\u0004 of plump,",
+     "quote": "Those who aspire to seek immortality but have not yet attained the great elixirs must all take this. Even those who cannot abstain from sexual intercourse or sever grain consumption need only take it to dispel the myriad illnesses, causing a person to achieve longevity without aging. When compounding the medicine, one must choose a chen day and chen hour the fifth terrestrial branch, corresponding to the dragon and 7:00 to 9:00 AM inside an empty room. One's garments must be pure and clean. Do not allow chickens, dogs, women, or sons in mourning to catch sight of it. Master Li Baba's Golden Apricot Elixir Formula Take five dou [traditional pecks] of plump, solid apricot kernels.",
+     "quote_marked": "Those who aspire to seek immortality but have not yet attained the great elixirs must all take this. Even those who cannot abstain from sexual intercourse or sever grain consumption need only take it to dispel the myriad illnesses, causing a person to achieve longevity without aging. When compounding the medicine, one must choose a \u0001chen\u0002 day and \u0001chen\u0002 hour the fifth terrestrial branch, corresponding to the dragon and 7:00 to 9:00 AM inside an empty room. One's garments must be pure and clean. Do not allow chickens, dogs, women, or sons in mourning to catch sight of it. Master Li Baba's Golden Apricot Elixir Formula Take five \u0001dou\u0002 \u0003traditional pecks\u0004 of plump, solid apricot kernels.",
      "cut": [
       false,
-      true
+      false
      ],
      "url": "https://sourcelibrary.org/book/6a3cc186ec254ff6cae0d10e?page=98",
      "title": "遵生八牋·卷十三 (vol 10)",
@@ -27323,23 +27198,10 @@
    "type": "cultivates",
    "cooccurring_pages": 120,
    "provenance": {
-    "kind": "passage",
+    "kind": "background",
+    "model": "claude-opus-5-5",
     "claim": "Rasāyana is rejuvenation therapy.",
-    "judge": "claude-opus-5-5",
-    "reason": "rasayana is named as rejuvenation therapy",
-    "passage": {
-     "quote": "In India, such a composition came under the general name of rasāyana alchemy or rejuvenation therapy. Speaking of this rasāyana, the Rasārṇavakalpa stresses that the purpose of preparing artificial gold or silver is to attain the four goals of life: dharma (duty), artha (wealth), kāma (pleasure), and mokṣa (liberation).",
-     "quote_marked": "In India, such a composition came under the general name of rasāyana \u0001alchemy or rejuvenation therapy\u0002. Speaking of this rasāyana, the Rasārṇavakalpa stresses that the purpose of preparing artificial gold or silver is to attain the four goals of life: dharma (duty), artha (wealth), kāma (pleasure), and mokṣa (liberation).",
-     "cut": [
-      false,
-      false
-     ],
-     "url": "https://sourcelibrary.org/book/69d006e57d7491182a232833?page=8",
-     "title": "Rasārṇavakalpa (English critical edition)",
-     "author": "Mira Roy (ed.)",
-     "work_year": 1300,
-     "date_basis": "work:model_knowledge"
-    }
+    "passage_dropped": "the judged passage is not on the page as served (#7458)"
    }
   },
   {
@@ -27353,8 +27215,8 @@
     "judge": "claude-opus-5-5",
     "reason": "this rasayana is the foremost of things which generate ojas",
     "passage": {
-     "quote": "It is the foremost of all those things which generate ‘ojas’ [vital essence/energy]. The potency of this ‘Rasāyana’ has been well tested. No incantations according to Atharvan rites can injure a man who takes this medicine.",
-     "quote_marked": "It is the foremost of all those things which generate ‘ojas’ \u0003vital essence/energy\u0004. The potency of this ‘Rasāyana’ has been well tested. No incantations according to Atharvan rites can injure a man who takes this medicine.",
+     "quote": "It is the foremost of all those things which generate ‘ojas.’ The potency of this ‘Rasāyana’ has been well tested. No incantations according to Atharvan rites can injure a man who takes this medicine.",
+     "quote_marked": "It is the foremost of all those things which generate ‘ojas.’ The potency of this ‘Rasāyana’ has been well tested. No incantations according to Atharvan rites can injure a man who takes this medicine.",
      "cut": [
       false,
       false
@@ -27920,8 +27782,8 @@
     "judge": "claude-opus-5-5",
     "reason": "asks whether the art can make old age itself young: renewal of youth set against old age",
     "passage": {
-     "quote": "G 99 with the Secret of Rejuvenescence, drawn out by Arnold de Villeneuve, by M. de Longueville-Harcourt. The fifteenth chapter discusses the possibility of renewal, with the curious illustrations that follow. > \"To renew youth is to enter once more into that happy season which gives to the human frame the pleasures and strength of the morning. Here it is to no purpose that we should speak of that problem so much discussed by the Wise—whether the art can be carried to such a pitch of excellence that old age itself should be made young.",
-     "quote_marked": "G 99 with the Secret of Rejuvenescence, drawn out by Arnold de Villeneuve, by M. de Longueville-Harcourt. The fifteenth chapter discusses the possibility of renewal, with the curious illustrations that follow. > \"To renew youth is to enter once more into that happy season which gives to the human frame the pleasures and strength of the morning. Here it is to no purpose that we should speak of that problem so much discussed by the Wise—whether the art can be carried to such a pitch of excellence that old age itself should be made young.",
+     "quote": "G 99 with the Secret of Rejuvenescence, drawn out by Arnold de Villenieuve, by M. de Longueville-Harcourt. The fifteenth chapter discusses the possibility of renewal, with the quaint illustrations that follow. > \"To renew youth is to enter once more into that felicitous season which imparts to the human frame the pleasures and strength of the morning. Here it is to no purpose that we should speak of that problem so much discussed by the Wise, whether the art can be carried to such a pitch of excellence that old age should itself be made young.",
+     "quote_marked": "G 99 with the Secret of Rejuvenescence, drawn out by Arnold de Villenieuve, by M. de Longueville-Harcourt. The fifteenth chapter discusses the possibility of renewal, with the quaint illustrations that follow. > \"To renew youth is to enter once more into that felicitous season which imparts to the human frame the pleasures and strength of the morning. Here it is to no purpose that we should speak of that problem so much discussed by the Wise, whether the art can be carried to such a pitch of excellence that old age should itself be made young.",
      "cut": [
       false,
       false
