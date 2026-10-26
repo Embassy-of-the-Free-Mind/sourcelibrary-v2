@@ -213,6 +213,22 @@ export const posts: BlogPost[] = [
       'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
   },
   {
+    slug: 'aliveness',
+    title: 'What Is Alive? Ten Turning Points',
+    subtitle:
+      'Breath, heat, spirit, machine, force and feeling: how the answer to what makes a thing alive changed, from Anaximenes and Aristotle to Fechner, Bergson and the first use of the word aliveness in 1898.',
+    summary:
+      'What makes a thing alive: breath, heat, spirit, machine, force, feeling. Ten turning points from Anaximenes to Hobbes, Bichat, Fechner and Helen Wilmans.',
+    date: '26 October 2026',
+    readTime: '14 min read',
+    kind: 'stories',
+    // Robert Fludd, Utriusque cosmi historia (1617), title page, scan 1: the microcosm inside the macrocosm.
+    image: 'https://images.sourcelibrary.org/archived/69904dd67d19f3f2aac1d49d/1.jpg',
+    imageAlt:
+      'Engraved title page: a naked man stands with arms outstretched inside the circles of the heavens, while a winged figure in the clouds turns the outer circle on a rope.',
+    imagePosition: 'center 75%',
+  },
+  {
     slug: 'concords-not-unisons',
     title: 'Concords, Not Unisons',
     subtitle:
