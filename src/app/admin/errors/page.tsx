@@ -38,7 +38,58 @@ const SOURCE_LABELS: Record<string, string> = {
   'search_query': 'Search API',
 };
 
+interface DailyErrors {
+  day: string;
+  crash: number;
+  browser: number;
+  server: number;
+  crash_visitors: number;
+}
+
+const DAILY_SERIES: { key: keyof Omit<DailyErrors, 'day'>; label: string; note: string; bar: string }[] = [
+  { key: 'crash_visitors', label: 'Visitors who saw an error screen', note: 'distinct IPs per day', bar: 'bg-accent-rust' },
+  { key: 'crash', label: 'Error-screen reports', note: 'error boundary rows', bar: 'bg-accent-rust/60' },
+  { key: 'browser', label: 'Other browser errors', note: 'window.onerror, promises, API calls', bar: 'bg-stone-400' },
+  { key: 'server', label: 'Server errors', note: 'renders and routes, client hang-ups excluded', bar: 'bg-stone-600' },
+];
+
+function DailyChart({ days }: { days: DailyErrors[] }) {
+  return (
+    <div className="bg-white rounded-lg border border-light p-4 mb-6 space-y-5">
+      {DAILY_SERIES.map(({ key, label, note, bar }) => {
+        const max = Math.max(1, ...days.map(d => d[key]));
+        const total = days.reduce((s, d) => s + d[key], 0);
+        return (
+          <div key={key}>
+            <div className="flex items-baseline justify-between mb-1">
+              <p className="text-sm font-medium text-primary">
+                {label} <span className="text-xs font-normal text-muted">({note})</span>
+              </p>
+              <p className="text-xs text-muted">{total.toLocaleString('en-US')} in {days.length} days · peak {max.toLocaleString('en-US')}</p>
+            </div>
+            <div className="flex items-end gap-px h-16">
+              {days.map(d => (
+                <div
+                  key={d.day}
+                  title={`${d.day}: ${d[key].toLocaleString('en-US')}`}
+                  className={`flex-1 rounded-t-sm ${d[key] ? bar : 'bg-stone-100'}`}
+                  style={{ height: d[key] ? `${Math.max(4, (d[key] / max) * 100)}%` : '2px' }}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      <div className="flex justify-between text-xs text-muted">
+        <span>{days[0]?.day}</span>
+        <span>{days[days.length - 1]?.day}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminErrorsPage() {
+  const [daily, setDaily] = useState<DailyErrors[]>([]);
   const [errors, setErrors] = useState<AppError[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -47,7 +98,11 @@ export default function AdminErrorsPage() {
   const fetchErrors = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/errors?limit=100');
+      const [res, dailyRes] = await Promise.all([
+        fetch('/api/errors?limit=100'),
+        fetch('/api/errors?daily=30'),
+      ]);
+      if (dailyRes.ok) setDaily((await dailyRes.json()).days);
       if (!res.ok) throw new Error();
       const data = await res.json();
       setErrors(data.errors);
@@ -101,6 +156,8 @@ export default function AdminErrorsPage() {
             Refresh
           </button>
         </div>
+
+        {daily.length > 0 && <DailyChart days={daily} />}
 
         {loading && errors.length === 0 ? (
           <div className="flex justify-center py-20"><BookLoader /></div>
