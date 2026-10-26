@@ -26,7 +26,7 @@ BOXES=${SL_JOB_BOXES:-"main=root@46.224.122.120 cloudlayer=root@46.224.208.175 l
 MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}; MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}
 MAX_SESSION_PCT=${MAX_SESSION_PCT:-80}; MAX_WEEK_PCT=${MAX_WEEK_PCT:-90}
 # Used only while a box's installed wrapper predates `account=` in `where` (logins change: check JOB-HOSTS.md).
-DEFAULT_ACCOUNTS="main=team@sourcelibrary.org cloudlayer=derek@playpowerlabs.com l7a=derek@sourcelibrary.org"
+DEFAULT_ACCOUNTS="main=milolomas200921@gmail.com cloudlayer=derek@playpowerlabs.com l7a=derek@sourcelibrary.org"
 
 # The shared limits doc. The env file lives in the main checkout, not in a worktree.
 here=$(cd "$(dirname "$0")" && pwd); limits=""
