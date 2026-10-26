@@ -5,7 +5,7 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-10-13';
+export const PROSE_AS_OF = '2026-10-26';
 
 /**
  * "What changed this month" (#5939): a short dated note written by a person, shown at the top of
@@ -14,8 +14,8 @@ export const PROSE_AS_OF = '2026-10-13';
  * more than 35 days old. Keep `as_of` a quoted ISO date on the same line as the key.
  */
 export const MONTH_NOTE: { as_of: string; text: string } | null = {
-  as_of: '2026-10-10',
-  text: '10 October: we checked a random sample of 60 Chinese pages read by PaddleOCR, one page from each of 60 Siku Quanshu books. Opus and Gemini each compared the text with the page image. No page was unusable and none had invented text. 51% were clean, 27% had minor errors and 22% had material errors. Opus and Gemini also transcribed the same pages from the image. Measured against the Kanripo text, Opus was about as accurate as PaddleOCR and Gemini was worse.',
+  as_of: '2026-10-26',
+  text: '26 October: we tested which reader should transcribe Arabic manuscripts, on 26 pages from 13 alchemical manuscripts attributed to Jābir ibn Ḥayyān (14th to 20th century), two pages per book. No scholar has transcribed these pages, so two judges from different model families, Opus and Gemini, compared each reading with the page image; they caught 18 of 18 and 16 of 18 errors we had planted. Opus gave a usable page on 22 of 26. Flash-Lite, our default reader, read every page, but 15 of 26 were misleading. Gemini 3.8 Flash was cut off by its safety filter partway through 16 of 26 pages, apparently because the recipes name lead, mercury and arsenic. Pooled with our earlier Arabic tests, the quality model agrees that only Opus clears the bar for Arabic manuscripts. The 13 manuscripts, about 3,000 pages, were then read with Opus. Of 18 pages checked by eye against the images, none had invented text or was misleading; the errors were single doubtful words, mostly marked as unclear, once a metal name (tin read as silver).',
 };
 
 /**
