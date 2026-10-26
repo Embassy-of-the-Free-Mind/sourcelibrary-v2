@@ -347,17 +347,17 @@ function Eras() {
 
 // Each word for life at the century where it is most over-represented against the library, with the span that
 // holds 90% of its dated pages. Rebuild the numbers with scripts/analysis/experience-map/ontology/words-over-time.py.
-// The axis is compressed before 1000: 500 BCE to 1000 takes the first 30%, 1000 to 1950 the rest.
+// The axis is compressed before 1000: 500 BCE to 1000 takes the first 30%, 1000 to 2000 the rest.
 const AX_FROM = -500;
 const AX_KNEE = 1000;
-const AX_TO = 1950;
+const AX_TO = 2000;
 const x = (year: number) => {
   const y = Math.min(AX_TO, Math.max(AX_FROM, year));
   return y < AX_KNEE ? ((y - AX_FROM) / (AX_KNEE - AX_FROM)) * 30 : 30 + ((y - AX_KNEE) / (AX_TO - AX_KNEE)) * 70;
 };
-const TICKS = [
+const TICKS: { year: number; label: string; wide?: boolean }[] = [
   { year: -500, label: '500 BCE' },
-  { year: 0, label: '1 CE' },
+  { year: 0, label: '1 CE', wide: true },
   { year: 1000, label: '1000' },
   { year: 1500, label: '1500' },
   { year: 1900, label: '1900' },
@@ -369,7 +369,7 @@ function Axis() {
       {TICKS.map((t) => (
         <span
           key={t.year}
-          className="absolute -translate-x-1/2 whitespace-nowrap first:translate-x-0 last:-translate-x-full"
+          className={`absolute -translate-x-1/2 whitespace-nowrap first:translate-x-0 ${t.wide ? 'hidden md:inline' : ''}`}
           style={{ left: `${x(t.year)}%` }}
         >
           {t.label}
@@ -382,13 +382,13 @@ function Axis() {
 function WordsOverTime() {
   return (
     <figure className="not-prose my-10">
-      <div className="md:grid md:grid-cols-[13rem_1fr] md:gap-x-4">
+      <div className="md:grid md:grid-cols-[15rem_1fr] md:gap-x-4">
         <span className="hidden md:block" />
         <Axis />
       </div>
       <ol className="mt-1">
         {wordsOverTime.rows.map((r) => (
-          <li key={r.id} className="py-2 border-b border-border-light md:grid md:grid-cols-[13rem_1fr] md:gap-x-4 md:items-center">
+          <li key={r.id} className="py-2 border-b border-border-light md:grid md:grid-cols-[15rem_1fr] md:gap-x-4 md:items-center">
             <p className="font-body text-sm leading-tight mb-1 md:mb-0">
               <Ext href={`${VOCABULARY}#${r.id}`}>{r.label}</Ext>{' '}
               <span className="text-xs text-muted">
@@ -407,14 +407,14 @@ function WordsOverTime() {
                 style={{ left: `${x(r.span_from)}%`, width: `${x(r.span_to) - x(r.span_from)}%` }}
               />
               <span
-                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-gold-dark ring-2 ring-cream"
-                style={{ left: `${x(r.peak_century + 50)}%` }}
+                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-accent-gold-dark ring-2 ring-cream"
+                style={{ left: `${x(r.peak_century + 50)}%`, borderRadius: '9999px' }}
               />
             </div>
           </li>
         ))}
       </ol>
-      <div className="md:grid md:grid-cols-[13rem_1fr] md:gap-x-4 mt-1">
+      <div className="md:grid md:grid-cols-[15rem_1fr] md:gap-x-4 mt-1">
         <span className="hidden md:block" />
         <Axis />
       </div>
