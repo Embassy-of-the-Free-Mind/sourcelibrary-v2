@@ -25,6 +25,10 @@
  *            page (leaf guards), re-check the stored reading and the hold, write through writePageText (revision row
  *            with the whole prior field, CAS, human-edit guard), mark English stale, recount, sweep_log before and
  *            after, one book_events row. Dry unless --apply.
+ *   fallback the pages the guards turned away (fallbackRoute): still without text in a book still held → fallback/page-ids.json
+ *            for Gemini Flash through agy; blank pages and pages with no image are listed, not read. `apply --apply` writes
+ *            the list at its end; `fallback --read --apply` reads it with scripts/batch/cli-ocr.mjs and writes the reads
+ *            with that writer's guards and provenance. The hold stays: no translation follows.
  *   status   counts from the files.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/paddle-print-lane.mjs census
@@ -42,7 +46,9 @@ import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
   storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
+  fallbackRoute,
 } from '../lib/paddle-print-lane.mjs';
+import { spawnSync } from 'node:child_process';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -552,7 +558,65 @@ async function apply() {
     }
   }, { timeoutMs: 6 * 3600 * 1000 });
   log(`APPLY ${JSON.stringify(totals)}`);
+  // the pages turned away go on to the Flash fallback list: nothing waits behind the hold unrouted (#6101)
+  if (APPLY) await fallback({ read: false, write: false });
   return totals;
+}
+
+// ── fallback: the pages this lane turned away, to Gemini Flash through agy ───────────────
+
+const FALLBACK_JOB = 'paddle-print-fallback-6101';
+const FALLBACK_REASON = 'paddle-print-6101 fallback (#6101, routing row chinese-print): Paddle split-leaf guards turned this page away; Gemini Flash through agy reads it';
+
+/**
+ * Route every page the lane did not write (fallbackRoute) and, for the ones still without text in a book still held
+ * for this lane, write fallback/page-ids.json (Flash), blank.jsonl and unfetchable.jsonl. Read-only on Mongo.
+ * `--read` then reads the Flash list with scripts/batch/cli-ocr.mjs (agy, --stop-on-quota) and `--apply` writes the
+ * reads with its guards and provenance. The book keeps its hold: no translation follows.
+ */
+async function fallback({ read = flag('--read'), write = flag('--apply') } = {}) {
+  const fb = path.join(DIR, 'fallback'), reads = path.join(fb, 'reads');
+  fs.mkdirSync(fb, { recursive: true });
+  const last = new Map();
+  for (const r of readJsonl(F.rejected)) last.set(`${r.bid}/${r.pn}`, { verdict: 'reject', reason: r.reason, at: r.at });
+  for (const r of readJsonl(F.skipped)) { const k = `${r.bid}/${r.pn}`; if (!last.has(k) || last.get(k).at < r.at) last.set(k, { verdict: 'skip', reason: r.why, at: r.at }); }
+  const cand = [];
+  for (const f of fs.existsSync(F.prepDir) ? fs.readdirSync(F.prepDir).filter((x) => x.endsWith('.json')) : []) {
+    const pr = readJson(path.join(F.prepDir, f));
+    if (BOOK && pr.bid !== BOOK) continue;
+    for (const p of pr.pages) {
+      const l = last.get(`${pr.bid}/${p.pn}`);
+      const route = fallbackRoute({ verdict: l?.verdict, reason: l?.reason, leaves: p.leaves || [], prepError: p.error || null });
+      if (route) cand.push({ bid: pr.bid, pn: p.pn, pid: p.pid, route, reason: p.error ? 'prep_error' : l.reason });
+    }
+  }
+  const out = { flash: [], blank: [], unfetchable: [] };
+  const why = {};
+  await withMongo(async (db) => {
+    const held = new Set((await db.collection('books').find({ id: { $in: [...new Set(cand.map((c) => c.bid))] }, 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id));
+    for (let i = 0; i < cand.length; i += 1000) {
+      const chunk = cand.slice(i, i + 1000);
+      const live = new Map((await db.collection('pages').find({ id: { $in: chunk.map((c) => c.pid) } }, { projection: { id: 1, image_width: 1, image_height: 1, ocr: 1 } }).toArray()).map((p) => [p.id, p]));
+      for (const c of chunk) {
+        const p = live.get(c.pid);
+        // a page that has text now (a later read, a human) or whose book left the lane is not this lane's to send
+        if (!p || !held.has(c.bid) || storedPolicy(p.ocr, { spread: isSpread(p.image_width, p.image_height) }).why !== 'no_text') continue;
+        out[c.route].push(c); why[`${c.route}:${c.reason}`] = (why[`${c.route}:${c.reason}`] || 0) + 1;
+      }
+    }
+  });
+  fs.writeFileSync(path.join(fb, 'page-ids.json'), JSON.stringify(out.flash.map((c) => c.pid)));
+  for (const k of ['blank', 'unfetchable']) fs.writeFileSync(path.join(fb, `${k}.jsonl`), out[k].map((c) => JSON.stringify(c)).join('\n') + (out[k].length ? '\n' : ''));
+  log(`FALLBACK flash ${out.flash.length}, blank ${out.blank.length}, unfetchable ${out.unfetchable.length} ${JSON.stringify(why)} → ${fb}`);
+  const run = (stage, extra) => {
+    if (stage === 'read' && !out.flash.length) return;
+    const r = spawnSync(process.execPath, [new URL('../batch/cli-ocr.mjs', import.meta.url).pathname, stage, `--out=${reads}`, ...extra], { stdio: 'inherit', env: process.env });
+    if (r.status === 3) { log('FALLBACK read stopped on quota; the next run resumes from the reads on disk'); process.exit(3); }
+    if (r.status !== 0) throw new Error(`cli-ocr ${stage} exited ${r.status}`);
+  };
+  if (read) run('read', [`--page-ids-file=${path.join(fb, 'page-ids.json')}`, `--job=${FALLBACK_JOB}`, '--stop-on-quota', `--concurrency=${arg('--concurrency', 2)}`]);
+  if (write && fs.existsSync(reads)) run('apply', [`--reason=${FALLBACK_REASON}`, `--only=${path.join(fb, 'page-ids.json')}`, '--apply']);
+  return out;
 }
 
 // ── status ─────────────────────────────────────────────────────────────────────────────
@@ -582,7 +646,7 @@ function status() {
   }, null, 1));
 }
 
-const CMDS = { census, plan, prep, recheck, apply, status };
+const CMDS = { census, plan, prep, recheck, apply, fallback, status };
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
 if (isMain) {
   if (!CMDS[CMD]) { console.error(`usage: paddle-print-lane.mjs ${Object.keys(CMDS).join('|')} [options]`); process.exit(1); }

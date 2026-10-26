@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, dittoRate, dittoDropped, underRead, bookMedians, kanaShare, MAX_KANA_SHARE, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount } from '../../scripts/lib/paddle-print-lane.mjs';
+import { LANE, HOLD_REASON, INK_BLANK, INK_FAINT, SHORT_LEAF, dittoRate, dittoDropped, underRead, bookMedians, kanaShare, MAX_KANA_SHARE, stableRead, dropRepeats, coversLite, liteTextCount, storedPolicy, isSpread, innerInk, shortUnitRepeats, deflateRatio, convertLeaf, leafLoop, assemblePage, envelope, ocrField, laneLanguage, bodyCharCount, fallbackRoute } from '../../scripts/lib/paddle-print-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import { convertPaddle } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
@@ -215,5 +215,23 @@ describe('ditto marks (Derek, #6056 round 3, 2026-10-23)', () => {
     expect(dittoRate(withMarks)).toBeGreaterThan(20);
     expect(dittoDropped([withMarks, withMarks, body, withMarks]).dropped).toEqual([2]);
     expect(dittoDropped([body, body, body]).dropped).toEqual([]);
+  });
+});
+
+describe('fallbackRoute: where a page the lane turned away goes next (#6101 fallback, by eye 2026-10-26)', () => {
+  it('every guard reject goes to Flash, a faint leaf and a transient leaf error included', () => {
+    for (const reason of ['faint_leaf', 'short_leaf_unstable', 'under_read', 'leaf_loop:deflate', 'leaf_error', 'ditto_marks_missing']) {
+      expect(fallbackRoute({ verdict: 'reject', reason, leaves: [{ side: 'R', ink: 0.03, blank: false }, { side: 'L', ink: 0.01, blank: true }] })).toBe('flash');
+    }
+  });
+  it('a textless page is blank only when every leaf is blank or faint; one inked leaf sends it to Flash', () => {
+    expect(fallbackRoute({ verdict: 'skip', reason: 'paddle_textless_kept', leaves: [{ side: 'R', ink: 0, blank: true }, { side: 'L', ink: 0.05, blank: false }] })).toBe('blank');
+    expect(fallbackRoute({ verdict: 'textless', leaves: [{ side: 'S', ink: 0.0001, blank: true }] })).toBe('blank');
+    expect(fallbackRoute({ verdict: 'skip', reason: 'paddle_textless_kept', leaves: [{ side: 'R', ink: 0.12, blank: false }, { side: 'L', ink: 0, blank: true }] })).toBe('flash');
+  });
+  it('a page with no image is the fetch lane\'s; written, kept or out-of-lane pages are not fallback pages', () => {
+    expect(fallbackRoute({ prepError: 'HTTP 404', verdict: undefined })).toBe('unfetchable');
+    for (const reason of ['now_keep:gemini_flash', 'human_edited', 'lite_lines_missing', 'japanese_content', 'write_conflict']) expect(fallbackRoute({ verdict: 'skip', reason })).toBeNull();
+    expect(fallbackRoute({ verdict: undefined })).toBeNull();
   });
 });
