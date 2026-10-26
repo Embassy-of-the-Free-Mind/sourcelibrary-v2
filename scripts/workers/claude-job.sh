@@ -327,15 +327,23 @@ weekly_pct() {
   python3 -c '
 import json, sys
 d = json.load(open(sys.argv[1])); me = d.get("claude_code_account")
-try: me = json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"] or me
+try: me = json.load(open(sys.argv[2]))["oauthAccount"]["emailAddress"] or me
 except Exception: pass
 for a in d.get("accounts", []):
     if a.get("email") == me and a.get("ok"):
         for l in a.get("limits", []):
             if l.get("key") == "weekly_all:all": print(int(l.get("percent") or 0))
-' "$f" 2>/dev/null | head -1
+' "$f" "$(claude_json)" 2>/dev/null | head -1
 }
 MAX_WEEKLY_PCT=${MAX_WEEKLY_PCT:-90}
+
+# A second Claude login on one box (2026-10-26): an account with no box of its own (milolomas200921@,
+# added 2026-10-26) gets a config dir beside the box's own login, e.g. /root/.claude-milo, logged in once
+# with `CLAUDE_CONFIG_DIR=/root/.claude-milo claude`. `JOB_CLAUDE_HOME=<dir> claude-job.sh start ...`
+# pins the job to it: the dir is recorded in $JD/<name>.claude-home, so resume and sweep keep the same
+# login, and the weekly check reads that login's account, not the box's.
+claude_json() { if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then echo "$CLAUDE_CONFIG_DIR/.claude.json"; else echo /root/.claude.json; fi; }
+job_claude_home() { [ -s "$JD/$1.claude-home" ] && export CLAUDE_CONFIG_DIR="$(cat "$JD/$1.claude-home")"; return 0; }
 
 # A job capped on this box's account continues on the emptiest other box (#6360 fix 2), through the box
 # mesh (box.sh / box-rpc.sh). The new job is <name>-mv, starts from origin/main like any job, and its brief
@@ -434,6 +442,7 @@ keep_reads() {
 
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
+  job_claude_home "$name"
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
   # Heartbeat (2026-10-04, #5709): `claude -p` writes nothing to the log until it exits, so an empty
   # log cannot tell a working job from one the OOM killer took with its tmux. This file can.
@@ -544,6 +553,7 @@ job_state() {
 case "${1:-status}" in
   start)
     name="$2"; brief="$3"; [ -f "$brief" ] || { echo "no brief file $brief"; exit 2; }
+    [ -n "${JOB_CLAUDE_HOME:-}" ] && export CLAUDE_CONFIG_DIR="$JOB_CLAUDE_HOME"
     # An empty brief launched harmony-authors-a and -b on 2026-10-21: each ran with only the HEADLESS RULES.
     grep -q '[^[:space:]]' "$brief" || { echo "REFUSED: brief file $brief is empty"; exit 2; }
     # Preflight (#6223): a job started on a full root disk dies silently with an empty log.
@@ -573,6 +583,7 @@ case "${1:-status}" in
     landing_contract "$name" "$JD/$name.brief.txt"
     [ "$LC_ISSUE_SRC" = "Lands header" ] && [ "$LC_PR" != auto ] || echo "note: brief has no 'Lands: #NNNN' / 'PR: yes|no' header lines; the landing check will guess (issue: ${LC_ISSUE:-none found}${LC_ISSUE_SRC:+ from $LC_ISSUE_SRC}; PR: only if it commits)"
     rm -f "$JD/$name.done"
+    if [ -n "${JOB_CLAUDE_HOME:-}" ]; then echo "$JOB_CLAUDE_HOME" > "$JD/$name.claude-home"; else rm -f "$JD/$name.claude-home"; fi
     tmux new -d -s "job-$name" "$0 _run $name"
     sleep 20  # a job that dies at launch must say so here, not look blank in `status` (#5709)
     if tmux has-session -t "=job-$name" 2>/dev/null || [ -f "$JD/$name.done" ]; then
@@ -580,6 +591,7 @@ case "${1:-status}" in
     else echo "job-$name DIED within 20 s:"; tail -5 "$LOGD/$name.log"; exit 4; fi ;;
   resume)
     name="$2"
+    job_claude_home "$name"
     if ! why=$(preflight_auth); then
       echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
       exit 7
