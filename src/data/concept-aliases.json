@@ -9,7 +9,8 @@
   },
   "caveat": "single CJK characters (占, 卜, 德, 夢) need word-boundary handling on the search side; never substring-match them",
   "body": "2026-09-13: 41 body-practice concepts (theme \"body\") from 8 Sonnet judges over scripts/graph/body-vocab-gather.mjs output; finalised by body-vocab-finalize.mjs (floor 0.7)",
-  "daimon": "2026-10-12: one concept (theme \"spirits\") for #4251 — candidates from the issue's worked node, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-daimon-2026-10-12.mjs"
+  "daimon": "2026-10-12: one concept (theme \"spirits\") for #4251 — candidates from the issue's worked node, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-daimon-2026-10-12.mjs",
+  "psychoactives": "2026-10-26: thirteen concepts (theme \"psychoactives\") for #7398 — candidates from the period vocabulary of a visionary-plants research session, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-psychoactives-2026-10-26.mjs"
  },
  "concepts": [
   {
@@ -11130,6 +11131,613 @@
     }
    ],
    "rejected": 18
+  },
+  {
+   "concept": "opium",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "opium",
+     "confidence": 0.95,
+     "reason": "Headword: Bibra \"Opium\"; Browne 1799 \"Opium (Ar. Aphiúm) ... carried to excess in Constantinople\"."
+    },
+    {
+     "term": "ὄπιον",
+     "confidence": 0.9,
+     "reason": "The Greek word: Opiologia 1739 \"Opium ... dictum ὄπιον, ἀπὸ τοῦ ὀποῦ\"; Pseudo-Galen \"opium ὄπιον (opion)\"."
+    },
+    {
+     "term": "افيون",
+     "confidence": 0.9,
+     "reason": "Arabic afyūn: Clusius Exotica \"The Arabs use the Greek word Ofiun ... افيون\"; Avicenna's Canon recipes."
+    },
+    {
+     "term": "鴉片",
+     "confidence": 0.9,
+     "reason": "Chinese yāpiàn: Haiguo tuzhi on \"the ban on opium\" and \"the Evils of the Opium Trade\"; Wuli xiaoshi on collecting the latex."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "opio",
+     "confidence": 0.9,
+     "reason": "Latin ablative / Spanish form: Costa \"Del Opio\"; Brunfels \"cum Opio ... makes the sick rest and sleep\".",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "afyun",
+     "confidence": 0.85,
+     "reason": "Transliteration of افيون: Storehouse of Medicaments \"this is called afyun opium\"; a Persian medical recueil.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "afyūn",
+     "confidence": 0.75,
+     "reason": "Diacritic transliteration: Avicenna's Canon \"afyūn opium\"; one row is an index entry, so the floor is close.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "ofiom",
+     "confidence": 0.8,
+     "reason": "Costa 1578: \"Why the Arabs call Opium Ofiom\"; Opiologia on the name.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "amfiam",
+     "confidence": 0.8,
+     "reason": "Orta's Indo-Portuguese name: Colóquios \"bangue ... and what is called amfiam opium\"; Venette \"Maslach of the Turks ... Amfiam\"."
+    },
+    {
+     "term": "阿片",
+     "confidence": 0.7,
+     "reason": "The other CJK spelling; its rows are weaker (a 阿芙蓉 entry, a Bengali opium recipe), so labelled, not silent."
+    }
+   ],
+   "related": [
+    {
+     "term": "aphion",
+     "confidence": 0.65,
+     "reason": "Monardes \"the Turks use this Aphio ... they take the Aphion and sleep\", but the other rows are Greek lexicon noise (apheidia, Ophion)."
+    },
+    {
+     "term": "masschlach",
+     "confidence": 0.65,
+     "reason": "Weyer 1568: \"The common Turks call it Masschlach\"; the Turkish opium electuary (maslach), not the drug itself, and the other rows are fuzzy noise."
+    },
+    {
+     "term": "laudanum",
+     "confidence": 0.85,
+     "reason": "A preparation: Croll \"Laudanum, or Nepenthes\"; Cooke on laudanum habits. Not every laudanum held opium."
+    },
+    {
+     "term": "papaver",
+     "confidence": 0.8,
+     "reason": "The plant: Herbarius 1485 \"Papaver magsamen\"; Dioscorides commentaries."
+    },
+    {
+     "term": "poppy",
+     "confidence": 0.8,
+     "reason": "The plant, mostly garden and field poppies in the rows (Hill, Parkinson)."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "cannabis",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "cannabis",
+     "confidence": 0.95,
+     "reason": "Headword: Seidenschnur 1803 on intoxicating preparations; Dioscorides \"Cannabis hemp\"; Bibra \"Cannabis indica\"."
+    },
+    {
+     "term": "κάνναβις",
+     "confidence": 0.9,
+     "reason": "The Greek word: Dioscorides (Wellmann) \"κάνναβις· φυτὸν εὔχρηστον τῷ βίῳ\"; glossaries."
+    },
+    {
+     "term": "大麻",
+     "confidence": 0.8,
+     "reason": "Chinese dàmá, hemp: Sancai tuhui, Zhiwu mingshi tukao \"Hemp original: 大麻\". Mostly the fibre and seed plant."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "hemp",
+     "confidence": 0.75,
+     "reason": "The English name of the same plant (herbals \"Canapus Hemp\"), though most rows are about fibre; labelled."
+    },
+    {
+     "term": "bangue",
+     "confidence": 0.85,
+     "reason": "The Indo-Portuguese name: Orta/Clusius \"DE BANGVE ... almost similar to Hemp\"; Costa's chapter; Baudelaire \"in India, bangie\"."
+    },
+    {
+     "term": "bhang",
+     "confidence": 0.85,
+     "reason": "The Hindi name: Indian Hemp Drugs Commission \"Another preparation of the bhang is majum\"; O'Shaughnessy."
+    },
+    {
+     "term": "ganja",
+     "confidence": 0.8,
+     "reason": "Hemp Drugs Commission \"the most recent work on ganja\"; Rumphius \"Ganja sativa ... similarity with Cannabis\"."
+    },
+    {
+     "term": "hashish",
+     "confidence": 0.8,
+     "reason": "The resin preparation under its Arabic name: Moreau \"On Hashish and Mental Alienation\"; Baudelaire; Bibra."
+    },
+    {
+     "term": "haschisch",
+     "confidence": 0.8,
+     "reason": "German/French spelling: Bibra \"Haschisch. Cannabis indica\"; de Sacy on the Haschischin."
+    },
+    {
+     "term": "hachisch",
+     "confidence": 0.8,
+     "reason": "French spelling: Moreau de Tours \"les feuilles du hachisch\"; Leclerc's Histoire de la médecine arabe."
+    }
+   ],
+   "related": [
+    {
+     "term": "gunjah",
+     "confidence": 0.65,
+     "reason": "O'Shaughnessy's spelling of ganja, but Sanskrit guñjā (the Abrus seed weight) shares it in Lilavati and the Brihat Samhita."
+    },
+    {
+     "term": "churrus",
+     "confidence": 0.8,
+     "reason": "The hand-gathered resin: O'Shaughnessy and Bibra \"A resin then sweats from the leaves ... called Churrus\". A preparation."
+    },
+    {
+     "term": "charas",
+     "confidence": 0.6,
+     "reason": "The same resin (Hemp Drugs Commission \"By smoking charas\"), but other rows are a Latin dictionary and Hebrew."
+    },
+    {
+     "term": "axix",
+     "confidence": 0.65,
+     "reason": "Costa: \"The Arabs call this Bangue, Axix\"; the other rows are Latin axis."
+    }
+   ],
+   "rejected": 4
+  },
+  {
+   "concept": "henbane",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "henbane",
+     "confidence": 0.95,
+     "reason": "Headword: Bauhin \"Hyoscyamus ... Bilsenkraut\"; Brunfels' Hyoscyamus rhapsody; the Albertus herbal."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "hyoscyamus",
+     "confidence": 0.95,
+     "reason": "Latin name: Brunfels \"On Hyoscyamus ... Henbane\"; Dioscorides commentaries; Bauhin."
+    },
+    {
+     "term": "hyoscyami",
+     "confidence": 0.9,
+     "reason": "Genitive of hyoscyamus: Gesner's commentaries, a Bengal dispensatory, Weyer's henbane juice."
+    },
+    {
+     "term": "ὑοσκύαμος",
+     "confidence": 0.9,
+     "reason": "Greek: Brunfels \"NOMENCLATURES Greek, ὑοσκύαμος\"; Dioscorides (Wellmann) \"Henbane original\"."
+    },
+    {
+     "term": "bilsenkraut",
+     "confidence": 0.9,
+     "reason": "German: the Albertus herbal \"Henbane (Bilsam-Kraut)\"; Bauhin \"All. Bilsenkraut\"."
+    },
+    {
+     "term": "bilsam",
+     "confidence": 0.75,
+     "reason": "Older German: Hildegard's Physica \"henbane (that is bilsam)\"; one noise row (Llull letter tables)."
+    },
+    {
+     "term": "jusquiame",
+     "confidence": 0.9,
+     "reason": "French: Bauhin \"Franç. Jusquiame jaune\"; Flora of Switzerland \"la Jusquiame noire\"."
+    }
+   ],
+   "related": [],
+   "rejected": 1
+  },
+  {
+   "concept": "mandrake",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "mandrake",
+     "confidence": 0.95,
+     "reason": "Headword: Frazer \"Jacob and the Mandrakes\"; Bauhin \"MANDRAKE Male\"; Mattioli's female mandragora."
+    },
+    {
+     "term": "mandragora",
+     "confidence": 0.9,
+     "reason": "Latin form of the same word: Bauhin, the 1486 Latin herbal, Lémery."
+    },
+    {
+     "term": "μανδραγόρας",
+     "confidence": 0.9,
+     "reason": "Greek: Dioscorides 1499 \"drunk with wine ... deceives people by creating brave visions\"; Plutarch on cooling drugs."
+    },
+    {
+     "term": "mandragore",
+     "confidence": 0.85,
+     "reason": "French/Latin oblique form: Lémery \"Mandragores\"; the Apuleius herbal \"Name of the Herb: Mandragore\"."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "alraun",
+     "confidence": 0.85,
+     "reason": "German: Fuchs \"Mandragora / Alraun\"; Grimm \"ALRAUN (MANDRAKE)\". The word also names the root-manikins, which are still the mandrake."
+    },
+    {
+     "term": "alraune",
+     "confidence": 0.85,
+     "reason": "Plural/variant of Alraun, same rows (Horst's Zauberbibliothek, Grimm)."
+    }
+   ],
+   "related": [
+    {
+     "term": "dudaim",
+     "confidence": 0.8,
+     "reason": "The Hebrew plant of Genesis 30, read as mandrakes (Fuchs, Scheuchzer), but its identification is disputed in the rows themselves."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "belladonna",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "belladonna",
+     "confidence": 0.95,
+     "reason": "Headword: Fuchs \"De Malis insanis ... Belladonna\"; Mattioli \"HERB BEAUTIFUL LADY\"; Cooke on the name."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "tollkirsche",
+     "confidence": 0.8,
+     "reason": "German: Flora of Switzerland \"Wolfskirsche, Tollkraut deadly nightshade\"; Fuchs \"Dollöpffel\"."
+    },
+    {
+     "term": "dwale",
+     "confidence": 0.8,
+     "reason": "Old English: Gerard \"Solanum Lethale. Dwale, or deadly Nightshade\"; Parkinson."
+    }
+   ],
+   "related": [
+    {
+     "term": "atropa",
+     "confidence": 0.7,
+     "reason": "The Linnaean genus (Atropa belladonna, but also Atropa mandragora in the Encyclopédie), and a cipher-table row in Trithemius."
+    },
+    {
+     "term": "solanum somniferum",
+     "confidence": 0.8,
+     "reason": "Porta's and Weyer's ointment ingredient, \"sleepy nightshade\" (Parkinson, Bauhin); not certainly belladonna."
+    },
+    {
+     "term": "solanum manicum",
+     "confidence": 0.75,
+     "reason": "The \"mad-making nightshade\" of Dioscorides, identified with datura or belladonna by different herbalists."
+    },
+    {
+     "term": "strychnos manicus",
+     "confidence": 0.7,
+     "reason": "Faber's \"Strychnomania\" on belladonna poisoning; Strychnos is also the nux-vomica genus (Rumphius rows)."
+    },
+    {
+     "term": "nightshade",
+     "confidence": 0.7,
+     "reason": "The family name in English: common, sleepy and deadly nightshade are different plants in Parkinson."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "datura",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "datura",
+     "confidence": 0.95,
+     "reason": "Headword: Orta's Colóquios; Bibra \"Datura stramonium. Datura metel\"; Fuchs \"Datura Stramonia\"."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "stramonium",
+     "confidence": 0.9,
+     "reason": "Latin: Fuchs \"Datura Stramonia, or Spiny Apple\"; Hernández \"Tlapatl, Stramonium\"; Cooke."
+    },
+    {
+     "term": "thorn-apple",
+     "confidence": 0.85,
+     "reason": "English: Cooke \"very common species of thorn-apple over the peninsula of India\"; Tabernaemontanus."
+    },
+    {
+     "term": "dutroa",
+     "confidence": 0.85,
+     "reason": "Indo-Portuguese: Rumphius \"By the Portuguese, it is called Dutroa\"; Linschoten \"Of the herb Dutroa\"."
+    },
+    {
+     "term": "dutra",
+     "confidence": 0.7,
+     "reason": "Rumphius \"the folly excited by the Dutra\"; other rows are a Provençal glossary and a Brazilian novel."
+    },
+    {
+     "term": "tlapatl",
+     "confidence": 0.85,
+     "reason": "Nahuatl: Sahagún \"tlapatl ... drives them mad permanently\"; Hernández \"Tlapatl, Stramonium\"."
+    },
+    {
+     "term": "chamico",
+     "confidence": 0.7,
+     "reason": "Quechua/Peruvian: Cobo \"Of the Chamico\", the datura of Peru; one noise row in Chwolsohn."
+    }
+   ],
+   "related": [
+    {
+     "term": "toloache",
+     "confidence": 0.6,
+     "reason": "The Mexican name; no row shows the word itself (Cooke on dhatoora, Maya boundary texts)."
+    },
+    {
+     "term": "曼陀羅",
+     "confidence": 0.6,
+     "reason": "Li Shizhen's datura (\"drunk, it makes people laugh and dance\"), but the same characters are the Buddhist mandārava flower in the Lotus Sutra."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "ololiuhqui",
+   "theme": "psychoactives",
+   "tradition": "Native American & Mesoamerican",
+   "variants": [
+    {
+     "term": "ololiuhqui",
+     "confidence": 0.95,
+     "reason": "Headword: Sahagún XI.7 \"seed called ololiuhqui ... intoxicates and drives people mad\"; the 1634 Confessionario."
+    },
+    {
+     "term": "ololiuqui",
+     "confidence": 0.95,
+     "reason": "Spelling: Hernández \"Cap. XIV. Ololiuqui\"; Sahagún."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "coatl xoxouhqui",
+     "confidence": 0.85,
+     "reason": "Sahagún's other name for the plant: \"an herb called coatl xoxouhqui ... a seed called ololiuhqui\"."
+    }
+   ],
+   "related": [
+    {
+     "term": "morning glory",
+     "confidence": 0.6,
+     "reason": "The plant family (Chinese qianniuzi seed); most rows are poetry and Chinese materia medica."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "peyote",
+   "theme": "psychoactives",
+   "tradition": "Native American & Mesoamerican",
+   "variants": [
+    {
+     "term": "peyote",
+     "confidence": 0.95,
+     "reason": "Headword: Klüver \"Peyote is the general commercial term\"; Dorsey on the Arapaho rite."
+    },
+    {
+     "term": "peyotl",
+     "confidence": 0.95,
+     "reason": "Nahuatl: Sahagún \"called peyotl ... frightful visions, or laughable ones\"; the 1634 Confessionario."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "mescal buttons",
+     "confidence": 0.85,
+     "reason": "Klüver \"the misleading name mescal buttons\"; Prentiss & Morgan 1895."
+    },
+    {
+     "term": "anhalonium",
+     "confidence": 0.8,
+     "reason": "The old genus: \"Anhalonium Lewinii (Mescal Buttons)\"; Crowley's rows use it for peyote too."
+    }
+   ],
+   "related": [
+    {
+     "term": "mescal",
+     "confidence": 0.6,
+     "reason": "Also the agave and its liquor (Zuni Breadstuff on mescal roasting); only some rows mean peyote."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "teonanacatl",
+   "theme": "psychoactives",
+   "tradition": "Native American & Mesoamerican",
+   "variants": [
+    {
+     "term": "teonanacatl",
+     "confidence": 0.95,
+     "reason": "Headword: Sahagún XI \"Those who eat them see visions and feel a faintness of heart\"."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "nanacatl",
+     "confidence": 0.8,
+     "reason": "Nahuatl \"mushroom\" in general: the merchants' feast \"small black mushrooms, which they call nanacatl\"; chimalnanacatl."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "fly agaric",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "fly agaric",
+     "confidence": 0.95,
+     "reason": "Headword: Bibra \"Fly Agaric. Amanita muscaria\"; Bulliard; Hussey."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "amanita muscaria",
+     "confidence": 0.95,
+     "reason": "Latin binomial: Gleditsch 1753; Persoon's Synopsis; Bibra."
+    },
+    {
+     "term": "agaricus muscarius",
+     "confidence": 0.95,
+     "reason": "Linnaean name: Sowerby \"AGARICUS MUSCARIUS\"; Cooke \"FLY MUSHROOM. Agaricus (Amanita) muscarius\"."
+    },
+    {
+     "term": "fungus muscarius",
+     "confidence": 0.85,
+     "reason": "Pre-Linnaean Latin: Sterbeeck \"Fungus muscarius miniatus\"; Schaeffer \"the fungus muscarius (fly-fungus)\"."
+    },
+    {
+     "term": "fliegenpilz",
+     "confidence": 0.85,
+     "reason": "German: Lenz's mycology \"the Fly Agaric (Fliegenpilz)\"."
+    },
+    {
+     "term": "muchumor",
+     "confidence": 0.8,
+     "reason": "Russian, as the Siberian trade name: Strahlenberg 1738 \"called, in the Russian Tongue, Muchumor\"; Bibra."
+    }
+   ],
+   "related": [],
+   "rejected": 1
+  },
+  {
+   "concept": "cohoba",
+   "theme": "psychoactives",
+   "tradition": "Native American & Mesoamerican",
+   "variants": [
+    {
+     "term": "cohoba",
+     "confidence": 0.95,
+     "reason": "Headword: Eden's Decades \"pouder of the herbe cauled Cohobba ... they see the\"; Pané in Brasseur's Landa; Kircher."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "cagioba",
+     "confidence": 0.85,
+     "reason": "Pané's spelling: \"the vision he had in the intoxication of the cagioba, which he inhaled\"."
+    }
+   ],
+   "related": [
+    {
+     "term": "yopo",
+     "confidence": 0.6,
+     "reason": "The Orinoco snuff from the same tree (Cooke, after Humboldt); other rows are a Korean place name."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "darnel",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "darnel",
+     "confidence": 0.95,
+     "reason": "Headword: Mattioli \"Darnel ... notorious for its ability to intoxicate\"; Lyte \"Of Iuray or Darnell\"."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "lolium",
+     "confidence": 0.75,
+     "reason": "Latin: Dioscorides \"On Lolium (Darnel)\"; Lémery. The genus also holds ryegrass (Flora of Switzerland), so labelled."
+    },
+    {
+     "term": "ivraie",
+     "confidence": 0.8,
+     "reason": "French: Nynauld \"darnel original: ivraie\"; Dodoens; one row is the parable of the tares."
+    },
+    {
+     "term": "taumellolch",
+     "confidence": 0.85,
+     "reason": "German \"reeling darnel\": Tabernaemontanus \"Lulch. Lolium\"; Alexander of Tralles."
+    }
+   ],
+   "related": [
+    {
+     "term": "zizania",
+     "confidence": 0.7,
+     "reason": "The tares of the Gospel parable (Ortus sanitatis \"Zizania tares/darnel\"), and Chinese wild rice."
+    },
+    {
+     "term": "tares",
+     "confidence": 0.6,
+     "reason": "Almost every row is the parable of the wheat and the tares."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "witches' ointment",
+   "theme": "psychoactives",
+   "variants": [
+    {
+     "term": "witches' ointment",
+     "confidence": 0.95,
+     "reason": "Headword: Scot \"ointments made and used for the transportation of witches\"; Murray; Nynauld."
+    },
+    {
+     "term": "witches ointment",
+     "confidence": 0.9,
+     "reason": "Unpunctuated form of the headword, same rows."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "lamiarum unguenta",
+     "confidence": 0.9,
+     "reason": "Porta 1560 \"Lamiarum vnguenta\"; Godelmann quoting Porta; the index of Weyer's De praestigiis."
+    },
+    {
+     "term": "unguenta lamiarum",
+     "confidence": 0.9,
+     "reason": "Word order of the same phrase: Porta, Godelmann, Guazzo."
+    },
+    {
+     "term": "hexensalbe",
+     "confidence": 0.9,
+     "reason": "German: Soldan \"Woraus dann die Hexensalbe gemacht\"; Grimm \"die gewöhnliche hexensalbe\"."
+    },
+    {
+     "term": "flying ointment",
+     "confidence": 0.85,
+     "reason": "Modern English: Summers \"that flying ointment\"; Murray; Hansen's Quellen."
+    }
+   ],
+   "related": [],
+   "rejected": 0
   }
  ]
 }
