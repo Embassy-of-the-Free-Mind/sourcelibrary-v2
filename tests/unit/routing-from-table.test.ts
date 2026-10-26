@@ -154,6 +154,19 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(translateLaneForBook(t, { language: 'Pali' })).toMatchObject({ channel: 'cli', engine: 'claude-opus-5-5' });
   });
 
+  // #7075 (2026-10-26): on a Loeb the facing page is printed English, and the agy read copied it (Plutarch Loeb 99 p.94).
+  it('a Loeb skips the Greek cli row and stays on the Batch row it had before', () => {
+    const t = TRANSLATION_ROUTING_TABLE;
+    const loeb = { language: 'Ancient Greek', title: "Plutarch's Lives, Vol. 7 (Loeb 99: Demosthenes, Cicero, Alexander, Caesar)" };
+    expect(translateLaneForBook(t, loeb)).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
+    expect(translateLaneForBook(t, { language: 'Greek', title: 'Loebliche Schriften' }).channel).toBe('cli');
+    expect(translateLaneForBook(t, { language: 'Greek', title: 'Historiae (editio princeps)' }).channel).toBe('cli');
+    const v = (row: Record<string, unknown>) => () => validateTranslationTable(withCli(row), [MODEL_FLASH, MODEL_LITE]);
+    expect(v(cliRow({ unless: { title_words: [] } }))).toThrow(/title_words/);
+    expect(v(cliRow({ unless: {} }))).toThrow(/title_words/);
+    expect(() => validateTranslationTable(withCli(cliRow({ unless: { title_words: ['loeb'] } })), [MODEL_FLASH, MODEL_LITE])).not.toThrow();
+  });
+
   it('a cli row must name a CLI reader and carry its blind sample; a batch row may not name one', () => {
     const v = (row: Record<string, unknown>) => () => validateTranslationTable(withCli(row), [MODEL_FLASH, MODEL_LITE]);
     expect(v(cliRow({ engine: MODEL_FLASH }))).toThrow(/a cli lane runs only/);
