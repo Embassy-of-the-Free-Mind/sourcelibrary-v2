@@ -38,6 +38,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/ndl-koten-lane.mjs': 'NDL古典籍OCR (specialist, not Gemini) — its own engine block + content_hash per the #4613 specialist standard (#4925)',
   'scripts/lib/paddle-zh-lane.mjs': 'PaddleOCR-VL (specialist, not Gemini) — its own engine block + content_hash, `paddle` checked by missingProvenance (#5600)',
   'scripts/maintenance/apply-reocr-verdicts.mjs': 'BDRC Tibetan models (specialist, not Gemini) — the template engine block',
+  'scripts/maintenance/apply-tib-gutter-vllm-6871.mjs': 'BDRC Yigdzin page reads on gex45 (specialist, not Gemini) — the apply-reocr-verdicts engine block, written through writePageText (#6871)',
   'scripts/import/ia-ocr-ingest.mjs': "the Internet Archive's own OCR, recorded in the `ia` block, not a Gemini read",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration",
   'scripts/import/import-oraec.mjs': 'ORAEC corpus dump, a published edition',
