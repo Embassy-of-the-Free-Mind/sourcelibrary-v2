@@ -87,13 +87,13 @@
     },
     {
       "name": "ia-lazy",
-      "box": "l7a",
+      "box": "gex45",
       "hosts": ["iiif.archive.org"],
       "providers": ["internet_archive", "ia_language", "ia_microfilm", "ia"],
       "rate": { "iiif.archive.org": 5 },
       "page_concurrency": 2,
-      "flags": ["--lazy-only"],
-      "note": "Manifest-only IA books, per page over IIIF (JPEG, no JP2 decode). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main). Item zips for manifest-only books are a follow-up: archive-ia-bulk writes page docs."
+      "flags": ["--lazy-only", "--ia-zip"],
+      "note": "Manifest-only IA books from the item _jp2.zip when the canvas→member mapping is proven (ia-zip-ledger.mjs), else per page over IIIF. --ia-zip needs opj_decompress + unzip; on a box without them every book falls back before any request . On gex45 (62 GB, x86): on l7a this lane's node reached 4.4 GB RSS on 51 MP IA leaves and the box went global-OOM at 2026-10-26 00:13:59, taking another service's runner with it. gex45 has no revive cron yet (infrastructure/gex45-crontab), so until one is installed nothing runs this lane. Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main)."
     },
     {
       "name": "harvard",

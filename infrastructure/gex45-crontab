@@ -33,3 +33,7 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # GPU task queue (#6871): `gpu-queue.sh add <task.sh>` queues; this starts the next one when nothing is running.
 */5 * * * * /root/bin/gpu-queue.sh run >> /var/log/sourcelibrary/gpu-queue.log 2>&1  # GPU task queue, one at a time under /root/gpu.lock (#6871)
+
+# Archiver host lanes (#5448): NOT INSTALLED YET. To run the gex45 lanes of scripts/catalog-coverage/archive-lanes.json (ia-lazy):
+#   */10 * * * * f=/root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh; [ -x $f ] && ARCHIVE_LANES_BOX=gex45 $f >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1  # #5448
+# Needs opj_decompress + unzip (apt: libopenjp2-tools unzip) for --ia-zip; without them the lane archives page by page.

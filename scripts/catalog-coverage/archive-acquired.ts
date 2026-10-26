@@ -47,6 +47,7 @@ import { ensurePages, isLazyPagesBook, LAZY_PAGES_FILTER } from '../lib/lazy-pag
 import { archiveFromManifest } from '../lib/manifest-archive.mjs';
 import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import { laneSelectionTiers } from './archive-lanes.mjs';
+import { openIaZip } from '../lib/ia-zip-ledger.mjs';
 import {
   isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
@@ -119,6 +120,10 @@ const HOST_FILTER = !!(HOSTS || EXCLUDE_HOSTS);
 // gallica.bnf.fr wall 403s datacenter addresses). A lane flag, so exactly one process does it.
 const GALLICA_OPENAPI = process.argv.includes('--gallica-openapi');
 const fetchUrlOf = (u: string) => (GALLICA_OPENAPI ? gallicaOpenApiUrl(u) : u);
+// `--ia-zip`: a manifest-only IA book is archived from its item `_jp2.zip` (one request, the JP2
+// master) when its canvas → member mapping is proven; otherwise page by page (ia-zip-ledger.mjs).
+// Needs opj_decompress + unzip on the box; without them every book falls back, and says so.
+const IA_ZIP = process.argv.includes('--ia-zip');
 for (const spec of listArg('host-rate') ?? []) {
   const [h, r] = spec.split('=');
   capDomainLimit(h, Number(r));
@@ -133,6 +138,11 @@ for (const [flag, v] of [['concurrency', CONCURRENCY], ['page-concurrency', PAGE
   }
 }
 const log = (...a: any[]) => console.log(new Date().toISOString().slice(11, 19), ...a);
+// libvips keeps decoded images in a cache and spreads each operation over every core. On a 51 MP
+// IA leaf that is ~150 MB per decode, and a lane on l7a reached 4.4 GB RSS and tipped the box into
+// a global OOM (2026-10-26 00:13). An archiver touches each image once: no cache, two threads.
+sharp.cache(false);
+sharp.concurrency(2);
 
 async function main() {
   const mc = new MongoClient(process.env.MONGODB_URI!); await mc.connect();
@@ -519,7 +529,7 @@ async function main() {
     await cur.close();
     if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
-  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0, lazyArchived = 0, manifestPages = 0;
+  let ok = 0, gapped = 0, partial = 0, stalled = 0, hostSkipped = 0, lazySkipped = 0, lazyArchived = 0, manifestPages = 0, zipBooks = 0, zipRefused = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -536,6 +546,7 @@ async function main() {
     let block: Error | null = null;
     const r = await archiveFromManifest(db, w.book_id, {
       put: storagePut, breaker, missGuard, pageConcurrency: PAGE_CONCURRENCY, fetchUrl: fetchUrlOf,
+      openZip: IA_ZIP ? openIaZip : null,
       shouldStop: () => !!(block || blocked),
       log: (m: string) => log(m),
       onPage: (ev: any) => {
@@ -560,6 +571,8 @@ async function main() {
       catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
     }
     if (r.status === 'manifest_failed') log(`book ${w.book_id}: manifest fetch failed (${r.error})`);
+    if (r.zip?.route) { zipBooks++; log(`book ${w.book_id}: ${r.zip.pages} pages from the IA item zip (${r.zip.route} mapping, ${(r.zip.bytes / 1e6).toFixed(0)} MB)`); }
+    else if (r.zip?.refused) zipRefused++;
     if (r.status === 'complete') { if (r.verdict === 'complete') ok++; else gapped++; }
     else partial++;
     lazyArchived++;
@@ -690,7 +703,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${lazyArchived ? `, ${lazyArchived} manifest-only books archived from the manifest (${manifestPages} pages, #5448)` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, with gaps ${gapped}, partial ${partial}, stalled ${stalled}${booksAbandoned ? `, abandoned this run ${booksAbandoned}` : ''} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesMissed} missed [404/410], ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${lazySkipped ? `, ${lazySkipped} manifest-only books skipped (#7343)` : ''}${lazyArchived ? `, ${lazyArchived} manifest-only books archived from the manifest (${manifestPages} pages, #5448)` : ''}${zipBooks || zipRefused ? `, IA zips ${zipBooks} used / ${zipRefused} refused` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.
