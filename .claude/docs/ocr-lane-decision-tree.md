@@ -61,7 +61,7 @@ you are about to pick `--model`, an engine, or a free lane by hand.
 | Greek | 3 Flash via agy | CER 6.6% flash vs 11% lite, 176 referenced books (#5575) | `FLASH_OCR_FROM.grc` |
 | Persian, Sanskrit, Pali, Arabic | 3 Flash via agy | flash re-read lifts judged translation fidelity +1.00 / +0.75 / +0.58 / +0.39 (#5700, PR #5760) | `FLASH_OCR_FROM` |
 | Ge'ez | in the Flash list on agreement only; the issue marks it "not Flash" — open | #4729 agreement 0.47, 9/20 catastrophic | `FLASH_OCR_FROM.gez` |
-| Chinese print (woodblock) | 3 Flash via agy | median CER 5.2%, 0/198 catastrophic; lite 3/198; PaddleOCR-VL fails ~1 spread in 7 (#6101) | `FLASH_OCR_FROM.zho` (from 2026-10-21) |
+| Chinese print (woodblock, movable type, typeset) | **Paddle split-leaf lane** (row below) — Derek 2026-10-26 "use paddle": $0 and no agy quota, which stays for correction; pages its guards turn away → 3 Flash via agy | split leaves median CER 6.1% vs Flash 5.2% (Flash stays the better reader), catastrophic 3/198, all blank leaves, now guarded (PR #7184); whole-spread Paddle failed ~1 spread in 7 (#6101) | lane: `scripts/workers/paddle-print-lane.mjs`; fallback and books outside a lane frame: `FLASH_OCR_FROM.zho` (from 2026-10-21). The fallback is not wired for held lane books (`ocr-routing-table.json` row `chinese-print`) |
 | Chinese / Japanese print outside the Siku, cursive and Meiji-typeset cohorts (woodblock, movable type, Chinese typeset) | **Paddle split-leaf lane** on gex45 for pages with no text, a flash-lite read or a whole-spread Paddle read; a stored Flash / Pro / Claude / typed / human read is kept | P1 median CER 0.061 vs lite 0.067, catastrophic 3/198 each; Flash 0.052 stays the better reader (PR #7184); blank-leaf + loop guard per leaf | `scripts/workers/paddle-print-lane.mjs`, books held `paddle-print-6101` |
 | Chinese manuscript | Paddle lane where the book is held for it; otherwise 3 Flash via agy until #4743 has a writer | #4743 | holds + `FLASH_OCR_FROM.zho` |
 | Syriac | Kraken; never Gemini | #4883 | own lane, books held |
@@ -103,11 +103,11 @@ A page (or book) needs text
 │     ├─ Chinese MS ──────── PaddleOCR-VL cost lane ADOPTED by rule 2026-09-18, Derek's  │
 │     │                      application unverified (#4743) → until then, 3 Flash via    │
 │     │                      the agy CLI. Books held for the Paddle lane keep the hold.  │
-│     ├─ Chinese print ───── 3 Flash via the agy CLI (#6101: median CER 5.2%, 0/198      │
-│     │                      catastrophic; lite 3/198; Paddle ~1 spread in 7). #7075.    │
-│     │                      The frame of print books outside Siku/cursive/Meiji (#6101 │
-│     │                      census) is read by the Paddle split-leaf lane instead, onto │
-│     │                      empty / lite / whole-spread-Paddle pages only (PR #7184).   │
+│     ├─ Chinese print ───── Paddle split-leaf lane (Derek 2026-10-26 "use paddle"; PR   │
+│     │                      #7184: CER 6.1% vs Flash 5.2%, $0, keeps agy for correction)│
+│     │                      onto empty / lite / whole-spread-Paddle pages, books held   │
+│     │                      paddle-print-6101. Pages its guards turn away, and books    │
+│     │                      outside a lane frame → 3 Flash via the agy CLI (#7075).     │
 │     ├─ Greek, Persian, Sanskrit, Pali, Arabic ── 3 Flash via the agy CLI              │
 │     │                      (FLASH_OCR_FROM; #5575, #5700). Ge'ez is in the same list   │
 │     │                      on agreement only (#4729). Kraken passes on Greek 1450–1699 │

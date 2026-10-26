@@ -43,6 +43,9 @@
     { "fn": "ocr", "language": "Chinese", "visibility": "hidden backlog", "expect": "lite" }
    ]
   },
+  "ocr/chinese-print-woodblock-movable-type-typeset-outside-siku-cu--paddleocr-vl-on-split-leaves-instead-of": {
+   "not_routing": "The Paddle split-leaf lane (scripts/workers/paddle-print-lane.mjs) reads a frame of print books it holds (paddle-print-6101), run by hand on gex45; getOcrModelForBook still answers flash for a visible Chinese book, which is the fallback this row keeps (the row above's probes)."
+  },
   "ocr/all-gemini-ocr-channel--which-channel-runs-a-gemini-model-other": {
    "not_routing": "The channel is enforced where a job is submitted (assertApiOcrModel, and the CLI_FLASH_OCR_HOLD queue in the orchestrator), not by the routing functions this audit probes; tests/unit/ocr-api-channel-guard.test.ts checks it."
   },
