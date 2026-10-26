@@ -235,3 +235,8 @@
 # Max 20x, since 2026-10-26), 3.8 Flash rows through agy -p. No paid API. Skips when this box's Claude account is at
 # >= 70% of its week, or >= 95% in the last 24 h before the reset (unused headroom lapses then). Releases a book back to the pipeline once no untranslated page is left. Queue at install: 0 books.
 40 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-translate-lane.lock timeout 100m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-translate/$(date +\%F) --max-pages=60 --apply >> /var/log/sourcelibrary/cli-translate-lane.log 2>&1  # #7075
+
+# CLI OCR lane (#7089): every 2 h at :10, read up to 120 unread pages in books the orchestrator held for the agy Flash lane
+# (ocr-flash-cli-7075), with Gemini 3.8 Flash low through agy -p on the subscription (agy has no 3 Flash). No paid API; stops on the
+# first quota reply. Spread books (needs_splitting) wait. Releases a book once nothing is unread. Approved by Derek 2026-10-26.
+10 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-ocr-lane/$(date +\%F) --max-pages=120 --apply >> /var/log/sourcelibrary/cli-ocr-lane.log 2>&1  # #7089
