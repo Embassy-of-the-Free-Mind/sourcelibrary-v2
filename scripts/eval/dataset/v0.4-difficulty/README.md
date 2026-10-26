@@ -1,7 +1,8 @@
 # v0.4-difficulty — a labelled corpus of HARD pages
 
-Companion to the pinned ground-truth set (`../v0.3/`), answering a different
-question. Built for [#3469](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3469).
+**A companion to v0.3, not a newer version of it.** The "v0.4" in the name only orders it after
+v0.3; it replaces nothing there. It shares no rows with v0.3, carries no reference texts and no
+model runs, and answers a different question. Built for [#3469](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3469).
 
 The 44 pinned pages are **selected for being easy**: they exist because
 scholarly etexts exist for them, which means clean canonical print. Every
@@ -182,8 +183,28 @@ OCR'd pages). Filling those needs a different source — synthetic degradation, 
 a targeted visual sweep. The rest are short because of the blank-page
 reclassification above, and a wider draw refills them.
 
+### What `skew` holds
+
+The `skew` label comes from the page's own `<warning>`, and most of those warnings describe
+rotation, not skew. Of the 12 `skew` rows, checked 2026-10-26 (#7462) from their `evidence`:
+
+| what the warning describes | rows |
+|---|---:|
+| tilt or warp of the text block (true skew) | 2: `mercury-or-the-secret-and-swift-messenger-wilkins-58`, `thesaurus-graecae-linguae-vol-2-estienne-175` |
+| the page or main text rotated 90° or 180° | 6: `cxviii-fundet-aquas…-3`, `materialien-zur-geschichte-der-freimaurerei…-78`, `essence-of-pomegranates-gallico-122`, `primum-volumen…-8-906`, `maurerische-bibliographie…-761`, `erklarte-offenbarung-johannis…-717` |
+| rotated marginalia or an inserted note on an upright page | 4: `liber-scivias-bingen-224`, `zinnendorf-s-verhandlungen…-25`, `makhzan-al-adviyah…-59`, `assemblies-illustrated-by-yahya-al-wasiti-1237…-180` |
+
+(Slugs shortened; each starts with `skew-`.) Treat the class as "orientation", and split it by
+this table before reading a skew result.
+
 `script_family` is 268 spaced / 66 space-less. 24 pages carry more than one
 difficulty label.
+
+## Licence
+
+`pages.jsonl` and this README: **CC BY 4.0**, attribution "Source Library / Embassy of the Free
+Mind, sourcelibrary.org". The `evidence` text is Source Library's own OCR output. Page images are
+not in the dataset.
 
 ## Canary
 
