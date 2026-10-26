@@ -17,6 +17,10 @@
  *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json
  *       Samples n pages that apply would write with a change, rebuilds the text apply would write (guard reverts
  *       applied), and asks a FRESH judge, per changed span, which of draft / written the leaf shows (A/B random).
+ *   page-req       --key=K.json --dir=READ_DIR --req=R.jsonl
+ *       The route-judge whole-page judge (#6740) on the audit's pages: draft and written text, one call each, blind.
+ *   gate           --key=K.json --span=S.json --page-replies=O.jsonl [--n=40|10] [--out=G.json]
+ *       Both judges per page and the pooled verdict; the production gate's bar (see the mode).
  *   audit-score    --key=K.json --replies=O.jsonl [--guard-key=K.json --guard-replies=O.jsonl] [--out=S.json]
  *       Per page: spans where the leaf shows the draft (worse), the written text (better), neither, unclear. A page is
  *       WORSE when it has more draft-wins than written-wins. With the guard files, Krippendorff's alpha between the
@@ -175,7 +179,8 @@ if (CMD === 'yatags-req') {
     });
     items.push(...controls(d, rng));
     reqs.push({ uid: m.page_id, image: path.join(DIR, `ws-${m.page_id}`, `${m.page_id}.jpg`), prompt: buildPrompt(items, rng) });
-    key[m.page_id] = { book_id: m.book_id, page_number: m.page_number, changed: d.changed, draftN: d.draftN, items };
+    // draft and written: the whole-page judge (page-req) reads each of them against the image
+    key[m.page_id] = { book_id: m.book_id, page_number: m.page_number, changed: d.changed, draftN: d.draftN, items, draft: pages.get(m.page_id).ocr.data, written: d.nextText };
   }
   writeJsonl(arg('req'), reqs);
   fs.writeFileSync(arg('key'), JSON.stringify(key));
@@ -281,7 +286,59 @@ if (CMD === 'yatags-req') {
     worse_pages: worse.map((p) => ({ page_number: p.page_number, page_id: p.page_id, spans: p.worse_spans })) };
   if (arg('out')) fs.writeFileSync(arg('out'), JSON.stringify({ ...out, page_rows: pages }, null, 1));
   console.log(JSON.stringify(out, null, 1));
+} else if (CMD === 'page-req') {
+  // The second instrument (#6560 production gate, 2026-10-26): the route-judge whole-page judge (#6740,
+  // route-judge-6740/judge.mjs judgePrompt, the prompt that judged the router cell), one output per call against the
+  // image, on the SAME sampled pages: the draft and the text apply would write, each judged blind and on its own.
+  const { judgePrompt } = await import('../../route-judge-6740/judge.mjs');
+  const key = JSON.parse(fs.readFileSync(arg('key'), 'utf8'));
+  const reqs = [];
+  for (const [pid, k] of Object.entries(key)) {
+    if (!k.draft || !k.written) throw new Error(`${pid}: key has no draft/written text (rebuild it with audit-req)`);
+    const image = path.join(arg('dir'), `ws-${pid}`, `${pid}.jpg`);
+    for (const [side, text] of [['draft', k.draft], ['written', k.written]])
+      reqs.push({ uid: `${pid}|${side}`, image, prompt: judgePrompt({ task: 'ocr', lang: 'Tibetan', text }, 'the file ./page.jpg in your working directory (open it with Read before you answer)') });
+  }
+  writeJsonl(arg('req'), reqs);
+  console.log(`page-req: ${reqs.length} requests (${reqs.length / 2} pages)`);
+} else if (CMD === 'gate') {
+  // The production gate (brief, 2026-10-26), fixed before the gate volume's data was seen:
+  //   tiled span judge (audit-score over the tiles replies) and whole-page judge (page-req replies), per page.
+  //   whole page: WORSE when fidelity drops, accept is lost or a wrong_text defect is added (judge.mjs made_worse);
+  //   BETTER when fidelity rises and it is not worse; else SAME.
+  //   pooled: the judges agree -> that verdict; worse against better -> same (they cancel, as span pooling did in
+  //   #6758); one says same -> the other's verdict. A page a judge did not answer takes the other judge's verdict.
+  //   PASS (gate, --n=40): pooled worse <= 4 AND better >= 3 x worse. Per volume (--n=10): STOP when pooled worse > 2.
+  const span = JSON.parse(fs.readFileSync(arg('span'), 'utf8'));
+  const sv = Object.fromEntries(span.page_rows.filter((p) => p.verdict).map((p) => [p.page_id, p.verdict]));
+  const parseJ = (t) => { const m = String(t || '').match(/\{[\s\S]*\}/); if (!m) return null; try { const v = JSON.parse(m[0]); return typeof v.accept === 'boolean' && Number(v.fidelity) >= 1 && Number(v.fidelity) <= 5 ? v : null; } catch { return null; } };
+  const V = Object.fromEntries(readJsonl(arg('page-replies')).filter((r) => r.text).map((r) => [r.uid, parseJ(r.text)]));
+  const wt = (v) => (v.defects || []).some((d) => d.severity === 'wrong_text');
+  const key = JSON.parse(fs.readFileSync(arg('key'), 'utf8'));
+  const rows = [];
+  for (const [pid, k] of Object.entries(key)) {
+    const a = V[`${pid}|draft`], b = V[`${pid}|written`];
+    let pv = null;
+    if (a && b) {
+      const d = Number(b.fidelity) - Number(a.fidelity);
+      pv = d < 0 || (a.accept && !b.accept) || (!wt(a) && wt(b)) ? 'worse' : d > 0 ? 'better' : 'same';
+    }
+    const s = sv[pid] ?? null;
+    const both = [s, pv].filter(Boolean);
+    const pooled = !both.length ? null : both.length === 1 ? both[0] : s === pv ? s : s === 'same' ? pv : pv === 'same' ? s : 'same';
+    rows.push({ page_id: pid, page_number: k.page_number, span: s, page: pv, pooled,
+      ...(a && b && { fidelity: `${a.fidelity}->${b.fidelity}`, accept: `${a.accept}->${b.accept}`, wrong_text: `${wt(a)}->${wt(b)}`, note: b.reader_note }) });
+  }
+  const count = (f) => ({ better: rows.filter((r) => r[f] === 'better').length, same: rows.filter((r) => r[f] === 'same').length, worse: rows.filter((r) => r[f] === 'worse').length, judged: rows.filter((r) => r[f]).length });
+  const n = Number(arg('n') || rows.length), P = count('pooled');
+  const pass = n >= 40 ? P.worse <= 4 && P.better >= 3 * P.worse : P.worse <= 2;
+  const out = { n: rows.length, rule: n >= 40 ? 'pooled worse <= 4/40 and better >= 3 x worse' : 'pooled worse <= 2/10', pass,
+    span_judge: count('span'), page_judge: count('page'), pooled: P, rows };
+  if (arg('out')) fs.writeFileSync(arg('out'), JSON.stringify(out, null, 1));
+  const { rows: _r, ...head } = out;
+  console.log(JSON.stringify(head));
+  for (const r of rows.filter((x) => x.pooled === 'worse')) console.log('WORSE', r.page_number, r.page_id, `span=${r.span} page=${r.page}`, r.fidelity ?? '', r.note ?? '');
 } else {
-  console.error('usage: leafcheck.mjs yatags-req|yatags-verdicts|audit-req|audit-score (see the header)');
+  console.error('usage: leafcheck.mjs yatags-req|yatags-verdicts|audit-req|audit-score|tiles-req|judges|page-req|gate (see the header)');
   process.exit(2);
 }
