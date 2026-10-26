@@ -3,7 +3,7 @@ import { iiifFullSizeUrl as tsFullSize } from '../../src/lib/iiif-image-service'
 import { extractCanvasImage as tsExtract } from '../../src/lib/import-utils';
 import { iiifFullSizeUrl as mjsFullSize } from '../../scripts/lib/iiif-utils.mjs';
 import { extractCanvasImage as mjsExtract } from '../../scripts/iiif-discovery/lib/manifest-store.mjs';
-import { manifestToPages } from '../../scripts/iiif-discovery/lib/iiif-metadata.mjs';
+import { manifestToPages, unwrapProxiedImageService } from '../../scripts/iiif-discovery/lib/iiif-metadata.mjs';
 
 /**
  * IIIF Image API 3.0 removed the size keyword `full`; a v3 service answers
@@ -64,5 +64,22 @@ describe('manifestToPages', () => {
   it('v3 manifest -> /full/max/', () => {
     const pages = manifestToPages({ items: [v3Canvas(IA_V3)] });
     expect(pages[0].photo).toBe(`${IA_V3}/full/max/0/default.jpg`);
+  });
+});
+
+describe('Heidelberg iiif-proxy service ids (#5448)', () => {
+  const INNER = 'https://iiif.bodleian.ox.ac.uk/iiif/image/25948125-0c69-4051-943c-f04366bc9e1a';
+  const PROXY = `https://digi.ub.uni-heidelberg.de/iiif/2/bodleian_mslaudmisc116%3Aiiif-proxy.cgi?serviceId=${encodeURIComponent(INNER)}&size=100%25`;
+  it('unwraps to the wrapped service', () => {
+    expect(unwrapProxiedImageService(PROXY)).toBe(INNER);
+  });
+  it('leaves an ordinary service id alone', () => {
+    expect(unwrapProxiedImageService(MDZ_V2)).toBe(MDZ_V2);
+    expect(unwrapProxiedImageService('https://x.org/iiif-proxy.cgi?serviceId=not-a-url')).toBe('https://x.org/iiif-proxy.cgi?serviceId=not-a-url');
+  });
+  it('manifestToPages mints direct URLs for a proxied canvas', () => {
+    const pages = manifestToPages({ sequences: [{ canvases: [v2Canvas(PROXY)] }] });
+    expect(pages[0].photo).toBe(`${INNER}/full/full/0/default.jpg`);
+    expect(pages[0].thumbnail).toBe(`${INNER}/full/!400,400/0/default.jpg`);
   });
 });

@@ -28,7 +28,7 @@ What each box HAS. For what is free right now, and where the next job should go,
 | Box | CPU | RAM / swap | GPU | Disks (size · free on 2026-10-26) | What fills them |
 |---|---|---|---|---|---|
 | main | 16 vCPU ARM (Neoverse-N1, shared) | 30 GB / 11 GB | none | `/` **150 GB** · 28 GB free (81%) — the tightest root of the four. `/mnt/HC_Volume_105839809` 492 GB · 76 GB (84%) | root: checkout 19 GB, `.gemini` 16 GB, `.claude` transcripts 16 GB, `claude-jobs` 8 GB. The steward moves idle `/root` folders to the volume nightly |
-| cloudlayer | 16 vCPU ARM (shared) | 30 GB / 15 GB (swapfile on the volume) | none | `/` 301 GB · 74 GB (75%). `/data/scratch` 492 GB · **9.8 GB (98%)** | the volume is mostly Cloud Layer imagery (`moved` 86, `north72-archive` 54, `poles-e` 53, `north90` 49 GB); Source Library's `sl/` is 57 GB. No steward |
+| cloudlayer | 16 vCPU ARM (shared) | 30 GB / 15 GB (swapfile on the volume) | none | `/` 301 GB · 74 GB (75%). `/data/scratch` 492 GB · 131 GB (72%) after a cleanup the same day (it was 9.8 GB, 98%) | Cloud Layer prototype trees: `north72-archive` 54, `poles-e` 53, `north90` 49 GB (an open backfill, #379 in earthlove), all read by nothing live; the globe runs from `/data/live` on `/`. Source Library's `sl/` is 57 GB. No steward |
 | l7a | 16 vCPU ARM (shared) | 30 GB / none | none | `/` 301 GB · 138 GB (53%). No volume | `/data` 134 GB (archive tick). No steward |
 | gex45 | 20 threads x86 (i5-13500, dedicated) | 62 GB / 31 GB | RTX PRO 4000 Blackwell, 24 GB | `/` 436 GB · 143 GB (66%). No volume | `/root/.cache/huggingface` 125 GB (model weights), `/root/jobs` 43 GB, `/root/pz` and `/root/bench` 20 GB each |
 

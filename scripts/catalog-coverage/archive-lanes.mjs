@@ -64,7 +64,8 @@ export function laneTableProblems(table, { domainLimitOf } = {}) {
     if (!(l.box in budget)) out.push(`${who}: box '${l.box}' has no page budget`);
     if (!Array.isArray(l.hosts) || l.hosts.length === 0 || !l.hosts.every(h => HOST.test(h))) out.push(`${who}: hosts must be a non-empty list of hostnames`);
     if (!Array.isArray(l.providers) || l.providers.length === 0 || !l.providers.every(p => PROVIDER.test(p))) out.push(`${who}: providers must be a non-empty list of image_source.provider tags`);
-    if (!Number.isInteger(l.page_concurrency) || l.page_concurrency < 1 || l.page_concurrency > 4) out.push(`${who}: page_concurrency must be 1..4`);
+    // Up to 8: a zip lane's pages in flight are JP2 decodes (CPU on its own box), not requests.
+    if (!Number.isInteger(l.page_concurrency) || l.page_concurrency < 1 || l.page_concurrency > 8) out.push(`${who}: page_concurrency must be 1..8`);
     for (const f of l.flags ?? []) if (!FLAGS.has(f)) out.push(`${who}: unknown flag ${f}`);
     for (const h of l.hosts ?? []) {
       if (FROZEN_HOSTS.includes(h)) out.push(`${who}: ${h} is frozen (MDZ rate waits on BSB's reply, #5448)`);
