@@ -14,7 +14,7 @@
  *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME] [--reread]
  *   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *
- * --books-file: book ids, one per line; reads every page of each that has NO OCR yet (a page with text is never
+ * --books-file: book ids, one per line; reads every live page (page_number > 0) of each that has NO OCR yet (a page with text is never
  * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped
  * unless --reread is given (page-ids mode only: a re-read is chosen page by page, never a whole book). Each page's meta
  * then records `reread: true` and the OCR model it was read over (`replaces_model`); `cli-ocr.mjs apply` still holds
@@ -47,6 +47,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { readPageIdsFile, parseBookIds } from '../lib/ocr-targeting.mjs';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
@@ -164,8 +165,10 @@ async function main() {
   const db = client.db('bookstore');
   const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
   const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.model': 1 };
+  // A book's soft-hidden pages (page_number <= 0: the spreads a split archived) are never read: reading them pays for
+  // text no reader sees, and on a just-split book they are a third of the "pages without OCR" (#7341).
   const filter = arg('books-file')
-    ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...NO_OCR }
+    ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...VISIBLE_PAGE_MATCH, ...NO_OCR }
     : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...(!REREAD && NO_OCR) };
   const pages = await db.collection('pages').find(filter, { projection: PAGE_FIELDS }).sort({ book_id: 1, page_number: 1 }).toArray();
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { id: 1, language: 1, title: 1 } }).toArray()).map((b) => [b.id, b]));
