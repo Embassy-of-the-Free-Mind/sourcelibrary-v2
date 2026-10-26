@@ -8,21 +8,25 @@
 #   shard-NNNNN.ids.jsonl the manifest rows embedded (failed rows are in shard-NNNNN.failed.jsonl, not in the vectors)
 #   shard-NNNNN.json      the checkpoint: written last, atomically; a shard with it is skipped on resume
 # and manifest.json (model, revision, preprocessing, every finished shard + totals) after every shard.
-#   python embed-shards.py --manifest crops.jsonl --out out/crops [--shard 10000] [--workers 24] [--deadline EPOCH]
-import argparse, io, json, os, sys, time, urllib.request
+#   python embed-shards.py --manifest crops.jsonl --out out/crops [--shard 10000] [--procs 12 --workers 8] [--deadline EPOCH]
+# Fetch + decode run in --procs worker processes of --workers threads each (fetchlib.py: R2 direct, keep-alive), a batch
+# per task, so the GPU loop only stacks tensors (pilot: 24 threads in this process, GPU busy 0.33).
+import argparse, json, multiprocessing as mp, os, sys, time
 from collections import deque
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 import torch
-from PIL import Image
-from transformers import AutoModel, AutoProcessor
+from transformers import AutoModel
 
-Image.MAX_IMAGE_PIXELS = None
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fetchlib
+
 MODEL = "google/siglip2-so400m-patch14-384"
 ap = argparse.ArgumentParser()
 ap.add_argument("--manifest", required=True); ap.add_argument("--out", required=True)
-ap.add_argument("--shard", type=int, default=10000); ap.add_argument("--workers", type=int, default=24)
+ap.add_argument("--shard", type=int, default=10000); ap.add_argument("--workers", type=int, default=8)
+ap.add_argument("--procs", type=int, default=12); ap.add_argument("--inflight", type=int, default=3, help="batches in flight per process")
 ap.add_argument("--batch", type=int, default=64); ap.add_argument("--deadline", type=float, default=0)
 ap.add_argument("--mem-fraction", type=float, default=0.6)
 ap.add_argument("--cpu", action="store_true", help="smoke test only: fp32 on CPU, no card (use with --limit)")
@@ -42,33 +46,14 @@ if os.path.exists(fpp) and json.load(open(fpp)) != fp:
 json.dump(fp, open(fpp, "w"))
 print(f"{a.manifest}: {len(rows)} rows, {nshards} shards of {a.shard}", flush=True)
 
+# fork the fetch processes BEFORE anything touches CUDA (a forked child must never inherit a CUDA context); with fork
+# the executor starts all of them on the first submit, so this warm-up call is that point
+pool = ProcessPoolExecutor(a.procs, mp_context=mp.get_context("fork"), initializer=fetchlib.init, initargs=(a.workers,))
+pool.submit(fetchlib.load_batch, []).result()
 if DEV == "cuda": torch.cuda.set_per_process_memory_fraction(a.mem_fraction)
 model = AutoModel.from_pretrained(MODEL, dtype=DT).to(DEV).eval()
-proc = AutoProcessor.from_pretrained(MODEL)
-iproc = proc.image_processor
 SNAPS = os.path.expanduser("~/.cache/huggingface/hub/models--google--siglip2-so400m-patch14-384/snapshots")
 snap = sorted(os.listdir(SNAPS))[0] if os.path.isdir(SNAPS) else "?"
-
-def load(r):
-    """fetch + decode + resize + preprocess one image; returns (pixel_values | None, stats)."""
-    st = {"bytes": 0, "fetch_s": 0.0, "decode_s": 0.0, "cache": None, "err": None}
-    t0 = time.time()
-    try:
-        req = urllib.request.Request(r["src"], headers={"User-Agent": "sourcelibrary-siglip2-6871"})
-        with urllib.request.urlopen(req, timeout=120) as f:
-            body = f.read(); st["cache"] = f.headers.get("cf-cache-status")
-        st["bytes"] = len(body); t1 = time.time(); st["fetch_s"] = t1 - t0
-        im = Image.open(io.BytesIO(body))
-        im.draft("RGB", (768, 768))          # JPEG DCT downscale; never below 768 on the long side
-        im = im.convert("RGB")
-        if max(im.size) > 768:              # the eval's preprocessing (fetch.py): long side ≤ 768, LANCZOS
-            s = 768 / max(im.size); im = im.resize((max(1, round(im.width * s)), max(1, round(im.height * s))), Image.LANCZOS)
-        pv = iproc(images=im, return_tensors="pt")["pixel_values"][0]
-        st["decode_s"] = time.time() - t1
-        return pv, st
-    except Exception as e:
-        st["err"] = repr(e)[:300]; st["fetch_s"] = st["fetch_s"] or time.time() - t0
-        return None, st
 
 def write_manifest():
     done = sorted(f for f in os.listdir(a.out) if f.startswith("shard-") and f.endswith(".json"))
@@ -82,7 +67,7 @@ def write_manifest():
               open(os.path.join(a.out, "manifest.json.tmp"), "w"), indent=1)
     os.replace(os.path.join(a.out, "manifest.json.tmp"), os.path.join(a.out, "manifest.json"))
 
-pool = ThreadPoolExecutor(a.workers); stopped = False
+stopped = False
 for k in range(nshards):
     tag = f"shard-{k:05d}"
     if os.path.exists(os.path.join(a.out, tag + ".json")): continue
@@ -90,34 +75,26 @@ for k in range(nshards):
         print(f"deadline reached before {tag}; resume re-runs from here", flush=True); stopped = True; break
     part = rows[k * a.shard:(k + 1) * a.shard]
     t0 = time.time(); gpu_s = 0.0; vecs, ok_rows, bad, stats = [], [], [], []
-    batch_pv, batch_rows = [], []
 
-    def flush():
-        global gpu_s
-        if not batch_pv: return
+    def ahead(part, window=a.procs * a.inflight):   # in order, at most `window` batches decoded ahead (≈ 56 MB each)
+        q = deque()
+        for b in range(0, len(part), a.batch):
+            q.append((part[b:b + a.batch], pool.submit(fetchlib.load_batch, part[b:b + a.batch])))
+            if len(q) >= window: r0, fu = q.popleft(); yield r0, fu.result()
+        while q: r0, fu = q.popleft(); yield r0, fu.result()
+
+    for rows_b, (X, ok, sts) in ahead(part):
+        stats.extend(sts); okset = set(ok)
+        bad.extend({**r, "err": st["err"]} for n, (r, st) in enumerate(zip(rows_b, sts)) if n not in okset)
+        if not ok: continue
         g0 = time.time()
         with torch.inference_mode():
-            x = torch.stack(batch_pv).to(DEV, DT)
-            f = model.get_image_features(pixel_values=x)
+            f = model.get_image_features(pixel_values=torch.from_numpy(X).to(DEV, DT))
             f = f.pooler_output if hasattr(f, "pooler_output") else f
             f = torch.nn.functional.normalize(f.float(), dim=-1).half().cpu().numpy()
         if DEV == "cuda": torch.cuda.synchronize()
         gpu_s += time.time() - g0
-        vecs.append(f); ok_rows.extend(batch_rows); batch_pv.clear(); batch_rows.clear()
-
-    def ahead(part, window=8 * a.batch):   # in order, at most `window` decoded images in RAM (1.7 MB each)
-        q = deque()
-        for r in part:
-            q.append((r, pool.submit(load, r)))
-            if len(q) >= window: r0, fu = q.popleft(); yield r0, fu.result()
-        while q: r0, fu = q.popleft(); yield r0, fu.result()
-
-    for r, (pv, st) in ahead(part):
-        stats.append(st)
-        if pv is None: bad.append({**r, "err": st["err"]}); continue
-        batch_pv.append(pv); batch_rows.append(r)
-        if len(batch_pv) >= a.batch: flush()
-    flush()
+        vecs.append(f); ok_rows.extend(rows_b[n] for n in ok)
     V = np.concatenate(vecs) if vecs else np.zeros((0, 1152), np.float16)
     np.save(os.path.join(a.out, tag + ".f16.npy"), V)
     with open(os.path.join(a.out, tag + ".ids.jsonl"), "w") as f: f.writelines(json.dumps(r) + "\n" for r in ok_rows)
@@ -136,7 +113,7 @@ for k in range(nshards):
     write_manifest()
     print(json.dumps(rec), flush=True)
 write_manifest()
-pool.shutdown(wait=True)
+pool.shutdown(wait=True, cancel_futures=True)
 del model
 if DEV == "cuda": torch.cuda.empty_cache()
 sys.exit(75 if stopped else 0)
