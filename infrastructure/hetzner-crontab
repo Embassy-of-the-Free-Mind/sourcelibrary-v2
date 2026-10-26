@@ -229,3 +229,9 @@
 # trailing 24 h or on 3 failing runs in a row. No model call of its own (fixed queries); ~3,840 Vercel invocations/day. Until the PR merges, the
 # copy in the search-evals job scratch runs; the repo copy wins as soon as /root/sourcelibrary has it.
 4,19,34,49 * * * * cd /root/sourcelibrary && P=scripts/audit/search-probe.mjs && { [ -f "$P" ] || P=/mnt/HC_Volume_105839809/jobs/search-evals/probe/search-probe.mjs; } && flock -n /tmp/sl-search-probe.lock timeout 600 node "$P" >> /var/log/sourcelibrary/search-probe.log 2>&1
+
+# CLI translation lane (#7075): every 2 h at :40, translate up to 60 untranslated pages in books the orchestrator held
+# for a subscription CLI lane (translate-cli-7075): Opus rows through claude -p on this box's login (milolomas200921,
+# Max 20x, since 2026-10-26), 3.8 Flash rows through agy -p. No paid API. Skips when this box's Claude account is at
+# >= 70% of its week. Releases a book back to the pipeline once no untranslated page is left. Queue at install: 0 books.
+40 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-translate-lane.lock timeout 100m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-translate/$(date +\%F) --max-pages=60 --apply >> /var/log/sourcelibrary/cli-translate-lane.log 2>&1  # #7075
