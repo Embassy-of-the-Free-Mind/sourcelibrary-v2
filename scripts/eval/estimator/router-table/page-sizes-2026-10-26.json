@@ -1,0 +1,338 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/page-size.mjs (read-only)",
+ "as_of": "2026-10-26T17:43:43.404Z",
+ "sample": "200 live books per language with OCR, up to 30 OCR'd pages each; Mongo $sample (not seeded): a re-run draws other pages",
+ "multi_column": "OCR <columns>N</columns> with N >= 2 (self-reported by the OCR model) or page_type matching /table/",
+ "cells": {
+  "latin-lite": {
+   "language": "Latin",
+   "pages": 1320,
+   "books": 65,
+   "draft_chars": {
+    "median": 2265,
+    "p90": 6443
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 1320
+   },
+   "image_px": {
+    "width_median": 2201,
+    "height_median": 3000
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.177809388335704,
+    "n": 1083
+   },
+   "multi_column_share": 0.185
+  },
+  "latin-flash3": {
+   "language": "Latin",
+   "pages": 3666,
+   "books": 175,
+   "draft_chars": {
+    "median": 1827,
+    "p90": 3608
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 2754
+   },
+   "image_px": {
+    "width_median": 1852,
+    "height_median": 2568
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.099601593625498,
+    "n": 591
+   },
+   "multi_column_share": 0.102
+  },
+  "german-lite": {
+   "language": "German",
+   "pages": 2148,
+   "books": 107,
+   "draft_chars": {
+    "median": 1776,
+    "p90": 3520
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 2148
+   },
+   "image_px": {
+    "width_median": 1704,
+    "height_median": 2342
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.418757841907152,
+    "n": 1400
+   },
+   "multi_column_share": 0.127
+  },
+  "german-flash3": {
+   "language": "German",
+   "pages": 3184,
+   "books": 159,
+   "draft_chars": {
+    "median": 1673,
+    "p90": 3053
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 2665
+   },
+   "image_px": {
+    "width_median": 1760,
+    "height_median": 2381
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.4154518950437316,
+    "n": 411
+   },
+   "multi_column_share": 0.028
+  },
+  "german-tr-flash3": {
+   "language": "German",
+   "pages": 1553,
+   "books": 58,
+   "draft_chars": {
+    "median": 1837,
+    "p90": 4066
+   },
+   "translation_chars": {
+    "median": 2479,
+    "p90": 4380
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 1553
+   },
+   "image_px": {
+    "width_median": 3400,
+    "height_median": 3229
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.4936936936936935,
+    "n": 814
+   },
+   "multi_column_share": 0.108
+  },
+  "german-tr-lite": {
+   "language": "German",
+   "pages": 1449,
+   "books": 65,
+   "draft_chars": {
+    "median": 1851,
+    "p90": 3085
+   },
+   "translation_chars": {
+    "median": 1664,
+    "p90": 2981
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 1408
+   },
+   "image_px": {
+    "width_median": 1692,
+    "height_median": 2248
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.313953488372093,
+    "n": 579
+   },
+   "multi_column_share": 0.068
+  },
+  "french-lite": {
+   "language": "French",
+   "pages": 2292,
+   "books": 107,
+   "draft_chars": {
+    "median": 1593,
+    "p90": 3288
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 2290
+   },
+   "image_px": {
+    "width_median": 1903,
+    "height_median": 3000
+   },
+   "gemini_chars_per_output_token": {
+    "median": 3.3284671532846715,
+    "n": 1961
+   },
+   "multi_column_share": 0.094
+  },
+  "tibetan-yigdzin": {
+   "language": "Tibetan",
+   "pages": 4099,
+   "books": 168,
+   "draft_chars": {
+    "median": 2171,
+    "p90": 3721
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 4099
+   },
+   "image_px": {
+    "width_median": 1536,
+    "height_median": 1024
+   },
+   "gemini_chars_per_output_token": {
+    "median": null,
+    "n": 0
+   },
+   "multi_column_share": 0
+  },
+  "zh-paddle-dice-lt090": {
+   "language": "Chinese",
+   "pages": 1300,
+   "books": 142,
+   "draft_chars": {
+    "median": 234,
+    "p90": 449
+   },
+   "image_tokens": {
+    "median": 1061,
+    "p90": 1095,
+    "with_dims": 1300
+   },
+   "image_px": {
+    "width_median": 763,
+    "height_median": 1034
+   },
+   "gemini_chars_per_output_token": {
+    "median": null,
+    "n": 0
+   },
+   "multi_column_share": 0
+  },
+  "zh-6561-served": {
+   "language": "Chinese",
+   "pages": 5045,
+   "books": 178,
+   "draft_chars": {
+    "median": 233,
+    "p90": 386
+   },
+   "image_tokens": {
+    "median": 1068,
+    "p90": 1107,
+    "with_dims": 5045
+   },
+   "image_px": {
+    "width_median": 768,
+    "height_median": 1040
+   },
+   "gemini_chars_per_output_token": {
+    "median": null,
+    "n": 0
+   },
+   "multi_column_share": 0
+  },
+  "chinese-flash3": {
+   "language": "Chinese",
+   "pages": 593,
+   "books": 89,
+   "draft_chars": {
+    "median": 638,
+    "p90": 1034
+   },
+   "image_tokens": {
+    "median": 1074,
+    "p90": 1188,
+    "with_dims": 593
+   },
+   "image_px": {
+    "width_median": 770,
+    "height_median": 1046
+   },
+   "gemini_chars_per_output_token": {
+    "median": 1.5570934256055364,
+    "n": 163
+   },
+   "multi_column_share": 0.268
+  },
+  "zh-frame-6871": {
+   "language": "Chinese",
+   "pages": 1000,
+   "books": 187,
+   "draft_chars": {
+    "median": 210,
+    "p90": 320
+   },
+   "image_tokens": {
+    "median": 828,
+    "p90": 1087,
+    "with_dims": 1000
+   },
+   "image_px": {
+    "width_median": 663,
+    "height_median": 939
+   },
+   "gemini_chars_per_output_token": {
+    "median": null,
+    "n": 0
+   },
+   "multi_column_share": 0
+  },
+  "hebrew-flash3": {
+   "language": "Hebrew",
+   "pages": 4372,
+   "books": 189,
+   "draft_chars": {
+    "median": 1786,
+    "p90": 4651
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 4372
+   },
+   "image_px": {
+    "width_median": 1573,
+    "height_median": 2000
+   },
+   "gemini_chars_per_output_token": {
+    "median": 2.060253164556962,
+    "n": 2771
+   },
+   "multi_column_share": 0.219
+  },
+  "arabic-flash3": {
+   "language": "Arabic",
+   "pages": 3427,
+   "books": 160,
+   "draft_chars": {
+    "median": 1614,
+    "p90": 2953
+   },
+   "image_tokens": {
+    "median": 1533,
+    "p90": 1533,
+    "with_dims": 3359
+   },
+   "image_px": {
+    "width_median": 2725,
+    "height_median": 2720
+   },
+   "gemini_chars_per_output_token": {
+    "median": 2.8052884615384617,
+    "n": 2510
+   },
+   "multi_column_share": 0.321
+  }
+ }
+}

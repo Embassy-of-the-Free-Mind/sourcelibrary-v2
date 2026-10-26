@@ -1,11 +1,12 @@
 {
   "_about": "Every parameter of the router table (#6740), read by build.py. Data, not code: change a number here and re-run. A route's outcome is acceptance judged against the page image (route-judge pilot, #7376), not agreement with Opus. Opus is the judge, not the reference reader. The hierarchical models (v1, v2) give only the weak prior.",
-  "as_of": "2026-10-26",
+  "as_of": "2026-10-26b",
   "inputs": {
     "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
     "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
     "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
-    "capacity": "scripts/eval/estimator/chain/capacity.json"
+    "capacity": "scripts/eval/estimator/chain/capacity.json",
+    "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json"
   },
   "draws": 40000,
   "seed": 6740,
@@ -25,7 +26,10 @@
     "p": 0.9,
     "wrong_text_max": 0.02,
     "wrong_text_bar": "relative",
-    "_wrong_text_bar": "relative (Derek, 2026-10-26: cost is part of the measure): a route passes when its wrong-text rate is at most the best route's rate + wrong_text_max, so the cheaper of two equally good routes wins. absolute: at most wrong_text_max outright, which keeps the current route whenever every route misses 2% (Tibetan: 3/30 on both correctors). The other bar is reported as a sensitivity."
+    "_wrong_text_bar": "relative (Derek, 2026-10-26: cost is part of the measure): a route passes when its wrong-text rate is at most the best route's rate + wrong_text_max, so the cheaper of two equally good routes wins. absolute: at most wrong_text_max outright, which keeps the current route whenever every route misses 2% (Tibetan: 3/30 on both correctors). The other bar is reported as a sensitivity.",
+    "_pick": "2026-10-26b (Derek: 'and this takes cost into account?' -> 'yes'): among the routes that pass the gate, the pick is the lowest median expected dollars per ACCEPTED page, one unit for every channel (was: the lowest share of the channel's free week per RAW page). The margin is unchanged; sensitivity_within reports what a 0.10 margin would pick, flagged when that route is 0.05-0.10 below the best and >= sensitivity_cheaper times cheaper.",
+    "sensitivity_within": 0.10,
+    "sensitivity_cheaper": 5
   },
   "hold": { "_about": "HOLD when no measured route has P(acceptance >= hold.acc) >= hold.p.", "acc": 0.8, "p": 0.9 },
   "test_next": {
@@ -35,33 +39,60 @@
     "routes": "the cell's untested routes; if every route is tested, the one with the largest share x variance",
     "judge_points_per_output": 0.0124
   },
+  "fees": {
+    "_about": "Turns points and agy calls into dollars for the pick only. --fees <private fee file> (agy_month_usd, claude_usd_per_weekly_point; the file route_ocr_v1.py reads) when present; else every plan at default_plan_month_usd, the list price v2 and #7417 assumed. The source used is named in the table; dollar results go to stdout only, never into the repo.",
+    "default_plan_month_usd": 200
+  },
+  "size_model": {
+    "_about": "Inbox 2026-10-26 17:21Z and 17:22Z (Derek: '10 pages are not the same in all books'; 'maybe 5 when it is multi column'). A Claude call costs k x (overhead + the tokens of each page in it), tokens weighted input + output_weight x output. Batching saves the overhead only: points per page = k x (overhead / pages per call + the page's own tokens). Page sizes per cell: page-size.mjs (draft characters, image pixels -> image tokens by Anthropic's resize rule, OCR <columns> tag). k is fitted from the meter readings below. The Claude weekly quota is NOT published per token: k is an estimate, and the spread of the readings is its range.",
+    "output_weight": 5,
+    "_central": "Central k per kind of call = the median of that kind's readings. The two image readings agree (pilot, correct.mjs); the translation lane's own reading implies a rate about 3x lower: less per-call overhead (no images to open) or the coarse integer meter. Pricing translation at the image rate would contradict its one direct measurement, so each kind keeps its own; the range spans all readings.",
+    "_output_weight": "Opus list price: output tokens cost 5x input. Assumes the weekly meter weighs them as the API price does (unpublished).",
+    "overhead": { "in": 12400, "out": 750, "basis": "the pilot's one-page Opus image call, 14.6K in / 1.5K out tokens (route-judge pilot meter), minus one page: image about 1.5K + draft about 0.7K tokens in, about 0.75K out. The rest is the claude -p system prompt, the instructions and the tool turns that open the files, paid once per call." },
+    "chars_per_token_default": { "Chinese": 1.0, "Tibetan": 1.0, "other": 3.3, "_basis": "used where fewer than min_pages_for_measured_cpt pages record Gemini's output token count. Chinese and Tibetan: one token a character, a guess (Gemini's measured 1.56 on Chinese 3 Flash includes the tag markup). Claude's tokenizer differs from Gemini's; neither is measured here for Claude." },
+    "min_pages_for_measured_cpt": 30,
+    "english_chars_per_token": 4.0,
+    "pages_per_call": { "single": 10, "multi": 5, "_basis": "Derek 2026-10-26: 10 for single-column prose, 5 for multi-column pages (two-column print, tables, glossed or interlinear). A cell's effective figure mixes the two by its measured multi-column share (OCR <columns>N</columns> with N >= 2, self-reported, or page_type table). correct.mjs (--per-call, default 10) and claude-translate.mjs (--per-call=10) have no layout switch today: 5 for multi-column is the rule proposed here, not what the lanes do." },
+    "readings": [
+      { "id": "pilot (one-page Opus image calls)", "calls": 323, "points": 4, "in_per_call": 14600, "out_per_call": 1500, "kind": "correct", "basis": "route-judge pilot meter: weekly 21% -> 25% over 323 calls on a shared account, an UPPER bound" },
+      { "id": "correct.mjs, 10 Latin pages a call", "points_per_page": 0.004, "pages_per_call": 10, "cell": "latin-lite", "kind": "correct", "basis": "capacity.json opus-5.5@10: about 1% of an account-week per 250 Latin pages (#7258, integer meter)" },
+      { "id": "claude-translate.mjs, 10 German pages a call", "points_per_page": 0.000923, "pages_per_call": 10, "cell": "german-tr-flash3", "kind": "translate", "basis": "capacity.json opus-translate@10: 3% of an account-week per 3,250 pages (#7263); another early reading is about 10x this" },
+      { "id": "66 Sonnet text calls = 2 points", "used": false, "why": "Sonnet, not Opus, and no token counts recorded for those calls: it cannot fit an Opus rate" }
+    ]
+  },
+  "idle": {
+    "_about": "Per channel, the share of THIS week's quota projected to go unused at the reset (allocate_v2.idle_shares: used / elapsed share of the week, per account). Idle pages cost 0 in the this-week decision. --idle claude=<share>,agy=<share> overrides.",
+    "claude": { "meters": ["/root/.claude-limits/latest.json", "scripts/eval/estimator/chain/results/claude-weekly-2026-10-25.json"], "_note": "the first that reads in the {as_of, accounts[{account, weekly_percent, resets_at}]} shape; ops_reports claude-limits:latest on Mongo is the same reading (needs credentials, not read by this stdlib script)." },
+    "agy": { "share": 0, "why": "agy meter not read: it is on Hetzner main (/root/agy-quota), not on the job box; 0 = no idle credit" }
+  },
   "stages": {
     "none": { "label": "serve the draft (already paid)", "channel": null, "draw": 0, "api_usd": 0 },
-    "opus-img": { "label": "Opus image call, one page", "channel": "claude", "draw": 0.000124, "points": 0.0124, "points_range": [0.0093, 0.0155], "api_usd": 0.0822, "basis": "route-judge pilot meter (score.json meter): 0.0124 weekly points per Opus image call over 323 calls, an UPPER bound (the orchestrating session shared the account; the meter reads whole points). correct.mjs at 10 pages a call measured 0.004 points a page (capacity.json opus-5.5@10), a third of this. API list: $0.0822 a call (the pilot's 14.6K in / 1.5K out tokens)." },
-    "opus-text": { "label": "Opus CLI translation, 10 pages a call", "channel": "claude", "draw": 9.23e-06, "points": 0.000923, "api_usd": 0.0597, "basis": "claude-translate.mjs: 3% of an account-week per 3,250 pages (#7263; capacity.json opus-translate@10). API list: the pilot's 30 one-page German reads, $1.79." },
-    "agy": { "label": "agy 3.8 Flash correction, one page", "channel": "agy", "draw": 1.02, "agy_share": 4.45e-06, "api_usd": null, "basis": "1.02 calls a page (capacity.json agy@1) x 4.3632e-6 of a month's agy quota a call (route-costs.json quota_shares). No paid API equivalent is enabled." }
+    "opus-img@10": { "label": "Opus image correction, 10 pages a call", "size": "correct", "pages_per_call": "layout", "lane": "correct.mjs (--per-call, default 10)", "channel": "claude", "draw": 4.0e-05, "points": 0.004, "points_range": [0.00203, 0.00608], "api_usd": 0.0822, "basis": "capacity.json opus-5.5@10: correct.mjs, about 1% of an account-week per 250 Latin pages (2026-10-24, #7258, climits integer meter). The production lane for print OCR corrections in every language it has run on. API list kept at the pilot's one-page $0.0822 (the image dominates the tokens; not re-measured at 10 a call)." },
+    "opus-img@1": { "label": "Opus image correction, one page a call", "size": "correct", "pages_per_call": 1, "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)", "channel": "claude", "draw": 0.000124, "points": 0.0124, "points_range": [0.0093, 0.0155], "api_usd": 0.0822, "basis": "route-judge pilot meter (score.json meter): 0.0124 weekly points per Opus image call over 323 calls, an UPPER bound (the orchestrating session shared the account; the meter reads whole points). Used where the only lane that has run is one page a call: Chinese Paddle (#6561) and Tibetan (#6560); correct.mjs's 10-a-call rate is unmeasured on either. API list: $0.0822 a call (the pilot's 14.6K in / 1.5K out tokens)." },
+    "opus-text": { "label": "Opus CLI translation, 10 pages a call", "size": "translate", "pages_per_call": "layout", "lane": "claude-translate.mjs (--per-call=10)", "channel": "claude", "draw": 9.23e-06, "points": 0.000923, "api_usd": 0.0597, "basis": "claude-translate.mjs: 3% of an account-week per 3,250 pages (#7263; capacity.json opus-translate@10). API list: the pilot's 30 one-page German reads, $1.79." },
+    "agy": { "label": "agy 3.8 Flash correction, one page", "lane": "agy, one page a call", "channel": "agy", "draw": 1.02, "agy_share": 4.45e-06, "api_usd": null, "basis": "1.02 calls a page (capacity.json agy@1) x 4.3632e-6 of a month's agy quota a call (route-costs.json quota_shares). No paid API equivalent is enabled." }
   },
   "taxonomy": "O1 confabulation (text not on the page); O4 block repetition; O5 silent omission; O6 meaning-changing misread; O7 numerals/dates wrong; O8 normalisation toward the expected; O10 secondary script dropped; O11 page furniture mis-tagged; O12 marginalia/apparatus dropped or mis-tagged; O16 self-reported tags wrong; I5 several leaves in one photo; T6 catchword/split-word seams; T8 sense inverted or qualifier dropped; T9 quiet omission; T10 invented scholarship in notes; T15 continuity meta wrong; E2 other. Full list: .claude/docs/page-error-taxonomy.md and judge.mjs TAXONOMY.",
   "cells": [
     { "id": "latin-lite", "title": "Latin print, Flash-Lite text (#5924)", "v2": "latin-lite", "pilot": "latin", "v1": ["latin", "no web transcription", "gemini-3.1-flash-lite"], "current": "lite>opus",
       "routes": [
         { "id": "lite", "stage": "none", "pilot": "lite" },
-        { "id": "lite>opus", "stage": "opus-img", "pilot": "lite>opus-correct", "v2": "opus-5.5" },
+        { "id": "lite>opus", "stage": "opus-img@10", "pilot": "lite>opus-correct", "v2": "opus-5.5" },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin", "route": "lite>agy-flash-low"}] } ] },
     { "id": "latin-flash3", "title": "Latin print, 3 Flash text (most-read books)", "v2": "latin-flash3", "v1": ["latin", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
       "routes": [
         { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash"}] },
-        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
         { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "german-lite", "title": "German OCR, Flash-Lite", "v2": "german-lite", "current": "lite>opus",
       "routes": [
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-lite", "route": "lite"}] },
-        { "id": "lite>opus", "stage": "opus-img", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-lite", "route": "lite>opus-correct"}] },
+        { "id": "lite>opus", "stage": "opus-img@10", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-lite", "route": "lite>opus-correct"}] },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-lite", "route": "lite>agy-flash-low"}] } ] },
     { "id": "german-flash3", "title": "German OCR, 3 Flash", "v2": "german-flash3", "current": "3flash>opus",
       "routes": [
         { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-flash3", "route": "3flash"}] },
-        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-flash3", "route": "3flash>opus-correct"}] },
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-flash3", "route": "3flash>opus-correct"}] },
         { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "de-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "german-tr-flash3", "title": "German translation, 3 Flash English (#7263)", "pages_waiting": 306784, "pages_source": "pilot frame: visible German books 1500-1800, English newer than the OCR", "pilot": "german", "current": "flash3",
       "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
@@ -76,7 +107,7 @@
     { "id": "french-lite", "title": "French OCR, Flash-Lite", "v2": "french-lite", "current": "lite>opus",
       "routes": [
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "fr-lite", "route": "lite"}] },
-        { "id": "lite>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "lite>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "fr-lite", "route": "lite>agy-flash-low"}] } ] },
     { "id": "greek-flash3", "title": "Greek OCR, 3 Flash", "v2": "greek-flash3", "held": "Derek 2026-10-14 (#6694): Greek stays on lane A", "current": "3flash",
       "routes": [ { "id": "3flash", "stage": "none" } ] },
@@ -85,36 +116,36 @@
       "routes": [
         { "id": "yigdzin", "stage": "none", "pilot": "yigdzin" },
         { "id": "yigdzin>agy-flash-low", "stage": "agy", "pilot": "yigdzin>flash-low-correct", "v2": "agy-3.8-flash-low" },
-        { "id": "yigdzin>opus", "stage": "opus-img", "pilot": "yigdzin>opus-correct", "v2": "opus-5.5" } ] },
+        { "id": "yigdzin>opus", "stage": "opus-img@1", "pilot": "yigdzin>opus-correct", "v2": "opus-5.5" } ] },
     { "id": "zh-paddle-dice-lt090", "title": "Chinese Paddle, Kanripo dice < 0.90", "v2": "zh-paddle-dice-lt090", "current": "paddle>opus",
       "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
       "routes": [
         { "id": "paddle", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle", "use": "name_check"}] },
-        { "id": "paddle>opus", "stage": "opus-img", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>opus-correct", "use": "name_check"}] },
+        { "id": "paddle>opus", "stage": "opus-img@1", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>opus-correct", "use": "name_check"}] },
         { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>agy-flash-high", "use": "name_check"}] } ] },
     { "id": "zh-6561-served", "title": "Chinese Paddle, served Opus correction (#6561)", "pages_waiting": 0, "pages_source": "4,379 pages already served as #6561 corrections; the pilot drew 30 of them, one per book", "pilot": "chinese", "current": "paddle>opus",
       "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
       "routes": [
         { "id": "paddle", "stage": "none", "pilot": "paddle" },
-        { "id": "paddle>opus", "stage": "opus-img", "pilot": "paddle>opus-correct" } ] },
+        { "id": "paddle>opus", "stage": "opus-img@1", "pilot": "paddle>opus-correct" } ] },
     { "id": "chinese-flash3", "title": "Chinese OCR, 3 Flash", "v2": "chinese-flash3", "current": "3flash>opus",
       "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
       "routes": [
         { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] },
+        { "id": "3flash>opus", "stage": "opus-img@1", "v2": "opus-5.5" } ] },
     { "id": "zh-frame-6871", "title": "Chinese tables + mixed, guarded Paddle (#6871)", "v2": "zh-frame-6871", "current": "paddle>opus",
       "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
       "routes": [
         { "id": "paddle", "stage": "none" },
-        { "id": "paddle>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "paddle>opus", "stage": "opus-img@1", "v2": "opus-5.5" },
         { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high" } ] },
     { "id": "hebrew-flash3", "title": "Hebrew OCR, 3 Flash", "v2": "hebrew-flash3", "current": "3flash>opus",
       "routes": [
         { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] },
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" } ] },
     { "id": "arabic-flash3", "title": "Arabic OCR, 3 Flash", "v2": "arabic-flash3", "v1": ["arabic-print", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
       "routes": [
         { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] }
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" } ] }
   ]
 }
