@@ -63,6 +63,7 @@ import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { ACTIVE_OCR_JOB_STATUSES, claimBookForOcrSubmit, releaseOcrSubmitClaims, loadOcrPagesInFlight, partitionGuardedPages, describeSkips } from '../lib/ocr-submit-guard.mjs';
+import { reuseKeptReads } from '../lib/kept-read-reuse.mjs';
 import { projectCanonicals, projectTotal, projectMembers, keysWithRoom, isFileQuotaError } from '../lib/gemini-batch-keys.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -1635,6 +1636,14 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   }
   pages = guarded.keep;
 
+  // #7075: a page we already read for free and kept is applied, not bought again.
+  const reuse = await reuseKeptReads(db, { bookId: book.id, field: 'ocr', pageIds: pages.map((p) => p.id), minModel: ocrModel });
+  if (reuse.applied) {
+    console.log(`    ${reuse.applied} page(s) applied from kept reads instead of bought`);
+    pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    if (pages.length === 0) return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, skipReason: `all ${reuse.applied} page(s) applied from kept reads (#7075)` };
+  }
+
   // Minimum batch size gate — don't burn a batch API call for a handful of pages.
   // Small batches (1-20 pages) are usually RECITATION/failure retries that won't succeed.
   // Skip them and let them accumulate or get accepted as gaps in Phase 3.
@@ -2107,6 +2116,13 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
       guardSkipped.push(...guarded.skipped);
     }
     pages = guarded.keep;
+
+    // #7075: a page we already read for free and kept is applied, not bought again.
+    const reuse = await reuseKeptReads(db, { bookId: book.id, field: 'ocr', pageIds: pages.map((p) => p.id), minModel: model });
+    if (reuse.applied) {
+      console.log(`    ${(book.title || '').substring(0, 40)}: ${reuse.applied} page(s) applied from kept reads instead of bought`);
+      pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    }
 
     if (pages.length === 0) continue;
     if (wholeBooksOnly && pages.length > poolRoom) {
