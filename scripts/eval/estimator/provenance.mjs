@@ -30,7 +30,7 @@
  *
  * Values: a string, `not_recorded` (the writer did not record it — explicit, never absent), `n/a` (the slot does not
  * apply: a prompt for Kraken, a CLI version for an API call). A row that pools many pages may carry a DISTRIBUTION
- * `{ distinct, top: [[value, pages], ...] }` in a covariate slot (sent_hash, job_id, code_version, cli_version,
+ * `{ distinct, top: [[value, pages], ...] }` (top 3) in a covariate slot (sent_hash, job_id, code_version, cli_version,
  * prompt_hash, access); the KEY slots (engine, prompt_id, prompt_version, read_mode) must be single values.
  *
  * A route's identity for pooling is engine x prompt (id + version) x read_mode — `routeKey()`. CLI version, job and
@@ -41,6 +41,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -152,7 +153,7 @@ export function provenanceFromRaw(raw, field, cov = {}) {
   // record (a label, not a hash: write-provenance.mjs rule 2), so they fill the version and nothing else.
   return { ...base, engine: nr(engineId(r.model)), prompt_id: NOT_RECORDED, prompt_version: r.tpv != null ? `label:${r.tpv}` : NOT_RECORDED,
     prompt_hash: NOT_RECORDED, sent_hash: NOT_RECORDED, read_mode: NOT_RECORDED,
-    access: r.src === 'batch_api' ? 'api' : NOT_RECORDED, cli_name: NOT_RECORDED, cli_version: NOT_RECORDED,
+    ...(r.src === 'batch_api' ? { access: 'api', cli_name: NA, cli_version: NA } : { access: NOT_RECORDED, cli_name: NOT_RECORDED, cli_version: NOT_RECORDED }),
     job_id: dist(cov.jobs, NOT_RECORDED), code_version: NOT_RECORDED };
 }
 
@@ -167,7 +168,7 @@ export function distribution(vals, dflt = NOT_RECORDED) {
   }
   if (counts.size === 0) return dflt;
   if (counts.size === 1) return [...counts.keys()][0];
-  return { distinct: counts.size, top: [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5) };
+  return { distinct: counts.size, top: [...counts].sort((a, b) => b[1] - a[1]).slice(0, 3) };
 }
 
 /** Merge several blocks with the same route key into one cell's block: covariates become distributions. */
@@ -187,7 +188,7 @@ export function mergeProvenance(blocks) {
       if (v && typeof v === 'object') for (const [x, n] of v.top) counts.set(x, (counts.get(x) ?? 0) + n);
       else counts.set(v, (counts.get(v) ?? 0) + w);
     }
-    out[k] = counts.size === 1 ? [...counts.keys()][0] : { distinct: counts.size, top: [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5) };
+    out[k] = counts.size === 1 ? [...counts.keys()][0] : { distinct: counts.size, top: [...counts].sort((a, b) => b[1] - a[1]).slice(0, 3) };
   }
   delete out._pages;
   return out;
@@ -235,9 +236,10 @@ export function validateRow(row, where = 'row') {
   return { legacy: false, key: routeKey(p) };
 }
 
-/** Validate every row of a .jsonl file; returns counts. Lines starting with {"_doc" are file notes, not rows. */
+/** Validate every row of a .jsonl (or .jsonl.gz) file; returns counts. A {"_doc": ...} line is a file note, not a row. */
 export function validateFile(file) {
-  const lines = fs.readFileSync(file, 'utf8').split('\n');
+  const buf = fs.readFileSync(file);
+  const lines = (file.endsWith('.gz') ? zlib.gunzipSync(buf) : buf).toString('utf8').split('\n');
   let rows = 0, legacy = 0;
   lines.forEach((l, i) => {
     if (!l.trim()) return;

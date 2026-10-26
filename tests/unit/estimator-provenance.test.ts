@@ -20,7 +20,7 @@ const measured = (over: Record<string, unknown> = {}) => ({
 });
 
 describe('every committed estimator row file', () => {
-  const files = execFileSync('git', ['ls-files', `${DIR}/**/*.jsonl`, `${DIR}/*.jsonl`], { cwd: ROOT, encoding: 'utf8' })
+  const files = execFileSync('git', ['ls-files', `${DIR}/**/*.jsonl`, `${DIR}/*.jsonl`, `${DIR}/**/*.jsonl.gz`], { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean);
   it('finds the row files', () => {
     expect(files).toContain(`${DIR}/ocr/failure-observations.jsonl`);

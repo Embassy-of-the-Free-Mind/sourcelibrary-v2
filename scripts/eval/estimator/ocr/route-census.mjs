@@ -48,7 +48,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { publicationYear } from '../../../lib/ia-ocr-cohort.mjs';
 import { normalizeLanguageToken } from '../../../lib/language-normalize.mjs';
 import { scorePage } from '../../en-ocr-reference-5124.mjs';
-import { mongoRawProvenance, rawFromSub, covariatesFromSub, provenanceFromRaw } from '../provenance.mjs';
+import { mongoRawProvenance, rawFromSub, covariatesFromSub } from '../provenance.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BENCH = path.join(HERE, '..', '..', 'benchmark');
@@ -518,8 +518,9 @@ async function stageRefs(db) {
     if (!page) { out.write(JSON.stringify({ ...base, missing: 'page' }) + '\n'); return; }
     const revs = await db.collection('page_revisions').find({ page_id: page.id, field: 'ocr' }, { projection: { data: 1, model: 1, source: 1, reason: 1, created_at: 1, original_date: 1,
       engine: 1, prompt_version: 1, prompt_name: 1, ia: 1, batch_job_id: 1 } }).sort({ created_at: 1 }).toArray();
-    // each stored read keeps the provenance its writer recorded (#6740): the prompt is part of the route
-    const prov = (sub) => provenanceFromRaw(rawFromSub(sub), 'ocr', covariatesFromSub(sub));
+    // each stored read keeps the provenance its writer recorded (#6740), raw, so emit-prov derives the block with the
+    // current rules (provenance.mjs provenanceFromRaw) rather than the rules of the day this stage ran
+    const prov = (sub) => ({ raw: rawFromSub(sub), cov: covariatesFromSub(sub) });
     const versions = [...revs.map((r) => ({ version: 'revision', at: r.original_date ?? null, superseded_at: r.created_at, model: r.model, source: r.source, reason: r.reason ?? null, data: r.data, provenance: prov(r) })),
       { version: 'live', at: page.ocr?.updated_at ?? null, model: page.ocr?.model, source: page.ocr?.source, reason: null, data: page.ocr?.data, provenance: prov(page.ocr) }];
     const seen = new Set();
@@ -547,7 +548,7 @@ async function stageRefs(db) {
       language: firstLanguage(b), year: publicationYear(b), kind: page?.script_type ?? null,
       versions: s ? [{ version: 'revision', model: v.model, source: v.source, cer: s.cer, wer: s.wer, ref_chars: s.ref_alnum_chars, len_ratio: s.len_ratio,
         num_ref: s.num_ref, num_sub: s.num_sub, num_drop: s.num_drop, num_ins: s.num_ins,
-        provenance: provenanceFromRaw(rawFromSub(v), 'ocr', covariatesFromSub(v)) }] : [] }) + '\n');
+        provenance: { raw: rawFromSub(v), cov: covariatesFromSub(v) } }] : [] }) + '\n');
   }
   await new Promise((r) => out.end(r));
 }
