@@ -1,0 +1,119 @@
+{
+  "_about": "Every parameter of the router table (#6740), read by build.py. Data, not code: change a number here and re-run. A route's outcome is acceptance judged against the page image (route-judge pilot, #7376), not agreement with Opus. Opus is the judge, not the reference reader. The hierarchical models (v1, v2) give only the weak prior.",
+  "as_of": "2026-10-26",
+  "inputs": {
+    "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+    "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
+    "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
+    "capacity": "scripts/eval/estimator/chain/capacity.json"
+  },
+  "draws": 40000,
+  "seed": 6740,
+  "prior": {
+    "_about": "Acceptance prior per route. Draft served as-is: v1's P(passes the absolute floors) for the draft engine in its chart. Draft plus corrector: d + (1 - d) x v2's median net gain for that corrector in that cell (d = the draft's prior mean, 0.5 if v1 has no chart). Worth pages_measured pages (a + b) when every input is measured, pages_pooled when any is pooled. Flat Beta(1, 1) where neither model covers the route (translation, Tibetan drafts).",
+    "pages_measured": 4,
+    "pages_pooled": 2,
+    "flat": [1, 1],
+    "_v1_charts_left_out": "German and French OCR have no v1 chart: latin-script-other is web-transcribed text and gives Flash-Lite 0.998, against 17/30 the judge accepted on Latin. Chinese print: v1 says its floors measure the reference panel's variant forms.",
+    "clip": [0.02, 0.98]
+  },
+  "cluster_by_book": true,
+  "_cluster_note": "The judge's pages are not independent within a book. When a route's n pages come from fewer books (Latin: 30 pages in 9 books), k and n are scaled by books / n before they enter the posterior. Wrong-text pages are read as the page count k of n.",
+  "switch": {
+    "_about": "Reference = the measured route with the highest posterior mean acceptance. Pick the cheapest measured route with P(acc_route >= acc_reference - within) >= p AND wrong-text pages / n <= wrong_text_max. The pick is the current route: keep. Another route: switch. None qualifies: keep.",
+    "within": 0.05,
+    "p": 0.9,
+    "wrong_text_max": 0.02,
+    "wrong_text_relative_sensitivity": true
+  },
+  "hold": { "_about": "HOLD when no measured route has P(acc >= acc) >= p.", "acc": 0.8, "p": 0.9 },
+  "test_next": {
+    "_about": "score(cell) = max over routes that draw capacity of pages_waiting x share_per_page x Var(acceptance posterior); share_per_page = the route's draw per page / its channel's free week. A test is pages_per_test pages of each named route, plus one Opus judge call per output.",
+    "n": 3,
+    "pages_per_test": 30,
+    "routes": "the cell's untested routes; if every route is tested, the one with the largest share x variance",
+    "judge_points_per_output": 0.0124
+  },
+  "stages": {
+    "none": { "label": "serve the draft (already paid)", "channel": null, "draw": 0, "api_usd": 0 },
+    "opus-img": { "label": "Opus image call, one page", "channel": "claude", "draw": 0.000124, "points": 0.0124, "points_range": [0.0093, 0.0155], "api_usd": 0.0822, "basis": "route-judge pilot meter (score.json meter): 0.0124 weekly points per Opus image call over 323 calls, an UPPER bound (the orchestrating session shared the account; the meter reads whole points). correct.mjs at 10 pages a call measured 0.004 points a page (capacity.json opus-5.5@10), a third of this. API list: $0.0822 a call (the pilot's 14.6K in / 1.5K out tokens)." },
+    "opus-text": { "label": "Opus CLI translation, 10 pages a call", "channel": "claude", "draw": 9.23e-06, "points": 0.000923, "api_usd": 0.0597, "basis": "claude-translate.mjs: 3% of an account-week per 3,250 pages (#7263; capacity.json opus-translate@10). API list: the pilot's 30 one-page German reads, $1.79." },
+    "agy": { "label": "agy 3.8 Flash correction, one page", "channel": "agy", "draw": 1.02, "agy_share": 4.45e-06, "api_usd": null, "basis": "1.02 calls a page (capacity.json agy@1) x 4.3632e-6 of a month's agy quota a call (route-costs.json quota_shares). No paid API equivalent is enabled." }
+  },
+  "taxonomy": "O1 confabulation (text not on the page); O4 block repetition; O5 silent omission; O6 meaning-changing misread; O7 numerals/dates wrong; O8 normalisation toward the expected; O10 secondary script dropped; O11 page furniture mis-tagged; O12 marginalia/apparatus dropped or mis-tagged; O16 self-reported tags wrong; I5 several leaves in one photo; T6 catchword/split-word seams; T8 sense inverted or qualifier dropped; T9 quiet omission; T10 invented scholarship in notes; T15 continuity meta wrong; E2 other. Full list: .claude/docs/page-error-taxonomy.md and judge.mjs TAXONOMY.",
+  "cells": [
+    { "id": "latin-lite", "title": "Latin print, Flash-Lite text (#5924)", "v2": "latin-lite", "pilot": "latin", "v1": ["latin", "no web transcription", "gemini-3.1-flash-lite"], "current": "lite>opus",
+      "routes": [
+        { "id": "lite", "stage": "none", "pilot": "lite" },
+        { "id": "lite>opus", "stage": "opus-img", "pilot": "lite>opus-correct", "v2": "opus-5.5" },
+        { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low" } ] },
+    { "id": "latin-flash3", "title": "Latin print, 3 Flash text (most-read books)", "v2": "latin-flash3", "v1": ["latin", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
+      "routes": [
+        { "id": "3flash", "stage": "none" },
+        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low" } ] },
+    { "id": "german-lite", "title": "German OCR, Flash-Lite", "v2": "german-lite", "current": "lite>opus",
+      "routes": [
+        { "id": "lite", "stage": "none" },
+        { "id": "lite>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low" } ] },
+    { "id": "german-flash3", "title": "German OCR, 3 Flash", "v2": "german-flash3", "current": "3flash>opus",
+      "routes": [
+        { "id": "3flash", "stage": "none" },
+        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low" } ] },
+    { "id": "german-tr-flash3", "title": "German translation, 3 Flash English (#7263)", "pages_waiting": 306784, "pages_source": "pilot frame: visible German books 1500-1800, English newer than the OCR", "pilot": "german", "current": "flash3",
+      "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
+      "routes": [
+        { "id": "flash3", "stage": "none", "pilot": "flash3" },
+        { "id": "opus-cli", "stage": "opus-text", "pilot": "opus-cli" } ] },
+    { "id": "german-tr-lite", "title": "German translation, Flash-Lite English (#7263)", "pages_waiting": 151361, "pages_source": "pilot frame, as above", "pilot": "german", "current": "flash-lite",
+      "caveat": "Each German route was judged on its own 30 pages, not paired.",
+      "routes": [
+        { "id": "flash-lite", "stage": "none", "pilot": "flash-lite" },
+        { "id": "opus-cli", "stage": "opus-text", "pilot": "opus-cli" } ] },
+    { "id": "french-lite", "title": "French OCR, Flash-Lite", "v2": "french-lite", "current": "lite>opus",
+      "routes": [
+        { "id": "lite", "stage": "none" },
+        { "id": "lite>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low" } ] },
+    { "id": "greek-flash3", "title": "Greek OCR, 3 Flash", "v2": "greek-flash3", "held": "Derek 2026-10-14 (#6694): Greek stays on lane A", "current": "3flash",
+      "routes": [ { "id": "3flash", "stage": "none" } ] },
+    { "id": "tibetan-yigdzin", "title": "Tibetan, Yigdzin (#6560)", "v2": "tibetan-yigdzin", "pilot": "tibetan", "current": "yigdzin>opus",
+      "caveat": "Judged on the Kangyur stratum only (30 folios, one per book); Derge agrees with the judge's order on 25/27 pairs, planted syllables caught 8/10.",
+      "routes": [
+        { "id": "yigdzin", "stage": "none", "pilot": "yigdzin" },
+        { "id": "yigdzin>agy-flash-low", "stage": "agy", "pilot": "yigdzin>flash-low-correct", "v2": "agy-3.8-flash-low" },
+        { "id": "yigdzin>opus", "stage": "opus-img", "pilot": "yigdzin>opus-correct", "v2": "opus-5.5" } ] },
+    { "id": "zh-paddle-dice-lt090", "title": "Chinese Paddle, Kanripo dice < 0.90", "v2": "zh-paddle-dice-lt090", "current": "paddle>opus",
+      "caveat": "Nearest measured frame is the #6561 row below (Paddle 3/30, Paddle > Opus 24/30). Chinese acceptance is an UPPER bound: the judge accepted 章德懋 -> 童德懋.",
+      "routes": [
+        { "id": "paddle", "stage": "none" },
+        { "id": "paddle>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high" } ] },
+    { "id": "zh-6561-served", "title": "Chinese Paddle, served Opus correction (#6561)", "pages_waiting": 0, "pages_source": "4,379 pages already served as #6561 corrections; the pilot drew 30 of them, one per book", "pilot": "chinese", "current": "paddle>opus",
+      "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
+      "routes": [
+        { "id": "paddle", "stage": "none", "pilot": "paddle" },
+        { "id": "paddle>opus", "stage": "opus-img", "pilot": "paddle>opus-correct" } ] },
+    { "id": "chinese-flash3", "title": "Chinese OCR, 3 Flash", "v2": "chinese-flash3", "current": "3flash>opus",
+      "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
+      "routes": [
+        { "id": "3flash", "stage": "none" },
+        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] },
+    { "id": "zh-frame-6871", "title": "Chinese tables + mixed, guarded Paddle (#6871)", "v2": "zh-frame-6871", "current": "paddle>opus",
+      "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
+      "routes": [
+        { "id": "paddle", "stage": "none" },
+        { "id": "paddle>opus", "stage": "opus-img", "v2": "opus-5.5" },
+        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high" } ] },
+    { "id": "hebrew-flash3", "title": "Hebrew OCR, 3 Flash", "v2": "hebrew-flash3", "current": "3flash>opus",
+      "routes": [
+        { "id": "3flash", "stage": "none" },
+        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] },
+    { "id": "arabic-flash3", "title": "Arabic OCR, 3 Flash", "v2": "arabic-flash3", "v1": ["arabic-print", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
+      "routes": [
+        { "id": "3flash", "stage": "none" },
+        { "id": "3flash>opus", "stage": "opus-img", "v2": "opus-5.5" } ] }
+  ]
+}
