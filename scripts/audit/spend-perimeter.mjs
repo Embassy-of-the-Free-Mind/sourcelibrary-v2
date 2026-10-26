@@ -83,7 +83,7 @@ const UNATTENDED = [
   { match: 'agy-wal-checkpoint.py', spends: false, gated: false,
     note: 'SQLite WAL checkpoint on the Gemini CLI\'s local db; no model call (#6223)' },
   { match: 'cli-translate-lane.mjs', spends: false, gated: false,
-    note: 'drains books held for the CLI translation lane: Opus through claude -p and 3.8 Flash through agy -p, both on the box\'s subscriptions; no paid API; skips at >= 70% of the Claude account\'s week (#7075)' },
+    note: 'drains books held for the CLI translation lane: Opus through claude -p and 3.8 Flash through agy -p, both on the box\'s subscriptions; no paid API; skips at >= 70% of the Claude account\'s week, 95% in its last 24 h (#7075)' },
   { match: 'box.sh push-limits', spends: false, gated: false,
     note: 'copies the climits meter file to the other job boxes over the mesh; no model call (#6360)' },
   { match: 'pipeline-orchestrator.mjs', spends: true, gated: true,

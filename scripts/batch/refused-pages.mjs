@@ -70,6 +70,11 @@ export function eligibleBook(book) {
  * is pushed to every box; the account is the box's own login). null when the meter is absent, stale or unreadable.
  */
 export function weeklyPct(meterFile = '/root/.claude-limits/latest.json', loginFile = '/root/.claude.json') {
+  return weeklyMeter(meterFile, loginFile)?.pct ?? null;
+}
+
+/** weeklyPct plus the hours until that week resets (null when the meter has no resets_at). */
+export function weeklyMeter(meterFile = '/root/.claude-limits/latest.json', loginFile = '/root/.claude.json') {
   try {
     if (Date.now() - fs.statSync(meterFile).mtimeMs > 30 * 60 * 1000) return null;
     const d = JSON.parse(fs.readFileSync(meterFile, 'utf8'));
@@ -77,7 +82,9 @@ export function weeklyPct(meterFile = '/root/.claude-limits/latest.json', loginF
     try { me = JSON.parse(fs.readFileSync(loginFile, 'utf8')).oauthAccount.emailAddress || me; } catch { /* the meter's account */ }
     const acct = (d.accounts ?? []).find((a) => a.email === me && a.ok);
     const l = acct?.limits?.find((x) => x.key === 'weekly_all:all');
-    return l ? Math.round(Number(l.percent) || 0) : null;
+    if (!l) return null;
+    const reset = Date.parse(l.resets_at ?? '');
+    return { pct: Math.round(Number(l.percent) || 0), hoursLeft: Number.isNaN(reset) ? null : (reset - Date.now()) / 3.6e6 };
   } catch { return null; }
 }
 

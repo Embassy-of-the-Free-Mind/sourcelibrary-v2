@@ -13,7 +13,7 @@
  *
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs count
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs run --out=DIR [--max-pages=60]
- *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--apply]
+ *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--end-of-week-pct=95] [--apply]
  *
  * WHICH BOOKS. Those held with reason CLI_TRANSLATE_HOLD.reason: the orchestrator's Phase 4 holds a book when
  * translateLaneForBook (the `channel: "cli"` rows of scripts/lib/translation-routing-table.json) names a CLI reader.
@@ -39,7 +39,7 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
-import { weeklyPct } from './refused-pages.mjs';
+import { weeklyMeter } from './refused-pages.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -80,7 +80,7 @@ async function heldBooks(db) {
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--apply]'); process.exit(2); }
+  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--end-of-week-pct=95] [--apply]'); process.exit(2); }
   const ENGINE = arg('engine') || null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
@@ -88,9 +88,12 @@ async function main() {
   if (mode === 'run') {
     if (!OUT) { console.error('run needs --out=DIR'); process.exit(2); }
     // A cron spends the box account's subscription; stop well short of its week so sessions keep their headroom.
-    const cap = Number(arg('max-weekly-pct') || 70);
-    const wk = ENGINE === 'gemini-3.8-flash+agy-cli' ? null : weeklyPct();
-    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%)`); return; }
+    // In the last 24 h before the reset that headroom would lapse unused, so the cap rises (use it or lose it).
+    const meter = ENGINE === 'gemini-3.8-flash+agy-cli' ? null : weeklyMeter();
+    const endOfWeek = meter?.hoursLeft != null && meter.hoursLeft <= 24;
+    const cap = Number((endOfWeek ? arg('end-of-week-pct') : arg('max-weekly-pct')) || (endOfWeek ? 95 : 70));
+    const wk = meter?.pct ?? null;
+    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%${endOfWeek ? ', last 24 h' : ''})`); return; }
   }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
