@@ -32,7 +32,7 @@ import { getCanvases, extractCanvasImage } from '../iiif-discovery/lib/manifest-
 import { rateLimitedFetch, fetchPageMaster } from './iiif-utils.mjs';
 import { classifyFetchError } from './host-breaker.mjs';
 import { assertNotQuotaPlaceholder } from './archive-failure-class.mjs';
-import { isMissCode, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
+import { isMissFor, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
 import { LAZY_STATES, isLazyPagesBook } from './pages-state.mjs';
 import {
   LEDGER_FIELD, newLedger, openLedger, manifestFingerprint, ledgerKey, ledgerPageFields,
@@ -223,7 +223,7 @@ export async function archiveFromManifest(db, bookId, deps) {
         await storePage(p, jpg, { nativeWidth: master.nativeWidth, nativeHeight: master.nativeHeight }, h);
       } catch (e) {
         const code = classifyFetchError(e);
-        if (!fetched && isMissCode(code)) {
+        if (!fetched && isMissFor(url, code)) {
           ledger.markMiss(p);
           res.missed++;
           breaker?.pageMiss(h, code);

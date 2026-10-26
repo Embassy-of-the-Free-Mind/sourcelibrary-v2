@@ -42,7 +42,25 @@ export const MISS_CODES = Object.freeze(['404', '410']);
 /** Misses on the same URL, across separate runs, before a page is given up on. Matches archive-ocr.mjs. */
 export const MISS_LIMIT = 3;
 
-const MISS_REASON = /^HTTP (404|410)\b/;
+const MISS_REASON = /^HTTP (404|410)\b|^HTTP \d{3} \(no such page at /;
+
+/**
+ * Hosts that answer "this page is not there" with a status other than 404/410 (measured, never
+ * guessed). Without an entry, such a page is an ordinary failure: it is never recorded as a miss,
+ * it trips the HOST breaker, and a book of them stalls a lane the way the 404 books did (#5448).
+ */
+export const HOST_MISS_CODES = Object.freeze({
+  // BnF's openapi IIIF: a folio past the document's end answers 500 with a query-error JSON.
+  // 2026-10-26, bpt6k15122214 (45 folios): f45 200, f46 500, f60 500, f46/info.json the same error.
+  'openapi.bnf.fr': Object.freeze(['500']),
+});
+
+const hostOfUrl = (url) => { try { return new URL(url).hostname; } catch { return ''; } };
+
+/** Is `code`, answered for `url`, a miss — 404/410 anywhere, or a host's measured "no such page"? */
+export function isMissFor(url, code) {
+  return isMissCode(code) || (HOST_MISS_CODES[hostOfUrl(url)] ?? []).includes(String(code));
+}
 
 /**
  * A book is done-with-gaps only if its permanent misses are a small minority.
@@ -81,7 +99,7 @@ export function missUpdate(page, url, code, now = new Date()) {
   const count = lastMissWas(am, url) ? (am.failure_count ?? 0) + 1 : 1;
   return {
     'archive_metadata.failure_count': count,
-    'archive_metadata.last_failure_reason': `HTTP ${code}`,
+    'archive_metadata.last_failure_reason': isMissCode(code) ? `HTTP ${code}` : `HTTP ${code} (no such page at ${hostOfUrl(url)})`,
     'archive_metadata.last_failure_source_url': url,
     'archive_metadata.last_failure_at': now,
   };

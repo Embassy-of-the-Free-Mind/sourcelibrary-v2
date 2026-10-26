@@ -22,6 +22,7 @@ import path from 'node:path';
 // @ts-expect-error — plain .mjs helper, no types
 import { createHostBreaker, BREAKER_DEFAULTS } from '../../scripts/lib/host-breaker.mjs';
 import {
+  isMissFor,
   isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, isMissCode, MISS_LIMIT, ROTATION_SORT,
   // @ts-expect-error — plain .mjs helper, no types
 } from '../../scripts/lib/archive-miss.mjs';
@@ -192,5 +193,31 @@ cat "${root}/count" > "${root}/slept"; kill -TERM $(cat "${root}/lanepid")
 
   it('a run that fetched nothing but closed books is progress, not idle (#5448)', () => {
     expect(firstSleepAfter([closed, gapsOnly, busy])).toBe(null);
+  });
+});
+
+describe('host-specific miss codes (#5448)', () => {
+  const folio = 'https://openapi.bnf.fr/iiif/image/v3/ark:/12148/bpt6k15122214/f46/full/max/0/default.jpg';
+  it("openapi.bnf.fr's 500 for a folio past the document's end is a miss; elsewhere a 500 is not", () => {
+    expect(isMissFor(folio, '500')).toBe(true);
+    expect(isMissFor('https://gallica.bnf.fr/iiif/ark:/12148/x/f1/full/full/0/default.jpg', '500')).toBe(false);
+    expect(isMissFor('https://example.org/a.jpg', '404')).toBe(true);
+    expect(isMissFor('not a url', '500')).toBe(false);
+  });
+  it('a host miss is recorded so it can become permanent after MISS_LIMIT runs, keyed to the URL', () => {
+    let page: any = {};
+    for (let i = 0; i < MISS_LIMIT; i++) {
+      const set = missUpdate(page, folio, '500');
+      page = { archive_metadata: { failure_count: set['archive_metadata.failure_count'], last_failure_reason: set['archive_metadata.last_failure_reason'], last_failure_source_url: set['archive_metadata.last_failure_source_url'] } };
+    }
+    expect(page.archive_metadata.last_failure_reason).toBe('HTTP 500 (no such page at openapi.bnf.fr)');
+    expect(isPermanentMiss(page, folio)).toBe(true);
+    expect(isPermanentMiss(page, folio.replace('f46', 'f47'))).toBe(false);
+  });
+  it('archive-acquired and the manifest archiver both ask isMissFor, not the bare code', () => {
+    for (const f of ['scripts/catalog-coverage/archive-acquired.ts', 'scripts/lib/manifest-archive.mjs']) {
+      const src = readFileSync(path.resolve(__dirname, '../..', f), 'utf8');
+      expect(src, f).toMatch(/!fetched && isMissFor\(url, code\)/);
+    }
   });
 });
