@@ -37,6 +37,7 @@
 // (pipeline-status-truth.md, #4523). Translation is its own decision.
 
 import { contentHash } from './write-provenance.mjs';
+import { laneForWrite } from './lanes.mjs';
 
 export { isHumanEdited, hasRealTranslation, STALE_OCR_FIELDS, markTranslationsStale } from './syriac-kraken-lane.mjs';
 
@@ -207,6 +208,7 @@ export function ocrSetFields(text, { run, now = new Date(), secs = null, imageUr
     'ocr.model': PADDLE.model,
     'ocr.source': 'paddle',
     'ocr.pipeline': LANE,
+    'ocr.lane': laneForWrite('ocr', { call_site: 'scripts/lib/paddle-zh-lane.mjs' }),
     'ocr.updated_at': now,
     'ocr.engine': {
       name: PADDLE.name, model: PADDLE.model, version: PADDLE.version, model_label: PADDLE.label,

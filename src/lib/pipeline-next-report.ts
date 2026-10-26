@@ -42,6 +42,25 @@ export async function getLatestPipelineNextReport(): Promise<PipelineNextReport 
   return (rows[0] as unknown as PipelineNextReport) ?? null;
 }
 
+/** One subscription-lane job's recorded book list (scripts/lib/lane-book-list.mjs, #7301 item 5), sized, not listed. */
+export interface LaneJobBooks { lane: string; job: string; lands: number | null; books: number; pages: number; last_at: Date | string | null; box: string | null }
+
+/**
+ * What each subscription lane owns until R6 (#5825): the newest 300 job records of `lane_job_books`, with each book
+ * list counted on the server ($size), so the page never ships the ids. A small collection, one document per job.
+ */
+export async function getLaneJobBooks(): Promise<LaneJobBooks[]> {
+  const db = await getDb();
+  const rows = await db.collection('lane_job_books')
+    .aggregate([
+      { $sort: { last_at: -1 } },
+      { $limit: 300 },
+      { $project: { _id: 0, lane: 1, job: 1, lands: 1, pages: 1, last_at: 1, box: 1, books: { $size: { $ifNull: ['$book_ids', []] } } } },
+    ])
+    .toArray();
+  return rows as unknown as LaneJobBooks[];
+}
+
 type Price = { low: number; high: number; currency: string; basis: string; sources: { value: number; what: string; where: string; measured: string | null }[] };
 const PRICES = UNIT_PRICES as Record<string, Price>;
 

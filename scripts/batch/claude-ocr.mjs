@@ -54,6 +54,8 @@ import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-ocr.mjs';
@@ -171,6 +173,9 @@ async function main() {
     ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...VISIBLE_PAGE_MATCH, ...NO_OCR }
     : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...(!REREAD && NO_OCR) };
   const pages = await db.collection('pages').find(filter, { projection: PAGE_FIELDS }).sort({ book_id: 1, page_number: 1 }).toArray();
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5). The lane is the one that will
+  // stamp these pages when cli-ocr.mjs apply writes them (an anthropic engine). No page or book is written here.
+  await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: 'scripts/batch/cli-ocr.mjs', name: 'anthropic' }), ...laneJob(JOB), pages });
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { id: 1, language: 1, title: 1 } }).toArray()).map((b) => [b.id, b]));
   const { base, ref } = await liveOcrPrompt(db);   // the auto-detect base, for the log line; each book's slot is filled here
   const promptFor = {};

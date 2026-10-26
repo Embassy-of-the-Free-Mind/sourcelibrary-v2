@@ -45,6 +45,7 @@ import fs from 'fs';
 import path from 'path';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -317,6 +318,7 @@ async function processBook(db, book) {
             'ocr.model': MODEL_TAG,
             'ocr.source': 'mineru',
             'ocr.pipeline': LANE,
+            'ocr.lane': laneForWrite('ocr', { call_site: 'scripts/workers/mineru-ocr-worker.mjs' }),
             'ocr.engine': engine,
             'ocr.updated_at': now,
             updated_at: now,

@@ -250,6 +250,9 @@ export function engineFromBatchJob(job: BatchJobLike, { batch_job_id, input, col
   };
 }
 
+// The .mjs twin also returns `lane` for a writer scripts/lib/lanes.mjs registers in a lane's `stamps` (#7301). No src/
+// writer is one (they are the admin and Batch paths), so these return no `lane`; tests/unit/lane-stamps.test.ts fails
+// if a lane ever names a src/ call site.
 export function ocrProvenance(text: string, engine: GeminiEngine): { content_hash: string; engine: GeminiEngine } {
   const m = missingProvenance('ocr', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: OCR engine block incomplete — ${m.missing.join(', ')}`);

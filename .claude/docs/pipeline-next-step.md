@@ -256,6 +256,16 @@ The rules the registry enforces are unchanged from revision 1:
 - **Every lane declares `respectsHold`, `respectsPause` and `budget`.** A `false` needs a reason. `gap: true` marks a known gap.
 - **Budget is a lane property, never a book state.** A closed budget leaves the book's step standing, and the lane idles. `/admin/pipeline` says so.
 
+### Subscription and GPU lanes (R9, #7301)
+
+In the week to 2026-10-23 about 85% of page translations came from subscription jobs that no registry could see. Since #7301 they are lanes like any other:
+- **Registered.** `agy-flash-ocr`, `agy-flash-translate`, `claude-opus-ocr`, `claude-opus-translate`, `paddle-zh`, `paddle-zh-guarded` and `paddle-print` (the GEX45 queue's two writers), `kraken-syriac`, `ndl-koten`. `paddle-zh` runs from a pinned copy of the repo on main (`runsFrom` says why).
+- **Routed.** A lane names the routing hold it drains (`routes.hold`: `ocr-flash-cli-7075`, `translate-cli-7075`) and the cli engines it reads for. The registry test fails when a router hands books to a hold or engine that no lane drains, or when the OCR routing table names a lane file nobody registered.
+- **Budgeted in quota, not dollars.** The budget is `quota-share`: a share of the account's week, read from the climits or agy meter (`scripts/lib/lane-quota.mjs`). This is the default of D13; the decision stays Derek's. A lane out of quota idles and its book waits. It never falls through to the paid API, and the registry test fails if a quota lane's files can reach a paid model client. In the last 48 h before a reset the share is lifted to spare-lane.py's 90%, at $0, because quota left at a reset is lost. Even-burn pacing (`paced: true`) exists but is off: on 2026-10-26 it would have idled l7a's refused-pages cron.
+- **Stamped.** The helper that builds `engine` also stamps `ocr.lane` / `translation.lane` from the registry (`laneForWrite`). A writer the registry does not name writes no `lane`.
+- **Covered on every box.** The coverage test reads the main, gex45 and l7a crontab snapshots. A program a snapshot runs from outside the repo must be a lane's `cron` line or an `OFF_REPO_CRON` entry with a reason.
+- **Book lists until R6.** Each reader's read stage records its job's books in `lane_job_books` (job name and `Lands:` issue from `claude-job.sh`). `/admin/pipeline` shows them under the lane. The record is a label, not a lock. R6 replaces it with the queue's own record.
+
 ## The standing driver (new in revision 2)
 
 **One driver per step, always on, never copied.** `scripts/workers/pipeline-driver.mjs --step <step>` runs on the scheduler every 10 min. It replaces the per-run drivers (readable-20k, translate300, preview-stubs-4719), their `DONE` files and their chain scripts.
