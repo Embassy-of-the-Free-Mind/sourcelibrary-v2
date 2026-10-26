@@ -135,6 +135,98 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-27 · Tibetan router cell: 30 more Kangyur folios, Yigdzin > agy Flash-low correction (#6740)
+
+PRIOR ART: the pilot's Tibetan cell (`2026-10-25-route-judge-qualitative-pilot-6740.md`, #7376) and #6560's arms
+(`scripts/eval/tibetan-correct-6560/`). This is a new router-test cell in the same harness,
+`scripts/eval/route-judge-6740/judge.mjs` (`draw --cells=tib-kangyur`), stacked on #7434's router-test stages. It is not
+a second harness.
+
+**Why.** PR #7461 made the wrong-text bar relative to the best route. After that, the Tibetan cell was HOLD only
+because Flash-low's P(acc >= 0.8) was 0.84 on 30 folios, below 0.9. Thirty more folios decide whether it switches.
+
+**Draw.** The pilot's frame (`tibetan-proofread/draw.mjs`), with seed `rt-tib-kangyur`, recorded in `sample.json`:
+- visible Tibetan books titled Kanjur/Kangyur, the pilot's 30 books left out. Lane holds are allowed
+  (tibetan-retranslation, kangyur-import, specialist-ocr-lane); containment holds are not.
+- the page is still served by `bdrc-yigdzin-v1` (`ocr.source` bdrc, not the #6560 volume pass), with a British Library
+  EAP image, not split or cropped, interior, at least 300 characters.
+- the folio is placed in Derge with identity in [0.90, 0.97], the pilot's band.
+- one folio per book, books in seeded order: 30 folios from the first 80 books walked.
+
+All 30 are two-leaf frames (a marked `<leaf-break/>`). The pilot's 10 marked + 20 single mix was not available: walking
+all 195 books found only 4 single-leaf folios in band. In the pilot the marked frames were not harder: Flash-low 10/10,
+Opus 9/10 and Yigdzin 5/10 there, against 16/20, 16/20 and 12/20 on single leaves.
+
+**Routes.** Per folio, all fresh reads, `CANDIDATE_READS=off`, one page a call:
+- `yigdzin`: the stored draft.
+- `yigdzin>agy-flash-low`: `cli-ocr.mjs read --correct-prompt=tibetan-correct-6560/corr-prompt.txt`, agy
+  `gemini-3.8-flash-low`. This is #6560's CORR request and the volume pass's.
+- `yigdzin>opus-correct`: `claude -p --model opus`, the same CORR prompt, the image in a sealed folder, Read only. This is
+  `replicate-6547/run-claude-arm.py`'s request.
+
+Both correctors answered 30/30. Opus left the draft unchanged on 7 folios. No CONTAIN answers.
+
+**Judge.** The pilot's one Opus judge and prompt: 99 calls, blind, one output a call, against the image. That covers
+90 outputs (one shared text), 6 wrong-page controls and 10 planted drafts. Every route's controls passed.
+
+**Derge.** OpenPecha P000001 is public; the Hetzner index pickle was not reachable from this box. `tib-derge.py`
+rebuilds a folio's window (Pagination imgnum ± 2) from a sparse checkout, which took about a minute. It reproduces 29
+of #6560's 30 committed windows syllable for syllable; the 30th has the same length, because the e-text was revised on
+2026-10-22. A new folio is placed by syllable 5-gram votes over every Derge page, taking the best identity of the top 3.
+Tested on the pilot's 30: 23 on the manifest's page and the rest within a page or on a repeated passage, with identity
+equal or higher.
+
+### Result (`results/tibetan-30-2026-10-27/score.json`)
+
+| route | accepted, this run [95% by book] | pooled 60 | wrong text (run / pooled) | fidelity | Derge identity | worse than draft |
+|---|---|---|---|---|---|---|
+| yigdzin | 17/30 [0.40, 0.73] | 34/60 | 11/30 / 23/60 | 3.6 | 0.944 | — |
+| yigdzin>agy-flash-low | **27/30** [0.77, 1.00] | **53/60** | 2/30 / 5/60 | 4.2 | **0.967** | 1/30 (better 15/30) |
+| yigdzin>opus-correct | 27/30 [0.80, 1.00] | 52/60 | 2/30 / 5/60 | 4.1 | 0.960 | 1/30 (better 13/30) |
+
+- **Top defects.** Yigdzin: O6 misread 26/30 and O5 omission 11/30; its wrong text is O6, O4 and O5. Flash-low: O12
+  (marginal folio labels dropped) 9/30 and O6 8/30. Opus: O6 14/30 and O12 7/30.
+- **Wrong text in the corrections.** Both correctors' wrong-text pages include the same folio
+  (`69e7ab225f1a22ab19a93749:82`). Flash reads ཀུན་དགའ་ར་བ as རི་རབ, twice. Opus drops a line on an eye-skip.
+- **Planted syllables: caught 8/10** (0.80, at the bar), so the judge decides, not Derge. It missed a vowel
+  (ཆེན → ཆིན) and a letter (ཆུས → ཇུས). It accepted 5 of the 10 planted drafts, so a single planted syllable does not
+  by itself sink a page.
+- **Derge order: 31/32** pairs agree with the judge (27 ties). The one disagreement is Flash against Opus on a folio
+  where Derge favours Opus by 0.008.
+- **Made worse (#6758's question).** Flash-low: 1/30 worse, 15/30 better, accept lost 1 and gained 11, wrong text
+  added 0. Opus: 1/30, 13/30, lost 1 and gained 11, wrong text added 0. Neither corrector made a ya-btags edit
+  (`tibetan-yatags-guard.mjs`). Flash changed a median 3.2% of syllables (max 21%), Opus 1.3% (max 11%); none is over
+  the 25% apply cap. PR #6758's gate found 10/40 changed pages worse. That gate was a span-level A/B read-off: a page
+  counted as worse when the leaf showed the draft at more spans than the correction. This run uses the page-level
+  judge, which does not see a few worse spans on a page that is better overall. So for the router question (which
+  route gives the better page) the whole-page answer is that Flash helps. It does not overrule #6758's gate on an
+  APPLY, where any span made worse is a regression written into the page.
+
+### Router table (`estimator/router-table/2026-10-27-tibetan-30.md`, before: `2026-10-26-router-tests`)
+
+| route | P(acc >= 0.8), before → after | posterior mean [90%] |
+|---|---|---|
+| yigdzin>agy-flash-low | 0.85 → **0.96** | 0.88 [0.81, 0.94] |
+| yigdzin>opus | 0.68 → 0.91 | 0.86 [0.78, 0.93] |
+
+**Decision: HOLD → yigdzin>agy-flash-low becomes switch → yigdzin>agy-flash-low.** The cell clears the HOLD bar (P >=
+0.9). Flash-low is the cheapest route within 0.05 of the best, and its wrong-text rate (5/60) equals the best route's,
+so it is within the relative bar. Under the absolute 2% bar the cell would keep Opus (5/60 is 8%). No other cell
+changes.
+
+**Rebuilt on rebase (2026-10-26, #6560 job).** After #7455 the table was regenerated with
+`build.py --name 2026-10-27-tibetan-30 --before 2026-10-26b.json` (dollar pick, Opus priced as `opus-img@1`, one page a
+call). The Tibetan decision is unchanged: switch → yigdzin>agy-flash-low; margin 0.1 makes no change. Opus now costs
+0.0199 points per accepted page [0.0186, 0.0219], against Flash-low's 1.15 agy calls.
+
+**Not in scope.** No routing-table (`scripts/lib/*-routing-table.json`) edits, and no writes to pages. The /quality
+`page_check` block (#7429) still quotes the pilot's 30; refreshing it is a separate PR. Whether to run the #6560
+Flash-low volume pass again under this evidence is the pass's own gate's call (#6560), not the router table's.
+
+**Cost.** $0 paid. Calls: 30 agy, 30 Opus corrections (list-equivalent $4.30), 99 Opus judge calls ($11.79
+list-equivalent), all inside the subscriptions. The meter (`meter.json`) was shared with other jobs and read mid-run,
+so it gives no per-call figure.
+
 ## 2026-10-26 · Can the production vLLM Yigdzin reader replace the HF reader on gex45? (#6871 row 4, #5771; job yig-vllm-6871)
 <!-- PRIOR ART: 2026-10-20-tibetan-guttered-pages-yigdzin-page-mode-6871.md (the HF page-mode lane this replaces; its vLLM arm hung); 2026-10-14-yigdzin-rest-withheld-and-unread-tibetan-4523.md (the same worker on vLLM 0.29.0 on L4s, 0.73–0.97 pages/s); scripts/eval/split-leaf-5771/yig_leaf_read.py on job-split-leaves-5771 (the HF port of the worker that 81-split-leaf-5771 ran). -->
 
