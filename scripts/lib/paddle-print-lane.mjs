@@ -32,6 +32,7 @@ import zlib from 'node:zlib';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { contentHash } from './write-provenance.mjs';
 import { writePageText } from './page-text-writer.mjs';
+import { laneForWrite } from './lanes.mjs';
 import { PADDLE, MIN_HAN, MAX_CHAR_RUN, convertPaddle, bodyHanCount, longestCharRun, isHumanEdited } from './paddle-zh-lane.mjs';
 
 export { isHumanEdited, markTranslationsStale, STALE_OCR_FIELDS } from './paddle-zh-lane.mjs';
@@ -348,6 +349,7 @@ export function ocrField(text, { language, run, now = new Date(), imageUrl = nul
     model: PADDLE.model,
     source: 'paddle',
     pipeline: LANE,
+    lane: laneForWrite('ocr', { call_site: 'scripts/lib/paddle-print-lane.mjs' }),
     updated_at: now,
     engine: {
       name: PADDLE.name, model: PADDLE.model, version: PADDLE.version, model_label: PADDLE.label,

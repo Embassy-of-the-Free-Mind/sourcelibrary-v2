@@ -51,6 +51,8 @@ import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
@@ -146,6 +148,9 @@ async function main() {
   const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5). The lane is the one that will
+  // stamp these pages when cli-translate.mjs apply writes them (an anthropic engine). No page or book is written here.
+  await recordLaneBooks(db, { lane: laneForWrite('translation', { call_site: 'scripts/batch/cli-translate.mjs', name: 'anthropic' }), ...laneJob(JOB), pages: [...found.values()] });
   const bookIds = [...new Set([...found.values()].map((p) => p.book_id))];
   const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }).toArray()).map((b) => [b.id, b]));
   // Every page of these books, for the neighbours: the seed page before a block and the next page's OCR.

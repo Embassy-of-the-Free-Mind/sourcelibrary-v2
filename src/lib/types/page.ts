@@ -332,6 +332,13 @@ export interface OcrData extends ProcessingMetadata {
   };
   source_url?: string;
   content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/write-provenance.mjs
+  /**
+   * The registered lane that wrote `data` (#7301): a name from scripts/lib/lanes.mjs (`agy-flash-ocr`,
+   * `claude-opus-ocr`, `paddle-zh`, `kraken-syriac`…), stamped from the registry at write time by the helper that
+   * builds `engine`. Absent on pages written before 2026-10-26 and by writers that are not registered stamped lanes.
+   * Not `pipeline`, which some lanes use for their own run/route id and the withhold sweep reads.
+   */
+  lane?: string;
   image_urls?: string[];
   updated_at?: Date;
   prompt_name?: string;
@@ -441,6 +448,8 @@ export interface TranslationData extends ProcessingMetadata {
   content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/write-provenance.mjs
   /** What produced this translation, and from which OCR text (`input.source_text_hash`) — #4613. */
   engine?: GeminiEngine;
+  /** The registered lane that wrote it (#7301), e.g. `claude-opus-translate`; see `OcrData.lane`. */
+  lane?: string;
   updated_at?: Date;
   prompt_name?: string;
   prompt_version?: string;

@@ -444,6 +444,8 @@ run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   job_claude_home "$name"
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
+  # The job's name and Lands issue, for the subscription readers' book list (scripts/lib/lane-book-list.mjs, #7301).
+  landing_contract "$name" "$JD/$name.brief.txt"; export JOB_NAME="$name" JOB_LANDS="$LC_ISSUE"
   # Heartbeat (2026-10-04, #5709): `claude -p` writes nothing to the log until it exits, so an empty
   # log cannot tell a working job from one the OOM killer took with its tmux. This file can.
   ( while :; do date +%s > "$JD/$name.hb"; sleep 60; done ) & hb=$!

@@ -2,7 +2,7 @@
 // PRIOR ART: scripts/batch/refused-pages.mjs — the scheduled `claude -p` job this copies (weekly-limit guard, exit-3
 // stop, per-day output folder, a ledger of pages not to retry); it selects REFUSED OCR pages, not books held for a
 // translation lane. scripts/batch/claude-translate.mjs and cli-translate.mjs (read + apply) — the readers and the writer
-// this drives, unchanged. The OCR twin of the hold (CLI_FLASH_OCR_HOLD) is drained by cli-ocr-lane.mjs (#7089). Nothing drained
+// this drives, unchanged. The OCR twin of the hold (CLI_FLASH_OCR_HOLD) has no runner yet (#7089). Nothing drained
 // books held for a CLI translation lane, because nothing held them before #7075.
 /**
  * cli-translate-lane — translate the books the pipeline held for a subscription CLI translation lane (#7075).
@@ -13,7 +13,7 @@
  *
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs count
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs run --out=DIR [--max-pages=60]
- *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--end-of-week-pct=95] [--apply]
+ *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--apply]
  *
  * WHICH BOOKS. Those held with reason CLI_TRANSLATE_HOLD.reason: the orchestrator's Phase 4 holds a book when
  * translateLaneForBook (the `channel: "cli"` rows of scripts/lib/translation-routing-table.json) names a CLI reader.
@@ -39,7 +39,8 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
-import { weeklyMeter } from './refused-pages.mjs';
+import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
+import { laneQuota } from '../lib/lane-quota.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -73,27 +74,27 @@ async function heldBooks(db) {
   return db.collection('books').find(
     // The status first: it is indexed, and a held book carries both (pipeline-hold.mjs).
     { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason },
-    { projection: { id: 1, title: 1, publisher: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
+    { projection: { id: 1, title: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
   ).sort({ visible: -1, 'pipeline_auto.hold.held_at': 1 }).toArray();
 }
 
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--end-of-week-pct=95] [--apply]'); process.exit(2); }
+  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--apply]'); process.exit(2); }
   const ENGINE = arg('engine') || null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
   const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'cli-translate-ledger.jsonl') : null);
   if (mode === 'run') {
     if (!OUT) { console.error('run needs --out=DIR'); process.exit(2); }
-    // A cron spends the box account's subscription; stop well short of its week so sessions keep their headroom.
-    // In the last 24 h before the reset that headroom would lapse unused, so the cap rises (use it or lose it).
-    const meter = ENGINE === 'gemini-3.8-flash+agy-cli' ? null : weeklyMeter();
-    const endOfWeek = meter?.hoursLeft != null && meter.hoursLeft <= 24;
-    const cap = Number((endOfWeek ? arg('end-of-week-pct') : arg('max-weekly-pct')) || (endOfWeek ? 95 : 70));
-    const wk = meter?.pct ?? null;
-    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%${endOfWeek ? ', last 24 h' : ''})`); return; }
+    // A cron spends the box account's subscription: the lane's quota gate (lane-quota.mjs, #7301) idles it at its
+    // share of the week (70% for Opus) and opens it to 90% in the last 48 h, when the quota would otherwise be lost.
+    // --max-weekly-pct overrides the registered share.
+    const agy = ENGINE === 'gemini-3.8-flash+agy-cli';
+    const q = laneQuota(agy ? 'agy-flash-translate' : 'claude-opus-translate', { model: agy ? CLI_TRANSLATE_LANES[ENGINE].model : null, maxWeeklyPct: arg('max-weekly-pct') ?? null });
+    if (!q.open) { console.log(`skip: lane ${q.lane} idles (${q.state}): ${q.why}`); return; }
+    console.log(`quota: lane ${q.lane} ${q.state}: ${q.why}`);
   }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();

@@ -13,7 +13,8 @@
  *
  *   read   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low]
  *          Downloads each page's archived image, asks the CLI to transcribe it on the live default OCR prompt, and
- *          saves DIR/<page_id>.txt + .meta.json. Writes NOTHING to the database. Re-running skips pages already read.
+ *          saves DIR/<page_id>.txt + .meta.json. Writes no page or book: only the job's book list, for the lane
+ *          registry (lane_job_books, #7301). Re-running skips pages already read.
  *
  *   apply  node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page: refuses a human-edited page, a page whose OCR changed after the read,
@@ -89,6 +90,8 @@ import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/ti
 import { checkWrittenText, writeGuardReason } from '../lib/write-text-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -166,6 +169,8 @@ if (STAGE === 'read') {
   const STOP_ON_QUOTA = process.argv.includes('--stop-on-quota');
   const stopOnQuota = async (p, why) => { console.error(`QUOTA at p.${p.page_number}: stopping (--stop-on-quota). ${why}`); await client.close(); process.exit(3); };
   console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
+  await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(arg('job')), pages });
   let quotaUntil = 0, reused = 0;
   const readOne = async (p) => {
     const key = p.id;

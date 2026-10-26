@@ -13,7 +13,8 @@
  *
  *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low] [--ocr-checked="..."]
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
- *          Writes NOTHING to the database. Skips pages already read, pages with no translatable OCR, and blank pages.
+ *          Writes no page or book (only the job's book list, lane_job_books, #7301). Skips pages already read, pages
+ *          with no translatable OCR, and blank pages.
  *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
  *          first read got wrong, named with its value from Beltrán's table). Recorded as `instruction` in the meta.
  *
@@ -60,6 +61,8 @@ import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { copiesPrintedEnglish } from '../lib/page-integrity.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -99,6 +102,8 @@ if (STAGE === 'read') {
   const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
+  await recordLaneBooks(db, { lane: laneForWrite('translation', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(process.env.CLI_JOB_NAME), pages: [...found.values()] });
   const books = new Map();
   let reused = 0;
   for (const id of ids) {   // the file's order, which is page order

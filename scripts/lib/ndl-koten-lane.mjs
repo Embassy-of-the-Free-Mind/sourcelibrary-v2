@@ -38,6 +38,7 @@
 // (lesson_ocr_apply_triggers_gapfill_retranslation). Re-translation is a separate, priced go.
 
 import { contentHash } from './write-provenance.mjs';
+import { laneForWrite } from './lanes.mjs';
 
 export { isHumanEdited, hasRealTranslation, STALE_OCR_FIELDS, reenrolDecision, markTranslationsStale } from './syriac-kraken-lane.mjs';
 
@@ -153,6 +154,7 @@ export function ocrSetFields(text, route, { run, now = new Date(), secs = null, 
     'ocr.model': `ndl-koten/v${NDL.version}`,
     'ocr.source': 'ndl-koten',
     'ocr.pipeline': LANE,
+    'ocr.lane': laneForWrite('ocr', { call_site: 'scripts/lib/ndl-koten-lane.mjs' }),
     'ocr.updated_at': now,
     'ocr.engine': {
       name: NDL.name, label: NDL.label, version: NDL.version, repo: NDL.repo,

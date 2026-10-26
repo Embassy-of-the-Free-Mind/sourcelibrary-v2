@@ -29,7 +29,8 @@
  *     run: { job_id | batch_job_id, code_version, host, at },
  *     input: { image_url, … } | { source_text_hash, … },
  *   }
- *   plus top-level `content_hash` (of the text written) and `updated_at`.
+ *   plus top-level `content_hash` (of the text written) and `updated_at`, and `lane` (the registered lane,
+ *   scripts/lib/lanes.mjs `stamps`) when the writer is one (#7301).
  *
  * ── Three rules, enforced here rather than remembered ────────────────────────
  *
@@ -66,6 +67,7 @@ import { relative, sep } from 'path';
 import os from 'os';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { laneForWrite } from './lanes.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -369,12 +371,22 @@ export function engineFromBatchJob(job, { batch_job_id, input, collected_by, res
 export function ocrProvenance(text, engine) {
   const m = missingProvenance('ocr', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: OCR engine block incomplete — ${m.missing.join(', ')}`);
-  return { content_hash: contentHash(text), engine };
+  return { content_hash: contentHash(text), engine, ...laneStamp('ocr', engine) };
 }
 export function translationProvenance(text, engine) {
   const m = missingProvenance('translation', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: translation engine block incomplete — ${m.missing.join(', ')}`);
-  return { content_hash: contentHash(text), engine };
+  return { content_hash: contentHash(text), engine, ...laneStamp('translation', engine) };
+}
+
+/**
+ * `{ lane }` when the registry (scripts/lib/lanes.mjs `stamps`) names this writer as a lane, else `{}` (#7301): the
+ * subscription and GPU lanes stamp `ocr.lane` / `translation.lane` beside `engine`, so a page says which lane wrote
+ * it, not only `source: 'ai'`. A writer the registry does not name writes no `lane` key, exactly as before.
+ */
+function laneStamp(field, engine) {
+  const lane = laneForWrite(field, engine);
+  return lane ? { lane } : {};
 }
 
 /**
