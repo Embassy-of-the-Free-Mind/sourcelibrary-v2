@@ -118,6 +118,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true, skipped: 'extension' });
     }
 
+    // Runaway recursion inside a script the iOS in-app browsers inject (#7437).
+    // Chrome for iOS (CriOS) and the Google app (GSA) are WKWebView shells that
+    // add their own user scripts to every page; WebKit reports those frames
+    // against the PAGE url with invented line numbers (":193:70", ":229:409")
+    // and minified names that alternate (Hk/Fk, $k/Yk). Our served HTML is 12
+    // lines and contains none of those names, and none of the frames is a
+    // /_next/ chunk. 4,020 of 4,257 stored rows were CriOS, 189 GSA. Keep any
+    // report whose stack touches a /_next/ chunk: that would be our bundle.
+    if (
+      /Maximum call stack size exceeded/i.test(msg) &&
+      /\b(?:CriOS|GSA|FxiOS|EdgiOS)\//.test(String(userAgent || '')) &&
+      !/\/_next\//.test(stackStr)
+    ) {
+      return NextResponse.json({ ok: true, skipped: 'injected-webview' });
+    }
+
     // Bound the write. This endpoint is public, unauthenticated, and its traffic
     // RISES exactly when the database is unhealthy (every failing page reports).
     // With no deadline each request holds a connection for the full maxDuration,
