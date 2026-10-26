@@ -48,6 +48,10 @@ off the GPU job's cores).
     folios each, plus both 435-page gate audits), #7258 and #7269 (Latin lite: Opus correction, Flash-low correction,
     Flash re-read, the second-family judge), #7275 (lite as corrector, both prompts, no-image control) and the
     Florentine gate on #6865 (30 better / 0 worse).
+  - **Provenance (#7389):** every new row is labelled `legacy-not-recorded`, with what its experiment's own files
+    state. That is 21 new entries in `provenance-legacy.json`, plus five for the #4763 GPU arms, each naming the
+    file, prompt, read mode, access, engine and judge. `label-legacy-rows.mjs --check` and
+    `tests/unit/estimator-provenance.test.ts` pass.
   - **#6694's counts are over changed pages** (196 judged; B changed 809 of 976). An unchanged page is neither better
     nor worse, so its n is scaled to all pages (n / 0.829), as the other counts are.
 - **`chain_v2.py`, the model.** Per rate r and cell (draft, corrector, language, kind):
