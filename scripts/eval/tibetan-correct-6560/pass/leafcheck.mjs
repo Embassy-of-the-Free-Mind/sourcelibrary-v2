@@ -14,7 +14,7 @@
  *   yatags-verdicts --key=K.json --replies=O.jsonl --out=V.jsonl [--append]
  *       V rows {page_id, hits, keep, checked_by, answers}: a change is KEPT only where the judge saw the correction's
  *       syllable. V is cli-ocr.mjs apply --yatags-verdicts input.
- *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json [--changed=IDS.json]
+ *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json [--changed=IDS.json] [--drafts=D.jsonl]
  *       Samples n pages that apply would write with a change, rebuilds the text apply would write (guard reverts
  *       applied), and asks a FRESH judge, per changed span, which of draft / written the leaf shows (A/B random).
  *   page-req       --key=K.json --dir=READ_DIR --req=R.jsonl
@@ -147,9 +147,15 @@ if (CMD === 'yatags-req') {
   const DIR = arg('dir'), N = Number(arg('n') || 40), seed = arg('seed') || '6560';
   const verdicts = new Map(readJsonl(arg('verdicts')).map((v) => [v.page_id, v]));
   const metas = fs.readdirSync(DIR).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'))).filter((m) => m.mode === 'correct' && m.exit === 0 && !m.wrapper);
-  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
-  const pages = new Map((await c.db('bookstore').collection('pages').find({ id: { $in: metas.map((m) => m.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
-  await c.close();
+  // --drafts=F (JSONL {key, text}): the drafts as they were before a write, for an audit run after the apply
+  // (#6740 rolling audit: the stored OCR is then the correction itself).
+  let pages;
+  if (arg('drafts')) pages = new Map(readJsonl(arg('drafts')).map((r) => [r.key, { id: r.key, ocr: { data: r.text } }]));
+  else {
+    const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+    pages = new Map((await c.db('bookstore').collection('pages').find({ id: { $in: metas.map((m) => m.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+    await c.close();
+  }
   const cands = [];
   for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     const draft = m.draft && pages.get(m.page_id)?.ocr?.data;
