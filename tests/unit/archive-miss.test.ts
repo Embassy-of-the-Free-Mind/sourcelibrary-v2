@@ -22,7 +22,7 @@ import path from 'node:path';
 // @ts-expect-error — plain .mjs helper, no types
 import { createHostBreaker, BREAKER_DEFAULTS } from '../../scripts/lib/host-breaker.mjs';
 import {
-  isMissFor,
+  isMissFor, isBookScopedFailure, FAIL_STREAK,
   isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, isMissCode, MISS_LIMIT, ROTATION_SORT,
   // @ts-expect-error — plain .mjs helper, no types
 } from '../../scripts/lib/archive-miss.mjs';
@@ -218,6 +218,36 @@ describe('host-specific miss codes (#5448)', () => {
     for (const f of ['scripts/catalog-coverage/archive-acquired.ts', 'scripts/lib/manifest-archive.mjs']) {
       const src = readFileSync(path.resolve(__dirname, '../..', f), 'utf8');
       expect(src, f).toMatch(/!fetched && isMissFor\(url, code\)/);
+    }
+  });
+});
+
+describe('a 400/500 from a book that has served nothing is about the book (#5448)', () => {
+  it('abandons the book after FAIL_STREAK, and only while it has served nothing', () => {
+    const g = createBookMissGuard();
+    for (let i = 0; i < FAIL_STREAK - 1; i++) g.fail('b');
+    expect(g.abandoned('b')).toBe(false);
+    g.fail('b');
+    expect(g.abandoned('b')).toBe(true);
+    const h = createBookMissGuard();
+    h.ok('c'); h.fail('c'); h.fail('c'); h.fail('c');
+    expect(h.fresh('c')).toBe(false);
+    expect(h.abandoned('c')).toBe(false);
+  });
+  it('only 400 and 500 are book-scoped; refusals, throttles and timeouts stay host verdicts', () => {
+    expect(isBookScopedFailure('500')).toBe(true);
+    expect(isBookScopedFailure('400')).toBe(true);
+    for (const c of ['401', '403', '429', '503', 'timeout', 'network']) expect(isBookScopedFailure(c)).toBe(false);
+  });
+  it('one broken book no longer trips the host breaker: the archivers charge the host once per abandoned book', () => {
+    const b = createHostBreaker();
+    const g = createBookMissGuard();
+    // Göttingen PPN870120751_1702: every page 500.
+    for (let i = 0; i < FAIL_STREAK; i++) { g.fail('broken'); b.pageMiss('images.sub.uni-goettingen.de', '500'); }
+    if (g.abandoned('broken')) b.failure('images.sub.uni-goettingen.de', 'dead-book-500');
+    expect(b.allow('images.sub.uni-goettingen.de')).toBe(true);
+    for (const f of ['scripts/catalog-coverage/archive-acquired.ts', 'scripts/lib/manifest-archive.mjs']) {
+      expect(readFileSync(path.resolve(__dirname, '../..', f), 'utf8'), f).toMatch(/isBookScopedFailure\(code\) && missGuard\.fresh\(bookId\)/);
     }
   });
 });

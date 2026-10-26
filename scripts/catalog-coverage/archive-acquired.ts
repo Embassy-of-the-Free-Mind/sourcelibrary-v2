@@ -49,7 +49,7 @@ import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import { laneSelectionTiers } from './archive-lanes.mjs';
 import { openIaZip } from '../lib/ia-zip-ledger.mjs';
 import {
-  isMissFor, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+  isMissFor, isBookScopedFailure, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
@@ -384,6 +384,18 @@ async function main() {
             continue;
           }
           pagesFailed++;
+          if (!fetched && isBookScopedFailure(code) && missGuard.fresh(bookId)) {
+            // A 400/500 from a book that has served nothing yet is about the book (archive-miss.mjs).
+            missGuard.fail(bookId);
+            breaker.pageMiss(host, code); // reported per host, but neither trips nor closes it
+            if (!abandoned && missGuard.abandoned(bookId)) {
+              abandoned = true;
+              booksAbandoned++;
+              log(`book ${bookId}: ${missGuard.stateOf(bookId)?.fail} page failures [${code}] and nothing served — leaving it for a later run`);
+              if ((breaker.stateOf(host)?.ok ?? 0) === 0) breaker.failure(host, `dead-book-${code}`);
+            }
+            continue;
+          }
           if (!fetched) {
             try {
               noteFailure(url, e); // rethrows HostBlocked once the host looks blocked

@@ -130,17 +130,34 @@ export function bookVerdict({ pagesCount, archived, misses }) {
  * (a scattered missing leaf costs one request), so a gap mid-book is recorded,
  * not used as an excuse to quit.
  */
-export function createBookMissGuard({ streak = 5 } = {}) {
+export function createBookMissGuard({ streak = 5, failStreak = FAIL_STREAK } = {}) {
   const books = new Map();
-  const s = (id) => { let v = books.get(id); if (!v) books.set(id, v = { ok: 0, miss: 0, run: 0 }); return v; };
+  const s = (id) => { let v = books.get(id); if (!v) books.set(id, v = { ok: 0, miss: 0, run: 0, fail: 0, frun: 0 }); return v; };
   return {
-    ok(id) { const v = s(id); v.ok++; v.run = 0; },
+    ok(id) { const v = s(id); v.ok++; v.run = 0; v.frun = 0; },
     miss(id) { const v = s(id); v.miss++; v.run++; },
-    /** Other failures (timeouts, 5xx) break nothing here — the host breaker owns them. */
-    abandoned(id) { const v = books.get(id); return !!v && v.ok === 0 && v.run >= streak; },
+    /** A book-scoped failure (isBookScopedFailure) on a book that has served nothing this run. */
+    fail(id) { const v = s(id); v.fail++; v.frun++; },
+    abandoned(id) { const v = books.get(id); return !!v && v.ok === 0 && (v.run >= streak || v.frun >= failStreak); },
+    /** Has this book served anything this run? Until it has, its 400/500s are about the book. */
+    fresh(id) { return (books.get(id)?.ok ?? 0) === 0; },
     stateOf(id) { return books.get(id); },
   };
 }
+
+/**
+ * Statuses that, from a book that has served NOTHING this run, are a fact about the BOOK until
+ * other books fail too. Fed straight to the host breaker, one broken book at the head of a run
+ * tripped its cold-start rule (5 failures, 0 successes) and the run skipped every other book on
+ * the host: Göttingen PPN870120751_1702, every page 500 while other documents served 200, cost
+ * lane-goettingen a 6,824-page skip and a 15-minute sleep per broken volume (2026-10-26). The
+ * caller abandons the book after FAIL_STREAK of them and charges the host ONCE (dead-book), so a
+ * host that is truly down still trips its breaker, after a few books instead of a few pages.
+ * 401/403 (refusals), 429 (throttling) and timeouts stay host verdicts.
+ */
+export const BOOK_SCOPED_FAILURES = Object.freeze(['400', '500']);
+export const FAIL_STREAK = 3;
+export const isBookScopedFailure = (code) => BOOK_SCOPED_FAILURES.includes(String(code));
 
 /**
  * Book-mode sort. Least-recently-ATTEMPTED first: a book that could not be
