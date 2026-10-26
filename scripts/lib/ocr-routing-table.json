@@ -318,13 +318,13 @@
     {
       "id": "chinese-print",
       "kind": "Chinese woodblock and typeset print outside the Siku Quanshu",
-      "reader": "Gemini 3 Flash, through the Gemini command-line tool",
-      "why": "Measured on 7 October 2026 against a typed text of the same editions, on 198 pages from 54 books: Gemini 3 Flash got a median 5.2% of characters wrong and no page more than half wrong. Flash-Lite got 6.8% wrong with 3 pages more than half wrong, and PaddleOCR-VL 12.8% with 29.",
-      "in_use": "In use for visible books and books added from 21 October 2026. Older hidden books are still read by Flash-Lite.",
+      "reader": "PaddleOCR-VL, one leaf at a time; Gemini 3 Flash for the pages its checks turn away",
+      "why": "Measured on 22 October 2026 against a typed text of the same editions, on 198 pages from 54 books, with each spread split into its two leaves: PaddleOCR-VL got a median 6.1% of characters wrong, Gemini 3 Flash 5.2% and Flash-Lite 6.7%. PaddleOCR-VL had 3 pages more than half wrong, all of them blank leaves, which the checks now turn away; Flash-Lite also had 3, and Flash none. Flash is still the more accurate reader. PaddleOCR-VL runs on our own GPU at no cost per page, which keeps the Gemini allowance for correcting text (Derek, 26 October 2026).",
+      "in_use": "In use for the Chinese print books read in October 2026. Pages its checks turn away wait for Gemini 3 Flash, and books outside that read go to Gemini 3 Flash.",
       "stored": "Counted with all Chinese books, 1,943,433 pages: 103,874 (5%) read by Gemini 3 Flash, 18,720 (1%) by Flash-Lite, 1,599,766 (82%) by PaddleOCR-VL, and 214,554 (11%) with no text yet.",
       "status": "settled",
       "routed": "partly",
-      "production": "FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API, and it waits there. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Paddle lane (row chinese-siku-manuscript) keep that hold. Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold; about 68K held for the Paddle lane; about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
+      "production": "scripts/workers/paddle-print-lane.mjs (ocr.pipeline paddle-print-2026-10, ocr.source paddle), run by hand on gex45 through /root/gpu-queue over a frame of print books outside the Siku, cursive-Japanese and Meiji-typeset cohorts (#6101, PR #7211). Each spread is split at the gutter; per leaf the lane turns away faint leaves (show-through), unstable short leaves (re-read at 1,200 px disagrees), under-read leaves, loops, textless spreads, kana-heavy (Japanese) books and pages that lost their ditto marks; it never replaces a Gemini Flash / Pro, Claude, CBETA or human text, and replaces flash-lite only when it covers lite's text. Books are held paddle-print-6101 before the first write. Written 2026-10-25: 73,330 pages. Census 2026-10-26 (job paddle-print-rest-6101): no unread non-Siku Chinese print book is left outside that frame; the next frame is the Berlin State Library import (#7343, held manifest-only-lazy-pages, no page records yet). The fallback is not wired: the 5,850 pages still without text in books held paddle-print-6101 (2026-10-26; most are pages the checks turned away) wait there: no Flash lane selects a held book until the hold is released. Everything outside the lane: FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Siku Paddle lane (row chinese-siku-manuscript) keep that hold.",
       "route": {
         "engine": "gemini-3-flash-preview",
         "families": {
@@ -342,6 +342,11 @@
       },
       "evidence": [
         {
+          "file": "2026-10-22-paddle-split-leaves-woodblock-6101.md",
+          "n": "198 pages from 54 books",
+          "date": "2026-10-22"
+        },
+        {
           "file": "2026-10-07-chinese-print-against-cbeta-6101.md",
           "n": "198 pages from 54 books",
           "date": "2026-10-07"
@@ -353,8 +358,8 @@
         }
       ],
       "audit": {
-        "select": "ocr.model gemini-3-flash*, book language family zho",
-        "reviewer": "claude"
+        "select": "ocr.pipeline paddle-print-2026-10; ocr.model gemini-3-flash* in book language family zho outside it",
+        "reviewer": "claude and gemini (the lane reader is neither family; Flash pages by claude)"
       },
       "charts": [
         "chinese-print"
