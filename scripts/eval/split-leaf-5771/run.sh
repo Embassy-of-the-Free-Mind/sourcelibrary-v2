@@ -10,7 +10,10 @@
 #   5 score + attribute (audit.mjs, unchanged)
 set -uo pipefail
 ROOT=$(cd "$(dirname "$0")/../../.." && pwd); S=$JOB_SCRATCH; cd "$ROOT"
-export PATH=/root/.local/bin:$PATH CLAUDE_SESSION_MAX_PCT=80 CLAUDE_WEEKLY_MAX_PCT=85
+# the first claude that has --restricted (main's ~/.local/bin/claude is a stale 2.1.31 without it; gex45 has only that path)
+CB=$(for c in /usr/bin/claude /root/.local/bin/claude; do "$c" --help 2>/dev/null | grep -q -- --restricted && { echo "$c"; break; }; done)
+[ -n "$CB" ] || { echo "no claude with --restricted"; exit 6; }
+export PATH=$(dirname "$CB"):$PATH CLAUDE_SESSION_MAX_PCT=80 CLAUDE_WEEKLY_MAX_PCT=85
 G=root@65.108.136.89; J=/root/jobs/split-leaves-5771
 P6948=$S/p6948/audit
 log() { echo "$(date -u +%FT%TZ) $*"; }
