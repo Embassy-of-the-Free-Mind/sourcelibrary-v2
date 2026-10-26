@@ -503,3 +503,4 @@ src/components/work/LocusJumpBox.tsx 2  # rewritten in a #6215 copy PR; --tighte
 src/app/articles/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/articles/aliveness/page.tsx 2  # verbatim quotation: Helen Wilmans, A Search for Freedom (1898), p. 88, prints 'I was — in my own way — tremendously alive'

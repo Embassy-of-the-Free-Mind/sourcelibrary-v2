@@ -56,6 +56,7 @@ const B = {
   hayy: '/book/philosophus-autodidactus-tufayl',
   menasseh: '/book/de-resurrectione-mortuorum-libri-iii-israel',
   plato: '/book/platonis-opera-republic-timaeus-critias-plato',
+  lucretius: '/book/lucretius-navagero-andrea',
   plotinus: '/book/five-books-of-plotinus-taylor',
   ficino1582: '/book/les-trois-livres-de-la-vie-ficino',
   agrippa: '/book/three-books-of-occult-philosophy-agrippa',
@@ -476,7 +477,9 @@ export default function AlivenessPage() {
         </Quote>
 
         <p className={p}>
-          Plotinus made all things <Link href={pg(B.plotinus, 260)}>parts of one universal animal</Link>. Ficino
+          It was never agreed: Lucretius held that earth, sun and sky{' '}
+          <Link href={pg(B.lucretius, 187)}>lack vital motion and sense</Link>. But Plotinus made all things{' '}
+          <Link href={pg(B.plotinus, 260)}>parts of one universal animal</Link>. Ficino
           gave the world soul an instrument, a spirit through which it acts on bodies: in a French edition of
           1582, &ldquo;the Spirit of the World, which is the first instrument of the Soul of the World ... the most
           life-giving, the most forming, the most similar to light, the most similar to life&rdquo; (
