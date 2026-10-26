@@ -137,9 +137,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const artworkTitle = resolveTitle(artwork);
   const provenanceNote = titleProvenanceNote(artwork);
   const baseDescription =
-    (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`;
+    (artwork as any).commons_description?.slice(0, 200) || (artwork.author ? `${artwork.title} by ${artwork.author}` : artwork.title);
   return {
-    title: `${artworkTitle.display}, ${artwork.author} | Source Library`,
+    title: `${artworkTitle.display}${artwork.author ? `, ${artwork.author}` : ''} | Source Library`,
     description: artworkTitle.isDescriptive && provenanceNote
       ? `${provenanceNote} ${baseDescription}`
       : baseDescription,
@@ -150,12 +150,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       // "<label> by <author>" is a bibliographic claim. When the label is an AI
       // description of the picture, the card names the source record's title
       // instead — the author attribution is true, the title must be too.
-      title: artworkTitle.isDescriptive
+      title: !artwork.author
+        ? (artworkTitle.isDescriptive ? artworkTitle.citation : artworkTitle.display)
+        : artworkTitle.isDescriptive
         ? `${artworkTitle.citation} by ${artwork.author}`
         : `${artworkTitle.display} by ${artwork.author}`,
       // Omit rather than emit an empty url when the record has no image.
       ...((artwork.thumbnail_blob || artwork.thumbnail)
-        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: `${artworkTitle.display}, ${artwork.author}` }] }
+        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: artwork.author ? `${artworkTitle.display}, ${artwork.author}` : artworkTitle.display }] }
         : {}),
     },
   };

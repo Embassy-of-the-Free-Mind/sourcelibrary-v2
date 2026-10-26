@@ -214,6 +214,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
                   work was published under. Cite it by the source record&rsquo;s title.
                 </p>
               )}
+              {book.author && (
               <p className="text-xl text-stone-300 mt-3">
                 {attributionNote && (
                   <span className="text-stone-500 italic mr-1">{attributionNote} </span>
@@ -230,6 +231,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
                   </span>
                 ))}
               </p>
+              )}
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-sm text-stone-400">
                 {/* Show published date, but filter out Wikimedia upload timestamps
@@ -421,7 +423,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
           <div className="card p-6 sm:p-8">
             <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
-              Books by {book.author}
+              {book.author ? `Books by ${book.author}` : 'Related books'}
             </h2>
             <div className="space-y-2">
               {relatedBooks.map(rb => (
@@ -471,7 +473,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
 
         {/* Cross-reference: books by this author (pre-computed).
             Hidden in embed mode — author_cross_ref is computed across all tenants. */}
-        {!isEmbedded && (book as any).author_cross_ref && (
+        {!isEmbedded && book.author && (book as any).author_cross_ref && (
           <AuthorCrossReference
             author={book.author}
             authorId={book.author_id}
