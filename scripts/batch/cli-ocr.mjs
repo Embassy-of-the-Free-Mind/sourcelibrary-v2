@@ -29,7 +29,9 @@
  * the markers. A reply with text outside the markers or cut before <<<END>>> is read once more, then never written.
  *
  * HOW IT FAILS: a CLI that is not signed in, or a refusal, leaves an empty .txt and a non-zero `exit` in the meta;
- * `apply` skips those and says so. Nothing is retried silently.
+ * `apply` skips those and says so. Nothing is retried silently. A quota reply (or a model locked until its reset)
+ * sleeps and tries the same page again, which suits a person at the desk; `read --stop-on-quota` exits 3 instead, so
+ * a scheduled caller (cli-ocr-lane.mjs) stops cleanly and the next run resumes from the pages already read (#7089).
  *
  * CORRECT MODE (#6560, the Yigdzin Tibetan pass): `read --correct-prompt=FILE --lane=ID` sends FILE's text with
  * `{draft}` replaced by the page's stored OCR, then ` @./<page>.jpg` (the #6560 eval's exact request, as
@@ -161,6 +163,8 @@ if (STAGE === 'read') {
   const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
+  const STOP_ON_QUOTA = process.argv.includes('--stop-on-quota');
+  const stopOnQuota = async (p, why) => { console.error(`QUOTA at p.${p.page_number}: stopping (--stop-on-quota). ${why}`); await client.close(); process.exit(3); };
   console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
   let quotaUntil = 0, reused = 0;
   const readOne = async (p) => {
@@ -197,9 +201,11 @@ if (STAGE === 'read') {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
       r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
       // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
+      if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(p, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
       calls++;
       logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
+      if (r.cls === 'quota' && STOP_ON_QUOTA) await stopOnQuota(p, r.err);
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;

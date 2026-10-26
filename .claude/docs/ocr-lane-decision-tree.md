@@ -32,6 +32,9 @@ you are about to pick `--model`, an engine, or a free lane by hand.
    3.x Flash, Pro) reads through the **agy CLI** on the subscription (`cli-ocr.mjs`), never the
    API. Claude reads through `claude -p` (`claude-ocr.mjs`, `claude-ocr-two-read.mjs`), never via
    agy. When a CLI lane has no quota the book **waits**; it never falls through to the API.
+   agy offers no Gemini 3 Flash (its Gemini models are 3.8 Flash and 4 Argon, checked 2026-10-26), so a
+   book routed to `gemini-3-flash-preview` is read by **3.8 Flash low**: `scripts/batch/cli-ocr-lane.mjs`
+   drains the `ocr-flash-cli-7075` hold that way (`CLI_MODEL_FOR`, #7089). Spread books wait.
    Enforced by `assertApiOcrModel` in `scripts/lib/ocr-routing.mjs` at every OCR submitter and
    `tests/unit/ocr-api-channel-guard.test.ts`.
 3. **No Tesseract**, as an engine or as a free reference (Derek). Never Gemini below v3.
@@ -195,7 +198,7 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 |---|---|---|---|
 | Gemini batch (orchestrator, `bulk-reocr-local.mjs`) | `scripts/workers/batch-collector.mjs`, `scripts/batch/collect-batch-results.mjs` | `batch_api` | ✓ `gemini-engine/1` |
 | Gemini realtime, hand-run | `scripts/batch/realtime-ocr.mjs` (`--realtime`, `--model=lite` only since #7075) | `ai` | ✓ |
-| Gemini CLI (agy, subscription): 3 Flash for the `FLASH_OCR_FROM` scripts and the ladder's flash tier | `scripts/batch/cli-ocr.mjs read` then `apply` | `ai` | ✓ `gemini-engine/1` (api `cli`, CLI name and version, prompt, image) |
+| Gemini CLI (agy, subscription): 3.8 Flash low in place of 3 Flash for the `FLASH_OCR_FROM` scripts and the ladder's flash tier | `scripts/batch/cli-ocr.mjs read` then `apply`; the held queue through `scripts/batch/cli-ocr-lane.mjs` | `ai` | ✓ `gemini-engine/1` (api `cli`, CLI name and version, prompt, image) |
 | Gemini realtime, Lambda / Vercel | `src/workers/ocr-processor-logic.ts`, `/api/books/[id]/batch-ocr-async` | `ai` / `batch_api` | ✓ (collect stamps `updated_at` as a string, #5228) |
 | Archive free text | `scripts/import/ia-ocr-ingest.mjs` | `ia_djvu` | ✓ `ia` block + `agreement_ref` (measured or `by_eye`) + ingest run |
 | Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |

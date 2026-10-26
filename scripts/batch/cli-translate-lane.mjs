@@ -2,7 +2,7 @@
 // PRIOR ART: scripts/batch/refused-pages.mjs — the scheduled `claude -p` job this copies (weekly-limit guard, exit-3
 // stop, per-day output folder, a ledger of pages not to retry); it selects REFUSED OCR pages, not books held for a
 // translation lane. scripts/batch/claude-translate.mjs and cli-translate.mjs (read + apply) — the readers and the writer
-// this drives, unchanged. The OCR twin of the hold (CLI_FLASH_OCR_HOLD) has no runner yet (#7089). Nothing drained
+// this drives, unchanged. The OCR twin of the hold (CLI_FLASH_OCR_HOLD) is drained by cli-ocr-lane.mjs (#7089). Nothing drained
 // books held for a CLI translation lane, because nothing held them before #7075.
 /**
  * cli-translate-lane — translate the books the pipeline held for a subscription CLI translation lane (#7075).
