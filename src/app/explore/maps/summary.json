@@ -19,5 +19,12 @@
   "readable": 164,
   "absent": 19,
   "editions": 1387
+ },
+ "magic": {
+  "generated": "2026-10-26",
+  "works": 327,
+  "readable": 261,
+  "absent": 29,
+  "editions": 1353
  }
 }

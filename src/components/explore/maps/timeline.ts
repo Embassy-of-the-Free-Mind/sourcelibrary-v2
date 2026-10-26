@@ -36,8 +36,11 @@ export type LayersData = {
   kinds: { id: string; label: string; desc: string }[]; wk: Record<string, string[]>;
   ideas: { n: string; q: string; t: string; works: Record<string, 's' | 'a' | 'm' | 'b'>; notes: Record<string, string> }[];
   links: { a: string; b: string; k: 'rejects' | 'builds' | 'comments' | 'tests' | 'parallel'; n: string }[];
-  stories: { id: string; title: string; line: string; chain: string[]; tested: { result: 'true' | 'false'; by: string; how: string; b: string; p: number; pl?: string } | null }[];
+  stories: { id: string; title: string; line: string; chain: string[]; tested: { result: 'true' | 'false'; by: string; how: string; b: string; p: number; pl?: string } | null; untested?: string }[];
   counter: Record<string, string>; verdict: { title: string; text: string } | null;
+  /** The map's own words for its layers (#7402); without them the harmony wording is used. untested: a story's line in
+   *  place of "It was never put to a test." */
+  labels?: { kinds?: string; counter?: string; ideasFrom?: string; article?: { href: string; label: string } | null };
 };
 
 export type TimelineConfig = {
@@ -51,10 +54,12 @@ export const REGIONS: [string, string[]][] = [
   ['The Classical World', ['Greek', 'Roman', 'Hellenistic & Late Antique', 'Hermetic & Gnostic']],
   ['Christian East and West', ['Early Christian & Monastic', 'Byzantine & Orthodox', 'Syriac & Armenian', 'Medieval Latin']],
   ['The Islamic World and Iran', ['Zoroastrian', 'Arabic', 'Persian', 'Turkic', 'Kabbalistic & Hasidic']],
-  ['Europe after 1350', ['Renaissance & Early Modern Europe', 'Modern European', 'Norse & Celtic', 'Slavic & Finnic', 'Theosophical & Modern Esoteric']],
+  // Grimoires, Demonology & Witch Trials, Natural Magic & Early Science and New Thought & Mind Cure are the Map of Magic's rows (#7402)
+  ['Europe after 1350', ['Renaissance & Early Modern Europe', 'Grimoires', 'Demonology & Witch Trials', 'Natural Magic & Early Science', 'Modern European', 'Norse & Celtic', 'Slavic & Finnic', 'Theosophical & Modern Esoteric', 'New Thought & Mind Cure']],
   ['South and Southeast Asia', ['Indian', 'Buddhist', 'Tibetan', 'Southeast Asian']],
   ['East Asia', ['Chinese', 'Japanese', 'Korean & Vietnamese']],
   ['Africa, the Americas, Oceania', ['African', 'Native American & Mesoamerican', 'Oceanian']],
+  ['The Study of Magic', ['Historians & Anthropologists']],
 ];
 
 const stat = (w: Work) => (w.st === 'readable' ? 'readable' : w.st === 'absent' ? 'absent' : 'held');
@@ -281,15 +286,18 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   lensInput?.addEventListener('input', onLens); lensInput?.addEventListener('change', onLens);
   // ---- layer controls (only when the theme ships a layers file) ----
   const lyBox = root.querySelector<HTMLElement>('#layers'), lyNote = root.querySelector<HTMLElement>('#lynote'), verdictEl = root.querySelector<HTMLElement>('#verdict');
+  // harmony's layers predate labels and link the harmony article; a map with labels names its own article, or none
+  const articleText = () => { const a = Ly?.labels ? Ly.labels.article : { href: '/articles/harmony-map', label: 'the harmony map article' };
+    return a ? `; the full argument, with its sources, is in <a href="${esc(a.href)}">${esc(a.label)}</a>` : ''; };
   function renderNote() {
     if (!lyNote || !Ly) return; let h = '';
     const idea = ideaOf();
     if (idea) { const c = { s: 0, a: 0, m: 0, b: 0 }; Object.values(idea.works).forEach((v) => c[v]++);
-      h += `<p><b>${esc(idea.q)}</b> Lit: the works a reader checked against this question. <span class="sw id-s"></span>${c.s} answer yes <span class="sw id-a"></span>${c.a} answer no <span class="sw id-m"></span>${c.m} both <span class="sw id-b"></span>${c.b} bear on it. The question comes from a reader’s notes on harmony; the full argument, with its sources, is in <a href="/articles/harmony-map">the harmony map article</a>.</p>`; }
+      h += `<p><b>${esc(idea.q)}</b> Lit: the works a reader checked against this question. <span class="sw id-s"></span>${c.s} answer yes <span class="sw id-a"></span>${c.a} answer no <span class="sw id-m"></span>${c.m} both <span class="sw id-b"></span>${c.b} bear on it. The question comes from ${esc(Ly.labels?.ideasFrom || 'a reader’s notes on harmony')}${articleText()}.</p>`; }
     const story = storyOf();
-    if (story) h += `<p><b>${esc(story.title)}.</b> ${esc(story.line)} ${story.chain.length} works on the map tell it, joined in date order.${story.tested ? ` ${testedText(story.tested)} ${esc(story.tested.how)} <a href="/book/${story.tested.b}?page=${story.tested.p}" target="_blank" rel="noopener">${esc(story.tested.pl || 'Read the page')}</a>.` : ' It was never put to a test.'}</p>`;
+    if (story) h += `<p><b>${esc(story.title)}.</b> ${esc(story.line)} ${story.chain.length} works on the map tell it, joined in date order.${story.tested ? ` ${testedText(story.tested)} ${esc(story.tested.how)} <a href="/book/${story.tested.b}?page=${story.tested.p}" target="_blank" rel="noopener">${esc(story.tested.pl || 'Read the page')}</a>.` : ` ${esc(story.untested || 'It was never put to a test.')}`}</p>`;
     if (state.lines) h += `<p class="lnkey"><b>Lines of argument:</b> <span class="lk ln-rejects"></span>disagrees <span class="lk ln-builds"></span>builds on <span class="lk ln-comments"></span>comments on <span class="lk ln-parallel"></span>says the same independently. Each line runs from a work to the one that answers it; hover a line, or open a work, for what was said.</p>`;
-    if (state.counter) h += `<p class="lnkey"><span class="ctkey"></span><b>Counter-texts:</b> ${Object.keys(Ly.counter).length} works that answer against the usual praise of harmony, ringed in red.</p>`;
+    if (state.counter) h += `<p class="lnkey"><span class="ctkey"></span><b>Counter-texts:</b> ${Object.keys(Ly.counter).length} ${esc(Ly.labels?.counter || 'works that answer against the usual praise of harmony, ringed in red')}.</p>`;
     lyNote.innerHTML = h; lyNote.hidden = !h;
   }
   function setStory(id: string) { state.story = id || null; const sel = root.querySelector<HTMLSelectElement>('#lystory'); if (sel) sel.value = id; refresh(); }
@@ -297,7 +305,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   const on = (el: Element | null, ev: string, fn: EventListener) => { if (!el) return; el.addEventListener(ev, fn); lyHandlers.push([el, ev, fn]); };
   if (Ly && lyBox) {
     lyBox.hidden = false;
-    lyBox.innerHTML = `<div class="lyrow"><label class="tog"><input type="checkbox" id="lykind"> Colour by kind of harmony</label><span class="kindchips" id="kindchips" hidden>${Ly.kinds.map((k) => `<button class="kindchip k-${k.id}" data-k="${k.id}" aria-pressed="false" title="${esc(k.desc)}"><span class="sw"></span>${esc(k.label)}</button>`).join('')}<span class="kindnone"><span class="sw"></span>not classified</span></span></div>
+    lyBox.innerHTML = `<div class="lyrow"><label class="tog"><input type="checkbox" id="lykind"> ${esc(Ly.labels?.kinds || 'Colour by kind of harmony')}</label><span class="kindchips" id="kindchips" hidden>${Ly.kinds.map((k) => `<button class="kindchip k-${k.id}" data-k="${k.id}" aria-pressed="false" title="${esc(k.desc)}"><span class="sw"></span>${esc(k.label)}</button>`).join('')}<span class="kindnone"><span class="sw"></span>not classified</span></span></div>
       <div class="lyrow"><label class="sel">Question <select id="lyidea"><option value="">none</option>${Ly.ideas.map((x) => `<option value="${x.n}">${esc(x.q)} (${Object.keys(x.works).length})</option>`).join('')}</select></label>
       <label class="sel">Story <select id="lystory"><option value="">none</option>${Ly.stories.map((x) => `<option value="${x.id}">${esc(x.title)}${x.tested ? (x.tested.result === 'true' ? ' · holds' : ' · fails') : ''}</option>`).join('')}</select></label>
       <label class="tog"><input type="checkbox" id="lylines"> Lines of argument</label><label class="tog"><input type="checkbox" id="lycounter"> Counter-texts</label></div>`;

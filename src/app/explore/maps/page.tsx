@@ -40,6 +40,13 @@ const CARDS: Card[] = [
     figures: `${fmt(summary.harmony.readable)} of ${fmt(summary.harmony.works)} works readable now · ${fmt(summary.harmony.absent)} not held · checked ${day(summary.harmony.generated)}`,
   },
   {
+    href: '/explore/maps/magic',
+    lead: 'A Map of', word: 'Magic',
+    kind: 'Timeline map',
+    blurb: 'What people across traditions took magic to be: hidden virtues and sympathy, the stars drawn into images, spirits called and bound, words and names, divination, the witch and her trial, and the power of mind, from the Atharvaveda and the Greek magical papyri to Agrippa, Bodin, Frazer and New Thought. Many works open with a reader’s notes and passages checked against the page.',
+    figures: `${fmt(summary.magic.readable)} of ${fmt(summary.magic.works)} works readable now · ${fmt(summary.magic.absent)} not held · checked ${day(summary.magic.generated)}`,
+  },
+  {
     href: '/explore/maps/ritual',
     lead: 'A Map of', word: 'Ritual',
     kind: 'Survey',
