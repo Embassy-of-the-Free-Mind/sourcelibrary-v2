@@ -213,3 +213,22 @@ describe('a manifest-only book whose pages all 500 (#5448)', () => {
     expect(breaker.allow('img.example.org')).toBe(true);
   });
 });
+
+describe('a miss from a host that has served nothing this run is not kept (#5448)', () => {
+  it('outage-time 404s leave the ledger clean; once the host serves, a 404 is recorded', async () => {
+    await cleanDb();
+    const db = getTestDb();
+    await seed(db);
+    const { createHostBreaker } = await import('../../scripts/lib/host-breaker.mjs');
+    const { openLedger } = await import('../../scripts/lib/manifest-ledger.mjs');
+    // Run 1: the host answers 404 to everything (an outage). Nothing is kept.
+    await archiveFromManifest(db, BOOK, { put: fakeStore().put, breaker: createHostBreaker(), pageConcurrency: 1, fetchManifest: async () => manifest(), download: async () => { throw new Error('HTTP 404'); } });
+    let led = (await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger;
+    for (const p of [1, 2, 3, 5, 6]) expect(openLedger(led).missCount(p)).toBe(0);
+    // Run 2: the host serves, but page 6 is really gone. That miss is kept.
+    const img = fakeImages({ 6: 404 });
+    await archiveFromManifest(db, BOOK, { put: fakeStore().put, breaker: createHostBreaker(), pageConcurrency: 1, fetchManifest: async () => manifest(), download: img.download });
+    led = (await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger;
+    expect(openLedger(led).missCount(6)).toBe(1);
+  });
+});

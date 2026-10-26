@@ -251,3 +251,11 @@ describe('a 400/500 from a book that has served nothing is about the book (#5448
     }
   });
 });
+
+describe('archive-acquired keeps a miss only from a host that has served this run (#5448)', () => {
+  it('guards the missUpdate write with missesCount(host)', () => {
+    const src = readFileSync(path.resolve(__dirname, '../../scripts/catalog-coverage/archive-acquired.ts'), 'utf8');
+    expect(src).toMatch(/const missesCount = \(host: string\) => \(breaker\.stateOf\(host\)\?\.ok \?\? 0\) > 0;/);
+    expect(src).toMatch(/if \(missesCount\(host\)\) \{\s*try \{ await pages\.updateOne\(\{ _id: p\._id \}, \{ \$set: missUpdate\(p, url, code\) \}\)/);
+  });
+});
