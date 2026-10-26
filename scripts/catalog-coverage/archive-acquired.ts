@@ -49,7 +49,7 @@ import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import { laneSelectionTiers } from './archive-lanes.mjs';
 import { openIaZip } from '../lib/ia-zip-ledger.mjs';
 import {
-  isMissCode, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+  isMissFor, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
 } from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
@@ -363,7 +363,7 @@ async function main() {
         } catch (e) {
           if (e instanceof HostBlocked) { pageBlocked = e; return; }
           const code = classifyFetchError(e);
-          if (!fetched && isMissCode(code)) {
+          if (!fetched && isMissFor(url, code)) {
             pagesMissed++;
             breaker.pageMiss(host, code);
             missGuard.miss(bookId);
