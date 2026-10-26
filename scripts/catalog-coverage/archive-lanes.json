@@ -24,11 +24,11 @@
     {
       "name": "heidelberg",
       "box": "main",
-      "hosts": ["digi.ub.uni-heidelberg.de"],
+      "hosts": ["digi.ub.uni-heidelberg.de", "iiif.bodleian.ox.ac.uk"],
       "providers": ["heidelberg"],
-      "rate": { "digi.ub.uni-heidelberg.de": 1 },
+      "rate": { "digi.ub.uni-heidelberg.de": 1, "iiif.bodleian.ox.ac.uk": 1 },
       "page_concurrency": 2,
-      "note": "Was hand-listed in /etc/sourcelibrary/archive-lanes.conf (campaign acquisition-wave-2026-10); now every Heidelberg book."
+      "note": "Was hand-listed in /etc/sourcelibrary/archive-lanes.conf (campaign acquisition-wave-2026-10); now every Heidelberg book. iiif.bodleian.ox.ac.uk: the 82 Bodleian manuscripts the portal served through its dead iiif-proxy.cgi now point at Bodleian directly (#5448)."
     },
     {
       "name": "vatican",

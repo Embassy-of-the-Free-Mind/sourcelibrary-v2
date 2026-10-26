@@ -191,6 +191,22 @@ export function extractManifestMetadata(manifest) {
 }
 
 /**
+ * The Heidelberg portal serves other libraries' manuscripts (Bodleian, …) through a proxy:
+ *   https://digi.ub.uni-heidelberg.de/iiif/2/bodleian_mslaudmisc116%3Aiiif-proxy.cgi?serviceId=<encoded service>&size=100%25
+ * Every image request on that id 303s to a dead info.json and 404s (measured 2026-10-25/26, #5448:
+ * 82 books, 0 pages archivable), while the wrapped service answers 200. Return the wrapped service
+ * id, or the id unchanged when it is not a proxy id.
+ */
+export function unwrapProxiedImageService(id) {
+  if (typeof id !== 'string') return id;
+  const m = id.match(/iiif-proxy\.cgi\?serviceId=([^&/]+)/);
+  if (!m) return id;
+  let inner;
+  try { inner = decodeURIComponent(m[1]); } catch { return id; }
+  return /^https:\/\/[^/?#]+\/\S+$/.test(inner) ? inner.replace(/\/+$/, '') : id;
+}
+
+/**
  * Extract ordered per-page image URLs from a IIIF manifest (v2 + v3).
  * Returns [{ photo, thumbnail }] — `photo` is a full-size image URL, `thumbnail`
  * a ~400px derivative. Prefers the IIIF Image API service (so we can size on
@@ -202,7 +218,7 @@ export function extractManifestMetadata(manifest) {
  */
 export function manifestToPages(manifest, { thumbSize = '!400,400' } = {}) {
   const fromService = (svc, fallback) => {
-    const base = typeof svc === 'string' ? svc : (svc?.['@id'] || svc?.id);
+    const base = unwrapProxiedImageService(typeof svc === 'string' ? svc : (svc?.['@id'] || svc?.id));
     if (!base) return fallback ? { photo: fallback, thumbnail: fallback } : null;
     return { photo: iiifFullSizeUrl(base, svc), thumbnail: `${base}/full/${thumbSize}/0/default.jpg` };
   };
