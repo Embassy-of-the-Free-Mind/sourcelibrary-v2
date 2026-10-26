@@ -11,7 +11,8 @@
 //   bench    scripts/eval/benchmark/*.json sealed pages → script (Unicode census of the by-eye / corrected reference in
 //            refs/ where one exists = gold; else of the stored OCR = silver, training only), script-class/ spread → leaves
 //   dd4763   english-ia-5124 rows with observed.by → kind date-dense | prose (#4763)
-//   tab6561  paddle_table_corrections_6561 Opus layout call → kind table | prose | mixed | diagram | plate (#6561)
+//   tab6561  paddle_table_corrections_6561 Opus layout call → kind table | prose | mixed | diagram | plate (#6561);
+//            script from the Opus-corrected text
 //   music    music_transcriptions pages → kind music
 //   frames   split-leaves-5771 pilot frames (two-leaf pecha frames) → leaves 2 (#5771/#6948)
 //   usplit   split_training_examples (a user split the image) → leaves 2
@@ -86,10 +87,13 @@ const KIND = { table: 'table', prose: 'prose', mixed: 'mixed', diagram: 'diagram
 const want = { table: 300, prose: 300, mixed: 120, diagram: 120, illustration: 16, map: 2 };
 for (const [layout, n] of Object.entries(want)) {
   const rows = await db.collection('paddle_table_corrections_6561')
-    .aggregate([{ $match: { layout } }, { $sample: { size: n } }, { $project: { page_id: 1, book_id: 1, page_number: 1, image_url: 1 } }]).toArray();
+    .aggregate([{ $match: { layout } }, { $sample: { size: n } }, { $project: { page_id: 1, book_id: 1, page_number: 1, image_url: 1, corrected_text: 1 } }]).toArray();
   for (const r of rows) add({ uid: `tab6561:${r.page_id}`, set: 'tab6561', page_id: r.page_id, book_id: r.book_id, page_number: r.page_number,
-    image_url: r.image_url, catalogue_language: 'Chinese', labels: { kind: KIND[layout], script: 'Hani' },
-    label_src: `paddle_table_corrections_6561 layout=${layout} (Opus, image in)` });
+    image_url: r.image_url, catalogue_language: 'Chinese', labels: { kind: KIND[layout] },
+    // script is NOT assumed from the catalogue: 172 of these "Chinese" pages are Manchu (御製增訂清文鑑). It is the
+    // Unicode census of Opus's corrected text (made with the image in), computed in labels.py
+    ref_text: (r.corrected_text || '').slice(0, 6000) || null,
+    label_src: `paddle_table_corrections_6561 layout=${layout} (Opus, image in); script = Unicode census of the Opus-corrected text` });
 }
 
 // ── music: pages a verified or draft transcription was read from

@@ -17,8 +17,12 @@ def script_of(ch):
     for n, rs in RANGES:
         for a, b in rs:
             if a <= o <= b: return n
+# elements whose CONTENT is apparatus written by the transcriber (English descriptions, vocabulary notes,
+# self-reported tags), not the page's own writing; dropped whole before the census
+APPARATUS = r'scan-quality|language|script|page-type|vocab|warning|meta|image-desc|note|gloss|columns'
 def census(txt):
-    txt = re.sub(r'<[^>]{0,80}>', ' ', txt)  # drop tags
+    txt = re.sub(rf'<({APPARATUS})\b[^>]*>.*?</\1>', ' ', txt, flags=re.S)
+    txt = re.sub(r'<[^>]{0,80}>', ' ', txt)  # drop the remaining tags, keep their text
     c = collections.Counter(s for s in map(script_of, txt) if s)
     tot = sum(c.values())
     if tot < 30: return None, c
@@ -40,6 +44,11 @@ for r in map(json.loads, open(man)):
             looks_table = txt.count('|') > 40 or '<table' in txt
             lab['kind'] = 'table' if looks_table else ('date-dense' if date_dense(txt) else 'prose')
             src['kind'] = 'reference text (#4763 rule; | or <table> → table)'
+    elif r.get('ref_text'):  # #6561: Opus's corrected transcription, read with the image
+        s, c = census(r['ref_text'])
+        if s == 'Latn':  # Opus romanises Manchu (Möllendorff) and says so in its apparatus: the page's script is Manchu
+            s = 'Mong' if 'manchu' in r['ref_text'].lower() else None
+        if s: lab['script'] = s; src['script'] = 'Unicode census of the Opus-corrected text (#6561); romanised Manchu → Mong'
     elif r.get('stored_ocr'):
         s, c = census(r['stored_ocr'])
         if s: lab['script_silver'] = s; src['script_silver'] = 'stored OCR Unicode census (silver: training only)'
