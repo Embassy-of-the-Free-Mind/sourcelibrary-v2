@@ -1,0 +1,390 @@
+{
+ "interval": "95%, resampled by PAGE (one book; pages are not independent, so intervals are too narrow)",
+ "usable_definition": "stricter judge: USABLE or NOTICEABLE",
+ "arms": {
+  "lite": {
+   "given": 25,
+   "read": 25,
+   "filter_cut_fixed_message": 0,
+   "filter_cut_pages": [],
+   "other_failed": 0,
+   "calls": 25,
+   "key-o|skel": [
+    0.0053,
+    0.0036,
+    0.0073,
+    25
+   ],
+   "key-o|marks": [
+    0.0389,
+    0.0315,
+    0.0466,
+    25
+   ],
+   "key-g|skel": [
+    0.0048,
+    0.0033,
+    0.0067,
+    25
+   ],
+   "key-o|skel|fail=1": [
+    0.0053,
+    0.0036,
+    0.0073,
+    25
+   ],
+   "usability|claude": {
+    "NOTICEABLE": 10,
+    "USABLE": 14,
+    "MISLEADING": 1
+   },
+   "usable|claude": [
+    0.96,
+    0.88,
+    1.0,
+    25
+   ],
+   "usability|gemini": {
+    "USABLE": 15,
+    "MISLEADING": 5,
+    "NOTICEABLE": 5
+   },
+   "usable|gemini": [
+    0.8,
+    0.64,
+    0.96,
+    25
+   ],
+   "usability|worse": {
+    "NOTICEABLE": 11,
+    "MISLEADING": 5,
+    "USABLE": 9
+   },
+   "usable|worse": [
+    0.8,
+    0.64,
+    0.96,
+    25
+   ],
+   "strict_usable|worse": [
+    0.36,
+    0.16,
+    0.56,
+    25
+   ],
+   "misleading|worse": [
+    0.2,
+    0.04,
+    0.36,
+    25
+   ],
+   "pooled29": {
+    "pages": 29,
+    "read": 29,
+    "not_read": 0,
+    "usable|worse": [
+     0.8276,
+     0.6897,
+     0.931,
+     29
+    ],
+    "key-o|skel": [
+     0.006,
+     0.0043,
+     0.0079,
+     29
+    ]
+   }
+  },
+  "f38l": {
+   "given": 25,
+   "read": 23,
+   "filter_cut_fixed_message": 2,
+   "filter_cut_pages": [
+    "152",
+    "475"
+   ],
+   "other_failed": 0,
+   "calls": 29,
+   "key-o|skel": [
+    0.0019,
+    0.001,
+    0.003,
+    23
+   ],
+   "key-o|marks": [
+    0.0063,
+    0.0043,
+    0.0088,
+    23
+   ],
+   "key-g|skel": [
+    0.0013,
+    0.0007,
+    0.0019,
+    23
+   ],
+   "key-o|skel|fail=1": [
+    0.0818,
+    0.0015,
+    0.2015,
+    25
+   ],
+   "usability|claude": {
+    "USABLE": 21,
+    "FAILED": 2,
+    "NOTICEABLE": 2
+   },
+   "usable|claude": [
+    0.92,
+    0.8,
+    1.0,
+    25
+   ],
+   "usability|gemini": {
+    "USABLE": 20,
+    "NOTICEABLE": 3,
+    "FAILED": 2
+   },
+   "usable|gemini": [
+    0.92,
+    0.8,
+    1.0,
+    25
+   ],
+   "usability|worse": {
+    "USABLE": 18,
+    "NOTICEABLE": 5,
+    "FAILED": 2
+   },
+   "usable|worse": [
+    0.92,
+    0.8,
+    1.0,
+    25
+   ],
+   "strict_usable|worse": [
+    0.72,
+    0.52,
+    0.88,
+    25
+   ],
+   "misleading|worse": [
+    0.0,
+    0.0,
+    0.0,
+    25
+   ],
+   "pooled29": {
+    "pages": 29,
+    "read": 27,
+    "not_read": 2,
+    "usable|worse": [
+     0.931,
+     0.8276,
+     1.0,
+     29
+    ],
+    "key-o|skel": [
+     0.0024,
+     0.0015,
+     0.0035,
+     27
+    ]
+   }
+  },
+  "opus": {
+   "given": 25,
+   "read": 25,
+   "filter_cut_fixed_message": 0,
+   "filter_cut_pages": [],
+   "other_failed": 0,
+   "calls": 25,
+   "key-o|skel": [
+    0.0012,
+    0.0001,
+    0.0032,
+    25
+   ],
+   "key-o|marks": [
+    0.0096,
+    0.0073,
+    0.0122,
+    25
+   ],
+   "key-g|skel": [
+    0.0019,
+    0.0006,
+    0.004,
+    25
+   ],
+   "key-o|skel|fail=1": [
+    0.0012,
+    0.0001,
+    0.0032,
+    25
+   ],
+   "usability|claude": {
+    "USABLE": 25
+   },
+   "usable|claude": [
+    1.0,
+    1.0,
+    1.0,
+    25
+   ],
+   "usability|gemini": {
+    "USABLE": 22,
+    "NOTICEABLE": 3
+   },
+   "usable|gemini": [
+    1.0,
+    1.0,
+    1.0,
+    25
+   ],
+   "usability|worse": {
+    "USABLE": 22,
+    "NOTICEABLE": 3
+   },
+   "usable|worse": [
+    1.0,
+    1.0,
+    1.0,
+    25
+   ],
+   "strict_usable|worse": [
+    0.88,
+    0.76,
+    1.0,
+    25
+   ],
+   "misleading|worse": [
+    0.0,
+    0.0,
+    0.0,
+    25
+   ],
+   "pooled29": {
+    "pages": 29,
+    "read": 29,
+    "not_read": 0,
+    "usable|worse": [
+     1.0,
+     1.0,
+     1.0,
+     29
+    ],
+    "key-o|skel": [
+     0.0013,
+     0.0002,
+     0.0032,
+     29
+    ]
+   }
+  }
+ },
+ "judges": {
+  "agreement": {
+   "n": 73,
+   "exact": 54,
+   "usable_vs_not": 54,
+   "confusion": {
+    "NOTICEABLE/USABLE": 8,
+    "USABLE/USABLE": 49,
+    "USABLE/MISLEADING": 4,
+    "MISLEADING/MISLEADING": 1,
+    "USABLE/NOTICEABLE": 7,
+    "NOTICEABLE/NOTICEABLE": 4
+   }
+  },
+  "unparsed": {
+   "claude": 0,
+   "gemini": 0
+  },
+  "plants": {
+   "claude": {
+    "by_kind": {
+     "swap|caught": 5,
+     "invented|caught": 6,
+     "dropped|caught": 6,
+     "swap|missed": 1
+    },
+    "caught": 17,
+    "total": 18
+   },
+   "gemini": {
+    "by_kind": {
+     "swap|caught": 3,
+     "invented|caught": 5,
+     "dropped|caught": 4,
+     "swap|missed": 3,
+     "invented|missed": 1,
+     "dropped|missed": 2
+    },
+    "caught": 12,
+    "total": 18
+   }
+  },
+  "planted_verdicts": {
+   "claude": [
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ]
+   ],
+   "gemini": [
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ],
+    [
+     "NOTICEABLE",
+     "USABLE"
+    ],
+    [
+     "MISLEADING",
+     "USABLE"
+    ]
+   ]
+  }
+ },
+ "cost": {
+  "lite_usd_paid_realtime": 0.0462,
+  "lite_usd_per_page_realtime": 0.00185,
+  "agy_calls_per_page": 1.16,
+  "opus_list_usd_equiv_per_page": 0.0727
+ }
+}
