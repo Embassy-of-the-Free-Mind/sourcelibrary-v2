@@ -1,6 +1,6 @@
 {
   "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (the per-stratum ledger: what was measured and who decided, one row per question, 80+ rows), .claude/docs/ocr-engine-routing.md (a generated per-LANGUAGE table of what the Gemini router does), .claude/docs/ocr-lane-decision-tree.md (the operator's tree for a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/eval/build-routing-table.mjs), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-26",
   "issue": 6688,
   "fields": {
     "kind": "public: the kind of page, in plain words",
@@ -280,7 +280,7 @@
       "kind": "Chinese pages with tables and diagrams",
       "reader": "PaddleOCR-VL, then Claude Opus corrects the draft against the image",
       "why": "PaddleOCR invents text on table pages. A rule on the text found all 136 pages known to have invented text and flags 4,379 of 1,568,108 pages (0.28%), which are withheld (11 October 2026). On 40 of them (12 October 2026), Opus correcting the draft left 4.0% of characters wrong, against 6.4% for the draft and 5.8% for Opus reading the image afresh. It was better on 31 pages and worse on 1. Opus reading from the image alone was not adopted: a Gemini reviewer found invented text in 23 of 100 such readings.",
-      "in_use": "In progress. The flagged pages show no text until the corrected text has been reviewed.",
+      "in_use": "In use on the 4,379 flagged pages: they show the corrected text.",
       "stored": null,
       "status": "settled",
       "routed": "partly",
@@ -656,5 +656,226 @@
     "date": "2026-10-25",
     "source": "scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-25.json), run 2026-10-25 over twelve languages, Chinese and Tibetan included: 16,178,325 pages in 64,624 live books",
     "method": "Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet, and a page whose text names no engine is counted as unrecorded (all 137,535 such pages are Tibetan, and their ocr.source is Esukhia's Derge Kangyur or Tengyur text). It replaces the counts of 2026-10-16 and, for Chinese and Tibetan, of 2026-10-13. Books first shown on 23 and 24 October 2026 (#7176, #7270) are counted with the rest. An earlier draw of 150 random books per language was dropped: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text."
+  },
+  "page_check": {
+    "_doc": "Display only: /quality renders it under the page-kind table, and the `in_use` sentences of routes not in use also under the matching row's reader (`row`). It routes nothing. Every accepted / wrong_text count is the route's cell in `source` (score.json), checked by tests/unit/ocr-routing-table.test.ts. The judge accepts a page when a reader would be served by publishing it as that page's text (for a translation: its statements, negations, names and numbers), and marks wrong text when the candidate says something the page does not: invented, duplicated, dropped, another page, or a wrong word that changes the sense (scripts/eval/route-judge-6740/judge.mjs).",
+    "date": "2026-10-26",
+    "issue": 6740,
+    "source": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+    "by_eye": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/by-eye.md",
+    "writeup": "2026-10-25-route-judge-qualitative-pilot-6740.md",
+    "router_table": "scripts/eval/estimator/router-table/2026-10-26.md",
+    "by_eye_agreement": {
+      "n": 28,
+      "of": 30
+    },
+    "kinds": [
+      {
+        "id": "latin-print",
+        "row": "latin-script-print",
+        "kind": "Printed Latin: the transcription",
+        "sample": "30 pages from 9 books",
+        "routes": [
+          {
+            "reader": "Gemini 3.1 Flash-Lite",
+            "in_use": "In use.",
+            "score": {
+              "cell": "latin",
+              "route": "lite"
+            },
+            "accepted": {
+              "n": 17,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 12,
+              "of": 30
+            },
+            "wrong_text_what": "Mostly words or whole lines left out (9 pages) and misreads that make another word (7). Some reverse the sense: “inæquales” read as “equales”, “ſeminis” (of seed) as “feminis” (of women)."
+          },
+          {
+            "reader": "Flash-Lite, then Claude Opus corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "latin",
+              "route": "lite>opus-correct"
+            },
+            "accepted": {
+              "n": 30,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 0,
+              "of": 30
+            },
+            "wrong_text_what": "None. What is left is cosmetic, for example abbreviations expanded on some lines and not on others."
+          }
+        ],
+        "note": null
+      },
+      {
+        "id": "chinese-paddle",
+        "row": "chinese-tables",
+        "kind": "Chinese pages that PaddleOCR-VL read and a rule flagged as possibly invented (4,379 pages, mostly the Siku Quanshu)",
+        "sample": "30 pages, one per book",
+        "routes": [
+          {
+            "reader": "PaddleOCR-VL, then Claude Opus corrects the draft against the image",
+            "in_use": "In use on the flagged pages.",
+            "score": {
+              "cell": "chinese",
+              "route": "paddle>opus-correct"
+            },
+            "accepted": {
+              "n": 24,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "On 3 pages that are mostly Manchu, the Manchu is left out (a note in the text says so). On the one table page the counting-rod numbers are written right to left, so each reads reversed."
+          },
+          {
+            "reader": "PaddleOCR-VL's draft alone",
+            "in_use": "What these pages had before the correction.",
+            "score": {
+              "cell": "chinese",
+              "route": "paddle"
+            },
+            "accepted": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 24,
+              "of": 30
+            },
+            "wrong_text_what": "Lines left out (14 pages), misreads that make another character (12), repeated text (12) and text that is not on the page (8)."
+          }
+        ],
+        "note": "An upper bound. Of the 3 corrected pages we read by eye, one changes the calligrapher's name 章德懋 to 童德懋, twice, where the page and PaddleOCR's draft have 章; the reviewer accepted it. Other one-character changes to names may have passed the same way."
+      },
+      {
+        "id": "tibetan",
+        "row": "tibetan",
+        "kind": "Tibetan (Kangyur)",
+        "sample": "30 folios, one per book",
+        "routes": [
+          {
+            "reader": "BDRC Yigdzin",
+            "in_use": "In use.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin"
+            },
+            "accepted": {
+              "n": 17,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 12,
+              "of": 30
+            },
+            "wrong_text_what": "Misreads that make another word (6 folios), one of which loses a negation; lines or phrases left out (4); syllables that are not on the leaf (2)."
+          },
+          {
+            "reader": "Yigdzin, then Gemini 3.8 Flash corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin>flash-low-correct"
+            },
+            "accepted": {
+              "n": 26,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "On one folio it filled a line Yigdzin had dropped with words that are not on the leaf. On another it put in “desire” from a different formula where the leaf has “ignorance”."
+          },
+          {
+            "reader": "Yigdzin, then Claude Opus corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin>opus-correct"
+            },
+            "accepted": {
+              "n": 25,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "A phrase copied ahead from the next line, a garbled phrase, a doubled syllable."
+          }
+        ],
+        "note": null
+      },
+      {
+        "id": "german-translation",
+        "row": null,
+        "kind": "German books printed 1500 to 1800: the English translation",
+        "sample": "30 pages, one per book, for each translator",
+        "routes": [
+          {
+            "reader": "Gemini 3 Flash",
+            "in_use": "In use.",
+            "score": {
+              "cell": "german",
+              "route": "flash3"
+            },
+            "accepted": {
+              "n": 22,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 6,
+              "of": 30
+            },
+            "wrong_text_what": "Misreads carried into the English (an alchemical sign, a family's coat of arms), a note taken from the next page, headwords left out. On 2 of the 6 the fault is in the page itself: its photo shows another page, or the edge of the facing one."
+          },
+          {
+            "reader": "Gemini 3.1 Flash-Lite",
+            "in_use": "In use.",
+            "score": {
+              "cell": "german",
+              "route": "flash-lite"
+            },
+            "accepted": {
+              "n": 15,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 10,
+              "of": 30
+            },
+            "wrong_text_what": "Text from the next page (3 pages), words or a clause left out (3), misreads (2: a planet's sign, “Venetian soap” as “Benedetto powders”), a sense turned around (1)."
+          },
+          {
+            "reader": "Claude Opus",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "german",
+              "route": "opus-cli"
+            },
+            "accepted": {
+              "n": 26,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "A word dropped at a bracket, a claim about earlier pages, and a page whose photo shows another page (a fault in the page, not the translation)."
+          }
+        ],
+        "note": "Each translator was judged on its own 30 pages, so the comparison is between samples, not page by page."
+      }
+    ]
   }
 }

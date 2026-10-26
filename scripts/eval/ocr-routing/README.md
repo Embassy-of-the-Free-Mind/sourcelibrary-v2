@@ -30,7 +30,7 @@ To change a row, edit the JSON in the same PR as the experiment file that justif
 
 <!-- BEGIN GENERATED ocr-routing-table: scripts/eval/build-routing-table.mjs writes this section from scripts/lib/ocr-routing-table.json. Do not edit it by hand. -->
 
-As of 2026-10-13 (#6688). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.
+As of 2026-10-26 (#6688). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.
 
 "Reader" is what NEW pages get. "Stored now" is what readers have: Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet, and a page whose text names no engine is counted as unrecorded (all 137,535 such pages are Tibetan, and their ocr.source is Esukhia's Derge Kangyur or Tengyur text). It replaces the counts of 2026-10-16 and, for Chinese and Tibetan, of 2026-10-13. Books first shown on 23 and 24 October 2026 (#7176, #7270) are counted with the rest. An earlier draw of 150 random books per language was dropped: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text. Counted 2026-10-25; source: scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-25.json), run 2026-10-25 over twelve languages, Chinese and Tibetan included: 16,178,325 pages in 64,624 live books.
 

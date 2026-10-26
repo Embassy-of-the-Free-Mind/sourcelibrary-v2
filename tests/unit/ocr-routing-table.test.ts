@@ -151,6 +151,31 @@ describe('OCR routing table by page kind (scripts/lib/ocr-routing-table.json)', 
     }
   });
 
+  it('PAGE CHECK: every count is its cell in score.json, and every kind names a real row or none', () => {
+    type Count = { n: number; of: number };
+    type Route = { reader: string; in_use: string; score: { cell: string; route: string }; accepted: Count; wrong_text: Count; wrong_text_what: string };
+    const pc = OCR_ROUTING_TABLE.page_check as {
+      date: string; source: string; by_eye: string; writeup: string; router_table: string;
+      kinds: { id: string; row: string | null; kind: string; sample: string; routes: Route[] }[];
+    };
+    expect(pc.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    for (const f of [pc.source, pc.by_eye, pc.router_table, `scripts/eval/experiments/${pc.writeup}`]) expect([f, exists(f)]).toEqual([f, true]);
+    const score = JSON.parse(read(pc.source)) as { cells: Record<string, { routes: Record<string, { accept: string; wrong_text_pages: string }> }> };
+    for (const k of pc.kinds) {
+      if (k.row) expect(() => ocrRouteForKind(k.row)).not.toThrow();
+      expect([k.id, /\b\d+ (pages|folios)\b/.test(k.sample)]).toEqual([k.id, true]);
+      expect([k.id, k.routes.some((r) => /^In use/.test(r.in_use))]).toEqual([k.id, true]);
+      for (const r of k.routes) {
+        const cell = score.cells[r.score.cell]?.routes[r.score.route];
+        expect([k.id, r.score.route, cell?.accept, cell?.wrong_text_pages]).toEqual([
+          k.id, r.score.route, `${r.accepted.n}/${r.accepted.of}`, `${r.wrong_text.n}/${r.wrong_text.of}`,
+        ]);
+        expect([k.id, r.score.route, /^(In use|Measured, not in use yet\.|What these pages had)/.test(r.in_use)]).toEqual([k.id, r.score.route, true]);
+        expect(r.wrong_text_what.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
   it('AUDIT: each reviewer is from another model family than the reader', () => {
     for (const r of rows) {
       const reader = r.reader.toLowerCase();
