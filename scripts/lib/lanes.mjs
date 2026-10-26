@@ -209,7 +209,7 @@ export const LANES = [
   { name: 'claude-opus-translate', serves: 'translate', files: ['scripts/batch/claude-translate.mjs', 'scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/lib/lane-quota.mjs'],
     selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming claude-opus-5-5), refused pages\' English, and page lists by hand',
     trigger: 'one-off claude-job runs (book list recorded per job until R6); refused-pages.mjs on l7a every 3 h translates what it OCRs',
-    budget: 'quota-share', quota: { meter: 'climits', share: 0.7 }, respectsHold: false, pause: null,
+    budget: 'quota-share', quota: { meter: 'climits', share: 0.7, endOfWeek: { weekly: 95, hours: 24 } }, respectsHold: false, pause: null,
     stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'anthropic' }],
     routes: { hold: 'translate-cli-7075', engines: ['claude-opus-5-5'] },
     reason: 'It drains the books held FOR it. claudeBlocked() refuses the call on a spent account; the runner\'s quota gate (lane-quota.mjs) idles it at its share, paced over the week. No pause check: the subscription spends no dial money.', gap: true },

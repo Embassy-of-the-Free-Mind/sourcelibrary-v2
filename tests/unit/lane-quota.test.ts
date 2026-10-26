@@ -63,6 +63,16 @@ describe('quotaGate', () => {
     expect(quotaGate(claude, { weekly: 50, session: 70, weeklyReset: resetIn(30) }, { now: NOW })).toMatchObject({ open: false });
   });
 
+  it('a lane with endOfWeek runs past the stop line to its own cap in its own last stretch (#7448: Opus translate, 95% / 24 h)', () => {
+    const eow = { ...claude, endOfWeek: { weekly: 95, hours: 24 } };
+    expect(quotaGate(eow, { weekly: 94, session: 20, weeklyReset: resetIn(20) }, { now: NOW })).toMatchObject({ open: true, state: 'spare', priced_usd: 0 });
+    expect(quotaGate(eow, { weekly: 95, session: 20, weeklyReset: resetIn(20) }, { now: NOW })).toMatchObject({ open: false });
+    expect(quotaGate(eow, { weekly: 94, session: 85, weeklyReset: resetIn(20) }, { now: NOW })).toMatchObject({ open: false, state: 'stop' });
+    // Outside its 24 h it is an ordinary lane: 36 h out, 94% is past the shared 92% stop line.
+    expect(quotaGate(eow, { weekly: 94, session: 20, weeklyReset: resetIn(36) }, { now: NOW })).toMatchObject({ open: false, state: 'stop' });
+    expect(quotaGate(claude, { weekly: 94, session: 20, weeklyReset: resetIn(20) }, { now: NOW })).toMatchObject({ open: false });
+  });
+
   it('outside the last stretch the share is a ceiling', () => {
     expect(quotaGate(claude, { weekly: 70, session: 0, weeklyReset: resetIn(100) }, { now: NOW })).toMatchObject({ open: false, state: 'ceiling' });
     expect(quotaGate(claude, { weekly: 66, session: 16, weeklyReset: resetIn(94) }, { now: NOW })).toMatchObject({ open: true, state: 'open', priced_usd: null });

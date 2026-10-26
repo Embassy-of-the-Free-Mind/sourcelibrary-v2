@@ -89,7 +89,8 @@ async function main() {
   if (mode === 'run') {
     if (!OUT) { console.error('run needs --out=DIR'); process.exit(2); }
     // A cron spends the box account's subscription: the lane's quota gate (lane-quota.mjs, #7301) idles it at its
-    // share of the week (70% for Opus) and opens it to 90% in the last 48 h, when the quota would otherwise be lost.
+    // share of the week (70% for Opus) and opens it in the last stretch, when the quota would otherwise be lost: Opus
+    // to 95% in the last 24 h (its `endOfWeek`, #7448), agy at the shared 90% in the last 48 h.
     // --max-weekly-pct overrides the registered share.
     const agy = ENGINE === 'gemini-3.8-flash+agy-cli';
     const q = laneQuota(agy ? 'agy-flash-translate' : 'claude-opus-translate', { model: agy ? CLI_TRANSLATE_LANES[ENGINE].model : null, maxWeeklyPct: arg('max-weekly-pct') ?? null });

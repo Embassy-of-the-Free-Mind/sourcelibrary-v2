@@ -11,6 +11,9 @@
  * Derek's decision D13 on #5469, taken as the default. Rules, first match wins:
  *
  *   locked     the meter says the model or account is at its wall          → idle; the book waits (never the API)
+ *   end-of-week  only for a lane with `quota.endOfWeek: { weekly, hours }`: the week resets within `hours` and weekly <
+ *              `weekly`, 5-hour < 85%                                    → OPEN, priced $0, past the 92% stop line. The
+ *              Opus translate lane runs to 95% in the last 24 h (#7448; Derek chose 95 over the shared 90 on #7387)
  *   stop       weekly ≥ 92% or 5-hour ≥ 85% (spare-lane.py's stop line)     → idle; the rest is for interactive use
  *   spare      the week resets within 48 h, weekly < 90%, 5-hour < 70%     → OPEN, priced $0, the share is lifted:
  *              quota left at a reset is lost (Derek, 2026-10-26), so spare-lane.py and every lane may spend it
@@ -61,6 +64,10 @@ export function quotaGate(quota, usage, { now = Date.now() } = {}) {
   if (!usage || usage.weekly == null) return { open: true, state: 'unmetered', why: 'no fresh climits meter on this box; the reader stops on its own limit reply', priced_usd: null };
   const w = Number(usage.weekly), s = Number(usage.session ?? 0);
   if (w >= 98 || s >= 98) return { open: false, state: 'locked', why: `account at its wall (weekly ${w}%, 5-hour ${s}%)`, priced_usd: null, until: w >= 98 ? usage.weeklyReset ?? null : null };
+  const eow = quota.endOfWeek, eowReset = Date.parse(usage.weeklyReset ?? '');
+  if (eow && !Number.isNaN(eowReset) && (eowReset - now) / 1000 <= eow.hours * 3600 && w < eow.weekly && s < PACE.STOP_SESSION) {
+    return { open: true, state: 'spare', why: `last ${Math.round((eowReset - now) / 3600000)} h of the week at ${w}%: this lane runs to ${eow.weekly}% before the reset, priced $0`, priced_usd: 0 };
+  }
   if (w >= PACE.STOP_WEEKLY || s >= PACE.STOP_SESSION) return { open: false, state: 'stop', why: `weekly ${w}% / 5-hour ${s}%: the rest is left for interactive use`, priced_usd: null };
   const reset = Date.parse(usage.weeklyReset ?? '');
   if (Number.isNaN(reset)) return { open: false, state: 'pace', why: 'weekly reset time unknown, so the pace cannot be read', priced_usd: null };
