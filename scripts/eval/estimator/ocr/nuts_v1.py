@@ -29,7 +29,7 @@ q = lambda x: [round(float(v), 4) for v in np.percentile(x, [5, 50, 95])]
 
 def nuts_fit(model, seed, warmup, samples, chains, **kw):
     mc = MCMC(NUTS(model, target_accept_prob=0.9), num_warmup=warmup, num_samples=samples, num_chains=chains,
-              chain_method='parallel', progress_bar=False)
+              chain_method='parallel', progress_bar=bool(os.environ.get('NUTS_PROGRESS')))
     t0 = time.time()
     mc.run(jax.random.PRNGKey(seed), extra_fields=('diverging',), **kw)
     by = mc.get_samples(group_by_chain=True)

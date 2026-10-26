@@ -112,8 +112,10 @@ def floors_ok(r, bars, dense, kind):
 
 def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0, kind='print'):
     """rows: per route dict with draws cer, fail, num (or None). Adds p_bar, cost_usable, p_best; returns choice."""
-    # a route with no metered price (a Claude image read, until it is metered) is never routed on cost
-    routable = [r for r in rows if r['enabled'] and not np.isnan(r['cost']).any()]
+    # a route with no metered price (a Claude image read, until it is metered) sets the bar and counts for HOLD, but
+    # is never chosen on cost
+    routable = [r for r in rows if r['enabled']]
+    metered = lambda r: not np.isnan(r['cost']).any()
     measured = [r for r in routable if r['basis'] == 'measured']
     if not measured:
         return None
@@ -140,7 +142,7 @@ def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0, ki
         ok &= floors_ok(r, bars, dense, kind)
         r['p_bar'] = float(ok.mean())
     # only a measured route is routed; a pooled one that would clear the bar is a candidate to test, not a route
-    qual = [r for r in measured if r['p_bar'] >= threshold]
+    qual = [r for r in measured if r['p_bar'] >= threshold and metered(r)]
     # §3a: cost per usable page = cost / P(read) + P(not read) x next route's (cost / P(read)); linear in the cost
     # vector, so it is computed per unit and priced once
     per = {r['route']: r['cost'] / max(1 - r['fail'].mean(), 1e-6) for r in qual}
@@ -162,7 +164,7 @@ def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0, ki
         # HOLD when no measured route, at any cost, passes the absolute floors in half the draws; else a test can settle it
         near = max(measured, key=lambda r: r['p_floor'])
         return dict(route=None, answer='hold' if near['p_floor'] < 0.5 else 'test', nearest=near['route'],
-                    nearest_p_floor=round(near['p_floor'], 3))
+                    nearest_p_floor=round(near['p_floor'], 3), nearest_unmetered=not metered(near))
     pick = min(qual, key=lambda r: (round(float(r['cost_usable_draws'].mean()), 9), -r['p_bar'], float(r['cer'].mean())))
     return dict(route=pick['route'], answer='route')
 
@@ -255,6 +257,7 @@ def main():
                                       choice=ch['route'] if ch else None, sensitivity=sens, best_quality=best['route'],
                                       answer=(choice or {}).get('answer', 'test'), page_kind=floor_kind,
                                       nearest=(choice or {}).get('nearest'), nearest_p_floor=(choice or {}).get('nearest_p_floor'),
+                                      nearest_unmetered=(choice or {}).get('nearest_unmetered'),
                                       routes=route_rows))
                 for out, dollars in ((md, False), (md_usd, True)):
                     if ch:

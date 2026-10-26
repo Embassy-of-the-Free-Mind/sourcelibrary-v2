@@ -6,7 +6,7 @@ scripts: [Latn, Hani, Tibt, Grek, Arab, Hebr]
 canons: []
 n_books: null
 n_pages: null
-verdict: "Correction is now a stage of a route: pages made worse and made better per draft engine x corrector x language x page kind, from 115 committed counts in 13 experiments. With Opus as the assumed reference (Derek, 2026-10-25), no cheaper corrector yet matches Opus at P >= 0.9 in any of 13 cells, so every cell routes to Opus and the free half of four Claude accounts binds: 78 weeks for lite Latin, 104-130 for Chinese and Tibetan, while agy sits idle for correction. Eleven 30-page tests (0.04 account-weeks + 330 agy calls) would decide whether agy can take part: if they confirm, lite Latin drains in 43 weeks and Tibetan in 21. Held out one experiment at a time, the correction rows land inside their 90% interval 87/99 times but re-reads 2/12. A prompt x language-family term fixes v1's #4780 miss (0/6 -> 12/12 languages covered). NUTS widens v1's accuracy intervals by 1.29x (median) and leaves did-not-read unchanged (0.95x)."
+verdict: "Correction is now a stage of a route: pages made worse and made better per draft engine x corrector x language x page kind, from 115 committed counts in 13 experiments. With Opus as the assumed reference (Derek, 2026-10-25), no cheaper corrector yet matches Opus at P >= 0.9 in any of the 12 cells not held, so every cell routes to Opus and the free half of four Claude accounts binds: 78 weeks for lite Latin, 104-130 for Chinese and Tibetan, while agy sits idle for correction. Eleven 30-page tests (0.04 account-weeks + 307 agy calls) would decide whether agy can take part: if they confirm, lite Latin drains in 43 weeks and Tibetan in 21. Held out one experiment at a time, the correction rows land inside their 90% interval 87/99 times but re-reads 2/12. A prompt x language-family term fixes v1's #4780 miss (0/6 -> 12/12 languages covered). On #7341's extended v1, NUTS widens the accuracy intervals by 1.15x (median; not converged) and not the did-not-read ones (0.79x). With absolute floors, six v1 cells answer HOLD (Hebrew, Rashi, Chinese print, both Syriac, non-alchemical Arabic print)."
 status: informational
 decision: "Proposals only: allocation and proposed routing rows in scripts/eval/estimator/chain/results/ for #7170; #5924, #6560 and #6561/#6871 answered in capacity terms below (#6740)"
 superseded_by: null
@@ -34,6 +34,7 @@ off the GPU job's cores).
 | 22:19 | **Override** (Derek, 21:20Z: "I don't even believe in the judge family effect. Assume Opus is ok; we are mostly looking for enhanced cost") | the router objective is now the cheapest route a reader would accept as matching Opus; Opus is the fallback in every cell; the judge-family term and Gemini-judged rows do not move routing; route-judge-6740's qualitative rates are an outcome where they land (none had landed: §10). §3–§7 are the post-override routing |
 | 23:27 | CLI pricing: Opus and Sonnet priced separately, per page; image OCR unmetered until metered; quota share in the repo, dollars only in the issue comment | §2; `ocr/route-costs.json` and `route_ocr_v1.py` |
 | 23:29 | Idle quota is free: fill each account's projected-unused share first; this week and the steady state; `spare-lane.py`'s fallback | §3b |
+| 23:48 | Build on #7372 (v1 refit with the Arabic charts), do not fork v1; absolute floors per outcome and a HOLD answer, with the cells that land there | §9 (the NUTS fits use #7341's extended model and rows); §9b |
 
 ### What was built (`scripts/eval/estimator/chain/`)
 
@@ -363,34 +364,91 @@ NUTS, 2 × 600 draws per fit, R-hat ≤ 1.017, 0 divergences. Result: `results/r
 - **The gap:** the agy arm's per-page file is on Hetzner main only, so agy is not in this table.
 - **Where it ran:** NUTS on gex45's CPU, pinned to cores 4–19 and niced. The GPU job's utilisation stayed at 90–98%.
 
-| model | SVI (v1's inference) | NUTS | NUTS / SVI interval width, median [p10, p90] over 174 chart × engine cells |
-|---|---|---|---|
-| did not read | AutoNormal, 15,000 steps, 51 s | 4 × 1,000 draws, R-hat 1.011, 1 divergence, 197 s | **0.95 [0.56, 1.65]**: not systematically narrow. 31 cells wider by more than 1.5×, 32 narrower by more than 1.5× |
-| accuracy (hurdle) | AutoNormal, 15,000 steps, 166 s | 4 × 500 draws, **R-hat 1.154** (not converged), 0 divergences, 1.9 h | **1.29 [0.85, 2.51]**: wider in 134 of 174 cells. English 1880–1930 date-dense: olmOCR-2 2.2×, lite 2.6×, Archive text 2.1× |
+**Built on #7372 (inbox note 23:48Z).** The fits that decide are on v1 as #7341 left it: `model_ocr_v1`'s script-family
+extension (`--ext`) and its 232 Arabic rows (`--extra results/arabic-rows.jsonl`), plus the GPU arms above. That is
+13,020 rows.
 
-NUTS_LONG
+| fit | model | did not read: NUTS / SVI width, median [p10, p90] | accuracy: NUTS / SVI width | NUTS convergence |
+|---|---|---|---|---|
+| **v1 + #7341 extension + Arabic + GPU arms** (`results/ocr-v1-nuts-vs-svi-ext.json`) | extended | **0.79 [0.32, 1.52]**, 181 cells | **1.15 [0.85, 2.49]**, 181 cells | did-not-read: 4 × 1,000, R-hat 1.006, 0 divergences, 19 min. Accuracy: 8 × 250 after 1,000 warmup, **R-hat 1.176, 18 divergences**, 3.7 h |
 
-**The GPU arms on the #4763 cells**, v1's rule (the cheapest measured route within the bars, P ≥ 0.9). Here "P" is
-P(clears both bars) for a route, from `results/ocr-v1-gpu-arms-english-routes.json`.
+- **The accuracy NUTS is not converged** on the page and work spread terms: `mu_tau_page_c` 1.18, `mu_tau_work_c` 1.17,
+  `mu_P` and `mu_W` 1.16. That is the hierarchical funnel; the cell-level E[CER] mixes better.
+- **What a converged run needs:** about 2–3× the iterations, or a reparametrised page effect. Its widths are a lower
+  bound on how much SVI understates.
+- **SVI understates accuracy and does not understate did-not-read.**
+  - Accuracy: NUTS is wider in most cells.
+  - English 1880–1930 date-dense: olmOCR-2 2.1×, Flash-Lite 1.7×, Archive text 1.8×.
+  - Did not read: NUTS is as wide or narrower in most cells.
+  - So v1's routes rest on accuracy intervals that were too narrow, and on refusal intervals that were about right.
 
-| cell | SVI | NUTS |
-|---|---|---|
-| English pre-1880 date-dense | **olmOCR-2 (GPU)**, P 0.91 | **olmOCR-2**, P 0.92 |
-| English 1880–1930 prose | olmOCR-2 | olmOCR-2 (P 0.99) |
-| English pre-1880 prose | olmOCR-2, P 0.92 | **Flash-Lite**: olmOCR-2 falls to 0.90 |
-| **English 1880–1930 date-dense** (the #4763 cell) | **none clears both bars**: olmOCR-2 0.49, MinerU 0.35 | **none**: olmOCR-2 0.43, MinerU 0.33 |
+**The GPU arms on the #4763 cells.** v1's rule (the cheapest measured, metered route within the relative bars, P ≥
+0.9), on the extended NUTS fits, now with the floors of §9b. `results/ocr-v1-routes-ext-nuts.{json,md}` holds every
+cell; dollars only on #6740.
 
-- **On numbers, the GPU arms beat every route v1 had** (S4, per number printed). NUTS fits [90%]:
+| cell | answer | route, or the nearest | E[CER] | errors per number | P(clears the bars) |
+|---|---|---|---|---|---|
+| English pre-1880 prose | **route** | **olmOCR-2 (GPU, $0)** | 0.018 | — | 0.96 |
+| English 1880–1930 prose | **route** | **olmOCR-2 (GPU)** | 0.004 | — | 1.00 |
+| English pre-1880 date-dense | **test** | olmOCR-2 | 0.028 | 0.232 | 0.69 |
+| **English 1880–1930 date-dense** (the #4763 cell) | **test** | olmOCR-2; MinerU; Archive text | 0.041; 0.048; 0.052 | 0.140; 0.128; 0.169 | 0.43; 0.36; 0.03 |
+| English early print (EEBO) | route | Chandra OCR 2 (GPU) | | | |
+
+- **On numbers, the GPU arms beat every route v1 had** (S4, per number printed, NUTS [90%]):
   - MinerU 0.128 [0.107, 0.152];
   - GLM-OCR 0.136;
   - olmOCR-2 0.140;
   - Archive text 0.169;
   - Flash-Lite 0.281.
 - **Every GPU arm read every page:** did-not-read 0/34.
-- **Why no route clears S4:** the character bar is set by Flash-Lite's E[CER] (0.033). olmOCR-2's 0.040 [0.024, 0.074]
-  clears it in about half the draws.
-- **agy is missing from this table.** v1 routed S1 and S2 to agy, so these cells compare the GPU arms with Flash-Lite and
-  the Archive's text only.
+- **Why S4 still has no route:** the character bar is set by the best measured route's E[CER], and olmOCR-2 clears both
+  bars in 43% of draws.
+- **agy's gate rows are not in this table** (main only), so S1 and S2, which v1 routed to agy, compare the GPU arms with
+  Flash-Lite and the Archive's text only.
+
+
+The first comparison, on v1's own structure (no extension, no Arabic rows; `results/ocr-v1-nuts-vs-svi.json`): did not read 0.95 [0.56, 1.65] (NUTS R-hat 1.011); accuracy 1.29 [0.85, 2.51] (4 × 500 draws, R-hat 1.154). The same direction.
+
+### 9b. Absolute floors and a third answer: HOLD (inbox note 23:48Z)
+
+`quality-bars.json` had only relative bars (`absolute_max: null`). So in a cell where every route is bad, the cheapest
+bad route still "cleared". It now carries **absolute floors**, as data with their reasons:
+
+| outcome | floor | reason |
+|---|---|---|
+| E[CER], print | ≤ 0.15 | above it, a reader quoting a line must check every word against the image (with errors spread evenly, fewer than half of five-letter words are right) |
+| E[CER], manuscript | ≤ 0.25 | manuscripts are read with the image beside the text, which serves finding and search |
+| errors per number printed | ≤ 0.25 | one number in four wrong: an index, table or date list can no longer be cited |
+| P(read) | ≥ 0.5 | a route that leaves most pages unread is not a reader for the cell |
+
+`route_ocr_v1.py` now gives **one of three answers** per cell:
+- **route:** the cheapest metered route clearing the relative bars and the floors, with P ≥ 0.9.
+- **test:** some measured route passes the floors in at least half the draws, but none is routable. Either nothing
+  clears at 0.9, or the one that does is unmetered (a Claude image read).
+- **HOLD:** no measured, enabled route, at any cost, passes the floors in half the draws. The book stays held, and the
+  router names the nearest route and what it lacks.
+
+The floors are judgment; the router prints which cells move at 0.10 / 0.20 and 0.20 / 0.35.
+
+**Cells that land in HOLD** (extended NUTS fits; pages measured in the chart):
+
+| cell | pages | nearest route: E[CER], P(passes the floors) | what would unlock it |
+|---|---|---|---|
+| Hebrew print | 10 | Opus 0.177, 0.38 (unmetered) | more referenced Hebrew pages (10 is the whole chart), or a reader under 15% |
+| Rashi script | 58 | agy Gemini 4 Argon low 0.220, 0.00 | a Rashi-trained reader; no general model is near |
+| Chinese print | 19 | Argon 0.234, Opus 0.245, Chandra 0.237: all ≈ 0.24 | **probably the reference, not the readers:** every engine, Opus included, sits at 0.24, so the gap is the panel's own variant forms. Unlock: a variant-folded score or a cleaner panel (the Paddle/Kanripo sets read about 3%) |
+| Syriac manuscript | 40 | Sophro 0.397, 0.08 | a better Syriac manuscript model (Sophro is the best measured) |
+| Syriac print | 20 | Kraken OmniSyr 0.166, 0.24 | a few points of CER; OmniSyr is near the 0.15 floor |
+| Arabic print, non-alchemical books | 11 | Gemini 3 Flash 0.131, 0.59, **disabled** (paid Gemini is Flash-Lite only, #6331); Flash-Lite 0.176, 0.39 | an agy or Opus read measured here, or an exception to the rule |
+| Malayalam palm leaf (Whish 147; not a v1 chart) | — | Opus 0.71–0.75 (Derek's note); 0.54 half-leaf in `2026-10-22-whish147-line-strips.md` | no route is near |
+| Mongolian Kanjur (#5664; not a v1 chart) | — | every read declined (Derek's note); a real-data LoRA reached 23.6% CER, but its meaning check was 8/30 against a bar of 18 | a reader that passes the meaning check |
+
+- **Answered TEST:**
+  - Arabic manuscript: Opus passes the floors at 0.73–0.96 but is unmetered. Unlock: meter Opus image calls
+    (route-judge-run-6740).
+  - Latin print: Sonnet at 0.84, unmetered.
+  - Armenian and German/French print: lite and Chandra pass the floors but not the relative bar at 0.9.
+- **No v2 correction cell lands in HOLD.** Opus correction has a positive net gain in every cell (§3).
 
 ### 10. Inbox note D: production route rows; route-judge-6740
 
