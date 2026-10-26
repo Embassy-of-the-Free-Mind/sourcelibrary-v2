@@ -77,6 +77,7 @@ import { enrolBrake } from './quality-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
+import { reuseKeptReads } from './kept-read-reuse.mjs';
 import {
   planBlocks, maxOutputTokensFor, batchRequest, responseTextOf, selectPages,
   RUNS_COLLECTION, MAX_PAGES_PER_RUN, translateSubmitBrake, brakeStopsBook,
@@ -343,8 +344,18 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
   // #5915: the pre-translation gate judges the queue here; a dry run records nothing.
-  const { pages, excluded, gate } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  const sel = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  const { excluded, gate } = sel;
+  let pages = sel.pages;
   if (gate?.book) return { ok: false, reason: preGateBookReason(gate.book), book, excluded };
+  // #7075: a page we already translated for free and kept is applied, not bought again. Not on a dry run: it writes.
+  if (!dryRun && pages.length) {
+    const reuse = await (deps.reuseKeptReads ?? reuseKeptReads)(db, { bookId, field: 'translation', pageIds: pages.map((p) => p.id), minModel: getTranslateModelForBook(book), log });
+    if (reuse.applied) {
+      excluded.applied_from_kept_read = reuse.applied;
+      pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    }
+  }
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
   const estimate = estimateChainedUsd({ prompts, book, pages, model, noContext });

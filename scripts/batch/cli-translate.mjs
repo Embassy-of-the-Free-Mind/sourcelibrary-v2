@@ -82,6 +82,11 @@ const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
 const FRESH = wantsFresh();
+// --reuse-only (#7075): hand back kept reads, never call the model. Used by scripts/lib/kept-read-reuse.mjs before a
+// paid lane buys a page that a free read already covers.
+const REUSE_ONLY = process.argv.includes('--reuse-only');
+if (REUSE_ONLY && FRESH) { console.error('--reuse-only and --fresh contradict each other'); process.exit(2); }
+let noKept = 0;
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -89,14 +94,17 @@ const db = client.db('bookstore');
 
 if (STAGE === 'read') {
   const ids = readPageIdsFile(arg('page-ids-file'));
-  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
+  // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
+  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const prompts = await loadTranslationPrompts(db);
   fs.mkdirSync(OUT, { recursive: true });
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PAGE_PROJECTION }).toArray()).map((p) => [p.id, p]));
   console.log(`${found.size} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}`);
   // Check the transcription before paying for a translation on top of it (#6865).
-  const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
+  // --reuse-only spends nothing, and the paid lane it stands in front of would translate the same OCR anyway: the
+  // OCR-first gate (#6865) is a spend gate, so it does not apply to handing back a read already paid for.
+  const gate = REUSE_ONLY ? { ok: true, message: 'reuse-only: OCR-first gate not applied (no call is made)' } : ocrFirstGate([...found.values()], arg('ocr-checked'));
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
   const books = new Map();
@@ -125,6 +133,8 @@ if (STAGE === 'read') {
       const hit = await findRead({ page_id: id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKey, derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
       if (hit && await reuseInto(OUT, id, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); continue; }
     }
+    // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
+    if (REUSE_ONLY) { noKept++; continue; }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
     const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
@@ -156,6 +166,7 @@ if (STAGE === 'read') {
     console.log(`  ${p.page_number} ${r.cls || r.problem || 'ok'} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
   }
   console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
+  if (REUSE_ONLY) console.log(`reuse-only: ${noKept} page(s) had no matching kept read and were not called`);
   await client.close();
   process.exit(0);
 }

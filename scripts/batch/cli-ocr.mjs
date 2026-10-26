@@ -135,6 +135,11 @@ const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts
 const variantOf = (mode, lane, promptVariant) => (mode === 'correct' ? `correct:${lane}` : promptVariant ?? null);
 const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant) }) : null);
 const FRESH = wantsFresh();
+// --reuse-only (#7075): hand back kept reads, never call the model. Used by scripts/lib/kept-read-reuse.mjs before a
+// paid lane buys a page that a free read already covers.
+const REUSE_ONLY = process.argv.includes('--reuse-only');
+if (REUSE_ONLY && FRESH) { console.error('--reuse-only and --fresh contradict each other'); process.exit(2); }
+let noKept = 0;
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -158,7 +163,8 @@ if (STAGE === 'read') {
   const extra = INSTRUCTION_FILE ? `\n\n${fs.readFileSync(INSTRUCTION_FILE, 'utf8').trim()}` : '';
   if (extra) fs.writeFileSync(path.join(OUT, 'prompt-extra.txt'), extra);
   fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify(ref));
-  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
+  // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
+  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
@@ -191,6 +197,8 @@ if (STAGE === 'read') {
       const hit = await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: reuseKey, derive: readReuseKey });
       if (hit && await reuseInto(OUT, key, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); return; }
     }
+    // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
+    if (REUSE_ONLY) { noKept++; return; }
     const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
@@ -239,6 +247,7 @@ if (STAGE === 'read') {
   const queue = [...pages];
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readOne(queue.shift()); }));
   console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
+  if (REUSE_ONLY) console.log(`reuse-only: ${noKept} page(s) had no matching kept read and were not called`);
   await client.close();
   process.exit(0);
 }
