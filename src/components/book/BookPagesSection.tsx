@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
@@ -37,6 +38,7 @@ const PAGE_WINDOW = 100;
 type PagesWindowInfo = { offset: number; limit: number; returned: number; total: number };
 
 export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, readHref, subtitle, fallbackImages }: BookPagesSectionProps) {
+  const router = useRouter();
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -533,11 +535,18 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
       });
       if (!update) {
         console.error('Set cover: page has no usable image URL', page);
+        toast.error('This page has no usable image to set as the cover');
         return;
       }
       await books.update(bookId, update as unknown as Record<string, unknown>);
+      // The PATCH revalidates + purges the book page server-side, but this
+      // client still holds the old RSC payload — without a refresh the save
+      // looked like a no-op ("changing the cover has no effect", #2785).
+      toast.success('Cover updated');
+      router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to set cover');
     } finally {
       setSettingCover(null);
     }
