@@ -224,7 +224,9 @@ export async function archiveFromManifest(db, bookId, deps) {
       } catch (e) {
         const code = classifyFetchError(e);
         if (!fetched && isMissFor(url, code)) {
-          ledger.markMiss(p);
+          // Kept only once the host has served something this run: an outage's 404s are not facts about
+          // pages (archive-acquired.ts, 2026-10-26). Without a breaker there is no run state; keep it.
+          if (!breaker || (breaker.stateOf(h)?.ok ?? 0) > 0) ledger.markMiss(p);
           res.missed++;
           breaker?.pageMiss(h, code);
           missGuard.miss(bookId);

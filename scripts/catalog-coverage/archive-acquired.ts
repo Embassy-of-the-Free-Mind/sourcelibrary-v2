@@ -263,6 +263,8 @@ async function main() {
   // host hears about it only when whole books keep missing with nothing served.
   const missGuard = createBookMissGuard();
   const urlOf = (p: any) => fetchUrlOf(upgradeToFullRes(p.photo_original || p.photo));
+  /** Is a miss from this host evidence worth keeping? Only once the host has served a page this run. */
+  const missesCount = (host: string) => (breaker.stateOf(host)?.ok ?? 0) > 0;
 
   /** @returns how many pages were actually REQUESTED, and how many were skipped for a paused host. */
   async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number }> {
@@ -371,7 +373,13 @@ async function main() {
             missGuard.miss(bookId);
             // Bookkeeping only: never let a failed Mongo write turn into a thrown
             // error that reads as the source's fault.
-            try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            // Recorded only once the host has served something THIS run. During an outage openapi.bnf.fr
+            // answered 404 for pages that served 200 an hour later (2026-10-26 12:30–13:40: 1,268 Gallica
+            // pages took 1–2 such misses), and a third would have made real pages permanent gaps. A miss
+            // from a host that has served nothing is still counted for this run (the book guard), never kept.
+            if (missesCount(host)) {
+              try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            }
             if (!abandoned && missGuard.abandoned(bookId)) {
               abandoned = true;
               booksAbandoned++;
