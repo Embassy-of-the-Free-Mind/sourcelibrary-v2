@@ -20,6 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const OUT = arg('out'); if (!OUT) { console.error('--out required'); process.exit(2); }
@@ -30,15 +31,16 @@ const BENCH = path.join(path.dirname(new URL(import.meta.url).pathname), '..', '
 let s = SEED >>> 0; // mulberry32, so the draw is reproducible against the same data
 const rnd = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-// the image the reader (and so the OCR) gets: the crop of a split page, else the archived master, else the source
-const imageOf = (p) => (p.crop && p.cropped_photo) || p.archived_photo || p.photo || null;
+// the image the reader (and so the OCR) gets: the shared resolver (a split page's own leaf, never the whole spread)
+const imageOf = (p) => getPageSource(p);
 
 const c = await MongoClient.connect(process.env.MONGODB_URI);
 const db = c.db('bookstore');
 const pages = db.collection('pages');
 const out = [];
 const add = (r) => out.push(r);
-const PROJ = { projection: { id: 1, book_id: 1, page_number: 1, crop: 1, cropped_photo: 1, archived_photo: 1, photo: 1 } };
+const PROJ = { projection: { id: 1, book_id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1,
+  archived_photo: 1, photo_original: 1, photo: 1 } };
 
 // ── bench: every sealed page that has a reference text in refs/
 const refs = new Set(fs.readdirSync(path.join(BENCH, 'refs')).filter((f) => f.endsWith('.txt')).map((f) => f.slice(0, -4)));
