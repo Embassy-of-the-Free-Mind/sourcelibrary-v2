@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # timeout: 2h
 # issue: 6871
-# 83-yig-vllm029-parity (job yig-vllm-6871): the production Yigdzin reader on vLLM 0.29.0 on gex45's Blackwell card,
+# 83-yig-vllm029-parity / 83a-…-r2 (job yig-vllm-6871): the production Yigdzin reader on vLLM 0.29.0 on gex45's Blackwell card,
 # parity-checked against the HF reads it would replace. Files only, no Mongo.
 #   L  the #5771 leaf crops (/root/jobs/split-leaves-5771/out/crops, READ ONLY) with yig_leaf_worker.py, crop rows
 #   P  the 30 guttered pages of parity30.jsonl with yig_vllm.py page mode (the HF page reader's recipe)
@@ -14,7 +14,11 @@ J=/root/jobs/yig-vllm-6871; H=$J/harness; R=$J/run; PY=$J/venv/bin/python
 G=/root/jobs/tib-gutter-6871; C=/root/jobs/split-leaves-5771/out/crops
 MODEL=/root/.cache/huggingface/hub/models--BDRC--tibetan-ocr/snapshots/50506eb6d8ed8738df86b448f6f6cdc688de29ea
 mkdir -p "$R"; cd "$R"
-export VLLM_USE_FLASHINFER_SAMPLER=0 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential PYTHONFAULTHANDLER=1 OMP_NUM_THREADS=8
+export VLLM_USE_FLASHINFER_SAMPLER=0 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential PYTHONFAULTHANDLER=1
+# NO OMP_NUM_THREADS. Run 1 of this task (and 73) exported OMP_NUM_THREADS=8: the parent then starts an 8-thread libgomp
+# pool before vLLM FORKS the EngineCore, and the child deadlocks in libgomp on its first CPU torch.zeros
+# (py-spy, 2026-10-26: gpu_input_batch.py:134 -> at::native::fill_kernel -> libgomp). Unset, vLLM pins it to 1.
+unset OMP_NUM_THREADS
 export HF_HUB_OFFLINE=1 TMPDIR=$J/tmp; mkdir -p "$TMPDIR"
 ts() { date -u +%FT%TZ; }
 nvidia-smi --query-gpu=name,memory.used,memory.total --format=csv,noheader
