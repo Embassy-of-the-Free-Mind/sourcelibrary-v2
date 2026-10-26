@@ -26,6 +26,10 @@ import ParetoDownload from './ParetoDownload';
 //                       buttons and CSS alone (Tailwind's group-has), so the page needs no client state. One click
 //                       down: the forest plot of each engine's paired difference from the engine in use, and the table.
 //   NotEnoughEvidence   the scripts or languages whose primary panel is not fit to rank, per half, collapsed.
+//   Chained routes      a draft engine's read corrected against the image by another model (#6740) is a point like
+//                       any engine, scored on the same pages; on the scatter an arrow runs to it from its draft's dot,
+//                       so the arrow is what the correction buys and costs, and its tooltip and table row count the
+//                       pages the correction made worse.
 // Colour follows the engine's role, never its rank: amber for the engine in use, teal for an engine the data file
 // marks better, stone for everything else. Colours are hex rather than var(--…) because the download serialises
 // the SVG outside the page's CSS; each one is a Tailwind token the page already uses (named beside it).
@@ -40,7 +44,10 @@ const PAPER = '#ffffff'; // white
 const FONT = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
 const GH = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/';
 
-type Cost = { usd_per_1k: number; basis: 'billed' | 'quota'; detail: string; source: string };
+type Cost = { usd_per_1k: number; basis: 'billed' | 'quota' | 'chain'; detail: string; source: string; billed_usd_per_1k?: number };
+/** A chained route (#6740): the draft engine it corrects, and what the correction did to each page against that draft
+ *  (by more than the 1-point margin), over the n pages both read. */
+type Chain = { draft: string; corrector: string; n: number; worse: number; better: number };
 /** How the engine is run (#6776): billed per request, a CLI on a subscription ($0 billed), a rented GPU, our server. */
 type Route = 'api' | 'subscription' | 'gpu' | 'own';
 type Secs = { median: number; n: number; files: string[] };
@@ -67,6 +74,7 @@ type Point = {
   extra: (string | null)[];
   /** position in the data file (placed, then no_cost): the tie-break the verdict sentence uses */
   order: number;
+  chain: Chain | null;
 };
 type Noise = { kind: 'spread' | 'identical' | 'not_reproduced' | 'unlike'; band: number | null; diff?: number; why?: string | null; n?: number };
 type Grade = { level: 'decide' | 'directional' | 'not_fit'; why: string };
@@ -119,14 +127,24 @@ type RosterData = {
 const ROSTER = roster as unknown as RosterData;
 const ROSTER_BY = new Map(ROSTER.engines.map(r => [r.engine, r]));
 /** "<engine>|kraken" is the same engine on another input */
-const rosterOf = (engine: string) => ROSTER_BY.get(engine.split('|')[0]) ?? null;
+const rosterOf = (engine: string): RosterRow | null => {
+  const id = engine.split('|')[0];
+  if (!id.includes('>')) return ROSTER_BY.get(id) ?? null;
+  // a chained route is not in the roster: we can run it when we can run its corrector and its draft is runnable or is
+  // what production already stores (the same rule as availabilityOf() in scripts/eval/lib/model-availability.mjs)
+  const [d, c] = id.split('>').map(e => ROSTER_BY.get(e) ?? null);
+  if (!d || !c) return null;
+  const ok = (d.available || !!d.in_use_route) && c.available;
+  return { ...c, engine: id, label: `${d.label} → ${c.label}`, how: `the draft by ${d.label}, corrected by ${c.label}`, available: ok,
+    why_not: ok ? null : (c.available ? d : c).why_not, measured_via: undefined, note: undefined, in_use_route: undefined };
+};
 
 // ── adapters: each data file to the renderer's shape ─────────────────────────────────────────
-type RawCost = { usd_per_1k: number; basis: string; detail: string; source: string } | null;
+type RawCost = { usd_per_1k: number; basis: string; detail: string; source: string; billed_usd_per_1k?: number } | null;
 type OcrPoint = {
   engine: string; label: string; production: boolean; accuracy: number; accuracy_ci95: number[] | null; fail_share: number;
   words_not_in_ref: number | null; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict;
-  secs_per_page?: Secs | null;
+  secs_per_page?: Secs | null; chain?: Chain;
   did_not_read: { k: number; n: number; kinds: Record<string, number> }; partly_measured?: string;
 };
 // #6523: a failed read is counted, not scored
@@ -144,9 +162,10 @@ const base = <P,>(p: RawPanel<P>, i: number) => ({
   reference: p.reference, grade: p.grade, toDecide: p.to_decide ?? null, frontier: p.frontier, noise: p.noise, date: p.date, verdict: p.verdict, notes: p.notes ?? [],
 });
 const common = (x: { engine: string; label: string; production: boolean; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict;
-  secs_per_page?: Secs | null }) => ({
+  secs_per_page?: Secs | null; chain?: Chain }) => ({
   engine: x.engine, label: x.label, production: x.production, cost: x.cost as Cost | null, no_price: x.no_price ?? null,
   on_frontier: !!x.on_frontier, vs: x.vs_in_use ?? null, verdict: x.verdict ?? null, secs: x.secs_per_page ?? null, roster: rosterOf(x.engine),
+  chain: x.chain ?? null,
 });
 export function ocrPanel(p: RawPanel<OcrPoint>, i = 0): Panel {
   const all = [...p.placed, ...p.no_cost];
@@ -222,12 +241,22 @@ const sample = (p: Panel) => `${plural(p.n_works, 'work')} · ${plural(p.n_pages
 const ciText = (m: Measure, ci: number[] | null) => (ci ? `${m.fmtDiff(ci[0])} to ${m.fmtDiff(ci[1])}` : 'no interval');
 
 const BILLED_NOTHING = '$0 billed';
+/** What a correction is, in one sentence, wherever an arrow is drawn (#6740). */
+const CORRECTION = 'a second model is given the page image and another engine’s reading of it, and fixes what the image contradicts. The arrow runs from that engine’s dot to the corrected result, scored on the same pages; its cost is both steps.';
+const NO_LITE_CORRECTOR = 'Gemini 3.1 Flash-Lite is not drawn as a corrector: in a test it failed at the task (#7275).';
 /** run on a subscription: a CLI run, or an engine measured through an API that we run on a subscription today */
-const isSub = (p: Point) => !p.production && (p.cost?.basis === 'quota' || p.roster?.route === 'subscription');
+const isSub = (p: Point) => !p.production && !p.chain && (p.cost?.basis === 'quota' || p.roster?.route === 'subscription');
 /** The price an engine is drawn at. A subscription route shows the API price for the same requests beside the $0 it
  *  bills, so the comparison price is never read as a bill (#6776). */
-const priceText = (p: Point) => (p.cost ? (isSub(p) ? `${usd(p.cost.usd_per_1k)} API, ${BILLED_NOTHING}` : usd(p.cost.usd_per_1k))
+const priceText = (p: Point) => (p.cost ? (isSub(p) ? `${usd(p.cost.usd_per_1k)} API, ${BILLED_NOTHING}` : p.chain ? chainPriceText(p.cost) : usd(p.cost.usd_per_1k))
   : isSub(p) ? BILLED_NOTHING : 'no price');
+/** A chain's price: its draft's billed price, plus the correction at the API price ($0 billed on the subscription). */
+function chainPriceText(c: Cost) {
+  const billed = c.billed_usd_per_1k ?? 0;
+  return `${usd(c.usd_per_1k)}: ${usd(billed)} billed for the draft, ${usd(c.usd_per_1k - billed)} for the correction at the API price (${BILLED_NOTHING})`;
+}
+/** "made 2 of 44 pages worse, 10 better": against its own draft, by more than the 1-point margin. */
+const chainText = (c: Chain) => `the correction made ${c.worse} of ${c.n} pages worse and ${c.better} better than the draft, by more than 1 point`;
 const secsText = (p: Point) => (p.secs ? `${p.secs.median.toFixed(p.secs.median < 10 ? 1 : 0)} s a page` : 'not measured');
 const anchorOf = (m: Measure, chart: Chart, panel?: Panel) =>
   `${m.anchor}${chart.id}${panel && chart.panels.indexOf(panel) > 0 ? `-${panel.kind}` : ''}`;
@@ -439,6 +468,19 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, plo
     lines.push({ x0: q.x, y0: q.y - 1.5, x1: nx, y1: q.y + 1.5 });
     if (i + 1 < a.length) lines.push({ x0: nx - 1.5, y0: Math.min(q.y, a[i + 1].y), x1: nx + 1.5, y1: Math.max(q.y, a[i + 1].y) });
   });
+  // chained routes (#6740): an arrow from the draft's dot to the chain's, stopping short of both dots; names keep off it
+  const arrows = pts.filter(p => p.chain && !cut.has(p)).flatMap(p => {
+    const d = pts.find(x => x.engine === p.chain!.draft);
+    if (!d || cut.has(d)) return [];
+    const a = at(d), b = at(p), len = Math.hypot(b.x - a.x, b.y - a.y);
+    if (len < 2 * r + 6) return [];
+    const ux = (b.x - a.x) / len, uy = (b.y - a.y) / len, s0 = r + 2, s1 = r + 2;
+    const x0 = rd(a.x + ux * s0), y0 = rd(a.y + uy * s0), x1 = rd(b.x - ux * s1), y1 = rd(b.y - uy * s1);
+    const h = Math.max(4, r * 1.3), w = h * 0.55;
+    const head = `M${x1} ${y1} L${rd(x1 - ux * h - uy * w)} ${rd(y1 - uy * h + ux * w)} L${rd(x1 - ux * h + uy * w)} ${rd(y1 - uy * h - ux * w)} Z`;
+    for (let k = 1; k < 10; k++) { const bx = x0 + ((x1 - x0) * k) / 10, by = y0 + ((y1 - y0) * k) / 10; lines.push({ x0: bx - 1.5, y0: by - 1.5, x1: bx + 1.5, y1: by + 1.5 }); }
+    return [{ p, line: [x0, y0, x1, y1], head }];
+  });
   const names: Box[] = [];
   const bounds: Box = { x0: X0 + 2, y0: head + 2, x1: W, y1: Y1 - 1 };   // never over the y tick labels or the header
   const inside = (b: Box) => b.x0 >= bounds.x0 && b.x1 <= bounds.x1 && b.y0 >= bounds.y0 && b.y1 <= bounds.y1;
@@ -484,11 +526,11 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, plo
     const sub = isSub(p) && axis === 'price';
     const text = mini ? [p.label]
       : [`${p.label}${sub ? ' †' : ''}${cut.has(p) ? ` ${m.fmtY(p.y)}` : ''}`, ...(sub ? [BILLED_NOTHING] : [])];
-    let s = place(p, text);
-    // a long name may take two lines: "Gemini 3.1 Pro" over "(thinking 128)"
-    const cut2 = text[0].indexOf(' (');
+    let s = mini && p.chain ? null : place(p, text);
+    // a long name may take two lines: "Gemini 3.1 Pro" over "(thinking 128)"; a chain's draft over "→ its corrector"
+    const cut2 = p.chain ? text[0].indexOf(' →') : text[0].indexOf(' (');
     const wrapped = cut2 > 0 ? [text[0].slice(0, cut2), text[0].slice(cut2 + 1), ...text.slice(1)] : null;
-    if (!s && wrapped && !mini) { s = place(p, wrapped); if (s) { labels.push({ p, lines: wrapped, ...s }); continue; } }
+    if (!s && wrapped && (!mini || p.chain)) { s = place(p, wrapped); if (s) { labels.push({ p, lines: wrapped, ...s }); continue; } }
     if (s) { labels.push({ p, lines: text, ...s }); continue; }
     if (mini) continue;
     const n = keyed.length + 1;
@@ -528,9 +570,15 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, plo
         const q = at(p), ci = p.y_ci95;
         return ci && !cut.has(p) && <line key={`ci-${p.engine}`} x1={q.x} x2={q.x} y1={sy(ci[0])} y2={sy(ci[1])} stroke={color(p)} strokeWidth={1.25} opacity={0.45} />;
       })}
+      {arrows.map(({ p, line, head }) => (
+        <g key={`arrow-${p.engine}`} stroke={MUTED} fill={MUTED} opacity={0.8}>
+          <line x1={line[0]} y1={line[1]} x2={line[2]} y2={line[3]} strokeWidth={1.25} />
+          <path d={head} strokeWidth={0.5} />
+        </g>
+      ))}
       {drawOrder.map(p => {
         const q = at(p), c = color(p), st = stateOf(p), filled = st !== 'not_available', ci = p.y_ci95;
-        const tip = `${p.label}: ${m.fmtY(p.y)}${ci ? ` (95% interval ${m.fmtY(ci[0])} to ${m.fmtY(ci[1])})` : ''}; ${axis === 'price' ? priceText(p) : secsText(p)}; ${stateText(p)}`;
+        const tip = `${p.label}: ${m.fmtY(p.y)}${ci ? ` (95% interval ${m.fmtY(ci[0])} to ${m.fmtY(ci[1])})` : ''}; ${axis === 'price' ? priceText(p) : secsText(p)}; ${stateText(p)}${p.chain ? `; ${chainText(p.chain)}` : ''}`;
         return (
           <g key={p.engine} data-engine={p.engine} data-state={st}>
             <title>{tip}</title>
@@ -774,7 +822,7 @@ function ExportSvg({ chart, panel, m }: { chart: Chart; panel: Panel; m: Measure
   const keyLine = plot.keyed.map(([n, p]) => `${n} ${p.label}`).join(' · ');
   y = plotY + plot.H + f * 1.2;
   const notes = [
-    'Filled: we can run it today. Hollow: not runnable today. Ringed: the engine in use. Solid line: frontier of what we can run; grey: of everything measured. †: run on a subscription, $0 billed, placed at the API price.',
+    `Filled: we can run it today. Hollow: not runnable today. Ringed: the engine in use. Solid line: frontier of what we can run; grey: of everything measured. †: run on a subscription, $0 billed, placed at the API price.${panel.points.some(p => p.chain) ? ` Arrow: ${CORRECTION}` : ''}`,
     ...(keyLine ? [keyLine] : []),
   ].flatMap(t => wrap(t, chars + 10));
   const noteEls = notes.map((t, i) => <text key={i} x={pad} y={y + i * f * 1.2} fontSize={f * 0.8} fill={MUTED}>{t}</text>);
@@ -843,7 +891,10 @@ function Table({ panel, m }: { panel: Panel; m: Measure }) {
       <tbody>
         {panel.points.map(p => (
           <tr key={p.engine} className="border-b border-stone-100 align-top">
-            <td className="py-1 pr-2" style={{ color: p.production ? PRODUCTION : undefined }}>{p.label}</td>
+            <td className="py-1 pr-2" style={{ color: p.production ? PRODUCTION : undefined }}>
+              {p.label}
+              {p.chain && <span className="block text-stone-600">made {p.chain.worse} of {p.chain.n} pages worse, {p.chain.better} better</span>}
+            </td>
             <td className="py-1 pr-2 text-right text-stone-800">{m.fmtY(p.y)}</td>
             {p.extra.map((c, k) => <td key={k} className="py-1 pr-2 text-right text-stone-700">{c ?? '–'}</td>)}
             <td className="py-1 pr-2 text-right"><VsCell p={p} m={m} decide={panel.grade.level === 'decide'} /></td>
@@ -853,7 +904,9 @@ function Table({ panel, m }: { panel: Panel; m: Measure }) {
             <td className="py-1 text-right">
               {p.cost ? (
                 <a href={`${GH}${p.cost.source}`} title={p.cost.detail} className="text-stone-800 hover:text-amber-800">
-                  {isSub(p) ? <>{BILLED_NOTHING} <span className="text-stone-600 whitespace-nowrap">({usd(p.cost.usd_per_1k)} at the API price, for comparison)</span></> : usd(p.cost.usd_per_1k)}
+                  {isSub(p) ? <>{BILLED_NOTHING} <span className="text-stone-600 whitespace-nowrap">({usd(p.cost.usd_per_1k)} at the API price, for comparison)</span></>
+                    : p.chain ? <>{usd(p.cost.billed_usd_per_1k ?? 0)} billed <span className="text-stone-600 whitespace-nowrap">({usd(p.cost.usd_per_1k)} with the correction at the API price)</span></>
+                    : usd(p.cost.usd_per_1k)}
                 </a>
               ) : <span className="text-stone-600" title={p.no_price ?? undefined}>{isSub(p) ? BILLED_NOTHING : 'no price'}</span>}
             </td>
@@ -1021,6 +1074,7 @@ export function ChartLegend({ m, short = false }: { m?: Measure; short?: boolean
   const line = (c: string, w: number) => <svg width="18" height="10" aria-hidden="true"><path d="M1 8 H8 V2 H17" fill="none" stroke={c} strokeWidth={w} /></svg>;
   const charts = m ? m.charts : [...OCR.charts, ...TRANSLATION.charts];
   const lane = charts.some(c => c.panels[0].points.some(p => p.production && p.roster?.in_use_route));
+  const chains = charts.some(c => c.panels.some(x => x.points.some(p => p.chain)));
   return (
     <div className="text-sm text-stone-600 space-y-1">
       <p className="flex flex-wrap gap-x-4 gap-y-1">
@@ -1032,6 +1086,12 @@ export function ChartLegend({ m, short = false }: { m?: Measure; short?: boolean
         <span className={item}>{line(FAINT, 1.25)}frontier of everything measured</span>
       </p>
       {!short && <p>† On the price view, an engine run on a subscription is $0 billed; it is placed at the API price for the same requests, for comparison.</p>}
+      {chains && (
+        <p className="flex flex-wrap gap-x-1 items-center">
+          <span className={item}><svg width="22" height="10" aria-hidden="true"><g stroke={MUTED} fill={MUTED}><line x1="1" y1="5" x2="15" y2="5" strokeWidth="1.25" /><path d="M21 5 L15 2 L15 8 Z" strokeWidth="0.5" /></g></svg>correction:</span>
+          <span>{CORRECTION}{!short && ` ${NO_LITE_CORRECTOR}`}</span>
+        </p>
+      )}
       {lane && <p>{ROSTER.production_lane_note}</p>}
     </div>
   );

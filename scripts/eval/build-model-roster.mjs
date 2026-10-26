@@ -36,6 +36,7 @@ for (const [stage, f] of [['ocr', 'ocr-pareto.json'], ['translation', 'translati
   const d = JSON.parse(fs.readFileSync(path.join(REPO, 'src', 'data', f), 'utf8'));
   for (const c of d.charts) for (const p of c.panels) for (const x of [...p.placed, ...p.no_cost]) {
     const id = x.engine.split('|')[0];   // "<engine>|kraken" is the same engine on another input
+    if (id.includes('>')) continue;   // a chained route (#6740) is two engines, each with its own row
     const label = x.label.replace(/ on the (Kraken text|typed e-text)$/, '');
     if (!engines.has(id)) engines.set(id, { label, stages: new Set() });
     engines.get(id).stages.add(stage);

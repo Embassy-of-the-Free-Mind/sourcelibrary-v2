@@ -25,6 +25,11 @@
  *              An engine with no per-page meter is "not measured", never estimated (#6776)
  *   hard hands #6731's Greek-manuscript and Rashi-type panels (results/hard-hands-6731/scored-*.json), graded by the
  *              same rules (#6776)
+ *   chains     #6740's chained routes (draft engine → corrector), re-run on each panel's own pages from the panel's read
+ *              by the draft engine and scored by the same scorer (ocr-pareto-chains-6740/results/scored-chains.json).
+ *              A chain is a point like any engine, placed at its draft's price plus its corrector's, and joins only a
+ *              panel that holds its draft and every page of which it read; `chain` names the draft (for the arrow) and
+ *              counts the pages the correction made worse or better than the draft, by more than the 1-point margin
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
@@ -63,6 +68,7 @@ import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, grad
 import { canRunToday } from './lib/model-availability.mjs';
 import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
 import { extractTranscription } from '../lib/cli-chatter.mjs';
+import { MODEL_PRICING, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -390,6 +396,60 @@ const memoAcc = Object.values(memo.reduce((m, r) => {
 const pctRange = xs => `${Math.round(Math.min(...xs) * 100)}% to ${Math.round(Math.max(...xs) * 100)}%`;
 const prodModels = src => Object.entries(hardProd[src]).sort((a, b) => b[1] - a[1]);
 
+// ── chained routes (#6740): a draft engine's read, corrected against the image by another model ─────────────────
+// The rows were scored by run-chains.mjs with this file's scorer (benchmark-score.mjs, then the #6523 extractor) on the
+// panels' own pages, and its control re-scored every draft to the CER its dot here is drawn from. A CONTAIN answer (the
+// corrector said the draft is not this leaf's text, or the leaf cannot be read) is counted as not read, kind refusal.
+const CHAIN_DIR = path.join(__dirname, 'ocr-pareto-chains-6740', 'results');
+const CHAIN_FILE = path.join(CHAIN_DIR, 'scored-chains.json');
+const CHAIN_DATE = '2026-10-26';   // scripts/eval/experiments/2026-10-26-ocr-pareto-chained-routes-6740.md
+const CORRECTOR = {
+  'claude-opus-5-5+claude-cli': { label: 'Claude Opus 5.5', model: 'claude-opus-5-5' },
+  'gemini-3.8-flash+antigravity-cli': { label: 'Gemini 3.8 Flash', model: 'gemini-3.8-flash' },
+};
+const isChain = e => e.includes('>');
+const chainParts = e => { const [draft, corrector] = e.split('>'); return { draft, corrector }; };
+const chainRows = fs.existsSync(CHAIN_FILE) ? JSON.parse(fs.readFileSync(CHAIN_FILE, 'utf8')).rows.map(r => ({
+  page: r.page, stratum: stratumOf(r.page), engine: r.engine, cer: r.failure ? null : r.unplaced ? 1 : r.cer, failure: r.failure ?? null, failure_why: r.failure_why ?? null,
+  unplaced: !r.failure && !!r.unplaced, invented: null, date: CHAIN_DATE, file: path.relative(REPO, CHAIN_FILE),
+})) : [];
+// The corrector's price per page on a chart: the API price of the tokens its CLI reported for these pages (Opus: the
+// list cost `claude -p` reports, realtime; agy: its input, output and thinking tokens at the model's Batch price), the
+// basis every other command-line point on these charts is placed on. An upper bound: both counts include the CLI's own
+// instructions. $0 is billed; what a page draws on the subscription is in `quota`.
+const CHAIN_METER = new Map();   // page|engine → meter row
+if (fs.existsSync(CHAIN_DIR)) for (const f of fs.readdirSync(CHAIN_DIR).filter(f => /^meter-.*\.jsonl$/.test(f))) {
+  for (const line of fs.readFileSync(path.join(CHAIN_DIR, f), 'utf8').split('\n').filter(Boolean)) { const o = JSON.parse(line); CHAIN_METER.set(`${o.stratum}|${o.slug}|${o.engine}`, o); }
+}
+const CHAIN_QUOTA = {
+  'claude-opus-5-5+claude-cli': 'about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot\'s meter, an upper bound; 0.004 at ten pages a call, #5924)',
+  'gemini-3.8-flash+antigravity-cli': `about ${(4.3632e-6 * 1e6).toFixed(1)} millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json)`,
+};
+function correctorUsd(engine, pages) {
+  const { corrector } = chainParts(engine);
+  const ms = pages.map(p => CHAIN_METER.get(`${p}|${engine}`)).filter(m => m && m.outcome !== 'no-draft');
+  if (!ms.length) return null;
+  const P = MODEL_PRICING[CORRECTOR[corrector].model];
+  const usd = ms.map(m => (corrector.startsWith('claude')
+    ? m.list_cost_usd ?? null
+    : m.usage ? ((m.usage.input_tokens || 0) * P.input + ((m.usage.output_tokens || 0) + (m.usage.thinking_tokens || 0)) * P.output) * BATCH_MULTIPLIER / 1e6 : null)).filter(x => x != null);
+  return usd.length ? { usd_per_1k: mean(usd) * 1000, n: usd.length } : null;
+}
+function chainCost(engine, chartId, pages) {
+  const { draft, corrector } = chainParts(engine);
+  const d = costOf(draft, chartId), c = correctorUsd(engine, pages);
+  if (!d || !c) return null;
+  return {
+    usd_per_1k: r3(d.usd_per_1k + c.usd_per_1k), basis: 'chain', billed_usd_per_1k: r3(d.basis === 'billed' ? d.usd_per_1k : 0),
+    detail: `the draft, ${LABEL[draft] || draft}, at ${d.basis === 'billed' ? 'its billed price' : 'its API price, $0 billed'} ($${r3(d.usd_per_1k)}), plus the correction by ${CORRECTOR[corrector].label} through its command-line tool at the API price of the tokens it reported ($${r3(c.usd_per_1k)}, the mean of ${c.n} pages; $0 billed; ${CHAIN_QUOTA[corrector]})`,
+    source: path.relative(REPO, CHAIN_DIR),
+  };
+}
+/** The chains that join a panel: their draft is in it and they have a row (a failure counts) for every page. */
+function chainsFor(engines, pages, byChain) {
+  return [...byChain.keys()].filter(e => engines.includes(chainParts(e).draft) && [...pages].every(p => byChain.get(e).has(p))).sort();
+}
+
 // #6293's CLI arms: a chart keeps one only if it read every page of the chart's frozen set (minus the #6304 drops);
 // placed at the API's Batch price for the same requests (cli-cost*.json), basis 'quota'.
 const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.json');
@@ -438,7 +498,7 @@ function greedy(byEngine, start, floor, within) {
   for (;;) {
     let best = null;
     for (const e of [...byEngine.keys()].sort()) {
-      if (set.includes(e)) continue;
+      if (set.includes(e) || isChain(e)) continue;
       const s = intersect(shared, ran(byEngine, e));
       if (s.size >= floor && (!best || s.size > best.s.size)) best = { e, s };
     }
@@ -454,6 +514,7 @@ function secsOf(engine, pages) {
 }
 
 const numPts = d => `${d >= 0 ? '+' : '−'}${Math.abs(d * 100).toFixed(1)}`;
+const labelOf = e => (isChain(e) ? `${LABEL[chainParts(e).draft] || chainParts(e).draft} → ${CORRECTOR[chainParts(e).corrector]?.label || chainParts(e).corrector}` : LABEL[e] || e);
 
 /** One panel: every engine on the same pages, its own interval, its paired difference against the engine in use. */
 function panel(script, kind, byEngine, engines, pages, production, repeat, extra = {}) {
@@ -492,7 +553,7 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     const k = ps.length - rs.length;
     const inv = rs.filter(r => typeof r.invented === 'number').map(r => r.invented);
     const pt = {
-      engine: e, label: LABEL[e] || e, production: e === production,
+      engine: e, label: labelOf(e), production: e === production,
       mean_cer: r3(mn), accuracy: r3(1 - mn), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
       // over the pages it read
       fail_share: r3(rs.filter(r => r.cer > 0.5).length / rs.length),
@@ -502,11 +563,18 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
       ...(k / ps.length > PARTLY_MEASURED ? { partly_measured: `did not read ${k} of ${ps.length} pages (${Object.entries(kinds).map(([x, n]) => `${KIND_WORDS[x]} ${n}`).join(', ')}); its accuracy rests on the ${rs.length} it read` } : {}),
       // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
       words_not_in_ref: inv.length >= Math.max(MIN_PAGES, rs.length / 2) ? r3(median(inv)) : null,
-      cost: costOf(e, script.id),
-      route: routeOf(e, script.id),
+      cost: isChain(e) ? chainCost(e, script.id, ps) : costOf(e, script.id),
+      route: isChain(e) ? 'subscription' : routeOf(e, script.id),
       // median seconds a page from the arm's own meter, on this panel's pages (failed reads too: the time was spent)
       secs_per_page: secsOf(e, ps),
     };
+    if (isChain(e)) {
+      // what the correction did to each page against its own draft: made worse or better by more than the margin
+      const { draft, corrector } = chainParts(e);
+      const both = ps.map(p => [byEngine.get(draft).get(p), byEngine.get(e).get(p)]).filter(([d, c]) => !d.failure && !c.failure);
+      pt.chain = { draft, corrector, n: both.length, worse: both.filter(([d, c]) => c.cer - d.cer > MARGIN.ocr).length, better: both.filter(([d, c]) => d.cer - c.cer > MARGIN.ocr).length,
+        unchanged_answers: ps.filter(p => /^unchanged$/.test(CHAIN_METER.get(`${p}|${e}`)?.outcome || '')).length };
+    }
     if (!pt.cost) pt.no_price = NO_PRICE[e] || (e === STORED ? 'the stored reads come from more than one model, so no one price applies'
       : isCli(e) ? 'run through a command-line tool on the subscription, $0 billed; no API price computed for these pages'
         : OWN_SERVER(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
@@ -577,6 +645,9 @@ for (const script of SCRIPTS) {
   const rows = script.source && script.source !== 'syriac' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
   chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, failure: r.failure, failure_why: r.failure_why }));
   const byEngine = pagesOf(rows);
+  // the chains whose draft engine read this chart's pages; never picked by greedy(), added to a panel by chainsFor()
+  const byChain = pagesOf(chainRows.filter(r => byEngine.get(chainParts(r.engine).draft)?.has(r.page) && !EXCLUDE.has(r.page)));
+  const withChains = (engines, pages) => { const cs = chainsFor(engines, pages, byChain); for (const c of cs) byEngine.set(c, byChain.get(c)); return [...engines, ...cs]; };
   const production = script.production || LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
@@ -603,13 +674,13 @@ for (const script of SCRIPTS) {
   const panels = [];
   fam.forEach((x, i) => {
     const heading = FAMILY_HEADING[x.f] || x.f;
-    const pn = panel(script, i === 0 ? 'primary' : `family-${x.f.replace('|', '-')}`, byEngine, x.wide.engines, x.wide.pages, production, repeat, { role: i === 0 ? 'primary' : 'secondary', heading: i === 0 ? null : heading });
+    const pn = panel(script, i === 0 ? 'primary' : `family-${x.f.replace('|', '-')}`, byEngine, withChains(x.wide.engines, x.wide.pages), x.wide.pages, production, repeat, { role: i === 0 ? 'primary' : 'secondary', heading: i === 0 ? null : heading });
     panels.push(pn);
     if (i === 0) primarySets[script.id] = { engines: x.wide.engines, pages: [...x.wide.pages].sort() };
     // a second view: more engines on fewer pages of the same family, when it still has enough works
     const broad = greedy(byEngine, production, MIN_PAGES, x.ps);
     if (broad.engines.length > x.wide.engines.length) {
-      const pb = panel(script, `${i === 0 ? 'primary' : x.f.replace('|', '-')}-more-engines`, byEngine, broad.engines, broad.pages, production, repeat, { role: 'secondary', heading: `${heading}: more engines, fewer pages` });
+      const pb = panel(script, `${i === 0 ? 'primary' : x.f.replace('|', '-')}-more-engines`, byEngine, withChains(broad.engines, broad.pages), broad.pages, production, repeat, { role: 'secondary', heading: `${heading}: more engines, fewer pages` });
       if (pb.n_works >= MIN_WORKS_EXTRA) panels.push(pb);
     }
   });
@@ -620,7 +691,8 @@ for (const script of SCRIPTS) {
     const bySub = pagesOf(subRows), inSub = new Set(sub.pages);
     let ps = new Set(primarySets[script.id].pages.filter(p => inSub.has(p)));
     for (const e of sub.engines) ps = intersect(ps, ran(bySub, e));
-    if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines], ps, production, repeat,
+    for (const c of chainsFor(primarySets[script.id].engines, ps, byChain)) bySub.set(c, byChain.get(c));
+    if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines, ...chainsFor(primarySets[script.id].engines, ps, byChain)], ps, production, repeat,
       { role: 'secondary', heading: `${ps.size} pages drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')}` }));
   }
   charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, stored_now: STORED_NOW.get(script.id) || null, panels });
