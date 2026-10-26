@@ -25,6 +25,7 @@ import { initialPagesState, materializePages } from '../../lib/lazy-pages.mjs';
 import { HOLD_STATUS, HOLD_EVENT } from '../../lib/pipeline-hold.mjs';
 import { yearFromPublished } from '../../lib/catalogue-year.mjs';
 import { getCanvases, extractCanvasImage } from './manifest-store.mjs';
+import { languageCode, languageName } from '../../lib/language-normalize.mjs';
 
 export const IMPORTER = 'script:iiif-discovery/import-wave';
 
@@ -42,6 +43,27 @@ export function isHijriSuspect(language, dateText) {
   if (!HIJRI_LANGS.has(language)) return false;
   const years = String(dateText || '').match(/\d{3,4}/g) || [];
   return years.length < 2;
+}
+
+/**
+ * The Vatican catalogue names languages in Italian, and the tier survey passes an
+ * unrecognised name through as it is ("Greco", "Spagnolo"). Map those, and the
+ * catalogue phrases that mean "no language", before the name reaches `language`.
+ */
+const CATALOGUE_NAMES = {
+  greco: 'Greek', spagnolo: 'Spanish', francese: 'French', 'francese medio': 'Middle French',
+  cinese: 'Chinese', portoghese: 'Portuguese', inglese: 'English', catalano: 'Catalan',
+  svedese: 'Swedish', ebraico: 'Hebrew', coreano: 'Korean', tedesco: 'German', latino: 'Latin',
+  arabo: 'Arabic', armeno: 'Armenian', siriaco: 'Syriac', copto: 'Coptic', etiopico: 'Ge\'ez',
+  'sans contenu linguistique': 'Unknown', 'not applicable': 'Unknown', 'no linguistic content': 'Unknown',
+};
+export function canonicalLanguage(raw) {
+  const s = String(raw ?? '').trim();
+  if (!s) return 'Unknown';
+  const mapped = CATALOGUE_NAMES[s.toLowerCase()];
+  if (mapped) return mapped;
+  const code = languageCode(s);
+  return (code && languageName(code)) || s;
 }
 
 /** The candidate's stable key, as the tier survey writes it (`id`). */
@@ -86,7 +108,7 @@ export function buildWaveBook(c, manifest, o) {
   return {
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
-    language: language && language !== 'Unknown' ? language : 'Unknown',
+    language: canonicalLanguage(language),
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
     thumbnail: first.thumbnail || first.photo || '',
     // makeBookDoc() declares the other five counters from this one.

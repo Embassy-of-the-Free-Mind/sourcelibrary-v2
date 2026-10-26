@@ -9,7 +9,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { ObjectId, type Db } from 'mongodb';
 import { getTestDb, cleanDb } from '../setup';
 import {
-  importCandidate, isHijriSuspect, HostParker, spreadSample, licenseOf,
+  importCandidate, isHijriSuspect, HostParker, spreadSample, licenseOf, canonicalLanguage,
 } from '../../scripts/iiif-discovery/lib/wave-import.mjs';
 import { materializePages, pageIdFor, PAGES_MATERIALIZED_FILTER } from '../../scripts/lib/lazy-pages.mjs';
 import { recountBook } from '../../scripts/lib/page-counts.mjs';
@@ -151,6 +151,15 @@ describe('wave-import helpers', () => {
     ];
     const s = spreadSample(rows, 4);
     expect(s.map(r => r.source).sort()).toEqual(['bsb', 'bsb', 'ia', 'sbb']);
+  });
+
+  it('canonicalLanguage maps catalogue names in Italian and "no language" phrases; keeps the rest', () => {
+    expect(canonicalLanguage('Greco')).toBe('Greek');
+    expect(canonicalLanguage('Italiano')).toBe('Italian');
+    expect(canonicalLanguage('Sans contenu linguistique')).toBe('Unknown');
+    expect(canonicalLanguage('Latin')).toBe('Latin');
+    expect(canonicalLanguage('')).toBe('Unknown');
+    expect(canonicalLanguage('Old Norse')).toBe('Old Norse');
   });
 
   it('licenseOf reads v2 license and v3 rights', () => {
