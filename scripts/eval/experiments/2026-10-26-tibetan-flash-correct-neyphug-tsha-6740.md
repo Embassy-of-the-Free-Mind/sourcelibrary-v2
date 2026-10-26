@@ -60,6 +60,30 @@ The bar was at most 2 worse and controls at least 90%. Both fail, so nothing was
 | with a parallel (draft ≥ 0.85), 907 | 0.9466 | 0.9520 | +0.0054 [0.0045, 0.0062] | 486 / 147 / 274 |
 | all placed, 960 | 0.9373 | 0.9434 | +0.0061 [0.0053, 0.0071] | 529 / 155 / 276 |
 
+**The 10 worse pages by defect** (judge B's worse spans; none is a ya-btags change, because there were 0 hits; none is
+a seam, because the leaves are split):
+
+| defect | pages |
+|---|---|
+| letter misread (a real error) | 345 ཁྲག→ཕྲག · 510 བཞི→གཞི · 805 བླ→སློབ · 709 ཅི→ཉིད |
+| particle dropped or added | 632 ལ→∅ · 663 ∅→ལ |
+| garbage: Latin letters inside a syllable | 751 སྤྱོད→`spy`ོད |
+| orthographic normalisation | 378 ལྕུགམ→ལྕུག་མ (tsheg) · 510 ༌→་ ×2 · 792 དྲང→དྲངས · 991 བསྲེགྶ→བསྲེགས |
+| mantra | none among the worse spans |
+
+**By eye (leaf images opened, full-resolution crops).** These four leaves show what the correction does when it is
+right. They are NOT written: the gate failed. Before/after are from the read files.
+- **p.128**: the draft has 8 lines and one sentence three times (ཁུ་ཚུར་སོ་སོར་བཅངས་ཏེ…). The leaf has 7 lines and the
+  sentence twice. Yigdzin had repeated a line that is not on the leaf; Flash removed it (Derge identity 0.794→0.920).
+- **p.990**, line 3: draft ཇི་ལྟར་བཅོལ་ལྡན་འདས་དེ་བཞིན་གཤེས་པ. The leaf reads བཅོམ་ལྡན་འདས་དེ་བཞིན་གཤེགས་པ, as Flash has it.
+  Also ལྔན→ལྡན and ཁམསམངོན→ཁམས་མངོན (0.890→0.975).
+- **p.389** (a list of nāga kings): the draft's ཆེནཔོ / ཆེན:པོ / ཆེན(པོ) / ཆེནབོ become ཆེན་པོ throughout. The leaf
+  has a clean tsheg, and ཧུ་ལ→ཧུ་ལུ matches it too (0.882→0.969).
+- **p.955**, line 5: the draft drops ལྡན་འདས་དང་བྱང་ཆུབ་སེམས (སངས་རྒྱས་བཅོམ་དཔའ). The leaf has the full phrase, and Flash
+  restores it. But the leaf writes a single shad (གསོལ། སངས) where Flash wrote ། ། throughout. That is the
+  normalisation the span gate counts against it.
+- p.812 is the judge-error page above: the leaf matches its text.
+
 **Reading.** The whole-page and span-level instruments agree on direction and disagree on the decision, as the router
 write-up predicted. Most leaves get better, and the median page gains. But a written page carries about one changed span
 in five that the leaf contradicts, and the apply gate counts any page with more of those than of fixes as a regression.
