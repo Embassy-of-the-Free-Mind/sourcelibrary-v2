@@ -5,7 +5,8 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { languageCode, toBcp47 } from '@/lib/language-normalize';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -249,6 +250,9 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // produced, so an English-original page has nothing to give it either.
     if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
       const hasOriginal = !!page.ocr?.data;
+      // The way back in for a transcribed foreign page (#7458): ask for it in its
+      // own language. Named here because the caller cannot guess the code.
+      const originalLang = hasOriginal ? toBcp47(languageCode(book.language)) : null;
       return NextResponse.json({
         // Two different facts, and they need different sentences: an
         // untranscribed leaf holds no text at all, while "no translation" now
@@ -261,6 +265,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         // Lets the caller fall back to the original language instead of reading
         // this as "the page is missing" (see src/lib/mcp-errors.ts).
         has_original: hasOriginal,
+        ...(originalLang && originalLang !== 'en' && includeOriginal
+          ? {
+              original_lang: originalLang,
+              hint: `Retry with lang=${originalLang} to quote this page's transcription in its own language.`,
+            }
+          : {}),
       }, { status: 404 });
     }
 
@@ -271,7 +281,11 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // The citation links follow the edition actually served, never the one
     // asked for — a `/es` URL for a book we fell back on would 307 straight
     // back to English.
-    const citation = generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang, page.printed_page);
+    // A transcription served in its own language is read in the ordinary reader,
+    // not under a `/de` locale (which does not exist and 307s), and carries no
+    // "trans. Source Library" credit: the words are the leaf's (#7458).
+    const servesTranscription = quotable.source === 'ocr_original';
+    const citation = generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, servesTranscription ? undefined : quotable.lang, page.printed_page, { transcription: servesTranscription });
 
     // Build response
     const response: QuoteResponse = {
@@ -292,7 +306,9 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         ...(requestedLang !== quotable.lang
           ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
           : {}),
-        ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
+        ...(quotable.source === 'ocr_original'
+          ? { transcription_note: quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE }
+          : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
         // Checked on the served text AND the OCR original: a translation often
         // renders the note without the mark-up, so the transcription is the

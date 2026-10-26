@@ -81,6 +81,11 @@ export function generateCitations(
   lang?: string,
   /** The leaf's printed page, when one was fitted (#4291). See pageLocator. */
   printedPage?: PrintedPage | null,
+  /**
+   * `transcription`: the text being cited is the leaf's own transcription, not
+   * a translation, so no rendering credit is ours to claim (#7458).
+   */
+  { transcription = false }: { transcription?: boolean } = {},
 ): Citation {
   // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
   // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
@@ -146,7 +151,7 @@ export function generateCitations(
    * never claim a named translator's work.
    */
   const isEnglishOriginal = (book.language || '').trim().toLowerCase().startsWith('english');
-  const renderingCredit = isEnglishOriginal
+  const renderingCredit = isEnglishOriginal || transcription
     ? null
     : { short: `trans. Source Library ${translationYear}`, long: `Translated by Source Library. ${translationYear}.` };
 

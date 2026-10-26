@@ -16,10 +16,14 @@
  * who wrote the words (the same reason `translation_note` exists for translated
  * editions, `.claude/docs/invariants/quote-and-snippet-integrity.md`).
  *
- * A FOREIGN page with no translation still returns null here. Serving Latin
- * under a field a caller reaches for when it wants quotable English is how a
- * translator's words get attributed to an author; those callers keep the
- * `no_translation` answer, which tells them to read `get_book_text` instead.
+ * A FOREIGN page with no translation still returns null here when English was
+ * asked for. Serving Latin under a field a caller reaches for when it wants
+ * quotable English is how a translator's words get attributed to an author;
+ * those callers keep the `no_translation` answer. But a caller that asks for
+ * the page IN ITS OWN LANGUAGE (`lang=de` on a German leaf) is asking for the
+ * transcription, and gets it (#7458): search serves those pages as `ocr`
+ * snippets and tells the caller to check them with get_quote, which then
+ * refused every untranslated page of Simmel and du Bois-Reymond.
  */
 import type { Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -27,6 +31,8 @@ import { markForExport } from '@/lib/provenance';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import { getTranslation } from '@/lib/page-translations';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { declaredPageLanguage } from '@/lib/english-page-language';
+import { sameLanguage } from '@/lib/language-normalize';
 
 export type QuoteTextSource = 'translation' | 'ocr_original' | 'source_column';
 
@@ -56,6 +62,39 @@ export const OCR_ORIGINAL_NOTE =
   + 'language exactly as printed. Quote it as the source\'s own words and never describe it as a '
   + 'translation. Where the exact wording carries weight, check it against the leaf with '
   + 'include_image.';
+
+/**
+ * The same, for a leaf transcribed in its own non-English language and served
+ * because the caller asked for that language (#7458). There is no translation
+ * of this page; nothing here is ours but the transcription.
+ */
+export const ORIGINAL_LANGUAGE_NOTE =
+  'This page has no translation yet. You asked for it in its own language, so the quotable text is the '
+  + 'transcription of the leaf, served as `original` (text_source: "ocr_original"): an AI transcription '
+  + 'of the scan, uncorrected, preserving period spelling, abbreviations and printer marks. Quote it as '
+  + 'the source\'s own words in the original language. Any English rendering of it is yours, not the '
+  + 'library\'s: do not put one in quotation marks as if it were. Where the exact wording carries '
+  + 'weight, check it against the leaf with include_image.';
+
+/**
+ * Is this leaf in `lang`? The page's own `<language>` declaration decides when
+ * there is one (a German volume can hold Latin leaves); the book's edition
+ * language only when the page declared nothing. Errs toward false: without
+ * the book and without a declaration there is no claim to serve under.
+ */
+export function pageIsInLanguage(
+  ocrData: string | null | undefined,
+  lang: string,
+  book?: { language?: unknown } | null,
+): boolean {
+  const declared = declaredPageLanguage(ocrData);
+  if (declared) {
+    return declared.split(/[,;/]|\band\b/).map((p) => p.trim()).filter(Boolean)
+      .some((p) => sameLanguage(p, lang));
+  }
+  const bookLanguage = typeof book?.language === 'string' ? book.language : null;
+  return !!bookLanguage && sameLanguage(bookLanguage, lang);
+}
 
 /**
  * What a caller has to be told when the localized text is the leaf's OWN column
@@ -148,6 +187,14 @@ export function resolveQuoteText(
       const source: QuoteTextSource =
         localized?.source === SOURCE_COLUMN_PROVENANCE ? 'source_column' : 'translation';
       return { text: stamp(cleaned), source, lang };
+    }
+    // The leaf's own words, asked for in their own language (#7458). Before the
+    // English fallback: a reader who asked for the German page of a German book
+    // wants Simmel, not our rendering of him.
+    const ownRaw = page.ocr?.data || '';
+    const own = ownRaw ? stripEditorialWrappers(ownRaw).trim() : '';
+    if (own && pageIsInLanguage(ownRaw, lang, book as { language?: unknown } | null | undefined)) {
+      return { text: own, source: 'ocr_original', lang };
     }
   }
 
