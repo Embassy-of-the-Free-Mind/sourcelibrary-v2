@@ -61,8 +61,10 @@ const ADDRESS_LIMIT = 1500;
 const AGENT_LIMIT = 2000;
 
 // Mirrors the Cloudflare skip rule "Allow social-card scrapers + verified
-// search crawlers" plus the uptime monitor: traffic we invite.
-const INVITED = /Googlebot|Google-InspectionTool|bingbot|Applebot|DuckDuckBot|YandexBot|Claude-SearchBot|Claude-User|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot|Discordbot|UptimeRobot/i;
+// search crawlers" plus the uptime monitor: traffic we invite. Sogou added
+// 2026-10-26: its 2026-10-25 crawl (~9K book pages/h from AS4837, AS134756,
+// AS56046) reverse-resolved to *.crawl.sogou.com and forward-confirmed.
+const INVITED = /Googlebot|Sogou web spider|Google-InspectionTool|bingbot|Applebot|DuckDuckBot|YandexBot|Claude-SearchBot|Claude-User|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot|Discordbot|UptimeRobot/i;
 // Edge actions that mean the request did NOT reach the site.
 const STOPPED = new Set(['block', 'managed_challenge', 'challenge', 'jschallenge', 'connection_close']);
 
