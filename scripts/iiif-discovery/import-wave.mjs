@@ -32,7 +32,9 @@
  *   --limit=N               at most N rows this run
  *   --min-canvases=N        skip manifests with fewer canvases (default 5)
  *   --host-rps=N            per-host request cap (default 1; lower-only against DOMAIN_LIMITS)
- *   --ia-concurrency=N      parallel manifest fetches for archive.org hosts (default 4; others 1)
+ *   --ia-concurrency=N      parallel manifest fetches for archive.org hosts (default 4)
+ *   --host-concurrency=N    parallel manifest fetches for every other host (default 1). The
+ *                           per-host rate cap still holds; this only helps a host that answers slowly.
  *   --park-after=N          park a host after N identical 401/403 in a row (default 2)
  *   --checkpoint=<file>     one JSON line per row; rows already in it are not retried
  *                           (except errors, and fetch_failed on a host that was parked)
@@ -63,6 +65,7 @@ const LIMIT = parseInt(args.limit, 10) || Infinity;
 const MIN_CANVASES = args['min-canvases'] ? parseInt(args['min-canvases'], 10) : 5;
 const HOST_RPS = parseFloat(args['host-rps']) || 1;
 const IA_CONC = parseInt(args['ia-concurrency'], 10) || 4;
+const HOST_CONC = parseInt(args['host-concurrency'], 10) || 1;
 const PARK_AFTER = parseInt(args['park-after'], 10) || 2;
 const CHECKPOINT = args.checkpoint || null;
 const STOP_FILE = args['stop-file'] || null;
@@ -106,6 +109,8 @@ if (CHECKPOINT && existsSync(CHECKPOINT)) {
 }
 
 let rows = (await readSurvivors(SURVIVORS)).filter(r => !done.has(r.manifest_url));
+// Within each host, the higher tier goes first: --tiers=B,C imports a host's B rows before its C rows.
+rows.sort((a, b) => String(a.tier).localeCompare(String(b.tier)));
 if (SAMPLE) rows = spreadSample(rows, SAMPLE);
 if (rows.length > LIMIT) rows = rows.slice(0, LIMIT);
 console.log(`[import-wave] ${rows.length} rows (tiers ${[...TIERS].join('')}, ${done.size} already in checkpoint) → ${MANIFEST_ONLY ? 'MANIFEST-ONLY' : 'with pages'}, hidden, held (${HOLD.reason}), campaign ${CAMPAIGN}${DRY_RUN ? ', DRY RUN' : ''}`);
@@ -165,7 +170,7 @@ async function one(host, r) {
 }
 
 async function hostLane(host, queue) {
-  const workers = Array.from({ length: isIa(host) ? IA_CONC : 1 }, async () => {
+  const workers = Array.from({ length: isIa(host) ? IA_CONC : HOST_CONC }, async () => {
     while (queue.length && !stopping) {
       if (STOP_FILE && existsSync(STOP_FILE)) { stopping = true; break; }
       if (parker.isParked(host)) {
