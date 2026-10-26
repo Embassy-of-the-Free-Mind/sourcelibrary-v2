@@ -77,6 +77,9 @@ issue: 6871
 - **Two books aborted safely on the revisions-first check.** 7 pages carried flash-lite fail stamps and no text, and `saveRevisionsBeforeOverwrite` snapshots text only. The selector was fixed and they re-ran: 183 pages.
 - **Totals:** 2,805 written, 0 races, 0 revisions needed (every page was empty).
 - **Not changed:** 0 pages in any excluded book, 0 translations, 129/129 books still `held` and hidden.
+- **Undo.** The run wrote by direct `$set`, before the script used `writePageText`. `--backfill-revisions` then added
+  one writer row per page: run_id `apply-tib-gutter-vllm-6871-20261026T182400Z-backfill`, 2,805 rows, with 7 priors that
+  are flash-lite fail stamps. `revert-run.mjs --run-id <that id>` dry run: 2,805 restorable, 0 changed.
 - **Provenance on every page:**
   - `ocr.source 'bdrc'`, `ocr.model 'bdrc-yigdzin-v1'`, `ocr.pipeline 'tib_gutter_vllm_6871'`, `ocr.content_hash`;
   - `ocr.engine`: BDRC/tibetan-ocr @50506eb6, `runtime_id: yigdzin-vllm-0.29`, run `gex45-86-…`;

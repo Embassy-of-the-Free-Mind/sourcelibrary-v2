@@ -14,6 +14,7 @@
  *   --plan   reads the task-86 files and decides every page. Writes nothing to Mongo.
  *            (reads/  = gex45:/root/jobs/tib-gutter-6871/full-vllm,  run/ = …/vllm-full-run with todo + flags)
  *   --apply  executes a plan for the books named in --books (comma list) or --all. Without --apply, a dry run.
+ *   --backfill-revisions --run-id=<id> [--apply]  writer rows for pages an earlier run wrote by direct $set (see below).
  *
  * Outcomes per page (the plan's `action`):
  *   skip-rights          the book is a modern authored work or uncertain (rights CSV): no text write at all
@@ -30,6 +31,11 @@
  *   write                the text, with provenance
  * Every withheld/dropped page gets a report row; the book's sweep_log row carries the counts.
  *
+ * Writes go through writePageText (scripts/lib/page-text-writer.mjs, #7058): one page_revisions row per page with the
+ * whole prior `ocr` and the run_id, then a compare-and-set. Undo a run: scripts/maintenance/revert-run.mjs --run-id <id>.
+ * The 2026-10-26 run predates that and wrote with a direct $set; --backfill-revisions added its writer rows afterwards
+ * (run_id apply-tib-gutter-vllm-6871-20261026T182400Z-backfill, 2,805 rows, revert-run dry run: 2,805 restorable).
+ *
  * Books stay held: this never touches `pipeline_auto`, `visible` or anything a translate phase selects; the only
  * book write is the page-counter recount (recountBook, the one writer of those counters).
  *
@@ -42,7 +48,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { firstOcrVerdict, textVerdict } from '../lib/first-ocr-guard.mjs';
-import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { randomBytes } from 'node:crypto';
+import { writePageText, newRunId, buildTextRevision } from '../lib/page-text-writer.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
@@ -164,6 +171,40 @@ if (HAS('--plan')) {
   process.exit(0);
 }
 
+// ---------------- backfill-revisions ----------------
+// The 2026-10-26 run (2,805 pages) wrote with a direct $set before this script used writePageText, so it left no
+// writer rows and revert-run.mjs could not undo it. This adds one writer-shaped row per page it wrote: the prior
+// `ocr` is the page's current object minus the fields this run set (on 7 pages that leaves the fail stamps of an
+// earlier flash-lite attempt; elsewhere nothing, i.e. absent), and next_hash is the text the run wrote. Idempotent:
+// a page that already has a row under --run-id is skipped. Dry run unless --apply.
+if (HAS('--backfill-revisions')) {
+  const RUN = ARG('--run-id');
+  if (!RUN) { console.error('--backfill-revisions needs --run-id'); process.exit(2); }
+  const RUN_FIELDS = ['data', 'language', 'model', 'source', 'pipeline', 'updated_at', 'content_hash', 'engine', 'verdict'];
+  const have = new Set((await db.collection('page_revisions').find({ run_id: RUN }, { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
+  const pages = await db.collection('pages').find({ 'ocr.pipeline': REASON }, { projection: { id: 1, book_id: 1, ocr: 1 } }).toArray();
+  const rows = [];
+  const tally = { pages: pages.length, already: 0, absent: 0, object: 0, hash_mismatch: 0 };
+  for (const p of pages) {
+    if (have.has(p.id)) { tally.already++; continue; }
+    if (contentHash(p.ocr.data) !== p.ocr.content_hash) { tally.hash_mismatch++; continue; }
+    const rest = Object.fromEntries(Object.entries(p.ocr).filter(([k]) => !RUN_FIELDS.includes(k)));
+    const prior = Object.keys(rest).length ? rest : null;
+    tally[prior ? 'object' : 'absent']++;
+    rows.push(buildTextRevision({
+      page: { id: p.id, book_id: p.book_id, ocr: prior }, field: 'ocr', next: p.ocr,
+      opts: { by: 'scripts/maintenance/apply-tib-gutter-vllm-6871.mjs --backfill-revisions', reason: `${REASON}: #4523 write rule (#${ISSUE}); row backfilled after the write (the run predates writePageText)`, run_id: RUN },
+      now: p.ocr.updated_at instanceof Date ? p.ocr.updated_at : new Date(p.ocr.updated_at), id: randomBytes(6).toString('hex'),
+    }));
+  }
+  if (HAS('--apply') && rows.length) {
+    for (let i = 0; i < rows.length; i += 500) await db.collection('page_revisions').insertMany(rows.slice(i, i + 500), { ordered: true });
+  }
+  console.log(JSON.stringify({ backfill: true, apply: HAS('--apply'), run_id: RUN, rows: rows.length, ...tally }));
+  await mongo.close();
+  process.exit(0);
+}
+
 // ---------------- apply ----------------
 const PLAN = ARG('--plan-file');
 const READS = ARG('--reads');
@@ -177,13 +218,7 @@ const plan = fs.readFileSync(PLAN, 'utf8').trim().split('\n').map((l) => JSON.pa
 const byBook = new Map();
 for (const r of plan) { if (!byBook.has(r.book)) byBook.set(r.book, []); byBook.get(r.book).push(r); }
 
-const literal = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, { $literal: v }]));
-const ENSURE_OCR = { $set: { ocr: { $cond: { if: { $eq: [{ $type: '$ocr' }, 'object'] }, then: '$ocr', else: {} } } } };
-// The write filter re-checks what the plan assumed: no human edit, and no text other than a flash-lite read.
-const WRITABLE = {
-  'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' },
-  $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }, { 'ocr.model': /lite/i }],
-};
+const RUN_ID = ARG('--run-id', newRunId('apply-tib-gutter-vllm-6871'));
 
 const totals = { books: 0, write: 0, already: 0, raced: 0, revisions: 0, notWritten: {} };
 for (const [bookId, rows] of byBook) {
@@ -205,47 +240,40 @@ for (const [bookId, rows] of byBook) {
   if (!APPLY) { rec({ book: bookId, status: 'dry-run', write: go.length }); totals.books++; totals.write += go.length; continue; }
   if (!go.length) { rec({ book: bookId, status: 'nothing-to-write' }); continue; }
 
-  // Revisions first: snapshot any text a page has (a flash-lite read) before it is replaced. A page whose `ocr` holds
-  // only fail stamps (fail_count / fail_reason from an earlier lite attempt) has no text to snapshot —
-  // saveRevisionsBeforeOverwrite skips it by design — and the dotted $set below leaves those stamps in place.
-  const withOcr = go.filter((r) => current.get(r.id)?.ocr?.data).map((r) => r.id);
-  if (withOcr.length) {
-    const n = await saveRevisionsBeforeOverwrite(db, withOcr, 'ocr', { reason: REASON, keepMeta: true });
-    totals.revisions += n;
-    if (n !== withOcr.length) { rec({ book: bookId, status: 'ABORT-revision-mismatch', want: withOcr.length, got: n }); console.error(`ABORT ${bookId}: revisions ${n} != ${withOcr.length}`); continue; }
-  }
+  // Every write goes through writePageText (#7058): a page_revisions row with the whole prior `ocr` object (a flash-lite
+  // read, or only the fail stamps of an earlier lite attempt), this run's run_id and the hash of the new text, then a
+  // compare-and-set on the prior text with the human-edit guard. Undo: scripts/maintenance/revert-run.mjs --run-id <id>.
   const now = new Date();
   let wrote = 0;
+  const revisions = go.filter((r) => current.get(r.id)?.ocr?.data).length;
   for (const r of go) {
-    let set;
-    {
-      const text = stripMarkers(fs.readFileSync(path.join(READS, `${r.id}.txt`), 'utf8'));
-      if (contentHash(text) !== r.hash) { totals.raced++; rec({ book: bookId, page: r.page, id: r.id, status: 'SKIP-read-file-changed' }); continue; }
-      set = {
-        'ocr.data': text, 'ocr.language': 'Tibetan', 'ocr.model': MODEL, 'ocr.source': 'bdrc', 'ocr.pipeline': REASON,
-        'ocr.updated_at': now, 'ocr.content_hash': r.hash, 'ocr.engine': ENGINE,
-        'ocr.verdict': { verdict: 'SERVE', rule: RULE, units: r.units, leaf_tex: r.leaf_tex ?? null, judged_engine: MODEL, run: ENGINE.run, issue: ISSUE, at: now },
-        updated_at: now,
-      };
-    }
-    const res = await db.collection('pages').updateOne({ id: r.id, ...WRITABLE }, [ENSURE_OCR, { $set: literal(set) }]);
-    if (res.modifiedCount === 1) { wrote++; rec({ book: bookId, page: r.page, id: r.id, status: 'WROTE', modified: res.modifiedCount }); }
-    else { totals.raced++; rec({ book: bookId, page: r.page, id: r.id, status: 'SKIP-guard-at-write', matched: res.matchedCount }); }
+    const text = stripMarkers(fs.readFileSync(path.join(READS, `${r.id}.txt`), 'utf8'));
+    if (contentHash(text) !== r.hash) { totals.raced++; rec({ book: bookId, page: r.page, id: r.id, status: 'SKIP-read-file-changed' }); continue; }
+    const prior = current.get(r.id)?.ocr;
+    const next = {
+      ...(prior && typeof prior === 'object' ? prior : {}),
+      data: text, language: 'Tibetan', model: MODEL, source: 'bdrc', pipeline: REASON,
+      updated_at: now, content_hash: r.hash, engine: ENGINE,
+      verdict: { verdict: 'SERVE', rule: RULE, units: r.units, leaf_tex: r.leaf_tex ?? null, judged_engine: MODEL, run: ENGINE.run, issue: ISSUE, at: now },
+    };
+    const res = await writePageText(db, r.id, 'ocr', next, { by: 'scripts/maintenance/apply-tib-gutter-vllm-6871.mjs', reason: `${REASON}: #4523 write rule (#${ISSUE})`, run_id: RUN_ID, now });
+    if (res.status === 'written') { wrote++; rec({ book: bookId, page: r.page, id: r.id, status: 'WROTE', revision_id: res.revision_id, run_id: RUN_ID }); }
+    else { totals.raced++; rec({ book: bookId, page: r.page, id: r.id, status: `SKIP-${res.status}` }); }
   }
   totals.write += wrote; totals.books++;
   const counts = await recountBook(db, bookId, { reason: SWEEP });
   const notWritten = rows.filter((r) => r.action !== 'write').reduce((m, r) => ((m[r.action] = (m[r.action] || 0) + 1), m), {});
   await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'tib-gutter-ocr-applied',
-    detail: { issue: ISSUE, model: MODEL, engine_run: ENGINE.run, written: wrote, revisions: withOcr.length, not_written: notWritten, pages_ocr_after: counts.after?.pages_ocr ?? null } });
+    detail: { issue: ISSUE, model: MODEL, engine_run: ENGINE.run, written: wrote, revisions, run_id: RUN_ID, not_written: notWritten, pages_ocr_after: counts.after?.pages_ocr ?? null } });
   await db.collection('book_events').updateOne(
     { book_id: bookId, type: BOOK_EVENT, 'details.run': ENGINE.run },
     { $setOnInsert: { book_id: bookId, type: BOOK_EVENT, at: now, source: 'apply-tib-gutter-vllm-6871', 'details.issue': ISSUE, 'details.model': MODEL, 'details.run': ENGINE.run, 'details.revision': ENGINE.revision },
       $set: { 'details.last_apply_at': now }, $inc: { 'details.written': wrote } },
     { upsert: true });
-  rec({ book: bookId, status: 'applied', written: wrote, revisions: withOcr.length, counts: counts.after ?? null });
-  console.log(`${bookId}: wrote ${wrote}, revisions ${withOcr.length}`);
+  rec({ book: bookId, status: 'applied', written: wrote, revisions, run_id: RUN_ID, counts: counts.after ?? null });
+  console.log(`${bookId}: wrote ${wrote}, revisions ${revisions}`);
 }
-console.log(JSON.stringify({ apply: APPLY, report: REPORT, ...totals }));
+console.log(JSON.stringify({ apply: APPLY, run_id: APPLY ? RUN_ID : null, report: REPORT, ...totals }));
 rec({ status: 'run-summary', apply: APPLY, ...totals });
 report.end();
 await mongo.close();
