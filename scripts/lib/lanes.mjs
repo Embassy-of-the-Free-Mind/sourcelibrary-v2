@@ -349,6 +349,7 @@ export const OFF_REPO_CRON = [
   { match: '/root/tib-step2/tend.py', reason: 'tends the #5320 Tibetan step-2 job; remove when step 2 is done' },
   { match: '/root/tibetan-reocr/relaunch.sh', reason: 'NOT A REGISTERED LANE YET: relaunches the Tibetan Yigdzin re-OCR reads on main (#4523, routing row `tibetan`); its pages are written by hand through scripts/maintenance/apply-reocr-verdicts.mjs after adjudication. Remove when the re-OCR is done, or register it if it becomes standing' },
   { match: '/root/tibetan-eval/relaunch_reacquire.sh', reason: 'relaunches the British Library image re-acquisition (#4646): images, no model spend; remove when reacquire-done.txt is complete' },
+  { match: '/root/jobs/siglip2-6871/code-full/siglip2-requeue.sh', reason: 'queues the next SigLIP2 page-embedding chunk on the gex45 GPU queue when nothing else is pending (#6871 row 8); an installed copy of scripts/gpu/siglip2-6871/siglip2-requeue.sh. Writes embedding shards, no page text' },
 ];
 
 /**
