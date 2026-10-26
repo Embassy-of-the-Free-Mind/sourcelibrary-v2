@@ -139,7 +139,7 @@ describe('every writer asks the guard before it writes (#5055)', () => {
     expect([f, `${guard} before ${write}`, g < w]).toEqual([f, `${guard} before ${write}`, true]);
   };
   it('OCR writers', () => {
-    before('scripts/batch/cli-ocr.mjs', "checkWrittenText(text, { kind: 'ocr' })", 'await saveRevisionBeforeOverwrite(db, page.id', '// ── apply ──');
+    before('scripts/batch/cli-ocr.mjs', "checkWrittenText(text, { kind: 'ocr' })", "await writePageText(db, page.id, 'ocr'", '// ── apply ──');
     before('scripts/batch/cli-ocr.mjs', 'checkWrittenText(unwrapRead(r.text).text', "fs.writeFileSync(path.join(OUT, `${key}.txt`), text)");
     before('scripts/workers/batch-collector.mjs', "checkWrittenText(text, { kind: 'ocr' })", "'ocr.data': text,");
     before('scripts/batch/claude-ocr.mjs', "checkWrittenText(t, { kind: 'ocr' })", 'const metas = todo.map');
