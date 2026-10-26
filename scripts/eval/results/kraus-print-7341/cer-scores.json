@@ -1,0 +1,797 @@
+{
+ "n_pages": 25,
+ "cells": {
+  "ar-ms": {
+   "arms": {
+    "lite": {
+     "given": 0,
+     "read": 0,
+     "failed": {},
+     "median_secs": null,
+     "key-o|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-o|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     }
+    },
+    "f38l": {
+     "given": 0,
+     "read": 0,
+     "failed": {},
+     "median_secs": null,
+     "key-o|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-o|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     }
+    },
+    "opus": {
+     "given": 0,
+     "read": 0,
+     "failed": {},
+     "median_secs": null,
+     "key-o|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-o|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|marks": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     },
+     "key-g|skel": {
+      "mean": [
+       null,
+       null,
+       null
+      ],
+      "fail=1": [
+       null,
+       null,
+       null
+      ],
+      "n": 0
+     }
+    }
+   },
+   "paired": {
+    "opus-lite|key-o|marks": null,
+    "f38l-lite|key-o|marks": null,
+    "opus-f38l|key-o|marks": null,
+    "opus-lite|key-o|skel": null,
+    "f38l-lite|key-o|skel": null,
+    "opus-f38l|key-o|skel": null,
+    "opus-lite|key-g|marks": null,
+    "f38l-lite|key-g|marks": null,
+    "opus-f38l|key-g|marks": null,
+    "opus-lite|key-g|skel": null,
+    "f38l-lite|key-g|skel": null,
+    "opus-f38l|key-g|skel": null
+   },
+   "books": 0
+  },
+  "ar-print": {
+   "arms": {
+    "lite": {
+     "given": 25,
+     "read": 25,
+     "failed": {},
+     "median_secs": 3.448,
+     "key-o|marks": {
+      "mean": [
+       0.038914752799767374,
+       0.038914752799767374,
+       0.038914752799767374
+      ],
+      "fail=1": [
+       0.038914752799767374,
+       0.038914752799767374,
+       0.038914752799767374
+      ],
+      "n": 25
+     },
+     "key-o|skel": {
+      "mean": [
+       0.005270192237051599,
+       0.005270192237051599,
+       0.005270192237051599
+      ],
+      "fail=1": [
+       0.005270192237051599,
+       0.005270192237051599,
+       0.005270192237051599
+      ],
+      "n": 25
+     },
+     "key-g|marks": {
+      "mean": [
+       0.037883173433828285,
+       0.037883173433828285,
+       0.037883173433828285
+      ],
+      "fail=1": [
+       0.037883173433828285,
+       0.037883173433828285,
+       0.037883173433828285
+      ],
+      "n": 25
+     },
+     "key-g|skel": {
+      "mean": [
+       0.004822263281794897,
+       0.004822263281794897,
+       0.004822263281794897
+      ],
+      "fail=1": [
+       0.004822263281794897,
+       0.004822263281794897,
+       0.004822263281794897
+      ],
+      "n": 25
+     }
+    },
+    "f38l": {
+     "given": 25,
+     "read": 23,
+     "failed": {
+      "refusal": 2
+     },
+     "median_secs": 7.8,
+     "key-o|marks": {
+      "mean": [
+       0.00633985917590694,
+       0.00633985917590694,
+       0.00633985917590694
+      ],
+      "fail=1": [
+       0.08583267044183439,
+       0.08583267044183439,
+       0.08583267044183439
+      ],
+      "n": 23
+     },
+     "key-o|skel": {
+      "mean": [
+       0.0019097317040947554,
+       0.0019097317040947554,
+       0.0019097317040947554
+      ],
+      "fail=1": [
+       0.08175695316776718,
+       0.08175695316776718,
+       0.08175695316776718
+      ],
+      "n": 23
+     },
+     "key-g|marks": {
+      "mean": [
+       0.004464996882269296,
+       0.004464996882269296,
+       0.004464996882269296
+      ],
+      "fail=1": [
+       0.08410779713168776,
+       0.08410779713168776,
+       0.08410779713168776
+      ],
+      "n": 23
+     },
+     "key-g|skel": {
+      "mean": [
+       0.0012500297227952015,
+       0.0012500297227952015,
+       0.0012500297227952015
+      ],
+      "fail=1": [
+       0.08115002734497159,
+       0.08115002734497159,
+       0.08115002734497159
+      ],
+      "n": 23
+     }
+    },
+    "opus": {
+     "given": 25,
+     "read": 25,
+     "failed": {},
+     "median_secs": 19.4,
+     "key-o|marks": {
+      "mean": [
+       0.009627414926420668,
+       0.009627414926420668,
+       0.009627414926420668
+      ],
+      "fail=1": [
+       0.009627414926420668,
+       0.009627414926420668,
+       0.009627414926420668
+      ],
+      "n": 25
+     },
+     "key-o|skel": {
+      "mean": [
+       0.001186229354702165,
+       0.001186229354702165,
+       0.001186229354702165
+      ],
+      "fail=1": [
+       0.001186229354702165,
+       0.001186229354702165,
+       0.001186229354702165
+      ],
+      "n": 25
+     },
+     "key-g|marks": {
+      "mean": [
+       0.011350871020652293,
+       0.011350871020652293,
+       0.011350871020652293
+      ],
+      "fail=1": [
+       0.011350871020652293,
+       0.011350871020652293,
+       0.011350871020652293
+      ],
+      "n": 25
+     },
+     "key-g|skel": {
+      "mean": [
+       0.001851768081940048,
+       0.001851768081940048,
+       0.001851768081940048
+      ],
+      "fail=1": [
+       0.001851768081940048,
+       0.001851768081940048,
+       0.001851768081940048
+      ],
+      "n": 25
+     }
+    }
+   },
+   "paired": {
+    "opus-lite|key-o|marks": [
+     -0.029287337873346708,
+     -0.029287337873346708,
+     -0.029287337873346708,
+     25
+    ],
+    "f38l-lite|key-o|marks": [
+     -0.0348261920512243,
+     -0.0348261920512243,
+     -0.0348261920512243,
+     23
+    ],
+    "opus-f38l|key-o|marks": [
+     0.0028185004830807575,
+     0.0028185004830807575,
+     0.0028185004830807575,
+     23
+    ],
+    "opus-lite|key-o|skel": [
+     -0.004083962882349434,
+     -0.004083962882349434,
+     -0.004083962882349434,
+     25
+    ],
+    "f38l-lite|key-o|skel": [
+     -0.003560347321728398,
+     -0.003560347321728398,
+     -0.003560347321728398,
+     23
+    ],
+    "opus-f38l|key-o|skel": [
+     -0.0006848597761672955,
+     -0.0006848597761672955,
+     -0.0006848597761672955,
+     23
+    ],
+    "opus-lite|key-g|marks": [
+     -0.026532302413175994,
+     -0.026532302413175994,
+     -0.026532302413175994,
+     25
+    ],
+    "f38l-lite|key-g|marks": [
+     -0.03558032434804078,
+     -0.03558032434804078,
+     -0.03558032434804078,
+     23
+    ],
+    "opus-f38l|key-g|marks": [
+     0.006567420515178302,
+     0.006567420515178302,
+     0.006567420515178302,
+     23
+    ],
+    "opus-lite|key-g|skel": [
+     -0.002970495199854849,
+     -0.002970495199854849,
+     -0.002970495199854849,
+     25
+    ],
+    "f38l-lite|key-g|skel": [
+     -0.003797677809280343,
+     -0.003797677809280343,
+     -0.003797677809280343,
+     23
+    ],
+    "opus-f38l|key-g|skel": [
+     0.0006335543574839709,
+     0.0006335543574839709,
+     0.0006335543574839709,
+     23
+    ]
+   },
+   "books": 1
+  }
+ },
+ "per_page": {
+  "6ade30b13326a0839b2d1c42_16": {
+   "lite|o|marks": 0.0661,
+   "lite|o|skel": 0.006,
+   "lite|g|marks": 0.065,
+   "lite|g|skel": 0.0048,
+   "f38l|o|marks": 0.0011,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0023,
+   "f38l|g|skel": 0.0024,
+   "opus|o|marks": 0.0148,
+   "opus|o|skel": 0.0012,
+   "opus|g|marks": 0.0137,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_27": {
+   "lite|o|marks": 0.0336,
+   "lite|o|skel": 0.0013,
+   "lite|g|marks": 0.0311,
+   "lite|g|skel": 0.0013,
+   "f38l|o|marks": 0.0075,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.005,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0025,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.005,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_65": {
+   "lite|o|marks": 0.0814,
+   "lite|o|skel": 0.0176,
+   "lite|g|marks": 0.0777,
+   "lite|g|skel": 0.0163,
+   "f38l|o|marks": 0.0102,
+   "f38l|o|skel": 0.0014,
+   "f38l|g|marks": 0.0076,
+   "f38l|g|skel": 0.0014,
+   "opus|o|marks": 0.0204,
+   "opus|o|skel": 0.0014,
+   "opus|g|marks": 0.0229,
+   "opus|g|skel": 0.0014
+  },
+  "6ade30b13326a0839b2d1c42_87": {
+   "lite|o|marks": 0.055,
+   "lite|o|skel": 0.0119,
+   "lite|g|marks": 0.0538,
+   "lite|g|skel": 0.0119,
+   "f38l|o|marks": 0.0046,
+   "f38l|o|skel": 0.0024,
+   "f38l|g|marks": 0.0034,
+   "f38l|g|skel": 0.0024,
+   "opus|o|marks": 0.008,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0092,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_112": {
+   "lite|o|marks": 0.0376,
+   "lite|o|skel": 0.0012,
+   "lite|g|marks": 0.0365,
+   "lite|g|skel": 0.0024,
+   "f38l|o|marks": 0.0046,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0011,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0171,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0205,
+   "opus|g|skel": 0.0012
+  },
+  "6ade30b13326a0839b2d1c42_139": {
+   "lite|o|marks": 0.0499,
+   "lite|o|skel": 0.0025,
+   "lite|g|marks": 0.0487,
+   "lite|g|skel": 0.0025,
+   "f38l|o|marks": 0.0171,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.011,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.011,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0171,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_152": {
+   "lite|o|marks": 0.0173,
+   "lite|o|skel": 0.0045,
+   "lite|g|marks": 0.0173,
+   "lite|g|skel": 0.0045,
+   "opus|o|marks": 0.0184,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0184,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_174": {
+   "lite|o|marks": 0.0377,
+   "lite|o|skel": 0.0046,
+   "lite|g|marks": 0.0377,
+   "lite|g|skel": 0.0046,
+   "f38l|o|marks": 0.0022,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0022,
+   "f38l|g|skel": 0.0012,
+   "opus|o|marks": 0.0066,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0066,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_190": {
+   "lite|o|marks": 0.0327,
+   "lite|o|skel": 0.0096,
+   "lite|g|marks": 0.0233,
+   "lite|g|skel": 0.0048,
+   "f38l|o|marks": 0.0234,
+   "f38l|o|skel": 0.0096,
+   "f38l|g|marks": 0.014,
+   "f38l|g|skel": 0.0048,
+   "opus|o|marks": 0.0093,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0186,
+   "opus|g|skel": 0.0048
+  },
+  "6ade30b13326a0839b2d1c42_221": {
+   "lite|o|marks": 0.0045,
+   "lite|o|skel": 0.0012,
+   "lite|g|marks": 0.0045,
+   "lite|g|skel": 0.0012,
+   "f38l|o|marks": 0.0,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.0,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0057,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0057,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_252": {
+   "lite|o|marks": 0.0135,
+   "lite|o|skel": 0.0,
+   "lite|g|marks": 0.0162,
+   "lite|g|skel": 0.0028,
+   "f38l|o|marks": 0.0094,
+   "f38l|o|skel": 0.0042,
+   "f38l|g|marks": 0.0067,
+   "f38l|g|skel": 0.0014,
+   "opus|o|marks": 0.004,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0067,
+   "opus|g|skel": 0.0028
+  },
+  "6ade30b13326a0839b2d1c42_267": {
+   "lite|o|marks": 0.0522,
+   "lite|o|skel": 0.0182,
+   "lite|g|marks": 0.0508,
+   "lite|g|skel": 0.0167,
+   "f38l|o|marks": 0.006,
+   "f38l|o|skel": 0.0061,
+   "f38l|g|marks": 0.0045,
+   "f38l|g|skel": 0.0045,
+   "opus|o|marks": 0.0015,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.003,
+   "opus|g|skel": 0.0015
+  },
+  "6ade30b13326a0839b2d1c42_283": {
+   "lite|o|marks": 0.059,
+   "lite|o|skel": 0.0071,
+   "lite|g|marks": 0.0579,
+   "lite|g|skel": 0.0059,
+   "f38l|o|marks": 0.0162,
+   "f38l|o|skel": 0.0047,
+   "f38l|g|marks": 0.0151,
+   "f38l|g|skel": 0.0036,
+   "opus|o|marks": 0.0046,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0058,
+   "opus|g|skel": 0.0012
+  },
+  "6ade30b13326a0839b2d1c42_310": {
+   "lite|o|marks": 0.058,
+   "lite|o|skel": 0.0079,
+   "lite|g|marks": 0.0569,
+   "lite|g|skel": 0.0079,
+   "f38l|o|marks": 0.0045,
+   "f38l|o|skel": 0.0011,
+   "f38l|g|marks": 0.0033,
+   "f38l|g|skel": 0.0011,
+   "opus|o|marks": 0.0045,
+   "opus|o|skel": 0.0011,
+   "opus|g|marks": 0.0056,
+   "opus|g|skel": 0.0011
+  },
+  "6ade30b13326a0839b2d1c42_331": {
+   "lite|o|marks": 0.027,
+   "lite|o|skel": 0.0,
+   "lite|g|marks": 0.027,
+   "lite|g|skel": 0.0,
+   "f38l|o|marks": 0.0,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.0,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0028,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0028,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_354": {
+   "lite|o|marks": 0.0486,
+   "lite|o|skel": 0.0023,
+   "lite|g|marks": 0.0476,
+   "lite|g|skel": 0.0023,
+   "f38l|o|marks": 0.0054,
+   "f38l|o|skel": 0.0011,
+   "f38l|g|marks": 0.0043,
+   "f38l|g|skel": 0.0011,
+   "opus|o|marks": 0.014,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0151,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_383": {
+   "lite|o|marks": 0.0301,
+   "lite|o|skel": 0.0049,
+   "lite|g|marks": 0.0289,
+   "lite|g|skel": 0.0037,
+   "f38l|o|marks": 0.0024,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0012,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0072,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0084,
+   "opus|g|skel": 0.0012
+  },
+  "6ade30b13326a0839b2d1c42_409": {
+   "lite|o|marks": 0.012,
+   "lite|o|skel": 0.0017,
+   "lite|g|marks": 0.012,
+   "lite|g|skel": 0.0017,
+   "f38l|o|marks": 0.0017,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.0017,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0274,
+   "opus|o|skel": 0.0245,
+   "opus|g|marks": 0.0274,
+   "opus|g|skel": 0.0245
+  },
+  "6ade30b13326a0839b2d1c42_440": {
+   "lite|o|marks": 0.051,
+   "lite|o|skel": 0.0024,
+   "lite|g|marks": 0.051,
+   "lite|g|skel": 0.0024,
+   "f38l|o|marks": 0.0057,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0057,
+   "f38l|g|skel": 0.0012,
+   "opus|o|marks": 0.0079,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0079,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_465": {
+   "lite|o|marks": 0.0205,
+   "lite|o|skel": 0.0025,
+   "lite|g|marks": 0.0194,
+   "lite|g|skel": 0.0013,
+   "f38l|o|marks": 0.006,
+   "f38l|o|skel": 0.0051,
+   "f38l|g|marks": 0.0036,
+   "f38l|g|skel": 0.0026,
+   "opus|o|marks": 0.0133,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0157,
+   "opus|g|skel": 0.0026
+  },
+  "6ade30b13326a0839b2d1c42_475": {
+   "lite|o|marks": 0.0087,
+   "lite|o|skel": 0.0015,
+   "lite|g|marks": 0.0087,
+   "lite|g|skel": 0.0,
+   "opus|o|marks": 0.0116,
+   "opus|o|skel": 0.0015,
+   "opus|g|marks": 0.0116,
+   "opus|g|skel": 0.003
+  },
+  "6ade30b13326a0839b2d1c42_506": {
+   "lite|o|marks": 0.0303,
+   "lite|o|skel": 0.006,
+   "lite|g|marks": 0.0267,
+   "lite|g|skel": 0.006,
+   "f38l|o|marks": 0.0047,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0012,
+   "f38l|g|skel": 0.0012,
+   "opus|o|marks": 0.0081,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0116,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_534": {
+   "lite|o|marks": 0.0636,
+   "lite|o|skel": 0.0076,
+   "lite|g|marks": 0.0636,
+   "lite|g|skel": 0.0076,
+   "f38l|o|marks": 0.0031,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.0031,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0073,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0073,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_540": {
+   "lite|o|marks": 0.0319,
+   "lite|o|skel": 0.0023,
+   "lite|g|marks": 0.0353,
+   "lite|g|skel": 0.0023,
+   "f38l|o|marks": 0.0046,
+   "f38l|o|skel": 0.0,
+   "f38l|g|marks": 0.0011,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0068,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0103,
+   "opus|g|skel": 0.0
+  },
+  "6ade30b13326a0839b2d1c42_563": {
+   "lite|o|marks": 0.0506,
+   "lite|o|skel": 0.007,
+   "lite|g|marks": 0.0494,
+   "lite|g|skel": 0.0058,
+   "f38l|o|marks": 0.0056,
+   "f38l|o|skel": 0.0012,
+   "f38l|g|marks": 0.0045,
+   "f38l|g|skel": 0.0,
+   "opus|o|marks": 0.0056,
+   "opus|o|skel": 0.0,
+   "opus|g|marks": 0.0067,
+   "opus|g|skel": 0.0012
+  }
+ }
+}

@@ -31,7 +31,7 @@ sig = lambda x: 1 / (1 + np.exp(-x))
 ENGINES = [('gemini-3.1-flash-lite', 'gemini-lite'), ('gemini-3.8-flash+antigravity-cli', 'gemini-cli'),
            ('gemini-3.8-flash-high+antigravity-cli', 'gemini-cli'), ('gemini-3.1-pro+antigravity-cli', 'gemini-cli'),
            ('claude-opus-5-5', 'claude'), ('gemini-3-flash-preview', 'gemini-flash')]
-ARABIC = ('gate-7341', '6544-setA', '6544-setB', 'reocr-5700')
+ARABIC = ('gate-7341', 'kraus-7341', '6544-setA', '6544-setB', 'reocr-5700')  # kraus-7341: the 25-page follow-up
 
 
 def arabic_ppc(df, ixa, pa, ixq, pq):
