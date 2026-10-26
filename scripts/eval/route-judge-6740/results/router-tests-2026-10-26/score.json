@@ -1,0 +1,2749 @@
+{
+ "generated_at": "2026-10-26T10:22:00.316Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 567,
+  "unparsed": 0,
+  "list_usd_equiv": 35.82
+ },
+ "meter": {
+  "account": "dereklomas@gmail.com",
+  "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
+  "shared": "SHARED: this orchestrating claude -p session ran throughout, and a #6420 spare-audit round (4 Opus readers) ran on the same account 09:05-09:55Z; the deltas are NOT this run's alone",
+  "start": {
+   "at": "2026-10-26T09:00:01Z",
+   "weekly_pct": 80,
+   "session_pct": 27
+  },
+  "end": {
+   "at": "2026-10-26T10:20:01Z",
+   "weekly_pct": 88,
+   "session_pct": 73
+  },
+  "opus_judge_calls": 507,
+  "opus_judge_verdicts_reused_from_pilot": 60,
+  "opus_name_check_calls": 27,
+  "opus_correct_calls": {
+   "zh-dice/paddle_opus_correct": 30,
+   "de-lite/lite_opus_correct": 30,
+   "de-flash3/3flash_opus_correct": 33
+  },
+  "opus_translate_calls": 30,
+  "agy_calls": 182,
+  "agy_calls_by_route": {
+   "zh-dice/paddle_agy_flash_high": 30,
+   "fr-lite/lite_agy_flash_low": 30,
+   "latin-flash3/3flash_agy_flash_low": 30,
+   "latin/lite_agy_flash_low": 30,
+   "de-lite/lite_agy_flash_low": 30,
+   "de-flash3/3flash_agy_flash_low": 32
+  },
+  "list_usd_equiv_judge": 31.8,
+  "note": "No points_per_call: the meter is shared and integer; the pilot's 0.0124 stays the upper bound."
+ },
+ "cells": {
+  "zh-dice": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "books": 10985,
+    "books_walked": 39,
+    "held_or_hidden": 0,
+    "no_eligible_page": 9,
+    "rule": "paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han"
+   },
+   "controls": {
+    "paddle": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "paddle>agy-flash-high": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "paddle>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "paddle": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "15/30",
+     "accept_rate": 0.5,
+     "accept_ci": {
+      "ci95": [
+       0.333,
+       0.667
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "12/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.233,
+       0.6
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "6/30",
+      "O5": "4/30",
+      "O11": "3/30",
+      "I4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "O11": "14/30",
+      "E2": "9/30",
+      "O5": "8/30",
+      "O16": "6/30",
+      "O12": "6/30",
+      "O8": "3/30",
+      "I4": "1/30"
+     },
+     "fidelity_mean": 3.87,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "釀虛蜂",
+       "severity": "wrong_text",
+       "what": "the page reads 釀蜜蜂 'honey-making bee'; 虛 changes the phrase"
+      },
+      {
+       "page": "6a3c721401fe4f593c1dc018:53",
+       "quote": "錢銚鎛鎛銍獲也",
+       "severity": "wrong_text",
+       "what": "the page reads 鎛鎒, but the second character is given as 鎛 again, so a different tool name is lost"
+      },
+      {
+       "page": "6a3c721401fe4f593c1dc018:53",
+       "quote": "謂之瀝",
+       "severity": "wrong_text",
+       "what": "the page has the spade character 疀 (metal-radical form); 瀝 is a misread"
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "basis": "paddleocr-vl-1.6 (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000182
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0,
+     "name_check": {
+      "accepted": 15,
+      "checked": 14,
+      "unchecked": 1,
+      "with_name_error": 0,
+      "accept_after_name_check": "14/30",
+      "accept_after_name_check_strict": "13/30",
+      "rule": "accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count",
+      "errors": [],
+      "errors_strict": [
+       {
+        "page": "6a3c6d3001fe4f593c1b88d4:101",
+        "names": [
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         },
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "paddle>agy-flash-high": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-high)",
+     "n": 30,
+     "books": 30,
+     "accept": "19/30",
+     "accept_rate": 0.63,
+     "accept_ci": {
+      "ci95": [
+       0.467,
+       0.8
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "8/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.133,
+       0.433
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "6/30",
+      "O5": "5/30"
+     },
+     "classes_k_of_n": {
+      "O6": "16/30",
+      "O5": "10/30",
+      "O11": "9/30",
+      "E2": "7/30",
+      "O8": "6/30",
+      "O12": "4/30",
+      "T4": "1/30",
+      "O16": "1/30"
+     },
+     "fidelity_mean": 4.17,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "鵲鵲華華山中採花",
+       "severity": "wrong_text",
+       "what": "the page reads 蘤蘤 (grass radical), not 鵲鵲 'magpie'"
+      },
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "釀虛蜂",
+       "severity": "wrong_text",
+       "what": "the page reads 釀蜜蜂 (honey-making bee); 虛 is a misread"
+      },
+      {
+       "page": "6a3c721401fe4f593c1dc018:53",
+       "quote": "謂之瀝",
+       "severity": "wrong_text",
+       "what": "the page has 疀, not 瀝"
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-high call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000144,
+      "agy_share": 0.00000689
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "8/30",
+     "skipped": 0,
+     "name_check": {
+      "accepted": 19,
+      "checked": 17,
+      "unchecked": 2,
+      "with_name_error": 0,
+      "accept_after_name_check": "17/30",
+      "accept_after_name_check_strict": "13/30",
+      "rule": "accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count",
+      "errors": [],
+      "errors_strict": [
+       {
+        "page": "6a3c617a879008ba7e15e724:57",
+        "names": [
+         {
+          "kind": "place",
+          "image": "虚滑",
+          "reference": "虚滑",
+          "candidate": "虛滑"
+         }
+        ]
+       },
+       {
+        "page": "6a3c6d3001fe4f593c1b88d4:101",
+        "names": [
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         },
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         }
+        ]
+       },
+       {
+        "page": "6a3c754d01fe4f593c1f4818:29",
+        "names": [
+         {
+          "kind": "place",
+          "image": "荆州",
+          "reference": "荆州",
+          "candidate": "荊州"
+         }
+        ]
+       },
+       {
+        "page": "6a3cb8ec3d799518cd71c409:58",
+        "names": [
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         },
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         },
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "paddle>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O6": "9/30",
+      "E2": "7/30",
+      "O8": "7/30",
+      "O5": "5/30",
+      "O11": "2/30",
+      "O12": "1/30",
+      "O16": "1/30"
+     },
+     "fidelity_mean": 4.6,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "曰鵲鵲華華",
+       "severity": "misleads",
+       "what": "The doubled character has a grass radical on the page (蘤蘤), not 鵲 'magpie'."
+      },
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "令丁丈果覆射之",
+       "severity": "cosmetic",
+       "what": "The name is probably 丁文杲; 丈 and 果 are look-alike misreads."
+      },
+      {
+       "page": "6a3c637993327f06e8350792:37",
+       "quote": "見蜂于投窓紙",
+       "severity": "cosmetic",
+       "what": "The sense requires 蜂子 ('bee'); the image is ambiguous, and 于 garbles the phrase."
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0000941
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "2/30",
+     "skipped": 0,
+     "name_check": {
+      "accepted": 29,
+      "checked": 27,
+      "unchecked": 2,
+      "with_name_error": 1,
+      "accept_after_name_check": "26/30",
+      "accept_after_name_check_strict": "17/30",
+      "rule": "accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count",
+      "errors": [
+       {
+        "page": "6a3c65e139b4508b04e2facc:150",
+        "names": [
+         {
+          "kind": "person",
+          "image": "五羖大夫",
+          "reference": "五羖大夫",
+          "candidate": "五殺大夫"
+         },
+         {
+          "kind": "person",
+          "image": "五羖大夫",
+          "reference": "五羖大夫",
+          "candidate": "五殺大夫"
+         }
+        ]
+       }
+      ],
+      "errors_strict": [
+       {
+        "page": "6a3c637993327f06e8350792:37",
+        "names": [
+         {
+          "kind": "person",
+          "image": "徐恵",
+          "reference": "徐恵",
+          "candidate": "徐惠"
+         },
+         {
+          "kind": "person",
+          "image": "李商隠",
+          "reference": "李商隠",
+          "candidate": "李商隱"
+         },
+         {
+          "kind": "person",
+          "image": "神瓉",
+          "reference": "神瓉",
+          "candidate": "神瓚"
+         }
+        ]
+       },
+       {
+        "page": "6a3c721401fe4f593c1dc018:53",
+        "names": [
+         {
+          "kind": "person",
+          "image": "高誘",
+          "reference": "髙誘",
+          "candidate": "髙誘"
+         }
+        ]
+       },
+       {
+        "page": "6a3c655f39b4508b04e2e4a7:103",
+        "names": [
+         {
+          "kind": "place",
+          "image": "荆州",
+          "reference": "荆州",
+          "candidate": "荊州"
+         }
+        ]
+       },
+       {
+        "page": "6a3c617a879008ba7e15e724:57",
+        "names": [
+         {
+          "kind": "place",
+          "image": "虚滑",
+          "reference": "虚滑",
+          "candidate": "虛滑"
+         }
+        ]
+       },
+       {
+        "page": "6a3cbe91f9474f825c1638ac:29",
+        "names": [
+         {
+          "kind": "person",
+          "image": "呂温",
+          "reference": "呂温",
+          "candidate": "呂溫"
+         },
+         {
+          "kind": "person",
+          "image": "釋齊已",
+          "reference": "釋齊已",
+          "candidate": "釋齊巳"
+         },
+         {
+          "kind": "person",
+          "image": "釋齊已",
+          "reference": "釋齊已",
+          "candidate": "釋齊巳"
+         },
+         {
+          "kind": "person",
+          "image": "温庭筠",
+          "reference": "温庭筠",
+          "candidate": "溫庭筠"
+         },
+         {
+          "kind": "person",
+          "image": "釋齊已",
+          "reference": "釋齊已",
+          "candidate": "釋齊巳"
+         }
+        ]
+       },
+       {
+        "page": "6a3c65e139b4508b04e2facc:150",
+        "names": [
+         {
+          "kind": "person",
+          "image": "五羖大夫",
+          "reference": "五羖大夫",
+          "candidate": "五殺大夫"
+         },
+         {
+          "kind": "person",
+          "image": "五羖大夫",
+          "reference": "五羖大夫",
+          "candidate": "五殺大夫"
+         }
+        ]
+       },
+       {
+        "page": "6a3c6d3001fe4f593c1b88d4:101",
+        "names": [
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         },
+         {
+          "kind": "person",
+          "image": "禇先生",
+          "reference": "禇先生",
+          "candidate": "褚先生"
+         }
+        ]
+       },
+       {
+        "page": "6a3c6451af3c49b59c5ca54e:79",
+        "names": [
+         {
+          "kind": "person",
+          "image": "陳渉",
+          "reference": "陳渉",
+          "candidate": "陳涉"
+         },
+         {
+          "kind": "place",
+          "image": "漢濵",
+          "reference": "漢濵",
+          "candidate": "漢濱"
+         }
+        ]
+       },
+       {
+        "page": "6a3c754d01fe4f593c1f4818:29",
+        "names": [
+         {
+          "kind": "place",
+          "image": "荆州",
+          "reference": "荆州",
+          "candidate": "荊州"
+         }
+        ]
+       },
+       {
+        "page": "6a3cb8ec3d799518cd71c409:58",
+        "names": [
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         },
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         },
+         {
+          "kind": "person",
+          "image": "孔逹",
+          "reference": "孔逹",
+          "candidate": "孔達"
+         }
+        ]
+       }
+      ]
+     }
+    }
+   },
+   "made_worse": {
+    "paddle -> paddle>agy-flash-high": {
+     "pairs": 30,
+     "identical_text": 8,
+     "fidelity_diff": 0.3,
+     "fidelity_diff_ci": [
+      0.1,
+      0.5
+     ],
+     "worse": "4/30",
+     "better": "11/30",
+     "accept_lost": "1/30",
+     "accept_gained": "5/30",
+     "wrong_text_added": "3/30",
+     "worse_pages": [
+      {
+       "page": "6a3c663d39b4508b04e3329c:52",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "Two words don't match the page: line 1 has 輸倕 where the page has 輸爾, and line 4 has 騫闞 where the page has 風閲. The other lines match apart from some characters given in standard form instead of the page's variant forms."
+      },
+      {
+       "page": "6a3c65e139b4508b04e2facc:150",
+       "draft": 3,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The headwords and citations match the leaf, but the 丨 ditto marks are gone throughout, 五羖 is misread as 五殺 twice, and the gloss phrase 德流子孫哉 after 附驥之尾 is missing."
+      },
+      {
+       "page": "6a3c723201fe4f593c1dd0c9:94",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text follows the leaf line by line and is complete, but line 4 reads 牝孕 where the page has 牲孕, and 眂 is written as the variant 眡."
+      },
+      {
+       "page": "6a3c6451af3c49b59c5ca54e:79",
+       "draft": 3,
+       "after": 4,
+       "accept": "false->false",
+       "note": "The text is complete and in order, but in three places the repeat marks (丨) for the headword are placed wrong around 之, which garbles phrases like 縱橫之志 and 清白之志."
+      }
+     ]
+    },
+    "paddle -> paddle>opus-correct": {
+     "pairs": 30,
+     "identical_text": 2,
+     "fidelity_diff": 0.73,
+     "fidelity_diff_ci": [
+      0.467,
+      1.033
+     ],
+     "worse": "1/30",
+     "better": "18/30",
+     "accept_lost": "0/30",
+     "accept_gained": "14/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "6a3cb7d93dce6cfad7488c67:104",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text is complete and correct; the line breaks don't follow the page's columns, and the note 衰七回反 sits at the head of the 正義 column on the page."
+      }
+     ]
+    }
+   },
+   "reference": {
+    "name": "Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)",
+    "align_status": {
+     "aligned:own": 30
+    },
+    "leaf_misplaced": 2,
+    "given_to_judge": true,
+    "per_route": {
+     "paddle": {
+      "n": 28,
+      "mean": 0.1177,
+      "ci95": [
+       0.09,
+       0.153
+      ]
+     },
+     "paddle>agy-flash-high": {
+      "n": 28,
+      "mean": 0.0972,
+      "ci95": [
+       0.067,
+       0.137
+      ]
+     },
+     "paddle>opus-correct": {
+      "n": 28,
+      "mean": 0.0817,
+      "ci95": [
+       0.054,
+       0.119
+      ]
+     }
+    },
+    "pages_with_ref": 28,
+    "pair_min_gap": 0.01,
+    "ordered_pairs": 39,
+    "judge_agrees": 30,
+    "judge_disagrees": 0,
+    "judge_ties": 9,
+    "agreement": 1,
+    "disagreements": [],
+    "ref_mean_accepted": 0.091,
+    "ref_mean_not_accepted": 0.1163
+   }
+  },
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books": 2736,
+    "books_walked": 71,
+    "held_or_hidden": 0,
+    "no_eligible_page": 41,
+    "rule": "visible German books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "21/30",
+     "accept_rate": 0.7,
+     "accept_ci": {
+      "ci95": [
+       0.533,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "5/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.3
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "3/30",
+      "I4": "1/30",
+      "O12": "1/30",
+      "O1": "1/30",
+      "O5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "18/30",
+      "O6": "16/30",
+      "E2": "10/30",
+      "O16": "7/30",
+      "O7": "4/30",
+      "T6": "3/30",
+      "O11": "3/30",
+      "O12": "3/30",
+      "O5": "2/30",
+      "O1": "2/30",
+      "I4": "2/30",
+      "O13": "1/30",
+      "O10": "1/30"
+     },
+     "fidelity_mean": 4.03,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a267f4288f11913ee9c8bef:37",
+       "quote": "zu erhören",
+       "severity": "wrong_text",
+       "what": "page reads 'zu erthönen' (to resound), not 'erhören' (to hear/grant)"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "wissend nun sehet und probier",
+       "severity": "wrong_text",
+       "what": "Misread; the page has roughly 'Weisheit und Kunst … auszustreuen'"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "Energie zustromt. Angeshene haben sie gestillt",
+       "severity": "wrong_text",
+       "what": "Garbled; 'Energie' is not on the page (likely 'Ewige …'), and 'gestillt' should be roughly 'sämtlich göttlich'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00211
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "28/30",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.833,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "2/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.167
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "2/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "14/30",
+      "E2": "9/30",
+      "O6": "7/30",
+      "O11": "3/30",
+      "O7": "3/30",
+      "T6": "3/30",
+      "O12": "3/30",
+      "O13": "1/30",
+      "O1": "1/30",
+      "D1": "1/30",
+      "O5": "1/30",
+      "O16": "1/30"
+     },
+     "fidelity_mean": 4.33,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "das ehr Ewig Gott loben und Ihm zustehen mögen",
+       "severity": "wrong_text",
+       "what": "page reads roughly 'dort aber Ewig Gott loben und preisen mögen'"
+      },
+      {
+       "page": "69aea5c357ed98c21d25ae38:130",
+       "quote": "μετὰ τοῦ ι δημωι",
+       "severity": "wrong_text",
+       "what": "page has δημοι; the scholion's point is that ο was written for ω, so δημωι reverses it"
+      },
+      {
+       "page": "6a267f6e88f11913ee9c919b:26",
+       "quote": "Unt. Loffa Ge.",
+       "severity": "misleads",
+       "what": "The page has 'Loſſa' (Lossa) with long s. It was misread as 'ff', which gives a different place name in an index."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00159,
+      "agy_share": 0.00000467
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 30,
+     "books": 30,
+     "accept": "28/30",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.833,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "5/30",
+      "O12": "3/30",
+      "E2": "3/30",
+      "O16": "3/30",
+      "O13": "1/30",
+      "O6": "1/30",
+      "O7": "1/30"
+     },
+     "fidelity_mean": 4.83,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "Allein gott der allmächtige <unclear>wolle</unclear>",
+       "severity": "wrong_text",
+       "what": "The page reads 'allmächtige Baumeister'. The candidate puts in 'wolle' here, which repeats the 'wolle' of the next line."
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "Allein gott der allmächtige <unclear>wolle</unclear>",
+       "severity": "wrong_text",
+       "what": "The page reads 'allmächtige Baumeister'. The candidate puts in 'wolle' here, which repeats the 'wolle' of the next line."
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "Ex minera ♄ fiat Regulus",
+       "severity": "misleads",
+       "what": "The planetary sign is the 2-shaped Jupiter sign (♃), not Saturn (♄). The same error appears in the slip ('Minera ♄', 'memorabilia ♄') and in the vocab list ('Saturnus')."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00159
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "4/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 0,
+     "fidelity_diff": 0.3,
+     "fidelity_diff_ci": [
+      0.133,
+      0.467
+     ],
+     "worse": "0/30",
+     "better": "9/30",
+     "accept_lost": "0/30",
+     "accept_gained": "7/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    },
+    "lite -> lite>opus-correct": {
+     "pairs": 30,
+     "identical_text": 4,
+     "fidelity_diff": 0.8,
+     "fidelity_diff_ci": [
+      0.567,
+      1.033
+     ],
+     "worse": "0/30",
+     "better": "20/30",
+     "accept_lost": "0/30",
+     "accept_gained": "7/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   }
+  },
+  "de-flash3": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books": 2736,
+    "books_walked": 52,
+    "held_or_hidden": 0,
+    "no_eligible_page": 22,
+    "rule": "visible German books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "22/30",
+      "O6": "12/30",
+      "E2": "10/30",
+      "O12": "3/30",
+      "T6": "3/30",
+      "O16": "2/30",
+      "O11": "2/30",
+      "O13": "1/30",
+      "O5": "1/30",
+      "D1": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 4.27,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6988a5a0b35a40d0f7621798:198",
+       "quote": "ganz himmlisch",
+       "severity": "cosmetic",
+       "what": "The page spells it 'gantz'; the candidate silently modernises it."
+      },
+      {
+       "page": "6988a5a0b35a40d0f7621798:198",
+       "quote": "Mittler- und Versöhnungs-Amt",
+       "severity": "cosmetic",
+       "what": "The page spells it 'Mitler'; the candidate normalises it to 'Mittler'."
+      },
+      {
+       "page": "6a491765ae20621d947e7ccf:22",
+       "quote": "gefährlicheit",
+       "severity": "cosmetic",
+       "what": "the page reads 'gefärlicheit'; an h was added"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00354
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "accept_rate": 0.87,
+     "accept_ci": {
+      "ci95": [
+       0.733,
+       0.967
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "18/30",
+      "E2": "9/30",
+      "O6": "8/30",
+      "T6": "4/30",
+      "O12": "2/30",
+      "O16": "2/30",
+      "O5": "1/30",
+      "O4": "1/30"
+     },
+     "fidelity_mean": 4.43,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "sie angestrengt hatte",
+       "severity": "wrong_text",
+       "what": "page reads 'sie angeben hatte' (had denounced them)"
+      },
+      {
+       "page": "6988a5a0b35a40d0f7621798:198",
+       "quote": "Herzligkeit",
+       "severity": "misleads",
+       "what": "the page has Herꝛligkeit (Herrligkeit); the r rotunda was read as z, which suggests 'Herz'"
+      },
+      {
+       "page": "6988a5a0b35a40d0f7621798:198",
+       "quote": "verathesmen",
+       "severity": "misleads",
+       "what": "the page has 'verathemen'; an extra s was added"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00395,
+      "agy_share": 0.00000503
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "5/30",
+     "skipped": 0
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 29,
+     "books": 29,
+     "accept": "29/29",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "0/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "11/29",
+      "O16": "4/29",
+      "E2": "3/29",
+      "O11": "2/29",
+      "O12": "1/29",
+      "T6": "1/29"
+     },
+     "fidelity_mean": 4.79,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6a491765ae20621d947e7ccf:22",
+       "quote": "alle vnser sinne/",
+       "severity": "cosmetic",
+       "what": "the page's abbreviations (siñe, entpfindūg, vñ) are expanded without any mark"
+      },
+      {
+       "page": "6a26c557aad44c98627d6276:23",
+       "quote": "als das Feuer / welches eigentlich",
+       "severity": "cosmetic",
+       "what": "page has 'Feur'; normalised to 'Feuer'"
+      },
+      {
+       "page": "6a26c557aad44c98627d6276:23",
+       "quote": "wird ein Feuer / und",
+       "severity": "cosmetic",
+       "what": "page has 'Feur'; normalised to 'Feuer'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00342
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "8/29",
+     "skipped": 1
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 5,
+     "fidelity_diff": 0.17,
+     "fidelity_diff_ci": [
+      0.033,
+      0.3
+     ],
+     "worse": "3/30",
+     "better": "5/30",
+     "accept_lost": "3/30",
+     "accept_gained": "0/30",
+     "wrong_text_added": "1/30",
+     "worse_pages": [
+      {
+       "page": "6a4921dd1bbf4176e1e85183:25",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text is complete and in order, but the first line has 'bleiben' where the page clearly prints 'bekleiben', and section 4 opens with 'Seye' instead of 'So seye'."
+      },
+      {
+       "page": "69b51ddf261c58d63664c2f0:206",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text is complete and in the right order, but the word 'Kühmist' has stray Chinese characters inside it, and the page's 'Holtz-' and 'tüngen' spellings have been quietly modernised."
+      },
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Mostly faithful, but two misreads change the sense ('angestrengt' for 'angeben', 'Sohns / tödtet' for 'Son ertödtet'), and the cut-off gutter notes are given in full as if they could all be read."
+      }
+     ]
+    },
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 29,
+     "identical_text": 8,
+     "fidelity_diff": 0.52,
+     "fidelity_diff_ci": [
+      0.345,
+      0.69
+     ],
+     "worse": "0/29",
+     "better": "15/29",
+     "accept_lost": "0/29",
+     "accept_gained": "1/29",
+     "wrong_text_added": "0/29",
+     "worse_pages": []
+    }
+   }
+  },
+  "latin": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "pages": 225,
+    "books": 9,
+    "note": "the pilot's pages (2026-10-25); #5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out",
+    "pilot_pages": 30,
+    "still_lite": 30
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 9,
+     "accept": "17/30",
+     "accept_rate": 0.57,
+     "accept_ci": {
+      "ci95": [
+       0.29,
+       0.857
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "12/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.143,
+       0.667
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O5": "9/30",
+      "O6": "7/30",
+      "O4": "2/30",
+      "O12": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "21/30",
+      "O5": "12/30",
+      "E2": "11/30",
+      "O12": "9/30",
+      "O8": "9/30",
+      "O16": "8/30",
+      "T6": "5/30",
+      "O4": "2/30",
+      "O10": "2/30",
+      "D1": "2/30",
+      "O11": "2/30",
+      "O17": "1/30",
+      "O14": "1/30"
+     },
+     "fidelity_mean": 3.77,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b51eba47b06ecd581960d3:141",
+       "quote": "quid sit ignis, & reliqua. & quæ dicturus est",
+       "severity": "wrong_text",
+       "what": "drops 'Proponens in his Plato', the main verb and subject of the sentence"
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "illicò materia extruditur",
+       "severity": "wrong_text",
+       "what": "'à' is dropped: the page reads 'illicò à materia extruditur'"
+      },
+      {
+       "page": "69b51eba47b06ecd581960d3:160",
+       "quote": "pyramidis apex siue angulus solidus multo longius latus.",
+       "severity": "wrong_text",
+       "what": "drops 'erit maior angulis planis, ex quibus componitur: quia basis pyramidis integer æquilater est, & quasi' (about two lines) and fuses the remnants into a non-sentence"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "Flash-Lite Batch list price"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00261
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>opus-correct": {
+     "served": "experiment read, not served (#5924 oc-reads)",
+     "n": 30,
+     "books": 9,
+     "accept": "30/30",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "7/30",
+      "O8": "5/30",
+      "O12": "4/30",
+      "D1": "4/30",
+      "O16": "3/30",
+      "O6": "3/30",
+      "T6": "2/30",
+      "O11": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 4.83,
+     "commonest": "E2",
+     "examples": [
+      {
+       "page": "69b638be1c1c21a373839d77:294",
+       "quote": "q tecu sunt. Scimus quia peccauimus in deu",
+       "severity": "cosmetic",
+       "what": "Abbreviation marks are dropped in the early lines (tecū, deū, consiliū, dederūt) but kept later (respōdēs, eū), so the convention is inconsistent within the page."
+      },
+      {
+       "page": "69dc557bcb6f7429748b8d13:85",
+       "quote": "<vocab>Aristoteles, philosophia, phisica, vegetabilia, plante, animalia, methaphisica, theoria, mathesis, mathematica</vocab>",
+       "severity": "cosmetic",
+       "what": "added keyword list that is not on the page; it is outside the transcribed text"
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "quote": "| ⊕ | 10000 | Ↄ | 5000 |",
+       "severity": "cosmetic",
+       "what": "special glyphs (target-circle, D with inner arc) only approximated by Unicode, as the note already says"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "lite + one Opus call (route-costs claude_points_per_call (a Sonnet text call; images not metered))"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00148
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 9,
+     "accept": "24/30",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.677,
+       0.931
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "4/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.036,
+       0.226
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O12": "1/30",
+      "O6": "1/30",
+      "O5": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "16/30",
+      "E2": "10/30",
+      "O8": "9/30",
+      "O12": "5/30",
+      "O11": "5/30",
+      "O5": "5/30",
+      "O10": "3/30",
+      "T6": "3/30",
+      "O17": "1/30",
+      "O7": "1/30",
+      "D1": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 4.2,
+     "commonest": "O12",
+     "examples": [
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "non quidem ratione instantaneæ formæ, acci- introductionis formæ substantialis",
+       "severity": "wrong_text",
+       "what": "words from the marginal note 'Si in aduentu formæ, accidentia corrumpantur' were pulled into the main text; the page reads 'instantaneæ introductionis'"
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:247",
+       "quote": "<margin>Plato.</margin>",
+       "severity": "cosmetic",
+       "what": "Several sidenotes are grouped at the start of the chapter, away from their lines. 'Plato.' sits beside 'genus. Cæterùm' near the foot of the page, and 'Substantia…Homo' sits beside the Porphyry quotation."
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "non quidem ratione instantaneæ formæ, acci- introductionis formæ substantialis",
+       "severity": "wrong_text",
+       "what": "words from the marginal note 'Si in aduentu formæ, accidentia corrumpantur' were pulled into the main text; the page reads 'instantaneæ introductionis'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00185,
+      "agy_share": 0.00000545
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "1/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>opus-correct": {
+     "pairs": 30,
+     "identical_text": 4,
+     "fidelity_diff": 1.07,
+     "fidelity_diff_ci": [
+      0.667,
+      1.485
+     ],
+     "worse": "0/30",
+     "better": "23/30",
+     "accept_lost": "0/30",
+     "accept_gained": "13/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    },
+    "lite -> lite>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 1,
+     "fidelity_diff": 0.43,
+     "fidelity_diff_ci": [
+      0.179,
+      0.656
+     ],
+     "worse": "2/30",
+     "better": "13/30",
+     "accept_lost": "2/30",
+     "accept_gained": "9/30",
+     "wrong_text_added": "1/30",
+     "worse_pages": [
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "In the first block of the table the halves (D, IↃ, I⊐, QC) are paired with the wrong thousand-signs, one row too high; the rest of the table and the closing sentence match the page."
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The scan cuts off the right edge of the text block. The transcription fills in some lost word endings without saying so, and drops others: 'sine' before 'ulla intermissione' and 'fide' after 'nudaque'."
+      }
+     ]
+    }
+   }
+  },
+  "latin-flash3": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15731,
+    "books_walked": 38,
+    "held_or_hidden": 0,
+    "no_eligible_page": 8,
+    "rule": "visible Latin books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "21/30",
+     "accept_rate": 0.7,
+     "accept_ci": {
+      "ci95": [
+       0.533,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "4/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.267
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "3/30",
+      "O1": "1/30",
+      "O7": "1/30",
+      "O5": "1/30",
+      "O12": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "16/30",
+      "O6": "14/30",
+      "E2": "8/30",
+      "O12": "5/30",
+      "O16": "5/30",
+      "O7": "2/30",
+      "O5": "2/30",
+      "O10": "2/30",
+      "O11": "2/30",
+      "O1": "1/30",
+      "D1": "1/30",
+      "T6": "1/30",
+      "O13": "1/30"
+     },
+     "fidelity_mean": 4.07,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a4a7e7320c510eceebc581a:16",
+       "quote": "toto consequendum exigit\ncordibus.",
+       "severity": "wrong_text",
+       "what": "The page reads 'Donatore consequendam, ex lege condictio.'"
+      },
+      {
+       "page": "6a4a6fd37b720133514b2ad2:13",
+       "quote": "habet in libro Responsum",
+       "severity": "wrong_text",
+       "what": "page has 'in libb. Responsorum' (in the books of Oracles); the candidate gives a single book and a garbled title"
+      },
+      {
+       "page": "69dbc9611040d1d5e20a3074:167",
+       "quote": "Seruilii Catonis uxoris sorore uxorem habuit",
+       "severity": "wrong_text",
+       "what": "The page reads 'Seruiliã Catõis uticẽsis sororẽ uxorẽ habuit'."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00489
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "23/30",
+     "accept_rate": 0.77,
+     "accept_ci": {
+      "ci95": [
+       0.6,
+       0.9
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.233
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O18": "1/30",
+      "O6": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "11/30",
+      "O8": "10/30",
+      "E2": "6/30",
+      "O16": "5/30",
+      "O12": "3/30",
+      "O11": "3/30",
+      "O7": "2/30",
+      "O18": "1/30",
+      "O13": "1/30",
+      "O5": "1/30",
+      "O10": "1/30"
+     },
+     "fidelity_mean": 4.23,
+     "commonest": "O18",
+     "examples": [
+      {
+       "page": "6a4a7e7320c510eceebc581a:16",
+       "quote": "<page-type>blank</page-type>",
+       "severity": "wrong_text",
+       "what": "The page is printed and readable but was left empty. It runs from the end of a thesis ('…officiosae donationis ad supplementum legitimae competere, absque dubio arbitramur'), through numbered theses about 22–25 on revoking gifts, to 'condictio.' and 'FINIS.'"
+      },
+      {
+       "page": "6a4a7e7320c510eceebc581a:16",
+       "quote": "<page-type>blank</page-type>",
+       "severity": "wrong_text",
+       "what": "The page is printed and readable but was left empty. It runs from the end of a thesis ('…officiosae donationis ad supplementum legitimae competere, absque dubio arbitramur'), through numbered theses about 22–25 on revoking gifts, to 'condictio.' and 'FINIS.'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00446,
+      "agy_share": 0.00000569
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "2/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 4,
+     "fidelity_diff": 0.17,
+     "fidelity_diff_ci": [
+      -0.033,
+      0.367
+     ],
+     "worse": "2/30",
+     "better": "7/30",
+     "accept_lost": "1/30",
+     "accept_gained": "3/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "6a42c71697284560a2b10e43:18",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "All of the page's text is here and in order, but every abbreviated legal citation has been expanded without notice, and some expansions are wrong (\"glossa Clementis\" for the gloss on the Clementines, \"pars 3\", \"quaestio 5\"). A reader would not see the page's actual abbreviated forms."
+      },
+      {
+       "page": "69de98cb1b234a773e4395a3:23",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The only text on the plate is the tablet signature 'VRIE / SE / INV / ENT' and the plate number 6. Both are captured correctly. The image description has small slips: it calls the columns Corinthian, and it leaves out the ruined walls with plants along the top."
+      }
+     ]
+    }
+   }
+  },
+  "fr-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "frame": {
+    "books": 885,
+    "books_walked": 75,
+    "held_or_hidden": 0,
+    "no_eligible_page": 45,
+    "rule": "visible French books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "accept_rate": 0.73,
+     "accept_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "6/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.067,
+       0.367
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "I1": "2/30",
+      "O5": "2/30",
+      "I4": "1/30",
+      "O1": "1/30",
+      "O4": "1/30",
+      "O7": "1/30",
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "9/30",
+      "O6": "8/30",
+      "E2": "8/30",
+      "O5": "5/30",
+      "O11": "5/30",
+      "O16": "4/30",
+      "O12": "3/30",
+      "I1": "2/30",
+      "O7": "2/30",
+      "T6": "2/30",
+      "I4": "1/30",
+      "O1": "1/30",
+      "O4": "1/30",
+      "I3": "1/30"
+     },
+     "fidelity_mean": 4,
+     "commonest": "I1",
+     "examples": [
+      {
+       "page": "69af4a490c7af0237dfb9792:554",
+       "quote": "monde. Pour terminer la discussion, voici mon dernier mot : en observant les actes de César",
+       "severity": "wrong_text",
+       "what": "The whole body is the Machiavelli/Lucio dialogue from another page of the book. The image is page 544, which describes César's silver horseshoes, his strength, and the dance at Lucrezia's wedding."
+      },
+      {
+       "page": "69e961652beefe2f6f72b4a8:168",
+       "quote": "<page-num>67</page-num>\n<header>LIVRE DEUXIÈME.</header>",
+       "severity": "wrong_text",
+       "what": "The image is page 68 (header 'VIE ET VOYAGES DE HIOUEN-THSANG.'). The candidate gives page 67, the previous page, which ends at 'arrivait des contrées' where page 68 picks up with 'lointaines'."
+      },
+      {
+       "page": "69e961652beefe2f6f72b4a8:168",
+       "quote": "pour les honorer. Cet homme était fort intelligent",
+       "severity": "wrong_text",
+       "what": "None of the candidate's text is on this page. Page 68 itself, which runs from 'lointaines, envoyèrent chacun de grands officiers' to 'Hélas! Si Hiouen-thsang ne fût point allé chercher,', is missing entirely."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00202
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "27/29",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.828,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "2/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.172
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "I4": "1/29",
+      "O5": "1/29",
+      "O4": "1/29"
+     },
+     "classes_k_of_n": {
+      "E2": "11/29",
+      "O8": "10/29",
+      "O6": "3/29",
+      "O5": "3/29",
+      "O16": "2/29",
+      "O11": "2/29",
+      "O12": "1/29",
+      "O15": "1/29",
+      "I4": "1/29",
+      "O7": "1/29",
+      "O17": "1/29",
+      "O4": "1/29",
+      "D1": "1/29",
+      "T6": "1/29"
+     },
+     "fidelity_mean": 4.52,
+     "commonest": "I4",
+     "examples": [
+      {
+       "page": "69e806acfdad300064d9fced:56",
+       "quote": "<margin>ellorū\nde eꝯ-\n℥ iij\nomniā</margin>",
+       "severity": "wrong_text",
+       "what": "These line-ends come from the facing page in the gutter strip. They are not marginalia on this leaf."
+      },
+      {
+       "page": "69e806acfdad300064d9fced:56",
+       "quote": "<margin>ellorū\nde eꝯ-\n℥ iij\nomniā</margin>",
+       "severity": "wrong_text",
+       "what": "These line-ends come from the facing page in the gutter strip. They are not marginalia on this leaf."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00159,
+      "agy_share": 0.00000469
+     },
+     "counts": true,
+     "contain_answers": "1/30",
+     "contain_reasons": [
+      "CONTAIN: The draft is from page 541 of the work, whereas this image is page 544."
+     ],
+     "unchanged": "3/29",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 29,
+     "identical_text": 3,
+     "fidelity_diff": 0.41,
+     "fidelity_diff_ci": [
+      0,
+      0.862
+     ],
+     "worse": "5/29",
+     "better": "10/29",
+     "accept_lost": "1/29",
+     "accept_gained": "6/29",
+     "wrong_text_added": "2/29",
+     "worse_pages": [
+      {
+       "page": "69e806acfdad300064d9fced:56",
+       "draft": 3,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The body text is correct, but two drachm doses are given as ounces, and the 'margin' is actually text from the facing page."
+      },
+      {
+       "page": "69b51eaf9a81ef7feb3d957d:52",
+       "draft": 5,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The lyrics are rejoined into running phrases instead of the line under each stave. As a result, 'cret;' and 'quet,' are lost from the starts of systems 2–3, and the closing lines don't match the page."
+      },
+      {
+       "page": "69c7fda46c6f3cc53c84349e:360",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "All the text of the page is there in the right order (header, ornament band, title, 'Fable' and the fable's opening text), but the long s is printed as f, so a reader sees 'preffé', 'deffus', 'faifoit' and 'fur' instead of 'presse', 'dessus', 'faisoit' and 'sur'."
+      },
+      {
+       "page": "69f8c1350c0c281d4bd32bfd:430",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The leaf is blank apart from faint pinkish ghost text: a page numbered about 151 about Xiuhtlaltzin and Mallaccoatl with footnotes citing Veytia and Ixtlilxochitl, plus a fainter second layer. None of it is this page's own printing, so nothing is lost by marking the page blank."
+      },
+      {
+       "page": "69907d225f855ec553e78ee2:514",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful, complete transcription of the body text, the section heading and the footnotes. The only differences are minor diacritic and italic choices."
+      }
+     ]
+    }
+   }
+  },
+  "german": {
+   "task": "translation",
+   "lang": "German",
+   "frame": {
+    "books": 5882,
+    "routes": {
+     "flash3": {
+      "pages": 299823,
+      "books": 1210
+     },
+     "flash-lite": {
+      "pages": 146306,
+      "books": 990
+     }
+    },
+    "salt": "german-r2",
+    "books_left_out": 60,
+    "note": "visible German books dated 1500-1800; English newer than the OCR"
+   },
+   "controls": {
+    "flash3": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "flash-lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "opus-cli": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "flash3": {
+     "served": "served",
+     "n": 30,
+     "books": 30,
+     "accept": "19/30",
+     "accept_rate": 0.63,
+     "accept_ci": {
+      "ci95": [
+       0.467,
+       0.8
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "5/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.3
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "T7": "2/30",
+      "T5": "2/30",
+      "T9": "1/30",
+      "T1": "1/30",
+      "O6": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "T10": "16/30",
+      "E2": "14/30",
+      "O6": "12/30",
+      "T15": "11/30",
+      "T6": "6/30",
+      "O8": "4/30",
+      "T7": "3/30",
+      "T5": "3/30",
+      "T9": "3/30",
+      "T8": "2/30",
+      "O7": "2/30",
+      "D1": "2/30",
+      "T1": "1/30",
+      "O12": "1/30",
+      "O4": "1/30",
+      "O11": "1/30",
+      "T3": "1/30",
+      "O1": "1/30",
+      "O16": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 3.73,
+     "commonest": "T7",
+     "examples": [
+      {
+       "page": "69c878bb6c6f3cc53c858317:19",
+       "quote": "we wish to have understood the first [matter] next in conformity",
+       "severity": "wrong_text",
+       "what": "The transcription is garbled at this point, and the translation smooths it into fluent English. It drops what the page says: 'primam materiam, sive primum Ens limbi humani; Item die primam materiam Mercurii salis, weil derselbe demselben am nächsten gleichförmig'."
+      },
+      {
+       "page": "69b51de0261c58d63664c4fa:4",
+       "quote": "<unclear>However,</unclear> <unclear>that</unclear> <unclear>is</unclear> <unclear>the thing</unclear> <unclear>which</unclear> <unclear>is seen</unclear>",
+       "severity": "wrong_text",
+       "what": "Smooth, word-by-word English laid over an invented Latin source, which presents made-up text as a real but faint reading."
+      },
+      {
+       "page": "69c878bb6c6f3cc53c858317:19",
+       "quote": "we wish to have understood the first [matter] next in conformity",
+       "severity": "wrong_text",
+       "what": "The transcription is garbled at this point, and the translation smooths it into fluent English. It drops what the page says: 'primam materiam, sive primum Ens limbi humani; Item die primam materiam Mercurii salis, weil derselbe demselben am nächsten gleichförmig'."
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "basis": "not in route-costs.json (an OCR table); 3 Flash translation price not measured per page"
+     },
+     "cost_per_usable_page": {},
+     "counts": true
+    },
+    "flash-lite": {
+     "served": "served",
+     "n": 30,
+     "books": 30,
+     "accept": "11/30",
+     "accept_rate": 0.37,
+     "accept_ci": {
+      "ci95": [
+       0.2,
+       0.533
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "9/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.133,
+       0.467
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "T9": "3/30",
+      "T5": "2/30",
+      "T3": "1/30",
+      "O6": "1/30",
+      "T8": "1/30",
+      "T1": "1/30",
+      "E2": "1/30",
+      "T15": "1/30",
+      "I1": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "14/30",
+      "O6": "10/30",
+      "T6": "8/30",
+      "T8": "7/30",
+      "T10": "7/30",
+      "T9": "5/30",
+      "T5": "3/30",
+      "T7": "3/30",
+      "T15": "2/30",
+      "O8": "2/30",
+      "O12": "2/30",
+      "O11": "2/30",
+      "T3": "1/30",
+      "I4": "1/30",
+      "T13": "1/30",
+      "T1": "1/30",
+      "O3": "1/30",
+      "I1": "1/30",
+      "O7": "1/30"
+     },
+     "fidelity_mean": 3.4,
+     "commonest": "T9",
+     "examples": [
+      {
+       "page": "6a26b93861b3857ed05a8a01:17",
+       "quote": "It restates that the Imperial mandates are invalid",
+       "severity": "wrong_text",
+       "what": "drops the whole content: the request not to be moved by contrary mandates against 'Us' and our dependants, not to impose execution costs for Austria's private claims, Austria's exempting itself, the request for 'counsel and deed' under the Execution Ordinance that 'We' have always observed, the closing friendly request and offer to return the favour"
+      },
+      {
+       "page": "6a26bd0ad6b178e5aad87c71:17",
+       "quote": "other inexperienced people, who, with few exceptions, do not truly understand it",
+       "severity": "wrong_text",
+       "what": "drops 'sich diser schweren Kranckheit zu curieren vndernehmen' (undertake to cure this grave disease), so 'it' has no referent"
+      },
+      {
+       "page": "6a26c56eaad44c98627d6d82:20",
+       "quote": "For because I have never had any greater desire",
+       "severity": "wrong_text",
+       "what": "The first nine lines are missing: the end of the sentence from the previous page about the origin of natural generation and decay, the author's reason for treating it, and his hope that it will benefit both the common and each person's own use. The translation also opens with 'For because', which reads as if something came before it."
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "basis": "not in route-costs.json (an OCR table)"
+     },
+     "cost_per_usable_page": {},
+     "counts": true
+    },
+    "opus-cli": {
+     "served": "this run's reads, not served (claude-translate.mjs read, one page a call)",
+     "n": 30,
+     "books": 30,
+     "accept": "23/30",
+     "accept_rate": 0.77,
+     "accept_ci": {
+      "ci95": [
+       0.6,
+       0.9
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "4/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.267
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "T9": "2/30",
+      "T7": "1/30",
+      "T1": "1/30",
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "T10": "15/30",
+      "E2": "13/30",
+      "T15": "12/30",
+      "O6": "5/30",
+      "T9": "4/30",
+      "T6": "4/30",
+      "T3": "2/30",
+      "O8": "2/30",
+      "O12": "2/30",
+      "O11": "1/30",
+      "T7": "1/30",
+      "O15": "1/30",
+      "T1": "1/30",
+      "T8": "1/30",
+      "T13": "1/30"
+     },
+     "fidelity_mean": 4.1,
+     "commonest": "T9",
+     "examples": [
+      {
+       "page": "6a308ce6d57c4b7e016006c6:2",
+       "quote": "like the barrels of hook-guns",
+       "severity": "wrong_text",
+       "what": "The imprint 'Bey Hanns Glaser Brieffmaler zu Nürmberg' is not translated. Glaser is named only in the summary."
+      },
+      {
+       "page": "6a26b93861b3857ed05a8a01:17",
+       "quote": "mandates <note>original: \"Mandata\"</note> which run counter to the law, against us, our associates, and relatives, in this dispute which we have with His Majest",
+       "severity": "wrong_text",
+       "what": "The main clause on this page, \"zu vngutem nicht bewegen\" (not let themselves be moved to our harm), is missing. The request survives only as a paraphrase in the meta, so the 'nor allow…' clause hangs with nothing before it."
+      },
+      {
+       "page": "69c878bb6c6f3cc53c858317:19",
+       "quote": "And under the secret of the <term>prima materia</term>",
+       "severity": "misleads",
+       "what": "Leaves out 'dem ersten' (the first arcanum). The terms 'limbi humani' and 'Mercurii salis' are missing from the whole sentence."
+      }
+     ],
+     "cost": {
+      "basis": "one Opus text call per page here (production sends 10 pages a call) (route-costs claude_points_per_call (a Sonnet text call; images not metered))"
+     },
+     "cost_per_usable_page": {},
+     "counts": true
+    }
+   },
+   "made_worse": {
+    "flash3 -> opus-cli": {
+     "pairs": 15,
+     "identical_text": 0,
+     "fidelity_diff": 0.27,
+     "fidelity_diff_ci": [
+      0,
+      0.533
+     ],
+     "worse": "1/15",
+     "better": "5/15",
+     "accept_lost": "1/15",
+     "accept_gained": "2/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": [
+      {
+       "page": "69c887a66c6f3cc53c85a109:7",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The page is rendered accurately, but the author's jab that Menapius's letters are really an untimely rebuke and libels appears as a bracketed editor's note, not as the author's words."
+      }
+     ]
+    },
+    "flash-lite -> opus-cli": {
+     "pairs": 15,
+     "identical_text": 0,
+     "fidelity_diff": 0.73,
+     "fidelity_diff_ci": [
+      0.4,
+      1.067
+     ],
+     "worse": "0/15",
+     "better": "9/15",
+     "accept_lost": "0/15",
+     "accept_gained": "4/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": []
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "de-lite",
+   "route": "lite",
+   "page_id": "69f664d320bcf02baf4309e6",
+   "book_id": "69b4192e2b0edf3eaa2def0d",
+   "page_number": 118,
+   "defects": [
+    {
+     "class": "O12",
+     "quote": "partes aa quolibet par. in minera ♄ lässet sich auch eine leichte resolution",
+     "severity": "wrong_text",
+     "what": "Text of the pasted slip is spliced line by line into the cut-off Latin lines, so it reads as one mixed text"
+    },
+    {
+     "class": "O6",
+     "quote": "wissend nun sehet und probier",
+     "severity": "wrong_text",
+     "what": "Misread; the page has roughly 'Weisheit und Kunst … auszustreuen'"
+    },
+    {
+     "class": "O6",
+     "quote": "Energie zustromt. Angeshene haben sie gestillt",
+     "severity": "wrong_text",
+     "what": "Garbled; 'Energie' is not on the page (likely 'Ewige …'), and 'gestillt' should be roughly 'sämtlich göttlich'"
+    },
+    {
+     "class": "O1",
+     "quote": "♄, ♃, ♁, ♂",
+     "severity": "wrong_text",
+     "what": "A string of planetary symbols that is not on the page"
+    }
+   ],
+   "note": "The German upper half is only roughly right, and the lower half mixes the pasted-on German slip into the half-covered Latin recipe, with wrong alchemical symbols."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4a7e7320c510eceebc582a",
+   "book_id": "6a4a7e7320c510eceebc581a",
+   "page_number": 16,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Hoc est, ut Augustinus ait, et gratia in hunc in-\ntendit: quia non per legem iustificamur, sed per gratiam.",
+     "severity": "wrong_text",
+     "what": "Theology about grace and justification is invented. The page is a legal text on inofficious donations, the legitime and revocation."
+    },
+    {
+     "class": "O1",
+     "quote": "Et Hieronymus: non est per hunc usum res quae\ndonum est. Vnde gratia dicitur gratuita.",
+     "severity": "wrong_text",
+     "what": "No Jerome on the page. The page reads roughly 'Et hoc casu, nec etiam ... persona ... donatarii ...'."
+    },
+    {
+     "class": "O1",
+     "quote": "Gratia vero gratum\nfacientis donatio ad id implendum legitime con-\nsueta, digne et dubio ac nimium.",
+     "severity": "wrong_text",
+     "what": "The page reads '...officiosae donationis ad supplementum legitimae competere, absque dubio arbitramur.'"
+    },
+    {
+     "class": "O1",
+     "quote": "Quod si ista per hunc usum constitueretur,\nquod non est: gratia iam non esset gratia.",
+     "severity": "wrong_text",
+     "what": "Invented text. The page has 'Quod si is in partis portionem ...' about the donation and the legitime."
+    },
+    {
+     "class": "O1",
+     "quote": "Quemadmodum bis in hunc usum recantant\nhis lineis melodiam congruentis. Donatori obsequium",
+     "severity": "wrong_text",
+     "what": "The page has 'Et quemadmodum his in hunc modum revocantibus haec remedia competunt: ita Donatori ad revocandum ob ingratitudinem ... datur actio'."
+    },
+    {
+     "class": "O6",
+     "quote": "toto consequendum exigit\ncordibus.",
+     "severity": "wrong_text",
+     "what": "The page reads 'Donatore consequendam, ex lege condictio.'"
+    },
+    {
+     "class": "O7",
+     "quote": "->XI.<-",
+     "severity": "wrong_text",
+     "what": "The section numbers are arabic 22–25. The candidate's XI–XV are wrong in both value and count."
+    },
+    {
+     "class": "O5",
+     "quote": "Atque adeo",
+     "severity": "wrong_text",
+     "what": "Silently dropped: the whole five-line section 22 ('Atque adeo ... non tantum ad legitimae supplementum ... revocandae donationis ...'). Quoted from the page; the candidate has nothing in its place."
+    }
+   ],
+   "note": "None of the text matches the page. The leaf is a faint legal passage on inofficious donations and revocation for ingratitude, sections 22–25 ending in FINIS, but the candidate gives invented theology about grace, Augustine and Jerome."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69f6a676963c0bec3582ee99",
+   "book_id": "6909bf46cf28baa1b4caf6b5",
+   "page_number": 128,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "il ne s'est pas contenté de se faire un party, il a voulu encore se faire un nom, & se rendre chef d'une secte",
+     "severity": "wrong_text",
+     "what": "The whole second column is invented. The page has one column, and only a thin strip of the facing leaf shows at the right edge."
+    },
+    {
+     "class": "O4",
+     "quote": "& sans aucune communion avec nos Eglises, & sans aucune participation aux Sacremens de nos Eglises",
+     "severity": "wrong_text",
+     "what": "The invented column falls into a looping run of repeated 'sans aucune ... avec nos Eglises' phrases."
+    }
+   ],
+   "note": "The real page text is transcribed almost correctly, but a long invented second column follows it, full of repeated 'sans aucune ... avec nos Eglises' phrases, and that column is not on this single-column page."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69af4a490c7af0237dfb99bc",
+   "book_id": "69af4a490c7af0237dfb9792",
+   "page_number": 554,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "monde. Pour terminer la discussion, voici mon dernier mot : en observant les actes de César",
+     "severity": "wrong_text",
+     "what": "The whole body is the Machiavelli/Lucio dialogue from another page of the book. The image is page 544, which describes César's silver horseshoes, his strength, and the dance at Lucrezia's wedding."
+    },
+    {
+     "class": "O7",
+     "quote": "<page-num>541</page-num>",
+     "severity": "wrong_text",
+     "what": "The page prints 544, not 541."
+    },
+    {
+     "class": "O5",
+     "quote": "Lucio, sans façon, secoua Machiavel et l'appela polisson.",
+     "severity": "wrong_text",
+     "what": "None of this page's 31 lines is transcribed, from 'cents ducats par jour' to 'lui chuchota quelques mots'."
+    }
+   ],
+   "note": "A reader would see a transcription of a different page (541, the Machiavelli tavern dialogue) next to an image of page 544 about César Borgia's horseshoes, his strength, and his masked dance at Lucrezia's wedding. None of the text matches."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69e961652beefe2f6f72b550",
+   "book_id": "69e961652beefe2f6f72b4a8",
+   "page_number": 168,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "<page-num>67</page-num>\n<header>LIVRE DEUXIÈME.</header>",
+     "severity": "wrong_text",
+     "what": "The image is page 68 (header 'VIE ET VOYAGES DE HIOUEN-THSANG.'). The candidate gives page 67, the previous page, which ends at 'arrivait des contrées' where page 68 picks up with 'lointaines'."
+    },
+    {
+     "class": "I1",
+     "quote": "pour les honorer. Cet homme était fort intelligent",
+     "severity": "wrong_text",
+     "what": "None of the candidate's text is on this page. Page 68 itself, which runs from 'lointaines, envoyèrent chacun de grands officiers' to 'Hélas! Si Hiouen-thsang ne fût point allé chercher,', is missing entirely."
+    }
+   ],
+   "note": "The text shown beside this image belongs to the previous page (67). The page's own text, about the trip to Kie-tchi and Fan-yen-na (Bamian) through the snowy mountains, is not there at all."
+  },
+  {
+   "cell": "german",
+   "route": "flash3",
+   "page_id": "69b51de0261c58d63664c4fe",
+   "book_id": "69b51de0261c58d63664c4fa",
+   "page_number": 4,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "much <unclear>craftsmanship</unclear> in models <note>original: \"in modulis multum artificium\"</note>",
+     "severity": "wrong_text",
+     "what": "The image shows mirrored German blackletter bleed-through from a title page (e.g. 'Modelen Kunst', 'MACHINA', 'Leipzig', 'in Verlegung', 'Lanckischens Erben'). The Latin preface sentences being translated are invented."
+    },
+    {
+     "class": "T7",
+     "quote": "<unclear>However,</unclear> <unclear>that</unclear> <unclear>is</unclear> <unclear>the thing</unclear> <unclear>which</unclear> <unclear>is seen</unclear>",
+     "severity": "wrong_text",
+     "what": "Smooth, word-by-word English laid over an invented Latin source, which presents made-up text as a real but faint reading."
+    }
+   ],
+   "note": "The page is essentially blank, with a mirrored German title page showing through, but the translation gives an invented Latin preface as if it had been read from the ghost text."
+  },
+  {
+   "cell": "german",
+   "route": "flash-lite",
+   "page_id": "69bda135f6d63c919748ed52",
+   "book_id": "69bda135f6d63c919748ec78",
+   "page_number": 218,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "painting that was smeared together with red lead and red, and he believed he possessed a beautiful painting by Apelles or Zeuxis",
+     "severity": "wrong_text",
+     "what": "The image is page 195, but the transcription and translation are of page 196, the next page, which only shows through faintly. None of the visible page is translated: the ambrosia and sturgeon lines, the ugly wife who seems a Venus to her husband, and the woodcut of a painter at his easel."
+    }
+   ],
+   "note": "The English text doesn't match the page shown. The image is page 195 (ambrosia, sturgeon, a wife as lovely as Venus, plus a woodcut), but the translation gives the following page (Apelles and Zeuxis, the false jewels, the Morus note)."
+  }
+ ]
+}

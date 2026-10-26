@@ -1,0 +1,35 @@
+{
+ "account": "dereklomas@gmail.com",
+ "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
+ "shared": "SHARED: this orchestrating claude -p session ran throughout, and a #6420 spare-audit round (4 Opus readers) ran on the same account 09:05-09:55Z; the deltas are NOT this run's alone",
+ "start": {
+  "at": "2026-10-26T09:00:01Z",
+  "weekly_pct": 80,
+  "session_pct": 27
+ },
+ "end": {
+  "at": "2026-10-26T10:20:01Z",
+  "weekly_pct": 88,
+  "session_pct": 73
+ },
+ "opus_judge_calls": 507,
+ "opus_judge_verdicts_reused_from_pilot": 60,
+ "opus_name_check_calls": 27,
+ "opus_correct_calls": {
+  "zh-dice/paddle_opus_correct": 30,
+  "de-lite/lite_opus_correct": 30,
+  "de-flash3/3flash_opus_correct": 33
+ },
+ "opus_translate_calls": 30,
+ "agy_calls": 182,
+ "agy_calls_by_route": {
+  "zh-dice/paddle_agy_flash_high": 30,
+  "fr-lite/lite_agy_flash_low": 30,
+  "latin-flash3/3flash_agy_flash_low": 30,
+  "latin/lite_agy_flash_low": 30,
+  "de-lite/lite_agy_flash_low": 30,
+  "de-flash3/3flash_agy_flash_low": 32
+ },
+ "list_usd_equiv_judge": 31.8,
+ "note": "No points_per_call: the meter is shared and integer; the pilot's 0.0124 stays the upper bound."
+}

@@ -24,8 +24,12 @@
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs refs   --out=DIR
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs translate --out=DIR
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs packet --out=DIR
- *   node scripts/eval/route-judge-6740/judge.mjs judge --out=DIR [--concurrency=3] [--cell=latin] [--limit=N]
+ *   node scripts/eval/route-judge-6740/judge.mjs judge --out=DIR [--concurrency=3] [--cell=latin] [--routes=a,b] [--limit=N]
  *   node scripts/eval/route-judge-6740/judge.mjs score --out=DIR
+ * Router tests (below): draw --cells=zh-dice,de-lite,... --out=DIR, then refs (zh-dice), correct [--cell=X], translate
+ * (german), packet, judge [--reuse=<a verdicts file>], names (zh-dice), score.
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs correct --out=DIR [--cell=X] [--by=opus|agy] [--agy-max=N]
+ *   node scripts/eval/route-judge-6740/judge.mjs names --out=DIR
  *
  * CELLS (each an open routing decision). "experiment read" = never served; it comes from the eval named.
  *   latin    Latin print OCR (#5924). lite as served; lite > Opus correction (experiment read, #5924 oc-reads).
@@ -39,6 +43,26 @@
  *   german   German translation (#7263). 3 Flash and Flash-Lite as served; Opus CLI (this run's reads, not served:
  *            `translate` runs claude-translate.mjs read with CANDIDATE_READS=off on half of each served route's pages).
  *
+ * ROUTER TESTS (#6740, the router table's "test next" cells; `draw --cells=a,b,...` draws only these, into a new DIR).
+ * Each is a STORED draft and its corrections, read now by the correctors the router would send it to; nothing applied.
+ *   zh-dice      Chinese Paddle pages whose own Kanripo screen is trusted and below 0.90 dice (0.6 <= dice < 0.90,
+ *                not the guarded #6871 apply, interior, >= 40 Han). paddle; paddle>agy-flash-high; paddle>opus-correct.
+ *                The Kanripo leaf goes to the judge as a REFERENCE (another edition: the image decides), and every
+ *                accepted page gets a NAME CHECK (`names`): personal and place names, character by character.
+ *   de-lite      German OCR, Flash-Lite drafts: lite; lite>agy-flash-low; lite>opus-correct.
+ *   de-flash3    German OCR, 3 Flash drafts: 3flash; 3flash>agy-flash-low; 3flash>opus-correct.
+ *   latin        The pilot's 30 Latin pages again, plus lite>agy-flash-low. `judge --reuse=<pilot verdicts>` copies
+ *                the pilot's verdicts for every item whose text is unchanged, so lite and lite>opus-correct pair with it.
+ *   latin-flash3 Latin print, 3 Flash drafts: 3flash; 3flash>agy-flash-low.
+ *   fr-lite      French OCR, Flash-Lite drafts: lite; lite>agy-flash-low.
+ *   german       German translation, a second draw (salt german-r2, the pilot's books left out), as the pilot's cell.
+ * OCR frames: visible books not held, of the cell's language; one page per book, interior, >= 300 characters (Chinese:
+ * 40 Han), not <script>handwritten</script>, the stored OCR by the cell's draft engine. `correct` runs the correctors on
+ * the stored draft: Opus through scripts/batch/ocr-convergence/correct.mjs (one page a call here: one page per book),
+ * agy through scripts/batch/cli-ocr.mjs read --correct-prompt (the #5924 one-page template, fc-prompt.mjs), both with
+ * CANDIDATE_READS=off and --fresh, so nothing is kept in R2. Their reads stay in DIR/corr/. An UNCHANGED answer is
+ * the draft; a CONTAIN answer is counted apart (score: contain), never judged.
+ *
  * VERDICT per output: accept (would a reader accept this as this leaf's text / translation), a 1-5 fidelity score,
  * defects tagged with the 44 page-error-taxonomy classes, each with a quoted span and a severity, and a one-line note.
  * Two routes that produced the same text on a page are judged once.
@@ -47,7 +71,8 @@
  * The judge passes when it accepts neither and scores both <= 2; a route whose control fails does not count.
  *
  * PACE: the judge does not call while this box's Claude account is at or above ROUTE_JUDGE_WEEKLY_MAX (85) of its
- * week or 95 of its 5 hours (model-limits.mjs; CLAUDE_LIMITS_FILE may point at a per-box meter). Read-only: no writes
+ * week or ROUTE_JUDGE_SESSION_MAX (95) of its 5 hours (model-limits.mjs; CLAUDE_LIMITS_FILE may point at a per-box
+ * meter), nor after ROUTE_JUDGE_STOP_AT (an ISO time) when that is set. `correct` checks the same before each corrector. Read-only: no writes
  * to pages, books or R2. Large files live in DIR, under $JOB_SCRATCH; the committed summary is score.json.
  */
 import fs from 'node:fs';
@@ -59,6 +84,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { parseJson } from '../translate-cli-lane-7075/sample.mjs';
+import { contentHash } from '../../lib/write-provenance.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const STAGE = process.argv[2];
@@ -78,6 +104,23 @@ const LITE = ['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview'];
 const FLASH3 = ['gemini-3-flash-preview'];
 const OPUS = ['claude-opus-5-5'];
 const DE_OPUS_DIR = 'opus-de';
+const PILOT_DIR = path.join(ROOT, 'scripts/eval/route-judge-6740/results/pilot-2026-10-26');
+const SESSION_MAX = Number(process.env.ROUTE_JUDGE_SESSION_MAX || 95);
+const pastStop = () => process.env.ROUTE_JUDGE_STOP_AT && Date.now() >= Date.parse(process.env.ROUTE_JUDGE_STOP_AT);
+const readJsonl = (f) => (fs.existsSync(f) ? jsonl(f.endsWith('.gz') ? gz(f) : fs.readFileSync(f, 'utf8')) : []);
+const textSha = (t) => h(String(t || '')).slice(0, 16);
+const AGY = (model) => ({ by: 'agy', model });
+// The router tests' cells (header). `draft` is the stored engine; correctors read that stored text and the image.
+const RT = {
+  // Every Paddle-lane book carries an OCR-only lane hold (translation waits; not a containment): those are allowed.
+  'zh-dice': { lang: 'Chinese', draft: 'paddle', laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-high': AGY('gemini-3.8-flash-high'), 'paddle>opus-correct': { by: 'opus' } }, kanripo: true },
+  'de-lite': { lang: 'German', draft: 'lite', models: LITE, books: '^German', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'lite>opus-correct': { by: 'opus' } } },
+  'de-flash3': { lang: 'German', draft: '3flash', models: FLASH3, books: '^German', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' } } },
+  latin: { lang: 'Latin', draft: 'lite', models: LITE, pilot: true, routes: ['lite', 'lite>opus-correct', 'lite>agy-flash-low'], correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'latin-flash3': { lang: 'Latin', draft: '3flash', models: FLASH3, books: '^Latin', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'fr-lite': { lang: 'French', draft: 'lite', models: LITE, books: '^French', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+};
+const slug = (route) => route.replace(/[^a-z0-9]+/gi, '_');
 
 /** One page per book in a seeded order; a second round per book only when there are fewer books than n. */
 function onePerBook(rows, n, salt) {
@@ -94,6 +137,7 @@ const sentinelBody = (t) => { const b = t.indexOf('<<<BEGIN>>>'), e = t.lastInde
 const tibManifest = () => fs.readFileSync(TIB_MANIFEST, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.stratum === 'kangyur');
 
 async function draw() {
+  if (arg('cells')) return drawRouterTests(arg('cells').split(','));
   const { MongoClient } = await import('mongodb');
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
@@ -129,8 +173,19 @@ async function draw() {
     planted: plants.anchor_ids,
     frame: { folios: tib.length, books: new Set(tib.map((r) => r.book_id)).size, note: 'tibetan-proofread-2026-10 Kangyur stratum: one folio per book, Derge identity 0.904-0.969' } };
 
-  // german: one frame, two served translation routes, one page per book per route. Opus CLI reads half of each.
-  const books = await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: '^German', $options: 'i' }, year: { $gte: 1500, $lte: 1800 } }, { projection: { id: 1, title: 1, year: 1 } }).toArray();
+  cells.german = await drawGerman(db, 'german');
+
+  await c.close();
+  fs.mkdirSync(OUT, { recursive: true });
+  W('sample.json', { drawn_at: new Date().toISOString(), n: N, cells });
+  for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
+}
+
+// german: one frame, two served translation routes, one page per book per route. Opus CLI reads half of each.
+// `salt` is the pilot's 'german'; a later draw passes its own salt and the books already drawn to leave out.
+async function drawGerman(db, salt, exclude = new Set()) {
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const books = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: '^German', $options: 'i' }, year: { $gte: 1500, $lte: 1800 } }, { projection: { id: 1, title: 1, year: 1 } }).toArray()).filter((b) => !exclude.has(b.id));
   const toDate = (f) => ({ $convert: { input: f, to: 'date', onError: null, onNull: null } });
   const de = await db.collection('pages').aggregate([
     { $match: { book_id: { $in: books.map((b) => b.id) }, page_number: { $gt: 0 }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'translation.model': { $in: [...FLASH3, ...LITE] }, 'ocr.data': { $type: 'string' }, 'translation.data': { $type: 'string' } } },
@@ -142,23 +197,81 @@ async function draw() {
   for (const route of ['flash3', 'flash-lite']) {
     const rows = de.filter((p) => deRoute(p.translation.model) === route).map((p) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, route, tr_source: p.translation.source ?? null }));
     deFrame[route] = { pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size };
-    const pick = onePerBook(rows, N, `german-${route}`);
+    const pick = onePerBook(rows, N, `${salt}-${route}`);
     dePages.push(...pick, ...pick.slice(0, Math.ceil(N / 2)).map((p) => ({ ...p, route: 'opus-cli', paired_with: route })));
   }
-  cells.german = { task: 'translation', lang: 'German', paired: false, routes: ['flash3', 'flash-lite', 'opus-cli'], pages: dePages,
+  return { task: 'translation', lang: 'German', paired: false, routes: ['flash3', 'flash-lite', 'opus-cli'], pages: dePages,
     served: { flash3: 'served', 'flash-lite': 'served', 'opus-cli': "this run's reads, not served (claude-translate.mjs read, one page a call)" },
-    frame: { books: books.length, routes: deFrame, note: 'visible German books dated 1500-1800; English newer than the OCR' } };
+    frame: { books: books.length, routes: deFrame, salt, books_left_out: exclude.size, note: 'visible German books dated 1500-1800; English newer than the OCR' } };
+}
 
+/** The router tests' cells (RT, header): one page per book, the stored draft by the cell's engine, books not held. */
+async function drawRouterTests(names) {
+  const { MongoClient } = await import('mongodb');
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const { isInterior, bodyText, foldHan } = await import('../ground-truth-5935/lib.mjs');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const db = c.db('bookstore');
+  const pilot = JSON.parse(fs.readFileSync(path.join(PILOT_DIR, 'sample.json'), 'utf8'));
+  const notHeld = { visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.status': { $ne: 'held' } };
+  const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, translation_withheld: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.pipeline': 1, 'ocr.unreadable': 1, 'ocr.qa_screen': 1, 'ocr.updated_at': 1 };
+  const row = (p, extra = {}) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, draft_model: p.ocr.model, draft_sha: contentHash(p.ocr.data), ...extra });
+  const shuffled = (ids, salt) => [...ids].sort((a, b) => h(salt + a).localeCompare(h(salt + b)));
+  const cells = {};
+  for (const name of names) {
+    const t = RT[name];
+    if (name === 'german') { cells.german = await drawGerman(db, 'german-r2', new Set(pilot.cells.german.pages.map((p) => p.book_id))); continue; }
+    if (!t) throw new Error(`unknown cell ${name}; cells: ${Object.keys(RT).join(', ')}, german`);
+    const routes = t.routes ?? [t.draft, ...Object.keys(t.correctors)];
+    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo,
+      served: Object.fromEntries(routes.map((r) => [r, r === t.draft ? 'served (the stored draft)' : t.correctors[r] ? `this run's correction of the stored draft, not served (${t.correctors[r].by}${t.correctors[r].model ? ` ${t.correctors[r].model}` : ''})` : 'experiment read, not served (#5924 oc-reads)'])) };
+    if (t.pilot) {
+      // The pilot's own pages, so its judgements pair with the new route; the stored draft must still be the lite read.
+      const ps = await db.collection('pages').find({ id: { $in: pilot.cells[name].pages.map((p) => p.page_id) } }, { projection: PROJ }).toArray();
+      const by = new Map(ps.map((p) => [p.id, p]));
+      const pages = pilot.cells[name].pages.filter((sp) => t.models.includes(by.get(sp.page_id)?.ocr?.model)).map((sp) => row(by.get(sp.page_id)));
+      cells[name] = { ...base, pages, frame: { ...pilot.cells[name].frame, pilot_pages: pilot.cells[name].pages.length, still_lite: pages.length, note: `the pilot's pages (${pilot.drawn_at.slice(0, 10)}); ${pilot.cells[name].frame.note}` } };
+      continue;
+    }
+    let frameBooks, eligible;
+    if (name === 'zh-dice') {
+      // #6561 set B's frame (books the Paddle lane wrote), its own-leaf rule, and the v2 cell's dice bucket.
+      const ev = await db.collection('book_events').find({ type: 'paddle_zh_reocr', 'details.pages_written': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
+      frameBooks = [...new Set(ev.map((e) => e.book_id))];
+      eligible = (p) => { const q = p.ocr?.qa_screen; return p.ocr?.source === 'paddle' && !p.ocr.unreadable && p.ocr.pipeline !== 'paddle-zh-guarded-2026-10' && q?.status === 'screened' && q.dice >= 0.6 && q.dice < 0.9 && [...foldHan(bodyText(p.ocr.data))].length >= 40; };
+    } else {
+      frameBooks = (await db.collection('books').find({ ...notHeld, language: { $regex: t.books, $options: 'i' } }, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id);
+      eligible = (p) => t.models.includes(p.ocr?.model) && typeof p.ocr.data === 'string' && p.ocr.data.length >= 300 && !/<script>\s*handwritten/i.test(p.ocr.data);
+    }
+    const order = shuffled(frameBooks, `rt-${name}`);
+    const pages = [], tally = { books_walked: 0, held_or_hidden: 0, no_eligible_page: 0 };
+    for (const bid of order) {
+      if (pages.length >= N) break;
+      tally.books_walked++;
+      const b = await db.collection('books').findOne({ id: bid, visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, pages_count: 1, pipeline_auto: 1 } });
+      const hold = b?.pipeline_auto?.hold;
+      if (!b || ((hold || b.pipeline_auto?.status === 'held') && !(hold && t.laneHolds?.test(hold.reason)))) { tally.held_or_hidden++; continue; }
+      const ps = (await db.collection('pages').find({ book_id: bid, page_number: { $gt: 0 } }, { projection: PROJ }).toArray())
+        .filter((p) => !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count) && eligible(p));
+      if (!ps.length) { tally.no_eligible_page++; continue; }
+      const p = ps.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
+      pages.push(row(p, name === 'zh-dice' ? { qa_dice: p.ocr.qa_screen.dice, qa_pb: p.ocr.qa_screen.pb ?? null } : {}));
+    }
+    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars, not handwritten` } };
+  }
   await c.close();
   fs.mkdirSync(OUT, { recursive: true });
-  W('sample.json', { drawn_at: new Date().toISOString(), n: N, cells });
+  // A second draw into the same DIR replaces only the cells it names.
+  const prev = fs.existsSync(path.join(OUT, 'sample.json')) ? J('sample.json') : null;
+  W('sample.json', { drawn_at: new Date().toISOString(), n: N, router_tests: true, cells: { ...(prev?.router_tests ? prev.cells : {}), ...cells } });
   for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
 }
 
 /** Kanripo leaf (WYG witness) for each drawn Chinese page, where paddle-table-6388/align.mjs can place it. */
 async function refs() {
   const s = J('sample.json');
-  const cand = s.cells.chinese.pages.map((p) => JSON.stringify({ key: p.page_id, bid: p.book_id, pn: p.page_number })).join('\n') + '\n';
+  const zh = Object.entries(s.cells).filter(([k, cs]) => k === 'chinese' || cs.kanripo).flatMap(([, cs]) => cs.pages);
+  const cand = zh.map((p) => JSON.stringify({ key: p.page_id, bid: p.book_id, pn: p.page_number })).join('\n') + '\n';
   fs.writeFileSync(path.join(OUT, 'kanripo-cand.jsonl'), cand);
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/eval/paddle-table-6388/align.mjs'), path.join(OUT, 'kanripo-cand.jsonl'), path.join(OUT, 'kanripo-align.jsonl')], { stdio: 'inherit', env: process.env });
   if (r.status !== 0) { console.error(`align.mjs exit ${r.status}`); process.exit(1); }
@@ -170,12 +283,87 @@ async function translate() {
   const ids = s.cells.german.pages.filter((p) => p.route === 'opus-cli').map((p) => p.page_id);
   fs.writeFileSync(path.join(OUT, 'opus-de-ids.json'), JSON.stringify(ids));
   const limits = await import('../../lib/model-limits.mjs');
-  const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: 95 });
+  const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
   if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'opus-de-ids.json')}`, `--out=${path.join(OUT, DE_OPUS_DIR)}`,
     '--model=opus', '--per-call=1', '--job=route-judge-6740', '--ocr-checked=eval reads for #6740, never applied; the judge reads every page against its image'],
   { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' } });
   process.exit(r.status ?? 1);
+}
+
+/**
+ * The router tests' correctors, on the STORED draft and the image: Opus through correct.mjs, agy through cli-ocr.mjs
+ * correct mode on the #5924 one-page template (fc-prompt.mjs, rebuilt from the live OCR prompt). CANDIDATE_READS=off
+ * and --fresh: nothing goes to R2, nothing is reused, nothing is written to the database. Reads land in
+ * DIR/corr/<cell>/<route>/. --agy-max caps this run's agy calls; an agy QUOTA or LOCKED line stops every agy call.
+ */
+async function correct() {
+  const s = J('sample.json');
+  const limits = await import('../../lib/model-limits.mjs');
+  const tpl = path.join(OUT, 'fc-correct-prompt.txt');
+  if (!fs.existsSync(tpl)) {
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/eval/flash-reread-5924/fc-prompt.mjs'), tpl], { stdio: 'inherit', env: process.env, cwd: ROOT });
+    if (r.status !== 0) { console.error('fc-prompt.mjs failed: the agy template could not be rebuilt'); process.exit(1); }
+  }
+  const agyCalls = () => Object.entries(s.cells).flatMap(([cell, cs]) => Object.entries(cs.correctors || {}).filter(([, c]) => c.by === 'agy').flatMap(([route]) => {
+    const d = path.join(OUT, 'corr', cell, slug(route)); return fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8')).calls || 1) : [];
+  })).reduce((a, b) => a + b, 0);
+  const AGY_MAX = Number(arg('agy-max') || 1200);
+  let agyStopped = fs.existsSync(path.join(OUT, 'agy-stopped.txt'));
+  for (const [cell, cs] of Object.entries(s.cells)) {
+    if (arg('cell') && arg('cell') !== cell) continue;
+    for (const [route, cor] of Object.entries(cs.correctors || {})) {
+      if (arg('by') && arg('by') !== cor.by) continue;
+      const dir = path.join(OUT, 'corr', cell, slug(route)); fs.mkdirSync(dir, { recursive: true });
+      const ids = cs.pages.map((p) => p.page_id);
+      if (pastStop()) { console.log('STOP_AT reached'); process.exit(3); }
+      if (cor.by === 'opus') {
+        const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+        if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+        fs.writeFileSync(path.join(dir, 'manifest.jsonl'), ids.map((id) => JSON.stringify({ page_id: id })).join('\n') + '\n');
+        console.log(`${cell}/${route}: correct.mjs on ${ids.length} pages`);
+        const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/ocr-convergence/correct.mjs'), `--set-dir=${dir}`, '--model=opus', '--per-call=10', '--concurrency=3', '--job=route-judge-6740', '--fresh'],
+          { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT });
+        if (r.status === 3) { console.log('Opus usage limit: stopped'); process.exit(3); }
+      } else {
+        if (agyStopped) { console.log(`${cell}/${route}: agy stopped earlier (agy-stopped.txt); skipped`); continue; }
+        const used = agyCalls();
+        if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
+        fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(ids));
+        console.log(`${cell}/${route}: cli-ocr.mjs correct mode, ${cor.model}, ${ids.length} pages (${used} agy calls so far)`);
+        // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
+        await new Promise((resolve) => {
+          const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
+            `--correct-prompt=${tpl}`, '--lane=route-judge-6740-eval', '--job=route-judge-6740', '--concurrency=3', '--fresh'], { env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+          child.stdout.on('data', (d) => {
+            process.stdout.write(d);
+            if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }
+          });
+          child.on('close', resolve);
+        });
+      }
+    }
+  }
+  console.log(`agy calls in DIR: ${agyCalls()}`);
+}
+
+/** A router-test corrector's answer for a page: { text } | { contain } | { none } (no answer / failed / stale draft). */
+function correction(cell, cs, route, sp, draftText) {
+  // correct.mjs keeps its reads in <set-dir>/reads/; cli-ocr.mjs in its --out.
+  const dir = path.join(OUT, 'corr', cell, slug(route), cs.correctors[route].by === 'opus' ? 'reads' : '');
+  let m; try { m = JSON.parse(fs.readFileSync(path.join(dir, `${sp.page_id}.meta.json`), 'utf8')); } catch { return { none: 'not read' }; }
+  const seen = cs.correctors[route].by === 'opus' ? m.stored_sha256 : m.draft?.text_hash;
+  if (seen !== contentHash(draftText)) return { none: 'the draft the corrector read is not the stored draft' };
+  if (cs.correctors[route].by === 'opus') {
+    if (m.outcome === 'unchanged') return { text: draftText, unchanged: true };
+    if (m.outcome === 'contain') return { contain: m.reason };
+    return m.outcome === 'corrected' ? { text: fs.readFileSync(path.join(dir, `${sp.page_id}.txt`), 'utf8') } : { none: m.reason || m.outcome };
+  }
+  if (m.exit !== 0 || m.error_class || m.wrapper) return { none: m.error_class || m.wrapper || `exit ${m.exit}` };
+  const t = fs.readFileSync(path.join(dir, `${sp.page_id}.txt`), 'utf8').trim();
+  if (/^UNCHANGED\.?$/i.test(t)) return { text: draftText, unchanged: true };
+  if (/^CONTAIN\s*:/i.test(t) && t.length < 600 && !/<page-type>/.test(t)) return { contain: t.replace(/^CONTAIN\s*:\s*/i, '') };
+  return t ? { text: t } : { none: 'empty' };
 }
 
 async function packet() {
@@ -184,10 +372,10 @@ async function packet() {
   const s = J('sample.json');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
-  const all = ['latin', 'chinese', 'german'].flatMap((x) => s.cells[x].pages.map((p) => p.page_id));
+  const all = Object.entries(s.cells).filter(([k]) => k !== 'tibetan').flatMap(([, cs]) => cs.pages.map((p) => p.page_id));
   const pages = new Map((await db.collection('pages').find({ id: { $in: all } }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1 } }).toArray()).map((p) => [p.id, p]));
   // The newest opus_correct_6561 revision of a page is the draft the served correction replaced.
-  const zhDraft = new Map((await db.collection('page_revisions').find({ field: 'ocr', reason: 'opus_correct_6561', page_id: { $in: s.cells.chinese.pages.map((p) => p.page_id) } }, { projection: { page_id: 1, data: 1, created_at: 1 } }).sort({ created_at: 1 }).toArray()).map((r) => [r.page_id, r.data]));
+  const zhDraft = new Map((await db.collection('page_revisions').find({ field: 'ocr', reason: 'opus_correct_6561', page_id: { $in: (s.cells.chinese?.pages ?? []).map((p) => p.page_id) } }, { projection: { page_id: 1, data: 1, created_at: 1 } }).sort({ created_at: 1 }).toArray()).map((r) => [r.page_id, r.data]));
   await c.close();
   const oc = new Map(jsonl(gz(LATIN_READS)).map((r) => [r.page_id, r]));
   const tibM = new Map(tibManifest().map((r) => [r.id, r]));
@@ -195,8 +383,17 @@ async function packet() {
   const deOpus = (id) => { const m = path.join(OUT, DE_OPUS_DIR, `${id}.meta.json`); try { return JSON.parse(fs.readFileSync(m, 'utf8')).exit === 0 ? fs.readFileSync(path.join(OUT, DE_OPUS_DIR, `${id}.txt`), 'utf8') : null; } catch { return null; } };
   const lite = (p) => (LITE.includes(p?.ocr?.model) ? p.ocr.data : null);
 
+  const corrOf = new Map();   // router tests: why a corrector gave no text (CONTAIN counted apart)
+  const draftOf = (cs, sp) => { const p = pages.get(sp.page_id); return p?.ocr?.data && contentHash(p.ocr.data) === sp.draft_sha ? p.ocr.data : null; };
   const output = (cell, route, sp) => {
-    const p = pages.get(sp.page_id);
+    const p = pages.get(sp.page_id), cs = s.cells[cell];
+    if (cs.kind === 'router-test' && (cs.correctors[route] || route === cs.draft_route)) {
+      const d = draftOf(cs, sp);
+      if (!d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: 'stored draft changed since the draw' }); return null; }
+      if (route === cs.draft_route) return d;
+      const a = correction(cell, cs, route, sp, d); corrOf.set(`${cell}/${route}/${sp.page_id}`, a);
+      return a.text ?? null;
+    }
     if (cell === 'latin') { const r = oc.get(sp.page_id); return route === 'lite' ? lite(p) : r?.outcome === 'unchanged' ? lite(p) : r?.text || null; }
     if (cell === 'chinese') return route === 'paddle' ? zhDraft.get(sp.page_id) ?? null : OPUS.includes(p?.ocr?.model) ? p.ocr.data : null;
     if (cell === 'tibetan') return route === 'yigdzin' ? tibM.get(sp.uid)?.served_text ?? null : tibOut[route].get(sp.uid) ?? null;
@@ -204,6 +401,16 @@ async function packet() {
   };
   // image-pick-ok: Tibetan pages are the frozen #6560 manifest's images (the ones Derge was scored against); none of the 30 is split_from_spread or cropped (checked 2026-10-26)
   const image = (cell, sp) => (cell === 'tibetan' ? (tibM.get(sp.uid)?.archived_photo || tibM.get(sp.uid)?.display_photo) : getPageSource(pages.get(sp.page_id)));
+  // Kanripo leaf as the judge's REFERENCE (router tests, zh-dice): only where some candidate is within CER 0.5 of it;
+  // further than that the neighbour rule placed the wrong leaf, and no reference is given.
+  const kan = new Map(readJsonl(path.join(OUT, 'kanripo-align.jsonl')).filter((a) => a.status === 'aligned').map((a) => [a.key, a]));
+  const refOf = new Map();
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kanripo)) for (const sp of cs.pages) {
+    const a = kan.get(sp.page_id); if (!a) continue;
+    const ref = kanFold(a.kanripo_text);
+    const best = Math.min(...cs.routes.map((r) => output(cell, r, sp)).filter(Boolean).map((t) => lev(kanFold(t), ref) / Math.max(1, ref.length)));
+    if (ref.length && best <= 0.5) refOf.set(`${cell}:${sp.page_id}`, { text: a.kanripo_text, pb: a.ref_pb, leaf: a.leaf, best_cer: +best.toFixed(4) });
+  }
   const items = [], key = [], skipped = [], byText = new Map();
   // One judge call per distinct (cell, page, text): two routes that produced the same text share a verdict.
   const add = (cell, route, sp, kind, text, extra = {}) => {
@@ -212,7 +419,7 @@ async function packet() {
     const id = `j${h(tag).slice(0, 10)}`;
     if (!byText.has(id)) {
       byText.set(id, true);
-      items.push({ id, task: cs.task, lang: cs.lang, image_url: image(cell, sp), text, source: cs.task === 'translation' ? pages.get(sp.page_id)?.ocr?.data ?? '' : undefined });
+      items.push({ id, task: cs.task, lang: cs.lang, image_url: image(cell, sp), text, source: cs.task === 'translation' ? pages.get(sp.page_id)?.ocr?.data ?? '' : undefined, reference: refOf.get(`${cell}:${sp.page_id}`)?.text });
     }
     key.push({ id: `k${h(`${kind}:${cell}:${route}:${sp.page_id}:${extra.other ?? ''}`).slice(0, 10)}`, judged_as: id, cell, route, kind, served: cs.served?.[route] ?? null, page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, uid: sp.uid, ...extra });
   };
@@ -222,10 +429,11 @@ async function packet() {
       const ok = mine.filter((sp) => {
         const t = output(cell, route, sp), img = image(cell, sp);
         const good = img && t?.trim() && (cs.task === 'ocr' || pages.get(sp.page_id)?.ocr?.data);
-        if (!good) skipped.push({ cell, route, page_id: sp.page_id, why: !img ? 'no image' : !t?.trim() ? 'no output' : 'no source OCR' });
+        const cr = corrOf.get(`${cell}/${route}/${sp.page_id}`);
+        if (!good) skipped.push({ cell, route, page_id: sp.page_id, book_id: sp.book_id, why: !img ? 'no image' : cr?.contain ? `CONTAIN: ${cr.contain}` : cr?.none ? cr.none : !t?.trim() ? 'no output' : 'no source OCR', contain: !!cr?.contain });
         return good;
       });
-      for (const sp of ok) add(cell, route, sp, 'item', output(cell, route, sp), sp.paired_with ? { paired_with: sp.paired_with } : {});
+      for (const sp of ok) add(cell, route, sp, 'item', output(cell, route, sp), { ...(sp.paired_with && { paired_with: sp.paired_with }), ...(corrOf.get(`${cell}/${route}/${sp.page_id}`)?.unchanged && { unchanged: true }), ...(refOf.has(`${cell}:${sp.page_id}`) && { reference: refOf.get(`${cell}:${sp.page_id}`).pb }) });
       // Wrong-page controls: this page's image, the output this route made for a page of ANOTHER book.
       for (let i = 0; i < 2 && ok.length > 2; i++) {
         const sp = ok[i];
@@ -237,7 +445,7 @@ async function packet() {
   // Planted: one syllable planted in the served Yigdzin read of each of the 10 #6560 anchor folios (plants.json; the
   // kind rotates vowel / swap / letter). The judge catches it if a defect quotes the planted syllable in its context.
   const plants = JSON.parse(fs.readFileSync(path.join(TIB, 'plants.json'), 'utf8'));
-  plants.anchor_ids.forEach((uid, i) => {
+  if (s.cells.tibetan) plants.anchor_ids.forEach((uid, i) => {
     const m = tibM.get(uid), pl = plants.plants[uid].plants;
     const p = pl.find((x) => x.kind === ['vowel', 'swap', 'letter'][i % 3]) ?? pl[0];
     const lines = m.served_text.split('\n');
@@ -279,7 +487,14 @@ ${it.source}
 """
 
 `;
-  return `${head}CANDIDATE ${ocr ? 'TRANSCRIPTION' : 'TRANSLATION'}:
+  // Router tests, zh-dice: the Kanripo leaf as a reference (brief, #6740). It is another edition: the image decides.
+  const ref = it.reference ? `REFERENCE: the Kanripo e-text (Wenyuange Siku quanshu witness) of the passage this leaf holds, aligned to this leaf. It is ANOTHER EDITION's digital text: it may differ from this print in variant or simplified characters, small-character notes, layout, line breaks, and in places in wording, and its first and last lines may run past this leaf. Use it to check names, numbers and hard characters; where it and the image differ, the IMAGE decides, and a candidate is not wrong for following the image against it.
+"""
+${it.reference}
+"""
+
+` : '';
+  return `${head}${ref}CANDIDATE ${ocr ? 'TRANSCRIPTION' : 'TRANSLATION'}:
 """
 ${it.text}
 """
@@ -321,17 +536,28 @@ function opusCall(prompt, cwd) {
 async function judge() {
   const only = arg('cell'), limit = Number(arg('limit') || Infinity);
   const cellOf = new Map(J('key.json').map((k) => [k.judged_as, k.cell]));
-  const pk = J('packet.json').items.filter((it) => !only || cellOf.get(it.id) === only);
+  // --routes=a,b: only items some key row of these routes judges (a route still being corrected waits for its turn).
+  const routes = arg('routes')?.split(','), routeOk = new Set(J('key.json').filter((k) => !routes || routes.includes(k.route)).map((k) => k.judged_as));
+  const pk = J('packet.json').items.filter((it) => (!only || cellOf.get(it.id) === only) && routeOk.has(it.id));
   const file = path.join(OUT, 'verdicts-opus.jsonl');
   const done = new Set(fs.existsSync(file) ? jsonl(fs.readFileSync(file, 'utf8')).filter((r) => r.verdict).map((r) => r.id) : []);
   const tries = new Map(); if (fs.existsSync(file)) for (const r of jsonl(fs.readFileSync(file, 'utf8'))) if (!r.verdict) tries.set(r.id, (tries.get(r.id) ?? 0) + 1);
   const limits = await import('../../lib/model-limits.mjs');
-  // The brief's ceiling: this box's Claude account stays under 85% of its week.
+  // --reuse=FILE: a verdict an earlier run gave the SAME item (same cell, page and text, so the same id) is copied, not
+  // re-judged: the router tests' latin cell pairs with the pilot's lite and lite>opus-correct judgements this way.
+  if (arg('reuse')) {
+    const want = new Set(pk.map((it) => it.id).filter((id) => !done.has(id)));
+    const got = readJsonl(arg('reuse')).filter((r) => r.verdict && want.has(r.id));
+    for (const r of got) { fs.appendFileSync(file, JSON.stringify({ ...r, reused_from: path.relative(ROOT, path.resolve(arg('reuse'))) }) + '\n'); done.add(r.id); }
+    console.log(`reused ${got.length} verdicts from ${arg('reuse')}`);
+  }
+  // The brief's ceiling: this box's Claude account stays under ROUTE_JUDGE_WEEKLY_MAX of its week.
   const WEEKLY = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
   let stop = null, calls = 0;
   const one = async (it) => {
     if (stop || calls >= limit) return;
-    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: 95 });
+    if (pastStop()) { stop = { until: process.env.ROUTE_JUDGE_STOP_AT, reason: 'ROUTE_JUDGE_STOP_AT' }; return; }
+    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: SESSION_MAX });
     if (b) { stop = b; return; }
     calls++;
     const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-opus-'));
@@ -354,6 +580,69 @@ async function judge() {
   let i = 0;
   await Promise.all(Array.from({ length: conc }, async () => { while (!stop && i < todo.length && calls < limit) await one(todo[i++]); }));
   if (stop) { console.log(`BLOCKED until=${stop.until} (${stop.reason})`); process.exit(3); }
+}
+
+/** The name check's prompt: the image, the Kanripo leaf, and the page's accepted candidates under blind labels. */
+export function namesPrompt(e, imageRef) {
+  return `You are checking the personal names and place names on one page of a historical Chinese book, for a library that publishes transcriptions beside the page image. The image is the only authority for what this leaf prints.
+
+The page image is attached: ${imageRef}
+
+REFERENCE: the Kanripo e-text (Wenyuange Siku quanshu witness) of the passage this leaf holds. It is another edition's text: it may differ from this print, and it may run past the leaf at either end.
+"""
+${e.reference}
+"""
+
+${e.labels.map((l) => `CANDIDATE ${l}:\n"""\n${e.texts[l]}\n"""`).join('\n\n')}
+
+List every personal name (surname and given name, courtesy name, style, posthumous or official name, a title used as a name) and every place name (state, commandery, prefecture, county, mountain, river, building) that appears on THIS LEAF, in the reference or in any candidate. Read each one on the IMAGE, character by character.
+For each name give: "kind" ("person" or "place"); "image": the characters this leaf prints, exactly (null if you cannot read it on the leaf, or it is not on this leaf); "reference": the reference's characters at that place (null if the reference has none); "candidates": for each candidate label, the characters that candidate gives at that place (null if it leaves the name out).
+
+Answer with one JSON object only: {"names": [{"kind": "person", "image": "章德懋", "reference": "章德懋", "candidates": {${e.labels.map((l, i) => `"${l}": "${i ? '章德懋' : '童德懋'}"`).join(', ')}}}]}`;
+}
+
+/**
+ * Name check (router tests, zh-dice; the brief: the pilot's judge accepted 章德懋 -> 童德懋). Every page with an ACCEPTED
+ * candidate and a Kanripo reference: one Opus call with the image, the reference and the accepted candidates (blind,
+ * seeded order). score counts a name error where a name the image prints (two or more Han) is not in the candidate,
+ * Han-folded: a mechanical check on the checker's reading of the image, not on its reading of the candidate.
+ */
+async function names() {
+  const keyRows = J('key.json'), s = J('sample.json');
+  const pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
+  const V = new Map(readJsonl(path.join(OUT, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+  const file = path.join(OUT, 'names-opus.jsonl');
+  const tries = new Map(); for (const r of readJsonl(file)) tries.set(r.page_id, r.verdict ? 99 : (tries.get(r.page_id) ?? 0) + 1);
+  const limits = await import('../../lib/model-limits.mjs');
+  const WEEKLY = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
+  const pages = new Map();
+  for (const k of keyRows.filter((x) => x.kind === 'item' && s.cells[x.cell]?.kanripo && V.get(x.judged_as)?.accept)) {
+    const it = pk.get(k.judged_as); if (!it?.reference) continue;
+    const e = pages.get(k.page_id) ?? { page_id: k.page_id, cell: k.cell, image_url: it.image_url, reference: it.reference, ids: new Set() };
+    e.ids.add(k.judged_as); pages.set(k.page_id, e);
+  }
+  const todo = [...pages.values()].filter((e) => (tries.get(e.page_id) ?? 0) < 3);
+  console.log(`names: ${todo.length} of ${pages.size} pages to check`);
+  let stop = null, i = 0;
+  const one = async (e) => {
+    if (pastStop()) { stop = { reason: 'ROUTE_JUDGE_STOP_AT' }; return; }
+    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: SESSION_MAX }); if (b) { stop = b; return; }
+    const ids = [...e.ids].sort((a, b2) => h(`names:${a}`).localeCompare(h(`names:${b2}`)));
+    const labels = ids.map((_, j) => `C${j + 1}`), texts = Object.fromEntries(ids.map((id, j) => [labels[j], pk.get(id).text]));
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-names-'));
+    try {
+      const res = await fetch(e.image_url);
+      if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ page_id: e.page_id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      const r = await opusCall(namesPrompt({ ...e, labels, texts }, 'the file ./page.jpg in your working directory (open it with Read before you answer)'), ws);
+      if (r.cls === 'quota') { stop = { reason: 'quota reply' }; return; }
+      const v = parseJson(r.text, (x) => Array.isArray(x.names));
+      fs.appendFileSync(file, JSON.stringify({ page_id: e.page_id, cell: e.cell, labels: Object.fromEntries(labels.map((l, j) => [l, ids[j]])), texts, verdict: v, raw: v ? undefined : String(r.text).slice(0, 500), usage: r.usage, list_usd: r.cost, at: new Date().toISOString() }) + '\n');
+      console.log(`  ${e.page_id}: ${v ? `${v.names.length} names` : 'unparsed'}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  await Promise.all(Array.from({ length: 3 }, async () => { while (!stop && i < todo.length) await one(todo[i++]); }));
+  if (stop) { console.log(`BLOCKED (${stop.reason})`); process.exit(3); }
 }
 
 // ------------------------------------------------------------------------------------------------ score
@@ -396,9 +685,32 @@ function routeCosts(measuredPoints) {
     'german/flash3': { usd: null, basis: 'not in route-costs.json (an OCR table); 3 Flash translation price not measured per page' },
     'german/flash-lite': { usd: null, basis: 'not in route-costs.json (an OCR table)' },
     'german/opus-cli': { claude_points: pts, basis: `one Opus text call per page here (production sends 10 pages a call) (${ptsBasis})` },
+    _q: { ...q, by, ptsBasis, pts },
   };
 }
+/** A router-test route's cost: the draft's (route-costs.json engine), plus one corrector call (Opus points / agy share). */
+function rtCost(cs, route, q, measuredPoints) {
+  if (cs.kind !== 'router-test' || !q) return null;
+  const eng = { lite: 'gemini-3.1-flash-lite', '3flash': 'gemini-3-flash-preview', paddle: 'paddleocr-vl-1.6' }[cs.draft_route];
+  const e = q.by(eng), usd = e ? (e.usd_per_page ?? (e.busy_usd_per_1k != null ? e.busy_usd_per_1k / 1000 : null)) : null;
+  const cor = cs.correctors?.[route];
+  if (!cor) return { usd, basis: `${eng} (route-costs.json${e ? '' : ': not listed'})` };
+  return cor.by === 'opus' ? { usd, claude_points: measuredPoints ?? q.pts, basis: `draft + one Opus image call (${q.ptsBasis}; correct.mjs at one page a call here)` }
+    : { usd, agy_share: q.agy_share_per_call, basis: `draft + one agy ${cor.model} call` };
+}
 const perUsable = (cost, rate) => (cost && rate ? Object.fromEntries(Object.entries(cost).filter(([k, v]) => typeof v === 'number').map(([k, v]) => [k, +(v / rate).toPrecision(3)])) : null);
+
+// Apparatus (the library's tags whose CONTENT is not the page's text) goes before a Kanripo compare; the leaf's own
+// small-character notes stay (<gloss>, <unclear> keep their text), as Kanripo carries them inline. Han only.
+const KAN_APP = 'vocab|warning|meta|note|header|summary|keywords|image-desc|page-num|sig|scan-quality|language|script|page-type|columns';
+const kanFold = (t) => String(t || '').replace(new RegExp(`<(${KAN_APP})\\b[^>]*>[\\s\\S]*?</\\1>`, 'g'), '').replace(/<[^>]+>/g, '').replace(/[^\p{Script=Han}]/gu, '');
+
+// Glyph variants (the same character, another form) met in the name check of 2026-10-26, classed by eye: the checker
+// copies Kanripo's form (often a shinjitai-like variant) as the image's, so a strict compare flags 荆州 / 荊州. 己 已 巳
+// are one glyph in this woodblock type (釋齊巳 / 齊已 / 齊己 on one page): not separable from the image. A pair of
+// DIFFERENT characters (五羖 / 五殺, by eye on the leaf) is never here.
+const GLYPH_VARIANTS = ['恵惠', '隠隱', '瓉瓚', '高髙', '荆荊', '虚虛', '温溫', '渉涉', '濵濱', '逹達', '禇褚', '己已巳'];
+const glyphFold = (t) => { let o = String(t); for (const g of GLYPH_VARIANTS) o = o.replace(new RegExp(`[${g}]`, 'g'), g[0]); return o; };
 
 /** Did a verdict on a planted item quote the planted syllable in its context? */
 function caught(v, plant) {
@@ -418,7 +730,14 @@ function score() {
   const cls = (d) => String(d.class || '').toUpperCase().match(/^[IOTDE]\d+/)?.[0] ?? 'E2';
   const meter = fs.existsSync(path.join(OUT, 'meter.json')) ? J('meter.json') : null;
   const costs = routeCosts(meter?.points_per_call ?? null);
-  const FILE = 'scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json';
+  const FILE = path.relative(ROOT, path.join(OUT, 'score.json'));
+  const skippedRows = fs.existsSync(path.join(OUT, 'packet-skipped.json')) ? J('packet-skipped.json') : [];
+  // Name check (router tests, `names`): a name the image prints that an accepted candidate does not carry, Han-folded.
+  const nameRows = readJsonl(path.join(OUT, 'names-opus.jsonl')).filter((r) => r.verdict);
+  const nameOf = new Map(); for (const r of nameRows) for (const [lab, jid] of Object.entries(r.labels)) nameOf.set(`${r.page_id}:${jid}`, { r, lab });
+  // strict: character by character. folded: the same character in another glyph (GLYPH_VARIANTS) is not a name error.
+  const nameErrors = (k, fold = (t) => t) => { const x = nameOf.get(`${k.page_id}:${k.judged_as}`); if (!x) return null; const t = fold(kanFold(x.r.texts[x.lab]));
+    return (x.r.verdict.names || []).filter((n) => kanFold(n.image).length >= 2 && !t.includes(fold(kanFold(n.image)))).map((n) => ({ kind: n.kind, image: n.image, reference: n.reference ?? null, candidate: n.candidates?.[x.lab] ?? null })); };
   const report = { generated_at: new Date().toISOString(), judge: 'claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key',
     calls: { judged: V.size, unparsed: [...new Set(rows.filter((r) => !r.verdict).map((r) => r.id))].filter((id) => !V.has(id)).length, list_usd_equiv: +rows.reduce((a, r) => a + (r.list_usd || 0), 0).toFixed(2) }, meter, cells: {} };
   const ocrRows = [], trRows = [], contain = [];
@@ -443,7 +762,10 @@ function score() {
       const k2n = (o) => Object.fromEntries(Object.entries(o).sort((a, b) => b[1] - a[1]).map(([c2, k]) => [c2, `${k}/${got.length}`]));
       const top = Object.entries(wtClasses).sort((a, b) => b[1] - a[1])[0]?.[0] ?? Object.entries(classes).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
       const rate = got.length ? accept.length / got.length : null;
-      const cost = costs[`${cell}/${route}`] ?? null;
+      const cost = costs[`${cell}/${route}`] ?? rtCost(cs, route, costs._q, meter?.points_per_call ?? null);
+      const contains = skippedRows.filter((x) => x.cell === cell && x.route === route && x.contain);
+      const nc = s.cells[cell].kanripo ? accept.map((k) => [k, nameErrors(k, glyphFold)]) : null;
+      const ncStrict = s.cells[cell].kanripo ? accept.map((k) => [k, nameErrors(k)]) : null;
       C.routes[route] = {
         served: cs.served?.[route] ?? null, n: got.length, books: new Set(got.map((k) => k.book_id)).size,
         accept: `${accept.length}/${got.length}`, accept_rate: rate == null ? null : +rate.toFixed(2), accept_ci: clusterCI(got.map((k) => ({ book: k.book_id, v: verdict(k).accept ? 1 : 0 })), 6740),
@@ -452,6 +774,14 @@ function score() {
         fidelity_mean: got.length ? +mean(got.map((k) => Number(verdict(k).fidelity))).toFixed(2) : null,
         commonest: top, examples: top ? spans[top].filter((x) => x.severity === 'wrong_text').concat(spans[top]).slice(0, 3) : [],
         cost, cost_per_usable_page: perUsable(cost, rate), counts: passed,
+        ...(cs.kind === 'router-test' && { contain_answers: `${contains.length}/${got.length + contains.length}`, contain_reasons: contains.map((x) => x.why.slice(0, 200)),
+          unchanged: `${got.filter((k) => k.unchanged).length}/${got.length}`, skipped: skippedRows.filter((x) => x.cell === cell && x.route === route && !x.contain).length }),
+        ...(nc && { name_check: { accepted: accept.length, checked: nc.filter(([, e]) => e).length, unchecked: nc.filter(([, e]) => !e).length, with_name_error: nc.filter(([, e]) => e?.length).length,
+          accept_after_name_check: `${nc.filter(([, e]) => e && !e.length).length}/${got.length}`,
+          accept_after_name_check_strict: `${ncStrict.filter(([, e]) => e && !e.length).length}/${got.length}`,
+          rule: 'accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count',
+          errors: nc.filter(([, e]) => e?.length).map(([k, e]) => ({ page: `${k.book_id}:${k.page_number}`, names: e })),
+          errors_strict: ncStrict.filter(([, e]) => e?.length).map(([k, e]) => ({ page: `${k.book_id}:${k.page_number}`, names: e })) } }),
       };
       const base = { route: `${cell}: ${route}`, script: cs.lang, judge: 'opus-image', note: passed ? 'Opus reads against the image; no reference text' : 'wrong-page control failed: does not count', source: '6740 route-judge pilot', unit: 'pages', books: new Set(got.map((k) => k.book_id)).size, one_page_per_book: new Set(got.map((k) => k.book_id)).size === got.length, file: FILE };
       if (cs.task === 'ocr') {
@@ -468,7 +798,8 @@ function score() {
 
   // Pages made worse: a correction (or the Opus read) beside the draft (or the served route) on the same page.
   const pairsOf = { latin: [['lite', 'lite>opus-correct']], chinese: [['paddle', 'paddle>opus-correct']], tibetan: [['yigdzin', 'yigdzin>flash-low-correct'], ['yigdzin', 'yigdzin>opus-correct']], german: [['flash3', 'opus-cli'], ['flash-lite', 'opus-cli']] };
-  for (const [cell, prs] of Object.entries(pairsOf)) {
+  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test') pairsOf[cell] = cs.routes.filter((r) => r !== cs.draft_route).map((r) => [cs.draft_route, r]);
+  for (const [cell, prs] of Object.entries(pairsOf).filter(([c2]) => s.cells[c2])) {
     const ks = keyRows.filter((k) => k.cell === cell && k.kind === 'item');
     report.cells[cell].made_worse = {};
     for (const [draft, corr] of prs) {
@@ -505,30 +836,31 @@ function score() {
       ref_mean_accepted: mAcc == null ? null : +mAcc.toFixed(4), ref_mean_not_accepted: mRej == null ? null : +mRej.toFixed(4) };
   };
   const derge = JSON.parse(gz(path.join(TIB, 'scores-flash.json.gz'))).pages;
-  report.cells.tibetan.reference = { name: 'Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (scores-flash.json.gz)',
+  if (s.cells.tibetan) report.cells.tibetan.reference = { name: 'Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (scores-flash.json.gz)',
     ...agreement('tibetan', (k) => derge[k.uid]?.[TIB_ARMS[k.route]]?.identity ?? null, 0.005, true) };
   const kanFile = path.join(OUT, 'kanripo-align.jsonl');
   if (fs.existsSync(kanFile)) {
     const kan = new Map(jsonl(fs.readFileSync(kanFile, 'utf8')).filter((a) => a.status === 'aligned').map((a) => [a.key, a]));
     const pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
-    // Apparatus (the library's tags whose CONTENT is not the page's text) goes before the compare; the leaf's own
-    // small-character notes stay (<gloss>, <unclear> keep their text), as Kanripo carries them inline.
-    const APP = 'vocab|warning|meta|note|header|summary|keywords|image-desc|page-num|sig|scan-quality|language|script|page-type|columns';
-    const fold = (t) => String(t || '').replace(new RegExp(`<(${APP})\\b[^>]*>[\\s\\S]*?</\\1>`, 'g'), '').replace(/<[^>]+>/g, '').replace(/[^\p{Script=Han}]/gu, '');
+    const fold = kanFold;
     const rawCer = (k) => { const a = kan.get(k.page_id); if (!a) return null; const ref = fold(a.kanripo_text); return ref.length ? +(lev(fold(pk.get(k.judged_as)?.text), ref) / ref.length).toFixed(4) : null; };
     // A neighbour-rule leaf can be one leaf off: where no candidate comes within CER 0.5 of it, the leaf is not this page.
-    const best = new Map(); for (const k of keyRows.filter((x) => x.cell === 'chinese' && x.kind === 'item')) { const c2 = rawCer(k); if (c2 != null) best.set(k.page_id, Math.min(best.get(k.page_id) ?? 9, c2)); }
+    for (const zc of Object.keys(s.cells).filter((x) => x === 'chinese' || s.cells[x].kanripo)) {
+    const best = new Map(); for (const k of keyRows.filter((x) => x.cell === zc && x.kind === 'item')) { const c2 = rawCer(k); if (c2 != null) best.set(k.page_id, Math.min(best.get(k.page_id) ?? 9, c2)); }
     const misplaced = [...best].filter(([, c2]) => c2 > 0.5).map(([id]) => id);
     const cer = (k) => (misplaced.includes(k.page_id) ? null : rawCer(k));
-    const st = {}; for (const a of jsonl(fs.readFileSync(kanFile, 'utf8'))) st[a.status + (a.leaf ? `:${a.leaf}` : '')] = (st[a.status + (a.leaf ? `:${a.leaf}` : '')] ?? 0) + 1;
-    report.cells.chinese.reference = { name: 'Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)', align_status: st, leaf_misplaced: misplaced.length, ...agreement('chinese', cer, 0.01, false) };
+    const zk = new Set(s.cells[zc].pages.map((p) => p.page_id));
+    const st = {}; for (const a of jsonl(fs.readFileSync(kanFile, 'utf8')).filter((x) => zk.has(x.key))) st[a.status + (a.leaf ? `:${a.leaf}` : '')] = (st[a.status + (a.leaf ? `:${a.leaf}` : '')] ?? 0) + 1;
+    report.cells[zc].reference = { name: 'Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)', align_status: st, leaf_misplaced: misplaced.length,
+      given_to_judge: !!s.cells[zc].kanripo, ...agreement(zc, cer, 0.01, false) };
+    }
   }
 
   // Planted errors (Tibetan): the judge's catch rate. Below 80%, Derge decides the cell, not the judge.
   const pl = keyRows.filter((k) => k.kind === 'planted' && verdict(k));
   const ct = pl.filter((k) => caught(verdict(k), k.plant));
   const plRate = pl.length ? ct.length / pl.length : null;
-  report.cells.tibetan.planted = { n: pl.length, caught: ct.length, catch_rate: plRate == null ? null : +plRate.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
+  if (s.cells.tibetan) report.cells.tibetan.planted = { n: pl.length, caught: ct.length, catch_rate: plRate == null ? null : +plRate.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
     decides: plRate != null && plRate >= 0.8 ? 'judge' : 'derge', accepted_with_plant: pl.filter((k) => verdict(k).accept).length,
     detail: pl.map((k) => ({ uid: k.uid, kind: k.plant.kind, orig: k.plant.orig, planted: k.plant.planted, caught: caught(verdict(k), k.plant), accept: verdict(k).accept, fidelity: verdict(k).fidelity })) };
   report.contain_candidates = contain;
@@ -547,5 +879,5 @@ function score() {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!OUT) { console.error('--out=DIR required'); process.exit(2); }
-  await ({ draw, refs, translate, packet, judge, score }[STAGE] ?? (() => { console.error('stages: draw | refs | translate | packet | judge | score'); process.exit(2); }))();
+  await ({ draw, refs, translate, correct, packet, judge, names, score }[STAGE] ?? (() => { console.error('stages: draw | refs | translate | correct | packet | judge | names | score'); process.exit(2); }))();
 }
