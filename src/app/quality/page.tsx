@@ -107,6 +107,12 @@ type RoutingEvidence = { file?: string; issue?: number; pr?: number; n: string; 
 const ROUTING_STATUS: Record<string, string> = { settled: 'settled', provisional: 'decided on a small sample', open: 'not settled' };
 const ocrExperimentCount = EXPERIMENTS.filter(e => e.stage === 'ocr').length;
 const evidenceHref = (e: RoutingEvidence) => (e.file ? `${BLOB}scripts/eval/experiments/${e.file}` : `${ISSUE}${e.issue}`);
+/* Checked against the page image (#6740): `page_check` in the same file, one row per route the judge read.
+   A route not in use is also listed under its kind's row in the table above, in the reader column. */
+const pageCheck = ocrRouting.page_check;
+const NOT_IN_USE = /^Measured, not in use/;
+const notInUseFor = (rowId: string) =>
+  pageCheck.kinds.filter(k => k.row === rowId).flatMap(k => k.routes.filter(r => NOT_IN_USE.test(r.in_use)));
 /** "#6544" in a sentence becomes a link to the issue. */
 const withIssueLinks = (text: string) =>
   text.split(/(#\d+)/).map((part, i) => (/^#\d+$/.test(part) ? <IssueLink key={i} num={Number(part.slice(1))} /> : part));
@@ -440,6 +446,12 @@ export default function QualityCenterPage() {
                     <td className={`${td} w-[17%]`}>
                       {row.reader}
                       <span className="block text-xs text-stone-500 mt-1">{row.in_use}</span>
+                      {notInUseFor(row.id).map(r => (
+                        <span key={r.reader} className="block text-xs text-stone-500 mt-1">
+                          {r.in_use} {r.reader}: accepted on {of(r.accepted)} pages checked against the image,{' '}
+                          {longDate(pageCheck.date)}.
+                        </span>
+                      ))}
                     </td>
                     <td className={`${td} w-[17%]`}>{row.stored ?? <span className="text-stone-400">Not counted</span>}</td>
                     <td className={td}>
@@ -479,6 +491,63 @@ export default function QualityCenterPage() {
             weekly check is specified in{' '}
             <A href={`${BLOB}scripts/eval/ocr-routing/README.md`}>scripts/eval/ocr-routing/README.md</A>. Cost against accuracy
             for each engine: <A href="/quality/pareto">What it costs to read and translate a page, and how well</A>.
+          </Source>
+
+          <div id="page-check" className="scroll-mt-24">
+            <Sub>Checked against the page image, {longDate(pageCheck.date)}</Sub>
+          </div>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            For four kinds of page we drew 30 pages for each way of reading them, and had Claude Opus, an AI reviewer,
+            read every text against the photograph of its page. A page is accepted when it could be published as that page&rsquo;s text: every line, in
+            order, with the right words, names and numbers. A page has wrong text when it says something the page does not:
+            words left out or added, another page&rsquo;s text, or a misread that changes the sense. Routes we measured but
+            do not use yet are listed with the route in use. We also checked {pageCheck.by_eye_agreement.of} of these texts by
+            eye against the page; our verdict and the reviewer&rsquo;s agreed on {pageCheck.by_eye_agreement.n}.
+          </p>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[820px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Kind of page</th>
+                  <th className={th}>Read by</th>
+                  <th className={th}>Accepted</th>
+                  <th className={th}>Pages with wrong text</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pageCheck.kinds.flatMap(k =>
+                  k.routes.map((r, i) => (
+                    <tr key={`${k.id}-${r.score.route}`}>
+                      {i === 0 && (
+                        <td rowSpan={k.routes.length} className={`${td} w-[22%]`}>
+                          <span className="font-semibold text-stone-900">{k.kind}</span>
+                          <span className="block text-xs text-stone-500 mt-1">{k.sample}</span>
+                          {k.note && <span className="block text-xs text-stone-600 mt-2">{k.note}</span>}
+                        </td>
+                      )}
+                      <td className={`${td} w-[24%]`}>
+                        {r.reader}
+                        <span className="block text-xs text-stone-500 mt-1">{r.in_use}</span>
+                      </td>
+                      <td className={`${td} w-[10%] whitespace-nowrap`}>{of(r.accepted)}</td>
+                      <td className={td}>
+                        <span className="whitespace-nowrap">{of(r.wrong_text)}.</span> {r.wrong_text_what}
+                      </td>
+                    </tr>
+                  )),
+                )}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            Read from the <code>page_check</code> block of{' '}
+            <A href={`${BLOB}scripts/lib/ocr-routing-table.json`}>scripts/lib/ocr-routing-table.json</A>; the counts are those
+            of <A href={`${BLOB}${pageCheck.source}`}>score.json</A>, with the pages we read by eye in{' '}
+            <A href={`${BLOB}${pageCheck.by_eye}`}>by-eye.md</A>. Write-up:{' '}
+            <A href={`${BLOB}scripts/eval/experiments/${pageCheck.writeup}`}>the route-judge pilot</A>; cost and acceptance per
+            route: <A href={`${BLOB}${pageCheck.router_table}`}>the router table of {longDate(pageCheck.date)}</A>{' '}
+            (<IssueLink num={pageCheck.issue} />).
           </Source>
 
           <Sub>What we have not measured, and what is known to be wrong</Sub>
