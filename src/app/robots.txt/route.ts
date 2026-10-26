@@ -124,10 +124,12 @@ type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 const GROUPS: Group[] = [
   { userAgent: '*', allow: ['/'], disallow: DEFAULT_DISALLOW },
   // Sogou: a real search engine, but on 2026-10-25 it walked ~9K reader pages
-  // an hour (/book/<slug>/page/<id>). Those are noindex by default (#2688), so
-  // every fetch was a Vercel render it could not index. It keeps the book
-  // landing pages, which are what it can index; reader pages are disallowed.
-  // A named group replaces '*' for this crawler, so it repeats the defaults.
+  // an hour (/book/<slug>/page/<id>), most of them noindex (#2688), and Sogou
+  // and Baidu together sent 26 search arrivals in the 30 days before. It keeps
+  // the book landing pages. NOT applied to '*': the 394K seo_indexable reader
+  // pages brought 14,283 Google/Bing arrivals in the same 30 days, half of all
+  // search traffic (5x the landing pages). A named group replaces '*' for this
+  // crawler, so it repeats the defaults.
   { userAgent: 'Sogou web spider', allow: ['/'], disallow: [...DEFAULT_DISALLOW, '/book/*/page/'] },
   { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
