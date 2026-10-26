@@ -202,6 +202,7 @@ async function packet() {
     if (cell === 'tibetan') return route === 'yigdzin' ? tibM.get(sp.uid)?.served_text ?? null : tibOut[route].get(sp.uid) ?? null;
     return route === 'opus-cli' ? deOpus(sp.page_id) : p?.translation?.data ?? null;
   };
+  // image-pick-ok: Tibetan pages are the frozen #6560 manifest's images (the ones Derge was scored against); none of the 30 is split_from_spread or cropped (checked 2026-10-26)
   const image = (cell, sp) => (cell === 'tibetan' ? (tibM.get(sp.uid)?.archived_photo || tibM.get(sp.uid)?.display_photo) : getPageSource(pages.get(sp.page_id)));
   const items = [], key = [], skipped = [], byText = new Map();
   // One judge call per distinct (cell, page, text): two routes that produced the same text share a verdict.
