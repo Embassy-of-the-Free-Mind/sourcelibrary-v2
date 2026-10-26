@@ -30,6 +30,10 @@ state pulled
 node scripts/eval/split-leaf-5771/cut.mjs --frames=$S/frames.jsonl --req=$P6948/req.jsonl --out=$S/arm2/txt
 for arm in cut:$S/arm2/txt reread:$S/leafread/txt; do
   name=${arm%%:*}; txt=${arm#*:}
+  if [ "$name" = reread ]; then   # every crop must have its read, or a frame's English would miss a leaf
+    want=$(node -e "console.log(require('fs').readFileSync('$S/frames.jsonl','utf8').trim().split('\n').map(JSON.parse).reduce((a,f)=>a+(f.spans?f.spans.length:1),0))")
+    until [ "$(ls $txt | grep -c '\.txt$')" -ge "$want" ]; do log "waiting for leaf reads: $(ls $txt | grep -c '\.txt$')/$want"; sleep 600; done
+  fi
   for i in $(seq 1 30); do
     waitcap || exit 4
     node --env-file=.env.production.local scripts/eval/split-leaf-5771/leaf-translate.mjs --frames=$S/frames.jsonl --txt=$txt --out=$S/translate-$name
