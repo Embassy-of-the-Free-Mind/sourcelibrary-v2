@@ -246,7 +246,9 @@ async function main() {
     lastTick = now; lastPages = pagesDone;
     const thr = [...hostThrottles.entries()].map(([h, n]) => `${h.split('.')[0]}:${n}`).join(' ');
     const paused = breaker.openHosts().map(h => h.split('.')[0]).join(' ');
-    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed${pagesSkipped ? `, ${pagesSkipped} skipped` : ''} | ${recent.toFixed(2)} pages/s now | host ${currentHost}${thr ? ` | throttled ${thr}` : ''}${paused ? ` | PAUSED ${paused}` : ''}`);
+    // rss is THIS node process (decoded images, sharp buffers); opj_decompress children are extra.
+    const rss = Math.round(process.memoryUsage().rss / 1e6);
+    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed${pagesSkipped ? `, ${pagesSkipped} skipped` : ''} | ${recent.toFixed(2)} pages/s now | host ${currentHost} | rss ${rss} MB${thr ? ` | throttled ${thr}` : ''}${paused ? ` | PAUSED ${paused}` : ''}`);
   }, 60_000);
   // Never let the heartbeat hold the process open past the work.
   if (typeof hb.unref === 'function') hb.unref();
