@@ -1,4 +1,16 @@
 {
+ "/articles/aliveness/fludd-microcosm.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/ee2f1dd2cd16-1920.avif",
+    "w": 1400
+   }
+  ]
+ },
  "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
   "srcset": [
    {
