@@ -29,13 +29,13 @@ export const PLANETS = ['Saturn', 'Jupiter', 'Mars', 'Sun', 'Venus', 'Mercury', 
 const NAMES = [
   // English, Latin (common case forms), German, French, Italian, Arabic, astronomical symbols.
   // A form missing here reads as a gap and can fake a break, so add forms before trusting a book's flags.
-  ['Saturn', 'Saturnus', 'Saturni', 'Saturno', 'Saturnum', 'Saturne', 'زحل', '♄'],
-  ['Jupiter', 'Iupiter', 'Iuppiter', 'Iovis', 'Jovis', 'Iove', 'Jove', 'Giove', 'المشتري', 'المشترى', '♃'],
-  ['Mars', 'Martis', 'Marte', 'المريخ', '♂'],
-  ['Sun', 'Sol', 'Solis', 'Sole', 'Sonne', 'Soleil', 'الشمس', '☉'],
-  ['Venus', 'Veneris', 'Venere', 'الزهرة', 'الزهره', '♀'],
-  ['Mercury', 'Mercurius', 'Mercurii', 'Mercurio', 'Merkur', 'Mercure', 'عطارد', 'العطارد', '☿'],
-  ['Moon', 'Luna', 'Lunae', 'Lunæ', 'Lune', 'Mond', 'القمر', '☽', '☾'],
+  ['Saturn', 'Saturnus', 'Saturni', 'Saturno', 'Saturnum', 'Saturne', 'saturni', 'زحل', '♄'],
+  ['Jupiter', 'Iupiter', 'Iuppiter', 'Iovis', 'Jovis', 'iovis', 'jovis', 'Iove', 'Jove', 'Giove', 'المشتري', 'المشترى', '♃'],
+  ['Mars', 'Martis', 'martis', 'Marte', 'المريخ', '♂'],
+  ['Sun', 'Sol', 'Solis', 'solis', 'Sole', 'Sonne', 'Soleil', 'الشمس', '☉'],
+  ['Venus', 'Vénus', 'Veneris', 'veneris', 'Venere', 'الزهرة', 'الزهره', '♀'],
+  ['Mercury', 'Mercurius', 'Mercurii', 'mercurii', 'Mercurio', 'Merkur', 'Mercure', 'عطارد', 'العطارد', '☿'],
+  ['Moon', 'Luna', 'Lunae', 'Lunæ', 'lunae', 'lunæ', 'Lune', 'Mond', 'القمر', '☽', '☾'],
 ];
 
 const NAME_TO_INDEX = new Map();
@@ -54,6 +54,9 @@ export function findPlanets(s) {
 const MIN_COLUMN = 7; // a full cycle; shorter runs agree with a step by chance too often
 const MIN_STEP_SHARE = 0.6; // share of pairs on the dominant step for the column to count as ordered
 const MAX_LINE = 160; // longer lines are prose, where planet mentions are in no order
+// Headings and tagged lines (<meta>, <vocab>, <margin>) name a planet without being a row:
+// "The day of Saturn" above an hours list read as an extra first Saturn.
+const isNotARow = (l) => /^\s*(#|<)/.test(l);
 
 const isTableLine = (l) => l.trim().startsWith('|');
 const isSeparatorRow = (l) => /^\|?[\s:|-]+\|?$/.test(l.trim());
@@ -91,6 +94,7 @@ export function planetColumns(text) {
       continue;
     }
     if (!line.trim()) continue; // blank lines do not end a block
+    if (isNotARow(line)) continue;
     const p = line.length <= MAX_LINE ? findPlanets(line) : [];
     if (!p.length) { close(); continue; }
     for (const [j, planet] of p.entries()) push('lines', j, planet, row);
