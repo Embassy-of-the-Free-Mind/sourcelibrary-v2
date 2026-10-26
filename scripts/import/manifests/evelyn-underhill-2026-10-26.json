@@ -1,0 +1,29 @@
+{
+ "note": "Curated 2026-10-26 (Derek: 'get all of her works', 'can use better ocr if we have it'). Evelyn Underhill (1875-1941): every work first published before 1931 (US public domain; EU/UK PD since 2012), first or earliest available edition, plus the editions and introductions she made (Cloud of Unknowing 1912, Ruysbroeck's Adornment 1916, Hilton's Scale 1923, Cusa's Vision of God 1928). Already held, not re-imported: The Mystic Way (1913), Ruysbroeck (1914), One Hundred Poems of Kabir (1915). Skipped: A Defence of Magic (1907 magazine essay), post-1930 works (Mixed Pasture, Golden Sequence, School of Charity, Worship, Spiritual Life, etc. - US copyright). Imported WITHOUT a hold so the lite OCR lane reads them (Archive OCR is provisional and worse on numbers, #5124).",
+ "campaign": "evelyn-underhill-2026-10-26",
+ "collections": ["mysticism"],
+ "BOOKS": [
+  { "id": "abarlambsballad00unkngoog", "title": "A Bar-Lamb's Ballad Book", "author": "Evelyn Underhill", "year": 1902, "lang": "English", "note": "Her first book, comic verse on the law." },
+  { "id": "greyworld00unde", "title": "The Grey World", "author": "Evelyn Underhill", "year": 1904, "lang": "English", "note": "Novel." },
+  { "id": "TheMiraclesOfOurLady", "title": "The Miracles of Our Lady Saint Mary, Brought Out of Divers Tongues and Newly Set Forth in English", "author": "Evelyn Underhill", "year": 1905, "lang": "English", "note": "Heinemann first edition (dated 1906 on some copies)." },
+  { "id": "lostword0000evel", "title": "The Lost Word", "author": "Evelyn Underhill", "year": 1907, "lang": "English", "note": "Novel." },
+  { "id": "columnofdust00undeiala", "title": "The Column of Dust", "author": "Evelyn Underhill", "year": 1909, "lang": "English", "note": "Novel." },
+  { "id": "mysticismstudyin1911unde", "title": "Mysticism: A Study in the Nature and Development of Man's Spiritual Consciousness", "author": "Evelyn Underhill", "year": 1911, "lang": "English", "note": "Methuen first edition." },
+  { "id": "pathofeternalwis0000john", "title": "The Path of Eternal Wisdom: A Mystical Commentary on the Way of the Cross", "author": "Evelyn Underhill (as John Cordelier)", "year": 1911, "lang": "English", "note": "Published under the pseudonym John Cordelier; IA dates this copy 1912." },
+  { "id": "abookofcontemplationunderhill", "title": "A Book of Contemplation the Which Is Called The Cloud of Unknowing, in the Which a Soul Is Oned with God", "author": "Anonymous (14th century); edited by Evelyn Underhill", "year": 1912, "lang": "English", "note": "Underhill's edition from BL MS Harl. 674." },
+  { "id": "immanencebookofv00underich", "title": "Immanence: A Book of Verses", "author": "Evelyn Underhill", "year": 1912, "lang": "English" },
+  { "id": "PracticalMysticism", "title": "Practical Mysticism: A Little Book for Normal People", "author": "Evelyn Underhill", "year": 1914, "lang": "English", "note": "Dent first edition, Google scan (600 ppi)." },
+  { "id": "theophaniesbooko00unde", "title": "Theophanies: A Book of Verses", "author": "Evelyn Underhill", "year": 1916, "lang": "English" },
+  { "id": "adornmentofthesp00ruysuoft", "title": "The Adornment of the Spiritual Marriage; The Sparkling Stone; The Book of Supreme Truth", "author": "Jan van Ruysbroeck; translated by C. A. Wynschenk Dom, edited with an introduction by Evelyn Underhill", "year": 1916, "lang": "English" },
+  { "id": "jacoponedatodipo00undeuoft", "title": "Jacopone da Todi, Poet and Mystic, 1228-1306: A Spiritual Biography", "author": "Evelyn Underhill", "year": 1919, "lang": "English", "note": "With a selection of the Italian poems and Mrs Theodore Beck's English verse translations - facing Italian; set languages if the scan confirms." },
+  { "id": "essentialsofmyst00unde_0", "title": "The Essentials of Mysticism and Other Essays", "author": "Evelyn Underhill", "year": 1920, "lang": "English" },
+  { "id": "spiralwaybeingme00undeiala", "title": "The Spiral Way, Being Meditations upon the Fifteen Mysteries of the Soul's Ascent", "author": "Evelyn Underhill (as John Cordelier)", "year": 1922, "lang": "English", "note": "First published 1912; this scan is the 1922 Watkins printing." },
+  { "id": "lifeofspiritandl00undeuoft", "title": "The Life of the Spirit and the Life of To-day", "author": "Evelyn Underhill", "year": 1922, "lang": "English" },
+  { "id": "hiltonscaleofperfection", "title": "The Scale of Perfection", "author": "Walter Hilton; newly edited from MS. sources with an introduction by Evelyn Underhill", "year": 1923, "lang": "English" },
+  { "id": "mysticsofchurch0000unde", "title": "The Mystics of the Church", "author": "Evelyn Underhill", "year": 1925, "lang": "English" },
+  { "id": "concerninginnerl0000unde", "title": "Concerning the Inner Life", "author": "Evelyn Underhill", "year": 1926, "lang": "English", "note": "Dutton 1926." },
+  { "id": "mansupernatural0000unde", "title": "Man and the Supernatural", "author": "Evelyn Underhill", "year": 1928, "lang": "English", "note": "Dutton; first published Methuen 1927." },
+  { "id": "visionofgod0000evel", "title": "The Vision of God", "author": "Nicholas of Cusa; translated by Emma Gurney Salter, with an introduction by Evelyn Underhill", "year": 1928, "lang": "English" },
+  { "id": "houseofsoul0000evel", "title": "The House of the Soul", "author": "Evelyn Underhill", "year": 1930, "lang": "English", "note": "First published 1929." }
+ ]
+}

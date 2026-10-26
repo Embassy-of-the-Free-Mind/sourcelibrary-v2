@@ -1,0 +1,18 @@
+{
+ "note": "Curated 2026-10-26 (Derek: 'Ruusbroec also', alongside the Evelyn Underhill shelf). Jan van Ruusbroec (1293-1381): editions and translations of his works printed before 1931 not already held. Already held: De ornatu 1512 (x2), Surius Opera 1552 (x2), Opera omnia 1609, Opera 1692, German 1701, T'Cieraet 1624, Die Zierde 1922 (Mainz), Adornment 1916 (Underhill ed., imported today), studies by Maeterlinck 1894, Scully 1910, Underhill 1914. Skipped: Hello's Rusbrock 1869 Google scan (no jp2; the 1926 Perrin printing is imported instead), Spiritual Espousals (Colledge 1952, in copyright), Rubruck/Mandeville false hits (William of Rubruck).",
+ "campaign": "ruusbroec-2026-10-26",
+ "collections": ["mysticism"],
+ "BOOKS": [
+  { "id": "datboecvandentw00ruusgoog", "title": "Dat boec vanden twaelf dogheden; Die spieghel der ewigher salicheit; Van den seven trappen (Werken van Jan van Ruusbroec)", "author": "Jan van Ruusbroec; edited by J.-B. David", "year": 1860, "lang": "Dutch", "note": "Middle Dutch original, David's Maetschappy der Vlaemsche Bibliophilen edition (Ghent, Annoot-Braeckman). Confirm volume number on title page." },
+  { "id": "ReflectionsFromTheMirrorOfAMystic", "title": "Reflections from the Mirror of a Mystic", "author": "Jan van Ruusbroec; translated by Earle Baillie", "year": 1905, "lang": "English" },
+  { "id": "lelivredesxiib00janv", "title": "Le livre des XII Béguines, ou de la vraie contemplation", "author": "Jan van Ruusbroec; translated by Paul Cuylits", "year": 1909, "lang": "French" },
+  { "id": "bwb_C0-BZH-989", "title": "Flowers of a Mystic Garden", "author": "Jan van Ruusbroec", "year": 1912, "lang": "English", "note": "Selections, English from Hello's French; year from IA metadata - confirm on title page." },
+  { "id": "bookoftwelvebg00janvuoft", "title": "The Book of the Twelve Béguines", "author": "Jan van Ruusbroec; translated by John Francis", "year": 1913, "lang": "English" },
+  { "id": "lovesgradatory00ruusuoft", "title": "Love's Gradatory (The Seven Steps of the Ladder of Spiritual Love)", "author": "Jan van Ruusbroec; translated by Mother St. Jerome", "year": 1914, "lang": "English" },
+  { "id": "dasbuchvondenzw00ruus", "title": "Das Buch von den zwölf Beghinen", "author": "Jan van Ruusbroec; translated by Friedrich Markus Huebner", "year": 1916, "lang": "German" },
+  { "id": "kingdomofloverso00ruusuoft", "title": "The Kingdom of the Lovers of God", "author": "Jan van Ruusbroec; translated by T. Arnold Hyde", "year": 1919, "lang": "English", "note": "From the Latin of Surius." },
+  { "id": "bwb_T3-BRJ-739", "title": "Œuvres de Ruysbroeck l'Admirable: L'Ornement des noces spirituelles; L'Anneau ou la Pierre brillante", "author": "Jan van Ruusbroec; translated from the Flemish by the Benedictines of Saint-Paul de Wisques", "year": 1920, "lang": "French", "note": "Title page checked by eye 2026-10-26 (Vromant, Brussels/Paris 1920)." },
+  { "id": "bwb_T3-BRJ-744", "title": "Rusbrock l'Admirable (œuvres choisies)", "author": "Jan van Ruusbroec; translated by Ernest Hello", "year": 1926, "lang": "French", "note": "Perrin reprint of Hello's 1869 selection. IA metadata says English - it is French." },
+  { "id": "ruysbroeckadmira00waut", "title": "Ruysbroeck the Admirable", "author": "Alfred Wautier d'Aygalliers; translated by Fred Rothwell", "year": 1925, "lang": "English", "note": "The standard study of the period (French original 1923)." }
+ ]
+}
