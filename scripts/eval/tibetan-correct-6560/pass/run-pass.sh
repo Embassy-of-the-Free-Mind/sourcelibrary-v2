@@ -49,7 +49,8 @@ audit() {  # audit <book> <n>: both judges on n changed pages; prints the gate j
   done
   node $P/leafcheck.mjs audit-score --key="$A/key.json" --replies="$A/tiles-out.jsonl" --out="$A/span-score.json" > "$A/span-score.log" || return 1
   node $P/leafcheck.mjs gate --key="$A/key.json" --span="$A/span-score.json" --page-replies="$A/page-out.jsonl" --n=$N \
-    --out="$A/gate.json" | tee "$A/gate.log" | head -1
+    --out="$A/gate.json" > "$A/gate.log" || return 1
+  head -1 "$A/gate.log"   # not `tee | head`: under pipefail its SIGPIPE fails the audit once gate prints WORSE lines
 }
 
 guard_rate() {  # held ya-btags pages / pages read, from the dry apply summary
