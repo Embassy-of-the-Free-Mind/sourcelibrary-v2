@@ -176,3 +176,7 @@ scripts/import/*-ledger.jsonl
 # (see sidequests/README.md). Never part of sourcelibrary; only the README is tracked.
 /sidequests/*
 !/sidequests/README.md
+
+# Python bytecode (the estimator builders import provenance.py, #6740)
+__pycache__/
+*.pyc

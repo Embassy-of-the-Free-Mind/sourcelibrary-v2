@@ -21,6 +21,9 @@ has cer=null and scored=false (counted, never scored, #6523). Added per row:
   engine_family gemini-lite / gemini-flash / gemini-cli / gemini-4 / claude / open-vlm / specialist / classic
 """
 import argparse, collections, glob, json, os, statistics
+import sys, os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from provenance import label_legacy  # noqa: E402  every row says where it came from (#6740)
 
 E = 'scripts/eval'
 FAMILY = [
@@ -129,6 +132,7 @@ def main():
     for x in out:
         if not x['n_ref']:
             x['n_ref'], x['n_ref_source'] = int(med[x['chart']]), 'chart-median'
+    out = [label_legacy(x, 'ocr-pareto', [f"{x['panel']}|{x['engine']}"]) for x in out]
     with open(a.out, 'w') as f:
         for x in out:
             f.write(json.dumps(x) + '\n')

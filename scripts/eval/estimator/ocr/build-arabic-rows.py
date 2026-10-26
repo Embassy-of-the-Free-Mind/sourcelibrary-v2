@@ -32,6 +32,9 @@ Skipped (and why) is listed in the experiment file; in short: every other `langu
 OCR by a judge of the English it yields, or by agreement, never by CER per page.
 """
 import argparse, collections, json, os, sys
+import sys, os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from provenance import label_legacy  # noqa: E402  every row says where it came from (#6740)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
@@ -156,6 +159,7 @@ def main():
     out += mss6544_rows(a.mss6544)
     out += reocr5700_rows(os.path.join(res, 'reocr-lift-2026-10', 'ocr-score.json'),
                           os.path.join(res, 'reocr-lift-2026-10', 'track-pages.jsonl'))
+    out = [label_legacy(r, 'arabic-rows', [r['source']]) for r in out]
     with open(a.out, 'w') as f:
         for r in out:
             f.write(json.dumps(r, ensure_ascii=False) + '\n')

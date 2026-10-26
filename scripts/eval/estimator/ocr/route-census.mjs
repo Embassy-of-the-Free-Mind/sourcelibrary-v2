@@ -25,7 +25,12 @@
  *   refs        every stored read (live + revisions) of each benchmark reference page and each volunteer-corrected
  *               page, scored against the reference -> DIR/refs-scored.jsonl
  *   throughput  pages written per route per hour over the last --days (default 60) -> DIR/throughput/<field>-<day>.json
- *   emit        the estimator inputs -> DIR/out/*.jsonl (see the experiment write-up for the formats)
+ *   revisions-prov  the provenance of every superseded read, grouped in Mongo (no text) -> DIR/revisions-prov.json
+ *   emit        the estimator inputs -> DIR/out/*.jsonl (see the experiment write-up for the formats); engine-keyed,
+ *               so every row is labelled legacy-not-recorded (provenance.mjs)
+ *   emit-prov   the same rows keyed engine x prompt x read mode, each with its provenance block, and the split
+ *               report -> DIR/out-prov/ (route-census-prov-emit.mjs). Needs books + refs + revisions-prov from a run
+ *               of this version (#6740: the books and refs stages now record each text's provenance).
  *
  * WHAT THE DENOMINATORS ARE. Did-not-read: a route's own attempts that the live page records — pages it wrote plus
  * pages it left refused / failed / empty under its own model stamp. A page refused by one Gemini route and later read
@@ -43,6 +48,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { publicationYear } from '../../../lib/ia-ocr-cohort.mjs';
 import { normalizeLanguageToken } from '../../../lib/language-normalize.mjs';
 import { scorePage } from '../../en-ocr-reference-5124.mjs';
+import { mongoRawProvenance, rawFromSub, covariatesFromSub, provenanceFromRaw } from '../provenance.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BENCH = path.join(HERE, '..', '..', 'benchmark');
@@ -184,6 +190,24 @@ const TR_STATUS = { $switch: { branches: [
   { case: { $ne: [{ $ifNull: ['$translation.fail_reason', null] }, null] }, then: 'failed' },
 ], default: 'empty' } };
 
+/**
+ * A per-book $group that also keys on the provenance of the text (provenance.mjs RAW_KEYS), and counts pages per
+ * job id and code version inside each group (two levels, so the counts are pages, not distinct values). The sent
+ * prompt hash is per page on chained translation, so only its distinct count is kept.
+ */
+function provGroup(field, keys) {
+  const raw = mongoRawProvenance(field);
+  const f = `$${field}.engine.run`;
+  return [
+    { $group: { _id: { ...keys, p: raw, job: { $ifNull: [`${f}.job_id`, { $ifNull: [`${f}.batch_job_id`, { $ifNull: [`$${field}.ia.ingest_run`, `$${field}.batch_job_id`] }] }] },
+      code: `${f}.code_version` }, n: { $sum: 1 }, sents: { $addToSet: `$${field}.engine.prompt.sent_hash` } } },
+    { $group: { _id: Object.fromEntries([...Object.keys(keys), 'p'].map((k) => [k, `$_id.${k}`])), n: { $sum: '$n' },
+      jobs: { $push: { v: '$_id.job', n: '$n' } }, codes: { $push: { v: '$_id.code', n: '$n' } }, sent_distinct: { $sum: { $size: '$sents' } } } },
+  ];
+}
+const tally = (xs) => { const m = {}; for (const x of xs ?? []) if (x.v != null) m[x.v] = (m[x.v] ?? 0) + x.n; return m; };
+const provOf = (g) => ({ ...g._id.p, jobs: tally(g.jobs), codes: tally(g.codes), sent_distinct: g.sent_distinct });
+
 async function stageBooks(db) {
   const file = F('books.jsonl');
   const done = new Set(readJsonl(file).map((r) => r.id));
@@ -198,10 +222,10 @@ async function stageBooks(db) {
     for (let attempt = 0; ; attempt++) {
       try {
         [agg] = await db.collection('pages').aggregate([{ $match: { book_id: b.id } }, { $facet: {
-          ocr: [{ $group: { _id: { m: '$ocr.model', s: '$ocr.source', cs: { $ifNull: ['$ocr.engine.call_site', '$ocr.engine.name'] },
-            k: '$script_type', st: OCR_STATUS, rm: { $ifNull: ['$ocr.last_skip.model', '$ocr.fail_blocked_model'] } }, n: { $sum: 1 } } }],
-          tr: [{ $group: { _id: { m: '$translation.model', s: '$translation.source', cs: '$translation.engine.call_site', st: TR_STATUS,
-            hb: '$translation.health_blocked' }, n: { $sum: 1 } } }],
+          ocr: provGroup('ocr', { m: '$ocr.model', s: '$ocr.source', cs: { $ifNull: ['$ocr.engine.call_site', '$ocr.engine.name'] },
+            k: '$script_type', st: OCR_STATUS, rm: { $ifNull: ['$ocr.last_skip.model', '$ocr.fail_blocked_model'] } }),
+          tr: provGroup('translation', { m: '$translation.model', s: '$translation.source', cs: '$translation.engine.call_site', st: TR_STATUS,
+            hb: '$translation.health_blocked' }),
         } }], { maxTimeMS: 600000 }).toArray();
         break;
       } catch (e) {
@@ -216,8 +240,9 @@ async function stageBooks(db) {
       visible: b.visible === true, pages: b.pages_count, ia: !!b.ia_identifier,
       // book-class-5768: printed | handwritten, and the script family read off a contact sheet of the book's pages
       book_class: b.book_class?.class ?? null, script_family: b.book_class?.script_family ?? null,
-      ocr: agg.ocr.map((g) => [g._id.m ?? null, g._id.s ?? null, g._id.cs ?? null, g._id.k ?? null, g._id.st, g._id.rm ?? null, g.n]),
-      tr: agg.tr.map((g) => [g._id.m ?? null, g._id.s ?? null, g._id.cs ?? null, g._id.st, g._id.hb ?? null, g.n]) }) + '\n');
+      // the trailing element is the provenance of the group's text (#6740): RAW_KEYS plus job / code-version page counts
+      ocr: agg.ocr.map((g) => [g._id.m ?? null, g._id.s ?? null, g._id.cs ?? null, g._id.k ?? null, g._id.st, g._id.rm ?? null, g.n, provOf(g)]),
+      tr: agg.tr.map((g) => [g._id.m ?? null, g._id.s ?? null, g._id.cs ?? null, g._id.st, g._id.hb ?? null, g.n, provOf(g)]) }) + '\n');
     if (++n % 2000 === 0) log(`  ${n}/${todo.length}`);
   });
   await new Promise((r) => out.end(r));
@@ -491,18 +516,21 @@ async function stageRefs(db) {
     const base = { slug: ref.slug, stratum: ref.stratum, substratum: ref.substratum, book_id: ref.book_id, page_number: ref.page_number, ref_kind: ref.ref_kind,
       ref_source: ref.ref_source, anchored: ref.anchored, fame_web: ref.fame_web, language: firstLanguage(b), year: publicationYear(b) ?? ref.year };
     if (!page) { out.write(JSON.stringify({ ...base, missing: 'page' }) + '\n'); return; }
-    const revs = await db.collection('page_revisions').find({ page_id: page.id, field: 'ocr' }, { projection: { data: 1, model: 1, source: 1, reason: 1, created_at: 1, original_date: 1 } })
-      .sort({ created_at: 1 }).toArray();
-    const versions = [...revs.map((r) => ({ version: 'revision', at: r.original_date ?? null, superseded_at: r.created_at, model: r.model, source: r.source, reason: r.reason ?? null, data: r.data })),
-      { version: 'live', at: page.ocr?.updated_at ?? null, model: page.ocr?.model, source: page.ocr?.source, reason: null, data: page.ocr?.data }];
+    const revs = await db.collection('page_revisions').find({ page_id: page.id, field: 'ocr' }, { projection: { data: 1, model: 1, source: 1, reason: 1, created_at: 1, original_date: 1,
+      engine: 1, prompt_version: 1, prompt_name: 1, ia: 1, batch_job_id: 1 } }).sort({ created_at: 1 }).toArray();
+    // each stored read keeps the provenance its writer recorded (#6740): the prompt is part of the route
+    const prov = (sub) => provenanceFromRaw(rawFromSub(sub), 'ocr', covariatesFromSub(sub));
+    const versions = [...revs.map((r) => ({ version: 'revision', at: r.original_date ?? null, superseded_at: r.created_at, model: r.model, source: r.source, reason: r.reason ?? null, data: r.data, provenance: prov(r) })),
+      { version: 'live', at: page.ocr?.updated_at ?? null, model: page.ocr?.model, source: page.ocr?.source, reason: null, data: page.ocr?.data, provenance: prov(page.ocr) }];
     const seen = new Set();
     const scored = [];
     for (const v of versions) {
-      if (typeof v.data !== 'string' || !v.data.trim()) { scored.push({ version: v.version, model: v.model ?? null, source: v.source ?? null, empty: true }); continue; }
+      if (typeof v.data !== 'string' || !v.data.trim()) { scored.push({ version: v.version, model: v.model ?? null, source: v.source ?? null, empty: true, provenance: v.provenance }); continue; }
       if (seen.has(v.data)) continue; seen.add(v.data);
       const s = scorePage(ref.text, v.data);
       scored.push({ version: v.version, model: v.model ?? null, source: v.source ?? null, reason: v.reason ? String(v.reason).slice(0, 80) : null,
-        at: v.at, cer: s.cer, wer: s.wer, ref_chars: s.ref_alnum_chars, len_ratio: s.len_ratio, num_ref: s.num_ref, num_sub: s.num_sub, num_drop: s.num_drop, num_ins: s.num_ins });
+        at: v.at, cer: s.cer, wer: s.wer, ref_chars: s.ref_alnum_chars, len_ratio: s.len_ratio, num_ref: s.num_ref, num_sub: s.num_sub, num_drop: s.num_drop, num_ins: s.num_ins,
+        provenance: v.provenance });
     }
     out.write(JSON.stringify({ ...base, page_id: page.id, kind: page.script_type ?? null, recitation: (page.ocr?.recitation_count ?? 0) > 0 || page.ocr?.recitation_blocked === true, versions: scored }) + '\n');
   });
@@ -518,9 +546,33 @@ async function stageRefs(db) {
       ref_source: 'page_revisions reason volunteer_correction (the corrected text right after it)', anchored: true, fame_web: 0,
       language: firstLanguage(b), year: publicationYear(b), kind: page?.script_type ?? null,
       versions: s ? [{ version: 'revision', model: v.model, source: v.source, cer: s.cer, wer: s.wer, ref_chars: s.ref_alnum_chars, len_ratio: s.len_ratio,
-        num_ref: s.num_ref, num_sub: s.num_sub, num_drop: s.num_drop, num_ins: s.num_ins }] : [] }) + '\n');
+        num_ref: s.num_ref, num_sub: s.num_sub, num_drop: s.num_drop, num_ins: s.num_ins,
+        provenance: provenanceFromRaw(rawFromSub(v), 'ocr', covariatesFromSub(v)) }] : [] }) + '\n');
   }
   await new Promise((r) => out.end(r));
+}
+
+// ---------------------------------------------------------------- stage: revisions-prov
+/**
+ * The provenance of every SUPERSEDED read (#6740), grouped in Mongo: field x writer x model x prompt (id, version,
+ * template hash) x CLI x read mode, with page counts, the time span, and pages per job / code version. A superseded
+ * read was a route's output too, so a route's prompt mix is live + superseded. No text is read.
+ */
+async function stageRevisionsProv(db) {
+  const file = F('revisions-prov.json');
+  if (fs.existsSync(file)) { log('revisions-prov: exists'); return; }
+  const raw = mongoRawProvenance('');
+  const rows = await db.collection('page_revisions').aggregate([
+    { $match: { field: { $in: ['ocr', 'translation'] } } },
+    { $group: { _id: { field: '$field', p: raw, job: { $ifNull: ['$engine.run.job_id', { $ifNull: ['$engine.run.batch_job_id', '$ia.ingest_run'] }] }, code: '$engine.run.code_version' },
+      n: { $sum: 1 }, from: { $min: '$original_date' }, to: { $max: '$original_date' } } },
+    { $group: { _id: { field: '$_id.field', p: '$_id.p' }, n: { $sum: '$n' }, from: { $min: '$from' }, to: { $max: '$to' },
+      jobs: { $push: { v: '$_id.job', n: '$n' } }, codes: { $push: { v: '$_id.code', n: '$n' } } } },
+  ], { maxTimeMS: 3600000, allowDiskUse: true }).batchSize(1000).toArray();
+  const out = rows.map((r) => ({ field: r._id.field, n: r.n, from: r.from ?? null, to: r.to ?? null, raw: r._id.p, jobs: tally(r.jobs), codes: tally(r.codes) }));
+  fs.writeFileSync(file + '.part', JSON.stringify(out));
+  fs.renameSync(file + '.part', file);
+  log(`revisions-prov: ${out.length} groups over ${out.reduce((a, r) => a + r.n, 0)} revisions`);
 }
 
 // ---------------------------------------------------------------- stage: throughput
@@ -548,9 +600,14 @@ async function stageEmit() {
   await emit({ OUT, NOW, DAYS, helpers: { era, chartOf, familyOf, routeName, READ_SOURCES, NOT_MODEL, GEMINI } });
 }
 
+async function stageEmitProv() {
+  const { emitProv } = await import('./route-census-prov-emit.mjs');
+  await emitProv({ OUT, helpers: { era, chartOf, familyOf, routeName, READ_SOURCES, NOT_MODEL, GEMINI } });
+}
+
 const STAGES = { books: stageBooks, revisions: stageRevisions, live: stageLive, pairs: stagePairs, change: stageChange,
-  refs: stageRefs, throughput: stageThroughput, emit: stageEmit };
-const LOCAL = new Set(['pairs', 'emit']);
+  refs: stageRefs, 'revisions-prov': stageRevisionsProv, throughput: stageThroughput, emit: stageEmit, 'emit-prov': stageEmitProv };
+const LOCAL = new Set(['pairs', 'emit', 'emit-prov']);
 if (import.meta.url === `file://${process.argv[1]}`) {
   const run = STAGE === 'all' ? Object.keys(STAGES) : STAGE.split(',');
   for (const s of run) {

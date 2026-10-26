@@ -28,6 +28,9 @@ Columns added to every row:
              term beside free page effects did not carry that (the SVI fit put S3's median page at 10x its observed).
 """
 import argparse, collections, json, re
+import sys, os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from provenance import label_legacy  # noqa: E402  every row says where it came from (#6740)
 
 GATE_ENGINE = {'agy': ('gemini-3.8-flash+antigravity-cli', 'gemini-cli'),
                'lite': ('gemini-3.1-flash-lite', 'gemini-lite'),
@@ -83,6 +86,9 @@ def main():
                         editions_held=m.get('editions_held'), num_ref=g['num_ref'] if scored else None,
                         num_sub=g['num_sub'] if scored else None, num_drop=g['num_drop'] if scored else None,
                         num_ins=g['num_ins'] if scored else None, source='gate-4763'))
+    # the Pareto rows arrive labelled by build-ocr-table.py; an unlabelled input is labelled here, never defaulted
+    out = [r if 'provenance' in r else label_legacy(r, 'ocr-pareto', [f"{r['panel']}|{r['engine']}"]) if r['source'] == 'pareto'
+           else label_legacy(r, 'ocr-gate-4763', [f"gate-4763|{r['engine']}"]) for r in out]
     with open(a.out, 'w') as f:
         for r in out:
             f.write(json.dumps(r) + '\n')
