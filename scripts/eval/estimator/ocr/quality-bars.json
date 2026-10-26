@@ -13,5 +13,17 @@
   "absolute_max": null,
   "margin_relative": 0.15
  },
- "_margins_note": "The margin is max(margin, margin_relative x the best route's error): 0.01 CER is about one wrong character per line of 100, and on a chart whose best route is at 10% CER a reader cannot tell 10% from 11%, so there the margin is 15% of the best. 0.02 per number is one more wrong number in fifty. Both are judgment calls, set here so they can be changed without code; the router prints how the choice moves at half and double the margins."
+ "_margins_note": "The margin is max(margin, margin_relative x the best route's error): 0.01 CER is about one wrong character per line of 100, and on a chart whose best route is at 10% CER a reader cannot tell 10% from 11%, so there the margin is 15% of the best. 0.02 per number is one more wrong number in fifty. Both are judgment calls, set here so they can be changed without code; the router prints how the choice moves at half and double the margins.",
+ "floors": {
+  "_about": "ABSOLUTE floors (Derek, 2026-10-26, #6740): the relative margin alone lets the cheapest bad route 'clear' a cell where every route is bad. A route must ALSO pass every floor that applies, in >= threshold of draws. When no measured route, at any cost, passes the floors in at least half the draws, the cell's answer is HOLD: no route is good enough; the book stays held, and the router names the nearest route and what would unlock the cell. Proposals, set as data so they can be argued with.",
+  "character_max": {
+   "print": 0.15,
+   "manuscript": 0.25
+  },
+  "character_reason": "Above about 15% CER on print, a reader quoting a line has to check every word against the image (with errors spread evenly, fewer than half of five-letter words would be right). Manuscripts get more room (25%), because their readers keep the image beside the text and the text serves finding and search. Both are judgment, not measurement: the router prints which cells move at 0.10 / 0.20 and 0.20 / 0.35.",
+  "numbers_max": 0.25,
+  "numbers_reason": "One number in four wrong, dropped or invented: an index, table or date list can no longer be cited from the text.",
+  "p_read_min": 0.5,
+  "p_read_reason": "A route that leaves more than half of a cell's pages unread is not a reader for that cell, whatever it does on the pages it reads (Mongolian Kanjur: every read declined, #5664)."
+ }
 }

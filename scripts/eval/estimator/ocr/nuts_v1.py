@@ -5,7 +5,9 @@
 # Derek's 2026-10-25 note B). No model calls; CPU only.
 """v1's accuracy and did-not-read models, SVI against NUTS on one table (#6740).
 
-  nuts_v1.py fit --table T --part acc-svi|acc-nuts|ref-svi|ref-nuts --out-dir D [--warmup 500 --samples 500]
+  nuts_v1.py fit --table T [--extra results/arabic-rows.jsonl --ext] --part acc-svi|acc-nuts|ref-svi|ref-nuts --out-dir D
+      [--warmup 500 --samples 500]
+  (--ext --extra: v1 as #7341 left it, script-family extension and the Arabic rows; build on it, not a second v1)
   nuts_v1.py report --table T --out-dir D --out results/ocr-v1-nuts-vs-svi.json
 
 Each part pickles (ix, post, diag) to D/<part>.pkl, so the four can run on separate cores. The report gives, per
@@ -44,16 +46,16 @@ def nuts_fit(model, seed, warmup, samples, chains, **kw):
 
 
 def fit(a):
-    df = m.load(a.table)
+    df = m.load(a.table, extra=a.extra)
     kind, how = a.part.split('-')
     t0 = time.time()
     if kind == 'acc':
         s = df[df.scored].reset_index(drop=True)
-        ix = m.Index(s)
+        ix = m.Index(s, a.ext)
         kw = dict(ix=ix, x=ix.enc(s), n=jnp.array(s.n.values), k=jnp.array(s.k.values), z=jnp.array(s.z.values), hurdle=True)
         model = m.accuracy_model
     else:
-        ix = m.Index(df)
+        ix = m.Index(df, a.ext)
         kw = dict(ix=ix, x=ix.enc(df), fail=jnp.array(df.fail.values))
         model = m.refusal_model
     if how == 'svi':
@@ -66,7 +68,7 @@ def fit(a):
 
 
 def report(a):
-    df = m.load(a.table)
+    df = m.load(a.table, extra=a.extra)
     L = {p: pickle.load(open(os.path.join(a.out_dir, f'{p}.pkl'), 'rb')) for p in ('acc-svi', 'acc-nuts', 'ref-svi', 'ref-nuts')
          if os.path.exists(os.path.join(a.out_dir, f'{p}.pkl'))}
     fam = dict(df[['engine', 'engine_family']].drop_duplicates().itertuples(index=False))
@@ -77,6 +79,8 @@ def report(a):
         mode = lambda s: s.value_counts().index[0]
         cell = dict(engine=eng, family=fam[eng], chart=chart, era=mode(g.era), dense=int(chart.endswith('-dense')),
                     web=int(round(g.fame_web.mean())))
+        if a.ext:
+            cell['kind'] = mode(g.kind)
         row = dict(chart=chart, engine=eng, pages=int(g.page.nunique()), observed_cer=round(float(g[g.scored].cer.mean()), 4)
                    if g.scored.any() else None, observed_fail=f"{int(g.fail.sum())}/{len(g)}")
         for kind, fn, extra in (('cer', m.cell_cer, dict(panel=mode(g.panel))), ('fail', m.cell_fail, dict(panel=None))):
@@ -113,6 +117,8 @@ def main():
     ap.add_argument('--warmup', type=int, default=500)
     ap.add_argument('--samples', type=int, default=500)
     ap.add_argument('--chains', type=int, default=4)
+    ap.add_argument('--extra', help='extra rows in the table format, e.g. results/arabic-rows.jsonl (#7341)')
+    ap.add_argument('--ext', action='store_true', help="model_ocr_v1's script-family extension (#7341): v1 as it now stands")
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
     (fit if a.cmd == 'fit' else report)(a)

@@ -68,6 +68,8 @@ def price(v, fees):
 
 
 def show_cost(v):
+    if np.isnan(v).any():
+        return 'unmetered'
     # components under a thousandth of a call of their kind are the fallback term on a route that almost always reads
     parts = [f'${v[0]:.5f}' if v[0] >= 1e-6 else '', f'{v[1]:.2e} agy' if v[1] >= 5e-8 else '',
              f'{v[2]:.4f} Claude pt' if v[2] >= 3e-5 else '']
@@ -95,7 +97,20 @@ def mode(s):
     return s.value_counts().index[0]
 
 
-def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0):
+def floors_ok(r, bars, dense, kind):
+    """Per draw: does the route pass the ABSOLUTE floors (quality-bars.json `floors`; Derek, 2026-10-26)?"""
+    f = bars.get('floors')
+    if not f:
+        return np.ones_like(r['cer'], dtype=bool)
+    n = len(r['cer'])   # the two posteriors may hold different numbers of draws: thin the did-not-read one to match
+    fail = r['fail'][np.linspace(0, len(r['fail']) - 1, n).astype(int)] if len(r['fail']) != n else r['fail']
+    ok = (r['cer'] <= f['character_max'].get(kind, f['character_max']['print'])) & ((1 - fail) >= f['p_read_min'])
+    if dense:
+        ok &= (r['num'] <= f['numbers_max']) if r['num'] is not None else False
+    return ok
+
+
+def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0, kind='print'):
     """rows: per route dict with draws cer, fail, num (or None). Adds p_bar, cost_usable, p_best; returns choice."""
     # a route with no metered price (a Claude image read, until it is metered) is never routed on cost
     routable = [r for r in rows if r['enabled'] and not np.isnan(r['cost']).any()]
@@ -121,6 +136,8 @@ def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0):
                 ok &= r['num'] <= best_n + margin_n
                 if bars['numbers'].get('absolute_max') is not None:
                     ok &= r['num'] <= bars['numbers']['absolute_max']
+        r['p_floor'] = float(floors_ok(r, bars, dense, kind).mean())
+        ok &= floors_ok(r, bars, dense, kind)
         r['p_bar'] = float(ok.mean())
     # only a measured route is routed; a pooled one that would clear the bar is a candidate to test, not a route
     qual = [r for r in measured if r['p_bar'] >= threshold]
@@ -142,9 +159,12 @@ def decide(rows, bars, threshold, margin_c, margin_n, dense, fees, scale=1.0):
         for j, i in enumerate(comparable):
             rows[i]['p_best'] = float((win == j).mean())
     if not qual:
-        return dict(route=None)
+        # HOLD when no measured route, at any cost, passes the absolute floors in half the draws; else a test can settle it
+        near = max(measured, key=lambda r: r['p_floor'])
+        return dict(route=None, answer='hold' if near['p_floor'] < 0.5 else 'test', nearest=near['route'],
+                    nearest_p_floor=round(near['p_floor'], 3))
     pick = min(qual, key=lambda r: (round(float(r['cost_usable_draws'].mean()), 9), -r['p_bar'], float(r['cer'].mean())))
-    return dict(route=pick['route'])
+    return dict(route=pick['route'], answer='route')
 
 
 def main():
@@ -182,6 +202,8 @@ def main():
     for chart in charts:
         d = df[df.chart == chart]
         era, kind_ = mode(d.era), mode(d.kind)
+        # the floor's page kind: a chart named for manuscripts is manuscripts, whatever its rows' majority says
+        floor_kind = 'manuscript' if ('manuscript' in chart or kind_ == 'manuscript') else 'print'
         webs = [0, 1] if chart.startswith('english') else [int(round(d.fame_web.mean()))]
         for (alch, panel), dense in [(c, int(chart.endswith('-dense'))) for c in cells_of(d)]:
             strata = (GATE_CHARTS[chart],) if chart in GATE_CHARTS else None
@@ -210,26 +232,29 @@ def main():
                 sens = {}
                 for f in (0.5, 2.0):
                     tmp = [dict(r) for r in rows]
-                    ch = decide(tmp, bars, th, mc * f, mn * f, dense, fees, scale=f)
+                    ch = decide(tmp, bars, th, mc * f, mn * f, dense, fees, scale=f, kind=floor_kind)
                     sens[f'margin x{f}'] = ch['route'] if ch else None
-                choice = decide(rows, bars, th, mc, mn, dense, fees)
+                choice = decide(rows, bars, th, mc, mn, dense, fees, kind=floor_kind)
                 kind = 'number-dense' if dense else 'prose'
                 fame = ('web transcription' if web else 'no web transcription') + ('; alchemy' if alch else '')
                 pages = int(d[(d.dense == dense) & (d.fame_web == web) & (d.alchemy == alch)].page.nunique())
                 route_rows = []
                 for r in sorted(rows, key=lambda r: float(r['cost_usable_draws'].mean())):
                     route_rows.append(dict(route=r['route'], engine=r['engine'], basis=r['basis'], enabled=r['enabled'],
-                                           cost_per_call=dict(zip(UNITS, [float(x) for x in r['cost']])),
+                                           cost_per_call=dict(zip(UNITS, [None if np.isnan(x) else float(x) for x in r['cost']])),
                                            p_read=q(1 - r['fail']), cer=q(r['cer']),
                                            number_errors=q(r['num']) if r['num'] is not None else None,
-                                           p_clears_bar=round(r['p_bar'], 3), next_route=r['next_route'],
-                                           cost_per_usable_page=dict(zip(UNITS, [float(x) for x in r['cost_usable_units']])),
+                                           p_clears_bar=round(r['p_bar'], 3), p_floors=round(r.get('p_floor', 1.0), 3),
+                                           next_route=r['next_route'],
+                                           cost_per_usable_page=dict(zip(UNITS, [None if np.isnan(x) else float(x) for x in r['cost_usable_units']])),
                                            p_best=round(r['p_best'], 3) if 'p_best' in r else None,
                                            _usd=float(r['cost_usable_draws'].mean()), _usd_call=price(r['cost'], fees)))
                 best = max(route_rows, key=lambda r: r['p_best'] or 0.0)
                 ch = next((r for r in route_rows if r['route'] == (choice or {}).get('route')), None)
                 cells_out.append(dict(chart=chart, kind=kind, fame=fame, era=era, panel=panel, pages_in_cell=pages, alchemy=alch,
                                       choice=ch['route'] if ch else None, sensitivity=sens, best_quality=best['route'],
+                                      answer=(choice or {}).get('answer', 'test'), page_kind=floor_kind,
+                                      nearest=(choice or {}).get('nearest'), nearest_p_floor=(choice or {}).get('nearest_p_floor'),
                                       routes=route_rows))
                 for out, dollars in ((md, False), (md_usd, True)):
                     if ch:
@@ -238,6 +263,9 @@ def main():
                         mid = (f"**{ch['route']}** | {cpc} | {ch['p_read'][1]:.2f} | {ch['cer'][1]:.4f} | "
                                + (f"{ch['number_errors'][1]:.3f} | " if dense else "— | ")
                                + f"{ch['p_clears_bar']:.2f} | {cpu} (then {ch['next_route']}) | {fmt(ch['p_best'])} | ")
+                    elif (choice or {}).get('answer') == 'hold':
+                        mid = (f"**HOLD**: no route passes the floors (nearest {choice['nearest']}, "
+                               f"P(floors) {choice['nearest_p_floor']:.2f}) | | | | | | | | ")
                     else:
                         mid = "**none clears the bar** | | | | | | | | "
                     out.append(f"| {chart} | {kind} | {fame} | {pages} | " + mid
