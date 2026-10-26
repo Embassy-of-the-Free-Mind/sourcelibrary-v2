@@ -21,6 +21,19 @@
 
 The boxes reach each other through the **box mesh** (below), and the laptop reaches all four as root. Main, cloudlayer and l7a are ARM (cax41, 16 shared vCPU); the ARM boxes have no Python ML tools (kraken, CLIP, onnx).
 
+### Capacity (measured 2026-10-26; re-measure with `scripts/workers/box-capacity.sh`)
+
+What each box HAS. For what is free right now, and where the next job should go, use `job-where.sh` (below).
+
+| Box | CPU | RAM / swap | GPU | Disks (size · free on 2026-10-26) | What fills them |
+|---|---|---|---|---|---|
+| main | 16 vCPU ARM (Neoverse-N1, shared) | 30 GB / 11 GB | none | `/` **150 GB** · 28 GB free (81%) — the tightest root of the four. `/mnt/HC_Volume_105839809` 492 GB · 76 GB (84%) | root: checkout 19 GB, `.gemini` 16 GB, `.claude` transcripts 16 GB, `claude-jobs` 8 GB. The steward moves idle `/root` folders to the volume nightly |
+| cloudlayer | 16 vCPU ARM (shared) | 30 GB / 15 GB (swapfile on the volume) | none | `/` 301 GB · 74 GB (75%). `/data/scratch` 492 GB · **9.8 GB (98%)** | the volume is mostly Cloud Layer imagery (`moved` 86, `north72-archive` 54, `poles-e` 53, `north90` 49 GB); Source Library's `sl/` is 57 GB. No steward |
+| l7a | 16 vCPU ARM (shared) | 30 GB / none | none | `/` 301 GB · 138 GB (53%). No volume | `/data` 134 GB (archive tick). No steward |
+| gex45 | 20 threads x86 (i5-13500, dedicated) | 62 GB / 31 GB | RTX PRO 4000 Blackwell, 24 GB | `/` 436 GB · 143 GB (66%). No volume | `/root/.cache/huggingface` 125 GB (model weights), `/root/jobs` 43 GB, `/root/pz` and `/root/bench` 20 GB each |
+
+`disk-alarm.sh` runs every 15 min on all four boxes and watches every mount, not just `/` (it watched only `/`, and only on main and gex45, until 2026-10-26). Memory for jobs on cloudlayer and l7a is capped by `sourcelibrary.slice` (14 GB), so the RAM column is not what a job gets there.
+
 **GEX45-1, the fourth job box and the only x86 + GPU one** (`root@65.108.136.89`, Hetzner Robot HEL1, NVIDIA RTX PRO 4000 Blackwell 24 GB, i5-13500 with 14 cores / 20 threads, dedicated, 62 GB; $249/mo flat, #5660). A brief that needs Python ML tools or the GPU goes here.
 - Paths as on main, but with no volume: checkout `/root/sourcelibrary`, worktrees `/root/worktrees`, job output `$JOB_SCRATCH` = `/root/jobs/<name>`, job state `/root/claude-jobs`, logs `/var/log/sourcelibrary/claude-jobs`. `/root/jobs` and `/root/pz/out` are what `scripts/maintenance/gex45-idle-alert.sh` (cron on main) watches: 6 h with no new file there pages ntfy and comments on #5660. When the GPU queue (`/root/gpu-queue`) has been empty for an hour, the same script starts one `gpu-steward-<date>` job (at most one a day, on cloudlayer or main) with `scripts/maintenance/gpu-steward-brief.md`: queue the next gated #6871 item at $0, or say why none is eligible (`STEWARD=0` turns it off). Never power it off to save money: a dedicated box bills the same.
 - Installed: node 22, gh (main's token), `agy` 1.4.0 on main's Google login (more CPU, **not** more Gemini quota: quota is per account), the Claude CLI, `.env.production.local`, `.vercel/project.json`. GPU stack in `/root/pz` (`paddle-zh-box.sh setup` with `PADDLE_CU=cu129`; vLLM needs `VLLM_USE_FLASHINFER_SAMPLER=0`). The vLLM server is not left running: start it for a job, stop it after.
