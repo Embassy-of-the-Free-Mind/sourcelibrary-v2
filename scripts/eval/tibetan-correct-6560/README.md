@@ -108,6 +108,18 @@ scripts/eval/tibetan-correct-6560/pass/run-volume.sh <book_id> [--no-apply]
 Another corrector through the same gate: `MODEL=<agy model> JOB=<job> run-volume.sh <book_id> --no-apply`. Gemini 4
 Argon low ran it on 2026-10-16 (NO-GO: `experiments/2026-10-15-tibetan-g4l-pass-gate-6560.md`).
 
+## The production pass (#6560, 2026-10-26): two judges, a net bar, volume by volume
+
+After the router cell switched to Yigdzin > agy Flash-low (#6740), `pass/run-pass.sh` wraps `run-volume.sh`:
+`gate <book>` (read, dry apply, 40-page audit), `apply-gate <book>` (only after a pass) and `run [max]` (the order
+file's volumes, each audited on 10 changed pages, then applied with `MARK_STALE=`, so no re-translation is queued and
+each volume's changed page ids go to `$JOB_SCRATCH/vol/<book>.changed.json`). The audit has two judges on the same
+pages. The first is the tiled span judge (`tiles-req`, `audit-score`). The second is the route-judge whole-page judge
+(`leafcheck.mjs page-req`, the #6740 prompt, draft and written judged separately). `leafcheck.mjs gate` pools their
+verdicts and applies the bar pre-registered in `experiments/2026-10-27-tibetan-flash-pass-production-6560.md`. agy is
+paced at `AGY_DAY_MAX` (4,000) calls a UTC day, and `$STATE` (`pass-state.jsonl`) is the done/stopped checkpoint.
+First gate, 2026-10-26, rGyud 'bum Ka: NO-GO (pooled worse 6/40, bar 4), and nothing was applied.
+
 ## Gemini 4 Argon low arm (#6560, 2026-10-15)
 
 `prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-4-argon-low --kind ocr

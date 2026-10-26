@@ -369,12 +369,12 @@
       "id": "tibetan",
       "kind": "Tibetan",
       "reader": "BDRC Yigdzin, a reader built for Tibetan",
-      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. Claude Opus, the best general model, matched 71.5% and fell below half on 4 of the 60 pages. On one page checked by eye it wrote Tibetan that is not on the leaf. On 30 folios (12 and 13 October 2026), a model correcting the Yigdzin text against the image raised the match: Gemini 3.8 Flash to 96.8% with no folio worse and 3 of 30 planted errors left, Opus to 96.0% with 14 of 30 left. Reading afresh from the image lowered it to 70%. No correction pass runs yet.",
-      "in_use": "In use. The correction pass is not.",
+      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. Claude Opus, the best general model, matched 71.5% and fell below half on 4 of the 60 pages. On one page checked by eye it wrote Tibetan that is not on the leaf. On 30 folios (12 and 13 October 2026), a model correcting the Yigdzin text against the image raised the match: Gemini 3.8 Flash to 96.8% with no folio worse and 3 of 30 planted errors left, Opus to 96.0% with 14 of 30 left. Reading afresh from the image lowered it to 70%. On 60 Kangyur folios judged against the image (26 and 27 October 2026), the Yigdzin text was accepted as the page's transcription on 34, after a Gemini 3.8 Flash correction on 53, and after an Opus correction on 52. Applied to a whole volume (525 pages, 26 October 2026), the Flash correction made 6 of 40 checked pages worse, more than the 4 allowed, so it is not applied.",
+      "in_use": "In use. The Flash correction is not: it failed its check on the first volume.",
       "stored": "430,518 pages: 280,623 (65%) read by Yigdzin and 1,836 by BDRC's woodblock model. 137,535 (32%) carry Esukhia's digital text of the Derge Kangyur and Tengyur, matched to the page. 9,352 (2%) still carry a Gemini reading, and 1,172 have no text yet.",
       "status": "settled",
       "routed": "yes",
-      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). A correction pass is an open decision on #6560: Gemini 3.8 Flash low did better than Opus on the same 30 folios.",
+      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). Correction stage (#6560): Yigdzin > Gemini 3.8 Flash-low correction via agy, the #6560 CORR prompt (scripts/eval/tibetan-correct-6560/corr-prompt.txt), gated per volume (scripts/eval/tibetan-correct-6560/pass/run-pass.sh; ya-btags guard, 25% syllable cap, ocr.pipeline tib-correct-6560, no --mark-stale). The router picks it: router-table cell tibetan-yigdzin (scripts/eval/estimator/router-table/2026-10-27-tibetan-30.md), accepted 53/60 vs Yigdzin 34/60 and Opus correction 52/60, switch -> yigdzin>agy-flash-low. Its first volume gate failed (2026-10-26, Thadrak Kanjur rGyud 'bum Ka 69e7aab880b52390feb197a8: pooled worse 6/40, bar <= 4 and better >= 3x worse; tiled span judge 6/40 worse, whole-page judge 5/40), so nothing is applied and the pass is stopped until a new pre-registered corrector passes the same gate.",
       "code": {
         "file": "scripts/maintenance/apply-reocr-verdicts.mjs"
       },
@@ -383,6 +383,16 @@
           "file": "2026-10-06-untried-ocr-engines-wave1-6011.md",
           "n": "60 Kangyur pages",
           "date": "2026-10-06"
+        },
+        {
+          "file": "2026-10-27-tibetan-flash-pass-production-6560.md",
+          "n": "one volume, 525 pages; 40 changed pages judged by two Opus judges",
+          "date": "2026-10-27"
+        },
+        {
+          "file": "2026-10-27-tibetan-router-30-6740.md",
+          "n": "60 Kangyur folios, one per book",
+          "date": "2026-10-27"
         },
         {
           "file": "2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md",
@@ -609,7 +619,7 @@
       "stored": null,
       "status": "settled",
       "routed": "partly",
-      "production": "Applied to the Chinese table pages only (job table-correct-6561, files, not yet written). Tibetan correction is an open decision on #6560. For manuscripts a correction pass was no better than Opus alone (#6544), so this row covers specialist drafts only.",
+      "production": "Applied to the Chinese table pages only (job table-correct-6561, files, not yet written). Tibetan: the router picks Yigdzin > Flash-low correction (#6740), but its first volume gate failed on 2026-10-26 (6/40 pages worse, bar 4), so none is applied (#6560, row tibetan). For manuscripts a correction pass was no better than Opus alone (#6544), so this row covers specialist drafts only.",
       "code": null,
       "evidence": [
         {
