@@ -30,14 +30,16 @@ import { getSplitLeafId, isArchivedSplit } from '../page-data';
 // pages (same seo_indexable gate as robots, #2688) — structured data on a
 // noindex page is wasted. The excerpt is wrapper-stripped (the #2232 invariant:
 // never expose editorial <meta>/<summary>/… blocks as page text).
-function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string, unknown> | null {
+// isPartOf carries the book's URL and a BreadcrumbList names it, so a search
+// engine that indexes a page is pointed at the book's front page (contents and
+// summary) as the parent: the page is the way in, the book is the place.
+function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: string): Record<string, unknown> | null {
   if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
   const bookTitle = book.display_title || book.title;
   const raw = page.translation?.data || page.ocr?.data || '';
   const clean = stripEditorialWrappers(raw).trim();
   const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
-  return {
-    '@context': 'https://schema.org',
+  const work = {
     '@type': 'CreativeWork',
     name: `${bookTitle}, Page ${page.page_number}`,
     url: pageUrl,
@@ -47,6 +49,8 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string
     ...(isEnglishOriginalBook(book) ? {} : { translator: { '@type': 'Organization', name: 'Source Library' } }),
     isPartOf: {
       '@type': 'Book',
+      '@id': bookUrl,
+      url: bookUrl,
       name: bookTitle,
       ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
       ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
@@ -55,6 +59,15 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string
     isAccessibleForFree: true,
     ...(excerpt ? { text: excerpt } : {}),
   };
+  const breadcrumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Source Library', item: 'https://sourcelibrary.org' },
+      { '@type': 'ListItem', position: 2, name: bookTitle, item: bookUrl },
+      { '@type': 'ListItem', position: 3, name: `Page ${page.page_number}`, item: pageUrl },
+    ],
+  };
+  return { '@context': 'https://schema.org', '@graph': [work, breadcrumb] };
 }
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
@@ -193,7 +206,12 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const bookPath = book.slug || scopedBookId;
   // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
   // zero-width characters so search snippet matching is untouched.
-  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`);
+  const jsonLd = buildPageJsonLd(
+    book,
+    serializedPage,
+    `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`,
+    `https://sourcelibrary.org${localePath(`/book/${bookPath}`, lang)}`,
+  );
 
   // Metered reader (#4357): beyond the free sample, the ISR HTML carries the
   // page WITHOUT its text — for everyone, which is what keeps it statically

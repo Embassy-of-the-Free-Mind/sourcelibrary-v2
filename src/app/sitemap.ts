@@ -399,7 +399,9 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
           url: `${BASE_URL}${p.seo_url}`,
           lastModified,
           changeFrequency: 'monthly' as const,
-          priority: 0.7,
+          // Below every book front page (0.5–0.9): the front page, with its
+          // contents and summary, is the place we want a crawler to rank first.
+          priority: 0.4,
         };
       });
   }, [] as MetadataRoute.Sitemap);
