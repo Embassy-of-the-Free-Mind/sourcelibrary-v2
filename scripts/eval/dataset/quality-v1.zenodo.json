@@ -1,0 +1,27 @@
+{
+ "_prior_art": "PRIOR ART: scripts/eval/deposit-quality-dataset.mjs — the first draft route for this bundle (one tar archive, its own hard-coded description); this file feeds deposit-ft-dataset.mjs --metadata instead, with the description updated for the 2026-10-26 fixes (#7462).",
+ "title": "Source Library quality dataset v1: OCR and translation quality evidence for historical primary sources",
+ "version": "v1",
+ "rights": [
+  "cc-by-sa-4.0"
+ ],
+ "related_identifiers": [
+  {
+   "identifier": "https://sourcelibrary.org/research/quality",
+   "scheme": "url",
+   "relation_type": {
+    "id": "issupplementto"
+   }
+  }
+ ],
+ "description": "<p>The per-page evidence behind the draft paper <a href=\"https://sourcelibrary.org/research/quality\">How page quality is measured</a> (Source Library, sourcelibrary.org), which asks of a translated historical page: does this English say what is printed on this leaf? With these files and no access to our database, a reader can recompute every figure the paper takes from them.</p><ul><li><b>Translation audit</b> (<code>audit-pages.jsonl</code>, <code>audit-controls.jsonl</code>, <code>audit-weights.json</code>): one random interior page from each of 311 books in 15 languages, with the served transcription and English translation, a Claude Opus fidelity rating (1-5) with typed defects, a second judge (Claude Sonnet) on 107 pages, 45 blinded swap, drop and repeat controls, and the weights for the language-weighted estimate. Measure: judged (no reference, no image).</li><li><b>Eye check</b> (<code>eye-check.jsonl</code>): 20 audited pages read against the scan by a model (Claude). Measure: accuracy.</li><li><b>Two-read screen</b> (<code>two-read-screen.jsonl</code>): 327 pages, served OCR against three fresh reads, with the judge's garble label. Measure: agreement.</li><li><b>OCR accuracy</b> (<code>ocr-accuracy-cells.json</code>, <code>ocr-accuracy-latin-pages.jsonl</code>): character error rate against published references for the cells the paper quotes, with the per-page Latin rows.</li><li><b>Reference windows</b> (<code>references/</code>): 298 CC BY-SA 4.0 windows (Perseus, First1KGreek, Kanripo, Wikisource) and 32 US public-domain windows that are also public domain in the EU, with source, revision and work for attribution; 209 more as pointers (source URL, revision, sha256) where the licence restricts redistribution, is not recorded, or the work is not public domain in the EU.</li></ul><p><b>Withheld text.</b> The transcription and translation of 12 audit pages from editions that are in copyright, or not established as public domain in the EU, are withheld; their scores, verdicts and hashes remain. See <code>LICENSES.md</code>.</p><p><b>Limits.</b> The judge never saw the scan; judged is not accuracy; many reference windows are canonical texts that models may recite; most languages have under 30 audited books. See <code>README.md</code>.</p><p><b>Licence.</b> CC BY-SA 4.0 for our data; third-party reference text keeps its own licence, named per file and per row. Contains a canary GUID (<code>CANARY.txt</code>): do not train on this data. Files in <code>references/</code> are named <code>references__file</code> on Zenodo.</p><p>Built by <code>scripts/eval/build-quality-dataset.mjs</code> in the <a href=\"https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2\">sourcelibrary-v2</a> repository (AGPL-3.0), which regenerates it from committed files and checks every quoted figure; issues #5531 and #7462. No reader or personal data.</p>",
+ "subjects": [
+  "digital libraries",
+  "optical character recognition",
+  "machine translation",
+  "evaluation",
+  "historical documents",
+  "large language models",
+  "digital humanities"
+ ]
+}

@@ -3,7 +3,7 @@
   "source": "gutenberg",
   "source_url": "https://www.gutenberg.org/cache/epub/38870/pg38870-images.html",
   "source_revision": "fetched 2026-09-26",
-  "licence": "PD-US (Project Gutenberg)",
+  "licence": "PD-US",
   "proofread_level": null,
   "unit": {
     "kind": "page",
@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg cut appends the chapter endnotes [74]-[76]; the leaf prints no footnotes (half-empty chapter-end page)"
+  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg cut appends the chapter endnotes [74]-[76]; the leaf prints no footnotes (half-empty chapter-end page)",
+  "work_title": "West African studies",
+  "ebook": 38870,
+  "pd_eu": true,
+  "pd_eu_basis": "authors and translators: Kingsley, Mary Henrietta (d. 1900); all died before 1956, or the work is anonymous and over 70 years old, or published before 1870 (checked 2026-10-26, #7462)"
 }

@@ -11,8 +11,9 @@
   "etext_chars": 18881,
   "window_chars": 175,
   "overlap": 0.919,
-  "licence": "CC-BY-SA",
-  "licence_url": "https://www.kanripo.org/about",
-  "licence_note": "version not stated by the source",
-  "licence_checked": "2026-10-01"
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/kanripo",
+  "licence_note": "github.com/kanripo states \"Licensed as CC BY SA 4.0\" (checked 2026-10-26, #7462); kanripo.org/about names CC BY-SA without a version",
+  "licence_checked": "2026-10-26",
+  "source_revision": "commit dbce9683a98aaebb9ae0767a92b4f571abb31c14 (2016-02-05T06:42:00Z): the last commit to this file, older than this record"
 }

@@ -1,0 +1,20 @@
+{
+ "_prior_art": "PRIOR ART: scripts/eval/dataset/refusal-census-v1.zenodo.json — the same --metadata shape for another dataset; this one is OCR-Eval's, for the folder build-ocr-eval-deposit.mjs writes (#7462).",
+ "title": "Reading or Reciting? Source Library OCR-Eval v0.3: reference-scored OCR of historical printed and manuscript pages, with a memorization control",
+ "version": "v0.3",
+ "rights": [
+  "cc-by-4.0",
+  "cc-by-sa-4.0"
+ ],
+ "description": "<p>Reference-scored OCR observations on 44 pages of early-modern printed books and manuscripts that Source Library (sourcelibrary.org) holds, in Greek, Armenian, Latin, Chinese, German and Hebrew. Every reference passage is labelled canonical (texts that vision-language models have plausibly memorised) or non-canonical (prefaces, front matter, passages of rarely digitised works). The gap between the two on matched pages estimates how much better a model scores on text it can recite than on text it can only read. Four within-work pairs hold a canonical and a low-canonicity passage of the same work in the same scan.</p><p><b>Files.</b> <code>v0.3/pages.jsonl</code>: 44 pages with book metadata, visually audited layout and canonicity covariates, and measured image resolution. <code>v0.3/references.jsonl</code>: 44 reference passages with source, licence and sha256; the text is included for 27 and withheld for 17 whose source does not permit redistribution or whose licence could not be confirmed. <code>v0.3/runs.jsonl</code>: 1,737 raw model outputs from about 15 model and serving arms (Gemini 3.x, Claude Sonnet, Mistral-OCR, Qwen3-VL, DeepSeek-OCR, Gemma 3 and 4, and the Source Library pipeline), with alignment and character accuracy. <code>v0.4-difficulty/pages.jsonl</code>: a companion set of 334 hard pages (20 difficulty classes) for reference-free measures; it has no references and no runs. Each folder has a README with field definitions and caveats; <code>checksums.txt</code> covers every file. Files in folders are named <code>folder__file</code> on Zenodo.</p><p><b>Limits.</b> 44 pages and unbalanced cells; canonical scores are memory-assisted upper bounds; the serving provider is part of the system under test; <code>scoring_version</code> was not stamped, so re-score from the raw text for a pinned metric.</p><p><b>Licences.</b> <code>v0.3/references.jsonl</code> is CC BY-SA 4.0 (it contains CC BY-SA text from Wikisource, First1KGreek, the Deutsches Textarchiv and Sefaria; each row names its source). All other files are CC BY 4.0. Page images are not included. Contains a canary GUID (<code>CANARY.txt</code>): do not train on this data.</p><p>Exported by <code>scripts/eval/export-eval-dataset.mjs</code> and assembled by <code>scripts/eval/build-ocr-eval-deposit.mjs</code> in the <a href=\"https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2\">sourcelibrary-v2</a> repository (AGPL-3.0); issues #3235 and #7462. No reader or personal data.</p>",
+ "subjects": [
+  "optical character recognition",
+  "vision-language models",
+  "benchmark contamination",
+  "memorization",
+  "historical documents",
+  "early modern printed books",
+  "manuscripts",
+  "digital humanities"
+ ]
+}

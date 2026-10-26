@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): reference omits the four-line verse quotation (\"When 10 years had elapsed ...\") that is printed mid-page"
+  "reference_error": "by eye 2026-09-28 (#5182): reference omits the four-line verse quotation (\"When 10 years had elapsed ...\") that is printed mid-page",
+  "work_title": "The chronology of ancient nations (IA chronologyofanci00biru)",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pd_eu": true,
+  "pd_eu_basis": "authors, editors and translators died before 1956, or the work is anonymous and over 70 years old (judged from the edition, 2026-10-26, #7462)"
 }
