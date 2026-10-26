@@ -46,6 +46,10 @@ Each box's Claude login is a different account (gex45: dereklomas@gmail.com, log
 
 Each box is logged into a different Claude account (main: milolomas200921@gmail.com, Max 20x, since 2026-10-26, was team@sourcelibrary.org; cloudlayer: derek@playpowerlabs, l7a: derek@sourcelibrary, gex45: dereklomas@gmail.com since 2026-10-26; since 10-26 team@ is the laptop's alone, see `needs/stewardship.md`). `scripts/workers/spare-lane.py` runs from cron on all four and spends that account's allowance on small issues when the account is under its fair share of the week. Only main polls usage. It publishes the poll to Mongo (`ops_reports` `claude-limits:latest`, `claude-limits-share.mjs`), and the guests read it there, because no box can ssh to another. Cron: main `*/30` (in `crontab.production`); guests `15,45 * * * *`, logging to `/data/scratch/sl/logs/spare-lane.log`, guarded on the script existing; gex45 `10,40` (in `infrastructure/gex45-crontab`), live since the 2026-10-26 login. Jobs are named `spare-<issue>`, at most 2 on main and 1 on a guest, and an issue the lane picks is labelled `spare-lane` so no other box takes it. In the last 48 h of an account's week, when no issue is eligible, it runs an Opus-only #6420 convergent-audit round instead (`spare-audit-<date>-<n>`, same cap, logged `reason: fallback audit`) and posts that account-week's rounds as one pooled comment on #6420 after the reset (#6781).
 
+## A second Claude login on one box (2026-10-26)
+
+An account with no box of its own (milolomas200921@gmail.com, added 2026-10-26) can share gex45. It gets its own config dir, logged in once by hand with `CLAUDE_CONFIG_DIR=/root/.claude-milo claude`. To start a job on that login, run `JOB_CLAUDE_HOME=/root/.claude-milo claude-job.sh start <name> <brief>`. The dir is recorded in `<name>.claude-home` beside the brief, so `resume` and `sweep` keep the job on the same login. The weekly-limit check reads that login's account too. Jobs started without it use the box's own login, as before. The spare lane is not affected.
+
 ## Placing a job: ask before you start
 
 ```
