@@ -48,7 +48,7 @@ describe('archive lane table (#5448)', () => {
     for (const flag of ['--gallica-openapi', '--lazy-only']) expect(src).toContain(`process.argv.includes('${flag}')`);
     const g = table.lanes.find((l: any) => l.name === 'gallica');
     expect(laneArgs(g)).toBe('--providers gallica --hosts gallica.bnf.fr --host-rate openapi.bnf.fr=2 --gallica-openapi');
-    for (const line of confLines(table, 'l7a')) expect(line).toMatch(/^[a-z0-9-]+\|[1-4]\|--providers \S+ --hosts \S+/);
+    for (const line of confLines(table, 'l7a')) expect(line).toMatch(/^[a-z0-9-]+\|[1-8]\|--providers \S+ --hosts \S+/);
     expect(confLines(table, 'mac')).toHaveLength(1);
   });
 

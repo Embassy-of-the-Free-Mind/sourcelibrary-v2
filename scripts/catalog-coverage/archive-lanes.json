@@ -91,9 +91,9 @@
       "hosts": ["iiif.archive.org"],
       "providers": ["internet_archive", "ia_language", "ia_microfilm", "ia"],
       "rate": { "iiif.archive.org": 5 },
-      "page_concurrency": 2,
+      "page_concurrency": 8,
       "flags": ["--lazy-only", "--ia-zip"],
-      "note": "Manifest-only IA books from the item _jp2.zip when the canvas→member mapping is proven (ia-zip-ledger.mjs), else per page over IIIF. --ia-zip needs opj_decompress + unzip; on a box without them every book falls back before any request . On gex45 (62 GB, x86): on l7a this lane's node reached 4.4 GB RSS on 51 MP IA leaves and the box went global-OOM at 2026-10-26 00:13:59, taking another service's runner with it. gex45 has no revive cron yet (infrastructure/gex45-crontab), so until one is installed nothing runs this lane. Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main)."
+      "note": "Manifest-only IA books from the item _jp2.zip when the canvas→member mapping is proven (ia-zip-ledger.mjs), else per page over IIIF. --ia-zip needs opj_decompress + unzip; on a box without them every book falls back before any request . On gex45 (62 GB, x86): on l7a this lane's node reached 4.4 GB RSS on 51 MP IA leaves and the box went global-OOM at 2026-10-26 00:13:59, taking another service's runner with it. Live on gex45 since 2026-10-26 08:00 (revive cron + libopenjp2-tools/unzip installed from the laptop session): exact mapping, 1.35 pages/s at 2 in flight, bound by JP2 decode + re-encode on a box with 20 cores idle, so 8 in flight. The zip route runs page_concurrency decoders; watch the heartbeat's rss (node only; each opj_decompress child adds ~0.6 GB on a 51 MP leaf). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main)."
     },
     {
       "name": "harvard",
