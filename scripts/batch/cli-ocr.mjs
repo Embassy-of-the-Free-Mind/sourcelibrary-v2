@@ -430,6 +430,7 @@ const MIN_SHARED = 0.4;
 const MAX_CORRECTED = 0.25;
 // The 25% is counted in syllables on a Tibetan draft and in words (whitespace tokens, tags out) on any other: the
 // syllable tokenizer keeps only Tibetan syllables, so on Latin it counted 0 of 0 and passed every correction (#7269).
+const latinLetters = (t) => (String(t).replace(/<[^>]+>/g, ' ').match(/[A-Za-z]/g) || []).length;
 const wordTokens = (t) => String(t).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean);
 function changedUnits(draft, next) {
   if (/[\u0F00-\u0FFF]/u.test(draft)) return { ...diffSyllables(draft, next), unit: 'syllables' };
@@ -514,6 +515,9 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
     if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
+    // #6740: Flash wrote སྤྱོད as `spy`ོད. The foreign-script guard always allows Latin (tags, sigla), so a correction of a
+    // Tibetan draft that ADDS Latin letters is refused here.
+    if (d.unit === 'syllables' && latinLetters(text) > latinLetters(page.ocr.data)) { skip(m, 'correction adds Latin letters to a Tibetan draft'); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
     // writing the canonical spelling over the leaf's. Kept only where a leaf check confirmed it; the rest go back.
     const hits = yatagsHits(page.ocr.data, text);
