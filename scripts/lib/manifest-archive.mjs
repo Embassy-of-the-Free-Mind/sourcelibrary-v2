@@ -32,7 +32,7 @@ import { getCanvases, extractCanvasImage } from '../iiif-discovery/lib/manifest-
 import { rateLimitedFetch, fetchPageMaster } from './iiif-utils.mjs';
 import { classifyFetchError } from './host-breaker.mjs';
 import { assertNotQuotaPlaceholder } from './archive-failure-class.mjs';
-import { isMissFor, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
+import { isMissFor, isBookScopedFailure, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
 import { LAZY_STATES, isLazyPagesBook } from './pages-state.mjs';
 import {
   LEDGER_FIELD, newLedger, openLedger, manifestFingerprint, ledgerKey, ledgerPageFields,
@@ -232,6 +232,19 @@ export async function archiveFromManifest(db, bookId, deps) {
           if (missGuard.abandoned(bookId)) {
             abandoned = true;
             log(`book ${bookId}: ${missGuard.stateOf(bookId)?.miss} page misses [${code}] and nothing served — leaving it for a later run`);
+            if ((breaker?.stateOf(h)?.ok ?? 0) === 0) breaker?.failure(h, `dead-book-${code}`);
+          }
+          continue;
+        }
+        if (!fetched && isBookScopedFailure(code) && missGuard.fresh(bookId)) {
+          // A 400/500 from a book that has served nothing yet is about the book (archive-miss.mjs).
+          missGuard.fail(bookId);
+          res.failed++;
+          breaker?.pageMiss(h, code);
+          onPage({ outcome: 'failed', host: h, code });
+          if (!abandoned && missGuard.abandoned(bookId)) {
+            abandoned = true;
+            log(`book ${bookId}: ${missGuard.stateOf(bookId)?.fail} page failures [${code}] and nothing served — leaving it for a later run`);
             if ((breaker?.stateOf(h)?.ok ?? 0) === 0) breaker?.failure(h, `dead-book-${code}`);
           }
           continue;

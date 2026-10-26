@@ -194,3 +194,22 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     expect(store.objects.size).toBe(0);
   });
 });
+
+describe('a manifest-only book whose pages all 500 (#5448)', () => {
+  it('is abandoned after FAIL_STREAK requests without pausing the host', async () => {
+    await cleanDb();
+    const db = getTestDb();
+    await seed(db);
+    const { createHostBreaker } = await import('../../scripts/lib/host-breaker.mjs');
+    const { FAIL_STREAK } = await import('../../scripts/lib/archive-miss.mjs');
+    const breaker = createHostBreaker();
+    const calls: string[] = [];
+    const r = await archiveFromManifest(db, BOOK, {
+      put: fakeStore().put, breaker, pageConcurrency: 1, fetchManifest: async () => manifest(),
+      download: async (u: string) => { calls.push(u); throw new Error('HTTP 500'); },
+    });
+    expect(calls).toHaveLength(FAIL_STREAK);
+    expect(r.status).toBe('partial');
+    expect(breaker.allow('img.example.org')).toBe(true);
+  });
+});
