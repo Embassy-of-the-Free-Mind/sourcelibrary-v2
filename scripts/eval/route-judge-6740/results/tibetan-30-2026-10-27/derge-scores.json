@@ -1,0 +1,335 @@
+{
+ "source": "OpenPecha P000001 (Esukhia Derge Kangyur e-text), Pagination layer, window imgnum +- 2",
+ "pages": {
+  "69e7ab1b5f1a22ab19a9314e": {
+   "yigdzin": {
+    "identity": 0.9639
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9918
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9639
+   }
+  },
+  "69e7aadf5f1a22ab19a8ed59": {
+   "yigdzin": {
+    "identity": 0.962
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9693
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.962
+   }
+  },
+  "69e7aae25f1a22ab19a8f0ad": {
+   "yigdzin": {
+    "identity": 0.9278
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9351
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9278
+   }
+  },
+  "69e7ab065f1a22ab19a91926": {
+   "yigdzin": {
+    "identity": 0.9529
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9592
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9529
+   }
+  },
+  "69e7abfe5f1a22ab19aa1dfb": {
+   "yigdzin": {
+    "identity": 0.9473
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9735
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9774
+   }
+  },
+  "69e7ac245f1a22ab19aa44b2": {
+   "yigdzin": {
+    "identity": 0.9578
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9847
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9578
+   }
+  },
+  "69e7ac005f1a22ab19aa1f68": {
+   "yigdzin": {
+    "identity": 0.9024
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9578
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9293
+   }
+  },
+  "69e7ab225f1a22ab19a9379b": {
+   "yigdzin": {
+    "identity": 0.9356
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9622
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.919
+   }
+  },
+  "69e7ac2b5f1a22ab19aa4c57": {
+   "yigdzin": {
+    "identity": 0.9699
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9737
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9699
+   }
+  },
+  "69e7ac385f1a22ab19aa5ad5": {
+   "yigdzin": {
+    "identity": 0.9338
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9568
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9568
+   }
+  },
+  "69e7ac255f1a22ab19aa46c3": {
+   "yigdzin": {
+    "identity": 0.9547
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9756
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9661
+   }
+  },
+  "69e7abba5f1a22ab19a9d122": {
+   "yigdzin": {
+    "identity": 0.9632
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9592
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9693
+   }
+  },
+  "69e7ac065f1a22ab19aa2793": {
+   "yigdzin": {
+    "identity": 0.9527
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9879
+   },
+   "yigdzin>opus-correct": {
+    "identity": 1
+   }
+  },
+  "69e7ab5a5f1a22ab19a97426": {
+   "yigdzin": {
+    "identity": 0.9298
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9926
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9963
+   }
+  },
+  "69e7abc05f1a22ab19a9d716": {
+   "yigdzin": {
+    "identity": 0.9296
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9257
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9317
+   }
+  },
+  "69e7abf35f1a22ab19aa0ecb": {
+   "yigdzin": {
+    "identity": 0.9234
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9496
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9234
+   }
+  },
+  "69e7ab2c5f1a22ab19a942d9": {
+   "yigdzin": {
+    "identity": 0.9399
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9827
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9904
+   }
+  },
+  "69e7ac345f1a22ab19aa561f": {
+   "yigdzin": {
+    "identity": 0.9445
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9732
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9607
+   }
+  },
+  "69e7abf05f1a22ab19aa0aed": {
+   "yigdzin": {
+    "identity": 0.9645
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9701
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9645
+   }
+  },
+  "69e7abee5f1a22ab19aa0a10": {
+   "yigdzin": {
+    "identity": 0.9644
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9644
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.968
+   }
+  },
+  "69e7abbe5f1a22ab19a9d687": {
+   "yigdzin": {
+    "identity": 0.9615
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9736
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9615
+   }
+  },
+  "69e7abf15f1a22ab19aa0c64": {
+   "yigdzin": {
+    "identity": 0.9451
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9732
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9734
+   }
+  },
+  "69e7abcb5f1a22ab19a9e4b5": {
+   "yigdzin": {
+    "identity": 0.9605
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9814
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9774
+   }
+  },
+  "69e7ab405f1a22ab19a9564c": {
+   "yigdzin": {
+    "identity": 0.9663
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9788
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9752
+   }
+  },
+  "69e7aaee5f1a22ab19a8fdd9": {
+   "yigdzin": {
+    "identity": 0.9345
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9884
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9496
+   }
+  },
+  "69e7ac115f1a22ab19aa3177": {
+   "yigdzin": {
+    "identity": 0.901
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9643
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9643
+   }
+  },
+  "69e7ac375f1a22ab19aa592f": {
+   "yigdzin": {
+    "identity": 0.9331
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9508
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9443
+   }
+  },
+  "69e7abca5f1a22ab19a9e23d": {
+   "yigdzin": {
+    "identity": 0.9075
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9041
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9075
+   }
+  },
+  "69e7ac095f1a22ab19aa2a4d": {
+   "yigdzin": {
+    "identity": 0.9344
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.9963
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9945
+   }
+  },
+  "69e7aac080b52390feb1a249": {
+   "yigdzin": {
+    "identity": 0.9521
+   },
+   "yigdzin>agy-flash-low": {
+    "identity": 0.954
+   },
+   "yigdzin>opus-correct": {
+    "identity": 0.9561
+   }
+  }
+ }
+}

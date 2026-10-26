@@ -112,11 +112,11 @@
     { "id": "greek-flash3", "title": "Greek OCR, 3 Flash", "v2": "greek-flash3", "held": "Derek 2026-10-14 (#6694): Greek stays on lane A", "current": "3flash",
       "routes": [ { "id": "3flash", "stage": "none" } ] },
     { "id": "tibetan-yigdzin", "title": "Tibetan, Yigdzin (#6560)", "v2": "tibetan-yigdzin", "pilot": "tibetan", "current": "yigdzin>opus",
-      "caveat": "Judged on the Kangyur stratum only (30 folios, one per book); Derge agrees with the judge's order on 25/27 pairs, planted syllables caught 8/10.",
+      "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
       "routes": [
-        { "id": "yigdzin", "stage": "none", "pilot": "yigdzin" },
-        { "id": "yigdzin>agy-flash-low", "stage": "agy", "pilot": "yigdzin>flash-low-correct", "v2": "agy-3.8-flash-low" },
-        { "id": "yigdzin>opus", "stage": "opus-img@1", "pilot": "yigdzin>opus-correct", "v2": "opus-5.5" } ] },
+        { "id": "yigdzin", "stage": "none", "pilot": "yigdzin", "evidence": [{"score": "scripts/eval/route-judge-6740/results/tibetan-30-2026-10-27/score.json", "cell": "tib-kangyur", "route": "yigdzin"}] },
+        { "id": "yigdzin>agy-flash-low", "stage": "agy", "pilot": "yigdzin>flash-low-correct", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/tibetan-30-2026-10-27/score.json", "cell": "tib-kangyur", "route": "yigdzin>agy-flash-low"}] },
+        { "id": "yigdzin>opus", "stage": "opus-img@1", "pilot": "yigdzin>opus-correct", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/tibetan-30-2026-10-27/score.json", "cell": "tib-kangyur", "route": "yigdzin>opus-correct"}] } ] },
     { "id": "zh-paddle-dice-lt090", "title": "Chinese Paddle, Kanripo dice < 0.90", "v2": "zh-paddle-dice-lt090", "current": "paddle>opus",
       "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
       "routes": [

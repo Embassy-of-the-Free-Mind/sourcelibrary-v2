@@ -1,0 +1,516 @@
+{
+ "generated_at": "2026-10-26T18:45:12.646Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 99,
+  "unparsed": 0,
+  "list_usd_equiv": 11.79
+ },
+ "meter": {
+  "account": "milolomas200921@gmail.com",
+  "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
+  "shared": "SHARED: other jobs (zh-translate-route-6871 Opus calls) ran on the same account throughout; no start reading was taken before the run. Not a per-call measure.",
+  "start": {
+   "at": "2026-10-26T18:25:02Z",
+   "weekly_pct": 12,
+   "session_pct": 100,
+   "note": "read mid-run (after the corrections, before the judge)"
+  },
+  "end": {
+   "at": "2026-10-26T18:40:02Z",
+   "weekly_pct": 12,
+   "session_pct": 0
+  },
+  "opus_judge_calls": 99,
+  "opus_correct_calls": 30,
+  "agy_calls": 30,
+  "list_usd_equiv_judge": 11.79,
+  "list_usd_equiv_correct": 4.3,
+  "note": "No points_per_call: the meter is shared and integer; the pilot's 0.0124 stays the upper bound."
+ },
+ "cells": {
+  "tib-kangyur": {
+   "task": "ocr",
+   "lang": "Tibetan",
+   "frame": {
+    "kanjur_books": 227,
+    "pilot_books_left_out": 30,
+    "held_or_quarantined": 2,
+    "no_eligible_page": 8,
+    "candidates": 144,
+    "not_placed_in_band": 13,
+    "band": [
+     0.9,
+     0.97
+    ],
+    "salt": "rt-tib-kangyur",
+    "derge": "OpenPecha P000001, tib-derge.py locate (5-gram votes, best of top 3 by identity), window imgnum +- 2",
+    "rule": "visible Tibetan books titled Kanjur/Kangyur, lane holds allowed (TIB_HOLDS), pilot books left out; page served by bdrc-yigdzin-v1 (ocr.source bdrc, not tib-correct-6560), BL EAP image, not split or cropped, interior, >= 300 chars, <= 1 leaf-break; Derge identity in band; one per book, in book order (the pilot's 10 marked-seam + 20 single mix is not available: 4 single-leaf folios placed in band in 195 books)",
+    "marked_seam": 30
+   },
+   "controls": {
+    "yigdzin": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "yigdzin>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "yigdzin": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "17/30",
+     "accept_rate": 0.57,
+     "accept_ci": {
+      "ci95": [
+       0.4,
+       0.733
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "11/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       0.533
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "6/30",
+      "O4": "6/30",
+      "O5": "4/30"
+     },
+     "classes_k_of_n": {
+      "O6": "26/30",
+      "E2": "23/30",
+      "O5": "11/30",
+      "O4": "9/30",
+      "O12": "3/30",
+      "O10": "2/30"
+     },
+     "fidelity_mean": 3.6,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e7abfe5f1a22ab19aa1d0d:238",
+       "quote": "དགའ་བོ་གཞན་ཡང་བཞིན་ལ་ལ",
+       "severity": "wrong_text",
+       "what": "འདི་ན is replaced by a stray བཞིན"
+      },
+      {
+       "page": "69e7abfe5f1a22ab19aa1d0d:238",
+       "quote": "ཤེས་བཞིན་དུ་མ་ཡིན་མངལ་དུ་འཇུག་ཅིང་",
+       "severity": "wrong_text",
+       "what": "the third entry is entered knowingly (ཤེས་བཞིན་དུ་མའི་མངལ); the candidate makes it 'not knowingly', inverting the sense"
+      },
+      {
+       "page": "69e7ac065f1a22ab19aa262c:359",
+       "quote": "སྲིད་པ་བདག་ཅེས་བྱ་བར་མི་སྤྱོད",
+       "severity": "wrong_text",
+       "what": "the leaf has སྲེད་པ (craving); སྲིད་པ (existence) is a different link of the chain, which only begins at the end of this leaf"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "basis": "BDRC's own OCR, held"
+     },
+     "cost_per_usable_page": {
+      "usd": 0
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "yigdzin>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.767,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "2/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.167
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30",
+      "O5": "1/30",
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O12": "9/30",
+      "O6": "8/30",
+      "E2": "7/30",
+      "O5": "6/30",
+      "O8": "5/30",
+      "O4": "1/30"
+     },
+     "fidelity_mean": 4.2,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e7ab225f1a22ab19a93749:82",
+       "quote": "ཀུན་དགའ་རི་རབ་ཉེན་ཀོར་གཅིག་པ་གང་ཞེ་ན",
+       "severity": "wrong_text",
+       "what": "The leaf reads ཀུན་དགའ་ར་བ (monastery garden), not རི་རབ (Mount Meru). The same misread appears twice on the second leaf."
+      },
+      {
+       "page": "69e7ab065f1a22ab19a91888:158",
+       "quote": "བཟོད་པ་བསྐུར་བར་མཛད་ཀྱིས་ལོང་ལ",
+       "severity": "cosmetic",
+       "what": "possibly ལོངས་ལ on the leaf; could not confirm at this resolution"
+      },
+      {
+       "page": "69e7ab065f1a22ab19a91888:158",
+       "quote": "དྲེགས་པ་ནས་སེམས་ཅན",
+       "severity": "cosmetic",
+       "what": "small connective here could not be confirmed; may differ from the leaf"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.0000043632,
+      "basis": "held Yigdzin + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000485
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "yigdzin>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus-prompt)",
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "2/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.167
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O5": "1/30",
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "17/30",
+      "O6": "14/30",
+      "O12": "7/30",
+      "O4": "3/30",
+      "O5": "2/30"
+     },
+     "fidelity_mean": 4.1,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69e7ab225f1a22ab19a93749:82",
+       "quote": "ནང་ངམ་ཉེན་ཀོར་དུ་ཆོས་གོས་དག་གི་ཤིང་རྟ་རབ་ཏུ་མང་པོ་གང་དག་ཡིན་པའོ།",
+       "severity": "wrong_text",
+       "what": "Eye-skip on leaf 1, line 5. It drops 'བཞག་སྟེ་གཞན་དུ་སྐྱ་རེངས་འཆར་བར་བྱེད་ན་སྤང་བའི་ལྟུང་བྱེད་དུ་འགྱུར་རོ། །ཤིང་རྟ་རབ་ཏུ་མང་པོ་ཉེན་ཀོར་ཐ་དད་པ་གང་ཞེ་ན། འདི་ལྟ་སྟེ་…' and merges two lines, so leaf 1 has 6 lines instead of 7."
+      },
+      {
+       "page": "69e7ab225f1a22ab19a93749:82",
+       "quote": "གང་དུ་ཆར་ཆེན་པོ་བབ་པའི་ཚེ་",
+       "severity": "wrong_text",
+       "what": "The opening phrase of leaf 2, line 1 ('པ་སྒྲིམ་པོ་དག་…པ་དང་།') is missing."
+      },
+      {
+       "page": "69e7ab225f1a22ab19a93749:82",
+       "quote": "ནང་ངམ་ཉེན་ཀོར་དུ་ཆོས་གོས་དག་གི་ཤིང་རྟ་རབ་ཏུ་མང་པོ་གང་དག་ཡིན་པའོ།",
+       "severity": "wrong_text",
+       "what": "Eye-skip on leaf 1, line 5. It drops 'བཞག་སྟེ་གཞན་དུ་སྐྱ་རེངས་འཆར་བར་བྱེད་ན་སྤང་བའི་ལྟུང་བྱེད་དུ་འགྱུར་རོ། །ཤིང་རྟ་རབ་ཏུ་མང་པོ་ཉེན་ཀོར་ཐ་དད་པ་གང་ཞེ་ན། འདི་ལྟ་སྟེ་…' and merges two lines, so leaf 1 has 6 lines instead of 7."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "basis": "held Yigdzin + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered))"
+     },
+     "cost_per_usable_page": {
+      "usd": 0
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "yigdzin -> yigdzin>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 0,
+     "fidelity_diff": 0.6,
+     "fidelity_diff_ci": [
+      0.367,
+      0.833
+     ],
+     "worse": "1/30",
+     "better": "15/30",
+     "accept_lost": "1/30",
+     "accept_gained": "11/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "69e7aac080b52390feb1a096:435",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Both leaves are transcribed in full and in order, and are mostly accurate, but the last line of the second leaf has misreads (གཤགས for ཞགས་པ, རྡུལ་ཕྲན་ནི for རྒྱལ་ཆེན་པོ) and the margin folio notes are missing."
+      }
+     ]
+    },
+    "yigdzin -> yigdzin>opus-correct": {
+     "pairs": 30,
+     "identical_text": 7,
+     "fidelity_diff": 0.5,
+     "fidelity_diff_ci": [
+      0.267,
+      0.767
+     ],
+     "worse": "1/30",
+     "better": "13/30",
+     "accept_lost": "1/30",
+     "accept_gained": "11/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "69e7aadf5f1a22ab19a8ebcb:398",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The text is complete and in the right order across both leaves, but many of the seed syllables (བཱིཛ) are misread or copied from neighbouring lines, and there are several slips such as མ་ཧ, ཚུ and དད."
+      }
+     ]
+    }
+   },
+   "reference": {
+    "name": "Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (tib-derge.py, window imgnum +- 2)",
+    "per_route": {
+     "yigdzin": {
+      "n": 30,
+      "mean": 0.9439,
+      "ci95": [
+       0.937,
+       0.95
+      ]
+     },
+     "yigdzin>agy-flash-low": {
+      "n": 30,
+      "mean": 0.967,
+      "ci95": [
+       0.959,
+       0.974
+      ]
+     },
+     "yigdzin>opus-correct": {
+      "n": 30,
+      "mean": 0.9597,
+      "ci95": [
+       0.951,
+       0.968
+      ]
+     }
+    },
+    "pages_with_ref": 30,
+    "pair_min_gap": 0.005,
+    "ordered_pairs": 59,
+    "judge_agrees": 31,
+    "judge_disagrees": 1,
+    "judge_ties": 27,
+    "agreement": 0.97,
+    "disagreements": [
+     {
+      "page": "69e7ab2c5f1a22ab19a9418f:330",
+      "routes": [
+       "yigdzin>agy-flash-low",
+       "yigdzin>opus-correct"
+      ],
+      "ref": [
+       0.9827,
+       0.9904
+      ],
+      "fidelity": [
+       5,
+       4
+      ]
+     }
+    ],
+    "ref_mean_accepted": 0.9599,
+    "ref_mean_not_accepted": 0.9455
+   },
+   "planted": {
+    "n": 10,
+    "caught": 8,
+    "catch_rate": 0.8,
+    "rule": "below 0.80 the Derge score decides the cell, not the judge",
+    "decides": "judge",
+    "accepted_with_plant": 5,
+    "detail": [
+     {
+      "page_id": "69e7aadf5f1a22ab19a8ed59",
+      "kind": "vowel",
+      "orig": "ནི",
+      "planted": "ནེ",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "page_id": "69e7aae25f1a22ab19a8f0ad",
+      "kind": "swap",
+      "orig": "པར",
+      "planted": "རེ",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "page_id": "69e7ab065f1a22ab19a91926",
+      "kind": "letter",
+      "orig": "ཕུང",
+      "planted": "ཕུད",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "page_id": "69e7ab1b5f1a22ab19a9314e",
+      "kind": "vowel",
+      "orig": "ཆེན",
+      "planted": "ཆིན",
+      "caught": false,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "page_id": "69e7ab225f1a22ab19a9379b",
+      "kind": "swap",
+      "orig": "གཅིག",
+      "planted": "འདོམ",
+      "caught": true,
+      "accept": false,
+      "fidelity": 2
+     },
+     {
+      "page_id": "69e7abfe5f1a22ab19aa1dfb",
+      "kind": "letter",
+      "orig": "ཆུས",
+      "planted": "ཇུས",
+      "caught": false,
+      "accept": false,
+      "fidelity": 3
+     },
+     {
+      "page_id": "69e7ac005f1a22ab19aa1f68",
+      "kind": "vowel",
+      "orig": "མི",
+      "planted": "མེ",
+      "caught": true,
+      "accept": false,
+      "fidelity": 3
+     },
+     {
+      "page_id": "69e7ac245f1a22ab19aa44b2",
+      "kind": "swap",
+      "orig": "འདས",
+      "planted": "བཅོམ",
+      "caught": true,
+      "accept": false,
+      "fidelity": 3
+     },
+     {
+      "page_id": "69e7ac2b5f1a22ab19aa4c57",
+      "kind": "letter",
+      "orig": "སེམས",
+      "planted": "མེམས",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "page_id": "69e7ac385f1a22ab19aa5ad5",
+      "kind": "vowel",
+      "orig": "བཅོམ",
+      "planted": "བཅུམ",
+      "caught": true,
+      "accept": false,
+      "fidelity": 3
+     }
+    ]
+   }
+  }
+ },
+ "contain_candidates": []
+}

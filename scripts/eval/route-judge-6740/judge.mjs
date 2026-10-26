@@ -27,7 +27,7 @@
  *   node scripts/eval/route-judge-6740/judge.mjs judge --out=DIR [--concurrency=3] [--cell=latin] [--routes=a,b] [--limit=N]
  *   node scripts/eval/route-judge-6740/judge.mjs score --out=DIR
  * Router tests (below): draw --cells=zh-dice,de-lite,... --out=DIR, then refs (zh-dice), correct [--cell=X], translate
- * (german), packet, judge [--reuse=<a verdicts file>], names (zh-dice), score.
+ * (german), packet, derge (tib-kangyur), judge [--reuse=<a verdicts file>], names (zh-dice), score.
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs correct --out=DIR [--cell=X] [--by=opus|agy] [--agy-max=N]
  *   node scripts/eval/route-judge-6740/judge.mjs names --out=DIR
  *
@@ -56,6 +56,10 @@
  *   latin-flash3 Latin print, 3 Flash drafts: 3flash; 3flash>agy-flash-low.
  *   fr-lite      French OCR, Flash-Lite drafts: lite; lite>agy-flash-low.
  *   german       German translation, a second draw (salt german-r2, the pilot's books left out), as the pilot's cell.
+ *   tib-kangyur  Tibetan Kangyur, 30 NEW folios in the pilot's frame (drawTib): yigdzin; yigdzin>agy-flash-low;
+ *                yigdzin>opus-correct, both on the #6560 CORR prompt (Opus through opusPromptCorrect, run-claude-arm's
+ *                request). Derge through tib-derge.py on an OpenPecha P000001 checkout (TIB_P1): placement at draw,
+ *                identity per output (`derge`). 10 drafts get a planted syllable (DIR/plants.json, prep.py plant()).
  * OCR frames: visible books not held, of the cell's language; one page per book, interior, >= 300 characters (Chinese:
  * 40 Han), not <script>handwritten</script>, the stored OCR by the cell's draft engine. `correct` runs the correctors on
  * the stored draft: Opus through scripts/batch/ocr-convergence/correct.mjs (one page a call here: one page per book),
@@ -100,6 +104,19 @@ const LATIN_READS = path.join(ROOT, 'scripts/eval/flash-reread-5924/results/oc-r
 const TIB = path.join(ROOT, 'scripts/eval/results/tibetan-correct-6560');
 const TIB_MANIFEST = path.join(ROOT, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl');
 const TIB_ARMS = { yigdzin: 'baseline', 'yigdzin>flash-low-correct': 'flash-low-corr', 'yigdzin>opus-correct': 'opus-corr' };
+const TIB_CORR = 'scripts/eval/tibetan-correct-6560/corr-prompt.txt';   // prep.py CORR, the #6560 arms' and volume pass's prompt
+// tib-kangyur: Derge through tib-derge.py on a checkout of OpenPecha P000001 (TIB_P1, or DIR/../p1 / $JOB_SCRATCH/p1).
+const TIB_P1 = () => process.env.TIB_P1 || [process.env.JOB_SCRATCH && path.join(process.env.JOB_SCRATCH, 'p1'), OUT && path.join(OUT, '..', 'p1')].find((d) => d && fs.existsSync(path.join(d, 'P000001.opf')));
+const TIB_BAND = [0.9, 0.97];   // tibetan-proofread/draw.mjs LO, HI: the pilot's frame
+const TIB_HOLDS = /^(tibetan-retranslation-awaits-derek|kangyur-import|specialist-ocr-lane-4523)$/;   // lane holds, not containment
+function tibDerge(cmd, rows, extra = []) {
+  const inF = path.join(OUT, `derge-${cmd}-in.jsonl`), outF = path.join(OUT, `derge-${cmd}-out.json${cmd === 'locate' ? 'l' : ''}`);
+  if (!TIB_P1()) throw new Error('no OpenPecha P000001 checkout: set TIB_P1 (git clone --filter=blob:none --sparse https://github.com/OpenPecha-Data/P000001)');
+  fs.writeFileSync(inF, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const r = spawnSync('python3', [path.join(ROOT, 'scripts/eval/route-judge-6740/tib-derge.py'), cmd, '--p1', TIB_P1(), inF, outF, ...extra], { stdio: ['ignore', 'inherit', 'inherit'] });
+  if (r.status !== 0) throw new Error(`tib-derge.py ${cmd} exit ${r.status}`);
+  return cmd === 'locate' ? readJsonl(outF) : JSON.parse(fs.readFileSync(outF, 'utf8'));
+}
 const LITE = ['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview'];
 const FLASH3 = ['gemini-3-flash-preview'];
 const OPUS = ['claude-opus-5-5'];
@@ -119,6 +136,9 @@ const RT = {
   latin: { lang: 'Latin', draft: 'lite', models: LITE, pilot: true, routes: ['lite', 'lite>opus-correct', 'lite>agy-flash-low'], correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
   'latin-flash3': { lang: 'Latin', draft: '3flash', models: FLASH3, books: '^Latin', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
   'fr-lite': { lang: 'French', draft: 'lite', models: LITE, books: '^French', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
+  'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
+    correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
 };
 const slug = (route) => route.replace(/[^a-z0-9]+/gi, '_');
 
@@ -233,6 +253,7 @@ async function drawRouterTests(names) {
       cells[name] = { ...base, pages, frame: { ...pilot.cells[name].frame, pilot_pages: pilot.cells[name].pages.length, still_lite: pages.length, note: `the pilot's pages (${pilot.drawn_at.slice(0, 10)}); ${pilot.cells[name].frame.note}` } };
       continue;
     }
+    if (name === 'tib-kangyur') { cells[name] = { ...base, derge: true, ...(await drawTib(db, name, row, isInterior)) }; continue; }
     let frameBooks, eligible;
     if (name === 'zh-dice') {
       // #6561 set B's frame (books the Paddle lane wrote), its own-leaf rule, and the v2 cell's dice bucket.
@@ -265,6 +286,65 @@ async function drawRouterTests(names) {
   const prev = fs.existsSync(path.join(OUT, 'sample.json')) ? J('sample.json') : null;
   W('sample.json', { drawn_at: new Date().toISOString(), n: N, router_tests: true, cells: { ...(prev?.router_tests ? prev.cells : {}), ...cells } });
   for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
+}
+
+/**
+ * tib-kangyur (#6740): 30 NEW folios in the pilot's frame (tibetan-proofread/draw.mjs): British Library Kangyur
+ * manuscripts, the served read still Yigdzin's (not the #6560 volume pass), placed in Derge with identity in
+ * TIB_BAND, one folio per book, none of the pilot's 30 books. The pilot's 10 marked-seam + 20 single mix is not
+ * available outside its books (2026-10-26: 4 single-leaf folios placed in band in 195 books), so the seam mix is the frame's own.
+ * Books are walked in a seeded order (salt rt-tib-kangyur); each contributes its first in-band folio of two seeded
+ * candidates. 10 folios (seeded) get the pilot's planted syllables (prep.py plant(), DIR/plants.json).
+ */
+async function drawTib(db, name, row, isInterior) {
+  const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
+  const pilotBooks = new Set(tibManifest().map((r) => r.book_id));
+  const books = (await db.collection('books').find({ language: 'Tibetan', title: /Kanjur|Kangyur/i, visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, title: 1, pages_count: 1, pipeline_auto: 1 } }).toArray());
+  const tally = { kanjur_books: books.length, pilot_books_left_out: 0, held_or_quarantined: 0, no_eligible_page: 0, candidates: 0, not_placed_in_band: 0 };
+  const ok = books.filter((b) => {
+    if (pilotBooks.has(b.id)) { tally.pilot_books_left_out++; return false; }
+    const hold = b.pipeline_auto?.hold, st = b.pipeline_auto?.status;
+    if ((hold && !TIB_HOLDS.test(hold.reason)) || (!hold && st && !['complete', 'held'].includes(st)) || (!hold && st === 'held')) { tally.held_or_quarantined++; return false; }
+    return true;
+  });
+  const order = [...ok].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
+  const got = [];
+  const PR = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, translation_withheld: 1, photo_original: 1, split_from_spread: 1, cropped_photo: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.pipeline': 1 };
+  for (let at = 0; at < order.length && got.length < N; at += 40) {
+    const cands = [];
+    for (const b of order.slice(at, at + 40)) {
+      const ps = (await db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 }, 'ocr.model': 'bdrc-yigdzin-v1' }, { projection: PR }).toArray())
+        .filter((p) => p.ocr.source === 'bdrc' && p.ocr.pipeline !== 'tib-correct-6560' && /eap\.bl\.uk/.test(p.photo_original || '') && !p.split_from_spread && !p.cropped_photo
+          && !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count))
+        .sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`))).slice(0, 6);
+      const full = (await db.collection('pages').find({ id: { $in: ps.map((p) => p.id) } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1 } }).toArray())
+        .filter((p) => typeof p.ocr?.data === 'string' && p.ocr.data.length >= 300 && (p.ocr.data.match(/<leaf-break\/>/g) || []).length <= 1)
+        .sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`))).slice(0, 2);
+      if (!full.length) { tally.no_eligible_page++; continue; }
+      cands.push(...full.map((p, i) => ({ p, i, b })));
+    }
+    tally.candidates += cands.length;
+    const loc = new Map(tibDerge('locate', cands.map(({ p }) => ({ key: p.id, text: p.ocr.data }))).map((r) => [r.key, r]));
+    for (const b of order.slice(at, at + 40)) {
+      const mine = cands.filter((c) => c.b.id === b.id); if (!mine.length) continue;
+      const hit = mine.find(({ p }) => { const l = loc.get(p.id); return l?.identity != null && l.identity >= TIB_BAND[0] && l.identity <= TIB_BAND[1]; });
+      if (!hit) { tally.not_placed_in_band++; continue; }
+      const seam = (hit.p.ocr.data.match(/<leaf-break\/>/g) || []).length;
+      if (got.length >= N) break;
+      const l = loc.get(hit.p.id);
+      got.push(row(hit.p, { uid: hit.p.id, title: b.title, leaf_breaks: seam, derge_vol: l.vol, derge_imgnum: l.imgnum, derge_identity: l.identity, derge_votes: l.votes }));
+    }
+    console.log(`tib-kangyur: books ${Math.min(at + 40, order.length)}/${order.length}: ${got.length}/${N} (two-leaf ${got.filter((g) => g.leaf_breaks).length})`);
+  }
+  const pages = [...got].sort((a, b) => h(`rt-${name}${a.page_id}`).localeCompare(h(`rt-${name}${b.page_id}`)));
+  // Planted syllables on 10 of them (seeded), prep.py's rule; packet plants one per folio, kind rotating as the pilot.
+  const anchors = pages.slice(0, 10);
+  const full = new Map((await db.collection('pages').find({ id: { $in: anchors.map((p) => p.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr.data]));
+  fs.mkdirSync(OUT, { recursive: true });
+  const pl = tibDerge('plants', anchors.map((p) => ({ key: p.page_id, vol: p.derge_vol, imgnum: p.derge_imgnum, served_text: full.get(p.page_id) })), ['--seed', '6740']);
+  W('plants.json', pl);
+  return { pages, planted: pl.anchor_ids, frame: { ...tally, band: TIB_BAND, salt: `rt-${name}`, derge: 'OpenPecha P000001, tib-derge.py locate (5-gram votes, best of top 3 by identity), window imgnum +- 2',
+    rule: 'visible Tibetan books titled Kanjur/Kangyur, lane holds allowed (TIB_HOLDS), pilot books left out; page served by bdrc-yigdzin-v1 (ocr.source bdrc, not tib-correct-6560), BL EAP image, not split or cropped, interior, >= 300 chars, <= 1 leaf-break; Derge identity in band; one per book, in book order (the pilot\'s 10 marked-seam + 20 single mix is not available: 4 single-leaf folios placed in band in 195 books)', marked_seam: pages.filter((p) => p.leaf_breaks).length } };
 }
 
 /** Kanripo leaf (WYG witness) for each drawn Chinese page, where paddle-table-6388/align.mjs can place it. */
@@ -317,7 +397,10 @@ async function correct() {
       const dir = path.join(OUT, 'corr', cell, slug(route)); fs.mkdirSync(dir, { recursive: true });
       const ids = cs.pages.map((p) => p.page_id);
       if (pastStop()) { console.log('STOP_AT reached'); process.exit(3); }
-      if (cor.by === 'opus') {
+      if (cor.by === 'opus-prompt') {
+        const r = await opusPromptCorrect(cs, cor, dir, limits);
+        if (r === 'blocked') process.exit(3);
+      } else if (cor.by === 'opus') {
         const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
         if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
         fs.writeFileSync(path.join(dir, 'manifest.jsonl'), ids.map((id) => JSON.stringify({ page_id: id })).join('\n') + '\n');
@@ -330,11 +413,11 @@ async function correct() {
         const used = agyCalls();
         if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
         fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(ids));
-        console.log(`${cell}/${route}: cli-ocr.mjs correct mode, ${cor.model}, ${ids.length} pages (${used} agy calls so far)`);
+        console.log(`${cell}/${route}: cli-ocr.mjs correct mode, ${cor.model}, ${cor.prompt ?? 'fc template'}, ${ids.length} pages (${used} agy calls so far)`);
         // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
         await new Promise((resolve) => {
           const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
-            `--correct-prompt=${tpl}`, '--lane=route-judge-6740-eval', '--job=route-judge-6740', '--concurrency=3', '--fresh'], { env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+            `--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', '--job=route-judge-6740', '--concurrency=3', '--fresh'], { env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
           child.stdout.on('data', (d) => {
             process.stdout.write(d);
             if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }
@@ -347,12 +430,52 @@ async function correct() {
   console.log(`agy calls in DIR: ${agyCalls()}`);
 }
 
+/**
+ * Opus on a corrector's own prompt file ({draft} = the stored draft), one page a call, the image in a sealed folder:
+ * replicate-6547/run-claude-arm.py's request (the #6560 opus-corr arm), through opusCall. Nothing is kept or written
+ * but DIR/<page_id>.{txt,raw.txt,meta.json}; a page already read on the same draft is skipped.
+ */
+async function opusPromptCorrect(cs, cor, dir, limits) {
+  const { MongoClient } = await import('mongodb');
+  const { getPageSource } = await import('../../lib/page-image-url.mjs');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const ps = await c.db('bookstore').collection('pages').find({ id: { $in: cs.pages.map((p) => p.page_id) } }, { projection: { id: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1 } }).toArray();
+  await c.close();
+  const tpl = fs.readFileSync(path.join(ROOT, cor.prompt), 'utf8').trimEnd();
+  const todo = ps.filter((p) => { try { const m = JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')); return !(m.exit === 0 && m.draft_sha === contentHash(p.ocr.data)); } catch { return true; } });
+  console.log(`opus-prompt: ${todo.length} of ${ps.length} pages to read (${cor.prompt})`);
+  let stop = null, i = 0;
+  const one = async (p) => {
+    if (pastStop()) { stop = 'blocked'; return; }
+    const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+    if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); stop = 'blocked'; return; }
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-corr-'));
+    try {
+      const src = getPageSource(p), res = await fetch(src);
+      if (!res.ok) { fs.writeFileSync(path.join(dir, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, exit: 1, error_class: `image HTTP ${res.status}` })); return; }
+      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      const prompt = `${tpl.replace('{draft}', p.ocr.data)}\n\nThe page image is the file ./page.jpg in this folder. Open it with the Read tool.`;
+      const t0 = Date.now(), r = await opusCall(prompt, ws);
+      if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: r.text.slice(0, 200) }); console.log('Opus quota reply: stopped'); stop = 'blocked'; return; }
+      const bgn = r.text.indexOf('<<<BEGIN>>>'), end = r.text.lastIndexOf('<<<END>>>');
+      const body = bgn < 0 ? '' : r.text.slice(bgn + 11, end > bgn ? end : undefined).replace(/^```\w*\n|\n```$/g, '').trim();
+      fs.writeFileSync(path.join(dir, `${p.id}.raw.txt`), r.text);
+      fs.writeFileSync(path.join(dir, `${p.id}.txt`), body);
+      fs.writeFileSync(path.join(dir, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, exit: r.cls || !/[\u0F00-\u0FFF]/.test(body) ? 1 : 0, error_class: r.cls ?? (bgn < 0 ? 'no_sentinel' : end <= bgn ? 'no_end_sentinel' : !/[\u0F00-\u0FFF]/.test(body) ? 'no_tibetan' : null),
+        draft_sha: contentHash(p.ocr.data), image_url: src, prompt_file: cor.prompt, prompt_sha: h(prompt).slice(0, 16), model: r.model, usage: r.usage, list_usd: r.cost, secs: Math.round((Date.now() - t0) / 1000), at: new Date().toISOString() }));
+      console.log(`  ${p.id}: ${body.length} chars ${r.cls ?? ''}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(3, Number(arg('concurrency') || 2))) }, async () => { while (!stop && i < todo.length) await one(todo[i++]); }));
+  return stop;
+}
+
 /** A router-test corrector's answer for a page: { text } | { contain } | { none } (no answer / failed / stale draft). */
 function correction(cell, cs, route, sp, draftText) {
   // correct.mjs keeps its reads in <set-dir>/reads/; cli-ocr.mjs in its --out.
   const dir = path.join(OUT, 'corr', cell, slug(route), cs.correctors[route].by === 'opus' ? 'reads' : '');
   let m; try { m = JSON.parse(fs.readFileSync(path.join(dir, `${sp.page_id}.meta.json`), 'utf8')); } catch { return { none: 'not read' }; }
-  const seen = cs.correctors[route].by === 'opus' ? m.stored_sha256 : m.draft?.text_hash;
+  const seen = { opus: m.stored_sha256, 'opus-prompt': m.draft_sha }[cs.correctors[route].by] ?? m.draft?.text_hash;
   if (seen !== contentHash(draftText)) return { none: 'the draft the corrector read is not the stored draft' };
   if (cs.correctors[route].by === 'opus') {
     if (m.outcome === 'unchanged') return { text: draftText, unchanged: true };
@@ -454,6 +577,19 @@ async function packet() {
     const sp = s.cells.tibetan.pages.find((x) => x.uid === uid);
     add('tibetan', 'yigdzin', sp, 'planted', lines.join('\n'), { plant: { kind: p.kind, orig: p.orig, planted: p.planted, prev: p.prev, next: p.next, line: p.line } });
   });
+  // tib-kangyur: the same on its own 10 anchors (DIR/plants.json, drawn with the cell), planted in the STORED draft.
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kind === 'router-test' && x.planted?.length)) {
+    const P = J('plants.json');
+    cs.planted.forEach((uid, i) => {
+      const sp = cs.pages.find((x) => x.uid === uid), d = sp && draftOf(cs, sp);
+      if (!d) { skipped.push({ cell, route: cs.draft_route, page_id: uid, why: 'planted: stored draft changed since the draw' }); return; }
+      const pl = P.plants[uid].plants, p = pl.find((x) => x.kind === ['vowel', 'swap', 'letter'][i % 3]) ?? pl[0];
+      const lines = d.split('\n');
+      if (lines[p.line].slice(p.offset, p.offset + p.orig.length) !== p.orig) throw new Error(`plant does not sit on ${uid}`);
+      lines[p.line] = lines[p.line].slice(0, p.offset) + p.planted + lines[p.line].slice(p.offset + p.orig.length);
+      add(cell, cs.draft_route, sp, 'planted', lines.join('\n'), { plant: { kind: p.kind, orig: p.orig, planted: p.planted, prev: p.prev, next: p.next, line: p.line } });
+    });
+  }
   const order = items.map((it, i) => [h(`order:${it.id}`), i]).sort((a, b) => a[0].localeCompare(b[0])).map(([, i]) => i);
   W('packet.json', { items: order.map((i) => items[i]) });
   W('key.json', key);
@@ -645,6 +781,19 @@ async function names() {
   if (stop) { console.log(`BLOCKED (${stop.reason})`); process.exit(3); }
 }
 
+/** tib-kangyur: Derge identity of every judged output (after packet), into DIR/derge-scores.json. */
+function derge() {
+  const s = J('sample.json'), pk = new Map(J('packet.json').items.map((it) => [it.id, it]));
+  const rows = [];
+  for (const k of J('key.json').filter((x) => x.kind === 'item' && s.cells[x.cell]?.derge)) {
+    const sp = s.cells[k.cell].pages.find((p) => p.page_id === k.page_id);
+    rows.push({ key: k.page_id, route: k.route, vol: sp.derge_vol, imgnum: sp.derge_imgnum, text: pk.get(k.judged_as).text });
+  }
+  const out = tibDerge('score', rows);
+  W('derge-scores.json', out);
+  console.log(`derge: ${rows.length} outputs scored`);
+}
+
 // ------------------------------------------------------------------------------------------------ score
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
 /** Cluster (by-book) bootstrap 95% interval of the mean of rows[].v; by page when the cell is one or two books. */
@@ -694,8 +843,9 @@ function rtCost(cs, route, q, measuredPoints) {
   const eng = { lite: 'gemini-3.1-flash-lite', '3flash': 'gemini-3-flash-preview', paddle: 'paddleocr-vl-1.6' }[cs.draft_route];
   const e = q.by(eng), usd = e ? (e.usd_per_page ?? (e.busy_usd_per_1k != null ? e.busy_usd_per_1k / 1000 : null)) : null;
   const cor = cs.correctors?.[route];
-  if (!cor) return { usd, basis: `${eng} (route-costs.json${e ? '' : ': not listed'})` };
-  return cor.by === 'opus' ? { usd, claude_points: measuredPoints ?? q.pts, basis: `draft + one Opus image call (${q.ptsBasis}; correct.mjs at one page a call here)` }
+  if (!cor && cs.draft_route !== 'yigdzin') return { usd, basis: `${eng} (route-costs.json${e ? '' : ': not listed'})` };
+  if (cs.draft_route === 'yigdzin') return cor ? (cor.by.startsWith('opus') ? { usd: 0, claude_points: measuredPoints ?? q.pts, basis: `held Yigdzin + one Opus image call (${q.ptsBasis})` } : { usd: 0, agy_share: q.agy_share_per_call, basis: `held Yigdzin + one agy ${cor.model} call` }) : { usd: 0, basis: "BDRC's own OCR, held" };
+  return cor.by.startsWith('opus') ? { usd, claude_points: measuredPoints ?? q.pts, basis: `draft + one Opus image call (${q.ptsBasis}; correct.mjs at one page a call here)` }
     : { usd, agy_share: q.agy_share_per_call, basis: `draft + one agy ${cor.model} call` };
 }
 const perUsable = (cost, rate) => (cost && rate ? Object.fromEntries(Object.entries(cost).filter(([k, v]) => typeof v === 'number').map(([k, v]) => [k, +(v / rate).toPrecision(3)])) : null);
@@ -856,8 +1006,19 @@ function score() {
     }
   }
 
+  // tib-kangyur: Derge identity of every judged output (DIR/derge-scores.json, the `derge` stage), and its planted set.
+  for (const [cell, cs] of Object.entries(s.cells).filter(([, x]) => x.kind === 'router-test' && x.derge)) {
+    const dg = fs.existsSync(path.join(OUT, 'derge-scores.json')) ? J('derge-scores.json').pages : {};
+    report.cells[cell].reference = { name: 'Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (tib-derge.py, window imgnum +- 2)',
+      ...agreement(cell, (k) => dg[k.page_id]?.[k.route]?.identity ?? null, 0.005, true) };
+    const pk = keyRows.filter((k) => k.cell === cell && k.kind === 'planted' && verdict(k)), ck = pk.filter((k) => caught(verdict(k), k.plant));
+    const r = pk.length ? ck.length / pk.length : null;
+    report.cells[cell].planted = { n: pk.length, caught: ck.length, catch_rate: r == null ? null : +r.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
+      decides: r != null && r >= 0.8 ? 'judge' : 'derge', accepted_with_plant: pk.filter((k) => verdict(k).accept).length,
+      detail: pk.map((k) => ({ page_id: k.page_id, kind: k.plant.kind, orig: k.plant.orig, planted: k.plant.planted, caught: caught(verdict(k), k.plant), accept: verdict(k).accept, fidelity: verdict(k).fidelity })) };
+  }
   // Planted errors (Tibetan): the judge's catch rate. Below 80%, Derge decides the cell, not the judge.
-  const pl = keyRows.filter((k) => k.kind === 'planted' && verdict(k));
+  const pl = keyRows.filter((k) => k.cell === 'tibetan' && k.kind === 'planted' && verdict(k));
   const ct = pl.filter((k) => caught(verdict(k), k.plant));
   const plRate = pl.length ? ct.length / pl.length : null;
   if (s.cells.tibetan) report.cells.tibetan.planted = { n: pl.length, caught: ct.length, catch_rate: plRate == null ? null : +plRate.toFixed(2), rule: 'below 0.80 the Derge score decides the cell, not the judge',
@@ -879,5 +1040,5 @@ function score() {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!OUT) { console.error('--out=DIR required'); process.exit(2); }
-  await ({ draw, refs, translate, correct, packet, judge, names, score }[STAGE] ?? (() => { console.error('stages: draw | refs | translate | correct | packet | judge | names | score'); process.exit(2); }))();
+  await ({ draw, refs, translate, correct, packet, derge, judge, names, score }[STAGE] ?? (() => { console.error('stages: draw | refs | translate | correct | packet | judge | names | score'); process.exit(2); }))();
 }
