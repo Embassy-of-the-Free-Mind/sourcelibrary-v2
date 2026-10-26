@@ -18,7 +18,8 @@
  *   apply  node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page: refuses a human-edited page, a page whose OCR changed after the read,
  *          an empty or over-long read, a repetition loop, a refusal or summary dressed as a transcription, and a read
- *          that shares under 40% of its words with the text already stored; snapshots the old text to page_revisions; writes
+ *          that shares under 40% of its words with the text already stored; writes through writePageText (#7058: the old
+ *          text to page_revisions under the run id, so scripts/maintenance/revert-run.mjs --run-id <run> undoes it); writes
  *          `ocr` with a gemini-engine/1 block (api: 'cli', the CLI's name and version, the prompt sent, the image
  *          read); leaves a sweep_log row per page and one book_events row per book.
  *
@@ -73,7 +74,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
-import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { writePageText, textHash } from '../lib/page-text-writer.mjs';
 import { geminiEngine, engineNameForCli, imageInput, ocrProvenance, notRecorded, contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
 import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
@@ -408,24 +409,19 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   console.log(`  ${APPLY ? 'WRITE' : 'would write'} p.${page.page_number} (${page.ocr?.model ?? 'no OCR'} -> ${m.model}, ${text.length} chars)`);
   if (yat) { tally.yatags_hits += yat.hits; tally.yatags_kept += yat.kept; tally.yatags_reverted += yat.reverted; }
   if (!APPLY) { tally.written++; continue; }
-  await saveRevisionBeforeOverwrite(db, page.id, 'ocr', { reason: 'reocr_cli' });
-  const r = await db.collection('pages').updateOne(
-    // Guard on the OCR timestamp read above: if another writer got in between, write nothing.
-    { id: page.id, 'ocr.updated_at': page.ocr?.updated_at ?? { $exists: false } },
-    { $set: {
-      ocr: { data: text, language: correct ? (page.ocr?.language ?? 'auto-detect') : 'auto-detect', model: m.model, updated_at: new Date(), source: 'ai', prompt_version: ref.version, prompt_id: ref.id, prompt_name: ref.name, ...ocrProvenance(text, engine),
-        // A correction is stamped with its own lane, so the reader can tell it from the draft's lane and the hourly
-        // withhold sweep (WITHHOLD_LANES) does not take the English down; --mark-stale queues it for re-translation.
-        ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }),
-        // A gated re-read is stamped with its lane: the stale-translation sweep (arm 1) then finds any page whose
-        // English was not redone after it (#6769).
-        ...(LANE_GATE && { pipeline: LANE }) },
-      ...tags,
-      ...(detectedImages.length > 0 && { detected_images: detectedImages }),
-      updated_at: new Date(),
-    } },
-  );
-  if (r.modifiedCount !== 1) { skip(m, 'page changed between read and write'); continue; }
+  // Through the one page-text writer (#7058): the whole prior `ocr` goes to page_revisions with this run's id, the write
+  // is compare-and-set on the text read above, and scripts/maintenance/revert-run.mjs --run-id <run> undoes the run.
+  const w = await writePageText(db, page.id, 'ocr', {
+    data: text, language: correct ? (page.ocr?.language ?? 'auto-detect') : 'auto-detect', model: m.model, updated_at: new Date(), source: 'ai', prompt_version: ref.version, prompt_id: ref.id, prompt_name: ref.name, ...ocrProvenance(text, engine),
+    // A correction is stamped with its own lane, so the reader can tell it from the draft's lane and the hourly
+    // withhold sweep (WITHHOLD_LANES) does not take the English down; --mark-stale queues it for re-translation.
+    ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }),
+    // A gated re-read is stamped with its lane: the stale-translation sweep (arm 1) then finds any page whose
+    // English was not redone after it (#6769).
+    ...(LANE_GATE && { pipeline: LANE }),
+  }, { by: `${m.cli} ${m.model}`, reason: REASON, run_id: runId, revision_source: 'reocr_cli', expect_prior_hash: textHash(page.ocr) });
+  if (w.status !== 'written') { skip(m, w.status === 'conflict' || w.status === 'prior_changed' ? 'page changed between read and write' : `writer: ${w.status}`); continue; }
+  if (Object.keys(tags).length || detectedImages.length) await db.collection('pages').updateOne({ id: page.id }, { $set: { ...tags, ...(detectedImages.length > 0 && { detected_images: detectedImages }) } });
   await recordSweepAction(db, { sweep: 'cli-ocr', book_id: page.book_id, action: 'ocr-reread-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.ocr?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   if (MARK_STALE) await markTranslationsStale(db, [{ id: page.id, text }], new Date(), MARK_STALE);
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
