@@ -149,11 +149,13 @@ function packets() {
   const controlUnits = new Set(units.filter((_, i) => i % 4 === 0).map((u) => u.unit)); // 12 of 48
   for (const u of units) {
     const t = (arm) => out.get(`${u.unit}|${arm}`)?.text || '';
-    const add = (kind, x, y) => { const flip = rng() < 0.5; pairs.push({ unit: u.unit, stratum: u.stratum, kind, A: flip ? y : x, B: flip ? x : y, src: u.ocrText }); };
+    // Texts are attached in add(), from THIS unit. (An earlier version filled them afterwards from
+    // pairs.slice(-3), which on a unit with two pairs overwrote the previous unit's last pair with this
+    // unit's English — caught by a judge on 2026-10-26; the affected pairs were re-judged.)
+    const add = (kind, x, y) => { const flip = rng() < 0.5; const A = flip ? y : x, B = flip ? x : y; pairs.push({ unit: u.unit, stratum: u.stratum, kind, A, B, src: u.ocrText, textA: t(A), textB: t(B) }); };
     add('cand', 'v19', 'v13a');
     add('noise', 'v13b', 'v13a');
     if (controlUnits.has(u.unit)) add('control', 'v13a', 'v13a');
-    for (const p of pairs.slice(-3)) { p.textA = t(p.A); p.textB = t(p.B); }
   }
   // shuffle so a judge cannot read a pair's kind from its position
   for (let i = pairs.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pairs[i], pairs[j]] = [pairs[j], pairs[i]]; }
@@ -189,10 +191,19 @@ function score() {
     };
   }
   const report = { measure: 'term-fidelity (mechanical, cognate stem present in body)', m1 };
-  const vPath = path.join(DIR, 'verdicts.jsonl');
-  if (fs.existsSync(vPath)) {
+  // Verdicts: verdicts-1..8.jsonl, except the pairs in rejudge-ids.json (the packet bug, see packets()),
+  // whose verdicts come from verdicts-r*.jsonl, judged on the corrected packets.
+  const vFiles = fs.readdirSync(DIR).filter((f) => /^verdicts-\d+\.jsonl$/.test(f));
+  if (vFiles.length) {
     const key = new Map(JSON.parse(fs.readFileSync(path.join(DIR, 'judge-key.json'), 'utf8')).map((k) => [k.id, k]));
-    const v = fs.readFileSync(vPath, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+    const rejudge = new Set(fs.existsSync(path.join(DIR, 'rejudge-ids.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'rejudge-ids.json'), 'utf8')) : []);
+    const read = (f) => fs.readFileSync(path.join(DIR, f), 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    const v = [
+      ...vFiles.flatMap(read).filter((x) => !rejudge.has(x.id)),
+      ...fs.readdirSync(DIR).filter((f) => /^verdicts-r\d+\.jsonl$/.test(f)).flatMap(read).filter((x) => rejudge.has(x.id)),
+    ];
+    const missing = [...key.keys()].filter((id) => !v.some((x) => x.id === id));
+    if (missing.length) console.warn(`missing verdicts: ${missing.join(' ')}`);
     const agg = {};
     for (const x of v) {
       const k = key.get(x.id); if (!k) continue;
@@ -207,7 +218,19 @@ function score() {
       a.serious_first += firstIsA ? x.serious_A : x.serious_B; a.serious_second += firstIsA ? x.serious_B : x.serious_A;
       a.ff_first += firstIsA ? x.false_friends_A : x.false_friends_B; a.ff_second += firstIsA ? x.false_friends_B : x.false_friends_A;
     }
-    report.judge = { note: 'first = v19 in cand pairs, v13b in noise pairs; second = v13a', by_kind_stratum: agg, verdicts: v.length };
+    const sum = (kind, strata = ['T', 'F', 'C']) => {
+      const t = { n: 0, fid: { first: 0, second: 0, tie: 0 }, read: { first: 0, second: 0, tie: 0 }, serious_first: 0, serious_second: 0, ff_first: 0, ff_second: 0 };
+      for (const s of strata) { const a = agg[`${kind}|${s}`]; if (!a) continue; t.n += a.n; for (const k of ['first', 'second', 'tie']) { t.fid[k] += a.fidelity[k]; t.read[k] += a.readability[k]; } t.serious_first += a.serious_first; t.serious_second += a.serious_second; t.ff_first += a.ff_first; t.ff_second += a.ff_second; }
+      return t;
+    };
+    const control = sum('control');
+    report.judge = {
+      note: 'first = v19 in cand pairs, v13b in noise pairs; second = v13a',
+      control_tie_rate: control.n ? control.fid.tie / control.n : null,
+      cand_all: sum('cand'), noise_all: sum('noise'),
+      cand_F: sum('cand', ['F']), cand_C: sum('cand', ['C']), noise_C: sum('noise', ['C']),
+      by_kind_stratum: agg, verdicts: v.length,
+    };
   }
   fs.writeFileSync(path.join(DIR, 'report.json'), JSON.stringify(report, null, 1));
   console.log(JSON.stringify(report, null, 1));
