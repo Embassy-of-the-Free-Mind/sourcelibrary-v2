@@ -371,9 +371,7 @@ export default function AlivenessPage() {
         </p>
 
         <p className={p}>
-          This page starts with the oldest and longest-lived answer, the soul. Then comes a table of what life
-          was taken to be in each age and what people did to keep it, the five large shifts, ten moments when
-          the answer changed, and last, the word itself. Every quotation links to the page it is printed on.
+          Every quotation links to the page it is printed on.
           The picture above is from the title page of Robert Fludd&apos;s{' '}
           <Link href={pg(B.fludd, 1)}>
             <em>Utriusque cosmi historia</em> (1617)
@@ -502,7 +500,7 @@ export default function AlivenessPage() {
         <h3 className={h3}>The split</h3>
 
         <p className={p}>
-          The machine broke the ladder. Descartes kept the top rung and threw away the rest. As Ernst Haeckel
+          Descartes ended the ladder by keeping only its top rung, the thinking soul of people. As Ernst Haeckel
           summed it up in 1899, Descartes &ldquo;contended that man alone had a true &lsquo;soul,&rsquo; and,
           consequently, sensation and free will, and that the animals were mere automata, or machines, without
           will or sensibility&rdquo; (<em>The Riddle of the Universe</em>, <Link href={pg(B.haeckel, 122)}>p.
@@ -526,10 +524,10 @@ export default function AlivenessPage() {
         <h2 className={h2}>What life was, and what people did about it</h2>
 
         <p className={p}>
-          A practice follows from a definition. Where life was a heat burning in a moisture, people rationed the
-          fuel. Where it was a spirit made of vapour, they fed it vapours. Where it was a food in the air, they
-          tried to catch the food. Where it was breath staying in the body, they held the breath. Where it was a
-          soul that could lodge in matter, they made images and called it in.
+          What people did followed from what they took life to be. Physicians who thought it a heat burning in
+          a moisture rationed food and drink. Ficino, for whom it was a vapour, fed it with vapours. Alchemists
+          who found it in the air tried to catch it there. Yogis, for whom it was breath kept in the body, held
+          the breath. Priests who thought a god could lodge in matter made statues and called it in.
         </p>
 
         <Eras />
@@ -609,13 +607,13 @@ export default function AlivenessPage() {
         <p className={p}>
           <strong className="text-primary">4. From a substance to a felt quality.</strong> By 1906 the practice was
           to rub the hands until they felt alive. W. W. Atkinson told his readers: &ldquo;Now I wish to put LIFE
-          into you&rdquo; (<em>Thought Vibration</em>, <Link href={pg(B.thoughtVibration, 97)}>p. 62</Link>). What
-          was worked on was no longer a heat or a breath but a sensation.
+          into you&rdquo; (<em>Thought Vibration</em>, <Link href={pg(B.thoughtVibration, 97)}>p. 62</Link>). The
+          practice now worked on a sensation.
         </p>
 
         <p className={p}>
-          <strong className="text-primary">5. What stayed: the inhabited land.</strong> Places were not made alive;
-          they already were. A dissertation of 1688 says the ancients gave a guardian genius to{' '}
+          <strong className="text-primary">5. What stayed: the inhabited land.</strong> In every period, places
+          were treated as alive already, to be honoured rather than made. A dissertation of 1688 says the ancients gave a guardian genius to{' '}
           <Link href={pg(B.wagner, 12)}>every kingdom, province, city and people</Link>. Han Yu, the Tang official
           exiled to Chaozhou, wrote that &ldquo;the spirits of the mountains and rivers provide protection to the
           people; the officials shall establish shrines and halls&rdquo; (<em>Peiwen yunfu</em>,{' '}
@@ -626,8 +624,7 @@ export default function AlivenessPage() {
         <h2 className={h2}>Ten turning points</h2>
 
         <p className={p}>
-          The shifts happened at particular moments, in particular books. Here are ten, each with one line from
-          the page where it happened.
+          Ten moments when the answer changed, each with a line from the page where it was written.
         </p>
 
         <h3 className={h3}>1. Breath becomes soul</h3>
@@ -816,7 +813,7 @@ export default function AlivenessPage() {
           The words for the matter left over came from the other side. Henry More called matter{' '}
           <Link href={pg(B.more, 22)}>&ldquo;stupid&rdquo;</Link>, and Anne Conway asked what progress{' '}
           <Link href={pg(B.conway, 106)}>dead matter</Link> could ever make. On these pages &ldquo;dead
-          matter&rdquo; is the critics&apos; phrase. The mechanists said machine.
+          matter&rdquo; is the critics&apos; phrase; the mechanists themselves wrote &ldquo;machine&rdquo;.
         </p>
 
         <h3 className={h3}>7. Life against death</h3>
@@ -967,9 +964,8 @@ export default function AlivenessPage() {
 
         <p className={p}>
           She puts the word in quotation marks, as if it needed excusing, and on the same page says the aliveness
-          showed in her love of living things and a pang at killing anything. On these pages the word is about
-          130 years old. What it names is a soul that moves itself, breath kept in the body, heat fed by moisture,
-          a spirit fed by wine and light, an Earth more alive than we are.
+          showed in her love of living things and a pang at killing anything. In the library&apos;s books the
+          word is about 130 years old. The earlier answers to the same question are the ones above.
         </p>
 
         <h2 className={h2}>Explore further</h2>
