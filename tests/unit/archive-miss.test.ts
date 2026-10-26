@@ -185,4 +185,12 @@ cat "${root}/count" > "${root}/slept"; kill -TERM $(cat "${root}/lanepid")
   it('busy runs and a run stopped at the ceiling do not sleep', () => {
     expect(firstSleepAfter([busy, killed, busy])).toBe(null);
   });
+
+  // lane-gallica 2026-10-26: 40 books whose pages were already on R2, closed with 0 fetches. Progress.
+  const closed = '00:24:12 archive-acquired (finished): complete 40, with gaps 0, partial 0, stalled 0 | books 40/40 | pages 0 ok, 0 failed, 0 missed [404/410], 0 skipped in 0.1m (0.00 pages/s)\n';
+  const gapsOnly = '00:24:12 archive-acquired (finished): complete 0, with gaps 3, partial 0, stalled 0 | books 3/3 | pages 0 ok, 0 failed, 0 missed [404/410], 0 skipped in 0.1m (0.00 pages/s)\n';
+
+  it('a run that fetched nothing but closed books is progress, not idle (#5448)', () => {
+    expect(firstSleepAfter([closed, gapsOnly, busy])).toBe(null);
+  });
 });
