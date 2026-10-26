@@ -39,6 +39,30 @@ export const OTHER_REPOSITORIES = [
   'Speyer, Landesarchiv',
   'Bensheim, Pfarrarchiv St. Georg',
   'Bensheim, Stadtarchiv',
+  // Measured 2026-10-26 (#7270): repositories whose name is not "<City>, <Repository>", or that
+  // the first list did not reach. 1,318 of the 1,383 titles below are the first two.
+  'Universitätsarchiv Heidelberg',
+  'Wissenschaftliche Stadtbibliothek Mainz',
+  'Berlin, Staatsbibliothek zu Berlin – Preußischer Kulturbesitz',
+  'Herzog August Bibliothek Wolfenbüttel',
+  'Dresden, Sächsische Landesbibliothek – Staats- und Universitätsbibliothek',
+  'Stadtbibliothek im Bildungscampus Nürnberg',
+  "Scheurl'sches Familienarchiv Nürnberg",
+  'Wien, Österreichische Nationalbibliothek',
+  'Wien, Österreichisches Staatsarchiv',
+  'Deutsches Literaturarchiv in Marbach (DLA)',
+  'Deutsches Literaturarchiv Marbach (DLA)',
+  'Wiesbaden, Hessisches Hauptstaatsarchiv',
+  'Germanisches Nationalmuseum Nürnberg',
+  'Staatsbibliothek Bamberg',
+  'Staatsarchiv Nürnberg',
+  'Bad Mergentheim, Deutschordensmuseum',
+  'München, Bayerische Staatsbibliothek',
+  'Duisburg, Landesarchiv Nordrhein-Westfalen Abteilung Rheinland',
+  'Forschungsbibliothek Gotha',
+  'Hamburg, Staats- und Universitätsbibliothek',
+  'Fürstlich Waldeckschen Hofbibliothek Arolsen',
+  'Michelstadt, Nikolaus-Matz-Bibliothek (Kirchenbibliothek)',
 ];
 
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };

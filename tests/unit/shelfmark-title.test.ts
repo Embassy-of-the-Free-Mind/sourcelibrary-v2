@@ -43,6 +43,24 @@ describe('workFirstTitle', () => {
       .toBe('Divan (Oxford, Bodleian Library, MS. Laud Or. 12)');
   });
 
+  it('handles repositories named without a city, and shelfmarks with commas or colons (#7270)', () => {
+    expect(workFirstTitle('Universitätsarchiv Heidelberg, XII,2 Nr. 96: [Urkunde]'))
+      .toBe('[Urkunde] (Universitätsarchiv Heidelberg, XII,2 Nr. 96)');
+    expect(workFirstTitle('Wissenschaftliche Stadtbibliothek Mainz, Hs I 525: Kräuterbuch, deutsch'))
+      .toBe('Kräuterbuch, deutsch (Wissenschaftliche Stadtbibliothek Mainz, Hs I 525)');
+    expect(workFirstTitle('Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 236.11 Extrav., f.21r-22v: Brief'))
+      .toBe('Brief (Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 236.11 Extrav., f.21r-22v)');
+    expect(workFirstTitle('Deutsches Literaturarchiv in Marbach (DLA), A:Mommsen: Briefwechsel: Brief'))
+      .toBe('Briefwechsel: Brief (Deutsches Literaturarchiv in Marbach (DLA), A:Mommsen)');
+    expect(workFirstTitle("Scheurl&apos;sches Familienarchiv Nürnberg, Akten XIV, E 9: Akten"))
+      .toBe("Akten (Scheurl'sches Familienarchiv Nürnberg, Akten XIV, E 9)");
+  });
+
+  it('never reads a printed title that merely starts with "Museum" as a repository', () => {
+    const printed = 'Museum Museorum, Oder Vollständige SchauBühne Aller Materialien und Specereyen: Nebst deren Natürlichen Beschreibung';
+    expect(workFirstTitle(printed)).toBe(printed);
+  });
+
   it('leaves a title that does not start with a listed repository alone', () => {
     const printed = 'Von Gottes Gnaden Wir Carl Philipp, Pfaltz-Graff bey Rhein: Unseren gnädigsten Gruß zuvor';
     expect(workFirstTitle(printed)).toBe(printed);
