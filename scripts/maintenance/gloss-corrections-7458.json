@@ -1,0 +1,556 @@
+[
+ {
+  "book_id": "6976f5fb7b4366f057e0e974",
+  "page_number": 271,
+  "claim": "alch-croll-natural-balsam-gloss-life-force",
+  "edits": [
+   {
+    "find": "<note>In Paracelsian medicine, the \"Natural Balsam\" is an internal life-force or fluid that preserves the body from decay and disease.</note>",
+    "replace": "<note>original: \"Balsami naturalis\". In Paracelsian medicine, the natural balsam is a preserving substance in the body that keeps it from decay and disease.</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "69b51e1f768235dc6598c9e7",
+  "page_number": 88,
+  "claim": "alch-burggrav-lamp-of-life-from-blood",
+  "edits": [
+   {
+    "find": "from whose blood it is prepared draws vital Spirit;",
+    "replace": "from whose blood it is prepared draws vital breath <note>original: \"vitalem ducit Spiritum\", the Latin idiom for \"is alive, breathes\"</note>;"
+   }
+  ]
+ },
+ {
+  "book_id": "699376e7b0a84a5763961e8f",
+  "page_number": 421,
+  "claim": "anc-deanima-ensouled-distinguished-by-living",
+  "edits": [
+   {
+    "find": "distinguishing the ensouled from the unsouled by the presence of life.",
+    "replace": "distinguishing the ensouled from the unsouled by living <note>original: \"τῷ ζῆν\"</note>."
+   }
+  ]
+ },
+ {
+  "book_id": "699376e7b0a84a5763961e8f",
+  "page_number": 489,
+  "claim": "anc-despiritu-innate-pneuma-grows-with-age",
+  "edits": [
+   {
+    "find": "<term>pneuma</term> <gloss>vital spirit/breath</gloss>",
+    "replace": "<term>pneuma</term> <gloss>breath, spirit</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "69a97a2df3f3d2fb7de270de",
+  "page_number": 182,
+  "claim": "anc-cleomedes-sympathy-needs-one-pneuma",
+  "edits": [
+   {
+    "find": "<term>pneuma</term> <gloss>vital spirit</gloss>",
+    "replace": "<term>pneuma</term> <gloss>breath, spirit</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "69804b901fb2ba7cf1d43a18",
+  "page_number": 1118,
+  "claim": "heb-knorr-nefesh-life-force-note",
+  "edits": [
+   {
+    "find": "<note>The lowest part of the soul, associated with life force and the physical body.</note>",
+    "replace": "<note>The lowest of the three parts of the soul.</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "6985ca71d6a3951c0372a83f",
+  "page_number": 341,
+  "claim": "anc-psyche-heat-mistranslated-vital",
+  "edits": [
+   {
+    "find": "in the whole of the universe there is a **vital heat** <note>",
+    "replace": "in the whole of the universe there is a **soul-heat** <note>"
+   }
+  ]
+ },
+ {
+  "book_id": "6985ca71d6a3951c0372a83f",
+  "page_number": 339,
+  "claim": "anc-psyche-heat-mistranslated-vital",
+  "edits": [
+   {
+    "find": "heat belonging to the soul or life-force</note>",
+    "replace": "heat belonging to the soul</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "6953e60e1479a63c11084af4",
+  "page_number": 247,
+  "claim": "anc-galen-nf-erasistratus-pneuma-gloss-vital-spirit",
+  "edits": [
+   {
+    "find": "<term>the \"vital spirit\" or \"breath of life,\" thought to be a refined substance carried in the arteries</term>",
+    "replace": "<term>breath, air; for Erasistratus a refined air carried in the arteries</term>"
+   }
+  ]
+ },
+ {
+  "book_id": "69e72c6ba409200ea79f484e",
+  "page_number": 140,
+  "claim": "asia-zhuangzi-life-gathering-of-qi",
+  "edits": [
+   {
+    "find": "<term>qi</term> <gloss>vital energy</gloss>",
+    "replace": "<term>qi</term> <gloss>breath, vapour</gloss>",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "69e72c6ba409200ea79f484e",
+  "page_number": 141,
+  "claim": "asia-zhuangzi-one-qi-through-world",
+  "edits": [
+   {
+    "find": "<term>qi</term> <gloss>vital energy</gloss>",
+    "replace": "<term>qi</term> <gloss>breath, vapour</gloss>",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "69e72c70a409200ea79f48f9",
+  "page_number": 24,
+  "claim": "asia-zhuangzi-pangzhu-qi-gathers-energy",
+  "edits": [
+   {
+    "find": "This means energy gathers and produces,",
+    "replace": "This means qi gathers and produces,"
+   },
+   {
+    "find": "responding to the gathering and scattering of energy,",
+    "replace": "responding to the gathering and scattering of qi,"
+   }
+  ]
+ },
+ {
+  "book_id": "6992caf6d4d545ae73feeb7c",
+  "page_number": 107,
+  "claim": "asia-baopuzi-daoyin-qigong-gloss",
+  "edits": [
+   {
+    "find": "an ancient precursor to Qigong involving breath control and physical movements to circulate vital energy (Qi).",
+    "replace": "exercises of breathing and bodily movement to guide the qi (breath)."
+   }
+  ]
+ },
+ {
+  "book_id": "6a0e54e98831ddc9459ad225",
+  "page_number": 147,
+  "claim": "asia-hyp-asau-rendered-energy",
+  "edits": [
+   {
+    "find": "moving the energy",
+    "replace": "moving the śakti",
+    "all": true
+   },
+   {
+    "find": "<gloss>the central energy channel</gloss>",
+    "replace": "<gloss>the central channel</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "6a1d81af5afc14a085e6d7e6",
+  "page_number": 16,
+  "claim": "asia-ming-xingming-guizhi-lifeforce",
+  "edits": [
+   {
+    "find": "Life-Force",
+    "replace": "Life",
+    "all": true
+   },
+   {
+    "find": "life-force",
+    "replace": "life",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6a1d81ba5afc14a085e6dbe2",
+  "page_number": 105,
+  "claim": "asia-ming-huiming-jing-lifeforce",
+  "edits": [
+   {
+    "find": "<gloss>Inner Nature and Life-force</gloss>",
+    "replace": "<gloss>inner nature and allotted life</gloss>"
+   },
+   {
+    "find": "Inner Nature and Life-force",
+    "replace": "Inner Nature and Life",
+    "all": true
+   },
+   {
+    "find": "<term>Qi</term> <gloss>vital energy</gloss>",
+    "replace": "<term>Qi</term> <gloss>breath, vapour</gloss>"
+   },
+   {
+    "find": "Life-force",
+    "replace": "Life",
+    "all": true
+   },
+   {
+    "find": "Spirit and Vital Energy",
+    "replace": "Spirit and Qi",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6a3cc18aec254ff6cae0d2c3",
+  "page_number": 6,
+  "claim": "asia-ming-zunsheng-bajian-lifeforce",
+  "edits": [
+   {
+    "find": "restore wholeness to their inner nature and life force.",
+    "replace": "restore wholeness to their inner nature and allotted life <note>original: \"xingming\" (性命)</note>."
+   },
+   {
+    "find": "it becomes breath-energy and blood;",
+    "replace": "it becomes qi and blood;"
+   }
+  ]
+ },
+ {
+  "book_id": "6992ce273ea667fbac8284fd",
+  "page_number": 18,
+  "claim": "asia-yuanqi-shilin-guangji-earth-floats",
+  "edits": [
+   {
+    "find": "Life-force",
+    "replace": "Qi",
+    "all": true
+   },
+   {
+    "find": "Life-Force",
+    "replace": "Qi",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6992caf8d4d545ae73feec07",
+  "page_number": 6,
+  "claim": "asia-qi-helo-zhenshu-fate",
+  "edits": [
+   {
+    "find": "<term>qi</term> <gloss>vital life force</gloss>",
+    "replace": "<term>qi</term> <gloss>breath, vapour</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c68c1af3c49b59c5dc249",
+  "page_number": 131,
+  "claim": "asia-yangqi-chaoshi-season",
+  "edits": [
+   {
+    "find": "<term>Yang</term> <gloss>active, warming energy</gloss> <term>Qi</term> <gloss>vital life force</gloss>",
+    "replace": "<term>Yang</term> <gloss>the warm, active aspect</gloss> <term>Qi</term> <gloss>breath, vapour</gloss>",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c5f26879008ba7e1533be",
+  "page_number": 84,
+  "claim": "asia-qi-jingyue-smallpox",
+  "edits": [
+   {
+    "find": "the vital energy <term>qi</term> <gloss>breath or life force</gloss>",
+    "replace": "the <term>qi</term> <gloss>breath, vapour</gloss>"
+   },
+   {
+    "find": "blood and vital energy",
+    "replace": "blood and qi",
+    "all": true
+   },
+   {
+    "find": "excess of pathogenic energy",
+    "replace": "excess of pathogenic qi"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c5f0840c88a541d8e6528",
+  "page_number": 98,
+  "claim": "asia-shengqi-jingyue-shenqi",
+  "edits": [
+   {
+    "find": "<note>original: \"shengqi\" refers to vital energy or life force</note>",
+    "replace": "<note>original: \"shengqi\" (生氣), literally \"living qi\"</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "6a1d81b45afc14a085e6d8a2",
+  "page_number": 620,
+  "claim": "asia-sheng-zhuangzi-dasheng",
+  "edits": [
+   {
+    "find": "whose life-force has vanished",
+    "replace": "whose life has gone"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c5f0840c88a541d8e6528",
+  "page_number": 79,
+  "claim": "asia-three-treasures-jingyue-one-qi",
+  "edits": [
+   {
+    "find": "As for that which cannot be divided, consider the practitioners of internal cultivation <note>referring to Neidan or internal alchemy</note> who regard essence, energy, and spirit <note>original: \"jing, qi, shen\"</note> as the Three Treasures. In the state of Pre-heaven <note>referring to the innate or primordial state before birth</note>, energy is transformed through spirit into energy, and energy is transformed into essence. In the state of Post-heaven <note>referring to the acquired state after birth</note>, energy is transformed through essence into energy, and energy is transformed into spirit. The generative transformations of these three serve as mutual roots for one another, as they are ultimately the same single energy <note>term: qi</note>. This is why they are considered indivisible. Therefore, those skilled at treating essence can cause energy to be produced from within essence, and those skilled at treating energy can cause essence to be produced from within energy. This is the wondrous application of that which can and cannot be divided. Furthermore, regarding the Yin and Yang of cold and heat, these absolutely must be divided. For the nature of cold is like ice, while the nature of heat is like charcoal. Since ice and charcoal cannot coexist or be used for the same purpose, how can they be applied recklessly? Thus I say: the Yin and Yang of essence and energy cannot be separated, but the Yin and Yang of cold and heat must not be confused. This is the most vital and definitive principle for physicians.",
+    "replace": "As for that which cannot be divided, consider the practitioners of internal cultivation <note>referring to Neidan or internal alchemy</note> who regard essence, qi, and spirit <note>original: \"jing, qi, shen\"</note> as the Three Treasures. In the state of Pre-heaven <note>referring to the innate or primordial state before birth</note>, qi is transformed through spirit into qi, and qi is transformed into essence. In the state of Post-heaven <note>referring to the acquired state after birth</note>, qi is transformed through essence into qi, and qi is transformed into spirit. The generative transformations of these three serve as mutual roots for one another, as they are ultimately the same single qi. This is why they are considered indivisible. Therefore, those skilled at treating essence can cause qi to be produced from within essence, and those skilled at treating qi can cause essence to be produced from within qi. This is the wondrous application of that which can and cannot be divided. Furthermore, regarding the Yin and Yang of cold and heat, these absolutely must be divided. For the nature of cold is like ice, while the nature of heat is like charcoal. Since ice and charcoal cannot coexist or be used for the same purpose, how can they be applied recklessly? Thus I say: the Yin and Yang of essence and qi cannot be separated, but the Yin and Yang of cold and heat must not be confused. This is the most vital and definitive principle for physicians."
+   }
+  ]
+ },
+ {
+  "book_id": "69ee89ff4501bec89654730c",
+  "page_number": 54,
+  "claim": "asia-ayus-rigveda-lifeforce",
+  "edits": [
+   {
+    "find": "<term>āyuḥ</term> <gloss>life-force</gloss>",
+    "replace": "<term>āyuḥ</term> <gloss>life, lifespan</gloss>",
+    "all": true
+   },
+   {
+    "find": "takes the life-force of all beings",
+    "replace": "takes the life of all beings"
+   },
+   {
+    "find": "this Agni becomes the exceptional life-force,",
+    "replace": "this Agni becomes one of exceptional life,"
+   }
+  ]
+ },
+ {
+  "book_id": "69920beee0a548a13d887aeb",
+  "page_number": 519,
+  "claim": "asia-visvayu-sayana-vayu",
+  "edits": [
+   {
+    "find": "May the all-pervading life-force protect you;",
+    "replace": "May Āyu, who goes everywhere, protect you <note>original: \"āyur viśvāyuḥ\"; Sāyaṇa takes it as Vāyu, the wind</note>;"
+   },
+   {
+    "find": "The all-pervading life-force, the Wind (<term>vayu</term>),",
+    "replace": "The all-pervading one (viśvāyu) is the Wind (<term>vayu</term>),"
+   }
+  ]
+ },
+ {
+  "book_id": "69ee89f34501bec896546e1d",
+  "page_number": 770,
+  "claim": "asia-jivatu-sayana-medicine",
+  "edits": [
+   {
+    "find": "if you wish for our life-force,",
+    "replace": "if you wish for our life <note>original: \"jīvātu\"; Sāyaṇa: jīvanauṣadha, a medicine of life</note>,"
+   }
+  ]
+ },
+ {
+  "book_id": "6991d89a8c1030b12444c076",
+  "page_number": 144,
+  "claim": "asia-prana-hyp-vayu",
+  "edits": [
+   {
+    "find": "the life-force—the vital air—",
+    "replace": "the breath—the air—",
+    "all": true
+   },
+   {
+    "find": "life-force",
+    "replace": "breath",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6a0eb384283b678bc95b96ca",
+  "page_number": 57,
+  "claim": "asia-prana-siva-samhita-vayus",
+  "edits": [
+   {
+    "find": "The life-force (<term>Prana</term>)",
+    "replace": "The breath (<term>Prana</term>)"
+   },
+   {
+    "find": "the life-force",
+    "replace": "prāṇa",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6a0eb379283b678bc95b9611",
+  "page_number": 31,
+  "claim": "asia-prana-gheranda-gloss-injected",
+  "edits": [
+   {
+    "find": "<term>Prâna-Vâyu</term> <gloss>vital life-force</gloss>",
+    "replace": "<term>Prâna-Vâyu</term> <gloss>the in-breath</gloss>"
+   },
+   {
+    "find": "<term>Apâna-Vâyu</term> <gloss>downward-moving life-force</gloss>",
+    "replace": "<term>Apâna-Vâyu</term> <gloss>the downward breath</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "6abe9c216a920ffd924d91c8",
+  "page_number": 273,
+  "claim": "asia-srog-sustenance-tengyur",
+  "edits": [
+   {
+    "find": "the life-force <note>original: \"prana\"</note>",
+    "replace": "life <note>original: \"srog\"; Sanskrit usually jīvita or prāṇa</note>"
+   },
+   {
+    "find": "the life-force",
+    "replace": "life",
+    "all": true
+   },
+   {
+    "find": "life-force",
+    "replace": "life",
+    "all": true
+   }
+  ]
+ },
+ {
+  "book_id": "6abe88866a920ffd924d46a0",
+  "page_number": 515,
+  "claim": "asia-srog-central-channel",
+  "edits": [
+   {
+    "find": "The life-force <term>prana</term> <gloss>breath-energy</gloss>",
+    "replace": "The life-wind <term>prana</term> <gloss>srog, the life-breath</gloss>"
+   },
+   {
+    "find": "cause the life-force to",
+    "replace": "cause the life-wind to"
+   },
+   {
+    "find": "<gloss>the central energy channel</gloss>",
+    "replace": "<gloss>the central channel</gloss>"
+   }
+  ]
+ },
+ {
+  "book_id": "6970e3619b09d309d780a26a",
+  "page_number": 148,
+  "claim": "alch-clangor-growth-is-heat-in-radical-moisture",
+  "edits": [
+   {
+    "find": "<note>the vital energy believed to drive all growth and life</note>",
+    "replace": "<note>the body's own heat, which with the radical moisture was held to sustain growth and life</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "6977813098a09acb229a3f0d",
+  "page_number": 206,
+  "claim": "alch-meteororum-archeus-smith-in-stomach",
+  "edits": [
+   {
+    "find": "the \"inner alchemist\" or vital force that",
+    "replace": "the \"inner alchemist\" that"
+   }
+  ]
+ },
+ {
+  "book_id": "6968d70e4fa3b04c6de86c76",
+  "page_number": 427,
+  "claim": "med-miscellany-life-stands-by-moisture",
+  "edits": [
+   {
+    "find": "\"spirits\" were subtle substances that carried life force through the body.",
+    "replace": "\"spirits\" were subtle vapours carried through the body."
+   }
+  ]
+ },
+ {
+  "book_id": "6953c67c77f38f6761bd9970",
+  "page_number": 18,
+  "claim": "med-hildegard-viriditas-life-force-note",
+  "edits": [
+   {
+    "find": "<note>Hildegard’s central concept of the \"greening power\" or life-force inherent in all living things, reflecting the vitality of God's creation.</note>",
+    "replace": "<note>Hildegard’s term for greenness, the freshness of growing things; the German introduction calls it \"Grünkraft\" (greening power).</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "59e68f94-49d0-4ed7-a610-b1f53e55b2f8",
+  "page_number": 73,
+  "claim": "med-avicenna-canon-ms-life-force",
+  "edits": [
+   {
+    "find": "subtle substances or \"vapors\" that carry life force</note>",
+    "replace": "subtle substances or \"vapors\"</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "69520600ab34727b1f042e3c",
+  "page_number": 90,
+  "claim": "ren-ficino-green-plants-breathe-into-spirit",
+  "edits": [
+   {
+    "find": "breathe forth their essence to increase the spirit",
+    "replace": "breathe forth to increase the spirit"
+   }
+  ]
+ },
+ {
+  "book_id": "69568909be7c607c5f03c44d",
+  "page_number": 243,
+  "claim": "ren-mercuriale-exercise-excites-native-heat",
+  "edits": [
+   {
+    "find": "the internal organs and the vital spirits are altered",
+    "replace": "the internal organs and the spirits are altered"
+   }
+  ]
+ },
+ {
+  "book_id": "6954347b1479a63c11089b35",
+  "page_number": 283,
+  "claim": "wil-kant-organism-formative-power-not-machine",
+  "edits": [
+   {
+    "find": "<note>original: \"bildende Kraft\" — a vital, creative force that shapes and maintains the structure of a living thing</note>",
+    "replace": "<note>original: \"bildende Kraft\" — a formative power that organizes matter, set against the merely moving force of a machine</note>"
+   }
+  ]
+ },
+ {
+  "book_id": "69e7ac115f1a22ab19aa30d2",
+  "page_number": 156,
+  "claim": "asia-srog-jiva-kanjur",
+  "edits": [
+   {
+    "find": "the life-force",
+    "replace": "life",
+    "all": true
+   }
+  ]
+ }
+]
