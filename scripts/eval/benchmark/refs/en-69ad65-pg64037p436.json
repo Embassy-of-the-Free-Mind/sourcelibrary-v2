@@ -3,7 +3,7 @@
   "source": "gutenberg",
   "source_url": "https://www.gutenberg.org/cache/epub/64037/pg64037-images.html",
   "source_revision": "fetched 2026-09-26",
-  "licence": "PD-US (Project Gutenberg)",
+  "licence": "PD-US",
   "proofread_level": null,
   "unit": {
     "kind": "page",
@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg renumbers the footnotes 90–94 where the page prints 49–53, and the footnote bodies are not on this reference page"
+  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg renumbers the footnotes 90–94 where the page prints 49–53, and the footnote bodies are not on this reference page",
+  "work_title": "The Life of Jesus Critically Examined: (4th ed.)",
+  "ebook": 64037,
+  "pd_eu": true,
+  "pd_eu_basis": "authors and translators: Strauss, David Friedrich (d. 1874); Eliot, George (d. 1880); all died before 1956, or the work is anonymous and over 70 years old, or published before 1870 (checked 2026-10-26, #7462)"
 }

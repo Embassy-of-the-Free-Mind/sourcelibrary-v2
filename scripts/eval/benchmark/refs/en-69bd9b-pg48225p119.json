@@ -3,7 +3,7 @@
   "source": "gutenberg",
   "source_url": "https://www.gutenberg.org/cache/epub/48225/pg48225-images.html",
   "source_revision": "fetched 2026-09-26",
-  "licence": "PD-US (Project Gutenberg)",
+  "licence": "PD-US",
   "proofread_level": null,
   "unit": {
     "kind": "page",
@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg cut carries the caption of the plate facing p. 118 (not on this leaf) and omits the printed table (Husband/Wife/Difference)"
+  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg cut carries the caption of the plate facing p. 118 (not on this leaf) and omits the printed table (Husband/Wife/Difference)",
+  "work_title": "Collected Papers on Analytical Psychology",
+  "ebook": 48225,
+  "pd_eu": false,
+  "pd_eu_basis": "C. G. Jung d. 1961: in copyright in the EU until 2031"
 }

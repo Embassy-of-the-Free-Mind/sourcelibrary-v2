@@ -15,11 +15,13 @@
  *   checksums.txt     sha256 of each jsonl
  *
  * Reference-license policy (conservative by design):
- *   include   First1KGreek (CC-BY-SA), Wikisource (CC BY-SA), Living Poets (CC-BY/PD),
- *             Clementine Vulgate via drbo (PD text), Sefaria versions marked
- *             Public Domain / CC0 / CC-BY
+ *   include   First1KGreek, Wikisource, DTA and Sefaria's Miqra according to the
+ *             Masorah (all CC BY-SA), Clementine Vulgate via drbo and Sefaria
+ *             versions marked Public Domain
  *   pointer   TITUS (site forbids republication), ctext.org (terms restrict
- *             redistribution), any Sefaria version with unknown license
+ *             redistribution), Living Poets (licence not confirmed), any Sefaria
+ *             version with unknown license
+ *   The table is scripts/eval/lib/ocr-eval-licences.mjs (checked 2026-10-26, #7462).
  *
  *   set -a; source .env.production.local; set +a
  *   node scripts/eval/export-eval-dataset.mjs [--version=v0.1] [--obs=path.jsonl]
@@ -31,6 +33,7 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { licenseFor, RETRIEVAL_NOTE } from './lib/ocr-eval-licences.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -39,20 +42,8 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 const VERSION = args.version || 'v0.1';
 const sha256 = s => crypto.createHash('sha256').update(s, 'utf8').digest('hex');
 
-// source name → {license, include}. Matched by substring against gt.source.
-const LICENSE_MAP = [
-  { match: /First1KGreek/i, license: 'CC-BY-SA-4.0 (OpenGreekAndLatin First1KGreek)', include: true },
-  { match: /Wikisource/i, license: 'CC BY-SA 4.0 (Wikisource)', include: true },
-  { match: /Living Poets/i, license: 'CC-BY / Public Domain (Living Poets, Durham University)', include: true },
-  { match: /drbo\.org|Clementine Vulgate \(drbo/i, license: 'Public Domain (Clementine Vulgate text)', include: true },
-  { match: /Sefaria.*Sha'arei|Sha'arei_Orah/i, license: 'Public Domain (Sefaria he-version "Shaarei Orah, grimoar")', include: true },
-  { match: /Sefaria.*(Masoretic|Miqra)/i, license: 'CC-BY (Sefaria, Miqra according to the Masorah)', include: true },
-  { match: /Sefaria/i, license: 'UNKNOWN (Sefaria he-version license not stated)', include: false },
-  { match: /TITUS/i, license: 'TITUS terms forbid republication — text NOT included', include: false },
-  { match: /ctext/i, license: 'ctext.org terms restrict redistribution — text NOT included', include: false },
-];
-const licenseFor = source => LICENSE_MAP.find(l => l.match.test(source || '')) ||
-  { license: 'UNKNOWN — text NOT included', include: false };
+// Which reference texts may ship, and under what licence: one table, shared with build-ocr-eval-deposit.mjs (#7462).
+
 
 const gtDir = path.join(__dirname, 'ground-truth');
 const gts = fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))
@@ -112,8 +103,7 @@ for (const gt of gts) {
     reference_text: lic.include ? gt.ocr_ground_truth : null,
     reference_sha256: sha256(gt.ocr_ground_truth),
     reference_chars: [...gt.ocr_ground_truth].length,
-    retrieval_note: lic.include ? null :
-      `Fetch from source_url and locate the passage; verify integrity via reference_sha256 over the exact UTF-8 string. The repository's scripts/eval/reference-works/ files document the passage boundaries.`,
+    retrieval_note: lic.include ? null : RETRIEVAL_NOTE,
     audit_note: gt.audit_note || null,
   });
 }

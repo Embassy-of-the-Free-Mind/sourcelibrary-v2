@@ -28,5 +28,9 @@
     "finish_reason": null
   },
   "reference_error_rate": null,
-  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
+  "work_title": "Sushruta Samhita Vol 3",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pd_eu": false,
+  "pd_eu_basis": "translator Kaviraj Kunja Lal Bhishagratna, death year not established: public domain in the EU not established (checked 2026-10-26, #7462)"
 }
