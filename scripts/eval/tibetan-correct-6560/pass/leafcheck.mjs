@@ -14,7 +14,7 @@
  *   yatags-verdicts --key=K.json --replies=O.jsonl --out=V.jsonl [--append]
  *       V rows {page_id, hits, keep, checked_by, answers}: a change is KEPT only where the judge saw the correction's
  *       syllable. V is cli-ocr.mjs apply --yatags-verdicts input.
- *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json
+ *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json [--changed=IDS.json]
  *       Samples n pages that apply would write with a change, rebuilds the text apply would write (guard reverts
  *       applied), and asks a FRESH judge, per changed span, which of draft / written the leaf shows (A/B random).
  *   page-req       --key=K.json --dir=READ_DIR --req=R.jsonl
@@ -161,6 +161,8 @@ if (CMD === 'yatags-req') {
     if (!d.hunks.length || d.changed / Math.max(1, d.draftN) > 0.25) continue;
     cands.push({ m, d, hits, kept: hits.length ? verdicts.get(m.page_id).keep : [] });
   }
+  // --changed=F: every page apply would write with a change (the volume's re-translation list when --mark-stale is off)
+  if (arg('changed')) fs.writeFileSync(arg('changed'), JSON.stringify(cands.map((x) => x.m.page_id)));
   const rng0 = rngFor(`6560|audit|${seed}`);
   const pick = shuffle([...cands], rng0).slice(0, N);
   const reqs = [], key = {};
