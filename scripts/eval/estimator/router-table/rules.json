@@ -26,7 +26,7 @@
     "wrong_text_max": 0.02,
     "wrong_text_relative_sensitivity": true
   },
-  "hold": { "_about": "HOLD when no measured route has P(acc >= acc) >= p.", "acc": 0.8, "p": 0.9 },
+  "hold": { "_about": "HOLD when no measured route has P(acceptance >= hold.acc) >= hold.p.", "acc": 0.8, "p": 0.9 },
   "test_next": {
     "_about": "score(cell) = max over routes that draw capacity of pages_waiting x share_per_page x Var(acceptance posterior); share_per_page = the route's draw per page / its channel's free week. A test is pages_per_test pages of each named route, plus one Opus judge call per output.",
     "n": 3,
