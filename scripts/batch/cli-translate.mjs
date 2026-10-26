@@ -94,7 +94,8 @@ const db = client.db('bookstore');
 
 if (STAGE === 'read') {
   const ids = readPageIdsFile(arg('page-ids-file'));
-  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
+  // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
+  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const prompts = await loadTranslationPrompts(db);
   fs.mkdirSync(OUT, { recursive: true });

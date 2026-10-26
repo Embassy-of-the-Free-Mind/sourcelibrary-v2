@@ -163,7 +163,8 @@ if (STAGE === 'read') {
   const extra = INSTRUCTION_FILE ? `\n\n${fs.readFileSync(INSTRUCTION_FILE, 'utf8').trim()}` : '';
   if (extra) fs.writeFileSync(path.join(OUT, 'prompt-extra.txt'), extra);
   fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify(ref));
-  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
+  // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
+  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
