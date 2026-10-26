@@ -64,6 +64,8 @@ async function defaultFetchManifest(url) {
  * @param {object} [deps.missGuard]  a createBookMissGuard() instance shared with the run
  * @param {number} [deps.pageConcurrency=2]
  * @param {boolean} [deps.retryMisses=false]  ask again for pages that missed MISS_LIMIT times
+ * @param {Function} [deps.openZip]  ia-zip-ledger.mjs openIaZip: archive an IA book from its item zip
+ *   when the canvas→member mapping is proven; null = page by page only
  * @param {(url: string) => string} [deps.fetchUrl]  where to GET a canvas image from (e.g. gallicaOpenApiUrl);
  *   the ledger's fingerprint and miss record stay keyed to the manifest's own URL
  * @param {() => boolean} [deps.shouldStop]  checked between pages
@@ -75,7 +77,7 @@ export async function archiveFromManifest(db, bookId, deps) {
   const {
     put, fetchManifest = defaultFetchManifest, download = (u) => rateLimitedFetch(u),
     breaker = null, missGuard = createBookMissGuard(), pageConcurrency = 2, retryMisses = false, fetchUrl = (u) => u,
-    shouldStop = () => false, onPage = () => {}, log = () => {},
+    shouldStop = () => false, onPage = () => {}, log = () => {}, openZip = null,
   } = deps ?? {};
   if (typeof put !== 'function') throw new Error('archiveFromManifest: deps.put (storagePut) is required');
   const books = db.collection('books');
@@ -141,6 +143,63 @@ export async function archiveFromManifest(db, bookId, deps) {
     sinceFlush = [];
   };
 
+  /** Put one page's JPEG at its book-scoped key and mark it in the ledger. */
+  const storePage = async (p, jpg, native, h) => {
+    const key = ledgerKey(bookId, p);
+    const blob = await put(key, jpg, { contentType: 'image/jpeg', access: 'public' });
+    // The URL base comes from the store's own answer, never assumed: the page docs will carry it.
+    const b = typeof blob?.url === 'string' && blob.url.endsWith(`/${key}`) ? blob.url.slice(0, -(key.length + 1)) : null;
+    if (!b) throw new Error(`storagePut answered ${JSON.stringify(blob?.url)} for ${key}`);
+    if (base && base !== b) throw new Error(`storage base changed mid-book: ${base} → ${b}`);
+    base = b;
+    let dims = {};
+    try { dims = await sharp(jpg).metadata(); } catch { /* dimensions are a nice-to-have */ }
+    ledger.markDone(p, { width: dims.width, height: dims.height, bytes: jpg.length, nativeWidth: native?.nativeWidth, nativeHeight: native?.nativeHeight });
+    res.archived++;
+    res.bytes += jpg.length;
+    sinceFlush.push(p);
+    onPage({ outcome: 'ok', host: h, bytes: jpg.length });
+    if (sinceFlush.length >= FLUSH_EVERY) await flush();
+  };
+
+  // ── IA item zip (one request per book; the JP2 is the master). Only on a PROVEN mapping
+  // (ia-zip-ledger.mjs); a refusal, or a page the zip cannot give, falls through to per-page IIIF.
+  if (openZip && pending.length > 0 && /(^|\.)archive\.org$/.test(host)) {
+    const z = await openZip({ manifestUrl, photos, log, onRefuse: (why) => { res.zip = { refused: why }; log(`book ${bookId}: IA zip refused (${why}) — archiving page by page`); } });
+    if (z) {
+      res.zip = { route: z.route, bytes: z.bytes, pages: 0 };
+      res.requested++;
+      try {
+        // Decoding is CPU, not requests: pageConcurrency decoders, each opj_decompress single-threaded.
+        const left = [];
+        let zi = 0;
+        const zipWorker = async () => {
+          for (;;) {
+            const p = pending[zi++];
+            if (p === undefined) return;
+            const f = shouldStop() ? null : z.fileFor(p);
+            if (!f) { left.push(p); continue; }
+            let decoded = null;
+            try { decoded = await z.decode(f); } catch (e) {
+              res.local++; onPage({ outcome: 'local', host, error: `jp2 decode: ${String(e?.message ?? e).slice(0, 120)}` }); left.push(p); continue;
+            }
+            try {
+              // The JP2 IS the master: its size is native.
+              await storePage(p, decoded.buffer, { nativeWidth: decoded.width, nativeHeight: decoded.height }, host);
+              res.zip.pages++;
+            } catch (e) {
+              res.local++; onPage({ outcome: 'local', host, error: String(e?.message ?? e).slice(0, 140) }); left.push(p);
+            }
+          }
+        };
+        await Promise.all(Array.from({ length: Math.max(1, Math.min(pageConcurrency, pending.length)) }, () => zipWorker()));
+        pending.splice(0, pending.length, ...left.sort((a, b) => a - b));
+      } finally {
+        await z.close();
+      }
+    }
+  }
+
   let next = 0;
   let abandoned = false;
   const worker = async () => {
@@ -161,21 +220,7 @@ export async function archiveFromManifest(db, bookId, deps) {
         missGuard.ok(bookId);
         // Source fidelity, same encode as archive-acquired.ts (#3897): no resize.
         const jpg = await sharp(master.buffer).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
-        const key = ledgerKey(bookId, p);
-        const blob = await put(key, jpg, { contentType: 'image/jpeg', access: 'public' });
-        // The URL base comes from the store's own answer, never assumed: the page docs will carry it.
-        const b = typeof blob?.url === 'string' && blob.url.endsWith(`/${key}`) ? blob.url.slice(0, -(key.length + 1)) : null;
-        if (!b) throw new Error(`storagePut answered ${JSON.stringify(blob?.url)} for ${key}`);
-        if (base && base !== b) throw new Error(`storage base changed mid-book: ${base} → ${b}`);
-        base = b;
-        let dims = {};
-        try { dims = await sharp(jpg).metadata(); } catch { /* dimensions are a nice-to-have */ }
-        ledger.markDone(p, { width: dims.width, height: dims.height, bytes: jpg.length, nativeWidth: master.nativeWidth, nativeHeight: master.nativeHeight });
-        res.archived++;
-        res.bytes += jpg.length;
-        sinceFlush.push(p);
-        onPage({ outcome: 'ok', host: h, bytes: jpg.length });
-        if (sinceFlush.length >= FLUSH_EVERY) await flush();
+        await storePage(p, jpg, { nativeWidth: master.nativeWidth, nativeHeight: master.nativeHeight }, h);
       } catch (e) {
         const code = classifyFetchError(e);
         if (!fetched && isMissCode(code)) {

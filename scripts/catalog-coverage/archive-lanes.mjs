@@ -42,7 +42,7 @@ export function thisBox(env = process.env, hostname = os.hostname()) {
 const NAME = /^[a-z0-9][a-z0-9-]*$/;
 const HOST = /^[a-z0-9.-]+\.[a-z]{2,}$/;
 const PROVIDER = /^[a-z0-9_-]+$/;
-const FLAGS = new Set(['--gallica-openapi', '--lazy-only']);
+const FLAGS = new Set(['--gallica-openapi', '--lazy-only', '--ia-zip']);
 
 /**
  * Every problem with the table, as strings (empty = valid). `domainLimitOf(host)` is the host's

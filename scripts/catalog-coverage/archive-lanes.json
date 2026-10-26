@@ -92,8 +92,8 @@
       "providers": ["internet_archive", "ia_language", "ia_microfilm", "ia"],
       "rate": { "iiif.archive.org": 5 },
       "page_concurrency": 2,
-      "flags": ["--lazy-only"],
-      "note": "Manifest-only IA books, per page over IIIF (JPEG, no JP2 decode). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main). Item zips for manifest-only books are a follow-up: archive-ia-bulk writes page docs."
+      "flags": ["--lazy-only", "--ia-zip"],
+      "note": "Manifest-only IA books from the item _jp2.zip when the canvas→member mapping is proven (ia-zip-ledger.mjs), else per page over IIIF. --ia-zip needs opj_decompress + unzip; on a box without them every book falls back before any request (l7a, 2026-10-26: the Hetzner mirror's security pocket failed TLS, so libopenjp2-tools is not installed yet). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main)."
     },
     {
       "name": "harvard",
