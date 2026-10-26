@@ -138,6 +138,11 @@ for (const [flag, v] of [['concurrency', CONCURRENCY], ['page-concurrency', PAGE
   }
 }
 const log = (...a: any[]) => console.log(new Date().toISOString().slice(11, 19), ...a);
+// libvips keeps decoded images in a cache and spreads each operation over every core. On a 51 MP
+// IA leaf that is ~150 MB per decode, and a lane on l7a reached 4.4 GB RSS and tipped the box into
+// a global OOM (2026-10-26 00:13). An archiver touches each image once: no cache, two threads.
+sharp.cache(false);
+sharp.concurrency(2);
 
 async function main() {
   const mc = new MongoClient(process.env.MONGODB_URI!); await mc.connect();
