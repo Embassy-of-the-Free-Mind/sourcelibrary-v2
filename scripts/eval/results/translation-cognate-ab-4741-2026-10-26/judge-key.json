@@ -1,0 +1,866 @@
+[
+ {
+  "id": "P001",
+  "unit": "T-13",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P002",
+  "unit": "C-11",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P003",
+  "unit": "F-4",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P004",
+  "unit": "T-6",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P005",
+  "unit": "C-3",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P006",
+  "unit": "T-21",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P007",
+  "unit": "F-10",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P008",
+  "unit": "T-18",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P009",
+  "unit": "C-1",
+  "stratum": "C",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P010",
+  "unit": "F-1",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P011",
+  "unit": "T-3",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P012",
+  "unit": "T-2",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P013",
+  "unit": "T-7",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P014",
+  "unit": "T-21",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P015",
+  "unit": "T-24",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P016",
+  "unit": "F-1",
+  "stratum": "F",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P017",
+  "unit": "T-17",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P018",
+  "unit": "C-12",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P019",
+  "unit": "T-9",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P020",
+  "unit": "C-5",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P021",
+  "unit": "C-2",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P022",
+  "unit": "F-9",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P023",
+  "unit": "T-23",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P024",
+  "unit": "F-2",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P025",
+  "unit": "F-8",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P026",
+  "unit": "C-10",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P027",
+  "unit": "T-9",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P028",
+  "unit": "F-9",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P029",
+  "unit": "T-11",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P030",
+  "unit": "C-7",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P031",
+  "unit": "F-9",
+  "stratum": "F",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P032",
+  "unit": "T-20",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P033",
+  "unit": "F-7",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P034",
+  "unit": "C-7",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P035",
+  "unit": "C-4",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P036",
+  "unit": "T-23",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P037",
+  "unit": "C-9",
+  "stratum": "C",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P038",
+  "unit": "T-10",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P039",
+  "unit": "T-18",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P040",
+  "unit": "C-8",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P041",
+  "unit": "T-16",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P042",
+  "unit": "T-12",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P043",
+  "unit": "C-11",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P044",
+  "unit": "F-11",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P045",
+  "unit": "T-14",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P046",
+  "unit": "F-10",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P047",
+  "unit": "C-6",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P048",
+  "unit": "T-1",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P049",
+  "unit": "T-22",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P050",
+  "unit": "T-15",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P051",
+  "unit": "T-1",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P052",
+  "unit": "C-2",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P053",
+  "unit": "T-9",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P054",
+  "unit": "C-8",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P055",
+  "unit": "F-8",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P056",
+  "unit": "C-12",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P057",
+  "unit": "T-10",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P058",
+  "unit": "C-3",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P059",
+  "unit": "T-7",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P060",
+  "unit": "T-15",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P061",
+  "unit": "T-13",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P062",
+  "unit": "F-3",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P063",
+  "unit": "F-1",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P064",
+  "unit": "C-5",
+  "stratum": "C",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P065",
+  "unit": "F-5",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P066",
+  "unit": "T-4",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P067",
+  "unit": "T-17",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P068",
+  "unit": "F-12",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P069",
+  "unit": "T-13",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P070",
+  "unit": "C-9",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P071",
+  "unit": "T-16",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P072",
+  "unit": "T-6",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P073",
+  "unit": "T-21",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P074",
+  "unit": "C-6",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P075",
+  "unit": "F-11",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P076",
+  "unit": "T-19",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P077",
+  "unit": "T-1",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P078",
+  "unit": "T-2",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P079",
+  "unit": "T-3",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P080",
+  "unit": "C-10",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P081",
+  "unit": "T-4",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P082",
+  "unit": "T-5",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P083",
+  "unit": "F-12",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P084",
+  "unit": "T-11",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P085",
+  "unit": "T-12",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P086",
+  "unit": "C-1",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P087",
+  "unit": "F-4",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P088",
+  "unit": "F-7",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P089",
+  "unit": "T-5",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P090",
+  "unit": "C-9",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P091",
+  "unit": "F-2",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13a",
+  "B": "v13b"
+ },
+ {
+  "id": "P092",
+  "unit": "T-17",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v13a",
+  "B": "v19"
+ },
+ {
+  "id": "P093",
+  "unit": "C-4",
+  "stratum": "C",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P094",
+  "unit": "T-8",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P095",
+  "unit": "F-3",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P096",
+  "unit": "C-5",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P097",
+  "unit": "T-5",
+  "stratum": "T",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P098",
+  "unit": "F-6",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P099",
+  "unit": "F-5",
+  "stratum": "F",
+  "kind": "control",
+  "A": "v13a",
+  "B": "v13a"
+ },
+ {
+  "id": "P100",
+  "unit": "T-24",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P101",
+  "unit": "T-8",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P102",
+  "unit": "C-1",
+  "stratum": "C",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P103",
+  "unit": "T-19",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P104",
+  "unit": "T-20",
+  "stratum": "T",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P105",
+  "unit": "T-22",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P106",
+  "unit": "T-14",
+  "stratum": "T",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ },
+ {
+  "id": "P107",
+  "unit": "F-5",
+  "stratum": "F",
+  "kind": "cand",
+  "A": "v19",
+  "B": "v13a"
+ },
+ {
+  "id": "P108",
+  "unit": "F-6",
+  "stratum": "F",
+  "kind": "noise",
+  "A": "v13b",
+  "B": "v13a"
+ }
+]
