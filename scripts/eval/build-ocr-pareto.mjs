@@ -412,11 +412,16 @@ const chainParts = e => { const [draft, corrector] = e.split('>'); return { draf
 const chainRows = fs.existsSync(CHAIN_FILE) ? JSON.parse(fs.readFileSync(CHAIN_FILE, 'utf8')).rows.map(r => ({
   page: r.page, stratum: stratumOf(r.page), engine: r.engine, cer: r.failure ? null : r.unplaced ? 1 : r.cer, failure: r.failure ?? null, failure_why: r.failure_why ?? null,
   unplaced: !r.failure && !!r.unplaced, invented: null, date: CHAIN_DATE, file: path.relative(REPO, CHAIN_FILE),
+  // where the scoring box held no read by the draft engine, the chain corrected the stored read by the same engine:
+  // what the correction did to the page is measured against that draft's score, not the dot's
+  ...(r.draft_source === 'stored' ? { draft_cer: r.draft_cer } : {}),
 })) : [];
-// The corrector's price per page on a chart: the API price of the tokens its CLI reported for these pages (Opus: the
-// list cost `claude -p` reports, realtime; agy: its input, output and thinking tokens at the model's Batch price), the
-// basis every other command-line point on these charts is placed on. An upper bound: both counts include the CLI's own
-// instructions. $0 is billed; what a page draws on the subscription is in `quota`.
+// The corrector's price per page on a chart, on the #6293 preregistered x-axis formula every command-line point here is
+// placed on, extended by the draft: the request is the read request as metered for Flash-Lite in production (3,736 input
+// tokens: prompt and image), plus the draft at the corrector's own tokens per character on this chart, and the reply is
+// the output tokens the CLI reported for the page. Gemini at its Batch price, as the CLI read points; Opus at its
+// realtime list price, as the Claude API points. The CLIs' own instructions and tool turns are not counted (as for the
+// read points). $0 is billed; what a page draws on the subscription is in the detail.
 const CHAIN_METER = new Map();   // page|engine → meter row
 if (fs.existsSync(CHAIN_DIR)) for (const f of fs.readdirSync(CHAIN_DIR).filter(f => /^meter-.*\.jsonl$/.test(f))) {
   for (const line of fs.readFileSync(path.join(CHAIN_DIR, f), 'utf8').split('\n').filter(Boolean)) { const o = JSON.parse(line); CHAIN_METER.set(`${o.stratum}|${o.slug}|${o.engine}`, o); }
@@ -425,15 +430,19 @@ const CHAIN_QUOTA = {
   'claude-opus-5-5+claude-cli': 'about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot\'s meter, an upper bound; 0.004 at ten pages a call, #5924)',
   'gemini-3.8-flash+antigravity-cli': `about ${(4.3632e-6 * 1e6).toFixed(1)} millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json)`,
 };
+const READ_IN = 3736;   // cli-cost.mjs LITE_IN: Flash-Lite's metered production input tokens a page
 function correctorUsd(engine, pages) {
   const { corrector } = chainParts(engine);
-  const ms = pages.map(p => CHAIN_METER.get(`${p}|${engine}`)).filter(m => m && m.outcome !== 'no-draft');
+  const claude = corrector.startsWith('claude');
+  const outOf = m => (claude ? m.usage?.output : (m.usage?.output_tokens ?? 0) + (m.usage?.thinking_tokens ?? 0));
+  const ms = pages.map(p => CHAIN_METER.get(`${p}|${engine}`)).filter(m => m?.usage && outOf(m) != null && m.draft_chars != null);
   if (!ms.length) return null;
+  // tokens per character of this corrector's corrected texts on these pages (an UNCHANGED answer has no text)
+  const withText = ms.filter(m => m.outcome === 'corrected' && m.answer_chars > 0);
+  const tpc = withText.reduce((a, m) => a + outOf(m), 0) / Math.max(1, withText.reduce((a, m) => a + m.answer_chars, 0));
   const P = MODEL_PRICING[CORRECTOR[corrector].model];
-  const usd = ms.map(m => (corrector.startsWith('claude')
-    ? m.list_cost_usd ?? null
-    : m.usage ? ((m.usage.input_tokens || 0) * P.input + ((m.usage.output_tokens || 0) + (m.usage.thinking_tokens || 0)) * P.output) * BATCH_MULTIPLIER / 1e6 : null)).filter(x => x != null);
-  return usd.length ? { usd_per_1k: mean(usd) * 1000, n: usd.length } : null;
+  const usd = ms.map(m => ((READ_IN + m.draft_chars * tpc) * P.input + outOf(m) * P.output) * (claude ? 1 : BATCH_MULTIPLIER) / 1e6);
+  return { usd_per_1k: mean(usd) * 1000, n: usd.length };
 }
 function chainCost(engine, chartId, pages) {
   const { draft, corrector } = chainParts(engine);
@@ -441,9 +450,26 @@ function chainCost(engine, chartId, pages) {
   if (!d || !c) return null;
   return {
     usd_per_1k: r3(d.usd_per_1k + c.usd_per_1k), basis: 'chain', billed_usd_per_1k: r3(d.basis === 'billed' ? d.usd_per_1k : 0),
-    detail: `the draft, ${LABEL[draft] || draft}, at ${d.basis === 'billed' ? 'its billed price' : 'its API price, $0 billed'} ($${r3(d.usd_per_1k)}), plus the correction by ${CORRECTOR[corrector].label} through its command-line tool at the API price of the tokens it reported ($${r3(c.usd_per_1k)}, the mean of ${c.n} pages; $0 billed; ${CHAIN_QUOTA[corrector]})`,
+    detail: `the draft, ${LABEL[draft] || draft}, at ${d.basis === 'billed' ? 'its billed price' : 'its API price, $0 billed'} ($${r3(d.usd_per_1k)}), plus the correction by ${CORRECTOR[corrector].label} through its command-line tool, placed at the API price for the same request ($${r3(c.usd_per_1k)}, the mean of ${c.n} pages: the read request, the draft and the reply, ${corrector.startsWith('claude') ? 'realtime' : 'Batch'} rate; $0 billed; ${CHAIN_QUOTA[corrector]})`,
     source: path.relative(REPO, CHAIN_DIR),
   };
+}
+// #6740 sensitivity, never plotted: a Chinese chain re-scored with its metadata tags removed with their text (the CJK
+// path of the scorer keeps that text; its Latin-script path drops it). Written into the panel's chain note.
+const CJK_TAGS_FILE = path.join(CHAIN_DIR, 'cjk-tags-sensitivity.json');
+const CJK_TAGS = new Map(fs.existsSync(CJK_TAGS_FILE) ? JSON.parse(fs.readFileSync(CJK_TAGS_FILE, 'utf8')).rows.map(r => [`${r.page}|${r.engine}`, r.cer_tags_removed]) : []);
+function chainNote(points, ps, byEngine) {
+  const chains = points.filter(p => p.chain);
+  if (!chains.length) return null;
+  const pct = x => `${(Math.round(x * 1000) / 10).toFixed(1)}%`;
+  const tagged = chains.filter(p => ps.some(pg => CJK_TAGS.has(`${pg}|${p.engine}`)));
+  if (!tagged.length) return null;
+  const draft = chains[0].chain.draft;
+  const both = ps.filter(pg => tagged.every(p => CJK_TAGS.get(`${pg}|${p.engine}`) != null) && !byEngine.get(draft).get(pg).failure);
+  if (both.length < MIN_PAGES) return null;
+  const d = 1 - mean(both.map(pg => byEngine.get(draft).get(pg).cer));
+  return `The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the ${both.length} pages all read: ${labelOf(draft)} ${pct(d)}, `
+    + tagged.map(p => `${p.label} ${pct(1 - mean(both.map(pg => CJK_TAGS.get(`${pg}|${p.engine}`))))}`).join(', ') + '. A check, not plotted.';
 }
 /** The chains that join a panel: their draft is in it and they have a row (a failure counts) for every page. */
 function chainsFor(engines, pages, byChain) {
@@ -571,9 +597,11 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     if (isChain(e)) {
       // what the correction did to each page against its own draft: made worse or better by more than the margin
       const { draft, corrector } = chainParts(e);
-      const both = ps.map(p => [byEngine.get(draft).get(p), byEngine.get(e).get(p)]).filter(([d, c]) => !d.failure && !c.failure);
+      const both = ps.map(p => { const c = byEngine.get(e).get(p), d = byEngine.get(draft).get(p); return [c.draft_cer !== undefined ? { cer: c.draft_cer, failure: c.draft_cer == null ? 'other' : null } : d, c]; })
+        .filter(([d, c]) => !d.failure && !c.failure);
       pt.chain = { draft, corrector, n: both.length, worse: both.filter(([d, c]) => c.cer - d.cer > MARGIN.ocr).length, better: both.filter(([d, c]) => d.cer - c.cer > MARGIN.ocr).length,
-        unchanged_answers: ps.filter(p => /^unchanged$/.test(CHAIN_METER.get(`${p}|${e}`)?.outcome || '')).length };
+        unchanged_answers: ps.filter(p => /^unchanged$/.test(CHAIN_METER.get(`${p}|${e}`)?.outcome || '')).length,
+        stored_drafts: ps.filter(p => byEngine.get(e).get(p).draft_cer !== undefined).length };
     }
     if (!pt.cost) pt.no_price = NO_PRICE[e] || (e === STORED ? 'the stored reads come from more than one model, so no one price applies'
       : isCli(e) ? 'run through a command-line tool on the subscription, $0 billed; no API price computed for these pages'
@@ -607,6 +635,8 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
     placed, no_cost: noCost, ...extra,
   };
+  const cn = chainNote(points, ps, byEngine);
+  if (cn) p.chain_note = cn;
   p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page', canRun: canRunToday });
   return p;
 }
@@ -705,6 +735,12 @@ const out = {
   stored_now_census: OCR_ROUTING_TABLE.census,
   production_rule: 'the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns',
   grade_rules: GRADE_RULES,
+  // #6740: what a chained route is, for the legend, and the corrector deliberately left out
+  chains: chainRows.length ? {
+    what: 'a second model is given the page image and another engine’s reading of it, and fixes what the image contradicts. The arrow runs from that engine’s dot to the corrected result, scored on the same pages; its price is both steps.',
+    not_drawn: 'Gemini 3.1 Flash-Lite is not drawn as a corrector: tested as one, it failed at the task (#7275).',
+    source: path.relative(REPO, CHAIN_DIR),
+  } : null,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },
   charts,
   no_chart: [...noChart, ...NO_REFERENCE],

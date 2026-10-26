@@ -47,7 +47,7 @@ const GH = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/ma
 type Cost = { usd_per_1k: number; basis: 'billed' | 'quota' | 'chain'; detail: string; source: string; billed_usd_per_1k?: number };
 /** A chained route (#6740): the draft engine it corrects, and what the correction did to each page against that draft
  *  (by more than the 1-point margin), over the n pages both read. */
-type Chain = { draft: string; corrector: string; n: number; worse: number; better: number };
+type Chain = { draft: string; corrector: string; n: number; worse: number; better: number; stored_drafts?: number };
 /** How the engine is run (#6776): billed per request, a CLI on a subscription ($0 billed), a rented GPU, our server. */
 type Route = 'api' | 'subscription' | 'gpu' | 'own';
 type Secs = { median: number; n: number; files: string[] };
@@ -82,6 +82,8 @@ type Panel = {
   kind: string; role: string; heading: string | null; n_pages: number; n_works: number; reference: string;
   grade: Grade; toDecide: string[] | null; frontier: boolean; noise: Noise | null; date: string | null; verdict: string;
   notes: string[]; points: Point[]; extraHeads: { head: string; title: string }[];
+  /** what the chains' scores do and do not measure on this panel (#6740), shown under the scatter */
+  chainNote: string | null;
 };
 export type Chart = { id: string; title: string; production_label: string; caption: string | null; storedNow: string | null; mentions: string[]; panels: Panel[] };
 type NoChartRow = { title: string; why: string; source: string };
@@ -154,12 +156,14 @@ const didNotRead = (x: OcrPoint) => (x.did_not_read.k === 0 ? '0'
 type RawPanel<P> = {
   kind: string; role?: string; heading: string | null; n_pages: number; n_works: number; reference: string; grade: Grade;
   to_decide?: string[] | null; frontier: boolean; noise: Noise | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
+  chain_note?: string;
 };
 type RawChart<P> = { id: string; title: string; production_label: string; caption?: string | null; stored_now?: string | null; mentions?: string[]; panels: RawPanel<P>[] };
 
 const base = <P,>(p: RawPanel<P>, i: number) => ({
   kind: p.kind, role: p.role ?? (i === 0 ? 'primary' : 'secondary'), heading: p.heading, n_pages: p.n_pages, n_works: p.n_works,
   reference: p.reference, grade: p.grade, toDecide: p.to_decide ?? null, frontier: p.frontier, noise: p.noise, date: p.date, verdict: p.verdict, notes: p.notes ?? [],
+  chainNote: p.chain_note ?? null,
 });
 const common = (x: { engine: string; label: string; production: boolean; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict;
   secs_per_page?: Secs | null; chain?: Chain }) => ({
@@ -241,9 +245,10 @@ const sample = (p: Panel) => `${plural(p.n_works, 'work')} · ${plural(p.n_pages
 const ciText = (m: Measure, ci: number[] | null) => (ci ? `${m.fmtDiff(ci[0])} to ${m.fmtDiff(ci[1])}` : 'no interval');
 
 const BILLED_NOTHING = '$0 billed';
-/** What a correction is, in one sentence, wherever an arrow is drawn (#6740). */
-const CORRECTION = 'a second model is given the page image and another engine’s reading of it, and fixes what the image contradicts. The arrow runs from that engine’s dot to the corrected result, scored on the same pages; its cost is both steps.';
-const NO_LITE_CORRECTOR = 'Gemini 3.1 Flash-Lite is not drawn as a corrector: in a test it failed at the task (#7275).';
+/** What a correction is, in one sentence, wherever an arrow is drawn, and the corrector left out (#6740): data. */
+const CHAINS = (pareto as unknown as { chains: { what: string; not_drawn: string } | null }).chains;
+const CORRECTION = CHAINS?.what ?? '';
+const NO_LITE_CORRECTOR = CHAINS?.not_drawn ?? '';
 /** run on a subscription: a CLI run, or an engine measured through an API that we run on a subscription today */
 const isSub = (p: Point) => !p.production && !p.chain && (p.cost?.basis === 'quota' || p.roster?.route === 'subscription');
 /** The price an engine is drawn at. A subscription route shows the API price for the same requests beside the $0 it
@@ -256,7 +261,8 @@ function chainPriceText(c: Cost) {
   return `${usd(c.usd_per_1k)}: ${usd(billed)} billed for the draft, ${usd(c.usd_per_1k - billed)} for the correction at the API price (${BILLED_NOTHING})`;
 }
 /** "made 2 of 44 pages worse, 10 better": against its own draft, by more than the 1-point margin. */
-const chainText = (c: Chain) => `the correction made ${c.worse} of ${c.n} pages worse and ${c.better} better than the draft, by more than 1 point`;
+const chainText = (c: Chain) => `the correction made ${c.worse} of ${c.n} pages worse and ${c.better} better than the draft, by more than 1 point`
+  + (c.stored_drafts ? `; on ${c.stored_drafts} pages the draft corrected was the read the same engine stored, as the run's own read was not kept` : '');
 const secsText = (p: Point) => (p.secs ? `${p.secs.median.toFixed(p.secs.median < 10 ? 1 : 0)} s a page` : 'not measured');
 const anchorOf = (m: Measure, chart: Chart, panel?: Panel) =>
   `${m.anchor}${chart.id}${panel && chart.panels.indexOf(panel) > 0 ? `-${panel.kind}` : ''}`;
@@ -623,6 +629,7 @@ function ScatterNotes({ chart, panel, axis, keyed }: { chart: Chart; panel: Pane
     viaApi.length > 0 && `Measured via API; we run ${viaApi.length === 1 ? 'it' : 'them'} on a subscription: ${listOf(viaApi.map(p => p.label))}.`,
     newest && `${ROSTER.newest.label}: not measured on this set yet${elsewhere ? '; measured in another run' : ''}.`,
     panel.grade.level === 'not_fit' && 'No frontier: this run is not fit to rank.',
+    panel.chainNote,
   ].filter(Boolean);
   return (
     <div className="text-sm text-stone-600 mt-1">

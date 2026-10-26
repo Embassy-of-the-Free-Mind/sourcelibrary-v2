@@ -20,6 +20,9 @@
  *                              a Claude 5-hour or weekly limit (or the weekly cap, MAX_WEEKLY) stops the Opus side;
  *                              an agy quota or lock stops the agy side
  *   collect                    write results/outputs-<chain>.jsonl.gz and meter-<chain>.jsonl from $WORK/corr
+ *   cjk-tags                   SENSITIVITY only, never on the chart: the Chinese chains re-scored with the tags normAlpha already
+ *                              drops for Latin-script pages (<vocab>, <meta>, <warning> …) removed with their text, as the
+ *                              CJK path keeps it (results/cjk-tags-sensitivity.json)
  *   score                      benchmark-score.mjs over $WORK/bench, then the #6523 extractor for the Latin-script strata,
  *                              exactly as build-ocr-pareto.mjs scores every other engine; CONTROL: every draft must
  *                              re-score to the committed CER of the panel's dot, or nothing is written. Writes
@@ -154,12 +157,23 @@ async function prep() {
     if (!res.ok) { report.no_image.push(`${key} HTTP ${res.status}`); continue; }
     const raw = Buffer.from(await res.arrayBuffer());
     // the bench's own bytes decide: raw first (a Commons rendering was not resized), then the sealed form
-    const buf = d.image?.sha256 && sha(raw) === d.image.sha256 ? raw : await sealImage(raw);
+    let buf = d.image?.sha256 && sha(raw) === d.image.sha256 ? raw : await sealImage(raw);
+    // the archive's image can differ in bytes or size from the one the bench sealed; where only the scale differs, the
+    // corrector gets the bench's pixel size, so it sees the page at the resolution the draft engine read
+    if (d.image?.width && sha(buf) !== d.image.sha256) {
+      const sharp = (await import('sharp')).default;
+      const m = await sharp(buf).metadata();
+      const aspect = (m.width / m.height) / (d.image.width / d.image.height);
+      if (m.width !== d.image.width && Math.abs(aspect - 1) < 0.01) buf = await sharp(buf).resize({ width: d.image.width, height: d.image.height, fit: 'fill' }).jpeg({ quality: 92 }).toBuffer();
+    }
     fs.mkdirSync(path.dirname(dst), { recursive: true });
     fs.writeFileSync(dst, buf);
     report.images++;
     if (d.image?.sha256 && sha(buf) === d.image.sha256) report.sha_match++;
-    else report.sha_mismatch.push({ page: key, ours: sha(buf).slice(0, 12), bench: d.image?.sha256?.slice(0, 12) ?? null, bench_wh: d.image ? [d.image.width, d.image.height] : null });
+    else {
+      const m = await (await import('sharp')).default(buf).metadata();
+      report.sha_mismatch.push({ page: key, ours_wh: [m.width, m.height], bench_wh: d.image ? [d.image.width, d.image.height] : null });
+    }
   }
   await client.close();
   fs.writeFileSync(path.join(WORK, 'prep-report.json'), JSON.stringify(report, null, 1));
@@ -241,7 +255,9 @@ async function correct() {
   let stop = null, n = 0;
   const one = async (t) => {
     const img = path.join(BENCH, t.st, `${t.slug}.jpg`), draftFile = path.join(BENCH, t.st, 'out', t.draft, `${t.slug}.txt`);
-    if (!fs.existsSync(img) || !fs.existsSync(draftFile)) return { outcome: 'no-answer', reason: 'no image or draft in the bench' };
+    const ids = { stratum: t.st, slug: t.slug, chart: t.chart, draft_engine: t.draft, corrector: CORRECTORS[by].engine, engine: chainEngine(t.draft, by) };
+    if (!fs.existsSync(draftFile)) return { ...ids, outcome: 'no-draft', reason: `no read by ${t.draft} on record for this page (results/stored-drafts.json)` };
+    if (!fs.existsSync(img)) return { ...ids, outcome: 'no-image', reason: 'the page image could not be fetched again (prep-report)' };
     const draft = fs.readFileSync(draftFile, 'utf8');
     const imgBuf = fs.readFileSync(img);
     const ws = path.join(WORK, 'ws', `${by}-${t.st}-${t.slug}-${t.draft}`.replace(/[^\w.-]/g, '_'));
@@ -314,7 +330,9 @@ function collect() {
     const safe = chain.replace('>', '__');
     const outputs = rows.map((r) => ({ stratum: r.stratum, slug: r.slug, engine: r.engine, draft_engine: r.draft_engine, corrector: r.corrector, outcome: r.outcome, reason: r.reason ?? null, text: r.outcome === 'corrected' ? r.text : null }));
     fs.writeFileSync(path.join(RES, `outputs-${safe}.jsonl.gz`), zlib.gzipSync(outputs.map((o) => JSON.stringify(o)).join('\n') + '\n', { level: 9 }));
-    const meters = rows.map(({ text, ...m }) => m);
+    // characters, for the price: the draft the corrector was given and the answer it returned
+    const charsOf = (r) => { const f = path.join(BENCH, r.stratum, 'out', r.draft_engine, `${r.slug}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8').length : null; };
+    const meters = rows.map(({ text, ...m }) => ({ ...m, draft_chars: charsOf(m), answer_chars: text?.length ?? 0 }));
     fs.writeFileSync(path.join(RES, `meter-${safe}.jsonl`), meters.map((m) => JSON.stringify(m)).join('\n') + '\n');
     const t = {}; for (const r of rows) t[r.outcome] = (t[r.outcome] || 0) + 1;
     console.log(`${chain}: ${rows.length} pages ${JSON.stringify(t)}`);
@@ -352,8 +370,7 @@ async function score() {
   for (const f of fs.readdirSync(RES).filter((f) => /^outputs-.*\.jsonl\.gz$/.test(f))) {
     for (const o of zlib.gunzipSync(fs.readFileSync(path.join(RES, f))).toString('utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l))) {
       answers.set(`${o.stratum}|${o.slug}|${o.engine}`, o);
-      const draft = fs.readFileSync(path.join(BENCH, o.stratum, 'out', o.draft_engine, `${o.slug}.txt`), 'utf8');
-      const text = o.outcome === 'corrected' ? o.text : o.outcome === 'unchanged' ? draft : null;
+      const text = o.outcome === 'corrected' ? o.text : o.outcome === 'unchanged' ? fs.readFileSync(path.join(BENCH, o.stratum, 'out', o.draft_engine, `${o.slug}.txt`), 'utf8') : null;
       const dir = path.join(BENCH, o.stratum, 'out', o.engine);
       fs.mkdirSync(dir, { recursive: true });
       if (text != null) fs.writeFileSync(path.join(dir, `${o.slug}.txt`), text); else fs.rmSync(path.join(dir, `${o.slug}.txt`), { force: true });
@@ -362,7 +379,19 @@ async function score() {
   const strata = [...new Set([...answers.values()].map((o) => o.stratum))].sort();
   const scoredDir = path.join(WORK, 'scored');
   fs.rmSync(scoredDir, { recursive: true, force: true }); fs.mkdirSync(scoredDir, { recursive: true });
-  const r = spawnSync(process.execPath, [path.join(EVAL, 'benchmark-score.mjs'), `--root=${BENCH}`, `--stratum=${strata.join(',')}`, `--out=${scoredDir}`], { stdio: ['ignore', 'ignore', 'inherit'], env: process.env });
+  // the references benchmark-score.mjs reads, with the bundled ones unpacked (left packed, the Chinese cohort is scored
+  // against the proxy engine without a word: EXPERIMENTS.md, #5547); a copy in scratch, the repo's refs untouched
+  const refsDir = path.join(WORK, 'refs');
+  fs.rmSync(refsDir, { recursive: true, force: true }); fs.mkdirSync(refsDir, { recursive: true });
+  const REFS = path.join(EVAL, 'benchmark', 'refs');
+  for (const f of fs.readdirSync(REFS)) {
+    if (!f.endsWith('.refs.jsonl')) { fs.copyFileSync(path.join(REFS, f), path.join(refsDir, f)); continue; }
+    for (const r of jl(path.join(REFS, f))) {
+      fs.writeFileSync(path.join(refsDir, `${r.slug}.json`), JSON.stringify(r.record, null, 2));
+      if (r.text != null) fs.writeFileSync(path.join(refsDir, `${r.slug}.txt`), r.text);
+    }
+  }
+  const r = spawnSync(process.execPath, [path.join(EVAL, 'benchmark-score.mjs'), `--root=${BENCH}`, `--stratum=${strata.join(',')}`, `--out=${scoredDir}`, `--refs-dir=${refsDir}`], { stdio: ['ignore', 'ignore', 'inherit'], env: process.env });
   if (r.status !== 0) throw new Error('benchmark-score.mjs failed');
   const cell = new Map();
   for (const f of fs.readdirSync(scoredDir).filter((f) => /-\d{4}-\d{2}-\d{2}\.json$/.test(f) && !f.startsWith('summary'))) {
@@ -377,25 +406,49 @@ async function score() {
     const c = cell.get(`${st}|${slug}|${e}`);
     if (!c || c.missing) return null;
     let aligned = st.startsWith('ref-') ? !!c.aligned : true, cer = c.cer ?? null;
-    if (LATIN_SCRIPT.has(st) && text != null) { const ex = extractTranscription(text); if (ex.changed) ({ aligned, cer } = extractScore(st, slug, ex.text)); }
+    // the reference tiers' committed scores were made with digits dropped (normalizeForScript v3; rescore-extract.mjs
+    // V3_DIGITS), which benchmark-score.mjs no longer does: they are scored with that rule, as their dots were
+    if (st.startsWith('ref-') && text != null && !c.refused) { const ex = extractTranscription(text); ({ aligned, cer } = extractScore(st, slug, ex.changed ? ex.text : text)); }
+    else if (LATIN_SCRIPT.has(st) && text != null) { const ex = extractTranscription(text); if (ex.changed) ({ aligned, cer } = extractScore(st, slug, ex.text)); }
     return { aligned, cer, refused: !!c.refused, has_ref: c.has_ref, ref_mismatch: c.ref_mismatch, cell: c };
   };
   const control = { checked: 0, reproduced: 0, mismatches: [] };
+  const mismatched = new Set();   // drafts whose read here is not the one their dot was scored from
+  // drafts the scoring box did not hold: the stored read by the same engine, scored here; never part of the control
+  const storedF = path.join(RES, 'stored-drafts.json');
+  const storedKeys = new Set(fs.existsSync(storedF) ? JSON.parse(fs.readFileSync(storedF, 'utf8')).rows.filter((x) => x.used).map((x) => `${x.stratum}|${x.slug}|${x.engine}`) : []);
+  const storedDraft = new Map();
+  for (const k of storedKeys) {
+    const [st, slug, e] = k.split('|');
+    const s = finalOf(st, slug, e, fs.readFileSync(path.join(BENCH, st, 'out', e, `${slug}.txt`), 'utf8'));
+    storedDraft.set(k, s ? (s.aligned ? Math.min(1, s.cer ?? 1) : 1) : null);
+  }
   const out = [];
   const drafts = new Set([...answers.values()].map((o) => `${o.stratum}|${o.slug}|${o.draft_engine}`));
   for (const k of [...drafts].sort()) {
     const [st, slug, e] = k.split('|');
     const cm = committed.get(k);
-    if (!cm || cm.failure) continue;
+    if (!cm || cm.failure || storedKeys.has(k)) continue;
+    if (!fs.existsSync(path.join(BENCH, st, `${slug}.jpg`))) { control.no_image = (control.no_image || 0) + 1; continue; }   // the scorer lists a page by its image
+    if (!fs.existsSync(path.join(BENCH, st, 'out', e, `${slug}.txt`))) { control.no_draft = (control.no_draft || 0) + 1; continue; }   // no read on record (stored-drafts.json)
     const s = finalOf(st, slug, e, fs.readFileSync(path.join(BENCH, st, 'out', e, `${slug}.txt`), 'utf8'));
     control.checked++;
     const theirs = cm.cer, ours = s ? (s.aligned ? Math.min(1, s.cer ?? 1) : 1) : null;
-    if (ours != null && Math.abs(ours - theirs) < 1e-9) control.reproduced++; else control.mismatches.push(`${k}: committed ${theirs} vs ${ours}`);
+    if (ours != null && Math.abs(ours - theirs) < 1e-9) control.reproduced++; else { control.mismatches.push(`${k}: committed ${theirs} vs ${ours}`); mismatched.add(k); }
   }
   for (const [k, o] of [...answers].sort((a, b) => a[0].localeCompare(b[0]))) {
     const [st, slug] = k.split('|');
-    const base = { page: `${st}|${slug}`, engine: o.engine, draft_engine: o.draft_engine, corrector: o.corrector, outcome: o.outcome };
-    if (o.outcome !== 'corrected' && o.outcome !== 'unchanged') { out.push({ ...base, cer: null, failure: o.outcome === 'contain' ? 'refusal' : 'empty', failure_why: o.outcome === 'contain' ? `CONTAIN: ${o.reason}` : o.reason || o.outcome }); continue; }
+    const dk = `${st}|${slug}|${o.draft_engine}`;
+    const base = { page: `${st}|${slug}`, engine: o.engine, draft_engine: o.draft_engine, corrector: o.corrector, outcome: o.outcome,
+      ...(storedKeys.has(dk) ? { draft_source: 'stored', draft_cer: storedDraft.get(dk) } : {}) };
+    // a draft that did not read the page (the copy filter cut it, say) leaves the chain nothing to correct: the chain
+    // did not read it either, for the same reason
+    // a draft that does not re-score to its dot (the read exported is not the one the dot was scored from, or the
+    // reference was refreshed since): the chain cannot be set beside the dot on this page, so it is counted, not scored
+    if (mismatched.has(dk)) { out.push({ ...base, cer: null, failure: 'other', failure_why: 'the draft read on record does not re-score to its dot here (another read, or a reference refreshed since); not scored' }); continue; }
+    const draftFail = o.outcome === 'no-draft' ? committed.get(dk)?.failure : null;
+    if (draftFail) { out.push({ ...base, cer: null, failure: draftFail, failure_why: `the draft did not read the page (${committed.get(dk).failure_why || draftFail})` }); continue; }
+    if (o.outcome !== 'corrected' && o.outcome !== 'unchanged') { out.push({ ...base, cer: null, failure: o.outcome === 'contain' ? 'refusal' : o.outcome === 'no-answer' ? 'empty' : 'other', failure_why: o.outcome === 'contain' ? `CONTAIN: ${o.reason}` : o.reason || o.outcome }); continue; }
     const text = o.outcome === 'corrected' ? o.text : fs.readFileSync(path.join(BENCH, st, 'out', o.draft_engine, `${slug}.txt`), 'utf8');
     const s = finalOf(st, slug, o.engine, text);
     if (!s) { out.push({ ...base, cer: null, failure: 'other', failure_why: 'not scored' }); continue; }
@@ -404,12 +457,47 @@ async function score() {
   console.log(`control: ${control.reproduced}/${control.checked} drafts re-score to the committed CER of the panel's dot`);
   for (const m of control.mismatches.slice(0, 15)) console.log(`  mismatch ${m}`);
   const json = JSON.stringify({ issue: 6740, generated_by: 'scripts/eval/ocr-pareto-chains-6740/run-chains.mjs score', scorer: 'scripts/eval/benchmark-score.mjs, then rescore-extract.mjs score() where extractTranscription changes a Latin-script read (as build-ocr-pareto.mjs)',
-    control: { checked: control.checked, reproduced: control.reproduced, mismatches: control.mismatches }, rows: out }, null, 1) + '\n';
-  if (control.reproduced !== control.checked && !process.argv.includes('--allow-mismatch')) { console.error('control failed: nothing written (--allow-mismatch to write anyway, listing them)'); process.exit(1); }
+    control: { checked: control.checked, reproduced: control.reproduced, mismatches: control.mismatches, no_image: control.no_image || 0, no_draft: control.no_draft || 0 }, rows: out }, null, 1) + '\n';
+  // a few drafts may not reproduce (each is listed and its chains are not scored); many means the scorer copy is wrong
+  if (control.checked - control.reproduced > 0.02 * control.checked && !process.argv.includes('--allow-mismatch')) { console.error('control failed: over 2% of drafts do not re-score to their dot; nothing written'); process.exit(1); }
   fs.writeFileSync(path.join(RES, 'scored-chains.json'), json);
   console.log(`wrote ${path.relative(process.cwd(), path.join(RES, 'scored-chains.json'))} (${out.length} rows)`);
 }
 
+// ── cjk-tags: how much of a Chinese chain's score is the text inside its metadata tags ─────────
+// The correctors answer in the library's tagged format (the live prompt asks for <vocab>, <language>, <meta> …). On a
+// Latin-script page the scorer drops those tags with their text (normAlpha); on a CJK page it drops the tags and keeps
+// the text (normCJK), so a list of key terms is scored as text the page does not print. No other engine on these panels
+// writes the format. This re-scores each Chinese chain page with normAlpha's tag list removed first, normCJK otherwise
+// copied from benchmark-score.mjs (its variant folding read from the file).
+async function cjkTags() {
+  const src = fs.readFileSync(path.join(EVAL, 'benchmark-score.mjs'), 'utf8');
+  const kyu = src.match(/const KYU_SHIN = '([^']+)'/)[1];
+  const KM = new Map(); for (let i = 0; i + 1 < kyu.length; i += 2) KM.set(kyu[i], kyu[i + 1]);
+  const normCJK = (x) => [...stripMarkupTags([...String(x || '')].map((c) => KM.get(c) || c).join('')).normalize('NFC')].filter((c) => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}〇]/u.test(c)).join('').slice(0, 6000);
+  const TAGS = /<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi;
+  const CJK = new Set(['chinese', 'chinese-ext', 'chinese-cohort-5547']);
+  const rows = [], scored = JSON.parse(fs.readFileSync(path.join(RES, 'scored-chains.json'), 'utf8')).rows;
+  const texts = new Map();
+  for (const f of fs.readdirSync(RES).filter((f) => /^outputs-.*\.jsonl\.gz$/.test(f))) for (const l of zlib.gunzipSync(fs.readFileSync(path.join(RES, f))).toString('utf8').split('\n').filter(Boolean)) { const o = JSON.parse(l); texts.set(`${o.stratum}|${o.slug}|${o.engine}`, o); }
+  for (const r of scored) {
+    const [st, slug] = r.page.split('|');
+    if (!CJK.has(st) || r.cer == null) continue;
+    const ref = loadRefText(path.join(WORK, 'refs'), slug).text;
+    if (!ref) continue;
+    const o = texts.get(`${r.page}|${r.engine}`);
+    const text = o.outcome === 'corrected' ? o.text : fs.readFileSync(path.join(BENCH, st, 'out', r.draft_engine, `${slug}.txt`), 'utf8');
+    const R = [...normCJK(ref)];
+    if (!R.length) continue;
+    const h = [...normCJK(text.replace(TAGS, ' '))];
+    rows.push({ page: r.page, engine: r.engine, cer: r.cer, cer_tags_removed: r3(Math.min(1, levenshtein(h, R) / R.length)) });
+  }
+  fs.writeFileSync(path.join(RES, 'cjk-tags-sensitivity.json'), JSON.stringify({ issue: 6740, generated_by: 'scripts/eval/ocr-pareto-chains-6740/run-chains.mjs cjk-tags', not_on_the_chart: true,
+    removed: 'warning, meta, image-desc, figure, note, scan-quality, language, page-type, columns, detected-images, vocab (the tags normAlpha drops with their text)', rows }, null, 1) + '\n');
+  const by = {}; for (const r of rows) { const a = (by[r.engine] ||= [0, 0, 0]); a[0]++; a[1] += r.cer; a[2] += r.cer_tags_removed; }
+  for (const [e, [n, a, b]] of Object.entries(by)) console.log(`${e}: ${n} pages, accuracy as scored ${(1 - a / n).toFixed(3)}, tags removed ${(1 - b / n).toFixed(3)}`);
+}
+
 if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
-  await ({ prep, correct, collect, score }[STAGE] ?? (() => { console.error('stages: prep | correct --by=opus|agy | collect | score'); process.exit(2); }))();
+  await ({ prep, correct, collect, score, 'cjk-tags': cjkTags }[STAGE] ?? (() => { console.error('stages: prep | correct --by=opus|agy | collect | score'); process.exit(2); }))();
 }
