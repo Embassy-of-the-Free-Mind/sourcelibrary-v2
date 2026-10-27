@@ -1,0 +1,4170 @@
+{
+ "issue": 7499,
+ "rule": "scripts/eval/PREREGISTRATION-bench-translation-7499.md",
+ "delta": 0.15,
+ "engines": {
+  "lite": {
+   "judge": "opus (claude -p)",
+   "items": 389,
+   "judged": 389,
+   "unparsed": [],
+   "look": 2,
+   "decision_level": 0.95,
+   "gate": {
+    "plants": [
+     {
+      "item": "lite-0024",
+      "group": "hebrew-aramaic",
+      "kind": "clause",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "lite-0041",
+      "group": "vernacular",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "lite-0046",
+      "group": "latin",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "lite-0060",
+      "group": "latin",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0134",
+      "group": "arabic",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0165",
+      "group": "hebrew-aramaic",
+      "kind": "number",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0195",
+      "group": "persian",
+      "kind": "number",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0203",
+      "group": "chinese",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0230",
+      "group": "greek",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0240",
+      "group": "sanskrit-pali",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0264",
+      "group": "vernacular",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0270",
+      "group": "sanskrit-pali",
+      "kind": "negation",
+      "located": true,
+      "fid": 2.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0288",
+      "group": "arabic",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "lite-0316",
+      "group": "persian",
+      "kind": "negation",
+      "located": true,
+      "fid": 2.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0336",
+      "group": "greek",
+      "kind": "negation",
+      "located": true,
+      "fid": 2.0,
+      "rev": 1
+     },
+     {
+      "item": "lite-0348",
+      "group": "chinese",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     }
+    ],
+    "wrong": [
+     {
+      "item": "lite-0125",
+      "fid": 1.0
+     },
+     {
+      "item": "lite-0241",
+      "fid": 1.0
+     },
+     {
+      "item": "lite-0257",
+      "fid": 1.0
+     },
+     {
+      "item": "lite-0321",
+      "fid": 1.0
+     }
+    ],
+    "dup": [
+     {
+      "item": "lite-0009",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "lite-0074",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "lite-0361",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "lite-0366",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     }
+    ],
+    "pass": {
+     "plants_located": "16/16",
+     "plants_ok": true,
+     "wrong_ok": true,
+     "dup_ok": true,
+     "all": true
+    }
+   },
+   "floor": {
+    "n": 365,
+    "mean": 0.022,
+    "ci95": [
+     -0.068,
+     0.107
+    ],
+    "rev_v13": 65,
+    "rev_v13b": 59,
+    "d_floor_rev": 0.016,
+    "om_v13": 162,
+    "om_v13b": 183
+   },
+   "cells": {
+    "latin": {
+     "arms": {
+      "v13": {
+       "n": 71,
+       "fidelity": 3.831,
+       "ci95": [
+        3.634,
+        4.014
+       ],
+       "reversal_pages": 9,
+       "omission_pages": 26,
+       "invention_pages": 16,
+       "invention_by_kind": {
+        "unreadable_fill": 8,
+        "gloss": 15
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 2.225,
+       "major_acc_spans_per_page": 0.507,
+       "out_tok_mean": 671.465,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2345.282
+      },
+      "v20": {
+       "n": 71,
+       "fidelity": 4.127,
+       "ci95": [
+        3.944,
+        4.296
+       ],
+       "reversal_pages": 6,
+       "omission_pages": 25,
+       "invention_pages": 14,
+       "invention_by_kind": {
+        "gloss": 16,
+        "boundary": 3,
+        "unreadable_fill": 3
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.986,
+       "major_acc_spans_per_page": 0.31,
+       "out_tok_mean": 657.085,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2396.606
+      },
+      "plain": {
+       "n": 71,
+       "fidelity": 4.127,
+       "ci95": [
+        3.944,
+        4.296
+       ],
+       "reversal_pages": 6,
+       "omission_pages": 12,
+       "invention_pages": 17,
+       "invention_by_kind": {
+        "unreadable_fill": 6,
+        "gloss": 20,
+        "boundary": 1
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 1.859,
+       "major_acc_spans_per_page": 0.38,
+       "out_tok_mean": 555.887,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2406.099
+      },
+      "v13b": {
+       "n": 71,
+       "fidelity": 3.915,
+       "ci95": [
+        3.718,
+        4.113
+       ],
+       "reversal_pages": 7,
+       "omission_pages": 28,
+       "invention_pages": 14,
+       "invention_by_kind": {
+        "boundary": 3,
+        "gloss": 15,
+        "unreadable_fill": 6
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.239,
+       "major_acc_spans_per_page": 0.493,
+       "out_tok_mean": 675.746,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2388.535
+      }
+     },
+     "v20-v13": {
+      "n": 71,
+      "mean": 0.296,
+      "ci95": [
+       0.113,
+       0.479
+      ],
+      "ci_decision": [
+       0.113,
+       0.479
+      ],
+      "wins": 22,
+      "losses": 5,
+      "ties": 44,
+      "rev_rise": -3,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -1,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 71,
+      "mean": 0.296,
+      "ci95": [
+       0.113,
+       0.479
+      ],
+      "ci_decision": [
+       0.113,
+       0.479
+      ],
+      "wins": 23,
+      "losses": 6,
+      "ties": 42,
+      "rev_rise": -3,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -14,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)"
+    },
+    "vernacular": {
+     "arms": {
+      "v13": {
+       "n": 59,
+       "fidelity": 4.169,
+       "ci95": [
+        3.932,
+        4.373
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 11,
+       "invention_pages": 7,
+       "invention_by_kind": {
+        "unreadable_fill": 2,
+        "boundary": 2,
+        "gloss": 3
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 1.153,
+       "major_acc_spans_per_page": 0.186,
+       "out_tok_mean": 516.22,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1743.898
+      },
+      "v20": {
+       "n": 59,
+       "fidelity": 4.39,
+       "ci95": [
+        4.237,
+        4.542
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 7,
+       "invention_pages": 8,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 6,
+        "boundary": 1
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 1.017,
+       "major_acc_spans_per_page": 0.051,
+       "out_tok_mean": 517.39,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1785.254
+      },
+      "plain": {
+       "n": 59,
+       "fidelity": 4.407,
+       "ci95": [
+        4.254,
+        4.559
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 1,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 2
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.017,
+       "major_acc_spans_per_page": 0.068,
+       "out_tok_mean": 423.593,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1788.39
+      },
+      "v13b": {
+       "n": 59,
+       "fidelity": 3.983,
+       "ci95": [
+        3.712,
+        4.237
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 14,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "unreadable_fill": 4,
+        "boundary": 3,
+        "gloss": 4
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.22,
+       "major_acc_spans_per_page": 0.136,
+       "out_tok_mean": 518.644,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1672.746
+      }
+     },
+     "v20-v13": {
+      "n": 59,
+      "mean": 0.22,
+      "ci95": [
+       0.051,
+       0.407
+      ],
+      "ci_decision": [
+       0.051,
+       0.407
+      ],
+      "wins": 14,
+      "losses": 5,
+      "ties": 40,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -4,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 59,
+      "mean": 0.237,
+      "ci95": [
+       0.034,
+       0.475
+      ],
+      "ci_decision": [
+       0.034,
+       0.475
+      ],
+      "wins": 18,
+      "losses": 9,
+      "ties": 32,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -10,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)"
+    },
+    "greek": {
+     "arms": {
+      "v13": {
+       "n": 69,
+       "fidelity": 3.246,
+       "ci95": [
+        3.0,
+        3.478
+       ],
+       "reversal_pages": 13,
+       "omission_pages": 38,
+       "invention_pages": 24,
+       "invention_by_kind": {
+        "unreadable_fill": 22,
+        "added_fact": 1,
+        "gloss": 10,
+        "boundary": 6
+       },
+       "fill_pages": 13,
+       "acc_spans_per_page": 3.29,
+       "major_acc_spans_per_page": 1.116,
+       "out_tok_mean": 766.681,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2353.884
+      },
+      "v20": {
+       "n": 69,
+       "fidelity": 3.565,
+       "ci95": [
+        3.348,
+        3.768
+       ],
+       "reversal_pages": 16,
+       "omission_pages": 31,
+       "invention_pages": 21,
+       "invention_by_kind": {
+        "unreadable_fill": 22,
+        "boundary": 3,
+        "gloss": 7
+       },
+       "fill_pages": 14,
+       "acc_spans_per_page": 3.101,
+       "major_acc_spans_per_page": 0.913,
+       "out_tok_mean": 746.87,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2468.362
+      },
+      "plain": {
+       "n": 69,
+       "fidelity": 3.536,
+       "ci95": [
+        3.319,
+        3.725
+       ],
+       "reversal_pages": 18,
+       "omission_pages": 17,
+       "invention_pages": 16,
+       "invention_by_kind": {
+        "unreadable_fill": 10,
+        "gloss": 9,
+        "boundary": 3
+       },
+       "fill_pages": 9,
+       "acc_spans_per_page": 2.696,
+       "major_acc_spans_per_page": 0.899,
+       "out_tok_mean": 655.043,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2595.812
+      },
+      "v13b": {
+       "n": 69,
+       "fidelity": 3.377,
+       "ci95": [
+        3.13,
+        3.594
+       ],
+       "reversal_pages": 17,
+       "omission_pages": 42,
+       "invention_pages": 25,
+       "invention_by_kind": {
+        "unreadable_fill": 13,
+        "gloss": 18,
+        "boundary": 4,
+        "added_fact": 2
+       },
+       "fill_pages": 8,
+       "acc_spans_per_page": 3.29,
+       "major_acc_spans_per_page": 1.145,
+       "out_tok_mean": 800.551,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2455.551
+      }
+     },
+     "v20-v13": {
+      "n": 69,
+      "mean": 0.319,
+      "ci95": [
+       0.087,
+       0.565
+      ],
+      "ci_decision": [
+       0.087,
+       0.565
+      ],
+      "wins": 21,
+      "losses": 7,
+      "ties": 41,
+      "rev_rise": 3,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": -7,
+      "verdict": "inconclusive",
+      "superior": true,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 69,
+      "mean": 0.29,
+      "ci95": [
+       0.072,
+       0.522
+      ],
+      "ci_decision": [
+       0.072,
+       0.522
+      ],
+      "wins": 25,
+      "losses": 12,
+      "ties": 32,
+      "rev_rise": 5,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": -21,
+      "verdict": "inconclusive",
+      "superior": true,
+      "grade": "decision"
+     },
+     "recommendation": "test-next"
+    },
+    "hebrew-aramaic": {
+     "arms": {
+      "v13": {
+       "n": 34,
+       "fidelity": 3.529,
+       "ci95": [
+        3.235,
+        3.794
+       ],
+       "reversal_pages": 6,
+       "omission_pages": 21,
+       "invention_pages": 15,
+       "invention_by_kind": {
+        "unreadable_fill": 6,
+        "added_fact": 1,
+        "gloss": 14,
+        "boundary": 5
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 3.382,
+       "major_acc_spans_per_page": 1.176,
+       "out_tok_mean": 1000.412,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3005.706
+      },
+      "v20": {
+       "n": 34,
+       "fidelity": 3.824,
+       "ci95": [
+        3.559,
+        4.088
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 15,
+       "invention_pages": 15,
+       "invention_by_kind": {
+        "gloss": 11,
+        "boundary": 4,
+        "unreadable_fill": 9,
+        "added_fact": 3
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 3.353,
+       "major_acc_spans_per_page": 1.118,
+       "out_tok_mean": 1038.706,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3338.559
+      },
+      "plain": {
+       "n": 34,
+       "fidelity": 3.765,
+       "ci95": [
+        3.441,
+        4.059
+       ],
+       "reversal_pages": 7,
+       "omission_pages": 7,
+       "invention_pages": 20,
+       "invention_by_kind": {
+        "gloss": 13,
+        "boundary": 4,
+        "added_fact": 1,
+        "unreadable_fill": 11
+       },
+       "fill_pages": 8,
+       "acc_spans_per_page": 3.676,
+       "major_acc_spans_per_page": 1.265,
+       "out_tok_mean": 864.412,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3364.5
+      },
+      "v13b": {
+       "n": 34,
+       "fidelity": 3.676,
+       "ci95": [
+        3.353,
+        3.971
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 20,
+       "invention_pages": 14,
+       "invention_by_kind": {
+        "unreadable_fill": 8,
+        "boundary": 4,
+        "gloss": 12,
+        "added_fact": 4
+       },
+       "fill_pages": 6,
+       "acc_spans_per_page": 3.441,
+       "major_acc_spans_per_page": 1.324,
+       "out_tok_mean": 966.382,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3141.324
+      }
+     },
+     "v20-v13": {
+      "n": 34,
+      "mean": 0.294,
+      "ci95": [
+       0.059,
+       0.529
+      ],
+      "ci_decision": [
+       0.059,
+       0.529
+      ],
+      "wins": 11,
+      "losses": 3,
+      "ties": 20,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -6,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "directional"
+     },
+     "plain-v13": {
+      "n": 34,
+      "mean": 0.235,
+      "ci95": [
+       -0.029,
+       0.5
+      ],
+      "ci_decision": [
+       -0.029,
+       0.5
+      ],
+      "wins": 12,
+      "losses": 6,
+      "ties": 16,
+      "rev_rise": 1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -14,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "directional"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)"
+    },
+    "arabic": {
+     "arms": {
+      "v13": {
+       "n": 24,
+       "fidelity": 3.833,
+       "ci95": [
+        3.375,
+        4.25
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 10,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "added_fact": 1,
+        "gloss": 10,
+        "boundary": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 2.042,
+       "major_acc_spans_per_page": 0.5,
+       "out_tok_mean": 662.0,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2051.5
+      },
+      "v20": {
+       "n": 24,
+       "fidelity": 3.792,
+       "ci95": [
+        3.458,
+        4.125
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 11,
+       "invention_pages": 8,
+       "invention_by_kind": {
+        "gloss": 11,
+        "unreadable_fill": 5,
+        "boundary": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.792,
+       "major_acc_spans_per_page": 0.625,
+       "out_tok_mean": 660.25,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2098.0
+      },
+      "plain": {
+       "n": 24,
+       "fidelity": 3.958,
+       "ci95": [
+        3.583,
+        4.333
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 5,
+       "invention_pages": 11,
+       "invention_by_kind": {
+        "gloss": 17,
+        "unreadable_fill": 4,
+        "boundary": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.5,
+       "major_acc_spans_per_page": 0.792,
+       "out_tok_mean": 559.833,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2222.125
+      },
+      "v13b": {
+       "n": 24,
+       "fidelity": 3.708,
+       "ci95": [
+        3.333,
+        4.083
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 13,
+       "invention_pages": 11,
+       "invention_by_kind": {
+        "unreadable_fill": 8,
+        "added_fact": 1,
+        "gloss": 9,
+        "boundary": 3
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 2.667,
+       "major_acc_spans_per_page": 0.5,
+       "out_tok_mean": 696.417,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2192.208
+      }
+     },
+     "v20-v13": {
+      "n": 24,
+      "mean": -0.042,
+      "ci95": [
+       -0.375,
+       0.208
+      ],
+      "ci_decision": [
+       -0.375,
+       0.208
+      ],
+      "wins": 5,
+      "losses": 5,
+      "ties": 14,
+      "rev_rise": 2,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": 1,
+      "verdict": "inferior",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 24,
+      "mean": 0.125,
+      "ci95": [
+       -0.167,
+       0.417
+      ],
+      "ci_decision": [
+       -0.167,
+       0.417
+      ],
+      "wins": 8,
+      "losses": 5,
+      "ties": 11,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -5,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "persian": {
+     "arms": {
+      "v13": {
+       "n": 23,
+       "fidelity": 3.217,
+       "ci95": [
+        2.957,
+        3.522
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 10,
+       "invention_pages": 7,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 8,
+        "boundary": 1,
+        "added_fact": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 4.217,
+       "major_acc_spans_per_page": 1.304,
+       "out_tok_mean": 846.913,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2426.87
+      },
+      "v20": {
+       "n": 23,
+       "fidelity": 3.217,
+       "ci95": [
+        2.913,
+        3.522
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 10,
+       "invention_pages": 6,
+       "invention_by_kind": {
+        "unreadable_fill": 5,
+        "gloss": 6
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 4.217,
+       "major_acc_spans_per_page": 1.304,
+       "out_tok_mean": 806.087,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2401.087
+      },
+      "plain": {
+       "n": 23,
+       "fidelity": 3.391,
+       "ci95": [
+        3.043,
+        3.739
+       ],
+       "reversal_pages": 9,
+       "omission_pages": 3,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "unreadable_fill": 2,
+        "boundary": 1,
+        "gloss": 12
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 3.522,
+       "major_acc_spans_per_page": 1.0,
+       "out_tok_mean": 684.87,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2541.304
+      },
+      "v13b": {
+       "n": 23,
+       "fidelity": 3.261,
+       "ci95": [
+        2.87,
+        3.652
+       ],
+       "reversal_pages": 7,
+       "omission_pages": 11,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "gloss": 7,
+        "unreadable_fill": 2,
+        "added_fact": 1,
+        "boundary": 1
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 3.826,
+       "major_acc_spans_per_page": 1.13,
+       "out_tok_mean": 824.348,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2312.043
+      }
+     },
+     "v20-v13": {
+      "n": 23,
+      "mean": 0.0,
+      "ci95": [
+       -0.304,
+       0.348
+      ],
+      "ci_decision": [
+       -0.304,
+       0.348
+      ],
+      "wins": 5,
+      "losses": 6,
+      "ties": 12,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 0,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 23,
+      "mean": 0.174,
+      "ci95": [
+       -0.174,
+       0.565
+      ],
+      "ci_decision": [
+       -0.174,
+       0.565
+      ],
+      "wins": 7,
+      "losses": 5,
+      "ties": 11,
+      "rev_rise": -3,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -7,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "sanskrit-pali": {
+     "arms": {
+      "v13": {
+       "n": 60,
+       "fidelity": 3.6,
+       "ci95": [
+        3.417,
+        3.767
+       ],
+       "reversal_pages": 14,
+       "omission_pages": 36,
+       "invention_pages": 28,
+       "invention_by_kind": {
+        "boundary": 8,
+        "gloss": 24,
+        "unreadable_fill": 10,
+        "added_fact": 3
+       },
+       "fill_pages": 6,
+       "acc_spans_per_page": 3.6,
+       "major_acc_spans_per_page": 0.833,
+       "out_tok_mean": 797.433,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2444.483
+      },
+      "v20": {
+       "n": 60,
+       "fidelity": 3.617,
+       "ci95": [
+        3.4,
+        3.817
+       ],
+       "reversal_pages": 13,
+       "omission_pages": 41,
+       "invention_pages": 25,
+       "invention_by_kind": {
+        "gloss": 19,
+        "unreadable_fill": 10,
+        "added_fact": 2,
+        "boundary": 7
+       },
+       "fill_pages": 7,
+       "acc_spans_per_page": 3.45,
+       "major_acc_spans_per_page": 0.717,
+       "out_tok_mean": 783.017,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2400.3
+      },
+      "plain": {
+       "n": 60,
+       "fidelity": 3.833,
+       "ci95": [
+        3.633,
+        4.017
+       ],
+       "reversal_pages": 9,
+       "omission_pages": 22,
+       "invention_pages": 27,
+       "invention_by_kind": {
+        "gloss": 31,
+        "unreadable_fill": 10,
+        "added_fact": 1,
+        "boundary": 4
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 2.8,
+       "major_acc_spans_per_page": 0.6,
+       "out_tok_mean": 676.133,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2601.75
+      },
+      "v13b": {
+       "n": 60,
+       "fidelity": 3.583,
+       "ci95": [
+        3.433,
+        3.75
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 45,
+       "invention_pages": 24,
+       "invention_by_kind": {
+        "gloss": 20,
+        "unreadable_fill": 12,
+        "boundary": 5
+       },
+       "fill_pages": 8,
+       "acc_spans_per_page": 3.483,
+       "major_acc_spans_per_page": 0.7,
+       "out_tok_mean": 806.983,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2466.483
+      }
+     },
+     "v20-v13": {
+      "n": 60,
+      "mean": 0.017,
+      "ci95": [
+       -0.183,
+       0.217
+      ],
+      "ci_decision": [
+       -0.183,
+       0.217
+      ],
+      "wins": 15,
+      "losses": 13,
+      "ties": 32,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 5,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 60,
+      "mean": 0.233,
+      "ci95": [
+       0.067,
+       0.383
+      ],
+      "ci_decision": [
+       0.067,
+       0.383
+      ],
+      "wins": 19,
+      "losses": 5,
+      "ties": 36,
+      "rev_rise": -5,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -14,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)"
+    },
+    "chinese": {
+     "arms": {
+      "v13": {
+       "n": 25,
+       "fidelity": 3.56,
+       "ci95": [
+        3.32,
+        3.8
+       ],
+       "reversal_pages": 6,
+       "omission_pages": 10,
+       "invention_pages": 6,
+       "invention_by_kind": {
+        "boundary": 1,
+        "unreadable_fill": 4,
+        "gloss": 3,
+        "added_fact": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.84,
+       "major_acc_spans_per_page": 0.64,
+       "out_tok_mean": 577.2,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1767.52
+      },
+      "v20": {
+       "n": 25,
+       "fidelity": 3.68,
+       "ci95": [
+        3.4,
+        3.96
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 9,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "boundary": 1,
+        "unreadable_fill": 3,
+        "gloss": 9,
+        "added_fact": 1
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 2.76,
+       "major_acc_spans_per_page": 0.44,
+       "out_tok_mean": 585.88,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1799.04
+      },
+      "plain": {
+       "n": 25,
+       "fidelity": 3.76,
+       "ci95": [
+        3.48,
+        4.04
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 4,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "boundary": 1,
+        "gloss": 5,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 2.4,
+       "major_acc_spans_per_page": 0.56,
+       "out_tok_mean": 471.36,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1820.0
+      },
+      "v13b": {
+       "n": 25,
+       "fidelity": 3.64,
+       "ci95": [
+        3.32,
+        3.96
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 10,
+       "invention_pages": 7,
+       "invention_by_kind": {
+        "unreadable_fill": 4,
+        "gloss": 7
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 2.68,
+       "major_acc_spans_per_page": 0.6,
+       "out_tok_mean": 582.4,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1781.4
+      }
+     },
+     "v20-v13": {
+      "n": 25,
+      "mean": 0.12,
+      "ci95": [
+       -0.16,
+       0.4
+      ],
+      "ci_decision": [
+       -0.16,
+       0.4
+      ],
+      "wins": 8,
+      "losses": 5,
+      "ties": 12,
+      "rev_rise": -3,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 25,
+      "mean": 0.2,
+      "ci95": [
+       -0.08,
+       0.48
+      ],
+      "ci_decision": [
+       -0.08,
+       0.48
+      ],
+      "wins": 9,
+      "losses": 4,
+      "ties": 12,
+      "rev_rise": -4,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -6,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    }
+   },
+   "pools": {
+    "all": {
+     "arms": {
+      "v13": {
+       "n": 365,
+       "fidelity": 3.652,
+       "ci95": [
+        3.559,
+        3.742
+       ],
+       "reversal_pages": 65,
+       "omission_pages": 162,
+       "invention_pages": 112,
+       "invention_by_kind": {
+        "unreadable_fill": 56,
+        "boundary": 24,
+        "added_fact": 8,
+        "gloss": 87
+       },
+       "fill_pages": 38,
+       "acc_spans_per_page": 2.742,
+       "major_acc_spans_per_page": 0.745,
+       "out_tok_mean": 719.696,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2273.775
+      },
+      "v20": {
+       "n": 365,
+       "fidelity": 3.841,
+       "ci95": [
+        3.756,
+        3.923
+       ],
+       "reversal_pages": 59,
+       "omission_pages": 149,
+       "invention_pages": 106,
+       "invention_by_kind": {
+        "unreadable_fill": 60,
+        "gloss": 85,
+        "boundary": 20,
+        "added_fact": 6
+       },
+       "fill_pages": 39,
+       "acc_spans_per_page": 2.655,
+       "major_acc_spans_per_page": 0.616,
+       "out_tok_mean": 712.447,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2339.419
+      },
+      "plain": {
+       "n": 365,
+       "fidelity": 3.896,
+       "ci95": [
+        3.808,
+        3.984
+       ],
+       "reversal_pages": 55,
+       "omission_pages": 71,
+       "invention_pages": 110,
+       "invention_by_kind": {
+        "unreadable_fill": 47,
+        "gloss": 109,
+        "boundary": 15,
+        "added_fact": 2
+       },
+       "fill_pages": 36,
+       "acc_spans_per_page": 2.389,
+       "major_acc_spans_per_page": 0.625,
+       "out_tok_mean": 604.351,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2419.83
+      },
+      "v13b": {
+       "n": 365,
+       "fidelity": 3.674,
+       "ci95": [
+        3.578,
+        3.764
+       ],
+       "reversal_pages": 59,
+       "omission_pages": 183,
+       "invention_pages": 113,
+       "invention_by_kind": {
+        "unreadable_fill": 57,
+        "boundary": 23,
+        "gloss": 92,
+        "added_fact": 8
+       },
+       "fill_pages": 37,
+       "acc_spans_per_page": 2.748,
+       "major_acc_spans_per_page": 0.718,
+       "out_tok_mean": 726.921,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2309.123
+      }
+     },
+     "v20-v13": {
+      "n": 365,
+      "mean": 0.189,
+      "ci95": [
+       0.11,
+       0.268
+      ],
+      "ci_decision": [
+       0.11,
+       0.268
+      ],
+      "wins": 101,
+      "losses": 49,
+      "ties": 215,
+      "rev_rise": -6,
+      "rev_allowed": 6,
+      "rev_ok": true,
+      "om_change": -13,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 365,
+      "mean": 0.244,
+      "ci95": [
+       0.162,
+       0.326
+      ],
+      "ci_decision": [
+       0.162,
+       0.326
+      ],
+      "wins": 121,
+      "losses": 52,
+      "ties": 192,
+      "rev_rise": -10,
+      "rev_allowed": 6,
+      "rev_ok": true,
+      "om_change": -91,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "latin",
+        "vernacular",
+        "greek",
+        "hebrew-aramaic",
+        "arabic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "latin",
+        "vernacular",
+        "greek",
+        "hebrew-aramaic",
+        "arabic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    },
+    "latin-script": {
+     "arms": {
+      "v13": {
+       "n": 130,
+       "fidelity": 3.985,
+       "ci95": [
+        3.846,
+        4.123
+       ],
+       "reversal_pages": 13,
+       "omission_pages": 37,
+       "invention_pages": 23,
+       "invention_by_kind": {
+        "unreadable_fill": 10,
+        "gloss": 18,
+        "boundary": 2
+       },
+       "fill_pages": 7,
+       "acc_spans_per_page": 1.738,
+       "major_acc_spans_per_page": 0.362,
+       "out_tok_mean": 601.008,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2072.346
+      },
+      "v20": {
+       "n": 130,
+       "fidelity": 4.246,
+       "ci95": [
+        4.131,
+        4.369
+       ],
+       "reversal_pages": 8,
+       "omission_pages": 32,
+       "invention_pages": 22,
+       "invention_by_kind": {
+        "unreadable_fill": 6,
+        "gloss": 22,
+        "boundary": 4
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 1.546,
+       "major_acc_spans_per_page": 0.192,
+       "out_tok_mean": 593.685,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2119.146
+      },
+      "plain": {
+       "n": 130,
+       "fidelity": 4.254,
+       "ci95": [
+        4.131,
+        4.377
+       ],
+       "reversal_pages": 9,
+       "omission_pages": 13,
+       "invention_pages": 22,
+       "invention_by_kind": {
+        "unreadable_fill": 9,
+        "gloss": 22,
+        "boundary": 1
+       },
+       "fill_pages": 8,
+       "acc_spans_per_page": 1.477,
+       "major_acc_spans_per_page": 0.238,
+       "out_tok_mean": 495.846,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2125.754
+      },
+      "v13b": {
+       "n": 130,
+       "fidelity": 3.946,
+       "ci95": [
+        3.792,
+        4.1
+       ],
+       "reversal_pages": 10,
+       "omission_pages": 42,
+       "invention_pages": 23,
+       "invention_by_kind": {
+        "unreadable_fill": 10,
+        "boundary": 6,
+        "gloss": 19
+       },
+       "fill_pages": 6,
+       "acc_spans_per_page": 1.777,
+       "major_acc_spans_per_page": 0.331,
+       "out_tok_mean": 604.446,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2063.677
+      }
+     },
+     "v20-v13": {
+      "n": 130,
+      "mean": 0.262,
+      "ci95": [
+       0.138,
+       0.392
+      ],
+      "ci_decision": [
+       0.138,
+       0.392
+      ],
+      "wins": 36,
+      "losses": 10,
+      "ties": 84,
+      "rev_rise": -5,
+      "rev_allowed": 2,
+      "rev_ok": true,
+      "om_change": -5,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 130,
+      "mean": 0.269,
+      "ci95": [
+       0.131,
+       0.415
+      ],
+      "ci_decision": [
+       0.131,
+       0.415
+      ],
+      "wins": 41,
+      "losses": 15,
+      "ties": 74,
+      "rev_rise": -4,
+      "rev_allowed": 2,
+      "rev_ok": true,
+      "om_change": -24,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "latin",
+        "vernacular"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      },
+      "plain": {
+       "groups_ge10": [
+        "latin",
+        "vernacular"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    },
+    "non-latin": {
+     "arms": {
+      "v13": {
+       "n": 235,
+       "fidelity": 3.468,
+       "ci95": [
+        3.357,
+        3.579
+       ],
+       "reversal_pages": 52,
+       "omission_pages": 125,
+       "invention_pages": 89,
+       "invention_by_kind": {
+        "boundary": 22,
+        "unreadable_fill": 46,
+        "added_fact": 8,
+        "gloss": 69
+       },
+       "fill_pages": 31,
+       "acc_spans_per_page": 3.298,
+       "major_acc_spans_per_page": 0.957,
+       "out_tok_mean": 785.353,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2385.204
+      },
+      "v20": {
+       "n": 235,
+       "fidelity": 3.617,
+       "ci95": [
+        3.511,
+        3.723
+       ],
+       "reversal_pages": 51,
+       "omission_pages": 117,
+       "invention_pages": 84,
+       "invention_by_kind": {
+        "unreadable_fill": 54,
+        "gloss": 63,
+        "boundary": 16,
+        "added_fact": 6
+       },
+       "fill_pages": 34,
+       "acc_spans_per_page": 3.268,
+       "major_acc_spans_per_page": 0.851,
+       "out_tok_mean": 778.145,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2461.272
+      },
+      "plain": {
+       "n": 235,
+       "fidelity": 3.698,
+       "ci95": [
+        3.591,
+        3.809
+       ],
+       "reversal_pages": 46,
+       "omission_pages": 58,
+       "invention_pages": 88,
+       "invention_by_kind": {
+        "gloss": 87,
+        "unreadable_fill": 38,
+        "boundary": 14,
+        "added_fact": 2
+       },
+       "fill_pages": 28,
+       "acc_spans_per_page": 2.894,
+       "major_acc_spans_per_page": 0.838,
+       "out_tok_mean": 664.374,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2582.511
+      },
+      "v13b": {
+       "n": 235,
+       "fidelity": 3.523,
+       "ci95": [
+        3.417,
+        3.634
+       ],
+       "reversal_pages": 49,
+       "omission_pages": 141,
+       "invention_pages": 90,
+       "invention_by_kind": {
+        "unreadable_fill": 47,
+        "boundary": 17,
+        "gloss": 73,
+        "added_fact": 8
+       },
+       "fill_pages": 31,
+       "acc_spans_per_page": 3.285,
+       "major_acc_spans_per_page": 0.932,
+       "out_tok_mean": 794.672,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2444.902
+      }
+     },
+     "v20-v13": {
+      "n": 235,
+      "mean": 0.149,
+      "ci95": [
+       0.043,
+       0.264
+      ],
+      "ci_decision": [
+       0.043,
+       0.264
+      ],
+      "wins": 65,
+      "losses": 39,
+      "ties": 131,
+      "rev_rise": -1,
+      "rev_allowed": 4,
+      "rev_ok": true,
+      "om_change": -8,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 235,
+      "mean": 0.23,
+      "ci95": [
+       0.119,
+       0.332
+      ],
+      "ci_decision": [
+       0.119,
+       0.332
+      ],
+      "wins": 80,
+      "losses": 37,
+      "ties": 118,
+      "rev_rise": -6,
+      "rev_allowed": 4,
+      "rev_ok": true,
+      "om_change": -67,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "arabic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "arabic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    }
+   },
+   "did_not_read": {
+    "lite-plain": 0,
+    "lite-v13": 4,
+    "lite-v13b": 6,
+    "lite-v20": 0
+   },
+   "hidden_body_scored_1": {
+    "v13": [
+     "698fb77b6b95eeda7d2d1eaf_00187",
+     "69942ffcbb14908bbd9a1123_00426",
+     "69c79fed92b884e4f817374f_00107",
+     "69d13d751c2a66dc094b168d_00129"
+    ],
+    "v13b": [
+     "698fb77b6b95eeda7d2d1eaf_00187",
+     "69aebfa1c337b1e6a4d58005_00358",
+     "69c1bbd28522835be8460a78_00032",
+     "69d13d751c2a66dc094b168d_00129",
+     "69e74ef95cf1eaf3ad80e04c_00131",
+     "69e8b18b2ff2a8dc09e76378_00076"
+    ]
+   }
+  },
+  "flash38": {
+   "judge": "opus (claude -p)",
+   "items": 149,
+   "judged": 149,
+   "unparsed": [],
+   "look": 1,
+   "decision_level": 0.99,
+   "gate": {
+    "plants": [
+     {
+      "item": "flash38-0046",
+      "group": "persian",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0064",
+      "group": "hebrew-aramaic",
+      "kind": "name",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0072",
+      "group": "chinese",
+      "kind": "number",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0075",
+      "group": "greek",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0090",
+      "group": "persian",
+      "kind": "negation",
+      "located": true,
+      "fid": 2.0,
+      "rev": 0
+     },
+     {
+      "item": "flash38-0096",
+      "group": "greek",
+      "kind": "number",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0103",
+      "group": "sanskrit-pali",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0115",
+      "group": "sanskrit-pali",
+      "kind": "number",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "flash38-0148",
+      "group": "hebrew-aramaic",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     }
+    ],
+    "wrong": [
+     {
+      "item": "flash38-0020",
+      "fid": 1.0
+     },
+     {
+      "item": "flash38-0022",
+      "fid": 1.0
+     },
+     {
+      "item": "flash38-0091",
+      "fid": 1.0
+     },
+     {
+      "item": "flash38-0138",
+      "fid": 1.0
+     }
+    ],
+    "dup": [
+     {
+      "item": "flash38-0052",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "flash38-0063",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "flash38-0092",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "flash38-0112",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     }
+    ],
+    "pass": {
+     "plants_located": "9/9",
+     "plants_ok": true,
+     "wrong_ok": true,
+     "dup_ok": true,
+     "all": true
+    }
+   },
+   "floor": {
+    "n": 49,
+    "mean": 0.0,
+    "ci95": [
+     -0.143,
+     0.143
+    ],
+    "rev_v13": 5,
+    "rev_v13b": 3,
+    "d_floor_rev": 0.041,
+    "om_v13": 17,
+    "om_v13b": 17
+   },
+   "cells": {
+    "greek": {
+     "arms": {
+      "v13": {
+       "n": 25,
+       "fidelity": 3.84,
+       "ci95": [
+        3.6,
+        4.08
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 11,
+       "invention_pages": 7,
+       "invention_by_kind": {
+        "gloss": 2,
+        "boundary": 1,
+        "added_fact": 1,
+        "unreadable_fill": 8
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.6,
+       "major_acc_spans_per_page": 0.64,
+       "out_tok_mean": 828.64,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2600.72
+      },
+      "v20": {
+       "n": 24,
+       "fidelity": 3.958,
+       "ci95": [
+        3.708,
+        4.208
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 12,
+       "invention_pages": 3,
+       "invention_by_kind": {
+        "boundary": 1,
+        "gloss": 3,
+        "unreadable_fill": 3
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 2.458,
+       "major_acc_spans_per_page": 0.417,
+       "out_tok_mean": 835.458,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2650.042
+      },
+      "plain": {
+       "n": 25,
+       "fidelity": 4.16,
+       "ci95": [
+        3.8,
+        4.48
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 3,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "boundary": 2,
+        "added_fact": 1,
+        "unreadable_fill": 3
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 1.8,
+       "major_acc_spans_per_page": 0.48,
+       "out_tok_mean": 730.44,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2745.24
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 3.5,
+       "ci95": [
+        3.0,
+        3.9
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 6,
+       "invention_pages": 1,
+       "invention_by_kind": {
+        "gloss": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 3.3,
+       "major_acc_spans_per_page": 0.7,
+       "out_tok_mean": 876.2,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2578.9
+      }
+     },
+     "v20-v13": {
+      "n": 24,
+      "mean": 0.125,
+      "ci95": [
+       -0.125,
+       0.375
+      ],
+      "ci_decision": [
+       -0.208,
+       0.417
+      ],
+      "wins": 6,
+      "losses": 3,
+      "ties": 15,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 25,
+      "mean": 0.32,
+      "ci95": [
+       0.04,
+       0.6
+      ],
+      "ci_decision": [
+       -0.04,
+       0.68
+      ],
+      "wins": 9,
+      "losses": 2,
+      "ties": 14,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -8,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "hebrew-aramaic": {
+     "arms": {
+      "v13": {
+       "n": 29,
+       "fidelity": 4.0,
+       "ci95": [
+        3.69,
+        4.276
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 9,
+       "invention_pages": 13,
+       "invention_by_kind": {
+        "boundary": 4,
+        "unreadable_fill": 9,
+        "gloss": 11,
+        "added_fact": 3
+       },
+       "fill_pages": 6,
+       "acc_spans_per_page": 2.724,
+       "major_acc_spans_per_page": 0.586,
+       "out_tok_mean": 1024.862,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3345.69
+      },
+      "v20": {
+       "n": 27,
+       "fidelity": 4.037,
+       "ci95": [
+        3.741,
+        4.296
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 7,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "unreadable_fill": 7,
+        "boundary": 5,
+        "gloss": 1
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 2.259,
+       "major_acc_spans_per_page": 0.519,
+       "out_tok_mean": 904.778,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2911.444
+      },
+      "plain": {
+       "n": 29,
+       "fidelity": 4.276,
+       "ci95": [
+        3.966,
+        4.552
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 4,
+       "invention_pages": 6,
+       "invention_by_kind": {
+        "unreadable_fill": 7,
+        "added_fact": 1,
+        "gloss": 3
+       },
+       "fill_pages": 6,
+       "acc_spans_per_page": 2.034,
+       "major_acc_spans_per_page": 0.448,
+       "out_tok_mean": 831.207,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3299.276
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 4.5,
+       "ci95": [
+        4.2,
+        4.8
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 2,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 2
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.3,
+       "major_acc_spans_per_page": 0.0,
+       "out_tok_mean": 676.2,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1964.0
+      }
+     },
+     "v20-v13": {
+      "n": 27,
+      "mean": 0.037,
+      "ci95": [
+       -0.148,
+       0.222
+      ],
+      "ci_decision": [
+       -0.222,
+       0.296
+      ],
+      "wins": 4,
+      "losses": 3,
+      "ties": 20,
+      "rev_rise": 1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 29,
+      "mean": 0.276,
+      "ci95": [
+       0.069,
+       0.483
+      ],
+      "ci_decision": [
+       0.0,
+       0.552
+      ],
+      "wins": 10,
+      "losses": 2,
+      "ties": 17,
+      "rev_rise": 1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -5,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "persian": {
+     "arms": {
+      "v13": {
+       "n": 23,
+       "fidelity": 3.652,
+       "ci95": [
+        3.348,
+        3.957
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 7,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "unreadable_fill": 7,
+        "added_fact": 3,
+        "boundary": 2,
+        "gloss": 7
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 3.435,
+       "major_acc_spans_per_page": 1.043,
+       "out_tok_mean": 953.826,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2560.565
+      },
+      "v20": {
+       "n": 23,
+       "fidelity": 3.565,
+       "ci95": [
+        3.304,
+        3.783
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 8,
+       "invention_pages": 10,
+       "invention_by_kind": {
+        "gloss": 14,
+        "unreadable_fill": 7,
+        "boundary": 1
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 3.478,
+       "major_acc_spans_per_page": 0.783,
+       "out_tok_mean": 886.87,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2581.87
+      },
+      "plain": {
+       "n": 23,
+       "fidelity": 3.87,
+       "ci95": [
+        3.565,
+        4.174
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 3,
+       "invention_pages": 6,
+       "invention_by_kind": {
+        "unreadable_fill": 7,
+        "gloss": 2
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 3.13,
+       "major_acc_spans_per_page": 0.696,
+       "out_tok_mean": 705.957,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2602.826
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 3.9,
+       "ci95": [
+        3.6,
+        4.2
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 3,
+       "invention_pages": 3,
+       "invention_by_kind": {
+        "gloss": 5
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 2.6,
+       "major_acc_spans_per_page": 0.4,
+       "out_tok_mean": 707.2,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1790.6
+      }
+     },
+     "v20-v13": {
+      "n": 23,
+      "mean": -0.087,
+      "ci95": [
+       -0.348,
+       0.174
+      ],
+      "ci_decision": [
+       -0.391,
+       0.217
+      ],
+      "wins": 3,
+      "losses": 5,
+      "ties": 15,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 23,
+      "mean": 0.217,
+      "ci95": [
+       -0.087,
+       0.522
+      ],
+      "ci_decision": [
+       -0.174,
+       0.609
+      ],
+      "wins": 7,
+      "losses": 3,
+      "ties": 13,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -4,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "sanskrit-pali": {
+     "arms": {
+      "v13": {
+       "n": 29,
+       "fidelity": 3.724,
+       "ci95": [
+        3.483,
+        3.931
+       ],
+       "reversal_pages": 6,
+       "omission_pages": 14,
+       "invention_pages": 15,
+       "invention_by_kind": {
+        "gloss": 13,
+        "unreadable_fill": 11,
+        "added_fact": 2,
+        "boundary": 2
+       },
+       "fill_pages": 7,
+       "acc_spans_per_page": 3.241,
+       "major_acc_spans_per_page": 0.517,
+       "out_tok_mean": 968.138,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3061.448
+      },
+      "v20": {
+       "n": 30,
+       "fidelity": 3.8,
+       "ci95": [
+        3.567,
+        4.0
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 18,
+       "invention_pages": 12,
+       "invention_by_kind": {
+        "unreadable_fill": 7,
+        "gloss": 7,
+        "boundary": 2,
+        "added_fact": 2
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 2.9,
+       "major_acc_spans_per_page": 0.433,
+       "out_tok_mean": 959.9,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3064.533
+      },
+      "plain": {
+       "n": 30,
+       "fidelity": 3.933,
+       "ci95": [
+        3.667,
+        4.2
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 8,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "added_fact": 2,
+        "gloss": 8,
+        "boundary": 1,
+        "unreadable_fill": 5
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 2.433,
+       "major_acc_spans_per_page": 0.433,
+       "out_tok_mean": 773.567,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3083.1
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 3.8,
+       "ci95": [
+        3.4,
+        4.2
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 5,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "gloss": 2
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 2.4,
+       "major_acc_spans_per_page": 0.5,
+       "out_tok_mean": 1170.8,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 3842.1
+      }
+     },
+     "v20-v13": {
+      "n": 29,
+      "mean": 0.103,
+      "ci95": [
+       -0.034,
+       0.241
+      ],
+      "ci_decision": [
+       -0.069,
+       0.31
+      ],
+      "wins": 4,
+      "losses": 1,
+      "ties": 24,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 3,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 29,
+      "mean": 0.241,
+      "ci95": [
+       -0.034,
+       0.483
+      ],
+      "ci_decision": [
+       -0.069,
+       0.552
+      ],
+      "wins": 9,
+      "losses": 3,
+      "ties": 17,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -7,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "chinese": {
+     "arms": {
+      "v13": {
+       "n": 25,
+       "fidelity": 4.04,
+       "ci95": [
+        3.8,
+        4.28
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 7,
+       "invention_pages": 13,
+       "invention_by_kind": {
+        "unreadable_fill": 5,
+        "gloss": 6,
+        "added_fact": 2,
+        "boundary": 5
+       },
+       "fill_pages": 5,
+       "acc_spans_per_page": 2.12,
+       "major_acc_spans_per_page": 0.28,
+       "out_tok_mean": 603.32,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1930.04
+      },
+      "v20": {
+       "n": 25,
+       "fidelity": 4.12,
+       "ci95": [
+        3.92,
+        4.32
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 7,
+       "invention_pages": 12,
+       "invention_by_kind": {
+        "gloss": 6,
+        "added_fact": 5,
+        "boundary": 3,
+        "unreadable_fill": 4
+       },
+       "fill_pages": 4,
+       "acc_spans_per_page": 2.0,
+       "major_acc_spans_per_page": 0.2,
+       "out_tok_mean": 597.48,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1869.56
+      },
+      "plain": {
+       "n": 25,
+       "fidelity": 4.28,
+       "ci95": [
+        4.08,
+        4.48
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 1,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "gloss": 1,
+        "unreadable_fill": 3,
+        "boundary": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.6,
+       "major_acc_spans_per_page": 0.08,
+       "out_tok_mean": 457.8,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 1855.4
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 4.0,
+       "ci95": [
+        3.6,
+        4.4
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 2,
+       "invention_pages": 4,
+       "invention_by_kind": {
+        "added_fact": 3,
+        "gloss": 1,
+        "boundary": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.7,
+       "major_acc_spans_per_page": 0.3,
+       "out_tok_mean": 688.4,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2128.5
+      }
+     },
+     "v20-v13": {
+      "n": 25,
+      "mean": 0.08,
+      "ci95": [
+       -0.16,
+       0.32
+      ],
+      "ci_decision": [
+       -0.2,
+       0.4
+      ],
+      "wins": 6,
+      "losses": 4,
+      "ties": 15,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 0,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 25,
+      "mean": 0.24,
+      "ci95": [
+       0.04,
+       0.48
+      ],
+      "ci_decision": [
+       -0.04,
+       0.52
+      ],
+      "wins": 8,
+      "losses": 2,
+      "ties": 15,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -6,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    }
+   },
+   "pools": {
+    "all": {
+     "arms": {
+      "v13": {
+       "n": 131,
+       "fidelity": 3.855,
+       "ci95": [
+        3.74,
+        3.977
+       ],
+       "reversal_pages": 15,
+       "omission_pages": 48,
+       "invention_pages": 57,
+       "invention_by_kind": {
+        "gloss": 39,
+        "unreadable_fill": 40,
+        "boundary": 14,
+        "added_fact": 11
+       },
+       "fill_pages": 25,
+       "acc_spans_per_page": 2.824,
+       "major_acc_spans_per_page": 0.603,
+       "out_tok_mean": 881.939,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2732.588
+      },
+      "v20": {
+       "n": 129,
+       "fidelity": 3.899,
+       "ci95": [
+        3.783,
+        4.016
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 52,
+       "invention_pages": 46,
+       "invention_by_kind": {
+        "gloss": 31,
+        "unreadable_fill": 28,
+        "boundary": 12,
+        "added_fact": 7
+       },
+       "fill_pages": 17,
+       "acc_spans_per_page": 2.612,
+       "major_acc_spans_per_page": 0.465,
+       "out_tok_mean": 841.953,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2637.736
+      },
+      "plain": {
+       "n": 132,
+       "fidelity": 4.106,
+       "ci95": [
+        3.977,
+        4.235
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 19,
+       "invention_pages": 31,
+       "invention_by_kind": {
+        "gloss": 14,
+        "unreadable_fill": 25,
+        "added_fact": 4,
+        "boundary": 4
+       },
+       "fill_pages": 17,
+       "acc_spans_per_page": 2.189,
+       "major_acc_spans_per_page": 0.424,
+       "out_tok_mean": 706.477,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2750.402
+      },
+      "v13b": {
+       "n": 50,
+       "fidelity": 3.94,
+       "ci95": [
+        3.76,
+        4.12
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 18,
+       "invention_pages": 15,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 11,
+        "added_fact": 3,
+        "boundary": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.26,
+       "major_acc_spans_per_page": 0.38,
+       "out_tok_mean": 823.76,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2460.82
+      }
+     },
+     "v20-v13": {
+      "n": 128,
+      "mean": 0.055,
+      "ci95": [
+       -0.039,
+       0.148
+      ],
+      "ci_decision": [
+       -0.07,
+       0.188
+      ],
+      "wins": 23,
+      "losses": 16,
+      "ties": 89,
+      "rev_rise": -3,
+      "rev_allowed": 5,
+      "rev_ok": true,
+      "om_change": 4,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 131,
+      "mean": 0.26,
+      "ci95": [
+       0.145,
+       0.374
+      ],
+      "ci_decision": [
+       0.107,
+       0.412
+      ],
+      "wins": 43,
+      "losses": 12,
+      "ties": 76,
+      "rev_rise": -3,
+      "rev_allowed": 5,
+      "rev_ok": true,
+      "om_change": -30,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    },
+    "non-latin": {
+     "arms": {
+      "v13": {
+       "n": 131,
+       "fidelity": 3.855,
+       "ci95": [
+        3.74,
+        3.977
+       ],
+       "reversal_pages": 15,
+       "omission_pages": 48,
+       "invention_pages": 57,
+       "invention_by_kind": {
+        "gloss": 39,
+        "unreadable_fill": 40,
+        "boundary": 14,
+        "added_fact": 11
+       },
+       "fill_pages": 25,
+       "acc_spans_per_page": 2.824,
+       "major_acc_spans_per_page": 0.603,
+       "out_tok_mean": 881.939,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2732.588
+      },
+      "v20": {
+       "n": 129,
+       "fidelity": 3.899,
+       "ci95": [
+        3.783,
+        4.016
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 52,
+       "invention_pages": 46,
+       "invention_by_kind": {
+        "gloss": 31,
+        "unreadable_fill": 28,
+        "boundary": 12,
+        "added_fact": 7
+       },
+       "fill_pages": 17,
+       "acc_spans_per_page": 2.612,
+       "major_acc_spans_per_page": 0.465,
+       "out_tok_mean": 841.953,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2637.736
+      },
+      "plain": {
+       "n": 132,
+       "fidelity": 4.106,
+       "ci95": [
+        3.977,
+        4.235
+       ],
+       "reversal_pages": 12,
+       "omission_pages": 19,
+       "invention_pages": 31,
+       "invention_by_kind": {
+        "gloss": 14,
+        "unreadable_fill": 25,
+        "added_fact": 4,
+        "boundary": 4
+       },
+       "fill_pages": 17,
+       "acc_spans_per_page": 2.189,
+       "major_acc_spans_per_page": 0.424,
+       "out_tok_mean": 706.477,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2750.402
+      },
+      "v13b": {
+       "n": 50,
+       "fidelity": 3.94,
+       "ci95": [
+        3.76,
+        4.12
+       ],
+       "reversal_pages": 4,
+       "omission_pages": 18,
+       "invention_pages": 15,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "gloss": 11,
+        "added_fact": 3,
+        "boundary": 1
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 2.26,
+       "major_acc_spans_per_page": 0.38,
+       "out_tok_mean": 823.76,
+       "think_tok_mean": 0.0,
+       "body_chars_mean": 2460.82
+      }
+     },
+     "v20-v13": {
+      "n": 128,
+      "mean": 0.055,
+      "ci95": [
+       -0.039,
+       0.148
+      ],
+      "ci_decision": [
+       -0.07,
+       0.188
+      ],
+      "wins": 23,
+      "losses": 16,
+      "ties": 89,
+      "rev_rise": -3,
+      "rev_allowed": 5,
+      "rev_ok": true,
+      "om_change": 4,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 131,
+      "mean": 0.26,
+      "ci95": [
+       0.145,
+       0.374
+      ],
+      "ci_decision": [
+       0.107,
+       0.412
+      ],
+      "wins": 43,
+      "losses": 12,
+      "ties": 76,
+      "rev_rise": -3,
+      "rev_allowed": 5,
+      "rev_ok": true,
+      "om_change": -30,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    }
+   },
+   "did_not_read": {
+    "flash38-plain": 0,
+    "flash38-v13": 1,
+    "flash38-v13b": 0,
+    "flash38-v20": 3
+   },
+   "hidden_body_scored_1": {}
+  },
+  "opus": {
+   "judge": "gemini-3.8-flash-high (agy -p)",
+   "items": 150,
+   "judged": 149,
+   "unparsed": [
+    "opus-0019"
+   ],
+   "look": 1,
+   "decision_level": 0.99,
+   "gate": {
+    "plants": [
+     {
+      "item": "opus-0004",
+      "group": "sanskrit-pali",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "opus-0050",
+      "group": "greek",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "opus-0051",
+      "group": "hebrew-aramaic",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "opus-0061",
+      "group": "hebrew-aramaic",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "opus-0078",
+      "group": "sanskrit-pali",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "opus-0086",
+      "group": "chinese",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "opus-0127",
+      "group": "chinese",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "opus-0142",
+      "group": "persian",
+      "kind": "number",
+      "located": true,
+      "fid": 4.0,
+      "rev": 0
+     },
+     {
+      "item": "opus-0143",
+      "group": "persian",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     },
+     {
+      "item": "opus-0147",
+      "group": "greek",
+      "kind": "negation",
+      "located": true,
+      "fid": 3.0,
+      "rev": 1
+     }
+    ],
+    "wrong": [
+     {
+      "item": "opus-0038",
+      "fid": 1.0
+     },
+     {
+      "item": "opus-0047",
+      "fid": 1.0
+     },
+     {
+      "item": "opus-0093",
+      "fid": 1.0
+     },
+     {
+      "item": "opus-0098",
+      "fid": 1.0
+     }
+    ],
+    "dup": [
+     {
+      "item": "opus-0015",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "opus-0022",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "opus-0057",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     },
+     {
+      "item": "opus-0065",
+      "same_fid": true,
+      "same_tier": true,
+      "same_om": true
+     }
+    ],
+    "pass": {
+     "plants_located": "10/10",
+     "plants_ok": true,
+     "wrong_ok": true,
+     "dup_ok": true,
+     "all": true
+    }
+   },
+   "floor": {
+    "n": 49,
+    "mean": -0.02,
+    "ci95": [
+     -0.306,
+     0.286
+    ],
+    "rev_v13": 2,
+    "rev_v13b": 1,
+    "d_floor_rev": 0.02,
+    "om_v13": 7,
+    "om_v13b": 8
+   },
+   "cells": {
+    "greek": {
+     "arms": {
+      "v13": {
+       "n": 25,
+       "fidelity": 4.24,
+       "ci95": [
+        3.92,
+        4.56
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 5,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "added_fact": 2
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.2,
+       "major_acc_spans_per_page": 0.12,
+       "out_tok_mean": 2819.64,
+       "think_tok_mean": null,
+       "body_chars_mean": 2734.92
+      },
+      "v20": {
+       "n": 25,
+       "fidelity": 4.08,
+       "ci95": [
+        3.76,
+        4.36
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 7,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "added_fact": 1,
+        "unreadable_fill": 3
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.36,
+       "major_acc_spans_per_page": 0.0,
+       "out_tok_mean": 2733.08,
+       "think_tok_mean": null,
+       "body_chars_mean": 2685.96
+      },
+      "plain": {
+       "n": 25,
+       "fidelity": 4.44,
+       "ci95": [
+        4.08,
+        4.72
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 4,
+       "invention_pages": 0,
+       "invention_by_kind": {},
+       "fill_pages": 0,
+       "acc_spans_per_page": 0.8,
+       "major_acc_spans_per_page": 0.16,
+       "out_tok_mean": 1983.28,
+       "think_tok_mean": null,
+       "body_chars_mean": 2626.8
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 3.8,
+       "ci95": [
+        3.4,
+        4.2
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 4,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "added_fact": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.9,
+       "major_acc_spans_per_page": 0.1,
+       "out_tok_mean": 2661.7,
+       "think_tok_mean": null,
+       "body_chars_mean": 2548.4
+      }
+     },
+     "v20-v13": {
+      "n": 25,
+      "mean": -0.16,
+      "ci95": [
+       -0.64,
+       0.24
+      ],
+      "ci_decision": [
+       -0.72,
+       0.4
+      ],
+      "wins": 7,
+      "losses": 8,
+      "ties": 10,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 2,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 25,
+      "mean": 0.2,
+      "ci95": [
+       -0.08,
+       0.48
+      ],
+      "ci_decision": [
+       -0.16,
+       0.6
+      ],
+      "wins": 8,
+      "losses": 4,
+      "ties": 13,
+      "rev_rise": -1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "hebrew-aramaic": {
+     "arms": {
+      "v13": {
+       "n": 28,
+       "fidelity": 3.929,
+       "ci95": [
+        3.536,
+        4.321
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 5,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "boundary": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.464,
+       "major_acc_spans_per_page": 0.179,
+       "out_tok_mean": 2879.821,
+       "think_tok_mean": null,
+       "body_chars_mean": 2892.857
+      },
+      "v20": {
+       "n": 28,
+       "fidelity": 4.214,
+       "ci95": [
+        3.893,
+        4.536
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 6,
+       "invention_pages": 1,
+       "invention_by_kind": {
+        "added_fact": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.179,
+       "major_acc_spans_per_page": 0.214,
+       "out_tok_mean": 2899.5,
+       "think_tok_mean": null,
+       "body_chars_mean": 3003.321
+      },
+      "plain": {
+       "n": 28,
+       "fidelity": 4.286,
+       "ci95": [
+        3.929,
+        4.607
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 2,
+       "invention_pages": 3,
+       "invention_by_kind": {
+        "unreadable_fill": 3,
+        "boundary": 1
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 0.821,
+       "major_acc_spans_per_page": 0.25,
+       "out_tok_mean": 2191.929,
+       "think_tok_mean": null,
+       "body_chars_mean": 2979.036
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 4.4,
+       "ci95": [
+        3.9,
+        4.9
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 1,
+       "invention_pages": 0,
+       "invention_by_kind": {},
+       "fill_pages": 0,
+       "acc_spans_per_page": 0.7,
+       "major_acc_spans_per_page": 0.1,
+       "out_tok_mean": 2355.0,
+       "think_tok_mean": null,
+       "body_chars_mean": 1881.7
+      }
+     },
+     "v20-v13": {
+      "n": 28,
+      "mean": 0.286,
+      "ci95": [
+       -0.071,
+       0.679
+      ],
+      "ci_decision": [
+       -0.214,
+       0.786
+      ],
+      "wins": 9,
+      "losses": 4,
+      "ties": 15,
+      "rev_rise": 1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 28,
+      "mean": 0.357,
+      "ci95": [
+       -0.036,
+       0.75
+      ],
+      "ci_decision": [
+       -0.107,
+       0.857
+      ],
+      "wins": 12,
+      "losses": 5,
+      "ties": 11,
+      "rev_rise": 2,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": -3,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "persian": {
+     "arms": {
+      "v13": {
+       "n": 23,
+       "fidelity": 3.609,
+       "ci95": [
+        3.261,
+        3.957
+       ],
+       "reversal_pages": 3,
+       "omission_pages": 7,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "gloss": 1,
+        "added_fact": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 2.087,
+       "major_acc_spans_per_page": 0.391,
+       "out_tok_mean": 2925.826,
+       "think_tok_mean": null,
+       "body_chars_mean": 2492.87
+      },
+      "v20": {
+       "n": 22,
+       "fidelity": 3.682,
+       "ci95": [
+        3.182,
+        4.182
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 9,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "gloss": 1,
+        "added_fact": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.545,
+       "major_acc_spans_per_page": 0.5,
+       "out_tok_mean": 3114.818,
+       "think_tok_mean": null,
+       "body_chars_mean": 2385.636
+      },
+      "plain": {
+       "n": 23,
+       "fidelity": 4.043,
+       "ci95": [
+        3.652,
+        4.391
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 1,
+       "invention_pages": 0,
+       "invention_by_kind": {},
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.174,
+       "major_acc_spans_per_page": 0.217,
+       "out_tok_mean": 2093.174,
+       "think_tok_mean": null,
+       "body_chars_mean": 2491.565
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 4.5,
+       "ci95": [
+        4.1,
+        4.9
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 1,
+       "invention_pages": 0,
+       "invention_by_kind": {},
+       "fill_pages": 0,
+       "acc_spans_per_page": 0.8,
+       "major_acc_spans_per_page": 0.0,
+       "out_tok_mean": 2459.2,
+       "think_tok_mean": null,
+       "body_chars_mean": 1914.9
+      }
+     },
+     "v20-v13": {
+      "n": 22,
+      "mean": 0.091,
+      "ci95": [
+       -0.273,
+       0.455
+      ],
+      "ci_decision": [
+       -0.364,
+       0.545
+      ],
+      "wins": 7,
+      "losses": 5,
+      "ties": 10,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 2,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 23,
+      "mean": 0.435,
+      "ci95": [
+       0.087,
+       0.826
+      ],
+      "ci_decision": [
+       -0.087,
+       0.957
+      ],
+      "wins": 11,
+      "losses": 4,
+      "ties": 8,
+      "rev_rise": -2,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -6,
+      "verdict": "pass",
+      "superior": true,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    },
+    "sanskrit-pali": {
+     "arms": {
+      "v13": {
+       "n": 30,
+       "fidelity": 4.0,
+       "ci95": [
+        3.667,
+        4.3
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 10,
+       "invention_pages": 4,
+       "invention_by_kind": {
+        "boundary": 2,
+        "unreadable_fill": 2
+       },
+       "fill_pages": 2,
+       "acc_spans_per_page": 1.3,
+       "major_acc_spans_per_page": 0.233,
+       "out_tok_mean": 2831.533,
+       "think_tok_mean": null,
+       "body_chars_mean": 2918.333
+      },
+      "v20": {
+       "n": 30,
+       "fidelity": 4.1,
+       "ci95": [
+        3.767,
+        4.4
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 8,
+       "invention_pages": 3,
+       "invention_by_kind": {
+        "boundary": 3,
+        "added_fact": 2
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.067,
+       "major_acc_spans_per_page": 0.267,
+       "out_tok_mean": 2924.067,
+       "think_tok_mean": null,
+       "body_chars_mean": 2993.933
+      },
+      "plain": {
+       "n": 30,
+       "fidelity": 4.333,
+       "ci95": [
+        4.067,
+        4.6
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 1,
+       "invention_pages": 4,
+       "invention_by_kind": {
+        "boundary": 3,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 0.8,
+       "major_acc_spans_per_page": 0.1,
+       "out_tok_mean": 1903.6,
+       "think_tok_mean": null,
+       "body_chars_mean": 2936.3
+      },
+      "v13b": {
+       "n": 10,
+       "fidelity": 4.1,
+       "ci95": [
+        3.8,
+        4.4
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 1,
+       "invention_pages": 1,
+       "invention_by_kind": {
+        "boundary": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.3,
+       "major_acc_spans_per_page": 0.1,
+       "out_tok_mean": 3054.1,
+       "think_tok_mean": null,
+       "body_chars_mean": 3685.6
+      }
+     },
+     "v20-v13": {
+      "n": 30,
+      "mean": 0.1,
+      "ci95": [
+       -0.267,
+       0.433
+      ],
+      "ci_decision": [
+       -0.367,
+       0.533
+      ],
+      "wins": 8,
+      "losses": 5,
+      "ties": 17,
+      "rev_rise": 2,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": -2,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "directional"
+     },
+     "plain-v13": {
+      "n": 30,
+      "mean": 0.333,
+      "ci95": [
+       -0.033,
+       0.7
+      ],
+      "ci_decision": [
+       -0.167,
+       0.833
+      ],
+      "wins": 14,
+      "losses": 6,
+      "ties": 10,
+      "rev_rise": 2,
+      "rev_allowed": 1,
+      "rev_ok": false,
+      "om_change": -9,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "directional"
+     },
+     "recommendation": "test-next"
+    },
+    "chinese": {
+     "arms": {
+      "v13": {
+       "n": 25,
+       "fidelity": 4.24,
+       "ci95": [
+        4.0,
+        4.48
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 2,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "boundary": 1,
+        "added_fact": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.0,
+       "major_acc_spans_per_page": 0.08,
+       "out_tok_mean": 1857.2,
+       "think_tok_mean": null,
+       "body_chars_mean": 1862.56
+      },
+      "v20": {
+       "n": 25,
+       "fidelity": 4.4,
+       "ci95": [
+        4.04,
+        4.76
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 3,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "boundary": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 0.6,
+       "major_acc_spans_per_page": 0.28,
+       "out_tok_mean": 1915.56,
+       "think_tok_mean": null,
+       "body_chars_mean": 1845.12
+      },
+      "plain": {
+       "n": 25,
+       "fidelity": 4.32,
+       "ci95": [
+        4.0,
+        4.6
+       ],
+       "reversal_pages": 2,
+       "omission_pages": 1,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "boundary": 2
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 0.72,
+       "major_acc_spans_per_page": 0.16,
+       "out_tok_mean": 1293.08,
+       "think_tok_mean": null,
+       "body_chars_mean": 1780.76
+      },
+      "v13b": {
+       "n": 9,
+       "fidelity": 4.0,
+       "ci95": [
+        3.556,
+        4.444
+       ],
+       "reversal_pages": 0,
+       "omission_pages": 1,
+       "invention_pages": 2,
+       "invention_by_kind": {
+        "gloss": 1,
+        "boundary": 1
+       },
+       "fill_pages": 0,
+       "acc_spans_per_page": 1.111,
+       "major_acc_spans_per_page": 0.111,
+       "out_tok_mean": 2060.556,
+       "think_tok_mean": null,
+       "body_chars_mean": 1802.889
+      }
+     },
+     "v20-v13": {
+      "n": 25,
+      "mean": 0.16,
+      "ci95": [
+       -0.2,
+       0.48
+      ],
+      "ci_decision": [
+       -0.28,
+       0.6
+      ],
+      "wins": 10,
+      "losses": 5,
+      "ties": 10,
+      "rev_rise": 0,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": 1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "plain-v13": {
+      "n": 25,
+      "mean": 0.08,
+      "ci95": [
+       -0.16,
+       0.36
+      ],
+      "ci_decision": [
+       -0.24,
+       0.4
+      ],
+      "wins": 6,
+      "losses": 4,
+      "ties": 15,
+      "rev_rise": 1,
+      "rev_allowed": 1,
+      "rev_ok": true,
+      "om_change": -1,
+      "verdict": "inconclusive",
+      "superior": false,
+      "grade": "exploratory"
+     },
+     "recommendation": "test-next (exploratory, n < 30: decides nothing alone; read with its pool)"
+    }
+   },
+   "pools": {
+    "all": {
+     "arms": {
+      "v13": {
+       "n": 131,
+       "fidelity": 4.008,
+       "ci95": [
+        3.847,
+        4.16
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 29,
+       "invention_pages": 12,
+       "invention_by_kind": {
+        "boundary": 4,
+        "unreadable_fill": 3,
+        "gloss": 1,
+        "added_fact": 4
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.397,
+       "major_acc_spans_per_page": 0.198,
+       "out_tok_mean": 2670.198,
+       "think_tok_mean": null,
+       "body_chars_mean": 2601.702
+      },
+      "v20": {
+       "n": 130,
+       "fidelity": 4.108,
+       "ci95": [
+        3.946,
+        4.269
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 33,
+       "invention_pages": 10,
+       "invention_by_kind": {
+        "boundary": 4,
+        "added_fact": 5,
+        "gloss": 1,
+        "unreadable_fill": 5
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.138,
+       "major_acc_spans_per_page": 0.246,
+       "out_tok_mean": 2720.385,
+       "think_tok_mean": null,
+       "body_chars_mean": 2612.862
+      },
+      "plain": {
+       "n": 131,
+       "fidelity": 4.29,
+       "ci95": [
+        4.145,
+        4.435
+       ],
+       "reversal_pages": 7,
+       "omission_pages": 9,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "boundary": 6,
+        "unreadable_fill": 4
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 0.855,
+       "major_acc_spans_per_page": 0.176,
+       "out_tok_mean": 1897.206,
+       "think_tok_mean": null,
+       "body_chars_mean": 2587.763
+      },
+      "v13b": {
+       "n": 49,
+       "fidelity": 4.163,
+       "ci95": [
+        3.98,
+        4.367
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 8,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "boundary": 2,
+        "gloss": 1,
+        "added_fact": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.163,
+       "major_acc_spans_per_page": 0.082,
+       "out_tok_mean": 2527.449,
+       "think_tok_mean": null,
+       "body_chars_mean": 2378.204
+      }
+     },
+     "v20-v13": {
+      "n": 130,
+      "mean": 0.1,
+      "ci95": [
+       -0.062,
+       0.262
+      ],
+      "ci_decision": [
+       -0.115,
+       0.323
+      ],
+      "wins": 41,
+      "losses": 27,
+      "ties": 62,
+      "rev_rise": 0,
+      "rev_allowed": 3,
+      "rev_ok": true,
+      "om_change": 4,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 131,
+      "mean": 0.282,
+      "ci95": [
+       0.13,
+       0.443
+      ],
+      "ci_decision": [
+       0.084,
+       0.496
+      ],
+      "wins": 51,
+      "losses": 23,
+      "ties": 57,
+      "rev_rise": 2,
+      "rev_allowed": 3,
+      "rev_ok": true,
+      "om_change": -20,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    },
+    "non-latin": {
+     "arms": {
+      "v13": {
+       "n": 131,
+       "fidelity": 4.008,
+       "ci95": [
+        3.847,
+        4.16
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 29,
+       "invention_pages": 12,
+       "invention_by_kind": {
+        "boundary": 4,
+        "unreadable_fill": 3,
+        "gloss": 1,
+        "added_fact": 4
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.397,
+       "major_acc_spans_per_page": 0.198,
+       "out_tok_mean": 2670.198,
+       "think_tok_mean": null,
+       "body_chars_mean": 2601.702
+      },
+      "v20": {
+       "n": 130,
+       "fidelity": 4.108,
+       "ci95": [
+        3.946,
+        4.269
+       ],
+       "reversal_pages": 5,
+       "omission_pages": 33,
+       "invention_pages": 10,
+       "invention_by_kind": {
+        "boundary": 4,
+        "added_fact": 5,
+        "gloss": 1,
+        "unreadable_fill": 5
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 1.138,
+       "major_acc_spans_per_page": 0.246,
+       "out_tok_mean": 2720.385,
+       "think_tok_mean": null,
+       "body_chars_mean": 2612.862
+      },
+      "plain": {
+       "n": 131,
+       "fidelity": 4.29,
+       "ci95": [
+        4.145,
+        4.435
+       ],
+       "reversal_pages": 7,
+       "omission_pages": 9,
+       "invention_pages": 9,
+       "invention_by_kind": {
+        "boundary": 6,
+        "unreadable_fill": 4
+       },
+       "fill_pages": 3,
+       "acc_spans_per_page": 0.855,
+       "major_acc_spans_per_page": 0.176,
+       "out_tok_mean": 1897.206,
+       "think_tok_mean": null,
+       "body_chars_mean": 2587.763
+      },
+      "v13b": {
+       "n": 49,
+       "fidelity": 4.163,
+       "ci95": [
+        3.98,
+        4.367
+       ],
+       "reversal_pages": 1,
+       "omission_pages": 8,
+       "invention_pages": 5,
+       "invention_by_kind": {
+        "boundary": 2,
+        "gloss": 1,
+        "added_fact": 1,
+        "unreadable_fill": 1
+       },
+       "fill_pages": 1,
+       "acc_spans_per_page": 1.163,
+       "major_acc_spans_per_page": 0.082,
+       "out_tok_mean": 2527.449,
+       "think_tok_mean": null,
+       "body_chars_mean": 2378.204
+      }
+     },
+     "v20-v13": {
+      "n": 130,
+      "mean": 0.1,
+      "ci95": [
+       -0.062,
+       0.262
+      ],
+      "ci_decision": [
+       -0.115,
+       0.323
+      ],
+      "wins": 41,
+      "losses": 27,
+      "ties": 62,
+      "rev_rise": 0,
+      "rev_allowed": 3,
+      "rev_ok": true,
+      "om_change": 4,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "plain-v13": {
+      "n": 131,
+      "mean": 0.282,
+      "ci95": [
+       0.13,
+       0.443
+      ],
+      "ci_decision": [
+       0.084,
+       0.496
+      ],
+      "wins": 51,
+      "losses": 23,
+      "ties": 57,
+      "rev_rise": 2,
+      "rev_allowed": 3,
+      "rev_ok": true,
+      "om_change": -20,
+      "verdict": "pass",
+      "superior": false,
+      "grade": "decision"
+     },
+     "recommendation": "switch to PLAIN (after the notes pass, #5942)",
+     "heterogeneity": {
+      "v20": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": false,
+       "pooled_inside_each_ci": true,
+       "pass": false
+      },
+      "plain": {
+       "groups_ge10": [
+        "greek",
+        "hebrew-aramaic",
+        "persian",
+        "sanskrit-pali",
+        "chinese"
+       ],
+       "same_sign": true,
+       "pooled_inside_each_ci": true,
+       "pass": true
+      }
+     }
+    }
+   },
+   "did_not_read": {
+    "opus-plain": 0,
+    "opus-v13": 0,
+    "opus-v13b": 1,
+    "opus-v20": 3
+   },
+   "hidden_body_scored_1": {}
+  }
+ }
+}
