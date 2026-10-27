@@ -1,0 +1,14 @@
+{
+ "id": "corrector.gemini-3.8-flash-low.tibetan",
+ "kind": "corrector",
+ "status": "DRAFT, written for the #6560 profile experiment (2026-10-27); not used by any production lane",
+ "applies_to": { "corrector_model": "gemini-3.8-flash-low", "script": "Tibetan", "draft_model": "bdrc-yigdzin-v1" },
+ "measured_from": [
+  "profile-counts.py over the same four audits (128 pages): spans where the leaf showed the DRAFT, i.e. an error the corrector introduced: other word 76, Sanskrit/mantra 42, tsheg/split-join 40, particle 16, vowel sign 8 (counts.json)",
+  "#7477: O6 substitutions (ནི→ཡང, དབང→དགྲ, གཅོད→ཆད), O8 normalisation (ཧུྃ→ཧཱུྃ; དྷཱཿསརྦ→དྷཱཿ་སརྦ 26 times on one page), O5: 2 of 40 pages lost a whole line",
+  "#7483 router-30: བདུན་པ 'seventh' → བ་དགུ 'nine', བུ་མོས 'girl' → ཁྱིམ་ས་པ, བལ་གླང → བ་ལང, mantra ཨཱ→ཞཱ; the leaf showed the draft each time",
+  "#6740: brGyad stong p.233 two lines merged into one (7 → 6); 29 of 398 brGyad reads changed the line count",
+  "#6560 2026-10-16 (G4L, same family of error): a Kannada virama inside a Tibetan stack; #6740 apply: 1 page refused by the Latin-letter guard"
+ ],
+ "prompt_text": "What correctors make of drafts like this one: errors to avoid. When this kind of correction was checked against the leaves, the corrector itself had introduced these errors, most often to least:\n1. A right syllable or word replaced by another plausible one (ནི→ཡང, དབང→དགྲ, བདུན 'seven' → a different number, བུ་མོས → another word).\n2. Mantra and Sanskrit normalised: a long-vowel mark added or dropped (དྭི→དྭཱི), anusvara turned into visarga (ཧྲཱིཾ→ཧྲཱིཿ), a dhāraṇī rewritten in its standard form.\n3. A tsheg put inside a Sanskrit cluster (དྷཱཿསརྦ→དྷཱཿ་སརྦ, many times on one page), or one of the leaf's contractions split (མཎྜལ→མཎྜ་ལ, ཆོག→ཆོ་ག).\n4. A particle changed or dropped (ཏེ→ནས, པ left out).\n5. Two lines merged into one, a line left out, or text supplied from memory of the printed Kangyur that is not on the leaf.\n6. A letter of another script inside the Tibetan.\n\nRules that follow from this:\n- When you are not sure that the image differs from the draft, keep the draft.\n- Change a syllable only where you can see on the leaf that the draft's syllable is not what is written there. Do not change a word because another word would make better sense.\n- Keep exactly as many lines as the leaf has. Never merge two lines; never leave one out.\n- In mantras and Sanskrit, copy the leaf's marks exactly: do not add or remove a long-vowel mark, anusvara, candrabindu, visarga or tsheg that the leaf does not show.\n- Write only Tibetan script."
+}

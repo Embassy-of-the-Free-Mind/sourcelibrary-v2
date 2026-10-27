@@ -1,0 +1,13 @@
+{
+ "id": "reader.yigdzin-v1.tibetan",
+ "kind": "reader",
+ "status": "DRAFT, written for the #6560 profile experiment (2026-10-27); not used by any production lane",
+ "applies_to": { "draft_model": "bdrc-yigdzin-v1", "script": "Tibetan", "material": "Kangyur manuscripts (Thadrak, Neyphug)" },
+ "measured_from": [
+  "profile-counts.py over four tiled-span-judge audits, 128 pages: #7477 gate (40), #7479 Neyphug gate (40) and wave-2 gate (38), #7483 router-30 (10). Spans where the leaf showed the CORRECTION, i.e. a draft error: other word 326, Sanskrit/mantra 179, vowel sign 144, tsheg/split-join 141, particle 50, whole line 6, ya-btags 4 (counts.json)",
+  "route-judge-6740 whole-page judge on Yigdzin (pilot 30 pages, tibetan-30 30 pages): O6 misread-to-fluent 27/30 and 26/30 pages, O5 silent omission 8/30 and 11/30, O4 repetition 5/30 and 9/30",
+  "#7483: Yigdzin repeats lines (Neyphug p.128 had one sentence three times); the Kangyur leaves also repeat near-whole lines themselves, so a repeat is not by itself an error; 6,318 Yigdzin pages flagged by the duplicate-line detector, by-eye precision 2/6 on fresh pages",
+  "#6560 2026-10-16 (G4L gate): the leaf's own contractions (ཆོག, ལན, མཎྜལ, པུར) and spellings (འཀྱིལ, ཅུ་ཀྲུང) were right where a corrector normalised them"
+ ],
+ "prompt_text": "What the OCR system that made this draft usually gets wrong. Where earlier checks against the leaves found the draft wrong, the errors were, most often to least:\n1. A syllable misread as another, look-alike syllable or word (ད/ང, པ/བ, ས/མ, ཙ/ཚ, a dropped or wrong subscript or superscript; e.g. སྦོས for སྤོས, བྱི for ཕྱི, བཟླ for ཟླ).\n2. Sanskrit and mantra syllables misread: a stack, a long-vowel mark (ཱ) or an anusvara or candrabindu (ཾ ྃ) read wrong or left out.\n3. A vowel sign wrong or lost (ི/ེ, ུ/ོ).\n4. A tsheg missing between two syllables (ཕྱགརྒྱ for ཕྱག་རྒྱ), or a stray one.\n5. Particles (པ/བ, ཡི/ཡིས, དུ/ཏུ).\n6. Whole lines: the OCR sometimes writes a phrase or a line two or three times where the leaf has it once (sometimes as a loop, ག་པ་དང་། ག་པ་དང་། …), and sometimes skips a line or a run of syllables.\n\nWhat is NOT an error in this draft, so keep it:\n- A line or phrase that the leaf itself repeats. These sutras and tantras repeat formulas, refrains and litanies on the leaf. Remove a repeated line only when the image shows it once, and keep exactly as many lines as the leaf has.\n- A subscribed ya (ya-btags) that the leaf shows, as in མྱི or དམྱིགས: it is the manuscript's spelling.\n- The manuscript's own spellings, abbreviations and contractions (such as ཆོག, ལན, མཎྜལ with no inner tsheg), even where a printed edition spells the word another way."
+}

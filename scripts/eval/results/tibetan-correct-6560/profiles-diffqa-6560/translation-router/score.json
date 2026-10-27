@@ -1,0 +1,384 @@
+{
+ "generated_at": "2026-10-27T11:48:48.784Z",
+ "judge": "claude -p --model opus, sealed (replicate-6547/run-claude-arm.py), route-judge judgePrompt task translation, image + corrected transcription",
+ "cells": {
+  "tibetan-tr": {
+   "task": "translation",
+   "lang": "Tibetan",
+   "frame": {
+    "pages": 30,
+    "books": 30,
+    "source": "arm A (the current #6560 prompt) corrections from the profile experiment, never written; no arm passed its rule",
+    "block": "the test page first, then the next pages of its book: 4 a call (agy), 10 a call (Opus)"
+   },
+   "paired": {
+    "pages": 30,
+    "agy_only": 2,
+    "opus_only": 7,
+    "fidelity_diff_mean": -0.4
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "served": "experiment read (never served)",
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "accept_rate": 0.73,
+     "wrong_text_pages": "4/30",
+     "wrong_text_classes": {
+      "T5": "3/30",
+      "T9": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "20/30",
+      "O6": "15/30",
+      "T9": "8/30",
+      "T6": "6/30",
+      "T5": "6/30",
+      "T10": "6/30",
+      "T7": "3/30",
+      "T15": "2/30",
+      "O7": "2/30",
+      "T8": "1/30",
+      "T1": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 3.9,
+     "page_break_drift": {
+      "pages": "6/30",
+      "examples": [
+       {
+        "page": "69e7ab065f1a22ab19a91888:158",
+        "what": "T5 The page breaks off mid-word at སྐྱེས་བུ་དམ་པ་མཁས་པ་ཆེན་; the candidate finishes the sentence with a clause that is not on this page."
+       },
+       {
+        "page": "69e7ab285f1a22ab19a93de3:401",
+        "what": "T5 The first leaf breaks off at 'the world' (འཇིག). 'Teaches the Dharma' comes from the next, unseen leaf."
+       },
+       {
+        "page": "69e7ab345f1a22ab19a94976:432",
+        "what": "T5 The page breaks off at the word ཆོས. These three sentences come from the next page."
+       },
+       {
+        "page": "69e7ab9b5f1a22ab19a9ad39:310",
+        "what": "T5 The page opens mid-phrase with only 'height'. The translation adds 'a palm tree', which reads as a height of one even though the monks are then at three."
+       }
+      ]
+     },
+     "planted_reversals": {
+      "n": 15,
+      "caught": 15,
+      "quoted": 15,
+      "rows": [
+       {
+        "page": "69e7aab880b52390feb197a8:22",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab065f1a22ab19a91888:158",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab285f1a22ab19a93de3:401",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       },
+       {
+        "page": "69e7ab345f1a22ab19a94976:432",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab535f1a22ab19a96a78:189",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab9b5f1a22ab19a9ad39:310",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7aba15f1a22ab19a9b381:194",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis not\\b → is"
+       },
+       {
+        "page": "69e7abca5f1a22ab19a9e1ec:81",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bwill\\b → will not"
+       },
+       {
+        "page": "69e7abd05f1a22ab19a9e929:362",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       },
+       {
+        "page": "69e7abec5f1a22ab19aa0707:792",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bwill\\b → will not"
+       },
+       {
+        "page": "69e7abfa5f1a22ab19aa16cf:88",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ac1d5f1a22ab19aa3cbd:362",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ac325f1a22ab19aa53a1:147",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis not\\b → is"
+       },
+       {
+        "page": "69e7ab3a5f1a22ab19a94fa2:87",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bwill\\b → will not"
+       },
+       {
+        "page": "69e7ab585f1a22ab19a970a0:149",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis not\\b → is"
+       }
+      ]
+     },
+     "controls": {
+      "n": 2,
+      "passed": true
+     },
+     "examples": [
+      {
+       "page": "69e7ab065f1a22ab19a91888:158",
+       "class": "T5",
+       "quote": "great sages—even they especially fall under the power of women!",
+       "what": "The page breaks off mid-word at སྐྱེས་བུ་དམ་པ་མཁས་པ་ཆེན་; the candidate finishes the sentence with a clause that is not on this page."
+      },
+      {
+       "page": "69e7ab345f1a22ab19a94976:432",
+       "class": "T5",
+       "quote": "They thoroughly bless the teachings of the Dharma. They also completely fulfill the causes that are free from attachment and hindrance. By the power of the realm of reality, they also comprehend the undifferentiated eye.",
+       "what": "The page breaks off at the word ཆོས. These three sentences come from the next page."
+      },
+      {
+       "page": "69e7aba15f1a22ab19a9b381:194",
+       "class": "T9",
+       "quote": "should listen to, hold,",
+       "what": "The object clause is dropped. The page says the bodhisattva should hear and hold 'this King of Concentrations, praised by all Buddhas, mother of all Tathāgatas, which sets out the sameness of the nature of all phenomena'. The candidate leaves 'listen to, hold' with no object."
+      },
+      {
+       "page": "69e7abad5f1a22ab19a9c315:274",
+       "class": "T5",
+       "quote": "an inauspicious constellation appeared causing rain not to fall for twelve years",
+       "what": "The page ends 'for twelve years rain did not fall...'. Nothing on the page mentions a constellation or ill omen; this is invented or taken from the next leaf."
+      }
+     ],
+     "calls": 32,
+     "pages_read": 120,
+     "test_pages_read": 30
+    },
+    "opus-cli@10": {
+     "served": "experiment read (never served)",
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "accept_rate": 0.9,
+     "wrong_text_pages": "1/30",
+     "wrong_text_classes": {
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "17/30",
+      "T10": "10/30",
+      "O6": "6/30",
+      "T8": "3/30",
+      "T15": "2/30",
+      "T5": "2/30",
+      "O8": "2/30",
+      "O7": "2/30",
+      "T6": "2/30",
+      "T16": "1/30",
+      "T7": "1/30",
+      "O4": "1/30",
+      "T9": "1/30"
+     },
+     "fidelity_mean": 4.3,
+     "page_break_drift": {
+      "pages": "2/30",
+      "examples": [
+       {
+        "page": "69e7ab065f1a22ab19a91888:158",
+        "what": "T5 The summary and keywords name a tathāgata who appears nowhere on this page; the speaker is unnamed here, so the name comes from outside context."
+       },
+       {
+        "page": "69e7ac275f1a22ab19aa4797:72",
+        "what": "T5 'Apart from' is not on the page. The sentence breaks off at the leaf end, so this guesses at its continuation."
+       }
+      ]
+     },
+     "planted_reversals": {
+      "n": 15,
+      "caught": 15,
+      "quoted": 15,
+      "rows": [
+       {
+        "page": "69e7aae15f1a22ab19a8edd5:34",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab175f1a22ab19a92bbc:126",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab2c5f1a22ab19a9418f:330",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ab455f1a22ab19a95aa3:258",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bdo not\\b → do"
+       },
+       {
+        "page": "69e7ab685f1a22ab19a98430:116",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bcannot\\b → can"
+       },
+       {
+        "page": "69e7ab9f5f1a22ab19a9b1db:156",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       },
+       {
+        "page": "69e7abad5f1a22ab19a9c315:274",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bdo not\\b → do"
+       },
+       {
+        "page": "69e7abce5f1a22ab19a9e719:46",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       },
+       {
+        "page": "69e7abda5f1a22ab19a9f702:465",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bwill\\b → will not"
+       },
+       {
+        "page": "69e7abf15f1a22ab19aa0c01:99",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ac1a5f1a22ab19aa39bf:187",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       },
+       {
+        "page": "69e7ac275f1a22ab19aa4797:72",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bis\\b → is not"
+       },
+       {
+        "page": "69e7ac3a5f1a22ab19aa5bbf:163",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bdoes not\\b → does"
+       },
+       {
+        "page": "69e7aad95f1a22ab19a8e519:163",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bwill\\b → will not"
+       },
+       {
+        "page": "69e7abc55f1a22ab19a9dcfd:225",
+        "caught": true,
+        "quoted": true,
+        "rejected": true,
+        "how": "\\bare\\b → are not"
+       }
+      ]
+     },
+     "controls": {
+      "n": 2,
+      "passed": true
+     },
+     "examples": [
+      {
+       "page": "69e7ac275f1a22ab19aa4797:72",
+       "class": "O4",
+       "quote": "Are there this many hundreds of thousands of koṭis again?",
+       "what": "On the leaf, the 'hundred thousand koṭis' line appears once, followed directly by the khrag khrig line. The transcription repeats it, and the translation keeps the repeat and adds 'again'."
+      }
+     ],
+     "calls": 57,
+     "pages_read": 299,
+     "test_pages_read": 30
+    }
+   }
+  }
+ }
+}

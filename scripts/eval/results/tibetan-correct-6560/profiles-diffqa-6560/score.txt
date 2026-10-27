@@ -1,0 +1,11 @@
+controls {"span":{"right":366,"n":382},"confirm":{"right":208,"n":220},"qa":{"right":596,"wrong":3,"unclear":138}} opus {"span":191,"confirm":110,"page":446,"qa":737}
+variant | pooled b/s/w | severe pages (per 10) | plants caught | line right/loss/unclear/breaks | p.128 p.131 p.233 | rule
+A       | 45/12/15 | 31 (4.3) | 29/30 | 7/2/1/12 | 8->7:right 8->7:right 14->14:line count kept | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":true,"line_removals":false,"pass":false}
+B       | 49/14/9 | 33 (4.6) | 27/30 | 6/0/5/11 | 8->7:right 8->7:right 14->14:line count kept | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":false,"line_removals":true,"pass":false}
+C       | 50/7/15 | 31 (4.3) | 30/30 | 6/2/2/13 | 8->7:unclear 8->7:right 14->15:unclear | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":true,"line_removals":false,"pass":false}
+A+lane  | 29/32/11 | 18 (2.5) | 29/30 | 0/0/0/0 | 8->8:line count kept 8->8:line count kept 14->14:line count kept | fail {"severity":false,"better_3x_worse":false,"plants_ge_A":true,"line_removals":false,"pass":false}
+B+lane  | 31/35/6 | 20 (2.8) | 27/30 | 0/0/0/0 | 8->8:line count kept 8->8:line count kept 14->14:line count kept | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":false,"line_removals":false,"pass":false}
+C+lane  | 30/31/11 | 19 (2.6) | 27/30 | 0/0/0/0 | 8->8:line count kept 8->8:line count kept 14->14:line count kept | fail {"severity":false,"better_3x_worse":false,"plants_ge_A":false,"line_removals":false,"pass":false}
+A+qa    | 50/19/3 | 18 (2.5) | 27/30 | 7/0/1/13 | 8->7:right 8->7:right 14->14:line count kept | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":false,"line_removals":true,"pass":false}
+B+qa    | 52/19/1 | 13 (1.8) | 25/30 | 6/2/0/10 | 8->8:line count kept 8->7:right 14->14:line count kept | fail {"severity":true,"better_3x_worse":true,"plants_ge_A":false,"line_removals":false,"pass":false}
+C+qa    | 51/16/5 | 17 (2.4) | 27/30 | 5/2/3/12 | 8->7:unclear 8->7:loss 14->15:unclear | fail {"severity":false,"better_3x_worse":true,"plants_ge_A":false,"line_removals":false,"pass":false}

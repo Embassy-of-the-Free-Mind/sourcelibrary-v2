@@ -11,7 +11,7 @@
  * languages under a cross-family judge). READ stage only; `cli-translate.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-translate.mjs read --page-ids-file=F --out=DIR [--ocr-checked="..."]
- *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F] [--cli=claude|agy]
+ *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F] [--cli=claude|agy] [--ocr-file=F (eval only)]
  *   node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *
  * --cli=agy (#7503): the same blocks, prompt, split and guards, but each call goes to Gemini (default
@@ -166,6 +166,12 @@ async function main() {
   const ids = readPageIdsFile(arg('page-ids-file'));
   const prompts = await loadTranslationPrompts(db);
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PROJ }).toArray()).map((p) => [p.id, p]));
+  // --ocr-file=F (eval only): JSON { page_id: text }, read IN PLACE OF the stored OCR of those pages, e.g. a correction
+  // that was never written (#6560 translation router test). The meta's ocr_hash is then the override's, which no stored
+  // page matches, so `cli-translate.mjs apply` refuses these reads as written over another OCR.
+  const OCR_OVERRIDE = arg('ocr-file') ? JSON.parse(fs.readFileSync(arg('ocr-file'), 'utf8')) : {};
+  const override = (p) => { if (p && OCR_OVERRIDE[p.id]) p.ocr = { ...(p.ocr || {}), data: OCR_OVERRIDE[p.id], override: true }; return p; };
+  for (const p of found.values()) override(p);
   // Check the transcription before paying for a translation on top of it (#6865).
   const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
   console.log(gate.message);
@@ -177,7 +183,7 @@ async function main() {
   const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }).toArray()).map((b) => [b.id, b]));
   // Every page of these books, for the neighbours: the seed page before a block and the next page's OCR.
   const byNum = new Map();
-  for (const p of await db.collection('pages').find({ book_id: { $in: bookIds } }, { projection: PROJ }).toArray()) byNum.set(`${p.book_id}:${p.page_number}`, p);
+  for (const p of await db.collection('pages').find({ book_id: { $in: bookIds } }, { projection: PROJ }).toArray()) byNum.set(`${p.book_id}:${p.page_number}`, found.get(p.id) ?? override(p));
 
   fs.mkdirSync(path.join(OUT, 'prompts'), { recursive: true });
   const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
