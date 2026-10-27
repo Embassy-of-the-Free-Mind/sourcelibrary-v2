@@ -118,13 +118,19 @@ function englishShare(text) {
 export function summaryProblem(en, es, title = '') {
   if (typeof es !== 'string' || !es.trim()) return 'empty';
   const t = es.trim();
-  if (/<<<|```|^\s*[{[]/.test(t)) return 'wrapper or JSON left in the text';
+  // "[Arabic] Alphabetum arabicum …" opens many summaries; JSON opens with {" or [".
+  if (/<<<|```|^\s*(\{\s*"|\[\s*")/.test(t)) return 'wrapper or JSON left in the text';
   if (t === en.trim()) return 'identical to the English';
   const r = t.length / en.length;
   if (r < 0.75 || r > 1.8) return `length ${t.length} vs English ${en.length}`;
-  // A title in English is kept as written ("The pictorial key to the tarot … es un manual"): not English prose.
+  // A title in English is kept as written ("The pictorial key to the tarot … es un manual"): not English prose. It is
+  // the book's title, or whatever opening the Spanish copies verbatim from the English.
   const tt = String(title || '').trim();
-  const s = englishShare(tt.length > 10 && t.includes(tt) ? t.replace(tt, ' ') : t);
+  let body = tt.length > 10 && t.includes(tt) ? t.replace(tt, ' ') : t;
+  let k = 0;
+  while (k < en.length && k < body.length && en[k] === body[k]) k++;
+  if (k >= 15) body = body.slice(k);
+  const s = englishShare(body);
   if (s.en > 0.06 || s.es < 0.12) return `does not read as Spanish (en ${s.en.toFixed(2)}, es ${s.es.toFixed(2)})`;
   return null;
 }
