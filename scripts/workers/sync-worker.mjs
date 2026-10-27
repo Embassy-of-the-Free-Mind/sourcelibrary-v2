@@ -23,7 +23,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import {
-  buildCorpusPageCountPipeline, diffPageCounters, recountSet, PAGE_COUNTERS,
+  buildCorpusPageCountPipeline, diffPageCounters, recountSet, translationAdvancedSet, PAGE_COUNTERS,
   computeTranslationMetrics, computeTranslationState, translationStateChanged,
   READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
@@ -190,6 +190,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
           ? {
             $set: {
               ...recountSet(actual, now),
+              ...translationAdvancedSet(book, actual, now),
               translation_pct,
               is_fully_translated,
               over_90_translated,

@@ -458,9 +458,14 @@ function workKey(b: CatalogBook): string {
   const title = (b.display_title || b.title || '')
     .toLowerCase()
     .replace(/\([^)]*\)/g, '')
+    // A Chinese volume suffix: 御製律呂正義後編·卷一百六~卷一百七 → 御製律呂正義後編.
+    .replace(/[·・].*$/, '')
+    .replace(/卷[一二三四五六七八九十百千首上中下0-9]+/g, '')
     .replace(/\b(vol|volume|part|book|tome|band|no|first collection|second collection)\.?\s*[ivxlcdm0-9]*\b/g, '')
     .replace(/[0-9]+/g, '')
-    .replace(/[^a-z\s]/g, '')
+    // Letters of every script: a-z alone erased CJK, Greek and Arabic titles, so every
+    // such book by the same (or no) author collapsed into one card.
+    .replace(/[^\p{L}\s]/gu, '')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 32);

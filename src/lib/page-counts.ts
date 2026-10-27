@@ -181,6 +181,22 @@ export interface RecountResult {
 }
 
 /**
+ * `last_translation_at` when a recount finds MORE translated pages than were stored
+ * ({} otherwise). Twin of translationAdvancedSet() in scripts/lib/page-counts.mjs,
+ * which says why: the Recently Translated surfaces sort on this field, and the CLI
+ * lanes never set it.
+ */
+export function translationAdvancedSet(
+  before: { pages_translated?: number | null } | null | undefined,
+  after: { pages_translated?: number | null } | null | undefined,
+  now: Date,
+): { last_translation_at?: Date } {
+  // A book never counted before (null) is not stamped: its pages may be years old.
+  const was = before?.pages_translated;
+  return typeof was === 'number' && (after?.pages_translated ?? 0) > was ? { last_translation_at: now } : {};
+}
+
+/**
  * THE writer of a book's page counters. Mirror of the .mjs recountBook(): recounts
  * the book's visible pages and `$set`s all six counters plus `page_counts_at`;
  * never a subset, never `$inc`. `bookId` is the book's string `id` (what
@@ -206,7 +222,7 @@ export async function recountBook(
 
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null])) as Record<PageCounter, number | null>;
   const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
-  const $set: Document = { ...after, page_counts_at: now };
+  const $set: Document = { ...after, page_counts_at: now, ...translationAdvancedSet(before, after, now) };
   const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
   const stored = book.translation_state as Partial<TranslationState> | undefined;
   if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };
