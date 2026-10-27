@@ -6,8 +6,8 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { resolveHoldingLibrary } from '@/lib/library-partners';
 import type { Locale } from '@/lib/locale-path';
 
-// The panel's chrome, by the page's language. Spanish since #7496 (every /es book page
-// now renders); the original-text sites read English labels until they get their own.
+// The panel's chrome, by the page's language: Spanish and Chinese since #7496 (every
+// /es and /zh book page renders); Latin and Dutch read English labels until they get theirs.
 const LABELS = {
   en: {
     title: 'Title', english: 'English', author: 'Author', language: 'Language', publisher: 'Publisher',
@@ -26,6 +26,15 @@ const LABELS = {
     fromCatalogue: 'Del registro de catálogo', statedInColophon: 'Indicado en el colofón:', fromWikidata: 'De Wikidata',
     whyThisDate: 'Por qué esta fecha (en inglés):', fromAuthorDates: 'De las fechas registradas del autor',
     layer: { composition: 'Composición', compilation: 'Compilación', edition: 'Edición', translation: 'Traducción', commentary: 'Comentario', revision: 'Revisión' } as Record<string, string>,
+  },
+  zh: {
+    title: '题名', english: '英文题名', author: '作者', language: '语言', publisher: '出版信息',
+    published: '出版', format: '开本', pages: '页数', sourceWork: '原作', provenance: '来源',
+    heldBy: '收藏机构', scansFrom: '扫描来源', originalRecord: '原始记录', digitizedBy: '数字化者',
+    shelfmark: '索书号', license: '许可', estimated: '估计', printedOnOpening: '见于卷首：',
+    fromCatalogue: '据馆藏目录', statedInColophon: '见于版记：', fromWikidata: '据 Wikidata',
+    whyThisDate: '断代依据（英文）：', fromAuthorDates: '据作者生卒年',
+    layer: { composition: '成书', compilation: '编纂', edition: '版本', translation: '翻译', commentary: '注释', revision: '修订' } as Record<string, string>,
   },
 };
 
@@ -60,7 +69,7 @@ export default function BookBiblioPanel({
   showExternalLinks?: boolean;
   lang?: Locale;
 }) {
-  const t = lang === 'es' ? LABELS.es : LABELS.en;
+  const t = lang === 'es' || lang === 'zh' ? LABELS[lang] : LABELS.en;
   const src = book.image_source;
   const holder = resolveHoldingLibrary(src);
   const layers = (book.source_work_dates ?? []) as SourceWorkDateLayer[];
