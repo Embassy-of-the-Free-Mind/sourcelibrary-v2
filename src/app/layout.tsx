@@ -141,8 +141,6 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: TRANSLATION_DOM_GUARD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="search"
           type="application/opensearchdescription+xml"
