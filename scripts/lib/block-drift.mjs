@@ -45,8 +45,13 @@
  * repeats itself across the same boundary (sourceRepeatsAcrossBoundary, #5275): a sūtra's
  * refrain rendered on both leaves is the text, not a copy.
  *
+ * The third shape, detectCaselessDrift() (#7503): the same move in unpunctuated Chinese (SKQS
+ * columns), where steps 1, 2 and 5 cannot be read from letter case or full stops. The English
+ * side is cased, so steps 3–4 stand; the source side is read from the column layout instead.
+ *
  * Deliberately NOT caught: a German/Dutch fragment opening on a capitalised noun (reads as a
- * sentence start), a fragment with no full stop within FRAGMENT_WINDOW chars, caseless scripts.
+ * sentence start), a fragment with no full stop within FRAGMENT_WINDOW chars, caseless scripts
+ * other than Han (Tibetan has its shad, but no calibration set yet).
  * Recall is traded for precision: a parser that rejects on this re-translates pages.
  */
 
@@ -196,7 +201,10 @@ function sharesOpening(fragment, text) {
  * `trNext`). Returns { drift, fragment, absorbed, anchorVerdict } — drift=false carries a
  * `reason`.
  */
-export function detectBlockDrift({ ocrPrev, ocrNext, trPrev, trNext, minAbsorbed = MIN_ABSORBED_SHARE }) {
+export function detectBlockDrift({ ocrPrev, ocrNext, trPrev, trNext, minAbsorbed = MIN_ABSORBED_SHARE, caseless = false }) {
+  // The caseless (Han) test is opt-in: a hit is two pages re-read alone, which on a paid lane is spend
+  // (claude-translate.mjs, on the subscription, opts in). Without it a Han page takes the cased path as before.
+  if (caseless && isHanSource(ocrNext)) return detectCaselessDrift({ ocrPrev, ocrNext, trPrev, trNext });
   const fragment = continuationFragment(ocrNext);
   if (!fragment) return { drift: false, reason: 'source N+1 opens on a sentence (or no claim)' };
   const trNextHead = stripEdgeBrackets(dropLeadingFurniture(translationProse(trNext)));
@@ -227,6 +235,98 @@ export function detectBlockDrift({ ocrPrev, ocrNext, trPrev, trNext, minAbsorbed
     return { drift: false, reason: 'page N\'s last sentence did not grow by the fragment', fragment, absorbed };
   }
   return { drift: true, fragment, anchors, anchorVerdict, absorbed };
+}
+
+const HAN_CHARS = /\p{Script=Han}/gu;
+const hanCount = (t) => (String(t || '').match(HAN_CHARS) || []).length;
+
+/** A source page whose prose is Han, not a cased script: at least half its letters. */
+export function isHanSource(ocr) {
+  const prose = sourceProse(ocr);
+  const letters = (prose.match(/\p{L}/gu) || []).length;
+  return letters > 0 && hanCount(prose) / letters >= 0.5;
+}
+
+// Classical sentence-final particles: a page whose last column ends on one closed its sentence.
+export const HAN_FINAL_PARTICLE = /[也矣焉哉乎歟耶耳]$/u;
+
+/**
+ * Does page N's source run over into N+1? SKQS text is unpunctuated, but it is set in columns
+ * of a fixed length and a paragraph ends with a short column. So: the last prose column is
+ * full (within one character of the page's 75th-percentile column, columns under 3 characters
+ * — a title set one character to a line — left out) and does not end on a final particle.
+ */
+export function hanRunsOver(ocrPrev) {
+  const cols = sourceProse(ocrPrev).split('\n').map((l) => (l.match(HAN_CHARS) || []).join('')).filter((l) => l.length >= 3);
+  if (cols.length < 2) return false;
+  const lens = cols.map((l) => l.length).sort((a, b) => a - b);
+  const full = lens[Math.floor(lens.length * 0.75)];
+  const last = cols[cols.length - 1];
+  return full >= 8 && last.length >= full - 1 && !HAN_FINAL_PARTICLE.test(last);
+}
+
+// N+1 opens a new entry, not the rest of N's sentence: a commentary label (正義, 案/按, 注, 疏, 存疑) or a
+// speaker ("鄭氏鍔曰", "朱子曰": 曰 within the first five characters), or the sentence ends on its first
+// or second character (a final particle there: the word is finished on N, which is no clause to move).
+const HAN_ENTRY_OPENING = /^(?:謹案|臣等謹案|正義|存疑|案|按|注|疏|[^曰]{1,4}曰|.?[也矣焉哉乎歟耶耳])/u;
+export function hanOpensEntry(ocrNext) {
+  const first = sourceProse(ocrNext).split('\n').map((l) => (l.match(HAN_CHARS) || []).join('')).find((l) => l.length >= 1) || '';
+  return HAN_ENTRY_OPENING.test(first);
+}
+
+/**
+ * English per source character on page N minus that on N+1, over their mean. Moving the
+ * rendering of N+1's opening onto N makes it positive; with no move it is noise around 0.
+ */
+export function caselessShift({ ocrPrev, ocrNext, trPrev, trNext }) {
+  const sp = hanCount(sourceProse(ocrPrev)), sn = hanCount(sourceProse(ocrNext));
+  if (!sp || !sn) return null;
+  const rp = flat(translationProse(trPrev)).length / sp, rn = flat(translationProse(trNext)).length / sn;
+  return rp + rn ? (rp - rn) / ((rp + rn) / 2) : null;
+}
+export const MIN_CASELESS_SHIFT = 0;
+
+/**
+ * The #5021 move in a Han source (#7503). Unpunctuated SKQS OCR gives no lowercase letter and
+ * no full stop, so the cased test never fires; a block read there finishes the sentence that
+ * runs over the page break on page N and opens N+1 at the next sentence. Flagged when:
+ *   1. the SOURCE of N runs over (hanRunsOver) — the sentence is open at the foot of N;
+ *   2. the TRANSLATION of N closes on sentence-final punctuation (no trailing ellipsis), or on
+ *      ';' — a list item closed on N (經濟類編 "use a white flag for stone;");
+ *   3. after a full stop, the TRANSLATION of N+1 opens as a fresh sentence (capital or digit);
+ *      after ';' the next item may open lowercase;
+ *   4. page N carries more English per source character than N+1 (caselessShift >
+ *      MIN_CASELESS_SHIFT): the clause has to have gone somewhere.
+ *
+ * A source N+1 that opens a new entry (hanOpensEntry: 正義/案/注…, a speaker's 曰, a final
+ * particle on its first or second character) makes no claim.
+ *
+ * CALIBRATED (2026-10-27, #7503, the 60 Siku pages of #7518; scripts/eval/caseless-drift-7503/):
+ * catches all 5 by-eye moves (3 at 4/call, 2 at 2/call); on the 90 page breaks of the two
+ * 1/call runs, read as if they were blocks, 3 flags (3.3%); 2 of the 60 clean in-block breaks.
+ * That is in-sample: the rule was fitted on these reads. HELD OUT (floor.mjs, ~400 sampled
+ * Chinese books): one-page-per-call lanes, where every flag is false or a word finished across
+ * the break, flag 3.6% (Opus), 4.1% and 6.3% (3.8 Flash-low, two lanes); the block Batch lanes
+ * flag 8–9%. A hit costs two pages read again alone, never a wrong text.
+ */
+export function detectCaselessDrift({ ocrPrev, ocrNext, trPrev, trNext, minShift = MIN_CASELESS_SHIFT }) {
+  if (ocrPrev == null || !hanRunsOver(ocrPrev)) return { drift: false, reason: 'source N does not run over (or no claim)' };
+  if (hanOpensEntry(ocrNext)) return { drift: false, reason: 'source N+1 opens a new entry' };
+  const trNextHead = stripEdgeBrackets(dropLeadingFurniture(translationProse(trNext)));
+  const trPrevTail = stripEdgeBrackets(dropTrailingFurniture(translationProse(trPrev)));
+  if (!trNextHead || !trPrevTail) return { drift: false, reason: 'a translation is empty' };
+  if (TR_ELLIPSIS_HEAD.test(trNextHead)) return { drift: false, reason: 'translation N+1 marks the continuation' };
+  if (TR_ELLIPSIS_TAIL.test(trPrevTail)) return { drift: false, reason: 'translation N leaves its last sentence open' };
+  const listItem = /;$/u.test(trPrevTail);
+  if (!listItem) {
+    if (!TR_TERMINAL.test(trPrevTail)) return { drift: false, reason: 'translation N leaves its last sentence open' };
+    const first = trNextHead.match(/[\p{L}\p{N}]/u)?.[0];
+    if (!first || (CASED.test(first) && first === first.toLowerCase())) return { drift: false, reason: 'translation N+1 opens mid-sentence' };
+  }
+  const shift = caselessShift({ ocrPrev, ocrNext, trPrev, trNext });
+  if (shift == null || shift <= minShift) return { drift: false, reason: 'page N carries no more English per character than N+1', shift };
+  const fragment = sourceProse(ocrNext).split('\n').map((l) => (l.match(HAN_CHARS) || []).join('')).find((l) => l.length >= 3) || '';
+  return { drift: true, fragment, shift, caseless: true };
 }
 
 /** Longest run two strings share (40-char shingles of b, extended both ways). */
@@ -334,7 +434,7 @@ export function sourceRepeatsAcrossBoundary(ocrPrev, ocrNext) {
  * test like any other. The leaves of a `<leaf-break/>` page take this path too
  * (leaf-break.mjs leafUnitsHealth).
  */
-export function blockDriftBoundaries(pages, translations) {
+export function blockDriftBoundaries(pages, translations, { caseless = false } = {}) {
   const found = [];
   for (let i = 0; i + 1 < pages.length; i++) {
     const a = pages[i], b = pages[i + 1];
@@ -345,7 +445,7 @@ export function blockDriftBoundaries(pages, translations) {
       found.push({ prev: a.page_number, next: b.page_number, kind: 'duplicated', fragment: dup.text });
       continue;
     }
-    const r = detectBlockDrift({ ocrPrev: a.ocr?.data, ocrNext: b.ocr?.data, trPrev, trNext });
+    const r = detectBlockDrift({ ocrPrev: a.ocr?.data, ocrNext: b.ocr?.data, trPrev, trNext, caseless });
     if (r.drift) found.push({ prev: a.page_number, next: b.page_number, kind: 'moved', fragment: r.fragment, anchorVerdict: r.anchorVerdict });
   }
   return found;
@@ -364,8 +464,8 @@ export function blockDriftBoundaries(pages, translations) {
  * (the misses are runs cut by a block edge); 7 of 3,321 single-page-lane blocks (0.21%) are
  * rejected, which costs those 8 pages a single-page translation, never a wrong text.
  */
-export function dropDriftedPages(pages, translations) {
-  const drifted = blockDriftBoundaries(pages, translations);
+export function dropDriftedPages(pages, translations, { caseless = false } = {}) {
+  const drifted = blockDriftBoundaries(pages, translations, { caseless });
   // Read before any page is dropped: a dropped page breaks a run in two.
   const shifted = blockLeafShiftRuns(pages, translations);
   for (const d of drifted) { translations.delete(d.prev); translations.delete(d.next); }

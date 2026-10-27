@@ -1,0 +1,1423 @@
+{
+ "summary": {
+  "known_caught": "5/5",
+  "one_per_call_false_positives": "3/90",
+  "block_clean_breaks_flagged": "2/60",
+  "by_arm": {
+   "A1": "1/45",
+   "A1b": "2/45",
+   "B2": "4/26",
+   "C4": "3/39"
+  },
+  "flags": [
+   "A1 大學衍義補·卷二十四~卷二十七 (vol 10) 123→124 shift 0.086",
+   "A1b 易通變·卷六~卷八 (vol 3) 83→84 shift 0.208",
+   "A1b 春明夢餘錄·卷二十六~卷三十 (vol 11) 70→71 shift 0.088",
+   "B2 論語商·卷下 (vol 2) 37→38 (known) shift 0.02",
+   "B2 天原發微·卷一上~卷一下 (vol 2) 56→57 shift 0.022",
+   "B2 學易記·卷三 (vol 12) 122→123 (known) shift 0.194",
+   "B2 御定佩文韻府·卷二十六之五 (vol 431) 11→12 shift 0.009",
+   "C4 論語商·卷下 (vol 2) 37→38 (known) shift 0.123",
+   "C4 天原發微·卷一上~卷一下 (vol 2) 56→57 (known) shift 0.165",
+   "C4 經濟類編·卷六十三 (vol 60) 63→64 (known) shift 0.176"
+  ],
+  "missed": []
+ },
+ "rows": [
+  {
+   "arm": "A1",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "121→122",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "123→124",
+   "known": false,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.086
+  },
+  {
+   "arm": "A1",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "83→84",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "84→85",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "85→86",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "35→36",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "36→37",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "37→38",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "45→46",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "46→47",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "47→48",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "96→97",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "97→98",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "98→99",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "48→49",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.098
+  },
+  {
+   "arm": "A1",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "49→50",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "50→51",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "54→55",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "55→56",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "56→57",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 marks the continuation",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "29→30",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "32→33",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "120→121",
+   "known": false,
+   "flagged": false,
+   "reason": "source N+1 opens a new entry",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "121→122",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "61→62",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "62→63",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "63→64",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "26→27",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "27→28",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "28→29",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "70→71",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.056
+  },
+  {
+   "arm": "A1",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "71→72",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "72→73",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "93→94",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "94→95",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "95→96",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "9→10",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "10→11",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "11→12",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.001
+  },
+  {
+   "arm": "A1b",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "121→122",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "123→124",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.004
+  },
+  {
+   "arm": "A1b",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "83→84",
+   "known": false,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.208
+  },
+  {
+   "arm": "A1b",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "84→85",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "85→86",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "35→36",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "36→37",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "37→38",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "45→46",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "46→47",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "47→48",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "96→97",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "97→98",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "break": "98→99",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "48→49",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.066
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "49→50",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "50→51",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "54→55",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "55→56",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "56→57",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "29→30",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "32→33",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "120→121",
+   "known": false,
+   "flagged": false,
+   "reason": "source N+1 opens a new entry",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "121→122",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "61→62",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "62→63",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "63→64",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "26→27",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "27→28",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "28→29",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "70→71",
+   "known": false,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.088
+  },
+  {
+   "arm": "A1b",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "71→72",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "72→73",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "93→94",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "94→95",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "95→96",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "9→10",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "10→11",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "A1b",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "11→12",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.009
+  },
+  {
+   "arm": "B2",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "83→84",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "85→86",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "35→36",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "37→38",
+   "known": true,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.02
+  },
+  {
+   "arm": "B2",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "45→46",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "47→48",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "50→51",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "54→55",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "56→57",
+   "known": false,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.022
+  },
+  {
+   "arm": "B2",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "29→30",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "32→33",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "120→121",
+   "known": false,
+   "flagged": false,
+   "reason": "source N+1 opens a new entry",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "122→123",
+   "known": true,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.194
+  },
+  {
+   "arm": "B2",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "61→62",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "63→64",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "26→27",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "28→29",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "70→71",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "72→73",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "93→94",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "95→96",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "9→10",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "B2",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "11→12",
+   "known": false,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.009
+  },
+  {
+   "arm": "C4",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "break": "123→124",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "83→84",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "84→85",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "易通變·卷六~卷八 (vol 3)",
+   "break": "85→86",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "35→36",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "36→37",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "論語商·卷下 (vol 2)",
+   "break": "37→38",
+   "known": true,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.123
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "45→46",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "46→47",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "break": "47→48",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "break": "50→51",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "54→55",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "55→56",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "天原發微·卷一上~卷一下 (vol 2)",
+   "break": "56→57",
+   "known": true,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.165
+  },
+  {
+   "arm": "C4",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "29→30",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "欽定禮記義疏·卷五十八 (vol 75)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "30→31",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "31→32",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "break": "32→33",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "120→121",
+   "known": false,
+   "flagged": false,
+   "reason": "source N+1 opens a new entry",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "121→122",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷三 (vol 12)",
+   "break": "122→123",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N+1 opens mid-sentence",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "61→62",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "62→63",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "經濟類編·卷六十三 (vol 60)",
+   "break": "63→64",
+   "known": true,
+   "flagged": true,
+   "reason": null,
+   "shift": 0.176
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "26→27",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "27→28",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "學易記·卷一下 (vol 10)",
+   "break": "28→29",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "70→71",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "71→72",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "break": "72→73",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "93→94",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "94→95",
+   "known": false,
+   "flagged": false,
+   "reason": "translation N leaves its last sentence open",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "左傳事緯·卷一 (vol 1)",
+   "break": "95→96",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "9→10",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "10→11",
+   "known": false,
+   "flagged": false,
+   "reason": "source N does not run over (or no claim)",
+   "shift": null
+  },
+  {
+   "arm": "C4",
+   "book": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "break": "11→12",
+   "known": false,
+   "flagged": false,
+   "reason": "page N carries no more English per character than N+1",
+   "shift": -0.005
+  }
+ ]
+}
