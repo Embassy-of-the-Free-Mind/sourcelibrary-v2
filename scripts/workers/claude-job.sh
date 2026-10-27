@@ -444,6 +444,9 @@ run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   job_claude_home "$name"
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
+  # The agy ledger counts calls per AGY_JOB (scripts/lib/agy-cli.mjs). Without this every job that runs cli-ocr.mjs
+  # shares one bucket named "cli-ocr", and the per-job daily share caps all of them together (#6740).
+  export AGY_JOB="${AGY_JOB:-$name}"
   # The job's name and Lands issue, for the subscription readers' book list (scripts/lib/lane-book-list.mjs, #7301).
   landing_contract "$name" "$JD/$name.brief.txt"; export JOB_NAME="$name" JOB_LANDS="$LC_ISSUE"
   # Heartbeat (2026-10-04, #5709): `claude -p` writes nothing to the log until it exits, so an empty
