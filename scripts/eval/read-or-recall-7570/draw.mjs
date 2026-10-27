@@ -97,6 +97,7 @@ async function pickPage(b, script, { min, extraMatch = {} } = {}) {
   const cands = await P.aggregate([
     { $match: { book_id: b.id, page_number: { $gte: lo, $lte: hi }, ...extraMatch } },
     { $project: { _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1,
+    // strlen-safe: strText() is { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] }
       'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.recitation_count': 1, len: { $strLenCP: strText('$ocr.data') }, data: { $substrCP: [strText('$ocr.data'), 0, 6000] } } },
     { $match: { len: { $gte: min } } }]).toArray();
   const ok = cands.filter((p) => getPageSource(p) && !/^ia-|archive/i.test(String(p.ocr?.model || '')) && scriptLetters(p.data, script) >= min
