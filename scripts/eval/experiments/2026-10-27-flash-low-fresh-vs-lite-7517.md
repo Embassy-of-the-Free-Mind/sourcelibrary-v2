@@ -1,13 +1,13 @@
 ---
 stage: ocr
-measure: [acceptance, wrong_text]
-languages: [German, French, Latin]
-scripts: [Latin]
+measure: [judged]
+languages: [de, fr, la]
+scripts: [Latn]
 canons: []
 n_books: 60
 n_pages: 60
 verdict: "A fresh 3.8 Flash-low read does not pass the router rule on German (16/30 accepted, 12/30 cut by Gemini's filter) or French (23/30, 5/30 cut); Latin was not measured (the second account's weekly quota ran out after 86 calls). lite>agy-flash-low stays the best route on both measured cells (28/30, 27/29, router tests 2026-10-26)."
-status: complete
+status: rejected
 decision: "No fresh-read lane is built. Flash-Lite Batch stays the draft reader. The second agy account read 89 pages for 96% of its week: on that pool no Flash-low lane can carry Batch's ~30K pages a week."
 superseded_by: null
 issue: [7517, 6740]
