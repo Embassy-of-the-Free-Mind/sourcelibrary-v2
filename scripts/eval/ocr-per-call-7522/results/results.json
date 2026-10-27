@@ -1,0 +1,7074 @@
+{
+"status": "ok",
+"controls_caught": "5/5",
+"n_pages": 60,
+"n_books": 15,
+"controls": [
+{
+"page_id": "69b51e63768235dc65992909",
+"kind": "drop",
+"caught": true,
+"usable": false,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"comment": "Accurate except that one full body line is dropped, which breaks the sentence."
+},
+{
+"page_id": "69bd9d236120d54bd0373b66",
+"kind": "drop",
+"caught": true,
+"usable": false,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"comment": "A whole line is dropped in the roast-pork passage, which leaves the fragment 'ches' and breaks the sense."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27a",
+"kind": "bleed",
+"caught": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 1,
+"order_errors": 0,
+"misreads": 0,
+"comment": "Text is accurate, but the first heading of the next page has been added after the footnotes."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4d",
+"kind": "bleed",
+"caught": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 1,
+"order_errors": 0,
+"misreads": 3,
+"comment": "The body text is right, but it adds the subtitle from the next page."
+},
+{
+"page_id": "69b51e0ecf111105c42963b9",
+"kind": "drop",
+"caught": true,
+"usable": false,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"comment": "Drops one verse line of the poem; the rest is accurate."
+}
+],
+"arms": {
+"A1": {
+"usable": {
+"k": 55,
+"n": 60,
+"p": 0.9166666666666666,
+"ci": [
+0.8193105788446039,
+0.9638795436268733
+]
+},
+"delivered": {
+"k": 60,
+"n": 60,
+"p": 1,
+"ci": [
+0.9398281469657729,
+1
+]
+},
+"pages_with": {
+"omissions": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"additions": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"cross_page_bleed": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"order_errors": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"misreads": {
+"k": 32,
+"n": 60,
+"p": 0.5333333333333333,
+"ci": [
+0.40893426933426563,
+0.6537209404634525
+]
+}
+},
+"fault_counts": {
+"omissions": 3,
+"additions": 2,
+"cross_page_bleed": 0,
+"order_errors": 3,
+"misreads": 66
+},
+"usable_by_type": {
+"fraktur": {
+"k": 20,
+"n": 20,
+"p": 1,
+"ci": [
+0.8388748398148705,
+1
+]
+},
+"roman": {
+"k": 35,
+"n": 40,
+"p": 0.875,
+"ci": [
+0.7388788003201471,
+0.9454049978360052
+]
+}
+},
+"usable_by_language": {
+"German": {
+"k": 30,
+"n": 32,
+"p": 0.9375,
+"ci": [
+0.7985287670813637,
+0.982689433124541
+]
+},
+"Latin": {
+"k": 25,
+"n": 28,
+"p": 0.8928571428571429,
+"ci": [
+0.7280414829086315,
+0.962881633460356
+]
+}
+},
+"usable_by_call_pages": {
+"1": {
+"k": 55,
+"n": 60,
+"p": 0.9166666666666666,
+"ci": [
+0.8193105788446039,
+0.9638795436268733
+]
+}
+},
+"unusable_books": {
+"69b51e0147b06ecd58188993": 1,
+"69bd9abd46b01553e33bce57": 1,
+"69af0da8be5fc7f363545d1a": 1,
+"6a4e43f4dc886f1f5abb52bb": 2
+},
+"tokens": {
+"calls": 60,
+"block_calls": 0,
+"refused_blocks": 0,
+"pages_read_one_per_call": 60,
+"failed_reads": 0,
+"missing_usage": 0,
+"total": {
+"input": 1483639,
+"output": 56119,
+"thinking": 0,
+"cache_read": 605115
+},
+"per_page": {
+"input": 24727,
+"output": 935,
+"thinking": 0,
+"cache_read": 10085
+},
+"index_per_page": 30337,
+"uncached_index_per_page": 20252,
+"index_vs_A1": 1
+}
+},
+"A1b": {
+"usable": {
+"k": 59,
+"n": 60,
+"p": 0.9833333333333333,
+"ci": [
+0.9114487018291041,
+0.9970518402378096
+]
+},
+"delivered": {
+"k": 60,
+"n": 60,
+"p": 1,
+"ci": [
+0.9398281469657729,
+1
+]
+},
+"pages_with": {
+"omissions": {
+"k": 1,
+"n": 60,
+"p": 0.016666666666666666,
+"ci": [
+0.0029481597621904,
+0.08855129817089587
+]
+},
+"additions": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"cross_page_bleed": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"order_errors": {
+"k": 1,
+"n": 60,
+"p": 0.016666666666666666,
+"ci": [
+0.0029481597621904,
+0.08855129817089587
+]
+},
+"misreads": {
+"k": 29,
+"n": 60,
+"p": 0.48333333333333334,
+"ci": [
+0.36175049450337826,
+0.6069219005977627
+]
+}
+},
+"fault_counts": {
+"omissions": 1,
+"additions": 2,
+"cross_page_bleed": 0,
+"order_errors": 1,
+"misreads": 65
+},
+"usable_by_type": {
+"fraktur": {
+"k": 20,
+"n": 20,
+"p": 1,
+"ci": [
+0.8388748398148705,
+1
+]
+},
+"roman": {
+"k": 39,
+"n": 40,
+"p": 0.975,
+"ci": [
+0.8711863091181636,
+0.9955731685462955
+]
+}
+},
+"usable_by_language": {
+"German": {
+"k": 31,
+"n": 32,
+"p": 0.96875,
+"ci": [
+0.8425573603233156,
+0.9944621398972968
+]
+},
+"Latin": {
+"k": 28,
+"n": 28,
+"p": 1,
+"ci": [
+0.8793566935605293,
+1
+]
+}
+},
+"usable_by_call_pages": {
+"1": {
+"k": 59,
+"n": 60,
+"p": 0.9833333333333333,
+"ci": [
+0.9114487018291041,
+0.9970518402378096
+]
+}
+},
+"unusable_books": {
+"69bd9abd46b01553e33bce57": 1
+},
+"tokens": {
+"calls": 60,
+"block_calls": 0,
+"refused_blocks": 0,
+"pages_read_one_per_call": 60,
+"failed_reads": 0,
+"missing_usage": 0,
+"total": {
+"input": 1605867,
+"output": 56004,
+"thinking": 0,
+"cache_read": 483275
+},
+"per_page": {
+"input": 26764,
+"output": 933,
+"thinking": 0,
+"cache_read": 8055
+},
+"index_per_page": 32362,
+"uncached_index_per_page": 24307,
+"index_vs_A1": 1.07
+}
+},
+"B2": {
+"usable": {
+"k": 56,
+"n": 60,
+"p": 0.9333333333333333,
+"ci": [
+0.8407464259125857,
+0.9737713014577508
+]
+},
+"delivered": {
+"k": 60,
+"n": 60,
+"p": 1,
+"ci": [
+0.9398281469657729,
+1
+]
+},
+"pages_with": {
+"omissions": {
+"k": 1,
+"n": 60,
+"p": 0.016666666666666666,
+"ci": [
+0.0029481597621904,
+0.08855129817089587
+]
+},
+"additions": {
+"k": 1,
+"n": 60,
+"p": 0.016666666666666666,
+"ci": [
+0.0029481597621904,
+0.08855129817089587
+]
+},
+"cross_page_bleed": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"order_errors": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"misreads": {
+"k": 39,
+"n": 60,
+"p": 0.65,
+"ci": [
+0.5236261874086521,
+0.7583222566810799
+]
+}
+},
+"fault_counts": {
+"omissions": 1,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 89
+},
+"usable_by_type": {
+"fraktur": {
+"k": 19,
+"n": 20,
+"p": 0.95,
+"ci": [
+0.7638688045357189,
+0.9911185512976646
+]
+},
+"roman": {
+"k": 37,
+"n": 40,
+"p": 0.925,
+"ci": [
+0.8013576634835684,
+0.9741639744267374
+]
+}
+},
+"usable_by_language": {
+"German": {
+"k": 31,
+"n": 32,
+"p": 0.96875,
+"ci": [
+0.8425573603233156,
+0.9944621398972968
+]
+},
+"Latin": {
+"k": 25,
+"n": 28,
+"p": 0.8928571428571429,
+"ci": [
+0.7280414829086315,
+0.962881633460356
+]
+}
+},
+"usable_by_call_pages": {
+"2": {
+"k": 56,
+"n": 60,
+"p": 0.9333333333333333,
+"ci": [
+0.8407464259125857,
+0.9737713014577508
+]
+}
+},
+"unusable_books": {
+"69b51e6f9a81ef7feb3d4ec7": 1,
+"69b51e0cefd8df28f2daf7cd": 1,
+"6a4e43f4dc886f1f5abb52bb": 2
+},
+"tokens": {
+"calls": 31,
+"block_calls": 31,
+"refused_blocks": 1,
+"pages_read_one_per_call": 0,
+"failed_reads": 0,
+"missing_usage": 0,
+"total": {
+"input": 1243458,
+"output": 56037,
+"thinking": 0,
+"cache_read": 280144
+},
+"per_page": {
+"input": 20724,
+"output": 934,
+"thinking": 0,
+"cache_read": 4669
+},
+"index_per_page": 26328,
+"uncached_index_per_page": 21659,
+"index_vs_A1": 0.87
+}
+},
+"C4": {
+"usable": {
+"k": 58,
+"n": 60,
+"p": 0.9666666666666667,
+"ci": [
+0.886362256341505,
+0.9908106808265498
+]
+},
+"delivered": {
+"k": 60,
+"n": 60,
+"p": 1,
+"ci": [
+0.9398281469657729,
+1
+]
+},
+"pages_with": {
+"omissions": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"additions": {
+"k": 2,
+"n": 60,
+"p": 0.03333333333333333,
+"ci": [
+0.009189319173450283,
+0.11363774365849509
+]
+},
+"cross_page_bleed": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"order_errors": {
+"k": 0,
+"n": 60,
+"p": 0,
+"ci": [
+0,
+0.060171853034227174
+]
+},
+"misreads": {
+"k": 36,
+"n": 60,
+"p": 0.6,
+"ci": [
+0.47366053393698454,
+0.7143050954561698
+]
+}
+},
+"fault_counts": {
+"omissions": 2,
+"additions": 2,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 77
+},
+"usable_by_type": {
+"fraktur": {
+"k": 19,
+"n": 20,
+"p": 0.95,
+"ci": [
+0.7638688045357189,
+0.9911185512976646
+]
+},
+"roman": {
+"k": 39,
+"n": 40,
+"p": 0.975,
+"ci": [
+0.8711863091181636,
+0.9955731685462955
+]
+}
+},
+"usable_by_language": {
+"German": {
+"k": 31,
+"n": 32,
+"p": 0.96875,
+"ci": [
+0.8425573603233156,
+0.9944621398972968
+]
+},
+"Latin": {
+"k": 27,
+"n": 28,
+"p": 0.9642857142857143,
+"ci": [
+0.8228780209422653,
+0.9936674802210836
+]
+}
+},
+"usable_by_call_pages": {
+"4": {
+"k": 58,
+"n": 60,
+"p": 0.9666666666666667,
+"ci": [
+0.886362256341505,
+0.9908106808265498
+]
+}
+},
+"unusable_books": {
+"69b51e6f9a81ef7feb3d4ec7": 1,
+"69b51e3bcf111105c4298b05": 1
+},
+"tokens": {
+"calls": 15,
+"block_calls": 15,
+"refused_blocks": 0,
+"pages_read_one_per_call": 0,
+"failed_reads": 0,
+"missing_usage": 0,
+"total": {
+"input": 904950,
+"output": 54640,
+"thinking": 0,
+"cache_read": 150153
+},
+"per_page": {
+"input": 15083,
+"output": 911,
+"thinking": 0,
+"cache_read": 2503
+},
+"index_per_page": 20549,
+"uncached_index_per_page": 18046,
+"index_vs_A1": 0.68
+}
+}
+},
+"paired_diffs_vs_A1": {
+"A1b-A1": {
+"usable": {
+"delta": 0.06666666666666667,
+"ci": [
+0,
+0.15
+]
+},
+"omission_pages": {
+"delta": -0.016666666666666666,
+"ci": [
+-0.05,
+0
+]
+},
+"bleed_pages": {
+"delta": 0,
+"ci": [
+0,
+0
+]
+},
+"misread_pages": {
+"delta": -0.05,
+"ci": [
+-0.18333333333333332,
+0.06666666666666667
+]
+}
+},
+"B2-A1": {
+"usable": {
+"delta": 0.016666666666666666,
+"ci": [
+-0.05,
+0.08333333333333333
+]
+},
+"omission_pages": {
+"delta": -0.016666666666666666,
+"ci": [
+-0.05,
+0
+]
+},
+"bleed_pages": {
+"delta": 0,
+"ci": [
+0,
+0
+]
+},
+"misread_pages": {
+"delta": 0.11666666666666667,
+"ci": [
+0.016666666666666666,
+0.23333333333333334
+]
+}
+},
+"C4-A1": {
+"usable": {
+"delta": 0.05,
+"ci": [
+-0.03333333333333333,
+0.15
+]
+},
+"omission_pages": {
+"delta": 0,
+"ci": [
+0,
+0
+]
+},
+"bleed_pages": {
+"delta": 0,
+"ci": [
+0,
+0
+]
+},
+"misread_pages": {
+"delta": 0.06666666666666667,
+"ci": [
+-0.06666666666666667,
+0.21666666666666667
+]
+}
+}
+},
+"usable_disagreements": {
+"A1~A1b": 4,
+"A1~B2": 7,
+"A1~C4": 7,
+"A1b~B2": 5,
+"A1b~C4": 3,
+"B2~C4": 4
+},
+"decision": {
+"B2": {
+"usable_delta": 0.016666666666666666,
+"floor_delta": 0.06666666666666667,
+"within_floor": true,
+"bleed_pages": 0,
+"bleed_pages_A1": 0,
+"bleed_pages_A1b": 0
+},
+"C4": {
+"usable_delta": 0.05,
+"floor_delta": 0.06666666666666667,
+"within_floor": true,
+"bleed_pages": 0,
+"bleed_pages_A1": 0,
+"bleed_pages_A1b": 0
+}
+},
+"quota": {
+"A1": {
+"weekly_used": 0.009610235691070557,
+"five_h_before": 0.7126964330673218,
+"five_h_after": 0.6900216341018677,
+"five_h_reset_crossed": false,
+"own_calls": 60,
+"other_calls": 78,
+"minutes": 22.0766
+},
+"A1b": {
+"weekly_used": 0.0019908547401428223,
+"five_h_before": 0.9850755333900452,
+"five_h_after": 0.973195493221283,
+"five_h_reset_crossed": false,
+"own_calls": 60,
+"other_calls": 191,
+"minutes": 22.479366666666667
+},
+"B2": {
+"weekly_used": 0.0012679100036621094,
+"five_h_before": 0.6895329356193542,
+"five_h_after": 0.9886036515235901,
+"five_h_reset_crossed": true,
+"own_calls": 31,
+"other_calls": 87,
+"minutes": 20.010783333333332
+},
+"C4": {
+"weekly_used": 0.0014201998710632324,
+"five_h_before": 0.9874145984649658,
+"five_h_after": 0.9850755333900452,
+"five_h_reset_crossed": false,
+"own_calls": 15,
+"other_calls": 95,
+"minutes": 18.669833333333333
+},
+"CTL": {
+"weekly_used": 0.001643836498260498,
+"five_h_before": 0.9731147885322571,
+"five_h_after": 0.9694886207580566,
+"five_h_reset_crossed": false,
+"own_calls": 5,
+"other_calls": 146,
+"minutes": 16.1006
+}
+},
+"rows": [
+{
+"page_id": "69b51e0147b06ecd581889b3",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Dies' for printed 'Dieſs' (minor spelling)"
+]
+},
+"comment": "Complete and accurate; only a trivial spelling normalisation."
+},
+{
+"page_id": "69b51e0147b06ecd581889b3",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate; 'Dieß'/'Bekenntniß' are acceptable renderings of ſs."
+},
+{
+"page_id": "69b51e0147b06ecd581889b3",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Dies' for printed 'Dieſs' (minor spelling)"
+]
+},
+"comment": "Complete and accurate; 'Iahr'/'I.' follow the print, and there is only a trivial spelling normalisation."
+},
+{
+"page_id": "69b51e0147b06ecd581889b3",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and faithful to the print."
+},
+{
+"page_id": "69b51e0147b06ecd581889b4",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Tertriunum' should be 'Tertrinum'"
+]
+},
+"comment": "Complete and faithful apart from one small misspelling in the Latin title."
+},
+{
+"page_id": "69b51e0147b06ecd581889b4",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate transcription that keeps the long s."
+},
+{
+"page_id": "69b51e0147b06ecd581889b4",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'202 Seiten' should be '222 Seiten'"
+]
+},
+"comment": "Text is complete, but the page count is wrong, so it no longer says what the page says."
+},
+{
+"page_id": "69b51e0147b06ecd581889b4",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate transcription."
+},
+{
+"page_id": "69b51e0147b06ecd581889b5",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. Line-end hyphens are kept inside the joined text (astrolo-giſche, lächer-liche, Ge-ſellſchaft, Zuſam-menrottiren), but this is cosmetic."
+},
+{
+"page_id": "69b51e0147b06ecd581889b5",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, with line breaks joined cleanly."
+},
+{
+"page_id": "69b51e0147b06ecd581889b5",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, with the original line breaks kept. Long s is written as s and 'I. 1622' as 'J. 1622', both acceptable variants."
+},
+{
+"page_id": "69b51e0147b06ecd581889b5",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The text is identical to X."
+},
+{
+"page_id": "69b51e0147b06ecd581889b6",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page line for line, long s kept throughout."
+},
+{
+"page_id": "69b51e0147b06ecd581889b6",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'dreyffig' should be 'dreyssig' (long s read as f)"
+]
+},
+"comment": "Accurate with long s normalised to s; one minor ſ/f confusion."
+},
+{
+"page_id": "69b51e0147b06ecd581889b6",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page line for line."
+},
+{
+"page_id": "69b51e0147b06ecd581889b6",
+"book_id": "69b51e0147b06ecd58188993",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Text is correct but run together as one paragraph, with line-end hyphens kept mid-line (e.g. 'Roſenkreu-zern')."
+},
+{
+"page_id": "69b51e63768235dc65992907",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page text in full, catchword included."
+},
+{
+"page_id": "69b51e63768235dc65992907",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page text in full; the bold speaker labels are only formatting."
+},
+{
+"page_id": "69b51e63768235dc65992907",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page text in full, catchword included."
+},
+{
+"page_id": "69b51e63768235dc65992907",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"catchword 'funt' for 'ſunt' (in the meta tag only)"
+]
+},
+"comment": "Faithful transcription with long s kept; only the catchword in the tag is misread."
+},
+{
+"page_id": "69b51e63768235dc65992908",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'funt mortua, fed noftra funt' (long s read as f: ſunt, ſed, noſtra)",
+"'fumenda funt' (ſumenda ſunt)"
+]
+},
+"comment": "Complete and in the right order; in the opening Latin line the long s is misread as f, but the German text is correct."
+},
+{
+"page_id": "69b51e63768235dc65992908",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, complete transcription that keeps the long s."
+},
+{
+"page_id": "69b51e63768235dc65992908",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'funt mortua' (sunt)",
+"'Vege-stabilien' (Vege-tabilien)"
+]
+},
+"comment": "Complete; two minor misreads."
+},
+{
+"page_id": "69b51e63768235dc65992908",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate and complete; the header is normalised to 'über' but the body text is faithful."
+},
+{
+"page_id": "69b51e63768235dc65992909",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate transcription."
+},
+{
+"page_id": "69b51e63768235dc65992909",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'sintes-' (the hyphen was read as s)",
+"'vns' (the hyphen was read as s)",
+"'Taf-fel' for 'Ta-fel'"
+]
+},
+"comment": "Complete; a few small errors where hyphens were misread."
+},
+{
+"page_id": "69b51e63768235dc65992909",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'sintesmal' for 'sintemal'"
+]
+},
+"comment": "Complete reflowed text; one small misread caused by the hyphen."
+},
+{
+"page_id": "69b51e63768235dc65992909",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'ſinteſmal' for 'ſintemal'",
+"'damit' for 'darmit'"
+]
+},
+"comment": "Complete reflowed text with two small misreads."
+},
+{
+"page_id": "69b51e63768235dc6599290a",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"running head 'oder die' for 'vber die'"
+]
+},
+"comment": "Body text is accurate. The only error is in the running head ('oder' should be 'vber')."
+},
+{
+"page_id": "69b51e63768235dc6599290a",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"running head 'oder die' for 'vber die'",
+"'anhānget' adds a macron that is not printed ('anhanget')"
+]
+},
+"comment": "Body text is accurate apart from a stray macron. The running head is misread."
+},
+{
+"page_id": "69b51e63768235dc6599290a",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate and complete. Lines are joined into paragraphs, long s is kept, and the Mercury symbol is given as a description."
+},
+{
+"page_id": "69b51e63768235dc6599290a",
+"book_id": "69b51e63768235dc659928d8",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate line-by-line transcription, including the running head and catchword."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4b",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful transcription; the margin note and catchword are captured correctly."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4b",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'wolten' for 'wollten'"
+]
+},
+"comment": "Accurate apart from one minor spelling slip; á for ä is acceptable."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4b",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Leyer' for 'Leyter' (line 2)",
+"'Leyer' for 'Leyter' (line 6)"
+]
+},
+"comment": "Reads 'Leyter' (ladder) as 'Leyer' (lyre) twice, which changes the meaning; otherwise accurate."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4b",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Leyer' for 'Leyter' (line 2)",
+"'Leyer' for 'Leyter' (line 6)"
+]
+},
+"comment": "Same 'Leyer' for 'Leyter' error twice, which changes the meaning; the rest is accurate."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4c",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Leyer' for 'Leyter'",
+"margin 'Schwirigkeit' for 'Schwierigkeit'",
+"'Hiers' for 'Hier='"
+]
+},
+"comment": "Complete and in order. A few minor misreads; 'Leyer' for 'Leyter' changes the word."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4c",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate; the line breaks are reflowed into running text."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4c",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, with line breaks kept and marginal notes placed inline."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4c",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"margin 'Schwirigkeit' for 'Schwierigkeit'",
+"'Hiers=' for 'Hier='"
+]
+},
+"comment": "Complete. Two trivial misreads."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4d",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Ranstt' should be 'Ranfft'",
+"margin 'öffnen' where the page prints 'öfnen'"
+]
+},
+"comment": "Complete and in order, with the diagram roughly reproduced; one minor misread (Ranstt)."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4d",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Ranstt' should be 'Ranfft'"
+]
+},
+"comment": "Complete and in order; ihren for jhren is an acceptable i/j variant; one minor misread (Ranstt)."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4d",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, complete transcription with marginal notes and catchword."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4d",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"margin 'öffnen' where the page prints 'öfnen'"
+]
+},
+"comment": "Accurate text with lines joined into paragraphs; the <sig>E c</sig> tag names a signature that isn't printed on this page, but it is a tag, not text."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4e",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, line-for-line transcription; the marginal notes are placed sensibly and 'spazierten' is a negligible normalisation."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4e",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate transcription; the marginal notes are only slightly offset, which does not disturb the reading."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4e",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'spiß' for 'spitz'"
+]
+},
+"comment": "Accurate apart from one misread of the tz ligature; the catchword 'heit' is correctly included."
+},
+{
+"page_id": "69b51e6f9a81ef7feb3d4f4e",
+"book_id": "69b51e6f9a81ef7feb3d4ec7",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'schwöcher' for 'schwecher'",
+"'spatierten' for 'spatzierten'"
+]
+},
+"comment": "Reflowed into paragraphs with all text present; two minor misreads."
+},
+{
+"page_id": "69b51edaff09e4fe943b6144",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Handelsplatz' for printed 'Handelsplaz'"
+]
+},
+"comment": "Accurate line-by-line text; one small spelling normalisation."
+},
+{
+"page_id": "69b51edaff09e4fe943b6144",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Handelsplatz' for printed 'Handelsplaz'"
+]
+},
+"comment": "Accurate text with words rejoined across line breaks; one small spelling normalisation."
+},
+{
+"page_id": "69b51edaff09e4fe943b6144",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Handelsplatz' for printed 'Handelsplaz'"
+]
+},
+"comment": "Accurate line-by-line text; one small spelling normalisation."
+},
+{
+"page_id": "69b51edaff09e4fe943b6144",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Handelsplatz' for printed 'Handelsplaz'"
+]
+},
+"comment": "Accurate text; the printed hyphen is shown as ':', which is harmless; one small spelling normalisation."
+},
+{
+"page_id": "69b51edaff09e4fe943b6145",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page in full; the lines are joined and the hyphenation is resolved."
+},
+{
+"page_id": "69b51edaff09e4fe943b6145",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page line by line and keeps the original hyphenation."
+},
+{
+"page_id": "69b51edaff09e4fe943b6145",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page line by line; colons stand for the Fraktur double hyphen, which is acceptable."
+},
+{
+"page_id": "69b51edaff09e4fe943b6145",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page in full; the lines are joined and the hyphenation is resolved."
+},
+{
+"page_id": "69b51edaff09e4fe943b6146",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The lines are run together, which is fine, and 'Beschließung' for the printed 'Beschliessung' is an acceptable variant."
+},
+{
+"page_id": "69b51edaff09e4fe943b6146",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate line by line. 'Beschließ-ung' is an acceptable ß/ss variant."
+},
+{
+"page_id": "69b51edaff09e4fe943b6146",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, including 'Beschlies-sung' as printed."
+},
+{
+"page_id": "69b51edaff09e4fe943b6146",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Beschließ-sung' has a doubled s (page: 'Beschlies-sung')"
+]
+},
+"comment": "Complete, with one minor spelling slip at 'Beschließ-sung'."
+},
+{
+"page_id": "69b51edaff09e4fe943b6147",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'fran-zösischen' lowercase (printed 'Fran-')"
+]
+},
+"comment": "Complete and accurate. The only slip is a trivial capitalisation error."
+},
+{
+"page_id": "69b51edaff09e4fe943b6147",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. Its 'Versezung' spelling is an acceptable reading of the print."
+},
+{
+"page_id": "69b51edaff09e4fe943b6147",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. It keeps the printed '=' hyphens and the z spellings, which are acceptable."
+},
+{
+"page_id": "69b51edaff09e4fe943b6147",
+"book_id": "69b51edaff09e4fe943b611b",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea0",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [
+"footnote '*) Ausführlich referiert bei Binet: Les altérations. pag. 197 ff.' appears twice: inline as <note> and again at the foot"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Text is accurate but reflowed into paragraphs; the footnote is duplicated."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea0",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate line by line; the footnote appears once, inline as a note at its anchor."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea0",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate; the footnote marker is in the text and the footnote is at the foot, as printed."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea0",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [
+"footnote '*) Ausführlich referiert bei Binet: Les altérations. pag. 197 ff.' appears twice: inline as <note> and again at the foot"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Text is accurate but the footnote is duplicated."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea1",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page: all body lines and the footnote are present, with line breaks kept."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea1",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; the lines are joined into running text and the hyphenated words are rejoined correctly."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea1",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; the footnote is placed inline at its anchor inside a <note> tag, which is a markup choice and doesn't change the text."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea1",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page: all body lines and the footnote are present, with line breaks kept."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea2",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page: body text, figure and footnote are all correct."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea2",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Same text as the page with the line breaks joined up; no faults."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea2",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; it only leaves out the rule above the footnote, which is not a fault."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea2",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; the 1, 2, 3 inserts are the labels printed in the figure."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea3",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate transcription of body and footnote."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea3",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, keeps the printed line breaks and hyphenation."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea3",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate; the italics in the footnote wrongly cover 'Vergl.' as well, which is only a formatting slip."
+},
+{
+"page_id": "69bd9abd46b01553e33bcea3",
+"book_id": "69bd9abd46b01553e33bce57",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate transcription."
+},
+{
+"page_id": "69bd9d236120d54bd0373b64",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 6,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Zwihelen' for 'Zwibelen'",
+"'krandckheyt' for 'kranckheyt'",
+"'Ge=türns' for 'Gekürns'",
+"'dürfftigteyt' for 'dürfftigkeyt'",
+"'bedeutt' for 'bedeut'",
+"'seynd' for 'seind'"
+]
+},
+"comment": "Complete and in the right order. It has several small letter-level misreads, but the text still says what the page says."
+},
+{
+"page_id": "69bd9d236120d54bd0373b64",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'mer' for 'met'",
+"'seynd' for 'seind'",
+"'bey' for 'bei'"
+]
+},
+"comment": "Complete and accurate. It is the only version that correctly reads 'Gekürns'; it has only trivial slips."
+},
+{
+"page_id": "69bd9d236120d54bd0373b64",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'mer' for 'met'",
+"'Ge-türns' for 'Gekürns'",
+"'bedeuten' for 'bedeut'"
+]
+},
+"comment": "Complete and in the right order, with a few minor misreads."
+},
+{
+"page_id": "69bd9d236120d54bd0373b64",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 5,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'mer' for 'met'",
+"'Zwiſbelen' for 'Zwibelen'",
+"'Ge-türns' for 'Gekürns'",
+"'Mage' for 'Magē'",
+"'ſeynd' for 'ſeind'"
+]
+},
+"comment": "Complete and in the right order, with a few minor misreads."
+},
+{
+"page_id": "69bd9d236120d54bd0373b65",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Reiche' for 'Reichē' (Reichen)"
+]
+},
+"comment": "Complete and accurate; one dropped abbreviation mark (and the signature is given wrongly as 'A v')."
+},
+{
+"page_id": "69bd9d236120d54bd0373b65",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'derz-' for 'ders-'",
+"'Schaaffz-' for 'Schaaffs-'",
+"'Reiche' for 'Reichē'"
+]
+},
+"comment": "Complete; a few small letter-level misreads."
+},
+{
+"page_id": "69bd9d236120d54bd0373b65",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'jffet' for 'isset'",
+"'Arzten' for 'Artzten'",
+"'widert' for 'wider/'"
+]
+},
+"comment": "Complete; hyphenated words are moved across line breaks, and there are some minor misreads."
+},
+{
+"page_id": "69bd9d236120d54bd0373b65",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate and complete."
+},
+{
+"page_id": "69bd9d236120d54bd0373b66",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Kinderin' for 'Rinderin'",
+"'vnder' for 'vnter'",
+"'trau-met' for 'träu-met'"
+]
+},
+"comment": "Complete. 'Kinderin' is a real misread, but the page still reads correctly once it is fixed."
+},
+{
+"page_id": "69bd9d236120d54bd0373b66",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Kinderin' for 'Rinderin'",
+"'erneehrt' for 'ernehrt'",
+"'deutet' for 'bedeutet'",
+"'möchten' for 'möchte'"
+]
+},
+"comment": "Complete text with a few small misreads."
+},
+{
+"page_id": "69bd9d236120d54bd0373b66",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'nug=barkeyt' for 'nutzbarkeyt'",
+"'fleyfch' for 'fleysch'",
+"'Menfch=lich' for 'Mensch-lich'"
+]
+},
+"comment": "Complete. Hyphenated words are joined across line breaks and there are minor OCR slips."
+},
+{
+"page_id": "69bd9d236120d54bd0373b66",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'schlech=terhafftig' for 'schleck-erhafftig'"
+]
+},
+"comment": "Complete and accurate apart from one misread word."
+},
+{
+"page_id": "69bd9d236120d54bd0373b67",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Zader' for 'Hader'",
+"'verwohnten' for 'verwehnten'",
+"'Glis der' for 'Gli=der'",
+"'den' for 'deñ'"
+]
+},
+"comment": "Complete text; a few minor misreads, the worst being 'Zader' for 'Hader'."
+},
+{
+"page_id": "69bd9d236120d54bd0373b67",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 6,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'im' for 'jhm'",
+"'Glic=der' for 'Gli=der'",
+"'Läuffet' for 'Läuffer'",
+"'seind' for 'Feind'",
+"'verwohnten' for 'verwehnten'",
+"'vers=stehen'/'nachs=mals' (hyphen mark read as s)"
+]
+},
+"comment": "Complete text, but several small misreads, including 'seind' for 'Feind'."
+},
+{
+"page_id": "69bd9d236120d54bd0373b67",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'bössesten' for 'bösesten'",
+"'vnglücklichtsten' for 'vnglücklichsten'",
+"'jennige' for 'jehnige'",
+"'dañ' for 'deñ' (Es were deñ)"
+]
+},
+"comment": "Complete and accurate apart from a few spelling slips."
+},
+{
+"page_id": "69bd9d236120d54bd0373b67",
+"book_id": "69bd9d236120d54bd0373aaa",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'verwoehnten' for 'verwehnten'"
+]
+},
+"comment": "The most faithful version, with one small misread."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe00",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page, including the catchword; the handwritten margin symbol is described as an image."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe00",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'dige-stiret' for printed 'dige-riret'"
+]
+},
+"comment": "Accurate apart from one small misread; the handwritten margin symbols are rendered as glyphs inside a margin tag."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe00",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; the catchword is noted only in the meta tag."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe00",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; the margin sketch description sits after the paragraph, which is harmless."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe01",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'jezund' for printed 'jetzund'"
+]
+},
+"comment": "Faithful; it reasonably fills in the words cut off at the right edge by the binding."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe01",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'nichtes' (page reads 'nicht…', cut off; most likely 'nichts')",
+"'jezund' for 'jetzund'"
+]
+},
+"comment": "Accurate apart from one questionable completion of a cut-off word."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe01",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Vn-' / 'e-' / 'all-' / 'nicht-' cut-off words given as hyphenated fragments ('Vnd', 'es', 'alle', 'nichts')",
+"'jezund' for 'jetzund'"
+]
+},
+"comment": "Copies the words cut off at the right edge as fragments with false hyphens; otherwise accurate."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe01",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'vergängliche' for 'zergängliche'",
+"'alle-' with a false hyphen",
+"'jezund' for 'jetzund'"
+]
+},
+"comment": "Good overall; one real word misread (zergängliche)."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe02",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful and complete. The only difference is a comma after Podagra where the print has a semicolon."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe02",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Substantia' for Substantz"
+]
+},
+"comment": "Complete, with one minor misread."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe02",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Substantia' for Substantz",
+"'Concordanß' for Concordantz",
+"'effatæ' for essatæ",
+"'vnrahtsam' for vnratsam"
+]
+},
+"comment": "Complete, with several small misreads. The sense still holds."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe02",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate line-by-line transcription. 'verwandelt' is marked unclear but is read correctly."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe03",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate line-by-line transcription; the catchword 'worden/' is recorded in the meta tag."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe03",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate; it also puts the catchword 'worden /' in the body, which is allowed because the catchword is printed on this page."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe03",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate; spelling the æ/œ ligatures out as ae/oe is an acceptable variant."
+},
+{
+"page_id": "69d3705ccaec08931f8ffe03",
+"book_id": "69c70242da9771c71631580e",
+"language": "German",
+"type": "fraktur",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate text; hyphenated words are joined into running paragraphs, which is fine."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27a",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The page's misprint 'Ichbeziehnung' is silently normalised."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27a",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27a",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27a",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, and the layout of the examples is kept."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27b",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The diagram lines are described in image tags."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27b",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. Uses dashes for the connecting lines and bold for spaced-out emphasis."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27b",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27b",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The footnote is placed inline as a note at its reference mark, which is acceptable."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27c",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'*a.* Inneres Prädikat' should be α. (it sits in the α/β series)"
+]
+},
+"comment": "Complete and accurate; one minor Greek-letter misread."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27c",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'*a.* Inneres Prädikat' should be α."
+]
+},
+"comment": "Complete and accurate; one minor Greek-letter misread."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27c",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'*a.* Inneres Prädikat' should be α."
+]
+},
+"comment": "Complete; the bold formatting is harmless; one minor Greek-letter misread."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27c",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and faithful; the list is given as plain lines, which is fine."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27d",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Alliteration' for printed 'Allitteration'"
+]
+},
+"comment": "Complete and in the right order. The one slip is a modernised spelling of Allitteration."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27d",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Alliteration' for printed 'Allitteration'"
+]
+},
+"comment": "Complete and in the right order. The one slip is a modernised spelling of Allitteration."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27d",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Alliteration' for printed 'Allitteration'",
+"'a.' for Greek α before 'Eingeübte' and 'Verbindung durch' (minor)"
+]
+},
+"comment": "Complete. Two Greek α markers are given as a, and Allitteration is modernised; both are minor."
+},
+{
+"page_id": "6a21991c4b61907ea5ffb27d",
+"book_id": "6a21991c4b61907ea5ffb24f",
+"language": "German",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Alliteration' for printed 'Allitteration'"
+]
+},
+"comment": "Complete and in the right order. The one slip is a modernised spelling of Allitteration."
+},
+{
+"page_id": "69920bf777b798aa12121d0b",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful transcription of body, margin and both footnote columns."
+},
+{
+"page_id": "69920bf777b798aa12121d0b",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful transcription; extra bold markup only."
+},
+{
+"page_id": "69920bf777b798aa12121d0b",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful transcription; small-caps names rendered in normal case, which is acceptable."
+},
+{
+"page_id": "69920bf777b798aa12121d0b",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful transcription; term tags are markup only."
+},
+{
+"page_id": "69920bf777b798aa12121d0c",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page, including 'convincentur' as printed."
+},
+{
+"page_id": "69920bf777b798aa12121d0c",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'convincuntur' for printed 'convincentur'"
+]
+},
+"comment": "Complete and in order; one minor misread of the verb tense."
+},
+{
+"page_id": "69920bf777b798aa12121d0c",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'consonatioriem' for 'consonationem'",
+"'convincuntur' for printed 'convincentur'"
+]
+},
+"comment": "Complete; two small misreads."
+},
+{
+"page_id": "69920bf777b798aa12121d0c",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'consonationen' for 'consonationem'"
+]
+},
+"comment": "Complete; one typo-level misread, and the 'G. M.' margin note sits at the end of the paragraph instead of beside line 2."
+},
+{
+"page_id": "69920bf777b798aa12121d0d",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"footnote 4: 'τοῦτον' where the page prints 'τοῖον'"
+]
+},
+"comment": "Accurate apart from one wrong Greek word in footnote 4."
+},
+{
+"page_id": "69920bf777b798aa12121d0d",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"footnote 4: 'τοῦτον' where the page prints 'τοῖον'",
+"footnote 4: 'Arund.' where the page prints 'ABUND.'",
+"left margin: 'M.' where the page prints '16.'"
+]
+},
+"comment": "Body text is accurate; there are small misreads in footnote 4 and the margin."
+},
+{
+"page_id": "69920bf777b798aa12121d0d",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate; it leaves out the marginal '16.', which is only a page marker."
+},
+{
+"page_id": "69920bf777b798aa12121d0d",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'cælos' and 'cælo' where the page prints 'cœlos' and 'cœlo'"
+]
+},
+"comment": "Accurate apart from writing æ for œ in cœlos/cœlo."
+},
+{
+"page_id": "69920bf777b798aa12121d0e",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'volantibus' for 'volutantibus'",
+"'GB.' for 'GR.' in note 2"
+]
+},
+"comment": "Complete and in the right order. One body word is misread, and the abbreviation in note 2 is slightly off."
+},
+{
+"page_id": "69920bf777b798aa12121d0e",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'volantibus' for 'volutantibus'"
+]
+},
+"comment": "Complete and accurate except for one misread body word."
+},
+{
+"page_id": "69920bf777b798aa12121d0e",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'voluntantibus' for 'volutantibus'"
+]
+},
+"comment": "Complete and accurate except for one garbled body word."
+},
+{
+"page_id": "69920bf777b798aa12121d0e",
+"book_id": "69920bf777b798aa12121afc",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'voluntantibus' for 'volutantibus'",
+"note 2 'Factorem' for 'Factorum'"
+]
+},
+"comment": "Complete. One body word is garbled, and note 2 reads 'Factorem', which loses the editor's proposed correction 'Factorum'."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4b",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s rendered as 'f' throughout (e.g. 'fublimioribus', 'finiftris', 'eft', 'poffunt')"
+]
+},
+"comment": "Full, correctly ordered text, but every long s is rendered as f throughout; the words are still recognisable."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4b",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate and complete, with u/v normalised (an acceptable variant)."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4b",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate and complete, with long s kept as ſ."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4b",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'vniuerfum' for 'vniuersum' (XVII)"
+]
+},
+"comment": "Accurate and complete apart from one f-for-s slip."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4c",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. It has all nine propositions, XXI to XXIX, and only normalises long s and accents."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4c",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, and keeps the long s and the 'pūctum' abbreviation as printed."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4c",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s rendered as 'f' throughout (e.g. 'fed', 'fi', 'eft', 'fuperficiem')"
+]
+},
+"comment": "The text is complete and in order, but long s is consistently written as f. It also tags 'tiora' as a catchword, which is wrong: that is the end of the last line of text, and the page has no catchword."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4c",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, with long s and accents normalised."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4d",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Scenographicam' for printed 'Scenographicem'",
+"'Barbarus' for printed 'Balbarus' (silently corrected)",
+"long s rendered as 'f' in 'quiefcere'"
+]
+},
+"comment": "Complete and accurate apart from small normalisations; the page number 499 is given as 495."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4d",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Scenographicam' for printed 'Scenographicem'",
+"'Barbarus' for printed 'Balbarus' (silently corrected)"
+]
+},
+"comment": "Faithful transcription that keeps the long s."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4d",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Scenographicam' for printed 'Scenographicem'",
+"'Barbarus' for printed 'Balbarus' (silently corrected)"
+]
+},
+"comment": "Faithful transcription with normalised s."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4d",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Scenographicam' for printed 'Scenographicem'",
+"'Barbarus' for printed 'Balbarus' (silently corrected)",
+"'hic' for printed 'hîc' (accent dropped)"
+]
+},
+"comment": "Complete; only small normalisations."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4e",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s transcribed as 'f' throughout: 'fpecula', 'eft', 'fuperficiei', 'fine' (sine), 'fenfibilitate', 'fecundùm', 'foliditatem', 'vifum', 'femper'"
+]
+},
+"comment": "The text is complete and in the right order, but long s is read as f all through the page, which turns words like 'sine' into 'fine'."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4e",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Polito corporum' for 'Politio corporum'"
+]
+},
+"comment": "Complete and faithful with long s kept; the only fault is the misread 'Polito'."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4e",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Polito corporum' for 'Politio corporum'"
+]
+},
+"comment": "Complete and faithful with spelling normalised (SEU); the only fault is the misread 'Polito'."
+},
+{
+"page_id": "69af0da8be5fc7f363545f4e",
+"book_id": "69af0da8be5fc7f363545d1a",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate with u/v normalised; the catchword 'Linea' in the meta tag isn't visible on the page but sits only in a tag, not the text."
+},
+{
+"page_id": "69b51ddccf111105c429239c",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Rossedale 'f. 29' for 'f. 23'",
+"'Canoce' for 'Canoe'"
+]
+},
+"comment": "Accurate apart from two small slips: one folio number and one place name."
+},
+{
+"page_id": "69b51ddccf111105c429239c",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 6,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Rossedale 'f. 29' for 'f. 23'",
+"'Eiferrugge' for 'Elferugge'",
+"'Lessilah' for 'Lestilah'",
+"'Waltermervil' for 'Waltermeisvil'",
+"'Cokeswell' for 'Cockeswell'",
+"'Faramisio' for 'Faramiso'"
+]
+},
+"comment": "Complete and in the right order, but several proper names are garbled."
+},
+{
+"page_id": "69b51ddccf111105c429239c",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 7,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Roffeldale' for 'Rossedale'",
+"Rossedale 'f. 29' for 'f. 23'",
+"'Kirketham' for 'Kirkeham'",
+"'Snellefhale' for 'Snellshale'",
+"'Baukviil' for 'Baukvill'",
+"'Eiferugge' for 'Elferugge'",
+"'Cokefwell' for 'Cockeswell'"
+]
+},
+"comment": "Complete, but has a number of small errors in names."
+},
+{
+"page_id": "69b51ddccf111105c429239c",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 5,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Rossedale 'f. 29' for 'f. 23'",
+"'Snelleshale' for 'Snellshale'",
+"'Canoce' for 'Canoe'",
+"'Eiferrugge' for 'Elferugge'",
+"'Westthale' for 'Westhale'"
+]
+},
+"comment": "Complete and in the right order, with a few small slips in names."
+},
+{
+"page_id": "69b51ddccf111105c429239d",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 8,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'f. 46' for printed 'f. 96' (Horsted entry)",
+"'Duvell ... de Duvell' for 'Luvell ... de Luvell'",
+"'concessio Ric. Revill' / 'concessio eidem' for 'concesso'",
+"'Wicombe' for 'Wicumbe'",
+"'Suthamtonne' for 'Suthantone'",
+"'Westtoniam' for 'Westoniam'",
+"'Uppetone' for 'Uppeton'",
+"'Nortone' for 'Nortune'"
+]
+},
+"comment": "Complete and in order; a few misreads, including a wrong folio number and the name Duvell."
+},
+{
+"page_id": "69b51ddccf111105c429239d",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Wicumb' for 'Wicumbe'",
+"'Bleafetone' for 'Bleastone'",
+"'Uppetone' for 'Uppeton'",
+"'Nortone' for 'Nortune'"
+]
+},
+"comment": "Faithful long-s transcription with only small misreads."
+},
+{
+"page_id": "69b51ddccf111105c429239d",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 7,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'concessio Ric. Revill' / 'concessio eidem' for 'concesso'",
+"'Ambre sham' for 'Ambresham'",
+"'Wicombe' for 'Wicumbe'",
+"'Suthamtonne' for 'Suthantone'",
+"'Maslingham' for 'Massingham'",
+"'Uppetone' for 'Uppeton'",
+"'Nortone' for 'Nortune'"
+]
+},
+"comment": "Complete and in order; minor misreads."
+},
+{
+"page_id": "69b51ddccf111105c429239d",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 8,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Haghemorc' for 'Haghemore'",
+"'concessio Ric. Revill' / 'concessio eidem' for 'concesso'",
+"'Ambreseham' for 'Ambresham'",
+"'Wicumbel' for 'Wicumbe'",
+"'Lancaster Rogerō' for 'Lancastre Rogero'",
+"'Maslingham' for 'Massingham'",
+"'Uppetone' for 'Uppeton'",
+"'Nortone' for 'Nortune'"
+]
+},
+"comment": "Complete and in order; several small misreads of names."
+},
+{
+"page_id": "69b51ddccf111105c429239e",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"header 'DODSWORTHI' for 'DODSEWORTHI'",
+"'Chemſeme' for 'Chemleme'",
+"'ſiat' for 'fiat' (Nova Windsor)"
+]
+},
+"comment": "Complete and in the right order, with a few minor misreads."
+},
+{
+"page_id": "69b51ddccf111105c429239e",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"header 'DODESWORTHI' for 'DODSEWORTHI'",
+"'Evelfham' for 'Evesham'",
+"'man de' (stop dropped) and 'York fhire' (hyphen dropped)",
+"'conced.' for 'Conced.' (Will. Martin entry)"
+]
+},
+"comment": "Complete; the last line ends at 'de-' and 'molishing' is kept only in the catchword tag. Misreads are minor."
+},
+{
+"page_id": "69b51ddccf111105c429239e",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 5,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Sperstholt' for 'Sperſholt'",
+"'Kinton' for 'Kington'",
+"'Bassetow' for 'Basselow'",
+"'Alicia' for 'Aliciæ'",
+"'conced.' for 'Conced.' (Will. Martin entry)"
+]
+},
+"comment": "Complete with the correct header, but has several misread names."
+},
+{
+"page_id": "69b51ddccf111105c429239e",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"header 'DODSWORTHI' for 'DODSEWORTHI'",
+"'Danſredecurt' for 'Danfredecum'",
+"'Bellieys' for 'Bellicys'",
+"'conced.' for 'Conced.' (Will. Martin entry)"
+]
+},
+"comment": "Complete and in the right order, with a few minor misreads."
+},
+{
+"page_id": "69b51ddccf111105c429239f",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Giſſard' for printed 'Giffard'",
+"'Monkbretton' for printed 'Monkebretton'",
+"'Wolfey' (f for long s) in the Fundatores entry"
+]
+},
+"comment": "Complete and faithful; only a few small letter-level slips."
+},
+{
+"page_id": "69b51ddccf111105c429239f",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 6,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Glastonbury' modernised from printed 'Glaſtenburgh'",
+"'Thirsti' for 'Thirſt'",
+"'Christophori' for 'Chriſtopheri'",
+"'Dodsf.' for 'Dodſ.'",
+"'Monkbretton' for 'Monkebretton'",
+"'An,' for 'An.'"
+]
+},
+"comment": "Complete; several minor misreads, including one modernised place name."
+},
+{
+"page_id": "69b51ddccf111105c429239f",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s read as f throughout (e.g. 'five' for 'ſive', 'faid')",
+"'Maiden-Bradleyh' for 'Maiden-Bradlegh'",
+"'Edwardi' for 'Edvardi'",
+"'Monkbretton' for 'Monkebretton'"
+]
+},
+"comment": "Complete, but long s is consistently rendered as f, which makes words like 'five' (for sive) misleading; the language tag says English."
+},
+{
+"page_id": "69b51ddccf111105c429239f",
+"book_id": "69b51ddccf111105c42922b3",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'deſcripta' for printed 'exſcripta'",
+"'Maiden-Bradleyh' for 'Maiden-Bradlegh'",
+"'Monkbretton' for 'Monkebretton'"
+]
+},
+"comment": "Complete and close to the print; only a few small misreads."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88d",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The margin note is placed correctly at the line where it is printed."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88d",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate, with ligatures normalised."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88d",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Marfiliu' drops the tilde of 'Marfiliũ' (Marsilium)"
+]
+},
+"comment": "Complete and faithful in long-s spelling; one tilde is missing."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88d",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 4,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Hippocratica mufam' should be 'Hippocraticam Mufam'",
+"'Dicit itaque' should be 'Dic itaque'",
+"'cælefti' should be 'cœlefti'",
+"margin 'Gamahaas' should be 'Gamahaa'"
+]
+},
+"comment": "Complete line-by-line text with a few minor misreads."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88e",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate; marginal notes are placed inline but sit next to the right lines."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88e",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'cùm luna' for 'cum luna'",
+"'Abdallah amarach' split (page: Abdallahamarach)"
+]
+},
+"comment": "Complete with two minor misreads; the sig and catchword tags are spurious but they are only metadata."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88e",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'occasio ne' left split (should be 'occasione')"
+]
+},
+"comment": "Complete and accurate apart from one unjoined line-break word."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88e",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s read as f throughout ('fibi', 'figilla', 'Marfilius', 'fcientia', 'confefsione' etc.)",
+"'cæli' for 'cœli'"
+]
+},
+"comment": "Line-by-line and complete, but long s is read as f all through, which garbles many words."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88f",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "The text is accurate. The 'Almadel.' margin note sits at the top instead of beside 'del:', but this doesn't change how the text reads."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88f",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "The text is accurate and keeps the printed abbreviations."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88f",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"long s rendered as 'f' throughout (e.g. 'fpeculo', 'fint', 'fubftantiæ', 'eft')"
+]
+},
+"comment": "Long s is read as 'f' throughout. Because it's consistent, the text is still readable and otherwise complete."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf88f",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'immiscibiles' for 'commiscibiles'"
+]
+},
+"comment": "There is one wrong word ('immiscibiles'). Otherwise the text is complete and correct."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf890",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches the page; side notes are placed beside the right lines."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf890",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Text is correct, apart from normalising 'Hebreo' to 'Hebræo'. The metadata tag guesses a catchword 'periri?', but no catchword is printed on the page."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf890",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Babylonicus' should be 'Babylonius'"
+]
+},
+"comment": "Faithful long-s transcription with one minor misread."
+},
+{
+"page_id": "69b51e0cefd8df28f2daf890",
+"book_id": "69b51e0cefd8df28f2daf7cd",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Text is correct; side notes are grouped after the paragraphs, and 'Hebreo' is normalised to 'Hebræo'."
+},
+{
+"page_id": "69b51e0ecf111105c42963b7",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful to the page, including the printed misprint 'muliorum'; the abbreviations are expanded."
+},
+{
+"page_id": "69b51e0ecf111105c42963b7",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful and keeps the printed abbreviations; it silently corrects the printed 'muliorum' to 'multorum'."
+},
+{
+"page_id": "69b51e0ecf111105c42963b7",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful with the abbreviations fully expanded; it silently corrects 'muliorum' to 'multorum'."
+},
+{
+"page_id": "69b51e0ecf111105c42963b7",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Matches Y except for spacing around the slashes; it silently corrects 'muliorum' to 'multorum'."
+},
+{
+"page_id": "69b51e0ecf111105c42963b8",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. Lines are joined into paragraphs, abbreviations are expanded, and 'Xanctae' and 'michael angelo' match the print."
+},
+{
+"page_id": "69b51e0ecf111105c42963b8",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Xanciæ' for printed 'Xanctæ'"
+]
+},
+"comment": "Complete with the original line breaks kept; one minor misread of a name."
+},
+{
+"page_id": "69b51e0ecf111105c42963b8",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Xanciæ' for printed 'Xanctæ'"
+]
+},
+"comment": "Complete and close to the print, including 'Bonifatio'; one minor misread of a name."
+},
+{
+"page_id": "69b51e0ecf111105c42963b8",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Xanciæ' for printed 'Xanctæ'"
+]
+},
+"comment": "Complete, keeps the abbreviation 'Munopoli.' and silently corrects 'bliotecis' to 'bibliotecis'; one minor misread of a name."
+},
+{
+"page_id": "69b51e0ecf111105c42963b9",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Tenemo' for 'Te nemo'",
+"'celeberrimae' where the page prints 'ceberrimae'"
+]
+},
+"comment": "Complete and accurate apart from two small slips."
+},
+{
+"page_id": "69b51e0ecf111105c42963b9",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'serratum' for 'ferratum'",
+"'celeberrimae' where the page prints 'ceberrimae'"
+]
+},
+"comment": "Complete line-by-line text with two minor misreads."
+},
+{
+"page_id": "69b51e0ecf111105c42963b9",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'serratum' for 'ferratum'",
+"'celeberrimae' where the page prints 'ceberrimae'",
+"'sumptuosisi/ssima' garbled at the line break"
+]
+},
+"comment": "Complete text with a few minor misreads."
+},
+{
+"page_id": "69b51e0ecf111105c42963b9",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'sumptuosisi/sima' garbled at the line break"
+]
+},
+"comment": "Very faithful, keeping the printed 'ceberrimae'; one small slip at a line break."
+},
+{
+"page_id": "69b51e0ecf111105c42963ba",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'alia quae multa' where the page has 'alia q̄ multa' (quam)"
+]
+},
+"comment": "Complete text with lines joined; 'quae' for 'quam' is one minor misread."
+},
+{
+"page_id": "69b51e0ecf111105c42963ba",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful line-by-line copy; it quietly corrects the printed 'uirturibus' and 'Herigis'."
+},
+{
+"page_id": "69b51e0ecf111105c42963ba",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Rerigis' where the page has 'Herigis'/Erigis"
+]
+},
+"comment": "Complete, with abbreviations expanded; one garbled verse word."
+},
+{
+"page_id": "69b51e0ecf111105c42963ba",
+"book_id": "69b51e0ecf111105c4296303",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Faithful line-by-line copy; the 'iN' comes from the printed guide letter for the initial."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf4",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, complete transcription of the page; the Hebrew is correct and the abbreviations are correctly expanded."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf4",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'conclusio priscorum' for 'conclusionis priscorum'",
+"Hebrew 'כלו' for 'כלך'"
+]
+},
+"comment": "Complete; two minor misreads, and the page abbreviations are kept unexpanded, which is acceptable."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf4",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate; abbreviations such as 'nulla', 'matre' and 'Ada' are kept without their tilde, which is acceptable."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf4",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate; 'sa.' correctly reads the long s, and the catchword is given in a meta tag."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf5",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Hebrew 'נאוױ' for printed 'נאוו' (stray ligature character)"
+]
+},
+"comment": "Complete and accurate; the margin notes sit inline and the catchword is joined into 'mundissima'. Only a tiny Hebrew glitch."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf5",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Hebrew 'נאוי' for 'נאוו'"
+]
+},
+"comment": "Complete and accurate; the margin notes are grouped at the end, and there is one small Hebrew misread."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf5",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Responfio' for 'Responsio' (long s read as f)"
+]
+},
+"comment": "A faithful line-by-line transcription; only one trivial misread."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf5",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Hebrew 'נָאוּ שְׁחָרִים בַּתּוֹרִים' for printed 'נאוו לחייך בתורים'",
+"'necctuale' for 'nec actuale'"
+]
+},
+"comment": "Faithful overall, but the first Hebrew quotation has a wrong word and the vowel points were added. There is also one garbled word."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf6",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'pro omnibus tam maribus': the word 'tamen' (printed 'tamẽ') is left out"
+]
+},
+"comment": "Complete and in the right order; the only fault is one dropped word, 'tamen'."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf6",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'pro omnibus tam maribus': the word 'tamen' is left out",
+"'genetrici' where the page prints 'genitrici'",
+"Hebrew 'ערשנו'/'רחיטנו' follow the standard Bible text rather than the page's 'ערשינו'/'רחיטינו'"
+]
+},
+"comment": "Complete and in the right order; small faults only: 'tamen' dropped, Hebrew vowel points added that the page lacks, and spellings brought in line with the standard Bible text."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf6",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Accurate, line-by-line transcription that keeps 'tamen'; no faults found."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf6",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"Hebrew 'ערשנו' where the page prints 'ערשינו'"
+]
+},
+"comment": "Accurate, keeps the long s and 'tamẽ'; Hebrew vowel points are added that the page lacks."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf7",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [
+"Hebrew 'יכהן' added in 'כֶּחָתָן יְכַהֵן פְּאֵר', which is not printed (the page reads 'כחתן פאר'); it was completed from the Bible text"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Vna quidem' for 'Vnam quidem'",
+"'affecuta' for 'assecuta'",
+"'Vsqeadeo' for 'Vsqueadeo'"
+]
+},
+"comment": "Accurate overall, but it adds pointed Hebrew and inserts a word in the Isaiah quotation that is not printed."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf7",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Melsię' for 'Messię'",
+"'affecuta' for 'assecuta'"
+]
+},
+"comment": "Faithful, with only minor letter-level misreads."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf7",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'permisisle' for 'permisisse'",
+"'&c.' for '& e-' (exultabit)",
+"'עי' for 'עד'"
+]
+},
+"comment": "Faithful, with a few minor misreads."
+},
+{
+"page_id": "69b51e3bcf111105c4298cf7",
+"book_id": "69b51e3bcf111105c4298b05",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'עד' left out at the start of the Song of Songs 3 quotation, and 'מצאתי' given for 'שמצאתי'",
+"'permisisle' for 'permisisse'",
+"'Vsquedeo' for 'Vsqueadeo'"
+]
+},
+"comment": "Complete reflowed text, with small slips in the Hebrew and Latin."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5335",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [
+"'omnis' (example word above 'tres' in the 3-articulos/2-uoces table)"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'cuispiam' for 'cuipiam'",
+"'cuncque' for 'cunque' (cunq;)"
+]
+},
+"comment": "Complete and well laid out apart from the missing 'omnis' and two small misreads."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5335",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 1,
+"misreads": 0,
+"faults": {
+"omissions": [
+"'omnis' (example word above 'tres')"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [
+"'cuius, quarũ, cui, quib.' is placed in the M. row, not the F. row"
+],
+"misreads": []
+},
+"comment": "Accurate text with one misplaced cell group in the relatives table; 'omnis' is missing."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5335",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'díuerfas' for 'diuersas'"
+]
+},
+"comment": "The most complete version and includes 'omnis'; it has only minor glyph errors."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5335",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [
+"'omnis' (example word above 'tres')"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'quispiam' for 'quipiam' in the first cell of the M. row"
+]
+},
+"comment": "LaTeX-heavy but faithful; 'omnis' is missing and there is one misread."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5336",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [
+"'Antecedens.' / 'Relatiuum' column headings over the last diagram"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and accurate. The pronoun forms are paired line by line with the istic… column exactly as they sit on the page; only the two small column headings in the last diagram are missing."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5336",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 2,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 2,
+"misreads": 1,
+"faults": {
+"omissions": [
+"'tutemet' missing from the Mecum/tute list",
+"'Antecedens.' / 'Relatiuum' column headings"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [
+"Person numbers 1 and 2 put on the 'A Me' and 'A Te' rows instead of the plural rows",
+"'egomet' attached to Nobiscum instead of Mecum"
+],
+"misreads": [
+"'hic & hec' for 'hic & hęc'"
+]
+},
+"comment": "Drops 'tutemet' and shifts the pronoun list against its labels."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5336",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 1,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [
+"Tecum, Vobiscum, Secum., Meapte., Suapte. missing from the pronoun list"
+],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'nostraptē', 'uestraptē' for 'nostrapte', 'uestrapte'"
+]
+},
+"comment": "Five of the -cum/-apte forms in the left column are missing."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5336",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 0,
+"faults": {
+"omissions": [],
+"additions": [
+"'} fing.' repeated on every bracketed line where the page prints it once per bracket"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": []
+},
+"comment": "Complete and faithful, with long s written as f. The only flaw is the repeated sing. bracket marks."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5337",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [
+"'* Humilis' given twice, once in the list and again as a margin note"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'sterimus' for sterrimus",
+"'fsimilior ssimillimus' garbled"
+]
+},
+"comment": "Complete and faithful to the bracket layout; only small slips and one duplicated word."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5337",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'papsis' for passis",
+"'Pompeius' for Pompeus",
+"'ficentissimus' for Munificus where the page prints 'centissimus'"
+]
+},
+"comment": "Complete and well structured; a few minor misreads."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5337",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 1,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [
+"In the Formantur block, 'Datiuo 3, Forti, Fortior' is put under Superlatiuum instead of Comparatiuum, so the formation rules read wrongly"
+],
+"misreads": [
+"'pascis' for passis",
+"'similior' for ssimilior",
+"'ficentissimus' for Munificus where the page prints 'centissimus'"
+]
+},
+"comment": "The formation rules for comparative and superlative are mixed up."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5337",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Pompeio' for Pompeo",
+"'ficentissimus' for Munificus where the page prints 'centissimus'"
+]
+},
+"comment": "Complete; the tables follow the page's structure correctly."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5338",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "C4",
+"call_pages": 4,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'sui perponit' for 'su-perponit' (superponit)",
+"'sent' in imperfect subjunctive 3rd plural where the page prints 'ent'"
+]
+},
+"comment": "Complete and faithful, with abbreviations kept as printed; only two minor slips."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5338",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 3,
+"faults": {
+"omissions": [],
+"additions": [
+"'Nominatiuum' repeated after 'Post' (printed once, covering both Ante and Post)"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'quique fuere' for 'quotque fuere'",
+"'sunt' for printed 'unt'",
+"'sent' for printed 'ent' in imperfect subjunctive"
+]
+},
+"comment": "Complete; one wrong word in the Catullus line and minor table and cell slips."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5338",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "A1b",
+"call_pages": 1,
+"read_alone_from": null,
+"delivered": true,
+"usable": true,
+"omissions": 0,
+"additions": 0,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 2,
+"faults": {
+"omissions": [],
+"additions": [],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'Infinitui' for 'Infinitiui'",
+"'hortadi' shifted one column in the imperative Futuro row"
+]
+},
+"comment": "Faithful and complete; small column shift and one typo."
+},
+{
+"page_id": "6a4e43f4dc886f1f5abb5338",
+"book_id": "6a4e43f4dc886f1f5abb52bb",
+"language": "Latin",
+"type": "roman",
+"arm": "B2",
+"call_pages": 2,
+"read_alone_from": null,
+"delivered": true,
+"usable": false,
+"omissions": 0,
+"additions": 1,
+"cross_page_bleed": 0,
+"order_errors": 0,
+"misreads": 1,
+"faults": {
+"omissions": [],
+"additions": [
+"invented table header row 'Positiuus | Comparatiuus | Superlatiuus'"
+],
+"cross_page_bleed": [],
+"order_errors": [],
+"misreads": [
+"'slimus' for 'ssimus'"
+]
+},
+"comment": "Text otherwise good, but it adds a table header that is not printed on the page."
+}
+]
+}

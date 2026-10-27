@@ -1,5 +1,7 @@
 // PRIOR ART: scripts/batch/cli-ocr.mjs — this is its call, tool gate and marker unwrap (#6523), moved here unchanged
 // so the CLI translation runner (scripts/batch/cli-translate.mjs) uses the same code rather than a second copy.
+// The block split (splitPageBlocks, #7522) follows claude-ocr.mjs splitPages, which lives in a script with no
+// sentinel markers and reads `===== PAGE pNN =====` lines.
 // scripts/eval/run-cli-arm.py is the eval runner's Python copy of the same call (install_gate, call()).
 /**
  * agy-cli.mjs — one headless `agy -p` call, the way the #6523 dev rounds settled it:
@@ -56,6 +58,46 @@ export function unwrapRead(raw) {
   if (u.inside == null) return { text: String(raw || '').trim(), problem: String(raw || '').trim() ? 'no <<<BEGIN>>> marker' : null };
   const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>' : null;
   return { text: u.inside, problem };
+}
+
+/**
+ * An OCR call of several page images (cli-ocr.mjs read --per-call=N, #7522). The images sit in the call's workspace
+ * under neutral names (p01.jpg …), so no page id or number in a file name can be read as text. The wrapper below is
+ * part of the prompt SENT, so of what is hashed; it follows the live OCR prompt in place of the one-page sentence.
+ */
+export const pageBlockFile = (i) => `p${String(i + 1).padStart(2, '0')}.jpg`;
+export function ocrBlockInstruction(n) {
+  const list = Array.from({ length: n }, (_, i) => `page ${i + 1}: @./${pageBlockFile(i)}`).join(', ');
+  return `\n\nThis call: ${n} page images, consecutive pages of one book, in page order: ${list}. Transcribe each page separately and completely in the format above, following every rule above as if it were the only page: never carry text, a header or a heading over from a neighbouring page, and where a word or sentence runs over a page break, end that page with its last printed word and begin the next page with its own first printed word. Write each page between its own two marker lines: <<<PAGE 1 BEGIN>>> and <<<PAGE 1 END>>> around page 1, then <<<PAGE 2 BEGIN>>> and <<<PAGE 2 END>>> around page 2, and so on up to page ${n}. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.\n`;
+}
+
+/**
+ * Split a block OCR reply into its n pages. Returns the n texts in page order, or null unless the reply is exactly
+ * <<<PAGE 1 BEGIN>>> … <<<PAGE 1 END>>> … <<<PAGE n END>>>, in order, each page non-empty, nothing but whitespace
+ * outside them and no other marker inside them. Strict on purpose: a reply is attributed to pages ONLY by its markers,
+ * so a dropped, merged, repeated, renumbered or reordered page refuses the whole call (its pages are then read one per
+ * call) rather than putting one page's text on another.
+ */
+export function splitPageBlocks(reply, n) {
+  const s = String(reply || '');
+  const re = /<<<\s*PAGE\s+(\d+)\s+(BEGIN|END)\s*>>>/g;
+  const marks = [...s.matchAll(re)];
+  if (!(n >= 1) || marks.length !== 2 * n) return null;
+  const texts = [];
+  let at = 0;
+  for (let i = 0; i < n; i++) {
+    const b = marks[2 * i], e = marks[2 * i + 1];
+    if (Number(b[1]) !== i + 1 || b[2] !== 'BEGIN' || Number(e[1]) !== i + 1 || e[2] !== 'END') return null;
+    if (s.slice(at, b.index).trim()) return null;
+    const inside = s.slice(b.index + b[0].length, e.index);
+    if (/<<<\s*(?:BEGIN|END)\s*>>>/.test(inside)) return null;
+    const t = inside.trim();
+    if (!t) return null;
+    texts.push(t);
+    at = e.index + e[0].length;
+  }
+  if (s.slice(at).trim()) return null;
+  return texts;
 }
 
 // Gemini only. agy can also reach Claude models; Claude runs only through the Claude subscription (`claude -p`,
