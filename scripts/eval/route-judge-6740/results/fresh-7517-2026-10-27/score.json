@@ -1,0 +1,748 @@
+{
+ "generated_at": "2026-10-27T09:46:02.663Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 111,
+  "unparsed": 0,
+  "list_usd_equiv": 6.81
+ },
+ "meter": null,
+ "cells": {
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books": 2736,
+    "books_walked": 71,
+    "held_or_hidden": 0,
+    "no_eligible_page": 41,
+    "rule": "visible German books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "21/30",
+     "accept_rate": 0.7,
+     "accept_ci": {
+      "ci95": [
+       0.533,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "5/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.3
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "3/30",
+      "I4": "1/30",
+      "O12": "1/30",
+      "O1": "1/30",
+      "O5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "18/30",
+      "O6": "16/30",
+      "E2": "10/30",
+      "O16": "7/30",
+      "O7": "4/30",
+      "T6": "3/30",
+      "O11": "3/30",
+      "O12": "3/30",
+      "O5": "2/30",
+      "O1": "2/30",
+      "I4": "2/30",
+      "O13": "1/30",
+      "O10": "1/30"
+     },
+     "fidelity_mean": 4.03,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a267f4288f11913ee9c8bef:37",
+       "quote": "zu erhören",
+       "severity": "wrong_text",
+       "what": "page reads 'zu erthönen' (to resound), not 'erhören' (to hear/grant)"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "wissend nun sehet und probier",
+       "severity": "wrong_text",
+       "what": "Misread; the page has roughly 'Weisheit und Kunst … auszustreuen'"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "Energie zustromt. Angeshene haben sie gestillt",
+       "severity": "wrong_text",
+       "what": "Garbled; 'Energie' is not on the page (likely 'Ewige …'), and 'gestillt' should be roughly 'sämtlich göttlich'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00211
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 18,
+     "books": 18,
+     "accept": "16/18",
+     "accept_rate": 0.89,
+     "accept_ci": {
+      "ci95": [
+       0.722,
+       1
+      ],
+      "unit": "book",
+      "units": 18
+     },
+     "wrong_text_pages": "1/18",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.167
+      ],
+      "unit": "book",
+      "units": 18
+     },
+     "wrong_text_classes": {
+      "I4": "1/18"
+     },
+     "classes_k_of_n": {
+      "O6": "8/18",
+      "O8": "5/18",
+      "E2": "5/18",
+      "O11": "2/18",
+      "O16": "2/18",
+      "O12": "1/18",
+      "I4": "1/18",
+      "O13": "1/18"
+     },
+     "fidelity_mean": 4.33,
+     "commonest": "I4",
+     "examples": [
+      {
+       "page": "69ef37016c5c0455cc3f69e5:19",
+       "quote": "<margin>sten) etc.\nSumm\nDann e\nhat das",
+       "severity": "wrong_text",
+       "what": "the cut-off line starts of the facing page (p. 19) were transcribed as marginalia; this page has no margin notes"
+      },
+      {
+       "page": "69ef37016c5c0455cc3f69e5:19",
+       "quote": "<margin>sten) etc.\nSumm\nDann e\nhat das",
+       "severity": "wrong_text",
+       "what": "the cut-off line starts of the facing page (p. 19) were transcribed as marginalia; this page has no margin notes"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.0000043632,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000491
+     },
+     "counts": true,
+     "contain_answers": "0/18",
+     "contain_reasons": [],
+     "unchanged": "0/18",
+     "skipped": 12
+    }
+   },
+   "made_worse": {
+    "lite -> agy-flash-low": {
+     "pairs": 18,
+     "identical_text": 0,
+     "fidelity_diff": 0.11,
+     "fidelity_diff_ci": [
+      -0.222,
+      0.444
+     ],
+     "worse": "3/18",
+     "better": "4/18",
+     "accept_lost": "0/18",
+     "accept_gained": "3/18",
+     "wrong_text_added": "0/18",
+     "worse_pages": [
+      {
+       "page": "69c634823e8cae136d1497fa:109",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "Body text and footnote are complete and accurate; the only real slip is the Templar's name, given as 'Montpesato' with a needless unclear tag where the page plainly reads 'Montepesato'."
+      },
+      {
+       "page": "69c80b4f6c6f3cc53c8466f0:79",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text matches the page line by line. The only slips are a doubled 's' in 'transscendental' (twice) and a signature 'D' that is not on the page."
+      },
+      {
+       "page": "6a243c5a0f0e4f405e62e1f8:564",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The transcription is complete and in order. The only slip a reader would notice is 'Gewerbsbienen' where the page prints 'Gewerksbienen'."
+      }
+     ]
+    }
+   }
+  },
+  "fr-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "frame": {
+    "books": 885,
+    "books_walked": 75,
+    "held_or_hidden": 0,
+    "no_eligible_page": 45,
+    "rule": "visible French books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "accept_rate": 0.73,
+     "accept_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "6/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.067,
+       0.367
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "I1": "2/30",
+      "O5": "2/30",
+      "I4": "1/30",
+      "O1": "1/30",
+      "O4": "1/30",
+      "O7": "1/30",
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "9/30",
+      "O6": "8/30",
+      "E2": "8/30",
+      "O5": "5/30",
+      "O11": "5/30",
+      "O16": "4/30",
+      "O12": "3/30",
+      "I1": "2/30",
+      "O7": "2/30",
+      "T6": "2/30",
+      "I4": "1/30",
+      "O1": "1/30",
+      "O4": "1/30",
+      "I3": "1/30"
+     },
+     "fidelity_mean": 4,
+     "commonest": "I1",
+     "examples": [
+      {
+       "page": "69af4a490c7af0237dfb9792:554",
+       "quote": "monde. Pour terminer la discussion, voici mon dernier mot : en observant les actes de César",
+       "severity": "wrong_text",
+       "what": "The whole body is the Machiavelli/Lucio dialogue from another page of the book. The image is page 544, which describes César's silver horseshoes, his strength, and the dance at Lucrezia's wedding."
+      },
+      {
+       "page": "69e961652beefe2f6f72b4a8:168",
+       "quote": "<page-num>67</page-num>\n<header>LIVRE DEUXIÈME.</header>",
+       "severity": "wrong_text",
+       "what": "The image is page 68 (header 'VIE ET VOYAGES DE HIOUEN-THSANG.'). The candidate gives page 67, the previous page, which ends at 'arrivait des contrées' where page 68 picks up with 'lointaines'."
+      },
+      {
+       "page": "69e961652beefe2f6f72b4a8:168",
+       "quote": "pour les honorer. Cet homme était fort intelligent",
+       "severity": "wrong_text",
+       "what": "None of the candidate's text is on this page. Page 68 itself, which runs from 'lointaines, envoyèrent chacun de grands officiers' to 'Hélas! Si Hiouen-thsang ne fût point allé chercher,', is missing entirely."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00202
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 25,
+     "books": 25,
+     "accept": "23/25",
+     "accept_rate": 0.92,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       1
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_pages": "2/25",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.2
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_classes": {
+      "O18": "1/25",
+      "E2": "1/25"
+     },
+     "classes_k_of_n": {
+      "E2": "11/25",
+      "O8": "6/25",
+      "O16": "4/25",
+      "T6": "2/25",
+      "O12": "1/25",
+      "D1": "1/25",
+      "O18": "1/25",
+      "I3": "1/25"
+     },
+     "fidelity_mean": 4.68,
+     "commonest": "O18",
+     "examples": [
+      {
+       "page": "69f8c1350c0c281d4bd32bfd:430",
+       "quote": "<page-type>blank</page-type>",
+       "severity": "wrong_text",
+       "what": "Page holds a full text block headed '— 351 —' (\"jours, et ces infortunés furent murés à jamais dans le tombeau de leur maître…\", \"La reine Xiuhtlaltzin succéda à Nauhyotl…\") and three footnotes; none of it is transcribed."
+      },
+      {
+       "page": "69f8c1350c0c281d4bd32bfd:430",
+       "quote": "<page-type>blank</page-type>",
+       "severity": "wrong_text",
+       "what": "Page holds a full text block headed '— 351 —' (\"jours, et ces infortunés furent murés à jamais dans le tombeau de leur maître…\", \"La reine Xiuhtlaltzin succéda à Nauhyotl…\") and three footnotes; none of it is transcribed."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.0000043632,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000474
+     },
+     "counts": true,
+     "contain_answers": "0/25",
+     "contain_reasons": [],
+     "unchanged": "0/25",
+     "skipped": 5
+    }
+   },
+   "made_worse": {
+    "lite -> agy-flash-low": {
+     "pairs": 25,
+     "identical_text": 0,
+     "fidelity_diff": 0.64,
+     "fidelity_diff_ci": [
+      0,
+      1.24
+     ],
+     "worse": "4/25",
+     "better": "12/25",
+     "accept_lost": "2/25",
+     "accept_gained": "6/25",
+     "wrong_text_added": "2/25",
+     "worse_pages": [
+      {
+       "page": "69b51eaf9a81ef7feb3d957d:52",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "All eight underlay lines are there in order and match the page, including the repeats that really are printed under both staves of each system. The only thing a reader would notice is the long s written as 'f' (fçaurons, fecret, bofquet). The notation itself is described in an image note rather than transcribed."
+      },
+      {
+       "page": "69c7fda46c6f3cc53c84349e:360",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text is complete and in the right order; a reader would only notice 'faifoit' for 'faiſoit' and the modernised 'frappoit'."
+      },
+      {
+       "page": "69f8c1350c0c281d4bd32bfd:430",
+       "draft": 5,
+       "after": 1,
+       "accept": "true->false",
+       "note": "The image shows a faint but legible printed page 351 about Toltec rulers (Xiuhtlaltzin, Matlacxochitl), with footnotes (1)–(3). The transcription marks it blank and gives no text."
+      },
+      {
+       "page": "6a4ad95ed6371d99e7668aad:386",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Apart from the stray word 'Filters' between 'absous.' and 'Ajoûtons', the transcription matches the page, including the section heading, header, page number and catchword."
+      }
+     ]
+    }
+   }
+  },
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15735,
+    "books_walked": 128,
+    "held_or_hidden": 0,
+    "no_eligible_page": 98,
+    "rule": "visible Latin books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "lite": {
+     "n": 0,
+     "passed": false,
+     "verdicts": []
+    },
+    "lite>agy-flash-low": {
+     "n": 0,
+     "passed": false,
+     "verdicts": []
+    },
+    "agy-flash-low": {
+     "n": 0,
+     "passed": false,
+     "verdicts": []
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 0,
+     "books": 0,
+     "accept": "0/0",
+     "accept_rate": null,
+     "accept_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_pages": "0/0",
+     "wrong_text_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {},
+     "fidelity_mean": null,
+     "commonest": null,
+     "examples": [],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": null,
+     "counts": false,
+     "contain_answers": "0/0",
+     "contain_reasons": [],
+     "unchanged": "0/0",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 0,
+     "books": 0,
+     "accept": "0/0",
+     "accept_rate": null,
+     "accept_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_pages": "0/0",
+     "wrong_text_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {},
+     "fidelity_mean": null,
+     "commonest": null,
+     "examples": [],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.0000043632,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": null,
+     "counts": false,
+     "contain_answers": "0/0",
+     "contain_reasons": [],
+     "unchanged": "0/0",
+     "skipped": 26
+    },
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 0,
+     "books": 0,
+     "accept": "0/0",
+     "accept_rate": null,
+     "accept_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_pages": "0/0",
+     "wrong_text_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {},
+     "fidelity_mean": null,
+     "commonest": null,
+     "examples": [],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.0000043632,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": null,
+     "counts": false,
+     "contain_answers": "0/0",
+     "contain_reasons": [],
+     "unchanged": "0/0",
+     "skipped": 30
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "lite -> agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "de-lite",
+   "route": "lite",
+   "page_id": "69f664d320bcf02baf4309e6",
+   "book_id": "69b4192e2b0edf3eaa2def0d",
+   "page_number": 118,
+   "defects": [
+    {
+     "class": "O12",
+     "quote": "partes aa quolibet par. in minera ♄ lässet sich auch eine leichte resolution",
+     "severity": "wrong_text",
+     "what": "Text of the pasted slip is spliced line by line into the cut-off Latin lines, so it reads as one mixed text"
+    },
+    {
+     "class": "O6",
+     "quote": "wissend nun sehet und probier",
+     "severity": "wrong_text",
+     "what": "Misread; the page has roughly 'Weisheit und Kunst … auszustreuen'"
+    },
+    {
+     "class": "O6",
+     "quote": "Energie zustromt. Angeshene haben sie gestillt",
+     "severity": "wrong_text",
+     "what": "Garbled; 'Energie' is not on the page (likely 'Ewige …'), and 'gestillt' should be roughly 'sämtlich göttlich'"
+    },
+    {
+     "class": "O1",
+     "quote": "♄, ♃, ♁, ♂",
+     "severity": "wrong_text",
+     "what": "A string of planetary symbols that is not on the page"
+    }
+   ],
+   "note": "The German upper half is only roughly right, and the lower half mixes the pasted-on German slip into the half-covered Latin recipe, with wrong alchemical symbols."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69f6a676963c0bec3582ee99",
+   "book_id": "6909bf46cf28baa1b4caf6b5",
+   "page_number": 128,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "il ne s'est pas contenté de se faire un party, il a voulu encore se faire un nom, & se rendre chef d'une secte",
+     "severity": "wrong_text",
+     "what": "The whole second column is invented. The page has one column, and only a thin strip of the facing leaf shows at the right edge."
+    },
+    {
+     "class": "O4",
+     "quote": "& sans aucune communion avec nos Eglises, & sans aucune participation aux Sacremens de nos Eglises",
+     "severity": "wrong_text",
+     "what": "The invented column falls into a looping run of repeated 'sans aucune ... avec nos Eglises' phrases."
+    }
+   ],
+   "note": "The real page text is transcribed almost correctly, but a long invented second column follows it, full of repeated 'sans aucune ... avec nos Eglises' phrases, and that column is not on this single-column page."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69af4a490c7af0237dfb99bc",
+   "book_id": "69af4a490c7af0237dfb9792",
+   "page_number": 554,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "monde. Pour terminer la discussion, voici mon dernier mot : en observant les actes de César",
+     "severity": "wrong_text",
+     "what": "The whole body is the Machiavelli/Lucio dialogue from another page of the book. The image is page 544, which describes César's silver horseshoes, his strength, and the dance at Lucrezia's wedding."
+    },
+    {
+     "class": "O7",
+     "quote": "<page-num>541</page-num>",
+     "severity": "wrong_text",
+     "what": "The page prints 544, not 541."
+    },
+    {
+     "class": "O5",
+     "quote": "Lucio, sans façon, secoua Machiavel et l'appela polisson.",
+     "severity": "wrong_text",
+     "what": "None of this page's 31 lines is transcribed, from 'cents ducats par jour' to 'lui chuchota quelques mots'."
+    }
+   ],
+   "note": "A reader would see a transcription of a different page (541, the Machiavelli tavern dialogue) next to an image of page 544 about César Borgia's horseshoes, his strength, and his masked dance at Lucrezia's wedding. None of the text matches."
+  },
+  {
+   "cell": "fr-lite",
+   "route": "lite",
+   "page_id": "69e961652beefe2f6f72b550",
+   "book_id": "69e961652beefe2f6f72b4a8",
+   "page_number": 168,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "<page-num>67</page-num>\n<header>LIVRE DEUXIÈME.</header>",
+     "severity": "wrong_text",
+     "what": "The image is page 68 (header 'VIE ET VOYAGES DE HIOUEN-THSANG.'). The candidate gives page 67, the previous page, which ends at 'arrivait des contrées' where page 68 picks up with 'lointaines'."
+    },
+    {
+     "class": "I1",
+     "quote": "pour les honorer. Cet homme était fort intelligent",
+     "severity": "wrong_text",
+     "what": "None of the candidate's text is on this page. Page 68 itself, which runs from 'lointaines, envoyèrent chacun de grands officiers' to 'Hélas! Si Hiouen-thsang ne fût point allé chercher,', is missing entirely."
+    }
+   ],
+   "note": "The text shown beside this image belongs to the previous page (67). The page's own text, about the trip to Kie-tchi and Fan-yen-na (Bamian) through the snowy mountains, is not there at all."
+  }
+ ]
+}

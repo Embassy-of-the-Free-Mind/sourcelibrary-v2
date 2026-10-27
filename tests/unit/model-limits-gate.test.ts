@@ -76,6 +76,19 @@ describe('model-limits gate', () => {
     expect(Math.abs(t - (Date.now() + 2.5 * 3600e3))).toBeLessThan(5000);
   });
 
+  it('a second agy account (AGY_HOME) has its own locks, apart from the main account and its meter (#7517)', () => {
+    fs.writeFileSync(agyMeter, JSON.stringify({ locked_models: { 'gemini-3.8-flash-low': later } }));
+    lim.noteLimitHit('agy-gemini-3.8-flash-low', { until: later, reason: 'main account' });
+    process.env.AGY_HOME = '/root/.agy-james';
+    try {
+      expect(lim.agyLimitLane('gemini-3.8-flash-low')).toBe('agy@.agy-james-gemini-3.8-flash-low');
+      expect(lim.agyBlocked('gemini-3.8-flash-low')).toBeNull();
+      lim.noteLimitHit(lim.agyLimitLane('gemini-3.8-flash-low'), { until: later, reason: 'second account' });
+      expect(lim.agyBlocked('gemini-3.8-flash-low')).toMatchObject({ reason: 'second account' });
+    } finally { delete process.env.AGY_HOME; }
+    expect(lim.agyBlocked('gemini-3.8-flash-low')).toMatchObject({ reason: 'main account' });
+  });
+
   it('a wait does not idle through a block that outlasts it', async () => {
     const ok = await lim.waitWhileBlocked(() => ({ until: later, reason: 'test' }), { log: () => {}, maxWaitH: 1 });
     expect(ok).toBe(false);
