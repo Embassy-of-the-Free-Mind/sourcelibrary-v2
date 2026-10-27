@@ -1,0 +1,746 @@
+{
+ "judged": 30,
+ "books": 20,
+ "probe": "ok",
+ "controls_caught": "5/5",
+ "controls": [
+  {
+   "page_id": "6a3cb7ca3dce6cfad74884ad",
+   "kind": "control_drop",
+   "judged": true,
+   "accept": false,
+   "fidelity": 3,
+   "caught": true,
+   "defects": [
+    "T9/wrong_text: drops 而君至今列位畢故舉尸於鋪衣上也: the ruler has arrived and taken his place, so the corpse is lifted onto the laid-out garments",
+    "O6/misleads: 撫案尸 means the ruler lays his hand on the corpse; there is no table",
+    "E2/cosmetic: wrong romanisation of 稽顙, which is qisang"
+   ]
+  },
+  {
+   "page_id": "6a3cf0b18642f0445b166a50",
+   "kind": "control_bleed",
+   "judged": true,
+   "accept": false,
+   "fidelity": 3,
+   "caught": true,
+   "defects": [
+    "T5/wrong_text: Final sentence is not on this page; the page ends at 議者不曉農殖, so this is carried over from the next leaf",
+    "E2/cosmetic: Adds 'measuring' and 'portioning'; the source says only 割截 (cutting)",
+    "E2/cosmetic: Splits the clauses between cloth and grain, which the source does not do"
+   ]
+  },
+  {
+   "page_id": "6a3c618c879008ba7e15ef34",
+   "kind": "control_drop",
+   "judged": true,
+   "accept": false,
+   "fidelity": 3,
+   "caught": true,
+   "defects": [
+    "T9/wrong_text: A whole sentence on the page is left out without notice: 就使實能把捉得住只此已是大病况未必真能把捉得住乎 ('even if one really could hold it fast, that alone is already a great fault; and one may well not truly manage to hold it').",
+    "E2/cosmetic: The page only has 如云 ('as when it is said'). Naming Buddhists as the speakers is an added gloss, though the context supports it."
+   ]
+  },
+  {
+   "page_id": "6a3c6ba039b4508b04e44a8d",
+   "kind": "control_bleed",
+   "judged": true,
+   "accept": false,
+   "fidelity": 3,
+   "caught": true,
+   "defects": [
+    "T5/wrong_text: Added final paragraph that is not on the page; the page ends at 寧按上文大意主",
+    "T7/wrong_text: 合刪 ('should be deleted') was misread as 合 + 刑 and rendered as fragments",
+    "T8/misleads: Ning's verdict ('this loses the point; delete it') is put inside the quoted note and turned into 'otherwise'",
+    "O6/misleads: The source says the stretch from Kun back to Gou is what precedes Wuji; the Wuji does not return",
+    "E2/cosmetic: A stray character beside the series title is rendered as a word"
+   ]
+  },
+  {
+   "page_id": "6a3cb54257c1f37219c48251",
+   "kind": "control_drop",
+   "judged": true,
+   "accept": false,
+   "fidelity": 3,
+   "caught": true,
+   "defects": [
+    "T9/wrong_text: drops the opening sentence of the second paragraph, 以尊卑言之五父道也二子道也 (in terms of rank, the fifth is the father's way and the second the son's way); the contrast it sets up and the later 'son' warning now lack their premise",
+    "T8/cosmetic: 'arrogantly' is added; the source only says 以師道自居 (take the teacher's role upon itself)"
+   ]
+  }
+ ],
+ "usable": {
+  "k": 18,
+  "n": 30,
+  "pct": 60,
+  "ci95": [
+   42,
+   75
+  ]
+ },
+ "sense_error": {
+  "k": 13,
+  "n": 30,
+  "pct": 43,
+  "ci95": [
+   27,
+   61
+  ]
+ },
+ "omission": {
+  "k": 2,
+  "n": 30,
+  "pct": 7,
+  "ci95": [
+   2,
+   21
+  ]
+ },
+ "cross_page_bleed": {
+  "k": 0,
+  "n": 30,
+  "pct": 0,
+  "ci95": [
+   0,
+   11
+  ]
+ },
+ "names": {
+  "k": 6,
+  "n": 30,
+  "pct": 20,
+  "ci95": [
+   10,
+   37
+  ]
+ },
+ "wrong_leaf": {
+  "k": 0,
+  "n": 30,
+  "pct": 0,
+  "ci95": [
+   0,
+   11
+  ]
+ },
+ "invented": {
+  "k": 6,
+  "n": 30,
+  "pct": 20,
+  "ci95": [
+   10,
+   37
+  ]
+ },
+ "wrong_text": {
+  "k": 5,
+  "n": 30,
+  "pct": 17,
+  "ci95": [
+   7,
+   34
+  ]
+ },
+ "fidelity_mean": 3.87,
+ "gate": {
+  "rule": "0 wrong-leaf, 0 invented, sense errors <= 1 page in 3 (skqs-flash-pilot-5600, Derek 2026-10-27)",
+  "pass": false
+ },
+ "rows": [
+  {
+   "page_id": "6a3c6c4339b4508b04e47f60",
+   "book_id": "6a3c6c4339b4508b04e47ebd",
+   "page_number": 163,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: ambiguous syntax: 'stating' could be read as the inscription speaking, when 云 introduces the Jinshi lu compiler's comment «contains an inscription from a bronze tripod vessel belonging to Duke Luan of So»",
+    "T10/cosmetic: editorial gloss calls Li Qingzhao a co-compiler; the work is normally credited to Zhao Mingcheng, and the page names no author «compiled by Zhao Mingcheng and Li Qingzhao»"
+   ],
+   "note": "A faithful and complete rendering of the Jinshi lu passage on Duke Luan of Song (Duke Jing) and the Zong/Song error. It breaks off mid-sentence at 'The various barbarian tribes', as the page itself does."
+  },
+  {
+   "page_id": "6a3c6c2701fe4f593c1b0e2d",
+   "book_id": "6a3c6c2701fe4f593c1b0da1",
+   "page_number": 140,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 臭椿/樗 (ailanthus, tree of heaven) is rendered throughout as 'stink chinquapin'. A chinquapin is a chestnut-type tree, so the plant is misidentified on every mention. «The <term>kao</term> is the stink chinquapin»",
+    "T7/misleads: The page has 櫄 (chun, the toon tree), but the candidate follows the transcription's misread 櫃 and translates it as 'chest tree' with no sign of doubt. «The chest tree, stink chinquapin, <term>kao</term>, and lacquer tree»",
+    "O6/misleads: 今音丑居切與椿同母 means the modern reading is given by the fanqie spelling chou-ju and has the same initial consonant as 椿. The candidate garbles the fanqie and adds an invented 'phonetic root'. «its contemporary pronunciation shares the initial with <term>chou</term>; sharin»",
+    "T10/misleads: The note about the Shuowen character's structure is invented. The page only glosses it as 音考即栲 ('pronounced kao, i.e. 栲'). «written with the wood radical and <term>chou</term> phonetic»",
+    "T9/cosmetic: The specific variant 摴 given in 樗又作摴 is dropped. «is also written with alternative variants»",
+    "O6/misleads: The character in 一曰桼/黍 is doubtful, and the candidate commits to 'millet' without flagging it. «Another name is the millet tree»"
+   ],
+   "note": "The text reads smoothly, but the ailanthus is mislabelled 'stink chinquapin' throughout, the toon tree in the proverb becomes a 'chest tree', and the passage on pronunciation is garbled."
+  },
+  {
+   "page_id": "6a3c6f2201fe4f593c1c95a9",
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "page_number": 113,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: Added wording: in 神之格思 (a Shijing line), 思 is a particle, so 'in reverence' is not on the page; it means 'the spirits' arriving'. «spirit arriving in reverence belongs to what is dark and hidden»",
+    "E2/cosmetic: Loose rendering of 神而化之 (Xici: 'make it spirit-like and transform it'); the sense is roughly kept. «Spirit transforming into action belongs to what is visible»"
+   ],
+   "note": "The transcription matches the page, and the translation covers all three commentary sections with their Xici slip labels; only a few phrases of the commentary are loosely worded."
+  },
+  {
+   "page_id": "6a3c800801fe4f593c21f19b",
+   "book_id": "6a3c800801fe4f593c21f140",
+   "page_number": 91,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O11/cosmetic: The legible running title 欽定四庫全書 (Imperial Siku Quanshu edition) is marked unclear instead of translated. The transcription garbled it as 金穴口虎台. «<unclear>missing heading characters</unclear>»",
+    "E2/cosmetic: For 又肇於此, 'also begins here' is closer. 'Anew' slightly overstates the source. «begins anew here»"
+   ],
+   "note": "The body text is a faithful, complete translation of this commentary on losing friends and the mare's steadfastness in the Kun hexagram. Only the edition's running title at the top is left as 'unclear' when it should have been translated."
+  },
+  {
+   "page_id": "6a3ce8240a0011cb4bc0c4ee",
+   "book_id": "6a3ce8230a0011cb4bc0c42c",
+   "page_number": 29,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: 職儀 ('offices and protocols') padded into a longer phrase; the sense is unchanged «In all, 12 works of official ceremonial regulations and institutional protocols.»"
+   ],
+   "note": "This is a faithful rendering of the book list. It covers every title on the page in order, and the totals of 16 and 12 are correct. The opening 王世紀 is reasonably handled as the tail of a title split from the previous page (帝王世紀)."
+  },
+  {
+   "page_id": "6a3c6c4339b4508b04e47f65",
+   "book_id": "6a3c6c4339b4508b04e47ebd",
+   "page_number": 168,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O12/cosmetic: The interlinear notes 貞觀尚方令 and 振武校尉 describe the painter named just before them (Wang Ding and Tan Zhimin). On their own lines, they could be read as belonging to the next name. «<note>Director of the Imperial Workshops during the Zhenguan reign</note>\nTan Zh»",
+    "E2/cosmetic: 振武校尉 is a military rank title (Zhenwu Commandant). 'Of Zhenwu' makes Zhenwu look like a place. «Commandant of Zhenwu»"
+   ],
+   "note": "A complete and accurate translation of the list of paintings with historical subjects from the Han to the Tang, including all source citations. Only the placement of two short rank notes is slightly ambiguous."
+  },
+  {
+   "page_id": "6a3ce7ab0a0011cb4bc0a865",
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "page_number": 30,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: Three separate glosses (皇=張, 吪=動, 遒=聚, the last two key words from stanzas 2 and 3) are merged into one definition of 皇. The words 吪 and 遒 disappear, and 動 is overstated as 'summon into action'. «\"Huang\" 皇 means to display and enlarge; it also means to summon into action, or »",
+    "O6/misleads: 恐不幸而墮其機 means they feared the Duke might, by ill luck, fall into the petty men's trap (機 = scheme or snare). It does not mean an opportunity would be ruined. «they feared that by some misfortune the critical opportunity might be ruined»",
+    "T8/misleads: 亦孔之將 means only 'also very great'. 'His benevolence' is added. Also, 哀 here, as the commentary reads it, is the people's grief, not the Duke's pity. «And his benevolence was exceedingly great!»",
+    "T8/cosmetic: Ignores the page's own gloss 皇=張 (to extend or enlarge). «The four quarters of the realm were reformed and brought to order.»",
+    "T9/cosmetic: The juan number 卷八 in the margin is dropped. «<header>Imperially Approved Siku Quanshu</header>»"
+   ],
+   "note": "The commentary's glosses are run together: 'huang' gets three meanings, and the glosses on 吪 and 遒 vanish. The fear of the Duke 'falling into their trap' is turned into a ruined opportunity."
+  },
+  {
+   "page_id": "6a3c70de01fe4f593c1d5b3b",
+   "book_id": "6a3c70de01fe4f593c1d5b26",
+   "page_number": 21,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T9/cosmetic: the comparison is to 耜耒 (plowshare and plow); the plow is left out «The grain scratcher is smaller than a plowshare»",
+    "E2/cosmetic: 穀芨 (probably 耞芟, flail and sickle) given as an unclear made-up tool name «their grain scratchers»"
+   ],
+   "note": "This is a faithful, complete translation of the main text and the interlinear notes; the only issues are a loose name for one farm tool and a small simplification in one note."
+  },
+  {
+   "page_id": "6a3c67f9af3c49b59c5d53f3",
+   "book_id": "6a3c67f9af3c49b59c5d53b9",
+   "page_number": 58,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 端正月 means 'the perfectly round (upright) moon'; here 月 is the moon, not a month, and 端正 is not 'righteous' «called the Mid-Autumn moon the \"Righteous Month\"»",
+    "O6/misleads: Han Yu's line 三秋端正月 refers to the round moon of autumn; rendering it as an 'upright month' garbles the quotation «the moon of the upright month, tonight»",
+    "T10/misleads: the gloss makes up meanings for 端正月 that the source does not support «the moon of upright propriety or the true correct month»",
+    "T8/misleads: 宜良外甥 means the gourds are good for (benefit) the nephews; 'fine nephews' misreads 良 as an adjective describing the nephews «Folk custom says this brings good fortune to fine nephews»",
+    "O6/cosmetic: the custom is aunts and uncles giving gourds to their nephews, not a mutual exchange «nephews, maternal aunts, and maternal uncles all present one another»",
+    "T15/cosmetic: the specific previous-page number cannot be checked from this page and looks invented «concluding the term shefan (社飯, Earth God festival rice) from page 57»"
+   ],
+   "note": "Most of the page is translated correctly, but in the Mid-Autumn entry 端正月 (the perfectly round moon) comes out as a 'Righteous Month', which also distorts the Han Yu quotation."
+  },
+  {
+   "page_id": "6a3c75dc39b4508b04e5e2b1",
+   "book_id": "6a3c75dc39b4508b04e5e2ac",
+   "page_number": 5,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O11/cosmetic: The book title is the running title printed in the fold margin (banxin), but the candidate presents it as a heading in the body text. «# Trustworthy and Applicable Formulas <note>Chuanxin Shiyong Fang</note>»",
+    "T13/cosmetic: The margin's collection name 欽定四庫全書 and the leaf number 二 are dropped. «# Trustworthy and Applicable Formulas»",
+    "T10/cosmetic: The ninth lunar month of Qianlong 46 ran from about mid-October to mid-November 1781, so 'October' alone is too narrow. «<note>October 1781</note>»"
+   ],
+   "note": "This is the Siku Quanshu colophon dated Qianlong 46/9, naming Ji Yun, Lu Xixiong and Sun Shiyi as chief compilers and Lufei Chi as chief collator. The translation is accurate, but the margin's book title is shown as a body heading, and the collection name and leaf number are left out."
+  },
+  {
+   "page_id": "6a3cbef2f9474f825c1644da",
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "page_number": 45,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: page has 姤 (Gou, Hexagram 44, Coming to Meet), not 歸妹/Guimei «<term>Jiazi</term> <note>1st year of the cycle</note>, <term>Guimei</term> <glos»",
+    "T10/misleads: invented emendation claiming a scribal error; the page clearly reads 姤 «<note>The text writes 始, likely an error or variant for 歸妹</note>»",
+    "E2/cosmetic: note blames the page for a transcription misread; the page plainly reads 共 «<note>The character 芸 in the transcription is a scribal variant or error for 共</»"
+   ],
+   "note": "The hexagram for the jiazi year is given as Guimei (54) with an invented 'scribal error' note; the page actually reads 姤 (Gou, 44)."
+  },
+  {
+   "page_id": "6a3ce8240a0011cb4bc0c545",
+   "book_id": "6a3ce8230a0011cb4bc0c42c",
+   "page_number": 116,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: The page has 厹矛 (qiu mao, the three-pronged spear in 'Xiao Rong'), not 公矛, so the 'Duke's' reading is invented. «Duke's Spear <term>gong mao</term>»",
+    "O6/misleads: The page reads 駟驖 (Si Tie, 'Four Iron-Black Horses'), not 駟驥. The romanised title is wrong. «poem \"Four Steeds\" <note>original: \"Si Ji pian\"</note>»",
+    "T8/misleads: In 'Si Tie' (舍拔則獲), 拔 means the notched end of an arrow, not 'uprooting'. «Uprooting <term>ba</term>»",
+    "T8/misleads: In 二矛重喬, 喬 is the hook-shaped ornament on the spear that holds the tassels, not the shaft. «Spear Shaft <term>qiao</term>»",
+    "E2/cosmetic: The gloss is awkward and doubled: 伐 here is simply a shield (蒙伐). «Shield or Rank Shield <term>fa</term>»"
+   ],
+   "note": "This is an index of Shijing terms with the poems they come from. The order and the poem attributions match the page, but one headword is misread (厹矛 given as 'Duke's Spear'), one poem title is mis-romanised (Si Tie given as 'Si Ji'), and two glosses are wrong ('Uprooting' for 拔 and 'Spear Shaft' for 喬)."
+  },
+  {
+   "page_id": "6a3c74c339b4508b04e59406",
+   "book_id": "6a3c74c339b4508b04e593bc",
+   "page_number": 74,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 瞻略 is a variant of 膽略, which means courage and strategic skill, not foresight «possessed far-reaching foresight»",
+    "E2/cosmetic: Inaccurate title: 北京留守 means Resident Governor of the Northern Capital, not Regent «Regent of the Northern Capital»",
+    "E2/cosmetic: Anachronistic title: 太原尹 is better rendered Governor of Taiyuan Prefecture «Mayor of Taiyuan»"
+   ],
+   "note": "All five biographies are translated in full and match the page. The only real slip is Zhang Cunjing's 瞻略 (courage and strategy), rendered as 'foresight'; a few official titles also sound slightly modern."
+  },
+  {
+   "page_id": "6a3c6e7e01fe4f593c1c35de",
+   "book_id": "6a3c6e7e01fe4f593c1c35dd",
+   "page_number": 1,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": true,
+   "defects": [
+    "O1/wrong_text: There are no numerals on the page. The five 'margin' numbers seem to come from the five panels of the stitched spine on the right, and the translation passes them on as real text. «<margin>\nOne\n\nTwo\n\nThree\n\nFour\n\nFive\n</margin>»"
+   ],
+   "note": "The title label '四庫全書 / 經部' is correctly given as Complete Library in Four Sections / Classics Section, but the margin numbers 'One' to 'Five' aren't on the cover at all."
+  },
+  {
+   "page_id": "6a3c767401fe4f593c1fb2c3",
+   "book_id": "6a3c767401fe4f593c1fb25a",
+   "page_number": 105,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: interpretive addition: 'of the cosmos' is not on the page (自然之氣) «the natural vital breath of the cosmos»",
+    "E2/cosmetic: 'the alternating song' is supplied by the translator; the page says only 非正歌也而已 «this is simply the alternating song and not the primary song»"
+   ],
+   "note": "A faithful, complete translation of the passage on sung and piped odes and the opening of 'Alternating Singing, Part Two'; a few explanatory phrases are glosses that are not in the source."
+  },
+  {
+   "page_id": "6a3c6e7e01fe4f593c1c362b",
+   "book_id": "6a3c6e7e01fe4f593c1c35dd",
+   "page_number": 78,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 東 is read twice, once as 'east' and once as 束 'bundle'. 'Dried' is added too: the page says only 魚次, 'the fish stand comes next'. «The bundle of dried fish is placed next»",
+    "T10/cosmetic: The page has 鼏, 'cauldron cover', and the transcription wrongly has 鼐. Instead of fixing the misread, the note explains it away, and the rendering mixes both words. «the large tripod cauldron covers <note>original: \"鼐\", here referring to the caul»",
+    "E2/cosmetic: Inaccurate gloss: 少牢 is the sheep-and-pig offering, not a cattle offering. «<gloss>Lesser Cattle Offering</gloss>»"
+   ],
+   "note": "The translation reads accurately through the comparison of cauldron placement in funeral, wedding and Shaolao rites. In the final line, though, the dried fish 'bundle' is not on the page: the text says the fish stand comes next after the stands set east of the dou."
+  },
+  {
+   "page_id": "6a3cba213dce6cfad7499c85",
+   "book_id": "6a3cba213dce6cfad7499c52",
+   "page_number": 51,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: 甲 is rendered 'nails' everywhere else but 'claws' here, so the term is inconsistent «its concentrated essence resides in the claws»"
+   ],
+   "note": "This is a faithful, complete translation of the page on pig dewclaws (lines 覈曰 and 參曰). It continues 'erosion' from the previous page, and its last sentence breaks off mid-line, as the page itself does."
+  },
+  {
+   "page_id": "6a3c6ad6af3c49b59c5eaa5b",
+   "book_id": "6a3c6ad6af3c49b59c5eaa11",
+   "page_number": 73,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "O8/misleads: Running title 日講孟子解義 (Daily Lectures on Mencius) replaced with the broader series title 'Four Books' «Imperial Daily Lectures on the Meaning of the Four Books»",
+    "E2/cosmetic: 其人 ('the persons themselves') narrowed to 'personalities'; the sense still holds «how could one merely desire to know their personalities?»"
+   ],
+   "note": "The main text matches the page completely and accurately, but the running-title note names the wrong book: it should be the Daily Lectures on Mencius, not the Four Books."
+  },
+  {
+   "page_id": "6a3c6c0c01fe4f593c1afcce",
+   "book_id": "6a3c6c0c01fe4f593c1afc3e",
+   "page_number": 144,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T5/cosmetic: 'why' guesses how the sentence ends on the next page; the source only says 而不知青紫 «Yet they do not know why the blue and purple»"
+   ],
+   "note": "A faithful, complete page: it finishes the argument about ancestral temple music and Han Bangqi (Yuanluo), translates the entry on how 骨董/汨董/古董 are written, and starts the 拾青紫 entry, which breaks off mid-sentence as the page does."
+  },
+  {
+   "page_id": "6a3c74c339b4508b04e593f1",
+   "book_id": "6a3c74c339b4508b04e593bc",
+   "page_number": 53,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [],
+   "note": "This is a faithful, complete translation of all four Tang biographies (Zhang Sizong, Zhang Zhenzhou, Zhang Xuansu and Zhang Shigui), and the names, places, eras and offices all match the page. A few office titles use less common English renderings, such as 'Investigating Censor' for 侍御史 (usually 'Attendant Censor'), but none of them mislead."
+  },
+  {
+   "page_id": "6a3c6f2201fe4f593c1c95c5",
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "page_number": 141,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: The running header reads 欽定 ('Imperially Commissioned'). The transcription misread it as 釐定, and the translation carries that misread over as 'Revised'. «Revised Complete Library in Four Sections»",
+    "O6/misleads: 得禍於勢者 means calamity at the hands of those who hold power or position, not from 'immediate circumstances'. «suffering calamity from immediate circumstances»"
+   ],
+   "note": "The body reads faithfully, but the running header gives the wrong series title ('Revised' for 欽定, 'Imperially Commissioned'), and 勢者 (those in power) comes out as 'immediate circumstances'."
+  },
+  {
+   "page_id": "6a3cbcc3ec254ff6cadf2e79",
+   "book_id": "6a3cbcc3ec254ff6cadf2e44",
+   "page_number": 53,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: Padded rendering of 嫌於卑之: 'presumptuously' and 'or altering' are not on the page, and the sense becomes vague «avoiding the impropriety of presumptuously lowering or altering it»",
+    "E2/cosmetic: Adds 'higher', which is not in 父本無爵 ('the father had no rank') «the father originally held no higher rank»"
+   ],
+   "note": "A faithful and complete translation of the Royal Regulations passage, the Doctrine of the Mean passage and the commentary. Only the gloss on 嫌於卑之 is slightly padded, and the page correctly ends mid-sentence."
+  },
+  {
+   "page_id": "6a3c800801fe4f593c21f1bd",
+   "book_id": "6a3c800801fe4f593c21f140",
+   "page_number": 125,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T8/misleads: 闔之於已然 means closing it upon what has already come about; the translation reverses 'already' into 'before' «close it before it has become so»",
+    "T8/cosmetic: 亦微矣 means 'is also subtle'; the word 'also' is dropped and 'exceedingly' is overstated «is exceedingly subtle»",
+    "E2/cosmetic: adds 'generate' and 'cycle', which the page doesn't say; it reads 相與爲无窮 as 'together make the inexhaustible' «together generate an inexhaustible cycle»"
+   ],
+   "note": "The translation is complete and mostly faithful, but the Zhang Hengqu quote 闔之於已然 is reversed into 'before it has become so' (it should mean closing what has already happened)."
+  },
+  {
+   "page_id": "6a3c711839b4508b04e51b3d",
+   "book_id": "6a3c711839b4508b04e51b03",
+   "page_number": 57,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O8/cosmetic: 格物通 has no 'Mirror' in it; the word comes from the Tongjian-type title «Comprehensive Mirror of the Investigation of Things»",
+    "T8/cosmetic: 不知幾百 means 'who knows how many hundreds'; the translation loses that emphasis «numbered in the hundreds»",
+    "T9/cosmetic: the opening 日 ('daily' / 'now') is not translated «the productive capacity of a mere hundred or so prefectures is used»"
+   ],
+   "note": "The transcription matches the page. The translation is faithful: the numbers, the names (Jia Sidao, Shi Songzhi, Zhu Yi) and the 'could not put it into practice' outcome are all right. The only slips are a loose rendering of the running-head title and a slightly flattened 'who knows how many hundreds'."
+  },
+  {
+   "page_id": "6a3ce7ab0a0011cb4bc0a85c",
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "page_number": 21,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": true,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "O11/misleads: This is the book title 詩總聞 (Shi zongwen) printed in the fore-edge margin, not a scribal or reading note. «<note>original: \"寺忽聞\", a scribal or reading note</note>»",
+    "T9/misleads: The page gives two parallel usages, 克有常憲之有 and 有諸己之有. The second has been turned into a gloss on the first. «should be understood as in the phrase \"able to possess regular statutes,\" meanin»",
+    "T10/misleads: Calling 蘇 a modal particle is the translator's guess. The page only says 又若蘇, and 又若 ('also, as in') is rendered as 'or'. «or <term>su</term> <gloss>a modal particle</gloss>»"
+   ],
+   "note": "The commentary reads well, but the margin's book title is labelled as a scribal note, and the closing two-part gloss on 有 is folded into a single citation."
+  },
+  {
+   "page_id": "6a3c716e01fe4f593c1d7971",
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "page_number": 166,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T9/cosmetic: the opening '門也', the end of a sentence carried over from the previous page, is silently left out «At that time, his mother was outside the side gate»",
+    "E2/misleads: attribution error: 周制自卿大夫以下其室為夏屋 is still part of the commentary quote, but it is rendered as the author's own narration «Under the Zhou system, for everyone from ministers and great officers downward»",
+    "O6/misleads: 夏屋 here means a large two-sloped house, not a Xia-dynasty style; 'standard' is added «standard Xia-style two-sloped roofs»",
+    "E2/cosmetic: 'corridor' is added; 掖門 are simply side gates «eastern and western side corridor gates»"
+   ],
+   "note": "This is a faithful and complete rendering of the page on side gates and roof forms. It drops the carried-over '門也' at the start, treats part of Zheng's commentary as the author's narration, and gives 夏屋 the questionable reading 'Xia-style'."
+  },
+  {
+   "page_id": "6a3c6c0c01fe4f593c1afc8b",
+   "book_id": "6a3c6c0c01fe4f593c1afc3e",
+   "page_number": 77,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "T10/misleads: 遙集 is the courtesy name of Ruan Fu 阮孚, not Ruan Xian 阮咸 (Ruan Xian's style is Zhongrong); the gloss names the wrong person «his elder brother Yaoji <note>Ruan Xian</note>»",
+    "O6/cosmetic: 自有致 means they had their own appeal or reasons; 'integrity' stretches it «those people also possessed their own integrity»"
+   ],
+   "note": "The transcription matches the page and the translation is complete and accurate, but the note that names Yaoji as Ruan Xian is wrong: Yaoji is Ruan Fu."
+  },
+  {
+   "page_id": "6a3c67f9af3c49b59c5d53fd",
+   "book_id": "6a3c67f9af3c49b59c5d53b9",
+   "page_number": 68,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T15/cosmetic: The continuity note supplies \"All of you\" and \"eighth\" from the previous page, which this page doesn't show; this page begins at 月. «continues from previous page: \"All of you, on the eighth»",
+    "O6/misleads: In 天為素娥霜怨苦 the bitter grief is Su'e's, and Heaven acts on her behalf. The translation makes Heaven the one grieving. «Heaven feels bitter grief for the pale maiden's frost»",
+    "E2/cosmetic: 孀 means \"widowed\"; \"mourning\" is a loose rendering. «Mourning Maiden»"
+   ],
+   "note": "This is a faithful, complete translation of the Mid-Autumn music anecdote and the 孀娥怨 entry with Luo Yin's poem. Only one poem line slightly shifts who is grieving, and the continuity note fills in previous-page text that this page doesn't show."
+  },
+  {
+   "page_id": "6a3cbcc3ec254ff6cadf2e8d",
+   "book_id": "6a3cbcc3ec254ff6cadf2e44",
+   "page_number": 73,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": true,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": true,
+   "defects": [
+    "O11/wrong_text: The note was built from page furniture. 禮書綱目 is the running title on the fore-edge (and misread as 細目), and 二 is the folio number. The real 詳見 cross-reference breaks off and continues on the next page. «The details appear in \"Detailed Subheadings of Books on Ritual,\" part two.»",
+    "O6/misleads: 郊特牲 is the source chapter (\"Jiao Te Sheng\" of the Liji) cited for the lines that follow. It is not part of the rule. «For the Suburban single victim: pregnant beasts are not used»",
+    "T9/misleads: The opening 秩芻 (allot the fodder) is dropped. «to nourish the sacrificial beasts»",
+    "O6/misleads: 毛之 means the victims are chosen by coat colour. \"Hair inspections\" is garbled. «use reddish-brown victims and hair inspections»"
+   ],
+   "note": "The last note invents a cited work, \"Detailed Subheadings of Books on Ritual, part two\", out of the running title and folio number. The Liji chapter title 郊特牲 is read as part of the rule, and the opening words 秩芻 (allot the fodder) are left out."
+  },
+  {
+   "page_id": "6a3c6847af3c49b59c5d7935",
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "page_number": 31,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: The lake character on the page is 灉/㴩 (Yong), the known Yixing tea 'Yonghu hangao'. The transcription misreads it as 滍, so the translation gives the wrong name 'Zhi' in both the heading and the body. «Zhi Lake Cream»",
+    "E2/cosmetic: Wrong title rank: 汧公 means the Duke of Qian (Li Mian), not a prince. «the son of the Prince of Qian»",
+    "E2/cosmetic: The page just says 'made after the fire' (火後). 'Rekindled' is the translator's interpretation, added without a note. «after the fire was rekindled»"
+   ],
+   "note": "The lake behind the Yixing tea 'Cream' is mistranslated as Zhi; the page reads Yong (灉/㴩). The rest of the Li Yue passage on the three boilings is faithful and correctly stops mid-sentence where the page ends."
+  }
+ ],
+ "routing_floor": {
+  "rule": "usable >= 75% (the #7518 1/call floor)",
+  "pass": false
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "calls": 1676,
+ "cls": {
+  "null": 1644,
+  "timeout": 27,
+  "page_tags_mismatch": 5
+ },
+ "size": {
+  "1": 1085,
+  "4": 455,
+  "2": 89,
+  "3": 47
+ },
+ "block_calls": 591,
+ "alone_calls": 1085,
+ "timeouts_in_blocks": 27,
+ "guard_hit_blocks": 86,
+ "guard_pages": 185,
+ "tokens": {
+  "input": 14483136,
+  "cache_read": 2941359,
+  "output": 1563261,
+  "thinking": 2794
+ },
+ "metas": 2926,
+ "ok_reads": 2925,
+ "failed": [
+  [
+   "6a3cbef2f9474f825c1644c0",
+   1,
+   ""
+  ]
+ ]
+}

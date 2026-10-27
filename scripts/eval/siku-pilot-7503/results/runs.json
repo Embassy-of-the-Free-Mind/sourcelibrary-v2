@@ -1,0 +1,12 @@
+{
+ "applied": {
+  "g1": "cli-translate-20261027143422",
+  "g3": "cli-translate-20261027143505",
+  "g4": "cli-translate-20261027143548",
+  "g2": "cli-translate-20261027144007"
+ },
+ "written": { "g1": 737, "g3": 735, "g4": 721, "g2": 730 },
+ "reverted_at": "2026-10-27 (revert-run --apply, every page restorable, 0 changed since)",
+ "undo_revert": "node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id revert:<run> --apply",
+ "gemini_weekly": { "start": 0.6504, "end": 0.6382, "note": "shared account; the drop includes other jobs' calls in the window" }
+}

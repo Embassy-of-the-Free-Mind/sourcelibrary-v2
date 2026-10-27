@@ -1,0 +1,679 @@
+{
+ "judged": 30,
+ "books": 20,
+ "probe": "ok",
+ "controls_caught": "0/0",
+ "controls": [],
+ "usable": {
+  "k": 21,
+  "n": 30,
+  "pct": 70,
+  "ci95": [
+   52,
+   83
+  ]
+ },
+ "sense_error": {
+  "k": 17,
+  "n": 30,
+  "pct": 57,
+  "ci95": [
+   39,
+   73
+  ]
+ },
+ "omission": {
+  "k": 1,
+  "n": 30,
+  "pct": 3,
+  "ci95": [
+   1,
+   17
+  ]
+ },
+ "cross_page_bleed": {
+  "k": 2,
+  "n": 30,
+  "pct": 7,
+  "ci95": [
+   2,
+   21
+  ]
+ },
+ "names": {
+  "k": 5,
+  "n": 30,
+  "pct": 17,
+  "ci95": [
+   7,
+   34
+  ]
+ },
+ "wrong_leaf": {
+  "k": 0,
+  "n": 30,
+  "pct": 0,
+  "ci95": [
+   0,
+   11
+  ]
+ },
+ "invented": {
+  "k": 2,
+  "n": 30,
+  "pct": 7,
+  "ci95": [
+   2,
+   21
+  ]
+ },
+ "wrong_text": {
+  "k": 4,
+  "n": 30,
+  "pct": 13,
+  "ci95": [
+   5,
+   30
+  ]
+ },
+ "fidelity_mean": 3.87,
+ "gate": {
+  "rule": "0 wrong-leaf, 0 invented, sense errors <= 1 page in 3 (skqs-flash-pilot-5600, Derek 2026-10-27)",
+  "pass": false
+ },
+ "rows": [
+  {
+   "page_id": "6a3c725e01fe4f593c1dedbb",
+   "book_id": "6a3c725e01fe4f593c1ded96",
+   "page_number": 37,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: awkward rendering of 此文上經 ('in this text, the classic above says'); sense still recoverable «this text, the upper canonical text states»",
+    "E2/cosmetic: 鄭注云服亦云 parsed loosely; the attribution stays with Zheng, and no reader is misled about the quoted content «Zheng's commentary on the garments also says»"
+   ],
+   "note": "This is a faithful, complete rendering of the subcommentary on the banners and the three luminaries. It stops mid-sentence at 'the Superintendent', just as the page does, and only the opening phrase reads awkwardly."
+  },
+  {
+   "page_id": "6a3cec718642f0445b15c982",
+   "book_id": "6a3cec718642f0445b15c91c",
+   "page_number": 102,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 入内内侍省内侍(省)都都知 is the Director-in-Chief of both bureaus, which is why the next clause calls it the 'two bureaus' post. The translation makes it one bureau, so the link to the next clause is lost. «was appointed as Director-in-Chief of Palace Attendants in the Palace Inner Serv»",
+    "O6/misleads: 遂省各以轉入先後相壓 means the two bureaus each ranked their Directors and Vice Directors by order of transfer. Nothing on the page says the posts were merged. «were merged, with precedence strictly determined by the chronological order of t»",
+    "E2/cosmetic: Garbled rendering of 武信軍節度觀察等使, which is Military Commissioner and Surveillance Commissioner of Wuxin Army. «Military Inspector-Observer Commissioner of Wuxin Commandery»",
+    "O11/misleads: 職官分紀 is the book title on the fold and 十八 is the leaf number, not a volume number. «Official Allocation, Volume 18»",
+    "E2/cosmetic: 孝贈 means mourning gifts only. 'Posthumous honors' is added. «posthumous honors and mourning donations upon death»"
+   ],
+   "note": "The two-bureau Director-in-Chief title is misread, the Xining clause wrongly says the posts were 'merged', and the leaf number is shown as a volume number. The rest follows the page."
+  },
+  {
+   "page_id": "6a3c6a3daf3c49b59c5e5002",
+   "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+   "page_number": 97,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: The hexagram 賁 (Bi, Grace) is misread as 貴 'valuable'. The error recurs in every hexagram list on the page. «<term>Gui</term> <gloss>Valuable / Superior</gloss>»",
+    "O6/misleads: 項 is the neck of Xuanyuan. 噬 is the start of the 噬嗑 heading, not a separate asterism called 'Biting'. «the neck of <term>Shi</term> <gloss>Biting</gloss>»",
+    "O6/misleads: 過 is the second half of the split heading 大過, not a word meaning 'Great'. «<term>Guo</term> <gloss>Great</gloss>»",
+    "E2/cosmetic: 廟 is romanized wrongly. It should be Tianmiao, as the candidate itself writes later. «<term>Tiansi</term> <gloss>Celestial Temple</gloss>»",
+    "T10/misleads: 'Returning degrees' is added. The page says 為復噬嗑, 'becomes again Shihe'. «serving as the returning degrees of <term>Shihe</term>»",
+    "T16/misleads: The gridded star-degree table is flattened into a list. Degree cells lose their link to the mansion and hexagram columns, and 'Wei, one degree' is joined across cells. «Two degrees\nThree degrees»"
+   ],
+   "note": "The hexagram 賁 (Bi) is wrongly given throughout as 'Gui, Valuable', and the table is flattened into a jumbled list of degree lines that is hard to map back to the grid."
+  },
+  {
+   "page_id": "6a3c786d01fe4f593c208108",
+   "book_id": "6a3c786c01fe4f593c2080f0",
+   "page_number": 24,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: Over-interpretive rendering of 貞悔: 'transformed' mixes the reading 'inner/outer trigram' with the reading 'original/changed hexagram'; the page only says 貞悔 «whether one considers the inner lower trigram or the transformed upper trigram»",
+    "E2/cosmetic: 'vigorous' is added; the page says only 必用夬 «must necessarily employ vigorous resolution»"
+   ],
+   "note": "A faithful, complete rendering of the Guai (Hexagram 43) commentary and the author's disagreement with Zhu Xi's Benyi; only small interpretive additions."
+  },
+  {
+   "page_id": "6a3cbbb887ee3d48c89d09b6",
+   "book_id": "6a3cbbb887ee3d48c89d0944",
+   "page_number": 114,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": true,
+   "defects": [
+    "T7/wrong_text: The page reads 讀為丸 ('read as wan'). The transcription's 諸為九 was translated as if correct, inventing a 'zhu read as nine'. «reading <term>zhu</term> as nine»",
+    "T8/misleads: Jia's objection (this huan names a weight, not a capacity measure) is turned into Zheng Sinong's own reason. The argument is inverted. «and that reading <term>zhu</term> as nine is because <term>huan</term> is the de»",
+    "O6/wrong_text: Should be 'reading it as wan (丸)', not 'nine'. «Furthermore, as for reading it as nine»",
+    "O6/misleads: The glossed character is 柲 (bi, 'shaft'). The transcription's misread 柩 was carried over and romanised as 'Kao'. «<term>Kao</term> <gloss>shaft</gloss> sounds like <term>bi</term>»"
+   ],
+   "note": "The opening paragraph is confused. It talks about reading 'zhu' as 'nine' (the page says 'read as wan 丸') and garbles Jia's objection to Zheng Sinong. The dagger-axe text and its commentary are otherwise translated faithfully."
+  },
+  {
+   "page_id": "6a3cc051ec254ff6cae05795",
+   "book_id": "6a3cc051ec254ff6cae05774",
+   "page_number": 33,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T7/misleads: The header on the page is 欽定 ('Imperially Commissioned'). The transcription misread it as 鈔定, and the translation renders that misreading as 'Carefully Copied'. «Carefully Copied Imperial Collection of the Four Treasuries»"
+   ],
+   "note": "The body faithfully translates the Shuogua passage on the three Ways and the opening commentary on 'nature and destiny'. Only the running header mistranslates the collection's title as 'Carefully Copied' instead of 'Imperially Commissioned'."
+  },
+  {
+   "page_id": "6a3cbf4df9474f825c1672ce",
+   "book_id": "6a3cbf4df9474f825c16726e",
+   "page_number": 96,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 元之舊地 means the old site of the Yuan academy, not the Yuan capital «which is the old site of the Yuan capital»",
+    "E2/cosmetic: the page gives only 伯生; the surname Yu is supplied silently (correctly: Yu Ji) «Yu Bosheng»",
+    "E2/cosmetic: 金人 is just 'the Jin people'; 'invaders' is added colour «abandoned by the Jin invaders»",
+    "D1/cosmetic: nonstandard arrow markup around the 仝上 source attribution «->The Same as Above<-»"
+   ],
+   "note": "This is a complete and faithful translation. The only real slip is that it calls the academy's site the old 'Yuan capital' when the page says the old Yuan academy site."
+  },
+  {
+   "page_id": "6a3cb7333dce6cfad7486e03",
+   "book_id": "6a3cb7323dce6cfad7486de8",
+   "page_number": 27,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: The page has 沇也 ('it is the Yan [river]'), not 沈也. The candidate misreads it as 'sink'. «It means to settle or sink down.»",
+    "O6/wrong_text: The page has 導沇水, the Yan River. 'Chen' comes from the 沈 misread. «He guided the Chen River flowing east to become the Ji River.»",
+    "O11/misleads: This is the misread edition title (欽定四庫全書) from the margin, presented as page content. «<unclear>次三刁筆三言</unclear>»",
+    "E2/cosmetic: The romanisation 'Yintao' contradicts the note that 癭 is read ying, so it should be Yingtao. «it reaches Yintao»",
+    "O12/cosmetic: 鉅鹿縣 is part of the small-character interlinear note, but the candidate merges it into the main text. «in Julu County, where it enters»",
+    "E2/cosmetic: The author's own judgement is placed inside the quotation from the Shuowen commentary. «We ought to take the ancient character as standard.\"»"
+   ],
+   "note": "The Shuowen gloss and the Yu Gong quotation are rendered as 'sink' and the 'Chen River' instead of the Yan River (沇), and a garbled edition title from the margin appears at the end as content."
+  },
+  {
+   "page_id": "6a3cbca9ec254ff6cadf205d",
+   "book_id": "6a3cbca9ec254ff6cadf2042",
+   "page_number": 26,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T5/cosmetic: the opening word 'land, while' finishes the previous page's sentence; this page starts at 周禮舉中地 «land, while the *Rites of Zhou* cited medium land»",
+    "T13/cosmetic: the end-of-chapter title 禮書卷二十五 (Lishu, juan 25) is left out of the translation «are identical to the three grades of land under the <term>Situ</term>»",
+    "E2/cosmetic: 偏 here means 'one-sided part'; 'biased' is a loose choice of word «a single biased aspect»"
+   ],
+   "note": "The translation is faithful and complete for this short closing passage of juan 25. It starts with the word 'land' left over from the previous page, and it leaves out the end-of-chapter title."
+  },
+  {
+   "page_id": "6a3cec718642f0445b15c988",
+   "book_id": "6a3cec718642f0445b15c91c",
+   "page_number": 108,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [],
+   "note": "This is a faithful, complete translation of the page: Shi Quanyu's promotion, which made five Directors where precedent allowed four, the order not to fill future vacancies, the appointments of Su Rishe, Zhang Yuncheng and Ren Shouzhong, and the opening of the Xining 5 (1072) edict that runs onto the next page. The image matches the transcription, and the names, titles and date are all correct."
+  },
+  {
+   "page_id": "6a3c676aaf3c49b59c5d3132",
+   "book_id": "6a3c6769af3c49b59c5d3104",
+   "page_number": 45,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O16/misleads: Marks the opening as illegible, but the page is clear. The text simply starts with 使之, after the 宋 character set at the foot of the column. «<unclear>...</unclear> instructed him to report the bandits»",
+    "O6/cosmetic: The name 澄子 is misspelled: it should be Chengzi, not Chenzi. «Chenzi held up the robe»",
+    "E2/misleads: Wrong attribution: 交淺而談深言乃為天下病 is a separate general maxim, not something Huizi did. «Huizi rejected the torch, speaking deeply with a casual acquaintance, until word»",
+    "O6/cosmetic: 報寇 more likely means retaliating against enemies, not reporting bandits; the reading is uncertain. «instructed him to report the bandits»"
+   ],
+   "note": "Faithful through the Guan Zhong passage and the passage on reading people from small signs; the condensed list of examples at the end has a falsely marked gap, a misspelled name and one clause pinned on the wrong person."
+  },
+  {
+   "page_id": "6a3c7a6501fe4f593c216fd2",
+   "book_id": "6a3c7a6501fe4f593c216fad",
+   "page_number": 37,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 炒黃白术 means white atractylodes stir-fried until yellow, not a 'yellow atractylodes' «stir-fried yellow atractylodes»",
+    "O6/misleads: 另煎參湯沖服 means a ginseng decoction made separately and mixed in; the candidate makes the eucommia the thing decocted separately «adding eucommia, decocted separately with ginseng soup to wash down the draft»",
+    "O12/cosmetic: the small-character interlinear comment is run into the main text without being marked as commentary «Giving aid and wings to Xuanyuan and Qibo»"
+   ],
+   "note": "Mostly faithful, but the prescription is garbled: it names a 'yellow atractylodes' that does not exist, gets wrong what was decocted separately, and runs the small-print comment into the main text."
+  },
+  {
+   "page_id": "6a3c69eaaf3c49b59c5e3ac1",
+   "book_id": "6a3c69eaaf3c49b59c5e3a8b",
+   "page_number": 54,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: The page reads 三十丸 (thirty pills; the transcription's 九 is a misread of 丸), and 四 begins the next age bracket. The candidate drops 'pills' and turns the dose into an invented range 'thirty to …'. «administer thirty to <unclear>...</unclear>»"
+   ],
+   "note": "This is a faithful rendering of the ingredient list, doses and vinegar-and-iron steeping method. The only slip is the last line, where 'thirty pills' becomes an open-ended 'thirty to …' at the page break."
+  },
+  {
+   "page_id": "6a3ce8e70a0011cb4bc0e252",
+   "book_id": "6a3ce8e70a0011cb4bc0e212",
+   "page_number": 64,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [],
+   "note": "A complete, faithful translation of a short commentary page. It finishes the remark on Master Ao's (Ao Jigong) view, then covers the Yili line 士旅酌卒 with Zheng Xuan's gloss and the editors' note that the line refers to the servicemen who partake of the common food (旅食之士), whose rite is further reduced."
+  },
+  {
+   "page_id": "6a3cf0fa8642f0445b168692",
+   "book_id": "6a3cf0fa8642f0445b168631",
+   "page_number": 97,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [],
+   "note": "A complete, faithful rendering of Zhu Xi's commentary on Duke Liu (including the sound and fanqie notes for 盛, 鉞 and 豳) and the start of the 'fond of beauty' exchange with the Ode on Danfu; only the running title (孟子集註纂箋) and page number 十五 are left out, which is fine."
+  },
+  {
+   "page_id": "6a3c786d01fe4f593c208125",
+   "book_id": "6a3c786c01fe4f593c2080f0",
+   "page_number": 53,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: 行未牽 means 'not yet led or drawn along'; 'entangled' is a loose rendering «his movement is not yet entangled»",
+    "T6/cosmetic: The page ends mid-sentence at 隂之道 and the sentence carries on to the next leaf. The candidate closes it off and adds 'proper'. «Lingering in one's pace is the proper way of yin.»"
+   ],
+   "note": "This is a faithful and complete translation of the Gou line commentary on this leaf. It rightly ignores the stray 欠之习之 in the transcription, which is not on the page. The last sentence reads as finished, but it actually continues on the next page."
+  },
+  {
+   "page_id": "6a3c72f301fe4f593c1e45c7",
+   "book_id": "6a3c72f201fe4f593c1e458a",
+   "page_number": 61,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T10/cosmetic: The note hedges with 'or chariots'. The 衛貢五百 incident (Zuozhuan, Duke Ding 13th year) concerns five hundred households from Wei. The note invents an alternative reading, though it does not distort the main text. «families or chariots sent as tribute to Jin»"
+   ],
+   "note": "This is a faithful, complete translation of the commentary on Qi and Wei attacking Jin and the two Lu campaigns against Zhu. The only weak spot is a hedging note on the 'five hundred' tribute; it should say households."
+  },
+  {
+   "page_id": "6a3ce8e70a0011cb4bc0e23b",
+   "book_id": "6a3ce8e70a0011cb4bc0e212",
+   "page_number": 41,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 東上 means the row is ranked with the east end as the senior position. It says nothing about which way they face. «facing east as the place of honor»",
+    "T8/misleads: Ao says no offering ever uses a zhi, so the modern-text reading should be followed here. The candidate turns this into a condition: 'where no zhi is used'. «In all instances of offering wine where no <term>zhi</term> <gloss>drinking cup<»"
+   ],
+   "note": "This is a full, accurate translation of the page, cut off at the page's own sentence break. Two small slips: 東上 is rendered as 'facing east' rather than 'with the east end as senior', and Ao Jigong's rule is slightly reworded."
+  },
+  {
+   "page_id": "6a3ceabfc895e71c6023c8c4",
+   "book_id": "6a3ceabfc895e71c6023c83a",
+   "page_number": 138,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "T8/misleads: page says 又誤文 (又 is an error for 文); the corrected reading 文 is dropped «<term>You</term> <gloss>again</gloss> <note>original: \"又\"</note> is an erroneous»",
+    "T7/misleads: page reads 錫衰 (the mourning garment the king wears for the three dukes and six ministers); the translation follows the transcription's misread 哀 and invents 'granted mourning favors' «Because that King granted mourning favors to the Three Ducal Ministers and Six M»",
+    "T16/misleads: 掌三公 is the start of an entry that runs onto the next page ('in charge of … the three dukes'), not an office title «Master of the Three Ducal Ministers <note>original: \"掌三公\"</note>»",
+    "E2/cosmetic: 從通解續校 means 'corrected following the Tongjie Xu (儀禮經傳通解續)'; it is not a 'continuation of the collation' «Follow the continuation of the collation in the Tongjie»"
+   ],
+   "note": "Most collation notes read correctly, but the 又→文 correction is lost, 錫衰 is mistranslated as 'mourning favors', and the 掌三公 fragment that runs onto the next page is presented as an office title."
+  },
+  {
+   "page_id": "6a3c750e39b4508b04e5a9d6",
+   "book_id": "6a3c750e39b4508b04e5a9c8",
+   "page_number": 14,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 諮執事早出 most likely means Lou asked his staff to set out early; the candidate makes the administrator the one giving advice «An administrator advised him to set out early»",
+    "O6/cosmetic: 訴身名 here means he gave his name and post, not that he complained «Complaining about his own career and status»",
+    "E2/cosmetic: 'whispered' is added; 走告 only says the son ran over and told him «ran up and whispered»",
+    "E2/cosmetic: 嶷 is normally read yí, so the name is better romanised as Zuo Yi «Zuo Ni»"
+   ],
+   "note": "A complete and readable rendering of the anecdote about Lou Shide and the county magistrate, with small slips: who advised setting out early, and the magistrate's 'complaining'."
+  },
+  {
+   "page_id": "6a3c6a3daf3c49b59c5e500b",
+   "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+   "page_number": 106,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: The page opens mid-sentence with 毫均之 and the candidate guesses at its sense without flagging that it is uncertain. «Slightly equalizing the minute parts, at three hundred sixty degrees»",
+    "E2/cosmetic: The words 'of the horizon' are added. The page has only 北出三十六. «Emerging north of the horizon by thirty-six degrees»"
+   ],
+   "note": "This is a full, close rendering of a dense calendrical and Yijing passage. The numbers and hexagram values match the page; only the fragment that opens the page, carried over from the previous leaf, is rendered loosely."
+  },
+  {
+   "page_id": "6a3c77eb01fe4f593c205a04",
+   "book_id": "6a3c77eb01fe4f593c2059ab",
+   "page_number": 89,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: comma makes 'fire' look like a separate symptom; 惡人與火 means an aversion to both people and fire «aversion to people, and fire»",
+    "E2/cosmetic: loose modern gloss for qi «<gloss>vital life energy</gloss>»"
+   ],
+   "note": "This is a faithful, complete translation of the page: Schizonepeta and siler, moxibustion at the 3rd and 9th vertebrae with Miaoxiang Wan, Li Henan's Wusheng Wan, putting qi before blood, and Bupleurum then Siwu for menstrual illness. It breaks off mid-sentence where the page ends."
+  },
+  {
+   "page_id": "6a3cb7083dce6cfad7485da3",
+   "book_id": "6a3cb7083dce6cfad7485d99",
+   "page_number": 10,
+   "accept": false,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": true,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": true,
+   "wrong_text": false,
+   "defects": [
+    "T6/misleads: The page's opening 氏公彦曰 ('[Jia] Gongyan says') is rendered without the name Gongyan, which is on this page. 'Sub-commentary' is added, and the speaker is never identified. «...'s Sub-commentary says»",
+    "O6/misleads: In 皆五采玉十有二, 'twelve' counts the jades (玉十有二), not the cords. The cords' twelve tiers were already stated. «all using jade of five colors, twelve cords»"
+   ],
+   "note": "The opening speaker (Jia Gongyan) is not named, and 'twelve' is attached to the cords instead of the jades. The rest follows the page, including the break mid-sentence at 'only…'."
+  },
+  {
+   "page_id": "6a3c725e01fe4f593c1deddf",
+   "book_id": "6a3c725e01fe4f593c1ded96",
+   "page_number": 73,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 三年之練冠 is the lian cap worn in three-year mourning, not a cap for the third year «The cap for the third year of mourning, used after the <term>lian</term> sacrifi»",
+    "T5/cosmetic: the morning/evening phrase is given twice across the page seam «and evening, weeping once in the morning and once in the evening»",
+    "E2/cosmetic: adds 'wrist', which the page does not say (扼 means a grasp) «The girth of an average person's wrist or grasp»",
+    "E2/cosmetic: the gloss is just a variant character, not an English meaning «<term>Dan</term> <gloss>担</gloss>»",
+    "E2/cosmetic: adds leaving the hut; the page only says he lodges in the outer chamber «moves out of the lean-to hut to the outer bedchamber»"
+   ]
+  },
+  {
+   "page_id": "6a3cbbb887ee3d48c89d09c9",
+   "book_id": "6a3cbbb887ee3d48c89d0944",
+   "page_number": 133,
+   "accept": false,
+   "fidelity": 3,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": true,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": true,
+   "defects": [
+    "O6/wrong_text: The glossed character is 咸, read 洽斬反 and also written 減; the transcription has misread it as 成. The candidate swaps in 耗 'Hao', and 'xia' is the wrong reading of 洽. «<term>Hao</term> <gloss>diminish/loss</gloss> has the <term>fanqie</term> readin»",
+    "O12/misleads: 雖異灋用金必齊 is the second half of Zheng's commentary, but it is presented as classic text. The 音義 pronunciation gloss is then wrongly labelled as Commentary. «\"Even though the models differ, the metal used must be uniform.\" <note>Commentar»",
+    "T5/misleads: The page ends at 當為. The object 'level' is supplied from the next page without any mark. «Du Zichun says it should be read as \"level.\"»",
+    "E2/cosmetic: The page says only 準之 ('level them'); 'with a water level' is added. «level them with a water level»",
+    "O6/misleads: This follows a likely misreading of 聲 as 磬. In the Zhouli, 鳧氏 make bells (sound-instruments), not musical stones, so the sentence contradicts the rest of the passage. «the Fushi clan makes musical stones»"
+   ],
+   "note": "The sub-commentary on measures sharing the bell-and-cauldron alloy reads well. But the opening pronunciation notes misidentify 咸 as 'Hao', and near the end the commentary and the 音義 gloss are mixed up with the classic text."
+  },
+  {
+   "page_id": "6a3c69eaaf3c49b59c5e3aaa",
+   "book_id": "6a3c69eaaf3c49b59c5e3a8b",
+   "page_number": 31,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": true,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T8/misleads: 寒後熱 means fever that follows chills, not cold damage, and 因食 is not specifically stagnation «or fever following food stagnation, pediatric fright-epilepsy <term>xian</term>,»",
+    "O6/misleads: 傷寒溫壯，內挾冷食 means cold damage with high fever while cold food is held inside; the clauses are wrongly fused «cold damage and warm heat lingering internally with cold food accumulation»",
+    "E2/cosmetic: 'orally' is added; the page only says 灌藥一服 «administer one dose orally»",
+    "T10/misleads: a doubtful modern value for 分 in a Song formulary, given without hedging «approx. 2.5 grams»"
+   ],
+   "note": "The text matches the page and is complete; a few clauses in the Purple Frost Pill indications are loosely or wrongly parsed, and the weight glosses are speculative."
+  },
+  {
+   "page_id": "6a3ceabfc895e71c6023c8bd",
+   "book_id": "6a3ceabfc895e71c6023c83a",
+   "page_number": 131,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": false,
+   "omission": true,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T9/misleads: drops 記: the note says the chariot sentence comes first in the Kaogong ji, and the translation leaves out which text it means «I observe that the sentence concerning the plain chariot is positioned above.»",
+    "E2/cosmetic: 謂祭 means 'refers to the sacrifice'; 'calls sacrifice' is a clumsy literal rendering «From \"calls sacrifice\"»"
+   ],
+   "note": "The collation notes are accurate and complete (omitted characters, 玉/王, the Mao edition's 與/一, 牲/時). The one gap is the first note, which doesn't say the order it compares against is the Kaogong ji's."
+  },
+  {
+   "page_id": "6a3cc051ec254ff6cae057a8",
+   "book_id": "6a3cc051ec254ff6cae05774",
+   "page_number": 52,
+   "accept": true,
+   "fidelity": 5,
+   "sense_error": false,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "E2/cosmetic: 'physical' is an added interpretive qualifier; the page simply says 此氣也 ('this is qi') «are physical <term>qi</term>»"
+   ],
+   "note": "The translation is faithful and complete. It follows the page's argument that spirit is not the images or the qi of the six children but what makes them move, bend, dry, please, moisten, and end and begin. It ends mid-sentence, as the page does."
+  },
+  {
+   "page_id": "6a3c61a7879008ba7e15f864",
+   "book_id": "6a3c61a7879008ba7e15f810",
+   "page_number": 84,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "T8/misleads: 結句 means the closing line (of the verse) that prompted the guess. The translation turns this into a vague 'casual impression', so the reader loses the specific clue. «drawing an inference from a casual impression»",
+    "O11/cosmetic: 蘭苕館外集 credits the new story's source and sits right after its title 盜更圖姦. The translation moves it to the end of the page as a bare note without saying it is the source. «<note>Lantiao Guan Wai Ji</note>»",
+    "T8/cosmetic: 未必 means 'not necessarily', which is softer than 'would never'. The sentence breaks off at the page edge, so little is lost. «would never»"
+   ],
+   "note": "The translation is faithful and complete. The one real slip: the clue that the first story ends on, 'the closing line', is blurred into 'a casual impression'. Also, the source credit for the new story ends up at the bottom of the page instead of under its title."
+  },
+  {
+   "page_id": "6a3c77eb01fe4f593c2059ee",
+   "book_id": "6a3c77eb01fe4f593c2059ab",
+   "page_number": 67,
+   "accept": true,
+   "fidelity": 4,
+   "sense_error": true,
+   "omission": false,
+   "cross_page_bleed": false,
+   "wrong_leaf": false,
+   "invented": false,
+   "names": false,
+   "wrong_text": false,
+   "defects": [
+    "O6/misleads: 大指間出其端 means it runs between the big toe and the next toe and emerges at the tip; there are not two big toes «Its branch emerges at the tip between the big toes»",
+    "O8/cosmetic: the page says 手太陰脈之脈 and does not name the lung; 'Lung' is supplied from the standard text «Hand <term>Taiyin</term> <gloss>Greater Yin</gloss> Lung meridian»",
+    "O12/cosmetic: the small-character annotations (二呼, 中指内交 三呼, 七呼 六呼) are run into the main text without being marked; 'Retain' is an interpretive addition «Retain for two exhalations. It intersects medially at the middle finger for thre»"
+   ],
+   "note": "A mostly faithful rendering of the jing-well point passages. One branch description reads oddly ('between the big toes'), and the small interlinear breath-count notes are blended into the main text."
+  }
+ ],
+ "routing_floor": {
+  "rule": "usable >= 75% (the #7518 1/call floor)",
+  "pass": false
+ }
+}
