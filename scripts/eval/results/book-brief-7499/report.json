@@ -1,0 +1,2761 @@
+{
+ "at": "2026-10-27T11:44:23.235Z",
+ "books": 10,
+ "arms": {
+  "A": {
+   "pages": 120
+  },
+  "B": {
+   "pages": 120
+  },
+  "A2": {
+   "pages": 36
+  }
+ },
+ "consistency": {
+  "books": 10,
+  "A": 80.4,
+  "B": 84.7,
+  "delta_B_A": 4.3,
+  "ci": [
+   -8.4,
+   17.8
+  ],
+  "A2_A": {
+   "books": 3,
+   "delta": -19.4,
+   "ci": [
+    -66.7,
+    8.3
+   ],
+   "B_A_same_books": 17.9
+  },
+  "brief_match": {
+   "A": 77.1,
+   "B": 90.3
+  },
+  "terms_scored": {
+   "A": 47,
+   "B": 48
+  },
+  "per_book": [
+   {
+    "book": "69b4cce5d5b6c3815e1a2931",
+    "stratum": "latin",
+    "glossary": 30,
+    "terms_in_window": 13,
+    "terms_2plus": 6,
+    "A": 81.5,
+    "B": 88.1,
+    "A_brief_match": 76,
+    "B_brief_match": 84
+   },
+   {
+    "book": "6953e50577f38f6761bef758",
+    "stratum": "latin",
+    "glossary": 30,
+    "terms_in_window": 11,
+    "terms_2plus": 5,
+    "A": 82.2,
+    "B": 82.2,
+    "A_brief_match": 88.5,
+    "B_brief_match": 92.3
+   },
+   {
+    "book": "69dbc9491040d1d5e20a1afd",
+    "stratum": "latin",
+    "glossary": 30,
+    "terms_in_window": 12,
+    "terms_2plus": 6,
+    "A": 68.1,
+    "B": 70.8,
+    "A_brief_match": 60,
+    "B_brief_match": 70
+   },
+   {
+    "book": "69ea0f5913a685002bb8deaf",
+    "stratum": "vernacular",
+    "glossary": 32,
+    "terms_in_window": 15,
+    "terms_2plus": 10,
+    "A": 83.8,
+    "B": 91.1,
+    "A_brief_match": 84.5,
+    "B_brief_match": 100
+   },
+   {
+    "book": "69c814536c6f3cc53c848191",
+    "stratum": "vernacular",
+    "glossary": 30,
+    "terms_in_window": 14,
+    "terms_2plus": 7,
+    "A": 95.2,
+    "B": 96.8,
+    "A2": 95.2,
+    "A_brief_match": 90.3,
+    "B_brief_match": 100
+   },
+   {
+    "book": "699376d2b0a84a5763961a97",
+    "stratum": "greek",
+    "glossary": 30,
+    "terms_in_window": 5,
+    "terms_2plus": 2,
+    "A": 100,
+    "B": 62.5,
+    "A_brief_match": 100,
+    "B_brief_match": 100
+   },
+   {
+    "book": "6952e4b477f38f6761bc7d4c",
+    "stratum": "greek",
+    "glossary": 30,
+    "terms_in_window": 1,
+    "terms_2plus": 1,
+    "A": 100,
+    "B": 100,
+    "A2": 33.3,
+    "A_brief_match": 100,
+    "B_brief_match": 100
+   },
+   {
+    "book": "6a06cdd7c749b698e5b2c9a4",
+    "stratum": "semitic",
+    "glossary": 30,
+    "terms_in_window": 6,
+    "terms_2plus": 2,
+    "A": 63.3,
+    "B": 80,
+    "A_brief_match": 50,
+    "B_brief_match": 62.5
+   },
+   {
+    "book": "69e72c75a409200ea79f4976",
+    "stratum": "commentary",
+    "glossary": 31,
+    "terms_in_window": 9,
+    "terms_2plus": 4,
+    "A": 41.7,
+    "B": 93.8,
+    "A2": 50,
+    "A_brief_match": 75,
+    "B_brief_match": 100
+   },
+   {
+    "book": "6a3c6191879008ba7e15f0b2",
+    "stratum": "commentary",
+    "glossary": 30,
+    "terms_in_window": 11,
+    "terms_2plus": 5,
+    "A": 88.3,
+    "B": 81.7,
+    "A_brief_match": 47.1,
+    "B_brief_match": 94.1
+   }
+  ]
+ },
+ "consistency_detail": [
+  {
+   "book": "69b4cce5d5b6c3815e1a2931",
+   "stratum": "latin",
+   "glossary": 30,
+   "terms_in_window": 13,
+   "terms_2plus": 6,
+   "arms": {
+    "A": {
+     "terms": 6,
+     "consistency": 0.8154761904761904,
+     "all_same": 4,
+     "brief_match": 0.76,
+     "detail": [
+      {
+       "term": "animus",
+       "n": 7,
+       "modal_share": 0.14285714285714285,
+       "distinct": 7,
+       "renderings": {
+        "mind": 1,
+        "from your heart": 1,
+        "feeling": 1,
+        "resolve": 1,
+        "your mind": 1,
+        "soul": 1,
+        "his heart": 1
+       }
+      },
+      {
+       "term": "mundus",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "world": 4
+       }
+      },
+      {
+       "term": "vitium",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "vic": 3,
+        "our vic": 1
+       }
+      },
+      {
+       "term": "virtus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "virtue": 2
+       }
+      },
+      {
+       "term": "charitas",
+       "n": 6,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "charity": 6
+       }
+      },
+      {
+       "term": "monachus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "monk": 2
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 6,
+     "consistency": 0.8809523809523809,
+     "all_same": 5,
+     "brief_match": 0.84,
+     "detail": [
+      {
+       "term": "animus",
+       "n": 7,
+       "modal_share": 0.2857142857142857,
+       "distinct": 5,
+       "renderings": {
+        "mind": 2,
+        "from the heart": 1,
+        "spirit": 2,
+        "your mind": 1,
+        "heart": 1
+       }
+      },
+      {
+       "term": "mundus",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "world": 4
+       }
+      },
+      {
+       "term": "vitium",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "vic": 4
+       }
+      },
+      {
+       "term": "virtus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "virtue": 2
+       }
+      },
+      {
+       "term": "charitas",
+       "n": 6,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "charity": 6
+       }
+      },
+      {
+       "term": "monachus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "monk": 2
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "6953e50577f38f6761bef758",
+   "stratum": "latin",
+   "glossary": 30,
+   "terms_in_window": 11,
+   "terms_2plus": 5,
+   "arms": {
+    "A": {
+     "terms": 5,
+     "consistency": 0.8222222222222223,
+     "all_same": 2,
+     "brief_match": 0.8846153846153846,
+     "detail": [
+      {
+       "term": "Intellectus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "understanding": 2
+       }
+      },
+      {
+       "term": "Natura",
+       "n": 9,
+       "modal_share": 0.8888888888888888,
+       "distinct": 2,
+       "renderings": {
+        "nature": 8,
+        "natur": 1
+       }
+      },
+      {
+       "term": "Res",
+       "n": 9,
+       "modal_share": 0.5555555555555556,
+       "distinct": 4,
+       "renderings": {
+        "matter": 2,
+        "it": 1,
+        "thing": 5,
+        "nothing to do with": 1
+       }
+      },
+      {
+       "term": "Experimentum",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "experiment": 3
+       }
+      },
+      {
+       "term": "Sensus",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "sens": 1,
+        "sense": 2
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 5,
+     "consistency": 0.8222222222222223,
+     "all_same": 2,
+     "brief_match": 0.9230769230769231,
+     "detail": [
+      {
+       "term": "Intellectus",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "understanding": 2
+       }
+      },
+      {
+       "term": "Natura",
+       "n": 9,
+       "modal_share": 0.8888888888888888,
+       "distinct": 2,
+       "renderings": {
+        "nature": 8,
+        "natur": 1
+       }
+      },
+      {
+       "term": "Res",
+       "n": 9,
+       "modal_share": 0.5555555555555556,
+       "distinct": 4,
+       "renderings": {
+        "matter": 2,
+        "thi thing": 1,
+        "thing": 5,
+        "has nothing to do with": 1
+       }
+      },
+      {
+       "term": "Experimentum",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "experiment": 3
+       }
+      },
+      {
+       "term": "Sensus",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "sens": 1,
+        "sense": 2
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "69dbc9491040d1d5e20a1afd",
+   "stratum": "latin",
+   "glossary": 30,
+   "terms_in_window": 12,
+   "terms_2plus": 6,
+   "arms": {
+    "A": {
+     "terms": 6,
+     "consistency": 0.6805555555555557,
+     "all_same": 2,
+     "brief_match": 0.6,
+     "detail": [
+      {
+       "term": "virtus",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "virtue": 3,
+        "virtu": 1
+       }
+      },
+      {
+       "term": "prudentia",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "prudence": 1,
+        "prudent": 1
+       }
+      },
+      {
+       "term": "animi magnitudo",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "greatnes": 2
+       }
+      },
+      {
+       "term": "iustitia",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "justice": 3
+       }
+      },
+      {
+       "term": "iniuria",
+       "n": 3,
+       "modal_share": 0.3333333333333333,
+       "distinct": 3,
+       "renderings": {
+        "harm": 1,
+        "rightly so": 1,
+        "wrong": 1
+       }
+      },
+      {
+       "term": "fides",
+       "n": 6,
+       "modal_share": 0.5,
+       "distinct": 4,
+       "renderings": {
+        "trust him": 1,
+        "good faith": 1,
+        "trust": 3,
+        "trust us": 1
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 6,
+     "consistency": 0.7083333333333334,
+     "all_same": 2,
+     "brief_match": 0.7,
+     "detail": [
+      {
+       "term": "virtus",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "virtue": 3,
+        "virtu": 1
+       }
+      },
+      {
+       "term": "prudentia",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "prudence": 1,
+        "prudent": 1
+       }
+      },
+      {
+       "term": "animi magnitudo",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "greatnes": 2
+       }
+      },
+      {
+       "term": "iustitia",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "justice": 3
+       }
+      },
+      {
+       "term": "iniuria",
+       "n": 3,
+       "modal_share": 0.3333333333333333,
+       "distinct": 3,
+       "renderings": {
+        "doing wrong": 1,
+        "not without reason": 1,
+        "wrong": 1
+       }
+      },
+      {
+       "term": "fides",
+       "n": 6,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "trust": 4,
+        "good faith": 2
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "69ea0f5913a685002bb8deaf",
+   "stratum": "vernacular",
+   "glossary": 32,
+   "terms_in_window": 15,
+   "terms_2plus": 10,
+   "arms": {
+    "A": {
+     "terms": 10,
+     "consistency": 0.8380952380952381,
+     "all_same": 6,
+     "brief_match": 0.8448275862068966,
+     "detail": [
+      {
+       "term": "mantenimiento",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "food": 4
+       }
+      },
+      {
+       "term": "legua",
+       "n": 8,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "leagu": 8
+       }
+      },
+      {
+       "term": "señor",
+       "n": 9,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "lord": 9
+       }
+      },
+      {
+       "term": "indio",
+       "n": 10,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "indian": 10
+       }
+      },
+      {
+       "term": "cristiano",
+       "n": 5,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "christian": 5
+       }
+      },
+      {
+       "term": "tuna",
+       "n": 4,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "tuna": 2,
+        "prickly pear": 2
+       }
+      },
+      {
+       "term": "vaca",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "cowhide rob": 1,
+        "cow": 2
+       }
+      },
+      {
+       "term": "venado",
+       "n": 7,
+       "modal_share": 0.7142857142857143,
+       "distinct": 2,
+       "renderings": {
+        "deerskin": 2,
+        "deer": 5
+       }
+      },
+      {
+       "term": "areito",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "areito": 2
+       }
+      },
+      {
+       "term": "trabajo",
+       "n": 6,
+       "modal_share": 0.5,
+       "distinct": 3,
+       "renderings": {
+        "labor": 2,
+        "how hard they had worked": 1,
+        "hardship": 3
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 10,
+     "consistency": 0.9114285714285716,
+     "all_same": 6,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "mantenimiento",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "sustenance": 4
+       }
+      },
+      {
+       "term": "legua",
+       "n": 8,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "leagu": 8
+       }
+      },
+      {
+       "term": "señor",
+       "n": 9,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "lord": 9
+       }
+      },
+      {
+       "term": "indio",
+       "n": 10,
+       "modal_share": 0.9,
+       "distinct": 2,
+       "renderings": {
+        "indian": 9,
+        "indian s": 1
+       }
+      },
+      {
+       "term": "cristiano",
+       "n": 5,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "christian": 5
+       }
+      },
+      {
+       "term": "tuna",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "prickly pear": 4
+       }
+      },
+      {
+       "term": "vaca",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "cowhide": 1,
+        "cow": 2
+       }
+      },
+      {
+       "term": "venado",
+       "n": 7,
+       "modal_share": 0.7142857142857143,
+       "distinct": 2,
+       "renderings": {
+        "deerskin": 2,
+        "deer": 5
+       }
+      },
+      {
+       "term": "areito",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "areito": 2
+       }
+      },
+      {
+       "term": "trabajo",
+       "n": 6,
+       "modal_share": 0.8333333333333334,
+       "distinct": 2,
+       "renderings": {
+        "hardship": 5,
+        "trabajo hardship": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "69c814536c6f3cc53c848191",
+   "stratum": "vernacular",
+   "glossary": 30,
+   "terms_in_window": 14,
+   "terms_2plus": 7,
+   "arms": {
+    "A": {
+     "terms": 7,
+     "consistency": 0.9523809523809523,
+     "all_same": 6,
+     "brief_match": 0.9032258064516129,
+     "detail": [
+      {
+       "term": "wesen",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "being": 2
+       }
+      },
+      {
+       "term": "creatur",
+       "n": 9,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "creature": 6,
+        "creatur": 3
+       }
+      },
+      {
+       "term": "icheit",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "i-nes": 3
+       }
+      },
+      {
+       "term": "selbheit",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "selfhood": 2
+       }
+      },
+      {
+       "term": "sünd",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "sin": 2
+       }
+      },
+      {
+       "term": "vergottet",
+       "n": 7,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "deified": 7
+       }
+      },
+      {
+       "term": "liecht",
+       "n": 6,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "light": 6
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 7,
+     "consistency": 0.9682539682539683,
+     "all_same": 6,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "wesen",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "being": 2
+       }
+      },
+      {
+       "term": "creatur",
+       "n": 9,
+       "modal_share": 0.7777777777777778,
+       "distinct": 2,
+       "renderings": {
+        "creature": 7,
+        "creatur": 2
+       }
+      },
+      {
+       "term": "icheit",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "i-hood": 3
+       }
+      },
+      {
+       "term": "selbheit",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "selfhood": 2
+       }
+      },
+      {
+       "term": "sünd",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "sin": 2
+       }
+      },
+      {
+       "term": "vergottet",
+       "n": 7,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "deified": 7
+       }
+      },
+      {
+       "term": "liecht",
+       "n": 6,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "light": 6
+       }
+      }
+     ]
+    },
+    "A2": {
+     "terms": 7,
+     "consistency": 0.9523809523809523,
+     "all_same": 6,
+     "brief_match": 0.9032258064516129,
+     "detail": [
+      {
+       "term": "wesen",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "being": 2
+       }
+      },
+      {
+       "term": "creatur",
+       "n": 9,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "creature": 6,
+        "creatur": 3
+       }
+      },
+      {
+       "term": "icheit",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "i-nes": 3
+       }
+      },
+      {
+       "term": "selbheit",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "selfhood": 2
+       }
+      },
+      {
+       "term": "sünd",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "sin": 2
+       }
+      },
+      {
+       "term": "vergottet",
+       "n": 7,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "deified person": 7
+       }
+      },
+      {
+       "term": "liecht",
+       "n": 6,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "light": 6
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "699376d2b0a84a5763961a97",
+   "stratum": "greek",
+   "glossary": 30,
+   "terms_in_window": 5,
+   "terms_2plus": 2,
+   "arms": {
+    "A": {
+     "terms": 2,
+     "consistency": 1,
+     "all_same": 2,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "δόξα",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "opinion": 2
+       }
+      },
+      {
+       "term": "ψυχή",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "soul": 4
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 2,
+     "consistency": 0.625,
+     "all_same": 0,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "δόξα",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "doxa opinion": 1,
+        "opinion": 1
+       }
+      },
+      {
+       "term": "ψυχή",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "soul": 3,
+        "psyche soul": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "6952e4b477f38f6761bc7d4c",
+   "stratum": "greek",
+   "glossary": 30,
+   "terms_in_window": 1,
+   "terms_2plus": 1,
+   "arms": {
+    "A": {
+     "terms": 1,
+     "consistency": 1,
+     "all_same": 1,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "SS. Patres",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "father": 3
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 1,
+     "consistency": 1,
+     "all_same": 1,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "SS. Patres",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "father": 3
+       }
+      }
+     ]
+    },
+    "A2": {
+     "terms": 1,
+     "consistency": 0.3333333333333333,
+     "all_same": 0,
+     "brief_match": 0.3333333333333333,
+     "detail": [
+      {
+       "term": "SS. Patres",
+       "n": 3,
+       "modal_share": 0.3333333333333333,
+       "distinct": 3,
+       "renderings": {
+        "your father": 1,
+        "father": 1,
+        "our father": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "6a06cdd7c749b698e5b2c9a4",
+   "stratum": "semitic",
+   "glossary": 30,
+   "terms_in_window": 6,
+   "terms_2plus": 2,
+   "arms": {
+    "A": {
+     "terms": 2,
+     "consistency": 0.6333333333333333,
+     "all_same": 0,
+     "brief_match": 0.5,
+     "detail": [
+      {
+       "term": "الباب",
+       "n": 5,
+       "modal_share": 0.6,
+       "distinct": 2,
+       "renderings": {
+        "door": 3,
+        "chapter": 2
+       }
+      },
+      {
+       "term": "الشهوة",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "desire": 2,
+        "climax": 1
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 2,
+     "consistency": 0.8,
+     "all_same": 1,
+     "brief_match": 0.625,
+     "detail": [
+      {
+       "term": "الباب",
+       "n": 5,
+       "modal_share": 0.6,
+       "distinct": 2,
+       "renderings": {
+        "door": 3,
+        "chapter": 2
+       }
+      },
+      {
+       "term": "الشهوة",
+       "n": 3,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "desire": 3
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "69e72c75a409200ea79f4976",
+   "stratum": "commentary",
+   "glossary": 31,
+   "terms_in_window": 9,
+   "terms_2plus": 4,
+   "arms": {
+    "A": {
+     "terms": 3,
+     "consistency": 0.4166666666666667,
+     "all_same": 0,
+     "brief_match": 0.75,
+     "detail": [
+      {
+       "term": "道",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "dao": 1,
+        "way": 1
+       }
+      },
+      {
+       "term": "形",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "form": 1,
+        "bodily form": 1
+       }
+      },
+      {
+       "term": "神",
+       "n": 4,
+       "modal_share": 0.25,
+       "distinct": 4,
+       "renderings": {
+        "his spirit": 1,
+        "spiritual core": 1,
+        "divine": 1,
+        "spirit": 1
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 4,
+     "consistency": 0.9375,
+     "all_same": 3,
+     "brief_match": 1,
+     "detail": [
+      {
+       "term": "道",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "way": 2
+       }
+      },
+      {
+       "term": "形",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "bodily form": 2
+       }
+      },
+      {
+       "term": "神",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "spirit": 3,
+        "spiritual": 1
+       }
+      },
+      {
+       "term": "字法",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "diction": 2
+       }
+      }
+     ]
+    },
+    "A2": {
+     "terms": 3,
+     "consistency": 0.5,
+     "all_same": 0,
+     "brief_match": 0.625,
+     "detail": [
+      {
+       "term": "道",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "dao": 1,
+        "way": 1
+       }
+      },
+      {
+       "term": "形",
+       "n": 2,
+       "modal_share": 0.5,
+       "distinct": 2,
+       "renderings": {
+        "physical form": 1,
+        "physical body": 1
+       }
+      },
+      {
+       "term": "神",
+       "n": 4,
+       "modal_share": 0.5,
+       "distinct": 3,
+       "renderings": {
+        "spirit": 2,
+        "spiritual on": 1,
+        "spiritual essence": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "book": "6a3c6191879008ba7e15f0b2",
+   "stratum": "commentary",
+   "glossary": 30,
+   "terms_in_window": 11,
+   "terms_2plus": 5,
+   "arms": {
+    "A": {
+     "terms": 5,
+     "consistency": 0.8833333333333332,
+     "all_same": 3,
+     "brief_match": 0.47058823529411764,
+     "detail": [
+      {
+       "term": "眞如",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "suchnes": 4
+       }
+      },
+      {
+       "term": "阿棃耶識",
+       "n": 3,
+       "modal_share": 0.6666666666666666,
+       "distinct": 2,
+       "renderings": {
+        "storehouse consciousnes": 2,
+        "alayavijnana storehouse consciousnes": 1
+       }
+      },
+      {
+       "term": "無明",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "fundamental ignorance": 3,
+        "ignorance": 1
+       }
+      },
+      {
+       "term": "不覺",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "non-enlightenment": 4
+       }
+      },
+      {
+       "term": "染法",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "defiled phenomena": 2
+       }
+      }
+     ]
+    },
+    "B": {
+     "terms": 5,
+     "consistency": 0.8166666666666667,
+     "all_same": 3,
+     "brief_match": 0.9411764705882353,
+     "detail": [
+      {
+       "term": "眞如",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "suchnes": 4
+       }
+      },
+      {
+       "term": "阿棃耶識",
+       "n": 3,
+       "modal_share": 0.3333333333333333,
+       "distinct": 3,
+       "renderings": {
+        "alaya consciousnes": 1,
+        "alaya storehouse consciousnes": 1,
+        "alaya": 1
+       }
+      },
+      {
+       "term": "無明",
+       "n": 4,
+       "modal_share": 0.75,
+       "distinct": 2,
+       "renderings": {
+        "ignorance": 3,
+        "fundamental ignorance": 1
+       }
+      },
+      {
+       "term": "不覺",
+       "n": 4,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "non-awakening": 4
+       }
+      },
+      {
+       "term": "染法",
+       "n": 2,
+       "modal_share": 1,
+       "distinct": 1,
+       "renderings": {
+        "defiled dharma": 2
+       }
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "consistency_sensitivity_unregistered": {
+  "normalisation": "registered + possessives/demonstratives stripped",
+  "A": 81.9,
+  "B": 84.9,
+  "delta_B_A": 3,
+  "ci": [
+   -8.8,
+   14.9
+  ],
+  "A2_A": {
+   "delta": 0,
+   "ci": [
+    0,
+    0
+   ]
+  },
+  "by_engine_registered": {
+   "opus": {
+    "books": 5,
+    "delta_B_A": 3.6,
+    "ci": [
+     1.2,
+     6.1
+    ]
+   },
+   "agy": {
+    "books": 5,
+    "delta_B_A": 4.9,
+    "ci": [
+     -20.5,
+     30.8
+    ]
+   }
+  }
+ },
+ "page_judge": {
+  "B_vs_A": {
+   "pages": 120,
+   "B_wins": 24,
+   "A_wins": 19,
+   "ties": 41,
+   "split": 36,
+   "L_minus_W_pts (B loses)": -4.2,
+   "ci": [
+    -17.5,
+    7.5
+   ],
+   "omission": {
+    "B": 8.3,
+    "A": 7.5,
+    "delta": 0.8,
+    "ci": [
+     -5.8,
+     8.3
+    ]
+   },
+   "added": {
+    "B": 3.3,
+    "A": 13.3,
+    "delta": -10,
+    "ci": [
+     -18.3,
+     -3.3
+    ]
+   },
+   "mistranslation": {
+    "B": 10,
+    "A": 8.3,
+    "delta": 1.7,
+    "ci": [
+     -1.7,
+     5.8
+    ]
+   }
+  },
+  "A2_vs_A": {
+   "pages": 36,
+   "A2_wins": 3,
+   "A_wins": 8,
+   "ties": 13,
+   "split": 12,
+   "L_minus_W_pts (A2 loses)": 13.9,
+   "ci": [
+    0,
+    33.3
+   ],
+   "omission": {
+    "A2": 8.3,
+    "A": 5.6,
+    "delta": 2.8,
+    "ci": [
+     0,
+     8.3
+    ]
+   },
+   "added": {
+    "A2": 16.7,
+    "A": 13.9,
+    "delta": 2.8,
+    "ci": [
+     -8.3,
+     16.7
+    ]
+   },
+   "mistranslation": {
+    "A2": 11.1,
+    "A": 8.3,
+    "delta": 2.8,
+    "ci": [
+     0,
+     8.3
+    ]
+   }
+  },
+  "identical": {
+   "pairs": 10,
+   "tie_both_orders": 10
+  },
+  "B_vs_A_on_A2_books": {
+   "pages": 36,
+   "B_wins": 6,
+   "A_wins": 10,
+   "ties": 13,
+   "split": 7,
+   "L_minus_W_pts (B loses)": 11.1,
+   "ci": [
+    0,
+    16.7
+   ],
+   "omission": {
+    "B": 19.4,
+    "A": 11.1,
+    "delta": 8.3,
+    "ci": [
+     0,
+     25
+    ]
+   },
+   "added": {
+    "B": 5.6,
+    "A": 13.9,
+    "delta": -8.3,
+    "ci": [
+     -16.7,
+     0
+    ]
+   },
+   "mistranslation": {
+    "B": 11.1,
+    "A": 8.3,
+    "delta": 2.8,
+    "ci": [
+     0,
+     8.3
+    ]
+   }
+  },
+  "by_engine": {
+   "opus": {
+    "pages": 60,
+    "B_wins": 14,
+    "A_wins": 4,
+    "ties": 27,
+    "split": 15,
+    "L_minus_W_pts (B loses)": -16.7,
+    "ci": [
+     -36.7,
+     3.3
+    ],
+    "omission": {
+     "B": 1.7,
+     "A": 10,
+     "delta": -8.3,
+     "ci": [
+      -13.3,
+      -3.3
+     ]
+    },
+    "added": {
+     "B": 0,
+     "A": 8.3,
+     "delta": -8.3,
+     "ci": [
+      -25,
+      0
+     ]
+    },
+    "mistranslation": {
+     "B": 5,
+     "A": 5,
+     "delta": 0,
+     "ci": [
+      0,
+      0
+     ]
+    }
+   },
+   "agy": {
+    "pages": 60,
+    "B_wins": 10,
+    "A_wins": 15,
+    "ties": 14,
+    "split": 21,
+    "L_minus_W_pts (B loses)": 8.3,
+    "ci": [
+     1.7,
+     15
+    ],
+    "omission": {
+     "B": 15,
+     "A": 5,
+     "delta": 10,
+     "ci": [
+      1.7,
+      18.3
+     ]
+    },
+    "added": {
+     "B": 6.7,
+     "A": 18.3,
+     "delta": -11.7,
+     "ci": [
+      -15,
+      -8.3
+     ]
+    },
+    "mistranslation": {
+     "B": 15,
+     "A": 11.7,
+     "delta": 3.3,
+     "ci": [
+      -3.3,
+      11.7
+     ]
+    }
+   }
+  }
+ },
+ "seams": {
+  "B_vs_A": {
+   "joins": 110,
+   "B": 17.3,
+   "A": 16.4,
+   "delta": 0.9,
+   "ci": [
+    -13.6,
+    11.8
+   ]
+  },
+  "A2_vs_A": {
+   "joins": 33,
+   "A2": 27.3,
+   "A": 9.1,
+   "delta": 18.2,
+   "ci": [
+    0,
+    36.4
+   ]
+  },
+  "identical": {
+   "pair_orders": 40,
+   "tie": 40
+  }
+ },
+ "brief_invention": {
+  "pages": {
+   "A": 120,
+   "B": 120
+  },
+  "flagged_pages": {
+   "A": 33,
+   "B": 25
+  },
+  "per_100": {
+   "A": 27.5,
+   "B": 20.8,
+   "excess_B": -6.7,
+   "ci": [
+    -26.7,
+    7.5
+   ]
+  },
+  "faults": [
+   {
+    "arm": "A",
+    "book": "69b4cce5d5b6c3815e1a2931",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/69b4cce5d5b6c3815e1a2931?page=96",
+    "faults": [
+     {
+      "quote": "the sense follows Erasmus's usual reading",
+      "brief": "A Latin prose handbook ... by Desiderius Erasmus",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69b4cce5d5b6c3815e1a2931",
+    "page": 100,
+    "url": "https://sourcelibrary.org/book/69b4cce5d5b6c3815e1a2931?page=100",
+    "faults": [
+     {
+      "quote": "Erasmus plays on \"numisma,\" \"coin,\" and \"numen,\" \"divinity.\"",
+      "brief": "A Latin prose handbook ... by Desiderius Erasmus",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 279,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=279",
+    "faults": [
+     {
+      "quote": "THE NEW ORGANON",
+      "brief": "the *Novum Organum*",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 274,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=274",
+    "faults": [
+     {
+      "quote": "OF VERULAM",
+      "brief": "Franciscus de Verulamio — Francis of Verulam",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 272,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=272",
+    "faults": [
+     {
+      "quote": "OF VERULAM",
+      "brief": "Franciscus de Verulamio — Francis of Verulam",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 273,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=273",
+    "faults": [
+     {
+      "quote": "THE NEW ORGANON",
+      "brief": "the *Novum Organum*",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 277,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=277",
+    "faults": [
+     {
+      "quote": "THE NEW ORGANON",
+      "brief": "the *Novum Organum*",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69b4cce5d5b6c3815e1a2931",
+    "page": 98,
+    "url": "https://sourcelibrary.org/book/69b4cce5d5b6c3815e1a2931?page=98",
+    "faults": [
+     {
+      "quote": "How then can we mix this thing, always condemned in Holy Scripture,",
+      "brief": "scriptura sacra — Holy Scripture",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 276,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=276",
+    "faults": [
+     {
+      "quote": "OF VERULAM",
+      "brief": "Franciscus de Verulamio — Francis of Verulam",
+      "where": "body"
+     },
+     {
+      "quote": "as opposed to those aimed at immediate practical \"fruit\"",
+      "brief": "Experimenta fructifera — experiments of fruit",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 278,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=278",
+    "faults": [
+     {
+      "quote": "OF VERULAM",
+      "brief": "Franciscus de Verulamio — Francis of Verulam",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 280,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=280",
+    "faults": [
+     {
+      "quote": "OF VERULAM",
+      "brief": "Franciscus de Verulamio — Francis of Verulam",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 271,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=271",
+    "faults": [
+     {
+      "quote": "THE NEW ORGANON",
+      "brief": "A Latin philosophical treatise by Francis Bacon: the *Novum Organum*",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6953e50577f38f6761bef758",
+    "page": 275,
+    "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=275",
+    "faults": [
+     {
+      "quote": "THE NEW ORGANON",
+      "brief": "the *Novum Organum*",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 91,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=91",
+    "faults": [
+     {
+      "quote": "Cicero means people who are moved neither by the attractions of life and wealth",
+      "brief": "An early printed edition of Cicero's Latin prose treatise",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 87,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=87",
+    "faults": [
+     {
+      "quote": "which Caesar besieged in 49 BC",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 82,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=82",
+    "faults": [
+     {
+      "quote": "Dicaearchus of Messana, a pupil of Aristotle.",
+      "brief": "aristoteles — Aristotle",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 84,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=84",
+    "faults": [
+     {
+      "quote": "Julius Caesar, assassinated in 44 BC",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     },
+     {
+      "quote": "the year before Cicero wrote this work",
+      "brief": "An early printed edition of Cicero's Latin prose treatise on moral duties",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 92,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=92",
+    "faults": [
+     {
+      "quote": "the main speaker in Cicero's dialogue On Friendship",
+      "brief": "An early printed edition of Cicero's Latin prose treatise",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 81,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=81",
+    "faults": [
+     {
+      "quote": "Panaetius of Rhodes, a Stoic philosopher of the 2nd century BC, was Cicero's main source",
+      "brief": "An early printed edition of Cicero's Latin prose treatise on moral duties",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 84,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=84",
+    "faults": [
+     {
+      "quote": "Julius Caesar, assassinated in 44 BC.",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 83,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=83",
+    "faults": [
+     {
+      "quote": "defeated by Caesar and murdered in Egypt in 48 BC",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 83,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=83",
+    "faults": [
+     {
+      "quote": "in the civil war between Caesar and the Pompeians",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 87,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=87",
+    "faults": [
+     {
+      "quote": "was captured by Caesar in 49 BC",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 86,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=86",
+    "faults": [
+     {
+      "quote": "Cicero means Julius Caesar, assassinated by a small group of conspirators in 44 BC",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     },
+     {
+      "quote": "Again Julius Caesar is meant.",
+      "brief": "G cesar — Gaius Caesar",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69dbc9491040d1d5e20a1afd",
+    "page": 82,
+    "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=82",
+    "faults": [
+     {
+      "quote": "Dicaearchus of Messana was a pupil of Aristotle, active around 300 BC.",
+      "brief": "aristoteles — Aristotle",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 33,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=33",
+    "faults": [
+     {
+      "quote": "the Black man <note>Estebanico</note>",
+      "brief": "Estebanico / el negro — Estebanico / the Black man",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=31",
+    "faults": [
+     {
+      "quote": "The Black man <note>Estebanico</note>",
+      "brief": "Estebanico / el negro — Estebanico / the Black man",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=31",
+    "faults": [
+     {
+      "quote": "Estebanico, an enslaved North African who survived the expedition",
+      "brief": "Estebanico / el negro — Estebanico / the Black man",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=22",
+    "faults": [
+     {
+      "quote": "Estebanico, an enslaved North African man and one of the four survivors",
+      "brief": "Estebanico / el negro — Estebanico / the Black man",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=23",
+    "faults": [
+     {
+      "quote": "the \"Isle of Misfortune,\"",
+      "brief": "Mal Hado (Isle of Misfortune at first mention)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69ea0f5913a685002bb8deaf",
+    "page": 25,
+    "url": "https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=25",
+    "faults": [
+     {
+      "quote": "Cabeza de Vaca is describing people who lived in a recognized gender role",
+      "brief": "Álvar Núñez Cabeza de Vaca",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 63,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=63",
+    "faults": [
+     {
+      "quote": "the free spirits mock the enlightened, saying \"They go about with...\"",
+      "brief": "falscher freier geyst — false free spirit",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 55,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=55",
+    "faults": [
+     {
+      "quote": "Love seeks not its own, says Saint Paul.",
+      "brief": "Paulus / sant Paulus — Saint Paul",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 59,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=59",
+    "faults": [
+     {
+      "quote": "\"The old man\" is Paul's term for unredeemed human nature",
+      "brief": "Paulus / sant Paulus — Saint Paul",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 55,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=55",
+    "faults": [
+     {
+      "quote": "Love seeks not its own, says Saint Paul.",
+      "brief": "Paulus / sant Paulus — Saint Paul",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 56,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=56",
+    "faults": [
+     {
+      "quote": "These marginal notes were added by the editor of this 1523 printing",
+      "brief": "in a 1523 printing",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69c814536c6f3cc53c848191",
+    "page": 63,
+    "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=63",
+    "faults": [
+     {
+      "quote": "continues from previous page: the free spirits mock the enlightened",
+      "brief": "falscher freier geyst — false free spirit",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 367,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=367",
+    "faults": [
+     {
+      "quote": "ἐπιχειρεῖν] ἐπιθυμεῖν Stobaeus",
+      "brief": "Stobaeus; Proclus — Stobaeus; Proclus",
+      "where": "note"
+     },
+     {
+      "quote": "ἑνὶ λόγῳ A² F D M Stobaeus : ἐν ὀλίγῳ A",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "ἐᾷ αὐτὸ A F M : ἐὰν αὐτὸ D : ἑαυτῷ Stobaeus",
+      "brief": "Stobaeus; Proclus — Stobaeus; Proclus",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 370,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=370",
+    "faults": [
+     {
+      "quote": "Plato",
+      "brief": "A volume of a critical edition of Plato's dialogues",
+      "where": "body"
+     },
+     {
+      "quote": "stripping of property manuscripts A, M : admonitions manuscripts F, D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "fails manuscript A second corrector, manuscript F : should fail manuscripts A, D, M",
+      "brief": "sigla (A, A², F, D, M, a, f); codex — manuscript",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 373,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=373",
+    "faults": [
+     {
+      "quote": "τού τι M : τοῦτι F : τουτὶ A D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "διαδεξάμενος A M : δεξάμενος F D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "τοῖς . . . c 4 δοκεῖ omits F",
+      "brief": "om. = omits",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 371,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=371",
+    "faults": [
+     {
+      "quote": "tyrannical deeds manuscripts A, F, M : the tyrannical nature manuscript D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 374,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=374",
+    "faults": [
+     {
+      "quote": "\"and\" in manuscripts A, F, M : omitted in manuscript D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 375,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=375",
+    "faults": [
+     {
+      "quote": "d 3 lack of freedom in manuscripts A, F, M : freedom in manuscript D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 365,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=365",
+    "faults": [
+     {
+      "quote": "from written by the corrector of Monacensis",
+      "brief": "diorthota — corrector",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 375,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=375",
+    "faults": [
+     {
+      "quote": "d 3 ἀνελευθερίας A F M : ἐλευθερίας D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 367,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=367",
+    "faults": [
+     {
+      "quote": "to attempt] to desire Stobaeus",
+      "brief": "Stobaeus; Proclus — Stobaeus; Proclus",
+      "where": "note"
+     },
+     {
+      "quote": "in a word manuscripts A², F, D, M, and Stobaeus : in brief manuscript A",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "leaves it manuscripts A, F, M : leaving it manuscript D : to itself Stobaeus",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "then] truly Stobaeus",
+      "brief": "Stobaeus; Proclus — Stobaeus; Proclus",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 373,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=373",
+    "faults": [
+     {
+      "quote": "someone anything manuscript M : this manuscripts F, A, D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "all manuscripts A, F, M : all the manuscript D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "taking up manuscript A, M : receiving manuscripts F, D",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "hold opinions omitted in manuscript F",
+      "brief": "om. = omits; sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "699376d2b0a84a5763961a97",
+    "page": 364,
+    "url": "https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=364",
+    "faults": [
+     {
+      "quote": "d 1 honor FD : the honor AM",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "of those sold AFDM : of those destroyed A²",
+      "brief": "Keep the Greek readings and the sigla (A, A², F, D, M, a, f)",
+      "where": "note"
+     },
+     {
+      "quote": "fellow drinkers FD : fellow citizens A with \"li\" written above",
+      "brief": "s. v./suprascr. = written above; sigla (A, A², F, D, M)",
+      "where": "note"
+     },
+     {
+      "quote": "e 7 and manuscript Ven. 184 omits",
+      "brief": "om. = omits",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "6952e4b477f38f6761bc7d4c",
+    "page": 285,
+    "url": "https://sourcelibrary.org/book/6952e4b477f38f6761bc7d4c?page=285",
+    "faults": [
+     {
+      "quote": "Latin column translation follows Greek base text",
+      "brief": "Translate the Greek base text, and use the Latin version only as an aid.",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "6a06cdd7c749b698e5b2c9a4",
+    "page": 106,
+    "url": "https://sourcelibrary.org/book/6a06cdd7c749b698e5b2c9a4?page=106",
+    "faults": [
+     {
+      "quote": "Ja'far ibn Yahya al-Barmaki, grand vizier to Caliph Harun al-Rashid",
+      "brief": "الوزير الاعظم — Grand Vizier",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "6a06cdd7c749b698e5b2c9a4",
+    "page": 112,
+    "url": "https://sourcelibrary.org/book/6a06cdd7c749b698e5b2c9a4?page=112",
+    "faults": [
+     {
+      "quote": "behold, she was filled with longing",
+      "brief": "الشوق — longing",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=97",
+    "faults": [
+     {
+      "quote": "Zhongni <note>Confucius</note>",
+      "brief": "孔子 / 丘 — Confucius",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 96,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=96",
+    "faults": [
+     {
+      "quote": "indicates distress. Diction",
+      "brief": "字法 — [note: diction]",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 102,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=102",
+    "faults": [
+     {
+      "quote": "<note>diction</note> (first margin mark)",
+      "brief": "字法 — [note: diction]",
+      "where": "note"
+     },
+     {
+      "quote": "<note>diction</note> (second margin mark, beside 'The pearl')",
+      "brief": "字法 — [note: diction]",
+      "where": "note"
+     },
+     {
+      "quote": "<note>diction</note> (third margin mark, beside the black dragon gloss)",
+      "brief": "字法 — [note: diction]",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 97,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=97",
+    "faults": [
+     {
+      "quote": "Zhongni <note>Confucius</note>",
+      "brief": "孔子 / 丘 — Confucius",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "A",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 100,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=100",
+    "faults": [
+     {
+      "quote": "an ancestor of Confucius and minister of the state of Song",
+      "brief": "孔子 / 丘 — Confucius",
+      "where": "note"
+     },
+     {
+      "quote": "A ducal clan of Song, and the tenth-generation ancestor of Confucius.",
+      "brief": "孔子 / 丘 — Confucius",
+      "where": "body"
+     },
+     {
+      "quote": "prevent one from achieving virtue and advancing to the Way.",
+      "brief": "道 — the Way",
+      "where": "body"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "6a3c6191879008ba7e15f0b2",
+    "page": 67,
+    "url": "https://sourcelibrary.org/book/6a3c6191879008ba7e15f0b2?page=67",
+    "faults": [
+     {
+      "quote": "<term>ālaya</term> <gloss>storehouse consciousness</gloss>",
+      "brief": "藏識 — storehouse consciousness",
+      "where": "note"
+     }
+    ]
+   },
+   {
+    "arm": "B",
+    "book": "69e72c75a409200ea79f4976",
+    "page": 100,
+    "url": "https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=100",
+    "faults": [
+     {
+      "quote": "A ducal clan member of Song, the tenth-generation ancestor of Confucius",
+      "brief": "孔子 / 丘 — Confucius",
+      "where": "note"
+     },
+     {
+      "quote": "<note>diction</note>",
+      "brief": "字法 — [note: diction]",
+      "where": "note"
+     },
+     {
+      "quote": "<note>phrasing</note>",
+      "brief": "句法 — [note: phrasing]",
+      "where": "note"
+     },
+     {
+      "quote": "ultimately one can neither accomplish virtue nor advance in the Way.",
+      "brief": "道 — the Way",
+      "where": "note"
+     }
+    ]
+   }
+  ]
+ },
+ "reference": {
+  "gate": false,
+  "arms": {
+   "A": {
+    "fidelity": 4.55,
+    "ci": [
+     4.1,
+     4.9
+    ],
+    "omission": 0,
+    "n": 10
+   },
+   "B": {
+    "fidelity": 4.45,
+    "ci": [
+     4.05,
+     4.8
+    ],
+    "omission": 0.05,
+    "n": 10
+   },
+   "A2": {
+    "fidelity": 4.333,
+    "ci": [
+     4,
+     5
+    ],
+    "omission": 0.167,
+    "n": 3
+   }
+  },
+  "pairs": {
+   "A:B": {
+    "by_judge": {
+     "j1": {
+      "a_wins": 2,
+      "ties": 5,
+      "b_wins": 3,
+      "cant_tell": 0
+     },
+     "j2": {
+      "a_wins": 2,
+      "ties": 6,
+      "b_wins": 2,
+      "cant_tell": 0
+     }
+    },
+    "pages": {
+     "a_wins": 3,
+     "ties": 4,
+     "b_wins": 3,
+     "cant_tell": 0
+    },
+    "sign_test_p": 1,
+    "fidelity_delta": {
+     "mean": 0.1,
+     "ci": [
+      -0.35,
+      0.65
+     ],
+     "n": 10,
+     "note": "A minus B"
+    }
+   },
+   "A:A2": {
+    "by_judge": {
+     "j1": {
+      "a_wins": 0,
+      "ties": 2,
+      "b_wins": 1,
+      "cant_tell": 0
+     },
+     "j2": {
+      "a_wins": 1,
+      "ties": 1,
+      "b_wins": 1,
+      "cant_tell": 0
+     }
+    },
+    "pages": {
+     "a_wins": 1,
+     "ties": 1,
+     "b_wins": 1,
+     "cant_tell": 0
+    },
+    "sign_test_p": 1,
+    "fidelity_delta": {
+     "mean": -0.167,
+     "ci": [
+      -1,
+      0.5
+     ],
+     "n": 3,
+     "note": "A minus A2"
+    }
+   },
+   "B:A2": {
+    "by_judge": {
+     "j1": {
+      "a_wins": 2,
+      "ties": 1,
+      "b_wins": 0,
+      "cant_tell": 0
+     },
+     "j2": {
+      "a_wins": 1,
+      "ties": 1,
+      "b_wins": 1,
+      "cant_tell": 0
+     }
+    },
+    "pages": {
+     "a_wins": 2,
+     "ties": 0,
+     "b_wins": 1,
+     "cant_tell": 0
+    },
+    "sign_test_p": 1,
+    "fidelity_delta": {
+     "mean": 0,
+     "ci": [
+      -0.5,
+      0.5
+     ],
+     "n": 3,
+     "note": "B minus A2"
+    }
+   }
+  }
+ },
+ "rule": {
+  "build": false,
+  "dont": true,
+  "verdict": "DON'T",
+  "checks": {
+   "consistency Δ ≥ +10": false,
+   "consistency CI excludes 0": false,
+   "Δ above A2−A upper end": false,
+   "page L−W upper ≤ +5": false,
+   "omission Δ ≤ +5": true,
+   "brief invention excess ≤ 1/100": true
+  }
+ }
+}
