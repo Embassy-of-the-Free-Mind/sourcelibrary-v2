@@ -55,7 +55,10 @@ if (!LANGUAGE_NAMES[LANG]) { console.error(`--lang must be one of ${Object.keys(
 const LANGUAGE = LANGUAGE_NAMES[LANG];
 
 const MODEL = 'gemini-3.1-flash-lite';
-const PROMPT_VERSION = 'localize-titles-v1';
+// v2 after reading the 200-title v1 test (#7496): v1 cut "Opera" loose from its
+// author, dropped manuscript shelfmarks, read Chinese 卷 sections as volumes, and
+// left plain Latin and German titles untranslated.
+const PROMPT_VERSION = 'localize-titles-v2';
 const TITLES_PER_REQUEST = 40;
 const OUT_TOKENS_PER_TITLE = 25;
 const RUN = arg('--run', `localize-titles-${LANG}-7496`);
@@ -69,7 +72,14 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const GEN_CONFIG = { temperature: 0.2, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } };
 
 const HEAD = `You write catalogue title glosses for a digital library of historical primary sources.
-For each book below give the ${LANGUAGE} gloss of its title: the short, natural title a ${LANGUAGE}-speaking reader would expect on a catalogue card, as a published ${LANGUAGE} translation would be titled. Keep proper names in their customary ${LANGUAGE} form (Iamblichus → Jámblico). Keep a volume or part number if the title has one. Do not add subtitles, dates, publishers or explanations.
+For each book below give the ${LANGUAGE} gloss of its title: the short, natural title a ${LANGUAGE}-speaking reader would expect on a catalogue card, as a published ${LANGUAGE} translation would be titled.
+Rules:
+- Translate the title into ${LANGUAGE}. Keep it in the original only when it is a proper name or a title customarily cited untranslated (Syntagma musicum, Picatrix).
+- Proper names in their customary ${LANGUAGE} form (Iamblichus → Jámblico, Sidonius Apollinaris → Sidonio Apolinar).
+- When the title alone is generic (Opera, Epistolae, Collected works, a dissertation), name the author or subject: "Obras de Sidonio Apolinar", not "Obras".
+- Keep a manuscript shelfmark or collection number exactly as written, in parentheses at the end: (Cod. Pal. germ. 109), (Vat.ebr.339), (Derge).
+- Volumes: keep the number given as "(vol N)" or "Vol. N" as "volumen N". Chinese 卷 numbers are sections inside the work, not volumes: leave them out.
+- Shorten long baroque titles to their main title. Do not add subtitles, dates, publishers or explanations.
 Return ONLY a JSON array of strings, one gloss per book, in the same order (N items).`;
 
 function buildPrompt(books) {
