@@ -414,3 +414,28 @@ describe('entryScriptState: a commit sha names the code only if the running scri
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });
+
+// #7499: the page's prompt label comes from the prompt sent, never a constant.
+import { promptLabel, jobPromptVersion } from '../../scripts/lib/write-provenance.mjs';
+import { pageBreakVariant, PAGE_BREAK_SCOPED, LEAF_BREAK_ONLY } from '../../scripts/lib/translate-core.mjs';
+
+describe('promptLabel / jobPromptVersion / pageBreakVariant (#7499)', () => {
+  it('promptLabel copies what the prompt row says and leaves out what it does not', () => {
+    expect(promptLabel({ id: 'abc', name: 'Standard OCR', version: '19.1', hash: 'h1' })).toEqual({ prompt_version: '19.1', prompt_id: 'abc', prompt_hash: 'h1', prompt_name: 'Standard OCR' });
+    expect(promptLabel({ id: 'abc', version: 13, content_hash: 'h2' })).toEqual({ prompt_version: '13', prompt_id: 'abc', prompt_hash: 'h2' });
+    expect(promptLabel({ version: '' })).toEqual({});
+    expect(promptLabel(undefined)).toEqual({});
+  });
+  it('jobPromptVersion: the job, then its provenance, then null — never a constant', () => {
+    expect(jobPromptVersion({ prompt_version: '19.1' })).toBe('19.1');
+    expect(jobPromptVersion({ provenance: { prompt: { version: '16' } } })).toBe('16');
+    expect(jobPromptVersion({ provenance: { prompt: { version: 'not_recorded' } } })).toBeNull();
+    expect(jobPromptVersion({})).toBeNull();
+  });
+  it('pageBreakVariant names the option object passed', () => {
+    expect(pageBreakVariant(PAGE_BREAK_SCOPED)).toBe('scoped');
+    expect(pageBreakVariant(LEAF_BREAK_ONLY)).toBe('leaf-only');
+    expect(pageBreakVariant(null)).toBe('none');
+    expect(pageBreakVariant({ splitWords: true, rule: false, catchwords: true })).toBe('custom:catchwords+splitWords');
+  });
+});

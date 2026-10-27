@@ -49,10 +49,10 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
+import { readPageIdsFile, ocrLabelNotIn } from '../lib/ocr-targeting.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, imageInput, ocrProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
 import { OCR_MODEL_FLASH, OCR_MODEL_LITE, isApiOcrModel, assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { MODEL_PRICING } from '../lib/model-pricing.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -75,7 +75,8 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 const PRE_OCR_STATUSES = ['archive_complete', 'ocr_submitted'];
 // TARGET_MODEL is resolved after arg parsing (--model); the constant name is kept
 // because the targeting queries and every write/meter row read it.
-const TARGET_PROMPT = 'v5.2026-02';
+// SELECTION only (#7499): labels a page may carry and not be picked by --old-ocr. The page is
+// stamped with the prompt actually sent (`ocrPrompt.ref`), never with these.
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -347,7 +348,7 @@ function isDigitizerPage(pageType, ocrText) {
  * The rule this restores: a completeness predicate is satisfied by output OR by an
  * explicit recorded skip. Never by silence.
  */
-async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage }) {
+async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage, promptVersion = null }) {
   // A skip is still a billed call: a RECITATION refusal pays for the image, and a
   // MAX_TOKENS loop pays for the whole output cap (#4815 measured 7% of front-matter
   // reads looping to 16K tokens — more than the successful pages cost). Record the
@@ -362,7 +363,7 @@ async function recordSkip(db, page, { reason, finishReason, chars, durationMs, m
     output_tokens: usage?.outputTokens ?? 0,
     cost_usd: usage ? costUsd(usage.inputTokens, usage.outputTokens) : null,
     duration_ms: durationMs ?? null,
-    prompt_version: TARGET_PROMPT,
+    prompt_version: promptVersion,
     endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
   }).catch(() => {});
 
@@ -410,13 +411,13 @@ async function processPage(page, ocrPrompt, db, runId) {
           : result.finishReason === 'SAFETY' ? 'safety'
             : result.finishReason === 'MAX_TOKENS' ? 'max-tokens-no-text'
               : 'empty';
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason, finishReason: result.finishReason, durationMs };
     }
 
     // Hallucination guard
     if (result.text.length > 25000) {
-      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
@@ -429,7 +430,7 @@ async function processPage(page, ocrPrompt, db, runId) {
         pageId: page.id, bookId: page.book_id, pageNumber: page.page_number,
         text: result.text, model: TARGET_MODEL, verdict: loop,
       });
-      await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: `repetition loop (${(loop.share * 100).toFixed(0)}% of body)`, durationMs };
     }
 
@@ -442,7 +443,7 @@ async function processPage(page, ocrPrompt, db, runId) {
     // token cap is more usefully recorded as a loop, and its text is kept.
     if (isTruncatedCandidate({ finishReason: result.finishReason })) {
       const reason = truncationFailReason({ finishReason: result.finishReason });
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage, promptVersion: ocrPrompt.ref.version });
       return { pageId: page.id, status: 'skip', reason: `${reason} (${result.text.length} chars kept nothing)`, durationMs };
     }
 
@@ -475,7 +476,9 @@ async function processPage(page, ocrPrompt, db, runId) {
             model: TARGET_MODEL,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: TARGET_PROMPT,
+            // The prompt actually sent (#7499): this used to be the constant 'v5.2026-02'
+            // whatever the DB default was. A value not known is not written.
+            ...promptLabel(ocrPrompt.ref),
             ...ocrProvenance(result.text, engine),
           },
           ...tags, // page_type, columns, script_type — whichever parsed
@@ -498,7 +501,7 @@ async function processPage(page, ocrPrompt, db, runId) {
       cost_usd: costUsd(result.usage.inputTokens, result.usage.outputTokens),
       status: 'success',
       duration_ms: durationMs,
-      prompt_version: TARGET_PROMPT,
+      prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-ocr.mjs',
       timestamp: new Date(),
     }).catch(() => {});
@@ -516,7 +519,7 @@ async function processPage(page, ocrPrompt, db, runId) {
       type: 'ocr', mode: 'realtime', model: TARGET_MODEL,
       book_id: page.book_id, page_ids: [page.id],
       status: 'error', error_message: error.message?.substring(0, 200),
-      duration_ms: durationMs, prompt_version: TARGET_PROMPT,
+      duration_ms: durationMs, prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
     }).catch(() => {});
 
@@ -717,7 +720,7 @@ async function main() {
       pageFilter['ocr.source'] = { $nin: SKIP_SOURCES };
       pageFilter.$or = [
         { 'ocr.model': { $ne: TARGET_MODEL } },
-        { 'ocr.prompt_version': { $nin: ACCEPTABLE_PROMPTS } },
+        ocrLabelNotIn(ACCEPTABLE_PROMPTS),
       ];
     }
     // 'all' mode: no OCR filter — re-OCR everything

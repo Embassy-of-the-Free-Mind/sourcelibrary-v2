@@ -53,6 +53,7 @@
  */
 import {
   PAGE_BREAK_SCOPED,
+  pageBreakVariant,
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
@@ -240,7 +241,7 @@ export async function buildRoundRequest(db, { prompts, book, pages, kind, noCont
   const maxOutputTokens = maxOutputTokensFor(pages);
   return {
     prompt: built.prompt, promptRef: built.promptRef, maxOutputTokens,
-    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
+    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
   };
 }
 
