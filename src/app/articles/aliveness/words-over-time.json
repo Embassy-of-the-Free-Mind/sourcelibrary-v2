@@ -1,6 +1,18 @@
 {
  "about": "Per concept, the century where its share of dated pages most exceeds the library's share (centuries with > 2000 library pages and >= 20 concept pages), and the span holding 90% of its dated pages. Pages dated by when the work was written. Built by scripts/analysis/experience-map/ontology/words-over-time.py from ontology.json (built 2026-10-26).",
  "library_dated_pages": 8892431,
+ "refused_for_apparatus": [
+  {
+   "id": "mechanism",
+   "apparatus_only_share": 0.31,
+   "classed": 42
+  },
+  {
+   "id": "vital-principle",
+   "apparatus_only_share": 0.294,
+   "classed": 143
+  }
+ ],
  "rows": [
   {
    "id": "psyche",
@@ -12,7 +24,10 @@
    "peak_pages": 5419,
    "dated_pages": 40776,
    "span_from": -378,
-   "span_to": 1650
+   "span_to": 1650,
+   "sourced_share": 0.78,
+   "sourced_low": false,
+   "apparatus_only_share": 0
   },
   {
    "id": "pneuma",
@@ -24,7 +39,10 @@
    "peak_pages": 3512,
    "dated_pages": 23538,
    "span_from": -406,
-   "span_to": 1859
+   "span_to": 1859,
+   "sourced_share": 0.62,
+   "sourced_low": false,
+   "apparatus_only_share": 0.102
   },
   {
    "id": "anima-mundi",
@@ -36,7 +54,10 @@
    "peak_pages": 1554,
    "dated_pages": 11229,
    "span_from": -378,
-   "span_to": 1873
+   "span_to": 1873,
+   "sourced_share": 0.82,
+   "sourced_low": false,
+   "apparatus_only_share": 0.207
   },
   {
    "id": "innate-heat",
@@ -48,7 +69,10 @@
    "peak_pages": 1659,
    "dated_pages": 17268,
    "span_from": 175,
-   "span_to": 1685
+   "span_to": 1685,
+   "sourced_share": 0.65,
+   "sourced_low": false,
+   "apparatus_only_share": 0.056
   },
   {
    "id": "regimen",
@@ -60,7 +84,10 @@
    "peak_pages": 319,
    "dated_pages": 2255,
    "span_from": 897,
-   "span_to": 1755
+   "span_to": 1755,
+   "sourced_share": 0.64,
+   "sourced_low": false,
+   "apparatus_only_share": 0.181
   },
   {
    "id": "radical-moisture",
@@ -72,7 +99,10 @@
    "peak_pages": 399,
    "dated_pages": 5656,
    "span_from": 1274,
-   "span_to": 1741
+   "span_to": 1741,
+   "sourced_share": 0.55,
+   "sourced_low": false,
+   "apparatus_only_share": 0.09
   },
   {
    "id": "archeus",
@@ -84,7 +114,10 @@
    "peak_pages": 2308,
    "dated_pages": 3742,
    "span_from": 1525,
-   "span_to": 1745
+   "span_to": 1745,
+   "sourced_share": 0.6,
+   "sourced_low": false,
+   "apparatus_only_share": 0.193
   },
   {
    "id": "plastic-nature",
@@ -96,19 +129,10 @@
    "peak_pages": 309,
    "dated_pages": 502,
    "span_from": 400,
-   "span_to": 1893
-  },
-  {
-   "id": "mechanism",
-   "label": "mechanical philosophy",
-   "kind": "machine",
-   "peak_century": 1600,
-   "peak_label": "17th century",
-   "ratio": 2.4,
-   "peak_pages": 1420,
-   "dated_pages": 2671,
-   "span_from": 507,
-   "span_to": 1798
+   "span_to": 1893,
+   "sourced_share": 0.8,
+   "sourced_low": false,
+   "apparatus_only_share": 0.095
   },
   {
    "id": "growth-of-metals",
@@ -120,7 +144,10 @@
    "peak_pages": 1795,
    "dated_pages": 3892,
    "span_from": 1300,
-   "span_to": 1745
+   "span_to": 1745,
+   "sourced_share": 0.54,
+   "sourced_low": false,
+   "apparatus_only_share": 0.107
   },
   {
    "id": "animal-machine",
@@ -132,7 +159,10 @@
    "peak_pages": 322,
    "dated_pages": 404,
    "span_from": 1646,
-   "span_to": 1794
+   "span_to": 1794,
+   "sourced_share": 0.8,
+   "sourced_low": false,
+   "apparatus_only_share": 0.066
   },
   {
    "id": "bildungstrieb",
@@ -144,7 +174,10 @@
    "peak_pages": 99,
    "dated_pages": 140,
    "span_from": 1772,
-   "span_to": 1877
+   "span_to": 1877,
+   "sourced_share": 0.89,
+   "sourced_low": false,
+   "apparatus_only_share": 0.08
   },
   {
    "id": "animal-magnetism",
@@ -156,7 +189,10 @@
    "peak_pages": 5763,
    "dated_pages": 8296,
    "span_from": 1764,
-   "span_to": 1892
+   "span_to": 1892,
+   "sourced_share": 0.77,
+   "sourced_low": false,
+   "apparatus_only_share": 0.163
   },
   {
    "id": "makrobiotik",
@@ -168,7 +204,10 @@
    "peak_pages": 206,
    "dated_pages": 358,
    "span_from": 1563,
-   "span_to": 1898
+   "span_to": 1898,
+   "sourced_share": 0.64,
+   "sourced_low": false,
+   "apparatus_only_share": 0.014
   },
   {
    "id": "naturphilosophie",
@@ -180,19 +219,10 @@
    "peak_pages": 1319,
    "dated_pages": 4687,
    "span_from": 1525,
-   "span_to": 1889
-  },
-  {
-   "id": "vital-principle",
-   "label": "vital principle",
-   "kind": "force",
-   "peak_century": 1800,
-   "peak_label": "19th century",
-   "ratio": 2.9,
-   "peak_pages": 421,
-   "dated_pages": 2169,
-   "span_from": -66,
-   "span_to": 1891
+   "span_to": 1889,
+   "sourced_share": 0.78,
+   "sourced_low": false,
+   "apparatus_only_share": 0.142
   },
   {
    "id": "elan-vital",
@@ -204,7 +234,10 @@
    "peak_pages": 66,
    "dated_pages": 144,
    "span_from": 245,
-   "span_to": 1932
+   "span_to": 1932,
+   "sourced_share": 0.67,
+   "sourced_low": false,
+   "apparatus_only_share": 0.186
   },
   {
    "id": "animism",
@@ -216,7 +249,10 @@
    "peak_pages": 474,
    "dated_pages": 1730,
    "span_from": 1574,
-   "span_to": 1920
+   "span_to": 1920,
+   "sourced_share": 0.87,
+   "sourced_low": false,
+   "apparatus_only_share": 0.038
   }
  ]
 }
