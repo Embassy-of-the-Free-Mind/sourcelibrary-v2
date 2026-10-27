@@ -4,7 +4,7 @@
 /**
  * arms.mjs — the three arms of #7570 on the sealed pairs, plus the positive controls, for one engine.
  *
- *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/read-or-recall-7570/arms.mjs --engine=opus|gemini [--concurrency=4]
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/read-or-recall-7570/arms.mjs --engine=opus|gemini [--script=latin] [--concurrency=4]
  *
  *   A  image + work named     B  image only     C  work named, no image (anchor + length)     P  positive controls
  * Calls are made in a seeded random order over (page × arm), so a drift in the model or the quota during the run falls
@@ -28,6 +28,7 @@ const ENGINE = arg('engine');
 if (!['opus', 'gemini'].includes(ENGINE)) throw new Error('--engine=opus|gemini');
 const CONC = Number(arg('concurrency', ENGINE === 'opus' ? 4 : 3));
 const CLI = ENGINE === 'opus' ? 'claude' : 'agy';
+const ONLY = arg('script'); // run one script's pairs (and its controls) as soon as that script is sealed
 const WEEKLY_STOP = 70;
 
 const sealed = JSON.parse(fs.readFileSync(path.join(RES, 'pairs.json'), 'utf8'));
@@ -36,8 +37,8 @@ const OUT = path.join(RES, `raw-${ENGINE}.jsonl`);
 const done = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.cls !== 'quota' && r.cls !== 'usage_limit').map((r) => `${r.slug}|${r.arm}`) : []);
 const h = (s) => crypto.createHash('sha256').update(`7570:${ENGINE}:${s}`).digest('hex');
 const jobs = [];
-for (const p of sealed.pages) for (const arm of ['A', 'B', 'C']) jobs.push({ p, arm });
-for (const c of controls) jobs.push({ p: c, arm: 'P' });
+for (const p of sealed.pages) if (!ONLY || p.script === ONLY) for (const arm of ['A', 'B', 'C']) jobs.push({ p, arm });
+for (const c of controls) if (!ONLY || c.script === ONLY) jobs.push({ p: c, arm: 'P' });
 const todo = jobs.filter((j) => !done.has(`${j.p.slug}|${j.arm}`)).sort((a, b) => h(`${a.p.slug}|${a.arm}`).localeCompare(h(`${b.p.slug}|${b.arm}`)));
 console.log(`${ENGINE}: ${todo.length} of ${jobs.length} calls to make`);
 

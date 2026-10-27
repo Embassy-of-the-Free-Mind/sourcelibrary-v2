@@ -125,6 +125,34 @@ obscure) are what the design rests on. "Famous" here means "text online", from c
 the Latin split and the per-page evidence let a reader regroup. The no-image arm tests verbatim recall of the page's
 text, not knowledge of the work's content.
 
+### Deviation from the preregistration (recorded before the pairs were sealed and before any arm call)
+
+**The online check by web search could not carry a label, so it was replaced.** Seven search subagents (Sonnet,
+WebSearch) ran the quoted-phrase search on 138 screened pages. The session's search budget is 200 queries in all, and
+it ran out after the first pass on about half the pages. Worse, the search found the text of only 1 of the ~11
+canonical Latin pages it reached: Lucan, Cicero, Terence and the *Rhetorica ad Herennium* all came back empty, so
+"no hit" said almost nothing.
+
+What replaced it (`online.mjs`, no model call):
+- **Phrases:** two exact phrases per page, 5 words long (Chinese: 8 characters), taken from the blind key at 25% and
+  60% of its length.
+- **Sources searched:** GitHub code search over all public repositories (Latin Library, Perseus, First1KGreek, Kanripo,
+  Sefaria and GRETIL mirrors all live there), Kanripo on its own for Chinese, the language's Wikisource
+  (la, el, zh, he, sa) and, for Hebrew, Sefaria's search API.
+- **The first-pass web hits are merged in.**
+- **Calibration:** the instrument's miss rate is measured on 20 Greek and 20 Chinese famous pages whose e-text is
+  known.
+
+Two rules change:
+- **Obscure** still means no `etext` hit, now from these lookups.
+- **Famous Latin, Hebrew and Sanskrit pages are labelled at the work level:** a canonical title, or for Latin a
+  RECITATION refusal. A lookup miss no longer removes a famous page, because the lookups miss known-online pages too
+  often to unlabel one. The per-page lookups are still recorded as evidence.
+
+**What this means for "obscure":** the label's evidence is the catalogue and census rules, plus a lookup with a
+measured miss rate. The arms supply a second, direct check: any obscure page the no-image arm reproduces (acc(C) ≥ 0.50)
+is flagged as a suspect label, and the outcomes are also reported without it.
+
 ### Results
 
 Not yet run.
