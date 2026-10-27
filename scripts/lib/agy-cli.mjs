@@ -125,6 +125,12 @@ export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
   });
 }
 
+/** agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none. */
+export function agyUsage(u) {
+  if (!u) return null;
+  return { input: u.input_tokens ?? null, output: u.output_tokens ?? null, thinking: u.thinking_tokens ?? null, cache_read: u.cache_read_tokens ?? null, total: u.total_tokens ?? null };
+}
+
 /**
  * A text-only task (a translation) in a fresh, EMPTY, gated workspace: nothing to wander into, and a denied tool
  * comes back with a reason instead of ending the turn. Up to `attempts` calls while the reply is empty or the call
