@@ -9,7 +9,7 @@ import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
-import { localizedEditionFilterIndexed, type LocalizedCollectionMap } from '@/lib/localized';
+import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
 import { dedupeHomeSections } from '@/lib/home-dedupe';
@@ -39,6 +39,10 @@ const BOOK_PROJECTION = {
   pages_translated: { $ifNull: ['$pages_translated', 0] },
   pages_ocr: { $ifNull: ['$pages_ocr', 0] },
   translation_percent: { $ifNull: ['$translation_percent', 0] },
+  // Inputs of localizedTitle and hasLocalizedEdition, so a locale homepage can
+  // show the Spanish gloss and tell which books exist in Spanish (#7496).
+  localized: 1,
+  pages_translated_es: 1,
 };
 
 // ---------- Data fetching ----------
@@ -72,7 +76,7 @@ export interface FeaturedItem {
 // readable in its language, when one exists (#7098).
 const FEATURED_LOCALIZED_MIN = 3;
 
-async function getFeaturedCollections(preferSlugs: string[] = []): Promise<FeaturedItem[]> {
+async function getFeaturedCollections(preferSlugs: string[] = [], lang: HomeLang = 'en'): Promise<FeaturedItem[]> {
   const db = await getReadDb();
 
   // Pick 1 random collection with enough books for the editorial spread.
@@ -96,7 +100,7 @@ async function getFeaturedCollections(preferSlugs: string[] = []): Promise<Featu
   const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1,
     // Both inputs of hasLocalizedEdition, so a locale homepage links a book with
     // no edition in its language straight to the English page (#7076).
-    language: 1, pages_translated_es: 1 };
+    language: 1, pages_translated_es: 1, localized: 1 };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
@@ -131,8 +135,30 @@ async function getFeaturedCollections(preferSlugs: string[] = []): Promise<Featu
     booksBySlug.set(slug, books);
   }
 
+  // On a locale homepage a band that can be all editions in the page's language
+  // is: every other card opens an English page (#7496). The draw above prefers
+  // collections holding FEATURED_LOCALIZED_MIN of them; below that floor the
+  // curated mixed band stays.
+  const editionBands = new Set<string>();
+  if (lang !== 'en' && !readsOriginal(lang)) {
+    const editionFilter = await localizedEditionFilterIndexed(db, lang);
+    for (const slug of allSlugs) {
+      const inLang = await db.collection('books').aggregate([
+        { $match: { collections: slug, visible: true, pages_count: { $gt: 0 }, ...editionFilter } },
+        { $sort: { read_count: -1 } },
+        { $limit: 10 },
+        { $project: bookProjection },
+      ], { maxTimeMS: 8000 }).toArray();
+      if (inLang.length >= FEATURED_LOCALIZED_MIN) {
+        booksBySlug.set(slug, inLang);
+        editionBands.add(slug);
+      }
+    }
+  }
+
   // For collections with fewer than 10 highlighted books, backfill from general query
-  const slugsNeedingMore = allSlugs.filter(s => (booksBySlug.get(s)?.length || 0) < 10);
+  // An edition band is never topped up with English-only books.
+  const slugsNeedingMore = allSlugs.filter(s => !editionBands.has(s) && (booksBySlug.get(s)?.length || 0) < 10);
   if (slugsNeedingMore.length > 0) {
     const existingIds = new Set([...booksBySlug.values()].flat().map(b => b.id));
     const backfillBooks = await db.collection('books').aggregate([
@@ -271,17 +297,20 @@ async function getCuratedShowcase(lang: HomeLang): Promise<CuratedShowcase> {
         },
       },
       { $sample: { size: 4 } },
-      { $project: { _id: 0, slug: 1, name: 1, subtitle: 1, book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: ['$featured_images', 4] } } },
+      { $project: { _id: 0, slug: 1, name: 1, subtitle: 1, localized: 1, book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: ['$featured_images', 4] } } },
     ], { maxTimeMS: 5000 }).toArray(),
   ]);
 
   const items: CuratedShowcaseItem[] = docs.map((doc) => {
     const imageCandidates = cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image);
     const full = imageCandidates.map(toGalleryFullUrl).filter((u): u is string => Boolean(u));
+    // On /es the card reads the collection's Spanish copy; a hook with no
+    // Spanish version is dropped rather than shown in English (#7496).
+    const copy = lang === 'es' ? localizedCollection(doc, lang) : null;
     return {
       slug: doc.slug as string,
-      name: doc.name as string,
-      subtitle: (doc.subtitle || '') as string,
+      name: (copy ? copy.name : doc.name) as string,
+      subtitle: (copy ? (doc.localized?.es?.subtitle || '') : (doc.subtitle || '')) as string,
       book_count: (doc.book_count || 0) as number,
       artwork_count: (doc.artwork_count || 0) as number,
       imageCandidates,
@@ -468,6 +497,35 @@ async function getRecentlyTranslated(language?: string): Promise<CatalogBook[]> 
     if (out.length >= RECENTLY_TRANSLATED_COUNT) break;
   }
   return out;
+}
+
+/**
+ * The most-read works with an edition in `lang` (translated into it, or written
+ * in it), with a real cover. Fills the "recently translated" slot on /es: the
+ * English list there sent every card to an English page (#7496). Mongo, not the
+ * catalog mirror, because the edition test is `localizedEditionFilterIndexed`.
+ */
+async function getEditionShelf(lang: Exclude<Locale, 'en'>): Promise<CatalogBook[]> {
+  const db = await getReadDb();
+  const editionFilter = await localizedEditionFilterIndexed(db, lang);
+  const books = await db.collection('books').aggregate([
+    { $match: { visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, ...editionFilter } },
+    { $sort: { read_count: -1 } },
+    { $limit: 120 },
+    { $project: BOOK_PROJECTION },
+  ], { maxTimeMS: 8000 }).toArray() as unknown as CatalogBook[];
+
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b)) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= RECENTLY_TRANSLATED_COUNT) break;
+  }
+  return JSON.parse(JSON.stringify(out)) as CatalogBook[];
 }
 
 // ---------- The native shelf (the band under the /la, /nl, /zh hero, #6254, #6382) ----------
@@ -1015,10 +1073,14 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     nativeFirst
       ? Promise.resolve([] as FeaturedItem[])
       : withTimeout(localizedCountsPromise.then((c) => getFeaturedCollections(
-          Object.keys(c).filter((slug) => c[slug] >= FEATURED_LOCALIZED_MIN))), 20000, [] as FeaturedItem[]),
+          Object.keys(c).filter((slug) => c[slug] >= FEATURED_LOCALIZED_MIN), lang)), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
-    withTimeout(getRecentlyTranslated(nativeFirst), 20000, [] as CatalogBook[]),
-    nativeFirst ? Promise.resolve([] as LikedBook[]) : withTimeout(getMostLiked(), 8000, [] as LikedBook[]),
+    lang === 'es'
+      ? withTimeout(getEditionShelf('es'), 20000, [] as CatalogBook[])
+      : withTimeout(getRecentlyTranslated(nativeFirst), 20000, [] as CatalogBook[]),
+    nativeFirst ? Promise.resolve([] as LikedBook[]) : withTimeout(getMostLiked(), 8000, [] as LikedBook[])
+      // On /es only the favourites a Spanish reader can read in Spanish (#7496).
+      .then((liked) => lang === 'es' ? liked.filter((b) => hasLocalizedEdition(b as unknown as Record<string, unknown>, 'es') === true) : liked),
     withTimeout(getHomeGalleryPlates(nativeFirst), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),

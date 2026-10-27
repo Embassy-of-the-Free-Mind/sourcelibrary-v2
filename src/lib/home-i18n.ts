@@ -336,8 +336,8 @@ const es: HomeStrings = {
   bySubjectHeading: 'Explorar por tema',
   bySubjectLead: 'Toda la biblioteca:',
 
-  recentlyTranslatedHeading: 'Traducidas recientemente',
-  recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  recentlyTranslatedHeading: 'Para leer en español',
+  recentlyTranslatedSubtitle: 'Las obras más leídas de la biblioteca que ya tienen edición en español, traducidas por Source Library o escritas en castellano.',
   mostLikedHeading: 'Las favoritas de los lectores',
   mostLikedSubtitle: 'Los libros que más les han gustado a los lectores. ¿Encontraste uno que te encanta? Pulsa el ♥ en su página para sumar tu voto.',
   spanishHeading: 'Leer en español',
@@ -356,7 +356,7 @@ const es: HomeStrings = {
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',
 
-  blogHeading: 'Artículos',
+  blogHeading: 'Artículos (en inglés)',
   blogSubtitle: 'Historias, recorridos de lectura e investigación a partir de los libros de la biblioteca, cada cita enlazada a la página de la que procede',
   blogAllPosts: 'Todos los artículos',
   tagDeepDive: 'Análisis',
