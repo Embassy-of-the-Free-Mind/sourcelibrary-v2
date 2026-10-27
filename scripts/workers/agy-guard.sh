@@ -44,6 +44,16 @@ if [ "$1" = "--uninstall" ]; then
   rm -f "$SELF_DIR/agy"; echo "agy-guard removed"; exit 0
 fi
 
+# A second Google account: AGY_HOME=<dir> runs the CLI with that HOME, so it reads the login in
+# <dir>/.gemini/antigravity-cli/antigravity-oauth-token instead of root's. Quota is per account, so the heavy-call cap
+# is counted per account too. Linux only: the Mac keeps its login in the Keychain, which HOME does not change.
+# Log an account in once with `HOME=<dir> agy` and finish the browser sign-in.
+if [ -n "$AGY_HOME" ]; then
+  [ -f "$AGY_HOME/.gemini/antigravity-cli/antigravity-oauth-token" ] || {
+    echo "agy-guard: AGY_HOME=$AGY_HOME has no login (run: HOME=$AGY_HOME agy)" >&2; exit 78; }
+  export HOME="$AGY_HOME"; GUARD_DIR="$GUARD_DIR/$(basename "$AGY_HOME")"
+fi
+
 print=0; model=''; prev=''
 for a in "$@"; do
   case "$a" in -p|--print|--prompt) print=1 ;; --model=*) model="${a#--model=}" ;; esac
