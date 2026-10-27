@@ -96,6 +96,8 @@ export interface HomeStrings {
   /** The shelf of books WRITTEN in the page's language. Rendered on `/la` only (#6254). */
   nativeShelfHeading: string;
   nativeShelfSubtitle: string;
+  /** The subtitle with the live count of books in the page's language, when the count loaded. */
+  nativeShelfTotal?: (n: number) => string;
   nativeShelfAll: string;
   /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
   beginnerShelfHeading: string;
@@ -714,8 +716,8 @@ const zh: HomeStrings = {
   collectionsWord: '个专题',
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
-  showcaseEyebrow: '策展',
-  showcaseSubtitle: '每个专题一个主题，各收几十部书，附一篇简短导读。',
+  showcaseEyebrow: '中文专题',
+  showcaseSubtitle: '馆藏中文古籍的几个专题，均可对照原书影像阅读原文。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -729,6 +731,7 @@ const zh: HomeStrings = {
   spanishHeading: '西班牙文阅读',
   nativeShelfHeading: '中文书籍',
   nativeShelfSubtitle: '以中文写成的书，在这里阅读原文。',
+  nativeShelfTotal: (n) => `馆藏以中文写成的书 ${n.toLocaleString('zh-CN')} 部，均可对照原书影像阅读原文。`,
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
@@ -1051,6 +1054,11 @@ export const ZH_COLLECTION_NAMES: Record<string, string> = {
   // collections query times out (FALLBACK_COLLECTIONS in home-data.ts).
   'indic-traditions': '印度传统',
   'chinese-classics': '中国经典',
+  // The /zh showcase (NATIVE_SHOWCASE_SLUGS).
+  'chinese-natural-knowledge': '中国自然知识',
+  'chinese-divination-cosmology': '术数与宇宙论',
+  'confucian-classics': '儒家经典',
+  'chinese-astrology': '天文与星占',
   'leonardo-da-vinci': '达·芬奇',
   'kabbalah': '卡巴拉',
   'herbalism': '本草与植物学',
@@ -1185,6 +1193,17 @@ export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelv
       { slug: 'chinese-history-statecraft', heading: '史地与治术' },
     ],
   },
+};
+
+/**
+ * The collections the showcase shows on a native-first homepage, in place of the
+ * random draw of curated exhibitions. Only six curated exhibitions hold any Chinese
+ * book (ten at most), so the draw put Hogwarts and Indonesian manuscripts on /zh
+ * (#7537). These are the published Chinese collections the subject shelves below
+ * do not already show. Each needs a name in COLLECTION_NAMES for the language.
+ */
+export const NATIVE_SHOWCASE_SLUGS: Partial<Record<HomeLang, string[]>> = {
+  zh: ['chinese-natural-knowledge', 'chinese-divination-cosmology', 'confucian-classics', 'chinese-astrology'],
 };
 
 /** Hand-written collection names per locale. English is the stored name. */

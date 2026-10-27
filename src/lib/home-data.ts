@@ -7,7 +7,7 @@ import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
-import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
+import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
 import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
@@ -280,16 +280,24 @@ export interface CuratedShowcase {
 async function getCuratedShowcase(lang: HomeLang): Promise<CuratedShowcase> {
   const db = await getReadDb();
   const published = { type: 'curated', published: true, visible: { $ne: false } };
+  // A pinned set (NATIVE_SHOWCASE_SLUGS) is any published collection, curated or
+  // not; `total` still counts the curated exhibitions behind the "all" link.
+  const pinned = NATIVE_SHOWCASE_SLUGS[lang];
+  const pool = pinned
+    ? { slug: { $in: pinned }, published: true, visible: { $ne: false } }
+    : {
+        ...published,
+        ...(readsOriginal(lang) ? { slug: { $in: Object.keys(COLLECTION_NAMES[lang] ?? {}) } } : {}),
+        homepage_exclude: { $ne: true },
+        book_count: { $gte: 15 },
+        subtitle: { $type: 'string', $nin: ['', '-'] },
+      };
   const [total, docs] = await Promise.all([
     db.collection('collections').countDocuments(published, { maxTimeMS: 5000 }),
     db.collection('collections').aggregate([
       {
         $match: {
-          ...published,
-          ...(readsOriginal(lang) ? { slug: { $in: Object.keys(COLLECTION_NAMES[lang] ?? {}) } } : {}),
-          homepage_exclude: { $ne: true },
-          book_count: { $gte: 15 },
-          subtitle: { $type: 'string', $nin: ['', '-'] },
+          ...pool,
           $or: [
             { hero_image: { $type: 'string', $nin: [''] } },
             { 'featured_images.0': { $exists: true } },
@@ -558,6 +566,13 @@ async function getNativeShelf(language: string): Promise<CatalogBook[]> {
     if (out.length >= NATIVE_SHELF_COUNT) break;
   }
   return out;
+}
+
+// The shelf's subtitle quotes how many books there are in the language (#7537).
+// Its own query and timeout, so a slow count drops the number, never the shelf.
+async function getNativeShelfTotal(language: string): Promise<number> {
+  const { total } = await browseBooks({ language, limit: 1, exactCount: true });
+  return total;
 }
 
 // ---------- Subject shelves (native-first homepages) ----------
@@ -1035,6 +1050,8 @@ export interface HomeData {
   blogPosts: HomeBlogPost[];
   /** Popular books written in Latin, for the `/la` shelf (#6254). Empty on every other homepage. */
   nativeShelf: CatalogBook[];
+  /** Every public book in the page's language (0 when the count did not load). */
+  nativeShelfTotal: number;
   /** Hand-picked readable Latin for the `/la` "Tironibus" shelf (#6278). Empty elsewhere. */
   beginnerShelf: CatalogBook[];
   /** Latin books not readable in English, with their count, for the `/la` "Nondum conversi" band (#6278). Null elsewhere. */
@@ -1074,7 +1091,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const localizedCountsPromise = lang === 'en'
     ? Promise.resolve({} as Record<string, number>)
     : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>);
-  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks, untranslatedShelf] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, subjectShelfBooks, untranslatedShelf, nativeShelfTotal] = await Promise.all([
     nativeFirst
       ? Promise.resolve([] as FeaturedItem[])
       : withTimeout(localizedCountsPromise.then((c) => getFeaturedCollections(
@@ -1096,6 +1113,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
     lang === 'la' ? withTimeout<UntranslatedShelf | null>(getUntranslatedShelf('Latin'), 20000, null) : Promise.resolve(null),
+    NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelfTotal(NATIVE_SHELF_LANGUAGE[lang]!), 8000, 0) : Promise.resolve(0),
   ]);
 
   // One work, one appearance across the book shelves of a native-first page:
@@ -1138,6 +1156,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     localizedCollectionCounts,
     // One book, one appearance: the beginner's shelf is the hand-picked one, so it keeps the card.
     nativeShelf: nativeShelf.filter((b) => !beginnerShelf.some((p) => p.id === b.id)),
+    nativeShelfTotal,
     beginnerShelf,
     subjectShelves,
     // One work, one appearance: the two Latin shelves above it keep theirs.
