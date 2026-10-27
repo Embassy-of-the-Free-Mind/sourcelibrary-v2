@@ -528,6 +528,17 @@ function score(out, resultsDir) {
     per_book: perBook.map(r => ({ book: r.book, stratum: r.stratum, glossary: r.glossary, terms_in_window: r.terms_in_window, terms_2plus: r.terms_2plus, A: r1((r.arms.A?.consistency ?? NaN) * 100), B: r1((r.arms.B?.consistency ?? NaN) * 100), A2: r.arms.A2 ? r1(r.arms.A2.consistency * 100) : undefined, A_brief_match: r1((r.arms.A?.brief_match ?? NaN) * 100), B_brief_match: r1((r.arms.B?.brief_match ?? NaN) * 100) })),
   };
   report.consistency_detail = perBook;
+  // NOT registered (added after reading the A2 detail, where "your father" / "our father" / "father" counted as three
+  // renderings): the same score with possessives and demonstratives also stripped, and the registered score by engine.
+  const DET = /^(?:(?:his|her|its|their|our|your|my|this|that|these|those) )+/;
+  const consOf = (rows, arm) => avg(rows.map(t => { const c = {}; for (const r of t.raw) { const k = r.replace(DET, ''); c[k] = (c[k] || 0) + 1; } return Math.max(...Object.values(c)) / t.raw.length; }));
+  for (const r of perBook) for (const a of Object.values(r.arms)) for (const t of a.detail) t.raw = Object.entries(t.renderings).flatMap(([k, n]) => Array(n).fill(k));
+  const sens = perBook.filter(r => r.arms.A?.terms && r.arms.B?.terms).map(r => ({ book: r.book, A: consOf(r.arms.A.detail), B: consOf(r.arms.B.detail), A2: r.arms.A2?.terms ? consOf(r.arms.A2.detail) : null }));
+  const dS = (s) => avg(s.map(r => r.B - r.A)) * 100, dSA = (s) => avg(s.map(r => r.A2 - r.A)) * 100;
+  const sensAA = sens.filter(r => r.A2 != null);
+  report.consistency_sensitivity_unregistered = { normalisation: 'registered + possessives/demonstratives stripped', A: r1(avg(sens.map(r => r.A)) * 100), B: r1(avg(sens.map(r => r.B)) * 100), delta_B_A: r1(dS(sens)), ci: clusterBoot(sens, dS)?.map(r1), A2_A: { delta: r1(dSA(sensAA)), ci: clusterBoot(sensAA, dSA)?.map(r1) },
+    by_engine_registered: Object.fromEntries(['opus', 'agy'].map(e => { const u = consUnits.filter(r => books.find(b => b.book.id === r.book).engine === e); return [e, { books: u.length, delta_B_A: r1(dCons(u)), ci: clusterBoot(u, dCons)?.map(r1) }]; })) };
+  for (const r of perBook) for (const a of Object.values(r.arms)) for (const t of a.detail) delete t.raw;
 
   // 2 + 5. page judge
   const pj = readJsonl(path.join(out, 'pagejudge.jsonl'));
