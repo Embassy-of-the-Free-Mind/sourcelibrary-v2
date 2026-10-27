@@ -44,6 +44,8 @@ export interface BookStrings {
   ocr: string;
   translated: string;
   /** Rung `complete` (#5287): every translatable page is translated. */
+  /** Both badges count the ENGLISH translation; off English they say so, or a reader of
+   *  /es or /zh takes the book to be translated into their language (#7496 spot check). */
   translationComplete: string;
   ocrTooltip: (done: number, total: number) => string;
   translatedTooltip: (n: number) => string;
@@ -252,8 +254,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'imagen' : 'imágenes'}`,
     notTranscribed: 'Solo escaneos, todavía sin transcribir',
     ocr: 'Transcripción',
-    translated: 'Traducido',
-    translationComplete: 'Completo',
+    translated: 'Traducido al inglés',
+    translationComplete: 'Traducción al inglés completa',
     ocrTooltip: (done, total) => `${done} de ${total} páginas transcritas`,
     translatedTooltip: (n) => `${n} páginas traducidas al inglés`,
     notTranscribedTooltip: (total) => `${total} escaneos disponibles; ninguna página transcrita todavía`,
@@ -352,8 +354,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'imago' : 'imagines'}`,
     notTranscribed: 'Imagines tantum: nondum transcriptus',
     ocr: 'Transcriptio',
-    translated: 'Conversio',
-    translationComplete: 'Absoluta',
+    translated: 'Anglice conversum',
+    translationComplete: 'Anglice totum conversum',
     ocrTooltip: (done, total) => `${done} ex ${total} paginis transcriptae`,
     translatedTooltip: (n) => `${n} paginae Anglice conversae`,
     notTranscribedTooltip: (total) => `${total} imagines praesto sunt; nulla pagina adhuc transcripta`,
@@ -452,8 +454,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'afbeelding' : 'afbeeldingen'}`,
     notTranscribed: 'Alleen scans, nog niet getranscribeerd',
     ocr: 'Transcriptie',
-    translated: 'Vertaald',
-    translationComplete: 'Volledig',
+    translated: 'In het Engels vertaald',
+    translationComplete: 'Engelse vertaling volledig',
     ocrTooltip: (done, total) => `${done} van ${total} pagina’s getranscribeerd`,
     translatedTooltip: (n) => `${n} pagina’s naar het Engels vertaald`,
     notTranscribedTooltip: (total) => `${total} scans beschikbaar; nog geen pagina’s getranscribeerd`,
@@ -552,8 +554,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} 幅图像`,
     notTranscribed: '仅有扫描图，尚未转录',
     ocr: '转录',
-    translated: '已翻译',
-    translationComplete: '已全部翻译',
+    translated: '已译成英文',
+    translationComplete: '英文译本完整',
     ocrTooltip: (done, total) => `共 ${total} 页，已转录 ${done} 页`,
     translatedTooltip: (n) => `已有 ${n} 页译成英文`,
     notTranscribedTooltip: (total) => `有 ${total} 张扫描图；尚无页面转录`,
