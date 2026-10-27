@@ -83,5 +83,49 @@ reported against the same ≤ 5% bar; it decides the recommendation, not a write
 **Limits.** $0 paid; Opus on the subscription only; reads stop at 80% of the 5-hour window and 89% of the week. No
 agy. No page writes.
 
-### Result
-_(pending)_
+### Result, Stage 1 (20 pages): PASSES all three bars
+
+The reads finished 17:13Z (200 pages, 62 calls, 0 failed; 34 pages re-read alone by the reader's drift/seam guard,
+as production does: 3 of the 5 paired pages among them). The audit ran 19:00–19:40Z.
+
+| | n | bad | 95% CI | usable / with caveat | OCR spans per page (mean, median) |
+|---|---|---|---|---|---|
+| **all** | 20 | **1 (5%)** | 0.9–24% | 2 / 17 | 15.6, 10 |
+| FRESH (unbiased) | 15 | 1 (6.7%) | 1.2–30% | 1 / 13 | 13.0, 9 |
+| PAIRED-BAD | 5 | **0** (10-24: 5/5) | 0–43% | 1 / 4 | 23.4, 27 |
+| 10-24 text-only CANON, for reference | 40 | 19 (48%) | 33–63% | | 16.6, 15 |
+
+- **Bar 1 (bad ≤ 1/20): met, at exactly 1.** **Bar 3 (controls ≥ 5/6): 6/6** (4/4 reversals, 2/2 inventions).
+- **The five paired pages, 10-24 bad → now:**
+  - a008 (Thadrak mDo sde Ta p.239): caveat. The OCR's duplicated smith simile and five "bam po" are gone; the English
+    gives "fascicle forty-one" as the leaf has it.
+  - a011 ('Bum Kha p.113): usable. The leaf's "eye of Dharma" section, which the OCR replaced with a repeated
+    "eye of wisdom", is translated from the leaf.
+  - a015 (Khri brgyad stong pa Kha p.30), a031 ('Dul ba Ca p.93), a034 ('Bum Cha p.304): caveat. The OCR's
+    invented and repeated lines are not in the English.
+- **The one bad page, a013 (Neyphug mDo sde Pa p.308), is translator-side and checked by eye.** The leaf reads
+  གཞན་ལ་མི་སྨོད་པ་དེ་དག་ལ་ཆོས་ཡང་དག་པར་བརྗོད་པ་**མ་མཆིས** ("for those who do not disparage others there is *no* right
+  proclamation"), as the transcription does. The English says "there is", with a note claiming the leaf reads so.
+  Opus "corrected" the text toward the sense it expected and attributed that to the leaf. The same kind of false leaf
+  note is on a015 (FRESH, caveat): it says the leaf lacks ཟབ་མོ "profound", which the leaf has.
+  **2 of 20 audited pages carry a false claim about the leaf.**
+- **Why 17 of 20 are "with caveat":** mostly the bracketed notes ("[the transcription repeats this line; the leaf
+  has it once]"), which the auditor counts as chatter. 175 such notes sit on 83 of the 200 pages read. Written as
+  they are, readers would see them in the English.
+- **Attribution (`audit.mjs attribute`) was not run:** one bad page, and it was settled by eye.
+
+**Bar 2, by eye (10 pages, all opened against the native-resolution scan): 0 invented, 0 wrong-leaf. Met.**
+- The 5 paired pages (a002, a004, a007, a008, a018), the one page flagged for invention (a005), and seeded FRESH
+  a001, a009, a017, a020; plus a013, the bad page.
+- On every one, the English's leaf notes held where I could read the leaf: the line counts (7 + 7), the leaf
+  ends, the headings (a004 བམ་པོ་བཞི་བཅུ / གཅིག་པ), the replaced items (a018 ཆོས་ཀྱི་མིག, a002 བྱང་ཆུབ་ནི་དེ་བཞིན་ཉིད).
+- **The auditor's one "invention" (a005, "…is difficult") is wrong.** It is the lower leaf's first words,
+  དཀའ་བའོ། །གཞན་ཡང་དཔེར་ན་ཁྱིམ་གྱི་ཁྱི…, a line the OCR skipped and the translator restored from the leaf.
+
+**Usage, Stage 1:** reads $34.68 list-equivalent ($17.34 per 100 pages, 2× the Bardo's $8.70 and the 10-24
+text-only $9.29; 3,883 output tokens and 37.5 s per page), audit 26 calls $8.53. The weekly meter moved 10 → 22%
+over 12:40–17:10Z, but 6 jobs shared the account (es-meta-cli-7496, flora-zh-7537, prompt-bench-7499,
+siku-kanripo-check-7503, tib-concept-opus-6948, this one), so that is not this job's cost.
+
+### Result, Stage 2 (300 pages, metered)
+_(running)_
