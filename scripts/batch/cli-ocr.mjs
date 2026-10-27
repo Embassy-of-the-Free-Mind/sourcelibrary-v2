@@ -95,12 +95,12 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
-import { checkWrittenText, writeGuardReason } from '../lib/write-text-guard.mjs';
+import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
@@ -125,11 +125,20 @@ if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT) { console.error('--per-c
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
-// The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
 // #6523: the reply is asked for between <<<BEGIN>>> / <<<END>>> markers (the dev rounds' winning config). A read made
 // before that records no `prompt_variant` and is rebuilt with the legacy sentence, so its hash still matches at apply.
-const PROMPT_VARIANT = 'sentinels-6523';
-const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === PROMPT_VARIANT
+// #7558: `@./file` does NOT attach the image in `agy -p` (1.4.8): with read_file denied the model answers "the image is
+// not present in the context", and stream-json input refuses image blocks ("only text"). The model sees the page only
+// through its own read_file turn, so that turn is the read, not a redundant one. What a call can lose is the turn the
+// model spends on a denied shell (crop) before it opens the file. `read-file-7558` (--prompt-variant) names the file and
+// the one tool that works up front; the default stays sentinels-6523 unless the A/B in the experiment record says so.
+const PROMPT_VARIANTS = ['sentinels-6523', 'read-file-7558'];
+const PROMPT_VARIANT = arg('prompt-variant') || 'sentinels-6523';
+if (STAGE === 'read' && !PROMPT_VARIANTS.includes(PROMPT_VARIANT)) { console.error(`--prompt-variant must be one of ${PROMPT_VARIANTS.join(', ')}`); process.exit(2); }
+if (STAGE === 'read' && arg('prompt-variant') && CORRECT_PROMPT) { console.error('--prompt-variant is for a plain read; --correct-prompt sends its own file'); process.exit(2); }
+const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === 'read-file-7558'
+  ? `\n\nThe page image to transcribe is the file ./${path.basename(imagePath)} in this directory. ${OCR_READ_FILE_INSTRUCTION} Then transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
+  : variant === 'sentinels-6523'
   ? `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
   : `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`);
 // #6523: a PreToolUse hook in the page's workspace (scripts/lib/agy-tool-gate.py) lets the model open the image with
@@ -279,7 +288,7 @@ if (STAGE === 'read') {
     const buf = Buffer.from(await res.arrayBuffer());
     return { src, buf, sha: createHash('sha256').update(buf).digest('hex') };
   };
-  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n);
+  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT });
   const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(null, null, PROMPT_VARIANT, n) });
   /** One block call. Returns the pages to read again one per call ([] when every page was kept), or null when the call was refused whole. */
   const readBlock = async (group, imgs, attempt) => {
@@ -410,7 +419,8 @@ const MARK_STALE = arg('mark-stale');
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
-const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+// The pid keeps two applies started in the same second (cli-ocr-lane.mjs --concurrency, #7558) on separate run ids.
+const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|^#{2,3} Summary\b|overview and summary of the text/im;
 // Distinct words of 5+ letters, folded: enough to tell "the same page read again" from "a different text".
 const longWords = (t) => new Set((String(t).replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u').match(/\p{L}{5,}/gu) || []));
@@ -449,8 +459,9 @@ const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : 
 const bookCache = new Map();
 const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
-const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [] };
-const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
+const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [], skipped_pages: {}, contain_claims: [] };
+// skipped_pages: page id -> the reason, so a lane can ledger each page's outcome (cli-ocr-lane.mjs correct, #7558).
+const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; tally.skipped_pages[m.page_id ?? m.key] = why; console.log(`  skip p.${m.page_number}: ${why}`); };
 // A read the engine did not deliver (exit, empty, refusal, a cut or chattering wrapper) is stamped on the page as a
 // failed read (#7378), so the route census sees this route's did-not-read rate. Our own guards' skips are not.
 const failedReads = [];
@@ -465,6 +476,12 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // written even when the text inside looks like a transcription: it is usually a partial page.
   if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
   if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
+  // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
+  // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A
+  // CONTAIN is a model's claim, not a finding: it goes to contain_claims for a by-eye check, and the page is untouched.
+  if (correct && /^UNCHANGED\.?$/i.test(text)) { skip(m, 'corrector: UNCHANGED (the draft stands)'); continue; }
+  const containClaim = correct && text.match(/^CONTAIN\s*:\s*([\s\S]+)$/i);
+  if (containClaim && containClaim[1].length < 600 && !/<page-type>/.test(text)) { skip(m, 'corrector: CONTAIN (a claim to check by eye)'); tally.contain_claims.push({ page_id: m.page_id ?? m.key, book_id: m.book_id, page_number: m.page_number, reason: containClaim[1].trim() }); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
   if (!correct && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
   // The CLI is an agent, not an endpoint: a refusal arrives as exit 0 with prose. Aldine 1516 p.34 came back as two
@@ -494,8 +511,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let yat = null, byEye = null;
   if (correct) {
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
-    const headers = (t) => (t.match(/<page-type>|<scan-quality>/g) || []).length;
-    if (headers(text) > headers(page.ocr.data)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
+    if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
     if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
