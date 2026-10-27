@@ -1,0 +1,386 @@
+{
+"པ→པོ": {
+"class": "minor",
+"why": "nominaliser pa/po on the same word (rgyal pa/po)"
+},
+"བས→བར": {
+"class": "minor",
+"why": "case particle"
+},
+"དངས→དྭངས": {
+"class": "minor",
+"why": "spelling"
+},
+"མོ→པོ": {
+"class": "severe",
+"why": "feminine to masculine: another referent"
+},
+"པདྨ→པདྨོ": {
+"class": "normalisation",
+"why": "Sanskrit form of padma"
+},
+"ཁྲག→ཕྲག": {
+"class": "minor",
+"why": "ཁྲི་ཁྲག is a spelling of ཁྲི་ཕྲག (ten thousand); by eye the leaf has ཁྲག"
+},
+"བཞི→གཞི": {
+"class": "severe",
+"why": "number four to ground"
+},
+"ཚོན→ཚོགས": {
+"class": "severe",
+"why": "colour to assembly"
+},
+"ཨཱ→ཞཱ": {
+"class": "mantra",
+"why": "a mantra consonant changed"
+},
+"ཤོ→ཤྲོ": {
+"class": "mantra",
+"why": "a mantra consonant added"
+},
+"བྷཱུ→བྷཱ": {
+"class": "mantra",
+"why": "a mantra vowel changed u to a"
+},
+"པོ→པོས": {
+"class": "minor",
+"why": "agentive particle"
+},
+"སརྦ→སརྦྦ": {
+"class": "normalisation",
+"why": "Sanskrit gemination"
+},
+"བུ→བུར": {
+"class": "minor",
+"why": "particle"
+},
+"དྷྭ་ན→དྷྭཾ": {
+"class": "normalisation",
+"why": "nasal as anusvara"
+},
+"དྷྲི་ག→དྷྲྀ་གྷ": {
+"class": "normalisation",
+"why": "Sanskrit ṛ and aspirate"
+},
+"ན→ཀྱི": {
+"class": "minor",
+"why": "case particle"
+},
+"མ→མི": {
+"class": "minor",
+"why": "negative particle variant"
+},
+"པ→པའོ": {
+"class": "minor",
+"why": "final particle"
+},
+"ཅི→ཇི": {
+"class": "minor",
+"why": "ci/ji interrogative variant (ci ltar/ji ltar)"
+},
+"ཀྱི→ཀྱེ": {
+"class": "minor",
+"why": "particle to vocative"
+},
+"བཅོལ→བཅོམ": {
+"class": "minor",
+"why": "spelling of bcom (ldan das)"
+},
+"སྤྱད→སྤྱོད": {
+"class": "minor",
+"why": "tense of the same verb"
+},
+"བགྱི→བགྱིད": {
+"class": "minor",
+"why": "tense of the same verb"
+},
+"དཔའི→དཔའ": {
+"class": "minor",
+"why": "genitive dropped"
+},
+"ཆ→ཆོ": {
+"class": "severe",
+"why": "another syllable"
+},
+"གྱུར→འགྱུར": {
+"class": "minor",
+"why": "tense of the same verb"
+},
+"བ→བར": {
+"class": "minor",
+"why": "particle"
+},
+"ཆེ→ཚེ": {
+"class": "severe",
+"why": "great to life/time"
+},
+"འཛེ→ཛེ": {
+"class": "minor",
+"why": "spelling"
+},
+"ནི→ན": {
+"class": "minor",
+"why": "particle"
+},
+"སར→གསར": {
+"class": "minor",
+"why": "spelling"
+},
+"བཏང→གཏང": {
+"class": "minor",
+"why": "tense of the same verb"
+},
+"སིཛྫ→སིདྡྷི": {
+"class": "normalisation",
+"why": "siddhi spelled the Sanskrit way"
+},
+"ཊཱ→ཏྲཱ": {
+"class": "mantra",
+"why": "a mantra consonant changed"
+},
+"ཀར→པར": {
+"class": "severe",
+"why": "another syllable"
+},
+"གི→པོའི": {
+"class": "severe",
+"why": "a word added in place of the particle"
+},
+"ཏཱ་ན→ཏཱཾ": {
+"class": "normalisation",
+"why": "nasal as anusvara"
+},
+"སྔགས→མནྟྲ": {
+"class": "minor",
+"why": "the same word, Tibetan to Sanskrit (mantra); NOT what the leaf shows"
+},
+"མའོ→མའི": {
+"class": "minor",
+"why": "particle"
+},
+"རྩེ→རྩི": {
+"class": "severe",
+"why": "peak to juice"
+},
+"སེབས→སེམས": {
+"class": "minor",
+"why": "spelling"
+},
+"མེད→མཆིས": {
+"class": "severe",
+"why": "negation lost (absent to present)"
+},
+"གསོད→གཅོད": {
+"class": "severe",
+"why": "kill to cut"
+},
+"གིས→གི": {
+"class": "minor",
+"why": "particle"
+},
+"གཉེན→གཤེན": {
+"class": "severe",
+"why": "name changed"
+},
+"ནབས→གབས": {
+"class": "severe",
+"why": "another word"
+},
+"བརྟགས→བརྟན": {
+"class": "severe",
+"why": "examined to stable"
+},
+"གཅེས→གཙོ": {
+"class": "severe",
+"why": "precious to chief"
+},
+"འབྱམ→འབྱམས": {
+"class": "minor",
+"why": "spelling"
+},
+"མང→མངས": {
+"class": "minor",
+"why": "spelling"
+},
+"ཚེ→ཆེ": {
+"class": "severe",
+"why": "life/time to great"
+},
+"སེམྶ→སེམས": {
+"class": "minor",
+"why": "spelling"
+},
+"སྤང→ལྡང": {
+"class": "severe",
+"why": "abandon to rise"
+},
+"མཛྫ→མུཛྫ": {
+"class": "mantra",
+"why": "a mantra vowel added"
+},
+"བརྟགས→བལྟས": {
+"class": "severe",
+"why": "examined to looked"
+},
+"ཨཱཛྙ→ཡཱ་ཨཱཛྙཱ": {
+"class": "mantra",
+"why": "a mantra syllable added"
+},
+"འདོད→བྱེད": {
+"class": "severe",
+"why": "desire to do"
+},
+"སྐྱེ→སྒྱེ": {
+"class": "minor",
+"why": "spelling"
+},
+"བྱེད→བགྱིད": {
+"class": "minor",
+"why": "honorific of the same verb"
+},
+"ཀྱིས→ཀྱི": {
+"class": "minor",
+"why": "particle"
+},
+"ལ→ལྟར": {
+"class": "severe",
+"why": "to to like"
+},
+"ཞམ→ཞབས": {
+"class": "minor",
+"why": "spelling"
+},
+"གོལ→རྒོལ": {
+"class": "severe",
+"why": "deviate to attack"
+},
+"པ→པར": {
+"class": "minor",
+"why": "particle"
+},
+"རེ→རཱི": {
+"class": "mantra",
+"why": "a mantra vowel changed e to ī"
+},
+"བླས→བླmatrixས": {
+"class": "severe",
+"why": "Latin letters inserted"
+},
+"ཆ→ཅ": {
+"class": "minor",
+"why": "aspiration spelling"
+},
+"ཨཽ→ཨོ": {
+"class": "normalisation",
+"why": "Sanskrit au to o"
+},
+"→དག": {
+"class": "minor",
+"why": "plural marker added"
+},
+"→འདི": {
+"class": "minor",
+"why": "demonstrative added"
+},
+"བརྐྱང་ན་ས→བརྐྱངས་ལ": {
+"class": "minor",
+"why": "spelling and particle"
+},
+"ཏི་ནི་རྣཱ→ཏིར་ནིརྣཱ": {
+"class": "normalisation",
+"why": "Sanskrit cluster split/joined"
+},
+"ཤོག་མ་རྣམྶ→ཤོ་གམ་རྣམས": {
+"class": "minor",
+"why": "resegmented, same letters"
+},
+"ཧུ་བར་ཛོ→ཧཱུ་བརྡོ": {
+"class": "mantra",
+"why": "mantra letters changed"
+},
+"ནེ་ཤྭ་རེ→ནེཤྭ་རཱི": {
+"class": "mantra",
+"why": "mantra vowel changed and joined"
+},
+"ཀ་ཏྱའི་བུ→ཀཱ་ཏྱཱ་ཡཱ་ན": {
+"class": "normalisation",
+"why": "the same name, Tibetan form to Sanskrit (O8); NOT what the leaf shows"
+},
+"ཀ་ཏྱའི་བུས→ཀཱ་ཏྱཱ་ཡཱ་ནས": {
+"class": "normalisation",
+"why": "the same name, Tibetan form to Sanskrit (O8); NOT what the leaf shows"
+},
+"པའི་བར→པར": {
+"class": "minor",
+"why": "particle"
+},
+"པོ་ཆེའི→ཆེན": {
+"class": "minor",
+"why": "the same adjective"
+},
+"ས་ལ→སར": {
+"class": "minor",
+"why": "particle"
+},
+"བརྐམ→བར་ཀམ": {
+"class": "minor",
+"why": "split"
+},
+"འགྲོའོ→འགྲོ་བའི": {
+"class": "minor",
+"why": "particle"
+},
+"ན་ནི→ནའོ": {
+"class": "minor",
+"why": "particle"
+},
+"རྨོང་ངོ→རྨོངས་སོ": {
+"class": "minor",
+"why": "spelling and final particle"
+},
+"ཏ་ཏ→ཏེ་ཏྭ": {
+"class": "mantra",
+"why": "mantra letters changed"
+},
+"ས་ལ→སའམ": {
+"class": "minor",
+"why": "particle"
+},
+"གི་ཉིས→གཉིས": {
+"class": "minor",
+"why": "join and spelling"
+},
+"བལ་གླང→བ་ལང": {
+"class": "minor",
+"why": "spelling of ba lang"
+},
+"སྩལ་ཏི→སྩོལ་ཅིག": {
+"class": "minor",
+"why": "mood of the same verb"
+},
+"ཉིད་ཀྱང→དང": {
+"class": "minor",
+"why": "particles"
+},
+"བརྐམ→བར་རྐམ": {
+"class": "minor",
+"why": "split"
+},
+"དེ་ནས→དེས": {
+"class": "minor",
+"why": "connective particle"
+},
+"ཉིད་ཀྱང→": {
+"class": "minor",
+"why": "emphatic particles dropped"
+},
+"མཁྱེན→མ་ཁྱེན": {
+"class": "severe",
+"why": "a split that reads as a negation (did not know)"
+},
+"→ཀ": {
+"class": "mantra",
+"why": "a syllable added inside a letter-mantra (ཀ་ཁ་ཀ་ཁ། ཀུ་ཧུ…), real-world p.282"
+}
+}
