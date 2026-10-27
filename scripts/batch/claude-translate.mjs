@@ -32,6 +32,14 @@
  * sent is saved under DIR/prompts/<hash>.txt, and `apply` checks the meta's hash against it; each call's whole reply
  * is kept under DIR/raw/<call id>.txt.
  *
+ * --images-dir=D (#6948, image-attached reads): D/<page_id>/ holds that page's images, already cut (t1.jpg, t2.jpg, ... in
+ * reading order: full-resolution strips of the leaf; scripts/eval/tib-concept-opus-6948/prep-images.mjs makes them).
+ * Each call's sealed folder gets its pages' images as p<N>-t<k>.jpg, the CLI is allowed the Read tool and nothing
+ * else (still --restricted to that folder), and the prompt tells it to open every image and to follow the leaf, with
+ * a bracketed note, where the leaf plainly differs from the transcription. The image line is part of the prompt sent,
+ * so it is in the hash; each page's meta lists its images by sha256. Its own prompt_variant, so these reads are never
+ * reused as text-only reads, or the other way round. A page with no image in D is not read. Claude only.
+ *
  * --instructions-file=F: JSON { page_id: "one line" }, as in cli-translate.mjs read; a call appends each distinct line
  * of its pages once, before the reply rules (#6865: one column instruction given to every arm of a comparison).
  *
@@ -49,6 +57,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash } from '../lib/translate-core.mjs';
@@ -71,6 +80,23 @@ const AGY_MAX_PROMPT_CHARS = 120_000;
 // The <unclear> line: on the #6559 paired check Opus copied doubtful Nahuatl words through untranslated inside
 // <unclear> tags (Promptuario p. 67), where Gemini translated them. Translate the best reading and keep the doubt.
 export const CALL_SUFFIX = '\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.\n\nAnswer with the translation tags only, one per page in the order given, and nothing before, between or after them: no commentary, no code fence. Do not use any tool: the text is above.\n';
+
+/**
+ * The --images-dir suffix (#6948). The 10-24 Opus gate failed mostly on the transcription (18 of 28 bad Tibetan pages:
+ * seam lines invented or duplicated, lines cut short), which a text-only reader cannot see; this one is shown the leaf.
+ * `files` is [[page_number, [file, ...]], ...] in page order. The summary line: the base prompt's "END with <summary>"
+ * read as once per reply on 5 of the first 8 image calls (#6948), which the strict split refuses.
+ */
+export function imageCallSuffix(files) {
+  const list = files.map(([n, fs_]) => `page ${n}: ${fs_.map((f) => `./${f}`).join(', ')}`).join('\n');
+  return `\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.
+
+THE PAGE IMAGES. The scans of these pages are in your working folder, each leaf cut into overlapping full-resolution strips, left to right:
+${list}
+Open every one of them with the Read tool before you translate. The transcription above is machine OCR of these leaves and can be wrong: a line repeated, a line invented or carried over from another leaf, a line cut short or skipped, a letter or syllable misread. Translate what the LEAF says. Where the leaf plainly differs from the transcription in a way that changes the English (a repeated, invented, skipped or cut line, a misread word), follow the leaf and say so in a short bracketed note at that place, for example [the transcription repeats this line; the leaf has it once] or [leaf: X; the transcription reads Y]. Where the leaf is too faint or damaged to tell, translate the transcription. Do not describe the images otherwise.
+
+Answer with the translation tags only, one per page in the order given, and nothing before, between or after them: no commentary, no code fence. Each page's own <summary> and <keywords> go INSIDE that page's <translation> tag, just before its </translation>; never one summary for the whole reply. Use no tool except Read, and Read only the image files listed above.\n`;
+}
 
 /**
  * Split a block reply into pages. Returns Map<page_number, text>, or null when the tags are not exactly one
@@ -116,13 +142,14 @@ async function agyBlockCall(prompt, model, cwd) {
 }
 
 /** One sealed text-only `claude -p` call, the prompt on stdin. Resolves {text, model, usage, code, cls, err, secs}. */
-function claudeCall(prompt, model, cwd) {
+function claudeCall(prompt, model, cwd, { readImages = false } = {}) {
   // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
   const blocked = claudeBlocked();
   if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   return new Promise((resolve) => {
     const t0 = Date.now();
-    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const tools = readImages ? ['--tools', 'Read', '--allowedTools', 'Read'] : ['--tools', ''];
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', ...tools, '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
@@ -148,7 +175,11 @@ async function main() {
   const OUT = arg('out') && path.resolve(arg('out'));
   const CLI = arg('cli') || 'claude';
   if (!(CLI in PROMPT_VARIANTS)) { console.error(`--cli must be one of ${Object.keys(PROMPT_VARIANTS).join(', ')}`); process.exit(2); }
-  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI];
+  const IMAGES = arg('images-dir') && path.resolve(arg('images-dir'));
+  if (IMAGES && CLI !== 'claude') { console.error('--images-dir is for --cli=claude only'); process.exit(2); }
+  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '');
+  /** A page's prepared images, in reading order, or [] (#6948). */
+  const imagesOf = (p) => { const d = IMAGES && path.join(IMAGES, p.id); return d && fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /^t\d+\.jpg$/.test(f)).sort((a, b) => Number(a.slice(1, -4)) - Number(b.slice(1, -4))) : []; };
   const MODEL = arg('model') || (CLI === 'agy' ? 'gemini-3.8-flash-low' : 'opus');
   const PER_CALL = Math.max(1, Math.min(CLI === 'agy' ? 4 : 10, Number(arg('per-call') || (CLI === 'agy' ? 2 : 10))));
   const JOB = arg('job') || 'claude-translate';
@@ -190,6 +221,7 @@ async function main() {
     if (!tr.ok) { console.log(`  ${p.page_number} not translatable (${tr.reason}); skipped`); continue; }
     const same = sameLanguageReason({ book: books.get(p.book_id), page: p });
     if (same) { console.log(`  ${p.page_number} skipped: ${same}`); continue; }
+    if (IMAGES && !imagesOf(p).length) { console.log(`  ${p.page_number} skipped: no image in ${IMAGES}`); continue; }
     todo.push(p);
   }
   // A kept read of the same page, model, prompt template, OCR and instruction is used instead of a call (#7075).
@@ -232,7 +264,8 @@ async function main() {
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
     const built = buildBlockTranslationPrompt({ prompts, book, pages: group, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const instruction = [...new Set(group.map((p) => INSTRUCTIONS[p.id]).filter(Boolean))].join('\n\n') || null;
-    const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CALL_SUFFIX;
+    const imgFiles = IMAGES ? group.map((p) => [p, imagesOf(p)]) : null;
+    const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + (imgFiles ? imageCallSuffix(imgFiles.map(([p, fs_]) => [p.page_number, fs_.map((f) => `p${p.page_number}-${f}`)])) : CALL_SUFFIX);
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
@@ -240,8 +273,12 @@ async function main() {
     const dir = path.join(sealRoot, callId);
     fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir, { recursive: true });
+    const imgMeta = new Map();
+    for (const [p, fs_] of imgFiles || []) {
+      imgMeta.set(p.id, fs_.map((f) => { const b = fs.readFileSync(path.join(IMAGES, p.id, f)); fs.writeFileSync(path.join(dir, `p${p.page_number}-${f}`), b); return { file: `p${p.page_number}-${f}`, sha256: createHash('sha256').update(b).digest('hex') }; }));
+    }
     const t0 = new Date();
-    const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir);
+    const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir, { readImages: !!imgFiles });
     fs.rmSync(dir, { recursive: true, force: true });
     const texts = r.cls ? null : splitBlockReply(r.text, group.map((p) => p.page_number));
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
@@ -253,7 +290,7 @@ async function main() {
       prompt_ref: built.promptRef, is_english_book: built.isEnglish, prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage, ...(instruction && { instruction }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT, block: group.map((p) => p.page_number) },
     };
-    const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null });
+    const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, ...(imgMeta.has(p.id) && { images: imgMeta.get(p.id), tool_turns: r.usage?.turns ?? null }) });
     if (r.cls || !texts) {
       if (attempt > 0) group.forEach((p, i) => writePage(p, '', { ...pageMeta(p, i), exit: r.code === null ? -9 : (r.code || 1), error_class: r.cls || 'page_tags_mismatch', stderr_tail: r.err }));
       console.log(`  ${first.book_id} p.${first.page_number}-${lastP.page_number}: ${r.cls || 'translation tags do not match the pages: call refused'} (${Math.round(r.secs)}s)`);
