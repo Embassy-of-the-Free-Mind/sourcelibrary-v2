@@ -339,12 +339,14 @@ async function runWave(db) {
       if (arc !== 0) { log(`  ${label}: apply exit ${arc}; nothing ledgered`); continue; }
       const left = new Set((await db.collection('pages').find({ id: { $in: pages.map((p) => p.id) }, ...UNTRANSLATED }, { projection: { id: 1 } }).toArray()).map((p) => p.id));
       const readIds = new Set(fs.readdirSync(dir).filter((f) => f.endsWith('.meta.json')).map((f) => f.replace('.meta.json', '')));
+      // The writer's own reason per refused page (`skip p.N: why` in its log), so the ledger says why, not just "not written".
+      const why = new Map([...fs.readFileSync(path.join(dir, 'apply.log'), 'utf8').matchAll(/^\s*skip p\.(\d+): (.+)$/gm)].map((m) => [Number(m[1]), m[2].trim()]));
       let led = 0;
       for (const p of pages) {
         if (!left.has(p.id) || !readIds.has(p.id)) continue;   // written, or not reached (a stopped read): not ledgered
         let meta = null;
         try { meta = JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')); } catch { /* none */ }
-        ledger({ page_id: p.id, book_id: book.id, page_number: p.page_number, exit: meta?.exit ?? null, error_class: meta?.error_class ?? meta?.wrapper ?? 'not_written', wave: waveId });
+        ledger({ page_id: p.id, book_id: book.id, page_number: p.page_number, exit: meta?.exit ?? null, error_class: meta?.error_class ?? meta?.wrapper ?? why.get(p.page_number) ?? 'not_written', wave: waveId });
         done.add(p.id); led++;
       }
       const written = pages.filter((p) => !left.has(p.id)).length;
