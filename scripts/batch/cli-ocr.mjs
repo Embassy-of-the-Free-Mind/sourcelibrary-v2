@@ -458,8 +458,9 @@ const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : 
 const bookCache = new Map();
 const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
-const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [] };
-const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
+const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [], skipped_pages: {}, contain_claims: [] };
+// skipped_pages: page id -> the reason, so a lane can ledger each page's outcome (cli-ocr-lane.mjs correct, #7558).
+const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; tally.skipped_pages[m.page_id ?? m.key] = why; console.log(`  skip p.${m.page_number}: ${why}`); };
 // A read the engine did not deliver (exit, empty, refusal, a cut or chattering wrapper) is stamped on the page as a
 // failed read (#7378), so the route census sees this route's did-not-read rate. Our own guards' skips are not.
 const failedReads = [];
@@ -474,6 +475,12 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // written even when the text inside looks like a transcription: it is usually a partial page.
   if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
   if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
+  // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
+  // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A
+  // CONTAIN is a model's claim, not a finding: it goes to contain_claims for a by-eye check, and the page is untouched.
+  if (correct && /^UNCHANGED\.?$/i.test(text)) { skip(m, 'corrector: UNCHANGED (the draft stands)'); continue; }
+  const containClaim = correct && text.match(/^CONTAIN\s*:\s*([\s\S]+)$/i);
+  if (containClaim && containClaim[1].length < 600 && !/<page-type>/.test(text)) { skip(m, 'corrector: CONTAIN (a claim to check by eye)'); tally.contain_claims.push({ page_id: m.page_id ?? m.key, book_id: m.book_id, page_number: m.page_number, reason: containClaim[1].trim() }); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
   if (!correct && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
   // The CLI is an agent, not an endpoint: a refusal arrives as exit 0 with prose. Aldine 1516 p.34 came back as two

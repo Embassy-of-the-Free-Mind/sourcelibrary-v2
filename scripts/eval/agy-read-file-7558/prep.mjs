@@ -6,7 +6,7 @@
 /**
  * #7558 step 2: blind judge packets for the prompt A/B (sentinels-6523 vs read-file-7558, 1 and 4 pages a call).
  *
- *   node --env-file=... scripts/eval/agy-read-file-7558/prep.mjs --scratch=DIR
+ *   node --env-file=... scripts/eval/agy-read-file-7558/prep.mjs --scratch=DIR [--draw=draw-arabic.json --ids=arabic-ids.json]
  *   node scripts/eval/ocr-per-call-7522/judge.mjs --scratch=DIR --jobs=3
  *   node scripts/eval/agy-read-file-7558/score.mjs --scratch=DIR > results.json
  *
@@ -25,11 +25,14 @@ const HERE = path.dirname(new URL(import.meta.url).pathname);
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const S = arg('scratch');
 const J = path.join(S, 'judge');
-const draw = JSON.parse(fs.readFileSync(path.join(HERE, '../ocr-per-call-7522/draw.json'), 'utf8'));
-const ids = new Set(JSON.parse(fs.readFileSync(path.join(HERE, 'page-ids.json'), 'utf8')));
+// Default: the German/Latin set (#7522's draw, page-ids.json); --draw/--ids (relative to this folder) for the Arabic one.
+const draw = JSON.parse(fs.readFileSync(path.join(HERE, arg('draw') || '../ocr-per-call-7522/draw.json'), 'utf8'));
+const ids = new Set(JSON.parse(fs.readFileSync(path.join(HERE, arg('ids') || 'page-ids.json'), 'utf8')));
 const shuffle = (a, rng) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const read = (arm, id) => { try { return fs.readFileSync(path.join(S, arm, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
-const bodyLines = (t) => t.split('\n').map((l, i) => ({ l, i })).filter(({ l }) => l.trim().length >= 40 && !/^\s*</.test(l) && !/<[a-z-]+>/.test(l));
+const linesOver = (t, n) => t.split('\n').map((l, i) => ({ l, i })).filter(({ l }) => l.trim().length >= n && !/^\s*</.test(l) && !/<[a-z-]+>/.test(l));
+// 40 characters as #7522; a manuscript page of short lines (the Arabic set) falls back to 15.
+const bodyLines = (t) => { const b = linesOver(t, 40); return b.length ? b : linesOver(t, 15); };
 
 fs.mkdirSync(path.join(J, 'img'), { recursive: true });
 fs.mkdirSync(path.join(J, 'packets'), { recursive: true });
@@ -51,7 +54,8 @@ const key = {}, tamper = {};
 for (const b of books) {
   for (const pg of b.pages) {
     const near = await pages.find({ book_id: b.book_id, page_number: { $in: [pg.page_number - 1, pg.page_number + 1] } }, { projection: PROJ }).toArray();
-    const img = await fetchTo(pg.image, path.join(J, 'img', `${pg.page_id}.jpg`));
+    const self = pg.image ? null : await pages.findOne({ id: pg.page_id }, { projection: PROJ });
+    const img = await fetchTo(pg.image || getPageSource(self), path.join(J, 'img', `${pg.page_id}.jpg`));
     const nb = {};
     for (const [k, n] of [['prev', pg.page_number - 1], ['next', pg.page_number + 1]]) {
       const p = near.find((x) => x.page_number === n);

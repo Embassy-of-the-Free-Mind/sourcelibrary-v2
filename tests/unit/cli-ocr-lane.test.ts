@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -54,11 +54,29 @@ describe('the lane stops on quota instead of sleeping', () => {
   const reader = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
   it('passes --stop-on-quota and stops the run on exit 3', () => {
     expect(lane).toContain("'--stop-on-quota'");
-    expect(lane).toMatch(/read === 3\) \{[^}]*break/);
+    // #7558: books read in parallel; exit 3 sets the shared stop that every worker checks before its next book.
+    expect(lane).toMatch(/read === 3\) \{ stop \?\?= 'quota'/);
+    expect(lane).toMatch(/while \(queue\.length && !stop\)/);
   });
   it('cli-ocr.mjs read exits 3 on a quota reply or a locked model before any sleep', () => {
     expect(reader).toMatch(/process\.exit\(3\)/);
     expect(reader.indexOf("r.not_called && STOP_ON_QUOTA")).toBeLessThan(reader.indexOf('if (r.not_called) { quotaUntil'));
     expect(reader.indexOf("r.cls === 'quota' && STOP_ON_QUOTA")).toBeLessThan(reader.indexOf("if (r.cls === 'quota') { quotaUntil"));
+  });
+});
+
+describe('pages a call by script (#7558)', () => {
+  const opts = { perCall: 4, perCallArabic: 2 };
+  it('Latin-script books take --per-call, Arabic-script books --per-call-arabic', () => {
+    expect(perCallFor({ language: 'German' }, opts)).toBe(4);
+    expect(perCallFor({ language: 'Latin' }, opts)).toBe(4);
+    expect(perCallFor({ language: 'Arabic' }, opts)).toBe(2);
+    expect(perCallFor({ language: 'Persian' }, opts)).toBe(2);
+  });
+  it('every other script reads one page a call: no block test covered it', () => {
+    for (const language of ['Sanskrit', 'Chinese', 'Greek', 'Tibetan', 'Judeo-Arabic', 'Hebrew']) expect(perCallFor({ language }, opts)).toBe(1);
+  });
+  it('defaults to one page a call', () => {
+    expect(perCallFor({ language: 'German' })).toBe(1);
   });
 });
