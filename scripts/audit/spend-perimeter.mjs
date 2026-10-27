@@ -86,6 +86,8 @@ const UNATTENDED = [
     note: 'reaps merged worktrees, moves idle /root folders to the volume, removes agy .tmp leftovers; no model call (#6223)' },
   { match: 'cli-translate-lane.mjs', spends: false, gated: false,
     note: 'drains books held for the CLI translation lane: Opus through claude -p and 3.8 Flash through agy -p, both on the box\'s subscriptions; no paid API; skips at >= 70% of the Claude account\'s week, 95% in its last 24 h (#7075)' },
+  { match: 'siku-translate-lane.mjs', spends: false, gated: false,
+    note: 'translates the held Siku cohort (books stay held): 3.8 Flash low through agy -p, Opus spot checks through claude -p, both on the box\'s subscriptions; no paid API; runs only above a per-pool weekly floor from agy /quota (#5600)' },
   { match: 'cli-ocr-lane.mjs', spends: false, gated: false,
     note: 'drains books held for the CLI OCR lane (ocr-flash-cli-7075): 3.8 Flash low through agy -p on the box\'s subscription; no paid API; stops on the first quota reply (#7089)' },
   { match: 'box.sh push-limits', spends: false, gated: false,
