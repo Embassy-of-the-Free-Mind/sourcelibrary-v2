@@ -90,7 +90,7 @@ as production does: 3 of the 5 paired pages among them). The audit ran 19:00–1
 
 | | n | bad | 95% CI | usable / with caveat | OCR spans per page (mean, median) |
 |---|---|---|---|---|---|
-| **all** | 20 | **1 (5%)** | 0.9–24% | 2 / 17 | 15.6, 10 |
+| **all** | 20 | **1 (5%)** | 0.9–24% | 2 / 17 | 15.6, 11 |
 | FRESH (unbiased) | 15 | 1 (6.7%) | 1.2–30% | 1 / 13 | 13.0, 9 |
 | PAIRED-BAD | 5 | **0** (10-24: 5/5) | 0–43% | 1 / 4 | 23.4, 27 |
 | 10-24 text-only CANON, for reference | 40 | 19 (48%) | 33–63% | | 16.6, 15 |
