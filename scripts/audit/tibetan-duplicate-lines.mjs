@@ -127,7 +127,7 @@ async function main() {
     const ps = await db.collection('pages').find({ book_id: b.id, 'ocr.data': { $type: 'string', $ne: '' } }, {
       projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.content_hash': 1,
         'ocr.edited_by': 1, 'ocr.pipeline': 1, split_from_leaf_order: 1,
-        served: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } },
+        served: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] } },
       maxTimeMS: 600000,
     }).toArray();
     // The book's usual line count, per kind of page (a split leaf vs a whole frame): an invented line shows as one more.
