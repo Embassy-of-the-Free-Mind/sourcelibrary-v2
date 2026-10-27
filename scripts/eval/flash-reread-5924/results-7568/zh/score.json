@@ -1,0 +1,540 @@
+{
+ "lang": "zh",
+ "pages": 75,
+ "books": 3,
+ "C_outcomes": {
+  "corrected": 71,
+  "no-answer": 2,
+  "contain": 2
+ },
+ "misleading": {
+  "L": [
+   57,
+   [
+    65.2,
+    84.2
+   ]
+  ],
+  "C": [
+   5,
+   [
+    2.9,
+    14.7
+   ]
+  ],
+  "R": [
+   37,
+   [
+    38.3,
+    60.4
+   ]
+  ]
+ },
+ "bar_a_halves": {
+  "C": true,
+  "R": false
+ },
+ "worse_than_L": {
+  "C": 2,
+  "R": 9
+ },
+ "bar_b_no_page_worse": {
+  "C": false,
+  "R": false
+ },
+ "bar_c_C_beats_R": true,
+ "prefer": {
+  "CR": {
+   "C": 61,
+   "R": 7,
+   "tie": 7,
+   "material_loss_R": 37,
+   "material_loss_C": 5
+  },
+  "CL": {
+   "C": 71,
+   "L": 0,
+   "tie": 4,
+   "material_loss_L": 52,
+   "material_loss_C": 0
+  },
+  "RL": {
+   "R": 61,
+   "L": 12,
+   "tie": 2,
+   "material_loss_L": 51,
+   "material_loss_R": 9
+  }
+ },
+ "sign_test_CR_p": 7.39e-12,
+ "route": "C: Opus correction",
+ "contains": [
+  {
+   "slug": "69de98851b234a773e438912-p269",
+   "true_contain": true,
+   "reason": "The draft's text (向茅菴再入樓尋…前腔呼天泣地…) is not on this leaf, which begins 為忠臣君為智士今日坐視君亡 and carries the lyrics 須索向死中求活… and 爛翻舌轟雷捲濤…."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p341",
+   "true_contain": true,
+   "reason": "The draft's text (來了這老頭兒原錯的…可笑那夏言呵唱) is not on this leaf, which carries the 泣顏回 lyric 一旦擢高官恃君恩獨掌朝權… with the banxin heading 鳴鳳記 賄監."
+  }
+ ],
+ "R_unread": 0,
+ "R_filter_cut": 6,
+ "books_failing_25_check_L": 3,
+ "strip": {
+  "visible": 25,
+  "in_L": 0,
+  "in_C": 0,
+  "in_R": 0
+ },
+ "identical_C_L_verdict_mismatch": 0,
+ "worse_C_list": [
+  {
+   "slug": "69f1347c365e3fcae574ed1c-p52",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "Y and Z are identical: a 277-character garbled summary missing most of the page; X carries the full prose and verse with one misread (貿功 for 貿易)."
+  },
+  {
+   "slug": "69f1347c365e3fcae574ed1c-p89",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "X and Z are identical: after the prose they replace the ear-faculty verse with a looping 若人散亂心 verse from the Expedient Means chapter; Y matches the print."
+  }
+ ],
+ "worse_R_list": [
+  {
+   "slug": "69e72c60a409200ea79f46f6-p124",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X is exact. Y reads 林 as 材 and 繲 as 獬. Z gets the words but pulls the glosses 檜, 𦙄 and 解 into the main text and garbles the 五臟 gloss."
+  },
+  {
+   "slug": "69e72c60a409200ea79f46f6-p137",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X turns 請講以所聞 (let me tell you what I have heard) into 請問請以所聞. Y reads 吾 as 焉 (存焉是以). Z is exact."
+  },
+  {
+   "slug": "69e72c60a409200ea79f46f6-p174",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "All three get the main text (鳥而厲乎天…而劓). X drops every gloss on a heavily annotated page. Y repeats a garbled last column (下汝以仁義而劓下) and drops one gloss. Z is complete."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p84",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X stops after '俺李洪基' with a Gemini filter message; Y has 俺父 for 俺叔父 and 敗了 for 改了; Z is faithful."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p122",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X loses the whole 桂枝香 aria to a Gemini filter message; Z garbles 寇→施, 自→目, 寇兵→魁兵; Y only 諒→諫."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p145",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X is cut off after '千秋' by a Gemini filter message; Z has 各矣 for 各哭, 婚養 for 嬌養, 本 for the 末 role, 心如櫺; Y faithful."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p249",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z is cut off after '密' by a Gemini filter message; Y has 未付 for the 末付 role throughout and drops the closing '老生大師臣已'; X faithful."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p423",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y is cut off at '商' by a Gemini filter message; Z inverts '救得書生命' to '殺得書生命', makes the snoring 打齁 into 打躬 and splices phrases; X faithful."
+  },
+  {
+   "slug": "69de98851b234a773e438912-p507",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X faithful; Y's lyric text is right but it pads the page with long repeating 尺工六凡工 gloss runs that are not the printed gongche, plus a 新曲粹粹 header; Z has 德休懊 for 恁休悔懊 and drops the 淨 before 閃開."
+  }
+ ],
+ "judge2": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "drawn": 30,
+  "parsed": 30,
+  "gemini_prefer": {
+   "C": 20,
+   "R": 10,
+   "tie": 0
+  },
+  "opus_prefer_same_pages": {
+   "C": 26,
+   "R": 3,
+   "tie": 1
+  },
+  "gemini_misleading": {
+   "C": 9,
+   "R": 15
+  },
+  "opus_misleading_same_pages": {
+   "C": 3,
+   "R": 17
+  },
+  "pages": [
+   {
+    "slug": "69e72c60a409200ea79f46f6-p63",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p78",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p84",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p101",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p118",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p124",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p132",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p155",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p166",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p182",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e72c60a409200ea79f46f6-p189",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p34",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p37",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p42",
+    "gemini": "C",
+    "gemini_C": "misleading",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p52",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p57",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p69",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p89",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p92",
+    "gemini": "C",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p95",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p102",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69f1347c365e3fcae574ed1c-p105",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p122",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p215",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p231",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p289",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p358",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p423",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p468",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69de98851b234a773e438912-p530",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "flawed"
+   }
+  ]
+ },
+ "claude_correction_tokens": {
+  "calls": 31,
+  "input": 404,
+  "output": 218727,
+  "cache_read": 2316963,
+  "list_cost_usd": 8.98
+ },
+ "by_book": [
+  {
+   "book_id": "69e72c60a409200ea79f46f6",
+   "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+   "n": 25,
+   "L": 18,
+   "C": 0,
+   "R": 11,
+   "worse_C": 0,
+   "worse_R": 3,
+   "CR": {
+    "C": 20,
+    "R": 1,
+    "tie": 4
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69f1347c365e3fcae574ed1c",
+   "title": "Kumārajīva um 412: Miao fa lian hua jing",
+   "n": 25,
+   "L": 24,
+   "C": 2,
+   "R": 17,
+   "worse_C": 2,
+   "worse_R": 0,
+   "CR": {
+    "C": 21,
+    "R": 2,
+    "tie": 2
+   },
+   "outcomes": {
+    "corrected": 23,
+    "no-answer": 2
+   }
+  },
+  {
+   "book_id": "69de98851b234a773e438912",
+   "title": "崑曲粹存初集 (First Collection of Kunqu Treasures)",
+   "n": 25,
+   "L": 15,
+   "C": 3,
+   "R": 9,
+   "worse_C": 0,
+   "worse_R": 6,
+   "CR": {
+    "C": 20,
+    "R": 4,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 23,
+    "contain": 2
+   }
+  }
+ ]
+}
