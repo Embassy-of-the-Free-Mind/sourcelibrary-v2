@@ -430,6 +430,8 @@ const MIN_SHARED = 0.4;
 const MAX_CORRECTED = 0.25;
 // The 25% is counted in syllables on a Tibetan draft and in words (whitespace tokens, tags out) on any other: the
 // syllable tokenizer keeps only Tibetan syllables, so on Latin it counted 0 of 0 and passed every correction (#7269).
+// Text lines, the <leaf-break/> marker line not counted: adding or moving the marker (a seam fix) is not a line change.
+const leafLines = (t) => String(t).split('\n').filter((l) => l.trim() && !/^\s*<leaf-break\/>\s*$/.test(l)).length;
 const latinLetters = (t) => (String(t).replace(/<[^>]+>/g, ' ').match(/[A-Za-z]/g) || []).length;
 const wordTokens = (t) => String(t).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean);
 function changedUnits(draft, next) {
@@ -518,6 +520,10 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     // #6740: Flash wrote སྤྱོད as `spy`ོད. The foreign-script guard always allows Latin (tags, sigla), so a correction of a
     // Tibetan draft that ADDS Latin letters is refused here.
     if (d.unit === 'syllables' && latinLetters(text) > latinLetters(page.ocr.data)) { skip(m, 'correction adds Latin letters to a Tibetan draft'); continue; }
+    // #6740: a correction that changes the number of text lines dropped, merged or invented a line (Thadrak brGyad stong
+    // p.233: 7 lines → 6), or removed a line the draft invented (Neyphug rGyud Tsha p.128). Neither can be told apart
+    // without the image, so the draft stays and a person looks.
+    if (d.unit === 'syllables' && leafLines(text) !== leafLines(page.ocr.data)) { skip(m, `correction changes the line count (${leafLines(page.ocr.data)} → ${leafLines(text)}): check by eye`); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
     // writing the canonical spelling over the leaf's. Kept only where a leaf check confirmed it; the rest go back.
     const hits = yatagsHits(page.ocr.data, text);
