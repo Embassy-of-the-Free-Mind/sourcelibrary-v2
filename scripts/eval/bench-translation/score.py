@@ -102,6 +102,14 @@ def engine(E):
     page = {}   # uid -> {arm: decoded}
     for i, k in items.items():
         if k['kind'] == 'ARMS' and i in dec: page[k['page_id']] = {a.split('-', 1)[1]: v for a, v in dec[i].items()}
+    # PREREG amendment (before any judge call): a read whose whole text sits inside hidden tags (<meta>, <note> …) has an
+    # empty body. The reader sees no translation, so it scores fidelity 1 with an omission; it is not dropped.
+    hidden = {}
+    for a in ('v13', 'v20', 'plain', 'v13b'):
+        for u, why in BODIES['dnr'].get(A(a), {}).items():
+            if why == 'empty body' and u in page and a not in page[u]:
+                page[u][a] = {'fid': 1.0, 'rev': 0, 'om': 1, 'inven': 0, 'fill': 0, 'span_off': 1, 'tier': None, 'spans': [], 'inv': [], 'revq': None, 'label': None, 'hidden': True}
+                hidden.setdefault(a, []).append(u)
     fid = lambda u, a: (page.get(u, {}).get(a) or {}).get('fid')
 
     # ── gate ──
@@ -214,7 +222,7 @@ def engine(E):
         per_page.append(row)
     return {'judge': key['judge'], 'items': len(items), 'judged': len(dec), 'unparsed': unparsed, 'look': LOOK, 'decision_level': LEVEL,
             'gate': gate, 'floor': floor, 'cells': cells, 'pools': pools,
-            'did_not_read': {a: len(v) for a, v in BODIES['dnr'].items() if a.startswith(E + '-')}}, per_page
+            'did_not_read': {a: len(v) for a, v in BODIES['dnr'].items() if a.startswith(E + '-')}, 'hidden_body_scored_1': hidden}, per_page
 
 
 if __name__ == '__main__':
