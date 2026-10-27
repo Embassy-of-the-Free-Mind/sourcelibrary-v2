@@ -4,6 +4,30 @@ import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { resolveHoldingLibrary } from '@/lib/library-partners';
+import type { Locale } from '@/lib/locale-path';
+
+// The panel's chrome, by the page's language. Spanish since #7496 (every /es book page
+// now renders); the original-text sites read English labels until they get their own.
+const LABELS = {
+  en: {
+    title: 'Title', english: 'English', author: 'Author', language: 'Language', publisher: 'Publisher',
+    published: 'Published', format: 'Format', pages: 'Pages', sourceWork: 'Source Work', provenance: 'Provenance',
+    heldBy: 'Held by', scansFrom: 'Scans from', originalRecord: 'Original record', digitizedBy: 'Digitized by',
+    shelfmark: 'Shelfmark', license: 'License', estimated: 'estimated', printedOnOpening: 'Printed on the opening leaves:',
+    fromCatalogue: 'From the catalogue record', statedInColophon: 'Stated in the colophon:', fromWikidata: 'From Wikidata',
+    whyThisDate: 'Why this date:', fromAuthorDates: 'From the author’s recorded dates',
+    layer: {} as Record<string, string>,
+  },
+  es: {
+    title: 'Título', english: 'En inglés', author: 'Autor', language: 'Lengua', publisher: 'Pie de imprenta',
+    published: 'Publicado', format: 'Formato', pages: 'Páginas', sourceWork: 'Obra original', provenance: 'Procedencia',
+    heldBy: 'Conservado en', scansFrom: 'Digitalización de', originalRecord: 'Registro original', digitizedBy: 'Digitalizado por',
+    shelfmark: 'Signatura', license: 'Licencia', estimated: 'estimada', printedOnOpening: 'Impreso en las primeras hojas:',
+    fromCatalogue: 'Del registro de catálogo', statedInColophon: 'Indicado en el colofón:', fromWikidata: 'De Wikidata',
+    whyThisDate: 'Por qué esta fecha (en inglés):', fromAuthorDates: 'De las fechas registradas del autor',
+    layer: { composition: 'Composición', compilation: 'Compilación', edition: 'Edición', translation: 'Traducción', commentary: 'Comentario', revision: 'Revisión' } as Record<string, string>,
+  },
+};
 
 /**
  * Light-themed bibliographic panel for the book page's "Bibliographic
@@ -29,11 +53,14 @@ export default function BookBiblioPanel({
   book,
   pagesCount,
   showExternalLinks = true,
+  lang = 'en',
 }: {
   book: Book;
   pagesCount: number;
   showExternalLinks?: boolean;
+  lang?: Locale;
 }) {
+  const t = lang === 'es' ? LABELS.es : LABELS.en;
   const src = book.image_source;
   const holder = resolveHoldingLibrary(src);
   const layers = (book.source_work_dates ?? []) as SourceWorkDateLayer[];
@@ -58,30 +85,30 @@ export default function BookBiblioPanel({
       {l.work_title && <span className="italic">{l.author ? ', ' : ''}{l.work_title}</span>}
       {(l.language || l.date_display) && (
         <span style={{ color: '#948d80' }}>
-          {' '}({[l.language, l.date_display].filter(Boolean).join(', ')}{estimated(l) ? ', estimated' : ''})
+          {' '}({[l.language, l.date_display].filter(Boolean).join(', ')}{estimated(l) ? `, ${t.estimated}` : ''})
         </span>
       )}
       {l.basis === 'title_page' && l.evidence && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>
-          Printed on the opening leaves: <span className="italic">“{l.evidence}”</span>
+          {t.printedOnOpening} <span className="italic">“{l.evidence}”</span>
         </span>
       )}
       {l.basis === 'catalogue' && (
-        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the catalogue record</span>
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>{t.fromCatalogue}</span>
       )}
       {l.basis === 'colophon' && l.evidence && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>
-          Stated in the colophon: <span className="italic">“{l.evidence}”</span>
+          {t.statedInColophon} <span className="italic">“{l.evidence}”</span>
         </span>
       )}
       {l.basis === 'wikidata' && (
-        <span className="block text-[13px]" style={{ color: '#948d80' }}>From Wikidata</span>
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>{t.fromWikidata}</span>
       )}
       {l === whyLayer && l.basis === 'model_knowledge' && (
-        <span className="block text-[13px]" style={{ color: '#948d80' }}>Why this date: {work?.why}</span>
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>{t.whyThisDate} {work?.why}</span>
       )}
       {l.basis === 'author_lifespan' && (
-        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the author’s recorded dates</span>
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>{t.fromAuthorDates}</span>
       )}
     </>
   );
@@ -93,15 +120,15 @@ export default function BookBiblioPanel({
           const original = cleanOriginalTitle(book.title);
           if (!original) return null;
           // Latin-alphabet titles italicise; titles in their own script stand upright.
-          return <Row label="Title"><span className={isNonLatinScript(original) ? '' : 'italic'}>{original}</span></Row>;
+          return <Row label={t.title}><span className={isNonLatinScript(original) ? '' : 'italic'}>{original}</span></Row>;
         })()}
-        {book.display_title && book.display_title !== book.title && <Row label="English">{book.display_title}</Row>}
-        {book.author && <Row label="Author">{book.author}</Row>}
-        {book.language && <Row label="Language">{book.language}</Row>}
-        {impressum && <Row label="Publisher">{impressum}</Row>}
-        {book.published && <Row label="Published">{String(book.published)}</Row>}
-        {book.format && <Row label="Format">{book.format}</Row>}
-        {pagesCount > 0 && <Row label="Pages">{pagesCount}</Row>}
+        {book.display_title && book.display_title !== book.title && <Row label={t.english}>{book.display_title}</Row>}
+        {book.author && <Row label={t.author}>{book.author}</Row>}
+        {book.language && <Row label={t.language}>{book.language}</Row>}
+        {impressum && <Row label={t.publisher}>{impressum}</Row>}
+        {book.published && <Row label={t.published}>{String(book.published)}</Row>}
+        {book.format && <Row label={t.format}>{book.format}</Row>}
+        {pagesCount > 0 && <Row label={t.pages}>{pagesCount}</Row>}
         {book.doi && (
           <Row label="DOI">
             {showExternalLinks ? (
@@ -116,10 +143,10 @@ export default function BookBiblioPanel({
 
       {layers.length > 0 && (
         <>
-          <SectionLabel>Source Work</SectionLabel>
+          <SectionLabel>{t.sourceWork}</SectionLabel>
           <div className="divide-y" style={{ borderColor: '#ece6da' }}>
             {layers.map((l, i) => (
-              <Row key={i} label={l.type.charAt(0).toUpperCase() + l.type.slice(1)}>{layerLine(l)}</Row>
+              <Row key={i} label={t.layer[l.type] ?? l.type.charAt(0).toUpperCase() + l.type.slice(1)}>{layerLine(l)}</Row>
             ))}
           </div>
         </>
@@ -127,25 +154,25 @@ export default function BookBiblioPanel({
 
       {src && (src.provider_name || src.source_url || holder) && (
         <>
-          <SectionLabel>Provenance</SectionLabel>
+          <SectionLabel>{t.provenance}</SectionLabel>
           <div className="divide-y" style={{ borderColor: '#ece6da' }}>
             {holder && (
-              <Row label="Held by">
+              <Row label={t.heldBy}>
                 <span className="font-semibold" style={{ color: '#2b2620' }}>{holder}</span>
               </Row>
             )}
             {(src.provider_name || src.source_url) && (
-              <Row label="Scans from">
+              <Row label={t.scansFrom}>
                 {showExternalLinks && src.source_url ? (
                   <Link href={src.source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline" style={{ color: '#a5503d' }}>
-                    {src.provider_name || 'Original record'}<ExternalLink className="w-3 h-3" />
+                    {src.provider_name || t.originalRecord}<ExternalLink className="w-3 h-3" />
                   </Link>
                 ) : (src.provider_name || '–')}
               </Row>
             )}
-            {src.digitized_by && <Row label="Digitized by">{src.digitized_by}</Row>}
-            {src.shelfmark && <Row label="Shelfmark">{src.shelfmark}</Row>}
-            {src.license && <Row label="License">{src.license}</Row>}
+            {src.digitized_by && <Row label={t.digitizedBy}>{src.digitized_by}</Row>}
+            {src.shelfmark && <Row label={t.shelfmark}>{src.shelfmark}</Row>}
+            {src.license && <Row label={t.license}>{src.license}</Row>}
           </div>
         </>
       )}
