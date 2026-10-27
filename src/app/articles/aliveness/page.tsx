@@ -4,6 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 import PageFigure from '@/components/articles/PageFigure';
+import wordsOverTime from './words-over-time.json';
 
 // Every quotation is copied from the stored text of the page it links to, re-checked against
 // /api/books/<id>/quote?page=N on 26 October 2026 (#7458). Notes and glosses the translation inserts
@@ -344,6 +345,90 @@ function Eras() {
   );
 }
 
+// Each word for life at the century where it is most over-represented against the library, with the span that
+// holds 90% of its dated pages. Rebuild the numbers with scripts/analysis/experience-map/ontology/words-over-time.py.
+// The axis is compressed before 1000: 500 BCE to 1000 takes the first 30%, 1000 to 2000 the rest.
+const AX_FROM = -500;
+const AX_KNEE = 1000;
+const AX_TO = 2000;
+const x = (year: number) => {
+  const y = Math.min(AX_TO, Math.max(AX_FROM, year));
+  return y < AX_KNEE ? ((y - AX_FROM) / (AX_KNEE - AX_FROM)) * 30 : 30 + ((y - AX_KNEE) / (AX_TO - AX_KNEE)) * 70;
+};
+const TICKS: { year: number; label: string; wide?: boolean }[] = [
+  { year: -500, label: '500 BCE' },
+  { year: 0, label: '1 CE', wide: true },
+  { year: 1000, label: '1000' },
+  { year: 1500, label: '1500' },
+  { year: 1900, label: '1900' },
+];
+
+function Axis() {
+  return (
+    <div className="relative h-4 text-[11px] text-muted font-body">
+      {TICKS.map((t) => (
+        <span
+          key={t.year}
+          className={`absolute -translate-x-1/2 whitespace-nowrap first:translate-x-0 ${t.wide ? 'hidden md:inline' : ''}`}
+          style={{ left: `${x(t.year)}%` }}
+        >
+          {t.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function WordsOverTime() {
+  return (
+    <figure className="not-prose my-10">
+      <div className="md:grid md:grid-cols-[15rem_1fr] md:gap-x-4">
+        <span className="hidden md:block" />
+        <Axis />
+      </div>
+      <ol className="mt-1">
+        {wordsOverTime.rows.map((r) => (
+          <li key={r.id} className="py-2 border-b border-border-light md:grid md:grid-cols-[15rem_1fr] md:gap-x-4 md:items-center">
+            <p className="font-body text-sm leading-tight mb-1 md:mb-0">
+              <Ext href={`${VOCABULARY}#${r.id}`}>{r.label}</Ext>{' '}
+              <span className="text-xs text-muted">
+                {r.kind} &middot; {r.peak_label.replace(' century', ' c.')}, {Math.round(r.ratio)}&times;
+              </span>
+            </p>
+            <div
+              className="relative h-3"
+              title={`${r.label}: ${r.peak_label}, ${r.ratio}× the library's rate (${r.peak_pages.toLocaleString('en-GB')} of ${r.dated_pages.toLocaleString('en-GB')} dated pages); 90% of pages ${r.span_from} to ${r.span_to}`}
+            >
+              {TICKS.map((t) => (
+                <span key={t.year} className="absolute inset-y-0 w-px bg-border-light" style={{ left: `${x(t.year)}%` }} />
+              ))}
+              <span
+                className="absolute top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-accent-gold"
+                style={{ left: `${x(r.span_from)}%`, width: `${x(r.span_to) - x(r.span_from)}%` }}
+              />
+              <span
+                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-accent-gold-dark ring-2 ring-cream"
+                style={{ left: `${x(r.peak_century + 50)}%`, borderRadius: '9999px' }}
+              />
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="md:grid md:grid-cols-[15rem_1fr] md:gap-x-4 mt-1">
+        <span className="hidden md:block" />
+        <Axis />
+      </div>
+      <figcaption className="mt-4 text-sm text-muted leading-relaxed">
+        Dot: the century where the word is most over-represented, and by how many times. Line: the years holding 90%
+        of its pages. Counts from the <Ext href={VOCABULARY}>atlas vocabulary</Ext> (phrase matches in the
+        library&apos;s transcriptions and translations, at most 1,000 books per word, built 26 October 2026); only
+        centuries with more than 2,000 library pages and at least 20 pages for the word are compared. Each name links
+        to its entry.
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function AlivenessPage() {
   return (
     <ContentPageLayout
@@ -618,6 +703,24 @@ export default function AlivenessPage() {
           exiled to Chaozhou, wrote that &ldquo;the spirits of the mountains and rivers provide protection to the
           people; the officials shall establish shrines and halls&rdquo; (<em>Peiwen yunfu</em>,{' '}
           <Link href={pg(B.peiwen, 34)}>p. 34</Link>).
+        </p>
+
+        {/* The atlas's counts, placed against the essay */}
+        <h2 className={h2}>The words over time</h2>
+
+        <p className={p}>
+          Each row below counts the library&apos;s pages that use one word for life, in books dated by when the work
+          was written. The library&apos;s pages bunch in the 1500s to 1700s, so each dot marks the century where a
+          word is most over-represented against the library as a whole: on pages from the 4th century BCE,
+          <em> psychē</em> is nine times as common as on the library&apos;s pages overall.
+        </p>
+
+        <WordsOverTime />
+
+        <p className={p}>
+          The <Ext href={ATLAS}>Aliveness Atlas</Ext> reads passages rather than counting words, and there the felt
+          sense of the tenth turning point is the rarest: of the passages its judges confirmed, 651 say the world or
+          something in it is alive, 111 say the same of a made thing, and 31 describe a person feeling alive.
         </p>
 
         {/* Turning points */}
