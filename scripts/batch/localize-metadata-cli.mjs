@@ -23,7 +23,7 @@
  * most-read first. A write filters on the field still being missing, so an existing gloss is never overwritten and the
  * missing-field filter is the resume point. A book rejected twice (DIR/<field>-rejected.jsonl) is not asked again.
  *
- * Calls: one per pack of books (about 12K characters of English, at most 30 books). Each call is counted in
+ * Calls: one per pack of books (about 12K characters of English for summaries, 24K for chapter lists, at most 40 books). Each call is counted in
  * DIR/calls.jsonl; the run stops at --max-calls-day (UTC day, default 1200) or --max-calls-total (default 2500), and on
  * the first quota reply (exit 3), never retrying into it. Model: agy-guard's default, gemini-3.8-flash-low.
  *
@@ -52,8 +52,8 @@ const PROMPT_VERSION = { summary: 'es-summary-cli-v1', chapters: 'es-chapters-cl
 const MAX_CALLS_DAY = Number(arg('max-calls-day', 1200));
 const MAX_CALLS_TOTAL = Number(arg('max-calls-total', 2500));
 const CONCURRENCY = Number(arg('concurrency', 4));
-const PACK_CHARS = { summary: 12000, chapters: 16000 };
-const PACK_BOOKS = 30;
+const PACK_CHARS = { summary: 12000, chapters: 24000 };
+const PACK_BOOKS = 40;
 const CHAPTER_PART = 250; // a book with more entries is sent in parts of this many, and written only when every part passes
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = process.env.CLI_JOB_NAME || 'localize-metadata-cli-7496';
