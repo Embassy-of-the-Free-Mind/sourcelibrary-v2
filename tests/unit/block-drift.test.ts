@@ -156,3 +156,43 @@ describe('the realtime worker applies the reject', () => {
     expect(src).toMatch(/dropDriftedPages\(pages, translations\)/);
   });
 });
+
+// #7503: the same move in unpunctuated Chinese (SKQS, Paddle OCR). The fixtures are the five breaks
+// the #7518 judge and a by-eye read found moved (2/call and 4/call agy reads of Gemini 3.8 Flash-low),
+// the 1/call reads of the same breaks, a 2/call read that split one of them right, and a break whose
+// source opens a new entry. Calibration and held-out floor: scripts/eval/caseless-drift-7503/.
+const CASELESS: Case[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/block-drift/caseless-boundaries.json'), 'utf8'));
+
+describe('detectBlockDrift, caseless (Han) branch (#7503)', () => {
+  it('has the five known moves and at least five negatives', () => {
+    expect(CASELESS.filter(c => c.expectDrift)).toHaveLength(5);
+    expect(CASELESS.filter(c => !c.expectDrift).length).toBeGreaterThanOrEqual(5);
+  });
+  for (const c of CASELESS) {
+    it(`${c.expectDrift ? 'flags' : 'passes'} ${c.name} — ${c.note}`, () => {
+      expect(detectBlockDrift({ ...c, caseless: true }).drift).toBe(c.expectDrift);
+    });
+  }
+  it('makes no claim on a Han source without the caseless option (the paid lanes have not opted in)', () => {
+    for (const c of CASELESS) expect(detectBlockDrift(c).drift).toBe(false);
+  });
+  it('a Han source does not reach the cased test: no fragment from letter case', () => {
+    for (const c of CASELESS) expect(continuationFragment(c.ocrNext)).toBeNull();
+  });
+  it('dropDriftedPages with caseless drops both pages of a moved Han break, and only with the option', () => {
+    const c = CASELESS.find(x => x.expectDrift)!;
+    const pages = [{ page_number: 37, ocr: { data: c.ocrPrev } }, { page_number: 38, ocr: { data: c.ocrNext } }];
+    const off = new Map([[37, c.trPrev], [38, c.trNext]]);
+    expect(dropDriftedPages(pages, off).drifted).toEqual([]);
+    const on = new Map([[37, c.trPrev], [38, c.trNext]]);
+    expect(dropDriftedPages(pages, on, { caseless: true }).drifted.map((d: any) => d.kind)).toEqual(['moved']);
+    expect(on.size).toBe(0);
+  });
+  it('the agy/claude block reader opts in', () => {
+    const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/claude-translate.mjs'), 'utf8');
+    expect(src).toMatch(/dropDriftedPages\(group, texts, \{ caseless: true \}\)/);
+  });
+  it('the cased fixtures are unchanged by the option', () => {
+    for (const c of CASES) expect(detectBlockDrift({ ...c, caseless: true }).drift).toBe(c.expectDrift);
+  });
+});

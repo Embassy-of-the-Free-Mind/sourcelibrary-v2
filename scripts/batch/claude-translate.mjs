@@ -280,7 +280,8 @@ async function main() {
     const again = new Set();
     if (group.length > 1) for (const n of cut.keys()) again.add(n);
     if (group.length > 1) {
-      for (const d of dropDriftedPages(group, texts).drifted) { again.add(d.prev); again.add(d.next); }
+      // caseless: the Han test (#7503) runs here, on the subscription; the paid block lanes have not opted in.
+      for (const d of dropDriftedPages(group, texts, { caseless: true }).drifted) { again.add(d.prev); again.add(d.next); }
       for (const b of dropLeafSeamBreaches(group, texts).breached) again.add(b.page);
     }
     const redo = [], kept = [];
