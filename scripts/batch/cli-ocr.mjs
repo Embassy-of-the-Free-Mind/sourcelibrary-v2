@@ -65,6 +65,18 @@
  * sent and the same image bytes (correct mode: the same draft, in the prompt), and uses it instead of calling; the meta
  * then carries `reused_from`. `--fresh` always calls (a repeat-noise eval needs fresh reads; kept ones are its noise).
  *
+ * SEVERAL PAGES A CALL (#7522): `read --per-call=N` (2-4; default 1, the one-page call above, unchanged) sends up to N
+ * consecutive pages of one book (in the page-ids file's order; a gap or a new book starts a new call) in ONE agy call:
+ * the images under neutral names p01.jpg … in one workspace, the live prompt, then the block wrapper (agy-cli.mjs
+ * ocrBlockInstruction) asking for each page between <<<PAGE n BEGIN>>> / <<<PAGE n END>>>. The reply is split ONLY by
+ * those markers (splitPageBlocks): a reply missing, repeating or reordering any page's markers, or with text outside
+ * them, is refused whole, retried once as a block, then each of its pages is read one per call on the ordinary
+ * prompt. A page of an accepted block that fails the chatter or write guard is read again alone. The prompt sent is
+ * kept as prompts/<hash>.txt (apply hashes it); the whole reply as raw/<call id>.txt; each page's meta carries the
+ * call (call_id, call_pages, call_position, per_call) and the call's agy usage, and the kept-read variant names the
+ * call's page count, so a 1/call read and an N/call read never stand in for each other. A one-page remainder is read
+ * on the one-page prompt.
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -83,7 +95,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -107,6 +119,9 @@ const LANE_GATE_FILE = arg('lane-gate');
 if (STAGE === 'read' && INSTRUCTION_FILE && CORRECT_PROMPT) { console.error('--instruction-file is for a plain read, not --correct-prompt'); process.exit(2); }
 if (STAGE === 'apply' && LANE_GATE_FILE && !LANE) { console.error('--lane-gate needs --lane=<id>: the lane the gate was made for and the pages are stamped with'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
+const PER_CALL = Number(arg('per-call') || 1);
+if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
+if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT) { console.error('--per-call is for a plain read; --correct-prompt carries one draft per call'); process.exit(2); }
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
@@ -136,8 +151,9 @@ const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts
 // The reuse key of a read (#7075): the prompt sent (it names the page's image file, and in correct mode carries the
 // draft), the image bytes, and the mode. `readReuseKey` rebuilds it from a kept meta for reads kept before readers
 // stamped their own.
-const variantOf = (mode, lane, promptVariant) => (mode === 'correct' ? `correct:${lane}` : promptVariant ?? null);
-const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant) }) : null);
+// A read made N pages a call (#7522) carries the call's page count in its variant: it never stands in for a 1/call read.
+const variantOf = (mode, lane, promptVariant, callPages = 1) => (mode === 'correct' ? `correct:${lane}` : callPages > 1 ? `${promptVariant}:per_call=${callPages}` : promptVariant ?? null);
+const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant, m.call_pages ?? 1) }) : null);
 const FRESH = wantsFresh();
 // --reuse-only (#7075): hand back kept reads, never call the model. Used by scripts/lib/kept-read-reuse.mjs before a
 // paid lane buys a page that a free read already covers.
@@ -179,7 +195,8 @@ if (STAGE === 'read') {
   // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
   await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(arg('job')), pages });
   let quotaUntil = 0, reused = 0;
-  const readOne = async (p) => {
+  // `from`: the block call (#7522) whose refusal or guard sent this page to be read alone, recorded in its meta.
+  const readOne = async (p, from = null) => {
     const key = p.id;
     if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); return; }
     // The page's own image, split-aware (#6420): on a page split from a spread `archived_photo` is the WHOLE spread,
@@ -245,6 +262,7 @@ if (STAGE === 'read') {
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
+      ...(from && { per_call: PER_CALL, block_fallback: from }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
     };
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
@@ -252,8 +270,123 @@ if (STAGE === 'read') {
     if (meta.exit === 0 && !meta.error_class && !meta.wrapper) await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, prompt_text: CORRECT_PROMPT ? sent : null, source_path: path.join(OUT, `${key}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
   };
-  const queue = [...pages];
-  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readOne(queue.shift()); }));
+  // ── --per-call=N (#7522): several consecutive pages of one book in one call ──
+  const fetchImage = async (p) => {
+    const src = getPageSource(p);
+    if (!src) return { error: 'has no usable image' };
+    const res = await fetch(src);
+    if (!res.ok) return { error: `image HTTP ${res.status}` };
+    const buf = Buffer.from(await res.arrayBuffer());
+    return { src, buf, sha: createHash('sha256').update(buf).digest('hex') };
+  };
+  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n);
+  const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(null, null, PROMPT_VARIANT, n) });
+  /** One block call. Returns the pages to read again one per call ([] when every page was kept), or null when the call was refused whole. */
+  const readBlock = async (group, imgs, attempt) => {
+    const n = group.length, first = group[0], last = group[n - 1];
+    const sent = blockPrompt(n);
+    const sentHash = contentHash(sent);
+    const promptFile = path.join('prompts', `${sentHash}.txt`);
+    fs.mkdirSync(path.join(OUT, 'prompts'), { recursive: true });
+    if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
+    const callId = `${JOB}-${first.book_id}-${first.page_number}-${n}-${attempt}`;
+    // One workspace per call, holding exactly this call's images under neutral names.
+    const ws = path.join(OUT, `ws-call-${callId}`);
+    fs.rmSync(ws, { recursive: true, force: true });
+    fs.mkdirSync(ws, { recursive: true });
+    imgs.forEach((im, i) => fs.writeFileSync(path.join(ws, pageBlockFile(i)), im.buf));
+    const gateLog = installToolGate(ws);
+    const t0 = new Date();
+    let r, nudged = false, calls = 0;
+    const usage = [];
+    for (;;) {
+      while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
+      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], ws);
+      if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(first, `locked until ${r.locked_until || '?'}: ${r.err}`);
+      if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${first.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
+      calls++; usage.push(agyUsage(r.usage));
+      logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls, pages: n });
+      if (r.cls === 'quota' && STOP_ON_QUOTA) await stopOnQuota(first, r.err);
+      if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${first.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
+      if (r.cls === 'denied_tool' && r.conversation && !nudged) {
+        nudged = true;
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], ws); calls++; usage.push(agyUsage(r.usage));
+        logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls, pages: n });
+      }
+      break;
+    }
+    const texts = r.cls ? null : splitPageBlocks(r.text, n);
+    fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
+    fs.writeFileSync(path.join(OUT, 'raw', `${callId}.txt`), r.text);   // the whole reply, so a refused call can be read
+    const tools = gateCalls(gateLog);
+    fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (texts ? null : 'page_markers_mismatch'), calls, nudged, usage, tool_calls: tools }) + '\n');
+    if (!texts) { console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round((Date.now() - t0) / 1000)}s)`); return null; }
+    const redo = [];
+    for (const [i, p] of group.entries()) {
+      const text = texts[i];
+      const chatter = ocrReadProblem(text, { header: true });
+      const guard = checkWrittenText(text, { kind: 'ocr' }).verdict;
+      // A page of the block that reads as chatter or a cut text is read again alone, not written from this call.
+      if (chatter || guard === 'truncated') { redo.push(p); continue; }
+      fs.writeFileSync(path.join(OUT, `${p.id}.raw.txt`), text);
+      fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
+      const meta = {
+        page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null,
+        chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
+        prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
+        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)),
+        prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
+      };
+      fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify(meta, null, 1));
+      // Kept the moment it is paid for (#7075), keyed on this call's page count; best effort, never fails the read.
+      await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: blockReuseKey(sent, imgs[i].sha, n), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
+    }
+    console.log(`  p.${first.page_number}-${last.page_number}: ok ${texts.map((t) => t.length).join('/')} chars${redo.length ? `; ${redo.length} to read alone (guard)` : ''} (${Math.round((Date.now() - t0) / 1000)}s)`);
+    return redo;
+  };
+  const readGroup = async (group) => {
+    if (group.length === 1) return readOne(group[0], PER_CALL > 1 ? 'remainder' : null);
+    const imgs = [];
+    for (const p of group) {
+      const im = await fetchImage(p);
+      if (im.error) { console.log(`  ${p.page_number} ${im.error}: its call's ${group.length} pages are read one per call`); for (const q of group) await readOne(q, 'image'); return; }
+      imgs.push(im);
+    }
+    // A block's kept reads are used only when every page of it has one at this page count; otherwise the block is called.
+    if (!FRESH) {
+      const sent = blockPrompt(group.length);
+      const hits = [];
+      for (const [i, p] of group.entries()) hits.push(await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: blockReuseKey(sent, imgs[i].sha, group.length), derive: readReuseKey }));
+      if (hits.every(Boolean)) {
+        let all = true;
+        for (const [i, p] of group.entries()) all = (await reuseInto(OUT, p.id, hits[i])) && all;
+        if (all) { reused += group.length; console.log(`  p.${group[0].page_number}-${group[group.length - 1].page_number} reused kept reads: no call`); return; }
+      }
+    }
+    if (REUSE_ONLY) { noKept += group.length; return; }
+    let redo = await readBlock(group, imgs, 0);
+    if (redo === null) redo = await readBlock(group, imgs, 1);
+    // Still refused: each page alone, so one hard page does not cost its neighbours.
+    const from = redo === null ? 'refused' : 'guard';
+    for (const p of redo ?? group) await readOne(p, from);
+  };
+  let groups = pages.map((p) => [p]);
+  if (PER_CALL > 1) {
+    // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
+    const order = new Map(ids.map((id, i) => [id, i]));
+    const isRead = (p) => { try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
+    const runs = [];
+    for (const p of [...pages].sort((a, b) => order.get(a.id) - order.get(b.id))) {
+      if (isRead(p)) { console.log(`  ${p.page_number} already read`); continue; }
+      const run = runs[runs.length - 1], prev = run?.[run.length - 1];
+      if (prev && prev.book_id === p.book_id && prev.page_number + 1 === p.page_number) run.push(p); else runs.push([p]);
+    }
+    groups = runs.flatMap((run) => Array.from({ length: Math.ceil(run.length / PER_CALL) }, (_, i) => run.slice(i * PER_CALL, (i + 1) * PER_CALL)));
+    console.log(`--per-call=${PER_CALL}: ${groups.length} calls planned (${groups.filter((g) => g.length > 1).length} of several pages)`);
+  }
+  const queue = [...groups];
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readGroup(queue.shift()); }));
   console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   if (REUSE_ONLY) console.log(`reuse-only: ${noKept} page(s) had no matching kept read and were not called`);
   await client.close();
@@ -405,7 +538,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
+    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
