@@ -1,0 +1,1182 @@
+{
+ "scored_items": 2219,
+ "cells": {
+  "real6420/all": {
+   "pages": 2178,
+   "pos_pages": 1528,
+   "units": 776187,
+   "pos_units": 10868,
+   "auroc_gain": 0.5788,
+   "p10_gain": 0.0257,
+   "r10_gain": 0.1837,
+   "thr10_gain": 0.1504,
+   "auroc_base": 0.5627,
+   "p10_base": 0.025,
+   "r10_base": 0.1784,
+   "auroc_inll": 0.7159,
+   "p10_inll": 0.04,
+   "r10_inll": 0.2856,
+   "base_rate": 0.014,
+   "ci_gain": [
+    0.5609,
+    0.598
+   ],
+   "ci_base": [
+    0.5397,
+    0.5822
+   ],
+   "ci_diff": [
+    -0.0197,
+    0.0557
+   ],
+   "rp50_gain": {
+    "spans": 4681,
+    "spans_scorable": 4594,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.014
+   },
+   "rp50_base": {
+    "spans": 4681,
+    "spans_scorable": 4594,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.014
+   },
+   "rp50_inll": {
+    "spans": 4681,
+    "spans_scorable": 4594,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.014
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0015
+   ],
+   "noise": {
+    "pages": 300,
+    "units": 97856,
+    "median_abs_dgain": 0.0109,
+    "separation": 0.9667,
+    "auroc_rerun": 0.6062,
+    "beats_noise": false
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/arabic": {
+   "pages": 105,
+   "pos_pages": 80,
+   "units": 38902,
+   "pos_units": 934,
+   "auroc_gain": 0.5834,
+   "p10_gain": 0.0427,
+   "r10_gain": 0.1777,
+   "thr10_gain": 0.2396,
+   "auroc_base": 0.6345,
+   "p10_base": 0.0535,
+   "r10_base": 0.2227,
+   "auroc_inll": 0.7446,
+   "p10_inll": 0.0779,
+   "r10_inll": 0.3244,
+   "base_rate": 0.024,
+   "ci_gain": [
+    0.5478,
+    0.6167
+   ],
+   "ci_base": [
+    0.6017,
+    0.6661
+   ],
+   "ci_diff": [
+    -0.1125,
+    0.0105
+   ],
+   "rp50_gain": {
+    "spans": 311,
+    "spans_scorable": 303,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.024
+   },
+   "rp50_base": {
+    "spans": 311,
+    "spans_scorable": 303,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.024
+   },
+   "rp50_inll": {
+    "spans": 311,
+    "spans_scorable": 303,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.024
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0224
+   ],
+   "noise": {
+    "pages": 12,
+    "units": 3952,
+    "median_abs_dgain": 0.0102,
+    "separation": 0.4226,
+    "auroc_rerun": 0.5921,
+    "beats_noise": true
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/chinese": {
+   "pages": 356,
+   "pos_pages": 179,
+   "units": 35347,
+   "pos_units": 751,
+   "auroc_gain": 0.4429,
+   "p10_gain": 0.0207,
+   "r10_gain": 0.0972,
+   "thr10_gain": -0.1246,
+   "auroc_base": 0.683,
+   "p10_base": 0.0642,
+   "r10_base": 0.3023,
+   "auroc_inll": 0.6925,
+   "p10_inll": 0.0402,
+   "r10_inll": 0.1891,
+   "base_rate": 0.0212,
+   "ci_gain": [
+    0.4022,
+    0.4821
+   ],
+   "ci_base": [
+    0.6475,
+    0.7192
+   ],
+   "ci_diff": [
+    -0.3104,
+    -0.1708
+   ],
+   "rp50_gain": {
+    "spans": 394,
+    "spans_scorable": 392,
+    "R@P50": 0.0051,
+    "unit_recall_at_it": 0.0027,
+    "flagged_at_it": 4,
+    "base_rate": 0.0212
+   },
+   "rp50_base": {
+    "spans": 394,
+    "spans_scorable": 392,
+    "R@P50": 0.0026,
+    "unit_recall_at_it": 0.0013,
+    "flagged_at_it": 1,
+    "base_rate": 0.0212
+   },
+   "rp50_inll": {
+    "spans": 394,
+    "spans_scorable": 392,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0212
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0177
+   ],
+   "noise": {
+    "pages": 58,
+    "units": 6816,
+    "median_abs_dgain": 0.0104,
+    "separation": -0.2572,
+    "auroc_rerun": 0.4505,
+    "beats_noise": false
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/german": {
+   "pages": 402,
+   "pos_pages": 320,
+   "units": 117977,
+   "pos_units": 1735,
+   "auroc_gain": 0.5763,
+   "p10_gain": 0.0326,
+   "r10_gain": 0.2219,
+   "thr10_gain": 0.5194,
+   "auroc_base": 0.5739,
+   "p10_base": 0.0287,
+   "r10_base": 0.1948,
+   "auroc_inll": 0.7724,
+   "p10_inll": 0.0583,
+   "r10_inll": 0.3965,
+   "base_rate": 0.0147,
+   "ci_gain": [
+    0.5141,
+    0.642
+   ],
+   "ci_base": [
+    0.5143,
+    0.6312
+   ],
+   "ci_diff": [
+    -0.1136,
+    0.1267
+   ],
+   "rp50_gain": {
+    "spans": 868,
+    "spans_scorable": 860,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0147
+   },
+   "rp50_base": {
+    "spans": 868,
+    "spans_scorable": 860,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0147
+   },
+   "rp50_inll": {
+    "spans": 868,
+    "spans_scorable": 860,
+    "R@P50": 0.0012,
+    "unit_recall_at_it": 0.0006,
+    "flagged_at_it": 1,
+    "base_rate": 0.0147
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0
+   ],
+   "noise": {
+    "pages": 63,
+    "units": 16546,
+    "median_abs_dgain": 0.0083,
+    "separation": 0.9961,
+    "auroc_rerun": 0.6249,
+    "beats_noise": true
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/greek": {
+   "pages": 257,
+   "pos_pages": 199,
+   "units": 115381,
+   "pos_units": 1614,
+   "auroc_gain": 0.6281,
+   "p10_gain": 0.0301,
+   "r10_gain": 0.215,
+   "thr10_gain": -0.0099,
+   "auroc_base": 0.5192,
+   "p10_base": 0.0094,
+   "r10_base": 0.0669,
+   "auroc_inll": 0.7044,
+   "p10_inll": 0.0348,
+   "r10_inll": 0.2485,
+   "base_rate": 0.014,
+   "ci_gain": [
+    0.6027,
+    0.6526
+   ],
+   "ci_base": [
+    0.4935,
+    0.5447
+   ],
+   "ci_diff": [
+    0.0637,
+    0.1542
+   ],
+   "rp50_gain": {
+    "spans": 576,
+    "spans_scorable": 568,
+    "R@P50": 0.0018,
+    "unit_recall_at_it": 0.0006,
+    "flagged_at_it": 2,
+    "base_rate": 0.014
+   },
+   "rp50_base": {
+    "spans": 576,
+    "spans_scorable": 568,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.014
+   },
+   "rp50_inll": {
+    "spans": 576,
+    "spans_scorable": 568,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.014
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0087
+   ],
+   "noise": {
+    "pages": 25,
+    "units": 12225,
+    "median_abs_dgain": 0.0129,
+    "separation": 0.5313,
+    "auroc_rerun": 0.6662,
+    "beats_noise": false
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/hebrew": {
+   "pages": 36,
+   "pos_pages": 28,
+   "units": 24324,
+   "pos_units": 231,
+   "auroc_gain": 0.5973,
+   "p10_gain": 0.0164,
+   "r10_gain": 0.1732,
+   "thr10_gain": -0.1076,
+   "auroc_base": 0.528,
+   "p10_base": 0.0123,
+   "r10_base": 0.1299,
+   "auroc_inll": 0.6093,
+   "p10_inll": 0.0189,
+   "r10_inll": 0.1991,
+   "base_rate": 0.0095,
+   "ci_gain": [
+    0.5373,
+    0.6708
+   ],
+   "ci_base": [
+    0.4418,
+    0.602
+   ],
+   "ci_diff": [
+    -0.0389,
+    0.2065
+   ],
+   "rp50_gain": {
+    "spans": 79,
+    "spans_scorable": 79,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0095
+   },
+   "rp50_base": {
+    "spans": 79,
+    "spans_scorable": 79,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0095
+   },
+   "rp50_inll": {
+    "spans": 79,
+    "spans_scorable": 79,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0095
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0
+   ],
+   "noise": {
+    "pages": 1,
+    "units": 347,
+    "median_abs_dgain": 0.0145,
+    "separation": null,
+    "auroc_rerun": null,
+    "beats_noise": false
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "real6420/latin": {
+   "pages": 1022,
+   "pos_pages": 722,
+   "units": 444256,
+   "pos_units": 5603,
+   "auroc_gain": 0.5836,
+   "p10_gain": 0.0244,
+   "r10_gain": 0.1938,
+   "thr10_gain": 0.3322,
+   "auroc_base": 0.5665,
+   "p10_base": 0.0221,
+   "r10_base": 0.1754,
+   "auroc_inll": 0.7089,
+   "p10_inll": 0.0393,
+   "r10_inll": 0.3113,
+   "base_rate": 0.0126,
+   "ci_gain": [
+    0.5574,
+    0.6118
+   ],
+   "ci_base": [
+    0.5286,
+    0.5956
+   ],
+   "ci_diff": [
+    -0.0365,
+    0.0817
+   ],
+   "rp50_gain": {
+    "spans": 2453,
+    "spans_scorable": 2392,
+    "R@P50": 0.0013,
+    "unit_recall_at_it": 0.0005,
+    "flagged_at_it": 4,
+    "base_rate": 0.0126
+   },
+   "rp50_base": {
+    "spans": 2453,
+    "spans_scorable": 2392,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0126
+   },
+   "rp50_inll": {
+    "spans": 2453,
+    "spans_scorable": 2392,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0126
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.0034
+   ],
+   "noise": {
+    "pages": 141,
+    "units": 57970,
+    "median_abs_dgain": 0.0113,
+    "separation": 0.7161,
+    "auroc_rerun": 0.5939,
+    "beats_noise": true
+   },
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "plant-word/all": {
+   "pages": 21,
+   "pos_pages": 21,
+   "units": 3935,
+   "pos_units": 63,
+   "auroc_gain": 0.857,
+   "p10_gain": 0.0992,
+   "r10_gain": 0.619,
+   "thr10_gain": 0.164,
+   "auroc_base": 0.628,
+   "p10_base": 0.0331,
+   "r10_base": 0.2063,
+   "auroc_inll": 0.9665,
+   "p10_inll": 0.1476,
+   "r10_inll": 0.9206,
+   "base_rate": 0.016,
+   "ci_gain": [
+    0.7962,
+    0.9085
+   ],
+   "ci_base": [
+    0.5539,
+    0.7075
+   ],
+   "ci_diff": [
+    0.1015,
+    0.3394
+   ],
+   "rp50_gain": {
+    "spans": 63,
+    "spans_scorable": 63,
+    "R@P50": 0.3492,
+    "unit_recall_at_it": 0.3492,
+    "flagged_at_it": 40,
+    "base_rate": 0.016
+   },
+   "rp50_base": {
+    "spans": 63,
+    "spans_scorable": 63,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.016
+   },
+   "rp50_inll": {
+    "spans": 63,
+    "spans_scorable": 63,
+    "R@P50": 0.0794,
+    "unit_recall_at_it": 0.0794,
+    "flagged_at_it": 6,
+    "base_rate": 0.016
+   },
+   "rp50_gain_ci": [
+    0.2063,
+    0.4762
+   ],
+   "bar_auroc": true,
+   "bar_rp50": false
+  },
+  "plant-word/arabic": {
+   "pages": 2,
+   "pos_pages": 2,
+   "units": 387,
+   "pos_units": 6,
+   "auroc_gain": 0.7625,
+   "p10_gain": 0.0789,
+   "r10_gain": 0.5,
+   "thr10_gain": 0.0598,
+   "auroc_base": 0.6273,
+   "p10_base": 0.0526,
+   "r10_base": 0.3333,
+   "auroc_inll": 0.9466,
+   "p10_inll": 0.1316,
+   "r10_inll": 0.8333,
+   "base_rate": 0.0155,
+   "ci_gain": [
+    0.695,
+    0.8516
+   ],
+   "ci_base": [
+    0.6273,
+    0.7291
+   ],
+   "ci_diff": [
+    -0.034,
+    0.2192
+   ],
+   "rp50_gain": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.3333,
+    "unit_recall_at_it": 0.3333,
+    "flagged_at_it": 2,
+    "base_rate": 0.0155
+   },
+   "rp50_base": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0155
+   },
+   "rp50_inll": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0155
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.6667
+   ],
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "plant-word/chinese": {
+   "pages": 2,
+   "pos_pages": 2,
+   "units": 253,
+   "pos_units": 6,
+   "auroc_gain": 0.9015,
+   "p10_gain": 0.2,
+   "r10_gain": 0.8333,
+   "thr10_gain": -0.0089,
+   "auroc_base": 0.6309,
+   "p10_base": 0.04,
+   "r10_base": 0.1667,
+   "auroc_inll": 0.9022,
+   "p10_inll": 0.16,
+   "r10_inll": 0.6667,
+   "base_rate": 0.0237,
+   "ci_gain": [
+    0.6912,
+    0.987
+   ],
+   "ci_base": [
+    0.5931,
+    0.8659
+   ],
+   "ci_diff": [
+    0.098,
+    0.2706
+   ],
+   "rp50_gain": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.1667,
+    "unit_recall_at_it": 0.1667,
+    "flagged_at_it": 1,
+    "base_rate": 0.0237
+   },
+   "rp50_base": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0237
+   },
+   "rp50_inll": {
+    "spans": 6,
+    "spans_scorable": 6,
+    "R@P50": 0.5,
+    "unit_recall_at_it": 0.5,
+    "flagged_at_it": 6,
+    "base_rate": 0.0237
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.6667
+   ],
+   "bar_auroc": true,
+   "bar_rp50": false
+  },
+  "plant-word/german": {
+   "pages": 5,
+   "pos_pages": 5,
+   "units": 1148,
+   "pos_units": 15,
+   "auroc_gain": 0.891,
+   "p10_gain": 0.1053,
+   "r10_gain": 0.8,
+   "thr10_gain": 0.8023,
+   "auroc_base": 0.5397,
+   "p10_base": 0.0175,
+   "r10_base": 0.1333,
+   "auroc_inll": 0.9798,
+   "p10_inll": 0.1316,
+   "r10_inll": 1.0,
+   "base_rate": 0.0131,
+   "ci_gain": [
+    0.8007,
+    0.963
+   ],
+   "ci_base": [
+    0.4358,
+    0.6526
+   ],
+   "ci_diff": [
+    0.2382,
+    0.4868
+   ],
+   "rp50_gain": {
+    "spans": 15,
+    "spans_scorable": 15,
+    "R@P50": 0.5333,
+    "unit_recall_at_it": 0.5333,
+    "flagged_at_it": 13,
+    "base_rate": 0.0131
+   },
+   "rp50_base": {
+    "spans": 15,
+    "spans_scorable": 15,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0131
+   },
+   "rp50_inll": {
+    "spans": 15,
+    "spans_scorable": 15,
+    "R@P50": 0.1333,
+    "unit_recall_at_it": 0.1333,
+    "flagged_at_it": 4,
+    "base_rate": 0.0131
+   },
+   "rp50_gain_ci": [
+    0.2667,
+    0.7333
+   ],
+   "bar_auroc": true,
+   "bar_rp50": false
+  },
+  "plant-word/greek": {
+   "pages": 4,
+   "pos_pages": 4,
+   "units": 732,
+   "pos_units": 12,
+   "auroc_gain": 0.9102,
+   "p10_gain": 0.1096,
+   "r10_gain": 0.6667,
+   "thr10_gain": 0.2134,
+   "auroc_base": 0.5378,
+   "p10_base": 0.0274,
+   "r10_base": 0.1667,
+   "auroc_inll": 0.9765,
+   "p10_inll": 0.1644,
+   "r10_inll": 1.0,
+   "base_rate": 0.0164,
+   "ci_gain": [
+    0.8379,
+    0.9726
+   ],
+   "ci_base": [
+    0.4765,
+    0.596
+   ],
+   "ci_diff": [
+    0.2626,
+    0.4859
+   ],
+   "rp50_gain": {
+    "spans": 12,
+    "spans_scorable": 12,
+    "R@P50": 0.5,
+    "unit_recall_at_it": 0.5,
+    "flagged_at_it": 11,
+    "base_rate": 0.0164
+   },
+   "rp50_base": {
+    "spans": 12,
+    "spans_scorable": 12,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0164
+   },
+   "rp50_inll": {
+    "spans": 12,
+    "spans_scorable": 12,
+    "R@P50": 0.0833,
+    "unit_recall_at_it": 0.0833,
+    "flagged_at_it": 1,
+    "base_rate": 0.0164
+   },
+   "rp50_gain_ci": [
+    0.3333,
+    0.6667
+   ],
+   "bar_auroc": true,
+   "bar_rp50": false
+  },
+  "plant-word/latin": {
+   "pages": 8,
+   "pos_pages": 8,
+   "units": 1415,
+   "pos_units": 24,
+   "auroc_gain": 0.8132,
+   "p10_gain": 0.0922,
+   "r10_gain": 0.5417,
+   "thr10_gain": 0.0711,
+   "auroc_base": 0.7211,
+   "p10_base": 0.0567,
+   "r10_base": 0.3333,
+   "auroc_inll": 0.9734,
+   "p10_inll": 0.1702,
+   "r10_inll": 1.0,
+   "base_rate": 0.017,
+   "ci_gain": [
+    0.6727,
+    0.9267
+   ],
+   "ci_base": [
+    0.6006,
+    0.8362
+   ],
+   "ci_diff": [
+    -0.1651,
+    0.3104
+   ],
+   "rp50_gain": {
+    "spans": 24,
+    "spans_scorable": 24,
+    "R@P50": 0.2917,
+    "unit_recall_at_it": 0.2917,
+    "flagged_at_it": 13,
+    "base_rate": 0.017
+   },
+   "rp50_base": {
+    "spans": 24,
+    "spans_scorable": 24,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.017
+   },
+   "rp50_inll": {
+    "spans": 24,
+    "spans_scorable": 24,
+    "R@P50": 0.0833,
+    "unit_recall_at_it": 0.0833,
+    "flagged_at_it": 3,
+    "base_rate": 0.017
+   },
+   "rp50_gain_ci": [
+    0.0,
+    0.5833
+   ],
+   "bar_auroc": false,
+   "bar_rp50": false
+  },
+  "plant-sentence/all": {
+   "pages": 20,
+   "pos_pages": 20,
+   "units": 6042,
+   "pos_units": 254,
+   "auroc_gain": 0.9711,
+   "p10_gain": 0.346,
+   "r10_gain": 0.8228,
+   "thr10_gain": 0.1675,
+   "auroc_base": 0.7059,
+   "p10_base": 0.1192,
+   "r10_base": 0.2835,
+   "auroc_inll": 0.9846,
+   "p10_inll": 0.4023,
+   "r10_inll": 0.9567,
+   "base_rate": 0.042,
+   "ci_gain": [
+    0.958,
+    0.9828
+   ],
+   "ci_base": [
+    0.6304,
+    0.7715
+   ],
+   "ci_diff": [
+    0.1947,
+    0.3457
+   ],
+   "rp50_gain": {
+    "spans": 20,
+    "spans_scorable": 20,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.4567,
+    "flagged_at_it": 152,
+    "base_rate": 0.042
+   },
+   "rp50_base": {
+    "spans": 20,
+    "spans_scorable": 20,
+    "R@P50": 0.15,
+    "unit_recall_at_it": 0.0118,
+    "flagged_at_it": 3,
+    "base_rate": 0.042
+   },
+   "rp50_inll": {
+    "spans": 20,
+    "spans_scorable": 20,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.2677,
+    "flagged_at_it": 77,
+    "base_rate": 0.042
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  },
+  "plant-sentence/chinese": {
+   "pages": 3,
+   "pos_pages": 3,
+   "units": 764,
+   "pos_units": 34,
+   "auroc_gain": 0.9609,
+   "p10_gain": 0.3289,
+   "r10_gain": 0.7353,
+   "thr10_gain": 0.1425,
+   "auroc_base": 0.7666,
+   "p10_base": 0.1711,
+   "r10_base": 0.3824,
+   "auroc_inll": 0.9853,
+   "p10_inll": 0.4342,
+   "r10_inll": 0.9706,
+   "base_rate": 0.0445,
+   "ci_gain": [
+    0.9209,
+    0.9905
+   ],
+   "ci_base": [
+    0.6648,
+    0.913
+   ],
+   "ci_diff": [
+    0.0079,
+    0.3257
+   ],
+   "rp50_gain": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.0882,
+    "flagged_at_it": 3,
+    "base_rate": 0.0445
+   },
+   "rp50_base": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 0.3333,
+    "unit_recall_at_it": 0.0294,
+    "flagged_at_it": 1,
+    "base_rate": 0.0445
+   },
+   "rp50_inll": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.0882,
+    "flagged_at_it": 3,
+    "base_rate": 0.0445
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  },
+  "plant-sentence/german": {
+   "pages": 3,
+   "pos_pages": 3,
+   "units": 694,
+   "pos_units": 59,
+   "auroc_gain": 0.9926,
+   "p10_gain": 0.8116,
+   "r10_gain": 0.9492,
+   "thr10_gain": 0.2896,
+   "auroc_base": 0.5417,
+   "p10_base": 0.1014,
+   "r10_base": 0.1186,
+   "auroc_inll": 0.9848,
+   "p10_inll": 0.7391,
+   "r10_inll": 0.8644,
+   "base_rate": 0.085,
+   "ci_gain": [
+    0.9851,
+    0.9981
+   ],
+   "ci_base": [
+    0.4413,
+    0.6564
+   ],
+   "ci_diff": [
+    0.3417,
+    0.5439
+   ],
+   "rp50_gain": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.1017,
+    "flagged_at_it": 7,
+    "base_rate": 0.085
+   },
+   "rp50_base": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 0.3333,
+    "unit_recall_at_it": 0.0169,
+    "flagged_at_it": 1,
+    "base_rate": 0.085
+   },
+   "rp50_inll": {
+    "spans": 3,
+    "spans_scorable": 3,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.0678,
+    "flagged_at_it": 4,
+    "base_rate": 0.085
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  },
+  "plant-sentence/greek": {
+   "pages": 2,
+   "pos_pages": 2,
+   "units": 796,
+   "pos_units": 26,
+   "auroc_gain": 0.9861,
+   "p10_gain": 0.3165,
+   "r10_gain": 0.9615,
+   "thr10_gain": 0.3114,
+   "auroc_base": 0.8099,
+   "p10_base": 0.1392,
+   "r10_base": 0.4231,
+   "auroc_inll": 0.996,
+   "p10_inll": 0.3291,
+   "r10_inll": 1.0,
+   "base_rate": 0.0327,
+   "ci_gain": [
+    0.9681,
+    0.9983
+   ],
+   "ci_base": [
+    0.691,
+    0.8984
+   ],
+   "ci_diff": [
+    0.0698,
+    0.3074
+   ],
+   "rp50_gain": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.3077,
+    "flagged_at_it": 8,
+    "base_rate": 0.0327
+   },
+   "rp50_base": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 0.5,
+    "unit_recall_at_it": 0.0385,
+    "flagged_at_it": 1,
+    "base_rate": 0.0327
+   },
+   "rp50_inll": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.1538,
+    "flagged_at_it": 4,
+    "base_rate": 0.0327
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  },
+  "plant-sentence/hebrew": {
+   "pages": 2,
+   "pos_pages": 2,
+   "units": 1568,
+   "pos_units": 24,
+   "auroc_gain": 0.9758,
+   "p10_gain": 0.141,
+   "r10_gain": 0.9167,
+   "thr10_gain": 0.2021,
+   "auroc_base": 0.7793,
+   "p10_base": 0.0449,
+   "r10_base": 0.2917,
+   "auroc_inll": 0.9977,
+   "p10_inll": 0.1538,
+   "r10_inll": 1.0,
+   "base_rate": 0.0153,
+   "ci_gain": [
+    0.9676,
+    0.9917
+   ],
+   "ci_base": [
+    0.6939,
+    0.8491
+   ],
+   "ci_diff": [
+    0.1185,
+    0.2978
+   ],
+   "rp50_gain": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.1667,
+    "flagged_at_it": 4,
+    "base_rate": 0.0153
+   },
+   "rp50_base": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 0.0,
+    "unit_recall_at_it": 0.0,
+    "flagged_at_it": 0,
+    "base_rate": 0.0153
+   },
+   "rp50_inll": {
+    "spans": 2,
+    "spans_scorable": 2,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.0833,
+    "flagged_at_it": 4,
+    "base_rate": 0.0153
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  },
+  "plant-sentence/latin": {
+   "pages": 10,
+   "pos_pages": 10,
+   "units": 2220,
+   "pos_units": 111,
+   "auroc_gain": 0.9597,
+   "p10_gain": 0.3649,
+   "r10_gain": 0.7297,
+   "thr10_gain": 0.0966,
+   "auroc_base": 0.6889,
+   "p10_base": 0.1441,
+   "r10_base": 0.2883,
+   "auroc_inll": 0.9742,
+   "p10_inll": 0.4369,
+   "r10_inll": 0.8739,
+   "base_rate": 0.05,
+   "ci_gain": [
+    0.9321,
+    0.9849
+   ],
+   "ci_base": [
+    0.5657,
+    0.7872
+   ],
+   "ci_diff": [
+    0.1572,
+    0.396
+   ],
+   "rp50_gain": {
+    "spans": 10,
+    "spans_scorable": 10,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.3784,
+    "flagged_at_it": 67,
+    "base_rate": 0.05
+   },
+   "rp50_base": {
+    "spans": 10,
+    "spans_scorable": 10,
+    "R@P50": 0.1,
+    "unit_recall_at_it": 0.009,
+    "flagged_at_it": 1,
+    "base_rate": 0.05
+   },
+   "rp50_inll": {
+    "spans": 10,
+    "spans_scorable": 10,
+    "R@P50": 1.0,
+    "unit_recall_at_it": 0.3333,
+    "flagged_at_it": 43,
+    "base_rate": 0.05
+   },
+   "rp50_gain_ci": [
+    1.0,
+    1.0
+   ],
+   "bar_auroc": true,
+   "bar_rp50": true
+  }
+ }
+}
