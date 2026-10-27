@@ -2194,6 +2194,184 @@ model to prefer cognates everywhere. A second held-out set should be chosen for 
 - **n = 25 written pages checked by eye.** This rules out a high invented rate, not a low one. The #5660 prior for unflagged reads of ≥ 150 syllables, 5 % [2–13 %], still applies.
 - **The ≥ 150 floor is what kept an invented read out.** On p6 of the LIRI facsimile (an English © page), the reader wrote 123 characters of fluent Tibetan that is not on the page. That shape is invisible to every text flag.
 
+## 2026-10-26 · Flash-low correction across 20 Kangyur volumes: span gate, audit first (#6740 wave 2)
+
+PRIOR ART: `2026-10-26-tibetan-flash-correct-neyphug-tsha-6740.md` is wave 1 (one split-leaf tantra volume, NO-GO
+10/40), with the same request, guards and judge. Wave 2 is Derek's note of 22:05Z: "one volume is one observation;
+extend ACROSS BOOKS". It covers 20 volumes and allows two-leaf frames. The bar: at most 2 of 40 worse, no single book
+with 2 worse, and controls at least 90%. The seam stratum is reported separately.
+
+**Draw.** From the 145 eligible volumes I drew 20 with `random.Random('6740-wave2')`, round-robin over sections within
+each collection: 7 Thadrak, 7 Neyphug, 6 from the EAP310 "Kanjur" set (`pass-gate-wave2-6740/books.json`).
+- Eligible means: visible Kangyur, not Derge, at least 200 Yigdzin SERVE pages, not in the router draws, not the #6560
+  gate volume, and not held, or held only by `tibetan-retranslation-awaits-derek` (#4523, a translation hold; the router
+  allowed it too).
+- One quarantined volume was swapped for Kanjur Phal chen Ka.
+- In each volume, the pages (page_number > 2, at least 300 characters) are ranked by `sha256("6740-wave2|<page id>")`.
+  The first 6 were corrected. The audit takes the first 2 in rank order that apply would write with a change.
+
+**Order deviation, decided in the run.** Derek's note asked to correct every page of the 20 volumes. I ran the audit
+first: 120 reads instead of about 8,300. The full read was to start only if the gate passed. A second note (22:50Z:
+"do NOT start wave 2 corrections until Derek decides") arrived after the full read had been dispatched. It was
+stopped on main within 10 minutes, before it made any read (R2 shows only the 114 sample reads for those books).
+
+**Read.** 120/120 read. Guards on the 120: 5 pages held for ya-btags (22 changes), 2 over the 25% cap, 0 adding Latin.
+115 changed; the median change is 2.4% of syllables. Thadrak 'Bum Ja (Prajñāpāramitā) had no writable candidate: 4 of
+its 6 were held for ya-btags and 2 were over the cap, with 9–37% of syllables changed. So the audit has 38 pages from
+19 volumes, not 40.
+
+**Gate** (judge B, `--seed=6740-wave2`, 384 changed spans, 76 controls):
+
+| | worse / same / better (of 38) | leaf shows the correction (decided spans) | unclear | controls right | books with 2 worse |
+|---|---|---|---|---|---|
+| all | **1** / 2 / 35 | 334 of 364, **92%** [89, 94] | 17 | **71/76 (93%)** | 0 |
+| seam (two-leaf frames), 36 | 0 / 2 / 34 | | | | |
+| single leaf, 2 | 1 / 0 / 1 | | | | |
+
+The by-book bootstrap (19 books, 4,000 draws) puts the worse-page rate at 0.000–0.079 and the span rate at
+0.886–0.945. The one worse page is Neyphug rGyud Kha p.278: a long vowel added to a mantra syllable, ཛྙ→ཛྙཱ.
+
+**Why wave 1 and wave 2 differ** (a reading, not measured here). Wave 2's drafts are two-leaf page-mode Yigdzin reads,
+and they carry many plain misreads: a dropped tsheg (སེམསདཔའ), a wrong letter (ཐུབས→ཐབས), dropped words. Flash
+fixes these: Thadrak brGyad stong Ka p.323 has 24 of 25 spans going to the correction. The wave-1 leaves are leaf-mode
+reads of one tantra, already closer to the leaf (median Derge identity 0.953), so a larger share of Flash's changes
+there is normalisation. The three rGyud (tantra) volumes in wave 2 (Neyphug rGyud Ka, Tha, Kha) gave 5 better and 1 worse (the
+ཛྙཱ page), so "tantra" alone does not explain wave 1.
+
+**Not done (held for Derek):** correcting the remaining ~8,160 pages, the two-wave apply, the rolling audit. Apply
+would write through `writePageText` (PR #7470) with run id `cli-ocr-<stamp>`, undone by `revert-run.mjs --run-id`.
+
+Artifacts: `scripts/eval/results/tibetan-correct-6560/pass-gate-wave2-6740/` (books, candidates and their guard
+outcomes, the 38 picked, the reads, the audit key, requests, replies and score). Cost: $0. 120 agy calls and 38 Opus
+judge calls.
+
+## 2026-10-27 · Applied under Derek's 23:15Z rule, then diff-QA
+
+**The rule.** Write a page when it passes the automatic guards and does not lower Derge identity by more than 0.01 (where
+the draft has a parallel, identity ≥ 0.85). An audited page that introduced a severe error keeps Yigdzin. The re-score
+(`pass/rescore.mjs`): SEVERE = line-level, negation or mantra; a page passes with net ≥ 0 and no severe error introduced.
+This gate passed 35/38 pages.
+
+**Reads.** 8,278 pages, by agy Flash-low on main ($0). Reads came back through R2.
+
+**Derge placement.** 15 sample pages per volume against all of P000001, then the whole volume against those Derge volumes
+± 1. Derge v103's Pagination layer has a single entry, which makes one enormous window, so it is left out.
+
+**Written: 7,287 pages** in 19 volumes, through `writePageText` (runs: `results/.../pass-gate-wave2-6740/runs.json`; per
+volume: `written-by-volume.md`).
+
+| | pages |
+|---|---|
+| refused: line count changed | 349 |
+| refused: 25% cap | 94 |
+| refused: ya-btags, no leaf check | 46 |
+| refused: adds Latin letters | 5 |
+
+The **line-count guard** was added after the wave-A by-eye check. On Thadrak brGyad stong p.233, Flash merged two lines of
+the upper leaf (the draft had 7, Flash wrote 6). A dropped line and a removed invented line cannot be told apart without
+the image, so the draft stays. Moving or adding the leaf-break marker does not count as a line change.
+
+**Restores (run `revert-lines-6740`):** brGyad p.233 and p.289, gZungs 'dus p.260 (a dropped negation, from the rolling
+audit) and Neyphug p.303. Neyphug p.131 was restored and then put back on the Flash text (run `unrevert-lines-6740`): the
+scribe repeats that sentence, as checked by eye by tib-opus-translate-6948.
+
+**Rolling audit:** 10 seeded written pages, judge B. 9/10 pass; 90 errors fixed, 8 introduced, 1 severe introduced
+(restored). Controls 19/20.
+
+### Diff-QA (Derek 2026-10-27 05:10Z)
+`pass/diffqa.mjs` diffs each written page against its Yigdzin draft and classifies every changed span.
+- **LOW** (auto-accepted): tsheg/merge only, a particle swapped within its class, or a one-letter fix to a Derge dictionary word.
+- **RISKY**: everything else; negation, number, mantra, added/dropped and > 8 syllables always are.
+- **Calibration** on 680 spans already judged: LOW is right on 94% of decided spans, RISKY on 86%. The four known severe
+  introductions of the router-30 reads all classify RISKY.
+- **RISKY spans** go to the leaf: `leafcheck audit-req --pages --spans`, judge B, 2 controls a page. A span the leaf does not
+  show as corrected is put back to the draft (`diffqa.mjs merge`, `write`; runs `diffqa-6740-*`).
+- **Pilot, 40 pages:** 155/210 risky spans confirmed (74%), 38 show the draft. 55 spans were put back on 24 pages.
+- **Tranche 1** covers the 3,757 + 634 written pages that carry a severe-type risky span; results follow in #6740.
+
+## 2026-10-26 · Flash-low correction, one split-leaf Kangyur volume, gated write (#6740)
+
+PRIOR ART: `2026-10-15-tibetan-flash-pass-gate-6560.md` is the same gate on Thadrak rGyud 'bum Kha, and it was NO-GO. The
+router's whole-page result is `2026-10-27-tibetan-router-30-6740.md` (PR #7465): Flash-low was accepted on 53/60 folios
+and the router switched the Tibetan cell to it. Derek asked for a one-volume gated write of that route the same day. The
+pipeline and the bar are #6560's, unchanged: `cli-ocr.mjs read --correct-prompt` (the CORR request), the ya-btags guard,
+and `leafcheck.mjs audit-req` + `tiles-req` (judge B).
+
+**Volume.** Neyphug Kanjur rGyud Tsha, `69e7abec5f1a22ab19aa0707`. It is the only one of 226 visible Kangyur volumes
+already split one page per leaf (#5771). It is public and `complete`, with no hold, and none of its pages were in the
+router draws. The frame is the 962 split leaves (Yigdzin, SERVE, not human-edited). The 39 photos the split kept whole
+are two-leaf frames and are left out. Like the 10-15 gate volume, it is a tantra.
+
+**Read.** 960 of 962 leaves were corrected ($0). agy on l7a was not signed in, so the reads ran on main and cloudlayer
+and came back through R2 kept reads (#7075). On the way: `images.sourcelibrary.org` serves the same URL as a
+Cloudflare-Polished file (589 KB) or as the original (1.0 MB), depending on cache state. The #7075 reuse key hashes the
+image bytes, so it missed for 589 of 960 pages across boxes. `pass/import-kept-reads.mjs` matches on the exact prompt
+sent instead, and all 589 matched. Both readers walked the same Mongo order (`cli-ocr read` ignores the order of the
+id file), so about 490 leaves were read twice.
+
+**Dry apply.** All 960 pass the guards. None changes more than 25% of syllables, none was cut before END, and there
+were **0 ya-btags hits**. 781 leaves changed; the median change is 1.4% of syllables and the maximum 23.5%.
+
+**Gate.** 40 changed leaves, drawn with `--seed=6740-vol1`. 138 changed spans and 80 known-answer controls went to
+judge B: sealed Opus, A/B blind, the leaf plus 4 full-resolution tiles.
+
+| | worse / same / better (of 40) | leaf shows the correction (decided spans) | unclear | controls right |
+|---|---|---|---|---|
+| judge B | **10** / 10 / 20 | 95 of 120, 79% [71, 85] | 18 of 138 | **67/80 (84%)** |
+
+The bar was at most 2 worse and controls at least 90%. Both fail, so nothing was written.
+
+- **Where the leaf contradicts the correction.**
+  - Real misreads: སྤྱོད written with Latin letters (`spy`ོད, p.751); ཁྲག→ཕྲག (p.345); བླ→སློབ (p.805); བཞི→གཞི (p.510); ཅི→ཉིད (p.709); a ལ dropped (p.632) or added (p.663).
+  - Normalisation: the non-breaking tsheg ༌ for ་ (p.510); a tsheg inserted where the scribe wrote none (ལྕུགམ→ལྕུག་མ, p.378); a final ས for the leaf's subjoined ྶ (p.991); དྲང→དྲངས (p.792).
+  
+  The guard set does not catch these. The foreign-script guard needs 3+ letters, and `spy` is exactly 3.
+- **Judge.** Controls at 84% are under the judge's own bar. On p.812 the judge answered "none of the spots appear; the
+  image may not match". I opened that leaf. It matches its text: line 1 reads ཚེས་ལྔ་དང་ནི་ཚེས་བདུན་དང་།, and line 4
+  shows ཚེ་གྲངས་སམ, the correction's reading. The judge failed to find the spots; this is not a wrong-leaf page.
+- **Whole page against Derge.** OpenPecha P000001, `tib-derge.py` from PR #7465. All 962 leaves were placed; the drafts'
+  median identity is 0.953.
+
+| leaves | draft | Flash-low | Δ [95%, by page; one book] | better / worse / tied |
+|---|---|---|---|---|
+| with a parallel (draft ≥ 0.85), 907 | 0.9466 | 0.9520 | +0.0054 [0.0045, 0.0062] | 486 / 147 / 274 |
+| all placed, 960 | 0.9373 | 0.9434 | +0.0061 [0.0053, 0.0071] | 529 / 155 / 276 |
+
+**The 10 worse pages by defect** (judge B's worse spans; none is a ya-btags change, because there were 0 hits; none is
+a seam, because the leaves are split):
+
+| defect | pages |
+|---|---|
+| letter misread (a real error) | 345 ཁྲག→ཕྲག · 510 བཞི→གཞི · 805 བླ→སློབ · 709 ཅི→ཉིད |
+| particle dropped or added | 632 ལ→∅ · 663 ∅→ལ |
+| garbage: Latin letters inside a syllable | 751 སྤྱོད→`spy`ོད |
+| orthographic normalisation | 378 ལྕུགམ→ལྕུག་མ (tsheg) · 510 ༌→་ ×2 · 792 དྲང→དྲངས · 991 བསྲེགྶ→བསྲེགས |
+| mantra | none among the worse spans |
+
+**By eye (leaf images opened, full-resolution crops).** These four leaves show what the correction does when it is
+right. They are NOT written: the gate failed. Before/after are from the read files.
+- **p.128**: the draft has 8 lines and one sentence three times (ཁུ་ཚུར་སོ་སོར་བཅངས་ཏེ…). The leaf has 7 lines and the
+  sentence twice. Yigdzin had repeated a line that is not on the leaf; Flash removed it (Derge identity 0.794→0.920).
+- **p.990**, line 3: draft ཇི་ལྟར་བཅོལ་ལྡན་འདས་དེ་བཞིན་གཤེས་པ. The leaf reads བཅོམ་ལྡན་འདས་དེ་བཞིན་གཤེགས་པ, as Flash has it.
+  Also ལྔན→ལྡན and ཁམསམངོན→ཁམས་མངོན (0.890→0.975).
+- **p.389** (a list of nāga kings): the draft's ཆེནཔོ / ཆེན:པོ / ཆེན(པོ) / ཆེནབོ become ཆེན་པོ throughout. The leaf
+  has a clean tsheg, and ཧུ་ལ→ཧུ་ལུ matches it too (0.882→0.969).
+- **p.955**, line 5: the draft drops ལྡན་འདས་དང་བྱང་ཆུབ་སེམས (སངས་རྒྱས་བཅོམ་དཔའ). The leaf has the full phrase, and Flash
+  restores it. But the leaf writes a single shad (གསོལ། སངས) where Flash wrote ། ། throughout. That is the
+  normalisation the span gate counts against it.
+- p.812 is the judge-error page above: the leaf matches its text.
+
+**Reading.** The whole-page and span-level instruments agree on direction and disagree on the decision, as the router
+write-up predicted. Most leaves get better, and the median page gains. But a written page carries about one changed span
+in five that the leaf contradicts, and the apply gate counts any page with more of those than of fixes as a regression.
+On two tantra volumes the rate is the same (10/40). Whether it holds outside the tantras is wave 2 (20 volumes across
+Thadrak, Neyphug and the EAP310 set, 2 pages each); it is reported separately.
+
+Artifacts: `scripts/eval/results/tibetan-correct-6560/pass-gate-neyphug-tsha-6740/`. They hold the reads with
+provenance, the audit key, requests and replies, the score, the per-leaf change sizes, and the Derge placement and
+scores. Cost: $0 paid. About 1,450 agy Flash-low calls (960 leaves, about 490 read twice) and 40 Opus judge calls on the
+l7a subscription.
+
 ## 2026-10-26 · Do full-page SigLIP2 vectors retrieve well enough to embed ~21M pages, and can the fetch keep the card busy? (#6871 row 8; job siglip-full-6871-mv)
 <!-- PRIOR ART: 2026-10-20 image-search eval (PR #7042, scripts/eval/image-search-6871: P@10 so400m 0.46 vs CLIP 0.21 on a 15K pool, Opus-judged); the 100K pilot (scripts/gpu/siglip2-6871, job siglip-slot-6871: 15.8 img/s, GPU busy 0.33). -->
 
@@ -7207,6 +7385,78 @@ Separately, Bodleian Latin MSS scored "English" because of the English in `<dete
 - Books with compound Latin labels (`Latin-German` etc.).
 
 **Files.** `scripts/eval/results/relabel-5924/`: gate, eye sample, `proposals.jsonl.gz`, `written.jsonl`, `manuscript-filed-as-print.jsonl`, `longs-skip-5924.tsv` (the skip list given to the long-s apply job). Undo: `node --env-file=… scripts/maintenance/relabel-latin-function-words-5924.mjs --undo --commit` with `RELABEL_5924_DIR` pointing at a directory (it reads only `sweep_log`).
+
+## 2026-10-23 · Image gain, amendment 6871a: phrase plants, SKQS, span recall at precision 0.5 (#6871 row A)
+
+**Where this came from.** gex45 gpu-queue task `55-grounding-6871a` ran from 02:50Z to 03:00Z on 2026-10-23, scored itself and posted its table to #6871 and #6420. Its numbers never reached the repo. Job gpu-steward-20261027 copied the outputs back. It then re-ran the committed `score-6871a.py` (sha256 c88c6e6d…, identical to the copy on gex45) over `main.jsonl` + `rerun.jsonl` on gex45's CPU. The rerun reproduced `new.json` byte for byte.
+
+**Question.** The 2026-10-22 brief asked for three additions:
+- span recall at a precision useful for review;
+- a second script with real errors (Chinese SKQS);
+- plants that look like real misreads: a phrase taken from another page of the same book.
+
+Do any of these change the "no pre-screen" verdict?
+
+**Answer: no.** All three bars are preregistered: B1 unit AUROC ≥ 0.75 and beats perplexity; B2 R@P50 ≥ 0.6; B3 beats repeat noise. No real-error cell passes any of them.
+
+**Scorer.** Unchanged: Qwen2.5-VL-7B-Instruct-AWQ, per-token log p(read | image) − log p(read | no image), teacher-forced, on the gex45 RTX PRO 4000. R@P50 is the best span recall over thresholds where unit precision ≥ 0.5. Its CI comes from 500 page-cluster bootstraps.
+
+### Real errors
+
+| cell | pages (with a bad span) | AUROC gain (95% CI) | AUROC text-only perplexity | R@P50 gain (CI) | verdict |
+|---|---|---|---|---|---|
+| #6420, all | 2,178 (1,528) | 0.58 (0.56–0.60) | 0.56 | **0.00** (0.00–0.00) | fail |
+| #6420, Arabic | 105 (80) | 0.58 | 0.63 | 0.00 | fail |
+| #6420, Chinese | 356 (179) | 0.44 | 0.68 | 0.01 | fail |
+| #6420, German | 402 (320) | 0.58 | 0.57 | 0.00 | fail |
+| #6420, Greek | 257 (199) | 0.63 | 0.52 | 0.00 | fail |
+| #6420, Latin | 1,022 (722) | 0.58 | 0.57 | 0.00 | fail |
+| #6420, Hebrew | 36 (28) | 0.60 | 0.53 | 0.00 | no verdict (< 30 pages) |
+| SKQS vs Kanripo, all | 71 (60) | 0.53 (0.48–0.57) | 0.60 | **0.03** (0.00–0.08) | fail |
+| SKQS, PaddleOCR-VL-1.6 reads | 36 (27) | 0.43 | 0.62 | 0.00 | fail |
+| SKQS, flash-lite reads | 35 (33) | 0.58 | 0.59 | 0.08 | fail |
+
+- **R@P50 = 0 on the #6420 set.** With a 1.4% base rate, no threshold makes half of the flagged words real errors. That holds at every threshold, in every language.
+- **Gain is below chance on PaddleOCR-VL reads of SKQS (0.43)**, as it was on #6420 Chinese (0.44). Paddle's wrong characters are ones the image makes *more* likely: a look-alike glyph is a plausible reading of the leaf.
+
+### Plants (descriptive)
+
+| cell | pages | AUROC gain | R@P50 gain |
+|---|---|---|---|
+| phrase plants (new), all | 50 | 0.94 (0.92–0.96) | 0.98 (0.92–1.00) |
+| phrase plants, Latin / Greek / SKQS | 22 / 13 / 15 | 0.98 / 0.95 / 0.97 | 0.98 / 0.79 / 1.00 |
+| 2026-10-18 word plants, all | 21 | 0.86 | 0.35 |
+| 2026-10-18 sentence plants, all | 20 | 0.97 | 1.00 |
+
+- **The reading the prereg named applies:** plants pass and real errors fail. The detector sees text that is not on the leaf. A whole phrase or sentence from elsewhere is found almost every time. A single swapped word is found about a third of the time at precision 0.5. Most real wrong words are a letter or two off and look plausible, and those it misses.
+
+### Repeat noise and throughput
+
+- **Repeat noise.** The second pass, with a fresh server, gives the same ranking (#6420 rerun AUROC 0.61; new items within 0.01). B3 fails on #6420 pooled because the rerun's AUROC lies outside the main CI, not because the runs disagree.
+- **Throughput.** 121 items in 134 s = **3,251 pp/h** for the image + no-image pair (rerun 3,134 pp/h). That is above the capability card's 1,340 pp/h, because these pages are short.
+
+### Not preregistered: image surprisal alone
+
+The scorer also reports log p(read | image) alone, as a comparison column. That signal ranks real errors better than gain everywhere:
+- #6420 pooled AUROC 0.72; German 0.77; Arabic 0.74;
+- SKQS 0.88;
+- on SKQS flash-lite reads, R@P50 0.75 (35 pages, base rate 17%).
+
+**This is a post-hoc look at one comparison column, not a result.**
+- The #6420 cells still have R@P50 0.00.
+- The SKQS cell is 35 flash-lite pages in one collection.
+- On the PaddleOCR-VL reads of the same leaves, R@P50 is 0.00.
+
+Before it could change a decision, a new preregistration would have to fix the threshold on one set and test it on another. Nothing is queued for it.
+
+*Artifacts:* `scripts/eval/grounding-6871/results/amendment-2026-10-23/`:
+- `new.json`: the plant-phrase and SKQS cells;
+- `real6420.json`: the #6420 cells and the 2026-10-18 plants;
+- `report.md`: the self-posted table;
+- `main.jsonl.gz`, `rerun.jsonl.gz`: per-token log-probs of the 121 new items;
+- `hold.log.txt`, `task.log.txt`, `score.log.txt`.
+
+Items: `results/items-6871a.jsonl.gz`. The #6420 per-token log-probs stay on gex45 in `/root/jobs/grounding-6871/`. $0: no paid model, no rented GPU, nothing written to any store.
 
 ## 2026-10-23 · How often does the OCR drop the 丨 headword mark in Chinese reference works? (#6561, #6056)
 
