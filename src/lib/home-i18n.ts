@@ -717,7 +717,7 @@ const zh: HomeStrings = {
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
   showcaseEyebrow: '专题精选',
-  showcaseSubtitle: '从中国自然知识到霍格沃茨图书馆，每部书都可对照原书影像阅读。',
+  showcaseSubtitle: '中西典籍，对照而读：每部书都附原书影像。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -1055,6 +1055,8 @@ export const ZH_COLLECTION_NAMES: Record<string, string> = {
   'indic-traditions': '印度传统',
   'chinese-classics': '中国经典',
   // The /zh showcase (NATIVE_SHOWCASE_SLUGS).
+  'harmony-east-west': '律吕与和谐',
+  'china-through-european-eyes': '中学西传',
   'chinese-natural-knowledge': '中国自然知识',
   'chinese-divination-cosmology': '术数与宇宙论',
   'confucian-classics': '儒家经典',
@@ -1199,13 +1201,15 @@ export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelv
  * The collections the showcase shows on a native-first homepage, in place of the
  * random draw of curated exhibitions. Only six curated exhibitions hold any Chinese
  * book (ten at most), so the draw put Hogwarts and Indonesian manuscripts on /zh
- * (#7537). These are published Chinese collections the subject shelves below do
- * not already show, plus one European exhibition kept on purpose: the Hogwarts
- * library, a door into the Western books for a country that loves Harry Potter
- * (Derek, 2026-10-27). Each needs a name in COLLECTION_NAMES for the language.
+ * (#7537). Decided 2026-10-27 (Derek): four cards, each proving one message, "we
+ * read the traditions side by side": harmony in Chinese and European theory, how
+ * Europe read China, Chinese natural knowledge, and the Hogwarts library as the
+ * friendly door into the Western books. In this order; the first is the lead card.
+ * A collection not yet published simply drops out. Each needs a name in
+ * COLLECTION_NAMES for the language.
  */
 export const NATIVE_SHOWCASE_SLUGS: Partial<Record<HomeLang, string[]>> = {
-  zh: ['chinese-natural-knowledge', 'hogwarts-library', 'confucian-classics', 'chinese-divination-cosmology'],
+  zh: ['harmony-east-west', 'china-through-european-eyes', 'chinese-natural-knowledge', 'hogwarts-library'],
 };
 
 /** Hand-written collection names per locale. English is the stored name. */
