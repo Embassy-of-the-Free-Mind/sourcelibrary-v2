@@ -140,10 +140,14 @@ if (CMD === 'strips') {
     if (fs.existsSync(path.join(out, 't1.jpg'))) return;
     const raw = path.join(S, 'images', p.id, 'raw.img');   // the cache audit.mjs packet reads
     fs.mkdirSync(path.dirname(raw), { recursive: true });
-    if (!(await fetchImage(p, raw))) { failed++; console.log(`  ${p.id}: no image`); return; }
+    // The archived R2 copy first: BL's IIIF server caps a whole image at 1,200 px (the 10-24 audit cut its tiles as
+    // IIIF regions for that reason); the R2 master is the native 4,752 px frame.
+    if (!(await fetchImage({ archived_photo: p.archived_photo }, raw)) && !(await fetchImage(p, raw))) { failed++; console.log(`  ${p.id}: no image`); return; }
     const { width: W, height: H } = await sharp(raw, { limitInputPixels: false }).rotate().metadata();
-    // Strips of aspect <= 1.8, 6% overlap, each <= 1568 px: a two-leaf frame (4752 x 3168) becomes one or two strips.
-    const cols = Math.max(1, Math.ceil(W / H / 1.8)), tw = Math.ceil(W / cols), ox = cols > 1 ? Math.round(tw * 0.06) : 0;
+    // Strips of aspect <= 1.8 and <= ~1,600 source px wide, 6% overlap, each <= 1568 px. A pecha leaf (8704 x 1824)
+    // gets 3-5 strips as in the Bardo pilot; a two-leaf frame (4752 x 3168, 1.5:1) gets 3, read at ~0.5 of native
+    // scale (the Bardo strips' scale): one strip would be 0.33, its lines ~70 px.
+    const cols = Math.max(1, Math.ceil(W / H / 1.8), Math.round(W / 1600)), tw = Math.ceil(W / cols), ox = cols > 1 ? Math.round(tw * 0.06) : 0;
     fs.mkdirSync(out, { recursive: true });
     for (let k = 0; k < cols; k++) {
       const left = Math.max(0, k * tw - ox), width = Math.min(W - left, tw + 2 * ox);

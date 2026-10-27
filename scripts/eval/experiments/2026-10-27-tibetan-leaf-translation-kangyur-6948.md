@@ -46,6 +46,13 @@ Yigdzin transcription (not unreadable, not withheld for source_loop / ocr_unread
 not they have English; the AUDITED page is always a frame page (no English). Nothing is written, so existing English
 is untouched. The draw: 20 blocks, 200 pages; PAIRED-BAD = 10-24 a034, a008, a015, a011, a031.
 
+**Strips (before any read).** The frames come from the R2 archived master (BL's IIIF serves a whole image at only
+1,200 px) and are cut into 2–3 vertical strips (≤ ~1,600 source px wide, 6% overlap), read at 0.5–0.67 of native
+scale, about the Bardo pilot's scale. The Bardo rule alone (aspect ≤ 1.8) gave one strip per 1.5:1 frame, at 0.33.
+
+**Pacing (inbox note 15:23Z, acted on 15:31Z).** The account was spending ~2.4%/h of its week against ~0.5%/h, so the
+reads went from 2 streams to 1. 38 pages had been read in 2 streams before the 12:57Z 5-hour stop.
+
 **Translator.** Opus via `claude -p` on this box's subscription, `claude-translate.mjs read --images-dir`
 (job tib-concept-opus-6948's change, carried in this PR): each page's scan as overlapping full-resolution strips,
 Read only, "translate what the leaf says, bracket where it departs from the transcription". 10 pages a call,
