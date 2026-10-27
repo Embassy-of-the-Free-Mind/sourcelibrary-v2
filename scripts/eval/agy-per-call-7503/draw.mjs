@@ -8,7 +8,7 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/agy-per-call-7503/draw.mjs --pilot=F --out=DIR
  *
- * Writes DIR/draw.json (books, pages, OCR chars) and DIR/page-ids.txt (one id per line, page order).
+ * Writes DIR/draw.json (books, pages, OCR chars) and DIR/page-ids.json (a JSON array in page order, readPageIdsFile's format).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -48,6 +48,6 @@ for (const b of frame) {
 await client.close();
 fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(path.join(OUT, 'draw.json'), JSON.stringify({ seed: SEED, reasons: REASONS, frame_books: frame.length, pilot_excluded: pilot.size, drawn_at: new Date().toISOString(), skipped, books: picked }, null, 1) + '\n');
-fs.writeFileSync(path.join(OUT, 'page-ids.txt'), picked.flatMap((b) => b.pages.map((p) => p.page_id)).join('\n') + '\n');
+fs.writeFileSync(path.join(OUT, 'page-ids.json'), JSON.stringify(picked.flatMap((b) => b.pages.map((p) => p.page_id))) + '\n');
 console.log(`frame ${frame.length} books (pilot ${pilot.size} excluded); picked ${picked.length}, skipped ${skipped.length}; ${picked.length * RUN} pages`);
 for (const b of picked) console.log(`  ${b.book_id} ${b.hold} p.${b.start}-${b.start + 3} chars ${b.pages.map((p) => p.ocr_chars).join('/')} ${b.title}`);
