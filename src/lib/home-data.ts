@@ -454,7 +454,7 @@ function hasRenderableCover(b: CatalogBook): boolean {
 // 20-volume "Herculaneum Volumes") can't fill the whole slider. Key on the title
 // with volume/part/collection markers, parentheticals, and digits stripped, plus
 // the author.
-function workKey(b: CatalogBook): string {
+export function workKey(b: CatalogBook): string {
   const title = (b.display_title || b.title || '')
     .toLowerCase()
     .replace(/\([^)]*\)/g, '')

@@ -112,6 +112,8 @@ export interface CatalogBook {
   translation_rung: TranslationRung | null;
   /** The edition's own language is English — readable at `transcribed`. */
   english_original: boolean;
+  /** ISO time the translated page count last grew (stamped by the pipeline; null if never). */
+  last_translation_at?: string | null;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -154,7 +156,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // and PostgREST 42703s the whole query on an unknown column — which would take
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
-export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original, last_translation_at';
 
 // The extra columns search and the book-detail shell append after BOOK_SELECT.
 // `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
@@ -248,6 +250,8 @@ export async function browseBooks(opts: {
   holder?: string;
   firstTranslation?: boolean;
   hasTranslation?: boolean;
+  /** Only books whose translated page count last grew at or after this ISO time. */
+  translatedSince?: string;
   /** Only books NOT readable in English (`NOT_READABLE_IN_ENGLISH_OR`). */
   notReadableInEnglish?: boolean;
   hasPages?: boolean;
@@ -292,6 +296,7 @@ export async function browseBooks(opts: {
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
   if (opts.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
   else if (opts.notReadableInEnglish) query = query.or(NOT_READABLE_IN_ENGLISH_OR);
+  if (opts.translatedSince) query = query.gte('last_translation_at', opts.translatedSince);
   if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);

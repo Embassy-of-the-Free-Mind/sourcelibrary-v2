@@ -304,6 +304,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </div>
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
+              {!spanishCollection && (
+                <>
+                  {' '}
+                  <Link href="/new-in-english" className="underline hover:text-primary">
+                    See everything new this week
+                  </Link>
+                </>
+              )}
             </p>
             <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
