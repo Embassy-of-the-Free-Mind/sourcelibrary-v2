@@ -52,6 +52,26 @@ for a in "$@"; do
 done
 [ "$print" = 1 ] || exec "$REAL" "$@"
 
+# Keep agy's history database from filling the disk. agy never checkpoints its SQLite write-ahead log while other
+# calls hold the database open, so a job with calls always in flight grows the log without bound: 25 GB on the
+# Hetzner root disk on 2026-10-27, which filled it to 100% (the nightly disk-steward.sh checkpoint was too rare).
+# A TRUNCATE checkpoint succeeds even with idle readers attached (it did that night, with 12), so try one in the
+# background whenever the log passes 1 GB, at most once per 10 minutes per box. It is SQLite's own operation and
+# drops nothing; a busy database just returns and the next window tries again.
+AGY_DB_DIR="${AGY_DB_DIR:-$HOME/.gemini/antigravity-cli}"
+WAL="$AGY_DB_DIR/conversation_summaries.db-wal"; STAMP="$AGY_DB_DIR/.agy-guard-checkpoint"
+if [ -n "$(find "$WAL" -size +"${AGY_WAL_MAX_MB:-1024}"M 2>/dev/null)" ] && [ -z "$(find "$STAMP" -mmin -10 2>/dev/null)" ]; then
+  touch "$STAMP"
+  ( python3 - "${WAL%-wal}" >> "$AGY_DB_DIR/agy-guard-checkpoint.log" 2>&1 <<'PY'
+import os, sqlite3, sys, time
+db = sys.argv[1]; before = os.path.getsize(db + '-wal')
+c = sqlite3.connect(db, timeout=30); r = c.execute('PRAGMA wal_checkpoint(TRUNCATE)').fetchone(); c.close()
+after = os.path.getsize(db + '-wal') if os.path.exists(db + '-wal') else 0
+print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'busy' if r[0] else 'ok', before >> 20, 'MB ->', after >> 20, 'MB')
+PY
+  ) </dev/null >/dev/null 2>&1 &
+fi
+
 if [ -z "$model" ]; then
   echo "agy-guard: no --model given; using gemini-3.8-flash-low" >&2
   exec "$REAL" "$@" --model gemini-3.8-flash-low
