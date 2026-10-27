@@ -55,7 +55,9 @@
  *   - books already on the winner id → $addToSet work_id_aliases
  *   - one work_id_merges provenance doc
  *   - work_slug made uniform across each linked set (the /work route and the
- *     rail's "View this work" link resolve work_slug first), logged per book
+ *     rail's "View this work" link resolve work_slug first), logged per book;
+ *     the retired per-volume slug is kept in work_id_aliases so old /work
+ *     URLs redirect to the set rather than 404
  * Nothing else changes: not visibility, titles, work_title, or hidden books.
  * Revert: replay the plan file (each book's prior work_id + work_id_source).
  * The incremental books_catalog sync picks the rows up via updated_at.
@@ -312,7 +314,10 @@ async function main() {
       if (b.work_slug === sp.slug) continue;
       await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'work-slug-aligned',
         detail: { from: b.work_slug ?? null, to: sp.slug, work_id: sp.work_id, set_size: sp.books.length, issue: ISSUE } });
-      const r = await books.updateOne({ id: b.id, work_id: sp.work_id, visible: true }, { $set: { work_slug: sp.slug, updated_at: new Date() } });
+      // the retired per-volume slug goes into work_id_aliases, so /work/<old slug>
+      // 307s to the set (workAliasTarget) instead of 404ing on a cached link
+      const retired = b.work_slug && b.work_slug !== sp.slug ? { $addToSet: { work_id_aliases: b.work_slug } } : {};
+      const r = await books.updateOne({ id: b.id, work_id: sp.work_id, visible: true }, { $set: { work_slug: sp.slug, updated_at: new Date() }, ...retired });
       slugged += r.modifiedCount;
     }
   }
