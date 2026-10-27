@@ -519,7 +519,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
     // #6740: Flash wrote སྤྱོད as `spy`ོད. The foreign-script guard always allows Latin (tags, sigla), so a correction of a
     // Tibetan draft that ADDS Latin letters is refused here.
-    if (d.unit === 'syllables' && latinLetters(text) > latinLetters(page.ocr.data)) { skip(m, 'correction adds Latin letters to a Tibetan draft'); continue; }
+    // Per changed span, not page totals: a correction that drops Latin elsewhere must not hide Latin it adds (#7479 review).
+    if (d.unit === 'syllables' && d.hunks.some((h) => latinLetters(h.b.map((j) => d.B[j].syl).join(' ')) > latinLetters(h.a.map((i) => d.A[i].syl).join(' ')))) { skip(m, 'correction adds Latin letters to a Tibetan draft'); continue; }
     // #6740: a correction that changes the number of text lines dropped, merged or invented a line (Thadrak brGyad stong
     // p.233: 7 lines → 6), or removed a line the draft invented (Neyphug rGyud Tsha p.128). Neither can be told apart
     // without the image, so the draft stays and a person looks.
@@ -587,7 +588,9 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     ...(LANE_GATE && { pipeline: LANE }),
   }, { by: `${m.cli} ${m.model}`, reason: REASON, run_id: runId, revision_source: 'reocr_cli', expect_prior_hash: textHash(page.ocr) });
   if (w.status !== 'written') { skip(m, w.status === 'conflict' || w.status === 'prior_changed' ? 'page changed between read and write' : `writer: ${w.status}`); continue; }
-  if (Object.keys(tags).length || detectedImages.length) await db.collection('pages').updateOne({ id: page.id }, { $set: { ...tags, ...(detectedImages.length > 0 && { detected_images: detectedImages }) } });
+  // Page-level tags lifted from the read go in a second update, only while the page still holds the text just written.
+  // revert-run restores `ocr` only, not these (a Tibetan correction lifts none: it carries no header).
+  if (Object.keys(tags).length || detectedImages.length) await db.collection('pages').updateOne({ id: page.id, 'ocr.data': text }, { $set: { ...tags, ...(detectedImages.length > 0 && { detected_images: detectedImages }) } });
   await recordSweepAction(db, { sweep: 'cli-ocr', book_id: page.book_id, action: 'ocr-reread-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.ocr?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   if (MARK_STALE) await markTranslationsStale(db, [{ id: page.id, text }], new Date(), MARK_STALE);
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);

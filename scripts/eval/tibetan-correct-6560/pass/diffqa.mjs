@@ -48,17 +48,26 @@ export function classify(a, b, dict) {
   }
   return ['RISKY', a.length && b.length ? 'substitution' : (a.length ? 'dropped' : 'added')];
 }
-/** The correction with the listed hunks put back to the draft's text. */
+/**
+ * The correction with the listed hunks put back to the draft's text. Offsets are NFC (syllableTokens normalises), so a
+ * correction that is not NFC is refused rather than silently renormalised. Removing an added span also removes one
+ * adjacent tsheg (else prev་་next); a span re-inserted before the first syllable gets a trailing tsheg.
+ */
 export function revertHunks(draft, next, d, idx) {
-  const D = draft.normalize('NFC'), N = next.normalize('NFC');
+  if (next !== next.normalize('NFC')) throw new Error('revertHunks: correction is not NFC');
+  const D = draft.normalize('NFC'), N = next;
+  const SEP = /[\u0F0B\u0F0C]/u;
   const edits = [];
   for (const h of d.hunks.map((h, k) => ({ ...h, k })).filter((h) => idx.has(h.k))) {
     const aTxt = h.a.length ? D.slice(d.A[h.a[0]].start, d.A[h.a.at(-1)].end) : '';
-    if (h.b.length) edits.push([d.B[h.b[0]].start, d.B[h.b.at(-1)].end, aTxt]);
-    else { // insertion point: after the B syllable aligned before this hunk
+    if (h.b.length) {
+      let s0 = d.B[h.b[0]].start, e0 = d.B[h.b.at(-1)].end;
+      if (!aTxt) { if (SEP.test(N[e0] || '')) e0++; else if (SEP.test(N[s0 - 1] || '')) s0--; }
+      edits.push([s0, e0, aTxt]);
+    } else { // insertion point: after the B syllable aligned before this hunk
       const pi = d.pairs.findIndex(([i]) => i === h.a[0]);
-      let pos = 0; for (let t = pi - 1; t >= 0; t--) if (d.pairs[t][1] !== null) { pos = d.B[d.pairs[t][1]].end; break; }
-      edits.push([pos, pos, (pos ? '་' : '') + aTxt]);
+      let pj = null; for (let t = pi - 1; t >= 0; t--) if (d.pairs[t][1] !== null) { pj = d.pairs[t][1]; break; }
+      if (pj === null) { const at = d.B[0]?.start ?? 0; edits.push([at, at, `${aTxt}་`]); } else { const pos = d.B[pj].end; edits.push([pos, pos, `་${aTxt}`]); }
     }
   }
   let out = N; for (const [s, e, t] of edits.sort((x, y) => y[0] - x[0])) out = out.slice(0, s) + t + out.slice(e);
@@ -85,10 +94,11 @@ if (CMD === 'spans') {
   const rep = new Map(readJsonl(arg('replies')).filter((r) => r.text).map((r) => [r.uid, r.text]));
   const parse = (t) => { const m = String(t).match(/<<<\s*BEGIN\s*>>>([\s\S]*?)(?:<<<\s*END\s*>>>|$)/); const o = {}; for (let l of (m ? m[1] : String(t)).split('\n')) { l = l.trim().replace(/,$/, ''); if (l.startsWith('{')) try { const j = JSON.parse(l); o[+j.item] = j; } catch { /* */ } } return o; };
   const side = (it, a) => { const x = String(a?.answer || '').trim().toUpperCase(); return x === 'A' || x === 'B' ? ((x === 'A') === (it.A_is === 'arm') ? 'arm' : 'base') : (x ? x.toLowerCase() : 'none'); };
+  const noReply = [];
   const rows = []; const t = { pages: 0, risky_judged: 0, kept: 0, reverted: 0, by_side: {}, ctl: 0, ctl_right: 0, no_reply: 0 };
   for (const [pid, k] of Object.entries(key)) {
     const r = list.get(pid); if (!r) continue;
-    if (!rep.has(pid)) { t.no_reply++; continue; }
+    if (!rep.has(pid)) { t.no_reply++; noReply.push(pid); continue; }
     const ans = parse(rep.get(pid)); const idx = new Set(); const why = [];
     for (const it of k.items) {
       const s = side(it, ans[it.item]);
@@ -98,9 +108,16 @@ if (CMD === 'spans') {
       idx.add(it.hunk); t.reverted++; why.push(`${it.arm || '∅'}→${it.base || '∅'} (${s}, line ${it.line})`);
     }
     t.pages++;
-    if (idx.size) { const d = diffSyllables(r.draft, r.next); rows.push({ page_id: pid, book_id: r.book_id, page_number: r.page_number, next_hash_from: r.next, text: revertHunks(r.draft, r.next, d, idx), reverted: why }); }
+    if (idx.size) {
+      if (r.next !== r.next.normalize('NFC')) { t.skipped_not_nfc = (t.skipped_not_nfc || 0) + 1; continue; }
+      const d = diffSyllables(r.draft, r.next); rows.push({ page_id: pid, book_id: r.book_id, page_number: r.page_number, next_hash_from: r.next, text: revertHunks(r.draft, r.next, d, idx), reverted: why });
+    }
   }
   fs.writeFileSync(arg('out'), rows.map((x) => JSON.stringify(x)).join('\n') + (rows.length ? '\n' : ''));
+  // A page the judge never answered is NOT done: its risky spans stay on the correction until it is judged. It is listed
+  // for re-judging (<out>.no-reply.json) rather than reverted wholesale: a quota stop would otherwise revert every
+  // unjudged page, good fixes included (#6740 review, finding 1).
+  fs.writeFileSync(`${arg('out')}.no-reply.json`, JSON.stringify(noReply));
   console.log(JSON.stringify({ ...t, pages_changed: rows.length }));
 } else if (CMD === 'write') {
   const { MongoClient } = await import('mongodb');
