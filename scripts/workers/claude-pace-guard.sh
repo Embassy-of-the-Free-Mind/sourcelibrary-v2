@@ -72,6 +72,14 @@ try:
     # Keep our own samples: a box that only receives the meter (no climits history) still gets a burn rate.
     hist = os.path.join(d, email + ".hist")
     rows = [l.split() for l in open(hist)] if os.path.exists(hist) else []
+    if not rows:  # first call: seed from the box's climits history where it has one (main), else start sampling now
+        try:
+            for line in open(os.path.join(os.path.dirname(meter), "history.jsonl")).readlines()[-2000:]:
+                r = json.loads(line)
+                v = (r.get("limits") or {}).get(w["key"])
+                if r.get("email", "").lower() == email and v is not None: rows.append([r["t"], str(v)])
+        except Exception:
+            pass
     if not rows or rows[-1][0] != m["checked_at"]:
         rows.append([m["checked_at"], str(pct)])
         rows = rows[-200:]
