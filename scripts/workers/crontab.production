@@ -25,6 +25,7 @@
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-uptime.lock bash -c "set -a; source .env.production.local; set +a; node scripts/uptime-monitor.mjs" >> /var/log/sourcelibrary/uptime-monitor.log 2>&1
 */15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] || f=/root/disk-alarm.sh; $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1 # root-disk alarm, ntfy on each level change (85%, 95%), repeat every 2 h at >= 95% (#5534, #6223)
 40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # move idle /root folders to the volume + reap merged worktrees (#6223)
+10 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply --agy-only >> /var/log/sourcelibrary/disk-steward.log 2>&1 # agy WAL + orphaned .tmp cleanup (#6223, PR #7507)
 */5 * * * * echo "$(date -u +'\%Y-\%m-\%dT\%H:\%M:\%SZ') $(uptime | sed 's/.*load average: //')" >> /var/log/sourcelibrary/cpu-load.log
 # All pipeline workers managed by unified scheduler (issue #646)
 # ── Daily maintenance (early morning, staggered) ──
