@@ -61,9 +61,20 @@ check() {
     what="Disk $MOUNT"
     runbook="Largest: $(timeout 120 du -xsh "$MOUNT"/* 2>/dev/null | sort -rh | head -3 | awk '{printf "%s %s; ", $2, $1}')No steward runs here: free space by hand (#6223)."
   fi
+  # What grew. On 2026-10-27 the root pages said "run disk-steward", which could not help: the 27 GB were agy's
+  # orphaned .tmp files, not idle folders. Name the three directories (three levels deep) with the most bytes in
+  # files over 20 MB written in the last 6 h, so the page points at the cause. Bounded; only at high or critical.
+  grew=""
+  if [ "$level" = high ] || [ "$level" = critical ]; then
+    grew=$(timeout 90 find "$MOUNT" -xdev -type f -mmin -360 -size +20M -printf '%s %h\n' 2>/dev/null \
+      | awk '{ n = split($2, p, "/"); d = ""; for (i = 2; i <= n && i <= 4; i++) d = d "/" p[i]; s[d] += $1; c[d]++ }
+             END { for (d in s) printf "%d %s %d\n", s[d], d, c[d] }' \
+      | sort -rn | head -3 | awk '{ printf "%s%s %.1f GB (%d files)", (NR > 1 ? "; " : ""), $2, $1 / 1073741824, $3 }')
+    [ -n "$grew" ] && grew=" Written in the last 6 h: ${grew}."
+  fi
   case "$level" in
-    critical) title="$BOX $MOUNT ${used}% full — jobs about to die"; prio=urgent; msg="$what at ${used}% (${free} free). Jobs die silently when it fills. ${runbook}" ;;
-    high)     title="$BOX $MOUNT ${used}% full"; prio=high; msg="$what at ${used}% (${free} free, alarm at ${PCT_LIMIT}%). ${runbook}" ;;
+    critical) title="$BOX $MOUNT ${used}% full — jobs about to die"; prio=urgent; msg="$what at ${used}% (${free} free). Jobs die silently when it fills.${grew} ${runbook}" ;;
+    high)     title="$BOX $MOUNT ${used}% full"; prio=high; msg="$what at ${used}% (${free} free, alarm at ${PCT_LIMIT}%).${grew} ${runbook}" ;;
     unknown)  title="$BOX disk check UNKNOWN ($MOUNT)"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
     ok)       title="$BOX $MOUNT disk recovered: ${used}%"; prio=low; msg="$what back under ${PCT_LIMIT}% (${free} free)." ;;
   esac
