@@ -11,8 +11,9 @@
  *   span-req    --arm=A   the tiled span judge with --severity over every hunk of arm A's output (pages only)
  *   confirm-req --arm=A   a fresh judge on every severe draft-win AND every line-level hunk of arm A
  *   page-req    --variants=A,B,C[,A+qa,...]   the route-judge whole-page judge on the draft and each distinct text
- *   qa-req                one sealed call per distinct hunk of A, B and C (pages and planted drafts): the leaf, a band
- *                         tile around the line, the two readings in random order, one known-answer control
+ *   qa-req                one sealed call per page line with hunks in A, B or C (pages and planted drafts): the leaf, a
+ *                         band tile around the line, each distinct hunk as an item (two readings in random order), one
+ *                         known-answer control; a removed passage gets its own call, with "how many times on the leaf?"
  *   score       [--out=S.json]   every variant: better/same/worse, severe introduced, plants, line-count outcomes, cost
  * All files live under --root ($JOB_SCRATCH): set/pages.jsonl, req/drafts.jsonl, out/<arm>.jsonl (Stage 1),
  * judge/<kind>-req.jsonl and judge/<kind>-key.json written here, judge/<kind>-out.jsonl written by the runner.
@@ -197,7 +198,7 @@ function qaVerdicts() {
       // a removed passage: how often the leaf shows it decides, where the judge gave a count
       const cnt = Number.parseInt(ans[it.item]?.count, 10);
       if (it.removal && Number.isFinite(cnt)) keep = cnt < it.draft_copies;
-      v[k.hunk_key] = { side: s ?? 'unanswered', keep, count: Number.isFinite(cnt) ? cnt : null, draft_copies: it.draft_copies ?? null };
+      v[it.hunk_key] = { side: s ?? 'unanswered', keep, count: Number.isFinite(cnt) ? cnt : null, draft_copies: it.draft_copies ?? null };
     }
   }
   return { v, ctl, calls };
@@ -285,25 +286,25 @@ if (CMD === 'span-req' || CMD === 'confirm-req') {
   writeJsonl(J('judge', 'page-req.jsonl'), reqs);
   console.log(`page-req: ${reqs.length} distinct texts (${reqs.filter((r) => !have.has(r.uid)).length} not yet judged)`);
 } else if (CMD === 'qa-req') {
-  // One sealed call per distinct hunk (the same draft run and the same new syllables on the same page are one hunk,
-  // whichever arm wrote it), over the 72 pages and the 10 planted drafts.
+  // One sealed call per page LINE that has hunks (amended before any judge ran: arm A alone has 1,154 hunks on 62
+  // pages, so a call per hunk would be ~1,800 calls). The line's distinct hunks from A, B and C are the items (the same
+  // draft run and the same new syllables on the same page are one hunk, whichever arm wrote it), with one known-answer
+  // control. A removed passage (a line-level hunk that removes syllables) gets a call of its own with the count question.
   const sharp = (await import('sharp')).default;
-  const key = {}, reqs = [];
   const COUNT_Q = 'this item is a passage present in one reading and absent in the other: also add "count": <how many times this passage, or a near-copy of it, is written on the whole leaf (0, 1, 2, ...)>';
+  const groups = new Map();   // `${uid}|L${line}` or `${uid}|R${id}` -> {uid, line, d, hunks: Map(hunk_key -> item)}
   for (const arm of ARMS) {
     const O = armOut(arm);
     for (const uid of DRAFT.keys()) {
       const text = O.get(uid); if (!text) continue;
-      const draft = DRAFT.get(uid);
       const { d, hunks } = hunksOf(uid, text);
       if (d.changed / Math.max(1, d.draftN) > MAX_CHANGED) continue;   // the lane refuses these whole; no hunk is kept
-      const N = textLines(draft) || 1;
       for (const h of hunks) {
         const hk = hunkKey(uid, h.id);
-        const quid = `qa|${hash(hk)}`;
-        if (key[quid]) continue;
-        const rng = rngFor(`6560|profiles|qa|${hk}`);
         const removal = h.line_hunk && h.a.length > h.b.length;
+        const g = removal ? `${uid}|R${h.id}` : `${uid}|L${h.draft_line}`;
+        const G = groups.get(g) ?? groups.set(g, { uid, line: h.draft_line, d, hunks: new Map() }).get(g);
+        if (G.hunks.has(hk)) continue;
         let draft_copies = null;
         if (removal) { // copies of the passage in the draft: windows of its length aligning at >= 60% identity, not overlapping
           const P = h.a.map((i) => d.A[i].syl), A = d.A.map((x) => x.syl);
@@ -315,34 +316,34 @@ if (CMD === 'span-req' || CMD === 'confirm-req') {
           }
           draft_copies = Math.max(1, draft_copies);
         }
-        const item = { kind: 'span', base: h.base, arm: h.arm, line: h.line, before: h.before, after: h.after, removal, draft_copies, ...(removal && { count_q: COUNT_Q }) };
-        const items = [item, ...controls(d, rng, 1)];
-        // a band tile around the line, at full resolution: the draft's line, spread evenly over the frame
-        const img = IMAGE.get(uid);
-        const band = J('qa-tiles', `${hash(hk)}.jpg`);
-        if (!fs.existsSync(band)) {
-          fs.mkdirSync(path.dirname(band), { recursive: true });
-          const { width: W, height: H } = await sharp(img).metadata();
-          const y = 0.06 + (Math.min(h.draft_line, N) - 0.5) / N * 0.88, hh = Math.max(0.22, 3 / N);
-          const top = Math.max(0, Math.min(1 - hh, y - hh / 2));
-          await sharp(img).extract({ left: 0, top: Math.round(top * H), width: W, height: Math.round(hh * H) }).jpeg({ quality: 92 }).toFile(band);
-        }
-        const note = `\n\nA strip of the same frame around line ${h.line} is in this folder at full resolution: band.jpg. Open it to read small marks; the strip is an estimate, so look above or below it in the page image if the spot is not there.`;
-        reqs.push({ uid: quid, image: img, prompt: buildPrompt(items, rng) + note, extra_images: [band], band_name: 'band.jpg' });
-        key[quid] = { hunk_key: hk, uid, arm_first: arm, items };
+        G.hunks.set(hk, { kind: 'span', hunk_key: hk, base: h.base, arm: h.arm, line: h.line, before: h.before, after: h.after, removal, draft_copies, ...(removal && { count_q: COUNT_Q }) });
       }
     }
   }
-  // the runner copies extra images under their own names: name the band band.jpg in a per-request folder
-  for (const r of reqs) {
-    const dir = J('qa-tiles', r.uid.replace('|', '_')); fs.mkdirSync(dir, { recursive: true });
-    const f = path.join(dir, 'band.jpg'); if (!fs.existsSync(f)) fs.copyFileSync(r.extra_images[0], f);
-    r.extra_images = [f]; delete r.band_name;
+  const key = {}, reqs = [];
+  for (const [g, G] of [...groups].sort(([x], [y]) => x.localeCompare(y))) {
+    const quid = `qa|${hash(g)}`;
+    const rng = rngFor(`6560|profiles|qa|${g}`);
+    const items = [...G.hunks.values(), ...controls(G.d, rng, 1)];
+    const img = IMAGE.get(G.uid);
+    const N = textLines(DRAFT.get(G.uid)) || 1;
+    // a band of the frame around the line at full resolution: the draft's line, spread evenly over the frame
+    const dir = J('qa-tiles', quid.replace('|', '_')); fs.mkdirSync(dir, { recursive: true });
+    const band = path.join(dir, 'band.jpg');
+    if (!fs.existsSync(band)) {
+      const { width: W, height: H } = await sharp(img).metadata();
+      const y = 0.06 + (Math.min(G.line, N) - 0.5) / N * 0.88, hh = Math.max(0.22, 3 / N);
+      const top = Math.max(0, Math.min(1 - hh, y - hh / 2));
+      await sharp(img).extract({ left: 0, top: Math.round(top * H), width: W, height: Math.round(hh * H) }).jpeg({ quality: 92 }).toFile(band);
+    }
+    const note = `\n\nA strip of the same frame around line ${items[0].line} is in this folder at full resolution: band.jpg. Open it to read small marks; the strip is an estimate, so look above or below it in the page image if the spot is not there.`;
+    reqs.push({ uid: quid, image: img, prompt: buildPrompt(items, rng) + note, extra_images: [band] });
+    key[quid] = { group: g, uid: G.uid, items };
   }
   writeJsonl(J('judge', 'qa-req.jsonl'), reqs);
   fs.writeFileSync(J('judge', 'qa-key.json'), JSON.stringify(key));
-  const per = {}; for (const k of Object.values(key)) per[k.uid] = (per[k.uid] || 0) + 1;
-  console.log(`qa-req: ${reqs.length} distinct hunks over ${Object.keys(per).length} pages; ${Object.values(key).filter((k) => k.items[0].removal).length} removed passages`);
+  const hk = Object.values(key).reduce((s, k) => s + k.items.filter((i) => i.kind !== 'control').length, 0);
+  console.log(`qa-req: ${reqs.length} calls, ${hk} distinct hunks, over ${new Set(Object.values(key).map((k) => k.uid)).size} pages; ${Object.values(key).filter((k) => k.items.some((i) => i.removal)).length} removed passages`);
 } else if (CMD === 'score') {
   const withQa = fs.existsSync(J('judge', 'qa-out.jsonl'));
   const V = variants(withQa);

@@ -86,6 +86,16 @@ the +qa texts and the +lane texts. The whole-page judge reads every distinct tex
 - **Hunks that do not change syllables.** QA cannot revert a pure line-break change (two lines merged with every
   syllable kept). It stays in the +qa text.
 
+**Amendment, 2026-10-27, before any judge was run.** Arm A's outputs came back with 1,154 hunks on 62 pages
+(median about 20 a page; brGyad and wave-2 pages are corrected heavily). One call per hunk would be about 1,800 Opus
+calls. The QA therefore makes **one sealed call per page line that has hunks**:
+- the items are that line's distinct hunks from A, B and C, each with its two readings in random order, plus one
+  known-answer control;
+- **a removed passage still gets a call of its own**, with the count question;
+- the band tile, the keep/revert rule and the dedupe are unchanged.
+
+Nothing about the judges, the measures or the decision rule changed.
+
 ## Baseline: the lane as it runs now (+lane)
 
 - A correction that changes the text-line count is refused.
