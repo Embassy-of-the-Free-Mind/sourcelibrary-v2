@@ -122,7 +122,7 @@ function claudeCall(prompt, model, cwd) {
   if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
   return new Promise((resolve) => {
     const t0 = Date.now();
-    const child = spawn(CLI, ['-p', '--model', model, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
