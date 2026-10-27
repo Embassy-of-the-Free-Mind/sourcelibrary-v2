@@ -225,7 +225,7 @@ const rejectedTwice = (() => { const n = {}; for (const r of readJsonl(REJECTED)
 const q = { ...LIVE, ...SOURCE_FILTER[FIELD], ...missing(FIELD), language: { $not: NATIVE } };
 if (arg('book-ids')) q.id = { $in: arg('book-ids').split(',').map((s) => s.trim()) };
 const selected = [];
-for await (const b of books.find(q, { projection: PROJECTION[FIELD] }).sort({ read_count: -1, id: 1 })) {
+for await (const b of books.find(q, { projection: PROJECTION[FIELD], batchSize: 2000 }).sort({ read_count: -1, id: 1 })) {
   if (!b.id || rejectedTwice.has(b.id)) continue;
   const src = sourceOf(FIELD, b);
   if (!src) continue;
