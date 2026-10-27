@@ -1,4 +1,18 @@
-# Tibetan correction: do error profiles in the prompt help, and can a diff-hunk QA replace the line-count refusal? (#6560, #6740)
+---
+stage: ocr
+measure: [judged, accuracy]
+languages: [bo]
+scripts: [Tibt]
+canons: []
+n_books: 26
+n_pages: 72
+verdict: "No variant passes the pre-registered rule (severe on < 2 of 10 pages, better >= 3x worse, plants >= A, right line removals). The corrector profile (C) cuts introduced mantra normalisation 39 -> 4 spans and tsheg insertion 36 -> 8 at no cost to fixes, but word substitutions and severe pages do not move; a per-hunk Opus QA removes most confirmed severe spans (22 -> 5-7 pages) at ~8 calls a page, costs right fixes and cannot judge removed lines."
+status: rejected
+decision: "Nothing adopted: the lane keeps its prompt and its line-count refusal; profile C and a line-level (not hunk-level) QA are the next candidates for the lane's own gate (#6740)"
+superseded_by: null
+issue: [6560, 6740]
+---
+## 2026-10-27 · Tibetan correction: do error profiles in the prompt help, and can a diff-hunk QA replace the line-count refusal? (#6560, #6740)
 
 **Status: DONE (results below).** Pre-registered in 0afde11a8 (amended in f75925f70) before any judge was run on any arm's output. The
 results section is added after the run. Job `tib-corr-profiles-6560`. Eval only: no page was written.

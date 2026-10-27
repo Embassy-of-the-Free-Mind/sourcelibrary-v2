@@ -1,4 +1,20 @@
-# Tibetan translation router test: agy Flash-low, 4 pages a call, against Opus, 10 a call (#6948, #6740)
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: []
+n_books: 30
+n_pages: 30
+verdict: "On corrected Kangyur text, Opus claude -p at 10 pages a call is accepted on 27/30 (1 wrong text) against agy Flash-low at 4 a call 22/30 (4 wrong text; it finishes a leaf's broken sentence from the next page on 6/30); both judged blind against the image, planted reversals 15/15 each."
+status: informational
+decision: "Router table cell tibetan-tr added (rules.json): HOLD -> opus-cli; agy-flash-low@4 is outside the wrong-text gate"
+superseded_by: null
+issue: [6948, 6740]
+---
+## 2026-10-27 · Tibetan translation router test: agy Flash-low, 4 pages a call, against Opus, 10 a call (#6948, #6740)
+
+PRIOR ART: `scripts/eval/route-judge-6740/judge.mjs` (the router tests, judge prompt and controls, reused); `scripts/eval/agy-per-call-7503/` (PR #7518: agy 1/2/4 pages a call for translation, not Tibetan and not against Opus).
 
 **Decision it changes:** which route translates corrected Tibetan Kangyur text. This adds the router table's
 `tibetan-tr` cell (`scripts/eval/estimator/router-table/rules.json`). Derek asked for it in an inbox note to job
