@@ -1,0 +1,84 @@
+{
+ "at": "2026-10-27T10:45:06.834Z",
+ "books_sampled": 400,
+ "rows": [
+  {
+   "lane": "scripts/lib/translate-batch-chained.mjs | gemini-3-flash-preview",
+   "pairs": 23534,
+   "flagged": 2200,
+   "pct": 9.35
+  },
+  {
+   "lane": "scripts/batch/stale-retranslate-6567.mjs | gemini-3.8-flash-low",
+   "pairs": 6897,
+   "flagged": 434,
+   "pct": 6.29
+  },
+  {
+   "lane": "unrecorded | gemini-3.1-flash-lite-preview",
+   "pairs": 3934,
+   "flagged": 359,
+   "pct": 9.13
+  },
+  {
+   "lane": "scripts/batch/cli-translate.mjs | claude-opus-5-5",
+   "pairs": 3870,
+   "flagged": 140,
+   "pct": 3.62
+  },
+  {
+   "lane": "scripts/lib/translate-batch-chained.mjs | gemini-3.1-flash-lite",
+   "pairs": 2519,
+   "flagged": 203,
+   "pct": 8.06
+  },
+  {
+   "lane": "unrecorded | gemini-3-flash-preview",
+   "pairs": 2086,
+   "flagged": 137,
+   "pct": 6.57
+  },
+  {
+   "lane": "scripts/batch/cli-translate.mjs | gemini-3.8-flash-low",
+   "pairs": 592,
+   "flagged": 24,
+   "pct": 4.05
+  },
+  {
+   "lane": "scripts/workers/translate-worker.mjs | gemini-3-flash-preview",
+   "pairs": 300,
+   "flagged": 36,
+   "pct": 12
+  },
+  {
+   "lane": "unrecorded | mixed",
+   "pairs": 188,
+   "flagged": 3,
+   "pct": 1.6
+  },
+  {
+   "lane": "scripts/workers/translate-worker.mjs | gemini-3.1-flash-lite",
+   "pairs": 126,
+   "flagged": 15,
+   "pct": 11.9
+  },
+  {
+   "lane": "src/workers/translation-processor-logic.ts | gemini-3-flash-preview",
+   "pairs": 53,
+   "flagged": 5,
+   "pct": 9.43
+  },
+  {
+   "lane": "scripts/batch/realtime-translate.mjs | gemini-3.1-flash-lite",
+   "pairs": 36,
+   "flagged": 8,
+   "pct": 22.22
+  },
+  {
+   "lane": "unrecorded | gemini-3.1-flash-lite",
+   "pairs": 14,
+   "flagged": 0,
+   "pct": 0
+  }
+ ]
+}
