@@ -188,9 +188,9 @@ export default async function EsCollectionPage({ params }: Props) {
             and the badge are the content; only the heading is language-bearing. */}
         {col.firstTranslations.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2">Primeras traducciones</h2>
+            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2">Primeras traducciones al inglés</h2>
             <p className="text-muted mb-6 max-w-2xl">
-              Obras que, hasta donde sabemos, se traducen aquí por primera vez.
+              Obras que, hasta donde sabemos, se traducen aquí al inglés por primera vez.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {col.firstTranslations.map((b) => (
