@@ -44,6 +44,16 @@ lanes add agy-cli `TRANSLATE_SUFFIX` as `cli-translate.mjs` does. v13b sends v13
   two labels). **Gate:** plants located at their span ≥ 80%; every wrong-page candidate scored ≤ 2; duplicates
   scored equal in ≥ 3 of 4. A failed gate stops that engine's result until the failure is read.
 
+## Amendment 1 (2026-10-27, before any judge call)
+
+Collecting lite showed v13 reads whose WHOLE translation sits inside `<meta>continues from previous page: …</meta>`
+(4 of 365 v13, 6 of 365 v13b, 0 v20, 0 PLAIN): the #7085 continuity leak, which v20 fix (a) targets. Their body is
+empty, so a reader sees no translation. Rule: a read whose body is empty because its text is inside hidden tags is
+**scored fidelity 1 with an omission**, not dropped (dropping it would remove exactly the failure a fix removes).
+A read with no text at all (a failed call) is dropped and counted. The page is still judged on its other arms. The
+headline is also reported with these pages left out, as a sensitivity line. No judgment had been seen when this was
+written; the mechanical counts above had.
+
 ## Measures
 
 Primary: body fidelity 1–5, `judged_vs_reference`, **paired** per page (arm − v13, same judge item).

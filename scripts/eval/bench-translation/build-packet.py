@@ -51,7 +51,7 @@ items = []
 for u in sorted(man):
     if u in have_arms: continue
     have = {f'{E}-{a}': body(a)[u] for a in ARMS if u in body(a)}
-    if f'{E}-v13' not in have or len(have) < 2: continue
+    if len(have) < 2: continue   # a page whose v13 body is hidden (empty) is still judged; score.py scores the hidden arm as 1
     it, lab = item(u, have)
     items.append((it, {'kind': 'ARMS', 'page_id': u, 'lang': recs[u]['lang'], 'group': man[u]['group'], 'labels': lab}))
 
