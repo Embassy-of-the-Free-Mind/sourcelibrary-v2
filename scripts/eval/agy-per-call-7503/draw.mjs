@@ -15,6 +15,7 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { isTranslatablePage } from '../../lib/translate-core.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const SEED = 7503;
 const N_BOOKS = 15, RUN = 4;
@@ -33,7 +34,7 @@ for (let i = frame.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1
 const picked = [], skipped = [];
 for (const b of frame) {
   if (picked.length >= N_BOOKS) break;
-  const pages = await db.collection('pages').find({ book_id: b.id }, { projection: { id: 1, page_number: 1, page_type: 1, ocr: 1, archived_photo: 1, display_photo: 1, photo: 1 } }).sort({ page_number: 1 }).toArray();
+  const pages = await db.collection('pages').find({ book_id: b.id }, { projection: { id: 1, page_number: 1, page_type: 1, ocr: 1, archived_photo: 1, display_photo: 1, photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
   const byNum = new Map(pages.map((p) => [p.page_number, p]));
   const ok = (p) => p && p.ocr?.source === 'paddle' && isTranslatablePage(p).ok;
   const starts = pages.filter((p) => [0, 1, 2, 3].every((k) => ok(byNum.get(p.page_number + k)))).map((p) => p.page_number);
@@ -42,7 +43,7 @@ for (const b of frame) {
   const run = [0, 1, 2, 3].map((k) => byNum.get(start + k));
   picked.push({
     book_id: b.id, title: b.title, work_id: b.work_id ?? null, hold: b.pipeline_auto.hold.reason, pages_count: b.pages_count, start,
-    pages: run.map((p) => ({ page_id: p.id, page_number: p.page_number, page_type: p.page_type ?? null, ocr_chars: p.ocr.data.length, ocr_model: p.ocr.model ?? null, image: p.archived_photo || p.display_photo || p.photo || null })),
+    pages: run.map((p) => ({ page_id: p.id, page_number: p.page_number, page_type: p.page_type ?? null, ocr_chars: p.ocr.data.length, ocr_model: p.ocr.model ?? null, image: getPageSource(p) })),
   });
 }
 await client.close();
