@@ -45,7 +45,10 @@ mkdir -p "$J/runs" "$J/gpu/$NAME" "$J/out"
 python3 - "$J" > "$J/gpu/$NAME/manifest.tsv" <<'PY'
 import json, os, sys, glob
 J = sys.argv[1]
-for f in sorted(glob.glob(f'{J}/plan/*.json')):
+# $J/priority.txt (book ids, optional) is read first, so a run cut short still covers the chapters asked for first
+pri = [l.strip() for l in open(f'{J}/priority.txt')] if os.path.exists(f'{J}/priority.txt') else []
+rank = {b: i for i, b in enumerate(pri)}
+for f in sorted(glob.glob(f'{J}/plan/*.json'), key=lambda f: (rank.get(os.path.basename(f)[:-5], len(rank)), f)):
     p = json.load(open(f)); bid = p['bid']
     for r in p['pages']:
         if not os.path.exists(f"{J}/out/{bid}/{r['pn']}.txt") and not os.path.exists(f"{J}/out/{bid}/{r['pn']}.err"):
