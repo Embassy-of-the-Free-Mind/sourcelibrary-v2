@@ -55,10 +55,12 @@ if (!LANGUAGE_NAMES[LANG]) { console.error(`--lang must be one of ${Object.keys(
 const LANGUAGE = LANGUAGE_NAMES[LANG];
 
 const MODEL = 'gemini-3.1-flash-lite';
-// v2 after reading the 200-title v1 test (#7496): v1 cut "Opera" loose from its
-// author, dropped manuscript shelfmarks, read Chinese 卷 sections as volumes, and
-// left plain Latin and German titles untranslated.
-const PROMPT_VERSION = 'localize-titles-v2';
+// v3 after reading two 200-title tests side by side (#7496). v1 translated well but
+// cut "Opera" loose from its author, dropped shelfmarks and read Chinese 卷 sections
+// as volumes. v2 fixed those in the prompt and broke more: it translated less, added
+// authors everywhere, and replaced some Chinese titles with "Obras de <author>". So
+// the volume and the "Obras de" check moved into code (volumeOf, acceptGloss).
+const PROMPT_VERSION = 'localize-titles-v3';
 const TITLES_PER_REQUEST = 40;
 const OUT_TOKENS_PER_TITLE = 25;
 const RUN = arg('--run', `localize-titles-${LANG}-7496`);
@@ -74,11 +76,11 @@ const GEN_CONFIG = { temperature: 0.2, responseMimeType: 'application/json', thi
 const HEAD = `You write catalogue title glosses for a digital library of historical primary sources.
 For each book below give the ${LANGUAGE} gloss of its title: the short, natural title a ${LANGUAGE}-speaking reader would expect on a catalogue card, as a published ${LANGUAGE} translation would be titled.
 Rules:
-- Translate the title into ${LANGUAGE}. Keep it in the original only when it is a proper name or a title customarily cited untranslated (Syntagma musicum, Picatrix).
-- Proper names in their customary ${LANGUAGE} form (Iamblichus → Jámblico, Sidonius Apollinaris → Sidonio Apolinar).
-- When the title alone is generic (Opera, Epistolae, Collected works, a dissertation), name the author or subject: "Obras de Sidonio Apolinar", not "Obras".
-- Keep a manuscript shelfmark or collection number exactly as written, in parentheses at the end: (Cod. Pal. germ. 109), (Vat.ebr.339), (Derge).
-- Volumes: keep the number given as "(vol N)" or "Vol. N" as "volumen N". Chinese 卷 numbers are sections inside the work, not volumes: leave them out.
+- Translate the MEANING of the title into ${LANGUAGE}, whatever its language (Latin, German, Chinese, English…). Keep the original wording only for a proper name or a work customarily cited by its original title (Picatrix, Syntagma musicum, Enchiridion).
+- Proper names in their customary ${LANGUAGE} form (Iamblichus → Jámblico).
+- The author is context only. Do not add the author's name, except when the whole title is just "Opera" / "Works" / "Œuvres" / "Werke": then "Obras de <author>".
+- Keep a manuscript shelfmark exactly as written, in parentheses at the end: (Cod. Pal. germ. 109), (Vat.ebr.339).
+- Leave out volume numbers and Chinese 卷 section numbers; they are added separately.
 - Shorten long baroque titles to their main title. Do not add subtitles, dates, publishers or explanations.
 Return ONLY a JSON array of strings, one gloss per book, in the same order (N items).`;
 
@@ -91,6 +93,40 @@ function buildPrompt(books) {
     return bits.join(' | ');
   });
   return `${HEAD.replace('N items', `${books.length} items`)}\n\n${lines.join('\n')}`;
+}
+
+/** The volume a title names, from "(vol 18)", "Vol. 2", "Vol-VI" or a trailing "(三十)". */
+const CJK_NUM = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
+function cjkNumber(s) {
+  // 三十五 → 35, 十二 → 12, 二十 → 20; anything else (百, 千) is left alone.
+  if (!/^[一二三四五六七八九十]+$/.test(s)) return null;
+  const [tens, units] = s.includes('十') ? s.split('十') : ['', s];
+  return (s.includes('十') ? (tens ? CJK_NUM[tens] : 1) * 10 : 0) + (units ? CJK_NUM[units] : 0);
+}
+const ROMAN = { I: 1, V: 5, X: 10, L: 50, C: 100 };
+function roman(s) { let n = 0; for (let i = 0; i < s.length; i++) { const v = ROMAN[s[i]], w = ROMAN[s[i + 1]] || 0; n += v < w ? -v : v; } return n; }
+export function volumeOf(title) {
+  const t = String(title || '');
+  let m = t.match(/\(vol\.?\s*(\d+)\)\s*$/i) || t.match(/\bvol(?:ume)?[.\s-]*(\d+)\b/i);
+  if (m) return Number(m[1]);
+  m = t.match(/\b[Vv]ol(?:ume)?[.\s-]*([IVXLC]+)\b/);
+  if (m) return roman(m[1]);
+  m = t.match(/[(（]([一二三四五六七八九十]+)[)）]\s*$/);
+  return m ? cjkNumber(m[1]) : null;
+}
+
+/** The gloss as stored: null when it fails a check the prompt cannot be trusted with. */
+export function acceptGloss(book, raw) {
+  let g = cleanGloss(raw);
+  if (!g || g.length > 200) return null;
+  // "Obras de <author>" only for a title that IS "works" (v2 replaced Chinese titles with it).
+  if (/^obras de\b/i.test(g) && !/\b(opera|works|œuvres|oeuvres|werke|obras)\b/i.test(book.title)) return null;
+  g = g.replace(/[,(]?\s*vol(?:umen|úmenes|\.)?\s*[\dIVXLC-]+\)?\s*$/i, '').trim();
+  // "Tengyur (Derge Tengyur, vol. 173)" loses its ")" with the volume: drop the open bracket too.
+  if ((g.match(/\(/g) || []).length > (g.match(/\)/g) || []).length) g = g.slice(0, g.lastIndexOf('(')).replace(/[\s,:]+$/, '');
+  if (!g) return null;
+  const vol = volumeOf(book.title);
+  return vol ? `${g}, volumen ${vol}` : g;
 }
 
 function cleanGloss(t) {
@@ -244,7 +280,7 @@ async function collect() {
     if (!/SUCCEEDED/.test(st.state) || !st.responsesFile) { console.log(`${job._id}: ${st.state} ${JSON.stringify(st.stats || {})}`); continue; }
     const claim = await jobs.updateOne({ _id: job._id, status: 'submitted' }, { $set: { status: 'collecting', collecting_at: new Date() } });
     if (!claim.modifiedCount) continue;
-    const c = { responses: 0, unparsed: 0, errors: 0, empty: 0, too_long: 0, written: 0, already: 0 };
+    const c = { responses: 0, unparsed: 0, errors: 0, empty: 0, rejected: 0, written: 0, already: 0 };
     const tok = { in: 0, out: 0 };
     let ops = []; let sweep = [];
     const flushOps = async () => {
@@ -270,9 +306,9 @@ async function collect() {
       const glosses = parseGlosses(text, books.length);
       if (!glosses) { c.unparsed++; continue; }
       books.forEach((b, i) => {
-        const g = glosses[i];
-        if (!g) { c.empty++; return; }
-        if (g.length > 200) { c.too_long++; return; }
+        if (!glosses[i]) { c.empty++; return; }
+        const g = acceptGloss(b, glosses[i]);
+        if (!g) { c.rejected++; return; }
         ops.push({ updateOne: {
           filter: { id: b.id, [`localized.${LANG}.title`]: { $exists: false } },
           update: { $set: { [`localized.${LANG}.title`]: g, updated_at: new Date() } },
