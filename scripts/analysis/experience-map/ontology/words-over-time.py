@@ -9,7 +9,10 @@ from the same counts, not a change to the atlas.
 
 Rule: share of the concept's dated pages in a century, divided by the library's share of dated pages in that century
 (baseline.by_century). Only centuries where the baseline has more than 2,000 pages and the concept at least 20 count.
-Concepts flagged `broad` are refused. The CHOSEN list is hand-picked for the essay's line of argument; each peak was
+Concepts flagged `broad` are refused, and so is a concept whose phrase is too often only the translator's apparatus
+(apparatus-share.mjs: a sampled page where the phrase appears only inside <gloss>/<note>/<term> or [brackets], so the
+page is dated to an old work that never said it): more than MAX_APPARATUS of the classed sample, or fewer than
+MIN_CLASSED pages classed. The CHOSEN list is hand-picked for the essay's line of argument; each peak was
 checked against the concept's era (vital force and vigour peak in BCE centuries from broad phrases, so they are out).
 
   python3 words-over-time.py            → src/app/articles/aliveness/words-over-time.json
@@ -21,6 +24,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
 OUT = os.path.join(ROOT, 'src', 'app', 'articles', 'aliveness', 'words-over-time.json')
 MIN_BASE, MIN_PAGES = 2000, 20
+MAX_APPARATUS, MIN_CLASSED = 0.25, 75
+SOURCED_FLOOR = 0.5  # below this share of sourced work dates the page draws the row lighter
 
 # (node id, kind shown on the page)
 CHOSEN = [
@@ -73,10 +78,16 @@ def main():
                   + ' | '.join(f'{century_label(c)} {r[c]:.1f}x ({bc[c]})' for c in top))
         return
 
-    rows = []
+    app = json.load(open(os.path.join(HERE, 'apparatus-share.json')))['nodes']
+    rows, refused = [], []
     for nid, kind in CHOSEN:
         n = nodes[nid]
         assert not n['broad'], f'{nid} is flagged broad'
+        a = app[nid]
+        classed = a['source'] + a['body'] + a['apparatus_only']
+        if classed < MIN_CLASSED or a['apparatus_only_share'] > MAX_APPARATUS:
+            refused.append((nid, a['apparatus_only_share'], classed))
+            continue
         bc, total, r = over_rep(n, base, base_total)
         peak = max(r, key=r.get)
         span = n['counts']['span_90']
@@ -85,6 +96,9 @@ def main():
             'peak_century': peak, 'peak_label': century_label(peak),
             'ratio': round(r[peak], 1), 'peak_pages': bc[peak], 'dated_pages': total,
             'span_from': span['from'], 'span_to': span['to'],
+            'sourced_share': round(n['counts']['sourced_pages'] / total, 2),
+            'sourced_low': n['counts']['sourced_pages'] / total < SOURCED_FLOOR,
+            'apparatus_only_share': a['apparatus_only_share'],
         })
     rows.sort(key=lambda x: (x['peak_century'], -x['ratio']))
     out = {
@@ -94,13 +108,16 @@ def main():
                  'scripts/analysis/experience-map/ontology/words-over-time.py from ontology.json '
                  f"(built {d['about']['built']}).",
         'library_dated_pages': base_total,
+        'refused_for_apparatus': [{'id': i, 'apparatus_only_share': s, 'classed': c} for i, s, c in refused],
         'rows': rows,
     }
     with open(OUT, 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write('\n')
+    for i, s, c in refused:
+        print(f'refused {i}: apparatus-only {s} of {c} classed pages')
     for x in rows:
-        print(f"{x['label']:22} {x['kind']:18} {x['peak_label']:20} {x['ratio']:5}x  span {x['span_from']}–{x['span_to']}")
+        print(f"{x['label']:22} {x['kind']:18} {x['peak_label']:20} {x['ratio']:5}x  span {x['span_from']}–{x['span_to']}  sourced {x['sourced_share']}  apparatus {x['apparatus_only_share']}")
 
 
 if __name__ == '__main__':

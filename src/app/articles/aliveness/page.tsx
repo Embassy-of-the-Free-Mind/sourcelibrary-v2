@@ -379,6 +379,9 @@ function Axis() {
   );
 }
 
+const SOURCED_MIN = Math.round(Math.min(...wordsOverTime.rows.map((r) => r.sourced_share)) * 100);
+const SOURCED_MAX = Math.round(Math.max(...wordsOverTime.rows.map((r) => r.sourced_share)) * 100);
+
 function WordsOverTime() {
   return (
     <figure className="not-prose my-10">
@@ -396,8 +399,8 @@ function WordsOverTime() {
               </span>
             </p>
             <div
-              className="relative h-3"
-              title={`${r.label}: ${r.peak_label}, ${r.ratio}× the library's rate (${r.peak_pages.toLocaleString('en-GB')} of ${r.dated_pages.toLocaleString('en-GB')} dated pages); 90% of pages ${r.span_from} to ${r.span_to}`}
+              className={`relative h-3 ${r.sourced_low ? 'opacity-40' : ''}`}
+              title={`${r.label}: ${r.peak_label}, ${r.ratio}× the library's rate (${r.peak_pages.toLocaleString('en-GB')} of ${r.dated_pages.toLocaleString('en-GB')} dated pages); 90% of pages ${r.span_from} to ${r.span_to}; ${Math.round(r.sourced_share * 100)}% of work dates from a source`}
             >
               {TICKS.map((t) => (
                 <span key={t.year} className="absolute inset-y-0 w-px bg-border-light" style={{ left: `${x(t.year)}%` }} />
@@ -422,8 +425,12 @@ function WordsOverTime() {
         Dot: the century where the word is most over-represented, and by how many times. Line: the years holding 90%
         of its pages. Counts from the <Ext href={VOCABULARY}>atlas vocabulary</Ext> (phrase matches in the
         library&apos;s transcriptions and translations, at most 1,000 books per word, built 26 October 2026); only
-        centuries with more than 2,000 library pages and at least 20 pages for the word are compared. Each name links
-        to its entry.
+        centuries with more than 2,000 library pages and at least 20 pages for the word are compared. Between{' '}
+        {SOURCED_MIN}% and {SOURCED_MAX}% of each word&apos;s pages have a work date taken from a source (Wikidata, the
+        author&apos;s lifetime, the title page); the rest are a model&apos;s estimate
+        {wordsOverTime.rows.some((r) => r.sourced_low) ? ', and a pale row is one where fewer than half are sourced' : ''}.
+        Vital force, the vital principle and the mechanical philosophy are left out: on a quarter or more of a sample
+        of their pages, the phrase stands only in a translator&apos;s gloss or note. Each name links to its entry.
       </figcaption>
     </figure>
   );
@@ -710,7 +717,7 @@ export default function AlivenessPage() {
 
         <p className={p}>
           Each row below counts the library&apos;s pages that use one word for life, in books dated by when the work
-          was written. The library&apos;s pages bunch in the 1500s to 1700s, so each dot marks the century where a
+          was written, not when the edition was printed. The library&apos;s pages bunch in the 1500s to 1700s, so each dot marks the century where a
           word is most over-represented against the library as a whole: on pages from the 4th century BCE,
           <em> psychē</em> is nine times as common as on the library&apos;s pages overall.
         </p>

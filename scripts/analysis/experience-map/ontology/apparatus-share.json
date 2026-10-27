@@ -1,0 +1,158 @@
+{
+ "about": "Random sample of pages matching each node's phrases (first 20,000 search hits, then $sample). source = phrase in OCR text; body = in the translation outside <gloss>/<note>/<term> and [brackets]; apparatus_only = only inside them. Built by apparatus-share.mjs.",
+ "built": "2026-10-27",
+ "nodes": {
+  "pneuma": {
+   "sampled": 150,
+   "source": 132,
+   "body": 0,
+   "apparatus_only": 15,
+   "unmatched": 3,
+   "apparatus_only_share": 0.102
+  },
+  "psyche": {
+   "sampled": 150,
+   "source": 150,
+   "body": 0,
+   "apparatus_only": 0,
+   "unmatched": 0,
+   "apparatus_only_share": 0
+  },
+  "innate-heat": {
+   "sampled": 150,
+   "source": 13,
+   "body": 123,
+   "apparatus_only": 8,
+   "unmatched": 6,
+   "apparatus_only_share": 0.056
+  },
+  "radical-moisture": {
+   "sampled": 150,
+   "source": 81,
+   "body": 50,
+   "apparatus_only": 13,
+   "unmatched": 6,
+   "apparatus_only_share": 0.09
+  },
+  "archeus": {
+   "sampled": 150,
+   "source": 88,
+   "body": 29,
+   "apparatus_only": 28,
+   "unmatched": 5,
+   "apparatus_only_share": 0.193
+  },
+  "anima-mundi": {
+   "sampled": 150,
+   "source": 71,
+   "body": 40,
+   "apparatus_only": 29,
+   "unmatched": 10,
+   "apparatus_only_share": 0.207
+  },
+  "plastic-nature": {
+   "sampled": 150,
+   "source": 86,
+   "body": 38,
+   "apparatus_only": 13,
+   "unmatched": 13,
+   "apparatus_only_share": 0.095
+  },
+  "bildungstrieb": {
+   "sampled": 150,
+   "source": 118,
+   "body": 8,
+   "apparatus_only": 11,
+   "unmatched": 13,
+   "apparatus_only_share": 0.08
+  },
+  "vital-principle": {
+   "sampled": 150,
+   "source": 66,
+   "body": 35,
+   "apparatus_only": 42,
+   "unmatched": 7,
+   "apparatus_only_share": 0.294
+  },
+  "vital-force": {
+   "sampled": 150,
+   "source": 29,
+   "body": 73,
+   "apparatus_only": 40,
+   "unmatched": 8,
+   "apparatus_only_share": 0.282
+  },
+  "elan-vital": {
+   "sampled": 150,
+   "source": 86,
+   "body": 32,
+   "apparatus_only": 27,
+   "unmatched": 5,
+   "apparatus_only_share": 0.186
+  },
+  "animal-magnetism": {
+   "sampled": 150,
+   "source": 104,
+   "body": 9,
+   "apparatus_only": 22,
+   "unmatched": 15,
+   "apparatus_only_share": 0.163
+  },
+  "naturphilosophie": {
+   "sampled": 150,
+   "source": 115,
+   "body": 6,
+   "apparatus_only": 20,
+   "unmatched": 9,
+   "apparatus_only_share": 0.142
+  },
+  "animism": {
+   "sampled": 150,
+   "source": 117,
+   "body": 10,
+   "apparatus_only": 5,
+   "unmatched": 18,
+   "apparatus_only_share": 0.038
+  },
+  "growth-of-metals": {
+   "sampled": 150,
+   "source": 12,
+   "body": 97,
+   "apparatus_only": 13,
+   "unmatched": 28,
+   "apparatus_only_share": 0.107
+  },
+  "mechanism": {
+   "sampled": 150,
+   "source": 19,
+   "body": 10,
+   "apparatus_only": 13,
+   "unmatched": 108,
+   "apparatus_only_share": 0.31
+  },
+  "regimen": {
+   "sampled": 150,
+   "source": 58,
+   "body": 55,
+   "apparatus_only": 25,
+   "unmatched": 12,
+   "apparatus_only_share": 0.181
+  },
+  "makrobiotik": {
+   "sampled": 150,
+   "source": 135,
+   "body": 9,
+   "apparatus_only": 2,
+   "unmatched": 4,
+   "apparatus_only_share": 0.014
+  },
+  "animal-machine": {
+   "sampled": 150,
+   "source": 100,
+   "body": 13,
+   "apparatus_only": 8,
+   "unmatched": 29,
+   "apparatus_only_share": 0.066
+  }
+ }
+}
