@@ -87,21 +87,42 @@ const KANGYUR_TITLE = /\bka[nṅ]g?[jy]ur\b|bka['’]?\s?['’]?gyur/i;
  * that read it. Without a page (a book-level surface) the strong notice stands:
  * a book can still hold Gemini-read pages (#4523's remainder).
  */
+/**
+ * A Yigdzin read that a model then corrected against the image (#6560, #6740)
+ * carries the corrector's model id, so matching on `ocr.model` alone sent those
+ * pages to the 09-01 "cannot read" notice — a measurement of the Gemini reads
+ * Yigdzin replaced, shown on text that is Yigdzin's (2026-10-27, Neyphug rGyud
+ * Tsha). The draft it started from is recorded by write-provenance.mjs.
+ */
+function draftModel(ocr: { engine?: unknown } | null | undefined): string | null {
+  const engine = ocr?.engine as { input?: { draft?: { model?: unknown } } } | null | undefined;
+  const model = engine?.input?.draft?.model;
+  return typeof model === 'string' ? model : null;
+}
+
 export function transcriptionReliability(
   book: { language?: string | null; title?: string | null } | null | undefined,
-  page?: { ocr?: { model?: string | null } | null } | null,
+  page?: { ocr?: { model?: string | null; engine?: unknown } | null } | null,
 ): TranscriptionReliability | null {
   const lang = (book?.language ?? '').trim().toLowerCase();
   if (!UNREADABLE_LANGUAGES.has(lang)) return null;
-  if (page?.ocr?.model === YIGDZIN_MODEL) {
+  const corrected = page?.ocr?.model !== YIGDZIN_MODEL && draftModel(page?.ocr) === YIGDZIN_MODEL;
+  if (page?.ocr?.model === YIGDZIN_MODEL || corrected) {
     // Measured 2026-09-30 and replicated 2026-10-01 (n = 100, no shared pages):
     // median syllable identity 0.947 against the Derge Kangyur e-text, chance
     // 0.25; about 5% of two-leaf pages drop the lower leaf's first line.
     // scripts/eval/experiments/2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md
     const measured = KANGYUR_TITLE.test(book?.title ?? '');
-    const made =
-      'This transcription was made by machine, by BDRC’s Yigdzin, an OCR ' +
-      'model built for Tibetan manuscripts. ';
+    // The corrected wording rests on the whole-volume check of 960 Neyphug
+    // rGyud Tsha leaves against Derge: mean identity 0.937 draft → 0.943
+    // corrected (#6740, job tib-flash-correct-vol1-6740). The correction moves
+    // the number little, so the measured sentence below still holds.
+    const made = corrected
+      ? 'This transcription was made by machine: BDRC’s Yigdzin, an OCR model ' +
+        'built for Tibetan manuscripts, read it, and an AI model then corrected ' +
+        'that reading against the image. '
+      : 'This transcription was made by machine, by BDRC’s Yigdzin, an OCR ' +
+        'model built for Tibetan manuscripts. ';
     const tail = 'The English is an AI translation made from it. Check the scan before quoting either.';
     return {
       level: 'caution',

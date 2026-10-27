@@ -108,6 +108,22 @@ describe('transcriptionReliability', () => {
     expect(f?.evidence).toMatch(/95%/);
   });
 
+  it('gives a corrected Yigdzin read the Yigdzin caution, not the Gemini warning', () => {
+    const corrected = {
+      ocr: {
+        model: 'gemini-3.8-flash-low',
+        engine: { input: { draft: { model: 'bdrc-yigdzin-v1' } } },
+      },
+    };
+    const f = transcriptionReliability(kangyur, corrected);
+    expect(f?.level).toBe('caution');
+    expect(f?.message).toMatch(/corrected/);
+    expect(f?.message).not.toMatch(/cannot read/);
+    // A Gemini read with some other draft (or none) keeps the strong warning.
+    const other = { ocr: { model: 'gemini-3.8-flash-low', engine: { input: { draft: { model: 'x' } } } } };
+    expect(transcriptionReliability(kangyur, other)?.level).toBe('unreliable');
+  });
+
   it('says accuracy is unknown where there is no reference text', () => {
     const f = transcriptionReliability(nyingma, yig);
     expect(f?.level).toBe('caution');
