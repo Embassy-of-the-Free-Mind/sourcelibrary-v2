@@ -30,9 +30,11 @@ DEFAULT_ACCOUNTS="main=milolomas200921@gmail.com cloudlayer=derek@playpowerlabs.
 
 # The shared limits doc. The env file lives in the main checkout, not in a worktree.
 here=$(cd "$(dirname "$0")" && pwd); limits=""
+# macOS has no `timeout`: without this guard the pull never ran on the laptop and every box ranked by load only.
+tmo() { if command -v timeout >/dev/null; then timeout "$@"; elif command -v gtimeout >/dev/null; then gtimeout "$@"; else shift; "$@"; fi; }
 for root in "$(git -C "$here" rev-parse --show-toplevel 2>/dev/null)" "$(cd "$(git -C "$here" rev-parse --git-common-dir 2>/dev/null)/.." 2>/dev/null && pwd)"; do
   [ -n "$root" ] && [ -s "$root/.env.production.local" ] || continue
-  limits=$(cd "$root" && timeout 60 node --env-file=.env.production.local "$here/claude-limits-share.mjs" pull 2>/dev/null) && break
+  limits=$(cd "$root" && tmo 60 node --env-file=.env.production.local "$here/claude-limits-share.mjs" pull 2>/dev/null) && break
 done
 # One line per account: email session% week% hours-to-week-reset unused% score age-min. On a job box the
 # meter copied every 5 min (box.sh push-limits) is usually fresher than Mongo's (every 30): take the newer.
@@ -42,7 +44,8 @@ def t(s):
     try: return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
     except Exception: return None
 docs = []
-for src in (sys.stdin, "/root/.claude-limits/latest.json"):
+import os
+for src in (sys.stdin, "/root/.claude-limits/latest.json", os.path.expanduser("~/.claude-limits/latest.json")):
     try: docs.append(json.load(src if src is sys.stdin else open(src)))
     except Exception: pass
 docs = [d for d in docs if t(d.get("checked_at") or "")]
@@ -60,6 +63,10 @@ for a in d.get("accounts", []):
     elapsed = 1 - h / 168
     unused = f"{max(0, 100 - wp / elapsed):.0f}%" if elapsed >= 0.15 else "early"  # a day in, a pace is noise
     score = (100 - wp) / max(h, 12)
+    # Pacing: when the meter carries a recent burn rate (climits, 3h lookback), rank by the budget the
+    # account has NOT already committed: an account spending past its budget is the wrong place for more.
+    burn = w.get("burn_pct_per_h")
+    if burn is not None: score -= burn
     print(a["email"].lower(), sp, wp, f"{h:.0f}", unused, f"{score:.2f}", f"{age:.0f}")
 ')
 
