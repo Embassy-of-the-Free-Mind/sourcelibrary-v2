@@ -17,6 +17,7 @@ import {
   budgetAllowsDispatch,
   budgetAllowsDispatchScoped,
   readScopeEnvelopes,
+  envelopeShapeError,
   nextEnvelopeExpiry,
   ENVELOPE_TTL_DAYS,
   _setSupabaseSpendReaderForTests,
@@ -361,5 +362,111 @@ describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of o
     const g = await budgetAllowsDispatchScoped(db, 'test', { bypass: true });
     expect(g.allowed).toBe(true);
     expect(g.envelopeIds).toBeNull();
+  });
+});
+
+// ─── Lane-wide envelopes (#7402) ─────────────────────────────────────────────
+//
+// `all_books: true` funds one lane on every book (the embed-gemini incremental cron), metered by
+// endpoint alone. Each test below fails if its guard is removed: the lane check, the budget
+// comparison, the expiry check, the per-envelope meter-error check, the shape check.
+
+describe('lane-wide (all_books) envelopes (#7402)', () => {
+  const laneWide = (over: Record<string, unknown> = {}) => ({
+    all_books: true, book_ids: [], collections: [], budget_usd: 40,
+    lanes: ['embed-gemini'], meter_endpoints: ['worker/embed-gemini'],
+    created_at: new Date('2026-10-27T00:00:00Z'), expires_at: new Date(Date.now() + 30 * 864e5),
+    ...over,
+  });
+  const ctl = (env: Record<string, unknown>) => ({ _id: 'processing_control', daily_budget_usd: 5, allow_scopes: { sitewide: env } });
+  /** The lane-wide meter has no book_id clause: route its aggregate by endpoint, and record it. */
+  function db({ dailyUsd = 21, laneUsd = 0, control }: { dailyUsd?: number; laneUsd?: number; control: Record<string, unknown> }) {
+    const meterMatches: Record<string, unknown>[] = [];
+    return {
+      meterMatches,
+      collection(name: string) {
+        return {
+          aggregate: (pipeline: Array<{ $match?: Record<string, unknown> }>) => {
+            const m = pipeline[0]?.$match || {};
+            const isEnvelope = !!(m.endpoint || m.book_id);
+            if (isEnvelope) meterMatches.push(m);
+            const usd = isEnvelope ? laneUsd : dailyUsd;
+            return { toArray: async () => (usd === 0 ? [] : [{ _id: null, usd, rows: 1, costlessRows: 0 }]) };
+          },
+          findOne: async () => (name === 'system_config' ? control : null),
+          find: () => ({ toArray: async () => [], project: () => ({ toArray: async () => [] }) }),
+        };
+      },
+    };
+  }
+
+  it('opens ONLY its lane, unscoped, and meters by endpoint with no book filter', async () => {
+    const d = db({ laneUsd: 3, control: ctl(laneWide()) });
+    const mine = await budgetAllowsDispatchScoped(d, 'embed-gemini');
+    expect(mine).toEqual({ allowed: true, envelopeIds: null });
+    expect(d.meterMatches).toHaveLength(1);
+    expect(d.meterMatches[0].book_id).toBeUndefined();
+    expect(d.meterMatches[0].endpoint).toEqual({ $in: ['worker/embed-gemini'] });
+    expect((d.meterMatches[0]._id as { $gte: ObjectId }).$gte.getTimestamp().toISOString()).toBe('2026-10-27T00:00:00.000Z');
+    // Negative controls: another worker asking the same gate gets nothing, scoped or not.
+    for (const label of ['translate-worker run', 'image-extract-worker', 'embed-site-pages', 'run start (mode decision)']) {
+      const other = await budgetAllowsDispatchScoped(db({ laneUsd: 3, control: ctl(laneWide()) }), label);
+      expect(other.allowed).toBe(false);
+    }
+  });
+
+  it('closes when spent', async () => {
+    expect((await budgetAllowsDispatchScoped(db({ laneUsd: 40, control: ctl(laneWide()) }), 'embed-gemini')).allowed).toBe(false);
+    _setSupabaseScopeSpendReaderForTests(async () => ({ usd: 39.5, rows: 500, error: null }));
+    expect((await budgetAllowsDispatchScoped(db({ laneUsd: 0.6, control: ctl(laneWide()) }), 'embed-gemini')).allowed).toBe(false);
+    // Positive control: under budget, open.
+    _setSupabaseScopeSpendReaderForTests(async () => ({ usd: 0, rows: 0, error: null }));
+    expect((await budgetAllowsDispatchScoped(db({ laneUsd: 39.99, control: ctl(laneWide()) }), 'embed-gemini')).allowed).toBe(true);
+  });
+
+  it('closes when expired', async () => {
+    const shut = await budgetAllowsDispatchScoped(db({ laneUsd: 1, control: ctl(laneWide({ expires_at: new Date(Date.now() - 1000) })) }), 'embed-gemini');
+    expect(shut.allowed).toBe(false);
+    const garbled = await budgetAllowsDispatchScoped(db({ laneUsd: 1, control: ctl(laneWide({ expires_at: 'next month' })) }), 'embed-gemini');
+    expect(garbled.allowed).toBe(false);
+  });
+
+  it('closes on an unreadable meter, and the Supabase reader is asked with no book list', async () => {
+    const asked: unknown[] = [];
+    _setSupabaseScopeSpendReaderForTests(async (ids: string[] | null, _since: Date, endpoints: string[] | null) => {
+      asked.push([ids, endpoints]);
+      return { usd: 0, rows: 0, error: 'Supabase read failed (500)' };
+    });
+    const g = await budgetAllowsDispatchScoped(db({ laneUsd: 0, control: ctl(laneWide()) }), 'embed-gemini');
+    expect(g.allowed).toBe(false);
+    expect(asked).toEqual([[null, ['worker/embed-gemini']]]);
+  });
+
+  it('is refused at creation without lanes or meter endpoints, and a hand-written one stays closed', async () => {
+    expect(envelopeShapeError(laneWide())).toBeNull();
+    expect(envelopeShapeError({ book_ids: ['a'], budget_usd: 5 })).toBeNull(); // the book-scoped shape is untouched
+    expect(envelopeShapeError(laneWide({ lanes: undefined }))).toMatch(/lanes/);
+    expect(envelopeShapeError(laneWide({ lanes: [] }))).toMatch(/lanes/);
+    expect(envelopeShapeError(laneWide({ meter_endpoints: undefined }))).toMatch(/meter_endpoints/);
+    expect(envelopeShapeError(laneWide({ meter_endpoints: [''] }))).toMatch(/meter_endpoints/);
+    expect(envelopeShapeError(laneWide({ book_ids: ['b1'] }))).toMatch(/book_ids/);
+    expect(envelopeShapeError(laneWide({ all_books: 'yes' }))).toMatch(/true/);
+    // Written by hand anyway (bypassing set-scope): the gate never opens it, for any label.
+    // (The first two are also caught by the meter refusing a book-less read without endpoints;
+    // the third, a laned + metered envelope that also lists books, only by the shape check.)
+    for (const bad of [laneWide({ lanes: undefined }), laneWide({ meter_endpoints: undefined }), laneWide({ book_ids: ['b1'] })]) {
+      for (const label of ['embed-gemini', 'translate-worker run']) {
+        const g = await budgetAllowsDispatchScoped(db({ laneUsd: 0, control: ctl(bad) }), label);
+        expect(g.allowed).toBe(false);
+      }
+    }
+  });
+
+  it('getScopeSpendUsd refuses a book-less meter with no endpoints (it would be the whole site)', async () => {
+    const { getScopeSpendUsd } = await import('../../scripts/lib/spend-guard.mjs');
+    const d = db({ laneUsd: 999, control: ctl(laneWide()) });
+    const r = await getScopeSpendUsd(d, { ids: null, since: null, endpoints: null });
+    expect(r.meterError).toMatch(/meter_endpoints/);
+    expect(d.meterMatches).toHaveLength(0);
   });
 });
