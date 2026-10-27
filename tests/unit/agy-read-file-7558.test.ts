@@ -43,3 +43,19 @@ describe('cli-ocr.mjs prompt variant', () => {
     expect(OCR_READ_FILE_INSTRUCTION).toMatch(/read_file/);
   });
 });
+
+describe('correctionHeaderProblem (cli-ocr apply, correct mode)', async () => {
+  const { correctionHeaderProblem } = await import('../../scripts/lib/write-text-guard.mjs');
+  const draft = '<language>German</language>\n<page-type>text</page-type>\nWeil aber die Vernunfft';
+  it('a headed draft may gain the <scan-quality> line the template asks for', () => {
+    expect(correctionHeaderProblem(draft, `<scan-quality>good</scan-quality>\n${draft}`)).toBe(false);
+  });
+  it('a doubled header is still refused', () => {
+    expect(correctionHeaderProblem(draft, `${draft}\n<page-type>text</page-type>`)).toBe(true);
+    expect(correctionHeaderProblem(draft, `<scan-quality>good</scan-quality>\n<scan-quality>good</scan-quality>\n${draft}`)).toBe(true);
+  });
+  it('an unheaded (Tibetan) draft may gain no header, as before', () => {
+    expect(correctionHeaderProblem('བཀྲ་ཤིས་', 'བཀྲ་ཤིས་')).toBe(false);
+    expect(correctionHeaderProblem('བཀྲ་ཤིས་', '<page-type>text</page-type>\nབཀྲ་ཤིས་')).toBe(true);
+  });
+});

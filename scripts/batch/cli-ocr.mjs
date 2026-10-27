@@ -100,7 +100,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
-import { checkWrittenText, writeGuardReason } from '../lib/write-text-guard.mjs';
+import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
@@ -419,7 +419,8 @@ const MARK_STALE = arg('mark-stale');
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
-const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+// The pid keeps two applies started in the same second (cli-ocr-lane.mjs --concurrency, #7558) on separate run ids.
+const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|^#{2,3} Summary\b|overview and summary of the text/im;
 // Distinct words of 5+ letters, folded: enough to tell "the same page read again" from "a different text".
 const longWords = (t) => new Set((String(t).replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u').match(/\p{L}{5,}/gu) || []));
@@ -510,8 +511,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let yat = null, byEye = null;
   if (correct) {
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
-    const headers = (t) => (t.match(/<page-type>|<scan-quality>/g) || []).length;
-    if (headers(text) > headers(page.ocr.data)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
+    if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
     if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
