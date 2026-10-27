@@ -1,0 +1,446 @@
+[
+ {
+  "id": "qaf857069e9",
+  "book": "6a3c6c4339b4508b04e47ebd",
+  "pn": 163,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0226,
+  "dice": 0.955,
+  "cls": null
+ },
+ {
+  "id": "qb24d6ee745",
+  "book": "6a3c6c2701fe4f593c1b0da1",
+  "pn": 140,
+  "accept": false,
+  "fid": 3,
+  "serious": 5,
+  "classes": [
+   "O6/misleads",
+   "T7/misleads",
+   "O6/misleads",
+   "T10/misleads",
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0536,
+  "dice": 0.92,
+  "cls": null
+ },
+ {
+  "id": "q2076b0cfeb",
+  "book": "6a3c6f2201fe4f593c1c9538",
+  "pn": 113,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0,
+  "dice": 0.942,
+  "cls": null
+ },
+ {
+  "id": "q1e4aaebf7b",
+  "book": "6a3c800801fe4f593c21f140",
+  "pn": 91,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0385,
+  "dice": 0.97,
+  "cls": null
+ },
+ {
+  "id": "q314ed261c1",
+  "book": "6a3ce8230a0011cb4bc0c42c",
+  "pn": 29,
+  "accept": true,
+  "fid": 5,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0,
+  "dice": 1,
+  "cls": null
+ },
+ {
+  "id": "q6b435a1567",
+  "book": "6a3c6c4339b4508b04e47ebd",
+  "pn": 168,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0543,
+  "dice": 0.911,
+  "cls": null
+ },
+ {
+  "id": "q0bdbb9562a",
+  "book": "6a3ce7ab0a0011cb4bc0a847",
+  "pn": 30,
+  "accept": false,
+  "fid": 3,
+  "serious": 3,
+  "classes": [
+   "O6/wrong_text",
+   "O6/misleads",
+   "T8/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0198,
+  "dice": 0.94,
+  "cls": null
+ },
+ {
+  "id": "qa3671c8f7b",
+  "book": "6a3c70de01fe4f593c1d5b26",
+  "pn": 21,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.023,
+  "dice": 0.961,
+  "cls": null
+ },
+ {
+  "id": "qe0ca19d5b9",
+  "book": "6a3c67f9af3c49b59c5d53b9",
+  "pn": 58,
+  "accept": false,
+  "fid": 3,
+  "serious": 4,
+  "classes": [
+   "O6/misleads",
+   "O6/misleads",
+   "T10/misleads",
+   "T8/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0813,
+  "dice": 0.888,
+  "cls": null
+ },
+ {
+  "id": "q6a8e97544e",
+  "book": "6a3c75dc39b4508b04e5e2ac",
+  "pn": 5,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.1613,
+  "dice": 0.923,
+  "cls": null
+ },
+ {
+  "id": "q6b204ee8b1",
+  "book": "6a3cbef2f9474f825c1644ad",
+  "pn": 45,
+  "accept": false,
+  "fid": 3,
+  "serious": 2,
+  "classes": [
+   "O6/wrong_text",
+   "T10/misleads"
+  ],
+  "status": "no-kanripo",
+  "cer": null,
+  "dice": null,
+  "cls": "no-kanripo-repo"
+ },
+ {
+  "id": "qf607f098ed",
+  "book": "6a3ce8230a0011cb4bc0c42c",
+  "pn": 116,
+  "accept": false,
+  "fid": 3,
+  "serious": 4,
+  "classes": [
+   "O6/wrong_text",
+   "O6/misleads",
+   "T8/misleads",
+   "T8/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0435,
+  "dice": 0.912,
+  "cls": null
+ },
+ {
+  "id": "q88c6f7a98b",
+  "book": "6a3c74c339b4508b04e593bc",
+  "pn": 74,
+  "accept": true,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0088,
+  "dice": 0.891,
+  "cls": null
+ },
+ {
+  "id": "q3aed1e10eb",
+  "book": "6a3c6e7e01fe4f593c1c35dd",
+  "pn": 1,
+  "accept": false,
+  "fid": 3,
+  "serious": 1,
+  "classes": [
+   "O1/wrong_text"
+  ],
+  "status": "short",
+  "cer": null,
+  "dice": null,
+  "cls": null
+ },
+ {
+  "id": "qd6e7e5ae06",
+  "book": "6a3c767401fe4f593c1fb25a",
+  "pn": 105,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0076,
+  "dice": 0.985,
+  "cls": null
+ },
+ {
+  "id": "q4ed58bce05",
+  "book": "6a3c6e7e01fe4f593c1c35dd",
+  "pn": 78,
+  "accept": true,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0448,
+  "dice": 0.91,
+  "cls": null
+ },
+ {
+  "id": "qaf75f8c528",
+  "book": "6a3cba213dce6cfad7499c52",
+  "pn": 51,
+  "accept": true,
+  "fid": 5,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0145,
+  "dice": 0.978,
+  "cls": null
+ },
+ {
+  "id": "qc81ee60cf1",
+  "book": "6a3c6ad6af3c49b59c5eaa11",
+  "pn": 73,
+  "accept": true,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "O8/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0859,
+  "dice": 0.88,
+  "cls": null
+ },
+ {
+  "id": "q131c24c259",
+  "book": "6a3c6c0c01fe4f593c1afc3e",
+  "pn": 144,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0157,
+  "dice": 0.968,
+  "cls": null
+ },
+ {
+  "id": "q63b592ed3c",
+  "book": "6a3c74c339b4508b04e593bc",
+  "pn": 53,
+  "accept": true,
+  "fid": 5,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.053,
+  "dice": 0.89,
+  "cls": null
+ },
+ {
+  "id": "qab69ec6422",
+  "book": "6a3c6f2201fe4f593c1c9538",
+  "pn": 141,
+  "accept": false,
+  "fid": 4,
+  "serious": 2,
+  "classes": [
+   "O6/misleads",
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0,
+  "dice": 0.903,
+  "cls": null
+ },
+ {
+  "id": "q783d2861c9",
+  "book": "6a3cbcc3ec254ff6cadf2e44",
+  "pn": 53,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.0095,
+  "dice": 0.981,
+  "cls": null
+ },
+ {
+  "id": "qbf034bde99",
+  "book": "6a3c800801fe4f593c21f140",
+  "pn": 125,
+  "accept": false,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "T8/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0123,
+  "dice": 0.984,
+  "cls": null
+ },
+ {
+  "id": "q25dfde90e2",
+  "book": "6a3c711839b4508b04e51b03",
+  "pn": 57,
+  "accept": true,
+  "fid": 4,
+  "serious": 0,
+  "classes": [],
+  "status": "aligned",
+  "cer": 0.02,
+  "dice": 0.96,
+  "cls": null
+ },
+ {
+  "id": "q87d49cfd7a",
+  "book": "6a3ce7ab0a0011cb4bc0a847",
+  "pn": 21,
+  "accept": false,
+  "fid": 4,
+  "serious": 3,
+  "classes": [
+   "O11/misleads",
+   "T9/misleads",
+   "T10/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0513,
+  "dice": 0.827,
+  "cls": null
+ },
+ {
+  "id": "q235be480b2",
+  "book": "6a3c716e01fe4f593c1d78cb",
+  "pn": 166,
+  "accept": true,
+  "fid": 4,
+  "serious": 2,
+  "classes": [
+   "E2/misleads",
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0486,
+  "dice": 0.902,
+  "cls": null
+ },
+ {
+  "id": "q6381e5a31c",
+  "book": "6a3c6c0c01fe4f593c1afc3e",
+  "pn": 77,
+  "accept": false,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "T10/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0134,
+  "dice": 0.973,
+  "cls": null
+ },
+ {
+  "id": "qdad1013b43",
+  "book": "6a3c67f9af3c49b59c5d53b9",
+  "pn": 68,
+  "accept": true,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0794,
+  "dice": 0.873,
+  "cls": null
+ },
+ {
+  "id": "q22d6d6cae6",
+  "book": "6a3cbcc3ec254ff6cadf2e44",
+  "pn": 73,
+  "accept": false,
+  "fid": 3,
+  "serious": 4,
+  "classes": [
+   "O11/wrong_text",
+   "O6/misleads",
+   "T9/misleads",
+   "O6/misleads"
+  ],
+  "status": "aligned",
+  "cer": 0.0245,
+  "dice": 0.988,
+  "cls": null
+ },
+ {
+  "id": "q5a7c0334c8",
+  "book": "6a3c6847af3c49b59c5d7916",
+  "pn": 31,
+  "accept": false,
+  "fid": 4,
+  "serious": 1,
+  "classes": [
+   "O6/misleads"
+  ],
+  "status": "unaligned",
+  "cer": null,
+  "dice": 0.027,
+  "cls": "kanripo-lacks-these-juan"
+ }
+]

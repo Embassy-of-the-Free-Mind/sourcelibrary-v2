@@ -1,0 +1,521 @@
+{
+ "books_scanned": 13991,
+ "pages": 137,
+ "books": 127,
+ "translated": 17,
+ "sample": [
+  {
+   "book_id": "6a09ea573ca4edcd1ef01f1c",
+   "pn": 166,
+   "match": "作为一个人工智能",
+   "has_english": false
+  },
+  {
+   "book_id": "6a3c5eab40c88a541d8e48db",
+   "pn": 122,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c5f0940c88a541d8e6709",
+   "pn": 28,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c5f10879008ba7e152a8f",
+   "pn": 182,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c5f23879008ba7e1530c8",
+   "pn": 119,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c5f37879008ba7e15366b",
+   "pn": 121,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c5fb4879008ba7e157140",
+   "pn": 28,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c60c040c88a541d8ea33e",
+   "pn": 124,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c60ce40c88a541d8eaca3",
+   "pn": 154,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c60d840c88a541d8eb34e",
+   "pn": 124,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c611b40c88a541d8edb6f",
+   "pn": 138,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c614b40c88a541d8ef9d3",
+   "pn": 42,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c6164879008ba7e15de88",
+   "pn": 62,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c6179879008ba7e15e687",
+   "pn": 14,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c61c3879008ba7e1601ce",
+   "pn": 69,
+   "match": "作为一个人工智能",
+   "has_english": false
+  },
+  {
+   "book_id": "6a3c622e879008ba7e1614d9",
+   "pn": 42,
+   "match": "作为一个人工智能",
+   "has_english": false
+  },
+  {
+   "book_id": "6a3c62d740c88a541d8f6922",
+   "pn": 81,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c6317879008ba7e165c3f",
+   "pn": 48,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c6323879008ba7e166301",
+   "pn": 93,
+   "match": "作为一个人工智能",
+   "has_english": true
+  },
+  {
+   "book_id": "6a3c638b93327f06e83511ca",
+   "pn": 117,
+   "match": "作为一个人工智能",
+   "has_english": true
+  }
+ ],
+ "by_book": {
+  "6a09ea573ca4edcd1ef01f1c": [
+   166
+  ],
+  "6a3c5eab40c88a541d8e48db": [
+   122
+  ],
+  "6a3c5f0940c88a541d8e6709": [
+   28
+  ],
+  "6a3c5f10879008ba7e152a8f": [
+   182
+  ],
+  "6a3c5f23879008ba7e1530c8": [
+   119
+  ],
+  "6a3c5f37879008ba7e15366b": [
+   121
+  ],
+  "6a3c5fb4879008ba7e157140": [
+   28
+  ],
+  "6a3c60c040c88a541d8ea33e": [
+   124
+  ],
+  "6a3c60ce40c88a541d8eaca3": [
+   154
+  ],
+  "6a3c60d840c88a541d8eb34e": [
+   124
+  ],
+  "6a3c611b40c88a541d8edb6f": [
+   138
+  ],
+  "6a3c614b40c88a541d8ef9d3": [
+   42
+  ],
+  "6a3c6164879008ba7e15de88": [
+   62
+  ],
+  "6a3c6179879008ba7e15e687": [
+   14
+  ],
+  "6a3c61c3879008ba7e1601ce": [
+   69
+  ],
+  "6a3c622e879008ba7e1614d9": [
+   42
+  ],
+  "6a3c62d740c88a541d8f6922": [
+   81
+  ],
+  "6a3c6317879008ba7e165c3f": [
+   48
+  ],
+  "6a3c6323879008ba7e166301": [
+   93
+  ],
+  "6a3c638b93327f06e83511ca": [
+   117
+  ],
+  "6a3c652939b4508b04e2c81e": [
+   41,
+   66
+  ],
+  "6a3c652a39b4508b04e2c984": [
+   37
+  ],
+  "6a3c652d39b4508b04e2cbd8": [
+   45,
+   83
+  ],
+  "6a3c653639b4508b04e2d0e1": [
+   92
+  ],
+  "6a3c653839b4508b04e2d204": [
+   99,
+   101,
+   109
+  ],
+  "6a3c653a39b4508b04e2d38b": [
+   73
+  ],
+  "6a3c653d39b4508b04e2d56b": [
+   73
+  ],
+  "6a3c654039b4508b04e2d65d": [
+   27,
+   35,
+   57
+  ],
+  "6a3c654139b4508b04e2d6dd": [
+   59
+  ],
+  "6a3c6757af3c49b59c5d26aa": [
+   86
+  ],
+  "6a3c6761af3c49b59c5d2ce7": [
+   143
+  ],
+  "6a3c6859af3c49b59c5d8381": [
+   11
+  ],
+  "6a3c6861af3c49b59c5d87b2": [
+   26
+  ],
+  "6a3c6864af3c49b59c5d8970": [
+   104
+  ],
+  "6a3c6883af3c49b59c5d9d17": [
+   69
+  ],
+  "6a3c68aaaf3c49b59c5db37c": [
+   85
+  ],
+  "6a3c690f39b4508b04e3ba55": [
+   63
+  ],
+  "6a3c6963af3c49b59c5df019": [
+   51
+  ],
+  "6a3c6967af3c49b59c5df28e": [
+   55
+  ],
+  "6a3c696eaf3c49b59c5df63f": [
+   19
+  ],
+  "6a3c699339b4508b04e3e218": [
+   89
+  ],
+  "6a3c69bcaf3c49b59c5e21ce": [
+   177
+  ],
+  "6a3c69c8af3c49b59c5e297c": [
+   141
+  ],
+  "6a3c6a56af3c49b59c5e5f86": [
+   24
+  ],
+  "6a3c6a6faf3c49b59c5e6d55": [
+   35
+  ],
+  "6a3c6a91af3c49b59c5e7f49": [
+   64
+  ],
+  "6a3c6b5439b4508b04e42f49": [
+   19
+  ],
+  "6a3c6b6a39b4508b04e43d31": [
+   80
+  ],
+  "6a3c6b7339b4508b04e44300": [
+   79
+  ],
+  "6a3c6bb039b4508b04e4531c": [
+   86
+  ],
+  "6a3c6bc139b4508b04e45cab": [
+   39
+  ],
+  "6a3c6c1001fe4f593c1aff17": [
+   29
+  ],
+  "6a3c6c1801fe4f593c1b044d": [
+   117
+  ],
+  "6a3c6c1b01fe4f593c1b06bb": [
+   49,
+   55
+  ],
+  "6a3c6c2201fe4f593c1b0a32": [
+   115
+  ],
+  "6a3c6d1701fe4f593c1b7ab1": [
+   9
+  ],
+  "6a3c6d3d01fe4f593c1b911f": [
+   99
+  ],
+  "6a3c6d7001fe4f593c1bb0f5": [
+   93
+  ],
+  "6a3c6d7201fe4f593c1bb380": [
+   107
+  ],
+  "6a3c6daa01fe4f593c1bd7f3": [
+   72
+  ],
+  "6a3c6e0301fe4f593c1bee3d": [
+   97
+  ],
+  "6a3c6e4a01fe4f593c1c163b": [
+   96
+  ],
+  "6a3c6e8e01fe4f593c1c3cad": [
+   13
+  ],
+  "6a3c6fe501fe4f593c1cea94": [
+   18
+  ],
+  "6a3c707639b4508b04e4e928": [
+   153
+  ],
+  "6a3c70ba01fe4f593c1d448a": [
+   68
+  ],
+  "6a3c70d801fe4f593c1d569d": [
+   80
+  ],
+  "6a3c70e601fe4f593c1d6048": [
+   105
+  ],
+  "6a3c724601fe4f593c1dde42": [
+   167
+  ],
+  "6a3c725901fe4f593c1dea5d": [
+   87
+  ],
+  "6a3c727301fe4f593c1df7d1": [
+   168
+  ],
+  "6a3c72e801fe4f593c1e3eb5": [
+   88
+  ],
+  "6a3c72f501fe4f593c1e473b": [
+   23
+  ],
+  "6a3c731d01fe4f593c1e58c5": [
+   103
+  ],
+  "6a3c739101fe4f593c1e98ec": [
+   72
+  ],
+  "6a3c740201fe4f593c1ed60b": [
+   86
+  ],
+  "6a3c746c01fe4f593c1f0fb4": [
+   113
+  ],
+  "6a3c747401fe4f593c1f13d7": [
+   127
+  ],
+  "6a3c747901fe4f593c1f1641": [
+   129
+  ],
+  "6a3c754601fe4f593c1f4390": [
+   94
+  ],
+  "6a3c75f301fe4f593c1f7bc5": [
+   85
+  ],
+  "6a3c75fc39b4508b04e5ec02": [
+   151
+  ],
+  "6a3c761201fe4f593c1f8623": [
+   153
+  ],
+  "6a3c774901fe4f593c200fb2": [
+   101
+  ],
+  "6a3c776801fe4f593c201e9e": [
+   89
+  ],
+  "6a3c77ab01fe4f593c203c80": [
+   5,
+   23
+  ],
+  "6a3c784139b4508b04e603f8": [
+   36
+  ],
+  "6a3c784b39b4508b04e6088c": [
+   73
+  ],
+  "6a3c786e01fe4f593c20819d": [
+   100
+  ],
+  "6a3c793b01fe4f593c20e0c8": [
+   8
+  ],
+  "6a3c795a01fe4f593c20efe3": [
+   14
+  ],
+  "6a3c795e01fe4f593c20f11b": [
+   100
+  ],
+  "6a3c7b2b01fe4f593c21cbac": [
+   50
+  ],
+  "6a3cb53c57c1f37219c47f5f": [
+   130
+  ],
+  "6a3cb5ed3dce6cfad74841ba": [
+   35
+  ],
+  "6a3cb6113dce6cfad7485041": [
+   7
+  ],
+  "6a3cb6e757c1f37219c4d78f": [
+   2
+  ],
+  "6a3cb71457c1f37219c4ee07": [
+   63
+  ],
+  "6a3cb7233dce6cfad748661c": [
+   82
+  ],
+  "6a3cb7413dce6cfad7487512": [
+   100
+  ],
+  "6a3cb8653d799518cd71adf9": [
+   3
+  ],
+  "6a3cb8763d799518cd71b6e1": [
+   26
+  ],
+  "6a3cb89b3dce6cfad748eefd": [
+   12
+  ],
+  "6a3cb89e3dce6cfad748f0af": [
+   15
+  ],
+  "6a3cb8bc3dce6cfad748ffcb": [
+   3
+  ],
+  "6a3cb8dd3dce6cfad7490e27": [
+   29
+  ],
+  "6a3cb8ec3d799518cd71c409": [
+   93
+  ],
+  "6a3cb9133dce6cfad749260b": [
+   3
+  ],
+  "6a3cb99b3dce6cfad74952ae": [
+   85
+  ],
+  "6a3cbb843dce6cfad74a4854": [
+   100
+  ],
+  "6a3cbc3aec254ff6cadeeb8d": [
+   101
+  ],
+  "6a3cbc60ec254ff6cadf02f9": [
+   131
+  ],
+  "6a3cbc8ff9474f825c1613f5": [
+   120
+  ],
+  "6a3cbcf8ec254ff6cadf4e2e": [
+   148
+  ],
+  "6a3cbd49ec254ff6cadf79f1": [
+   48
+  ],
+  "6a3cbd52ec254ff6cadf7e38": [
+   38
+  ],
+  "6a3cbe7bec254ff6cae00bda": [
+   72
+  ],
+  "6a3cbfc8f9474f825c16b099": [
+   137
+  ],
+  "6a3cbfd6f9474f825c16b943": [
+   79,
+   135
+  ],
+  "6a3cbfe1f9474f825c16bf9a": [
+   117
+  ],
+  "6a3cbfe8f9474f825c16c42f": [
+   101,
+   103
+  ],
+  "6a3cbff4f9474f825c16cb1a": [
+   155
+  ],
+  "6a3ce6ce0a0011cb4bc072ad": [
+   10
+  ],
+  "6a3ce6e30a0011cb4bc07945": [
+   25
+  ],
+  "6a3ce75f0a0011cb4bc09611": [
+   46
+  ],
+  "6a3ce7ab0a0011cb4bc0a847": [
+   118
+  ],
+  "6a3ce7c80a0011cb4bc0afc1": [
+   102
+  ]
+ }
+}

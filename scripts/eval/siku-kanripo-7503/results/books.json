@@ -1,0 +1,1805 @@
+[
+ {
+  "book_id": "6a3c6e7e01fe4f593c1c35dd",
+  "title": "儀禮析疑·卷一~卷二 (vol 1)",
+  "work": "KR1d0041",
+  "witness": "WYG",
+  "witness_sha": "fb0e926220527cd0df16e7427e07238fe9360dc3",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 1,
+   "hi": 2,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 122,
+  "status": "done",
+  "pb_pages_in_work": 1115,
+  "aligned": 117,
+  "unaligned": 1,
+  "short": 4,
+  "juans_aligned": [
+   0,
+   1,
+   2
+  ],
+  "first_pb": "KR1d0041_WYG_000-1a",
+  "last_pb": "KR1d0041_WYG_002-32a",
+  "screen_agrees": 117,
+  "screen_compared": 117,
+  "flags": [
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.152
+    ],
+    "chars": [
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3cbef2f9474f825c1644ad",
+  "title": "皇極經世書解·卷三 (vol 14)",
+  "work": "KR3g0010",
+  "witness": null,
+  "witness_sha": null,
+  "repo_licence": null,
+  "licence_file": null,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 3,
+   "hi": 3,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 110,
+  "status": "no-kanripo"
+ },
+ {
+  "book_id": "6a3cba213dce6cfad7499c52",
+  "title": "本草乘雅半偈·卷七 (vol 7)",
+  "work": "KR3e0089",
+  "witness": "WYG",
+  "witness_sha": "c2ddf67c73c624080a934b899345ae0d1c61900a",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 7,
+   "hi": 7,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 126,
+  "status": "done",
+  "pb_pages_in_work": 1300,
+  "aligned": 122,
+  "unaligned": 1,
+  "short": 3,
+  "juans_aligned": [
+   7
+  ],
+  "first_pb": "KR3e0089_WYG_007-1a",
+  "last_pb": "KR3e0089_WYG_007-61b",
+  "screen_agrees": 122,
+  "screen_compared": 122,
+  "flags": [
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.233
+    ],
+    "chars": [
+     54
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c75dc39b4508b04e5e2ac",
+  "title": "傳信適用方·卷上 (vol 1)",
+  "work": "KR3e0034",
+  "witness": "WYG",
+  "witness_sha": "181ea5f07b4debc0e30695fe67dcddaf164a912f",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": null,
+  "pages": 124,
+  "status": "done",
+  "pb_pages_in_work": 261,
+  "aligned": 121,
+  "unaligned": 1,
+  "short": 2,
+  "juans_aligned": [
+   0,
+   1
+  ],
+  "first_pb": "KR3e0034_WYG_000-1a",
+  "last_pb": "KR3e0034_WYG_001-59b",
+  "screen_agrees": 121,
+  "screen_compared": 121,
+  "flags": [
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.148
+    ],
+    "chars": [
+     56
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c767401fe4f593c1fb25a",
+  "title": "樂書·卷一百四十九~卷一百五十五 (vol 22)",
+  "work": "KR1i0002",
+  "witness": "WYG",
+  "witness_sha": "5ef89b468957664f078920d02ab77bae0eb39127",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 149,
+   "hi": 155,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 126,
+  "status": "done",
+  "pb_pages_in_work": 3636,
+  "aligned": 93,
+  "unaligned": 3,
+  "short": 30,
+  "juans_aligned": [
+   149,
+   150,
+   151,
+   152,
+   153,
+   154,
+   155
+  ],
+  "first_pb": "KR1i0002_WYG_149-2b",
+  "last_pb": "KR1i0002_WYG_155-5a",
+  "screen_agrees": 93,
+  "screen_compared": 93,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 27,
+    "before_pn": 29,
+    "extra": 1,
+    "between": [
+     "28:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     2,
+     3
+    ],
+    "dice": [
+     0.455,
+     0.5
+    ],
+    "chars": [
+     34,
+     20
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     28
+    ],
+    "dice": [
+     0.212
+    ],
+    "chars": [
+     60
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c74c339b4508b04e593bc",
+  "title": "萬姓統譜·卷三十七~卷三十九 (vol 13)",
+  "work": "KR3k0044",
+  "witness": "WYG",
+  "witness_sha": "28f139231f10adeec1a59de6f21b6ed4c89d4020",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 37,
+   "hi": 39,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 146,
+  "status": "done",
+  "pb_pages_in_work": 5126,
+  "aligned": 141,
+  "unaligned": 1,
+  "short": 4,
+  "juans_aligned": [
+   40,
+   41,
+   42
+  ],
+  "first_pb": "KR3k0044_WYG_040-1a",
+  "last_pb": "KR3k0044_WYG_042-35b",
+  "screen_agrees": 141,
+  "screen_compared": 141,
+  "flags": [
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.177
+    ],
+    "chars": [
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3cbcc3ec254ff6cadf2e44",
+  "title": "禮書綱目·卷三十三~卷三十五 (vol 15)",
+  "work": "KR1d0086",
+  "witness": "WYG",
+  "witness_sha": "2dd17b6fa044bc97e325fa3159a06a7cc8e40643",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 33,
+   "hi": 35,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 128,
+  "status": "done",
+  "pb_pages_in_work": 5170,
+  "aligned": 125,
+  "unaligned": 1,
+  "short": 2,
+  "juans_aligned": [
+   35,
+   36,
+   37
+  ],
+  "first_pb": "KR1d0086_WYG_035-1a",
+  "last_pb": "KR1d0086_WYG_037-29b",
+  "screen_agrees": 125,
+  "screen_compared": 125,
+  "flags": [
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.171
+    ],
+    "chars": [
+     64
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6847af3c49b59c5d7916",
+  "title": "山堂肆考·卷一百九十三~卷一百九十四 (vol 86)",
+  "work": "KR3k0052",
+  "witness": "WYG",
+  "witness_sha": "cf36b611b8bfb9fca01995e020c50f96e5bc9623",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 193,
+   "hi": 194,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 146,
+  "status": "done",
+  "pb_pages_in_work": 3561,
+  "aligned": 0,
+  "unaligned": 142,
+  "short": 4,
+  "juans_aligned": [],
+  "screen_agrees": 0,
+  "screen_compared": 0,
+  "flags": [
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50,
+     51,
+     52,
+     53,
+     54,
+     55,
+     56,
+     57,
+     58,
+     59,
+     60,
+     61,
+     62,
+     63,
+     64,
+     65,
+     67,
+     68,
+     69,
+     70,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     77,
+     78,
+     79,
+     80,
+     81,
+     82,
+     83,
+     84,
+     85,
+     86,
+     87,
+     88,
+     89,
+     90,
+     91,
+     92,
+     93,
+     94,
+     95,
+     96,
+     97,
+     98,
+     99,
+     100,
+     101,
+     102,
+     103,
+     104,
+     105,
+     106,
+     107,
+     108,
+     109,
+     110,
+     111,
+     112,
+     113,
+     114,
+     115,
+     116,
+     117,
+     118,
+     119,
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     128,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135,
+     136,
+     137,
+     138,
+     139,
+     140,
+     141,
+     142,
+     143,
+     144
+    ],
+    "dice": [
+     0.146,
+     0.112,
+     0.048,
+     0.048,
+     0.042,
+     0.044,
+     0.03,
+     0.042,
+     0.025,
+     0.026,
+     0.045,
+     0.041,
+     0.042,
+     0.036,
+     0.167,
+     0.049,
+     0.044,
+     0.052,
+     0.021,
+     0.037,
+     0.041,
+     0.04,
+     0.028,
+     0.023,
+     0.045,
+     0.021,
+     0.03,
+     0.028,
+     0.031,
+     0.027,
+     0.03,
+     0.048,
+     0.023,
+     0.029,
+     0.031,
+     0.029,
+     0.027,
+     0.024,
+     0.038,
+     0.034,
+     0.034,
+     0.035,
+     0.026,
+     0.05,
+     0.043,
+     0.058,
+     0.054,
+     0.058,
+     0.045,
+     0.062,
+     0.035,
+     0.028,
+     0.12,
+     0.107,
+     0.044,
+     0.034,
+     0.031,
+     0.056,
+     0.05,
+     0.041,
+     0.054,
+     0.04,
+     0.088,
+     0.059,
+     0.153,
+     0.034,
+     0.044,
+     0.084,
+     0.267,
+     0.033,
+     0.04,
+     0.036,
+     0.032,
+     0.088,
+     0.063,
+     0.036,
+     0.038,
+     0.038,
+     0.037,
+     0.054,
+     0.026,
+     0.034,
+     0.038,
+     0.044,
+     0.042,
+     0.034,
+     0.048,
+     0.046,
+     0.037,
+     0.046,
+     0.09,
+     0.048,
+     0.069,
+     0.033,
+     0.047,
+     0.133,
+     0.272,
+     0.043,
+     0.034,
+     0.06,
+     0.039,
+     0.027,
+     0.041,
+     0.05,
+     0.053,
+     0.069,
+     0.042,
+     0.078,
+     0.033,
+     0.042,
+     0.049,
+     0.039,
+     0.037,
+     0.042,
+     0.027,
+     0.069,
+     0.043,
+     0.046,
+     0.025,
+     0.026,
+     0.034,
+     0.06,
+     0.032,
+     0.069,
+     0.048,
+     0.029,
+     0.027,
+     0.033,
+     0.048,
+     0.038,
+     0.039,
+     0.03,
+     0.044,
+     0.06,
+     0.049,
+     0.042,
+     0.034,
+     0.039,
+     0.169,
+     0.03,
+     0.033,
+     0.039
+    ],
+    "chars": [
+     63,
+     92,
+     121,
+     152,
+     132,
+     95,
+     125,
+     117,
+     151,
+     128,
+     109,
+     132,
+     100,
+     168,
+     93,
+     121,
+     148,
+     109,
+     106,
+     106,
+     141,
+     139,
+     131,
+     137,
+     134,
+     117,
+     100,
+     110,
+     95,
+     105,
+     73,
+     86,
+     112,
+     158,
+     121,
+     132,
+     117,
+     141,
+     136,
+     133,
+     94,
+     122,
+     145,
+     166,
+     88,
+     146,
+     94,
+     65,
+     116,
+     74,
+     114,
+     74,
+     111,
+     124,
+     88,
+     140,
+     136,
+     119,
+     83,
+     92,
+     82,
+     130,
+     131,
+     30,
+     65,
+     138,
+     88,
+     115,
+     81,
+     91,
+     83,
+     86,
+     84,
+     94,
+     113,
+     96,
+     112,
+     103,
+     90,
+     127,
+     123,
+     104,
+     135,
+     101,
+     101,
+     60,
+     41,
+     122,
+     76,
+     74,
+     124,
+     51,
+     88,
+     111,
+     118,
+     101,
+     93,
+     57,
+     116,
+     94,
+     147,
+     78,
+     67,
+     55,
+     103,
+     76,
+     113,
+     109,
+     92,
+     84,
+     77,
+     78,
+     94,
+     114,
+     60,
+     63,
+     89,
+     101,
+     91,
+     43,
+     86,
+     114,
+     103,
+     106,
+     105,
+     52,
+     103,
+     125,
+     60,
+     92,
+     79,
+     88,
+     98,
+     107,
+     71,
+     76,
+     80,
+     104,
+     93,
+     96,
+     93,
+     86
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3ce7ab0a0011cb4bc0a847",
+  "title": "詩總聞·卷八~卷十 (vol 12)",
+  "work": "KR1c0014",
+  "witness": "WYG",
+  "witness_sha": "c52d6a055818b8b2ed167aab7b2370618779e946",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 8,
+   "hi": 10,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 145,
+  "status": "done",
+  "pb_pages_in_work": 1208,
+  "aligned": 132,
+  "unaligned": 7,
+  "short": 6,
+  "juans_aligned": [
+   8,
+   9,
+   10
+  ],
+  "first_pb": "KR1c0014_WYG_008-1a",
+  "last_pb": "KR1c0014_WYG_010-21a",
+  "screen_agrees": 132,
+  "screen_compared": 132,
+  "flags": [
+   {
+    "kind": "leaves-skipped",
+    "after_pn": 112,
+    "before_pn": 115,
+    "leaves_skipped": 6,
+    "from_pb": "KR1c0014_WYG_010-3b",
+    "to_pb": "KR1c0014_WYG_010-8a"
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.267
+    ],
+    "chars": [
+     27
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     113,
+     114
+    ],
+    "dice": [
+     0.435,
+     0.453
+    ],
+    "chars": [
+     584,
+     398
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     118
+    ],
+    "dice": [
+     0.594
+    ],
+    "chars": [
+     132
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     143,
+     144,
+     145
+    ],
+    "dice": [
+     0.069,
+     0.157,
+     0.021
+    ],
+    "chars": [
+     124,
+     118,
+     24
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c800801fe4f593c21f140",
+  "title": "童溪易傳·卷一~卷三 (vol 1)",
+  "work": "KR1a0047",
+  "witness": "WYG",
+  "witness_sha": "42a0441ca1c72afff2c9bfe973518c092eb58e6a",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 1,
+   "hi": 3,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 129,
+  "status": "done",
+  "pb_pages_in_work": 1471,
+  "aligned": 118,
+  "unaligned": 2,
+  "short": 9,
+  "juans_aligned": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "first_pb": "KR1a0047_WYG_000-1a",
+  "last_pb": "KR1a0047_WYG_003-20b",
+  "screen_agrees": 118,
+  "screen_compared": 118,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 85,
+    "before_pn": 88,
+    "extra": 1,
+    "between": [
+     "86:short",
+     "87:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.156
+    ],
+    "chars": [
+     60
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     87
+    ],
+    "dice": [
+     0.053
+    ],
+    "chars": [
+     46
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c70de01fe4f593c1d5b26",
+  "title": "管子補注·卷八~卷十 (vol 3)",
+  "work": "KR3c0002",
+  "witness": "WYG",
+  "witness_sha": "1157e0bc722630bfc567380642526a6e7368ace2",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 8,
+   "hi": 10,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 149,
+  "status": "done",
+  "pb_pages_in_work": 1068,
+  "aligned": 145,
+  "unaligned": 2,
+  "short": 2,
+  "juans_aligned": [
+   8,
+   9,
+   10
+  ],
+  "first_pb": "KR3c0002_WYG_008-1a",
+  "last_pb": "KR3c0002_WYG_010-25b",
+  "screen_agrees": 145,
+  "screen_compared": 145,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 98,
+    "before_pn": 100,
+    "extra": 1,
+    "between": [
+     "99:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.133
+    ],
+    "chars": [
+     56
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     99
+    ],
+    "dice": [
+     0.185
+    ],
+    "chars": [
+     50
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6c0c01fe4f593c1afc3e",
+  "title": "疑耀·卷四~卷五 (vol 3)",
+  "work": "KR3j0063",
+  "witness": "WYG",
+  "witness_sha": "2f2039d42f2067fa67f918a8910458399fa0eaaf",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 4,
+   "hi": 5,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 147,
+  "status": "done",
+  "pb_pages_in_work": 543,
+  "aligned": 143,
+  "unaligned": 2,
+  "short": 2,
+  "juans_aligned": [
+   4,
+   5
+  ],
+  "first_pb": "KR3j0063_WYG_004-1a",
+  "last_pb": "KR3j0063_WYG_005-37b",
+  "screen_agrees": 143,
+  "screen_compared": 143,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 71,
+    "before_pn": 74,
+    "extra": 1,
+    "between": [
+     "72:short",
+     "73:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.118
+    ],
+    "chars": [
+     49
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     73
+    ],
+    "dice": [
+     0.078
+    ],
+    "chars": [
+     49
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6ad6af3c49b59c5eaa11",
+  "title": "日講四書解義·卷二十二~卷二十三 (vol 14)",
+  "work": "KR1h0053",
+  "witness": "WYG",
+  "witness_sha": "7ad41eb3f55e42399fb089ed1517319517783039",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 22,
+   "hi": 23,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 165,
+  "status": "done",
+  "pb_pages_in_work": 2515,
+  "aligned": 161,
+  "unaligned": 2,
+  "short": 2,
+  "juans_aligned": [
+   23,
+   24
+  ],
+  "first_pb": "KR1h0053_WYG_023-1a",
+  "last_pb": "KR1h0053_WYG_024-43b",
+  "screen_agrees": 161,
+  "screen_compared": 161,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 77,
+    "before_pn": 80,
+    "extra": 1,
+    "between": [
+     "78:short",
+     "79:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.224
+    ],
+    "chars": [
+     66
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     79
+    ],
+    "dice": [
+     0.222
+    ],
+    "chars": [
+     67
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6f2201fe4f593c1c9538",
+  "title": "簡端錄·卷一~卷三 (vol 1)",
+  "work": "KR1g0016",
+  "witness": "WYG",
+  "witness_sha": "79a550d5b5535ce985f7febd9ddf6f0bea42db88",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 1,
+   "hi": 3,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 155,
+  "status": "done",
+  "pb_pages_in_work": 544,
+  "aligned": 141,
+  "unaligned": 8,
+  "short": 6,
+  "juans_aligned": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "first_pb": "KR1g0016_WYG_000-1a",
+  "last_pb": "KR1g0016_WYG_003-24a",
+  "screen_agrees": 141,
+  "screen_compared": 141,
+  "flags": [
+   {
+    "kind": "leaves-skipped",
+    "after_pn": 9,
+    "before_pn": 13,
+    "leaves_skipped": 1,
+    "from_pb": "KR1g0016_WYG_000-4a",
+    "to_pb": "KR1g0016_WYG_001-1a"
+   },
+   {
+    "kind": "extra-pages",
+    "after_pn": 105,
+    "before_pn": 108,
+    "extra": 1,
+    "between": [
+     "106:short",
+     "107:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.125
+    ],
+    "chars": [
+     51
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     11,
+     12
+    ],
+    "dice": [
+     0.122,
+     0.087
+    ],
+    "chars": [
+     90,
+     142
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     19,
+     20
+    ],
+    "dice": [
+     0.097,
+     0.095
+    ],
+    "chars": [
+     106,
+     123
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     87,
+     88
+    ],
+    "dice": [
+     0.093,
+     0.128
+    ],
+    "chars": [
+     117,
+     125
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     107
+    ],
+    "dice": [
+     0.113
+    ],
+    "chars": [
+     59
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3ce8230a0011cb4bc0c42c",
+  "title": "六家詩名物疏·提要上~提要下 (vol 1)",
+  "work": "KR1c0039",
+  "witness": "WYG",
+  "witness_sha": "2c8a138052f9244ad26cca4477893cce73f17d34",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": null,
+  "pages": 157,
+  "status": "done",
+  "pb_pages_in_work": 2233,
+  "aligned": 152,
+  "unaligned": 2,
+  "short": 3,
+  "juans_aligned": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "first_pb": "KR1c0039_WYG_000-1a",
+  "last_pb": "KR1c0039_WYG_003-19b",
+  "screen_agrees": 152,
+  "screen_compared": 152,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 82,
+    "before_pn": 84,
+    "extra": 1,
+    "between": [
+     "83:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.125
+    ],
+    "chars": [
+     58
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     83
+    ],
+    "dice": [
+     0.154
+    ],
+    "chars": [
+     59
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c67f9af3c49b59c5d53b9",
+  "title": "山堂肆考·卷十二~卷十四 (vol 6)",
+  "work": "KR3k0052",
+  "witness": "WYG",
+  "witness_sha": "cf36b611b8bfb9fca01995e020c50f96e5bc9623",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": null,
+  "juan_title": {
+   "lo": 12,
+   "hi": 14,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 184,
+  "status": "done",
+  "pb_pages_in_work": 3561,
+  "aligned": 179,
+  "unaligned": 1,
+  "short": 4,
+  "juans_aligned": [
+   12,
+   13,
+   14
+  ],
+  "first_pb": "KR3k0052_WYG_012-1a",
+  "last_pb": "KR3k0052_WYG_014-29b",
+  "screen_agrees": 179,
+  "screen_compared": 179,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 72,
+    "before_pn": 75,
+    "extra": 1,
+    "between": [
+     "73:short",
+     "74:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     74
+    ],
+    "dice": [
+     0.176
+    ],
+    "chars": [
+     60
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6c4339b4508b04e47ebd",
+  "title": "日知錄·卷二十~卷二十一 (vol 12)",
+  "work": "KR3j0070",
+  "witness": "WYG",
+  "witness_sha": "5950b9975165d9bc011bffdd7f568bb7c57b853f",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 20,
+   "hi": 21,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 177,
+  "status": "done",
+  "pb_pages_in_work": 2933,
+  "aligned": 173,
+  "unaligned": 2,
+  "short": 2,
+  "juans_aligned": [
+   20,
+   21
+  ],
+  "first_pb": "KR3j0070_WYG_020-1a",
+  "last_pb": "KR3j0070_WYG_021-48a",
+  "screen_agrees": 173,
+  "screen_compared": 173,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 80,
+    "before_pn": 82,
+    "extra": 1,
+    "between": [
+     "81:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.179
+    ],
+    "chars": [
+     51
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     81
+    ],
+    "dice": [
+     0.211
+    ],
+    "chars": [
+     52
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c716e01fe4f593c1d78cb",
+  "title": "御纂朱子全書·卷三十九~卷四十 (vol 83)",
+  "work": "KR3a0108",
+  "witness": "WYG",
+  "witness_sha": "ee6e4571a532c83f02f3fb76f369835cbfc8395f",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 39,
+   "hi": 40,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 199,
+  "status": "done",
+  "pb_pages_in_work": 6279,
+  "aligned": 183,
+  "unaligned": 10,
+  "short": 6,
+  "juans_aligned": [
+   39,
+   40
+  ],
+  "first_pb": "KR3a0108_WYG_039-1a",
+  "last_pb": "KR3a0108_WYG_040-47a",
+  "screen_agrees": 183,
+  "screen_compared": 183,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 59,
+    "before_pn": 62,
+    "extra": 1,
+    "between": [
+     "60:short",
+     "61:unaligned"
+    ]
+   },
+   {
+    "kind": "extra-pages",
+    "after_pn": 62,
+    "before_pn": 67,
+    "extra": 2,
+    "between": [
+     "63:unaligned",
+     "64:unaligned",
+     "65:unaligned",
+     "66:short"
+    ]
+   },
+   {
+    "kind": "extra-pages",
+    "after_pn": 72,
+    "before_pn": 77,
+    "extra": 2,
+    "between": [
+     "73:unaligned",
+     "74:unaligned",
+     "75:short",
+     "76:short"
+    ]
+   },
+   {
+    "kind": "extra-pages",
+    "after_pn": 102,
+    "before_pn": 105,
+    "extra": 2,
+    "between": [
+     "103:unaligned",
+     "104:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.552
+    ],
+    "chars": [
+     22
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     61
+    ],
+    "dice": [
+     0.038
+    ],
+    "chars": [
+     33
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     63,
+     64,
+     65
+    ],
+    "dice": [
+     0.084,
+     0.06,
+     0.059
+    ],
+    "chars": [
+     56,
+     76,
+     230
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     73,
+     74
+    ],
+    "dice": [
+     0.161,
+     0.167
+    ],
+    "chars": [
+     50,
+     48
+    ]
+   },
+   {
+    "kind": "unaligned-run",
+    "pns": [
+     103,
+     104
+    ],
+    "dice": [
+     0.128,
+     0.571
+    ],
+    "chars": [
+     27,
+     21
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     199
+    ],
+    "dice": [
+     0.128
+    ],
+    "chars": [
+     27
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c711839b4508b04e51b03",
+  "title": "格物通·卷九十~卷九十四 (vol 19)",
+  "work": "KR3a0094",
+  "witness": "WYG",
+  "witness_sha": "95d2ef532c26f6228e39c9b4fc480e9de0efd6bd",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 90,
+   "hi": 94,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 185,
+  "status": "done",
+  "pb_pages_in_work": 3507,
+  "aligned": 176,
+  "unaligned": 2,
+  "short": 7,
+  "juans_aligned": [
+   90,
+   91,
+   92,
+   93,
+   94
+  ],
+  "first_pb": "KR3a0094_WYG_090-1a",
+  "last_pb": "KR3a0094_WYG_094-20a",
+  "screen_agrees": 176,
+  "screen_compared": 176,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 36,
+    "before_pn": 39,
+    "extra": 1,
+    "between": [
+     "37:short",
+     "38:unaligned"
+    ]
+   },
+   {
+    "kind": "extra-pages",
+    "after_pn": 142,
+    "before_pn": 146,
+    "extra": 1,
+    "between": [
+     "143:short",
+     "144:short",
+     "145:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     38
+    ],
+    "dice": [
+     0.203
+    ],
+    "chars": [
+     54
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     145
+    ],
+    "dice": [
+     0.185
+    ],
+    "chars": [
+     60
+    ]
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6c2701fe4f593c1b0da1",
+  "title": "通雅·卷四十一~卷四十三 (vol 22)",
+  "work": "KR3j0066",
+  "witness": "WYG",
+  "witness_sha": "4627ff078a9b563f45fb824e6d1e6d53b3911b0e",
+  "repo_licence": null,
+  "licence_file": false,
+  "readme_licence_line": null,
+  "readme_witness": [
+   "WYG",
+   "四庫全書・文淵閣"
+  ],
+  "juan_title": {
+   "lo": 41,
+   "hi": 43,
+   "part": "",
+   "sub": ""
+  },
+  "pages": 195,
+  "status": "done",
+  "pb_pages_in_work": 3798,
+  "aligned": 190,
+  "unaligned": 2,
+  "short": 3,
+  "juans_aligned": [
+   41,
+   42,
+   43
+  ],
+  "first_pb": "KR3j0066_WYG_041-1a",
+  "last_pb": "KR3j0066_WYG_043-39a",
+  "screen_agrees": 190,
+  "screen_compared": 190,
+  "flags": [
+   {
+    "kind": "extra-pages",
+    "after_pn": 115,
+    "before_pn": 118,
+    "extra": 1,
+    "between": [
+     "116:short",
+     "117:unaligned"
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     2
+    ],
+    "dice": [
+     0.175
+    ],
+    "chars": [
+     53
+    ]
+   },
+   {
+    "kind": "unaligned-page",
+    "pns": [
+     117
+    ],
+    "dice": [
+     0.159
+    ],
+    "chars": [
+     59
+    ]
+   }
+  ]
+ }
+]
