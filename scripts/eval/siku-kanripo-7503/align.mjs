@@ -47,7 +47,7 @@ for (const d of DRAW.books) {
     const Q = fold(body);
     const r = { book_id: d.book_id, pn: p.page_number, page_id: p.id, pilot: PILOT.has(p.id), ocr_source: p.ocr?.source || null, chars: [...Q].length,
       key_scoped: [p.archived_photo, p.display_photo, p.thumbnail_blob].filter(Boolean).every((u) => !/images\.sourcelibrary\.org/.test(u) || isBookScopedUrl(u, d.book_id)),
-      archived_photo: p.archived_photo || null, screen_pb: p.ocr?.qa_screen?.pb || null, screen_dice: p.ocr?.qa_screen?.dice ?? null };
+      archived_photo: p.archived_photo || null, screen_pb: p.ocr?.qa_screen?.pb || null, screen_dice: p.ocr?.qa_screen?.dice ?? null };   // image-pick-ok: the stored key is recorded for the R2 book-scope check, never shown or fetched
     if (r.chars < MIN_CHARS) { r.status = 'short'; seq.push(r); continue; }
     let m = last != null ? best(Q, pbs, Math.max(0, last - 6), Math.min(pbs.length, last + 12)) : null;
     if (!m || m.dice < THRESH) { const full = best(Q, pbs); if (!m || full.dice > m.dice) m = full; }
