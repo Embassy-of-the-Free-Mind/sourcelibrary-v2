@@ -96,43 +96,45 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
   editedBy: 'edited by',
 };
 
+// Off English every translation label names the language: these count the ENGLISH
+// translation, and a reader of /es or /zh otherwise takes the book to be in theirs (#7496).
 export const CARD_LABELS_ES: CollectionBookCardLabels = {
-  firstTranslation: 'Primera traducción',
+  firstTranslation: 'Primera trad. al inglés',
   pages: 'páginas',
   ocr: 'OCR',
-  translated: 'Traducido',
-  complete: 'Completo',
+  translated: 'Trad. al inglés',
+  complete: 'Inglés completo',
   inEnglish: 'En inglés',
   editedBy: 'editado por',
 };
 
 // Latin (#6254). "Conversus" is the ENGLISH translation; nothing is translated into Latin.
 export const CARD_LABELS_LA: CollectionBookCardLabels = {
-  firstTranslation: 'Prima conversio',
+  firstTranslation: 'Prima conversio Anglica',
   pages: 'paginae',
   ocr: 'OCR',
-  translated: 'Conversus',
-  complete: 'Absolutus',
+  translated: 'Anglice conversus',
+  complete: 'Anglice absolutus',
   inEnglish: 'Anglice',
   editedBy: 'edidit',
 };
 
 export const CARD_LABELS_NL: CollectionBookCardLabels = {
-  firstTranslation: 'Eerste vertaling',
+  firstTranslation: 'Eerste Engelse vertaling',
   pages: 'pagina’s',
   ocr: 'OCR',
-  translated: 'Vertaald',
-  complete: 'Volledig',
+  translated: 'Engels vertaald',
+  complete: 'Engels volledig',
   inEnglish: 'Engelstalig',
   editedBy: 'bezorgd door',
 };
 
 export const CARD_LABELS_ZH: CollectionBookCardLabels = {
-  firstTranslation: '首次译出',
+  firstTranslation: '首次英译',
   pages: '页',
   ocr: 'OCR',
-  translated: '已译',
-  complete: '全译',
+  translated: '已英译',
+  complete: '英译完整',
   inEnglish: '英文原著',
   editedBy: '编者',
 };
