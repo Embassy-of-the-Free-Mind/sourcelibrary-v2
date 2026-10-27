@@ -28,6 +28,12 @@
  *     --tag embed-x --books id1,id2 --budget 15 --lanes embed-gemini --meter-endpoints worker/embed-gemini --by "why"
  *     (--meter-endpoints: the envelope's meter counts only usage rows with these endpoints —
  *      without it, every lane's spend on these books counts against it, #5729)
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
+ *     --tag embed-sitewide-2026-10 --all-books --budget 40 --lanes embed-gemini --meter-endpoints worker/embed-gemini \
+ *     --expires 2026-11-26 --by "why"
+ *     (--all-books: a LANE-WIDE envelope, no book list, #7402 — its lanes dispatch UNSCOPED on every
+ *      book while it has room, metered by endpoint alone since created_at. Refused without --lanes
+ *      and --meter-endpoints, and with --books/--collection. It grants no pause bypass.)
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --remove --by "done"
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --extend 7 --by "why"
  *     (every envelope expires, #4599: expires_at = created + 14 days unless --expires <ISO date>
@@ -47,7 +53,7 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { updateConfigVersioned } from '../lib/versioned-config.mjs';
-import { readScopeEnvelopes, getScopeSpendUsd, nextEnvelopeExpiry, ENVELOPE_TTL_DAYS } from '../lib/spend-guard.mjs';
+import { readScopeEnvelopes, getScopeSpendUsd, nextEnvelopeExpiry, envelopeShapeError, envelopeMeterIds, ENVELOPE_TTL_DAYS } from '../lib/spend-guard.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -66,17 +72,16 @@ await withMongo(async (db) => {
       const env = envelopes.get(tag);
       let spendNote = 'no envelope (pause-bypass only — does NOT open the spend dial)';
       if (env) {
-        const ids = new Set((s.book_ids || []).map(String));
-        if (env.collections.length) {
-          const rows = await db.collection('books').find({ collections: { $in: env.collections } }).project({ id: 1 }).toArray();
-          for (const b of rows) ids.add(String(b.id));
-        }
-        const spend = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at, endpoints: env.meter_endpoints });
-        const state = env.expired ? 'EXPIRED (closed)'
+        const ids = await envelopeMeterIds(db, env);
+        const spend = env.misconfigured ? { usd: 0, rows: 0, meterError: null }
+          : await getScopeSpendUsd(db, { ids, since: env.created_at, endpoints: env.meter_endpoints });
+        const state = env.misconfigured ? `MISCONFIGURED (${env.misconfigured}) — closed`
+          : env.expired ? 'EXPIRED (closed)'
           : spend.meterError ? `METER ERROR: ${spend.meterError}` : (spend.usd < env.budget_usd ? 'OPEN' : 'SPENT');
-        spendNote = `envelope $${spend.usd.toFixed(2)} / $${env.budget_usd.toFixed(2)} → ${state} (${ids.size} books, ${spend.rows} usage rows${env.meter_endpoints ? `; metering only ${env.meter_endpoints.join(', ')}` : ''})`;
+        const reach = env.all_books ? 'ALL BOOKS' : `${ids.length} books`;
+        spendNote = `envelope $${spend.usd.toFixed(2)} / $${env.budget_usd.toFixed(2)} → ${state} (${reach}, ${spend.rows} usage rows${env.lanes ? `; lanes ${env.lanes.join(', ')}` : ''}${env.meter_endpoints ? `; metering only ${env.meter_endpoints.join(', ')}` : ''})`;
       }
-      console.log(`${tag}`);
+      console.log(`${tag}${env?.all_books ? '  [LANE-WIDE: all books, unscoped dispatch for its lanes]' : ''}`);
       console.log(`  book_ids: ${(s.book_ids || []).length}  collections: ${(s.collections || []).join(', ') || '(none)'}`);
       console.log(`  created: ${s.created_at ? new Date(s.created_at).toISOString() : '(unknown)'} by ${s.created_by || '(unknown)'}`);
       if (env) {
@@ -128,7 +133,11 @@ await withMongo(async (db) => {
   if (budgetRaw != null && (!Number.isFinite(budget) || budget <= 0)) {
     console.error('--budget must be a positive number of USD'); process.exit(1);
   }
-  if (!existing && !books && !collection) {
+  const allBooks = flag('all-books') || existing?.all_books === true;
+  if (allBooks && (books || collection)) {
+    console.error('--all-books cannot be combined with --books/--collection: a lane-wide envelope has no book list.'); process.exit(1);
+  }
+  if (!existing && !books && !collection && !allBooks) {
     console.error(`Scope '${tag}' does not exist — creating one needs --books and/or --collection.`); process.exit(1);
   }
   if (flag('replace-books') && !books) {
@@ -157,11 +166,21 @@ await withMongo(async (db) => {
   }
   if (val('meter-endpoints')) next.meter_endpoints = val('meter-endpoints').split(',').map((s) => s.trim()).filter(Boolean);
   else if (existing?.meter_endpoints) next.meter_endpoints = existing.meter_endpoints;
+  if (allBooks) next.all_books = true;
+  // A lane-wide envelope funds its lanes on every book (#7402): refuse it unless it is laned and
+  // metered by endpoint, so it can never fund another worker or meter the whole site.
+  const shapeError = envelopeShapeError(next);
+  if (shapeError) {
+    console.error(`Refused: ${shapeError}. --all-books needs --lanes and --meter-endpoints.`); process.exit(1);
+  }
   if (budget != null) next.budget_usd = budget;
   else if (existing?.budget_usd != null) next.budget_usd = existing.budget_usd;
   const extendRaw = val('extend');
   if ((val('expires') || extendRaw != null) && next.budget_usd == null) {
     console.error('--expires/--extend apply to an envelope; this scope has no --budget.'); process.exit(1);
+  }
+  if (allBooks && next.budget_usd == null) {
+    console.error('--all-books needs --budget: without an envelope it would grant nothing.'); process.exit(1);
   }
   if (next.budget_usd != null) {
     try {
@@ -174,7 +193,7 @@ await withMongo(async (db) => {
   }
 
   await updateConfigVersioned(db, 'processing_control', { $set: { [`allow_scopes.${tag}`]: next } }, by);
-  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}${next.lanes ? `, envelope lanes [${next.lanes.join(', ')}]` : ''}${next.meter_endpoints ? `, metering only [${next.meter_endpoints.join(', ')}]` : ''}`);
+  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}${next.lanes ? `, envelope lanes [${next.lanes.join(', ')}]` : ''}${next.meter_endpoints ? `, metering only [${next.meter_endpoints.join(', ')}]` : ''}${next.all_books ? ' — LANE-WIDE: these lanes dispatch unscoped on every book' : ''}`);
   if (next.expires_at) {
     const lapsed = next.expires_at <= new Date();
     console.log(`Envelope expires ${next.expires_at.toISOString()}${lapsed ? ' — ALREADY EXPIRED, so it is CLOSED: pass --extend <days> to reopen it' : ''}`);
