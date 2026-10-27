@@ -84,5 +84,7 @@ EOF
 fi
 
 # the Mongo half, on the CPU, with the card already free: write every book whose planned pages are all back
+# (APPLY=0: read only — a canary whose plan/ is a subset and whose out/ links to the main lane dir's)
+[ "${APPLY:-1}" = 1 ] || exit 0
 cd "$CODE_DIR" && node --env-file="$ENV_FILE" scripts/workers/paddle-zh-lane.mjs apply --apply 2>&1 | tail -5
 node --env-file="$ENV_FILE" scripts/workers/paddle-zh-lane.mjs status 2>&1 | tail -8
