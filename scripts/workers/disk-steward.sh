@@ -39,7 +39,7 @@ IDLE_DAYS=${DISK_STEWARD_IDLE_DAYS:-3}
 # Never moved: the live checkout, the job wrapper's state, and tool/config homes.
 KEEP=" sourcelibrary bin claude-jobs snap go .ssh .claude .config .local .npm .nvm .cache .cargo .rustup "
 now() { date -u +%FT%TZ; }
-echo "$(now) disk-steward ${APPLY:+--apply}${APPLY:---dry-run} root: $(df -h --output=used,avail,pcent / | tail -1)"
+echo "$(now) disk-steward $([ -n "$APPLY" ] && echo --apply || echo --dry-run) root: $(df -h --output=used,avail,pcent / | tail -1)"
 
 # 1. Reap merged worktrees.
 if [ -z "$AGY_ONLY" ] && [ -f "$SL/scripts/maintenance/reap-worktrees.mjs" ]; then
@@ -80,7 +80,7 @@ for T in "$ROOT"/.gemini/antigravity-cli/*.tmp; do
   n=$((n + 1)); kb=$((kb + $(du -k "$T" | cut -f1)))
   [ -n "$APPLY" ] && rm -f "$T"
 done
-[ "$n" -gt 0 ] && echo "  ${APPLY:+removed}${APPLY:-would remove} $n orphaned agy .tmp files ($((kb / 1048576)) GB)"
+[ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n orphaned agy .tmp files ($((kb / 1048576)) GB)"
 [ -n "$AGY_ONLY" ] && { echo "$(now) done (agy only). root: $(df -h --output=used,avail,pcent / | tail -1)"; exit 0; }
 
 # 2. Move idle /root folders to the volume.
