@@ -337,3 +337,10 @@
 # translate-batch-worker lines above, and cli-translate / realtime-translate inside jobs. Set to `dry` on main 2026-10-22
 # (job seam-prevent-7118); log + proposals in /mnt/HC_Volume_105839809/seam-guard-6742. Off: rm the file. One process
 # off: SEAM_GUARD=off. Sonnet fallback while agy is locked: ≤ SEAM_GUARD_CLAUDE_DAILY (1500) joins a day, none at ≥ 50% weekly.
+
+# Siku Quanshu translation lane (#5600, Derek 2026-10-27 "yes" + "lower the bar, keep them as drafts"): every 2 h at :25,
+# one wave of up to ~1,500 pages of the held Siku cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660) on agy 3.8 Flash
+# low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
+# left, `agy -p /quota`) is above 0.35 weekly remaining, or 0.05 in the last 24 h before its reset; stops mid-wave below.
+# Opus spot check per 5,000 pages written. Pause: touch /mnt/HC_Volume_105839809/siku-lane-5600/STOP (rm to resume).
+25 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600
