@@ -17,9 +17,12 @@
 # drivers should still lower their own parallelism — this is the backstop that holds when they do not.
 #
 # Off for one call: CLAUDE_PACE_OFF=1. Install (per box as root): --install. Undo: --uninstall.
-# Installs at /usr/local/bin/claude, which precedes /usr/bin in every PATH on the boxes, so running jobs pick it up
+# Installs at /usr/local/bin/claude, which precedes /usr/bin and /root/.local/bin in job PATHs on the boxes, so running jobs pick it up
 # on their next spawn without a restart. The real CLI stays where its installer put it.
-REAL="${CLAUDE_REAL:-/usr/bin/claude}"
+# The real CLI: the apt/npm install on main, the native installer's ~/.local/bin on the other boxes. Job PATHs put
+# /usr/local/bin ahead of /root/.local/bin, so the shim is found first either way.
+REAL="${CLAUDE_REAL:-}"
+[ -n "$REAL" ] || for c in /usr/bin/claude /root/.local/bin/claude; do [ -x "$c" ] && REAL=$c && break; done
 SELF=/usr/local/bin/claude
 DIR="${CLAUDE_PACE_DIR:-/root/claude-pace}"
 METER="${CLAUDE_PACE_METER:-/root/.claude-limits/latest.json}"
