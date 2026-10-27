@@ -13,9 +13,14 @@
  *   merge  --list=L.jsonl --spans=S.jsonl --key=K.json --replies=R.jsonl --out=M.jsonl
  *          Per page: every RISKY span the leaf does not clearly show as the correction (draft, other, unclear, no
  *          answer) goes back to the draft's syllables; LOW spans and confirmed spans stay. Rows {page_id, text, reverted}.
+ *   write  --merge=M.jsonl --run=diffqa-6740-<name> [--apply]   (needs --env-file)
+ *          Each merged page through writePageText, compare-and-set on the correction it was merged from (a page changed
+ *          since is skipped), the whole prior ocr kept in page_revisions under the run id (revert-run.mjs undoes it);
+ *          ocr.diffqa records the spans put back; translation_stale (lane diffqa-6740) where English exists.
  */
 import fs from 'node:fs';
 import { diffSyllables } from '../../../lib/tibetan-yatags-guard.mjs';
+import { contentHash } from '../../../lib/write-provenance.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
@@ -97,4 +102,24 @@ if (CMD === 'spans') {
   }
   fs.writeFileSync(arg('out'), rows.map((x) => JSON.stringify(x)).join('\n') + (rows.length ? '\n' : ''));
   console.log(JSON.stringify({ ...t, pages_changed: rows.length }));
-} else if (CMD) { console.error('usage: diffqa.mjs spans|merge (see the header)'); process.exit(2); }
+} else if (CMD === 'write') {
+  const { MongoClient } = await import('mongodb');
+  const { writePageText, textHash } = await import('../../../lib/page-text-writer.mjs');
+  const { markTranslationsStale } = await import('../../../lib/syriac-kraken-lane.mjs');
+  const APPLY = process.argv.includes('--apply'); const RUN = arg('run');
+  if (!/^diffqa-6740-/.test(RUN || '')) { console.error('--run=diffqa-6740-<name> is required'); process.exit(2); }
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); const db = c.db('bookstore');
+  const t = { rows: 0, written: 0, changed_since: 0, stale_marked: 0 }; const done = [];
+  for (const r of readJsonl(arg('merge'))) {
+    t.rows++;
+    const page = await db.collection('pages').findOne({ id: r.page_id }, { projection: { id: 1, ocr: 1 } });
+    if (!page || contentHash(page.ocr?.data || '') !== contentHash(r.next_hash_from)) { t.changed_since++; continue; }
+    if (!APPLY) continue;
+    const next = { ...page.ocr, data: r.text, content_hash: contentHash(r.text), updated_at: new Date(),
+      diffqa: { run: RUN, reverted_spans: r.reverted, from_hash: contentHash(r.next_hash_from), issue: 6740 } };
+    const w = await writePageText(db, r.page_id, 'ocr', next, { by: 'diffqa.mjs (sealed Opus leaf check of risky spans)', reason: `#6740 diff-QA: ${r.reverted.length} span(s) the leaf does not show as corrected put back to the Yigdzin draft`, run_id: RUN, expect_prior_hash: textHash(page.ocr), verbatim: true });
+    if (w.status === 'written') { t.written++; done.push({ id: r.page_id, text: r.text }); } else t.changed_since++;
+  }
+  if (APPLY && done.length) t.stale_marked = await markTranslationsStale(db, done, new Date(), 'diffqa-6740');
+  console.log(JSON.stringify({ apply: APPLY, run: RUN, ...t })); await c.close();
+} else if (CMD) { console.error('usage: diffqa.mjs spans|merge|write (see the header)'); process.exit(2); }
