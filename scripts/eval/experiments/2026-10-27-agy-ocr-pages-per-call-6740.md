@@ -1,7 +1,7 @@
 ---
 stage: ocr
 measure: [accuracy, judged]
-languages: [Chinese, German]
+languages: [lzh, de]
 scripts: [Hant, Latn]
 canons: []
 n_books: 30
