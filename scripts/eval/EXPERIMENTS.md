@@ -1005,6 +1005,111 @@ Files in `scripts/eval/caseless-drift-7503/`:
 
 Fixtures: `tests/fixtures/block-drift/caseless-boundaries.json`. Read only, nothing written.
 
+## 2026-10-27 · Does one per-book brief make page translations better? (#7499 row 6)
+
+PRIOR ART: `2026-10-26-translation-prompt-v19-cognates-4741.md` (a general cognate rule failed; "a per-book glossary,
+not a general rule"), `2026-10-16-seam-prompt-candidate-6742.md` (the CLI request reproduced call for call, the join
+judge and the A-vs-A floor reused here), #4741 (the glossary proposal, from the curated vocabulary rather than per book).
+
+**Who this is for.** Derek and the router. Today every page is translated with the prompt and the previous page's
+English. The question was whether to build a step that writes ONE brief per book and gives it to every page call.
+
+**Design** (preregistered and committed with the 10 briefs before any arm ran: `scripts/eval/PREREGISTRATION-book-brief-7499.md`).
+- **Books:** a seeded draw (7499) from the xlref reference books: 3 Latin print (Erasmus *Enchiridion*, Bacon *Novum
+  Organum*, Cicero *De officiis*), 2 vernacular (*Theologia deutsch*, Cabeza de Vaca *Naufragios*), 2 Greek (Burnet's
+  Plato, *Republic* IX; the Didot Septuagint with its facing Latin), 1 Arabic (*al-Rawḍ al-ʿāṭir*), 2 Chinese with
+  printed commentary (莊子旁注; Fazang's 大乘起信論義記). No live Sanskrit book with a printed commentary passed, so
+  both commentary books are Chinese. Each book contributed 12 consecutive pages containing its reference page.
+- **Brief:** written once per book by Opus (`claude -p`) from the metadata, the source-work line and the OCR of the first
+  20 translatable pages *outside* the window. 295–393 words: the work, a 30-term glossary, layout notes, names. The
+  briefs are in `results/book-brief-7499/briefs/`.
+- **Arms:** A = v13 exactly as production composes it (Flash: `cli-translate` one page per call through agy; Opus:
+  `claude-translate` blocks of up to 10). B = A plus the brief, placed where `--instructions-file` puts a line, under a header
+  saying it describes the book and must not be added to a page. A2 = A again on 3 seeded books (the floor). Nothing was
+  written to any page, R2 or the lane registry.
+- **Judges** (all blind Opus, both orders in separate calls): a whole-page fidelity judge with omission, added and
+  mistranslation flags; the #6742 join judge on 110 in-window joins; a brief-invention checker run on A pages too (A
+  never saw the brief, so its flag rate is the checker's false-alarm floor); and the `translation-vs-reference` judge on
+  the 10 reference pages. Term renderings were quoted by a blind extractor and scored mechanically.
+
+**Result.**
+
+| measure | A | B | B − A (95% CI) | A2 − A floor |
+|---|---:|---:|---:|---:|
+| term consistency, modal share (48 terms on ≥ 2 pages) | 80.4% | 84.7% | **+4.3 (−8.4, +17.8)** | −19.4 (−66.7, +8.3), 3 books |
+| renderings equal to the brief's | 77.1% | 90.3% | +13.2 | — |
+| page judge, 120 pages: wins in both orders | 19 | 24 | L − W **−4.2 (−17.5, +7.5)** | A2 lost 3–8: +13.9 (0, +33.3) |
+| omission pages (flagged in both orders) | 7.5% | 8.3% | +0.8 (−5.8, +8.3) | +2.8 (0, +8.3) |
+| added-content pages | 13.3% | 3.3% | **−10.0 (−18.3, −3.3)** | +2.8 (−8.3, +16.7) |
+| mistranslation pages | 8.3% | 10.0% | +1.7 (−1.7, +5.8) | +2.8 (0, +8.3) |
+| defective joins per 100 (110 joins) | 16.4 | 17.3 | +0.9 (−13.6, +11.8) | +18.2 (0, +36.4) |
+| pages the brief-invention checker flagged | 27.5% | 20.8% | −6.7 (−26.7, +7.5) | — |
+| vs published reference, 10 pages (gate FAILED; forced) | 4.55 | 4.45 | 3 wins each, 4 ties | — |
+
+- **Judge floors:** 10 of 10 identical page pairs and 40 of 40 identical join pairs were called tie.
+- **Rule output: DON'T.** Consistency Δ +4.3 is below +5 and inside the A2 − A interval. The fidelity guard did not clear
+  its +5 bound either (upper end +7.5), though the point estimate favours B.
+- **Where consistency moved:** almost all of it came from one book. On 莊子旁注, A rendered 道 as both "dao" and "Way" and 神
+  four ways, and B fixed both (41.7 → 93.8%). On the Latin and German books, A was already 68–95% consistent. Glossary
+  coverage was thin: 48 of the 303 glossary terms recur on 2 or more window pages, because the brief comes from the
+  book's opening and a window 270 pages in (the *Republic*) is in another dialogue. The sensitivity that strips
+  possessives ("your father" vs "father"), added after reading the data and not registered, gives Δ +3.0 (−8.8, +14.9).
+- **Brief invention: none found.** I read all 25 flagged B pages. None carries a fact that only the brief could have
+  supplied. The flags are general-knowledge notes of the kind A writes more often (A was flagged on 33 pages),
+  glossary renderings of terms the page does carry, and the Plato apparatus carried as the brief's layout note asked.
+- **The layout notes are the hazard.** The brief writer was told not to summarise; it was not told not to legislate.
+  The Septuagint brief said "translate the Greek base text, and use the Latin version only as an aid", and Flash B
+  dropped the printed Latin column on pp. 287, 290 and 293 (A on none, A2 on one). The Fazang brief said "omit the
+  running heads and folio numbers", and B dropped them on pp. 68 and 76. Five of Flash B's nine omission pages are
+  omissions the brief ordered; the page judge caught all of them in both orders.
+- **By engine** (exploratory, not registered; A2 − A on these books swings 13.9 points): on Opus, B won 14–4 with
+  omission pages 10 → 1.7%; on Flash, B lost 10–15 with omission pages 5 → 15%, mostly the ordered drops above.
+  Added content fell on both engines (Opus 8.3 → 0, Flash 18.3 → 6.7). The brief and its header line ("never add
+  anything the page does not carry") were given together, so this run cannot say which of the two did it.
+- **Reference judge:** the gate failed. j1 scored a wrong-page control 5/5 on *Naufragios* p. 30. The planted negation on
+  莊子旁注 p. 100 landed inside a sentence both arms already mistranslated: both judges located it but scored it level with
+  the base. Results are kept as `--force` (`ref-results.json`, `gate.forced: true`) and carry no weight here.
+
+**Read by eye, with the image open** (5 pages):
+- [Septuagint p. 287](https://sourcelibrary.org/book/6952e4b477f38f6761bc7d4c?page=287): the image has Deut. 18:9–19:5
+  in facing Greek and Latin columns. A renders both. B renders only the Greek: a real omission, caused by the brief.
+- [Fazang p. 68](https://sourcelibrary.org/book/6a3c6191879008ba7e15f0b2?page=68): the two arms are nearly identical
+  and both are faithful. B bolds the root-text lemma, as its layout note says, and drops the fore-edge title
+  起信論義記卷四 / 五, as its layout note ordered.
+- [Plato p. 367](https://sourcelibrary.org/book/699376d2b0a84a5763961a97?page=367) (*Republic* 571c–572b): the body is
+  faithful in both. B keeps the apparatus readings in Greek with the Latin translated ("sed κα in ras." → "but κα in
+  erasure"). A turned the variant readings into English ("into rages] into rage"), which loses what each witness reads.
+  Here the brief made the page better.
+- [*Naufragios* p. 25](https://sourcelibrary.org/book/69ea0f5913a685002bb8deaf?page=25): both are faithful.
+  "Isle of Misfortune" is B's gloss of the printed *Mal Hado*, not an invention. A's note adds an identification near
+  Galveston that the page does not carry.
+- [莊子旁注 p. 100](https://sourcelibrary.org/book/69e72c75a409200ea79f4976?page=100) (the reference page): for
+  孰協唐許…心有睫, B gives "How far this falls short of Tang and Xu! … the mind has eyelashes", close to the source. A
+  makes it an exclamation and invents a person, "Xie", from 協.
+
+**What it means.**
+- A brief is not worth a pipeline step for **consistency**. Production is already ~80% consistent on the terms that
+  recur within a dozen pages, and the brief's measurable gain is smaller than the noise between two runs of the same
+  prompt. The drift #4741 and #7169 document (a running head rendered ~28 ways over 33 pages) spans hundreds of pages.
+  A 12-page window cannot see that scale, and a brief written from the opening pages does not cover a window deep
+  into the book.
+- A brief carries **policy** as well as vocabulary, and the model obeys it. A writer that may say "omit" will sometimes
+  say it about content a reader needs. If a brief is ever built, its writer must describe the layout and never
+  prescribe dropping anything, and the omission guard must run on the brief arm.
+- The two exploratory signals are each worth one registered test: added content fell by ~10 points on both engines,
+  and Opus with the brief won 14–4. Both come with the same confound, that the header's no-additions line came
+  bundled with the brief.
+
+**Replicated?** No. One run, 10 books.
+
+**Spend.** $0 billed. agy (subscription): 144 Flash page calls, no lockout. Claude CLI (this box's subscription,
+weekly meter 0 → 4%): 10 briefs, 36 Opus translation calls, 23 extractions, 69 page-judge, 34 join-judge and 60
+brief-invention calls (≈ $41 list-equivalent), plus 6 reference-judge subagents.
+
+**Artifact.** `scripts/eval/results/book-brief-7499/`: `report.json` (every measure and the rule output),
+`draw.json`, `briefs/`, `reads.jsonl.gz` (all 276 reads), the judges' raw verdicts, `ref-results.json`.
+Harness: `scripts/eval/book-brief-7499/{select,run}.mjs`.
+
 ## 2026-10-27 · How many 3.8 Flash low calls does the agy Gemini quota hold in a week? (#6740)
 
 PRIOR ART: `scripts/eval/estimator/ocr/meter_quota_share.py` (the earlier figure, 229K calls per 30 days, from main's
