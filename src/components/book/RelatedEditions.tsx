@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { isEnglishOriginal } from '@/lib/page-counts';
 import { Library, ScanSearch } from 'lucide-react';
 import { isTrustedEditionKey } from '@/lib/edition-key';
+import { getWorkSiblings, SIBLING_FILTER, SIBLING_PROJECTION, type WorkSibling } from '@/lib/work-siblings';
+import { buildVolumeSet } from '@/lib/volume-set';
 
 /**
  * The editions rail (#3730 §4, #3102 step 6): on a book page, show the reader
@@ -40,34 +42,15 @@ interface RelatedEditionsProps {
   /** Locale of the page mounting this — sibling links keep its URL prefix.
    *  Named `locale` because `lang` already means the BOOK's language here. */
   locale?: Locale;
+  /** Set where the page ALSO mounts VolumeSetStrip (#7527): volumes of this
+   *  book's set are listed there, so they are left out of "Other printings"
+   *  here. Off by default, so a mount without the strip keeps every sibling. */
+  excludeSetVolumes?: boolean;
 }
 
-interface Sibling {
-  id?: string;
-  slug?: string;
-  title?: string;
-  display_title?: string;
-  year?: number;
-  language?: string;
-  pages_count?: number;
-  pages_translated?: number;
-  work_slug?: string;
-  edition_key?: string;
-  image_source?: { provider_name?: string };
-}
+type Sibling = WorkSibling;
 
-const SIBLING_FILTER = {
-  visible: true,
-  pages_count: { $gt: 0 },
-  // A duplicate pointer never appears as a sibling, whatever its visibility.
-  $or: [{ duplicate_of: { $exists: false } }, { duplicate_of: { $in: [null, ''] } }],
-};
-
-const PROJ = {
-  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, year: 1, language: 1,
-  pages_count: 1, pages_translated: 1, work_slug: 1, edition_key: 1,
-  'image_source.provider_name': 1,
-};
+const PROJ = SIBLING_PROJECTION;
 
 function bookHref(b: Sibling, locale: Locale): string {
   return localePath(`/book/${encodeURIComponent(b.slug || b.id || '')}`, locale);
@@ -78,14 +61,16 @@ function transPct(b: Sibling): number {
 }
 
 export default async function RelatedEditions({
-  bookId, workId, language, editionKey, editionKeyQuality, locale = 'en',
+  bookId, workId, language, editionKey, editionKeyQuality, locale = 'en', excludeSetVolumes = false,
 }: RelatedEditionsProps) {
   const db = await getReadDb();
 
-  const workSiblings = (await db.collection('books').find(
-    { work_id: workId, id: { $ne: bookId }, ...SIBLING_FILTER },
-    { projection: PROJ, limit: 40, maxTimeMS: 3000 },
-  ).toArray().catch(() => [])) as Sibling[];
+  const allOfWork = await getWorkSiblings(workId);
+  const self = allOfWork.find((s) => s.id === bookId);
+  const others = allOfWork.filter((s) => s.id !== bookId);
+  // Volumes of this book's own set are shown by the volume strip, not as "printings".
+  const setIds = excludeSetVolumes && self ? buildVolumeSet(self, others)?.memberIds : undefined;
+  const workSiblings = setIds ? others.filter((s) => !setIds.has(s.id ?? '')) : others;
 
   // Same-printing scans: separate, stricter query — trusted keys only, both sides.
   const scanSiblings = isTrustedEditionKey(editionKeyQuality) && editionKey
@@ -113,9 +98,9 @@ export default async function RelatedEditions({
   const more = printings.length - shown.length;
 
   const libraryCount = new Set(
-    workSiblings.map((r) => r.image_source?.provider_name).filter(Boolean),
+    printings.map((r) => r.image_source?.provider_name).filter(Boolean),
   ).size;
-  const workHref = `/work/${workSiblings.find((r) => r.work_slug)?.work_slug || workId}`;
+  const workHref = `/work/${allOfWork.find((r) => r.work_slug)?.work_slug || workId}`;
 
   const row = (b: Sibling) => {
     const pct = transPct(b);
