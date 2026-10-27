@@ -153,6 +153,24 @@ Two rules change:
 measured miss rate. The arms supply a second, direct check: any obscure page the no-image arm reproduces (acc(C) ≥ 0.50)
 is flagged as a suspect label, and the outcomes are also reported without it.
 
+**How the seal ran.** The pairs were sealed script by script, as each script's lookups finished, so the arms could
+start early. Re-sealing is deterministic per script; each re-seal was checked to leave every earlier script's pages
+byte-identical, and did.
+- **One slip:** a wait loop exited on its timeout rather than its condition, so Chinese was first sealed with 34 of its
+  37 lookups done.
+  - That seal had 10 pairs; the complete one has 13.
+  - All 20 pages of the 10 early pairs are still in the 13; the obscure pages are paired with different famous pages.
+- **The fix:** the Chinese arm rows already written are joined to the final pairs by page (book id and page number)
+  through `slug-remap-chinese-v3.json`, not by pair slug. Only the 6 new pages were called.
+  - No page was called twice.
+  - No row was moved to a page it was not called on. The prompt for a page (title, anchor, length) does not depend on
+    its pair.
+- **Rows written after this carry `page_key` directly.**
+
+**Final pairs:** Latin 20, Greek 16, Chinese 13, Hebrew 12, Sanskrit 20 (81 pairs, 162 pages). The short scripts ran
+out of eligible obscure pages: the screen dropped manuscripts, short keys and the wrong script, and the lookups dropped
+pages with an e-text hit. The rule was not loosened.
+
 ### Results
 
 Not yet run.

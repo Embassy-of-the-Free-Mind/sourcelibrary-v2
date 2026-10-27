@@ -1,0 +1,70 @@
+{
+ "latin/obscure": {
+  "pages": 35,
+  "with_etext_hit": 4,
+  "lookup_errors": 0,
+  "by_source": {
+   "wikisource": 4,
+   "github": 2
+  }
+ },
+ "greek/obscure": {
+  "pages": 31,
+  "with_etext_hit": 11,
+  "lookup_errors": 0,
+  "by_source": {
+   "github": 8,
+   "wikisource": 6,
+   "websearch": 1
+  }
+ },
+ "chinese/obscure": {
+  "pages": 37,
+  "with_etext_hit": 24,
+  "lookup_errors": 0,
+  "by_source": {
+   "github": 16,
+   "wikisource": 21,
+   "kanripo": 13,
+   "websearch": 1
+  }
+ },
+ "hebrew/obscure": {
+  "pages": 27,
+  "with_etext_hit": 13,
+  "lookup_errors": 0,
+  "by_source": {
+   "github": 6,
+   "wikisource": 9,
+   "sefaria": 11
+  }
+ },
+ "sanskrit/obscure": {
+  "pages": 27,
+  "with_etext_hit": 4,
+  "lookup_errors": 0,
+  "by_source": {
+   "wikisource": 4,
+   "github": 1
+  }
+ },
+ "greek/famous/calibration": {
+  "pages": 10,
+  "with_etext_hit": 8,
+  "lookup_errors": 0,
+  "by_source": {
+   "wikisource": 7,
+   "github": 6
+  }
+ },
+ "chinese/famous/calibration": {
+  "pages": 10,
+  "with_etext_hit": 10,
+  "lookup_errors": 0,
+  "by_source": {
+   "wikisource": 10,
+   "github": 6,
+   "kanripo": 5
+  }
+ }
+}

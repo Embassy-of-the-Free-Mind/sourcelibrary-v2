@@ -24,6 +24,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { score } from './text.mjs';
+import { rowPageKey, pageKeyOf } from './rows.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const RES = path.join(__dirname, '../results/read-or-recall-7570');
@@ -32,9 +33,10 @@ const controls = JSON.parse(fs.readFileSync(path.join(RES, 'controls.json'), 'ut
 const ENGINES = ['opus', 'gemini'];
 const SCRIPTS = ['latin', 'greek', 'chinese', 'hebrew', 'sanskrit'];
 const raw = {};
+const keyOfRow = rowPageKey(RES, sealed);
 for (const e of ENGINES) {
   const f = path.join(RES, `raw-${e}.jsonl`); raw[e] = new Map();
-  if (fs.existsSync(f)) for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (r.cls === 'quota' || r.cls === 'usage_limit') continue; raw[e].set(`${r.slug}|${r.arm}`, r); }
+  if (fs.existsSync(f)) for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (r.cls === 'quota' || r.cls === 'usage_limit') continue; raw[e].set(`${keyOfRow(r)}|${r.arm}`, r); }
 }
 
 function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -58,7 +60,7 @@ for (const e of ENGINES) {
     S[e][p.slug] = {};
     S[e][p.slug].anchor = { primary: score(p.anchor, p.key_text, p.script), opus: score(p.anchor, p.opus_key_text, p.script) };
     for (const arm of ['A', 'B', 'C']) {
-      const r = raw[e].get(`${p.slug}|${arm}`);
+      const r = raw[e].get(`${pageKeyOf(p)}|${arm}`);
       if (!r) continue;
       const failed = !!r.cls || !String(r.text || '').trim();
       const out = failed ? '' : arm === 'C' ? `${p.anchor} ${r.text}` : r.text;
@@ -98,7 +100,8 @@ function aggregate(e, script, keyName, pairFilter = () => true) {
   const DiD = (s) => mean(s.map((x) => x.oA - x.oC)) - mean(s.map((x) => x.fA - x.fC));
   const L = (s) => mean(s.map((x) => x.fA - x.fB)) - mean(s.map((x) => x.oA - x.oB));
   const est = (f) => (pairs.length ? { point: r3(f(pairs)), ci: boot(pairs, f).map(r3) } : { point: null, ci: [null, null] });
-  return { n_pairs: pairs.length, mean_acc: { famous: { A: m('fA'), B: m('fB'), C: m('fC'), anchor_only: m('fAnchor') }, obscure: { A: m('oA'), B: m('oB'), C: m('oC'), anchor_only: m('oAnchor') } },
+  const Rng = (s) => mean(s.map((x) => x.fRngC)) - mean(s.map((x) => x.oRngC));
+  return { n_pairs: pairs.length, R_recall_ng: est(Rng), mean_acc: { famous: { A: m('fA'), B: m('fB'), C: m('fC'), anchor_only: m('fAnchor') }, obscure: { A: m('oA'), B: m('oB'), C: m('oC'), anchor_only: m('oAnchor') } },
     median_acc_B_obscure: r3(median(pairs.map((x) => x.oB))), median_lcs_C: { famous: median(pairs.map((x) => x.fLcsC)), obscure: median(pairs.map((x) => x.oLcsC)) },
     mean_recall_ng_C: { famous: m('fRngC'), obscure: m('oRngC') }, R: est(R), DiD: est(DiD), L: est(L) };
 }
@@ -123,6 +126,14 @@ for (const e of ENGINES) for (const s of SCRIPTS) {
 // outcomes without the flagged pages' pairs
 const flaggedPairs = new Set(report.flags.map((f) => f.slug.replace(/-o$/, '')));
 for (const e of ENGINES) for (const s of SCRIPTS) report.per[s][e].without_flagged = flaggedPairs.size ? aggregate(e, s, 'primary', (x) => !flaggedPairs.has(x.pair_id)) : null;
+// descriptive: the unrelated-text floor of acc in each script (each page's Opus key scored against the next page's key
+// of the same script, as if it were an output): what acc a fluent but wrong text of the right language reaches
+report.unrelated_floor = {};
+for (const s of SCRIPTS) {
+  const ps = sealed.pages.filter((p) => p.script === s);
+  const v = ps.map((p, i) => score(ps[(i + 1) % ps.length].opus_key_text, p.opus_key_text, s)).filter(Boolean);
+  report.unrelated_floor[s] = { n: v.length, mean_acc: r3(mean(v.map((x) => x.acc))), mean_recall_ng: r3(mean(v.map((x) => x.recall_ng))) };
+}
 // key check: blind Opus key vs the e-text window on famous Greek/Chinese pages
 report.key_check = {};
 for (const s of ['greek', 'chinese']) {
@@ -148,6 +159,8 @@ for (const s of SCRIPTS) for (const e of ENGINES) { const p = report.per[s][e].s
 md += `\nControls (no image; acc / recall_ng / lcs):\n\n| item | ${ENGINES.join(' | ')} |\n|---|${ENGINES.map(() => '---').join('|')}|\n`;
 for (const c of controls) md += `| ${c.slug} | ${ENGINES.map((e) => { const z = ctl[e]?.[c.slug]; return z ? `${f2(z.acc)} / ${f2(z.recall_ng)} / ${z.lcs}` : '–'; }).join(' | ')} |\n`;
 md += `\nLatin split (primary key): ${ENGINES.map((e) => { const z = report.per.latin[e].latin_split; return `${e}: recitation-hit n=${z.recitation_hit.n_pairs} R ${ci(z.recitation_hit.R)} DiD ${ci(z.recitation_hit.DiD)}; canonical n=${z.canonical_work.n_pairs} R ${ci(z.canonical_work.R)} DiD ${ci(z.canonical_work.DiD)}`; }).join(' · ')}\n`;
+md += `\nR on n-gram recall of arm C (descriptive; floor ≈ 0): ${SCRIPTS.map((s) => ENGINES.map((e) => `${s}/${e} ${ci(report.per[s][e].primary.R_recall_ng)} (F ${f2(report.per[s][e].primary.mean_recall_ng_C.famous)}, O ${f2(report.per[s][e].primary.mean_recall_ng_C.obscure)})`).join(' · ')).join(' · ')}\n`;
+md += `\nUnrelated-text floor of acc (a page's key against another page's key): ${JSON.stringify(report.unrelated_floor)}\n`;
 md += `\nKey check (blind Opus key vs e-text window, famous pages): ${JSON.stringify(report.key_check)}\n`;
 md += `\nFlags (obscure page with acc(C) ≥ 0.50): ${report.flags.length ? report.flags.map((f) => `${f.slug} ${f.engine} ${f2(f.acc_C)} (${f.title.slice(0, 50)})`).join('; ') : 'none'}\n`;
 md += `\nDecision: ${JSON.stringify(report.decision)}\n`;

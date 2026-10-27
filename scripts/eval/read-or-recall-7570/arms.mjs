@@ -19,6 +19,7 @@ import { fileURLToPath } from 'url';
 import { call, fetchImage } from './calls.mjs';
 import * as PR from './prompts.mjs';
 import { claudeUsage } from '../../lib/model-limits.mjs';
+import { rowPageKey, pageKeyOf } from './rows.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const RES = path.join(__dirname, '../results/read-or-recall-7570');
@@ -34,12 +35,13 @@ const WEEKLY_STOP = 70;
 const sealed = JSON.parse(fs.readFileSync(path.join(RES, 'pairs.json'), 'utf8'));
 const controls = JSON.parse(fs.readFileSync(path.join(RES, 'controls.json'), 'utf8')).items;
 const OUT = path.join(RES, `raw-${ENGINE}.jsonl`);
-const done = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.cls !== 'quota' && r.cls !== 'usage_limit').map((r) => `${r.slug}|${r.arm}`) : []);
+const keyOfRow = rowPageKey(RES, sealed);
+const done = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.cls !== 'quota' && r.cls !== 'usage_limit').map((r) => `${keyOfRow(r)}|${r.arm}`) : []);
 const h = (s) => crypto.createHash('sha256').update(`7570:${ENGINE}:${s}`).digest('hex');
 const jobs = [];
 for (const p of sealed.pages) if (!ONLY || p.script === ONLY) for (const arm of ['A', 'B', 'C']) jobs.push({ p, arm });
 for (const c of controls) if (!ONLY || c.script === ONLY) jobs.push({ p: c, arm: 'P' });
-const todo = jobs.filter((j) => !done.has(`${j.p.slug}|${j.arm}`)).sort((a, b) => h(`${a.p.slug}|${a.arm}`).localeCompare(h(`${b.p.slug}|${b.arm}`)));
+const todo = jobs.filter((j) => !done.has(`${pageKeyOf(j.p)}|${j.arm}`)).sort((a, b) => h(`${a.p.slug}|${a.arm}`).localeCompare(h(`${b.p.slug}|${b.arm}`)));
 console.log(`${ENGINE}: ${todo.length} of ${jobs.length} calls to make`);
 
 let stop = null;
@@ -57,7 +59,7 @@ async function one({ p, arm }) {
   }
   const r = await call({ engine: ENGINE, prompt, image });
   if (r.cls === 'quota' || r.cls === 'usage_limit') { stop = `${r.cls}: ${r.err}`; fs.appendFileSync(OUT, JSON.stringify({ slug: p.slug, arm, engine: ENGINE, cls: r.cls, err: r.err, at: new Date().toISOString() }) + '\n'); return; }
-  const row = { slug: p.slug, arm, engine: ENGINE, model_ids: r.model_ids, at: new Date().toISOString(), prompt_sha: crypto.createHash('sha256').update(prompt).digest('hex').slice(0, 16),
+  const row = { slug: p.slug, page_key: p.book_id ? `${p.book_id}:${p.page_number}` : null, arm, engine: ENGINE, model_ids: r.model_ids, at: new Date().toISOString(), prompt_sha: crypto.createHash('sha256').update(prompt).digest('hex').slice(0, 16),
     prompt: arm === 'C' || arm === 'P' ? prompt : undefined, text: r.text, problem: r.problem, cls: r.cls, err: r.err, secs: r.secs, usage: r.usage, tool_calls: r.tool_calls };
   fs.appendFileSync(OUT, JSON.stringify(row) + '\n');
   console.log(`${p.slug} ${arm} ${r.cls || 'ok'} ${r.secs}s ${[...String(r.text)].length}ch ${r.problem || ''}`);
