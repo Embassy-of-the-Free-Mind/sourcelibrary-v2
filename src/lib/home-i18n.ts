@@ -716,8 +716,8 @@ const zh: HomeStrings = {
   collectionsWord: '个专题',
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
-  showcaseEyebrow: '中文专题',
-  showcaseSubtitle: '馆藏中文古籍的几个专题，均可对照原书影像阅读原文。',
+  showcaseEyebrow: '专题精选',
+  showcaseSubtitle: '从中国自然知识到霍格沃茨图书馆，每部书都可对照原书影像阅读。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -1199,11 +1199,13 @@ export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelv
  * The collections the showcase shows on a native-first homepage, in place of the
  * random draw of curated exhibitions. Only six curated exhibitions hold any Chinese
  * book (ten at most), so the draw put Hogwarts and Indonesian manuscripts on /zh
- * (#7537). These are the published Chinese collections the subject shelves below
- * do not already show. Each needs a name in COLLECTION_NAMES for the language.
+ * (#7537). These are published Chinese collections the subject shelves below do
+ * not already show, plus one European exhibition kept on purpose: the Hogwarts
+ * library, a door into the Western books for a country that loves Harry Potter
+ * (Derek, 2026-10-27). Each needs a name in COLLECTION_NAMES for the language.
  */
 export const NATIVE_SHOWCASE_SLUGS: Partial<Record<HomeLang, string[]>> = {
-  zh: ['chinese-natural-knowledge', 'chinese-divination-cosmology', 'confucian-classics', 'chinese-astrology'],
+  zh: ['chinese-natural-knowledge', 'hogwarts-library', 'confucian-classics', 'chinese-divination-cosmology'],
 };
 
 /** Hand-written collection names per locale. English is the stored name. */
