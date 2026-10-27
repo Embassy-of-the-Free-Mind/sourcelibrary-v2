@@ -83,6 +83,9 @@ def locate(quote, text):
 
 
 def engine(E):
+    # lite ran all its pages in one look (prereg): its decision level is always 95%; Flash / Opus use --look's level.
+    LV = 0.95 if E == 'lite' else LEVEL
+    lk = 2 if E == 'lite' else LOOK
     J = f'{W}/judge/{E}'
     key = json.load(open(f'{J}/key.json')); items = key['items']; texts = json.load(open(f'{J}/texts.json'))
     rows = {}
@@ -170,7 +173,7 @@ def engine(E):
         if not us: return None
         d = lambda s: mean([fid(u, x) - fid(u, 'v13') for u in s])
         w = sum(1 for u in us if fid(u, x) > fid(u, 'v13')); lo = sum(1 for u in us if fid(u, x) < fid(u, 'v13'))
-        ci95, ci_dec = boot(us, d, 0.95), boot(us, d, LEVEL)
+        ci95, ci_dec = boot(us, d, 0.95), boot(us, d, LV)
         m = d(us); n = len(us)
         rev_rise = sum(page[u][x]['rev'] for u in us) - sum(page[u]['v13']['rev'] for u in us)
         allowed = max(1, round(n * d_floor))
@@ -180,13 +183,15 @@ def engine(E):
         else: verdict = 'inconclusive'
         superior = bool(ci95 and ci95[0] > 0 and not (floor_ci[0] <= m <= floor_ci[1]) and m >= MIN_EFFECT)
         grade = 'decision' if n >= 50 else 'directional' if n >= 30 else 'exploratory'
-        return {'n': n, 'mean': r3(m), 'ci95': ci95, f'ci{int(LEVEL * 100)}': ci_dec, 'wins': w, 'losses': lo, 'ties': n - w - lo,
+        return {'n': n, 'mean': r3(m), 'ci95': ci95, 'ci_decision': ci_dec, 'wins': w, 'losses': lo, 'ties': n - w - lo,
                 'rev_rise': rev_rise, 'rev_allowed': allowed, 'rev_ok': rev_ok,
                 'om_change': sum(page[u][x]['om'] for u in us) - sum(page[u]['v13']['om'] for u in us),
                 'verdict': verdict, 'superior': superior, 'grade': grade}
 
     def rec(c):
         p, v = c['plain-v13'], c['v20-v13']
+        n = max((x or {}).get('n', 0) for x in (p, v))
+        if n < 30: return 'test-next (exploratory, n < 30: decides nothing alone; read with its pool)'
         if p and p['verdict'] == 'pass': return 'switch to PLAIN (after the notes pass, #5942)'
         if v and v['verdict'] == 'pass': return 'switch to v20'
         if (p and p['verdict'] == 'inconclusive') or (v and v['verdict'] == 'inconclusive'): return 'test-next'
@@ -220,7 +225,7 @@ def engine(E):
         row = {'id': u, 'group': MAN[u]['group'], 'lang': MAN[u]['lang'], 'medium': MAN[u]['medium'], 'century': MAN[u]['century'], 'url': MAN[u]['url']}
         for a, v in d.items(): row[a] = {'fid': v['fid'], 'rev': v['rev'], 'om': v['om'], 'inv': len(v['inv']), 'fill': v['fill'], 'tier': v['tier']}
         per_page.append(row)
-    return {'judge': key['judge'], 'items': len(items), 'judged': len(dec), 'unparsed': unparsed, 'look': LOOK, 'decision_level': LEVEL,
+    return {'judge': key['judge'], 'items': len(items), 'judged': len(dec), 'unparsed': unparsed, 'look': lk, 'decision_level': LV,
             'gate': gate, 'floor': floor, 'cells': cells, 'pools': pools,
             'did_not_read': {a: len(v) for a, v in BODIES['dnr'].items() if a.startswith(E + '-')}, 'hidden_body_scored_1': hidden}, per_page
 
@@ -234,7 +239,7 @@ if __name__ == '__main__':
         with open(f'{RESULTS}/per-page-{E}.jsonl', 'w') as f:
             for r in pp: f.write(json.dumps(r) + '\n')
     json.dump(S, open(f'{RESULTS}/scores.json', 'w'), indent=1)
-    fmt = lambda p: '—' if not p else f"{p['mean']:+.2f} {p['ci95']} {p['verdict']}{' SUP' if p['superior'] else ''} rev{p['rev_rise']:+d}/{p['rev_allowed']}"
+    fmt = lambda p: '—' if not p else f"{p['mean']:+.2f} {p['ci_decision']} {p['verdict']}{' SUP' if p['superior'] else ''} rev{p['rev_rise']:+d}/{p['rev_allowed']}"
     for E, s in S['engines'].items():
         g = s['gate']['pass']; f = s['floor']
         print(f"\n== {E} (judge {s['judge']}): {s['judged']}/{s['items']} judged, unparsed {len(s['unparsed'])}; gate {g}; floor v13b−v13 {f['mean']} {f['ci95']} n={f['n']} d_floor_rev {f['d_floor_rev']}")
