@@ -1,0 +1,362 @@
+{
+ "T1/A1": {
+  "start": {
+   "at": "2026-10-27T10:39:05.107Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6684774160385132,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7244647741317749,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:39:04Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:39:04Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:40:57.771Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6677974462509155,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7208411693572998,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:40:57Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:40:57Z"
+    }
+   ]
+  }
+ },
+ "T1/A1b": {
+  "start": {
+   "at": "2026-10-27T10:42:37.702Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6674802899360657,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.719241201877594,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:42:37Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:42:37Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:44:36.558Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6669114232063293,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7171638011932373,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:44:36Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:44:36Z"
+    }
+   ]
+  }
+ },
+ "T1/B2": {
+  "start": {
+   "at": "2026-10-27T10:41:00.783Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6678786277770996,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7208638787269592,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:41:00Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:41:00Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:42:34.402Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.667320728302002,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7186030745506287,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:42:34Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:42:34Z"
+    }
+   ]
+  }
+ },
+ "T2/A1": {
+  "start": {
+   "at": "2026-10-27T10:44:39.661Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6667605042457581,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7168912291526794,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:44:39Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:44:39Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:46:34.006Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6664906144142151,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7158116698265076,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:46:33Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:46:33Z"
+    }
+   ]
+  }
+ },
+ "T2/A1b": {
+  "start": {
+   "at": "2026-10-27T10:48:00.398Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6660402417182922,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7136145234107971,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:48:00Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:48:00Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:49:58.870Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6655198931694031,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7114681005477905,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:49:58Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:49:58Z"
+    }
+   ]
+  }
+ },
+ "T2/B2": {
+  "start": {
+   "at": "2026-10-27T10:46:36.713Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6664906144142151,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7158116698265076,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:46:36Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:46:36Z"
+    }
+   ]
+  },
+  "end": {
+   "at": "2026-10-27T10:47:57.565Z",
+   "buckets": [
+    {
+     "group": "Gemini Models",
+     "id": "gemini-weekly",
+     "remaining": 0.6661889553070068,
+     "reset": "2026-10-30T21:59:44Z"
+    },
+    {
+     "group": "Gemini Models",
+     "id": "gemini-5h",
+     "remaining": 0.7137905955314636,
+     "reset": "2026-10-27T11:28:20Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-weekly",
+     "remaining": 1,
+     "reset": "2026-11-03T10:47:57Z"
+    },
+    {
+     "group": "Claude and GPT models",
+     "id": "3p-5h",
+     "remaining": 1,
+     "reset": "2026-10-27T15:47:57Z"
+    }
+   ]
+  }
+ }
+}
