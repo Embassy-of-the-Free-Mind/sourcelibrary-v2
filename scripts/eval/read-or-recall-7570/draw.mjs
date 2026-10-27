@@ -110,7 +110,7 @@ async function pickPage(b, script, { min, extraMatch = {} } = {}) {
 async function booksOf(script) {
   const yr = YEARS[script];
   const q = { language: { $in: LANGS[script] }, pages_count: { $gte: 20 } };
-  if (yr) q.year = { $gte: yr[0], $lte: yr[1] };
+  if (yr) q.year = { $gte: yr[0], $lte: yr[1] }; // imprint-write-ok: a read-only query filter, not a books write
   return B.find(q, { projection: BOOKF }).toArray();
 }
 
@@ -161,7 +161,7 @@ for (const script of Object.keys(SCRIPTS)) {
   for (const f of famous) if (!f.page_id) {
     const p = await P.findOne({ book_id: f.book_id, page_number: f.page_number }, { projection: { _id: 0, id: 1, 'ocr.model': 1, 'ocr.updated_at': 1 } });
     f.page_id = p?.id || null; f.stored_model = p?.ocr?.model || null; f.stored_read_at = p?.ocr?.updated_at || null;
-    const b = await B.findOne({ id: f.book_id }, { projection: BOOKF }); f.author = b?.author || null; f.language = b?.language || null; if (f.year == null) f.year = b?.year ?? null;
+    const b = await B.findOne({ id: f.book_id }, { projection: BOOKF }); f.author = b?.author || null; f.language = b?.language || null; if (f.year == null) f.year = b?.year ?? null; // imprint-write-ok: a field of an eval draw row, not a books write
   }
   const obscure = (await fill(books.filter((b) => isObscureBook(b, script)), script, POOL.obscure, { min: MIN[script] }))
     .map((x) => ({ ...x, half: half(x.year) }));
