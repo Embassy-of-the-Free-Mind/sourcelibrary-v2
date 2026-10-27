@@ -11,7 +11,9 @@
 #     AGY_HEAVY_BOX_CAP (default 40) such calls per UTC day on this box, counted in $AGY_GUARD_DIR/<date>.log.
 #   - no --model: gemini-3.8-flash-low is added, so a bare `agy -p` can never land on a heavy default.
 # A refusal prints "quota reached" on stderr and exits 75, so agy-cli.mjs and the scripts that copy its QUOTA regex
-# stop as they would on a real lockout instead of retrying.
+# stop as they would on a real lockout instead of retrying. A refusal that is a setup mistake rather than spent quota
+# (an AGY_HOME with no login, a model that account may not run) says "refused (config)": it still stops the run
+# once, and agy-cli.mjs does not record it as the account's pool running out (#7514 review).
 #
 # Install (per box as root, or on the Mac): scripts/workers/agy-guard.sh --install. Undo: --uninstall.
 # The real CLI updates itself in place (Linux ~/.local/bin/agy, Mac /opt/homebrew/bin/agy), so the guard is a
@@ -50,7 +52,7 @@ fi
 # Log an account in once with `HOME=<dir> agy` and finish the browser sign-in.
 if [ -n "$AGY_HOME" ]; then
   [ -f "$AGY_HOME/.gemini/antigravity-cli/antigravity-oauth-token" ] || {
-    echo "agy-guard: AGY_HOME=$AGY_HOME has no login (run: HOME=$AGY_HOME agy)" >&2; exit 78; }
+    echo "agy-guard: quota reached (refused (config)): AGY_HOME=$AGY_HOME has no login (run: HOME=$AGY_HOME agy)" >&2; exit 75; }
   export HOME="$AGY_HOME"; GUARD_DIR="$GUARD_DIR/$(basename "$AGY_HOME")"
 fi
 
@@ -94,7 +96,7 @@ if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
   only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
   [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
   if [ "$model" != "$only" ]; then
-    echo "agy-guard: quota reached (refused): $(basename "$AGY_HOME") runs $only only, not $model" >&2
+    echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
     exit 75
   fi
 fi

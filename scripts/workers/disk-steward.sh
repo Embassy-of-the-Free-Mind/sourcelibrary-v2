@@ -73,7 +73,7 @@ done
 #     written that day, and the root disk had reached 100% at 02:45Z. Only files over an hour old that no process
 #     holds open are removed: a younger one may be a write in progress.
 n=0; kb=0
-for T in "$ROOT"/.gemini/antigravity-cli/*.tmp; do
+for T in "$ROOT"/.gemini/antigravity-cli/*.tmp "$ROOT"/.agy-*/.gemini/antigravity-cli/*.tmp; do
   [ -f "$T" ] || continue
   [ -n "$(find "$T" -mmin +60 -print -quit 2>/dev/null)" ] || continue
   lsof "$T" >/dev/null 2>&1 && continue
