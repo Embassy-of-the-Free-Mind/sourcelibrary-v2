@@ -116,11 +116,11 @@ export default async function AboutPage() {
             stats={headlineStats}
             second={
               <div className="max-w-2xl md:bg-transparent bg-cream/90 p-5 md:p-0 -mx-1 md:mx-0">
-                <h2 className="font-serif text-6xl md:text-8xl text-primary leading-[0.98] tracking-tight">
-                  Fewer than<br />1 in&nbsp;100.
+                <h2 className="font-serif text-5xl md:text-7xl text-primary leading-[1.02] tracking-tight">
+                  Most of the written past is still out of reach.
                 </h2>
                 <p className={`mt-6 ${lead} max-w-xl`}>
-                  That is how many books printed in Europe before 1700 you can read in English today. On this wall they are the few that stay lit.
+                  Fewer than 1 in 100 books printed in Europe before 1700 can be read in English. On this wall, they are the few that stay lit.
                 </p>
                 <p className={`mt-4 ${body} max-w-xl`}>
                   The rest are in Latin, German, French, Dutch and dozens of other languages, and most have never been scanned.
@@ -138,7 +138,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-36 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <Reveal>
-            <h2 className={`${h2} max-w-4xl`}>It was written down so that it could be known. Most of it is still locked away.</h2>
+            <h2 className={`${h2} max-w-4xl`}>Why these books stay unread</h2>
           </Reveal>
           <div className="mt-16 md:mt-24">
             <FourLocks
@@ -156,7 +156,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-36">
         <div className={WIDE}>
           <Reveal className="max-w-4xl">
-            <h2 className={h2}>Translation has changed the world before.</h2>
+            <h2 className={h2}>Translation has sparked a revolution before</h2>
             <p className={`mt-8 ${lead}`}>
               In 1463 Marsilio Ficino translated the Hermetic writings into Latin, then all of Plato. Europe could suddenly read what it had only heard of. The result was a small revolution we now call the Renaissance: new science, new art, new ideas about the body and the mind.
             </p>
@@ -165,7 +165,7 @@ export default async function AboutPage() {
             <PrefaceFigure />
           </div>
           <Reveal className="mt-24 md:mt-32 max-w-4xl">
-            <h3 className={h3}>Yet Ficino&apos;s own books were mostly never translated. Until we started.</h3>
+            <h3 className={h3}>Ficino&apos;s own books waited more than five hundred years for a translation</h3>
           </Reveal>
           <div className="mt-12 md:mt-16">
             <CompendiumFigure />
@@ -192,7 +192,7 @@ export default async function AboutPage() {
       <section className={SCENE}>
         <div className={WIDE}>
           <Reveal className="text-center max-w-3xl mx-auto">
-            <h3 className={h3}>Ask two thousand years a question.</h3>
+            <h3 className={h3}>Ask the great thinkers a question, and hear them answer in their own words</h3>
             <p className={`mt-5 ${body}`}>Every answer quotes the original page, in its own words, with the scan one click away.</p>
           </Reveal>
           <div className="mt-14 md:mt-16">
@@ -206,7 +206,7 @@ export default async function AboutPage() {
         <div className={WIDE}>
           <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] gap-8 lg:gap-16 items-end">
             <Reveal>
-              <h3 className={h3}>AI has read Reddit. It hasn&apos;t read the freethinkers.</h3>
+              <h3 className={h3}>AI has read Reddit, but not the freethinkers</h3>
             </Reveal>
             <Reveal delay={150}>
               <p className={body}>
@@ -224,7 +224,7 @@ export default async function AboutPage() {
       <section className={SCENE}>
         <div className={WIDE}>
           <Reveal>
-            <h3 className={h3}>It is already happening.</h3>
+            <h3 className={h3}>Thousands of books, translated into English for the first time</h3>
           </Reveal>
           <div className="mt-14 md:mt-16">
             <Counters
@@ -242,7 +242,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-32 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <Reveal className="max-w-3xl">
-            <h2 className={h2}>How far there is to go</h2>
+            <h2 className={h2}>Most of the world&apos;s writing is still waiting</h2>
             <p className={`mt-6 ${lead}`}>Start with Latin, the language of the Renaissance, then keep zooming out.</p>
           </Reveal>
           <Reveal className="mt-14 md:mt-16">
@@ -259,7 +259,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-32">
         <div className={WIDE}>
           <ReadingDemo>
-            <h2 className={h2}>How we do it</h2>
+            <h2 className={h2}>How a page becomes readable</h2>
             <ol className="mt-8 space-y-5">
               {STEPS.map((st, i) => (
                 <li key={st.title} data-i={i} className="rd-step grid grid-cols-[2.5rem_1fr] gap-3">
@@ -283,7 +283,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-32 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <Reveal>
-            <h2 className={h2}>Who we are</h2>
+            <h2 className={h2}>Who is behind Source Library</h2>
           </Reveal>
           <div className="mt-14 md:mt-16 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-14 md:gap-16 items-start">
             <Reveal>

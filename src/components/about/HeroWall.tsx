@@ -37,7 +37,11 @@ const smooth = (t: number) => t * t * (3 - 2 * t);
 export default function HeroWall({ stats, second }: { stats: HeroStat[]; second: ReactNode }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
-  const [panelRef, locked] = useInView<HTMLDivElement>(0.4);
+  const [panelRef, panelIn] = useInView<HTMLDivElement>(0.4);
+  const [heroRef, heroIn] = useInView<HTMLDivElement>(0.12);
+  // Only change the wall once the hero text has gone, so white hero type is
+  // never left sitting on the light wall.
+  const locked = panelIn && !heroIn;
   const still = useReducedMotion();
   const lockedRef = useRef(false);
 
@@ -118,7 +122,7 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
           const sy = cy + (row.y + row.h / 2 - cy) * s;
           if (sx < 0 || sx > W || sy < 0 || sy > H) continue;
           count++;
-          const clear = narrow ? sy < H * 0.42 && sy > 70 : sx > W * 0.56 && sx < W - 30 && sy > 90 && sy < H - 40;
+          const clear = narrow ? sy < H * 0.42 && sy > 70 : sx > W * 0.66 && sx < W - 30 && sy > 90 && sy < H - 40;
           if (clear) visible.push(q);
         }
       });
@@ -223,6 +227,7 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
       {/* Panel 1: the hero */}
       <section className="relative text-white">
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-40 pb-12 md:pb-16 min-h-[600px] md:min-h-[calc(100svh-64px)] flex flex-col justify-end">
+          <div ref={heroRef} className="hw-hero">
           <h1 className="ah-in font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6.2vw,92px)] tracking-[-0.03em] max-w-[11em] text-white">
             The written past, open to everyone
           </h1>
@@ -248,6 +253,7 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
               );
             })}
           </ul>
+          </div>
         </div>
       </section>
 
@@ -270,6 +276,8 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
         .hero-wall.is-ready h1.ah-in { transition-delay: .4s; }
         .hero-wall.is-ready p.ah-in { transition-delay: .6s; }
         .hero-wall.is-ready ul.ah-in { transition-delay: .8s; }
+        .hero-wall .hw-hero { transition: opacity .4s ease; }
+        .hero-wall.is-locked .hw-hero { opacity: 0; }
         .hero-wall .hw-second { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
         .hero-wall.is-locked .hw-second { opacity: 1; transform: none; transition-delay: .25s; }
         @media (prefers-reduced-motion: reduce) {
