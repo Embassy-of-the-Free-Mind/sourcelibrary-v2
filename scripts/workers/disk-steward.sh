@@ -50,7 +50,7 @@ fi
 #     open, and on 2026-10-16 it had reached 15 GB of a 150 GB root disk (conversation_summaries.db-wal).
 #     A checkpoint is SQLite's own operation: it copies committed pages into the database and drops nothing.
 #     TRUNCATE only succeeds in a moment with no reader, so retry for a few minutes, then say so.
-for W in "$ROOT"/.gemini/antigravity-cli/*.db-wal; do
+for W in "$ROOT"/.gemini/antigravity-cli/*.db-wal "$ROOT"/.agy-*/.gemini/antigravity-cli/*.db-wal; do
   [ -f "$W" ] || continue
   DB=${W%-wal}; mb=$(( $(stat -c %s "$W") / 1048576 ))
   [ "$mb" -ge 256 ] || continue
@@ -73,7 +73,7 @@ done
 #     written that day, and the root disk had reached 100% at 02:45Z. Only files over an hour old that no process
 #     holds open are removed: a younger one may be a write in progress.
 n=0; kb=0
-for T in "$ROOT"/.gemini/antigravity-cli/*.tmp; do
+for T in "$ROOT"/.gemini/antigravity-cli/*.tmp "$ROOT"/.agy-*/.gemini/antigravity-cli/*.tmp; do
   [ -f "$T" ] || continue
   [ -n "$(find "$T" -mmin +60 -print -quit 2>/dev/null)" ] || continue
   lsof "$T" >/dev/null 2>&1 && continue

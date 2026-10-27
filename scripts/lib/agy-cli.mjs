@@ -20,6 +20,9 @@ import { agyBlocked, agyLimitLane, agyResetFromText, noteLimitHit } from './mode
 
 export const CLI = 'agy';
 export const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
+// agy-guard's refusal for a setup mistake (an AGY_HOME with no login, a model that account may not run). It reads as
+// quota so the caller stops once, but the account's pool is not spent, so no limit stop is written for it.
+export const GUARD_CONFIG_REFUSAL = /agy-guard: quota reached \(refused \(config\)\)/;
 // Where a quota error can appear: stderr and agy's JSON envelope — never the model's own reply, unless the reply is
 // short enough to BE an error message. A transcription is long and can say "429" (a year, a folio): on 2026-10-12
 // one Latin page matched `\b429\b`, was taken for a quota stop 39 times, and held the whole read run for 6.5 h.
@@ -181,7 +184,7 @@ export function agyCall(args, cwd, { killAfterMs = 360_000, exitGraceMs = EXIT_G
       const cls = isQuotaError({ out, err, j, text }) ? 'quota' : (code === null && !hungAfterReply) || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 && !hungAfterReply ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
       // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
       // The first quota reply stops every later call on this box until Google's quoted reset (or one hour).
-      if (cls === 'quota') noteLimitHit(agyLimitLane(model), { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
+      if (cls === 'quota' && !GUARD_CONFIG_REFUSAL.test(err)) noteLimitHit(agyLimitLane(model), { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
       resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null, ...(hungAfterReply && { hung_after_reply: true }) });
     });
   });
