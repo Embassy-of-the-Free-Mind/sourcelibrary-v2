@@ -58,7 +58,7 @@ import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
-import { readPageIdsFile, readBookIdsFile, chunkByBytes } from '../lib/ocr-targeting.mjs';
+import { readPageIdsFile, readBookIdsFile, chunkByBytes, ocrLabelNotIn, LEGACY_V5_LABEL } from '../lib/ocr-targeting.mjs';
 import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE, isApiOcrModel, assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { batchJobProvenance, contentHash, codeVersion } from '../lib/write-provenance.mjs';
 import { logUsage, estimateBatchCostUsd } from '../workers/lib/supabase-usage-logger.mjs';
@@ -66,8 +66,9 @@ import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
 // --- Config ---
 const CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
-// The label realtime-ocr.mjs stamps for the same default prompt; a page carrying it is not stale.
-const LEGACY_PROMPT_LABEL = 'v5.2026-02';
+// SELECTION only, never stamped: the label realtime-ocr.mjs stamped for the default prompt until #7499. A page
+// carrying it, or written by one of its former stampers since, is not stale (scripts/lib/ocr-targeting.mjs).
+const LEGACY_PROMPT_LABEL = LEGACY_V5_LABEL;
 const SKIP_MODELS = ['manual', 'manual-correction'];
 const INLINE_BATCH_SIZE = 20;               // Pages per inline batch (base64 in HTTP body)
 const INLINE_MAX_BYTES = 15 * 1024 * 1024;  // Inline request body stays well under the ~20MB limit
@@ -336,7 +337,7 @@ function pageFilterForBook(bookId, model, promptVersion) {
     'ocr.model': { $nin: SKIP_MODELS },
     $and: [
       HAS_IMAGE,
-      { $or: [{ 'ocr.model': { $ne: model } }, { 'ocr.prompt_version': { $nin: [promptVersion, LEGACY_PROMPT_LABEL] } }] },
+      { $or: [{ 'ocr.model': { $ne: model } }, ocrLabelNotIn([promptVersion, LEGACY_PROMPT_LABEL])] },
     ],
   };
 }

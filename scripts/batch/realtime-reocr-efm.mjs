@@ -20,7 +20,8 @@ import { MongoClient } from 'mongodb';
 import { assertApiOcrModel } from '../lib/ocr-routing.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, imageInput, ocrProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
+import { ocrLabelNotIn } from '../lib/ocr-targeting.mjs';
 import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
@@ -31,12 +32,13 @@ const TARGET_MODEL = 'gemini-3-flash-preview';
 // #7075: only gemini-3.1-flash-lite runs on the paid API. This script's model is Flash, so it refuses to run;
 // read these pages through the agy CLI lane instead (scripts/batch/cli-ocr.mjs).
 assertApiOcrModel(TARGET_MODEL, 'realtime-reocr-efm');
-const TARGET_PROMPT = 'v5.2026-02';
 // Provenance identity of this writer (#4613).
 const CALL_SITE = 'scripts/batch/realtime-reocr-efm.mjs';
 const CODE_VERSION = await codeVersion();
 const HOST = host();
 const RUN_ID = `realtime-reocr-efm/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
+// SELECTION only (#7499): labels a page may carry and not be re-selected. The page is stamped
+// with the prompt actually sent (`ocrPrompt.ref`), never with these.
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02']; // v3+ acceptable
 const SKIP_SOURCES = ['manual', 'manual-correction'];
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -241,7 +243,7 @@ async function processPage(page, ocrPrompt, db) {
             model: TARGET_MODEL,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: TARGET_PROMPT,
+            ...promptLabel(ocrPrompt.ref), // the prompt sent (#7499), not a constant
             ...ocrProvenance(result.text, engine),
           },
           ...tags, // page_type, columns, script_type — whichever parsed
@@ -262,7 +264,7 @@ async function processPage(page, ocrPrompt, db) {
       output_tokens: result.usage.outputTokens,
       status: 'success',
       duration_ms: durationMs,
-      prompt_version: TARGET_PROMPT,
+      prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-reocr-efm.mjs',
       timestamp: new Date(),
     }).catch(() => {});
@@ -288,7 +290,7 @@ async function processPage(page, ocrPrompt, db) {
       status: 'error',
       error_message: error.message?.substring(0, 200),
       duration_ms: durationMs,
-      prompt_version: TARGET_PROMPT,
+      prompt_version: ocrPrompt.ref.version || null,
       endpoint: 'scripts/realtime-reocr-efm.mjs',
       timestamp: new Date(),
     }).catch(() => {});
@@ -394,7 +396,7 @@ async function main() {
       // Pages with old model OR old prompt (not v3 or v4)
       pageFilter.$or = [
         { 'ocr.model': { $ne: TARGET_MODEL } },
-        { 'ocr.prompt_version': { $nin: ACCEPTABLE_PROMPTS } },
+        ocrLabelNotIn(ACCEPTABLE_PROMPTS),
       ];
     }
 

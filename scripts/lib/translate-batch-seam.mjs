@@ -45,6 +45,7 @@ import {
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   LEAF_BREAK_ONLY,
+  pageBreakVariant,
   dropLeafSeamBreaches,
   sanitizeTranslationTags,
   assessTranslationHealth,
@@ -802,7 +803,7 @@ export async function writeRun(db, run, deps) {
           prompt_sent_hash: b.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: b.prompt_sent_chars,
           generationConfig: b.max_output_tokens ? { maxOutputTokens: b.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } } : notRecorded(`run ${run.id} was submitted before #4613 recorded generation settings`),
           run: { batch_job_id: run.translate_job?.name, job_id: run.id, code_version: run.code_version || NOT_RECORDED, host: run.host || NOT_RECORDED },
-          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true },
+          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true, page_break: pageBreakVariant(LEAF_BREAK_ONLY) },
         },
       });
       if (res.written) {

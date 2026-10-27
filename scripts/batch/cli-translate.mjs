@@ -53,7 +53,7 @@ import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
-import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
+import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
@@ -165,7 +165,7 @@ if (STAGE === 'read') {
       // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
       // beside it). The quota is charged by token cost, so this is what a page costs (#7503).
       call_usage: agyUsage(r.usage), ...(r.usage_first_read && { call_usage_first_read: agyUsage(r.usage_first_read) }),
-      context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
+      context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT },
       stderr_tail: r.err,
     };
     fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify(meta, null, 1));
@@ -220,7 +220,8 @@ for (const m of metas) {
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
     run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
-    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.context }),
+    // The lane's suffix (#7499): a read made before the context carried it still names it in its meta.
+    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.prompt_variant && m.context ? { prompt_variant: m.prompt_variant, ...m.context } : m.context }),
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });
   if (res.protected) { skip(m, 'human-edited translation'); continue; }

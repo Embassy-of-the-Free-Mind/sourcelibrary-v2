@@ -386,6 +386,18 @@ export const PAGE_BREAK_SCOPED = Object.freeze({ splitWords: true, catchwords: t
 export const LEAF_BREAK_ONLY = Object.freeze({ splitWords: false, catchwords: false, lookahead: false, rule: false, scoped: true, leafBreaks: true });
 
 /**
+ * The name of the page-break option a lane passed, for `engine.input.context.page_break` (#7499). The prompt
+ * sent is the DB row PLUS these devices, and PAGE_BREAK_SCOPED changed it without a version bump, so a page
+ * names the option it was built with — from the object passed, not a hand-typed string. 'none' = no devices.
+ */
+export function pageBreakVariant(pageBreak) {
+  if (!pageBreak) return 'none';
+  if (pageBreak === PAGE_BREAK_SCOPED) return 'scoped';
+  if (pageBreak === LEAF_BREAK_ONLY) return 'leaf-only';
+  return `custom:${Object.keys(pageBreak).filter((k) => pageBreak[k]).sort().join('+')}`;
+}
+
+/**
  * Resolve the devices around ONE page: the break before it (a word the previous page began, a
  * catchword it repeats) and the break after it (its own foot). Pure; the prompt builders below
  * decide whether to APPLY the result (`pageBreak.scoped` applies it only when something fired).

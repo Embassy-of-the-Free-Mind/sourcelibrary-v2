@@ -380,6 +380,34 @@ export function translationProvenance(text, engine) {
 }
 
 /**
+ * The page's top-level prompt LABEL (`prompt_version`, `prompt_id`, `prompt_hash`, `prompt_name`) from the prompt
+ * actually sent (#7499): `ref` is the stored row it came from ({ id, name, version, hash | content_hash }). A value
+ * not known is left out, never filled with a constant — realtime-ocr.mjs stamped 'v5.2026-02' for months while
+ * sending v16 and then v19.1 (.claude/docs/prompt-history.md, lesson 3).
+ */
+export function promptLabel(ref) {
+  const out = {};
+  const version = ref?.version != null && ref.version !== '' && ref.version !== NOT_RECORDED ? String(ref.version) : null;
+  if (version) out.prompt_version = version;
+  if (ref?.id) out.prompt_id = String(ref.id);
+  if (ref?.hash ?? ref?.content_hash) out.prompt_hash = ref.hash ?? ref.content_hash;
+  if (ref?.name) out.prompt_name = ref.name;
+  return out;
+}
+
+/**
+ * A batch job's prompt version for the page label (#7499): the job's own `prompt_version`, else the version its
+ * submit-time provenance recorded, else null. The collectors used to fall back to a constant ('v5.2026-02',
+ * 'v4.2026-02'). null, written over the previous read's label, says "not known" — leaving the key alone
+ * would let the old read's label describe the new text.
+ */
+export function jobPromptVersion(job) {
+  if (job?.prompt_version != null && job.prompt_version !== '') return String(job.prompt_version);
+  const v = job?.provenance?.prompt?.version;
+  return v != null && v !== '' && v !== NOT_RECORDED ? String(v) : null;
+}
+
+/**
  * `{ lane }` when the registry (scripts/lib/lanes.mjs `stamps`) names this writer as a lane, else `{}` (#7301): the
  * subscription and GPU lanes stamp `ocr.lane` / `translation.lane` beside `engine`, so a page says which lane wrote
  * it, not only `source: 'ai'`. A writer the registry does not name writes no `lane` key, exactly as before.
