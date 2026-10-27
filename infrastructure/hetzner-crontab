@@ -236,10 +236,19 @@
 # >= 70% of its week, or >= 95% in the last 24 h before the reset (unused headroom lapses then). Releases a book back to the pipeline once no untranslated page is left. Queue at install: 0 books.
 40 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-translate-lane.lock timeout 100m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-translate/$(date +\%F) --max-pages=60 --apply >> /var/log/sourcelibrary/cli-translate-lane.log 2>&1  # #7075
 
-# CLI OCR lane (#7089): every 2 h at :10, read up to 120 unread pages in books the orchestrator held for the agy Flash lane
+# CLI OCR lane (#7089): every 2 h at :10, read the unread pages in books the orchestrator held for the agy Flash lane
 # (ocr-flash-cli-7075), with Gemini 3.8 Flash low through agy -p on the subscription (agy has no 3 Flash). No paid API; stops on the
 # first quota reply. Spread books (needs_splitting) wait. Releases a book once nothing is unread. Approved by Derek 2026-10-26.
-10 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-ocr-lane/$(date +\%F) --max-pages=120 --apply >> /var/log/sourcelibrary/cli-ocr-lane.log 2>&1  # #7089
+# Pace (#7558, Derek 2026-10-27 "more pages and 4 pages"): the read-file-7558 prompt (no denied-shell turn: -37% input a page);
+# 4 pages a call on Latin-script print (#7522), 1 on Arabic (its 20-page check: 16/20 at 1, 15/20 at 4) and every other script;
+# 4 books at a time; no new book after 95 min, so the run fills its 110 min window (was 120 pages, one at a time, ~38 min).
+10 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/cli-ocr-lane/$(date +\%F) --max-pages=2400 --per-call=4 --per-call-arabic=1 --prompt-variant=read-file-7558 --concurrency=4 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-lane.log 2>&1  # #7089 #7558
+# CLI OCR correction lane (#7558): every 2 h at :50, correct the Flash-Lite drafts of visible, idle German and French books with
+# Gemini 3.8 Flash low through agy (lite>agy-flash-low; router tests 2026-10-26: DE 28/30, FR 27/29 accepted vs the served draft's
+# 21/30, 22/30), written by cli-ocr.mjs apply with its guards, stamped ocr.pipeline agy-correct-lite-7558, English flagged stale.
+# Spends only spare quota: before each 40-page chunk it reads agy /quota and stops when the Gemini week is under the straight line
+# to its reset or the 5 h bucket is under 25%. 3 books at a time, no new chunk after 95 min. Queue at install: 335,862 pages.
+50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=3 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558
 # Siku Quanshu translation lane (#5600, Derek 2026-10-27 "yes" + "lower the bar, keep them as drafts"): every 2 h at :25,
 # one wave of up to ~1,500 pages of the held Siku cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660) on agy 3.8 Flash
 # low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
