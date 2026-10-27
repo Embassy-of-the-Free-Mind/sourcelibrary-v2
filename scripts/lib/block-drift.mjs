@@ -202,11 +202,9 @@ function sharesOpening(fragment, text) {
  * `reason`.
  */
 export function detectBlockDrift({ ocrPrev, ocrNext, trPrev, trNext, minAbsorbed = MIN_ABSORBED_SHARE, caseless = false }) {
-  // A Han source makes no cased claim; the caseless test is opt-in (a hit is two pages re-read alone, which on a
-  // paid lane is spend: claude-translate.mjs, on the subscription, opts in).
-  if (isHanSource(ocrNext)) {
-    return caseless ? detectCaselessDrift({ ocrPrev, ocrNext, trPrev, trNext }) : { drift: false, reason: 'caseless source: no claim without the caseless option' };
-  }
+  // The caseless (Han) test is opt-in: a hit is two pages re-read alone, which on a paid lane is spend
+  // (claude-translate.mjs, on the subscription, opts in). Without it a Han page takes the cased path as before.
+  if (caseless && isHanSource(ocrNext)) return detectCaselessDrift({ ocrPrev, ocrNext, trPrev, trNext });
   const fragment = continuationFragment(ocrNext);
   if (!fragment) return { drift: false, reason: 'source N+1 opens on a sentence (or no claim)' };
   const trNextHead = stripEdgeBrackets(dropLeadingFurniture(translationProse(trNext)));
