@@ -99,3 +99,16 @@ the account, so meter deltas are upper bounds. agy: calls per page. Projection i
 ### By eye (after scoring)
 Per language, every page where the winning arm is worse than L, and 2 random pages where C and R differ
 (Mulberry32(seed + 5)), opened against the image.
+
+### Amendment 1 (2026-10-27, after the draws, before any model read)
+- **Draw fix.** The script check and the letter count now run on the body with the OCR metadata block stripped
+  (`stripOcrMetadata`). Before, `<page-type>text</page-type>` and the other tags counted as Latin letters and sank the
+  Han share of short Chinese pages. This changes no seed and no rule.
+- **Chinese: 5 books.** The terminal-status frame has 42 Chinese books with ≥ 50 OCR pages. Only 5 of them are lite
+  reads in Chinese. The other lite-read books are an English translation (諸蕃志, 佛國記), Japanese-glossed (韓非子),
+  stored refusals ("mojibake", 佛說無量壽經), or diagrams. Most Chinese lite pages are in `held` books, which the
+  brief puts out of the frame. Per the stop rule (≥ 3 and < 6), Chinese runs on the 5 books that pass, n ≤ 125.
+- **Greek: manuscripts stay in.** 12 of the 14 Greek candidates are catalogued or titled as manuscripts. In
+  this frame, the lite-read Greek pages *are* mostly manuscripts. So the Greek screen drops only a candidate that is
+  not Greek or not a text page, and keeps manuscripts. The result is reported split MS / print. (#6769 is
+  pilot-testing an Argon re-read of Greek manuscripts. This job writes nothing, so the two do not collide.)

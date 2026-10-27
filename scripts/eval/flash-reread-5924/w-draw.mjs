@@ -15,9 +15,10 @@ import { MongoClient } from 'mongodb';
 import fs from 'node:fs'; import path from 'node:path';
 import sharp from 'sharp';
 import { getPageSource } from '../../lib/page-image-url.mjs';
-import { classifyPageSample } from '../../lib/language-content-classify.mjs';
+import { classifyPageSample, stripOcrMetadata } from '../../lib/language-content-classify.mjs';
 
-const share = (re) => (texts) => { const t = texts.join('\n'), all = (t.match(/\p{L}/gu) || []).length; return all ? (t.match(re) || []).length / all : 0; };
+// Script shares and letter counts are taken on the body only: OCR tags (<page-type>text</page-type> …) are Latin letters.
+const share = (re) => (texts) => { const t = texts.map(stripOcrMetadata).join('\n'), all = (t.match(/\p{L}/gu) || []).length; return all ? (t.match(re) || []).length / all : 0; };
 export const LANGS = {
   zh: { seed: 75681, names: ['Chinese', 'Classical Chinese', 'zh'], minLetters: 150, check: (tx) => share(/\p{Script=Han}/gu)(tx) >= 0.6 },
   de: { seed: 75682, names: ['German', 'de'], minLetters: 400, check: (tx) => classifyPageSample(tx).dominant === 'german' },
@@ -29,7 +30,7 @@ const LANG = process.env.LANG_CODE || process.env.LANG7568;
 const C = LANGS[LANG];
 const N_CAND = Number(process.env.N_CAND || 14), PER_BOOK = 25;
 function mulberry32(a) { return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
-const letters = s => (String(s || '').match(/\p{L}/gu) || []).length;
+const letters = s => (stripOcrMetadata(String(s || '')).match(/\p{L}/gu) || []).length;
 const isLite = m => /flash-lite/.test(String(m || ''));
 const spread = v => Array.from({ length: PER_BOOK }, (_, i) => v[Math.floor((i + 0.5) * v.length / PER_BOOK)]);
 
