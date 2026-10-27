@@ -844,7 +844,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // No edition in this URL's language (#7496): the reader would only 307 to the
   // English page, so the Read buttons link there directly and say so.
   const readLinks = (b: unknown) => {
-    const englishOnly = lang !== 'en' && hasLocalizedEdition(b as Record<string, unknown>, lang) === false;
+    // `book` here is getBook's FULL record (an exclusion projection), so an absent
+    // counter is a zero, not an unknown: books never translated into Spanish have
+    // no `pages_translated_es` field at all, and the helper reads absence as null.
+    const rec = { pages_translated_es: 0, ...(b as Record<string, unknown>) };
+    const englishOnly = lang !== 'en' && hasLocalizedEdition(rec, lang) === false;
     return {
       readLabel: englishOnly ? t.readThisBookInEnglish : t.readThisBook,
       lpRead: (href: string) => (englishOnly ? `${href}?lang=${lang}` : lp(href)),
@@ -1687,7 +1691,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               && !['English', 'english', 'en', 'eng'].includes(book.language)
               && <TranslationHistoryUnresearched />
             )}
-            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
+            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} lang={lang} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions
                 bookId={book.id}
