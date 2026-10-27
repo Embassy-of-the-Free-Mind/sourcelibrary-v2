@@ -55,22 +55,28 @@ done
 # Keep agy's history database from filling the disk. agy never checkpoints its SQLite write-ahead log while other
 # calls hold the database open, so a job with calls always in flight grows the log without bound: 25 GB on the
 # Hetzner root disk on 2026-10-27, which filled it to 100% (the nightly disk-steward.sh checkpoint was too rare).
-# A TRUNCATE checkpoint succeeds even with idle readers attached (it did that night, with 12), so try one in the
-# background whenever the log passes 1 GB, at most once per 10 minutes per box. It is SQLite's own operation and
-# drops nothing; a busy database just returns and the next window tries again.
+# It grew ~350 MB a minute under one Tibetan job, and a checkpoint taken while calls are writing returns busy. What
+# worked by hand was to hold new calls for a moment so the running ones finish, then checkpoint. So: when the log
+# passes AGY_WAL_MAX_MB (4 GB), the first call to see it takes a drain lock (an atomic mkdir), and every call that
+# starts while it is held waits; the holder retries a TRUNCATE checkpoint for up to 2 minutes, then releases. The
+# wait stays well inside callers' kill timer (agy-cli.mjs: --print-timeout 300s). A checkpoint is SQLite's own
+# operation and drops nothing. A lock older than 5 minutes belongs to a dead holder and is cleared.
 AGY_DB_DIR="${AGY_DB_DIR:-$HOME/.gemini/antigravity-cli}"
-WAL="$AGY_DB_DIR/conversation_summaries.db-wal"; STAMP="$AGY_DB_DIR/.agy-guard-checkpoint"
-if [ -n "$(find "$WAL" -size +"${AGY_WAL_MAX_MB:-1024}"M 2>/dev/null)" ] && [ -z "$(find "$STAMP" -mmin -10 2>/dev/null)" ]; then
-  touch "$STAMP"
-  ( python3 - "${WAL%-wal}" >> "$AGY_DB_DIR/agy-guard-checkpoint.log" 2>&1 <<'PY'
+WAL="$AGY_DB_DIR/conversation_summaries.db-wal"; DRAIN="$AGY_DB_DIR/.agy-guard-drain"
+[ -n "$(find "$DRAIN" -maxdepth 0 -mmin +5 2>/dev/null)" ] && rmdir "$DRAIN" 2>/dev/null
+if [ -n "$(find "$WAL" -size +"${AGY_WAL_MAX_MB:-4096}"M 2>/dev/null)" ] && mkdir "$DRAIN" 2>/dev/null; then
+  python3 - "${WAL%-wal}" >> "$AGY_DB_DIR/agy-guard-checkpoint.log" 2>&1 <<'PY'
 import os, sqlite3, sys, time
-db = sys.argv[1]; before = os.path.getsize(db + '-wal')
-c = sqlite3.connect(db, timeout=30); r = c.execute('PRAGMA wal_checkpoint(TRUNCATE)').fetchone(); c.close()
+db = sys.argv[1]; before = os.path.getsize(db + '-wal'); t0 = time.time(); r = (1,)
+while r[0] and time.time() - t0 < 120:
+    c = sqlite3.connect(db, timeout=3); r = c.execute('PRAGMA wal_checkpoint(TRUNCATE)').fetchone(); c.close()
+    if r[0]: time.sleep(2)
 after = os.path.getsize(db + '-wal') if os.path.exists(db + '-wal') else 0
-print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'busy' if r[0] else 'ok', before >> 20, 'MB ->', after >> 20, 'MB')
+print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'busy' if r[0] else 'ok', before >> 20, 'MB ->', after >> 20, 'MB after', int(time.time() - t0), 's')
 PY
-  ) </dev/null >/dev/null 2>&1 &
+  rmdir "$DRAIN"
 fi
+n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
 
 if [ -z "$model" ]; then
   echo "agy-guard: no --model given; using gemini-3.8-flash-low" >&2
