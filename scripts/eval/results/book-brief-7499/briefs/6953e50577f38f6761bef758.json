@@ -1,0 +1,312 @@
+{
+ "book_id": "6953e50577f38f6761bef758",
+ "model": "claude-opus-5-5",
+ "words": 298,
+ "brief": "## 1. The work\nA Latin philosophical treatise by Francis Bacon: the *Novum Organum*, preceded by the prefatory matter of his *Instauratio Magna* (a proem and a preface), in a later Italian reprint with a printer's dedication. The text is learned Neo-Latin prose with long periodic sentences and frequent metaphor. It is the base text, with no commentary.\n\n## 2. Glossary\nInstauratio — Instauration\nIntellectus — understanding\nMens — mind\nScientia — science\nArs — art\nArtes mechanicae — mechanical arts\nNatura — nature\nRes — thing\nInquisitio — inquiry\nExperientia — experience\nExperimentum — experiment\nExperimenta fructifera — experiments of fruit\nExperimenta lucifera — experiments of light\nDialectica — logic\nNotio — notion\nAuxilium — aid\nOpinio — opinion\nPlacitum — tenet\nSensus — sense\nInventio — invention\nInventum — discovery\nIngenium — wit\nOpus — work\nPhilosophia — philosophy\nDoctrina — learning\nMethodus — method\nEmpirica (facultas) — empirical (faculty)\nRationalis (facultas) — rational (faculty)\nCharitas — charity\nPhantasia — fancy\n\n## 3. Layout\nThe text is single-column prose. Running heads (PRAEFATIO.), page numbers, signatures and catchwords should be omitted. Words hyphenated across a page break should be completed. Title and dedication pages should be set centred, line for line. Italic proem, headings and scriptural quotations should be kept in italics. Long ſ is an ordinary s. A stray Spanish page from another bound work may appear; translate it as printed, rendering its Latin quotations too.\n\n## 4. Names\nFranciscus de Verulamio — Francis of Verulam\nFranciscus Baco — Francis Bacon\nScylla — Scylla\nAdam — Adam\nGræci — the Greeks\nJosephus Marchio Ximenes — Joseph, Marquis Ximenes\nAragonia — Aragon\nAndreas Tosi — Andrea Tosi\nGaspar Girardi — Gaspare Girardi\nVenetiae — Venice\nDeus Pater, Verbum, Spiritus — God the Father, the Word, the Spirit",
+ "key": [
+  {
+   "source": "Instauratio",
+   "forms": [
+    "Instauratio",
+    "INSTAURATIO",
+    "Instaurationem"
+   ],
+   "english": "Instauration"
+  },
+  {
+   "source": "Intellectus",
+   "forms": [
+    "Intellectum",
+    "Intellectui",
+    "intellectum",
+    "intellectui",
+    "intellectus",
+    "intellectu"
+   ],
+   "english": "understanding"
+  },
+  {
+   "source": "Mens",
+   "forms": [
+    "Mens",
+    "mens",
+    "Mentis",
+    "mentis",
+    "Menti",
+    "mentem"
+   ],
+   "english": "mind"
+  },
+  {
+   "source": "Scientia",
+   "forms": [
+    "Scientia",
+    "Scientiarum",
+    "Scientiæ",
+    "Scientiae",
+    "Scientiis",
+    "Scientias"
+   ],
+   "english": "science"
+  },
+  {
+   "source": "Ars",
+   "forms": [
+    "Ars",
+    "arte",
+    "Artes",
+    "artes",
+    "Artium",
+    "Artibus",
+    "artibus"
+   ],
+   "english": "art"
+  },
+  {
+   "source": "Artes mechanicae",
+   "forms": [
+    "artibus autem mechanicis",
+    "mechanicis"
+   ],
+   "english": "mechanical arts"
+  },
+  {
+   "source": "Natura",
+   "forms": [
+    "Natura",
+    "Naturæ",
+    "Naturae",
+    "naturae",
+    "Naturam",
+    "naturam",
+    "Naturarum"
+   ],
+   "english": "nature"
+  },
+  {
+   "source": "Res",
+   "forms": [
+    "Res",
+    "res",
+    "Rei",
+    "Re",
+    "Rerum",
+    "rerum",
+    "Rebus",
+    "rebus"
+   ],
+   "english": "thing"
+  },
+  {
+   "source": "Inquisitio",
+   "forms": [
+    "Inquisitionem",
+    "inquisitionem",
+    "inquisitionis",
+    "inquiſitionis"
+   ],
+   "english": "inquiry"
+  },
+  {
+   "source": "Experientia",
+   "forms": [
+    "experientia",
+    "experientiæ",
+    "experientiam"
+   ],
+   "english": "experience"
+  },
+  {
+   "source": "Experimentum",
+   "forms": [
+    "Experimenta",
+    "experimentis"
+   ],
+   "english": "experiment"
+  },
+  {
+   "source": "Experimenta fructifera",
+   "forms": [
+    "Fructifera"
+   ],
+   "english": "experiments of fruit"
+  },
+  {
+   "source": "Experimenta lucifera",
+   "forms": [
+    "Lucifera"
+   ],
+   "english": "experiments of light"
+  },
+  {
+   "source": "Dialectica",
+   "forms": [
+    "Dialectica",
+    "Dialecticæ"
+   ],
+   "english": "logic"
+  },
+  {
+   "source": "Notio",
+   "forms": [
+    "Notiones",
+    "notionibus"
+   ],
+   "english": "notion"
+  },
+  {
+   "source": "Auxilium",
+   "forms": [
+    "auxilia",
+    "auxiliis",
+    "auxilio"
+   ],
+   "english": "aid"
+  },
+  {
+   "source": "Opinio",
+   "forms": [
+    "opinio",
+    "Opinionem",
+    "opinionum",
+    "opinionibus"
+   ],
+   "english": "opinion"
+  },
+  {
+   "source": "Placitum",
+   "forms": [
+    "placita",
+    "placitis",
+    "Placiti"
+   ],
+   "english": "tenet"
+  },
+  {
+   "source": "Sensus",
+   "forms": [
+    "Sensus",
+    "sensus",
+    "sensum",
+    "sensu",
+    "ſenſu",
+    "ſenſuum",
+    "ſenſibus"
+   ],
+   "english": "sense"
+  },
+  {
+   "source": "Inventio",
+   "forms": [
+    "inventio",
+    "inventione"
+   ],
+   "english": "invention"
+  },
+  {
+   "source": "Inventum",
+   "forms": [
+    "inventum",
+    "inventis"
+   ],
+   "english": "discovery"
+  },
+  {
+   "source": "Ingenium",
+   "forms": [
+    "ingenio",
+    "ingenii",
+    "Ingenii",
+    "ingenia",
+    "Ingeniorum"
+   ],
+   "english": "wit"
+  },
+  {
+   "source": "Opus",
+   "forms": [
+    "Opus",
+    "opera",
+    "operis",
+    "Operis",
+    "operum",
+    "operibus"
+   ],
+   "english": "work"
+  },
+  {
+   "source": "Philosophia",
+   "forms": [
+    "Philoſophia"
+   ],
+   "english": "philosophy"
+  },
+  {
+   "source": "Doctrina",
+   "forms": [
+    "Doctrinæ",
+    "doctrinæ"
+   ],
+   "english": "learning"
+  },
+  {
+   "source": "Methodus",
+   "forms": [
+    "Methodi"
+   ],
+   "english": "method"
+  },
+  {
+   "source": "Empirica (facultas)",
+   "forms": [
+    "Empiricam"
+   ],
+   "english": "empirical (faculty)"
+  },
+  {
+   "source": "Rationalis (facultas)",
+   "forms": [
+    "Rationalem"
+   ],
+   "english": "rational (faculty)"
+  },
+  {
+   "source": "Charitas",
+   "forms": [
+    "charitate",
+    "Charitatis"
+   ],
+   "english": "charity"
+  },
+  {
+   "source": "Phantasia",
+   "forms": [
+    "phantaſias",
+    "phantasiis"
+   ],
+   "english": "fancy"
+  }
+ ],
+ "input_pages": [
+  2,
+  5,
+  7,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25
+ ]
+}
