@@ -483,6 +483,51 @@ My labels agree with Argon's on 18 of the 24 links both read. The 6 differences 
 - Claude: the reading was done in this job's own session.
 - No writes to `embassy_messages`, the threads, the replay cache or the l7a cron.
 
+## 2026-10-27 · How many 3.8 Flash low calls does the agy Gemini quota hold in a week? (#6740)
+
+PRIOR ART: `scripts/eval/estimator/ocr/meter_quota_share.py` (the earlier figure, 229K calls per 30 days, from main's
+`/root/agy-quota/calls.csv` and the call counts before each 429). It did not fit: that meter sees only main's calls,
+and its stretch ran ~10K Argon-high calls, which cost several Flash calls each, so a "call" was not one unit.
+
+**What the CLI says about its own quota.** `agy -p "/quota" --output-format json` (also `/usage`) spends no tokens and
+returns, per model group, `remaining_fraction` and `reset_time` for a weekly and a 5-hour bucket. Its description:
+"Within each group, models share a weekly limit and a 5-hour limit. Quota is consumed proportionally to the cost of the
+tokens." Groups: *Gemini Models* (Gemini Flash, Gemini Pro; Argon is in it) and *Claude and GPT models*. The weekly
+window is fixed, not rolling: it reset at 2026-10-30T21:59:44Z, seven days after the 10-19 lockout ended
+(10-23T21:59:44Z).
+
+**Design.** Read the weekly fraction once (2026-10-27T08:21Z: 0.7105, so 0.2895 used) and count every print-mode call
+since the window opened, by model, from the CLI logs on all four boxes and the Mac (`Print mode: starting ...
+model="..."` lines in `~/.gemini/antigravity-cli/log/cli-*.log`).
+
+| where | 3.8 Flash low | 3.8 Flash high / medium | Argon high / medium |
+|---|---|---|---|
+| main | 24,997 | 114 / 0 | 52 / 25 |
+| cloudlayer | 3,597 | 158 / 1 | 0 |
+| gex45 | 1,097 | 28 / 0 | 0 |
+| l7a | 8 | 0 | 8 / 0 |
+| Mac | 18 | 0 | 0 |
+| **all** | **29,717** | **301** | **85** |
+
+**Result.** 0.2895 / 30,018 Flash calls = **9.6e-6 of a week per Flash-low call, ~104K calls a week**. That is
+2.25e-6 of a 30-day allowance, against the 4.36e-6 the router used. The 85 Argon calls are ignored; even at 10x a Flash
+call they would be ~3% of the use. At $200 a month that is **~$0.45 per 1,000 Flash-low pages** (one page a call),
+against $1.48 measured for Flash-Lite Batch.
+
+**Cross-check, and why the short reading is not used.** A 10-minute reading the same morning (08:21 to 08:31Z, the
+fraction sampled every 30 s, 200 other-box calls plus 11 test calls on the Mac): a drop of 0.0033, ~1.5e-5 a call,
+~66K a week. But the weekly fraction stood still for 5 minutes under ~100 calls, then fell in jumps, and once went
+back *up* (0.70716 -> 0.70726): the readings come from replicas that are not in step. Readings hours or days apart
+are the usable ones.
+
+**Not measured, on purpose.** Argon's cost per call: Derek stopped the test before its Argon blocks (2026-10-27). No
+Argon call was made by this test.
+
+**Replicated?** No: one weekly window. The next window's reading (after 10-30T21:59Z) is the replication.
+
+**Artifact.** The quota series and the Mac's test reads were scratch (session scratchpad); the counts are in the table
+above.
+
 ## 2026-10-26 · Can the production vLLM Yigdzin reader replace the HF reader on gex45? (#6871 row 4, #5771; job yig-vllm-6871)
 <!-- PRIOR ART: 2026-10-20-tibetan-guttered-pages-yigdzin-page-mode-6871.md (the HF page-mode lane this replaces; its vLLM arm hung); 2026-10-14-yigdzin-rest-withheld-and-unread-tibetan-4523.md (the same worker on vLLM 0.29.0 on L4s, 0.73–0.97 pages/s); scripts/eval/split-leaf-5771/yig_leaf_read.py on job-split-leaves-5771 (the HF port of the worker that 81-split-leaf-5771 ran). -->
 
