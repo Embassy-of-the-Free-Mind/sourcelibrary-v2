@@ -88,6 +88,17 @@ PY
 fi
 n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
 
+# A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
+# Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
+if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
+  only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
+  [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
+  if [ "$model" != "$only" ]; then
+    echo "agy-guard: quota reached (refused): $(basename "$AGY_HOME") runs $only only, not $model" >&2
+    exit 75
+  fi
+fi
+
 if [ -z "$model" ]; then
   echo "agy-guard: no --model given; using gemini-3.8-flash-low" >&2
   exec "$REAL" "$@" --model gemini-3.8-flash-low
