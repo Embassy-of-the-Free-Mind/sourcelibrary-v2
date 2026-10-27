@@ -386,7 +386,9 @@ preflight_auth() {
   out=$(cd "$SL" && export -f claude_capped && export CLAUDE_BIN && timeout 120 bash -c 'claude_capped -p "Reply with exactly: OK" --model sonnet' < /dev/null 2>&1); rc=$?
   echo "$out" | grep -qE '(^|[^A-Za-z])OK([^A-Za-z]|$)' && ! echo "$out" | grep -qiE "$AUTH_FAIL_RE" && return 0
   echo "$out" | grep -qiE "$LIMIT_RE" && return 0
-  [ $rc -eq 124 ] && out="timed out after 120 s${out:+: $out}"
+  # A timeout is a busy box, not a logout: on 2026-10-27 l7a ran out of memory and two jobs paged
+  # NOT LOGGED IN while the login was fine. Return 2 so the sweep waits quietly and retries.
+  [ $rc -eq 124 ] && { echo "timed out after 120 s (box busy, not an auth failure)"; return 2; }
   echo "${out:-no output, exit $rc}" | tr '\n' ' ' | cut -c1-200
   return 1
 }
@@ -625,7 +627,10 @@ case "${1:-status}" in
         cp=$(checkpoint "$n" "died twice")
         ntfy_job high warning "Job DIED twice, not resumed: $n" "Check dmesg/df on the box; \`claude-job.sh resume $n\` by hand.${cp:+ Work checkpointed to $cp.}"; continue; fi
       # Not logged in: a resume would die the same way and spend one of the two (#5627). Wait for a login.
-      if [ -z "${swept_auth:-}" ]; then swept_auth=ok; why=$(preflight_auth) || swept_auth="$why"; fi
+      if [ -z "${swept_auth:-}" ]; then swept_auth=ok; why=$(preflight_auth); src=$?; [ $src -eq 0 ] || swept_auth="$why"; fi
+      if [ "${src:-0}" -eq 2 ]; then  # busy, not logged out: the next sweep retries, no resume spent, no page
+        echo "[claude-job] sweep held: preflight timed out, box busy $(date -u +%FT%TZ)" >> "$LOGD/$n.log"; continue
+      fi
       if [ "$swept_auth" != ok ]; then
         grep -q '\[claude-job\] sweep held: not logged in' "$LOGD/$n.log" 2>/dev/null || {
           echo "[claude-job] sweep held: not logged in ($swept_auth) $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
