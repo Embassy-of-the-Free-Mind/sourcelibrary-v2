@@ -436,7 +436,8 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       // "Edition" covers both ways a book can be in Spanish: TRANSLATED into it
       // (the counter) or WRITTEN in it (`language`). Cogolludo needs no pivot to
       // be Spanish, and testing the counter alone sent him to an English page.
-      href: hasEsEdition(b) ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
+      // Every book has a Spanish book page since #7496 (English text labelled there).
+      href: spanishReaderHref(b),
     };
   });
 
@@ -474,7 +475,8 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     galleryTotal: gallery.total,
     firstTranslations: (rawFirstTranslations as unknown as RawBook[]).map((b) => ({
       ...b,
-      href: hasEsEdition(b) ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
+      // Every book has a Spanish book page since #7496 (English text labelled there).
+      href: spanishReaderHref(b),
     })),
     heroCandidates: imageCandidates(doc.featured_images, slug, doc.hero_image),
     // The curated plate as STORED — full size, for the share card. The
