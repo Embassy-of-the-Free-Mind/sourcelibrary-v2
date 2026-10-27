@@ -83,7 +83,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -211,19 +211,21 @@ if (STAGE === 'read') {
     // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
     // sleeps until the window resets and tries the same page again: it is the account's limit, not the page's.
     let r, nudged = false, rereads = 0, calls = 0;
+    // agy's own token counts, one entry per call made for this page (#7517: what a page costs the account's pool).
+    const usage = [];
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
       r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
       // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
       if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(p, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
-      calls++;
+      calls++; usage.push(agyUsage(r.usage));
       logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       if (r.cls === 'quota' && STOP_ON_QUOTA) await stopOnQuota(p, r.err);
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;
-        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++;
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++; usage.push(agyUsage(r.usage));
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       }
       // #5055: a read the write guard calls truncated (a tag left open at its tail, a text ending inside a tag) is read
@@ -238,7 +240,7 @@ if (STAGE === 'read') {
     const meta = {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
-      chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
+      chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: imageSha,

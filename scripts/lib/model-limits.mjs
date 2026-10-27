@@ -78,8 +78,19 @@ export function claudeBlocked({ sessionMax = SESSION_MAX, weeklyMax = WEEKLY_MAX
   return null;
 }
 
+/**
+ * The agy account this process calls (#7517). AGY_HOME=<dir> (scripts/workers/agy-guard.sh) runs the CLI on a second
+ * Google login whose quota is its own: a quota reply there must not lock the main account's lanes, and the main
+ * account's meter (/root/agy-quota/status.json) says nothing about it. null = the main account.
+ */
+export const agyAccount = () => (process.env.AGY_HOME ? path.basename(process.env.AGY_HOME) : null);
+/** The local stop lane for an agy model on this process's account: `agy-<model>`, or `agy@<account>-<model>`. */
+export const agyLimitLane = (model) => (agyAccount() ? `agy@${agyAccount()}-${model}` : `agy-${model}`);
+
 /** Is `model` on agy (Gemini via the subscription CLI) locked right now? null = go ahead; else { until, reason }. */
 export function agyBlocked(model) {
+  const acct = agyAccount();
+  if (acct) return localStop(agyLimitLane(model)) || localStop(`agy@${acct}`);
   const stop = localStop(`agy-${model}`) || localStop('agy');
   if (stop) return stop;
   const s = readJson(AGY_METER);
