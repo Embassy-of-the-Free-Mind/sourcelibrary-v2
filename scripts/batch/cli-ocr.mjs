@@ -430,6 +430,9 @@ const MIN_SHARED = 0.4;
 const MAX_CORRECTED = 0.25;
 // The 25% is counted in syllables on a Tibetan draft and in words (whitespace tokens, tags out) on any other: the
 // syllable tokenizer keeps only Tibetan syllables, so on Latin it counted 0 of 0 and passed every correction (#7269).
+// Text lines, the <leaf-break/> marker line not counted: adding or moving the marker (a seam fix) is not a line change.
+const leafLines = (t) => String(t).split('\n').filter((l) => l.trim() && !/^\s*<leaf-break\/>\s*$/.test(l)).length;
+const latinLetters = (t) => (String(t).replace(/<[^>]+>/g, ' ').match(/[A-Za-z]/g) || []).length;
 const wordTokens = (t) => String(t).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean);
 function changedUnits(draft, next) {
   if (/[\u0F00-\u0FFF]/u.test(draft)) return { ...diffSyllables(draft, next), unit: 'syllables' };
@@ -514,6 +517,14 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
     if (d.changed / Math.max(1, d.draftN) > MAX_CORRECTED) { skip(m, `correction changes ${Math.round(100 * d.changed / Math.max(1, d.draftN))}% of the draft's ${d.unit}: check by eye`); continue; }
+    // #6740: Flash wrote སྤྱོད as `spy`ོད. The foreign-script guard always allows Latin (tags, sigla), so a correction of a
+    // Tibetan draft that ADDS Latin letters is refused here.
+    // Per changed span, not page totals: a correction that drops Latin elsewhere must not hide Latin it adds (#7479 review).
+    if (d.unit === 'syllables' && d.hunks.some((h) => latinLetters(h.b.map((j) => d.B[j].syl).join(' ')) > latinLetters(h.a.map((i) => d.A[i].syl).join(' ')))) { skip(m, 'correction adds Latin letters to a Tibetan draft'); continue; }
+    // #6740: a correction that changes the number of text lines dropped, merged or invented a line (Thadrak brGyad stong
+    // p.233: 7 lines → 6), or removed a line the draft invented (Neyphug rGyud Tsha p.128). Neither can be told apart
+    // without the image, so the draft stays and a person looks.
+    if (d.unit === 'syllables' && leafLines(text) !== leafLines(page.ocr.data)) { skip(m, `correction changes the line count (${leafLines(page.ocr.data)} → ${leafLines(text)}): check by eye`); continue; }
     // The ya-btags guard (#6560): a change that only adds or drops ྱ under མ is the corrector's one measured way of
     // writing the canonical spelling over the leaf's. Kept only where a leaf check confirmed it; the rest go back.
     const hits = yatagsHits(page.ocr.data, text);
@@ -577,7 +588,9 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     ...(LANE_GATE && { pipeline: LANE }),
   }, { by: `${m.cli} ${m.model}`, reason: REASON, run_id: runId, revision_source: 'reocr_cli', expect_prior_hash: textHash(page.ocr) });
   if (w.status !== 'written') { skip(m, w.status === 'conflict' || w.status === 'prior_changed' ? 'page changed between read and write' : `writer: ${w.status}`); continue; }
-  if (Object.keys(tags).length || detectedImages.length) await db.collection('pages').updateOne({ id: page.id }, { $set: { ...tags, ...(detectedImages.length > 0 && { detected_images: detectedImages }) } });
+  // Page-level tags lifted from the read go in a second update, only while the page still holds the text just written.
+  // revert-run restores `ocr` only, not these (a Tibetan correction lifts none: it carries no header).
+  if (Object.keys(tags).length || detectedImages.length) await db.collection('pages').updateOne({ id: page.id, 'ocr.data': text }, { $set: { ...tags, ...(detectedImages.length > 0 && { detected_images: detectedImages }) } });
   await recordSweepAction(db, { sweep: 'cli-ocr', book_id: page.book_id, action: 'ocr-reread-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.ocr?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   if (MARK_STALE) await markTranslationsStale(db, [{ id: page.id, text }], new Date(), MARK_STALE);
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
