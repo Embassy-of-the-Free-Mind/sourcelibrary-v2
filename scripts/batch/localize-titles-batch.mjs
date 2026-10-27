@@ -120,7 +120,9 @@ export function acceptGloss(book, raw) {
   let g = cleanGloss(raw);
   if (!g || g.length > 200) return null;
   // "Obras de <author>" only for a title that IS "works" (v2 replaced Chinese titles with it).
-  if (/^obras de\b/i.test(g) && !/\b(opera|works|œuvres|oeuvres|werke|obras)\b/i.test(book.title)) return null;
+  // The full run rejected 354, mostly real collected works in words this list lacked
+  // (Opere, Opuscula, Wercken, omnia): widened after reading them.
+  if (/^obras de\b/i.test(g) && !/\b(opera|opere|opuscula|omnia|works|œuvres|oeuvres|werke|wercken|werken|obras|schriften)\b/i.test(book.title)) return null;
   g = g.replace(/[,(]?\s*vol(?:umen|úmenes|\.)?\s*[\dIVXLC-]+\)?\s*$/i, '').trim();
   // "Tengyur (Derge Tengyur, vol. 173)" loses its ")" with the volume: drop the open bracket too.
   if ((g.match(/\(/g) || []).length > (g.match(/\)/g) || []).length) g = g.slice(0, g.lastIndexOf('(')).replace(/[\s,:]+$/, '');
