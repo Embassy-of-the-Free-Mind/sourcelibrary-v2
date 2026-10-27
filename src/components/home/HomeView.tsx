@@ -31,7 +31,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, untranslatedShelf, subjectShelves } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, nativeShelfTotal, beginnerShelf, untranslatedShelf, subjectShelves } = data;
   const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
@@ -115,7 +115,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </Link>
             </div>
             <p className="text-muted mb-6 max-w-2xl">
-              {t.nativeShelfSubtitle}
+              {nativeShelfTotal > 0 && t.nativeShelfTotal ? t.nativeShelfTotal(nativeShelfTotal) : t.nativeShelfSubtitle}
             </p>
             <BookSlider books={nativeShelf as unknown as MiniBook[]} lang={lang} />
           </div>
