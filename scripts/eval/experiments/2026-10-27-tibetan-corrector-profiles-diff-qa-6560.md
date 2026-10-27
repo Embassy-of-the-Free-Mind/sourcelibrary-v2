@@ -1,6 +1,6 @@
 # Tibetan correction: do error profiles in the prompt help, and can a diff-hunk QA replace the line-count refusal? (#6560, #6740)
 
-**Status: PRE-REGISTERED.** This file was committed and pushed before any judge was run on any arm's output. The
+**Status: DONE (results below).** Pre-registered in 0afde11a8 (amended in f75925f70) before any judge was run on any arm's output. The
 results section is added after the run. Job `tib-corr-profiles-6560`. Eval only: no page was written.
 
 ## Decision it changes
@@ -150,3 +150,120 @@ Recommend the **cheapest** variant that passes all four:
 - **This box's Claude account meter is empty** (`/root/.claude-limits/latest.json` has no limits for
   derek@playpowerlabs.com). The 89% weekly stop can only be honoured as "stop at the first limit reply".
 - `/root/agy-quota/status.json` lives on main and is not readable from this box. agy errors stop the runner (exit 3).
+
+## Results (2026-10-27)
+
+**No variant passes the pre-registered rule.** Every one fails at least one of the four rules, so none is recommended.
+On this diagnostic set, the full corrector-profile prompt (C) is the clearest improvement over the current prompt. The
+diff-hunk QA as built is not a drop-in replacement for the line-count refusal. The results are below.
+
+- **Calls:** agy Flash-low 248 (82 per arm, plus 2 re-reads of replies cut before `<<<END>>>` in C; $0).
+- **Opus:** 1,484 sealed calls on this box's subscription: span 191, confirm 110, whole page 446, QA 737. That is
+  $177 at API-equivalent prices; nothing was billed. No limit reply was received.
+- **Judge controls:** span 366/382 (96%), confirm 208/220 (95%), QA 596 right / 3 wrong / 138 unclear. The QA's
+  control is drawn anywhere on the page, so it often falls outside the band tile; hence the unclears.
+- **Scores:** `results/.../profiles-diffqa-6560/score.json.gz` and `score.txt`.
+
+### The table (72 pages; plants: 30 planted syllables on 10 folios)
+
+| variant | better / same / worse (pooled) | pages with a severe error introduced | per 10 | plants caught | line-count changes: right / loss / unclear / breaks only | p.128 · p.131 · p.233 | rule |
+|---|---|---|---|---|---|---|---|
+| **A** current prompt | 45 / 12 / 15 | 31 | 4.3 | 29/30 | 7 / 2 / 1 / 12 | right · right · kept | fails 1, 4 |
+| **B** + reader profile | 49 / 14 / 9 | 33 | 4.6 | 27/30 | 6 / 0 / 5 / 11 | right · right · kept | fails 1, 3 |
+| **C** + reader + corrector profile | 50 / 7 / 15 | 31 | 4.3 | **30/30** | 6 / 2 / 2 / 13 | unclear · right · +1 line, unclear | fails 1, 4 |
+| A + lane guards (today) | 29 / 32 / 11 | 18 | 2.5 | 29/30 | refused | kept · kept · kept | fails 1, 2, 4 |
+| B + lane guards | 31 / 35 / 6 | 20 | 2.8 | 27/30 | refused | kept · kept · kept | fails 1, 3, 4 |
+| C + lane guards | 30 / 31 / 11 | 19 | 2.6 | 27/30 | refused | kept · kept · kept | fails 1, 2, 3, 4 |
+| A + diff QA | 50 / 19 / 3 | 18 | 2.5 | 27/30 | 7 / 0 / 1 / 13 | right · right · kept | fails 1, 3 |
+| **B + diff QA** | **52 / 19 / 1** | **13** | **1.8** | 25/30 | 6 / 2 / 0 / 10 | **kept** · right · kept | fails 3, 4 |
+| C + diff QA | 51 / 16 / 5 | 17 | 2.4 | 27/30 | 5 / 2 / 3 / 12 | unclear · loss · +1, unclear | fails 1, 3, 4 |
+
+Rules: (1) severe on fewer than 2 of 10 pages, (2) better ≥ 3 × worse, (3) plants ≥ A's 29/30, (4) p.128 and p.131
+right and no loss.
+
+**B + diff QA passes the severity rule (13/72) and better ≥ 3 × worse.** It fails the other two:
+- it catches 25/30 plants, against A's 29;
+- the QA put Yigdzin's duplicated line back on p.128 (8 lines again where the leaf has 7), and 2 line changes are
+  losses.
+
+### 1. Do the profiles help? They change WHICH errors Flash makes, not how many pages go wrong
+
+Spans the leaf contradicts (the span judge saw the draft; 60 pages paired, not over the 25% cap):
+
+| arm | errors introduced (spans) | mantra / Sanskrit | tsheg inside a cluster, split, join | another word | errors fixed (spans) |
+|---|---|---|---|---|---|
+| A | 166 | 39 | 36 | 67 | 966 |
+| B | 136 | 37 | **6** | 70 | 1,030 |
+| C | **116** | **4** | 8 | 74 | 1,042 |
+
+- **C against A:** 65 fewer introduced spans, 95% interval [−143, −3] (bootstrap over pages). Most of the drop is on a
+  few pages: 22 pages have fewer, 18 have more.
+- **The reader profile alone (B) stops the tsheg insertions.** It does not stop mantra normalisation.
+- **The corrector profile (C) stops mantra normalisation.** C against B on mantra: −32, [−78, −1].
+- **Neither profile reduces word substitutions** (O6, about 70 spans in every arm), and those are what the severity
+  rule mostly counts.
+- **The profiles cost no fixes:** fixed spans went up from 966 to 1,042. C caught all 30 plants.
+- **At page level:** worse pages were 15 / 9 / 15 for A / B / C, and pages with a severe error introduced were
+  31 / 33 / 31. None of the three is under the bar.
+
+### 2. Diff-hunk QA: it removes most confirmed severe spans, at about 8 Opus calls a page, but it is not a line-count judge
+
+- **Confirmed severe spans** (both span judges saw the draft) fall from 22 pages to 5–7, and pooled worse falls from
+  15 / 9 / 15 to 3 / 1 / 5.
+- **The whole-page judge** still flags 10–14 pages in every +qa variant: more wrong_text defects than the draft, or a
+  new class of one. Its "worse" verdicts stay at 4–5.
+- **It costs right fixes.** Unclear means revert, so plants caught drop by 2 (A, B) or 3 (C), and pooled "better"
+  barely moves.
+- **Removed passages: the QA is unreliable at hunk granularity.** The syllable alignment splits a removed Yigdzin
+  duplicate into fragments (p.128 had 8 "removal" hunks). The judge's answers and counts on the fragments disagree
+  with each other. A partial revert can leave a hybrid line: on p.131, C + qa, the whole-page judge then called a
+  restored fragment a near-copy, and the line outcome became a loss.
+  - The by-eye truth on p.131 (job tib-opus-translate-6948) is 7 lines, with the anger sentence written twice on the
+    leaf.
+- **Cost, measured:**
+  - 737 calls for 1,890 distinct hunks on 78 pages (three arms pooled), 3.3 hours of call time, $52.6 at API-equivalent
+    prices.
+  - For one arm alone: about 8 calls a page (A 633 calls on 82 pages), a median of 17 hunks a page, about $0.57 a page
+    at API-equivalent prices.
+  - On a 500-page volume that is about 4,000 Opus calls.
+
+### 3. The lane's current guards (+lane) do not meet the bar either
+
+On these pages, A + lane is 29 / 32 / 11 with 18 severe pages (2.5 per 10).
+- The blanket line-count refusal sends 26 of the 72 pages back to the draft.
+- It keeps the Yigdzin duplicate on p.128 and p.131.
+- It does not stop word substitutions on the pages it passes.
+- The Derge guard is not in this baseline (see above), so the real lane may be a little better.
+
+### Where the severity count comes from (one caution)
+
+- The whole-page judge's "a wrong_text defect of a new class" (leafcheck severity-gate (b)) raises 12–13 of the raw
+  arms' 31–33 severe pages, and 10–14 of the +qa variants' 13–18. That is most of the +qa flags, often on pages the
+  same judge scores better.
+- The judge was not re-run on identical texts, so its noise floor is not measured.
+- brGyad stong Ka, the heavily corrected volume, carries 16–20 of its 29 pages' severe flags in the raw arms. Wave-2
+  pages carry 3–7 of 20.
+
+### Decision
+
+- **None passes the pre-registered rule.** Nothing here is a write decision.
+- **What the evidence supports, for the lane's next gate** (each still needs its own pre-registered gate on a fresh
+  volume):
+  1. **Use profile C in the correction prompt.** It is free, keeps every fix, catches all plants, and removes the
+     measured mantra and tsheg normalisation.
+  2. **Keep the line-count refusal.** A per-hunk QA cannot tell a removed duplicate from a lost line. The next try
+     should be a **line-level** check: one call per changed line, asking how many times the leaf shows the line. It
+     should not use syllable hunks. Its known-answer controls should come from the same band.
+  3. **Word substitutions (O6) are what remains.** Neither profile reaches them. The diff QA's leaf check removes most
+     confirmed severe spans (22 pages → 5–7), at about 8 Opus calls a page.
+
+### Deviations, all taken before scoring
+
+- **QA calls per page line, not per hunk** (amendment f75925f70). Arm A came back with 1,154 hunks on 62 pages.
+- **The count question decides only for a pure removal** (nothing in its place). For a long run replaced by a short
+  one, "how often is this passage on the leaf" does not say which reading is right. This was seen on the first QA
+  replies, before any scoring.
+- **Arm C's 2 replies cut before `<<<END>>>` were read once more**, as `cli-ocr.mjs` does.
+- **brGyad:** 29 reads change the line count, not the brief's 32 (R2 holds 398 reads; tag lines are not counted).
+- **The Derge guard is not in +lane.** This box's Claude meter has no row for its account, so the 89% weekly stop
+  could only be "stop on a limit reply". None came.

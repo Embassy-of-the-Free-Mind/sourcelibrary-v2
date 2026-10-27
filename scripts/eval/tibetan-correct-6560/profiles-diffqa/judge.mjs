@@ -197,7 +197,9 @@ function qaVerdicts() {
       let keep = s === 'arm';
       // a removed passage: how often the leaf shows it decides, where the judge gave a count
       const cnt = Number.parseInt(ans[it.item]?.count, 10);
-      if (it.removal && Number.isFinite(cnt)) keep = cnt < it.draft_copies;
+      // only a PURE removal (nothing in its place): for a long run replaced by a short one, "how often is this passage
+      // on the leaf" does not say which reading is right (found on the first QA replies, before any scoring; see results)
+      if (it.removal && !it.arm && Number.isFinite(cnt)) keep = cnt < it.draft_copies;
       v[it.hunk_key] = { side: s ?? 'unanswered', keep, count: Number.isFinite(cnt) ? cnt : null, draft_copies: it.draft_copies ?? null };
     }
   }
@@ -367,13 +369,14 @@ if (CMD === 'span-req' || CMD === 'confirm-req') {
     opus.span += Object.keys(rep).length; opus.confirm += Object.keys(cr).length;
     for (const [uid, k] of Object.entries(key)) {
       if (k.wreck) { wreck[`${arm}|${uid}`] = true; continue; }
+      if (!rep[uid]) continue;
       for (const it of k.items) {
         const s = sideOf(it, rep[uid]?.[it.item]);
         if (it.kind === 'control') { ctl.span.n++; if (s === 'base') ctl.span.right++; continue; }
         SJ[hunkKey(uid, it.hunk)] ??= { side: s ?? 'unanswered', diff: diffOf(rep[uid]?.[it.item]), line_hunk: it.line_hunk, base: it.base, arm: it.arm, line: it.line, seen: rep[uid]?.[it.item]?.seen ?? null };
       }
     }
-    for (const [uid, k] of Object.entries(ck)) for (const it of k.items) {
+    for (const [uid, k] of Object.entries(ck)) for (const it of (cr[uid] && k.items) || []) {
       const s = sideOf(it, cr[uid]?.[it.item]);
       if (it.kind === 'control') { ctl.confirm.n++; if (s === 'base') ctl.confirm.right++; continue; }
       CJ[hunkKey(uid, it.hunk)] ??= s ?? 'unanswered';
@@ -488,7 +491,14 @@ if (CMD === 'span-req' || CMD === 'confirm-req') {
   }
   for (const name of NAMES) { const r = res[name]; r.rule.plants_ge_A = r.plants ? r.plants.catch_rate >= res.A.plants.catch_rate : null; r.rule.pass = Object.values(r.rule).every((x) => x === true); }
   const hunksPerPage = {};
-  for (const arm of ARMS) { const O = armOut(arm); const n = [...DRAFT.keys()].filter((u) => O.get(u)).map((u) => hunksOf(u, O.get(u)).hunks.length); hunksPerPage[arm] = { pages: n.length, hunks: n.reduce((s, x) => s + x, 0), median: n.sort((x, y) => x - y)[Math.floor(n.length / 2)] }; }
+  // what the QA would cost ONE arm on its own: the calls (page lines and removed passages) holding a hunk it wrote
+  const qaKey = readJson(J('judge', 'qa-key.json'), {});
+  for (const arm of ARMS) {
+    const O = armOut(arm); const n = [...DRAFT.keys()].filter((u) => O.get(u)).map((u) => hunksOf(u, O.get(u)).hunks.length);
+    const mine = new Set([...DRAFT.keys()].filter((u) => O.get(u)).flatMap((u) => hunksOf(u, O.get(u)).hunks.map((h) => hunkKey(u, h.id))));
+    const calls = Object.values(qaKey).filter((k) => k.items.some((it) => mine.has(it.hunk_key))).length;
+    hunksPerPage[arm] = { pages: n.length, hunks: n.reduce((s, x) => s + x, 0), median: n.sort((x, y) => x - y)[Math.floor(n.length / 2)], qa_calls_alone: calls, qa_calls_per_page: Math.round(10 * calls / n.length) / 10 };
+  }
   const out = { scored_at: new Date().toISOString(), controls: { span: ctl.span, confirm: ctl.confirm, qa: QA?.ctl ?? null }, opus_calls: opus,
     qa_cost: QA ? { calls: QA.calls.n, secs: Math.round(QA.calls.secs), cost_usd_equiv: Math.round(QA.calls.cost * 100) / 100, hunks_per_page: hunksPerPage, span_correction_right_ci: null } : null,
     variants: res };

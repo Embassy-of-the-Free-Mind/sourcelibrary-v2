@@ -136,3 +136,21 @@ lite OCR settings) on `req/corr.jsonl` and `req/corr-anchor.jsonl` into `out/lit
 (production-shaped prompt). `score.py` adds them and a `wreck` list (folios with lines > draft + 2, syllables > 115%,
 or identity < 0.85). Scores: `results/tibetan-correct-6560/scores-7263.json.gz`. No image read-off was run. Write-up:
 `scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md`.
+
+## Error profiles and diff-hunk QA (#6560, #6740, 2026-10-27)
+
+`profiles-diffqa/`: does the correction prompt do better when it carries the draft OCR system's error profile (B), or
+that profile plus the corrector's own (C)? And can a per-hunk Opus leaf check replace the lane's blanket line-count
+refusal? Profiles are data files, `profiles/<reader|corrector>.<model>.<script>.json`, written from
+`profile-counts.py` over four audits.
+
+```
+node --env-file=.env.production.local profiles-diffqa/build-set.mjs --root=$JOB_SCRATCH --brgyad=<R2 brGyad reads>.jsonl
+python3 prep.py --root $JOB_SCRATCH/prep --reuse-plants
+node profiles-diffqa/arms.mjs --root=$JOB_SCRATCH          # req/{A,B,C}.jsonl -> run-cli-arm.py --model gemini-3.8-flash-low
+node profiles-diffqa/judge.mjs span-req|confirm-req --arm=A|B|C ; page-req --variants=... ; qa-req ; score --out=S.json
+```
+
+Write-up: `scripts/eval/experiments/2026-10-27-tibetan-corrector-profiles-diff-qa-6560.md`. No variant passed the
+pre-registered rule. Profile C removed mantra and tsheg normalisation at no cost to fixes. The per-hunk QA cannot judge
+removed lines.
