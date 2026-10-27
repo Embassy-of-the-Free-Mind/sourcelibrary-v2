@@ -40,6 +40,7 @@ import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
 import TranslatedSiblingNotice from '@/components/book/TranslatedSiblingNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import VolumeSetStrip from '@/components/book/VolumeSetStrip';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
@@ -1575,6 +1576,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
     const readingDropdowns = (
       <>
+        {/* Volumes in this set (#7527) — first, because "which volume am I on,
+            and where is the next" is a navigation question. Renders nothing
+            unless the book is surely one volume of a set; tenant-gated like
+            RelatedEditions, which leaves these volumes out of its own list. */}
+        {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+          <Suspense fallback={null}><VolumeSetStrip
+            bookId={book.id}
+            workId={(book as unknown as { work_id?: string }).work_id!}
+            locale={lang}
+          /></Suspense>
+        )}
         {hasReadingGuide && (
           <AISection kind="reading-guide" className="card reveal-in">
             <details className="group sl-collapse">
@@ -1680,6 +1692,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 editionKey={(book as unknown as { edition_key?: string }).edition_key}
                 editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
                 locale={lang}
+                excludeSetVolumes
               /></Suspense>
             )}
             {embedPolicy.showIndexCatalogStatus && (

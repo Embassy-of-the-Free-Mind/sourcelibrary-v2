@@ -73,6 +73,17 @@ export interface BookStrings {
   searchThisBook: string;
   searchPlaceholder: string;
 
+  // ---- volumes of a multi-volume set (#7527) ----
+  volumesInSet: string;
+  /** Held run is complete from 1: "Volume 41 of 64". */
+  volumeOfSet: (n: number, of: number) => string;
+  /** Held run has gaps: say how many we hold, never "of N". */
+  volumeHeld: (n: number, held: number) => string;
+  volumeShort: (n: number) => string;
+  allVolumes: (n: number) => string;
+  /** Per-volume English readability: pct is 1-100. */
+  volumeTranslated: (pct: number) => string;
+
   // ---- pages grid ----
   pagesHeading: string;
   pagesShownOf: (shown: number, total: number) => string;
@@ -170,6 +181,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Book history',
     searchThisBook: 'Search this book',
     searchPlaceholder: 'Find a word, name, or phrase…',
+    volumesInSet: 'Volumes in this set',
+    volumeOfSet: (n, of) => `Volume ${n} of ${of}`,
+    volumeHeld: (n, held) => `Volume ${n} · ${held} volumes of this set in the library`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `All ${n} volumes`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'translated' : `${pct}% translated`),
 
     pagesHeading: 'Pages',
     pagesShownOf: (shown, total) => `${shown} of ${total}`,
@@ -260,6 +277,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Historia del ejemplar',
     searchThisBook: 'Buscar en este libro',
     searchPlaceholder: 'Busca una palabra, un nombre o una frase…',
+    volumesInSet: 'Volúmenes de esta obra',
+    volumeOfSet: (n, of) => `Volumen ${n} de ${of}`,
+    volumeHeld: (n, held) => `Volumen ${n} · ${held} volúmenes de esta obra en la biblioteca`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `Los ${n} volúmenes`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'traducido' : `${pct}% traducido`),
 
     pagesHeading: 'Páginas',
     pagesShownOf: (shown, total) => `${shown} de ${total}`,
@@ -353,6 +376,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Historia libri',
     searchThisBook: 'In hoc libro quaere',
     searchPlaceholder: 'Verbum, nomen, locutionem quaere…',
+    volumesInSet: 'Volumina huius operis',
+    volumeOfSet: (n, of) => `Volumen ${n} ex ${of}`,
+    volumeHeld: (n, held) => `Volumen ${n} · ${held} volumina huius operis in bibliotheca`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `Omnia ${n} volumina`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'conversum' : `${pct}% conversum`),
 
     pagesHeading: 'Paginae',
     pagesShownOf: (shown, total) => `${shown} ex ${total}`,
@@ -446,6 +475,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Geschiedenis van het boek',
     searchThisBook: 'Zoeken in dit boek',
     searchPlaceholder: 'Zoek een woord, naam of zinsdeel…',
+    volumesInSet: 'Delen van deze reeks',
+    volumeOfSet: (n, of) => `Deel ${n} van ${of}`,
+    volumeHeld: (n, held) => `Deel ${n} · ${held} delen van deze reeks in de bibliotheek`,
+    volumeShort: (n) => `Dl. ${n}`,
+    allVolumes: (n) => `Alle ${n} delen`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'vertaald' : `${pct}% vertaald`),
 
     pagesHeading: 'Pagina’s',
     pagesShownOf: (shown, total) => `${shown} van ${total}`,
@@ -539,6 +574,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: '本书沿革',
     searchThisBook: '在本书中搜索',
     searchPlaceholder: '查找字词、人名或短语……',
+    volumesInSet: '本套各册',
+    volumeOfSet: (n, of) => `第${n}册，共${of}册`,
+    volumeHeld: (n, held) => `第${n}册 · 本馆藏有本套${held}册`,
+    volumeShort: (n) => `第${n}册`,
+    allVolumes: (n) => `全部${n}册`,
+    volumeTranslated: (pct) => (pct >= 99 ? '已翻译' : `已翻译${pct}%`),
 
     pagesHeading: '页面',
     pagesShownOf: (shown, total) => `${shown} / ${total}`,
