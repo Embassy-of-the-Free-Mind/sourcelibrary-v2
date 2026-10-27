@@ -3,6 +3,7 @@ import {
   resolveReadingList,
   readingListBookIds,
   READING_LIST_MATCH_LABEL,
+  readingListHeader,
   type ReadingListItem,
 } from '@/lib/reading-list';
 import type { FurtherReadingBook } from '@/lib/further-reading';
@@ -101,5 +102,31 @@ describe('readingListBookIds', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(readingListBookIds({ items: [{ work: 'x', held: [{ match: 'exact' }] } as any] })).toEqual([]);
     expect(readingListBookIds(undefined)).toEqual([]);
+  });
+});
+
+describe('volume lists (#7511)', () => {
+  it('accepts `volume` refs, keeps their order, and gives them no badge word', () => {
+    const rows = resolveReadingList([
+      { work: 'Later Compilation', held: [{ book_id: 'b', match: 'volume', witness: 'vol. 2' }, { book_id: 'a', match: 'volume', witness: 'vol. 1' }] },
+    ], [A, B]);
+    expect(rows[0].witnesses.map(w => w.witness)).toEqual(['vol. 2', 'vol. 1']);
+    expect(READING_LIST_MATCH_LABEL.volume).toBe('');
+  });
+});
+
+describe('readingListHeader', () => {
+  it('keeps the commissioned-list defaults when nothing is authored', () => {
+    expect(readingListHeader({ items: ITEMS }, 13)).toEqual({
+      heading: 'The reading list',
+      intro: 'Thirteen works this collection was built around, and the witnesses asked for. Everything else on this page is related work we hold.',
+    });
+    expect(readingListHeader(ITEMS, 2).intro.startsWith('2 works')).toBe(true);
+  });
+
+  it('uses an authored heading and intro, ignoring blank ones', () => {
+    expect(readingListHeader({ heading: 'Read it in order', intro: 'Volume by volume.', items: ITEMS }, 3))
+      .toEqual({ heading: 'Read it in order', intro: 'Volume by volume.' });
+    expect(readingListHeader({ heading: '  ', items: ITEMS }, 3).heading).toBe('The reading list');
   });
 });
