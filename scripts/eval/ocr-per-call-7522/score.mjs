@@ -131,8 +131,9 @@ for (const arm of ['A1b', 'B2', 'C4']) diffs[`${arm}-A1`] = { usable: pairedDiff
 const pagesAll = draw.books.flatMap((bk) => bk.pages);
 const disagree = (a, b) => pagesAll.filter((p) => rows.find((x) => x.page_id === p.page_id && x.arm === a).usable !== rows.find((x) => x.page_id === p.page_id && x.arm === b).usable).length;
 const floor = Object.fromEntries([['A1', 'A1b'], ['A1', 'B2'], ['A1', 'C4'], ['A1b', 'B2'], ['A1b', 'C4'], ['B2', 'C4']].map(([a, b]) => [`${a}~${b}`, disagree(a, b)]));
-// The decision rule (#7522): a block arm passes if its paired usable difference vs A1 is no worse than A1b's, and it shows no bleed.
-const decision = Object.fromEntries(['B2', 'C4'].map((arm) => [arm, { usable_delta: diffs[`${arm}-A1`].usable.delta, floor_delta: diffs['A1b-A1'].usable.delta, within_floor: diffs[`${arm}-A1`].usable.delta >= diffs['A1b-A1'].usable.delta, bleed_pages: arms[arm].pages_with.cross_page_bleed.k, bleed_pages_A1: arms.A1.pages_with.cross_page_bleed.k, bleed_pages_A1b: arms.A1b.pages_with.cross_page_bleed.k }]));
+// The decision rule (#7522): a block arm passes if its paired usable difference vs A1 is no worse than the floor (A1b's
+// distance from A1, in either direction: two runs of the same arm), and it shows no bleed.
+const decision = Object.fromEntries(['B2', 'C4'].map((arm) => [arm, { usable_delta: diffs[`${arm}-A1`].usable.delta, floor_delta: diffs['A1b-A1'].usable.delta, within_floor: diffs[`${arm}-A1`].usable.delta >= -Math.abs(diffs['A1b-A1'].usable.delta), bleed_pages: arms[arm].pages_with.cross_page_bleed.k, bleed_pages_A1: arms.A1.pages_with.cross_page_bleed.k, bleed_pages_A1b: arms.A1b.pages_with.cross_page_bleed.k }]));
 
 const caught = controls.filter((c) => c.caught).length;
 console.log(JSON.stringify({ status: controls.length === 5 && caught >= 4 ? 'ok' : 'probe_broken', controls_caught: `${caught}/${controls.length}`, n_pages: pagesAll.length, n_books: draw.books.length, controls, arms, paired_diffs_vs_A1: diffs, usable_disagreements: floor, decision, quota: quota(), rows }, null, 1));
