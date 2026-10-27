@@ -92,8 +92,9 @@ export function ledgerGate(model, { dir = JOB_LEDGER, cap = HEAVY_DAILY_CAP, job
   return null;
 }
 
+const EXIT_GRACE_MS = 10_000;
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
-export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
+export function agyCall(args, cwd, { killAfterMs = 360_000, exitGraceMs = EXIT_GRACE_MS } = {}) {
   assertGeminiModel(args);
   const model = String(args[args.indexOf('--model') + 1] || '');
   const capped = ledgerGate(model);
@@ -105,22 +106,33 @@ export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
-    let out = '', err = '';
-    child.stdout.on('data', (d) => { out += d; });
+    let out = '', err = '', printed = false, grace = null;
+    child.stdout.on('data', (d) => {
+      out += d;
+      // #7503: agy 1.4.8 sometimes prints its whole final JSON (status SUCCESS, usage and all) and then never exits.
+      // The 360 s kill then threw a complete reply away as a timeout (13 of ~570 Siku block calls on 2026-10-27, each
+      // retried and hung again). Once the reply is printed, give the CLI a few seconds to exit, then end it.
+      if (!printed && /\}\s*$/.test(out)) {
+        try { printed = JSON.parse(out)?.status === 'SUCCESS'; } catch { /* not complete yet */ }
+        if (printed) grace = setTimeout(() => child.kill('SIGKILL'), exitGraceMs);
+      }
+    });
     child.stderr.on('data', (d) => { err += d; });
     const timer = setTimeout(() => child.kill('SIGKILL'), killAfterMs); // past --print-timeout: a caller raising it raises this too
     child.on('close', (code) => {
-      clearTimeout(timer);
+      clearTimeout(timer); clearTimeout(grace);
       let j = {};
       try { j = JSON.parse(out); } catch { /* not JSON: an error or an old CLI */ }
       const text = String((j && j.response) ?? (Object.keys(j).length ? '' : out)).trim();
       const denied = (j.denied_actions || []).map((d) => d.action);
+      // Killed only after it printed a whole SUCCESS reply: that reply is the call's result, not a timeout.
+      const hungAfterReply = code === null && printed;
       // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
-      const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
+      const cls = isQuotaError({ out, err, j, text }) ? 'quota' : (code === null && !hungAfterReply) || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 && !hungAfterReply ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
       // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
       // The first quota reply stops every later call on this box until Google's quoted reset (or one hour).
       if (cls === 'quota') noteLimitHit(agyLimitLane(model), { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
+      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null, ...(hungAfterReply && { hung_after_reply: true }) });
     });
   });
 }
