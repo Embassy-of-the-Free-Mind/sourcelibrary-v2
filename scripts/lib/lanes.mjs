@@ -192,9 +192,9 @@ export const LANES = [
     reason: 'It holds every book itself (paddle-print-6101) before its first write, and selects them by that hold. The GEX45 is rented by the month ($0 a page); the queue runs one task at a time under /root/gpu.lock.' },
 
   // ── subscription lanes (#7301): routed by the routing tables, budgeted in quota, never the paid API ──────────
-  { name: 'agy-flash-ocr', serves: 'ocr', files: ['scripts/batch/cli-ocr.mjs', 'scripts/lib/agy-cli.mjs'],
-    selects: 'books the OCR router holds for it (CLI_FLASH_OCR_HOLD: the flash families of ocr-routing-table.json), and page lists by hand',
-    trigger: 'one-off claude-job runs with their own page lists (book list recorded per job until R6); no standing runner yet (#7089)',
+  { name: 'agy-flash-ocr', serves: 'ocr', files: ['scripts/batch/cli-ocr.mjs', 'scripts/batch/cli-ocr-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the OCR router holds for it (CLI_FLASH_OCR_HOLD: the flash families of ocr-routing-table.json); Flash-Lite drafts of visible German/French books for `cli-ocr-lane.mjs correct` (#7558); and page lists by hand',
+    trigger: 'cron on main every 2 h: cli-ocr-lane.mjs run (:10, #7089) and cli-ocr-lane.mjs correct (:50, stops at the agy quota floor, #7558); one-off claude-job runs with their own page lists (book list recorded per job until R6)',
     budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
     stamps: [{ field: 'ocr', call_site: 'scripts/batch/cli-ocr.mjs', engine: 'gemini' }],
     routes: { hold: 'ocr-flash-cli-7075' },
