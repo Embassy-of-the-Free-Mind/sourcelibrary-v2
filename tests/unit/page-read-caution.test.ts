@@ -124,6 +124,13 @@ describe('transcriptionReliability', () => {
     expect(transcriptionReliability(kangyur, other)?.level).toBe('unreliable');
   });
 
+  it('recognises a correction by its prompt id when ocr.engine is not passed', () => {
+    const noEngine = { ocr: { model: 'gemini-3.8-flash-low', prompt_id: 'correct:corr-prompt.txt' } };
+    expect(transcriptionReliability(kangyur, noEngine)?.message).toMatch(/corrected/);
+    const otherPrompt = { ocr: { model: 'gemini-3.8-flash-low', prompt_id: 'ocr-v19' } };
+    expect(transcriptionReliability(kangyur, otherPrompt)?.level).toBe('unreliable');
+  });
+
   it('says accuracy is unknown where there is no reference text', () => {
     const f = transcriptionReliability(nyingma, yig);
     expect(f?.level).toBe('caution');
