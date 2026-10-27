@@ -15,7 +15,8 @@
  *           audited one, so before/after is paired. 15 blocks come from other CANON books, a random block and a
  *           random audited page in it (FRESH: the unbiased estimate).
  *   stage2  --frame=... --exclude=s1/draw.json                    → $S/s2/draw.json, ids.json
- *           30 blocks of 10 from 30 further CANON books, seed 69482; 20 of them (seeded) get one audited page.
+ *           30 blocks of 10 from 30 further CANON books, each with >= 1 frame page, seed 69482; 20 of them
+ *           (seeded) get one audited frame page.
  *   strips  --ids=F --out=DIR   each page's image cut into overlapping full-resolution strips DIR/<id>/t<k>.jpg.
  *   items   --draw=D --reads=DIR --controls=N --seed=K            → audit-items.json, control-items.json (audit.mjs)
  *
@@ -31,9 +32,9 @@ const CMD = process.argv[2];
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const CONCEPT_BOOKS = new Set(['6a37c28763d3f620b49ff2dc', '6a37d704d07939943b23ea3f', '6a37d770d07939943b246079', '6a37d788d07939943b247f88', '6a37ca2c06d55b107dad49a4', '6a37ca5206d55b107dad83c3']);
 
-/** Runs of consecutive page numbers within one book's frame pages. */
+/** Runs of consecutive page numbers within one book's pages. */
 const runsOf = (ps) => { const out = []; for (const p of ps) { const l = out.at(-1)?.at(-1); if (l && l.page_number + 1 === p.page_number) out.at(-1).push(p); else out.push([p]); } return out; };
-/** A block of up to n consecutive frame pages containing page index k, k at a random position where the run allows. */
+/** A block of up to n consecutive pages containing page index k, k at a random position where the run allows. */
 function blockAround(ps, k, r, n = 10) {
   const run = runsOf(ps).find((x) => x.includes(ps[k]));
   const i = run.indexOf(ps[k]);
@@ -42,15 +43,32 @@ function blockAround(ps, k, r, n = 10) {
   return run.slice(start, start + n);
 }
 
-async function canonFrame() {
+/**
+ * The CANON stratum. The AUDITED page is always a frame page (no English yet: what the lane would translate). Its
+ * BLOCK is the 10 consecutive pages around it that carry an uncorrected Yigdzin transcription (bdrc-yigdzin-v1, not
+ * ocr.unreadable, not withheld for source_loop / ocr_unreadable / invented_by_eye, not blank), whether or not they
+ * already have English: frame pages are scattered in these volumes (most neighbours carry older English), and the
+ * brief asks for 10-page calls. Nothing is written, so a neighbour's existing English is untouched.
+ * Returns Map<book_id, {pages: [{page_id, page_number, frame, title, hold, book_id}], title}>.
+ */
+async function canonStratum() {
   const { MongoClient } = await import('mongodb');
   const rows = readJsonl(arg('frame')).filter((x) => CANON.test((x.title || '').trim()) && !CONCEPT_BOOKS.has(x.book_id));
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
-  const corrected = new Set(await c.db('bookstore').collection('pages').distinct('book_id', { 'ocr.pipeline': 'tib-correct-6560' }));
-  await c.close();
+  const db = c.db('bookstore');
+  const corrected = new Set(await db.collection('pages').distinct('book_id', { 'ocr.pipeline': 'tib-correct-6560' }));
   const kept = rows.filter((x) => !corrected.has(x.book_id));
-  console.error(`CANON frame: ${rows.length} pages; ${rows.length - kept.length} dropped in ${corrected.size} books with Flash-corrected pages; ${kept.length} pages in ${new Set(kept.map((x) => x.book_id)).size} books`);
-  return byBook(kept);
+  const frameIds = new Set(kept.map((x) => x.page_id));
+  const out = new Map();
+  for (const [bookId, fps] of byBook(kept)) {
+    const ps = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: 1 }, 'ocr.model': 'bdrc-yigdzin-v1', 'ocr.unreadable': { $ne: true }, 'translation_withheld.reason': { $nin: ['source_loop', 'ocr_unreadable', 'invented_by_eye'] }, page_type: { $not: /^(blank|cover|binding)/i } }, { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
+    const pages = ps.filter((p) => String(p.ocr?.data || '').trim()).sort((a, b) => a.page_number - b.page_number)
+      .map((p) => ({ page_id: p.id, page_number: p.page_number, frame: frameIds.has(p.id), book_id: bookId, title: fps[0].title, hold: fps[0].hold }));
+    out.set(bookId, pages);
+  }
+  await c.close();
+  console.error(`CANON frame: ${rows.length} pages; ${rows.length - kept.length} dropped in ${corrected.size} books with Flash-corrected pages; ${kept.length} frame pages in ${out.size} books; ${[...out.values()].reduce((s, x) => s + x.length, 0)} Yigdzin pages in those books`);
+  return out;
 }
 const save = (dir, blocks, meta) => {
   fs.mkdirSync(dir, { recursive: true });
@@ -59,11 +77,11 @@ const save = (dir, blocks, meta) => {
   console.log(blocks.map((b) => `${b.kind} ${b.title.slice(0, 34)} p.${b.pages[0].n}-${b.pages.at(-1).n}${b.audit_page_id ? ` audit p.${b.pages.find((p) => p.id === b.audit_page_id).n}` : ''}`).join('\n'));
   console.log(`${blocks.length} blocks, ${blocks.reduce((s, b) => s + b.pages.length, 0)} pages`);
 };
-const asBlock = (kind, ps, audit, extra = {}) => ({ kind, book_id: ps[0].book_id, title: ps[0].title, hold: ps[0].hold, pages: ps.map((p) => ({ id: p.page_id, n: p.page_number })), audit_page_id: audit?.page_id || null, ...extra });
+const asBlock = (kind, ps, audit, extra = {}) => ({ kind, book_id: ps[0].book_id, title: ps[0].title, hold: ps[0].hold, pages: ps.map((p) => ({ id: p.page_id, n: p.page_number, frame: p.frame })), audit_page_id: audit?.page_id || null, ...extra });
 
 if (CMD === 'stage1') {
   const r = rng(6948);
-  const frame = await canonFrame();
+  const frame = await canonStratum();
   const c40 = JSON.parse(fs.readFileSync(arg('canon40'), 'utf8'));
   const bad = shuffle(c40.filter((x) => x.verdict === 'bad' && x.same_ocr && frame.has(x.book)).sort((a, b) => a.uid.localeCompare(b.uid)), r);
   const blocks = [];
@@ -72,7 +90,7 @@ if (CMD === 'stage1') {
     const ps = frame.get(x.book); const k = ps.findIndex((p) => p.page_number === x.n);
     if (k < 0) continue;
     const b = blockAround(ps, k, r);
-    if (b.length < 5) continue;
+    if (b.length < 10) continue;
     blocks.push(asBlock('PAIRED-BAD', b, ps[k], { uid_1024: x.uid }));
   }
   const used = new Set(blocks.map((b) => b.book_id));
@@ -80,11 +98,11 @@ if (CMD === 'stage1') {
     if (blocks.length === 20) break;
     if (used.has(id)) continue;
     const ps = frame.get(id);
-    const paired = ps.map((_, i) => i).filter((i) => ps[i - 1]?.page_number === ps[i].page_number - 1 || ps[i + 1]?.page_number === ps[i].page_number + 1);
-    if (!paired.length) continue;
-    const k = paired[Math.floor(r() * paired.length)];
-    const b = blockAround(ps, k, r);
-    blocks.push(asBlock('FRESH', b, b[Math.floor(r() * b.length)]));
+    const long = new Set(runsOf(ps).filter((x) => x.length >= 10).flat());
+    const cand = ps.map((p, i) => i).filter((i) => ps[i].frame && long.has(ps[i]));
+    if (!cand.length) continue;
+    const k = cand[Math.floor(r() * cand.length)];
+    blocks.push(asBlock('FRESH', blockAround(ps, k, r), ps[k]));
     used.add(id);
   }
   save(path.join(S, 's1'), blocks, { seed: 6948, frame_books: frame.size });
@@ -92,19 +110,19 @@ if (CMD === 'stage1') {
 
 if (CMD === 'stage2') {
   const r = rng(69482);
-  const frame = await canonFrame();
+  const frame = await canonStratum();
   const excl = new Set(JSON.parse(fs.readFileSync(arg('exclude'), 'utf8')).blocks.map((b) => b.book_id));
   const blocks = [];
   for (const id of shuffle([...frame.keys()].sort(), r)) {
     if (blocks.length === 30) break;
     if (excl.has(id)) continue;
     const ps = frame.get(id);
-    const full = runsOf(ps).filter((x) => x.length >= 10);
-    if (!full.length) continue;
-    const starts = full.flatMap((run) => run.slice(0, run.length - 9).map((_, i) => run.slice(i, i + 10)));
-    blocks.push(asBlock('BATCH', starts[Math.floor(r() * starts.length)], null));
+    const starts = runsOf(ps).filter((x) => x.length >= 10).flatMap((run) => run.slice(0, run.length - 9).map((_, i) => run.slice(i, i + 10))).filter((w) => w.some((p) => p.frame));
+    if (!starts.length) continue;
+    const w = starts[Math.floor(r() * starts.length)];
+    blocks.push({ ...asBlock('BATCH', w, null), frame_pages: w.filter((p) => p.frame).length, frame_ids: w.filter((p) => p.frame).map((p) => p.page_id) });
   }
-  shuffle(blocks.map((_, i) => i), r).slice(0, 20).forEach((i) => { const b = blocks[i]; b.audit_page_id = b.pages[Math.floor(r() * b.pages.length)].id; });
+  shuffle(blocks.map((_, i) => i), r).slice(0, 20).forEach((i) => { const b = blocks[i]; b.audit_page_id = b.frame_ids[Math.floor(r() * b.frame_ids.length)]; });
   save(path.join(S, 's2'), blocks, { seed: 69482, frame_books: frame.size, excluded_stage1_books: excl.size });
 }
 

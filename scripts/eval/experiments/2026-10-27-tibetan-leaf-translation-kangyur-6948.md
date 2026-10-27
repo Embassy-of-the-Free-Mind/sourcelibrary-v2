@@ -39,6 +39,13 @@ books.
   stored transcription is byte-identical to what the 10-24 auditor saw. That page is the audited page of its block.
 - **FRESH, 15 blocks:** from other CANON books, a random block and a random audited page in it.
 
+**Amendment, 12:55Z, before any read (the draw only).** Frame pages are scattered in these volumes: most of their
+neighbours already carry older English or are withheld, so 10 consecutive *frame* pages rarely exist, and the first
+draw gave 2-page blocks and dropped every paired page. A block is now 10 consecutive pages with an uncorrected
+Yigdzin transcription (not unreadable, not withheld for source_loop / ocr_unreadable / invented_by_eye), whether or
+not they have English; the AUDITED page is always a frame page (no English). Nothing is written, so existing English
+is untouched. The draw: 20 blocks, 200 pages; PAIRED-BAD = 10-24 a034, a008, a015, a011, a031.
+
 **Translator.** Opus via `claude -p` on this box's subscription, `claude-translate.mjs read --images-dir`
 (job tib-concept-opus-6948's change, carried in this PR): each page's scan as overlapping full-resolution strips,
 Read only, "translate what the leaf says, bracket where it departs from the transcription". 10 pages a call,
