@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
-import { localePath, type Locale } from '@/lib/locale-path';
+import { localePath, readsOriginal, type Locale } from '@/lib/locale-path';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { hasLocalizedEdition, localizedCollection, localizedTitle, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 import { HOME_STRINGS, collectionName } from '@/lib/home-i18n';
@@ -50,8 +50,10 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
   // A book with no edition in the page's language links straight to the page
   // its locale URL would redirect to, instead of a 307 hop (#7076). Unknown
   // (null) keeps the locale URL and lets the book page decide.
+  // Since #7496 /es has a book page for every book, so only the original-text
+  // sites (/la, /nl, /zh) still send a book without an edition to English.
   const bookHref = (book: FeaturedBook) =>
-    hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
+    readsOriginal(lang) && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
       ? `${bookUrl(book)}?lang=${lang}`
       : lp(bookUrl(book));
   const copy = localizedCollection(collection, lang);

@@ -55,6 +55,8 @@ export interface BookStrings {
   // ---- about / dropdowns ----
   summary: string;
   summaryIsEnglish: string;
+  /** Read button on a localized book page whose TEXT exists only in English (#7496). */
+  readThisBookInEnglish: string;
   readingGuide: string;
   englishText: string;
   contents: string;
@@ -153,6 +155,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'About this book',
     summaryIsEnglish: 'Summary available in English.',
+    readThisBookInEnglish: 'Read this book (English text)',
     readingGuide: 'Reading guide',
     englishText: 'In English.',
     contents: 'Contents',
@@ -243,6 +246,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'Sobre este libro',
     summaryIsEnglish: 'Resumen disponible en inglés.',
+    readThisBookInEnglish: 'Leer el libro (texto en inglés)',
     readingGuide: 'Guía de lectura',
     englishText: 'En inglés.',
     contents: 'Contenido',
@@ -336,6 +340,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'De hoc libro',
     summaryIsEnglish: 'Summarium Anglice praesto est.',
+    readThisBookInEnglish: 'Librum lege (textus Anglicus)',
     readingGuide: 'Dux legendi',
     englishText: 'Anglice.',
     contents: 'Index capitum',
@@ -429,6 +434,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'Over dit boek',
     summaryIsEnglish: 'Samenvatting beschikbaar in het Engels.',
+    readThisBookInEnglish: 'Lees dit boek (Engelse tekst)',
     readingGuide: 'Leeswijzer',
     englishText: 'In het Engels.',
     contents: 'Inhoud',
@@ -522,6 +528,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: '关于本书',
     summaryIsEnglish: '提供英文简介。',
+    readThisBookInEnglish: '阅读本书（英文文本）',
     readingGuide: '阅读指南',
     englishText: '英文。',
     contents: '目录',

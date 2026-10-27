@@ -92,7 +92,7 @@ import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
-import { localePath, PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import { localePath, PREFIXED_LOCALES, readsOriginal, type Locale } from '@/lib/locale-path';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
@@ -481,13 +481,19 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
   // one book.
   const isTwin = lang !== 'en';
   const twinUrl = `/${lang}${bookUrl}`;
+  // A twin with no edition in its language (#7496): Spanish chrome over English text.
+  // Not the Spanish edition, so it neither claims to be (canonical → English, no
+  // hreflang pair) nor asks to be indexed beside the English page.
+  const twinWithoutEdition = isTwin && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false;
   const localizedDescription = localizedMeta?.summary?.slice(0, 200) || description;
 
   return {
     title: isTwin && localizedTitleText ? `${localizedTitleText} | Source Library` : seoTitle,
     description: isTwin ? localizedDescription : description,
-    ...(!shouldIndex && { robots: { index: false, follow: true } }),
-    alternates: isTwin
+    ...((!shouldIndex || twinWithoutEdition) && { robots: { index: false, follow: true } }),
+    alternates: twinWithoutEdition
+      ? { canonical: bookUrl }
+      : isTwin
       ? { canonical: twinUrl, languages: { en: bookUrl, [lang]: twinUrl, 'x-default': bookUrl } }
       : {
         canonical: bookUrl,
@@ -835,6 +841,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // Spanish twin comes back unprefixed rather than pointing at a 404.
   const t = BOOK_STRINGS[lang];
   const lp = (href: string) => localePath(href, lang);
+  // No edition in this URL's language (#7496): the reader would only 307 to the
+  // English page, so the Read buttons link there directly and say so.
+  const readLinks = (b: unknown) => {
+    const englishOnly = lang !== 'en' && hasLocalizedEdition(b as Record<string, unknown>, lang) === false;
+    return {
+      readLabel: englishOnly ? t.readThisBookInEnglish : t.readThisBook,
+      lpRead: (href: string) => (englishOnly ? `${href}?lang=${lang}` : lp(href)),
+    };
+  };
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -1187,15 +1202,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const href = pageId ? lp(`/book/${bookSlug}/page/${pageId}`) : `/gallery/image/${img.id}`;
       return { src, fallback: img.extracted_url || img.image_url, href, label: img.description };
     }).filter((p): p is Plate => p !== null);
+    const { readLabel, lpRead } = readLinks(book);
     const readHref = (() => {
       if (pages.length === 0) return null;
       const firstChapterPageNumber = book.chapters?.length
         ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
         : null;
-      if (typeof firstChapterPageNumber === 'number') return lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber));
+      if (typeof firstChapterPageNumber === 'number') return lpRead(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber));
       const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
       const readPage = pages[skipTo] || pages[0];
-      return readPage ? lp(`/book/${bookSlug}/page/${readPage.id}`) : null;
+      return readPage ? lpRead(`/book/${bookSlug}/page/${readPage.id}`) : null;
     })();
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
     // The related rail only shows books with a CSP-renderable cover (rehosted to
@@ -1751,7 +1767,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="flex items-center">
               {embedPolicy.showBookReadCta && readHref && (
                 <Link href={readHref} className="inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
-                  <BookOpen className="w-4 h-4" />{t.readThisBook}
+                  <BookOpen className="w-4 h-4" />{readLabel}
                 </Link>
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-4 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
@@ -1933,7 +1949,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <div className="hidden md:flex flex-wrap items-center gap-2.5 mt-6">
                 {embedPolicy.showBookReadCta && readHref && (
                   <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
-                    <BookOpen className="w-[18px] h-[18px]" />{t.readThisBook}
+                    <BookOpen className="w-[18px] h-[18px]" />{readLabel}
                   </Link>
                 )}
                 <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1" style={{ background: 'rgba(12,9,6,0.82)', border: '1px solid rgba(245,240,232,0.16)' }}>
@@ -2357,6 +2373,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
+                const { readLabel, lpRead } = readLinks(book);
                 // Prefer the first chapter's starting page. Route through the
                 // resilient page-number redirect (/page-number/<n>) rather than a
                 // stored pageId: ~716 books have a stale chapters[0].pageId (pages
@@ -2370,11 +2387,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   return (
                     <div className="mt-5">
                       <Link
-                        href={lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber))}
+                        href={lpRead(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber))}
                         className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                       >
                         <BookOpen className="w-5 h-5" />
-                        {t.readThisBook}
+                        {readLabel}
                       </Link>
                     </div>
                   );
@@ -2385,11 +2402,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <div className="mt-5">
                     <Link
-                      href={lp(`/book/${bookSlug}/page/${readPage.id}`)}
+                      href={lpRead(`/book/${bookSlug}/page/${readPage.id}`)}
                       className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                     >
                       <BookOpen className="w-5 h-5" />
-                      {t.readThisBook}
+                      {readLabel}
                     </Link>
                   </div>
                 );
@@ -2835,7 +2852,12 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
     }
     // `?lang=` keeps the header in the reader's language on the English page (#6938).
-    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
+    // Spanish (a language we translate INTO) keeps its twin for every book since #7496:
+    // title, summary, contents and buttons in Spanish, the text labelled as English, and
+    // the metadata names the English page as canonical with no Spanish hreflang, so Google
+    // is never told it is the Spanish edition (the ~37.7K-URL problem above). Original-text
+    // locales (/la, /nl, /zh) still send a book not written in their language away.
+    if (hasEdition === false && readsOriginal(lang)) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
 
     // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
     // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
