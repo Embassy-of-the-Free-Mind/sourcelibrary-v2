@@ -20,6 +20,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { ocrLabelIn } from '../lib/ocr-targeting.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -352,7 +353,7 @@ async function main() {
   let newOcrBookIds = null;
   if (newOcrOnly) {
     newOcrBookIds = await db.collection('pages').distinct('book_id', {
-      'ocr.prompt_version': { $in: ['v4.2026-02', 'v5.2026-02'] },
+      ...ocrLabelIn(['v4.2026-02', 'v5.2026-02']),
       'ocr.data': { $exists: true, $ne: '' }
     });
     console.log(`Found ${newOcrBookIds.length} books with v4/v5 OCR pages`);

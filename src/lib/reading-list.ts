@@ -43,17 +43,25 @@ import {
   type FurtherReadingStatus,
 } from './further-reading';
 
-/** How a held book relates to what the list asked for. */
-export type ReadingListMatch = 'exact' | 'fallback' | 'edition' | 'stopgap';
+/**
+ * How a held book relates to what the list asked for.
+ *
+ * `volume` is the one kind that is not about a witness at all: it marks a
+ * physical volume of a multi-volume work, listed in reading order (a set of
+ * 64 volumes held as 64 records, #7511). Every row of such a list would carry
+ * the same word, so it has no badge — the order is the information.
+ */
+export type ReadingListMatch = 'exact' | 'fallback' | 'edition' | 'stopgap' | 'volume';
 
-const MATCH_KINDS: ReadonlySet<string> = new Set(['exact', 'fallback', 'edition', 'stopgap']);
+const MATCH_KINDS: ReadonlySet<string> = new Set(['exact', 'fallback', 'edition', 'stopgap', 'volume']);
 
-/** Reader-facing word for each match kind. */
+/** Reader-facing word for each match kind. Empty means "render no badge". */
 export const READING_LIST_MATCH_LABEL: Record<ReadingListMatch, string> = {
   exact: 'the witness named',
   fallback: 'the list’s fallback',
   edition: 'another edition',
   stopgap: 'stopgap',
+  volume: '',
 };
 
 /** An authored held-witness ref inside a reading-list row. */
@@ -80,7 +88,29 @@ export interface ReadingListItem {
 
 export interface ReadingListDoc {
   source?: string;
+  /**
+   * Band heading and lead-in, when the default ("The reading list" / "N works
+   * this collection was built around…") does not describe the list — e.g. a
+   * single work read volume by volume. Plain text; both optional.
+   */
+  heading?: string;
+  intro?: string;
   items?: ReadingListItem[];
+}
+
+/**
+ * The band's heading and lead-in: the authored ones when present, otherwise
+ * the commissioned-collection defaults the band was built with.
+ */
+export function readingListHeader(
+  doc: ReadingListDoc | ReadingListItem[] | undefined | null,
+  rowCount: number,
+): { heading: string; intro: string } {
+  const authored = doc && !Array.isArray(doc) ? doc : null;
+  const heading = authored?.heading?.trim() || 'The reading list';
+  const intro = authored?.intro?.trim()
+    || `${rowCount === 13 ? 'Thirteen' : rowCount.toLocaleString('en-US')} works this collection was built around, and the witnesses asked for. Everything else on this page is related work we hold.`;
+  return { heading, intro };
 }
 
 /** A held ref that resolved to a visible book. */

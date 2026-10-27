@@ -230,6 +230,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/gallery`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
     { url: `${BASE_URL}/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/libraries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/new-in-english`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
     { url: `${BASE_URL}/explore`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/explore/map`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/explore/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },

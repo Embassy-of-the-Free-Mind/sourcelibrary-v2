@@ -35,7 +35,7 @@ import {
   type FurtherReadingBook,
   type FurtherReadingRef,
 } from '@/lib/further-reading';
-import { resolveReadingList, readingListBookIds, type ReadingListDoc } from '@/lib/reading-list';
+import { resolveReadingList, readingListBookIds, readingListHeader, type ReadingListDoc } from '@/lib/reading-list';
 import { ObjectId } from 'mongodb';
 import { hasEsCollectionPage } from '@/lib/es-collections';
 
@@ -1411,7 +1411,11 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           built around and the witnesses asked for. First content band on
           purpose: the reader who wrote the list checks it before browsing.
           Self-gates when the collection has none. */}
-      <CollectionReadingList rows={readingList} tenantSlug={tenantSlug} />
+      <CollectionReadingList
+        rows={readingList}
+        tenantSlug={tenantSlug}
+        {...readingListHeader(collection.reading_list, readingList.length)}
+      />
 
       {/* Featured books — a few of the collection's books, surfaced under the
           sub-collections and above the illustration gallery. Full catalogue stays below. */}

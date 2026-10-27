@@ -27,7 +27,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET, recordTruncatedTranslation } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
-import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
+import { engineFromBatchJob, imageInput, jobPromptVersion, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
@@ -651,7 +651,7 @@ async function processOneJob(db, job) {
           // stack can still segment previews from full passes now that both
           // arrive through the Batch API (.claude/docs/data-provenance.md).
           'ocr.source': job.ocr_source || 'batch_api',
-          'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
+          'ocr.prompt_version': jobPromptVersion(job), // never a constant (#7499)
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,
           'ocr.prompt_name': job.prompt_name,
@@ -836,7 +836,7 @@ async function processOneJob(db, job) {
                 'translation.source_language': job.language,
                 'translation.target_language': 'English',
                 'translation.source': 'batch_api',
-                'translation.prompt_version': job.prompt_version || 'v5.2026-02',
+                'translation.prompt_version': jobPromptVersion(job), // never a constant (#7499)
                 'translation.prompt_id': job.prompt_id,
                 'translation.prompt_hash': job.prompt_hash,
                 'translation.prompt_name': job.prompt_name,

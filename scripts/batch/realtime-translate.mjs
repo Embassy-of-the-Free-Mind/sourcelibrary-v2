@@ -50,6 +50,7 @@ import {
   MODEL_LITE,
   loadTranslationPrompts,
   buildTranslationPrompt,
+  pageBreakVariant,
   writePageTranslation,
   SKIP_TRANSLATION_PAGE_TYPES,
   isDegenerateSource,
@@ -306,7 +307,7 @@ async function processBook(book, pages, prompts, db, globalStats) {
           call_site: CALL_SITE, api: 'realtime', model, promptText: prompt,
           generationConfig: result.generationConfig, response: { modelVersion: result.modelVersion },
           run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
-          context: { previous_translation: !!previousTranslation },
+          context: { previous_translation: !!previousTranslation, page_break: pageBreakVariant(null) },
         },
       });
 

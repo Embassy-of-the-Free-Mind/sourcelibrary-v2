@@ -1,0 +1,643 @@
+{
+ "seed": 7503,
+ "reasons": [
+  "paddle-zh-5600-ocr-only",
+  "gpu-backlog-5660"
+ ],
+ "frame_books": 10343,
+ "pilot_excluded": 20,
+ "drawn_at": "2026-10-27T09:19:14.454Z",
+ "skipped": [],
+ "books": [
+  {
+   "book_id": "6a3cf0b18642f0445b1669d7",
+   "title": "大學衍義補·卷二十四~卷二十七 (vol 10)",
+   "work_id": "kr:KR3a0080",
+   "hold": "gpu-backlog-5660",
+   "pages_count": 166,
+   "start": 121,
+   "pages": [
+    {
+     "page_id": "6a3cf0b18642f0445b166a50",
+     "page_number": 121,
+     "page_type": null,
+     "ocr_chars": 194,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cf0b18642f0445b1669d7/121.jpg"
+    },
+    {
+     "page_id": "6a3cf0b18642f0445b166a51",
+     "page_number": 122,
+     "page_type": null,
+     "ocr_chars": 254,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cf0b18642f0445b1669d7/122.jpg"
+    },
+    {
+     "page_id": "6a3cf0b18642f0445b166a52",
+     "page_number": 123,
+     "page_type": null,
+     "ocr_chars": 207,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cf0b18642f0445b1669d7/123.jpg"
+    },
+    {
+     "page_id": "6a3cf0b18642f0445b166a53",
+     "page_number": 124,
+     "page_type": null,
+     "ocr_chars": 208,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cf0b18642f0445b1669d7/124.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c6b81af3c49b59c5ecd90",
+   "title": "易通變·卷六~卷八 (vol 3)",
+   "work_id": "kr:KR3g0008",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 127,
+   "start": 83,
+   "pages": [
+    {
+     "page_id": "6a3c6b81af3c49b59c5ecde3",
+     "page_number": 83,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6b81af3c49b59c5ecd90/83.jpg"
+    },
+    {
+     "page_id": "6a3c6b81af3c49b59c5ecde4",
+     "page_number": 84,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6b81af3c49b59c5ecd90/84.jpg"
+    },
+    {
+     "page_id": "6a3c6b81af3c49b59c5ecde5",
+     "page_number": 85,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6b81af3c49b59c5ecd90/85.jpg"
+    },
+    {
+     "page_id": "6a3c6b81af3c49b59c5ecde6",
+     "page_number": 86,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6b81af3c49b59c5ecd90/86.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c6ac7af3c49b59c5ea089",
+   "title": "論語商·卷下 (vol 2)",
+   "work_id": "kr:KR1h0050",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 136,
+   "start": 35,
+   "pages": [
+    {
+     "page_id": "6a3c6ac7af3c49b59c5ea0ac",
+     "page_number": 35,
+     "page_type": null,
+     "ocr_chars": 216,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ac7af3c49b59c5ea089/35.jpg"
+    },
+    {
+     "page_id": "6a3c6ac7af3c49b59c5ea0ad",
+     "page_number": 36,
+     "page_type": null,
+     "ocr_chars": 205,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ac7af3c49b59c5ea089/36.jpg"
+    },
+    {
+     "page_id": "6a3c6ac7af3c49b59c5ea0ae",
+     "page_number": 37,
+     "page_type": null,
+     "ocr_chars": 303,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ac7af3c49b59c5ea089/37.jpg"
+    },
+    {
+     "page_id": "6a3c6ac7af3c49b59c5ea0af",
+     "page_number": 38,
+     "page_type": null,
+     "ocr_chars": 233,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ac7af3c49b59c5ea089/38.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c645e39b4508b04e267b3",
+   "title": "御定佩文韻府·卷六十三之二十一 (vol 527)",
+   "work_id": "kr:KR3k0059",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 127,
+   "start": 45,
+   "pages": [
+    {
+     "page_id": "6a3c645e39b4508b04e267e0",
+     "page_number": 45,
+     "page_type": null,
+     "ocr_chars": 433,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c645e39b4508b04e267b3/45.jpg"
+    },
+    {
+     "page_id": "6a3c645e39b4508b04e267e1",
+     "page_number": 46,
+     "page_type": null,
+     "ocr_chars": 513,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c645e39b4508b04e267b3/46.jpg"
+    },
+    {
+     "page_id": "6a3c645e39b4508b04e267e2",
+     "page_number": 47,
+     "page_type": null,
+     "ocr_chars": 403,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c645e39b4508b04e267b3/47.jpg"
+    },
+    {
+     "page_id": "6a3c645e39b4508b04e267e3",
+     "page_number": 48,
+     "page_type": null,
+     "ocr_chars": 466,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c645e39b4508b04e267b3/48.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3cb8b93dce6cfad748fe8e",
+   "title": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "work_id": "kr:KR3j0076",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 137,
+   "start": 96,
+   "pages": [
+    {
+     "page_id": "6a3cb8b93dce6cfad748feee",
+     "page_number": 96,
+     "page_type": null,
+     "ocr_chars": 167,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb8b93dce6cfad748fe8e/96.jpg"
+    },
+    {
+     "page_id": "6a3cb8b93dce6cfad748feef",
+     "page_number": 97,
+     "page_type": null,
+     "ocr_chars": 167,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb8b93dce6cfad748fe8e/97.jpg"
+    },
+    {
+     "page_id": "6a3cb8b93dce6cfad748fef0",
+     "page_number": 98,
+     "page_type": null,
+     "ocr_chars": 206,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb8b93dce6cfad748fe8e/98.jpg"
+    },
+    {
+     "page_id": "6a3cb8b93dce6cfad748fef1",
+     "page_number": 99,
+     "page_type": null,
+     "ocr_chars": 196,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb8b93dce6cfad748fe8e/99.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c618c879008ba7e15ef04",
+   "title": "經濟文衡前集·卷十三~卷十九 (vol 3)",
+   "work_id": "kr:KR3a0057",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 171,
+   "start": 48,
+   "pages": [
+    {
+     "page_id": "6a3c618c879008ba7e15ef34",
+     "page_number": 48,
+     "page_type": null,
+     "ocr_chars": 272,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c618c879008ba7e15ef04/48.jpg"
+    },
+    {
+     "page_id": "6a3c618c879008ba7e15ef35",
+     "page_number": 49,
+     "page_type": null,
+     "ocr_chars": 187,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c618c879008ba7e15ef04/49.jpg"
+    },
+    {
+     "page_id": "6a3c618c879008ba7e15ef36",
+     "page_number": 50,
+     "page_type": null,
+     "ocr_chars": 279,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c618c879008ba7e15ef04/50.jpg"
+    },
+    {
+     "page_id": "6a3c618c879008ba7e15ef37",
+     "page_number": 51,
+     "page_type": null,
+     "ocr_chars": 256,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c618c879008ba7e15ef04/51.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c6ba039b4508b04e44a57",
+   "title": "天原發微·卷一上~卷一下 (vol 2)",
+   "work_id": "kr:KR3g0013",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 153,
+   "start": 54,
+   "pages": [
+    {
+     "page_id": "6a3c6ba039b4508b04e44a8d",
+     "page_number": 54,
+     "page_type": null,
+     "ocr_chars": 301,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ba039b4508b04e44a57/54.jpg"
+    },
+    {
+     "page_id": "6a3c6ba039b4508b04e44a8e",
+     "page_number": 55,
+     "page_type": null,
+     "ocr_chars": 360,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ba039b4508b04e44a57/55.jpg"
+    },
+    {
+     "page_id": "6a3c6ba039b4508b04e44a8f",
+     "page_number": 56,
+     "page_type": null,
+     "ocr_chars": 271,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ba039b4508b04e44a57/56.jpg"
+    },
+    {
+     "page_id": "6a3c6ba039b4508b04e44a90",
+     "page_number": 57,
+     "page_type": null,
+     "ocr_chars": 221,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6ba039b4508b04e44a57/57.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3cb7ca3dce6cfad748848f",
+   "title": "欽定禮記義疏·卷五十八 (vol 75)",
+   "work_id": "kr:KR1d0068",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 102,
+   "start": 29,
+   "pages": [
+    {
+     "page_id": "6a3cb7ca3dce6cfad74884ac",
+     "page_number": 29,
+     "page_type": null,
+     "ocr_chars": 252,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb7ca3dce6cfad748848f/29.jpg"
+    },
+    {
+     "page_id": "6a3cb7ca3dce6cfad74884ad",
+     "page_number": 30,
+     "page_type": null,
+     "ocr_chars": 298,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb7ca3dce6cfad748848f/30.jpg"
+    },
+    {
+     "page_id": "6a3cb7ca3dce6cfad74884ae",
+     "page_number": 31,
+     "page_type": null,
+     "ocr_chars": 233,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb7ca3dce6cfad748848f/31.jpg"
+    },
+    {
+     "page_id": "6a3cb7ca3dce6cfad74884af",
+     "page_number": 32,
+     "page_type": null,
+     "ocr_chars": 278,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb7ca3dce6cfad748848f/32.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c738e01fe4f593c1e973a",
+   "title": "白孔六帖·卷二十五~卷二十六 (vol 12)",
+   "work_id": "kr:KR3k0008",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 138,
+   "start": 30,
+   "pages": [
+    {
+     "page_id": "6a3c738e01fe4f593c1e9758",
+     "page_number": 30,
+     "page_type": null,
+     "ocr_chars": 375,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c738e01fe4f593c1e973a/30.jpg"
+    },
+    {
+     "page_id": "6a3c738e01fe4f593c1e9759",
+     "page_number": 31,
+     "page_type": null,
+     "ocr_chars": 325,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c738e01fe4f593c1e973a/31.jpg"
+    },
+    {
+     "page_id": "6a3c738e01fe4f593c1e975a",
+     "page_number": 32,
+     "page_type": null,
+     "ocr_chars": 432,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c738e01fe4f593c1e973a/32.jpg"
+    },
+    {
+     "page_id": "6a3c738e01fe4f593c1e975b",
+     "page_number": 33,
+     "page_type": null,
+     "ocr_chars": 398,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c738e01fe4f593c1e973a/33.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3cb54457c1f37219c4834c",
+   "title": "學易記·卷三 (vol 12)",
+   "work_id": "kr:KR1a0081",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 159,
+   "start": 120,
+   "pages": [
+    {
+     "page_id": "6a3cb54457c1f37219c483c5",
+     "page_number": 120,
+     "page_type": null,
+     "ocr_chars": 257,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54457c1f37219c4834c/120.jpg"
+    },
+    {
+     "page_id": "6a3cb54457c1f37219c483c6",
+     "page_number": 121,
+     "page_type": null,
+     "ocr_chars": 206,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54457c1f37219c4834c/121.jpg"
+    },
+    {
+     "page_id": "6a3cb54457c1f37219c483c7",
+     "page_number": 122,
+     "page_type": null,
+     "ocr_chars": 218,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54457c1f37219c4834c/122.jpg"
+    },
+    {
+     "page_id": "6a3cb54457c1f37219c483c8",
+     "page_number": 123,
+     "page_type": null,
+     "ocr_chars": 257,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54457c1f37219c4834c/123.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c667339b4508b04e35400",
+   "title": "經濟類編·卷六十三 (vol 60)",
+   "work_id": "kr:KR3k0046",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 144,
+   "start": 61,
+   "pages": [
+    {
+     "page_id": "6a3c667339b4508b04e3543d",
+     "page_number": 61,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c667339b4508b04e35400/61.jpg"
+    },
+    {
+     "page_id": "6a3c667339b4508b04e3543e",
+     "page_number": 62,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c667339b4508b04e35400/62.jpg"
+    },
+    {
+     "page_id": "6a3c667339b4508b04e3543f",
+     "page_number": 63,
+     "page_type": null,
+     "ocr_chars": 232,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c667339b4508b04e35400/63.jpg"
+    },
+    {
+     "page_id": "6a3c667339b4508b04e35440",
+     "page_number": 64,
+     "page_type": null,
+     "ocr_chars": 234,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c667339b4508b04e35400/64.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3cb54257c1f37219c48237",
+   "title": "學易記·卷一下 (vol 10)",
+   "work_id": "kr:KR1a0081",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 113,
+   "start": 26,
+   "pages": [
+    {
+     "page_id": "6a3cb54257c1f37219c48251",
+     "page_number": 26,
+     "page_type": null,
+     "ocr_chars": 247,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54257c1f37219c48237/26.jpg"
+    },
+    {
+     "page_id": "6a3cb54257c1f37219c48252",
+     "page_number": 27,
+     "page_type": null,
+     "ocr_chars": 222,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54257c1f37219c48237/27.jpg"
+    },
+    {
+     "page_id": "6a3cb54257c1f37219c48253",
+     "page_number": 28,
+     "page_type": null,
+     "ocr_chars": 257,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54257c1f37219c48237/28.jpg"
+    },
+    {
+     "page_id": "6a3cb54257c1f37219c48254",
+     "page_number": 29,
+     "page_type": null,
+     "ocr_chars": 208,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3cb54257c1f37219c48237/29.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c6c7601fe4f593c1b1664",
+   "title": "春明夢餘錄·卷二十六~卷三十 (vol 11)",
+   "work_id": "kr:KR3j0161",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 146,
+   "start": 70,
+   "pages": [
+    {
+     "page_id": "6a3c6c7601fe4f593c1b16aa",
+     "page_number": 70,
+     "page_type": null,
+     "ocr_chars": 240,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6c7601fe4f593c1b1664/70.jpg"
+    },
+    {
+     "page_id": "6a3c6c7601fe4f593c1b16ab",
+     "page_number": 71,
+     "page_type": null,
+     "ocr_chars": 205,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6c7601fe4f593c1b1664/71.jpg"
+    },
+    {
+     "page_id": "6a3c6c7601fe4f593c1b16ac",
+     "page_number": 72,
+     "page_type": null,
+     "ocr_chars": 219,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6c7601fe4f593c1b1664/72.jpg"
+    },
+    {
+     "page_id": "6a3c6c7601fe4f593c1b16ad",
+     "page_number": 73,
+     "page_type": null,
+     "ocr_chars": 209,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6c7601fe4f593c1b1664/73.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c746201fe4f593c1f0a60",
+   "title": "左傳事緯·卷一 (vol 1)",
+   "work_id": "kr:KR1e0101",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 118,
+   "start": 93,
+   "pages": [
+    {
+     "page_id": "6a3c746201fe4f593c1f0abd",
+     "page_number": 93,
+     "page_type": null,
+     "ocr_chars": 258,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c746201fe4f593c1f0a60/93.jpg"
+    },
+    {
+     "page_id": "6a3c746201fe4f593c1f0abe",
+     "page_number": 94,
+     "page_type": null,
+     "ocr_chars": 222,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c746201fe4f593c1f0a60/94.jpg"
+    },
+    {
+     "page_id": "6a3c746201fe4f593c1f0abf",
+     "page_number": 95,
+     "page_type": null,
+     "ocr_chars": 255,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c746201fe4f593c1f0a60/95.jpg"
+    },
+    {
+     "page_id": "6a3c746201fe4f593c1f0ac0",
+     "page_number": 96,
+     "page_type": null,
+     "ocr_chars": 254,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c746201fe4f593c1f0a60/96.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a3c6401af3c49b59c5ca440",
+   "title": "御定佩文韻府·卷二十六之五 (vol 431)",
+   "work_id": "kr:KR3k0059",
+   "hold": "paddle-zh-5600-ocr-only",
+   "pages_count": 149,
+   "start": 9,
+   "pages": [
+    {
+     "page_id": "6a3c6401af3c49b59c5ca449",
+     "page_number": 9,
+     "page_type": "text",
+     "ocr_chars": 557,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6401af3c49b59c5ca440/9.jpg"
+    },
+    {
+     "page_id": "6a3c6401af3c49b59c5ca44a",
+     "page_number": 10,
+     "page_type": "text",
+     "ocr_chars": 503,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6401af3c49b59c5ca440/10.jpg"
+    },
+    {
+     "page_id": "6a3c6401af3c49b59c5ca44b",
+     "page_number": 11,
+     "page_type": "text",
+     "ocr_chars": 546,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6401af3c49b59c5ca440/11.jpg"
+    },
+    {
+     "page_id": "6a3c6401af3c49b59c5ca44c",
+     "page_number": 12,
+     "page_type": "text",
+     "ocr_chars": 476,
+     "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+     "image": "https://images.sourcelibrary.org/archived/6a3c6401af3c49b59c5ca440/12.jpg"
+    }
+   ]
+  }
+ ]
+}

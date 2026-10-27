@@ -46,6 +46,7 @@ import {
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
+  pageBreakVariant,
   dropLeafSeamBreaches,
   isEnglishBook,
   seamGuardOn,
@@ -68,7 +69,7 @@ import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
 import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
-import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, translationInput, translationProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS, translateJobOutcome, blockedJobFields } from '../lib/translate-job-outcome.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -114,7 +115,6 @@ const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce bat
 // worker's local copy had drifted to include Malay, routing Jawi manuscripts
 // to the lite model that garbles them. Parity with src/lib/types/ai-models.ts
 // is pinned by tests/unit/translate-core-parity.test.ts.
-const PROMPT_VERSION = 'v10';
 // Provenance identity of this writer (#4613).
 const CALL_SITE = 'scripts/workers/translate-worker.mjs';
 const CODE_VERSION = await codeVersion();
@@ -358,7 +358,7 @@ async function translatePage(db, page, book, prevTranslation) {
     promptRef,
     call: {
       model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
-      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null },
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: pageBreakVariant(PAGE_BREAK_SCOPED) },
     },
   };
 }
@@ -474,7 +474,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
     promptRef,
     call: {
       model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
-      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null, block: { pages: pages.length, first_page: pages[0].page_number } },
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), block: { pages: pages.length, first_page: pages[0].page_number } },
     },
   };
 }
@@ -510,7 +510,7 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
 function engineFor(page, book, promptRef, call) {
   return geminiEngine({
     call_site: CALL_SITE, api: 'realtime', model: call?.model || getModelForBook(book),
-    prompt: { id: promptRef?.id, name: promptRef?.name, version: promptRef?.version ?? PROMPT_VERSION, hash: promptRef?.content_hash, text: call?.promptText },
+    prompt: { id: promptRef?.id, name: promptRef?.name, version: promptRef?.version, hash: promptRef?.content_hash, text: call?.promptText },
     generationConfig: call?.generationConfig,
     run: { job_id: book?.job?.job_id || null, code_version: CODE_VERSION, host: HOST },
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: call?.context }),
@@ -520,8 +520,8 @@ function engineFor(page, book, promptRef, call) {
 
 // ── Write a single page translation to DB ──
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
-// Falls back to PROMPT_VERSION constant for callers that pre-date the
-// prompt-reference threading (none in this file after the audit, but safe).
+// No constant fallback (#7499): this file stamped 'v10' on 2.15M pages whatever it sent. A label
+// the prompt reference does not give is not written (promptLabel).
 async function writePageTranslation(db, page, text, book, promptRef, call, cut = null) {
   // #5055: the write guard. `cut` is its verdict on the raw reply (translatePage: a tag left open at the tail, MAX_TOKENS).
   if (cut?.verdict === 'truncated') return refuseCut(db, page, text, book, cut);
@@ -562,10 +562,7 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
       model: getModelForBook(book),
       updated_at: new Date(),
       source: 'ai',
-      prompt_version: promptRef?.version || PROMPT_VERSION,
-      prompt_id: promptRef?.id,
-      prompt_hash: promptRef?.content_hash,
-      prompt_name: promptRef?.name,
+      ...promptLabel(promptRef),
       ...translationProvenance(text, engine),
     },
     updated_at: new Date(),
@@ -673,10 +670,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
             model,
             updated_at: now,
             source: 'ai',
-            prompt_version: promptRef?.version || PROMPT_VERSION,
-            prompt_id: promptRef?.id,
-            prompt_hash: promptRef?.content_hash,
-            prompt_name: promptRef?.name,
+            ...promptLabel(promptRef),
             ...translationProvenance(text, engines.get(page.id)),
           },
           updated_at: now,
@@ -703,10 +697,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
         model,
         updated_at: now,
         source: 'ai',
-        prompt_version: promptRef?.version || PROMPT_VERSION,
-        prompt_id: promptRef?.id,
-        prompt_hash: promptRef?.content_hash,
-        prompt_name: promptRef?.name,
+        ...promptLabel(promptRef),
       },
       updated_at: now,
     },
@@ -983,7 +974,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           book_id: book.id, page_ids: [page.id],
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
           cost_usd: cost, status: 'success', duration_ms: result.durationMs,
-          prompt_version: PROMPT_VERSION, endpoint: 'worker/hetzner-translate',
+          prompt_version: result.promptRef?.version ?? null, endpoint: 'worker/hetzner-translate',
           batch_size: 1,
         }, db);
 
@@ -1134,7 +1125,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           book_id: book.id, page_ids: batch.map(p => p.id),
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
           cost_usd: cost, status: missing.length > 0 ? 'partial' : 'success',
-          duration_ms: result.durationMs, prompt_version: PROMPT_VERSION,
+          duration_ms: result.durationMs, prompt_version: result.promptRef?.version ?? null,
           endpoint: 'worker/hetzner-translate-batch',
           batch_size: batch.length, pages_parsed: result.translations.size,
         }, db);

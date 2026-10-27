@@ -6,6 +6,7 @@
 # Disk steward for the job hosts (#6223). Nightly from cron; safe to run by hand at any time.
 #   disk-steward.sh            # dry run: says what it would do
 #   disk-steward.sh --apply    # does it
+#   disk-steward.sh --apply --agy-only   # only the Antigravity CLI steps (1b, 1c); hourly from cron
 #
 # Why: the Hetzner root disk (150 GB) filled to 100% on 2026-10-01 and again on 2026-10-07, both times
 # from job worktrees and experiment output written into /root, while the attached 492 GB volume sat
@@ -25,8 +26,10 @@
 #
 # Install (Hetzner crontab):
 #   40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
+#   10 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply --agy-only >> /var/log/sourcelibrary/disk-steward.log 2>&1
 set -u
-APPLY=""; [ "${1:-}" = "--apply" ] && APPLY=1
+APPLY=""; AGY_ONLY=""
+for a in "$@"; do case "$a" in --apply) APPLY=1 ;; --agy-only) AGY_ONLY=1 ;; esac; done
 VOL=${DISK_STEWARD_VOL:-/mnt/HC_Volume_105839809}
 DEST=$VOL/root-moved
 SL=${DISK_STEWARD_SL:-/root/sourcelibrary}
@@ -36,10 +39,10 @@ IDLE_DAYS=${DISK_STEWARD_IDLE_DAYS:-3}
 # Never moved: the live checkout, the job wrapper's state, and tool/config homes.
 KEEP=" sourcelibrary bin claude-jobs snap go .ssh .claude .config .local .npm .nvm .cache .cargo .rustup "
 now() { date -u +%FT%TZ; }
-echo "$(now) disk-steward ${APPLY:+--apply}${APPLY:---dry-run} root: $(df -h --output=used,avail,pcent / | tail -1)"
+echo "$(now) disk-steward $([ -n "$APPLY" ] && echo --apply || echo --dry-run) root: $(df -h --output=used,avail,pcent / | tail -1)"
 
 # 1. Reap merged worktrees.
-if [ -f "$SL/scripts/maintenance/reap-worktrees.mjs" ]; then
+if [ -z "$AGY_ONLY" ] && [ -f "$SL/scripts/maintenance/reap-worktrees.mjs" ]; then
   (cd "$SL" && node scripts/maintenance/reap-worktrees.mjs --merged-only ${APPLY:+--apply} 2>&1 | grep -E '^ *removed |would remove|^Reaped|^DRY-RUN' )
 fi
 
@@ -63,6 +66,22 @@ for i in range(int(180)):
 else: print(f'  checkpointed {db}: WAL still held by a reader after 180 s (pages copied, file not shrunk)')
 PY
 done
+
+# 1c. Remove the Antigravity CLI's orphaned temp files. agy rewrites jetbox_summaries_proto.pb (~100 MB) by writing
+#     jetbox_summaries_proto.pb.<uuid>.tmp and renaming it into place; a call killed mid-write (a timeout, the tool
+#     gate) leaves the .tmp behind, and nothing reads it again. On 2026-10-27 main held 909 of them, 27 GB, 349
+#     written that day, and the root disk had reached 100% at 02:45Z. Only files over an hour old that no process
+#     holds open are removed: a younger one may be a write in progress.
+n=0; kb=0
+for T in "$ROOT"/.gemini/antigravity-cli/*.tmp; do
+  [ -f "$T" ] || continue
+  [ -n "$(find "$T" -mmin +60 -print -quit 2>/dev/null)" ] || continue
+  lsof "$T" >/dev/null 2>&1 && continue
+  n=$((n + 1)); kb=$((kb + $(du -k "$T" | cut -f1)))
+  [ -n "$APPLY" ] && rm -f "$T"
+done
+[ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n orphaned agy .tmp files ($((kb / 1048576)) GB)"
+[ -n "$AGY_ONLY" ] && { echo "$(now) done (agy only). root: $(df -h --output=used,avail,pcent / | tail -1)"; exit 0; }
 
 # 2. Move idle /root folders to the volume.
 # A mount point, not just a directory: a wrapper that mistakes its host for main mkdirs $VOL/worktrees on the root
