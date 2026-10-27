@@ -39,7 +39,7 @@ export default function FreethinkersFan() {
   return (
     <div ref={ref} className="ff">
       {/* Wide screens: a dealt, fanned row. */}
-      <ul className="hidden md:flex justify-center items-end h-[min(56vh,520px)] px-4">
+      <ul className="hidden md:flex justify-center items-end pt-6 px-4">
         {PAGES.map((p, k) => (
           <li
             key={p.src}

@@ -3,8 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
-import AboutHero, { type HeroStat } from '@/components/about/AboutHero';
-import LockedLibrary from '@/components/about/LockedLibrary';
+import HeroWall, { type HeroStat } from '@/components/about/HeroWall';
 import FourLocks from '@/components/about/FourLocks';
 import StatementReveal from '@/components/about/StatementReveal';
 import AskDemo from '@/components/about/AskDemo';
@@ -109,44 +108,67 @@ export default async function AboutPage() {
   ];
 
   return (
-    <ContentPageLayout header={<><SiteHeader variant="light" /><AboutHero stats={headlineStats} /></>} bg="bg-cream" maxWidth="wide" noPadding>
-      {/* The locked library */}
-      <LockedLibrary>
-        <h2 className={h2}>Most of what people have written down, almost nobody alive can read.</h2>
-        <p className={`mt-6 ${lead}`}>
-          Picture this wall as everything printed in Europe before 1700. The pages that stay lit are the ones you can read in English: fewer than one in a hundred.
-        </p>
-      </LockedLibrary>
-
-      {/* Four locks */}
-      <section className={`${SCENE} bg-[var(--bg-warm)]`}>
+    <ContentPageLayout
+      header={
+        <>
+          <SiteHeader variant="light" />
+          <HeroWall
+            stats={headlineStats}
+            second={
+              <div className="max-w-2xl md:bg-transparent bg-cream/90 p-5 md:p-0 -mx-1 md:mx-0">
+                <h2 className="font-serif text-6xl md:text-8xl text-primary leading-[0.98] tracking-tight">
+                  Fewer than<br />1 in&nbsp;100.
+                </h2>
+                <p className={`mt-6 ${lead} max-w-xl`}>
+                  That is how many books printed in Europe before 1700 you can read in English today. On this wall they are the few that stay lit.
+                </p>
+                <p className={`mt-4 ${body} max-w-xl`}>
+                  The rest are in Latin, German, French, Dutch and dozens of other languages, and most have never been scanned.
+                </p>
+              </div>
+            }
+          />
+        </>
+      }
+      bg="bg-cream"
+      maxWidth="full"
+      noPadding
+    >
+      {/* Four locks: the problem, then the mission */}
+      <section className="py-24 md:py-36 bg-[var(--bg-warm)]">
         <div className={WIDE}>
           <Reveal>
-            <h2 className={`${h2} max-w-4xl`}>It was written down to be known. Most of it is still locked away.</h2>
+            <h2 className={`${h2} max-w-4xl`}>It was written down so that it could be known. Most of it is still locked away.</h2>
           </Reveal>
           <div className="mt-16 md:mt-24">
-            <FourLocks />
+            <FourLocks
+              mission={
+                <p className="font-serif text-3xl md:text-5xl text-primary leading-[1.1] tracking-tight">
+                  Our mission is to unlock it: scans and translations that make these books accessible to people and AI systems everywhere.
+                </p>
+              }
+            />
           </div>
-          <Reveal className="mt-20 md:mt-28 max-w-3xl">
-            <p className={`${lead} text-primary`}>
-              That is the work: our scans and translations will make these books accessible to people and AI systems everywhere.
-            </p>
-          </Reveal>
         </div>
       </section>
 
       {/* It happened once */}
-      <section className={SCENE}>
+      <section className="py-24 md:py-36">
         <div className={WIDE}>
           <Reveal className="max-w-4xl">
-            <p className="font-serif text-7xl md:text-9xl text-primary leading-none tracking-tight tabular-nums">1463</p>
-            <h2 className={`mt-6 ${h3}`}>It has happened before.</h2>
-            <p className={`mt-6 ${body} max-w-2xl`}>
-              In Florence, Marsilio Ficino translated Plato and the Hermetic writings into Latin for the Medici. Europe could suddenly read what it had only heard of, and the Renaissance followed.
+            <h2 className={h2}>Translation has changed the world before.</h2>
+            <p className={`mt-8 ${lead}`}>
+              In 1463 Marsilio Ficino translated the Hermetic writings into Latin, then all of Plato. Europe could suddenly read what it had only heard of. The result was a small revolution we now call the Renaissance: new science, new art, new ideas about the body and the mind.
             </p>
           </Reveal>
           <div className="mt-14 md:mt-20">
             <PrefaceFigure />
+          </div>
+          <Reveal className="mt-24 md:mt-32 max-w-4xl">
+            <h3 className={h3}>Yet Ficino&apos;s own books were mostly never translated. Until we started.</h3>
+          </Reveal>
+          <div className="mt-12 md:mt-16">
+            <CompendiumFigure />
           </div>
         </div>
       </section>
@@ -180,7 +202,7 @@ export default async function AboutPage() {
       </section>
 
       {/* AI and the freethinkers */}
-      <section className={`${SCENE} bg-[var(--bg-warm)] overflow-hidden`}>
+      <section className="py-24 md:py-32 bg-[var(--bg-warm)] overflow-hidden">
         <div className={WIDE}>
           <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] gap-8 lg:gap-16 items-end">
             <Reveal>
@@ -192,7 +214,7 @@ export default async function AboutPage() {
               </p>
             </Reveal>
           </div>
-          <div className="mt-16 md:mt-24 md:pb-28">
+          <div className="mt-12 md:mt-16 md:pb-24">
             <FreethinkersFan />
           </div>
         </div>
@@ -212,9 +234,6 @@ export default async function AboutPage() {
                 { value: stats.firstTranslationCount, label: 'first-ever English translations', href: '/search?first_translation=true' },
               ]}
             />
-          </div>
-          <div className="mt-20 md:mt-28">
-            <CompendiumFigure />
           </div>
         </div>
       </section>
@@ -289,28 +308,41 @@ export default async function AboutPage() {
               </p>
             </Reveal>
           </div>
-          <Reveal className="mt-16 md:mt-20 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-14 md:gap-16">
-            <div>
-              <h3 className="text-base font-semibold text-primary">Partners</h3>
-              <p className={`mt-3 ${body}`}>
-                <a href="https://frond-studio.com" target="_blank" rel="noopener noreferrer" className={link}>Frond Studio</a> works on how Source Library looks and reads.{' '}
-                <a href="https://folium-studio.com" target="_blank" rel="noopener noreferrer" className={link}>Folium</a>, Frond&apos;s platform for libraries, museums and archives, takes what we learn here to other collections, the Embassy&apos;s own catalogue among them.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-primary">
-                The Embassy&apos;s{' '}
-                <a href="https://www.embassyofthefreemind.com/research" target="_blank" rel="noopener noreferrer" className={link}>Academic Advisory Board</a>
-              </h3>
-              <ul className="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2">
-                {ADVISORY_BOARD.map(([name, institution]) => (
-                  <li key={name} className="text-sm leading-snug">
-                    <span className="text-primary">{name}</span>
-                    <span className="text-muted">, {institution}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="mt-20 md:mt-24 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-6">
+            <Reveal>
+              <a href="https://frond-studio.com" target="_blank" rel="noopener noreferrer" className="group block h-full bg-[#1a1612] text-white p-8 md:p-10 hover:bg-[#241d17] transition-colors">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/partners/frond-studio-white.png" alt="Frond Studio" className="h-9 w-auto" loading="lazy" />
+                <p className="mt-8 text-lg leading-relaxed text-stone-200">
+                  Frond Studio designs and builds Source Library: the site, the reader and the tools behind them.
+                </p>
+                <span className="mt-6 inline-block text-sm text-stone-300 group-hover:text-white">frond-studio.com →</span>
+              </a>
+            </Reveal>
+            <Reveal delay={120}>
+              <a href="https://folium-studio.com" target="_blank" rel="noopener noreferrer" className="group block h-full bg-[#1a1612] text-white p-8 md:p-10 hover:bg-[#241d17] transition-colors">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/partners/folium-white.png" alt="Folium" className="h-9 w-auto" loading="lazy" />
+                <p className="mt-8 text-lg leading-relaxed text-stone-200">
+                  Folium is our partnership to offer the same scanning, translation and reading to other libraries, museums and archives. The Embassy&apos;s own catalogue already runs on it.
+                </p>
+                <span className="mt-6 inline-block text-sm text-stone-300 group-hover:text-white">folium-studio.com →</span>
+              </a>
+            </Reveal>
+          </div>
+          <Reveal className="mt-16 md:mt-20">
+            <h3 className="text-base font-semibold text-primary">
+              The Embassy&apos;s{' '}
+              <a href="https://www.embassyofthefreemind.com/research" target="_blank" rel="noopener noreferrer" className={link}>Academic Advisory Board</a>
+            </h3>
+            <ul className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
+              {ADVISORY_BOARD.map(([name, institution]) => (
+                <li key={name} className="text-sm leading-snug">
+                  <span className="text-primary">{name}</span>
+                  <span className="text-muted">, {institution}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>

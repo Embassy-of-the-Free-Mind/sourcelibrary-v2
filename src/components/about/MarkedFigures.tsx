@@ -29,7 +29,7 @@ export function PrefaceFigure() {
       href={PREFACE_PAGE}
       marks={PREFACE_MARKS}
       aside={(lit) => (
-        <blockquote className="font-serif text-2xl md:text-3xl text-primary leading-snug">
+        <blockquote className="font-serif text-xl md:text-2xl text-primary leading-snug">
           <span className="mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>
             &ldquo;Lately, having been brought from Macedonia into Italy through the diligence of Leonardo the Macedonian, a learned and pious monk, it has come to us.
           </span>{' '}

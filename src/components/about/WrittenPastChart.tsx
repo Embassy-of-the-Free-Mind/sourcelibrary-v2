@@ -22,7 +22,7 @@ const INK = '#57534e';
 const tint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, transparent)`;
 const fmt = (n: number) => n.toLocaleString('en-GB');
 const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
-const GRID = 'grid grid-cols-[5rem_minmax(0,1fr)_4.25rem_3.25rem] sm:grid-cols-[8rem_minmax(0,1fr)_6.5rem_6rem] items-center gap-x-3 sm:gap-x-4';
+const GRID = 'grid grid-cols-[5.25rem_minmax(0,1fr)_5.5rem] sm:grid-cols-[8rem_minmax(0,1fr)_8rem] items-center gap-x-3 sm:gap-x-4';
 
 export default function WrittenPastChart() {
   const [step, setStep] = useState(0);
@@ -82,81 +82,42 @@ export default function WrittenPastChart() {
     setProgress(0);
     if (!reduced.current) setPlaying(true);
   };
-  const togglePlay = () => {
-    if (!playing && step === WRITTEN_PAST_STEPS.length - 1 && progress >= 1) {
-      setStep(0);
-      setProgress(0);
-    }
-    setPlaying(!playing);
-  };
 
   const shown = WRITTEN_PAST_ROWS.filter((r) => r.step <= step);
   // At the last step China joins: India shrinks to 72% of the track and the
   // Chinese bar runs the full width and off the end, since it is larger and uncounted.
   const max = step >= 4 ? 10000000 / 0.72 : Math.max(...shown.map((r) => r.n));
   const solo = step === 0;
-  const axisMax = step >= 4 ? 'beyond any count →' : `${fmt(max)} ${step >= 2 ? 'manuscripts' : 'works'}`;
 
   return (
     <div ref={rootRef} className="written-past">
-      <div className="flex flex-wrap items-end gap-x-8 gap-y-3 text-sm text-secondary mb-6">
-        <div>
-          <div className="flex h-3.5 w-80 max-w-full" aria-hidden="true">
-            <i className="block h-full w-[18%]" style={{ background: INK }} />
-            <i className="block h-full flex-1" style={{ background: tint(INK, 22) }} />
-          </div>
-          <div className="mt-1.5 flex w-80 max-w-full justify-between gap-3">
-            <span className="text-primary font-medium">translated into English</span>
-            <span>never translated</span>
-          </div>
-        </div>
-        <div>
-          <i className="block h-3.5 w-24 wp-hatch border" style={{ ['--c' as string]: INK, borderColor: tint(INK, 35) }} aria-hidden="true" />
-          <span className="mt-1.5 block">only estimated, in manuscripts</span>
-        </div>
+      <div className="grid grid-cols-5 gap-3 sm:gap-6" role="tablist" aria-label="Zoom out">
+        {WRITTEN_PAST_STEPS.map((st, i) => (
+          <button
+            key={st.name}
+            type="button"
+            role="tab"
+            onClick={() => go(i)}
+            aria-selected={i === step}
+            className={`relative text-left pb-2.5 text-sm sm:text-lg font-medium transition-colors ${i === step ? 'text-primary' : 'text-muted hover:text-primary'}`}
+          >
+            {st.name}
+            <i className="absolute left-0 right-0 bottom-0 h-px bg-border-medium" />
+            <i
+              className="absolute left-0 bottom-0 h-[2px]"
+              style={{ background: RUST, width: i < step ? '100%' : i === step ? `${progress * 100}%` : '0%' }}
+            />
+          </button>
+        ))}
       </div>
 
-      <div className="flex items-stretch gap-1.5 sm:gap-2">
-        <button
-          type="button"
-          onClick={togglePlay}
-          aria-label={playing ? 'Pause' : 'Play'}
-          className="shrink-0 w-11 border border-border-medium bg-cream hover:bg-[var(--bg-warm)] flex items-center justify-center text-primary transition-colors"
-        >
-          {playing ? (
-            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" fill="currentColor" /><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor" /></svg>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z" fill="currentColor" /></svg>
-          )}
-        </button>
-        <div className="grid grid-cols-5 gap-2 flex-1">
-          {WRITTEN_PAST_STEPS.map((s, i) => (
-            <button
-              key={s.name}
-              type="button"
-              onClick={() => go(i)}
-              aria-pressed={i === step}
-              className={`relative text-left px-1.5 sm:px-2.5 py-2 border transition-colors overflow-hidden ${i === step ? 'border-primary text-primary' : 'border-border-medium text-muted hover:text-primary'}`}
-            >
-              <span className="block text-[11px] tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-              <span className="block text-[11px] sm:text-sm font-medium tracking-tight sm:tracking-normal">{s.name}</span>
-              <i
-                className="absolute left-0 bottom-0 h-[3px]"
-                style={{ background: RUST, width: i < step ? '100%' : i === step ? `${progress * 100}%` : '0%' }}
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <p className="mt-4 mb-5 text-base md:text-lg text-primary leading-snug min-h-[4.2em] sm:min-h-[2.8em]" aria-live="polite">
+      <p className="mt-6 mb-8 text-lg md:text-xl text-primary leading-snug min-h-[4.2em] sm:min-h-[2.8em]" aria-live="polite">
         {WRITTEN_PAST_STEPS[step].caption}
       </p>
 
       <div className={`${GRID} text-xs text-muted pb-2 mb-2 border-b border-border-light`}>
         <span />
-        <span className="text-right font-semibold text-secondary tabular-nums">{axisMax}</span>
-        <span className="text-right">works</span>
+        <span />
         <span className="text-right text-primary font-semibold">in English</span>
       </div>
 
@@ -167,7 +128,7 @@ export default function WrittenPastChart() {
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
           const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
           const c = r.color ?? RUST;
-          const size = r.open ? 'largest?' : r.none ? 'uncounted' : r.estimate ? `${compact(r.n)} mss.` : solo ? fmt(r.n) : `${Math.round(r.n / 1000)}K`;
+          const size = r.open ? 'not counted' : r.none ? 'not counted' : `${compact(r.n)} mss.`;
           return (
             <div
               key={r.key}
@@ -200,14 +161,19 @@ export default function WrittenPastChart() {
                   </>
                 )}
               </div>
-              <span className={`text-right tabular-nums whitespace-nowrap text-secondary ${solo ? 'text-base' : 'text-[12px] sm:text-[13px]'}`}>{size}</span>
               <span className={`text-right tabular-nums whitespace-nowrap ${solo ? 'text-xl' : 'text-sm sm:text-base'}`}>
-                {pct ? <b className="font-semibold text-primary">{pct}%</b> : <span className="text-muted">?</span>}
+                {pct ? <b className="font-semibold text-primary">{pct}%</b> : <span className="text-muted text-[12px] sm:text-sm">{size}</span>}
               </span>
             </div>
           );
         })}
       </div>
+
+      <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary">
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: INK }} />translated into English</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: tint(INK, 24) }} />never translated</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 wp-hatch border" style={{ ['--c' as string]: INK, borderColor: tint(INK, 40) }} />estimated, in manuscripts</span>
+      </p>
 
       <style>{`
         .written-past .wp-row { transition: height .6s ease, opacity .5s ease; }

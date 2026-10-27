@@ -6,8 +6,8 @@ import { useInView } from './useInView';
 import { useReducedMotion } from './useReducedMotion';
 
 /**
- * A question typed into a search bar, answered from three traditions in their
- * own words. Each quote is copied exactly from the English on the linked page
+ * A question typed out large, answered from three traditions in their own
+ * words. It is a demonstration, so nothing about it looks like an input. Each quote is copied exactly from the English on the linked page
  * (checked 2026-10-23). Plays when the scene arrives, resets when it leaves.
  */
 
@@ -64,18 +64,16 @@ export default function AskDemo() {
 
   return (
     <div ref={ref} className="ask">
-      <div className="max-w-2xl mx-auto flex items-center gap-3 border border-border-medium bg-white px-5 py-4 text-xl md:text-2xl text-primary">
-        <svg className="shrink-0 text-muted" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="M20 20l-4-4" strokeLinecap="round" />
-        </svg>
-        <span aria-label={QUESTION}>
-          {q}
-          <i className="ask-caret inline-block w-[2px] h-[1em] align-[-0.12em] ml-0.5 bg-primary" style={{ opacity: n ? 0 : 1 }} />
+      <p className="text-center">
+        <span className="block text-sm text-muted">Asked of the library</span>
+        <span className="mt-3 block font-serif text-4xl md:text-6xl text-primary leading-tight" aria-label={QUESTION}>
+          &ldquo;{q}
+          <i className="ask-caret inline-block w-[3px] h-[0.85em] align-[-0.08em] mx-0.5 bg-accent-rust" style={{ opacity: n || (!still && typed === 0) ? 0 : 1 }} />
+          {q.length === QUESTION.length ? '\u201d' : ''}
         </span>
-      </div>
+      </p>
 
-      <ul className="mt-10 grid grid-cols-[minmax(0,1fr)] md:grid-cols-3 gap-5">
+      <ul className="mt-12 md:mt-14 grid grid-cols-[minmax(0,1fr)] md:grid-cols-3 gap-5">
         {ANSWERS.map((a, k) => (
           <li
             key={a.who}
