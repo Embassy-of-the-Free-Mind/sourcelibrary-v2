@@ -483,6 +483,98 @@ My labels agree with Argon's on 18 of the 24 links both read. The 6 differences 
 - Claude: the reading was done in this job's own session.
 - No writes to `embassy_messages`, the threads, the replay cache or the l7a cron.
 
+## 2026-10-27 · Can a fresh 3.8 Flash-low read replace Flash-Lite Batch? (#7517)
+
+Derek, 2026-10-27: "we basically want to replace the use of gemini 3.1 flash lite batch". The second Google login
+(`AGY_HOME=/root/.agy-james`, PR #7514, held to `gemini-3.8-flash-low`) was to read in Batch's place. Flash-low had
+been measured only as a corrector of a lite draft on these cells, never as a reader of the image alone.
+
+**Design.** `scripts/eval/route-judge-6740/judge.mjs` gains a fresh-read route (`FRESH`, `agy-flash-low`): the page
+image on the live OCR prompt (`cli-ocr.mjs read`, its prompt, sentinels and guards, `--fresh`, `CANDIDATE_READS=off`),
+no draft. Every call went through `AGY_HOME=/root/.agy-james`.
+- **de-lite, fr-lite:** the router tests' own 30 pages per cell (`draw --from=… --routes=lite,agy-flash-low`), one
+  page per book. The lite verdicts are the stored ones, copied by id (`judge --reuse`); lite>agy-flash-low is the
+  stored row on the same pages.
+- **latin-lite (new):** the router test draw rule (visible Latin books not held, stored lite OCR, interior, >= 300
+  chars, one page per book, salt `rt-latin-lite`), with lite, lite>agy-flash-low and the fresh read. The table's
+  Latin cell is the pilot's 30 pages in 9 books, so a new draw was needed.
+- Judge: Opus through `claude -p`, the route-judge prompt, each output against the page image, blind to the route,
+  with wrong-page controls (both passed on every judged route).
+- Rule (`fresh-gate-7517.mjs`): `rules.json`'s router gate, P(acc >= acc_best - 0.05) >= 0.9 and wrong text <= the
+  best route's rate + 2%, over lite, lite>agy-flash-low, the fresh read and `fresh|lite` (the fresh read where
+  delivered, the lite draft where not: what a lane that hands cut pages back to Batch would serve). Flat
+  Beta(1, 1) priors. **A read that Gemini cut or that failed counts as not accepted**, because it is never written.
+
+**Result** (`results/fresh-7517-2026-10-27/fresh-gate.json`, `score.json`):
+
+| cell | route | accepted | wrong text | P(within 0.05 of best) | verdict |
+|---|---|---|---|---|---|
+| German | lite | 21/30 | 5/30 | 0.04 | fail |
+| | lite>agy-flash-low (stored) | **28/30** | 2/30 | best | pass |
+| | fresh Flash-low | 16/30 (18 delivered) | 1/30 | 0.00 | **fail** |
+| | fresh, lite where cut | 24/30 | 3/30 | 0.19 | fail |
+| French | lite | 22/30 | 6/30 | 0.08 | fail |
+| | lite>agy-flash-low (stored) | **27/29** | 2/29 | best | pass |
+| | fresh Flash-low | 23/30 (25 delivered) | 2/30 | 0.12 | **fail** |
+| | fresh, lite where cut | 26/30 | 3/30 | 0.46 | fail |
+| Latin | all | not measured | | | the account's quota ran out (below) |
+
+- **Gemini's filter is the failure, not the reading.** 12 of 30 German and 5 of 30 French fresh replies stop
+  mid-page with "This request was blocked by Gemini's filters…" (`reply cut before <<<END>>>`, after the one re-read
+  cli-ocr.mjs makes). On the pages it delivered, the fresh read beat lite: German 16/18 against lite's 13/18 accepted
+  (wrong text 1 against 3), French 23/25 against 19/25 (2 against 5). The corrector route, which gets the lite draft in
+  its prompt, was cut on none of these 60 pages in the 2026-10-26 run (one French answer was CONTAIN, below).
+- **A filter leak got past the wrapper guard.** French p.386 (printed 359): the reply came back whole, but
+  "absous.Filters Ajoûtons" holds a stray word from the filter message. The judge tagged it wrong text. Neither
+  `unwrapRead` nor the chatter guard catches it.
+
+**By eye** (this session, image opened beside the read, 3 pages per measured cell):
+- German p.18 of *Posaune der…* (6a26ceaf…): the frame carries a strip of the facing leaf, and the fresh read
+  transcribed its cut-off line starts as `<margin>`. The judge's I4 holds (lite also failed this page).
+- German, Bock herbal, "Von der kreütter vnderscheid" (6958dfb4…): a clean 16th-century leaf. The read stops after
+  "Erstlich im hal" with the filter message. A refusal on an ordinary public-domain page.
+- German p.107, Greek alphabet history (69aea5c3…): the read matches the leaf, Greek with lunate sigma included
+  (accepted; lite was not).
+- French p.359 (6a4ad95e…): matches line by line except the inserted "Filters" after "absous.".
+- French p.351 (69f8c135…): a faint but legible page of text and footnotes; Flash-low answered `<page-type>blank`
+  with a show-through warning. The judge's O18 (page left empty) holds.
+- French p.544, *Le roman de Léonard de Vinci* (69af4a49…): the first two paragraphs match word for word
+  (accepted, fidelity 5; lite 1).
+
+**Contained in this run** (containment-on-finding.md). French p.554 / printed 544 (book 69af4a49…9792, *Христос и
+Антихрист т. 2*, visible, `complete`) serves lite OCR headed and worded as printed 541 under the image of 544. Seen by
+eye above, and the 2026-10-26 corrector answered CONTAIN for the same reason. The book is held
+(`wrong-leaf-text-7517`) and that page's English is withheld (`withhold-stale-translations.mjs --by-eye-pages=554`).
+The repair (re-read or re-pair against the image) is still owed.
+
+**What the quota measured.** At 09:31Z `agy /quota` on the second account read 97% of the Gemini week left (the
+window opened 09:24Z). After this test's 86 calls (09:32–09:44Z, 89 conversations counting re-reads), the next call
+got `RESOURCE_EXHAUSTED … Resets in 167h40m`, and `/quota` read **0.6%**, resetting 2026-11-03T09:24:51Z. That is
+about 1.1% of the week per page. #7498 measured the main pool at 9.6e-6 of a week per Flash-low call (~104K a
+week), a thousand times cheaper. No other caller used the account on this box (agy-calls.jsonl), and boxes cannot see
+each other's calls. The account's tier is the first suspect.
+
+**Tokens per page** (Derek's inbox, 2026-10-27T09:44Z: does thinking matter?). cli-ocr.mjs did not record agy's usage
+envelope (it does from this PR on). The counts below come from agy's own conversation store on the account
+(`~/.gemini/antigravity-cli/conversations/*.db`, `gen_metadata` protobuf, decoded without a schema:
+`results/fresh-7517-2026-10-27/agy-usage-decoded.jsonl.gz`). Field 2 is read as input tokens and field 3 as output;
+the labels are inferred, not documented. Over 89 calls:
+- **3 model turns per call** (median and p90). The image is already attached (`@./page.jpg`), but the model opens it
+  again with `view_file` (allowed by the tool gate), and each turn re-sends the whole context.
+- Input per call: median **34,290** tokens, p90 37,918 (first turn alone: ~10,900). Output: median **553**, p90 1,059.
+- No thinking count shows in 263 of 265 turns. Two turns carry an unlabelled ~4,650 in field 5, and every turn carries
+  24 in field 6. On this decoding, thinking is not where the quota goes: the re-sent input of the agent loop is.
+
+**Decision.** Per the brief, no cell passed the fresh-read test, so no fresh-read lane is built. The lane code written
+before the result (`cli-ocr-lane.mjs --lane=lite`: claim under Phase 2's submit lease, hold, read on the second
+account, quota floor, release) is kept unmerged on branch `wip/cli-ocr-lane-lite-7517`. The route that passes,
+lite>agy-flash-low, needs the Batch draft, so it cannot replace Batch, and on this account's pool it could not run
+anyway. Shipped in the same PR: agy stop files are now per account (`agy@<account>-<model>`). The quota hit in this
+test would otherwise have locked Flash-low for every lane on l7a's main account for seven days.
+
+**Not done.** Latin (0 of 30 fresh reads; 6 of 30 corrections read, not judged). A view_file-free prompt (could cut
+input about 3x). A rerun after 2026-11-03 once the account's tier is known.
+
 ## 2026-10-27 · How many 3.8 Flash low calls does the agy Gemini quota hold in a week? (#6740)
 
 PRIOR ART: `scripts/eval/estimator/ocr/meter_quota_share.py` (the earlier figure, 229K calls per 30 days, from main's
@@ -527,6 +619,110 @@ Argon call was made by this test.
 
 **Artifact.** The quota series and the Mac's test reads were scratch (session scratchpad); the counts are in the table
 above.
+
+## 2026-10-27 · Gemini CLI translation, 1 vs 2 vs 4 pages per call, on Siku pages (#7503, job agy-per-call-7503)
+<!-- PRIOR ART: #6443 (pages per call for Gemini IMAGE transcription; error 12% -> 22% at 5 per call). Nobody had tested translation from text. PR #7504 is the tool (claude-translate.mjs --cli=agy, call_usage in metas). -->
+
+**Question.** An agy call carries a fixed CLI system prompt on top of our template. If 2 or 4 pages per call keeps quality, the ~1.37M-page Siku backlog (#5600) uses much less of the shared weekly Gemini pool.
+
+**Draw** (`agy-per-call-7503/draw.mjs`, seed 7503, committed before any read). The frame is the 10,343 live books held as `paddle-zh-5600-ocr-only` or `gpu-backlog-5660`, minus the 20 books of the skqs-flash-pilot-5600 pilot. 15 books were drawn. From each, one run of 4 consecutive translatable pages with `ocr.source: paddle`, starting at a seeded random point: 60 pages, 167–557 OCR chars per page (`draw.json`).
+
+**Arms.** All 60 pages in every arm, `--fresh`, `CANDIDATE_READS=off`, gemini-3.8-flash-low via agy. The four arms ran at the same time, so their wall times are comparable.
+- **A1**: `cli-translate.mjs read`, the production single-page prompt, one page per call.
+- **A1b**: A1 again. This is the noise floor.
+- **B2**: `claude-translate.mjs read --cli=agy --per-call=2`, the block prompt.
+- **C4**: the same with `--per-call=4`.
+
+**Judge** (`prep.mjs`, `judge.mjs`). Opus via `claude -p`, one page per call, Read tool only. Each call got:
+- the page image;
+- the page's OCR, plus the OCR of the page before and after (so bleed can be seen);
+- the four versions under shuffled letters W–Z, with `<summary>`/`<keywords>` cut.
+
+The arm key is in `judge-key.json` and was never in a prompt.
+
+**Controls.** Five controls were planted on 5 pages from 5 different books. Each control is a fifth version, made from a SEPARATE fresh 1/call read (arm CTL), so it could not be caught by diffing it against a shown arm:
+- 3 had a middle sentence dropped;
+- 2 had the next page's first sentence appended.
+
+**All 5 were caught** (each drop flagged as an omission, each bleed as cross-page bleed, all marked unusable), so `status: ok`.
+
+### Results (n = 60 pages / 15 books per arm; Wilson 95% CI on the share of pages)
+
+| arm | usable | omission | addition | sense error | cross-page bleed | name/term garbled |
+|---|---|---|---|---|---|---|
+| A1 1/call | **49/60, 82%** [70–89] | 2 (3%) [1–11] | 5 (8%) [4–18] | 20 (33%) [23–46] | 0 [0–6] | 19 (32%) [21–44] |
+| A1b 1/call again | **45/60, 75%** [63–84] | 5 (8%) [4–18] | 5 (8%) [4–18] | 20 (33%) [23–46] | 0 [0–6] | 18 (30%) [20–43] |
+| B2 2/call | **48/60, 80%** [68–88] | 4 (7%) [3–16] | 8 (13%) [7–24] | 16 (27%) [17–39] | 1 (2%) [0–9] | 17 (28%) [19–41] |
+| C4 4/call | **48/60, 80%** [68–88] | 6 (10%) [5–20] | 4 (7%) [3–16] | 18 (30%) [20–43] | 2 (3%) [1–11] | 11 (18%) [11–30] |
+
+Paired difference in usable rate against A1, with a 95% bootstrap that resamples the 15 books:
+
+| comparison | difference |
+|---|---|
+| A1b − A1 (the floor) | **−6.7 pts** [−16.7, +3.3] |
+| B2 − A1 | −1.7 [−15.0, +10.0] |
+| C4 − A1 | −1.7 [−16.7, +13.3] |
+
+Pages whose usable verdict differs between two arms: A1~A1b 10/60, A1~B2 13, A1b~C4 13, A1~C4 17. Neither block arm is further from A1 than the two A1 runs are from each other.
+
+Unusable pages cluster in the two 御定佩文韻府 volumes, a rhyme thesaurus of short quotations. They account for 5 of A1's 11 unusable pages, and every arm finds them hard.
+
+| arm | calls (pages per call) | refused calls | input / page | of which cached | output / page | thinking | quota index / page | vs A1 | vs A1, uncached input only | English chars / page | wall (parallel) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| A1 | 60 (60×1) | 0 | 6,397 | 3,655 | 606 | 0 | 10,034 | **1.00** | 1.00 | 2,546 | 388 s |
+| A1b | 60 (60×1) | 0 | 6,921 | 3,114 | 580 | 0 | 10,402 | 1.04 | 1.14 | 2,479 | 390 s |
+| B2 | 34 (26×2, 8×1) | 0 | 3,941 | 1,896 | 519 | 0 | 7,056 | **0.70** | 0.81 | 2,221 | 263 s |
+| C4 | 21 (12×4, 1×3, 1×2, 7×1) | 0 | 2,517 | 1,151 | 500 | 0 | 5,515 | **0.55** | 0.68 | 2,160 | 215 s |
+
+How to read the token table:
+- **The quota index** is input + 6 × (output + thinking) per page. The 6× weight is an ASSUMPTION (Gemini's list-price ratio), not a measured agy quota rate. The second "vs A1" column counts only uncached input.
+- **The cache adds noise.** agy reports `cache_read` on about half the input, and it varied between the two identical A1 runs (3,655 vs 3,114 per page). So the uncached index carries about ±10% noise from caching luck alone.
+- **The block arms were never refused.** No `page_tags_mismatch`, and no drift or seam re-reads.
+- **Some pages are always read alone.** 5 of the 60 pages fall under translate-batch-seam's 200-char block floor (`MIN_OCR_CHARS_FOR_BLOCK`) and are read alone in every arm, which is part of why B2 and C4 have single calls. The share of Siku pages under that floor decides how much of the saving the full backlog gets.
+- **Thinking was 0 on every call** (flash-low).
+
+### The new defect: a sentence across a page break is finished on the earlier page
+
+Every cross-page bleed the judge found in B2 and C4 is paired with an omission at the top of the next page in the same block. The model completes the sentence that runs over the page break on page N and starts page N+1 at the next sentence. Read by hand at the seam:
+
+| book | break | arm | what the block reads put on page N | how A1 split it |
+|---|---|---|---|---|
+| 論語商 | p.37→38 | B2, C4 | 非與驕傲相反（若以謙恭解之便非本旨矣） | no fault at this break (both A1 runs) |
+| 天原發微 | p.56→57 | C4 | 至哉言也學者宜深味之 | no fault at this break (both A1 runs) |
+| 經濟類編 | p.63→64 | C4 | "Use a white flag for stone" | "For stones / , use a white flag" |
+| 學易記 | p.122→123 | B2 | "…and cannot be disordered." | "…cannot be altered. / cannot be disrupted." |
+
+Rates:
+- B2: 2 of 26 in-block breaks.
+- C4: 3 of 39 in-block breaks.
+
+So the rate per break is about the same (~8%) at both block sizes, and 4/call has more in-block breaks per page. The two 1/call runs put no text on the wrong side of a page break.
+
+Nothing is lost from the book and nothing is invented. One clause sits on the page before its own, which is exactly the error a page citation inherits. `scripts/lib/block-drift.mjs` exists to catch this move (#5021), but it makes no claim on caseless scripts: its first test is a lowercase opening letter. Unpunctuated SKQS OCR is invisible to it, and none of the five moves was re-read.
+
+### Recommendation
+
+**4 pages per call for the Siku lane**, after the drift guard learns caseless scripts.
+- **Quality:** usable, sense errors and names are not distinguishable from one page per call; every difference lies inside the A1-vs-A1b floor.
+- **Quota:** the index is 0.55 of one per call (0.68 counting uncached input only).
+- **The page-break shift:** it happens at about the same rate per break at 2/call, so choosing 2 does not avoid it. The choice between 2 and 4 then comes down to quota, and 4 saves more.
+- **Before switching the lane:** extend block-drift to Chinese. For example, flag an in-block break where page N+1's English opens on a capitalised fresh sentence while its OCR continues page N's (SKQS pages almost never begin a new sentence at the top of a half-leaf). Otherwise accept that roughly 5% of pages carry a clause one page early.
+
+**Caveats:**
+- **Prompt confound.** A1 uses the single-page production prompt (sentinel markers) and B2/C4 the block prompt, so this compares the lane as it is against the block lane, not pages per call alone.
+- **Sample size.** At n = 60 across 15 books, a difference under about 15 points in usable rate is not detectable.
+- **One judge.** A single Opus judge rated every version, which the controls validate only for gross faults.
+- **Cost of the run:** about 180 agy calls; 60 judge calls at about $5.7 notional, on the subscription; Gemini weekly 70% → 69%.
+
+Files: `scripts/eval/agy-per-call-7503/`
+- `draw.json`, `page-ids.json`
+- `controls.json`, `controls-tamper.json`
+- `reads.jsonl` (every read, all arms)
+- `calls-B2.jsonl`, `calls-C4.jsonl`
+- `judge-verdicts.jsonl`, `judge-key.json`
+- `tokens.json`, `results.json`
+
+Re-score with `node scripts/eval/agy-per-call-7503/score.mjs --scratch=<dir with the arms>`. Nothing was written to pages or books. The readers recorded their book lists in `lane_job_books`, which is a label: nothing selects or skips a book from it.
 
 ## 2026-10-26 · Can the production vLLM Yigdzin reader replace the HF reader on gex45? (#6871 row 4, #5771; job yig-vllm-6871)
 <!-- PRIOR ART: 2026-10-20-tibetan-guttered-pages-yigdzin-page-mode-6871.md (the HF page-mode lane this replaces; its vLLM arm hung); 2026-10-14-yigdzin-rest-withheld-and-unread-tibetan-4523.md (the same worker on vLLM 0.29.0 on L4s, 0.73–0.97 pages/s); scripts/eval/split-leaf-5771/yig_leaf_read.py on job-split-leaves-5771 (the HF port of the worker that 81-split-leaf-5771 ran). -->
