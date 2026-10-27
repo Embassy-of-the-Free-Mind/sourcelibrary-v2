@@ -62,7 +62,8 @@
  * fc-prompt.mjs, exactly as judged) and written by `cli-ocr.mjs apply` with every guard, stamped `ocr.pipeline =
  * agy-correct-lite-7558`, and `--mark-stale` flags its English (a flag only: no cron re-translates on it). An UNCHANGED
  * answer leaves the page; a CONTAIN answer leaves it and goes to DIR/../correct-contain-claims.jsonl for a by-eye check.
- * Every page tried goes to DIR/../correct-ledger.jsonl with its outcome and is not tried again.
+ * Every page tried goes to DIR/../correct-ledger.jsonl with its outcome and is not tried again; once a chunk is
+ * ledgered its page images are deleted (only an applied run deletes them).
  *
  * QUOTA FLOOR. Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini weekly remaining
  * fraction is below the straight line to its reset (remaining time / 7 days), or the 5-hour bucket is below
@@ -269,6 +270,9 @@ async function correctMain(mode, arg) {
         fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, outcome: k, why, at: new Date().toISOString() }) + '\n');
         ledger.add(p.id);
       }
+      // The chunk is written and ledgered: its page images (~420 KB a page, ~1.3 GB a full run) are not needed again
+      // (apply checks the recorded image hash; the prompt sent is in each write's provenance). The root disk is #6223.
+      for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
   };
