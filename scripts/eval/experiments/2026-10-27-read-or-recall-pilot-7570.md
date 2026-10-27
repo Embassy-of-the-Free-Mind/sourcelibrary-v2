@@ -4,11 +4,11 @@ measure: accuracy
 languages: [la, grc, lzh, he, sa]
 scripts: [Latn, Grek, Hant, Hebr, Deva]
 canons: []
-n_books: 0
-n_pages: 0
-verdict: "PREREGISTERED, not yet run: how much of a vision model's reading of a historical page is memory? 5 scripts x up to 20 matched famous/obscure pairs, three arms (image + work named; image only; work named, no image), Opus and Gemini 3.8 Flash low."
+n_books: 162
+n_pages: 162
+verdict: "With the page image, both models read famous and obscure pages about equally well (Opus 0.91-0.99 accuracy on both; famous minus obscure between -0.05 and +0.04), so memory does not visibly inflate reading at full resolution. Without the image, Opus reproduces famous pages measurably better than matched obscure ones in Latin (R 0.15 [0.04, 0.28], all from canonical works: 0.31; RECITATION-refused pages 0.00), Hebrew (0.28 [0.12, 0.44]) and Sanskrit (0.14 [0.04, 0.24]), and in Greek once 4 mislabelled 'obscure' pages it recites are set aside (0.25 [0.08, 0.42]). Gemini 3.8 Flash low does so only in Hebrew (0.21 [0.08, 0.36]). Opus's Chinese 'gap' is an artefact of the cross-edition e-text key. 5 of 81 'obscure' pages are texts Opus recites from the name alone."
 status: undecided
-decision: "none yet"
+decision: "The preregistered rule says the full 10 x 50 run is justified (Opus shows a measurable gap in >= 2 scripts). Run it only redesigned: one key type for every page, an obscure label confirmed by a no-image probe as well as lookups, n-gram recall as the memory measure, and a degraded-image arm. At this pilot's cost it needs about 20x the Opus calls, so several account-weeks: Derek decides when (#7570)."
 superseded_by: null
 issue: 7570
 ---
@@ -173,4 +173,116 @@ pages with an e-text hit. The rule was not loosened.
 
 ### Results
 
-Not yet run.
+81 pairs, 162 pages, 162 books. Arm calls: Opus 496, Gemini 496. Failed reads: 2, both Opus no-image replies with no
+markers, scored 0. Both gates passed in every script for both models; Gemini's Hebrew reading only just passed
+(median 0.71). Numbers are `acc` = 1 − CER against the primary key, mean over pages, with a 95% bootstrap CI over pairs.
+
+| script | engine | pairs | famous A / B / C | obscure A / B / C | **R**: C famous − C obscure | **DiD**: image gap obscure − famous | naming lift L | measurable gap |
+|---|---|---|---|---|---|---|---|---|
+| Latin | Opus | 20 | 0.99 / 0.99 / 0.39 | 0.98 / 0.99 / 0.24 | **0.15** [0.04, 0.28] | 0.14 [0.03, 0.27] | 0.01 | **yes** |
+| Latin | Gemini | 20 | 0.93 / 0.93 / 0.25 | 0.98 / 0.97 / 0.24 | 0.01 [−0.01, 0.04] | 0.06 [−0.00, 0.13] | 0.00 | no |
+| Greek | Opus | 16 | 0.95 / 0.95 / 0.53 | 0.99 / 0.99 / 0.41 | 0.12 [−0.07, 0.30] | 0.16 [−0.02, 0.34] | −0.00 | no (yes without flagged, below) |
+| Greek | Gemini | 16 | 0.94 / 0.86 / 0.28 | 0.85 / 0.78 / 0.27 | 0.02 [−0.05, 0.11] | −0.06 [−0.26, 0.11] | 0.00 | no |
+| Chinese | Opus | 13 | 0.75 / 0.75 / 0.07 | 0.95 / 0.96 / 0.07 | −0.00 [−0.12, 0.08] | 0.20 [0.07, 0.34] | 0.01 | rule: yes; **artefact** (below) |
+| Chinese | Gemini | 13 | 0.72 / 0.74 / 0.13 | 0.83 / 0.71 / 0.10 | 0.04 [−0.03, 0.12] | 0.15 [−0.08, 0.36] | −0.14 | no |
+| Hebrew | Opus | 12 | 0.91 / 0.92 / 0.45 | 0.95 / 0.96 / 0.17 | **0.28** [0.12, 0.44] | 0.32 [0.14, 0.49] | 0.00 | **yes** |
+| Hebrew | Gemini | 12 | 0.78 / 0.77 / 0.47 | 0.69 / 0.66 / 0.25 | **0.21** [0.08, 0.36] | 0.13 [−0.15, 0.39] | −0.02 | **yes** |
+| Sanskrit | Opus | 20 | 0.94 / 0.98 / 0.41 | 0.99 / 0.99 / 0.27 | **0.14** [0.04, 0.24] | 0.18 [0.05, 0.35] | −0.04 | **yes** |
+| Sanskrit | Gemini | 20 | 0.90 / 0.91 / 0.27 | 0.92 / 0.83 / 0.23 | 0.05 [−0.02, 0.13] | 0.07 [−0.11, 0.26] | −0.10 | no |
+
+A = image + work named, B = image only, C = work named, no image (anchor + continuation). Full tables, the Opus-key
+sensitivity, the controls and every flag: `scripts/eval/results/read-or-recall-7570/report.md`.
+
+**Calibration.** The anchor alone scores 0.04–0.10. Two unrelated pages of the same script score 0.02 (Chinese) to
+0.17 (Latin) against each other: this is the floor of `acc` for a fluent but wrong text. An obscure page's C arm at
+0.17–0.27 is therefore that floor plus the anchor, not recall. The controls passed for both models in every script:
+every one of the 10 famous passages was written out with n-gram recall ≥ 0.91. Gemini's John 1 scores `acc` 0.05
+because the reply runs on past verse 14; its recall is 1.00.
+
+**Findings.**
+- **With the image, fame does not raise accuracy.** Opus reads famous and obscure pages alike. A(famous) − A(obscure)
+  against the Opus key is −0.05 to +0.04 in every script.
+  - Naming the work adds nothing for Opus: L is 0.00 ± 0.04 everywhere.
+  - Gemini is noisier. Famous pages score +0.09 (Hebrew) and +0.12 (Greek, Opus key) above obscure ones; that could be
+    memory or cleaner print, and this n cannot separate them. Naming hurts Gemini on Chinese and Sanskrit
+    (L −0.14, −0.10).
+  - At full resolution the image dominates. Whatever these models remember does not show up as better reading.
+- **Without the image, Opus remembers famous pages.** Given the work's name and the page's first 12 words, it writes
+  out a measurable share of a famous page and little of an obscure one.
+  - Latin canonical works: R 0.31 [0.12, 0.50] (Lucan, Cicero, Terence, Horace, Quintilian…).
+  - Hebrew: 0.28 (Torah, Psalms, Zohar). Sanskrit: 0.14 (Veda, Gita, Purāṇas).
+  - On n-gram recall (floor ≈ 0), R for all 20 Latin pairs, Hebrew and Sanskrit is 0.18, 0.33 and 0.21.
+- **RECITATION-refused pages are not remembered, with or without a name.** For the 10 Latin pages Gemini refuses as
+  recitation, Opus's R is 0.00 [−0.03, 0.03] and Gemini's 0.03 [−0.00, 0.06]. This replicates #7271's continuation
+  probe with a different prompt (name + anchor + length). Gemini's DiD on these pages is 0.12 [0.02, 0.26], but
+  with its R ≈ 0 that comes from the image arm, not from recall.
+- **Gemini 3.8 Flash low remembers only the Hebrew Bible.** It passes every positive control (it can write Genesis 1,
+  Iliad 1, the Gita) but reproduces arbitrary pages of famous works only in Hebrew (R 0.21). Knowing a work's famous
+  passages is not knowing its pages.
+- **The "obscure" label leaks, and the no-image arm catches it.** Opus reproduced 5 of 81 obscure pages from the name
+  alone (acc ≥ 0.50):
+  - the *Poimandres* (Corpus Hermeticum I, Turnèbe's 1554 editio princeps), 0.85;
+  - the Aldine *Epistolae diversorum philosophorum*, 0.90;
+  - a Greek *Gnomologia*, 0.71;
+  - Archimedes with Eutocius, 0.56;
+  - the *Samguk sagi*, 0.72.
+
+  They are online texts that the catalogue rules and the lookups missed. Without those 4 Greek pairs, Greek is a
+  measurable gap: R 0.25 [0.08, 0.42], DiD 0.28 [0.11, 0.45]. Chinese without its flagged pair: R 0.05
+  [0.02, 0.09]. Many more "obscure" Sanskrit pages are of works on GRETIL (Haṭhayogapradīpikā, Sāṃkhyakārikā,
+  Caraka…), which none of the lookups can search. Opus reproduced none of them past 0.50. But Sanskrit's obscure C
+  (0.27; n-gram recall 0.23, against Latin's 0.13) sits above the floor plus the anchor, so some partial recall of
+  those works is likely, and Sanskrit's R is a lower bound.
+- **Chinese: the e-text key manufactures a gap.** The 13 famous Chinese pages are keyed to Kanripo/CBETA windows of
+  the *work*, not this edition (blind Opus key vs window: median 0.78).
+  - So Opus's image reads score 0.75 against that key and 0.99 against the blind key.
+  - The preregistered DiD (0.20) comes from that mismatch: with the Opus key it is −0.06 [−0.18, 0.03], and R is
+    ≈ 0 under both keys.
+  - Opus does not reproduce Chinese pages from a name: its no-image C is 0.07 against a floor of 0.02, on both sides.
+  - Greek e-text windows (same editions, median 0.95) show no such effect.
+
+**Decision.** The preregistered rule counts a *measurable gap* for a model that passes both gates: R or DiD ≥ 0.05
+with a CI above 0. For Opus that holds in Latin, Hebrew and Sanskrit, plus Chinese mechanically, which is discounted
+above. For Gemini it holds in Hebrew. Since ≥ 2 scripts show a gap for one model, **the full 10 × 50 run is justified
+by the rule.**
+
+What the pilot says that run should measure differently:
+1. **One key type for every page.** Use the blind key, or by-eye references where they exist; never a cross-edition
+   e-text window for only one side.
+2. **Obscure labels confirmed by a no-image probe of two models**, on top of lookups. GRETIL and TLG cannot be searched
+   by any instrument used here, and 5 of 81 labels failed.
+3. **n-gram recall, not `acc`, as the memory measure for the no-image arm.** `acc` has a script-dependent floor of
+   0.02–0.17.
+4. **A degraded-image arm** (downsampled or cropped). At full resolution the image settles the reading and memory has
+   no room to show. The question labs care about, whether memory fills in what the model cannot see, needs a page it
+   cannot fully see.
+
+At this pilot's rate the full run is about 20× the Opus calls: several account-weeks on one subscription.
+
+**What this does not cover.**
+- n is 12–20 pairs per script; the CIs are wide.
+- One Opus key reader also keys the Opus arms, which flatters Opus's absolute accuracy. The comparisons rest within a
+  model.
+- "Famous" ranges from the Torah to a niche e-text. "Obscure" means "not found by these lookups", and 5 labels
+  failed visibly.
+- C is a verbatim test of this edition's wording, so a model that knows the work in another edition scores low.
+- One size of each model (Gemini Flash low is a small tier).
+- The longest-common-substring figures in `report.md` include the 12-word anchor, so for C they mostly measure the
+  anchor; use n-gram recall.
+
+*Grade.* Pilot-grade throughout. Directional for "Opus remembers famous Latin, Hebrew and Sanskrit pages without the
+image, and at full resolution that memory does not raise its reading accuracy". *Replicated?* The RECITATION null
+replicates #7271; the rest has not been run twice. *Cost.* $0 marginal, all on subscriptions:
+- 898 Opus calls (402 blind keys, 496 arm calls), on dereklomas@gmail.com via `claude -p`. Weekly meter 26% → 40%;
+  other jobs on that account also ran in the window.
+- 496 Gemini 3.8 Flash low calls on the agy pool (Gemini weekly remaining 60% → 54%).
+- 7 Sonnet search subagents for the abandoned web check.
+- No paid API. Mongo read-only; no production writes.
+
+*Artifacts.*
+- `scripts/eval/read-or-recall-7570/`: draw, controls, screen, online, seal, arms, score.
+- `scripts/eval/results/read-or-recall-7570/`: `pools.json`, `controls.json`, `seal-log.json`, `online-summary.json`,
+  `scores.jsonl` (no text), `report.json`, `report.md`, `slug-remap-chinese-v3.json`.
+- `scripts/eval/dataset/read-or-recall-v0/`: the pair list, no page text.
+- Page texts (keys, raw replies, phrases) are kept off this public repo, on gex45 under
+  `/root/jobs/read-or-recall-7570/private/`.
