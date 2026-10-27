@@ -293,7 +293,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.recentlyTranslatedHeading}
               </h2>
               <Link
-                href="/catalog?sort=last_translated"
+                // On /es the band holds Spanish editions, so "see all" is the
+                // Spanish list, not the English catalog (#7496).
+                href={spanishCollection ? lp(`/collections/${spanishCollection.slug}`) : '/catalog?sort=last_translated'}
                 className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
