@@ -66,10 +66,18 @@ export function unwrapRead(raw) {
  * part of the prompt SENT, so of what is hashed; it follows the live OCR prompt in place of the one-page sentence.
  */
 export const pageBlockFile = (i) => `p${String(i + 1).padStart(2, '0')}.jpg`;
-export function ocrBlockInstruction(n) {
+// #7558: the model sees an image only through its own read_file turn (`@./file` attaches nothing in agy -p). Said up
+// front, so the call does not spend a turn on a denied shell first (cli-ocr.mjs --prompt-variant=read-file-7558).
+export const OCR_READ_FILE_INSTRUCTION = 'Open it with read_file (or view_file): that is the only tool available here, and running commands, cropping or any other tool is disabled.';
+export function ocrBlockInstruction(n, { variant = 'sentinels-6523' } = {}) {
+  if (variant === 'read-file-7558') {
+    const files = Array.from({ length: n }, (_, i) => `page ${i + 1}: ./${pageBlockFile(i)}`).join(', ');
+    return `\n\nThis call: ${n} page images, consecutive pages of one book, in page order, as files in this directory: ${files}. ${OCR_READ_FILE_INSTRUCTION.replace('Open it', 'Open each')} ${BLOCK_RULES(n)}\n`;
+  }
   const list = Array.from({ length: n }, (_, i) => `page ${i + 1}: @./${pageBlockFile(i)}`).join(', ');
-  return `\n\nThis call: ${n} page images, consecutive pages of one book, in page order: ${list}. Transcribe each page separately and completely in the format above, following every rule above as if it were the only page: never carry text, a header or a heading over from a neighbouring page, and where a word or sentence runs over a page break, end that page with its last printed word and begin the next page with its own first printed word. Write each page between its own two marker lines: <<<PAGE 1 BEGIN>>> and <<<PAGE 1 END>>> around page 1, then <<<PAGE 2 BEGIN>>> and <<<PAGE 2 END>>> around page 2, and so on up to page ${n}. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.\n`;
+  return `\n\nThis call: ${n} page images, consecutive pages of one book, in page order: ${list}. ${BLOCK_RULES(n)}\n`;
 }
+const BLOCK_RULES = (n) => `Transcribe each page separately and completely in the format above, following every rule above as if it were the only page: never carry text, a header or a heading over from a neighbouring page, and where a word or sentence runs over a page break, end that page with its last printed word and begin the next page with its own first printed word. Write each page between its own two marker lines: <<<PAGE 1 BEGIN>>> and <<<PAGE 1 END>>> around page 1, then <<<PAGE 2 BEGIN>>> and <<<PAGE 2 END>>> around page 2, and so on up to page ${n}. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.`;
 
 /**
  * Split a block OCR reply into its n pages. Returns the n texts in page order, or null unless the reply is exactly

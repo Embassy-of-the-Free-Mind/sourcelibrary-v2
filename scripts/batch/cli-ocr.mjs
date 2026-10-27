@@ -95,7 +95,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -125,11 +125,20 @@ if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT) { console.error('--per-c
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
-// The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
 // #6523: the reply is asked for between <<<BEGIN>>> / <<<END>>> markers (the dev rounds' winning config). A read made
 // before that records no `prompt_variant` and is rebuilt with the legacy sentence, so its hash still matches at apply.
-const PROMPT_VARIANT = 'sentinels-6523';
-const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === PROMPT_VARIANT
+// #7558: `@./file` does NOT attach the image in `agy -p` (1.4.8): with read_file denied the model answers "the image is
+// not present in the context", and stream-json input refuses image blocks ("only text"). The model sees the page only
+// through its own read_file turn, so that turn is the read, not a redundant one. What a call can lose is the turn the
+// model spends on a denied shell (crop) before it opens the file. `read-file-7558` (--prompt-variant) names the file and
+// the one tool that works up front; the default stays sentinels-6523 unless the A/B in the experiment record says so.
+const PROMPT_VARIANTS = ['sentinels-6523', 'read-file-7558'];
+const PROMPT_VARIANT = arg('prompt-variant') || 'sentinels-6523';
+if (STAGE === 'read' && !PROMPT_VARIANTS.includes(PROMPT_VARIANT)) { console.error(`--prompt-variant must be one of ${PROMPT_VARIANTS.join(', ')}`); process.exit(2); }
+if (STAGE === 'read' && arg('prompt-variant') && CORRECT_PROMPT) { console.error('--prompt-variant is for a plain read; --correct-prompt sends its own file'); process.exit(2); }
+const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === 'read-file-7558'
+  ? `\n\nThe page image to transcribe is the file ./${path.basename(imagePath)} in this directory. ${OCR_READ_FILE_INSTRUCTION} Then transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
+  : variant === 'sentinels-6523'
   ? `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
   : `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`);
 // #6523: a PreToolUse hook in the page's workspace (scripts/lib/agy-tool-gate.py) lets the model open the image with
@@ -279,7 +288,7 @@ if (STAGE === 'read') {
     const buf = Buffer.from(await res.arrayBuffer());
     return { src, buf, sha: createHash('sha256').update(buf).digest('hex') };
   };
-  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n);
+  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT });
   const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(null, null, PROMPT_VARIANT, n) });
   /** One block call. Returns the pages to read again one per call ([] when every page was kept), or null when the call was refused whole. */
   const readBlock = async (group, imgs, attempt) => {

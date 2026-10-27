@@ -50,7 +50,7 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 function call(prompt, cwd) {
   return new Promise((resolve) => {
     const t0 = Date.now();
-    const child = spawn('/usr/bin/claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn(process.env.CLAUDE_BIN || 'claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
