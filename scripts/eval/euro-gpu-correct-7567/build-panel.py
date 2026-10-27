@@ -77,7 +77,7 @@ res = {p['slug']: p for p in json.load(open(f'{REPO}/scripts/eval/results/benchm
 for fn in sorted(os.listdir(f'{PC}/bench/ref-ws/out/gemini-3.1-flash-lite')):
     if not fn.endswith('.txt'): continue
     s = fn[:-4]; m = ws_meta.get(s); r = res.get(s, {})
-    if not m or not os.path.exists(f'{PC}/bench/ref-ws/{s}.jpg'): continue
+    if not m or not os.path.exists(f'{PC}/bench/ref-ws/{s}.jpg') or len(re.sub(r'\W', '', m.get('reference') or '')) < 200: continue
     lang = m['wiki']; yr = int(str(m.get('year') or 0)[:4] or 0)
     if lang == 'la' and yr >= 1800: continue
     add(slug=s, set='ref-ws', lang=lang, century=yr // 100, year=yr, title=m.get('work'), ref_source=m.get('source'),

@@ -3,16 +3,16 @@
  "stage": "E0",
  "frozen_at": "2026-10-27T21:08:17Z",
  "seed": 7567,
- "n": 327,
+ "n": 326,
  "by_lang": {
   "en": 58,
-  "la": 127,
+  "la": 126,
   "de": 62,
   "fr": 40,
   "it": 40
  },
- "with_lite": 212,
- "canonical": 69,
+ "with_lite": 211,
+ "canonical": 68,
  "pages": [
   {
    "slug": "ed-0425b5da276941ae93dd76624ba8236a-p86",
@@ -5653,23 +5653,6 @@
    "ref_sha256": "633e3c45e6fa016b0d834463b36441a589098a2615a58b40b8740340d83d0cc7"
   },
   {
-   "slug": "ws-la-gallia-christiana-1715-t1-djvu-p29",
-   "set": "ref-ws",
-   "lang": "la",
-   "century": 17,
-   "year": 1715,
-   "title": "[[Gallia Christiana",
-   "ref_source": "la.wikisource proofread Page (level 4)",
-   "ref_kind": "same-scan-transcription",
-   "fidelity": "word",
-   "canonical": true,
-   "image_sha256": "31a6d9e03a5a7e302294e8c85d5001e7964f8d0c6d196313040f360f039e9eae",
-   "lite": true,
-   "pc_stratum": "ref-ws",
-   "image": "img/ws-la-gallia-christiana-1715-t1-djvu-p29.jpg",
-   "ref_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  },
-  {
    "slug": "ws-la-gallia-christiana-1720-t2-djvu-p2",
    "set": "ref-ws",
    "lang": "la",
@@ -5872,6 +5855,12 @@
    "source_url": "https://it.wikisource.org/wiki/Pagina%3APetrarca%20-%20Le%20cose%20volgari%2C%20Aldo%2C%201501.djvu%2F22",
    "image": "img/ws-it-petrarca-le-cose-volgari-aldo-1501-djvu-p22.jpg",
    "ref_sha256": "d2f4d93c2ff9fd1f510eb1b7427551fa9ed58fafc73c373be2a81d3565086d8e"
+  }
+ ],
+ "excluded": [
+  {
+   "slug": "ws-la-gallia-christiana-1715-t1-djvu-p29",
+   "why": "empty reference text (ground-truth-wikisource record has no text)"
   }
  ]
 }
