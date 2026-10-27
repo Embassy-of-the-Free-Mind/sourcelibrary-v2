@@ -251,6 +251,12 @@ const nextConfig: NextConfig = {
         source: '/admin/work',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Self-hosted Google Fonts (#7537). File names carry Google's version id, so a
+      // changed face is a new URL and the old one can be cached for good.
+      {
+        source: '/fonts/google/:file',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
