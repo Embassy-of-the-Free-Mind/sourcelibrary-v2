@@ -64,7 +64,7 @@ async function ctx(out) {
     const win = d.page_ids.map(id => near.find(p => p.id === id));
     if (win.some(p => !p)) throw new Error(`window page missing for ${book.id}`);
     // brief input: the first 20 translatable pages outside the window, ≤ 2,500 chars each
-    const cur = db.collection('pages').find({ book_id: book.id, page_number: { $not: { $gte: w0, $lte: w1 } } }, { projection: PROJ }).sort({ page_number: 1 });
+    const cur = db.collection('pages').find({ book_id: book.id, page_number: { $not: { $gte: w0, $lte: w1 } } }, { projection: PROJ }).sort({ page_number: 1 }).batchSize(50);
     const briefPages = [];
     for await (const p of cur) {
       if (briefPages.length >= 20) break;
