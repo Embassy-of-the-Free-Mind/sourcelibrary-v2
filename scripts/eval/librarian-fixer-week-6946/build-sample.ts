@@ -18,6 +18,7 @@
  */
 import fs from 'node:fs';
 import { getDb } from '@/lib/mongodb';
+import { makeRng } from '../lib/paired-stats.mjs';
 import { findPageLinks } from '@/lib/embassy/citation-pages';
 import { readablePages } from '@/lib/embassy/citation-fixer';
 import { loadSupportPages, resolveBookIds } from '@/lib/embassy/librarian';
@@ -25,8 +26,9 @@ import { loadSupportPages, resolveBookIds } from '@/lib/embassy/librarian';
 const arg = (name: string, def?: string) => process.argv.find(a => a.startsWith(`--${name}=`))?.slice(name.length + 3) ?? def;
 const OUT = arg('out')!;
 const N = { keep: Number(arg('keep', '37')), move: Number(arg('move', '26')), drop: Number(arg('drop', '37')) };
-let seed = Number(arg('seed', '6946'));
-const rand = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+// The recorded sample (results/sample-keys.jsonl) was drawn on 2026-10-27 with an inline LCG that the
+// paired-stats-prng test bans; this generator draws a different keep/drop subset for the same seed (moves: all 26).
+const rand = makeRng(Number(arg('seed', '6946')));
 const shuffle = <T>(a: T[]) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
 const stratum = (o: string) => o === 'keep' ? 'keep' : o === 'move' ? 'move' : o === 'drop' || o === 'drop_unverified' ? 'drop' : null;
