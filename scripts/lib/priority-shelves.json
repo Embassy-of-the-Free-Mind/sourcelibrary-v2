@@ -1,0 +1,23 @@
+{
+  "_doc": "PRIOR ART: scripts/maintenance/set-pipeline-priority.mjs — boosts named BOOK ids by hand, once; it cannot name an author or a subject, and a boost it set never updates as new books arrive. Named shelves for queue priority v2 (#7502, scripts/maintenance/priority-v2.mjs). A book on a shelf gets a fixed bonus to its value, on top of demand and importance. Every shelf names who asked for it and when; a shelf without that line does not belong here. Match is on books.author_id, an author-name pattern (for books with no author_id), categories, or collections.",
+  "bonus": 0.25,
+  "shelves": [
+    {
+      "id": "steiner",
+      "asked": "Derek, 2026-10-27: \"steiner should be high\"",
+      "author_ids": ["rudolf-steiner"],
+      "author_pattern": "steiner,\\s*rudolf|rudol(f|ph) steiner"
+    },
+    {
+      "id": "goethe",
+      "asked": "Derek, 2026-10-27: \"and goethe also\"",
+      "author_ids": ["johann-wolfgang-von-goethe", "goethe-j-w"],
+      "author_pattern": "goethe,\\s*j|johann wolfgang (von )?goethe"
+    },
+    {
+      "id": "harmony",
+      "asked": "Derek, 2026-10 (memory: harmony books are pre-approved for OCR and translation)",
+      "categories": ["music-harmony", "music-theory", "music", "pythagoreanism"]
+    }
+  ]
+}
