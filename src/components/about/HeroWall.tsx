@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import atlas from './covers-atlas.json';
-import { useInView } from './useInView';
 import { useReducedMotion } from './useReducedMotion';
 
 /**
@@ -37,11 +36,18 @@ const smooth = (t: number) => t * t * (3 - 2 * t);
 export default function HeroWall({ stats, second }: { stats: HeroStat[]; second: ReactNode }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
-  const [panelRef, panelIn] = useInView<HTMLDivElement>(0.4);
-  const [heroRef, heroIn] = useInView<HTMLDivElement>(0.12);
-  // Only change the wall once the hero text has gone, so white hero type is
-  // never left sitting on the light wall.
-  const locked = panelIn && !heroIn;
+  // The wall turns light once the hero text has scrolled up and away, and
+  // stays light below that; it only goes dark again if you scroll back up to
+  // the hero. White hero type therefore never sits on the light wall.
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [locked, setLocked] = useState(false);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setLocked(!e.isIntersecting && e.boundingClientRect.top < 0), { threshold: 0.12 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const still = useReducedMotion();
   const lockedRef = useRef(false);
 
@@ -211,8 +217,11 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
 
   return (
     <div className={`hero-wall relative ${ready ? 'is-ready' : ''} ${locked ? 'is-locked' : ''}`}>
-      {/* The pinned wall, behind both panels. */}
-      <div className="hw-stage sticky top-0 h-[100svh] -mb-[100svh] overflow-hidden" aria-hidden="true">
+      {/* The pinned wall, behind both panels. The absolute layer spans exactly
+          the two panels, so the sticky stage inside it stops at their end and
+          never runs over the next section. */}
+      <div className="absolute inset-0" aria-hidden="true">
+      <div className="hw-stage sticky top-0 h-[100svh] overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
         {/* The book page's HeroScrim recipe, plus a bottom fade the text sits on. */}
         <div
@@ -222,6 +231,7 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
               'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,.22) 0%, transparent 55%), linear-gradient(90deg, rgba(14,10,7,.5) 0%, rgba(14,10,7,.12) 60%, transparent 100%), linear-gradient(180deg, rgba(16,12,8,.5), rgba(16,12,8,.5) 50%, rgba(16,12,8,.92) 100%), rgba(16,12,8,.4)',
           }}
         />
+      </div>
       </div>
 
       {/* Panel 1: the hero */}
@@ -259,7 +269,7 @@ export default function HeroWall({ stats, second }: { stats: HeroStat[]; second:
 
       {/* Panel 2: the locked wall */}
       <section className="relative min-h-[100svh] flex items-end md:items-start">
-        <div ref={panelRef} className="hw-second max-w-[var(--container-wide)] w-full mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-16">
+        <div className="hw-second max-w-[var(--container-wide)] w-full mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-16">
           {second}
         </div>
       </section>
