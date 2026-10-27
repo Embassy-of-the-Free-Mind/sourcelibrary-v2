@@ -55,7 +55,7 @@ import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
-import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
+import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
@@ -142,14 +142,14 @@ if (STAGE === 'read') {
     if (REUSE_ONLY) { noKept++; continue; }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
-    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, usage: c.usage }) });
     let r = await call();
     // #5055: a reply the write guard calls cut (a tag left open at its tail, the text ending inside a tag, English far
     // shorter than its source) is read once more; apply's door refuses it if the second read is cut too.
     if (!r.cls && !r.problem && checkWrittenText(r.answer, { kind: 'translation', source: p.ocr.data, lang: book?.language, type: p.page_type }).verdict === 'truncated') {
       console.log(`  ${p.page_number} read looks cut (write guard): reading once more`);
       const again = await call();
-      r = { ...again, calls: (r.calls || 1) + (again.calls || 1) };
+      r = { ...again, calls: (r.calls || 1) + (again.calls || 1), usage_first_read: r.usage };
     }
     if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
     // The raw reply is kept beside the translation; `.txt` holds only what was between the markers.
@@ -162,6 +162,9 @@ if (STAGE === 'read') {
       prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
+      // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
+      // beside it). The quota is charged by token cost, so this is what a page costs (#7503).
+      call_usage: agyUsage(r.usage), ...(r.usage_first_read && { call_usage_first_read: agyUsage(r.usage_first_read) }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
       stderr_tail: r.err,
     };

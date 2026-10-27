@@ -11,8 +11,14 @@
  * languages under a cross-family judge). READ stage only; `cli-translate.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-translate.mjs read --page-ids-file=F --out=DIR [--ocr-checked="..."]
- *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F]
+ *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F] [--cli=claude|agy]
  *   node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
+ *
+ * --cli=agy (#7503): the same blocks, prompt, split and guards, but each call goes to Gemini (default
+ * gemini-3.8-flash-low) through `agy -p` in an empty, tool-gated workspace (scripts/lib/agy-cli.mjs gatedTextCall,
+ * one attempt per call; this script's own retry ladder applies). Its reads carry `cli: 'agy'` and their own
+ * prompt_variant, so they are never reused as Opus reads, and `apply` records a gemini engine for them. Up to 4 pages
+ * per call: agy takes the prompt as one argv string, and Linux caps one argument at 128 KB.
  *
  * WHAT A CALL IS. Up to --per-call consecutive translatable pages of ONE book (translate-batch-seam planBlocks: a
  * short page or 20K chars of OCR ends a block early) go to `claude -p --model opus --tools ""` in an empty folder, on
@@ -51,13 +57,16 @@ import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { gatedTextCall, agyUsage } from '../lib/agy-cli.mjs';
+import { engineNameForCli } from '../lib/write-provenance.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
-const CLI = 'claude';
-const PROMPT_VARIANT = 'claude-block-6559-unclear';
+const PROMPT_VARIANTS = { claude: 'claude-block-6559-unclear', agy: 'agy-block-7503' };
+// One argv string carries an agy prompt; Linux refuses an argument over 128 KB (MAX_ARG_STRLEN).
+const AGY_MAX_PROMPT_CHARS = 120_000;
 /** Part of the prompt SENT, so part of what is hashed: the CLI is an agent and must answer with text only. */
 // The <unclear> line: on the #6559 paired check Opus copied doubtful Nahuatl words through untranslated inside
 // <unclear> tags (Promptuario p. 67), where Gemini translated them. Translate the best reading and keep the doubt.
@@ -96,6 +105,16 @@ const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of 
 // `claude -p` prefers an API key over the subscription login, and node --env-file loads one: strip it (#6553).
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 
+/**
+ * One block through agy, in the shape claudeCall resolves: a quota stop is reported as `usage_limit` so the run stops
+ * the same way. `text` is the whole reply (the block split reads the page tags, not agy's <<<BEGIN>>> markers).
+ */
+async function agyBlockCall(prompt, model, cwd) {
+  if (prompt.length > AGY_MAX_PROMPT_CHARS) return { text: '', model, usage: null, code: 1, cls: 'prompt_too_long', err: `${prompt.length} chars > ${AGY_MAX_PROMPT_CHARS}`, secs: 0 };
+  const r = await gatedTextCall(prompt, { model, task: 'translate', attempts: 1, tmp: cwd });
+  return { text: r.text, model, usage: agyUsage(r.usage), code: r.code, cls: r.cls === 'quota' ? 'usage_limit' : r.cls, err: r.err, secs: r.secs, tool_calls: r.tool_calls };
+}
+
 /** One sealed text-only `claude -p` call, the prompt on stdin. Resolves {text, model, usage, code, cls, err, secs}. */
 function claudeCall(prompt, model, cwd) {
   // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
@@ -127,14 +146,17 @@ function claudeCall(prompt, model, cwd) {
 async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   const OUT = arg('out') && path.resolve(arg('out'));
-  const MODEL = arg('model') || 'opus';
-  const PER_CALL = Math.max(1, Math.min(10, Number(arg('per-call') || 10)));
+  const CLI = arg('cli') || 'claude';
+  if (!(CLI in PROMPT_VARIANTS)) { console.error(`--cli must be one of ${Object.keys(PROMPT_VARIANTS).join(', ')}`); process.exit(2); }
+  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI];
+  const MODEL = arg('model') || (CLI === 'agy' ? 'gemini-3.8-flash-low' : 'opus');
+  const PER_CALL = Math.max(1, Math.min(CLI === 'agy' ? 4 : 10, Number(arg('per-call') || (CLI === 'agy' ? 2 : 10))));
   const JOB = arg('job') || 'claude-translate';
   const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
   if (process.argv[2] !== 'read' || !OUT || !arg('page-ids-file')) { console.error('usage: claude-translate.mjs read --page-ids-file=F --out=DIR (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
-  if (!/--restricted/.test(spawnSync(CLI, ['--help'], { encoding: 'utf8' }).stdout || '')) { console.error('this claude CLI has no --restricted: refusing to run an unsealed reader'); process.exit(2); }
+  if (CLI === 'claude' && !/--restricted/.test(spawnSync(CLI, ['--help'], { encoding: 'utf8' }).stdout || '')) { console.error('this claude CLI has no --restricted: refusing to run an unsealed reader'); process.exit(2); }
 
   const { MongoClient } = await import('mongodb');
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -149,8 +171,8 @@ async function main() {
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
   // The job's book list, recorded with the job for the lane registry (#7301 item 5). The lane is the one that will
-  // stamp these pages when cli-translate.mjs apply writes them (an anthropic engine). No page or book is written here.
-  await recordLaneBooks(db, { lane: laneForWrite('translation', { call_site: 'scripts/batch/cli-translate.mjs', name: 'anthropic' }), ...laneJob(JOB), pages: [...found.values()] });
+  // stamp these pages when cli-translate.mjs apply writes them (anthropic, or gemini for --cli=agy). No page or book is written here.
+  await recordLaneBooks(db, { lane: laneForWrite('translation', { call_site: 'scripts/batch/cli-translate.mjs', name: engineNameForCli(CLI) }), ...laneJob(JOB), pages: [...found.values()] });
   const bookIds = [...new Set([...found.values()].map((p) => p.book_id))];
   const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }).toArray()).map((b) => [b.id, b]));
   // Every page of these books, for the neighbours: the seed page before a block and the next page's OCR.
@@ -219,7 +241,7 @@ async function main() {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir, { recursive: true });
     const t0 = new Date();
-    const r = await claudeCall(sent, MODEL, dir);
+    const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir);
     fs.rmSync(dir, { recursive: true, force: true });
     const texts = r.cls ? null : splitBlockReply(r.text, group.map((p) => p.page_number));
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
