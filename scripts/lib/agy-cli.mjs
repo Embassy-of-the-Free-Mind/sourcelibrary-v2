@@ -14,7 +14,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { unwrapSentinels, TRANSLATION_SENTINEL_INSTRUCTION } from './cli-chatter.mjs';
-import { agyBlocked, agyResetFromText, noteLimitHit } from './model-limits.mjs';
+import { agyBlocked, agyLimitLane, agyResetFromText, noteLimitHit } from './model-limits.mjs';
 
 export const CLI = 'agy';
 export const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
@@ -119,7 +119,7 @@ export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
       const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
       // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
       // The first quota reply stops every later call on this box until Google's quoted reset (or one hour).
-      if (cls === 'quota') noteLimitHit(`agy-${model}`, { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
+      if (cls === 'quota') noteLimitHit(agyLimitLane(model), { until: agyResetFromText(out + err + text), reason: (err || text).slice(-200) });
       resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
     });
   });
