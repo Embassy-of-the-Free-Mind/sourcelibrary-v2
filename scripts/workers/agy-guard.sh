@@ -27,6 +27,7 @@ else
   REAL="${AGY_REAL:-/root/.local/bin/agy}"; SELF_DIR=/root/bin/agy-guard; RCS="/root/.bashrc /root/.profile"
   GUARD_DIR="${AGY_GUARD_DIR:-/root/agy-quota/heavy}"
 fi
+QUOTA_DIR="${AGY_QUOTA_CACHE:-$(dirname "$GUARD_DIR")/quota}"
 CAP="${AGY_HEAVY_BOX_CAP:-40}"
 HEAVY='argon|-pro'
 MARK='# agy-guard PATH (#7075)'
@@ -89,6 +90,41 @@ PY
   rmdir "$DRAIN"
 fi
 n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
+
+# Claude (and GPT, the same agy pool) only once this account's Gemini pool is empty (#7545; Derek 2026-10-27/28): the
+# Gemini WEEKLY bucket must read remaining_fraction 0 and both Claude buckets at least 10%. Read from `/quota` (free),
+# cached 10 min in $QUOTA_DIR/<account>.json, the file agy-cli.mjs agyQuota() reads and writes too, so a reset is seen
+# within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked before
+# the one-model rule below, which holds an account's GEMINI pool to one model and says nothing about this pool.
+if echo "$model" | grep -qiE '^(claude|gpt)'; then
+  acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
+  qf="$QUOTA_DIR/$acct.json"
+  if [ -z "$(find "$qf" -maxdepth 0 -mmin -10 2>/dev/null)" ]; then
+    mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
+      && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
+    rm -f "$qf.tmp$$"
+  fi
+  why=$(python3 - "$qf" "$acct" <<'PY' 2>/dev/null || echo "quota for $acct unreadable"
+import json, sys
+try:
+    g = {x['name']: {b['window']: b['remaining_fraction'] for b in x['buckets']} for x in json.load(open(sys.argv[1]))['command']['data']['groups']}
+except Exception:
+    print('quota for %s unreadable' % sys.argv[2]); sys.exit()
+gem = next((v for k, v in g.items() if k.lower().startswith('gemini')), {}).get('weekly')
+cl = next((v for k, v in g.items() if 'claude' in k.lower()), {})
+if not isinstance(gem, (int, float)): print('quota for %s unreadable' % sys.argv[2])
+elif gem > 0: print('%s Gemini weekly %.1f%% left' % (sys.argv[2], gem * 100))
+else:
+    low = [w for w in ('weekly', '5h') if not (isinstance(cl.get(w), (int, float)) and cl[w] >= 0.10)]
+    print('%s Claude %s under 10%%' % (sys.argv[2], low[0]) if low else '')
+PY
+)
+  if [ -n "$why" ]; then
+    echo "agy-guard: quota reached (refused (config)): $model runs on agy only once the Gemini pool is empty ($why); use claude -p (#7545)" >&2
+    exit 75
+  fi
+  exec "$REAL" "$@"
+fi
 
 # A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
 # Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
