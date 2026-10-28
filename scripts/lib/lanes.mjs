@@ -346,6 +346,7 @@ export const OFF_REPO_CRON = [
   { match: '/root/bin/claude-rc.sh', reason: 'job plumbing: remote-control session at boot' },
   { match: '/root/bin/agy-wal-checkpoint.py', reason: 'disk: a copy of scripts/workers/agy-wal-checkpoint.py (#6223)' },
   { match: '/root/disk-alarm.sh', reason: 'disk: fallback copy of scripts/workers/disk-alarm.sh' },
+  { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
   { match: '/root/translate300/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
   { match: '/root/translate-next/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
