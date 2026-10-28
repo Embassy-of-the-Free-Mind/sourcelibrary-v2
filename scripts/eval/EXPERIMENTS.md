@@ -135,6 +135,317 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-28 · Can a GPU draft corrected by Flash 3.8 (image + draft) replace lite on European print? (#7567, E0–E2)
+<!-- PRIOR ART: 2026-10-23-latin-open-engines-adoption-bar-6871.md (no engine alone beats lite + long-s), 2026-10-24-latin-lite-flash-correct-four-arms-5924.md (lite→Flash-low correction, 11/250 worse), 2026-10-24-lite-corrects-gpu-drafts-7263.md (lite as corrector of GPU drafts, rejected; no-image control), 2026-10-26-ocr-pareto-chained-routes-6740.md (#6740's lite→Opus and lite→agy chains, reused here as arm f and a stored replicate of a), 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane). -->
+
+**Yes, for Latin, English and German, by the issue's rule. Not decided for French and Italian (no lite comparator).**
+
+### E0 · Panel (`panel.json`, `refs.jsonl.gz`, `build-panel.py`)
+- **326 pages, 306 books, typed references only.** Non-canonical first.
+  - EEBO-TCP 58 en + 15 la (`eebo-tcp-5488`).
+  - latin-period-5126 77: CAMENA and Wikisource same-edition text; the corrected-OCR references were dropped.
+  - Wikisource proofread `ref-ws`: la 34 (pre-1800) and de 30.
+  - **DTA** German 1557–1780: 16 works × 2 interior pages, seed 7567, page-aligned diplomatic TEI with ſ.
+  - **Wikisource validated fr 40, it 40** (1500–1800, `harvest-wikisource-gt.mjs` unchanged).
+- **CATMuS was not used.** CATMuS/modern is line crops with no pages, and its Italian print is 266 lines. GT4HistOCR lines are shuffled. latin-r4-acc has no images or lite reads on this box.
+- **16 pages are out of every CER table** (`excluded_from_scoring`, recorded before any judge or decision table):
+  - **9 library pages whose served image is now another leaf than the reference's.** Every image reader reads the same other leaf at CER ≈ 0.70; the served image equals the read's image (corr ≥ 0.99).
+  - **2 DTA Logau section-title pages.** My parser missed `[printed/scan]` markers; Walter's two references were cut at them by hand.
+  - **2 pages of a DTA manuscript.**
+  - **3 Wikisource pages:** 2 image/transcription mismatches and 1 wiki-table reference.
+- **Scorer** (`score.py`): letters only, infix CER (free extra text at the ends). Two views:
+  - raw;
+  - folded: ſ/f/s, u/v, i/j, ß, æ/œ and the abbreviation marks merged.
+
+  Loops and truncation are judged against the page's median arm, not the reference: a Wikisource newspaper page transcribes one article of several.
+
+### E1 · Draft screen (median CER %, folded; pages every engine read; loops in brackets)
+
+| engine | la (116) | en (58) | de (58) | fr (40) | it (38) | all (310) | raw all | pages/h beside the 14.5 GB Tibetan job |
+|---|---|---|---|---|---|---|---|---|
+| **LightOnOCR-3-1B** | 6.38 (1) | **3.31** | 2.18 | 0.64 | **2.16** (1) | **3.07** (2) | 5.39 | 2,556 |
+| Surya 2 | 6.25 | 3.40 | 2.26 | **0.63** | 2.35 | 3.55 | 5.69 | 2,008 |
+| PERO-OCR (eu print 2022, CPU 8 threads) | **5.99** | 3.50 | 2.49 | 1.61 | 2.80 | 3.59 | 7.28 | 707 (CPU) |
+| CHURRO-3B (fp8 weights) | 7.26 (2) | 3.74 | **1.18** (1) | 0.80 (1) | 3.17 | 3.73 (4) | 7.49 | 1,069 |
+| Infinity-Parser2-Flash | 6.88 (1) | 3.58 | 2.60 (1) | 1.34 | 2.78 | 3.81 (2) | 5.83 | 1,813 |
+| GLM-OCR (anchor) | 6.81 | 3.69 | 3.21 (2) | 1.05 (1) | 2.79 | 3.96 (3) | 5.86 | 1,092 |
+| dots.ocr (anchor) | 6.75 (2) | 3.92 | 1.92 | 1.11 (1) | 2.68 | 3.96 (3) | 6.60 | 1,459 |
+| *lite (stored bench read, 199 pages)* | 5.39 | 3.36 | 0.87 | — | — | 4.13 | 6.67 | — |
+
+- **Every engine installed.** PERO took about 1 minute (pip + the `pero_eu_cz_print_newspapers_2022-09-26` model).
+- **The card was shared.** The Tibetan re-read held 14.5 GB at util 0.6 all night, outside the queue. Five of six vLLM servers OOM'd in the first pass at util 0.365, so `rerun-tight.sh` re-read the failed pages at util 0.30–0.35 with 8 sequences.
+- **CHURRO bf16 no longer fitted**, so it ran with fp8 weights on every page. On the 91 pages read both ways, bf16 vs fp8 letter distance is median 0.08%.
+- **Throughput is a beside-another-tenant number.** GLM ran 1,092/h here against 1,757/h alone on 10-23 (factor ≈ 0.62).
+- **Latin medians are high in every arm** because CAMENA references expand abbreviations.
+- **Arm (c)'s draft is the best non-GLM engine per language:** la PERO, en LightOnOCR, de CHURRO, fr Surya, it LightOnOCR (`c-pick.json`).
+
+### E2 · Correction arms (agy Gemini 3.8 Flash low, main pool, one page per call; #6740 template `0601ef30`)
+- **Arms:**
+  - (a) lite→Flash; (a2) the same again;
+  - (b) GLM→Flash; (c) X→Flash, where X is the best E1 draft for the page's language; (d) GLM + X→Flash (`e97253381edfd7e0`, the template with the draft sentence made plural);
+  - (e) fresh Flash read (`63266ce8e814161e`, the template's own OCR prompt);
+  - (f) lite→Opus, #6740's stored correction (`correct.mjs` instruction); not re-run.
+- **No-image control (Derek, inbox 21:15Z)** for a, b, c and d.
+  - Taken literally (no attachment), agy hunts for the file and answers CONTAIN/UNCHANGED: 10 CONTAIN of 20 pages. That measures nothing.
+  - The control run everywhere puts one sentence where the image was ("could not be attached … correct as well as you can").
+- **Decision rule** (`e2-table.py`, committed d1e26065a before arms c and d existed):
+  - CER: δ = mean(arm − a), folded, with a 95% paired bootstrap CI. Within the noise floor when the CI's upper end ≤ NF, the larger |end| of a2 − a.
+  - Judge: no more worse-than-draft pages than a.
+
+**Decision table, the 209 lite pages** (`results/decision.json`; misleading = the judge did not call it usable; worse = worse than its own draft)
+
+| lang (NF) | arm | δ CER vs a [95%] | misleading | worse than draft | verdict |
+|---|---|---|---|---|---|
+| la (±2.59 pt), n 125 | a / a2 | — | 6 / 10 | 5 / 6 | |
+| | b GLM→F | −0.63 [−2.43, +0.35] | 7 | 0 | **pass** |
+| | c X→F | −0.64 [−2.57, +0.52] | **2** | 2 | **pass** |
+| | d 2 drafts | −0.79 [−2.63, +0.22] | 4 | 3 | pass |
+| | f lite→Opus | −0.76 | 8 (all CONTAIN) | 3 | |
+| en (±0.19), n 55 | a / a2 | — | 1 / 1 | 2 / 2 | |
+| | b | −0.01 [−0.11, +0.08] | 0 | 1 | **pass** |
+| | c | −0.01 [−0.13, +0.11] | 1 | 2 | **pass** |
+| | d | −0.01 [−0.12, +0.11] | 1 | **4** | fail |
+| de (±1.15), n 29 | a / a2 | — | 1 / 1 | 0 / 0 | |
+| | b | −0.11 [−0.48, +0.13] | 0 | 0 | **pass** |
+| | c | −0.35 [−0.91, +0.02] | 0 | 0 | **pass** |
+| | d | +0.25 [−0.52, **+1.18**] | 0 | 1 | fail |
+| all, n 209 | a / a2 | — | 8 / 12 | 7 / 8 | |
+| | c | −0.42 [−1.55, +0.26] | **3** | 4 | pass |
+
+**All pages, judged** (`results/judge-table.txt`). French and Italian have no (a):
+
+| arm | misleading of 324 | fr (40) | it (40) |
+|---|---|---|---|
+| c | 5 | 1 | 0 |
+| d | 5 | 0 | 0 |
+| b | 12 | 1 | 1 |
+| e fresh Flash | 30 (8 filter cuts / no answer) | 0 | 1 |
+| X best draft alone | 115 | 9 | 13 |
+| G GLM alone | 203 | 19 | 24 |
+
+**Reading the tables:**
+- **The draft barely matters once Flash has the image.** GLM is the worst draft, misleading on 63% of pages, yet b, c and d end within the noise floor of each other and of a.
+- **The best draft still helps:** c has the fewest misleading pages in every language.
+- **Worse-than-draft is measured against each arm's own draft.** A bad draft (GLM) makes "worse" rare, so the c/d counts are the comparable ones.
+- **Fresh Flash with no draft (e) is weaker:** 30/324 misleading, 14/55 on English, from filter cuts and truncations.
+- **The corrector reads the image.** On the judged sample of 60 pages (12 per language, both arms in one call), for b the image arm has fewer faults on 35 pages and the no-image arm on 2; misleading 2 with the image vs 11 without. For a: 12 vs 1, misleading 2 vs 4.
+  - By CER, no-image is worse in de, fr and it for b and c (e.g. de c +3.42 [+1.27, +6.28]).
+  - In la and en the CER difference is within ±0.5: the image pass adds marginalia and catchwords the references leave out.
+  - This is unlike the #7263 Tibetan lite corrector, which gained as much with no image.
+- **Judge controls:** 6 packets with one version holding a dropped line and one an inserted line from another page: **12/12 caught**, and the original was clean in 5/6.
+
+**Cost.** $0 API.
+- **agy:** about 3,100 calls; about 27K input and 0.7K output tokens per page with the image, 11K without.
+  - The Gemini weekly bucket went 0.587 → 0.471 over 21:42–03:00Z, other pool traffic included. That is ≈ 3e-5 of a week per call (noisy, see #7558).
+- **Opus judge:** 602 `claude -p` calls (210 lite, 326 GPU, 60 no-image, 6 controls) on dereklomas@ and, while that login's 5-hour window was at 88%, on the box's second login (milo).
+- **GPU:** about 4 h on gex45, beside the Tibetan job.
+
+### Useful output (Derek, inbox 21:15Z)
+- **91 library pages rewritten** with the best judged read, through `cli-ocr.mjs apply --apply` with every guard: run `cli-ocr-20261028030021-609322`; undo with `revert-run.mjs --run-id`.
+  - The rule is #7522's: clean (usable, no omission, addition, bleed or order error), fewest misreads, and it must beat the stored OCR **inside the same judge call**. Ties keep the stored text.
+- **Picks by arm:** a 45, f 31, b 14, e 8, a2 4, c 3, d 3.
+- **Refused before apply:**
+  - 9 pages in held books, including the 8 image/reference-mismatch books, which were already held;
+  - 1 Opus UNCHANGED;
+  - at apply, 7 by the foreign-script guard.
+- **Image check:** each read's image was checked to be the leaf the page serves (`image-check.py`, corr ≥ 0.95; same leaf 0.997, neighbouring leaf 0.17).
+- **No `--mark-stale`.** The stale-translation sweep finds these pages; no re-translation queue was created. List: `results/written-page-ids.json`.
+- **Contained (by eye, the brief's exception).** Velser, *Opera historica* (`6a0b351d…`, not visible): the stored OCR runs one leaf behind the images. Archived 17.jpg opens with stored p16's text; 18.jpg opens with p17's.
+  - The book is held as `ocr-leaf-offset-7567`, and pp. 17–18 are withheld.
+  - The repair is the #3368/#4790 leaf re-pointing.
+
+### What this does not show
+- **French and Italian have no lite comparator.** $0 API meant no new lite reads, so "replaces lite" is untested there. c leaves 1/40 and 0/40 pages misleading.
+- **The references and the drafts are different texts on the lite side.** Lite here is the 10-03 bench read; the stored OCR is mostly `gemini-3-flash-preview`.
+- **n is small per language** (de 29 lite pages, en 55), and the Latin noise floor is wide (±2.6 pt): the CER clause is weak there and the judge carries the call.
+- **Throughput was measured beside another tenant.**
+
+**Recommended next (not run here):**
+- **E3 guards** (long-s pass, negation/numeral/expansion diffs) on arm c.
+- **E4** only if the drafts matter. They barely do: skip, or fine-tune for speed alone.
+- **E5:** 20 books × 25 pages per language, including a lite read for fr/it.
+
+Files: `scripts/eval/euro-gpu-correct-7567/` (code, `panel.json`, `refs.jsonl.gz`, `results/`: E1 reads, E2 outputs and prompts, verdicts, key, tables, decision, write choice, apply summary).
+
+## 2026-10-28 · Correct or re-read, wave 2: Sanskrit and Arabic (#7568)
+<!-- PRIOR ART: 2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md (wave 1, whose clear answer opened this wave) and 2026-10-27-correct-vs-reread-wave1-prereg-7568.md (design, and amendment 2 for this wave, committed before its draws). -->
+
+**Design.** Same as wave 1 (amendment 2 to the preregistration):
+- draws `w-draw.mjs` with seeds 75684 (sa) and 75685 (ar), from books in terminal status `complete`, ≥ 70% lite-read;
+- a format screen that keeps manuscripts;
+- arms L / C (`correct.mjs --model=opus`) / R (`cli-ocr.mjs read`, agy `gemini-3.8-flash-low`);
+- one blind Opus reader per book over all three texts (Step T);
+- agy Flash-low on 30 seeded C ≠ R pages.
+
+**Sample.**
+- **Sanskrit:** the first 10 of 13 that passed, all Devanagari print. The screen failed one book with full Hindi translations.
+- **Arabic:** the first 10 of 14, 6 print and 4 manuscripts (a Ḥāwāshī commentary, al-Ḥāwī, a Qurʾān, a Maghribī *Majisṭī*).
+
+**Outcomes of the correction call.**
+- **Sanskrit:** 247 corrected, 3 unchanged.
+- **Arabic:** 213 corrected, 18 unchanged, 14 contain, 5 no-answer. The no-answers are all in one two-page-spread book; the chatter guard restarted the read.
+- **R** read every page. Gemini's filter cut the text short on 3 Sanskrit and 17 Arabic pages.
+
+**Result** (`flash-reread-5924/results-7568/{sa,ar}/score.json`; Wilson 95%)
+
+| | n | misleading L | misleading **C** | misleading R | C vs R preferred (tie) | worse than L: C / R | agy C–R (Opus, same pages) |
+|---|---|---|---|---|---|---|---|
+| Sanskrit (print) | 250 | 208 (78–87%) | **26 (7–15%)** | 125 (44–56%) | **214–14** (22), p < 10⁻⁴⁶ | **0** / 21 | 20–8 (25–1) |
+| Arabic | 250 | 193 (72–82%) | **44 (13–23%)** | 144 (51–64%) | **175–41** (34), p < 10⁻²⁰ | 24 / 32 | 19–11 (21–5) |
+| …Arabic print (6 books) | 150 | 111 | **24** | 66 | 98–29 (23) | | |
+| …Arabic MSS (4 books) | 100 | 82 | **20** | 78 | 77–12 (11) | | |
+
+- **Route (preregistered rule): C in both.** C halves L in both languages; R halves L in neither.
+- **Bar (b) for C fails in Arabic on 24 pages.** By kind:
+  - **14 contains.** By rule they count as "false contains", because readers mark only another leaf's text as `not_this_leaf`. But the readers called L misleading on 14/14:
+    - 3 are blank leaves where L serves an invented "preface";
+    - 11 are *Majisṭī* pages where L is a repetition loop.
+  - **5 no-answers.** C serves L there.
+  - **4 non-transcriptions** (below).
+  - **1 real C misreading:** *al-Aʿlāq* p64, where C turns حرب لاقح ابدا into حرب لا تقع ابدا.
+- **Self-preference.** The cross-family judge agrees in both languages, by smaller margins than Opus.
+
+**The guard gap.** *Al-Durra al-Fākhira* (`6a08a754871243dce9def039`) is a modern typeset book, probably in copyright. On pp. 6, 12, 16 and 18 the corrector:
+- declined to reproduce the page;
+- answered with only the metadata tags and a `<warning>` that lists its corrections ("The full corrected page is not reproduced here …");
+- and `correct.mjs` scored it `corrected`. The chatter guard and the write guard both passed it.
+
+Applied, those pages would lose their whole body. Across the five languages it happened on these 4 pages only: no other correction has a body under 30% of its draft's letters, except two that cut a looping draft down to the page. A guard of "body letters ≥ some share of the draft's" would catch it. Whether that book should be public at all is a separate question.
+
+**By eye** (image open, crops, unblinded; C is the one to serve on all 4)
+- **sa `6a0eb388…` p51.** C fixes ललाटाद्यै, विलया, सशब्दं and सूक्ष्म. It also silently emends the print's own typo नन्तविधानात् to चिन्तनविधानात्. R has वरदात्तार, प्रपञ्च → पपञ्च and -तन्रे.
+- **sa `69e13a96…` p37.** C fixes महार्थदृष्ट्या, रज्यति, आपद्यते and the footnote महादृगादि, with no new errors. R splits अलंग्रास and misreads the footnote.
+- **ar `69ef3d42…` p60 (two-page spread).**
+  - C fixes the page numbers, المساقط and الزمان, and emends الحتم → الختم.
+  - C inherits L's omission of السعيد and the ف of فحينئذ, which R has.
+  - R reverses the order of the two pages.
+- **ar `6a477ce5…` p287 (Khiṭaṭ).** C repairs a heavily garbled L, checked against the print in 8 spots; its one slip is a lost و. R has وألوز برمحه for والوزير معه, توفيرا, ويقيمون and وتندب.
+- **Pattern across the five languages:**
+  - **C sometimes emends toward the expected text instead of the print.** In wave 1 the cases were the Lotus Sutra lacunae and the Homeric cento. Here they are चिन्तनविधानात् and الختم.
+  - **C keeps what L dropped only when it notices the gap.**
+
+**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed)
+
+| Language | Pages | Calls | Output tokens | List price | Per 1K pages |
+|---|---|---|---|---|---|
+| Sanskrit | 250 | 30 | 650K | $24.35 | $97 |
+| Arabic | 250 | 37 | 668K | $26.15 | $105 |
+
+- On wave 1's scale (Latin's $20.28 per 250 pages ≈ 1% of an account-week), the correction costs **about 5% of an account-week per 1K pages in both languages**.
+- **Wave 2 as a whole** (corrections, 2 screens, 20 readers, by-eye): the weekly meter went **46% → 53%** (02:35Z → 04:40Z). That is an upper bound, because the account is shared.
+- **R:** 530 agy calls for 500 pages.
+
+**Human check (#7573):** `scripts/eval/dataset/judge-human-check-7573/{sanskrit,arabic}.jsonl`. It has the same shape as wave 1, with 30 `review: true` rows per language.
+
+**Caveats.**
+- Exploratory: 10 books per language, a single-family judge with a 30-page cross-family check, and no human calibration (#7573).
+- The reader packets carried only the first line of each language's `lang_note`. The readers had the full note in `T-TASK.md`, and one used it explicitly. `w-packets.mjs` is fixed for later runs.
+
+Files: `scripts/eval/flash-reread-5924/results-7568/{sa,ar}/` and the `w-*.mjs` scripts there.
+
+## 2026-10-28 · Correct the lite text with Opus, or re-read with Flash: Chinese, German, Greek (#7568, wave 1)
+<!-- PRIOR ART: 2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md (the Latin result repeated here) and 2026-10-27-correct-vs-reread-wave1-prereg-7568.md (this run's preregistration, a766b3241, and amendment 1, 0b6739837). -->
+
+**Question.** On 250 lite-read Latin pages, Opus correcting the stored lite text in place beat a Flash re-read on every measure (#5924). Does that hold for Chinese, German and Greek?
+
+**Design** (preregistered in `2026-10-27-correct-vs-reread-wave1-prereg-7568.md` before any draw or model read; amendment 1 came after the draws, before any read).
+- **Sample.** For each language, books in terminal status `complete`, at least 70% lite-read, with the 25-page `spread` rule (`flash-reread-5924/w-draw.mjs`, seeds 75681/2/3) and a format screen by an Opus reader.
+  - **Chinese: 3 books.** The terminal frame holds only 5 lite-read Chinese books. The screen dropped a Siku Quanshu hand copy and a Japanese kunten edition. Most Chinese lite pages are in `held` books, which are out of the frame.
+  - **German: 10 printed books.**
+  - **Greek: 10 manuscripts.** All 14 Greek candidates were manuscripts; per amendment 1, manuscripts stay in.
+- **Arms.**
+  - L: the stored lite text.
+  - C: `correct.mjs --model=opus --per-call=10`, unchanged. C serves the correction, or L where the outcome is unchanged, contain or no-answer.
+  - R: `cli-ocr.mjs read --model=gemini-3.8-flash-low`, unchanged, one page per call through agy.
+- **Step T.** One blind Opus reader per book saw the image and all three texts as X/Y/Z, in a seeded order. It gave a verdict per text (misleading / flawed / sound, using #5924's `C-TASK.md` words) and the three pairwise preferences (`T-TASK.md`).
+  - This differs from Latin, where each pair of arms had its own reader. Here one reader judges every arm under the same conditions.
+- **(d) Second-family check.** agy Flash-low judged C vs R blind on 30 seeded pages per language where C ≠ R.
+
+**Outcomes of the correction call.**
+- Chinese: 71 corrected, 2 contain, 2 no-answer. Both no-answers were Opus output blocked by a content filter on the Lotus Sutra.
+- German: 233 corrected, 16 unchanged, 1 contain.
+- Greek: 185 corrected, 65 contain.
+- R read every page. Gemini's filter cut the text short on 6 Chinese, 2 German and 32 Greek pages.
+
+**Result** (`flash-reread-5924/results-7568/<lang>/score.json`; Wilson 95%)
+
+| | n | misleading L | misleading **C** | misleading R | C vs R preferred (tie) | worse than L: C / R | agy judge C vs R (Opus, same pages) |
+|---|---|---|---|---|---|---|---|
+| Chinese (print) | 75 | 57 (65–84%) | **5 (3–15%)** | 37 (38–60%) | **61–7** (7), p < 10⁻¹¹ | 2 / 9 | 20–10 (26–3) |
+| German (print) | 250 | 63 (20–31%) | **6 (1–5%)** | 23 (6–13%) | **167–22** (61), p < 10⁻²⁸ | 1 / 11 | **14–15** (21–1) |
+| Greek (MSS) | 250 | 245 (95–99%) | **87 (29–41%)** | 221 (84–92%) | **173–59** (18), p < 10⁻¹³ | 65 / 14 | 13–17 (13–13) |
+| Greek, the 185 pages C corrected | 185 | 180 | **22** | 157 | **173–4** (8) | 0 / — | 12–5 (13–1) |
+| Greek, the 65 pages C contained | 65 | 65 | 65 (serves L) | 64 | 0–55 (10) | 65 by rule / — | 1–12 (0–12) |
+| *Latin, #5924 (for reference)* | 250 | 111 | 31 | 20–32 | 131–43 | 1 / 7 | — |
+
+- **Route (preregistered rule): C in all three languages.** Misleading(C) ≤ misleading(R), C is preferred, the sign test gives p < 0.05, and C halves L.
+- **Bar (a), halving L:** C passes in all three languages. R passes only in German.
+- **Bar (b), no page worse than L:** fails for both arms in every language, as in Latin. Every C page that failed is one where C serves L unchanged:
+  - zh: 2 no-answers.
+  - de: 1 contain on a blank image (below).
+  - el: 65 contains. The prereg's "false contain" test only credits a reader's `not_this_leaf`. Here the readers called L misleading on 65/65 of these pages and named its text invented or looping; the corrector's reasons say the same.
+  - **No correction made a page worse than lite.**
+  - The R pages that failed bar (b) are misreads, Gemini filter cuts, and one German spread where R read only the right-hand page (by eye, below).
+- **Bar (c), C beats R:** passes in all three.
+- **Self-preference.**
+  - Chinese: agy agrees, 20–10.
+  - German: agy splits 14–15, against Opus's 21–1 on the same pages. Both families find few misleading pages there (agy: C 2, R 1 of 30). Read the German margin over R as "both good, C at least as good", not as a 167–22 rout.
+  - Greek: agy and Opus agree once the pages are split. On corrected pages both prefer C (agy 12–5). On contained pages, where C serves the invented lite text, both prefer R.
+- **Reader-noise check:** where C's text equalled L's, no reader gave the two different verdicts (0 mismatches in all three languages).
+- **Facing strip.**
+  - de: visible on 38 pages; read in by L on 13, C on 0, R on 0.
+  - el: visible on 183; L 8, C 0, R 13.
+
+**By eye** (image open, crops)
+- **zh p82 (Lotus Sutra scroll).** C fixes L's 多寶佛塔品 → 分別功德品 and 八生, and keeps 六百八十萬億 where R has 八百.
+  - Where the scroll is torn, C restores the lost characters (無生法, 陀羅尼門, most of panel 4) from the canonical sutra and tags them `<unclear>`. R restores them silently.
+  - The reader counted L's "omission" of text that is lost from the leaf. On this damaged scroll the reader and C both lean on the known text. This is a caveat for damaged canonical texts.
+- **zh p102.** C is sound. L drops two sentences. R has 梵王華 for 宿王華.
+- **de 6a20…p15.**
+  - C fixes L's invented margin note *Rom. 5.* → *v. 12.*, the initial (*Der Meinunge*) and *jhrer*. One slip: *verunehret* for *vervnehret*.
+  - R normalises *außdrückliches* and *jhrer*.
+- **de 69c8…p142 (a two-page spread).** R read only the right-hand page and dropped all 18 lines of p. 210. C keeps both pages, and puts one catchword into the body.
+- **el 6993…p99 (Homeric cento).** Neither is clean.
+  - C has *Ὀτρηρὸς* for *Ὀπτῆρ(ας)* and *Versus perfectus* for *ipfectus*.
+  - R invents *φεύξασθαι*.
+  - Both drift toward the printed Homer. C is better on layout and glosses.
+- **el 69e8…p159 (Sextus).**
+  - C rebuilds L's nonsense into the text, confirmed word by word: *ὁ ἄνθρωπος ἐπιβάλλει κρίνειν*, *τοὐναντίον συστηματική*, *ὁ νήπιος καὶ ὁ μεμηνὼς*.
+  - R invents whole phrases (*ὁ ἄνεμος*, *ἐκ πλειόνων σύγκειται*).
+- **de `69b51cda…` p264, the only German C "worse" page.** The archived image is a 267-byte blank JPEG (so are pp. 263 and 265). C correctly answered CONTAIN ("the leaf cannot be read"). L serves a Latin page that nobody can check against an image.
+
+**Served text that is not the page** (found by the corrector, confirmed by the blind readers; not contained by this job, which writes nothing)
+- **Greek, whole books:**
+  - Lucian MS `699383a150654cbbe29179f7`: 25/25 pages are invented Greek or repetition loops.
+  - Euclid *Elements* MS `6993881574305116d72cef37`: 25/25 pages are invented propositions or loops.
+  - Proclus *in Rempublicam* MS `6993898ace15387065947977`: 15/25 pages.
+- **Chinese:** Kunqu `69de98851b234a773e438912`, pp. 269 and 341 serve another leaf's text.
+
+**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed. agy: plan fee)
+- **Corrections (list-price equivalent of the tokens):**
+
+  | Language | Pages | Calls | Output tokens | List price | Per 1K pages |
+  |---|---|---|---|---|---|
+  | Chinese | 75 | 31 | 219K | $8.98 | $120 |
+  | German | 250 | 30 | 377K | $18.53 | $74 |
+  | Greek MSS | 250 | 46 | 1.18M | $42.05 | $168 |
+
+  - Latin's $20.28 per 250 pages moved the account-week about 1%. On that scale a correction costs about **4% (de), 6% (zh) and 8% (Greek MSS) of an account-week per 1K pages**.
+  - Greek manuscript calls ran 7–25 min each.
+- **Whole job, wave 1** (corrections, 3 screens, 23 readers, by-eye): the weekly meter went **26% → 46%** (2026-10-27 21:00Z → 2026-10-28 02:35Z). Treat that as an upper bound, because the account is shared. Per language it was about zh 5, de 5, el 10 points.
+  - The pace guard paused the Greek correction once (burn 6%/h, against a budget of 0.4%/h). It resumed after the window.
+- **Flash re-read:** 636 agy calls for 575 pages (1.1 a page), about $0.66 per 1K pages at the plan fee.
+
+**Human check** (Derek's addendum, for #7573): `scripts/eval/dataset/judge-human-check-7573/{chinese,german,greek}.jsonl`.
+- Each file has one row per judged page: reader URL, image URL, the three arm texts, the Opus verdicts, defects and rationale, and the agy verdicts where drawn.
+- 30 rows per language are marked `review: true`: the pages with the widest verdict spread, the C/R ties and the cross-family disagreements (`w-human.mjs`).
+
+**Grade.** Exploratory. The samples are 3 to 10 books, the judge is single-family (with a 30-page cross-family check), and there is no human calibration yet (#7573 is that calibration). Chinese at n = 75 from 3 books is the thinnest.
+
+Files: `scripts/eval/flash-reread-5924/`
+- Scripts: `w-draw.mjs`, `w-set.mjs`, `w-packets.mjs`, `w-score.mjs`, `w-judge2.mjs`, `w-byeye.mjs`, `w-human.mjs` and `T-TASK.md`.
+- `results-7568/<lang>/`: `sample.json`, `screen.json`, `stored-check.json`, `step-t.json` and `score.json`.
+
 ## 2026-10-27 · Tibetan translation router test: agy Flash-low, 4 pages a call, against Opus, 10 a call (#6948, #6740)
 
 PRIOR ART: `scripts/eval/route-judge-6740/judge.mjs` (the router tests, judge prompt and controls, reused); `scripts/eval/agy-per-call-7503/` (PR #7518: agy 1/2/4 pages a call for translation, not Tibetan and not against Opus).
@@ -1763,6 +2074,113 @@ test would otherwise have locked Flash-low for every lane on l7a's main account 
 
 **Not done.** Latin (0 of 30 fresh reads; 6 of 30 corrections read, not judged). A view_file-free prompt (could cut
 input about 3x). A rerun after 2026-11-03 once the account's tier is known.
+
+## 2026-10-27 · Preregistration: correct the lite text with Opus, or re-read with Flash — Chinese, German, Greek (#7568, wave 1)
+
+Written and committed **before any draw, correction, re-read or judgment** (job `correct-vs-reread-7568`, gex45).
+Grade: **exploratory** (10 books per language, eval-design §10.2): a result can recommend a route with its price,
+nothing is applied. **No production write to `pages` or `books`.** Corrections and re-reads are kept in R2
+`candidate-reads/` by the scripts' own keep-read path (#7075), which is not a page write.
+
+### Question
+On lite-read Latin, Opus correcting the stored lite text in place beat a Flash re-read. Does that hold for Chinese,
+German and Greek? Per language: which route upgrades a lite page — **C** (Opus corrects the lite text) or **R**
+(Flash re-reads the image) — or neither?
+
+### Sample (per language, one language at a time: zh, then de, then el)
+- `flash-reread-5924/w-draw.mjs`, `LANG7568=<lang>`. Frame: visible books with `pipeline_auto.status: complete`
+  (terminal), `language` in the language's names (zh: Chinese, Classical Chinese; de: German, de; el: Greek,
+  Ancient Greek, grc), not `duplicate_of`, not catalogued manuscript, ≥ 50 OCR pages. Mulberry32 seed zh 75681,
+  de 75682, el 75683 shuffles the frame (sorted by book id).
+- In shuffled order a book is a candidate when ≥ 70% of its OCR'd pages are flash-lite reads, ≥ 50 pages are eligible
+  body pages (page_type text/null, flash-lite, ≥ 400 letters — **150 for zh**, where a half-leaf holds ~200
+  characters — and an image), and the script check passes on a sample of its eligible text (zh: ≥ 60% Han letters;
+  de: the stopword classifier says German; el: ≥ 60% Greek letters). 14 candidates are drawn.
+- **Format screen** (one Opus reader per language, 2 drawn pages per candidate — the 8th and the 18th of 25 — image
+  only): drops a candidate that is a manuscript, not this language's print (woodblock and lithograph count as
+  print), or not a text page. The **first 10 that pass** are the sample.
+- Pages: `spread` over the eligible pages, `v[floor((i + 0.5) · n / 25)]`, 25 per book = 250 per language. A page
+  whose stored `ocr.data` changed since the draw, or whose image fails to download, is dropped and listed.
+
+### Arms
+- **L** — the stored lite OCR (what readers are served today).
+- **C** — `scripts/batch/ocr-convergence/correct.mjs --model=opus --per-call=10 --concurrency=3`, unchanged (live OCR
+  prompt + correction block, sealed `claude -p --restricted --tools Read`, opened-files check, chatter guard).
+  C serves the correction where the outcome is `corrected`, else L (as #5924).
+- **R** — `scripts/batch/cli-ocr.mjs read --model=gemini-3.8-flash-low`, unchanged defaults (one page per call, live
+  OCR prompt, tool gate), `--concurrency=3`. `apply` is never called. A page R fails to read is judged as an empty
+  transcription and counts as **R worse**.
+- Opus runs only through `claude -p` (subscription); Gemini Flash only through `agy`. No paid-API call, no fallback.
+
+### Judgment: Step T (blind, three transcriptions, one reader)
+- One fresh Opus subagent per book, `T-TASK.md`: image (crop helper for zoom) and the three texts labelled X/Y/Z,
+  the arm order one of the 6 permutations drawn per page with Mulberry32(seed + 1) in sample order. Verdict per text
+  (misleading / flawed / sound, `C-TASK.md`'s definitions verbatim) and the three pairwise preferences with
+  `loser_material`. Language conventions (`lang_note` in T-TASK) say what is minor in that script.
+- Change from #5924: Latin used one reader per pair (Step C L–F, C2 O–L, C3 O–F). Here one reader judges all three
+  arms of a page together, so every arm's verdict comes from the same reader under the same conditions (in #5924 the
+  same F text was called misleading 20 times next to L and 32 times next to O). Where C = L by text, both are shown;
+  differing verdicts on identical texts are counted as a reader-noise check.
+- Controls: no arm names in packets; readers see no key, no other packet; keys only in the job scratch, read by the
+  scorer (`w-score.mjs`).
+- **(d) second-family check, not a bar:** agy `gemini-3.8-flash-low` judges C vs R blind on 30 pages per language
+  (Mulberry32(seed + 3) over the pages where C ≠ R, X/Y from Mulberry32(seed + 4); `w-judge2.mjs`). Opus judging an
+  Opus correction may favour C; Gemini judging a Gemini read may favour R. **Self-preference is suspected** when the
+  two families' C-vs-R preferences on those pages point opposite ways.
+
+### Measures and bars (per language, pooled over its pages; Wilson 95%)
+- misleading(L), misleading(C), misleading(R) from Step T.
+- **(a) halves:** misleading(arm) ≤ ½ · misleading(L), per arm.
+- **(b) no page worse than L**, per arm: arm misleading and L not; or L preferred over the arm with a material loss;
+  C `no-answer`, or a false contain (contain where the reader did not mark L `not_this_leaf`); R unread. Every page
+  listed.
+- **(c) C vs R:** misleading(C) ≤ misleading(R) and C preferred over R on more pages than R over C.
+- **Route per language** (the recommendation):
+  - misleading(L) ≤ 2% of pages → **leave lite** (no upgrade worth its price).
+  - else **C** when misleading(C) ≤ misleading(R) and the C/R preference favours C with a two-sided sign test
+    p < 0.05 over non-tied pages; **R** symmetrically.
+  - else **no clear answer**.
+  - A winner that does not halve L is reported as "weak".
+- Reported, not bars: per-book counts, contains, R refusals/filter cuts, books failing the 25-page check
+  (≥ 2 misleading on L), facing-strip handling, and the (d) agreement.
+
+### Cost
+Claude: the box account's weekly % (`/root/.claude-limits/latest.json`, the `claude auth` account) before and after
+each language's correction run and its readers, and the correction's token totals (`calls.jsonl`). Other jobs share
+the account, so meter deltas are upper bounds. agy: calls per page. Projection in account-weeks per 1K pages.
+
+### Stop rules
+- Weekly Claude usage of the box account at **≥ 70%**: stop, comment on #7568 with a resume note.
+- A language with < 6 books passing the screen runs on those it has, reported with its n; < 3 → the language is skipped
+  and reported.
+- A usage-limit stop in `correct.mjs` (exit 3) waits for the 5-hour window and resumes (it skips answered pages).
+- **Wave 2** (Sanskrit, Arabic: seeds 75684, 75685, same design, its own preregistration amendment) runs only if at
+  least one wave-1 language gets route C or R. Otherwise the job says so and stops.
+
+### By eye (after scoring)
+Per language, every page where the winning arm is worse than L, and 2 random pages where C and R differ
+(Mulberry32(seed + 5)), opened against the image.
+
+### Amendment 1 (2026-10-27, after the draws, before any model read)
+- **Draw fix.** The script check and the letter count now run on the body with the OCR metadata block stripped
+  (`stripOcrMetadata`). Before, `<page-type>text</page-type>` and the other tags counted as Latin letters and sank the
+  Han share of short Chinese pages. This changes no seed and no rule.
+- **Chinese: 5 books.** The terminal-status frame has 42 Chinese books with ≥ 50 OCR pages. Only 5 of them are lite
+  reads in Chinese. The other lite-read books are an English translation (諸蕃志, 佛國記), Japanese-glossed (韓非子),
+  stored refusals ("mojibake", 佛說無量壽經), or diagrams. Most Chinese lite pages are in `held` books, which the
+  brief puts out of the frame. Per the stop rule (≥ 3 and < 6), Chinese runs on the 5 books that pass, n ≤ 125.
+- **Greek: manuscripts stay in.** 12 of the 14 Greek candidates are catalogued or titled as manuscripts. In
+  this frame, the lite-read Greek pages *are* mostly manuscripts. So the Greek screen drops only a candidate that is
+  not Greek or not a text page, and keeps manuscripts. The result is reported split MS / print. (#6769 is
+  pilot-testing an Argon re-read of Greek manuscripts. This job writes nothing, so the two do not collide.)
+
+### Amendment 2 (2026-10-28, wave 2: Sanskrit and Arabic; before any wave-2 draw or read)
+Wave 1 gave route C in all three languages, so wave 2 runs as the stop rule allows. The design is unchanged:
+`w-draw.mjs` with seeds sa 75684 and ar 75685, frames named in its `LANGS`, the same arms, Step T, (d), bars and
+route rule. Two settings carry over from amendment 1. First, the screen keeps manuscripts and reports the MS/print
+split, because the lite frames outside Latin are mostly manuscripts. Second, a language with fewer than 6 books
+runs on what it has (fewer than 3: skipped). A contain where the readers call L misleading is reported as a
+justified contain beside the strict rule's count. The result goes in its own experiments file. Stop at 70% weekly.
 
 ## 2026-10-27 · A page-break drift guard for unpunctuated Chinese (#7503, job caseless-drift-7503)
 
