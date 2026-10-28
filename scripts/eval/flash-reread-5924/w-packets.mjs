@@ -28,7 +28,9 @@ if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
   const sample = JSON.parse(fs.readFileSync(path.join(R, 'sample.json'), 'utf8'));
   const rnd = mulberry32(LANGS[L].seed + 1), key = {};
   const task = fs.readFileSync(path.join(HERE, 'T-TASK.md'), 'utf8');
-  const lang_note = (task.split('\n').find(l => l.startsWith(`- **${L}**`)) || '').replace(/^- \*\*\w+\*\* — /, '');
+  // The bullet and its indented continuation lines (#7568 wave 1 packets carried only the first line; readers also had T-TASK.md).
+  const tl = task.split('\n'), at = tl.findIndex(l => l.startsWith(`- **${L}**`));
+  const lang_note = at < 0 ? '' : [tl[at], ...tl.slice(at + 1).filter((l, k, a) => a.slice(0, k + 1).every(x => /^\s+\S/.test(x)))].map(s => s.trim()).join(' ').replace(/^- \*\*\w+\*\* — /, '');
   for (const d of ['agents', 'packets', 'keys', 'crops']) fs.mkdirSync(path.join(S, d), { recursive: true });
   let n = 0;
   sample.books.forEach((b, i) => {
