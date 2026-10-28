@@ -525,7 +525,7 @@ async function gpuMain(mode, arg) {
   const { getPageSource } = await import('../lib/page-image-url.mjs');
   console.log(`gpu-correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
   let budget = MAX, stop = null, bi = 0, booksTaken = 0;
-  const tally = { written: 0, check_flagged: 0, unchanged: 0, contain: 0, manuscript: 0, other: 0, agy_calls: 0, pero_secs: 0, books: 0 };
+  const tally = { written: 0, check_flagged: 0, unchanged: 0, contain: 0, manuscript: 0, blank: 0, other: 0, agy_calls: 0, pero_secs: 0, books: 0 };
   const nextChunk = async () => {
     while (bi < books.length) {
       const b = books[bi++];
@@ -574,27 +574,31 @@ async function gpuMain(mode, arg) {
       const pr = spawnSync('python3', [path.join(HERE, 'pero-draft.py'), imgDir, peroOut, `--threads=${arg('pero-threads') || 8}`], { encoding: 'utf8', env: process.env, timeout: 3600_000 });
       console.log(`${tag}  ${(pr.stdout || '').trim() || `pero exited ${pr.status}: ${(pr.stderr || '').slice(-300)}`}`);
       if (pr.status !== 0 || !fs.existsSync(peroOut)) { release(); fs.rmSync(imgDir, { recursive: true, force: true }); console.log(`${tag}  PERO failed: chunk skipped this run`); continue; }
-      tally.pero_secs += JSON.parse(fs.readFileSync(peroOut, 'utf8'))._engine?.wall_secs ?? 0;
+      const pero = JSON.parse(fs.readFileSync(peroOut, 'utf8'));
+      tally.pero_secs += pero._engine?.wall_secs ?? 0;
+      // Why a page the reader never sent was not sent (cli-ocr.mjs read applies the same 30-character floor).
+      const unsent = (p) => (!fs.existsSync(path.join(imgDir, `${p.id}.jpg`)) ? 'no image fetched' : !pero[p.id] ? 'PERO wrote no draft' : pero[p.id].text.replace(/\W/g, '').length < 30 ? 'GPU draft under 30 word characters (blank or near-blank page)' : null);
+      const unsentWhy = new Map(take.map((p) => [p.id, unsent(p)]));
       // 3. The agy correction with the image, 4. the write.
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${GPU_LANE}`, `--gpu-draft=${peroOut}`, `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
-      fs.rmSync(imgDir, { recursive: true, force: true });
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${GPU_LANE}`, `--gpu-draft=${peroOut}`, `--image-dir=${imgDir}`, `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
+      if (read !== 0) fs.rmSync(imgDir, { recursive: true, force: true });
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
       const reason = `${GPU_LANE_REASON}: PERO-OCR draft (${book.language} print, no OCR before) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash} (route ${GPU_ROUTE}: #7263 Latin TEST 105/108 usable, Derek 2026-10-28)`;
       const t0 = Date.now();
       const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])], tag, env);
       for (const p of take) { try { tally.agy_calls += JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')).calls ?? 0; } catch { /* not read */ } }
-      if (!APPLY || applied !== 0) { release(); continue; }
+      if (!APPLY || applied !== 0) { fs.rmSync(imgDir, { recursive: true, force: true }); release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
       for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: GPU_LANE }) + '\n');
       let hand = 0;
       for (const p of take) {
-        const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
-        const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /print only/.test(why) ? 'manuscript' : 'other';
+        const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? unsentWhy.get(p.id) ?? 'not_read';
+        const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /print only/.test(why) ? 'manuscript' : /under 30 word/.test(why) ? 'blank' : 'other';
         if (k === 'manuscript') hand++;
         tally[k]++;
         const share = sum.change_shares?.[p.id];
@@ -605,6 +609,7 @@ async function gpuMain(mode, arg) {
       // A book the corrector reads as mostly handwritten is not this route's: its other pages are not drafted again.
       if (hand * 2 >= take.length && take.length >= 4) { fs.appendFileSync(BOOKS_SKIPPED, JSON.stringify({ page_id: book.id, why: `corrector tagged ${hand}/${take.length} pages handwritten or mixed`, at: new Date().toISOString() }) + '\n'); console.log(`${tag}  book skipped from now on: ${hand}/${take.length} pages handwritten or mixed`); }
       for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      fs.rmSync(imgDir, { recursive: true, force: true });
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }

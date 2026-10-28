@@ -138,6 +138,11 @@ const DRAFT_FILE = arg('draft-file');
 if (STAGE === 'read' && DRAFT_FILE && !CORRECT_PROMPT) { console.error('--draft-file is for --correct-prompt'); process.exit(2); }
 const GPU_DRAFT = arg('gpu-draft');
 if (STAGE === 'read' && GPU_DRAFT && (!CORRECT_PROMPT || DRAFT_FILE)) { console.error('--gpu-draft is for --correct-prompt, without --draft-file'); process.exit(2); }
+// --image-dir=DIR (with --gpu-draft): the page images the GPU engine read, DIR/<page_id>.jpg, sent instead of a fresh
+// fetch. The image host can serve the same URL as different JPEG bytes from one request to the next (two variants of
+// archived/<book>/12.jpg, 2026-10-28), so a re-fetch is not the image the draft was made from.
+const IMAGE_DIR = arg('image-dir');
+if (STAGE === 'read' && IMAGE_DIR && !GPU_DRAFT) { console.error('--image-dir is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
@@ -252,9 +257,11 @@ if (STAGE === 'read') {
     if (CORRECT_PROMPT && !p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has no stored OCR to correct; skipped`); return; }
     const src = getPageSource(p);
     if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
-    const res = await fetch(src);
-    if (!res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
-    const buf = Buffer.from(await res.arrayBuffer());
+    const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
+    if (local && !fs.existsSync(local)) { console.log(`  ${p.page_number} not in --image-dir; skipped`); return; }
+    const res = local ? null : await fetch(src);
+    if (res && !res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
+    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
     if (p.ocr?.source === 'gpu') {
       // The corrector must see the image the draft was made from, or its "the image is the authority" is about another scan.
       if (createHash('sha256').update(buf).digest('hex') !== p.ocr.gpu.image_sha256) { console.log(`  ${p.page_number} the GPU draft was made from other image bytes; skipped`); return; }
