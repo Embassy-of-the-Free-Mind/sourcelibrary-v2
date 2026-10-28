@@ -122,7 +122,7 @@ const gapOr = [{ work_id: { $exists: false } }, { work_id: null }];
 if (REMINT) gapOr.push({ work_id_source: 'local-mint' });
 const gap = await b.find(
   { ...TEXT, $or: gapOr },
-  { projection: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, year: 1 } }
+  { projection: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, year: 1, work_id: 1 } }
 ).toArray();
 console.log(`Textual books: ${total} | already have work_id: ${already} (${(100*already/total).toFixed(1)}%)`);
 console.log(`Gap (no work_id): ${gap.length}\n`);
@@ -213,7 +213,17 @@ if (APPLY) {
     toWrite = toWrite.filter(w => !clusterHasParts(clusters.get(w.work_id)));
     heldParts = before - toWrite.length;
   }
-  const heldClusters = writes.length - toWrite.length;
+  // Under --remint-local most books re-derive the id they already carry. Writing
+  // those anyway rewrote all ~410K local mints for a 78K-book change (2026-10-28,
+  // #3780), too heavy to run nightly. Write only the ids that move.
+  let unchanged = 0;
+  if (REMINT) {
+    const currentOf = new Map(gap.map(bk => [bk.id, bk.work_id]));
+    const before = toWrite.length;
+    toWrite = toWrite.filter(w => currentOf.get(w.id) !== w.work_id);
+    unchanged = before - toWrite.length;
+  }
+  const heldClusters = writes.length - toWrite.length - unchanged;
   // A re-mint MOVES an id that queue rows, /work URLs and citations already
   // hold. Where a whole cluster moves to one new id, keep the old id as an
   // alias so those references still resolve (#4329); splits and partial moves
@@ -226,7 +236,7 @@ if (APPLY) {
   fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, holdParts: !INCLUDE_PARTS, heldParts, count: toWrite.length,
     writes: toWrite.map(w => ({ ...w, ...(REMINT ? { old_work_id: priorOf.get(w.id) ?? null, alias_added: aliasFor.get(w.id) ?? null } : {}) })) }, null, 2));
   if (aliasTally) console.log(`re-mint trail: ${aliasTally.renamed} old ids kept as aliases (${aliasFor.size} books); ${aliasTally.split} split and ${aliasTally.partial} partially-moved ids get no alias`);
-  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})`);
+  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})${unchanged ? `; ${unchanged} unchanged, not rewritten` : ''}`);
   let done = 0;
   for (const w of toWrite) {
     const idFilter = REMINT

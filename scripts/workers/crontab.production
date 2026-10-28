@@ -105,7 +105,7 @@
 50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-classify-text-role.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --only-missing" >> /var/log/sourcelibrary/classify-text-role.log 2>&1
 30 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-lang-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/audit-language-mismatch.mjs --flag" >> /var/log/sourcelibrary/lang-audit.log 2>&1
 0 4 * * * /root/sourcelibrary/scripts/workers/backup-bph-catalog.sh
-30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
+30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden --remint-local && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
 # Refresh book locations[] (publication/author/tradition) before the map-cache rebuild at 05:45
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-geocode.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/geocode-publication-places.mjs --ustc --ia --title-pages && node scripts/enrichment/backfill-author-locations.mjs --write-books && node scripts/enrichment/geocode-origin-by-tradition.mjs" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
 # Thesaurus-grounded author locations (canonical authors path); file-guarded until PR #2783 merges + box pulls
@@ -146,7 +146,8 @@
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
 # Stage coverage snapshot — nightly semantic monitoring (#3756)
 15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
-40 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
+# Author links, hidden books included, BEFORE the 02:30 work-id mint so a new link reaches its work_id the same night (#3780: imports land hidden, and without --include-backlog the 410K-book wave got 13 author_ids)
+10 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
