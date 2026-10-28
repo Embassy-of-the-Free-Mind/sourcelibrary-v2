@@ -229,7 +229,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   function citedBlock(w: Work) {
     const cs = claimsOf(w); if (!cs) return ''; const N = 8;
     const li = (c: [string, string, string]) => `<li><a href="${claimHref(c[1], c[0])}">${esc(c[2])}</a></li>`;
-    return `<div class="cited"><b>In the history of ${esc(Ct!.title)}</b><span class="sub">${nClaims(cs.length)} quote${cs.length === 1 ? 's' : ''} an edition of this work, checked against the page</span><ul>${cs.slice(0, N).map(li).join('')}</ul>${cs.length > N ? `<details class="moreeds"><summary>Show the other ${cs.length - N}</summary><ul>${cs.slice(N).map(li).join('')}</ul></details>` : ''}</div>`;
+    return `<div class="cited"><b>In the history of ${esc(Ct!.title)}</b><span class="sub">${nClaims(cs.length)} quote${cs.length === 1 ? 's' : ''} an edition of this work</span><ul>${cs.slice(0, N).map(li).join('')}</ul>${cs.length > N ? `<details class="moreeds"><summary>Show the other ${cs.length - N}</summary><ul>${cs.slice(N).map(li).join('')}</ul></details>` : ''}</div>`;
   }
   function edsBlock(w: Work) {
     if (!w.eds.length) return ''; const eds = [...w.eds].sort((a, b) => (+b.rd - +a.rd) || (+b.v - +a.v)); const N = 6;
