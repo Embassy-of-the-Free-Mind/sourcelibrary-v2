@@ -19,9 +19,14 @@
  *   pages.translation.text       string, the parser's `text` (no tag of the closed vocabulary)
  *   pages.translation.text_from  { source: 'parser' | 'model', parser_version, data_hash, annotations }
  *                                annotations = how many the page_annotations doc holds (0: no doc written)
- *   page_annotations             { page_id, book_id, source, anchor_kind, data_hash, annotations[], created_at }
- *                                unique on (page_id, source); a doc whose data_hash is not the page's
- *                                current hash describes an older text and is not served.
+ *   page_annotations             { page_id, book_id, source, run_id, anchor_kind, data_hash, annotations[], created_at }
+ *                                unique on (page_id, source, run_id, data_hash). A doc whose data_hash is
+ *                                not the page's current hash describes an older text and is not served.
+ *
+ * KEEP THE READS (Derek, 2026-10-28, #5942): a page_annotations doc is never overwritten or deleted by a
+ * writer, a backfill or a re-run. Each write INSERTS a doc keyed by its own run id; a key that already
+ * exists is left exactly as it is (`$setOnInsert`). The reader picks the current doc by data_hash. Only an
+ * undo removes docs, and only the ones carrying its own run id. `translation.data` is never rewritten.
  */
 
 import { splitAnnotations } from './annotation-layer.mjs';
@@ -100,15 +105,24 @@ export function getTranslationText(page) {
   return splitAnnotations(t.data).text;
 }
 
+/** The run id a translation writer stamps when its caller has no job id: one doc per text. */
+export const WRITE_RUN_ID = 'write';
+
 /** The page_annotations document for one parse, or null when there is nothing to store. */
-export function annotationsDoc({ page_id, book_id, layers, anchor_kind = 'inferred', created_at = new Date() }) {
+export function annotationsDoc({ page_id, book_id, layers, run_id = WRITE_RUN_ID, anchor_kind = 'inferred', created_at = new Date() }) {
   if (!layers?.annotations?.length) return null;
-  return { page_id, book_id: book_id ?? null, source: layers.source, anchor_kind, data_hash: layers.data_hash, annotations: layers.annotations, created_at };
+  return { page_id, book_id: book_id ?? null, source: layers.source, run_id: String(run_id || WRITE_RUN_ID), anchor_kind, data_hash: layers.data_hash, annotations: layers.annotations, created_at };
 }
 
-/** A bulkWrite op that stores (or replaces) one page_annotations doc, keyed by page and source. */
-export function annotationsUpsertOp(doc) {
-  return { replaceOne: { filter: { page_id: doc.page_id, source: doc.source }, replacement: doc, upsert: true } };
+/** The unique key of a page_annotations doc. */
+export const annotationsKey = (doc) => ({ page_id: doc.page_id, source: doc.source, run_id: doc.run_id, data_hash: doc.data_hash });
+
+/**
+ * A bulkWrite op that INSERTS one page_annotations doc and never touches an existing one: an upsert
+ * whose only operator is $setOnInsert, so a doc already under this key is left byte for byte.
+ */
+export function annotationsInsertOp(doc) {
+  return { updateOne: { filter: annotationsKey(doc), update: { $setOnInsert: doc }, upsert: true } };
 }
 
 /**
@@ -116,13 +130,13 @@ export function annotationsUpsertOp(doc) {
  * text_from.annotations > 0 with no current doc, which a reader treats as "re-parse data" — the
  * same fallback as a writer that never stored the layer.
  * @param {import('mongodb').Db} db
- * @param {Array<{ page_id: string, book_id?: string|null, layers: ReturnType<typeof translationLayers> }>} items
+ * @param {Array<{ page_id: string, book_id?: string|null, run_id?: string|null, layers: ReturnType<typeof translationLayers> }>} items
  */
 export async function writePageAnnotations(db, items) {
   const ops = [];
   for (const it of items) {
     const doc = annotationsDoc(it);
-    if (doc) ops.push(annotationsUpsertOp(doc));
+    if (doc) ops.push(annotationsInsertOp(doc));
   }
   if (!ops.length) return { written: 0 };
   try {
@@ -135,8 +149,8 @@ export async function writePageAnnotations(db, items) {
 }
 
 /**
- * The annotations of a page's CURRENT translation: the doc for `source` whose data_hash matches,
- * or a live parse when there is none. Projection: translation.{data,prompt_version}.
+ * The annotations of a page's CURRENT translation: the newest doc for `source` whose data_hash
+ * matches, or a live parse when there is none. Projection: translation.{data,prompt_version}.
  */
 export async function getPageAnnotations(db, page, { source } = {}) {
   const t = page?.translation;
@@ -144,7 +158,7 @@ export async function getPageAnnotations(db, page, { source } = {}) {
   const src = source || inlineSource(t.prompt_version);
   if (!source && translationTextIsCurrent(t) && t.text_from.annotations === 0) return [];
   const h = contentHash(t.data);
-  const doc = await db.collection(ANNOTATIONS_COLLECTION).findOne({ page_id: page.id, source: src, data_hash: h });
+  const doc = await db.collection(ANNOTATIONS_COLLECTION).findOne({ page_id: page.id, source: src, data_hash: h }, { sort: { created_at: -1 } });
   if (doc) return doc.annotations;
   return translationLayers(t.data, { promptVersion: t.prompt_version, source: src }).annotations;
 }

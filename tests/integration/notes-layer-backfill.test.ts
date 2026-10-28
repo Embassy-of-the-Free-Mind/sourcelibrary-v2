@@ -3,7 +3,7 @@ import { BSON } from 'mongodb';
 import { getTestDb, cleanDb } from '../setup';
 import { processBatch, newTotals } from '../../scripts/maintenance/notes-layer-backfill-5942/backfill.mjs';
 import { undoRun } from '../../scripts/maintenance/notes-layer-backfill-5942/undo.mjs';
-import { getTranslationText, translationTextIsCurrent } from '../../scripts/lib/translation-text.mjs';
+import { getTranslationText, translationTextIsCurrent, translationLayers, writePageAnnotations, getPageAnnotations } from '../../scripts/lib/translation-text.mjs';
 import { splitAnnotations } from '../../scripts/lib/annotation-layer.mjs';
 
 // #5942 failure modes that need a real database: a page edited between read and write, withheld
@@ -110,4 +110,53 @@ describe('notes-layer backfill against a database', () => {
     // Undo is not repeated: the rows are marked.
     expect((await undoRun(db, { runId: RUN, apply: true })).rows).toBe(0);
   });
+
+  // KEEP THE READS (Derek, 2026-10-28): a re-run or a writer never overwrites or deletes a
+  // page_annotations doc; it inserts its own. Undo removes only its own run's docs. data is never rewritten.
+  it('keep the reads: a re-run inserts its own doc, the first is byte-identical, undo removes only its own', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertOne(page('p1'));
+    const hex = (d: unknown) => Buffer.from(BSON.serialize(d as object)).toString('hex');
+    const dataHex = async () => hex({ d: (await db.collection('pages').findOne({ id: 'p1' }))!.translation.data });
+    const data0 = await dataHex();
+    await run(['p1']);
+    const first = await db.collection('page_annotations').findOne({ page_id: 'p1', run_id: RUN });
+    expect(first).toBeTruthy();
+    // A second run (as after a parser bump: the page's text_from is no longer current for it).
+    await db.collection('pages').updateOne({ id: 'p1' }, { $set: { 'translation.text_from.parser_version': 'annotation-layer/0' } });
+    const t2 = newTotals();
+    await processBatch(db, ['p1'], t2, null, { apply: true, runId: RUN + '-2' });
+    expect(t2.written).toBe(1);
+    expect(await db.collection('page_annotations').countDocuments({ page_id: 'p1' })).toBe(2);
+    expect(hex(await db.collection('page_annotations').findOne({ _id: first!._id }))).toBe(hex(first));
+    // A writer storing the same text again under a key that exists changes nothing.
+    await writePageAnnotations(db, [{ page_id: 'p1', book_id: 'b1', run_id: RUN, layers: { ...translationLayers(DATA, { promptVersion: 13 }), annotations: [{ type: 'note', body: 'different' }] } }]);
+    expect(hex(await db.collection('page_annotations').findOne({ _id: first!._id }))).toBe(hex(first));
+    // The reader picks a doc of the current text.
+    const p = await db.collection('pages').findOne({ id: 'p1' });
+    expect((await getPageAnnotations(db, p)).length).toBe(first!.annotations.length);
+    // Undo of run 2 removes run 2's doc only.
+    await undoRun(db, { runId: RUN + '-2', apply: true });
+    expect(await db.collection('page_annotations').countDocuments({ page_id: 'p1', run_id: RUN + '-2' })).toBe(0);
+    expect(hex(await db.collection('page_annotations').findOne({ _id: first!._id }))).toBe(hex(first));
+    // translation.data never changed through any of it.
+    expect(await dataHex()).toBe(data0);
+  });
+
+  it('keep the reads: a new translation inserts a new doc and the old text\'s doc stays (not served)', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertOne(page('p1'));
+    await run(['p1']);
+    const old = await db.collection('page_annotations').findOne({ page_id: 'p1' });
+    const NEW = 'A new reading <note>a newer note</note> of the page.';
+    await db.collection('pages').updateOne({ id: 'p1' }, { $set: { 'translation.data': NEW } });
+    await writePageAnnotations(db, [{ page_id: 'p1', book_id: 'b1', run_id: 'job-9', layers: translationLayers(NEW, { promptVersion: 13 }) }]);
+    expect(await db.collection('page_annotations').countDocuments({ page_id: 'p1' })).toBe(2);
+    expect(await db.collection('page_annotations').findOne({ _id: old!._id })).toEqual(old);
+    const p = await db.collection('pages').findOne({ id: 'p1' });
+    const served = await getPageAnnotations(db, p);
+    expect(served.some((a: { body: string }) => a.body === 'a newer note')).toBe(true);
+    expect(served.some((a: { body: string }) => a.body === 'divination by figures cast in earth')).toBe(false);
+  });
 });
+

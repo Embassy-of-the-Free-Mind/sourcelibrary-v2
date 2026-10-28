@@ -85,9 +85,9 @@ function translationTextFields(field, next) {
   const l = translationLayers(next.data, { promptVersion: next.prompt_version });
   return { text: l.text, text_from: l.text_from };
 }
-async function storeTranslationAnnotations(db, pageId, bookId, field, next, verbatim) {
+async function storeTranslationAnnotations(db, pageId, bookId, field, next, verbatim, runId) {
   if (verbatim || field !== 'translation' || typeof next?.data !== 'string' || !next.data) return;
-  await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, layers: translationLayers(next.data, { promptVersion: next.prompt_version }) }]);
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, run_id: runId, layers: translationLayers(next.data, { promptVersion: next.prompt_version }) }]);
 }
 
 /** The field value written: the caller's object, with content_hash and updated_at stamped if absent. */
@@ -206,7 +206,7 @@ export async function writePageText(db, pageId, field, next, opts) {
     await db.collection('page_revisions').updateOne({ id: rev.id }, { $set: { aborted: 'conflict', aborted_at: now } });
     return { status: 'conflict', revision_id: rev.id, book_id: page.book_id };
   }
-  await storeTranslationAnnotations(db, pageId, page.book_id, field, next, opts.verbatim);
+  await storeTranslationAnnotations(db, pageId, page.book_id, field, next, opts.verbatim, opts.run_id);
   return { status: 'written', revision_id: rev.id, book_id: page.book_id, prior_hash: rev.prior_hash, next_hash: rev.next_hash };
 }
 

@@ -456,7 +456,7 @@ export async function writePageTranslation(
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  await writePageAnnotations(db, [{ page_id: pageId, book_id: (current?.book_id as string | undefined) ?? null, layers }]);
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: (current?.book_id as string | undefined) ?? null, run_id: jobId ?? null, layers }]);
   return { written: true, protected: false, text: finalText };
 }
 

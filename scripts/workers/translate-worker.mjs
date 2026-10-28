@@ -572,7 +572,7 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
     updated_at: new Date(),
   };
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
-  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? book?.id, layers }]);
+  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? book?.id, run_id: book?.job?.job_id, layers }]);
   // Dual-write to Supabase (fire-and-forget; it maps known columns only, so text/text_from stay in Mongo)
   syncPageUpdate(page.id, setPayload);
   await seamGuardPages(db, [page], book);
@@ -695,7 +695,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     await db.collection('pages').bulkWrite(chunk, { ordered: false });
     if (i + CHUNK_SIZE < ops.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
   }
-  await writePageAnnotations(db, entries.map(({ page }) => ({ page_id: page.id, book_id: page.book_id ?? book?.id, layers: layersById.get(page.id) })));
+  await writePageAnnotations(db, entries.map(({ page }) => ({ page_id: page.id, book_id: page.book_id ?? book?.id, run_id: book?.job?.job_id, layers: layersById.get(page.id) })));
   // Dual-write to Supabase (fire-and-forget)
   syncPageBatch(entries.map(({ page, text }) => ({
     pageId: page.id,

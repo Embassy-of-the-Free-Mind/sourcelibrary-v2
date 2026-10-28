@@ -20,6 +20,8 @@ export {
   translationLayers,
   writePageAnnotations,
   annotationsDoc,
+  annotationsInsertOp,
+  WRITE_RUN_ID,
   parserAnnotation,
 } from '../../scripts/lib/translation-text.mjs';
 

@@ -1449,7 +1449,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, layers }]);
+  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, run_id: jobId, layers }]);
   // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
   // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
   // depend on it otherwise.
