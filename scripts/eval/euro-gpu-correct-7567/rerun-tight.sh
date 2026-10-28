@@ -16,6 +16,7 @@ for a in ${*:-G LO IP D S CH}; do
     IP) run IP UTIL=0.34 MAXLEN=14000 CLIENTS=8 IP_TIGHT="--max-num-seqs 8 --max-num-batched-tokens 8192 --enforce-eager" ;;
     D)  run D  UTIL=0.35 MAXLEN=12000 CLIENTS=8 D_TIGHT="--max-num-seqs 8 --max-num-batched-tokens 4096 --mm-processor-kwargs {\"max_pixels\":1605632}" ;;
     S)  run S  UTIL=0.34 MAXLEN=14000 S_SEQS=8 S_MAXPX=2508800 ;;
+    CH8) run CH8 UTIL=0.30 MAXLEN=12000 CLIENTS=8 CH_TIGHT="--max-num-seqs 8 --max-num-batched-tokens 8192 --enforce-eager" ;;
     CH) run CH UTIL=0.365 MAXLEN=12000 CLIENTS=6 CH_TIGHT="--max-num-seqs 4 --max-num-batched-tokens 4096 --enforce-eager --kv-cache-dtype fp8" ;;
   esac
 done

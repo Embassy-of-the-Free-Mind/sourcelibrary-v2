@@ -96,7 +96,11 @@ for (const [slug, ch] of Object.entries(choice)) {
     if (r.outcome !== 'corrected') { refused[slug] = `opus outcome ${r.outcome}: the text is the lite draft, not a read`; continue; }
     if (contentHash(OPUS_PROMPT) !== r.prompt_sent_hash) { refused[slug] = 'opus prompt cannot be reconstructed'; continue; }
     text = r.text;
-    meta = { cli: 'claude', cli_version: null, model: r.model, started_at: r.started_at, finished_at: r.finished_at, prompt_text: OPUS_PROMPT, read_note: '#6740 lite→Opus correction (correct.mjs instruction, d01.txt + p01.jpg)' };
+    // the CLI version #6740's run recorded in its stream-json transcripts (system init `claude_code_version`)
+    const trs = fs.readdirSync(path.join(PC, 'corr', 'transcripts')).filter((f) => f.includes(slug) && f.includes('claude'));
+    const ver = trs.map((f) => fs.readFileSync(path.join(PC, 'corr', 'transcripts', f), 'utf8').match(/"claude_code_version":"([^"]+)"/)?.[1]).find(Boolean);
+    if (!ver) { refused[slug] = 'opus transcript has no CLI version'; continue; }
+    meta = { cli: 'claude', cli_version: ver, model: r.model, started_at: r.started_at, finished_at: r.finished_at, prompt_text: OPUS_PROMPT, read_note: '#6740 lite→Opus correction (correct.mjs instruction, d01.txt + p01.jpg)' };
   } else {
     const r = JSON.parse(fs.readFileSync(path.join(J, 'e2', ch.arm, `${slug}.json`), 'utf8'));
     if (r.outcome !== 'corrected' && r.outcome !== 'read') { refused[slug] = `outcome ${r.outcome}`; continue; }
@@ -112,7 +116,8 @@ for (const [slug, ch] of Object.entries(choice)) {
   fs.writeFileSync(path.join(OUT, `${key2}.prompt.txt`), meta.prompt_text);
   fs.writeFileSync(path.join(OUT, `${key2}.meta.json`), JSON.stringify({
     page_id: page.id, book_id: page.book_id, page_number: page.page_number, exit: 0, wrapper: null, cli: meta.cli, cli_version: meta.cli_version,
-    model: meta.model, started_at: meta.started_at, finished_at: meta.finished_at, image_sha256: sha(imgBuf), image_bytes: imgBuf.length, image_url: null,
+    model: meta.model, started_at: meta.started_at, finished_at: meta.finished_at, image_sha256: sha(imgBuf), image_bytes: imgBuf.length, image_url: IMG[slug].served_image,   // the served image image-check.py compared (corr >= 0.95)
+   
     prompt_sent_file: `${key2}.prompt.txt`, prompt_sent_hash: contentHash(meta.prompt_text), chars: text.length,
     eval_pick: { issue: 7567, arm: ch.arm, packet: ch.group, misreads: ch.misreads, stored_clean: ch.s_clean, stored_misreads: ch.s_misreads, stored_shown: ch.s_shown, note: meta.read_note, image_corr_served: IMG[slug]?.corr },
   }, null, 1));

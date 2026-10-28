@@ -1,0 +1,7 @@
+{
+ "engine": "pero-ocr pero_eu_cz_print_newspapers_2022-09-26",
+ "device": "cpu (8 threads)",
+ "pages": 327,
+ "wall_secs": 1665,
+ "pages_per_hour": 707
+}

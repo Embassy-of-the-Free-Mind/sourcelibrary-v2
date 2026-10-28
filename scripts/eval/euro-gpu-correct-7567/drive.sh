@@ -65,6 +65,8 @@ run_arm() {
     D)  vlm dotsocr 8000 dots-studio/dots.ocr --trust-remote-code --limit-mm-per-prompt '{"image":1,"video":0}' ${D_TIGHT:-} ;;
     # Qwen2.5-VL / Qwen3.5 at 2,400 px would spend 8-11K visual tokens a page: cap at ~2.5 MP, as the card's 7B "tight" runs did
     CH) MAXLEN=${MAXLEN:-20000} vlm churro 6000 stanford-oval/churro-3B --limit-mm-per-prompt '{"image":1,"video":0}' --mm-processor-kwargs '{"max_pixels": 2508800}' ${CH_TIGHT:-} ;;
+    # CHURRO-3B bf16 (7.5 GB) did not fit beside the 14.5 GB Tibetan re-read on 2026-10-28 (OOM at start): fp8 weights
+    CH8) MAXLEN=${MAXLEN:-12000} vlm churro 6000 stanford-oval/churro-3B --quantization fp8 --limit-mm-per-prompt '{"image":1,"video":0}' --mm-processor-kwargs '{"max_pixels": 2508800}' ${CH_TIGHT:-} ;;
     LO) vlm lighton 6000 lightonai/LightOnOCR-3-1B --limit-mm-per-prompt '{"image":1}' --mm-processor-cache-gb 0 --no-enable-prefix-caching ${LO_TIGHT:-} ;;
     IP) MAXLEN=${MAXLEN:-20000} vlm infinity 6000 infly/Infinity-Parser2-Flash --trust-remote-code --limit-mm-per-prompt '{"image":1,"video":0}' --mm-processor-kwargs '{"max_pixels": 2508800}' ${IP_TIGHT:-} ;;
     S)  surya ;;
