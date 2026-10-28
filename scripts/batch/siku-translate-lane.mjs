@@ -61,6 +61,7 @@ import { MongoClient } from 'mongodb';
 import { UNTRANSLATED } from './cli-translate-lane.mjs';
 import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -150,7 +151,7 @@ const readLedger = () => new Set(fs.existsSync(P.ledger) ? fs.readFileSync(P.led
 const ledger = (row) => fs.appendFileSync(P.ledger, JSON.stringify({ ...row, at: new Date().toISOString() }) + '\n');
 
 async function ntfy(title, msg) {
-  try { await fetch('https://ntfy.sh/sourcelibrary-uptime', { method: 'POST', headers: { Title: title, Priority: 'high', Tags: 'warning' }, body: msg }); } catch { /* best effort */ }
+  try { await ntfyPost('https://ntfy.sh/sourcelibrary-uptime', { method: 'POST', headers: { Title: title, Priority: 'high', Tags: 'warning' }, body: msg }); } catch { /* best effort */ }
 }
 function comment(body) {
   const r = spawnSync('gh', ['issue', 'comment', String(ISSUE), '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body-file', '-'], { input: body, encoding: 'utf8' });

@@ -23,6 +23,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { LOG_DIR, RECONCILE_PATH, writeJsonAtomic, log } from './lib.mjs';
+import { ntfyPost } from '../../lib/ntfy-send.mjs';
 
 const LOCAL = `http://127.0.0.1:${process.env.VECTOR_SEARCH_LOCAL_PORT || 3459}`;
 const NTFY_TOPIC = process.env.VECTOR_SEARCH_NTFY || 'https://ntfy.sh/sourcelibrary-uptime';
@@ -77,7 +78,7 @@ const summary = fails.length ? fails.map((f) => `${f.kind}: ${f.line}`).join('\n
 log(`freshness: ${summary.replace(/\n/g, ' | ')}`);
 
 if (key !== prev.key && !DRY) {
-  const res = await fetch(NTFY_TOPIC, {
+  const res = await ntfyPost(NTFY_TOPIC, {
     method: 'POST',
     headers: {
       Title: key ? `vector service: ${key}` : 'vector service: ok again',
