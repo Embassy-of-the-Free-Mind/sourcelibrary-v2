@@ -1,0 +1,2592 @@
+{
+ "issue": 7651,
+ "scored": "2026-10-28T21:11:41.101Z",
+ "parsed": 350,
+ "missing": [],
+ "cost_usd_api_equivalent": 43.770187299999996,
+ "verdict_counts": {
+  "no_prior_known": 199,
+  "prior_exists": 74,
+  "partial_only": 21,
+  "not_a_single_work": 42,
+  "identity_unresolved": 10,
+  "already_english": 4,
+  "could_not_search": 0
+ },
+ "identity_source": {
+  "title_page_text": 142,
+  "title_page_image": 111,
+  "catalogue_only": 97
+ },
+ "frame": {
+  "works": 31723,
+  "books": 43608
+ },
+ "strata": {
+  "latin": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 21155,
+   "frame_books": 22747,
+   "no_prior_known": {
+    "k": 41,
+    "rate": 0.82,
+    "ci": [
+     0.6920368054529739,
+     0.902299172675462
+    ],
+    "works": 17347.1,
+    "books": 17935.134615384613,
+    "book_rate": 0.7884615384615384
+   },
+   "prior_exists": {
+    "k": 2,
+    "rate": 0.04,
+    "ci": [
+     0.011038652660826577,
+     0.13460337877954667
+    ],
+    "works": 846.2,
+    "books": 874.8846153846155,
+    "book_rate": 0.038461538461538464
+   },
+   "partial_only": {
+    "k": 2,
+    "rate": 0.04,
+    "ci": [
+     0.011038652660826577,
+     0.13460337877954667
+    ],
+    "works": 846.2,
+    "books": 874.8846153846155,
+    "book_rate": 0.038461538461538464
+   },
+   "not_a_single_work": {
+    "k": 4,
+    "rate": 0.08,
+    "ci": [
+     0.031549003255790686,
+     0.18838502545063704
+    ],
+    "works": 1692.4,
+    "books": 2624.653846153846,
+    "book_rate": 0.11538461538461539
+   },
+   "identity_unresolved": {
+    "k": 1,
+    "rate": 0.02,
+    "ci": [
+     0.0035391680889764604,
+     0.10495686471836953
+    ],
+    "works": 423.1,
+    "books": 437.44230769230774,
+    "book_rate": 0.019230769230769232
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   }
+  },
+  "chinese": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 860,
+   "frame_books": 10450,
+   "no_prior_known": {
+    "k": 43,
+    "rate": 0.86,
+    "ci": [
+     0.738135428014719,
+     0.9304925473797714
+    ],
+    "works": 739.6,
+    "books": 9015.243243243243,
+    "book_rate": 0.8627027027027027
+   },
+   "prior_exists": {
+    "k": 4,
+    "rate": 0.08,
+    "ci": [
+     0.031549003255790686,
+     0.18838502545063704
+    ],
+    "works": 68.8,
+    "books": 158.16216216216216,
+    "book_rate": 0.015135135135135135
+   },
+   "partial_only": {
+    "k": 3,
+    "rate": 0.06,
+    "ci": [
+     0.020614596364630478,
+     0.16217343370877002
+    ],
+    "works": 51.6,
+    "books": 1276.5945945945946,
+    "book_rate": 0.12216216216216216
+   },
+   "not_a_single_work": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   },
+   "identity_unresolved": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   }
+  },
+  "german": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 5733,
+   "frame_books": 6079,
+   "no_prior_known": {
+    "k": 33,
+    "rate": 0.66,
+    "ci": [
+     0.5215356854148285,
+     0.7756323036493895
+    ],
+    "works": 3783.78,
+    "books": 4129.132075471698,
+    "book_rate": 0.6792452830188679
+   },
+   "prior_exists": {
+    "k": 3,
+    "rate": 0.06,
+    "ci": [
+     0.020614596364630478,
+     0.16217343370877002
+    ],
+    "works": 343.97999999999996,
+    "books": 344.09433962264154,
+    "book_rate": 0.05660377358490566
+   },
+   "partial_only": {
+    "k": 1,
+    "rate": 0.02,
+    "ci": [
+     0.0035391680889764604,
+     0.10495686471836953
+    ],
+    "works": 114.66,
+    "books": 114.69811320754717,
+    "book_rate": 0.018867924528301886
+   },
+   "not_a_single_work": {
+    "k": 13,
+    "rate": 0.26,
+    "ci": [
+     0.15871379651367384,
+     0.3955342198899992
+    ],
+    "works": 1490.5800000000002,
+    "books": 1491.0754716981132,
+    "book_rate": 0.24528301886792453
+   },
+   "identity_unresolved": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   }
+  },
+  "fr_it_es_nl": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 1839,
+   "frame_books": 1935,
+   "no_prior_known": {
+    "k": 28,
+    "rate": 0.56,
+    "ci": [
+     0.4230578680014353,
+     0.6883801278976466
+    ],
+    "works": 1029.8400000000001,
+    "books": 1041.923076923077,
+    "book_rate": 0.5384615384615384
+   },
+   "prior_exists": {
+    "k": 14,
+    "rate": 0.28,
+    "ci": [
+     0.17474014357680362,
+     0.4166538714598967
+    ],
+    "works": 514.9200000000001,
+    "books": 520.9615384615385,
+    "book_rate": 0.2692307692307692
+   },
+   "partial_only": {
+    "k": 3,
+    "rate": 0.06,
+    "ci": [
+     0.020614596364630478,
+     0.16217343370877002
+    ],
+    "works": 110.33999999999999,
+    "books": 111.63461538461539,
+    "book_rate": 0.057692307692307696
+   },
+   "not_a_single_work": {
+    "k": 5,
+    "rate": 0.1,
+    "ci": [
+     0.04347512399157111,
+     0.2136049033478839
+    ],
+    "works": 183.9,
+    "books": 260.4807692307692,
+    "book_rate": 0.1346153846153846
+   },
+   "identity_unresolved": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   }
+  },
+  "greek": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 352,
+   "frame_books": 414,
+   "no_prior_known": {
+    "k": 15,
+    "rate": 0.3,
+    "ci": [
+     0.1910338908960936,
+     0.4375061227736339
+    ],
+    "works": 105.6,
+    "books": 111.71428571428571,
+    "book_rate": 0.2698412698412698
+   },
+   "prior_exists": {
+    "k": 26,
+    "rate": 0.52,
+    "ci": [
+     0.3851151225880844,
+     0.6520308760449429
+    ],
+    "works": 183.04000000000002,
+    "books": 243.14285714285714,
+    "book_rate": 0.5873015873015873
+   },
+   "partial_only": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   },
+   "not_a_single_work": {
+    "k": 6,
+    "rate": 0.12,
+    "ci": [
+     0.05617523710624646,
+     0.23805078886623582
+    ],
+    "works": 42.239999999999995,
+    "books": 39.42857142857142,
+    "book_rate": 0.09523809523809523
+   },
+   "identity_unresolved": {
+    "k": 2,
+    "rate": 0.04,
+    "ci": [
+     0.011038652660826577,
+     0.13460337877954667
+    ],
+    "works": 14.08,
+    "books": 13.142857142857142,
+    "book_rate": 0.031746031746031744
+   },
+   "already_english": {
+    "k": 1,
+    "rate": 0.02,
+    "ci": [
+     0.0035391680889764604,
+     0.10495686471836953
+    ],
+    "works": 7.04,
+    "books": 6.571428571428571,
+    "book_rate": 0.015873015873015872
+   }
+  },
+  "he_ar_fa_syr": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 1038,
+   "frame_books": 1078,
+   "no_prior_known": {
+    "k": 20,
+    "rate": 0.4,
+    "ci": [
+     0.2760818978624575,
+     0.5381881089724063
+    ],
+    "works": 415.20000000000005,
+    "books": 414.61538461538464,
+    "book_rate": 0.38461538461538464
+   },
+   "prior_exists": {
+    "k": 12,
+    "rate": 0.24,
+    "ci": [
+     0.14297252401872207,
+     0.3741294937519236
+    ],
+    "works": 249.12,
+    "books": 290.2307692307692,
+    "book_rate": 0.2692307692307692
+   },
+   "partial_only": {
+    "k": 7,
+    "rate": 0.14,
+    "ci": [
+     0.06950745262022862,
+     0.2618645719852809
+    ],
+    "works": 145.32000000000002,
+    "books": 145.1153846153846,
+    "book_rate": 0.1346153846153846
+   },
+   "not_a_single_work": {
+    "k": 6,
+    "rate": 0.12,
+    "ci": [
+     0.05617523710624646,
+     0.23805078886623582
+    ],
+    "works": 124.56,
+    "books": 124.38461538461539,
+    "book_rate": 0.11538461538461539
+   },
+   "identity_unresolved": {
+    "k": 5,
+    "rate": 0.1,
+    "ci": [
+     0.04347512399157111,
+     0.2136049033478839
+    ],
+    "works": 103.80000000000001,
+    "books": 103.65384615384616,
+    "book_rate": 0.09615384615384616
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "ci": [
+     0,
+     0.07135003417431873
+    ],
+    "works": 0,
+    "books": 0,
+    "book_rate": 0
+   }
+  },
+  "other": {
+   "n": 50,
+   "could_not_search": 0,
+   "frame_works": 746,
+   "frame_books": 905,
+   "no_prior_known": {
+    "k": 19,
+    "rate": 0.38,
+    "ci": [
+     0.2586259584257722,
+     0.5184980497760643
+    ],
+    "works": 283.48,
+    "books": 437.4166666666667,
+    "book_rate": 0.48333333333333334
+   },
+   "prior_exists": {
+    "k": 13,
+    "rate": 0.26,
+    "ci": [
+     0.15871379651367384,
+     0.3955342198899992
+    ],
+    "works": 193.96,
+    "books": 196.08333333333334,
+    "book_rate": 0.21666666666666667
+   },
+   "partial_only": {
+    "k": 5,
+    "rate": 0.1,
+    "ci": [
+     0.04347512399157111,
+     0.2136049033478839
+    ],
+    "works": 74.60000000000001,
+    "books": 75.41666666666666,
+    "book_rate": 0.08333333333333333
+   },
+   "not_a_single_work": {
+    "k": 8,
+    "rate": 0.16,
+    "ci": [
+     0.08337321362087696,
+     0.2851448096176598
+    ],
+    "works": 119.36,
+    "books": 120.66666666666667,
+    "book_rate": 0.13333333333333333
+   },
+   "identity_unresolved": {
+    "k": 2,
+    "rate": 0.04,
+    "ci": [
+     0.011038652660826577,
+     0.13460337877954667
+    ],
+    "works": 29.84,
+    "books": 30.166666666666668,
+    "book_rate": 0.03333333333333333
+   },
+   "already_english": {
+    "k": 3,
+    "rate": 0.06,
+    "ci": [
+     0.020614596364630478,
+     0.16217343370877002
+    ],
+    "works": 44.76,
+    "books": 45.25,
+    "book_rate": 0.05
+   }
+  }
+ },
+ "corpus": {
+  "no_prior_known": {
+   "works": 23704.599999999995,
+   "works_ci": [
+    21312.1745948033,
+    26097.02540519669
+   ],
+   "works_rate": 0.7472370204583424,
+   "books": 33085.17934801897,
+   "books_ci": [
+    28820.619336816202,
+    36328.093787739715
+   ],
+   "books_rate": 0.7586951785915192
+  },
+  "prior_exists": {
+   "works": 2400.02,
+   "works_ci": [
+    1160.0893991521543,
+    3639.9506008478456
+   ],
+   "works_rate": 0.07565551807836586,
+   "books": 2627.5596153379174,
+   "books_ci": [
+    1543.941484486515,
+    4257.165895466435
+   ],
+   "books_rate": 0.06025407299894325
+  },
+  "partial_only": {
+   "works": 1342.7199999999998,
+   "works_ci": [
+    160.90933251879756,
+    2524.530667481202
+   ],
+   "works_rate": 0.04232638779434479,
+   "books": 2598.3439898534234,
+   "books_ci": [
+    725.520655240282,
+    5574.695052262756
+   ],
+   "books_rate": 0.05958411277411079
+  },
+  "not_a_single_work": {
+   "works": 3653.04,
+   "works_ci": [
+    1908.4292146735052,
+    5397.650785326495
+   ],
+   "works_rate": 0.11515430444787693,
+   "books": 4660.689940562583,
+   "books_ci": [
+    2318.0167991841868,
+    7859.571058201059
+   ],
+   "books_rate": 0.10687694782064261
+  },
+  "identity_unresolved": {
+   "works": 570.82,
+   "works_ci": [
+    0,
+    1396.2222371109592
+   ],
+   "works_rate": 0.01799388456325064,
+   "books": 584.4056776556777,
+   "books_ci": [
+    76.72368893320039,
+    1516.2114892150103
+   ],
+   "books_rate": 0.013401340984582592
+  },
+  "already_english": {
+   "works": 51.8,
+   "works_ci": [
+    2.7080910093567496,
+    100.89190899064324
+   ],
+   "works_rate": 0.0016328846578192477,
+   "books": 51.82142857142857,
+   "books_ci": [
+    6.2727272727272725,
+    113.125
+   ],
+   "books_rate": 0.0011883468302015356
+  }
+ },
+ "period": {
+  "<1500": {
+   "n": 19,
+   "thin": false,
+   "frame_books": 1389,
+   "no_prior_known": {
+    "k": 6,
+    "rate": 0.4767246111619396,
+    "rate_ci": [
+     0.06153944263758689,
+     0.8002449926932004
+    ],
+    "book_rate": 0.4830313984756725,
+    "book_rate_ci": [
+     0.06270849458415795,
+     0.8061111906388677
+    ]
+   },
+   "prior_exists": {
+    "k": 5,
+    "rate": 0.10962488563586462,
+    "rate_ci": [
+     0.025292089521326493,
+     0.34741325760937086
+    ],
+    "book_rate": 0.10837413430902162,
+    "book_rate_ci": [
+     0.02512249716962973,
+     0.34652455734546006
+    ]
+   },
+   "partial_only": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   },
+   "not_a_single_work": {
+    "k": 7,
+    "rate": 0.39999999999999997,
+    "rate_ci": [
+     0.10317612781353055,
+     0.8039577393929229
+    ],
+    "book_rate": 0.3949877046077006,
+    "book_rate_ci": [
+     0.10270227636837942,
+     0.8050947983451957
+    ]
+   },
+   "identity_unresolved": {
+    "k": 1,
+    "rate": 0.013650503202195791,
+    "rate_ci": [
+     0,
+     0.06215976002666373
+    ],
+    "book_rate": 0.01360676260760514,
+    "book_rate_ci": [
+     0,
+     0.0639385782768079
+    ]
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   }
+  },
+  "1500s": {
+   "n": 72,
+   "thin": false,
+   "frame_books": 10324,
+   "no_prior_known": {
+    "k": 47,
+    "rate": 0.746633642570304,
+    "rate_ci": [
+     0.5958079370235185,
+     0.8770246204862246
+    ],
+    "book_rate": 0.7506509251239356,
+    "book_rate_ci": [
+     0.6013989106279592,
+     0.8794577560766339
+    ]
+   },
+   "prior_exists": {
+    "k": 15,
+    "rate": 0.14959208586265021,
+    "rate_ci": [
+     0.04737209114896321,
+     0.28169695417569207
+    ],
+    "book_rate": 0.1474364865465502,
+    "book_rate_ci": [
+     0.04538166019530043,
+     0.2811413651168779
+    ]
+   },
+   "partial_only": {
+    "k": 2,
+    "rate": 0.04781839242525377,
+    "rate_ci": [
+     0,
+     0.15268451935591762
+    ],
+    "book_rate": 0.04775037626459081,
+    "book_rate_ci": [
+     0,
+     0.15253008447968394
+    ]
+   },
+   "not_a_single_work": {
+    "k": 7,
+    "rate": 0.05379725118069452,
+    "rate_ci": [
+     0.013009144489501053,
+     0.10767925347412526
+    ],
+    "book_rate": 0.052076687973954615,
+    "book_rate_ci": [
+     0.012363790136605475,
+     0.10681717201261183
+    ]
+   },
+   "identity_unresolved": {
+    "k": 1,
+    "rate": 0.002158627961094782,
+    "rate_ci": [
+     0,
+     0.007522120687281248
+    ],
+    "book_rate": 0.0020855240909662467,
+    "book_rate_ci": [
+     0,
+     0.0073374375462113926
+    ]
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   }
+  },
+  "1600s": {
+   "n": 46,
+   "thin": false,
+   "frame_books": 11182,
+   "no_prior_known": {
+    "k": 35,
+    "rate": 0.8364026008519467,
+    "rate_ci": [
+     0.6869677676929412,
+     0.9565224438383055
+    ],
+    "book_rate": 0.7704065058983511,
+    "book_rate_ci": [
+     0.5553110982775774,
+     0.9548334817652375
+    ]
+   },
+   "prior_exists": {
+    "k": 3,
+    "rate": 0.0073455617438764964,
+    "rate_ci": [
+     0,
+     0.018551211029620002
+    ],
+    "book_rate": 0.010213993002299278,
+    "book_rate_ci": [
+     0,
+     0.02484008151801831
+    ]
+   },
+   "partial_only": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   },
+   "not_a_single_work": {
+    "k": 5,
+    "rate": 0.1111343144987155,
+    "rate_ci": [
+     0.013697255531583961,
+     0.24728163886840027
+    ],
+    "book_rate": 0.1784210787044147,
+    "book_rate_ci": [
+     0.012593890648027106,
+     0.3975891927612125
+    ]
+   },
+   "identity_unresolved": {
+    "k": 2,
+    "rate": 0.04360502247462098,
+    "rate_ci": [
+     0,
+     0.13777923628457855
+    ],
+    "book_rate": 0.039612760270947324,
+    "book_rate_ci": [
+     0,
+     0.12854020755248396
+    ]
+   },
+   "already_english": {
+    "k": 1,
+    "rate": 0.0015125004308395988,
+    "rate_ci": [
+     0,
+     0.0055282054575590414
+    ],
+    "book_rate": 0.0013456621239871334,
+    "book_rate_ci": [
+     0,
+     0.005151550857333486
+    ]
+   }
+  },
+  "1700s": {
+   "n": 88,
+   "thin": false,
+   "frame_books": 6815,
+   "no_prior_known": {
+    "k": 49,
+    "rate": 0.7400281920405761,
+    "rate_ci": [
+     0.5404223522006565,
+     0.8893973826055183
+    ],
+    "book_rate": 0.7424124226555502,
+    "book_rate_ci": [
+     0.5460529792526299,
+     0.8889031652561287
+    ]
+   },
+   "prior_exists": {
+    "k": 25,
+    "rate": 0.05774540913859807,
+    "rate_ci": [
+     0.024105736482595168,
+     0.11964330656416595
+    ],
+    "book_rate": 0.06077977359675122,
+    "book_rate_ci": [
+     0.0268028600988552,
+     0.12254103750028315
+    ]
+   },
+   "partial_only": {
+    "k": 3,
+    "rate": 0.0924512271261498,
+    "rate_ci": [
+     0,
+     0.2481708454726812
+    ],
+    "book_rate": 0.09029290473041231,
+    "book_rate_ci": [
+     0,
+     0.24516128253293965
+    ]
+   },
+   "not_a_single_work": {
+    "k": 10,
+    "rate": 0.1086423408404833,
+    "rate_ci": [
+     0.015041299780829786,
+     0.25684394908279456
+    ],
+    "book_rate": 0.10550810950124714,
+    "book_rate_ci": [
+     0.013718726620178838,
+     0.24935237255124093
+    ]
+   },
+   "identity_unresolved": {
+    "k": 1,
+    "rate": 0.0011328308541930841,
+    "rate_ci": [
+     0,
+     0.004100875319410035
+    ],
+    "book_rate": 0.001006789516040045,
+    "book_rate_ci": [
+     0,
+     0.0038070338274332222
+    ]
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   }
+  },
+  "1800s": {
+   "n": 24,
+   "thin": false,
+   "frame_books": 662,
+   "no_prior_known": {
+    "k": 4,
+    "rate": 0.08847890803782993,
+    "rate_ci": [
+     0.01325078189825748,
+     0.3346983346983348
+    ],
+    "book_rate": 0.16027234244050925,
+    "book_rate_ci": [
+     0.014752776819942954,
+     0.4590608812210366
+    ]
+   },
+   "prior_exists": {
+    "k": 9,
+    "rate": 0.10996577492456316,
+    "rate_ci": [
+     0.03505467315827279,
+     0.34945609945609934
+    ],
+    "book_rate": 0.11057785341892429,
+    "book_rate_ci": [
+     0.03563678393734832,
+     0.33236253774937485
+    ]
+   },
+   "partial_only": {
+    "k": 3,
+    "rate": 0.045322910549018845,
+    "rate_ci": [
+     0,
+     0.1785970792434762
+    ],
+    "book_rate": 0.03744249620358601,
+    "book_rate_ci": [
+     0,
+     0.13844726029104804
+    ]
+   },
+   "not_a_single_work": {
+    "k": 5,
+    "rate": 0.7129751513801418,
+    "rate_ci": [
+     0.14986376021798364,
+     0.8806660237136209
+    ],
+    "book_rate": 0.656635040784956,
+    "book_rate_ci": [
+     0.18980324834612966,
+     0.8577695844394085
+    ]
+   },
+   "identity_unresolved": {
+    "k": 1,
+    "rate": 0.021021081836408207,
+    "rate_ci": [
+     0,
+     0.10430064308681682
+    ],
+    "book_rate": 0.017153850789403194,
+    "book_rate_ci": [
+     0,
+     0.08000029684711263
+    ]
+   },
+   "already_english": {
+    "k": 2,
+    "rate": 0.02223617327203874,
+    "rate_ci": [
+     0,
+     0.097548218372017
+    ],
+    "book_rate": 0.01791841636262114,
+    "book_rate_ci": [
+     0,
+     0.07841612693090379
+    ]
+   }
+  },
+  "1900+": {
+   "n": 12,
+   "thin": false,
+   "frame_books": 246,
+   "no_prior_known": {
+    "k": 1,
+    "rate": 0.06209422340602632,
+    "rate_ci": [
+     0,
+     0.240393136228148
+    ],
+    "book_rate": 0.06227668528174045,
+    "book_rate_ci": [
+     0,
+     0.24343058141940827
+    ]
+   },
+   "prior_exists": {
+    "k": 3,
+    "rate": 0.30156484101881154,
+    "rate_ci": [
+     0,
+     0.6145409851564718
+    ],
+    "book_rate": 0.3015112616785326,
+    "book_rate_ci": [
+     0,
+     0.6230608204157536
+    ]
+   },
+   "partial_only": {
+    "k": 3,
+    "rate": 0.32586981854503094,
+    "rate_ci": [
+     0,
+     0.6356223465193072
+    ],
+    "book_rate": 0.3248286266310244,
+    "book_rate_ci": [
+     0,
+     0.6348541278708875
+    ]
+   },
+   "not_a_single_work": {
+    "k": 4,
+    "rate": 0.24837689362410528,
+    "rate_ci": [
+     0.05273948391657831,
+     0.5369481765834934
+    ],
+    "book_rate": 0.2491067411269618,
+    "book_rate_ci": [
+     0.050837727098587,
+     0.5440033840194136
+    ]
+   },
+   "identity_unresolved": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   },
+   "already_english": {
+    "k": 1,
+    "rate": 0.06209422340602632,
+    "rate_ci": [
+     0,
+     0.23874546618305956
+    ],
+    "book_rate": 0.06227668528174045,
+    "book_rate_ci": [
+     0,
+     0.2390664925907675
+    ]
+   }
+  },
+  "unknown": {
+   "n": 89,
+   "thin": false,
+   "frame_books": 12990,
+   "no_prior_known": {
+    "k": 57,
+    "rate": 0.8233052882669436,
+    "rate_ci": [
+     0.6635070732663699,
+     0.9024843727339993
+    ],
+    "book_rate": 0.8523522253027147,
+    "book_rate_ci": [
+     0.6347107511156731,
+     0.9563832133252579
+    ]
+   },
+   "prior_exists": {
+    "k": 14,
+    "rate": 0.06183586350561534,
+    "rate_ci": [
+     0.029817521237073503,
+     0.1207886460066735
+    ],
+    "book_rate": 0.024228485044654146,
+    "book_rate_ci": [
+     0.010040364701124785,
+     0.05673525928789218
+    ]
+   },
+   "partial_only": {
+    "k": 10,
+    "rate": 0.049984619286874615,
+    "rate_ci": [
+     0.020767285934293455,
+     0.10946892828425916
+    ],
+    "book_rate": 0.10547147865318786,
+    "book_rate_ci": [
+     0.009306145753414215,
+     0.3147711014872273
+    ]
+   },
+   "not_a_single_work": {
+    "k": 4,
+    "rate": 0.04404280695316171,
+    "rate_ci": [
+     0.0016556057776878914,
+     0.13161371384225923
+    ],
+    "book_rate": 0.012169103667113592,
+    "book_rate_ci": [
+     0.00046442109131108263,
+     0.033399646436625095
+    ]
+   },
+   "identity_unresolved": {
+    "k": 4,
+    "rate": 0.020831421987404022,
+    "rate_ci": [
+     0.003972818677573281,
+     0.05160892163196817
+    ],
+    "book_rate": 0.005778707332329021,
+    "book_rate_ci": [
+     0.001120708568705215,
+     0.01214686913312537
+    ]
+   },
+   "already_english": {
+    "k": 0,
+    "rate": 0,
+    "rate_ci": [
+     0,
+     0
+    ],
+    "book_rate": 0,
+    "book_rate_ci": [
+     0,
+     0
+    ]
+   }
+  }
+ },
+ "sensitivity": {
+  "scan": {
+   "n": 253,
+   "no_prior": 160,
+   "rate": 0.6324110671936759,
+   "ci": [
+    0.5714309731859485,
+    0.6894301957212691
+   ]
+  },
+  "catalogue_only": {
+   "n": 97,
+   "no_prior": 39,
+   "rate": 0.4020618556701031,
+   "ci": [
+    0.31002040253768065,
+    0.5015652922549447
+   ]
+  },
+  "single_identified:latin": {
+   "n": 45,
+   "no_prior": 41,
+   "rate": 0.9111111111111111,
+   "ci": [
+    0.792661488316343,
+    0.9648894518657969
+   ]
+  },
+  "single_identified:chinese": {
+   "n": 50,
+   "no_prior": 43,
+   "rate": 0.86,
+   "ci": [
+    0.738135428014719,
+    0.9304925473797714
+   ]
+  },
+  "single_identified:german": {
+   "n": 37,
+   "no_prior": 33,
+   "rate": 0.8918918918918919,
+   "ci": [
+    0.7529115358483284,
+    0.9571487947949374
+   ]
+  },
+  "single_identified:fr_it_es_nl": {
+   "n": 45,
+   "no_prior": 28,
+   "rate": 0.6222222222222222,
+   "ci": [
+    0.4762967000646754,
+    0.7489211470165014
+   ]
+  },
+  "single_identified:greek": {
+   "n": 41,
+   "no_prior": 15,
+   "rate": 0.36585365853658536,
+   "ci": [
+    0.23589630416936816,
+    0.5187957674783876
+   ]
+  },
+  "single_identified:he_ar_fa_syr": {
+   "n": 39,
+   "no_prior": 20,
+   "rate": 0.5128205128205128,
+   "ci": [
+    0.3619910864569657,
+    0.661350712168669
+   ]
+  },
+  "single_identified:other": {
+   "n": 37,
+   "no_prior": 19,
+   "rate": 0.5135135135135135,
+   "ci": [
+    0.3589463722598092,
+    0.6655384667278896
+   ]
+  }
+ },
+ "controls": [
+  {
+   "id": "6a423b7dc1f44d759e6cdfd5",
+   "title": "Description of the Whole World",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "F. E. (Frank E.) Romer",
+    "title": "Pomponius Mela's Description of the World",
+    "year": "1998",
+    "publisher": "University of Michigan Press",
+    "completeness": "complete",
+    "url": "https://press.umich.edu/isbn/9780472084524"
+   }
+  },
+  {
+   "id": "69b51ebe768235dc65998217",
+   "title": "Timaeus of Plato with the Commentary of Chalcidius",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "John Magee",
+    "title": "On Plato's Timaeus (Latin text with facing English translation, Dumbarton Oaks Medieval Library 41)",
+    "year": "2016",
+    "publisher": "Harvard University Press / Dumbarton Oaks",
+    "completeness": "complete",
+    "url": "https://domedieval.org/books/on-platos-timaeus-calcidius/"
+   }
+  },
+  {
+   "id": "6a4a3f5a9edae40468f8d794",
+   "title": "Three Treatises on the Philosopher's Stone",
+   "verdict": "partial_only",
+   "prior": {
+    "translator": "Arthur Edward Waite",
+    "title": "The Hermetic and Alchemical Writings of Paracelsus (vol. 1), containing 'The Book concerning the Tincture of the Philosophers' and, as Appendix VII, 'The Manual of Paracelsus'",
+    "year": "1894",
+    "publisher": "James Elliott, London",
+    "completeness": "partial",
+    "url": "https://dn760102.eu.archive.org/0/items/hermeticalchemic00para/hermeticalchemic00para_djvu.txt"
+   }
+  },
+  {
+   "id": "6a50579d78825bd7fddba209",
+   "title": "Nicomachean Ethics",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "Robert C. Bartlett and Susan D. Collins",
+    "title": "Aristotle's Nicomachean Ethics",
+    "year": "2011",
+    "publisher": "University of Chicago Press",
+    "completeness": "complete",
+    "url": "https://buxtonvillagebooks.com/book/9780226026756"
+   }
+  },
+  {
+   "id": "69937a42b0a84a5763967c12",
+   "title": "Histories, Vol. 1 (Books 1–2)",
+   "verdict": "already_english",
+   "prior": null
+  },
+  {
+   "id": "6a19e5b4011e5e64d8d7e4ba",
+   "title": "Das Buch der Weisheit Salomonis",
+   "verdict": "identity_unresolved",
+   "prior": null
+  },
+  {
+   "id": "6a4a58cf9050f0b4342ee66a",
+   "title": "Basilica Chymica, with Notes by Hartmann",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "Anonymous ('a lover of chymistry')",
+    "title": "Bazilica chymica, & Praxis chymiatricæ, or, Royal and practical chymistry in three treatises",
+    "year": "1670",
+    "publisher": "London: John Starkey and Thomas Passinger",
+    "completeness": "complete",
+    "url": "https://wellcomecollection.org/works/dv6s9674"
+   }
+  },
+  {
+   "id": "69b51e8847b06ecd58191fd7",
+   "title": "Steganography",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "Fiona Tait and Christopher Upton, ed. Adam McLean",
+    "title": "The Steganographia of Johannes Trithemius",
+    "year": "1982",
+    "publisher": "Magnum Opus Hermetic Sourceworks (Edinburgh)",
+    "completeness": "partial",
+    "url": "https://openlibrary.org/search.json?q=trithemius+steganographia&language=eng"
+   }
+  },
+  {
+   "id": "6a0853b849638a50931bd893",
+   "title": "The Divine Comedy",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "Henry Francis Cary",
+    "title": "The Vision; or, Hell, Purgatory, and Paradise of Dante Alighieri",
+    "year": "1805-1814",
+    "publisher": "London (various)",
+    "completeness": "complete",
+    "url": "https://en.wikipedia.org/wiki/Divine_Comedy"
+   }
+  },
+  {
+   "id": "69c1bab18522835be8459b6e",
+   "title": "Zohar (Hebrew MS 50)",
+   "verdict": "prior_exists",
+   "prior": {
+    "translator": "Daniel C. Matt",
+    "title": "The Zohar: Pritzker Edition, Volume Eight (includes Idra Rabba)",
+    "year": "2014",
+    "publisher": "Stanford University Press",
+    "completeness": "complete",
+    "url": "https://www.foyles.co.uk/book/the-zohar/daniel-matt/9780804787260"
+   }
+  }
+ ],
+ "recall": {
+  "n": 10,
+  "prior_exists": 7,
+  "partial_only": 1,
+  "rate": 0.7,
+  "ci": [
+   0.39677321997956516,
+   0.892210712513788
+  ]
+ },
+ "rejudge": {
+  "n": 20,
+  "exact": 18,
+  "binary": 19,
+  "pairs": [
+   {
+    "id": "69b679d770c69d645a6f87f2",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "69b6f9853c7947b468d73557",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "69e0af84528b77fe3ca13404",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a3c60f540c88a541d8ec2ae",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a3c6f5301fe4f593c1cb515",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a3c74a939b4508b04e5830d",
+    "a": "prior_exists",
+    "b": "prior_exists"
+   },
+   {
+    "id": "6a3cb75157c1f37219c4f4e3",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a3cbceeec254ff6cadf48d4",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a3ce9940a0011cb4bc10910",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a42f64a3ad4d80da123849b",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a4b73c6998fdd30218faeba",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a4e496ba41b23704d03abdd",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6a50817a78825bd7fde4a611",
+    "a": "prior_exists",
+    "b": "prior_exists"
+   },
+   {
+    "id": "6a9fba81abf09178b3659449",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6ac4ef5401a80410b96f04cd",
+    "a": "partial_only",
+    "b": "prior_exists"
+   },
+   {
+    "id": "6ac4f7dae4016f24bafabea0",
+    "a": "identity_unresolved",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6ac503f8eefc6804b9d7fb93",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6ac51a0b0749a01cb81e9d8a",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6ac534c8ed10b8de50a333d0",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   },
+   {
+    "id": "6ac5392bed10b8de50a365c8",
+    "a": "no_prior_known",
+    "b": "no_prior_known"
+   }
+  ],
+  "exact_rate": 0.9,
+  "binary_rate": 0.95,
+  "kappa_binary": 0.8275862068965515
+ },
+ "links_ok": 38,
+ "links_n": 73,
+ "links": [
+  {
+   "id": "69b643391c1c21a3738956b4",
+   "url": "https://proquest.com/docview/2248595169",
+   "status": "000"
+  },
+  {
+   "id": "69b64b3818b87551bfc6c743",
+   "url": "https://en.wikipedia.org/wiki/Decades_of_the_New_World",
+   "status": "200"
+  },
+  {
+   "id": "6a3cebe28642f0445b157fea",
+   "url": "https://www.degruyterbrill.com/document/doi/10.7312/zhu-19124/html",
+   "status": "202"
+  },
+  {
+   "id": "6a3cec0d8642f0445b1592b9",
+   "url": "https://ostasien-verlag.de/reihen/bibliothek-der-tang-und-song/bts/006.html",
+   "status": "200"
+  },
+  {
+   "id": "6a3c74a939b4508b04e5830d",
+   "url": "https://openlibrary.org/search.json?q=luxuriant+gems+spring+autumn&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "6992cd4d43713c66ea635af3",
+   "url": "https://openlibrary.org/works/OL2024422W",
+   "status": "000"
+  },
+  {
+   "id": "6ac5113e4ba7223afe056eb0",
+   "url": "https://www.fortresspress.com/store/product/9780800603403/Luthers-Works-Volume-40",
+   "status": "200"
+  },
+  {
+   "id": "6a26c7f0aad44c98627e8a35",
+   "url": "https://archive.org/details/sophic-hydrolith",
+   "status": "200"
+  },
+  {
+   "id": "6ac4fad74ba7223afef6f461",
+   "url": "https://openlibrary.org/works/OL24283828W",
+   "status": "000"
+  },
+  {
+   "id": "6ac52dbaed10b8de509f3a59",
+   "url": "https://www.dbnl.org/tekst/_zev001199501_01/_zev001199501_01_0003.php",
+   "status": "200"
+  },
+  {
+   "id": "6ac50b0e4ba7223afe00884e",
+   "url": "https://www.gutenberg.org/ebooks/20239",
+   "status": "200"
+  },
+  {
+   "id": "6a8ee224c3ddcafe21804fcc",
+   "url": "https://search.worldcat.org/oclc/240240",
+   "status": "404"
+  },
+  {
+   "id": "6a94440cb5a469d077fee627",
+   "url": "https://openlibrary.org/search.json?q=historia+de+preliis+alexander&language=eng&limit=10",
+   "status": "000"
+  },
+  {
+   "id": "6ac50d034ba7223afe01dd10",
+   "url": "https://www.capdox.capuchin.org.au/?p=1063",
+   "status": "406"
+  },
+  {
+   "id": "6ac4fe804ba7223afef87ca7",
+   "url": "https://libcat.library.tamu.edu/Record/in00004225960",
+   "status": "403"
+  },
+  {
+   "id": "6ac506c44ba7223afefd4d0a",
+   "url": "https://schulichwoolf.omeka.net/items/show/1001",
+   "status": "200"
+  },
+  {
+   "id": "6ac5009f4ba7223afef95329",
+   "url": "https://openlibrary.org/works/OL11420170W",
+   "status": "000"
+  },
+  {
+   "id": "6a26d392f5273a8d907aa4fd",
+   "url": "https://openlibrary.org/books/OL25200605M",
+   "status": "000"
+  },
+  {
+   "id": "6ac50e034ba7223afe0264fe",
+   "url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A09567?show=full",
+   "status": "000"
+  },
+  {
+   "id": "6ac50dd54ba7223afe0238a0",
+   "url": "https://libcat.lafayette.edu/Record/in00000143652",
+   "status": "202"
+  },
+  {
+   "id": "6ac4fc514ba7223afef72a4b",
+   "url": "https://ccel.org/ccel/calvin/calcom41.toc.html",
+   "status": "200"
+  },
+  {
+   "id": "6acc2d243daf4001ed9ffb31",
+   "url": "https://wellcomecollection.org/works/hgz8m57b",
+   "status": "200"
+  },
+  {
+   "id": "6ac50abf4ba7223afe004f94",
+   "url": "https://openlibrary.org/works/OL12423680W.json",
+   "status": "000"
+  },
+  {
+   "id": "6a5089be78825bd7fde96ecc",
+   "url": "https://lawcat.berkeley.edu/record/86259",
+   "status": "202"
+  },
+  {
+   "id": "69aebfd4c4a4a88d9ae89c63",
+   "url": "https://domedieval.org/books/the-histories-volume-i-books-1-5-laonikos-chalkokondyles/",
+   "status": "200"
+  },
+  {
+   "id": "6a50866778825bd7fde6e49d",
+   "url": "https://catalog.folger.edu/record/1454",
+   "status": "202"
+  },
+  {
+   "id": "69bfcda88ab50eb88e8c837a",
+   "url": "https://archive.org/download/strabogeographyb00stra/strabogeographyb00stra.pdf",
+   "status": "200"
+  },
+  {
+   "id": "6a76d5fb14c23e08b16a3b8e",
+   "url": "https://www.oeaw.ac.at/resources/Record/AC00692840",
+   "status": "403"
+  },
+  {
+   "id": "6a5082c578825bd7fde58724",
+   "url": "https://www.cambridge.org/core/journals/classical-review/article/works-of-aristotle-the-works-of-aristotle-translated-into-english-under-the-editorship-of-ja-smith-and-wd-ross-vol-iv-historia-animalium-by-darcy-wentworth-thompson-oxford-clarendon-press-1910-price-10s-6d-net/66704661D1A4DD78E37D7F430955A8A3",
+   "status": "200"
+  },
+  {
+   "id": "6a5057ab78825bd7fddba9c2",
+   "url": "https://openlibrary.org/search.json?q=nicomachean+ethics+aristotle&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "69de13308a46d0c97eedcb79",
+   "url": "https://www.lib.sophia.ac.jp/opac/opac_link/bibid/1000316329",
+   "status": "403"
+  },
+  {
+   "id": "6a5088be78825bd7fde89df0",
+   "url": "https://en.wikisource.org/wiki/Parallel_Lives",
+   "status": "200"
+  },
+  {
+   "id": "6a5086dd78825bd7fde740bc",
+   "url": "https://lib.ecu.edu/catalog-preview/catalog/3804928",
+   "status": "503"
+  },
+  {
+   "id": "6a50873378825bd7fde76d58",
+   "url": "https://lib.ecu.edu/catalog-preview/catalog/3804928",
+   "status": "503"
+  },
+  {
+   "id": "6a50853878825bd7fde69ab0",
+   "url": "https://prosody.princeton.edu/archive/CW0113992785",
+   "status": "200"
+  },
+  {
+   "id": "6a50817a78825bd7fde4a611",
+   "url": "https://archive.org/stream/plutarchslives10plut/plutarchslives10plut_djvu.txt",
+   "status": "200"
+  },
+  {
+   "id": "6a50745578825bd7fde0aa34",
+   "url": "https://en.wikipedia.org/wiki/Parallel_Lives",
+   "status": "200"
+  },
+  {
+   "id": "6a507dac78825bd7fde35210",
+   "url": "https://archive.org/download/plutarchs-lives-in-11-volumes.-vol.-4-loeb-80/Plutarch%27s%20Lives%20in%2011%20volumes.%20vol.4%20%5BLoeb%2080%5D.pdf",
+   "status": "200"
+  },
+  {
+   "id": "6a50866d78825bd7fde6e9c6",
+   "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Moralia/De_liberis_educandis*.html",
+   "status": "000"
+  },
+  {
+   "id": "69bfcdb78ab50eb88e8c838e",
+   "url": "https://www.ewtn.com/catholicism/library/select-orations-423-45-11648",
+   "status": "200"
+  },
+  {
+   "id": "6a508b9578825bd7fdea9ae4",
+   "url": "https://thegreatthinkers.org/plutarch/major-works/lives/",
+   "status": "403"
+  },
+  {
+   "id": "69937954b0a84a5763964865",
+   "url": "https://library.usi.edu/record/70579",
+   "status": "202"
+  },
+  {
+   "id": "6a507d5a78825bd7fde31e81",
+   "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Moralia/De_liberis_educandis*.html",
+   "status": "000"
+  },
+  {
+   "id": "6a50894e78825bd7fde90f82",
+   "url": "https://openlibrary.org/search.json?q=plutarch+morals+translated&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "6a5074cd78825bd7fde11b87",
+   "url": "https://search.worldcat.org/oclc/246896490",
+   "status": "404"
+  },
+  {
+   "id": "6a50640878825bd7fddd74d6",
+   "url": "https://openlibrary.org/works/OL723298W",
+   "status": "000"
+  },
+  {
+   "id": "6a507cd778825bd7fde2d474",
+   "url": "https://gutenberg.org/cache/epub/6763/pg6763-images.html",
+   "status": "200"
+  },
+  {
+   "id": "6a50844f78825bd7fde67be6",
+   "url": "https://librivox.org/parallel-lives-of-the-noble-greeks-and-romans-vol-4-by-lucius-mestrius-plutarchus",
+   "status": "200"
+  },
+  {
+   "id": "6ac4f6dce4016f24baf9efc9",
+   "url": "https://gorgiaspress.com/targums-of-onkelos-and-jonathan-ben-uzziel-on-the-pentateuch-2-volume-set",
+   "status": "200"
+  },
+  {
+   "id": "6ac4e5e1a52c373827893227",
+   "url": "https://ebible.org/bible/details.php?id=engoke",
+   "status": "200"
+  },
+  {
+   "id": "6aaafbaf5735c12a1ee4d396",
+   "url": "https://catalog.hathitrust.org/Record/005780546",
+   "status": "403"
+  },
+  {
+   "id": "6abe3ed1dbb76766e36bc012",
+   "url": "https://openlibrary.org/search.json?q=mystical+study+of+ruth+englander&language=eng",
+   "status": "000"
+  },
+  {
+   "id": "6ac4e60da52c373827895b81",
+   "url": "https://en.wikipedia.org/wiki/Midrash_Tanhuma",
+   "status": "200"
+  },
+  {
+   "id": "69d5ac20d0bd3547a565543a",
+   "url": "https://openlibrary.org/search.json?q=muqaddimah+ibn+khaldun+rosenthal&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "6ac4e601a52c37382789528e",
+   "url": "https://openlibrary.org/search.json?q=ibn+ezra+commentary+exodus&language=eng&limit=8",
+   "status": "000"
+  },
+  {
+   "id": "6ac4ef1301a80410b96ed296",
+   "url": "https://en.wikipedia.org/wiki/Authorised_Daily_Prayer_Book",
+   "status": "200"
+  },
+  {
+   "id": "6ac4ef6701a80410b96f0df5",
+   "url": "https://openlibrary.org/search.json?q=avicenna+canon+medicine&language=eng&limit=20&fields=title,first_publish_year,publisher,key",
+   "status": "000"
+  },
+  {
+   "id": "69c1ba328522835be84572dd",
+   "url": "https://dar-al-masnavi.org/about_nicholson_pub.html",
+   "status": "200"
+  },
+  {
+   "id": "6ac4eeae01a80410b96e88a8",
+   "url": "https://openlibrary.org/search.json?q=guide+of+the+perplexed+maimonides&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "69c1b9108522835be844d7cd",
+   "url": "https://archive.org/stream/bookofardaviraf00haug/bookofardaviraf00haug_djvu.txt",
+   "status": "200"
+  },
+  {
+   "id": "6ac76c2e42a492164edb596e",
+   "url": "https://www.wisdomlib.org/hinduism/book/the-bhagavata-purana/d/doc1129017.html",
+   "status": "200"
+  },
+  {
+   "id": "6a91e215bb7a47bd0f19e338",
+   "url": "https://claysanskritlibrary.org/volumes/friendly-advice-and-king-vikramas-adventures/",
+   "status": "403"
+  },
+  {
+   "id": "69944894185a84ef595ab53b",
+   "url": "https://openlibrary.org/search.json?q=artsruni+history+house&language=eng",
+   "status": "000"
+  },
+  {
+   "id": "6a19aa650d0321413fbc2595",
+   "url": "https://www.abebooks.com/book-search/author/sancelrien-tourangeau/",
+   "status": "200"
+  },
+  {
+   "id": "6a905fa71da1ecc792bd3164",
+   "url": "https://library.usi.edu/record/380024",
+   "status": "202"
+  },
+  {
+   "id": "6a19a1dfd93591e4e4b6cb29",
+   "url": "https://shop.watkinsbooks.com/products/zoroasters-telescope-deluxe-edition-by-andre-robert-andrea-de-nerciat",
+   "status": "200"
+  },
+  {
+   "id": "6ac76c2c42a492164edb5921",
+   "url": "https://www.wisdomlib.org/hinduism/book/the-bhagavata-purana",
+   "status": "200"
+  },
+  {
+   "id": "6ac76769492b9d701a8e1800",
+   "url": "https://www.wisdomlib.org/hinduism/book/the-bhagavata-purana",
+   "status": "200"
+  },
+  {
+   "id": "6a1ed9f709c2a0509efab417",
+   "url": "https://openlibrary.org/search.json?q=dongui+bogam&language=eng&fields=title,author_name,first_publish_year,publisher",
+   "status": "000"
+  },
+  {
+   "id": "6a1bbd725a11b3d745278dd6",
+   "url": "https://openlibrary.org/works/OL4487543W/editions.json",
+   "status": "000"
+  },
+  {
+   "id": "6a8f620fe408ab73f484cbe4",
+   "url": "https://ia800200.us.archive.org/34/items/Bibliotheca_Indica_Series/NatyasastraWithEnglishTranslationVolume1-ManomohanGhosh1951bis_text.pdf",
+   "status": "000"
+  },
+  {
+   "id": "6a95289fd5f269de866d50d4",
+   "url": "https://openlibrary.org/search.json?q=bhartrihari+satakatraya&language=eng&limit=5",
+   "status": "000"
+  },
+  {
+   "id": "69ef349b6c5c0455cc3f628c",
+   "url": "https://smith.edu/news-stories/2004-05/McVeighBook.html",
+   "status": "200"
+  }
+ ],
+ "examples": {
+  "no_prior_known": [
+   {
+    "id": "69b6ee0eb1a3146c0525e3d7",
+    "url": "https://sourcelibrary.org/book/69b6ee0eb1a3146c0525e3d7",
+    "stratum": "latin",
+    "period": "1700s",
+    "title": "Dissertatio inauguralis iuridica de decimis praesertim novalibus",
+    "work": "Inaugural juridical dissertation on tithes, especially novalia (tithes on newly cultivated land)",
+    "prior": null,
+    "reasoning": "This is a single 1751 Basel Latin inaugural dissertation. Seven searches, including Open Library and archive.org, found only Latin catalogue records and no English translation. The Boethius control passed. A small academic thesis like this is unlikely to have been translated. I could not search a La"
+   },
+   {
+    "id": "6a3cba4c3dce6cfad749af23",
+    "url": "https://sourcelibrary.org/book/6a3cba4c3dce6cfad749af23",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "Imperial Learning, juan 1–5 (vol 1)",
+    "work": "Dixue (Imperial Learning / Learning of the Emperors), 8 juan; our volume holds juan 1–5 in the Siku quanshu edition",
+    "prior": null,
+    "reasoning": "Searches in English and Chinese and both catalogue APIs found no published English translation of Dixue. Only scholarship about it turned up, such as a dissertation and Reiter's article on Fan's Tang lectures, which concern a different work. The control passed. I did not open the Kloss snippet. Not "
+   },
+   {
+    "id": "6ac5148a0749a01cb81c6704",
+    "url": "https://sourcelibrary.org/book/6ac5148a0749a01cb81c6704",
+    "stratum": "german",
+    "period": "1600s",
+    "title": "Sechshundert Berg-Vrthel , Schied und Weisunge: bey vorgefallenen Bergwercks Differentien ",
+    "work": "Six hundred mining judgments, rulings and decisions on mining disputes, with the Electoral Saxon Mining Ordinance of Ele",
+    "prior": null,
+    "reasoning": "The title page identifies Span's 1636 collection of mining judgments, reprinted in 1673. Eight searches, including Open Library and archive.org, found no English translation. The control searches worked. Coverage of niche early-modern German legal texts is thin, so a prior could still exist."
+   },
+   {
+    "id": "6ac508dd4ba7223afefea0e0",
+    "url": "https://sourcelibrary.org/book/6ac508dd4ba7223afefea0e0",
+    "stratum": "fr_it_es_nl",
+    "period": "1500s",
+    "title": "Leçon de perspective positive",
+    "work": "Leçons de perspective positive (Paris, Mamert Patisson, 1576)",
+    "prior": null,
+    "reasoning": "The scan's title page confirms a single work. Search-result snippets (Tours Architectura database, Höltgen 1990) say the only English translation is John Thorpe's 17th-century manuscript, which was never printed. A Spanish edition exists (Casado, 1980). I found no published English edition. I did no"
+   },
+   {
+    "id": "6a50884778825bd7fde8639f",
+    "url": "https://sourcelibrary.org/book/6a50884778825bd7fde8639f",
+    "stratum": "greek",
+    "period": "1700s",
+    "title": "Philosophical Course in Five Volumes, Vol. 3: Containing Disputations According to the Min",
+    "work": "Cursus philosophicus (Philosophiae ad mentem Scoti cursus integer), vol. 3: Scotist disputations on Aristotle's De anima",
+    "prior": null,
+    "reasoning": "Seven searches found no published English translation of the physics/De anima volume. Open Library and archive.org returned nothing. Only scholarly articles on Mastri's metaphysics (Andersen, Danish and English) turned up. I did not open those, so a small partial translation elsewhere cannot be rule"
+   },
+   {
+    "id": "6ac4eea001a80410b96e7e8f",
+    "url": "https://sourcelibrary.org/book/6ac4eea001a80410b96e7e8f",
+    "stratum": "he_ar_fa_syr",
+    "period": "<1500",
+    "title": "Mitsṿot ḳaṭan (Vat.ebr.247)",
+    "work": "Sefer Mitzvot Katan (SeMaK), also called Amudei Golah, an abridgment of Moses of Coucy's Sefer Mitzvot Gadol",
+    "prior": null,
+    "reasoning": "I found no formally published English translation. Kaufmann's 2019 De Gruyter book is a study of the manuscripts, not a translation. Sefaria's community translation is web-only. The Open Library and archive.org queries returned nothing. Only seven searches were run, and the Sefaria translation's com"
+   },
+   {
+    "id": "6a1ed98809c2a0509efa3554",
+    "url": "https://sourcelibrary.org/book/6a1ed98809c2a0509efa3554",
+    "stratum": "other",
+    "period": "1600s",
+    "title": "Kaden shinsho",
+    "work": "Kaden shinsho, a manuscript on acupuncture needle technique. It is an oral-tradition family text that gives needle depth",
+    "prior": null,
+    "reasoning": "Our copy is an unpublished manuscript. The title 家傳針書 returned no catalogue record and no English translation in any search. I opened no scholarly catalogue pages, and I found no sign of a translation, so this verdict rests on thin evidence. Only the control search tested the method. Three searches "
+   },
+   {
+    "id": "69b6409e1c1c21a37387d321",
+    "url": "https://sourcelibrary.org/book/69b6409e1c1c21a37387d321",
+    "stratum": "latin",
+    "period": "1500s",
+    "title": "In Lvcvlentum et sacrosanctum Evangeliũ domini nostri Iesu Christi secundum Lucam Commenta",
+    "work": "Commentary in nine books on the Gospel of Luke (Zürich, 1546)",
+    "prior": null,
+    "reasoning": "No complete English translation turned up in any search. Bullinger's English printings are the Decades sermons and the Apocalypse sermons, which are different works. Excerpts may appear in the Reformation Commentary on Scripture Luke volume, but I did not check it. I opened only our scan, not any of"
+   },
+   {
+    "id": "6a3c779801fe4f593c203594",
+    "url": "https://sourcelibrary.org/book/6a3c779801fe4f593c203594",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "Correct Meaning of the Hexagram Images of the Book of Changes, juan 5–6 (vol 5)",
+    "work": "Yixiang zheng (Correct Meaning of the Hexagram Images of the Book of Changes), juan 5–6, Siku quanshu copy. One volume o",
+    "prior": null,
+    "reasoning": "The scan is the Siku quanshu text of Yixiang zheng, a single work. Searches in English and Chinese, Open Library and archive.org found no English translation, either complete or partial. The control passed. I ran only 7 searches, and no JSTOR or WorldCat check, so this is a modest-confidence negativ"
+   },
+   {
+    "id": "6ac516920749a01cb81d51b5",
+    "url": "https://sourcelibrary.org/book/6ac516920749a01cb81d51b5",
+    "stratum": "german",
+    "period": "1600s",
+    "title": "Concio Inauguralis Oder Christliche Einweihungs-Predigt/ Der widererbawten Kirchen deß Stä",
+    "work": "Inaugural sermon for the rebuilt church of Lichtenau in the County of Hanau, preached 13 April 1656, in the presence of ",
+    "prior": null,
+    "reasoning": "The title page identifies a single 1656 German occasional sermon. Searches turned up only German catalogue records and the Heidelberg digitization. Open Library and archive.org returned nothing, and no English translation was found. The positive control passed."
+   }
+  ],
+  "prior_exists": [
+   {
+    "id": "69b643391c1c21a3738956b4",
+    "url": "https://sourcelibrary.org/book/69b643391c1c21a3738956b4",
+    "stratum": "latin",
+    "period": "1500s",
+    "title": "Commentariorum Joannis Calvini in Acta Apostolorum, liber I, ad sereniss. Daniae Regem",
+    "work": "Commentary on the Acts of the Apostles, book I (the first part of the commentary, Acts 1–13), dedicated to the King of D",
+    "prior": {
+     "translator": "Christopher Fetherstone",
+     "title": "The Commentaries of M. John Calvin upon the Actes of the Apostles",
+     "year": "1585",
+     "publisher": "London: [Thomas Dawson] for G. Bishop",
+     "completeness": "complete",
+     "url": "https://proquest.com/docview/2248595169"
+    },
+    "reasoning": "Calvin's Acts commentary was translated into English in full by Fetherstone (London, 1585, STC 4398). Beveridge revised it for the Calvin Translation Society (1844), and it has been reprinted many times. The 1552 Latin volume is the first part of this same work."
+   },
+   {
+    "id": "6a3cebe28642f0445b157fea",
+    "url": "https://sourcelibrary.org/book/6a3cebe28642f0445b157fea",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "Original Edition of the Original Meaning of the Book of Changes, juan 1–2 (vol 1)",
+    "work": "Zhouyi benyi (Original Meaning of the Book of Changes), in the Siku quanshu edition of the 'original' (ben) text arrange",
+    "prior": {
+     "translator": "Joseph A. Adler",
+     "title": "The Original Meaning of the Yijing: Commentary on the Scripture of Change",
+     "year": "2019",
+     "publisher": "Columbia University Press (Translations from the Asian Classics)",
+     "completeness": "complete",
+     "url": "https://www.degruyterbrill.com/document/doi/10.7312/zhu-19124/html"
+    },
+    "reasoning": "Adler's 2019 Columbia University Press translation of Zhu Xi's Zhouyi benyi is the first full English rendering, per publisher material and Open Library. Our copy is a Siku quanshu ordering of the same work, so the text is the same."
+   },
+   {
+    "id": "6ac5113e4ba7223afe056eb0",
+    "url": "https://sourcelibrary.org/book/6ac5113e4ba7223afe056eb0",
+    "stratum": "german",
+    "period": "1500s",
+    "title": "Van den Slotelen",
+    "work": "On the Keys (Von den Schlüsseln, 1530), in the Low German edition of 1531",
+    "prior": {
+     "translator": "Conrad Bergendoff (volume editor); translator not confirmed. Helmut T. Lehmann is general editor of Luther's Works.",
+     "title": "The Keys (1530), in Luther's Works, vol. 40: Church and Ministry II",
+     "year": "1958",
+     "publisher": "Fortress Press (Philadelphia)",
+     "completeness": "complete",
+     "url": "https://www.fortresspress.com/store/product/9780800603403/Luthers-Works-Volume-40"
+    },
+    "reasoning": "Our copy appears to be the 1531 Low German edition of Luther's Von den Schlüsseln. Search snippets indicate that 'The Keys' (1530) is in Luther's Works vol. 40 (Fortress, 1958), a published English translation. I did not open the pages, and I ran fewer than the 6 searches the protocol sets as a floo"
+   },
+   {
+    "id": "6ac52dbaed10b8de509f3a59",
+    "url": "https://sourcelibrary.org/book/6ac52dbaed10b8de509f3a59",
+    "stratum": "fr_it_es_nl",
+    "period": "1600s",
+    "title": "Iconologia Di Cesare Ripa Pervgino Cav.re De S.ti Mavritio, E Lazzaro: Nella Qvale Si Desc",
+    "work": "Iconologia (illustrated Padua edition, 1613, Heidelberg digitisation)",
+    "prior": {
+     "translator": "Anonymous (George Richardson, publisher and adapter)",
+     "title": "Iconology; or, Emblematical Figures Explained",
+     "year": "1779",
+     "publisher": "George Richardson, London",
+     "completeness": "substantial",
+     "url": "https://www.dbnl.org/tekst/_zev001199501_01/_zev001199501_01_0003.php"
+    },
+    "reasoning": "Zimmermann's survey shows Richardson's 1779 London Iconology is a fairly full English version, an adaptation based on an Italian edition and a French abridgment. Tempest 1709 is truncated. I ran only four searches, fewer than the six the floor asks for, and did not open the Richardson record itself."
+   },
+   {
+    "id": "6a5089be78825bd7fde96ecc",
+    "url": "https://sourcelibrary.org/book/6a5089be78825bd7fde96ecc",
+    "stratum": "greek",
+    "period": "1700s",
+    "title": "Parallel Lives of Plutarch, Vol. 9: Containing the Lives of Demetrius, Antony, Dion, and B",
+    "work": "Parallel Lives: Demetrius, Antony, Dion, Brutus (with their paired Lives and comparisons), in a French translation, vol.",
+    "prior": {
+     "translator": "Bernadotte Perrin",
+     "title": "Plutarch's Lives, Loeb Classical Library, vol. IX (Demetrius and Antony; Pyrrhus and Caius Marius) and vol. VI (Dion and Brutus; Timoleon and Aemilius Paulus)",
+     "year": "1914-1926",
+     "publisher": "Harvard University Press / Heinemann",
+     "completeness": "complete",
+     "url": "https://lawcat.berkeley.edu/record/86259"
+    },
+    "reasoning": "The Lives of Demetrius, Antony, Dion and Brutus are covered in complete English translations: Dryden/Clough, Langhorne, and Loeb (Perrin). Search worked, and I confirmed the Langhorne edition through the archive.org API. I could not open the Loeb or Dryden/Clough pages, so those two URLs rest on sea"
+   },
+   {
+    "id": "6ac4f6dce4016f24baf9efc9",
+    "url": "https://sourcelibrary.org/book/6ac4f6dce4016f24baf9efc9",
+    "stratum": "he_ar_fa_syr",
+    "period": "unknown",
+    "title": "Aramaic Targum of the Pentateuch (Vat.ebr.432)",
+    "work": "Targum Onkelos on the Pentateuch (Aramaic Targum), Vatican manuscript Vat. ebr. 432, 13th/14th century",
+    "prior": {
+     "translator": "J. W. Etheridge",
+     "title": "The Targums of Onkelos and Jonathan ben Uzziel on the Pentateuch, with the fragments of the Jerusalem Targum",
+     "year": "1862-1865",
+     "publisher": "London: Longman, Green, Longman, Roberts & Green (later reprinted by Gorgias Press)",
+     "completeness": "complete",
+     "url": "https://gorgiaspress.com/targums-of-onkelos-and-jonathan-ben-uzziel-on-the-pentateuch-2-volume-set"
+    },
+    "reasoning": "The scan is a manuscript of Targum Onkelos on the Pentateuch, a single work. Etheridge published a complete English translation in 1862-65, and Grossfeld (1988) and Drazin published modern ones. The control search passed."
+   },
+   {
+    "id": "6ac76c2e42a492164edb596e",
+    "url": "https://sourcelibrary.org/book/6ac76c2e42a492164edb596e",
+    "stratum": "other",
+    "period": "unknown",
+    "title": "Bhagavata Purana with Commentary, Book 12",
+    "work": "Bhagavata Purana, Skandha 12, with commentary (satik)",
+    "prior": {
+     "translator": "G. V. Tagare",
+     "title": "The Bhagavata Purana (Ancient Indian Tradition and Mythology series, 5 vols; Skandha 12 is in the final volume)",
+     "year": "1950 per the wisdomlib page; the Motilal Banarsidass print edition is probably later and I did not check its date",
+     "publisher": "Motilal Banarsidass (per the Buy links and ISBN 8120838203 on the wisdomlib page)",
+     "completeness": "complete",
+     "url": "https://www.wisdomlib.org/hinduism/book/the-bhagavata-purana/d/doc1129017.html"
+    },
+    "reasoning": "The work is the Bhagavata Purana, Skandha 12. Complete English translations are well established (Tagare, Motilal Banarsidass; Prabhupada's BBT edition; Debroy). I confirmed Tagare only on wisdomlib. A translation of Shridhara's commentary itself was not found, but the root text is translated."
+   },
+   {
+    "id": "69b64b3818b87551bfc6c743",
+    "url": "https://sourcelibrary.org/book/69b64b3818b87551bfc6c743",
+    "stratum": "latin",
+    "period": "1500s",
+    "title": "De Nvper Svb D. Carolo Repertis Insulis, simulque incolarum moribus, R. Petri Martyris Enc",
+    "work": "Enchiridion on the islands recently discovered under Charles V and the customs of their inhabitants (the 1521 Basel prin",
+    "prior": {
+     "translator": "Francis Augustus MacNutt",
+     "title": "De Orbe Novo: The Eight Decades of Peter Martyr d'Anghera",
+     "year": "1912",
+     "publisher": "G. P. Putnam's Sons, New York and London",
+     "completeness": "complete",
+     "url": "https://en.wikipedia.org/wiki/Decades_of_the_New_World"
+    },
+    "reasoning": "The 1521 Enchiridion is Decade 4 of De orbe novo. Lok (1612) translated Decades 4–8 and MacNutt (1912) translated all eight, so both contain it. The Lok/Decade 4 link is inferred from the Wikipedia page, which says 'remaining five decades'. I did not open a catalogue record for either."
+   },
+   {
+    "id": "6a3cec0d8642f0445b1592b9",
+    "url": "https://sourcelibrary.org/book/6a3cec0d8642f0445b1592b9",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "History of the Guqin, juan 4–6 (vol 2)",
+    "work": "Qinshi (History of the Qin zither), juan 4–6, in the Siku quanshu text; this is one volume of a single work",
+    "prior": {
+     "translator": "Luca Pisano",
+     "title": "Qinshi 琴史 (History of the Qin), bilingual annotated edition, Bibliothek der Tang und Song 6",
+     "year": "2023",
+     "publisher": "OSTASIEN Verlag",
+     "completeness": "complete",
+     "url": "https://ostasien-verlag.de/reihen/bibliothek-der-tang-und-song/bts/006.html"
+    },
+    "reasoning": "Search summaries consistently say Pisano published a bilingual annotated English translation of the whole Qinshi (OSTASIEN, 2023, ISBN 978-3-940527-27-1). The publisher page I opened confirms the edition but not that it is in English or that it covers all six juan, so completeness is inferred."
+   },
+   {
+    "id": "6a26c7f0aad44c98627e8a35",
+    "url": "https://sourcelibrary.org/book/6a26c7f0aad44c98627e8a35",
+    "stratum": "german",
+    "period": "1700s",
+    "title": "Jennis, Lucas: Wasserstein der Weisen Oder Chymisches Tractätlein, Darinn der Weg gezeiget",
+    "work": "Wasserstein der Weisen, a chymical treatise on the way, the matter and the process to the universal tincture. This 1703 ",
+    "prior": {
+     "translator": "Arthur Edward Waite (ed.)",
+     "title": "The Sophic Hydrolith, or Water Stone of the Wise (in The Hermetic Museum, Restored and Enlarged, vol. 1)",
+     "year": "1893",
+     "publisher": "James Elliott & Co., London",
+     "completeness": "complete",
+     "url": "https://archive.org/details/sophic-hydrolith"
+    },
+    "reasoning": "Waite's 1893 Hermetic Museum, vol. 1, contains 'The Sophic Hydrolith, or Water Stone of the Wise', whose subtitle matches our title. The Latin Hydrolithus sophicus is the version printed in the Musaeum Hermeticum. I did not read its text against the German. The 1703 edition's added tracts are not pa"
+   }
+  ],
+  "partial_only": [
+   {
+    "id": "69b6c60f31b7f0d07f4f7c80",
+    "url": "https://sourcelibrary.org/book/69b6c60f31b7f0d07f4f7c80",
+    "stratum": "latin",
+    "period": "1700s",
+    "title": "Iacobi Gretseri Societatis Iesu institutiones linguae Graecae in compendium redactae ...",
+    "work": "Condensed Greek grammar for Jesuit schools, abridged from his Institutiones linguae Graecae (Munich, 1711)",
+    "prior": {
+     "translator": "unknown (anonymous)",
+     "title": "The rudiments of the Greek tongue, out of the first book of the institutions of James Gretser of the Society of Jesus",
+     "year": "1687",
+     "publisher": "London: Henry Hills and Matthew Turner (per search-result catalogue summaries)",
+     "completeness": "partial",
+     "url": ""
+    },
+    "reasoning": "The only English item found is a 1687 London 'Rudiments of the Greek tongue' taken from Gretser's first book. It is an adaptation of the Rudimenta, not a full translation of the Institutiones or this compendium. I could not open the catalogue pages (403/503), so the details rest on search summaries."
+   },
+   {
+    "id": "6a3cc15aec254ff6cae0b87b",
+    "url": "https://sourcelibrary.org/book/6a3cc15aec254ff6cae0b87b",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "Jade Dew of the Crane Forest, juan 12–15 (vol 4)",
+    "work": "Helin yulu (Jade Dew of the Crane Forest), juan 12–15 (one volume of a multi-volume work); Siku quanshu copy",
+    "prior": {
+     "translator": "Mark Halperin",
+     "title": "A Thirteenth-Century View: Virtue, Valor, and Violence in Helin yulu 鶴林玉露 (study with translated passages)",
+     "year": "2021",
+     "publisher": "Tsing Hua Journal of Chinese Studies 51(1), pp. 37-83",
+     "completeness": "partial",
+     "url": "https://thjcs.site.nthu.edu.tw/var/file/452/1452/img/4400/700097906.pdf"
+    },
+    "reasoning": "No book-length or complete English translation turned up. The only English-language item found is Halperin's 2021 journal article, which translates selected passages. I did not check whether it covers juan 12–15. I did not search CTEXT or WorldCat, so a fuller translation is not ruled out."
+   },
+   {
+    "id": "6a26da5a863cf28d8f64e35b",
+    "url": "https://sourcelibrary.org/book/6a26da5a863cf28d8f64e35b",
+    "stratum": "german",
+    "period": "1700s",
+    "title": "Eckartshausen, Carl von: Aufschlüsse zur Magie aus geprüften Erfahrungen über verborgene p",
+    "work": "Aufschlüsse zur Magie, Part 2 (Zweyter Theil), Munich: Joseph Lentner, 1790, with 11 plates",
+    "prior": {
+     "translator": "Gerhard Hanswille and Deborah Brumlich",
+     "title": "Magic: The Principles of Higher Knowledge",
+     "year": "1989 (2nd edition 1991)",
+     "publisher": "Merkur Publishing Company, Scarborough, Ontario (ISBN 0969382014)",
+     "completeness": "partial",
+     "url": "https://museumofwitchcraftandmagic.co.uk/library/1925-magic-the-principles-of-higher-knowledge/"
+    },
+    "reasoning": "The scan is Part 2 of a 4-part work of roughly 1,800 pages. The only formally published English version found is Merkur's 316-page Magic: The Principles of Higher Knowledge, which secondary sources call a translation of Aufschlüsse zur Magie. At that length it is selective, and I could not confirm w"
+   },
+   {
+    "id": "6a9f4989d2c94fce8291018f",
+    "url": "https://sourcelibrary.org/book/6a9f4989d2c94fce8291018f",
+    "stratum": "fr_it_es_nl",
+    "period": "1900+",
+    "title": "Apologetic History of the Indies (Historians of the Indies, Vol. 1)",
+    "work": "Apologética historia sumaria (Apologética historia de las Indias), vol. 1 of Historiadores de Indias, NBAE 13, Madrid 19",
+    "prior": {
+     "translator": "Lawrence Clayton (editor; translator not confirmed)",
+     "title": "Bartolomé de las Casas and the Defense of Amerindian Rights: A Brief History with Documents (includes an excerpt from the Apologética historia)",
+     "year": "",
+     "publisher": "",
+     "completeness": "partial",
+     "url": ""
+    },
+    "reasoning": "I found no complete English translation. The only English version surfaced was an excerpt in Clayton's anthology, which I know only from a search snippet. My search was thin: 3 of the 6 required searches, and the Clayton details are unverified."
+   },
+   {
+    "id": "6aaafba55735c12a1ee4cecb",
+    "url": "https://sourcelibrary.org/book/6aaafba55735c12a1ee4cecb",
+    "stratum": "he_ar_fa_syr",
+    "period": "1900+",
+    "title": "Chronicle of an Anonymous Author Extending to the Year of Christ 1234, Vol. 1",
+    "work": "Anonymous Syriac Chronicle (Chronicle of 1234), Syriac text vol. I",
+    "prior": {
+     "translator": "A. S. Tritton and H. A. R. Gibb",
+     "title": "The First and Second Crusades from an Anonymous Syriac Chronicle",
+     "year": "1933",
+     "publisher": "Journal of the Royal Asiatic Society",
+     "completeness": "partial",
+     "url": "https://en.wikipedia.org/wiki/Chronicle_of_1234"
+    },
+    "reasoning": "No complete English translation was found. Only partial ones exist: Tritton & Gibb 1933 (the crusade sections) and Palmer 1993 (582–717). I did not open Palmer's publication page, and the Harrak 2018 listing is unverified. Abouna's 1974 translation is French."
+   },
+   {
+    "id": "69c1bda58522835be846acd6",
+    "url": "https://sourcelibrary.org/book/69c1bda58522835be846acd6",
+    "stratum": "other",
+    "period": "1800s",
+    "title": "Apadānapāḷi (Pali MS 2)",
+    "work": "Apadāna (Apadānapāḷi), Pali canonical verse biographies of Buddhas, paccekabuddhas, monks and nuns",
+    "prior": {
+     "translator": "William Pruitt",
+     "title": "The Commentary on the Verses of the Theris (includes 25 of the last 40 nun apadānas)",
+     "year": "1998",
+     "publisher": "Pali Text Society, Bristol",
+     "completeness": "partial",
+     "url": "https://en.wikipedia.org/wiki/Apad%C4%81na"
+    },
+    "reasoning": "The only complete English translation found is Walters' 2017 online version (Whitman College, apadanatranslation.org), which has no ISBN or press imprint, so I treated it as not formally published. Published English renderings cover only parts of the work. I ran 4 searches, fewer than the 6 the prot"
+   },
+   {
+    "id": "69b6584018b87551bfcf1138",
+    "url": "https://sourcelibrary.org/book/69b6584018b87551bfcf1138",
+    "stratum": "latin",
+    "period": "1500s",
+    "title": "De latinitate falso suspecta",
+    "work": "De Latinitate falso suspecta, expostulatio (1576), with the appended Plautine Latin dissertation",
+    "prior": {
+     "translator": "Jeroen De Keyser, Noreen Humble, Keith Sidwell (eds.)",
+     "title": "Henri Estienne: On Books (includes 'On Latin Wrongly Regarded as Suspect', the preface only)",
+     "year": "2022",
+     "publisher": "Lysa, Ghent (LYSA Neo-Latin Texts 2)",
+     "completeness": "partial",
+     "url": "https://bmcr.brynmawr.edu/?p=75412"
+    },
+    "reasoning": "The only English rendering found is the preface, in the 2022 Lysa bilingual volume. The main Expostulatio and the Plautus treatise have no English translation. The French version (Garnier) is not English. I ran fewer searches than the 6-search floor, but the verdict is partial_only rather than no_pr"
+   },
+   {
+    "id": "6a3cbbba87ee3d48c89d0ab2",
+    "url": "https://sourcelibrary.org/book/6a3cbbba87ee3d48c89d0ab2",
+    "stratum": "chinese",
+    "period": "unknown",
+    "title": "Commentary and Subcommentary on the Book of Rites, juan 2 (vol 2)",
+    "work": "Liji zhushu (Book of Rites with commentary and subcommentary), juan 2. This is the Siku quanshu edition, and it covers t",
+    "prior": {
+     "translator": "James Legge",
+     "title": "The Li Ki (Book of Rites), Sacred Books of the East vols. 27-28",
+     "year": "1885",
+     "publisher": "Clarendon Press, Oxford",
+     "completeness": "complete",
+     "url": "https://archive.org/advancedsearch.php?q=title%3A%28li+ki%29+AND+creator%3Alegge&fl[]=identifier&fl[]=title&fl[]=date&rows=10&output=json"
+    },
+    "reasoning": "Legge (1885) translates the whole Liji base text, including the Quli chapter, but not Zheng's commentary or Kong's subcommentary. I found no published English translation of the zhushu itself, apart from two chapters (Daxue and Zhongyong) in the Johnston and Wang edition. Verdict is partial only."
+   },
+   {
+    "id": "6ac510f14ba7223afe051a73",
+    "url": "https://sourcelibrary.org/book/6ac510f14ba7223afe051a73",
+    "stratum": "fr_it_es_nl",
+    "period": "1500s",
+    "title": "Premier volume contenant quarante tableaux, ou, histoires diverses qui sont memorables tou",
+    "work": "Premier volume contenant quarante tableaux: a series of 40 prints on the French Wars of Religion, each with a French cap",
+    "prior": {
+     "translator": "Philip Benedict (unverified; I could not open the book's contents)",
+     "title": "Graphic History: The Wars, Massacres and Troubles of Tortorel and Perrissin",
+     "year": "2007",
+     "publisher": "Droz (Geneva)",
+     "completeness": "partial",
+     "url": "https://openlibrary.org/search.json?q=graphic+history+tortorel+perrissin&language=eng"
+    },
+    "reasoning": "No standalone English edition of the captions was found. Benedict's 2007 study is the main English work on the series. It may translate some captions, but I could not confirm that. Fewer than 6 distinct searches were run, so this is a hedged result."
+   },
+   {
+    "id": "6ac50c990749a01cb8168153",
+    "url": "https://sourcelibrary.org/book/6ac50c990749a01cb8168153",
+    "stratum": "he_ar_fa_syr",
+    "period": "unknown",
+    "title": "Sīrat ʿAntar (Cod. Heid. Orient. 27,23)",
+    "work": "Sīrat ʿAntar (Sīrat ʿAntar ibn Shaddād), the Arabic popular romance of the pre-Islamic poet-hero ʿAntara",
+    "prior": {
+     "translator": "Terrick Hamilton",
+     "title": "Antar, a Bedoueen Romance",
+     "year": "1819-1820",
+     "publisher": "London (John Murray, as I recall; not confirmed from an opened page)",
+     "completeness": "partial",
+     "url": ""
+    },
+    "reasoning": "I found only partial English versions. Hamilton (1819-20) translated just the first part, and Nawolska did one incomplete volume. Norris (1980) and Lyons (1995) give selections or epitomes. I found no complete English translation. I ran only 3 searches and opened no pages, so Hamilton's publisher an"
+   }
+  ],
+  "not_a_single_work": [
+   {
+    "id": "69c1138537989a445aea1ac1",
+    "url": "https://sourcelibrary.org/book/69c1138537989a445aea1ac1",
+    "stratum": "latin",
+    "period": "1800s",
+    "title": "Complete Works",
+    "work": "Opera quae supersunt omnia, vol. VII (Corpus Reformatorum vol. XXXV): Tractatus theologici minores, tomus tertius. It is",
+    "prior": null,
+    "reasoning": "The scanned contents page lists many independent treatises (items XVIII to XXIV and beyond) in Latin and French, so the volume is not one work. No English-translation search was done, so no prior translation is ruled in or out."
+   },
+   {
+    "id": "6ac514c30749a01cb81c8b8c",
+    "url": "https://sourcelibrary.org/book/6ac514c30749a01cb81c8b8c",
+    "stratum": "german",
+    "period": "1600s",
+    "title": "Reichshandlung und andere deß Heiligen Römischen Reichs Acta, ...",
+    "work": "Reichshandlung: a compilation of Holy Roman Empire acts, treatises, imperial, royal and princely mandates, and documents",
+    "prior": null,
+    "reasoning": "The title page describes an anthology of many separate imperial acts, treatises and mandates that Goldast compiled. It is not one work. I did not search for translations of individual pieces."
+   },
+   {
+    "id": "6ac50f0b0749a01cb818d03d",
+    "url": "https://sourcelibrary.org/book/6ac50f0b0749a01cb818d03d",
+    "stratum": "fr_it_es_nl",
+    "period": "<1500",
+    "title": "Alain Chartier: Le livre des quatre dames; Jean Chapuis (?): Les sept articles de la foi (",
+    "work": "Composite manuscript, Heidelberg Cod. Pal. germ. 354. It holds Chartier's Livre des quatre dames, Les sept articles de l",
+    "prior": null,
+    "reasoning": "The volume is a composite codex of separate works from different dates, so it is not one work. Searches also suggest an English Book of the Four Ladies exists, with Barbara Altmann named as co-translator. I could not confirm its details, so I give no prior."
+   },
+   {
+    "id": "6a50864778825bd7fde6d5b3",
+    "url": "https://sourcelibrary.org/book/6a50864778825bd7fde6d5b3",
+    "stratum": "greek",
+    "period": "1700s",
+    "title": "Aristotle's Complete Works in Greek, Vol. 2",
+    "work": "Volume 2 of a multi-volume collected edition of Aristotle's works in Greek (probably the Bipontine Aristotelis Opera omn",
+    "prior": null,
+    "reasoning": "The record describes a volume of Aristotle's collected works in Greek, which holds several independent treatises. The scan shows no title page, so I could not identify a single work. I did not search for translations, and I did not check the volume's contents."
+   },
+   {
+    "id": "6abe3f2cdbb76766e36c1412",
+    "url": "https://sourcelibrary.org/book/6abe3f2cdbb76766e36c1412",
+    "stratum": "he_ar_fa_syr",
+    "period": "1700s",
+    "title": "History of Mary and Selected Memre (Borg.sir.128)",
+    "work": "Manuscript miscellany: a History of Mary plus selected memre (verse homilies) by different authors",
+    "prior": null,
+    "reasoning": "The catalogue record lists a History of Mary together with selected memre by two authors (Jacob of Sarug and Ephrem). That points to a manuscript miscellany of independent pieces, not one work. The scans I opened show only the binding and blank leaves. I ran no searches."
+   },
+   {
+    "id": "69af3e0496430911b0bce8ee",
+    "url": "https://sourcelibrary.org/book/69af3e0496430911b0bce8ee",
+    "stratum": "other",
+    "period": "1900+",
+    "title": "The Age of Expectation",
+    "work": "Век ожидания, a collection of articles (Moscow, Golos Truda, 1925), translated from the French by N. A. Kritskaya and ed",
+    "prior": null,
+    "reasoning": "The title page says 'Сборник статей', so this is a multi-article collection, not one work. I found no English translation of the title piece, 'Un siècle d'attente'. The full contents of the Russian volume were not visible, and my searches were not exhaustive."
+   },
+   {
+    "id": "6a4a5c0a9050f0b434318eab",
+    "url": "https://sourcelibrary.org/book/6a4a5c0a9050f0b434318eab",
+    "stratum": "latin",
+    "period": "1600s",
+    "title": "Public Law, in Which the Secrets and Rights of the Prince Are Expounded",
+    "work": "Pérez's Ius publicum, quo arcana et iura principis exponuntur, issued with Hippolytus a Collibus's Princeps added in the",
+    "prior": null,
+    "reasoning": "The catalogue record shows two works in one volume: Pérez's Ius publicum plus Hippolytus a Collibus's Princeps. I did not run a separate prior-translation search for the Collibus work. The searches for Pérez's work found no English translation, only a Spanish one."
+   },
+   {
+    "id": "6ac50e120749a01cb817d33a",
+    "url": "https://sourcelibrary.org/book/6ac50e120749a01cb817d33a",
+    "stratum": "german",
+    "period": "unknown",
+    "title": "Kommuniongebete; Ps.-Aurelius Augustinus: Meditationes, dt. (Cod. Pal. germ. 205)",
+    "work": "Heidelberg Cod. Pal. germ. 205: a 15th-century German prayer-book with communion prayers plus a German version of the Ps",
+    "prior": null,
+    "reasoning": "The catalogue title names two separate items: communion prayers and the German Ps.-Augustine Meditationes. That makes the codex a prayer-book miscellany, not one work. I could only open blank flyleaves and could not fetch the Heidelberg record, so the contents list is unverified. English Meditatione"
+   },
+   {
+    "id": "6ac5242bed10b8de5098951f",
+    "url": "https://sourcelibrary.org/book/6ac5242bed10b8de5098951f",
+    "stratum": "fr_it_es_nl",
+    "period": "1700s",
+    "title": "Recueil des marbres antiques qui se trouvent dans la Galerie du Roy de Pologne à Dresden: ",
+    "work": "Album of engraved plates of the antique marble sculptures in the gallery of the King of Poland (Augustus II) at Dresden,",
+    "prior": null,
+    "reasoning": "The volume is an album of about 230 plates with captions and a brief list, with no continuous text. That falls under the plates-without-text category. I found no English translation in the searches I ran, which were fewer than the six-search floor."
+   },
+   {
+    "id": "6a5087e278825bd7fde802d7",
+    "url": "https://sourcelibrary.org/book/6a5087e278825bd7fde802d7",
+    "stratum": "greek",
+    "period": "1700s",
+    "title": "Plutarch's Moral Treatises, Vol. 4",
+    "work": "Plutarch's Moral Treatises (Moralia), volume 4, in German. This is a volume of a multi-volume collection of separate ess",
+    "prior": null,
+    "reasoning": "The volume is one part of a German collection of many separate Moralia essays, so it is not a single work. English translations of the Moralia exist (Holland 1603, Goodwin 1878, Loeb), but they do not map onto this volume. I did not see the title page, so I could not confirm which essays it contains"
+   }
+  ],
+  "identity_unresolved": [
+   {
+    "id": "69b52597ea48bdf05847e753",
+    "url": "https://sourcelibrary.org/book/69b52597ea48bdf05847e753",
+    "stratum": "latin",
+    "period": "1600s",
+    "title": "\n              Primo questionum in Genesis /\n              Menasseh ben Israel.\n          ",
+    "work": "A Lutheran Latin treatise or disputation on the plural name Elohim as proof of the Trinity. The OCR pages (numbered 104–",
+    "prior": null,
+    "reasoning": "The scan text shows a Lutheran Trinitarian tract on Elohim, which contradicts the Menasseh ben Israel record. The title page is missing and the volume may be a composite. I can't name the work, so I can't check for an English translation."
+   },
+   {
+    "id": "6a5081b378825bd7fde4d0ab",
+    "url": "https://sourcelibrary.org/book/6a5081b378825bd7fde4d0ab",
+    "stratum": "greek",
+    "period": "1700s",
+    "title": "Commentary on Aristotle's Eight Books of Physics, On the Heavens, Meteorology",
+    "work": "Anonymous commentary on Aristotle's Physics (8 books), De caelo and Meteorologica, in a manuscript, BSB Clm 27786",
+    "prior": null,
+    "reasoning": "The six scanned pages are binding and blank flyleaves with no title page or text. The record describes an anonymous Latin manuscript commentary covering three Aristotelian treatises (Physics, De caelo, Meteora). Without an author or a specific text, no particular work can be identified, so I did not"
+   },
+   {
+    "id": "6ac4f6cce4016f24baf9e521",
+    "url": "https://sourcelibrary.org/book/6ac4f6cce4016f24baf9e521",
+    "stratum": "he_ar_fa_syr",
+    "period": "unknown",
+    "title": "Hebrew-Arabic lexicon (Vat.ebr.420)",
+    "work": "Hebrew-Arabic lexicon, Vat. ebr. 420 (ff. 1a-92v), mid-15th century manuscript",
+    "prior": null,
+    "reasoning": "The scan shows only a vellum binding, a blank flyleaf and a later Italian note ('Dizionario arabico esposto in lingua hebraica'). The Vatican record names no author or title. Without knowing which lexicon this is, I can't search for a translation of it, so I did not run the positive control or a ful"
+   },
+   {
+    "id": "69e11bc1b625c99d5585450b",
+    "url": "https://sourcelibrary.org/book/69e11bc1b625c99d5585450b",
+    "stratum": "other",
+    "period": "<1500",
+    "title": "Ostracon with a List of Workmen's Names",
+    "work": "A single museum object: a limestone ostracon fragment with a hieratic list of workmen's names. The accession number 09.1",
+    "prior": null,
+    "reasoning": "The scan is a photograph of a single fragmentary administrative ostracon, not a text edition. It has no identifiable literary work and no known edition to translate. I ran no searches, so I cannot say whether any published translation of this particular ostracon exists."
+   },
+   {
+    "id": "69938921ce15387065946913",
+    "url": "https://sourcelibrary.org/book/69938921ce15387065946913",
+    "stratum": "greek",
+    "period": "1600s",
+    "title": "Dioscorides Pedanius, De materia medica (Cambridge, Trinity College, MS O.7.45)",
+    "work": "Cannot be identified. The scan is a handwritten volume with a Trinity College bookplate. It contains an 18th-century not",
+    "prior": null,
+    "reasoning": "The scan shows a bookplate, a note 'Chiliades Medicinales Graece et Anglice' and English verse in secretary hand. It shows no Dioscorides text, so the record looks wrong. Without a firm identification, a search for a prior translation would be meaningless."
+   },
+   {
+    "id": "69c1bc678522835be8462c30",
+    "url": "https://sourcelibrary.org/book/69c1bc678522835be8462c30",
+    "stratum": "he_ar_fa_syr",
+    "period": "1800s",
+    "title": "Mishnat Ḥasidim with commentary (Gaster Hebrew MS 2117)",
+    "work": "Cannot be determined. The first pages are a mix of Tosefta Shabbat text, halakhic commentary headed 'Siach Aharon', and ",
+    "prior": null,
+    "reasoning": "The scan contradicts the catalogue title. The visible pages show Tosefta Shabbat text and shifting commentary headings, which suggests a composite manuscript. With no reliable title page, a search for a translation would not be meaningful. Someone needs to check the images by hand."
+   },
+   {
+    "id": "69e0af8f528b77fe3ca13416",
+    "url": "https://sourcelibrary.org/book/69e0af8f528b77fe3ca13416",
+    "stratum": "other",
+    "period": "unknown",
+    "title": "Funerary Stela Fragment of the First Intermediate Period",
+    "work": "Fragment of a limestone funerary stela, First Intermediate Period, with hieroglyphic inscription (museum number 98.4.68 ",
+    "prior": null,
+    "reasoning": "The item is a single museum object, a fragment with a few hieroglyphic columns, not a literary work. No named text can be identified, so there is no work to match against a translation. I ran no searches, so I cannot support a no_prior_known verdict."
+   },
+   {
+    "id": "6ac4f7dae4016f24bafabea0",
+    "url": "https://sourcelibrary.org/book/6ac4f7dae4016f24bafabea0",
+    "stratum": "he_ar_fa_syr",
+    "period": "unknown",
+    "title": "Sha’ar ha-Segulot (Vat.ebr.668)",
+    "work": "Sha'ar ha-Segulot, a Hebrew manuscript (Vat. ebr. 668), probably a collection of segulot (remedies and charms)",
+    "prior": null,
+    "reasoning": "The scan has no title page, so I cannot tell who wrote the work or what it is. Searches found no author, no Vatican catalogue description and no English translation for 'Sha'ar ha-Segulot'. Not enough to say 'none exists'. Fewer searches than the 6-search floor were run."
+   },
+   {
+    "id": "6ac4e618a52c3738278962fa",
+    "url": "https://sourcelibrary.org/book/6ac4e618a52c3738278962fa",
+    "stratum": "he_ar_fa_syr",
+    "period": "unknown",
+    "title": "Commentary on the Pentateuch (Vat.ebr.48)",
+    "work": "Anonymous or unattributed Hebrew commentary on the Pentateuch in a mid-14th-century Vatican manuscript (Vat. ebr. 48). T",
+    "prior": null,
+    "reasoning": "Only the cover, endpapers and flyleaves were viewed, so no commentator could be read. Search results gave only a generic title and date, and the Vatican catalogue page failed on a certificate error. Without an author the work cannot be matched to any translation."
+   },
+   {
+    "id": "6ac4f78fe4016f24bafa8a8b",
+    "url": "https://sourcelibrary.org/book/6ac4f78fe4016f24bafa8a8b",
+    "stratum": "he_ar_fa_syr",
+    "period": "1500s",
+    "title": "Supercommentary on Abraham ibn Ezra's commentary on the Pentateuch (Vat.ebr.563)",
+    "work": "Anonymous or unattributed supercommentary on Abraham ibn Ezra's Pentateuch commentary, a manuscript copied at Pesaro in ",
+    "prior": null,
+    "reasoning": "The title leaf reads 'a commentary on Ibn Ezra's commentary on the Torah' but names no clear author. Search snippets point to a Pesaro 1578 copy, with Camerino as scribe or owner. No author was confirmed, and fewer than 6 searches were run, so I cannot judge whether a translation exists."
+   }
+  ],
+  "already_english": [
+   {
+    "id": "6992541059cdabeb78f1b737",
+    "url": "https://sourcelibrary.org/book/6992541059cdabeb78f1b737",
+    "stratum": "greek",
+    "period": "1800s",
+    "title": "Bishop Serapion's Prayer-Book",
+    "work": "Prayer-book (Euchologion) of Bishop Sarapion, an Egyptian pontifical. Our copy is John Wordsworth's English translation ",
+    "prior": null,
+    "reasoning": "The title page shows this volume is itself a published English translation: Wordsworth, 'Translated from the edition of Dr. G. Wobbermin', SPCK, London, 1899. No further search was needed."
+   },
+   {
+    "id": "6a91e1edbb7a47bd0f19d77f",
+    "url": "https://sourcelibrary.org/book/6a91e1edbb7a47bd0f19d77f",
+    "stratum": "other",
+    "period": "1800s",
+    "title": "Science of Sphygmica; or, Sage Kanāda on Pulse: An English Translation with Sanskrit Passa",
+    "work": "Science of Sphygmica, or Sage Kanád on Pulse: an English translation with Sanskrit passages (Calcutta, S. C. Addy, 1891)",
+    "prior": null,
+    "reasoning": "The title page reads 'An English Translation with Sanskrit Passages' and the preface and contents are in English, so our copy is the English translation. I ran no searches, so I did not check whether an earlier translation of the Sanskrit text exists."
+   },
+   {
+    "id": "69aec7102bb3df12d9b4151d",
+    "url": "https://sourcelibrary.org/book/69aec7102bb3df12d9b4151d",
+    "stratum": "other",
+    "period": "1900+",
+    "title": "Mutual Aid: A Factor of Evolution",
+    "work": "Mutual Aid: A Factor of Evolution (Russian edition, Golos Truda, Petrograd–Moscow, 1922)",
+    "prior": {
+     "translator": "n/a (Kropotkin wrote the work in English)",
+     "title": "Mutual Aid: A Factor of Evolution",
+     "year": "1902",
+     "publisher": "William Heinemann, London",
+     "completeness": "complete",
+     "url": "https://dn710307.ca.archive.org/0/items/mutualaid01krop/mutualaid01krop_hocr.html"
+    },
+    "reasoning": "The Russian text in our scan is a translation from Kropotkin's own English original. The work was composed in English (Nineteenth Century articles 1890–96, Heinemann book 1902), so no English translation is needed. The English original itself is the published text."
+   },
+   {
+    "id": "69b874bd13506fe62959afc3",
+    "url": "https://sourcelibrary.org/book/69b874bd13506fe62959afc3",
+    "stratum": "other",
+    "period": "1600s",
+    "title": "The Compleat Gamester",
+    "work": "The Compleat Gamester: or, Instructions how to play at Billiards, Trucks, Bowls, and Chess, together with all manner of ",
+    "prior": null,
+    "reasoning": "The title page and the preliminaries of our scan are in 17th-century English (London, 1674). The work is English-original, so no translation question arises. No searches were needed."
+   }
+  ],
+  "could_not_search": []
+ }
+}
