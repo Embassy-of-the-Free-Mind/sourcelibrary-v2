@@ -121,7 +121,7 @@ Museum artwork imports alongside historical texts. ~18K artworks. Mixed collecti
 
 Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections support `collection_type` field. Gemini Vision cataloging, CLIP embeddings (3072d), semantic search.
 
-## MongoDB Collections (73)
+## MongoDB Collections (75)
 
 ### Core Data
 | Collection | Purpose | Key Fields |
@@ -174,6 +174,11 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 
 ### Research & Experiments
 `experiments`, `ocr_experiments`, `ocr_judgments`, `pipeline_experiments`, `pipeline_judgments`, `split_models`, `split_training_examples`, `split_adjustments`
+
+| Collection | Purpose |
+|------------|---------|
+| `reader_check_tokens` | One row per personal `/check/<token>` link for the blind human check (#7573): `_id` = sha256 of the token (the token is never stored), `reader_id` (HMAC of the email, same as invite tokens), `reader` {language, level, credit, credit_name, consent_publish}, `packet`, `items[]` (page, both arm texts, A/B order). Minted by `scripts/email/mint-reader-check-links.mjs`; read only by `/check/[token]` and `/api/check/[token]` |
+| `reader_check_judgements` | One row per (link, page): `_id` = `<token_id>:<index>`, choice A/B/same/cannot_tell, `preferred_arm`, `invented`, `note`, `arms_shown`, the reader's stated language/level/credit, `control`, `test`. Written by `POST /api/check/[token]`; no public surface reads it |
 
 ### Other
 `external_catalog` (IIIF union catalog), `editions`, `kdp_publications`, `book_metadata_changelog`, `prompts`, `libraries`, `volunteers`, `contributions`, `feedback`, `beta_subscribers`, `email_drafts`, `comparisons`, `entity_aliases`, `translation_catalogs`, `curation_drafts`, `curator_sessions`

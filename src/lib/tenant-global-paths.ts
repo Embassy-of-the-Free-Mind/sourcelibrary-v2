@@ -84,6 +84,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // leak as /encyclopedia, in a surface that also invites people to act on it.
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
+  // Personal reader-check links (#7573) serve pages drawn from the whole corpus,
+  // the same leak as /review. The links are minted for sourcelibrary.org only.
+  '/check',
   '/volunteers',
   // The public Quality Center (#5918): the whole library's quality figures, experiments and
   // feedback themes, with doors into /review. Corpus-wide by construction, like /research.
@@ -154,6 +157,8 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // they were served on, so blocking only the page would leave the unscoped
   // corpus reachable from a tenant subdomain.
   '/api/review',
+  // The answer endpoint behind /check (#7573).
+  '/api/check',
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',
