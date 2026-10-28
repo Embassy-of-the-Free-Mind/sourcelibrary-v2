@@ -42,6 +42,12 @@ const nextConfig: NextConfig = {
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
+  // generate-thumbnails reads a local page image with a cwd-relative path, so the
+  // tracer packs all of public/ into the function, and it sat at the 220 MB CI
+  // limit (#7318). Page images never live under public/articles, so leave that out.
+  outputFileTracingExcludes: {
+    '/api/books/[id]/generate-thumbnails': ['./public/articles/**'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [60, 75, 80, 85, 90], // 60: article heroes, under a dark gradient (ParallaxImage)
