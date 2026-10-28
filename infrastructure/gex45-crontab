@@ -42,3 +42,10 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # session. INSTALLED 2026-10-26 ~08:00 UTC from the laptop session, with libopenjp2-tools + unzip (needed by --ia-zip; without
 # them the lane archives page by page). Previous crontab: /root/crontab.bak.*
 */10 * * * * f=/root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh; [ -x $f ] && ARCHIVE_LANES_BOX=gex45 $f >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1  # #5448
+
+# CLI OCR correction lane (#7558, moved off CPU-bound main by #7263): Flash-Lite drafts of visible German/French books corrected by
+# 3.8 Flash low through agy, on BOTH Gemini pools, each run stopping when its pool's weekly is under the straight line to its reset
+# (so each pool is spent toward ~0 by then, Derek 2026-10-28) or its 5 h bucket is under 25%. The two runs share one ledger and claim
+# books, so they never take the same page. Guarded until the lane code takes --agy-home (PR #7594).
+50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/root/jobs/cli-ocr-correct/$(date +\%F) --max-pages=2400 --concurrency=4 --book-chunk=40 --deadline-min=95 --agy-home=default --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558 #7263 main pool (dereklomas@)
+20 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct-james.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/root/jobs/cli-ocr-correct/$(date +\%F) --max-pages=3000 --concurrency=6 --book-chunk=40 --deadline-min=95 --agy-home=/root/.agy-james --apply >> /var/log/sourcelibrary/cli-ocr-correct-james.log 2>&1  # #7263 second pool (jamesdereklomas@)
