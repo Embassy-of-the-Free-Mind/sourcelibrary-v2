@@ -12,8 +12,9 @@
   "seed": 6740,
   "prior": {
     "_about": "Acceptance prior per route. Draft served as-is: v1's P(passes the absolute floors) for the draft engine in its chart. Draft plus corrector: d + (1 - d) x v2's median net gain for that corrector in that cell (d = the draft's prior mean, 0.5 if v1 has no chart). Worth pages_measured pages (a + b) when every input is measured, pages_pooled when any is pooled. Flat Beta(1, 1) where neither model covers the route (translation, Tibetan drafts).",
-    "pages_measured": 4,
-    "pages_pooled": 2,
+    "pages_measured": 7,
+    "pages_pooled": 7,
+    "_learned": "2026-10-28 (#7263, job router-backfill-all-7263; fit_prior.py, was 4 / 2 by hand). Empirical Bayes over the 15 tested routes whose prior comes from v1 / v2: route acceptance ~ Beta(m W, (1 - m) W), the book-scaled judged k of n beta-binomial around it. Maximum marginal likelihood W = 7.0 pages, profile 90% [3.5, 14.5], route bootstrap [3.4, 25.8]. Measured and pooled priors fitted apart give 4.3 [1.4, 12.5] and 10.5 [4.1, 29.2]; the split gains 0.52 log-likelihood for one more parameter, so one weight for both (the data do not say pooled priors are worse). Calibration: logit(acceptance) = 1.2 + 0.40 [0.20, 0.60] x logit(prior mean): the prior predicts the order of routes but its means are too extreme and too low. One route carries most of the misfit: Latin Flash-Lite, v1 0.035 (P(passes the absolute CER floors)) against 0.65 judged; without it W = 14.9. Refit after each backfill: python3 scripts/eval/estimator/router-table/fit_prior.py <table>.json.",
     "flat": [1, 1],
     "_v1_charts_left_out": "German and French OCR have no v1 chart: latin-script-other is web-transcribed text and gives Flash-Lite 0.998, against 17/30 the judge accepted on Latin. Chinese print: v1 says its floors measure the reference panel's variant forms.",
     "clip": [0.02, 0.98]
