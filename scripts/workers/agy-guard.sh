@@ -99,7 +99,7 @@ n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
 if echo "$model" | grep -qiE '^(claude|gpt)'; then
   acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
   qf="$QUOTA_DIR/$acct.json"
-  if [ -z "$(find "$qf" -maxdepth 0 -mmin -10 2>/dev/null)" ]; then
+  if [ -z "$(find "$qf" -maxdepth 0 -mmin -10 ! -newermt now 2>/dev/null)" ]; then
     mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
       && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
     rm -f "$qf.tmp$$"

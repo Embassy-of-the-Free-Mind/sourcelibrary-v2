@@ -141,7 +141,8 @@ export function agyQuota(agyHome = process.env.AGY_HOME || '', { now = Date.now(
   if (mem && now - mem.at < ttlMs) return mem.q;
   try {
     const st = fs.statSync(file);
-    const q = now - st.mtimeMs < ttlMs ? parseAgyQuota(fs.readFileSync(file, 'utf8')) : null;
+    // A file dated in the future is not fresh: it would hold the gate open past a reset.
+    const q = now >= st.mtimeMs && now - st.mtimeMs < ttlMs ? parseAgyQuota(fs.readFileSync(file, 'utf8')) : null;
     if (q) { quotaMem.set(acct, { at: st.mtimeMs, q }); return q; }
   } catch { /* no cache yet */ }
   // Through agy-guard, on the same account (AGY_HOME), with a model so the guard adds none. /quota spends nothing.

@@ -56,6 +56,11 @@ describe('agy runs Gemini models only', () => {
     const PATH = process.env.PATH;
     process.env.PATH = dir;
     try { expect(agyQuota('/x/.agy-cache-test', { dir, now: Date.now() + 11 * 60_000 })).toBeNull(); } finally { process.env.PATH = PATH; }
+    // A cache dated in the future is not fresh either.
+    fs.writeFileSync(path.join(dir, '.agy-cache-future.json'), quotaReply(0));
+    fs.utimesSync(path.join(dir, '.agy-cache-future.json'), new Date(Date.now() + 86_400_000), new Date(Date.now() + 86_400_000));
+    process.env.PATH = dir;
+    try { expect(agyQuota('/x/.agy-cache-future', { dir })).toBeNull(); } finally { process.env.PATH = PATH; }
   });
 
   it('agy-guard.sh holds the same gate for ad-hoc calls', () => {
