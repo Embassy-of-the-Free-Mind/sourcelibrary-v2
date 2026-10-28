@@ -622,8 +622,8 @@ async function archivePage(page: any, db: any): Promise<boolean> {
       return false;
     }
 
-    // Mark permanent failures
-    await updatePageAnywhere(db, page._id, { $set: { archived_photo: `failed:${msg.slice(0, 80)}` } }).catch(() => {});
+    // Record the failure; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
+    await updatePageAnywhere(db, page._id, { $set: { 'archive_metadata.last_failure_reason': msg.slice(0, 80), 'archive_metadata.last_failure_at': new Date() } }).catch(() => {});
 
     process.stderr.write(`  [FAIL] ${page.book_id}/${page.page_number} (${source}): ${msg}\n`);
     stats.bySource[source]!.fail++;
