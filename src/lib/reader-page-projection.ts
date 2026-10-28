@@ -63,7 +63,7 @@ export const READER_PAGE_PROJECTION = {
 
 /**
  * #5942: the stored text layer (`translation.text`, `translation.text_from`) stays on the server.
- * The reader renders `translation.data` and serialises the page whole into its RSC payload, so a
+ * The reader renders the raw `data` and serialises the page whole into its RSC payload, so a
  * page the notes-layer backfill has written would otherwise ship its translation twice (~2 KB per
  * page), and a page whose `data` was later withheld by a dotted `$unset` would ship the withheld
  * words in `text`. A surface that wants the clean words reads them server-side through
