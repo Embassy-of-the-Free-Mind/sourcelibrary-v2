@@ -78,6 +78,8 @@ const UNATTENDED = [
     note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
   { match: 'edge-crawl-alert.mjs', spends: false, gated: false,
     note: 'reads Cloudflare GraphQL analytics (free) and pushes ntfy; no model call (#6398)' },
+  { match: 'edge-stops-daily.mjs', spends: false, gated: false,
+    note: 'reads Cloudflare GraphQL firewall events (free) into analytics_edge_daily; no model call (#7585)' },
   { match: 'attack-canary.mjs', spends: false, gated: false,
     note: '~24 plain HTTP requests a week to our own hosts, pushes ntfy on change; no model call (#4476)' },
   { match: 'agy-wal-checkpoint.py', spends: false, gated: false,
