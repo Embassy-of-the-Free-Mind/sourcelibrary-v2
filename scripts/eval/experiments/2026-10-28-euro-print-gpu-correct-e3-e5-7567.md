@@ -11,6 +11,7 @@ status: undecided
 decision: "Recommended default: switch the correction lane (cli-ocr-lane.mjs correct) to arm c for Latin and Italian, with the E3 diff guard on and its flags image-checked before the write. English, German and French stay on lite→Flash until the E3 guard has run on the lane's own output, because the rule failed there by 1–2 pages, all on number or one-word changes the guard targets. Not adopted here: the lane is unchanged."
 superseded_by: null
 issue: [7567, 7558, 6142, 5924]
+router_evidence: "none — no lane or router cell changes here; the la/it switch to arm c is a pending decision, and its verdicts become router evidence when the lane is switched"
 ---
 ## 2026-10-28 · E3 guards and the E5 scale test: GPU draft → agy Flash correction against lite → Flash on 2,500 library pages (#7567)
 <!-- PRIOR ART: 2026-10-28-euro-print-gpu-draft-flash-correct-7567.md (E0–E2: arm c chosen on 209 reference pages; this is its scale test on our own pages, and E2's tools reused unchanged where possible); 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane arm a stands for). -->
