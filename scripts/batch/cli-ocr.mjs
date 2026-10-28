@@ -44,6 +44,8 @@
  * check for it, and every change the check did not confirm is put back to the draft before the write. The write
  * stamps `ocr.pipeline` with the lane id and keeps the draft's `language` and `verdict`; the draft read is named in
  * `engine.input.draft`.
+ * `--draft-file=FILE` (eval only, #7263): JSON {page_id: text} supplies the draft instead of the stored OCR (e.g. a GPU
+ * engine's read kept on disk). The meta records `draft.source: 'file'`, and apply refuses such a read.
  *
  * RE-READ LANE GATE (#6769, Gemini 4 Argon low over Greek manuscripts and Rashi books): `apply --lane=ID
  * --lane-gate=FILE` replaces the 40% shared-words floor — which compares the read with the bad read it replaces — by a
@@ -119,6 +121,8 @@ const INSTRUCTION_FILE = arg('instruction-file');
 const LANE_GATE_FILE = arg('lane-gate');
 if (STAGE === 'read' && INSTRUCTION_FILE && CORRECT_PROMPT) { console.error('--instruction-file is for a plain read, not --correct-prompt'); process.exit(2); }
 if (STAGE === 'apply' && LANE_GATE_FILE && !LANE) { console.error('--lane-gate needs --lane=<id>: the lane the gate was made for and the pages are stamped with'); process.exit(2); }
+const DRAFT_FILE = arg('draft-file');
+if (STAGE === 'read' && DRAFT_FILE && !CORRECT_PROMPT) { console.error('--draft-file is for --correct-prompt'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
@@ -200,6 +204,10 @@ if (STAGE === 'read') {
   // Split before read (#7605): a page of an unsplit spread book is never sent; the lane's book list is not the only caller.
   const spreadBooks = new Map((await db.collection('books').find({ id: { $in: [...new Set(found.map((p) => p.book_id))] } }, { projection: { id: 1, needs_splitting: 1, split_completed: 1 } }).toArray()).map((b) => [b.id, b]));
   const pages = found.filter((p) => { const why = unsplitReadRefusal(spreadBooks.get(p.book_id), p); if (why) console.log(`  ${p.book_id} p.${p.page_number} not read: ${why}`); return !why; });
+  if (DRAFT_FILE) {
+    const drafts = JSON.parse(fs.readFileSync(DRAFT_FILE, 'utf8'));
+    for (const p of pages) p.ocr = drafts[p.id] ? { data: drafts[p.id], model: `file:${path.basename(DRAFT_FILE)}`, pipeline: null, content_hash: contentHash(drafts[p.id]), updated_at: null, source: 'file' } : null;
+  }
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   const STOP_ON_QUOTA = process.argv.includes('--stop-on-quota');
@@ -276,7 +284,7 @@ if (STAGE === 'read') {
       image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
-      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
+      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { ...(p.ocr.source === 'file' && { source: 'file' }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
     };
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
     // Kept the moment it is paid for (#7075); best effort, never fails the read.
@@ -519,6 +527,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
   let yat = null, byEye = null;
   if (correct) {
+    if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
