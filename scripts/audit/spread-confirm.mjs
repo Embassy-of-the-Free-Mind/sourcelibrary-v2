@@ -82,6 +82,7 @@ async function ask(url) {
   }
 }
 
+// image-pick-ok: this audit asks whether the WHOLE frame holds several leaves, so it must read the unsplit image
 const imageOf = (p) => p.archived_photo || p.photo || null;
 
 async function control(db) {
