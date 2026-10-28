@@ -56,7 +56,7 @@ async function one(s) {
   if (!ta || !tb) return { slug: s, skipped: 'an arm has no text' };
   let sp = spans(ta, tb);
   const total = sp.length;
-  // Math.imul, not `x * 1103515245` in doubles (#5373, tests/unit/paired-stats-prng.test.ts). The 2026-10-28 run drew with the
+  // Math.imul, not the multiply in double arithmetic (#5373, tests/unit/paired-stats-prng.test.ts). The 2026-10-28 run drew with the
   // double form; its draws are recorded per span (`first`, and which spans were kept) in its outputs, so it is reproducible from them.
   const rng = (seed) => { let x = parseInt(crypto.createHash('sha256').update(seed).digest('hex').slice(0, 8), 16); return () => ((x = ((Math.imul(1103515245, x) + 12345) >>> 0) % 2147483648) / 2147483648); };
   const r = rng(`7263${s}`);
