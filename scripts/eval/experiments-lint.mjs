@@ -11,7 +11,8 @@
  *
  * WHAT IT CHECKS (scripts/eval/experiments/, the schema in its README.md):
  *   - every file that HAS a header: it parses and validates (always);
- *   - every dated entry (YYYY-MM-DD-*.md) ADDED by the PR: it has a header (--pr / --base);
+ *   - every dated entry (YYYY-MM-DD-*.md) ADDED by the PR: it has a header (--pr / --base), and when it is a judged
+ *     OCR or translation result, a router_evidence field naming the router-table cells it fed, or "none — <why>" (#7263);
  *   - every dated entry: it has a header (--strict; once the backfill has landed).
  * Files without a header that were already on main are grandfathered and listed
  * as a count, until backfilled; the weekly garden (scripts/audit/experiments-garden.mjs)
@@ -26,21 +27,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { readExperiment, canonIds } from './lib/experiment-header.mjs';
+import { readExperiment, canonIds, routerCellIds, needsRouterEvidence } from './lib/experiment-header.mjs';
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'experiments');
 const REL = 'scripts/eval/experiments/';
 const DATED = /^\d{4}-\d{2}-\d{2}-[a-z0-9][a-z0-9-]*\.md$/;
 
 /** Lint a directory. `added` = names that must carry a header; strict = all dated entries must. */
-export function lintExperiments(dir = DIR, { added = [], strict = false, canons = canonIds() } = {}) {
+export function lintExperiments(dir = DIR, { added = [], strict = false, canons = canonIds(), routerCells = routerCellIds() } = {}) {
   const names = fs.readdirSync(dir).filter((n) => n.endsWith('.md') && n !== 'README.md').sort();
   const exists = (n) => names.includes(n);
   const errors = [];
   const missing = [];
   for (const n of names) {
-    const { header, problems } = readExperiment(fs.readFileSync(path.join(dir, n), 'utf8'), { name: n, exists, canons });
+    const { header, problems } = readExperiment(fs.readFileSync(path.join(dir, n), 'utf8'), { name: n, exists, canons, routerCells });
     for (const p of problems) errors.push(`${n}: ${p}`);
+    if (header && added.includes(n) && needsRouterEvidence(header) && header.router_evidence == null) {
+      errors.push(`${n}: a judged ${header.stage} result needs router_evidence: [<cell ids>] — add its verdicts as evidence in scripts/eval/estimator/router-table/rules.json and rebuild (build.py) — or router_evidence: "none — <why>" (#7263)`);
+    }
     if (header || problems.length || !DATED.test(n)) continue;
     if (strict || added.includes(n)) errors.push(`${n}: no header — a new entry starts with the front matter in ${REL}README.md`);
     else missing.push(n);
