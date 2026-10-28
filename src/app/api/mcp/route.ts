@@ -1431,7 +1431,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_library',
     title: 'Search Library',
-    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination.',
+    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination. To answer "do you hold X?" call check_duplicate, not this: a ranked list is not a holdings check.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1519,7 +1519,7 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning). To answer "do you hold X?" call check_duplicate: a listing that misses a title is not evidence of absence.',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
