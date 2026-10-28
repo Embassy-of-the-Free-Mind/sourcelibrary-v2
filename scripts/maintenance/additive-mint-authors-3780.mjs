@@ -54,6 +54,10 @@
  *   - an existing doc that already carries a DIFFERENT id is never appended to;
  *   - minted docs carry `bdrc_ids: [id]`, and appends add the id to the doc,
  *     so a resolver can join on the id instead of a name.
+ * The same holds for `authority: { gnd: "118632477" }` (#7660): the holding
+ * library's GND id, harvested by harvest-catalogue-authority.mjs. It is stored in
+ * `gnd_ids` exactly as a BDRC id is stored in `bdrc_ids`, and two GND ids never
+ * converge. A verdict carries one authority, BDRC or GND.
  * Further optional verdict fields: `slug` (explicit doc id, still clash-checked),
  * `extra_variants` (other catalogue forms of the SAME person, e.g. the Wylie
  * name), `link_to` (a hand-reviewed existing doc: append there, no key match),
@@ -98,7 +102,7 @@ if (REVERT) {
   const del = await authors.deleteMany({ _id: { $in: saved.minted }, source: SOURCE });
   let pulls = 0;
   for (const ap of saved.appended) {
-    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}) } });
+    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}), ...(ap.gnd ? { gnd_ids: ap.gnd } : {}) } });
     pulls += r.modifiedCount;
   }
   console.log(`Reverted: deleted ${del.deletedCount} minted docs, pulled variants from ${pulls} docs.`);
@@ -118,7 +122,7 @@ const byKey = new Map();
 const usedIds = new Set();
 const byId = new Map();
 const byQid = new Map();
-for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, wikidata_id: 1 } }).batchSize(1000)) {
+for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, gnd_ids: 1, wikidata_id: 1 } }).batchSize(1000)) {
   byId.set(a._id, a);
   if (a.wikidata_id) byQid.set(a.wikidata_id, a._id);
   usedIds.add(a._id);
@@ -231,9 +235,12 @@ const skips = [];
 const notes = [];      // decisions worth reading even though they are not skips
 const claimedKeys = new Map();   // key -> minted doc id, so same-person strings in one run converge
 const claimedAuthority = new Map(); // minted doc id -> its authority id (bdrc), so different ids never converge
-const authorityOf = (v) => v.authority?.bdrc || null;
+const authorityOf = (v) => v.authority?.bdrc || v.authority?.gnd || null;
+/** The doc field an authority id lives in: bdrc_ids or gnd_ids. */
+const authorityKind = (v) => (v.authority?.bdrc ? 'bdrc' : v.authority?.gnd ? 'gnd' : null);
+const authorityField = (v) => (authorityKind(v) ? `${authorityKind(v)}_ids` : null);
 // Does an existing doc already belong to a DIFFERENT authority id?
-const otherAuthority = (doc, v) => Boolean(authorityOf(v) && doc?.bdrc_ids?.length && !doc.bdrc_ids.includes(authorityOf(v)));
+const otherAuthority = (doc, v) => Boolean(authorityOf(v) && doc?.[authorityField(v)]?.length && !doc[authorityField(v)].includes(authorityOf(v)));
 const mintedBySlug = new Map();  // slug -> { source } for docs minted THIS run, to resolve slug clashes
 
 // The CJK characters of a string, in order — the part romanization throws away.
@@ -275,7 +282,7 @@ const buildDoc = (id, display, s, v) => {
     wikidata_id: v.wikidata_id || null,
     entity_ids: [],
     ...(v.verdict === 'institution' ? { is_person: false } : {}),
-    ...(authorityOf(v) ? { bdrc_ids: [authorityOf(v)] } : {}),
+    ...(authorityOf(v) ? { [authorityField(v)]: [authorityOf(v)] } : {}),
     source: SOURCE,
     built_at: new Date(),
   };
@@ -283,7 +290,7 @@ const buildDoc = (id, display, s, v) => {
 
 const appendOf = (doc, v, extra = {}) => ({
   doc, variant: v.string, variant_slug: authorSlug(v.string) || null,
-  ...(authorityOf(v) ? { bdrc: authorityOf(v) } : {}),
+  ...(authorityOf(v) ? { [authorityKind(v)]: authorityOf(v) } : {}),
   ...(v.extra_variants?.length ? { extra_variants: v.extra_variants.filter(x => x && poisonScore(x) < POISON_MIN_EXTENDERS) } : {}),
   ...extra,
 });
@@ -350,7 +357,7 @@ for (const v of actionable) {
     standalone = `same cluster key as ${keyHit._id} minted this run, but a different authority id (${claimedAuthority.get(keyHit._id)} vs ${authorityOf(v)})`;
   }
   if (!standalone && keyHit && !keyHit.minted && otherAuthority(keyHit, v)) {
-    standalone = `cluster key matches ${keyHit._id}, which carries a different authority id (${keyHit.bdrc_ids.join(',')})`;
+    standalone = `cluster key matches ${keyHit._id}, which carries a different authority id (${keyHit[authorityField(v)].join(',')})`;
   }
   if (!standalone && keyHit && !keyHit.minted && authorityOf(v)) {
     // An authority-backed person adopts an existing doc only through a reviewed link_to.
@@ -469,7 +476,7 @@ let appended = 0;
 for (const a of appends) {
   const r = await authors.updateOne(
     { _id: a.doc, merged_into: { $exists: false } },
-    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}) } },
+    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}), ...(a.gnd ? { gnd_ids: a.gnd } : {}) } },
   );
   appended += r.modifiedCount;
 }

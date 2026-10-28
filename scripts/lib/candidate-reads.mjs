@@ -22,6 +22,11 @@
  * asked for). A read kept by the sweep, before readers kept their own, has no `reuse` block; a reader can pass
  * `derive(meta)` to compute the same hash from the stored meta.
  *
+ * METADATA READS (#7660). field 'metadata' keeps a reader's answer ABOUT a book rather than a page's text: a title-page
+ * read returning {author, title, imprint…}, or a batch of author strings classified in one call (kept under the book
+ * the batch was sampled from). `page_id` names what was read ('title-page', 'author-strings-<n>'); the text must be
+ * JSON.
+ *
  * BEST EFFORT, ALWAYS. No credentials, an R2 error or a timeout logs one line and returns: keeping or finding a read
  * never fails the read. CANDIDATE_READS=off turns both off.
  */
@@ -33,10 +38,11 @@ import path from 'node:path';
 
 export const BUCKET = 'sl-corpus-snapshots';
 export const PREFIX = 'candidate-reads';
+const FIELDS = new Set(['ocr', 'translation', 'metadata']);
 
 /** The object key for one read. Throws unless book-scoped (#3362). */
 export function candidateKey(bookId, pageId, field, hash) {
-  if (field !== 'ocr' && field !== 'translation') throw new Error(`bad field ${JSON.stringify(field)}`);
+  if (!FIELDS.has(field)) throw new Error(`bad field ${JSON.stringify(field)}`);
   if (!/^[0-9a-f]{16}$/.test(String(hash))) throw new Error(`bad content hash ${JSON.stringify(hash)}`);
   if (!pageId || /[/\s]/.test(pageId)) throw new Error(`bad page id ${JSON.stringify(pageId)}`);
   const key = `${PREFIX}/${bookId}/${pageId}/${field}/${hash}.json`;
@@ -64,6 +70,7 @@ export function promptKey(bookId, hash) {
 export function textProblem(text, field) {
   const t = String(text || '').trim();
   if (!t) return 'empty';
+  if (field === 'metadata') { try { JSON.parse(t); return null; } catch { return 'not JSON'; } }
   if (field === 'translation') return cliChatterReason(t);
   // header: false — a correct-mode reply (cli-ocr --correct, correct.mjs) is plain text by design (#6560), and a
   // missing <page-type> tag is a format slip, not chatter; plan notes, refusals, restarts and openers still fail.

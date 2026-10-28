@@ -26,8 +26,16 @@
  * The backup merges on book id and the earliest `before` wins
  * (author-identity.md), so a second --apply cannot lose the original.
  *
+ * OTHER PROPOSAL SOURCES (#7660). A proposals file may carry its own top-level
+ * `run` and `method` (e.g. the placeholder-author title-text pass of
+ * scripts/audit/title-page-attribution.mjs --placeholder-authors): the run names
+ * the backup, the sweep_log rows and the provenance; the method is written into
+ * each field_provenance row. `current.author` may be null (a book with no byline).
+ * The backup and a sweep_log row are written BEFORE each book's write.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/apply-byline-proposals-3894.mjs
+ *   node --env-file=.env.production.local scripts/maintenance/apply-byline-proposals-3894.mjs --proposals=<file.json> [--apply]
  *   node --env-file=.env.production.local scripts/maintenance/apply-byline-proposals-3894.mjs --apply
  *   node --env-file=.env.production.local scripts/maintenance/apply-byline-proposals-3894.mjs --revert [--apply]
  */
@@ -38,12 +46,16 @@ import { fileURLToPath } from 'node:url';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const BACKUP = join(HERE, 'backups', 'apply-byline-proposals-3894.json');
-const RUN = 'byline-proposals-3894';
 const APPLY = process.argv.includes('--apply');
 const REVERT = process.argv.includes('--revert');
 const PROPOSALS = (process.argv.find((a) => a.startsWith('--proposals=')) || '').split('=')[1]
   || join(HERE, '..', 'eval', 'results', 'byline-proposals-3894.json');
+const FILE = existsSync(PROPOSALS) ? JSON.parse(readFileSync(PROPOSALS, 'utf8')) : null;
+const RUN = FILE?.run || 'byline-proposals-3894';
+const METHOD = FILE?.method || 'claude -p reader over the OCR attribution window, deterministic screens, Wikidata, adversarial refuter (#3894)';
+const PROV_SOURCE = FILE?.provenance_source || 'byline-reader-refuter-v1';
+const BACKUP = join(HERE, 'backups', RUN === 'byline-proposals-3894' ? 'apply-byline-proposals-3894.json' : `apply-byline-proposals-${RUN}.json`);
+const same = (a, b) => (a ?? null) === (b ?? null);
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -87,7 +99,8 @@ if (REVERT) {
     const set = { author: e.before.author };
     const unset = {};
     for (const k of ['author_id', 'translator']) { if (e.before[k] == null) unset[k] = ''; else set[k] = e.before[k]; }
-    const r = await books.updateOne({ id: e.book_id, author: e.after.author }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
+    if (e.before.author == null) { delete set.author; unset.author = ''; }
+    const r = await books.updateOne({ id: e.book_id, author: e.after.author }, { ...(Object.keys(set).length ? { $set: set } : {}), ...(Object.keys(unset).length ? { $unset: unset } : {}) });
     if (r.modifiedCount) n++;
     await supabaseSet(e.book_id, e.before.author);
   }
@@ -95,7 +108,7 @@ if (REVERT) {
   await mc.close(); process.exit(0);
 }
 
-const { proposals } = JSON.parse(readFileSync(PROPOSALS, 'utf8'));
+const { proposals } = FILE;
 const ready = proposals.filter((p) => p.status === 'READY' && p.proposed?.author);
 console.log(`READY proposals: ${ready.length} of ${proposals.length}\n`);
 
@@ -104,7 +117,7 @@ let wrote = 0, sb = 0, reval = 0;
 for (const p of ready) {
   const b = await books.findOne({ id: p.book_id }, { projection: { id: 1, author: 1, author_id: 1, translator: 1, title: 1 } });
   if (!b) { skipped.push([p.book_id, 'not found']); continue; }
-  if (b.author !== p.current.author) { skipped.push([p.book_id, `byline changed since: ${b.author}`]); continue; }
+  if (!same(b.author, p.current.author)) { skipped.push([p.book_id, `byline changed since: ${b.author}`]); continue; }
 
   const set = { author: p.proposed.author };
   const unset = {};
@@ -114,28 +127,30 @@ for (const p of ready) {
 
   const before = { author: b.author, author_id: b.author_id ?? null, translator: b.translator ?? null };
   const after = { author: set.author, author_id: set.author_id ?? null, translator: set.translator ?? before.translator };
-  console.log(`${APPLY ? 'WRITE' : 'would write'}  ${b.author.slice(0, 28).padEnd(28)} -> ${set.author.slice(0, 30).padEnd(30)} ${after.author_id ? `[${after.author_id}]` : '[unlinked]'}${set.translator ? ` +tr ${set.translator}` : ''}  ${String(b.title).slice(0, 40)}`);
-  backupRows.push({ book_id: p.book_id, before, after, at: new Date().toISOString() });
+  console.log(`${APPLY ? 'WRITE' : 'would write'}  ${String(b.author ?? '(none)').slice(0, 28).padEnd(28)} -> ${set.author.slice(0, 30).padEnd(30)} ${after.author_id ? `[${after.author_id}]` : '[unlinked]'}${set.translator ? ` +tr ${set.translator}` : ''}  ${String(b.title).slice(0, 40)}`);
+  const row = { book_id: p.book_id, before, after, at: new Date().toISOString() };
+  backupRows.push(row);
   if (!APPLY) continue;
 
-  const r = await books.updateOne({ id: p.book_id, author: b.author }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
+  // Backup and sweep_log row BEFORE the write, so an interrupted run is still revertible and explained.
+  mergeBackup([row]);
+  await recordSweepAction(db, { sweep: RUN, book_id: p.book_id, action: `byline-${p.proposed.catalogued_role}-replaced-with-author`, detail: { before, after, page_number: p.evidence.page ?? null } });
+  const r = await books.updateOne({ id: p.book_id, author: b.author ?? null }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
   if (r.modifiedCount !== 1) { console.log(`   !! modifiedCount ${r.modifiedCount}`); continue; }
   wrote++;
   const s = await supabaseSet(p.book_id, set.author);
   if (s.ok && s.rows > 0) sb++;
   const evidence = {
-    page_number: p.evidence.page, quoted_line: p.evidence.quoted_line, as_printed: p.evidence.as_printed,
-    wikidata: p.evidence.wikidata?.qid ?? null, refuter: p.refuter, catalogued_role: p.proposed.catalogued_role,
-    method: 'claude -p reader over the OCR attribution window, deterministic screens, Wikidata, adversarial refuter (#3894)',
+    page_number: p.evidence.page ?? null, quoted_line: p.evidence.quoted_line, as_printed: p.evidence.as_printed,
+    wikidata: p.evidence.wikidata?.qid ?? null, refuter: p.refuter ?? null, catalogued_role: p.proposed.catalogued_role,
+    method: METHOD,
   };
   const now = new Date().toISOString();
   for (const [field, value] of Object.entries({ ...set, ...Object.fromEntries(Object.keys(unset).map((k) => [k, null])) })) {
-    await db.collection('field_provenance').insertOne({ book_id: p.book_id, field, value, previous_value: before[field] ?? null, source: 'byline-reader-refuter-v1', run: RUN, evidence, created_at: now });
+    await db.collection('field_provenance').insertOne({ book_id: p.book_id, field, value, previous_value: before[field] ?? null, source: PROV_SOURCE, run: RUN, evidence, created_at: now });
   }
-  await recordSweepAction(db, { sweep: RUN, book_id: p.book_id, action: `byline-${p.proposed.catalogued_role}-replaced-with-author`, detail: { before, after, page_number: p.evidence.page } });
   if (await revalidate(p.book_id)) reval++;
 }
-if (APPLY && backupRows.length) mergeBackup(backupRows);
 
 console.log(`\n-- ${APPLY ? 'applied' : 'dry run (nothing written)'} --`);
 console.log(`  books ${APPLY ? 'written' : 'that would be written'}: ${APPLY ? wrote : backupRows.length}`);
