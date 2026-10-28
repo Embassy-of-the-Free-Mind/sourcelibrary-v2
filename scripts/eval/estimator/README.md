@@ -7,7 +7,7 @@ How the pieces connect, and who owns each, is on #7263 (top of the issue).
 
 | track | current | kept for reproducibility | what it answers |
 |---|---|---|---|
-| **Router table, the decision-maker** | `router-table/` (`rules.json`, `build.py`; PR #7417) | — | per cell: switch / keep / HOLD / test next, from acceptance against the page image (route-judge, #7376), with the models below as a weak prior |
+| **Router table, the decision-maker** | `router-table/` (`rules.json`, `build.py`; PR #7417; the prior's weight from `fit_prior.py`, #7263) | — | per cell: switch / keep / HOLD / test next, from acceptance against the page image (route-judge, #7376), with the models below as a weak prior (worth 7 pages, learned 2026-10-28) |
 | Chained routes + capacity ("estimator v2", #7393) | `chain/` (`chain_v2.py`, `allocate_v2.py`, `capacity.json`, `cells.json`) | — | correction as a stage (draft → corrector), pages made better/worse, each channel's free week allocated across cells. A **prior** to the router table |
 | OCR estimator | `ocr/` `*_v1.py` (+ `fit_ocr_v1_arabic.py`, #7372) | `ocr/` `*_v0.py` | accuracy, did-not-read, number errors, cost per usable page per engine × language (#7320) |
 | OCR production rows | `ocr/route-census*.mjs`, `ocr/route-costs.json`, `ocr/quality-bars.json` | — | production's own record as estimator rows (#7375); prices per route |
@@ -18,6 +18,6 @@ How the pieces connect, and who owns each, is on #7263 (top of the issue).
 
 **Nothing here writes data or routes pages.** A decision reaches production only by a PR to `scripts/lib/ocr-routing-table.json` (owner #6688) or `scripts/lib/translation-routing-table.json` (CLI rows, owner #7075), citing the router-table cell. That PR is on the hold list.
 
-**A judged route test is not done until its evidence entry is in `router-table/rules.json` and the table is rebuilt** (a new dated `.md`/`.json` from `build.py --before <the last table>`). A result kept only in an experiment file or an issue comment does not move a posterior (#7263: the 10-27/28 tests sat outside the table until `router-table/evidence/derive_backfill.py`).
+**A judged route test is not done until its evidence entry is in `router-table/rules.json` and the table is rebuilt** (a new dated `.md`/`.json` from `build.py --before <the last table>`). A result kept only in an experiment file or an issue comment does not move a posterior (#7263: the 10-27/28 tests sat outside the table until `router-table/evidence/derive_backfill.py`, the earlier ones until `derive_backfill_all.py`; which tests enter is `rules.json evidence_rules`). After a backfill, refit the prior's weight: `python3 router-table/fit_prior.py <the new table>.json`.
 
 When you add a version, put it beside the old one, give it a `PRIOR ART:` line naming what it replaces, and update this table in the same PR.
