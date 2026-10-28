@@ -172,7 +172,7 @@
 # after the daily meter resets because OCR/translation spend the dial before morning and
 # an embedder that runs later is refused every day (#4865). Tell it has regressed: the
 # log says "CEILING REACHED" or site_pages' newest indexed_at is more than two days old.
-20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
+20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs --operator" >> /var/log/sourcelibrary/site-pages.log 2>&1
 
 # warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 
