@@ -3,7 +3,7 @@ stage: translation
 measure: judged
 languages: [bo]
 scripts: [Tibt]
-canons: [kangyur]
+canons: []
 n_books: 50
 n_pages: 40
 verdict: "Reading the leaf removes the OCR-caused failures on the Kangyur two-leaf frames: 0 of 40 audited pages are bad because of the transcription (10-24 text-only: 18 of 28 Tibetan bad pages), and all five 10-24 bad pages drawn are now not bad. Stage 1 passed (1/20 bad, controls 6/6, 0 invented by eye in 10). The metered 300-page batch scored 2/20 bad, above the 5% bar; pooled 3/40 (7.5%, 2.6-19.9%), all translator-side, and 3 of the 40 pages carry a false bracketed claim about what the leaf says."
