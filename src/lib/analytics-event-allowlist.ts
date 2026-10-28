@@ -43,7 +43,8 @@ export const ALLOWED_EVENTS = new Set([
   // single one. Pairs with the /give pageview count (total arrivals) and
   // donate_click (actual gives) to make a three-step funnel.
   //
-  // `source` names the CONTROL ('header' | 'footer'), `url` its DESTINATION —
+  // `source` names the CONTROL ('header' | 'header_mobile' | 'footer'; the
+  // phone-width header button has its own value from 2026-10-29), `url` its DESTINATION —
   // they differ: the header pill goes to /give, the footer link to /support.
   // Recording only the control would silently merge two funnels with different
   // pages and different conversion odds.
