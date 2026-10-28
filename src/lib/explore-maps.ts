@@ -38,7 +38,7 @@ export const MAP_THEMES: MapTheme[] = [
     figLabels: ['works you can read in English now', 'works the library holds but you cannot read yet', 'works the library does not hold, each with a place to find it', 'editions listed below, {readable} of them readable'],
     method: METHOD_COMMON + ' The work panel: for each readable work, a script took candidate pages from its best readable edition, chosen by words about the mind, by the edition’s own indexed terms and by the work’s subject. Claude chose two or three passages and wrote the summary; Gemini re-read each passage and removed any that were not the work’s own words about the mind; every quote was matched word for word against its page. Readable and held marks were re-checked against the catalogue on 16 October 2026.',
     limits: LIMITS_COMMON + ' The summaries are written by a language model from the pages it was shown and can be wrong. The passages come from the library’s machine translations (or from the English original) and link to their page, so you can check them. Editions that are held but not yet public are named without a link.',
-    level2: true, lens: true,
+    level2: true, lens: true, history: '/explore/histories/consciousness',
     detailHint: 'Click a filled mark, or a title in the catalogue below, to see what the work says about the mind and where to start reading.',
   },
   {

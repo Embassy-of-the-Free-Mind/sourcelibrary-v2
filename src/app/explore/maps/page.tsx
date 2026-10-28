@@ -93,7 +93,7 @@ export default function MapsIndexPage() {
           <h2 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>Conceptual histories</h2>
           <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             One concept followed through its words, across time and languages, in essays whose every claim links to the
-            page it quotes. The maps of harmony and magic each have one.
+            page it quotes. The maps of consciousness, harmony and magic each have one.
           </p>
           <ul className="grid gap-x-6 gap-y-1 sm:grid-cols-2">
             {HISTORIES.concepts.map((c) => (

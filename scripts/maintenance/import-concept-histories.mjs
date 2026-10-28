@@ -22,7 +22,7 @@
 //   - Private asides: generic rules below ("For Derek" sections, "How we got here" paragraphs), then the per-file
 //     redaction lists (--redactions DIR of JSON arrays {file, find, replace, why}); each `find` must match exactly once
 //     or the run fails, so a stale list cannot silently publish what it was meant to remove.
-//   - Concepts with no essays are skipped, and so is any concept in SKIP (consciousness: wave 1 still open, #4).
+//   - Concepts with no essays are skipped, and so is any concept in SKIP.
 //
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/import-concept-histories.mjs \
 //     --repo /root/conceptual-histories --redactions <dir> [--dry-run] [--report <file.json>]
@@ -43,11 +43,12 @@ const DRY = process.argv.includes('--dry-run');
 if (!SRC || !RED_DIR) { console.error('usage: import-concept-histories.mjs --repo <conceptual-histories checkout> --redactions <dir> [--dry-run] [--report f.json]'); process.exit(1); }
 const REPO = path.resolve(new URL('../..', import.meta.url).pathname);
 const OUT = path.join(REPO, 'src/app/explore/histories/data');
-const SKIP = new Set(['consciousness']); // conceptual-histories#4: wave 1 still open
+const SKIP = new Set([]); // a concept still being built goes here (consciousness waited for its wave 1, conceptual-histories#4)
 const BASE = '/explore/histories';
 
 // One reader-facing sentence per concept. PURPOSE.md is addressed to the project and is not shown.
 const QUESTION = {
+  consciousness: 'Where did each tradition put experience: in the soul, the body, their union, a lower vehicle, a faculty, an act of attention, the One? From aisthēsis, synaisthēsis and cit to Cudworth’s and Locke’s “consciousness”, Bewusstsein and the hard problem.',
   aliveness: 'What did people take life to be? Each era’s definition of being alive, the words that carried it in each language, and what people did to make, keep or prolong life.',
   harmony: 'What did people take harmony and resonance to be, from Philolaus and the Chinese classics to Kepler, Helmholtz and the free-energy principle? Ratio and consonance, unlike things joined in one whole, and strings that answer each other.',
   magic: 'What counted as magic, how was it said to work, and who drew the line? Hidden virtues and sympathy, stars and images, spirits, words and names, divination, the witch and her trial, and the power of mind.',
@@ -56,8 +57,8 @@ const QUESTION = {
   soul: 'What is a soul made of, where does it sit, how many does a person have, who has one, does it survive death, and could a machine have one? What each tradition meant by the word we translate “soul”.',
   sympathy: 'Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?',
 };
-const TITLE = { aliveness: 'Aliveness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
-const MAP = { harmony: '/explore/maps/harmony', magic: '/explore/maps/magic' };
+const TITLE = { aliveness: 'Aliveness', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
+const MAP = { consciousness: '/explore/maps/consciousness', harmony: '/explore/maps/harmony', magic: '/explore/maps/magic' };
 
 const readJsonl = (f) => fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#') && !l.startsWith('//')).map((l) => JSON.parse(l)) : [];
 const listJsonl = (d) => fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.jsonl')).sort().map((f) => path.join(d, f)) : [];
@@ -218,7 +219,7 @@ const raw = {};
 for (const c of concepts) {
   const dir = path.join(SRC, 'concepts', c);
   const ideas = fs.existsSync(path.join(dir, 'ideas')) ? fs.readdirSync(path.join(dir, 'ideas')).filter((f) => f.endsWith('.md') && f !== 'README.md').sort() : [];
-  if (SKIP.has(c)) { report.skipped.push({ concept: c, why: 'conceptual-histories#4 (wave 1) still open' }); continue; }
+  if (SKIP.has(c)) { report.skipped.push({ concept: c, why: 'in SKIP' }); continue; }
   if (!ideas.length) { report.skipped.push({ concept: c, why: 'no essays yet' }); continue; }
   if (!TITLE[c] || !QUESTION[c]) throw new Error(`${c}: no TITLE/QUESTION entry — write the reader-facing question before publishing it`);
   const reg = new Map();

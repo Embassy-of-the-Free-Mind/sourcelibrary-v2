@@ -59,7 +59,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
           </p>
           {c.map && (
             <p className="leading-relaxed mt-3" style={{ color: 'var(--text-secondary)' }}>
-              The works behind this history, tradition by tradition, are on the <Link href={c.map}>map of {c.title.toLowerCase()}</Link>.
+              What the library holds on this theme, tradition by tradition, is on the <Link href={c.map}>map of {c.title.toLowerCase()}</Link>.
             </p>
           )}
         </section>
