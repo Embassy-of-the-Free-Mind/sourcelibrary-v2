@@ -672,12 +672,12 @@ Tags such as <page-type>, <scan-quality>, <header>, <note>, <meta>, <margin>, <l
 Answer with one JSON object only: {"accept": bool, "fidelity": n, "defects": [{"class": "O6", "quote": "...", "severity": "misleads", "what": "a few words"}], "reader_note": "..."}`;
 }
 
-const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'boolean' && Number(v.fidelity) >= 1 && Number(v.fidelity) <= 5 && Array.isArray(v.defects ?? []));
+export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'boolean' && Number(v.fidelity) >= 1 && Number(v.fidelity) <= 5 && Array.isArray(v.defects ?? []));
 
-const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
+export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
-function opusCall(prompt, cwd) {
+export function opusCall(prompt, cwd) {
   return new Promise((resolve) => {
     const child = spawn('claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
@@ -821,7 +821,7 @@ function derge() {
 // ------------------------------------------------------------------------------------------------ score
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
 /** Cluster (by-book) bootstrap 95% interval of the mean of rows[].v; by page when the cell is one or two books. */
-function clusterCI(rows, seed) {
+export function clusterCI(rows, seed) {
   const books = [...new Set(rows.map((r) => r.book))];
   const byPage = books.length < 3;
   const units = byPage ? rows.map((r) => [r.v]) : books.map((b) => rows.filter((r) => r.book === b).map((r) => r.v));
