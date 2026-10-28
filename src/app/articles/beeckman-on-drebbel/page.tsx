@@ -32,8 +32,8 @@ export default function BeeckmanOnDrebbelPage() {
         <ContentHeader feature headerVariant="dark"
           title="Beeckman on Drebbel"
           subtitle="What Isaac Beeckman wrote in his journal about Cornelis Drebbel&rsquo;s machines, 1619 to 1634, in his own words with an English translation"
-          image="https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg"
-          imageAlt="Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing."
+          image="/articles/beeckman-on-drebbel/drebbel-submarine.jpg"
+          imageAlt="Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving."
         >
           <p>6 October 2026</p>
         </ContentHeader>
@@ -56,6 +56,12 @@ export default function BeeckmanOnDrebbelPage() {
           beside it, the date, and the leaf of the manuscript. Long entries are cut down to the
           part about Drebbel, and a cut is marked [&hellip;]. The line in italics above a passage
           is Beeckman&rsquo;s own heading, written in his margin.
+        </p>
+
+        <p className="text-sm text-muted leading-relaxed mb-8 font-body">
+          The picture at the top is a later artist&rsquo;s idea of the boat, not a drawing from
+          Drebbel&rsquo;s time; no picture of it made in his lifetime survives. Public domain, via{' '}
+          <a href="https://commons.wikimedia.org/wiki/File:Drebbel_submarine.jpg" className="underline">Wikimedia Commons</a>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
