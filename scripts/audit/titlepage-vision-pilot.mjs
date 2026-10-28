@@ -145,7 +145,9 @@ const done = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n
 const outFd = fs.openSync(OUT, 'a');
 const taken = new Map();
 let calls = 0;
+let total = done.size;   // a restart re-draws; the cap is on reads in the file, never more than N
 for (const b of draw) {
+  if (total >= N) break;
   const p = b.image_source.provider;
   if ((taken.get(p) || 0) >= alloc.get(p)) continue;
   if (done.has(b.id)) { taken.set(p, (taken.get(p) || 0) + 1); continue; }
@@ -159,6 +161,7 @@ for (const b of draw) {
     for (const u of urls) { bufs.push(await getBuf(u)); await sleep(p === 'bsb' || p === 'mdz' || p === 'sbb' ? 1000 : 300); }
   } catch (e) { console.log(`  skip ${b.id} (${p}): ${e.message}`); continue; }
   taken.set(p, (taken.get(p) || 0) + 1);
+  total++;
   const shas = bufs.map((x) => crypto.createHash('sha256').update(x).digest('hex'));
   const hash = reuseHash({ field: 'metadata', prompt: `${PROMPT_VERSION}\n${PROMPT}`, input: shas.join(',') });
   let text = null, meta = {};
@@ -174,16 +177,18 @@ for (const b of draw) {
     fs.rmSync(ws, { recursive: true, force: true });
     if (r.cls === 'quota') { console.error(`quota: ${r.err}`); break; }
     const u = unwrapSentinels(r.text);
-    const j = firstJson(u.inside ?? r.text);
+    const body = String(u.inside ?? r.text).trim().replace(/^```(?:json)?\s*|\s*```$/g, '');
+    let j = null;
+    try { j = JSON.parse(body); } catch { j = firstJson(body); }
     meta = { model: MODEL, model_requested: MODEL, cli: 'agy', prompt_variant: PROMPT_VERSION, secs: r.secs, usage: r.usage, cls: r.cls, image_urls: urls, image_sha256: shas, finished_at: new Date().toISOString(), read_site: 'scripts/audit/titlepage-vision-pilot.mjs', issue: 7660, account: process.env.AGY_HOME ? 'second' : 'main' };
-    if (j) {
-      text = JSON.stringify(j);
-      await keepRead({ page_id: 'title-page', book_id: b.id, field: 'metadata', text, model: MODEL, prompt_hash: hash, job: 'authors-7660', meta, prompt_text: prompt });
-    }
+    // A reply that does not parse is still a paid read: kept verbatim, and reported as unparsed.
+    text = JSON.stringify(j || { unparsed_reply: r.text, cls: r.cls ?? null });
+    if (r.text || j) await keepRead({ page_id: 'title-page', book_id: b.id, field: 'metadata', text, model: MODEL, prompt_hash: hash, job: 'authors-7660', meta: { ...meta, ...(j ? {} : { error_class: 'unparsed' }) }, prompt_text: prompt });
   }
   if (IMAGES) { fs.mkdirSync(IMAGES, { recursive: true }); bufs.forEach((x, i) => fs.writeFileSync(path.join(IMAGES, `${b.id}-${i + 1}.jpg`), x)); }
-  const read = text ? JSON.parse(text) : null;
-  fs.writeSync(outFd, JSON.stringify({ book_id: b.id, provider: p, catalogue_title: String(b.title ?? '').slice(0, 200), catalogue_year: b.year ?? null, leaves: urls.length, read, ok: Boolean(read), secs: meta.secs ?? null, usage: meta.usage ?? null, reused: Boolean(hit) }) + '\n');
+  const parsed = text ? JSON.parse(text) : null;
+  const read = parsed && !parsed.unparsed_reply ? parsed : null;
+  fs.writeSync(outFd, JSON.stringify({ book_id: b.id, provider: p, catalogue_title: String(b.title ?? '').slice(0, 200), catalogue_year: b.year ?? null, leaves: urls.length, read, ok: Boolean(read), unparsed_reply: parsed?.unparsed_reply ?? null, secs: meta.secs ?? null, usage: meta.usage ?? null, reused: Boolean(hit) }) + '\n');
   console.log(`${[...taken.values()].reduce((a, c) => a + c, 0)}/${N} ${p} ${b.id}: ${read ? `leaf ${read.title_page_leaf} · ${read.author_role} · ${read.author ?? '—'}` : 'NO READ'}`);
 }
 console.log(`DONE: ${calls} model calls`);
