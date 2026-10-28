@@ -82,7 +82,7 @@ async function ask(url) {
   }
 }
 
-const imageOf = (p) => p.archived_photo || p.photo || null;
+const imageOf = (p) => p.archived_photo || p.photo || null; // image-pick-ok: the question is whether the whole scanned frame holds several leaves, so the spread is the image wanted
 
 async function control(db) {
   const spreads = await db.collection('pages').find({ book_id: PILOT, page_type: 'archived-spread' }, { projection: { archived_photo: 1, photo: 1 } }).limit(40).toArray();
