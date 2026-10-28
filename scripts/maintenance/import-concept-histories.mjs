@@ -36,6 +36,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
+import { linkHistorySources } from './link-history-sources.mjs';
 
 const argv = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const SRC = argv('--repo');
@@ -320,3 +321,5 @@ report.redactions = redLog;
 console.table(Object.fromEntries(Object.entries(report.concepts).map(([c, s]) => [c, { shown: s.verified + s.partial, partial: s.partial, dropped: s.dropped.unverified + s.dropped.disputed + s.dropped.other, essays: s.essays, quotesKept: s.quotesKept, quotesCopyright: s.quotesDroppedCopyright, quotesNotPublic: s.quotesDroppedNotPublic, refsLinked: s.refsLinked, refsPlain: s.refsPlain }])));
 console.log('skipped', report.skipped, '\nredactions', redLog.length, DRY ? '(dry run, nothing written)' : `\nwrote ${OUT} ${(total / 1e6).toFixed(2)} MB`);
 if (REPORT) fs.writeFileSync(REPORT, JSON.stringify(report, null, 1));
+// new claims move which works each history cites on its map, the sources view (#7646)
+if (!DRY) linkHistorySources();

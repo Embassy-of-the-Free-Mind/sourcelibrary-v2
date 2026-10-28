@@ -6,6 +6,7 @@ import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
 import { HISTORIES } from '@/app/explore/histories/histories';
+import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -276,7 +277,7 @@ function blogPosts(): MetadataRoute.Sitemap {
 }
 
 // The conceptual histories (#7623): index, each concept, its essays, its
-// claims index and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
+// claims index, its sources view (#7646) and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
 // site_pages; it crawls the static routes plus this chunk, and these are dynamic.
 function historyPages(): MetadataRoute.Sitemap {
   const lastModified = new Date(`${HISTORIES.generated}T00:00:00Z`);
@@ -287,6 +288,8 @@ function historyPages(): MetadataRoute.Sitemap {
       at(`/explore/histories/${c.slug}`, 0.7),
       ...c.essays.map((e) => at(`/explore/histories/${c.slug}/${e.slug}`, 0.6)),
       at(`/explore/histories/${c.slug}/claims`, 0.5),
+      // the sources view, where the concept has a map (#7646); its old /explore/maps/<c> address redirects here and is not listed
+      ...(() => { const t = mapThemeForConcept(c.slug); const href = t && sourcesHref(t); return href ? [at(href, 0.6)] : []; })(),
       ...c.domains.map((d) => at(`/explore/histories/${c.slug}/claims/${d}`, 0.5)),
     ]),
   ];
