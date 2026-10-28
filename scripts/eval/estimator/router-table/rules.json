@@ -129,6 +129,11 @@
       "routes": [
         { "id": "agy-flash-low@1", "stage": "agy-text@1", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/tengyur-6361.score.json", "cell": "tengyur-tr", "route": "agy-flash-low@1"}] },
         { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/tengyur-6361.score.json", "cell": "tengyur-tr", "route": "3flash"}] } ] },
+    { "id": "zh-siku-tr", "title": "Siku translation, stale English, Paddle CER < 0.1 (#6567)", "pages_waiting": 50676, "pages_source": "stale-retranslate-6567 census.json, 2026-10-12: eligible stale pages (paddle-zh-2026-10, CER < 0.1). Not re-counted: the count over pages.translation_stale timed out at 5 min on 2026-10-28; the lane may have written some since", "current": "stored",
+      "caveat": "#6567 pilot review (2026-10-12, backfill-all): 30 random pages, one a book, of the 289 the pilot wrote; both Englishes judged blind by Opus against the image and the Paddle reading (MQM; wrong text = >= 1 major / critical accuracy error). The Gemini 3.1 Pro judge, recorded in the score file, accepts far fewer (new 11/30, stored 7/30): the judges disagree on what is material, mostly where the Paddle reading itself is wrong.",
+      "routes": [
+        { "id": "stored", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/siku-tr-6567.score.json", "cell": "zh-siku-tr", "route": "stored"}] },
+        { "id": "agy-flash-low@1", "stage": "agy-text@1", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/siku-tr-6567.score.json", "cell": "zh-siku-tr", "route": "agy-flash-low@1"}] } ] },
     { "id": "tibetan-yigdzin", "title": "Tibetan, Yigdzin (#6560)", "v2": "tibetan-yigdzin", "pilot": "tibetan", "current": "yigdzin>opus",
       "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
       "routes": [
