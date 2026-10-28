@@ -497,8 +497,10 @@ async function run() {
     // Items in draw order: the lane's output, then its draft (the draft share is seeded per page).
     const week = isoWeek(until);
     const items = [];
-    // The flagged stratum first (judged always), then the random draw in draw order.
-    for (const d of [...flaggedDrawn, ...drawn.filter((x) => x.stratum !== 'flagged')]) {
+    // The flagged stratum first (judged always), then the random draw in draw order. Book depth (a pilot) puts the random
+    // draw first instead: the pilot's decision rests on it, and a meter stop must not leave it half judged.
+    const randomItems = drawn.filter((x) => x.stratum !== 'flagged');
+    for (const d of BOOKS ? [...randomItems, ...flaggedDrawn] : [...flaggedDrawn, ...randomItems]) {
       items.push({ kind: 'item', d, route: d.route });
       if (d.draft_route && rnd() < draftShare) items.push({ kind: 'draft', d, route: d.draft_route });
     }
