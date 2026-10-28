@@ -181,33 +181,50 @@ async function renderReview(buf, w, h, frame, pageOrder, file) {
 /**
  * SHEETS MODE (`propose --sheets`, #7605): for long bound books, where one agy call and one review image per frame
  * repeats the same fold a few hundred times (74 BPH books hold 10,303 frames).
- *  - Shape first: a frame narrower than SHAPE_SINGLE_AR is one leaf, with no call. On the 2,344 frames of the #7605
- *    census, 126 of the 127 frames under 0.9 were single and 2,136 of the 2,205 between 0.9 and 2.2 were spreads.
- *  - The book's fold: agy on SAMPLE evenly spaced spread-shaped frames, the median of their folds.
- *  - Every other spread-shaped frame takes the pixel cut when the pixel detector is confident and within AGREE_TOL of
- *    the book fold. Otherwise, and on every frame wider than SHAPE_WIDE_AR (a fold-out, a palm leaf), agy is asked and
- *    decideCut() rules as in the per-frame mode. So a book whose first leaves are single and whose later frames are
- *    spreads is cut frame by frame, not by one book-wide rule.
+ *  - Shape, against the book's own median frame: a frame under SINGLE_REL of it is one leaf (a cover, a single leaf),
+ *    with no call; over WIDE_REL of it (a fold-out) agy is asked. Relative, not absolute: BPH spreads run from 1.4 to
+ *    2.5 wide (the gated test, 2026-10-29: a 2.5:1 book whose one single leaf was 1.26:1). So a book whose first
+ *    frames are single and whose later frames are spreads is decided frame by frame.
+ *  - The book's fold: agy on SAMPLE evenly spaced spread-shaped frames. When their folds lie within FOLD_SPREAD of
+ *    each other, every other spread-shaped frame takes their median with no call (`book-fold`): a bound book's fold
+ *    does not move (agy 490–508 on two gate books), and the crop already overlaps 3% each side. When they do not
+ *    agree, every spread-shaped frame is asked and decideCut() rules as in the per-frame mode.
+ *  - The pixel detector is recorded but does not decide: on the gate books it was "high" confidence at 280–340 with the
+ *    fold at ~504, on 19 of 41 frames.
  *  - Review: contact sheets of SHEET_N frames in page order (sheet-NN.jpg), each with the cut and the overlap band
  *    drawn. A verdict row may name a sheet instead of a page: {book_id, sheet, verdict, checked_by, bad_pages?} covers
  *    every frame on it, and a page row for a frame on that sheet overrides it (expandSheetVerdicts()).
  */
-export const SHAPE_SINGLE_AR = 0.9, SHAPE_WIDE_AR = 2.2, SAMPLE = 8, SHEET_N = 20;
+export const SINGLE_REL = 0.75, WIDE_REL = 1.4, FOLD_SPREAD = 30, SAMPLE = 8, SHEET_N = 20;
 
-/** Which frames sheets mode asks agy about, from their aspect ratios: SAMPLE spread-shaped frames, evenly spaced. */
+const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
+/** 'single' | 'spread' | 'wide' for one frame, against the book's median aspect ratio. */
+export function shapeOf(ar, medAr) {
+  if (ar < SINGLE_REL * medAr) return 'single';
+  if (ar > WIDE_REL * medAr) return 'wide';
+  return 'spread';
+}
+
+/** Which frames sheets mode samples: SAMPLE spread-shaped frames, evenly spaced. */
 export function sampleIndexes(ars, n = SAMPLE) {
-  const spreadIdx = ars.map((ar, i) => (ar >= SHAPE_SINGLE_AR && ar <= SHAPE_WIDE_AR ? i : -1)).filter((i) => i >= 0);
+  const medAr = median(ars);
+  const spreadIdx = ars.map((ar, i) => (shapeOf(ar, medAr) === 'spread' ? i : -1)).filter((i) => i >= 0);
   if (spreadIdx.length <= n) return new Set(spreadIdx);
   return new Set(Array.from({ length: n }, (_, k) => spreadIdx[Math.floor(((k + 0.5) / n) * spreadIdx.length)]));
 }
 
-/** Sheets-mode cut for a frame agy was not asked about. Returns decideCut()'s shape, or null = ask agy. */
-export function shapeOrPixelCut(ar, pix, bookFold) {
-  if (ar < SHAPE_SINGLE_AR) return { fold: null, method: `shape-single(ar${ar})`, flags: [] };
-  if (ar > SHAPE_WIDE_AR || bookFold == null) return null;
-  const pixPos = pix?.conf === 'high' && pix.pos != null ? pix.pos : null;
-  if (pixPos != null && Math.abs(pixPos - bookFold) <= AGREE_TOL) return withRange({ fold: pixPos, method: `pixel~book(px${pixPos}/book${bookFold})`, flags: [] });
-  return null;
+/** The book fold from the sample's folds, or null when there are too few or they do not agree. */
+export function bookFoldOf(sampleFolds) {
+  if (sampleFolds.length < 3 || Math.max(...sampleFolds) - Math.min(...sampleFolds) > FOLD_SPREAD) return null;
+  return median(sampleFolds);
+}
+
+/** Sheets-mode cut for a frame that was not sampled. Returns decideCut()'s shape, or null = ask agy. */
+export function shapeOrBookCut(ar, medAr, bookFold) {
+  const shape = shapeOf(ar, medAr);
+  if (shape === 'single') return { fold: null, method: `shape-single(ar${ar}/med${medAr})`, flags: [] };
+  if (shape === 'wide' || bookFold == null) return null;
+  return withRange({ fold: bookFold, method: `book-fold(${bookFold})`, flags: [] });
 }
 
 /** Sheet-level verdict rows expanded to one per frame (a page row wins over its sheet's row). */
@@ -285,13 +302,13 @@ async function proposeSheets(db, book, pages, dir, wsRoot, conc) {
   const sample = [...sampleIndexes(ok.map((i) => frames[i].ar))].map((j) => ok[j]);
   await runAll(sample);
   if (quota) return { quota: true };
-  const folds = sample.map((i) => frames[i]).filter((f) => typeof f.fold === 'number').map((f) => f.fold).sort((a, b) => a - b);
-  const bookFold = folds.length ? folds[Math.floor(folds.length / 2)] : null;
-  // Pass 3: shape or pixel where they settle it; agy for the rest.
+  const medAr = median(ok.map((i) => frames[i].ar));
+  const bookFold = bookFoldOf(sample.map((i) => frames[i].agy?.parsed).filter((p) => p?.leaves === 2).map((p) => p.fold));
+  // Pass 3: shape or the book fold where they settle it; agy for the rest.
   const rest = [];
   for (const i of ok) {
     if (asked.has(i)) continue;
-    const c = shapeOrPixelCut(frames[i].ar, frames[i].pixel, bookFold);
+    const c = shapeOrBookCut(frames[i].ar, medAr, bookFold);
     if (c) Object.assign(frames[i], c); else rest.push(i);
   }
   await runAll(rest);

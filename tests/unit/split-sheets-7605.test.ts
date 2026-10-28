@@ -1,12 +1,12 @@
 /**
- * #7605: split-spreads-agy.mjs `propose --sheets` — shape decides portrait frames with no call, a sample of
- * spread-shaped frames sets the book fold, the pixel cut is taken only when it sits on that fold, and a sheet verdict
- * covers its frames unless a page row or bad_pages says otherwise.
+ * #7605: split-spreads-agy.mjs `propose --sheets` — shape against the book's own median decides single frames with
+ * no call, an agreeing sample sets the book fold for every other spread, and a sheet verdict covers its frames unless
+ * a page row or bad_pages says otherwise.
  */
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { sampleIndexes, shapeOrPixelCut, expandSheetVerdicts, applyRefusal, readVerdicts } from '../../scripts/maintenance/split-spreads-agy.mjs';
+import { sampleIndexes, shapeOf, bookFoldOf, shapeOrBookCut, expandSheetVerdicts, applyRefusal, readVerdicts } from '../../scripts/maintenance/split-spreads-agy.mjs';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -16,7 +16,7 @@ describe('sampleIndexes', () => {
     const ars = [0.7, 0.7, ...Array.from({ length: 40 }, () => 1.4), 2.6];
     const s = [...sampleIndexes(ars, 8)];
     expect(s).toHaveLength(8);
-    expect(s.every((i) => ars[i] >= 0.9 && ars[i] <= 2.2)).toBe(true);
+    expect(s.every((i) => ars[i] === 1.4)).toBe(true);
     expect(Math.max(...s) - Math.min(...s)).toBeGreaterThan(30); // spread through the book, not the first eight
   });
   it('takes every spread-shaped frame when there are fewer than n', () => {
@@ -24,18 +24,26 @@ describe('sampleIndexes', () => {
   });
 });
 
-describe('shapeOrPixelCut', () => {
-  it('a portrait frame stays whole with no call', () => {
-    expect(shapeOrPixelCut(0.7, null, 500)).toMatchObject({ fold: null });
+describe('shape against the book', () => {
+  it('judges a frame by the book median, not a fixed ratio', () => {
+    expect(shapeOf(1.26, 2.52)).toBe('single'); // the gated test: a 2.5:1 book's one single leaf
+    expect(shapeOf(2.5, 2.52)).toBe('spread');
+    expect(shapeOf(0.73, 1.47)).toBe('single');
+    expect(shapeOf(4.0, 1.47)).toBe('wide');
   });
-  it('a confident pixel cut on the book fold is taken', () => {
-    expect(shapeOrPixelCut(1.4, { pos: 510, conf: 'high' }, 500)).toMatchObject({ fold: 510 });
+});
+
+describe('book fold', () => {
+  it('is the median when the sample agrees within FOLD_SPREAD, else null', () => {
+    expect(bookFoldOf([504, 501, 507, 497, 504])).toBe(504);
+    expect(bookFoldOf([504, 398, 507])).toBeNull();
+    expect(bookFoldOf([504, 506])).toBeNull(); // too few to trust
   });
-  it('asks agy when the pixel cut is off the book fold, unsure, the frame is wide, or there is no book fold', () => {
-    expect(shapeOrPixelCut(1.4, { pos: 398, conf: 'high' }, 500)).toBeNull(); // the #7454 Hidayah case
-    expect(shapeOrPixelCut(1.4, { pos: 500, conf: 'low' }, 500)).toBeNull();
-    expect(shapeOrPixelCut(2.5, { pos: 500, conf: 'high' }, 500)).toBeNull();
-    expect(shapeOrPixelCut(1.4, { pos: 500, conf: 'high' }, null)).toBeNull();
+  it('a non-sampled frame takes the book fold, stays whole when narrow, and asks agy when wide or unsure', () => {
+    expect(shapeOrBookCut(1.47, 1.47, 504)).toMatchObject({ fold: 504 });
+    expect(shapeOrBookCut(0.7, 1.47, 504)).toMatchObject({ fold: null });
+    expect(shapeOrBookCut(4.0, 1.47, 504)).toBeNull();
+    expect(shapeOrBookCut(1.47, 1.47, null)).toBeNull();
   });
 });
 
