@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -160,6 +160,17 @@ describe('exportScore', () => {
     expect(x.by_script).toEqual({ manuscript: { accept: '0/1', wrong_text_pages: '1/1', books: 1 }, print: { accept: '8/10', wrong_text_pages: '1/10', books: 8 }, unknown: { accept: '1/1', wrong_text_pages: '0/1', books: 1 } });
   });
 
+  it('cuts the counted routes by script type in the shape build.py\'s script split reads (mixed counts as print)', () => {
+    const r = fixture();
+    r.push(rec('item', 42, 1, true, 5, false, 'lite>agy-flash-low', { script_type: 'mixed' }), rec('item', 43, 1, false, 2, true, 'lite>agy-flash-low', { script_type: 'manuscript' }));
+    const s = exportScore(r);
+    expect(s.by_script_cells['german-lite|print'].routes['lite>agy-flash-low']).toMatchObject({ accept: '9/11', wrong_text_pages: '1/11', books: 9 });
+    expect(s.by_script_cells['german-lite|manuscript'].routes['lite>agy-flash-low']).toMatchObject({ accept: '0/1', wrong_text_pages: '1/1', books: 1 });
+    expect(s.by_script_cells['german-lite|unknown']).toBeUndefined();
+    // a route whose control failed is not router evidence in any script variant
+    expect(Object.values(s.by_script_cells).some((c) => (c as { routes: Record<string, unknown> }).routes['agy-flash-low-read'])).toBe(false);
+  });
+
   it('checks the shape of what it reads', () => {
     expect(validRecord({ _id: 'a', kind: 'item', page_id: 'p', book_id: 'b', cell: 'c', route: 'r', lane: 'l', judge: {}, run_id: 'x', judged_at: 't', verdict: { accept: true, fidelity: 9 } })).toBe(false);
     expect(validRecord({ _id: 'a', kind: 'note', page_id: 'p', book_id: 'b', cell: 'c', route: 'r', lane: 'l', judge: {}, run_id: 'x', judged_at: 't' })).toBe(false);
@@ -187,6 +198,23 @@ describe('addEvidence (rules.json as text)', () => {
   });
   it('refuses a route rules.json does not have', () => {
     expect(() => addEvidence(text, 'french-lite', 'no-such-route', entry('french-lite', 'x'))).toThrow();
+  });
+});
+
+describe('rebuildInputs', () => {
+  it('copies every file build.py opens, the script split\'s waiting shares too, and never our own evidence', () => {
+    const rules = { inputs: { v2: 'scripts/eval/estimator/ocr/v2.json' }, script_split: { on: true, waiting: 'scripts/eval/router-next-7263/results/waiting-split.json' },
+      cells: [{ id: 'german-lite', routes: [{ id: 'a', evidence: [{ score: EVIDENCE_PATH }, { score: 'scripts/eval/x/score.json' }] }, { id: 'b' }] }] };
+    const need = rebuildInputs(rules);
+    expect(need).toContain('scripts/eval/router-next-7263/results/waiting-split.json');
+    expect(need).toContain('scripts/eval/x/score.json');
+    expect(need).not.toContain(EVIDENCE_PATH); expect(need).not.toContain(BY_SCRIPT_PATH);
+    expect(rebuildInputs({ ...rules, script_split: { on: false, waiting: 'w.json' } })).not.toContain('w.json');
+  });
+
+  it('reads every input the router table on disk names', () => {
+    const rules = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    for (const p of rebuildInputs(rules)) expect(fs.existsSync(path.resolve(__dirname, '../..', p)), p).toBe(true);
   });
 });
 
