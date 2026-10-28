@@ -5,6 +5,7 @@ import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
+import { HISTORIES } from '@/app/explore/histories/histories';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -171,6 +172,7 @@ export default async function sitemap({
       ...staticPages(),
       ...blogPosts(),
       ...categoryPages(),
+      ...historyPages(),
     ]);
   }
 
@@ -271,6 +273,23 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The conceptual histories (#7623): index, each concept, its essays, its
+// claims index and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
+// site_pages; it crawls the static routes plus this chunk, and these are dynamic.
+function historyPages(): MetadataRoute.Sitemap {
+  const lastModified = new Date(`${HISTORIES.generated}T00:00:00Z`);
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified, changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/explore/histories', 0.7),
+    ...HISTORIES.concepts.flatMap((c) => [
+      at(`/explore/histories/${c.slug}`, 0.7),
+      ...c.essays.map((e) => at(`/explore/histories/${c.slug}/${e.slug}`, 0.6)),
+      at(`/explore/histories/${c.slug}/claims`, 0.5),
+      ...c.domains.map((d) => at(`/explore/histories/${c.slug}/claims/${d}`, 0.5)),
+    ]),
+  ];
 }
 
 function categoryPages(): MetadataRoute.Sitemap {

@@ -18,6 +18,7 @@ export type MapTheme = {
   level2?: boolean;
   l2Topic?: string;        // "What it says about <topic>" in the catalogue (default: the mind)
   lens?: boolean;
+  history?: string;        // the concept's conceptual history, /explore/histories/<slug> (#7623)
   layers?: boolean;        // <slug>-layers.json: kinds, questions, lines of argument, stories, counter-texts, verdict (#7129)
   views?: boolean;         // tabs: Timeline, Stories (from the layers), Semantic map and Theme river (<slug>-semantic/map.json)
   detailHint?: string;
@@ -37,7 +38,7 @@ export const MAP_THEMES: MapTheme[] = [
     figLabels: ['works you can read in English now', 'works the library holds but you cannot read yet', 'works the library does not hold, each with a place to find it', 'editions listed below, {readable} of them readable'],
     method: METHOD_COMMON + ' The work panel: for each readable work, a script took candidate pages from its best readable edition, chosen by words about the mind, by the edition’s own indexed terms and by the work’s subject. Claude chose two or three passages and wrote the summary; Gemini re-read each passage and removed any that were not the work’s own words about the mind; every quote was matched word for word against its page. Readable and held marks were re-checked against the catalogue on 16 October 2026.',
     limits: LIMITS_COMMON + ' The summaries are written by a language model from the pages it was shown and can be wrong. The passages come from the library’s machine translations (or from the English original) and link to their page, so you can check them. Editions that are held but not yet public are named without a link.',
-    level2: true, lens: true,
+    level2: true, lens: true, history: '/explore/histories/consciousness',
     detailHint: 'Click a filled mark, or a title in the catalogue below, to see what the work says about the mind and where to start reading.',
   },
   {
@@ -48,7 +49,7 @@ export const MAP_THEMES: MapTheme[] = [
     figLabels: ['works you can read in English now', 'works the library holds but you cannot read yet', 'works the library does not hold, each with a place to find it', 'editions listed below, {readable} of them readable'],
     method: 'A canon of 199 works was written by hand for this map, starting from the 105 author pages of a reader’s notes on harmony and adding the works of each tradition those notes had not reached. A script matched each work against the whole catalogue (154,301 records on 22 October 2026) by title, and one model pass (Claude) checked every matched record and dropped those that hold a different work. “Readable” means at least one held edition is public and at least 80% translated (or an English edition at least 80% transcribed). The work panel: where the reader studied the work, the panel gives those notes, condensed, with the passages the reader checked against the page. Otherwise a script took candidate pages from the best readable edition, Claude Sonnet chose two or three passages and wrote the summary, and Claude Opus re-read each passage and removed any that were not the work’s own words on harmony. Every passage was matched word for word against its page on 22 October 2026.',
     limits: 'The canon is a selection, and its weight falls where the library is strongest: Europe and China. Absences were tested by title only, so a text held inside an uncatalogued anthology may be reported as missing, and complete-works editions count as holding each work they contain. Summaries written by a model can be wrong. The passages come from the library’s machine translations (or from the English original) and link to their page, so you can check them. Editions that are held but not yet public are named without a link.',
-    level2: true, l2Topic: 'harmony', layers: true, views: true,
+    level2: true, l2Topic: 'harmony', history: '/explore/histories/harmony', layers: true, views: true,
     detailHint: 'Click a mark, or a title in the catalogue below, to see what the work holds about harmony and where to start reading.',
   },
   {
@@ -59,7 +60,7 @@ export const MAP_THEMES: MapTheme[] = [
     figLabels: ['works you can read in English now', 'works the library holds but you cannot read yet', 'works the library does not hold, each with a place to find it', 'editions listed below, {readable} of them readable'],
     method: 'A canon of 327 works was written by hand for this map, starting from the 113 author pages of a reader’s notes on magic and the works those notes list as missing, and adding the works of each tradition the notes had not reached. A script matched each work against the whole catalogue (391,590 records on 26 October 2026) by title, and one model pass (Claude) checked every matched record and dropped those that hold a different work. “Readable” means at least one held edition is public and at least 80% translated (or an English edition at least 80% transcribed). The work panel: where the reader studied the work, Claude Opus condensed the reader’s page into the notes shown, using only the statements the reader had checked against the page, and each line links to that page; the reader’s checked passages come first. Otherwise a script took candidate pages from the best readable edition, Claude Sonnet chose two or three passages and wrote the summary, and Gemini re-read each passage and removed any that were not the work’s own words on magic. Every passage was matched word for word against its page on 26 October 2026. The kinds were assigned by Claude from each work’s description and notes, and the stances on each question are Claude’s reading of the reader’s checked statements. The lines of argument, stories, tests and counter-texts were written by hand from the reader’s notes and the pages they cite.',
     limits: 'The canon is a selection, and its weight falls where the library and the reader’s notes are strongest: Latin and vernacular Europe from 1450 to 1750. Grimoires, demonology, natural magic and New Thought are kinds of book given their own rows, not traditions. “Magic” is the map’s word, not always the sources’: see the verdict above. Absences were tested by title only, so a text held inside an uncatalogued anthology may be reported as missing, and complete-works editions count as holding each work they contain. Notes condensed and summaries written by a model can be wrong; every line of a reader’s notes links to the page it rests on, and the passages come from the library’s machine translations (or from the English original) and link to their page, so you can check them. Editions that are held but not yet public are named without a link.',
-    level2: true, l2Topic: 'magic', layers: true,
+    level2: true, l2Topic: 'magic', history: '/explore/histories/magic', layers: true,
     detailHint: 'Click a mark, or a title in the catalogue below, to see what the work holds about magic and where to start reading.',
   },
 ];
