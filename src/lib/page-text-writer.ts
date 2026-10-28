@@ -11,6 +11,7 @@
 import { randomBytes } from 'crypto';
 import type { Db, Document, Filter, UpdateFilter } from 'mongodb';
 import { contentHash } from './write-provenance';
+import { translationLayers, writePageAnnotations } from './translation-text';
 
 export type PageTextField = 'ocr' | 'translation';
 export const PAGE_TEXT_FIELDS: readonly PageTextField[] = Object.freeze(['ocr', 'translation'] as PageTextField[]);
@@ -81,11 +82,22 @@ export function validateWrite(field: unknown, next: unknown, opts: Partial<Write
   if (opts.run_id != null && (typeof opts.run_id !== 'string' || opts.run_id === '')) throw new Error('writePageText: opts.run_id must be a non-empty string when given');
 }
 
-export function nextFieldValue(next: NextField, now: Date, verbatim = false): Record<string, unknown> | null {
+/**
+ * #5942: a translation written through this door carries the book's words beside `data`
+ * (`text` + `text_from`, src/lib/translation-text.ts). Twin of translationTextFields in the .mjs.
+ */
+function translationTextFields(field: PageTextField | null, next: NextField): Record<string, unknown> {
+  if (field !== 'translation' || typeof next?.data !== 'string' || !next.data) return {};
+  const l = translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null });
+  return { text: l.text, text_from: l.text_from };
+}
+
+export function nextFieldValue(next: NextField, now: Date, verbatim = false, field: PageTextField | null = null): Record<string, unknown> | null {
   if (!next) return null;
   if (verbatim) return { ...next };
   return {
     ...next,
+    ...translationTextFields(field, next),
     ...(next.content_hash || !next.data ? {} : { content_hash: contentHash(next.data) }),
     ...(next.updated_at ? {} : { updated_at: now }),
   };
@@ -168,11 +180,14 @@ export async function writePageText(db: Db, pageId: string, field: PageTextField
 
   const res = await pages.updateOne(
     casFilter(pageId, field, prior, opts) as Filter<Document>,
-    fieldUpdate(field, nextFieldValue(next, now, opts.verbatim), now) as UpdateFilter<Document>,
+    fieldUpdate(field, nextFieldValue(next, now, opts.verbatim, field), now) as UpdateFilter<Document>,
   );
   if (res.matchedCount === 0) {
     await db.collection('page_revisions').updateOne({ id: rev.id }, { $set: { aborted: 'conflict', aborted_at: now } });
     return { status: 'conflict', revision_id: rev.id as string, book_id: bookId };
+  }
+  if (!opts.verbatim && field === 'translation' && typeof next?.data === 'string' && next.data) {
+    await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, layers: translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null }) }]);
   }
   return { status: 'written', revision_id: rev.id as string, book_id: bookId, prior_hash: rev.prior_hash as string | null, next_hash: rev.next_hash as string | null };
 }

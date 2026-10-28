@@ -291,6 +291,9 @@ export const INDEXES = [
   // ── correction_events ─────────────────────────────────────────
   { collection: 'correction_events', key: { 'page_id': 1, 'created_at': -1 }, options: { 'name': 'correction_events_page_idx', 'background': true }, why: 'Corrections for a page, newest first. src/lib/correction-events.ts (#3241).' },
   { collection: 'correction_events', key: { 'field': 1, 'created_at': -1 }, options: { 'name': 'correction_events_field_idx', 'background': true }, why: 'Eval-side mining: all OCR (or translation) corrections in time order (#3241).' },
+  // ── page_annotations (#5942) ──────────────────────────────────
+  { collection: 'page_annotations', key: { 'page_id': 1, 'source': 1 }, options: { 'name': 'page_annotations_page_source_uniq', 'unique': true }, why: 'One document per page and source (#5942, decided 2026-10-10): writers and the parser backfill upsert on it (scripts/lib/translation-text.mjs annotationsUpsertOp); getPageAnnotations reads by page_id + source + data_hash.' },
+  { collection: 'page_annotations', key: { 'book_id': 1 }, options: { 'name': 'page_annotations_book_idx' }, why: 'Per-book reads (exports, the notes step) and the backfill undo, scripts/maintenance/notes-layer-backfill-5942/undo.mjs (#5942).' },
   // ── page_revisions ────────────────────────────────────────────
   { collection: 'page_revisions', key: { 'page_id': 1, 'field': 1, 'created_at': -1 }, options: { 'name': 'page_revisions_page_field_idx', 'background': true }, why: 'Lookup by page + field, newest first (revision history). Archived ensure-indexes route.' },
   { collection: 'page_revisions', key: { 'id': 1 }, options: { 'name': 'page_revisions_id_idx', 'background': true, 'unique': true }, why: 'Unique id lookup. Archived ensure-indexes route.' },

@@ -70,6 +70,7 @@ import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
 import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
+import { translationLayers, writePageAnnotations } from '../lib/translation-text.mjs'; // #5942
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS, translateJobOutcome, blockedJobFields } from '../lib/translate-job-outcome.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -555,9 +556,12 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
   if (short.verdict === 'truncated') return refuseCut(db, page, text, book, short);
   const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
+  const layers = translationLayers(text, { promptVersion: promptRef?.version }); // #5942: text + annotations beside data
   const setPayload = {
     translation: {
       data: text,
+      text: layers.text,
+      text_from: layers.text_from,
       language: 'English',
       model: getModelForBook(book),
       updated_at: new Date(),
@@ -568,7 +572,8 @@ async function writePageTranslation(db, page, text, book, promptRef, call, cut =
     updated_at: new Date(),
   };
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
-  // Dual-write to Supabase (fire-and-forget)
+  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? book?.id, layers }]);
+  // Dual-write to Supabase (fire-and-forget; it maps known columns only, so text/text_from stay in Mongo)
   syncPageUpdate(page.id, setPayload);
   await seamGuardPages(db, [page], book);
   return { written: true };
@@ -659,6 +664,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   ));
   const now = new Date();
   const model = getModelForBook(book);
+  const layersById = new Map(entries.map(({ page, text }) => [page.id, translationLayers(text, { promptVersion: promptRef?.version })])); // #5942
   const ops = entries.map(({ page, text }) => ({
     updateOne: {
       filter: { id: page.id },
@@ -666,6 +672,8 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
         $set: {
           translation: {
             data: text,
+            text: layersById.get(page.id).text,
+            text_from: layersById.get(page.id).text_from,
             language: 'English',
             model,
             updated_at: now,
@@ -687,6 +695,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
     await db.collection('pages').bulkWrite(chunk, { ordered: false });
     if (i + CHUNK_SIZE < ops.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
   }
+  await writePageAnnotations(db, entries.map(({ page }) => ({ page_id: page.id, book_id: page.book_id ?? book?.id, layers: layersById.get(page.id) })));
   // Dual-write to Supabase (fire-and-forget)
   syncPageBatch(entries.map(({ page, text }) => ({
     pageId: page.id,
