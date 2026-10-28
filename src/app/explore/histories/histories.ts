@@ -37,7 +37,8 @@ export const domainLabel = (d: string) => d.replace(/-/g, ' ').replace(/^./, (c)
 export function qualityStatement(c: Concept): string {
   const { all, judge } = HISTORIES.audit;
   const made = `The claims were drafted by AI (Claude) from the library’s pages, and each quote was matched against its page when the claim was written.`;
-  const allLine = `Across the seven audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%). In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
+  const audited = HISTORIES.concepts.filter((x) => x.audit).length;
+  const allLine = `Across the ${audited} audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%). In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
   const notChecked = `Partly verified claims and the essays themselves were not audited, and no scholar has reviewed them yet.`;
   const a = c.audit;
   if (!a) return `${made} This history has not been audited yet. ${allLine} ${notChecked}`;
