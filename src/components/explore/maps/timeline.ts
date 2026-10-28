@@ -117,7 +117,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   const attests = (w: Work) => !!state.lens && wkey(w) in state.lens.works;
   // ---- the history's citations (#7646): the claims that quote an edition of the work ----
   const claimsOf = (w: Work) => Ct?.data.works[wkey(w)] ?? null;
-  const claimHref = (d: string, id: string) => `${Ct!.base}/${d}#${id}`;
+  const claimHref = (d: string, id: string) => esc(`${Ct!.base}/${encodeURIComponent(d)}#${encodeURIComponent(id)}`);
   const nClaims = (n: number) => `${n} claim${n === 1 ? '' : 's'}`;
   const visible = (w: Work) => state.st[stat(w)] && (!state.citedOnly || !!claimsOf(w)) && (state.adj || !w.adj) && (!state.kindOnly || kindsOf(w).includes(state.kindOnly)) && (!state.q || (w.n + ' ' + w.tr + ' ' + w.gl + ' ' + w.eds.map((e) => e.t + ' ' + e.a).join(' ')).toLowerCase().includes(state.q));
 
