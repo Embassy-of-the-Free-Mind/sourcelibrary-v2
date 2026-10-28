@@ -53,7 +53,8 @@ export function pageEnvelope(opts: {
     env.truncation_note =
       `Showing results ${returned ? offset + 1 : offset}–${end} ${of}. This is NOT the full set: ` +
       `call again with offset=${end} to see the next page, and repeat until truncated is false ` +
-      `before saying what the library does or does not hold.`;
+      `before saying what the library does or does not hold. For a yes/no "do you hold X?", ` +
+      `call check_duplicate instead of paging.`;
   }
   return env;
 }

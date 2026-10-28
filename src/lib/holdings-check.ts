@@ -62,6 +62,7 @@ export type HoldingReason =
   | 'same_iiif_manifest'
   | 'same_edition'
   | 'same_edition_year_unknown'
+  | 'same_edition_volume_unknown'
   | 'other_edition'
   | 'same_work'
   | 'same_work_same_year'
@@ -134,6 +135,7 @@ const REASON_RANK: Record<HoldingReason, number> = {
   same_iiif_manifest: 1,
   same_edition: 2,
   same_edition_year_unknown: 3,
+  same_edition_volume_unknown: 3,
   other_edition: 4,
   same_work: 5,
   same_work_same_year: 3,
@@ -156,6 +158,7 @@ const REASON_VERDICT: Record<HoldingReason, HoldingsVerdict> = {
   same_iiif_manifest: 'same_object',
   same_edition: 'same_edition',
   same_edition_year_unknown: 'possible_same_edition',
+  same_edition_volume_unknown: 'possible_same_edition',
   other_edition: 'other_edition',
   same_work: 'other_edition',
   same_work_same_year: 'possible_same_edition',
@@ -262,9 +265,15 @@ function toCandidate(doc: Document, collection: 'books' | 'books_warehouse', rea
   };
 }
 
-function reasonFromDedup(m: DedupMatch, candYear: number | null): { reason: HoldingReason; detail: string } {
+/** Asked for one volume, matched a record that states no volume: the gate rightly
+ *  blocks it as a possible duplicate, but it is not evidence that THIS volume is held.
+ *  "Opera, vol. 1, 1555" matched the translated vol. II scan as "same edition" (#7624). */
+const VOLUME_UNKNOWN = { reason: 'same_edition_volume_unknown' as const, detail: 'Same title, author and year, but the held record states no volume, so it may be another volume of this set.' };
+
+function reasonFromDedup(m: DedupMatch, candYear: number | null, candVolume: number | null): { reason: HoldingReason; detail: string } {
   if (m.matchType === 'source_fingerprint') return { reason: 'same_source_object', detail: 'Same digital object: a source identifier matches.' };
   if (m.matchType === 'iiif_manifest') return { reason: 'same_iiif_manifest', detail: 'Same IIIF manifest URL.' };
+  if (candVolume != null && m.matchedVolume == null && (m.matchType === 'edition_key' || m.matchType === 'title_author')) return VOLUME_UNKNOWN;
   if (m.matchType === 'edition_key') {
     return candYear != null && m.matchedYear != null
       ? { reason: 'same_edition', detail: `Same title, author and year (${m.matchedYear}).` }
@@ -366,6 +375,7 @@ export async function checkHoldings(
 
   const cand = candidateFromInput(input);
   const candYear = editionYear(cand);
+  const candVolume = buildEditionKey(cand).parts.volume ?? null;
   const fingerprints = sourceFingerprints(cand);
 
   // 1–3. The gate's own tiers, read-only.
@@ -380,7 +390,7 @@ export async function checkHoldings(
     const coll = m.matchedCollection ?? 'books';
     const doc = docs[coll].get(m.matchedBookId);
     if (!doc) continue;
-    const { reason, detail } = reasonFromDedup(m, candYear);
+    const { reason, detail } = reasonFromDedup(m, candYear, candVolume);
     add(toCandidate(doc, coll, reason, detail));
     if (!anchor && (reason === 'same_source_object' || reason === 'same_iiif_manifest')) anchor = doc;
   }
@@ -411,6 +421,8 @@ export async function checkHoldings(
         const otherYear = ek.parts.year != null && y != null && y !== ek.parts.year;
         if (otherVolume || otherYear) {
           add(toCandidate(r, coll, 'other_edition', otherYear ? `Same title and author, year ${y}.` : `Same title and author, volume ${v}.`));
+        } else if (ek.parts.volume != null && v == null) {
+          add(toCandidate(r, coll, VOLUME_UNKNOWN.reason, VOLUME_UNKNOWN.detail));
         } else if (ek.parts.year != null && y != null) {
           add(toCandidate(r, coll, 'same_edition', `Same title, author and year (${y}).`));
         } else {
