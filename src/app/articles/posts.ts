@@ -126,6 +126,21 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'agrippa-against-himself',
+    title: 'Agrippa Against Himself',
+    subtitle:
+      'He wrote the textbook of Renaissance magic, then a book declaring all learning vain, magic included. Read through his own pages.',
+    summary:
+      'Cornelius Agrippa wrote the textbook of Renaissance magic, then recanted it in a book on the vanity of learning. His books, and the accused woman he saved.',
+    date: '28 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Title page of the 1533 Cologne De occulta philosophia (the C. G. Jung copy, e-rara), reader page 6, opened by eye.
+    image: 'https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg',
+    imageAlt:
+      'Title page of De occulta philosophia libri tres (Cologne, 1533), with a woodcut portrait of Agrippa in a cap and fur collar.',
+  },
+  {
     slug: 'aldine-roman',
     title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
     subtitle: 'Francesco Griffo’s roman type for Aldus, traced letter by letter from our copy of De Aetna (1496).',
