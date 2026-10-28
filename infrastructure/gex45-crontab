@@ -33,10 +33,12 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # GPU task queue (#6871): `gpu-queue.sh add <task.sh>` queues; this starts the next one when nothing is running.
 */5 * * * * /root/bin/gpu-queue.sh run >> /var/log/sourcelibrary/gpu-queue.log 2>&1  # GPU task queue, one at a time under /root/gpu.lock (#6871)
-# SigLIP2 full page embed (#6871 row 8): queue the next zz-siglip2-full-cNNN chunk only when no other task is pending, at most
-# two ahead (scripts/gpu/siglip2-6871/siglip2-requeue.sh; installed copy in /root/jobs/siglip2-6871/code-full/). INSTALLED
-# 2026-10-26 17:02 UTC by job siglip-full-6871-mv. Pause: touch /root/jobs/siglip2-6871/full/PAUSE. Remove when all 16 chunks are done.
-2,32 * * * * /root/jobs/siglip2-6871/code-full/siglip2-requeue.sh >> /var/log/sourcelibrary/siglip2-requeue.log 2>&1  # next SigLIP2 embed chunk only when no other GPU task is pending, max 2 ahead (#6871)
+# OCR filler (#6871, Derek 2026-10-28 "we have plenty of GPU OCR to do"): when nothing is pending or running and nobody holds
+# /root/gpu.lock, queue ONE zy-ocr-<route>-cNNN chunk of the first gated route in ocr-filler-routes.tsv with pages left
+# (scripts/gpu/ocr-filler.sh; installed copy + routes file in /root/bin/). Pause: touch /root/gpu-queue/ocr-filler/PAUSE.
+# It replaces the SigLIP2 requeue line (2,32 … /root/jobs/siglip2-6871/code-full/siglip2-requeue.sh), removed 2026-10-28 by job
+# gpu-ocr-filler-6871; SigLIP stays paused and its script stays on disk.
+*/10 * * * * /root/bin/ocr-filler.sh run >> /var/log/sourcelibrary/ocr-filler.log 2>&1  # #6871
 
 # Archiver host lanes (#5448): start the gex45 lanes of scripts/catalog-coverage/archive-lanes.json (ia-lazy) that have no tmux
 # session. INSTALLED 2026-10-26 ~08:00 UTC from the laptop session, with libopenjp2-tools + unzip (needed by --ia-zip; without
