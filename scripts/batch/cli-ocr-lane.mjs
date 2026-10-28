@@ -81,7 +81,7 @@
  * ledger). Before a book chunk the run CLAIMS the book: an exclusive-create file <ledger dir>/claims/<book>.json,
  * removed when the chunk is ledgered. A run skips a book another live run has claimed (a claim whose pid is gone, or
  * older than 3 h, is stale and taken over), and after claiming re-reads the ledger lines other runs appended, so it
- * never takes a page another run has tried.
+ * never takes a page another run has tried. A book a correction reader is reading right now (/proc) is skipped too.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -213,6 +213,21 @@ export function claimBook(dir, bookId, me) {
   }
   return false;
 }
+/**
+ * Books a correction reader is reading right now on this box, from /proc (cli-ocr.mjs read --lane=<CORRECT_LANE>; the
+ * book is the folder of its --page-ids-file). Covers a run that does not claim (code from before the claims).
+ */
+export function liveReaderBooks(procDir = '/proc') {
+  const out = new Set();
+  for (const pid of fs.readdirSync(procDir).filter((d) => /^\d+$/.test(d))) {
+    let argv;
+    try { argv = fs.readFileSync(path.join(procDir, pid, 'cmdline'), 'utf8').split('\0'); } catch { continue; }
+    if (!argv.some((a) => a.endsWith('cli-ocr.mjs')) || !argv.includes('read') || !argv.includes(`--lane=${CORRECT_LANE}`)) continue;
+    const f = argv.find((a) => a.startsWith('--page-ids-file='));
+    if (f) out.add(path.basename(path.dirname(f.slice('--page-ids-file='.length))));
+  }
+  return out;
+}
 export const releaseBookClaim = (dir, bookId) => fs.rmSync(path.join(dir, `${bookId}.json`), { force: true });
 /** Ledger lines appended since the last call (other runs write the same file): adds their page ids to `set`. */
 function ledgerTail(file, set, state) {
@@ -304,6 +319,7 @@ async function correctMain(mode, arg) {
   const nextChunk = async () => {
     while (bi < books.length) {
       const b = books[bi++];
+      if (liveReaderBooks().has(b.id)) continue;       // a reader (of any run) is on this book now
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);

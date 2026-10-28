@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -158,5 +158,14 @@ describe('the correction lane on a second pool (#7263)', () => {
     expect(claimLive({ pid: 1, at: new Date(Date.now() - 4 * 3600e3).toISOString() }, { alive: () => true })).toBe(false);
     expect(claimLive({ pid: 1, at: new Date().toISOString() }, { alive: () => true })).toBe(true);
     fs.rmSync(dir, { recursive: true, force: true });
+  });
+  it('a book a correction reader is reading now is seen, whichever run started it', () => {
+    const proc = fs.mkdtempSync(path.join(os.tmpdir(), 'proc-'));
+    const put = (pid: string, argv: string[]) => { fs.mkdirSync(path.join(proc, pid)); fs.writeFileSync(path.join(proc, pid, 'cmdline'), argv.join('\0') + '\0'); };
+    put('11', ['node', '/r/scripts/batch/cli-ocr.mjs', 'read', '--page-ids-file=/d/2026-10-28/bookA/page-ids-1.json', '--lane=agy-correct-lite-7558']);
+    put('12', ['node', '/r/scripts/batch/cli-ocr.mjs', 'apply', '--out=/d/2026-10-28/bookB', '--lane=agy-correct-lite-7558']);
+    put('13', ['node', '/r/scripts/batch/cli-ocr.mjs', 'read', '--page-ids-file=/x/bookC/ids.json', '--lane=route-judge-6740-eval']);
+    expect([...liveReaderBooks(proc)]).toEqual(['bookA']);
+    fs.rmSync(proc, { recursive: true, force: true });
   });
 });
