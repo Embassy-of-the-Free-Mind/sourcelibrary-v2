@@ -56,10 +56,10 @@ describe('setCatalogueFields — refuses a write without a stamp (negative contr
     expect(f.calls).toHaveLength(0);
   });
 
-  it('refuses a field outside the imprint family', async () => {
+  it('refuses a field outside the gated catalogue fields', async () => {
     const f = fakeDb(aldine());
-    await expect(setCatalogueFields(f.db, 'x', { title: 'X' } as never, { source: 's', script: SCRIPT })).rejects.toThrow(ProvenanceError);
-    await expect(setCatalogueFields(f.db, 'x', { place_published: 'Lyon', title: 'X' } as never, { source: 's', script: SCRIPT })).rejects.toThrow(/title/);
+    await expect(setCatalogueFields(f.db, 'x', { summary: 'X' } as never, { source: 's', script: SCRIPT })).rejects.toThrow(ProvenanceError);
+    await expect(setCatalogueFields(f.db, 'x', { place_published: 'Lyon', author_id: 'x' } as never, { source: 's', script: SCRIPT })).rejects.toThrow(/author_id/);
     expect(f.calls).toHaveLength(0);
   });
 });
@@ -83,6 +83,19 @@ describe('setCatalogueFields — a stamped write', () => {
     // year_source describes `year`; it is written but gets no stamp of its own.
     expect($set.year_source).toBe('titlepage');
     expect($set['field_provenance.year_source']).toBeUndefined();
+  });
+
+  // #7673: "Complete Works" was written onto a single volume's display_title with no stamp, so the writer that
+  // produced it could not be found. A title write now carries the same stamp as an imprint write.
+  it('stamps a title correction with the title-page evidence and the title it replaced', () => {
+    const built = buildCatalogueUpdate(
+      { _id: 'o', title: 'Opera omnia', display_title: 'Complete Works' },
+      { title: 'Opera, Tomus Secundus', display_title: 'Works, Volume II (Basel, 1555)' },
+      { source: 'titlepage', script: SCRIPT, evidence: { page_number: 5, as_printed: 'TOMVS SECVNDVS' } });
+    const { $set, $push } = built!.update;
+    expect($set['field_provenance.display_title']).toMatchObject({ source: 'titlepage', previous_value: 'Complete Works', evidence: { page_number: 5 } });
+    expect($set['field_provenance.title']).toMatchObject({ previous_value: 'Opera omnia' });
+    expect($push['field_provenance_history.display_title']).toEqual($set['field_provenance.display_title']);
   });
 
   it('a first write records previous_value: null, not an absent key', () => {
@@ -127,8 +140,13 @@ describe('imprintWritesIn — the lint sees writes that go around the helper', (
   });
 
   it('a field allowlist copied into $set (the book PATCH route shape)', () => {
-    const w = imprintWritesIn(`${books}const allowedFields = [\n  'title', 'place_published',\n];`);
+    const w = imprintWritesIn(`${books}const allowedFields = [\n  'summary', 'place_published',\n];`);
     expect(w).toEqual([{ line: 3, field: 'place_published', how: 'listed' }]);
+  });
+
+  it('title and author writes are gated too (#7673)', () => {
+    const w = imprintWritesIn(`${books}await books.updateOne({ id }, { $set: { display_title: t, author: a, author_id: s } });`);
+    expect(w.map((x) => x.field).sort()).toEqual(['author', 'display_title']);
   });
 
   it('not: a file that never opens books, a stamp, a query, a select list, a comparison, or a marked line', () => {
