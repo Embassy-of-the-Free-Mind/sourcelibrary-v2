@@ -14,6 +14,8 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/lane-judge-sampler.mjs run --out=DIR
  *        [--since=ISO] [--until=ISO] [--seed=N] [--dry-run] [--cap-points=1] [--max-calls=N] [--draft-share=1]
+ *        [--book=ID[,ID] [--per-book=3]]   book-depth (#7263 pilots): N random written pages of each named book, no rate
+ *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
  *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
  *                                                      build.py on origin/main + this export; publish; post flips
@@ -30,7 +32,8 @@
  * DRAW (drawPages). Books in a seeded weighted order without replacement (Efraimidis-Spirakis: key = u^(1/w)), weight
  * w = 1 + ln(1 + books.human_read_count) — the reader-opened count (#5048) the other lanes queue by; read_count counts
  * bots. One page per book per run, uniform among its written pages; at most 2 pages per book over all runs (pages of
- * one book are one observation). Rate: every eligible book while the route has fewer than 60 books judged in that
+ * one book are one observation). CHECK FLAG (#7263): a page its lane flagged (engine.input.draft.check_flag) is drawn
+ * ALWAYS, beside the random draw, as stratum 'flagged', first in the queue; it is reported apart and is never evidence. Rate: every eligible book while the route has fewer than 60 books judged in that
  * cell, then 5% (a drift check). A page judged once is never drawn again. The seed (default: the run date as
  * yyyymmdd) and every draw decision go to DIR/draw.json and the run record, so a draw can be reproduced.
  *
@@ -72,7 +75,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-6740/judge.mjs';
-import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
+import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
 
@@ -101,6 +104,12 @@ export const LANES = [
     route: 'lite>agy-flash-low', draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
     cell: (lang) => (/^German/.test(lang) ? 'german-lite' : /^French/.test(lang) ? 'french-lite' : null),
     lang: (lang) => (/^German/.test(lang) ? 'German' : /^French/.test(lang) ? 'French' : null), languages: CORRECT_LANGUAGES },
+  // Route C (#7263): a PERO draft of a page with no OCR, corrected by agy Flash-low with the image. The page had no text
+  // before (`unread`), so there is no served draft to judge beside it; the check flag (>= 27% of the draft's words changed)
+  // is drawn ALWAYS, as its own stratum.
+  { lane: GPU_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': GPU_LANE }, reason: new RegExp(`^${GPU_LANE_REASON}`),
+    route: GPU_ROUTE, draft_route: null, unread: true, hand: 'print',
+    cell: (lang) => (/^Latin/.test(lang) ? 'latin-gpu-7263' : null), lang: (lang) => (/^Latin/.test(lang) ? 'Latin' : null), languages: /^Latin/ },
   { lane: 'tib-correct-6560', enabled: false, why: 'Tibetan: the judge alone does not decide the cell (planted-syllable catch below 0.80 hands it to Derge, judge.mjs tib-kangyur); needs the Derge stage' },
   { lane: 'tib_gutter_vllm_6871', enabled: false, why: 'GPU Yigdzin gutter reads: no rules.json route for them yet' },
   { lane: '(no ocr.pipeline) gemini-3.8-flash-low', enabled: false, why: 'the held-book CLI read (#7089) stamps no lane, and a page with no draft has no cell in rules.json yet' },
@@ -168,6 +177,40 @@ export function drawPages(cands, hist, { seed, rateFull = RATE_FULL_BOOKS, rateA
   return { drawn, log };
 }
 
+/**
+ * The book-depth draw (`run --book=ID[,ID] --per-book=N`, #7263 pilots): every named book's written pages, N of them per
+ * book uniformly without replacement (seeded), pages judged before excluded; no rate and no per-book cap. Returns
+ * { drawn, log } like drawPages.
+ */
+export function drawBookDepth(cands, hist, { seed, perBook = 3 } = {}) {
+  if (!Number.isFinite(seed)) throw new Error('drawBookDepth: a numeric seed is required');
+  const rnd = makeRng(seed);
+  const log = { seed, mode: 'book-depth', per_book: perBook, candidates: cands.length, judged_page: 0, books: 0 };
+  const byBook = new Map();
+  for (const c of cands) {
+    if (hist.pagesJudged.has(c.page_id)) { log.judged_page++; continue; }
+    if (!byBook.has(c.book_id)) byBook.set(c.book_id, []);
+    byBook.get(c.book_id).push(c);
+  }
+  const drawn = [];
+  for (const b of [...byBook.keys()].sort()) {
+    const pages = byBook.get(b).slice().sort((x, y) => (x.page_id < y.page_id ? -1 : 1));
+    for (let i = 0; i < Math.min(perBook, pages.length); i++) {
+      const j = i + Math.floor(rnd() * (pages.length - i));
+      [pages[i], pages[j]] = [pages[j], pages[i]];
+      drawn.push({ ...pages[i], key: null, rate: 1, u: null });
+    }
+  }
+  log.books = byBook.size;
+  return { drawn, log };
+}
+
+/** The check-flag stratum: flagged candidates not drawn and never judged, all of them (judged ALWAYS, #7263). */
+export function flaggedStratum(cands, drawn, hist) {
+  const inDraw = new Set(drawn.map((d) => d.page_id));
+  return cands.filter((c) => c.check_flag && !inDraw.has(c.page_id) && !hist.pagesJudged.has(c.page_id)).map((c) => ({ ...c, key: null, rate: 1, u: null, stratum: 'flagged' }));
+}
+
 /** The weekly cap: calls allowed in any 7 days = floor(capPoints / pointsPerCall); left = that minus calls made. */
 export function weeklyBudget({ callsLast7d, pointsPerCall, capPoints }) {
   if (!(pointsPerCall > 0) || !(capPoints >= 0)) throw new Error('weeklyBudget: pointsPerCall > 0 and capPoints >= 0');
@@ -214,7 +257,8 @@ function routeBlock(got) {
 
 const scriptOf = (r) => r.script_type ?? 'unknown';
 const handOf = (r) => r.cell_hand ?? LANES.find((l) => l.lane === r.lane)?.hand ?? null;
-const inEvidence = (r) => handOf(r) !== 'print' || scriptOf(r) === 'print';
+// The check-flag stratum (#7263) is drawn because it is flagged, not at random: reported apart, never evidence.
+const inEvidence = (r) => r.draw?.stratum !== 'flagged' && (handOf(r) !== 'print' || scriptOf(r) === 'print');
 function byScript(rs) {
   const out = {};
   for (const t of [...new Set(rs.map(scriptOf))].sort()) {
@@ -245,8 +289,10 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
       const all = rs.filter((r) => r.kind === 'item' && r.route === route);
       // A print cell's evidence is its print pages; manuscript, mixed and unknown pages are reported apart (by_script).
       const got = all.filter(inEvidence);
+      const flagged = all.filter((r) => r.draw?.stratum === 'flagged');
       const block = { ...routeBlock(got), lane: [...new Set(all.map((r) => r.lane))], counts: passed, served: 'the live lane\'s applied output (served)',
-        evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all) };
+        evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all),
+        ...(flagged.length && { flagged_stratum: { ...routeBlock(flagged), note: 'pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence' } }) };
       (passed ? C.routes : C.routes_not_counted)[route] = block;
       for (const r of all) {
         const wtd = (r.verdict.defects || []).filter((d) => d.severity === 'wrong_text');
@@ -365,7 +411,7 @@ async function findWrites(db, since, until) {
   for (const L of LANES.filter((l) => l.enabled)) {
     const F = frame[L.lane] = { pages_stamped: 0, no_cell: 0, rewritten_since: 0, no_revision: 0, draft_not_route_engine: 0, held_or_hidden: 0, eligible: 0 };
     const pages = await db.collection('pages').find({ ...L.stamp, [`${L.field}.updated_at`]: { $gte: since, $lt: until } },
-      { projection: { id: 1, book_id: 1, page_number: 1, script_type: 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1 } }).toArray();
+      { projection: { id: 1, book_id: 1, page_number: 1, script_type: 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1, [`${L.field}.engine.input.draft.check_flag`]: 1, [`${L.field}.engine.input.draft.change_share`]: 1 } }).toArray();
     F.pages_stamped = pages.length;
     const prof = await bookProfiles(db, [...new Set(pages.map((p) => p.book_id))]);
     F.script = {};
@@ -386,14 +432,15 @@ async function findWrites(db, since, until) {
       const r = revs.get(p.id);
       if (!r) { F.no_revision++; continue; }
       if (r.next_hash !== textHash(p[L.field])) { F.rewritten_since++; continue; }
-      if (!L.draft_models.includes(r.model)) { F.draft_not_route_engine++; continue; }
+      // An unread lane's revision row holds the page's prior text, which must be none; any other lane's, a draft of its engine.
+      if (L.unread ? (typeof r.data === 'string' && r.data.trim()) : !L.draft_models.includes(r.model)) { F.draft_not_route_engine++; continue; }
       F.eligible++;
       const sc = scriptClass(p[L.field].data, p.script_type, bookHand(prof.get(p.book_id)));
       F.script[sc.script_type] = (F.script[sc.script_type] ?? 0) + 1;
       out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: L.route, draft_route: L.draft_route, lane: L.lane, lang: L.lang(b.language),
         weight: bookWeight(b), human_read_count: b.human_read_count ?? 0, ...sc, cell_hand: L.hand,
         write: { revision_id: r.id, run_id: r.run_id ?? null, written_at: r.created_at, text_hash: r.next_hash, model: p[L.field].model },
-        draft_model: r.model });
+        draft_model: r.model, ...(L.unread && { check_flag: !!p[L.field].engine?.input?.draft?.check_flag, change_share: p[L.field].engine?.input?.draft?.change_share ?? null }) });
     }
   }
   return { cands: out, frame };
@@ -428,30 +475,39 @@ async function run() {
   try {
     // The window starts where the last real run's finished queue left it: a run the cap or the meter stopped leaves
     // its start in place, so the pages it did not reach are drawn from again.
-    const last = await db.collection(RUNS).find({ dry_run: false }).sort({ at: -1 }).limit(1).next();
-    const since = new Date(arg('since') || last?.next_since || DEFAULT_SINCE), until = new Date(arg('until') || Date.now());
+    // --book=ID[,ID] (#7263): the book-depth mode, a pilot's books judged N pages each; it never moves the nightly window.
+    const BOOKS = arg('book') ? new Set(arg('book').split(',').filter(Boolean)) : null;
+    const PER_BOOK = Number(arg('per-book') ?? 3);
+    const last = await db.collection(RUNS).find({ dry_run: false, mode: { $ne: 'book-depth' } }).sort({ at: -1 }).limit(1).next();
+    const since = new Date(arg('since') || (BOOKS ? DEFAULT_SINCE : last?.next_since) || DEFAULT_SINCE), until = new Date(arg('until') || Date.now());
     const today = until.toISOString().slice(0, 10);
     const seed = Number(arg('seed') ?? today.replace(/-/g, ''));
-    const runId = `lane-judge-${until.toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}${DRY ? '-dry' : ''}`;
-    const { cands, frame } = await findWrites(db, since, until);
+    const runId = `lane-judge-${until.toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}${BOOKS ? '-books' : ''}${DRY ? '-dry' : ''}`;
+    const found = await findWrites(db, since, until);
+    const { frame } = found;
+    const cands = BOOKS ? found.cands.filter((c) => BOOKS.has(c.book_id)) : found.cands;
     const hist = await history(db);
-    const { drawn, log } = drawPages(cands, hist, { seed });
+    const { drawn: random, log } = BOOKS ? drawBookDepth(cands, hist, { seed, perBook: PER_BOOK }) : drawPages(cands, hist, { seed });
+    const flaggedDrawn = flaggedStratum(cands, random, hist);
+    const drawn = [...random.map((d) => ({ ...d, stratum: 'random' })), ...flaggedDrawn];
+    log.flagged = flaggedDrawn.length;
     const budget = weeklyBudget({ callsLast7d: hist.callsLast7d, pointsPerCall: ppc, capPoints });
     const maxCalls = Math.min(budget.left, Number(arg('max-calls') ?? Infinity));
     const rnd = makeRng(seed ^ 0x7611);
     // Items in draw order: the lane's output, then its draft (the draft share is seeded per page).
     const week = isoWeek(until);
     const items = [];
-    for (const d of drawn) {
+    // The flagged stratum first (judged always), then the random draw in draw order.
+    for (const d of [...flaggedDrawn, ...drawn.filter((x) => x.stratum !== 'flagged')]) {
       items.push({ kind: 'item', d, route: d.route });
-      if (rnd() < draftShare) items.push({ kind: 'draft', d, route: d.draft_route });
+      if (d.draft_route && rnd() < draftShare) items.push({ kind: 'draft', d, route: d.draft_route });
     }
     // Wrong-page controls: two per cell x route per ISO week, first in line (a route whose control fails does not count).
     const controls = [];
     for (const g of [...new Set(drawn.map((d) => `${d.cell}|${d.route}`))]) {
       const [cell, route] = g.split('|');
       const owed = 2 - hist.rows.filter((r) => r.kind === 'wrong_page' && r.cell === cell && r.route === route && r.week === week).length;
-      const mine = drawn.filter((d) => d.cell === cell && d.route === route);
+      const mine = drawn.filter((d) => d.cell === cell && d.route === route && d.stratum !== 'flagged');
       for (let i = 0; i < owed && mine.length >= 3; i++) {
         const d = mine[i], other = mine.find((o, j) => j > i && o.book_id !== d.book_id);
         if (other) controls.push({ kind: 'wrong_page', d, other, route });
@@ -460,7 +516,8 @@ async function run() {
     const queue = [...controls, ...items];
     const drawFile = path.join(OUT, `draw-${runId}.json`);
     fs.writeFileSync(drawFile, JSON.stringify({ run_id: runId, since, until, seed, frame, log, budget, max_calls: maxCalls, draft_share: draftShare, prompt_template_sha: PROMPT_TEMPLATE_SHA,
-      drawn: drawn.map(({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, write }) => ({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, revision_id: write.revision_id })),
+      mode: BOOKS ? 'book-depth' : 'nightly', books: BOOKS ? [...BOOKS] : null, per_book: BOOKS ? PER_BOOK : null,
+      drawn: drawn.map(({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, write, stratum, check_flag, change_share }) => ({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, revision_id: write.revision_id, stratum, check_flag, change_share })),
       queue: queue.map((q) => ({ kind: q.kind, page_id: q.d.page_id, route: q.route, other: q.other?.page_id })) }, null, 1));
     const tally = {}; for (const d of drawn) tally[`${d.cell}/${d.route}`] = (tally[`${d.cell}/${d.route}`] ?? 0) + 1;
     console.log(`window ${since.toISOString()} .. ${until.toISOString()}  seed ${seed}  run ${runId}`);
@@ -506,7 +563,7 @@ async function run() {
           other_page_id: q.other?.page_id, script_type: q.d.script_type, script_source: q.d.script_source, cell_hand: q.d.cell_hand, write: q.d.write, draft_model: q.d.draft_model, image_url: imageUrl, text_hash: h(text.trim()).slice(0, 16),
           judge: { by: 'claude -p --model opus', model_reported: res.model, prompt_template_sha: PROMPT_TEMPLATE_SHA, prompt_sha: h(prompt).slice(0, 16), instrument: 'route-judge-6740 judgePrompt' },
           verdict: v, raw: v ? undefined : String(res.text).slice(0, 500), cls: res.cls, usage: res.usage, list_usd: res.cost, secs: Math.round((Date.now() - t0) / 1000),
-          seed, run_id: runId, week, draw: { key: q.d.key, rate: q.d.rate, u: q.d.u, human_read_count: q.d.human_read_count }, called: true, judged_at: new Date().toISOString() };
+          seed, run_id: runId, week, draw: { key: q.d.key, rate: q.d.rate, u: q.d.u, human_read_count: q.d.human_read_count, stratum: q.d.stratum ?? 'random', ...(BOOKS && { mode: 'book-depth' }), ...(q.d.check_flag != null && { check_flag: q.d.check_flag, change_share: q.d.change_share }) }, called: true, judged_at: new Date().toISOString() };
         await db.collection(VERDICTS).insertOne(doc);
         console.log(`  ${q.kind} ${q.d.cell}/${q.route} ${q.d.book_id}:${q.d.page_number}: ${v ? `accept=${v.accept} ${v.fidelity} (${(v.defects || []).length} defects)` : `unparsed ${res.cls ?? ''}`}`);
         if (q.kind === 'item' && v && (!v.accept || wrongText(v))) retry.push({ page_id: q.d.page_id, book_id: q.d.book_id, page_number: q.d.page_number, cell: q.d.cell, route: q.route, accept: v.accept, fidelity: v.fidelity,
@@ -515,7 +572,7 @@ async function run() {
     }
     const meter1 = await claudeMeter(limits);
     if (retry.length) fs.writeFileSync(path.join(OUT, `retry-queue-${runId}.jsonl`), retry.map((r) => JSON.stringify(r)).join('\n') + '\n');
-    const runDoc = { _id: runId, dry_run: false, since, until, seed, frame, draw_log: log, drawn: drawn.length, queue: queue.length, calls, stop, budget, cap_points: capPoints,
+    const runDoc = { _id: runId, dry_run: false, mode: BOOKS ? 'book-depth' : 'nightly', ...(BOOKS && { books: [...BOOKS], per_book: PER_BOOK }), since, until, seed, frame, draw_log: log, drawn: drawn.length, queue: queue.length, calls, stop, budget, cap_points: capPoints,
       draft_share: draftShare, meter_before: meter0, meter_after: meter1, prompt_template_sha: PROMPT_TEMPLATE_SHA, retry_queue: retry, host: os.hostname(), at: new Date().toISOString() };
     runDoc.next_since = stop ? since : until;
     await db.collection(RUNS).insertOne(runDoc);
