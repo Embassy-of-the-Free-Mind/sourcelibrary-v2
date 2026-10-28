@@ -60,3 +60,27 @@ export const READER_PAGE_PROJECTION = {
   summary: 1, modernized: 1, transliteration: 1,
   read_count: 1, edit_count: 1, created_at: 1, updated_at: 1,
 } as const;
+
+/**
+ * #5942: the stored text layer (`translation.text`, `translation.text_from`) stays on the server.
+ * The reader renders `translation.data` and serialises the page whole into its RSC payload, so a
+ * page the notes-layer backfill has written would otherwise ship its translation twice (~2 KB per
+ * page), and a page whose `data` was later withheld by a dotted `$unset` would ship the withheld
+ * words in `text`. A surface that wants the clean words reads them server-side through
+ * getTranslationText (src/lib/translation-text.ts) — never from this payload.
+ *
+ * Exclusion projection for `/api/pages/[id]`, `/api/pages/batch` and their tenant twins.
+ */
+export const PAGE_API_PROJECTION = Object.freeze({ detected_images: 0, 'translation.text': 0, 'translation.text_from': 0 });
+
+/**
+ * The same for the reader route, whose projection is an inclusion list (`translation: 1` whole —
+ * MongoDB cannot exclude a sub-field there): drop the two fields from the fetched page. Key order
+ * is kept, so a backfilled page serialises exactly as a page that never had them.
+ */
+export function withoutTextLayer<T>(page: T): T {
+  const t = (page as { translation?: unknown } | null)?.translation;
+  if (!t || typeof t !== 'object' || !('text' in t || 'text_from' in t)) return page;
+  const { text: _text, text_from: _from, ...rest } = t as Record<string, unknown>;
+  return { ...(page as object), translation: rest } as T;
+}
