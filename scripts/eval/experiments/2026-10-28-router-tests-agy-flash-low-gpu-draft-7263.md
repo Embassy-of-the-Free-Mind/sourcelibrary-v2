@@ -48,6 +48,11 @@ written. 180 agy calls. No new Opus read (Derek 09:50Z and 11:24Z): Opus is the 
 | | 3 Flash > agy Flash-low | 6/30 | 22/30 | O6 16 | |
 | Latin print, lite cell | GLM-OCR > agy Flash-low | **22/26** (4 replies cut) | 2/26 | O6 2 | lite > agy Flash-low 24/30, lite > Opus 30/30 |
 
+**Print vs manuscript** (Derek 11:55Z; `script-split.json`, each verdict with its page's `script_type`, or the `<script>handwritten` tag when the field is unset):
+- **Manuscript.** Every judged page of zh-dice and zh-frame-6871 is `handwritten`; these are the Siku Quanshu manuscript copies, so their k/n above are manuscript k/n.
+- **Print.** Every judged page of the Hebrew, Arabic and Chinese 3 Flash cells and of latin-gpu is print (`printed`, `mixed`, or no field and no handwritten tag). The 3 Flash frames left out `<script>handwritten` pages.
+- No cell has both kinds, so no k/n splits further.
+
 **Made worse by the agy corrector** (paired with the served draft): Hebrew 3 worse / 5 better of 28, Arabic 4 / 6 of 29 (3 accepts gained),
 Chinese 6 / 5 of 30 (wrong text added on 3).
 
