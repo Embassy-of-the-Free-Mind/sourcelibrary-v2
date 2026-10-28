@@ -295,7 +295,8 @@ async function proposeSheets(db, book, pages, dir, wsRoot, conc) {
     asked.add(i);
     f.agy = await askAgy(await fetchBuf(f.url), wsRoot);
     if (f.agy.cls === 'quota') { quota = true; return; }
-    Object.assign(f, decideCut(f.pixel, f.agy.parsed, { pageOrder }));
+    // No pixel vote here: on the gate books its "agree within 4%" cut put p.65 at 468 with the fold at 504 (by eye).
+    Object.assign(f, decideCut(null, f.agy.parsed, { pageOrder }));
   };
   const runAll = async (idx) => { let k = 0; await Promise.all(Array.from({ length: conc }, async () => { while (k < idx.length && !quota) await ask(idx[k++]); })); };
   // Pass 2: the sample sets the book's fold.
