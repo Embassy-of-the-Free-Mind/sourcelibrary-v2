@@ -13,7 +13,8 @@
  * WHAT IT TOUCHES, and nothing else:
  *   pages.translation.text, pages.translation.text_from      ($set; never updated_at, never
  *     translation.updated_at, never pipeline_auto, never data)
- *   page_annotations                                         (upsert per page + source, tagged run_id)
+ *   page_annotations                                         (INSERT per page + source + run_id; an existing
+ *     doc is never overwritten or deleted — a re-run adds its own, the reader picks by data_hash)
  *   page_revisions   one row per written page: field 'translation.text', source
  *     'notes-layer-backfill-5942', the previous text/text_from (null on a first write) — what
  *     undo.mjs reads. field is NOT 'translation', so revision history, edition-reader and the
@@ -42,7 +43,7 @@ import { createWriteStream, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { randomBytes } from 'node:crypto';
 import { splitAnnotations, renderInline, renderMarkup } from '../../lib/annotation-layer.mjs';
-import { translationLayers, translationTextIsCurrent, annotationsDoc, parserAnnotation, ANNOTATIONS_COLLECTION, PARSER_VERSION } from '../../lib/translation-text.mjs';
+import { translationLayers, translationTextIsCurrent, annotationsDoc, annotationsInsertOp, parserAnnotation, ANNOTATIONS_COLLECTION, PARSER_VERSION } from '../../lib/translation-text.mjs';
 
 export const SOURCE = 'notes-layer-backfill-5942';
 const args = process.argv.slice(2);
@@ -136,8 +137,8 @@ export async function processBatch(db, ids, totals, out, { apply = APPLY, runId 
     const layers = translationLayers(t.data, { promptVersion: t.prompt_version });
     const m = measure(t.data, layers);
     const textBytes = BSON.calculateObjectSize({ text: layers.text, text_from: layers.text_from });
-    const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers });
-    const annBytes = doc ? BSON.calculateObjectSize({ ...doc, run_id: runId }) : 0;
+    const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers, run_id: runId });
+    const annBytes = doc ? BSON.calculateObjectSize(doc) : 0;
     const rec = { page_id: page.id, book_id: page.book_id, data_chars: t.data.length, text_chars: layers.text.length, text_bytes: textBytes, ann_bytes: annBytes, ...m };
     totals.seen++;
     for (const k of ['round_trip', 'store_matches_parser']) if (m[k]) totals[k]++;
@@ -167,7 +168,7 @@ export async function processBatch(db, ids, totals, out, { apply = APPLY, runId 
       await db.collection('page_revisions').updateOne({ id: revId }, { $set: { aborted: 'conflict', aborted_at: new Date() } });
       rec.written = 'conflict';
     } else {
-      if (doc) await db.collection(ANNOTATIONS_COLLECTION).replaceOne({ page_id: doc.page_id, source: doc.source }, { ...doc, run_id: runId }, { upsert: true });
+      if (doc) await db.collection(ANNOTATIONS_COLLECTION).bulkWrite([annotationsInsertOp(doc)]);
       totals.written++;
       rec.written = true;
     }
@@ -184,7 +185,7 @@ async function main() {
   console.log(`[${SOURCE}] run ${RUN_ID} · ${APPLY ? 'APPLY' : 'dry run'} · ${PILOT ? `pilot ${PILOT}` : 'full'} · batch ${BATCH} · throttle ${THROTTLE}ms`);
   if (APPLY) {
     if (!(await waitForInterlock())) { console.error('entities interlock never cleared — stopping.'); process.exit(3); }
-    await db.collection(ANNOTATIONS_COLLECTION).createIndex({ page_id: 1, source: 1 }, { name: 'page_annotations_page_source_uniq', unique: true });
+    await db.collection(ANNOTATIONS_COLLECTION).createIndex({ page_id: 1, source: 1, run_id: 1, data_hash: 1 }, { name: 'page_annotations_key_uniq', unique: true });
     await db.collection(ANNOTATIONS_COLLECTION).createIndex({ book_id: 1 }, { name: 'page_annotations_book_idx' });
   }
   const out = OUT ? createWriteStream(OUT) : null;

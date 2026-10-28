@@ -187,7 +187,7 @@ export async function writePageText(db: Db, pageId: string, field: PageTextField
     return { status: 'conflict', revision_id: rev.id as string, book_id: bookId };
   }
   if (!opts.verbatim && field === 'translation' && typeof next?.data === 'string' && next.data) {
-    await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, layers: translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null }) }]);
+    await writePageAnnotations(db, [{ page_id: pageId, book_id: bookId, run_id: opts.run_id ?? null, layers: translationLayers(next.data, { promptVersion: (next.prompt_version as string | undefined) ?? null }) }]);
   }
   return { status: 'written', revision_id: rev.id as string, book_id: bookId, prior_hash: rev.prior_hash as string | null, next_hash: rev.next_hash as string | null };
 }

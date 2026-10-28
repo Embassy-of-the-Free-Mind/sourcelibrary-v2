@@ -141,7 +141,7 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `jobs` | Processing job queue |
 | `batch_jobs` | Batch OCR/translation jobs |
 | `page_revisions` | OCR/translation history (MUST create before writes) |
-| `page_annotations` | The notes layer (#5942): one doc per page and source — the model's notes and the page's marks, anchored to `pages.translation.text` by exact/prefix/suffix + offsets, with the `data_hash` of the `translation.data` they were parsed from. Read via `getPageAnnotations` (`scripts/lib/translation-text.mjs`), never served when the hash is stale. |
+| `page_annotations` | The notes layer (#5942): one doc per page, source and run, never overwritten (a re-run inserts its own; undo deletes only its run's) — the model's notes and the page's marks, anchored to `pages.translation.text` by exact/prefix/suffix + offsets, with the `data_hash` of the `translation.data` they were parsed from. Read via `getPageAnnotations` (`scripts/lib/translation-text.mjs`), never served when the hash is stale. |
 | `gemini_usage` | AI cost tracking (single source of truth) |
 | `system_config` | Global settings (`processing_control` with `paused` flag) |
 
