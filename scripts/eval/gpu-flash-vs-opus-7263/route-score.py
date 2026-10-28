@@ -10,7 +10,8 @@ fault lists), so the mapping is stated here and in every output:
                 bleed, order or meaning-changing misreads). A no-answer (CONTAIN, refusal, empty) is neither accepted nor
                 wrong text — it is counted in n and named in `no_answer`;
   classes     = pages with at least one fault of that kind (omissions, additions, cross_page_bleed, order_errors, misreads).
-Cells are <lang>-<print|manuscript|unknown> (script-type.json). One page per book, so books = n.
+Cells are <lang> (every page) and <lang>|<print|manuscript|unknown> (script-type.json), the key
+scripts/eval/estimator/router-table/build.py expand_by_script reads from evidence/by-script/<this file's name>. One page per book, so books = n.
 
   route-score.py test  <J> <out.json>   this job: judge-test (O C C2 D X) + judge-testE (E)
   route-score.py e2    <J> <out.json>   #7567 E2 verdicts (results/verdicts-opus.jsonl.gz + judge-key.json), same panel
@@ -34,13 +35,14 @@ def collect(items, routes):
     """items: (slug, labels {lab: [arms]}, not_delivered [arms], versions {lab: verdict}); routes: arm -> route id."""
     cells = {}
     for slug, labels, nd, ver in items:
-        cell = f"{LANG[slug]}-{ST.get(slug, 'unknown')}"
         seen = {}
         for lab, arms in labels.items():
             for a in arms: seen[a] = ver[lab]
         for a in nd: seen[a] = None
         for a, route in routes.items():
-            if a not in seen: continue
+          if a not in seen: continue
+          # one cell per language (all pages) and its by-script cut `<lang>|<script>` (router-table script_split scheme)
+          for cell in (LANG[slug], f"{LANG[slug]}|{ST.get(slug, 'unknown')}"):
             v = seen[a]; R = cells.setdefault(cell, {}).setdefault(route, {'n': 0, 'acc': 0, 'wrong': 0, 'na': 0, 'cl': {f: 0 for f in FAULTS}, 'pages': []})
             R['n'] += 1
             if v is None: R['na'] += 1; R['pages'].append([slug, 'no-answer']); continue
@@ -49,7 +51,7 @@ def collect(items, routes):
             R['pages'].append([slug, 'accept' if ok else 'wrong_text'])
     out = {}
     for cell, rs in cells.items():
-        out[cell] = {'task': 'ocr', 'lang': cell.split('-')[0], 'script_type': cell.split('-', 1)[1], 'routes': {}}
+        out[cell] = {'task': 'ocr', 'lang': cell.split('|')[0], 'script_type': cell.split('|')[1] if '|' in cell else 'all', 'routes': {}}
         for route, R in rs.items():
             n = R['n']
             out[cell]['routes'][route] = {'n': n, 'books': n, 'accept': f"{R['acc']}/{n}", 'accept_rate': round(R['acc'] / n, 3) if n else None,
@@ -81,9 +83,12 @@ else:
     routes = {'L': 'lite', 'a': 'lite>agy-flash-low', 'a2': 'lite>agy-flash-low (repeat)', 'f': 'lite>opus (stored)', 'G': 'gpu-glm', 'X': 'gpu',
               'b': 'gpu-glm>agy-flash-low', 'c': 'gpu>agy-flash-low', 'd': 'gpu-glm+gpu>agy-flash-low', 'e': 'agy-flash-low'}
     judge = '#7567 E2: Opus 5.5, ocr-per-call-7522/judge.mjs, lite packet (S L a a2 f e) and gpu packet (S G X b c d e) per page'
-res = {'generated_at': __import__('datetime').datetime.utcnow().isoformat() + 'Z', 'judge': judge,
+res = {'generated_at': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'judge': judge,
        'mapping': 'accept = usable; wrong_text = delivered and not usable; no_answer counted in n, neither (route-score.py header)',
        'cells': collect(items, routes)}
-json.dump(res, open(OUT, 'w'), indent=1)
+json.dump(res, open(OUT, 'w'), separators=(',', ':'))
+# the by-script copy build.py reads (same content: it holds both the whole-language and the per-script cells)
+BS = os.path.join(HERE, '..', 'estimator', 'router-table', 'evidence', 'by-script', os.path.basename(OUT))
+json.dump(res, open(BS, 'w'), separators=(',', ':'))
 for c, x in sorted(res['cells'].items()):
     print(c, '  '.join(f"{r}: {v['accept']} wt {v['wrong_text_pages']} na {v['no_answer']}" for r, v in x['routes'].items()))

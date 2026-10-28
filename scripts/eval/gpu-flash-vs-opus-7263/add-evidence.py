@@ -4,8 +4,8 @@
 PRIOR ART: scripts/eval/estimator/router-table/rules.json `cells[].routes[].evidence` ({score, cell, route}) — the
 format build.py pools; entries for the 2026-10-26 router tests were added by hand. This writes them from the two
 score files route-score.py made, one source per route and cell so no page is counted twice:
-  - new cells <lang>-print-gpu-7263 (la en de fr it, print only; manuscript n is 2-9 per language and is reported, not
-    routed): gpu, gpu>agy-flash-low (C), gpu2>agy-flash-low+diff (D), agy-flash-low (E), lite>opus (O, stored) from
+  - new cells <language>-gpu-7263 (la en de fr it; build.py splits each into /print, /manuscript, /unknown from the
+    by-script copies route-score.py writes): gpu, gpu>agy-flash-low (C), gpu2>agy-flash-low+diff (D), agy-flash-low (E), lite>opus (O, stored) from
     this job's TEST when the cell has them there, else from E2; lite, lite>agy-flash-low and the GLM routes from E2.
   - existing latin-lite / german-lite: E2's lite (L), lite>agy-flash-low (a) and lite>opus (f) on the same panel.
 Idempotent: entries pointing at these two score files are replaced, never duplicated.
@@ -33,7 +33,7 @@ def ev(cell, route, prefer_test=True, min_n=10):
 
 touched = []
 for lang in ['la', 'en', 'de', 'fr', 'it']:
-    c = f'{lang}-print'; cid = f'{NAME[lang].lower()}-print-gpu-7263'
+    c = lang; cid = f'{NAME[lang].lower()}-gpu-7263'
     routes = [
         {'id': 'lite', 'stage': 'none', 'evidence': ev(c, 'lite', False)},
         {'id': 'lite>agy-flash-low', 'stage': 'agy', 'evidence': ev(c, 'lite>agy-flash-low', False)},
@@ -45,14 +45,14 @@ for lang in ['la', 'en', 'de', 'fr', 'it']:
         {'id': 'gpu-glm>agy-flash-low', 'stage': 'agy', 'evidence': ev(c, 'gpu-glm>agy-flash-low', False)},
     ]
     routes = [r for r in routes if r['evidence'] or r['id'] == 'lite']
-    cell = {'id': cid, 'title': f'{NAME[lang]} print, GPU draft ({DRAFT[lang]}; second draft {SECOND[lang]}) — #7567 panel, #7263',
+    cell = {'id': cid, 'title': f'{NAME[lang]}, GPU draft ({DRAFT[lang]}; second draft {SECOND[lang]}) — #7567 panel, #7263',
             'current': 'lite', 'pages_waiting': 0,
             '_pages_waiting': 'not measured here: the panel is one page per book across the corpus; the unread backlog per language is not split by this cell',
             '_evidence': 'one page per book (books = n). TEST verdicts (#7263) where present, else #7567 E2 on the same panel; no route counts both. GPU card time (about 1-5 s a page beside another tenant, #7567 E1) is not priced by stage none.',
             'routes': routes}
     rules['cells'] = [x for x in rules['cells'] if x['id'] != cid] + [cell]; touched.append(cid)
 
-for cid, c in [('latin-lite', 'la-print'), ('german-lite', 'de-print')]:
+for cid, c in [('latin-lite', 'la'), ('german-lite', 'de')]:
     cell = next(x for x in rules['cells'] if x['id'] == cid)
     for r in cell['routes']:
         src = {'lite': 'lite', 'lite>agy-flash-low': 'lite>agy-flash-low', 'lite>opus': 'lite>opus (stored)'}.get(r['id'])
