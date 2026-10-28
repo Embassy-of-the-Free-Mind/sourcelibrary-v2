@@ -112,3 +112,11 @@ Per language, every page where the winning arm is worse than L, and 2 random pag
   this frame, the lite-read Greek pages *are* mostly manuscripts. So the Greek screen drops only a candidate that is
   not Greek or not a text page, and keeps manuscripts. The result is reported split MS / print. (#6769 is
   pilot-testing an Argon re-read of Greek manuscripts. This job writes nothing, so the two do not collide.)
+
+### Amendment 2 (2026-10-28, wave 2: Sanskrit and Arabic; before any wave-2 draw or read)
+Wave 1 gave route C in all three languages, so wave 2 runs as the stop rule allows. The design is unchanged:
+`w-draw.mjs` with seeds sa 75684 and ar 75685, frames named in its `LANGS`, the same arms, Step T, (d), bars and
+route rule. Two settings carry over from amendment 1. First, the screen keeps manuscripts and reports the MS/print
+split, because the lite frames outside Latin are mostly manuscripts. Second, a language with fewer than 6 books
+runs on what it has (fewer than 3: skipped). A contain where the readers call L misleading is reported as a
+justified contain beside the strict rule's count. The result goes in its own experiments file. Stop at 70% weekly.
