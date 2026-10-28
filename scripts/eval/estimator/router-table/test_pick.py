@@ -17,7 +17,7 @@ WEEK = lambda r: r['_usd_acc'] * (1 - r['idle_fit'])
 def route(rid, acc, usd_raw, idle_fit=0.0, n=30):
     """A measured route with a tight posterior at `acc`, priced at usd_raw dollars per raw page."""
     d = [acc - 0.01, acc, acc + 0.01] * 100
-    return dict(id=rid, mean=acc, _d=d, wrong=0, n=n, p80=sum(v >= 0.8 for v in d) / len(d),
+    return dict(id=rid, mean=acc, _d=d, wrong=0, wrate=0.0, n=n, p80=sum(v >= 0.8 for v in d) / len(d),
                 _usd_raw=usd_raw, _usd_acc=usd_raw / acc, idle_fit=idle_fit)
 
 
