@@ -114,7 +114,7 @@ export function splitPageBlocks(reply, n) {
 /**
  * An agy account's pools, read from `agy -p "/quota" --output-format json` (free: no model turn). Each account has two
  * groups, Gemini and "Claude and GPT", each with a weekly and a 5-hour bucket. Returns
- * { gemini: {weekly, h5}, claude: {weekly, h5}, read_at } as remaining fractions (0..1), or null when unreadable.
+ * { gemini: {weekly, h5}, claude: {weekly, h5} } as remaining fractions (0..1), or null when unreadable.
  * Cached ~10 min per account in AGY_QUOTA_CACHE/<account>.json (the raw reply; agy-guard.sh reads and writes the same
  * file), so a lane does not ask before every call, and a reset is seen within one cache period.
  */
