@@ -97,7 +97,8 @@ if [ "$MODE" = restore ]; then
 fi
 
 # One run at a time: an archive pass can outlast the hour.
-exec 9>/run/lock/disk-steward.lock 2>/dev/null || exec 9>/tmp/disk-steward.lock
+# (The 2>/dev/null stays inside the braces: on a bare `exec` it would silence stderr for the whole run.)
+{ exec 9>/run/lock/disk-steward.lock; } 2>/dev/null || exec 9>/tmp/disk-steward.lock
 flock -n 9 || { echo "$(now) disk-steward: another run holds the lock; skipping"; exit 0; }
 echo "$(now) disk-steward $([ -n "$APPLY" ] && echo --apply || echo --dry-run) box=$BOX band=${BAND}% root: $(df -h --output=used,avail,pcent / | tail -1)"
 
@@ -292,7 +293,7 @@ P
 ARCHIVED_KB=0; R2_BYTES=0
 declare -A SIM  # dry run: projected used kb per mount
 sort -n "$CANDS" -o "$CANDS"
-while read -r newest kb S; do
+while read -r -u 3 newest kb S; do  # fd 3: nothing the archive runs can eat the list from stdin
   m=$(mnt "$S")
   if [ -n "$APPLY" ]; then
     p=$(pct "$m")
@@ -305,7 +306,7 @@ while read -r newest kb S; do
     echo "  would archive $S ($(gb "$kb") GB, idle since $(date -u -d "@$newest" +%F)) [$m ~${p}%]"
     SIM[$m]=$((u - kb))
   fi
-done < "$CANDS"
+done 3< "$CANDS"
 sort -rn "$KEPT" | while read -r kb S why; do echo "  keep $S ($(gb "$kb") GB): $why"; done
 [ -n "$APPLY" ] && [ "$ARCHIVED_KB" -gt 0 ] && echo "  archived $(gb $ARCHIVED_KB) GB this run, $(awk -v b=$R2_BYTES 'BEGIN{printf "%.1f", b/1e9}') GB in R2 (\$$(awk -v b=$R2_BYTES 'BEGIN{printf "%.2f", b/1e9*0.015}')/month)"
 
