@@ -6,9 +6,9 @@
 //   importer: none.
 //
 // Copy the conceptual histories (private repo JDerekLomas/conceptual-histories) into sourcelibrary (#7623):
-//   src/app/explore/histories/data/index.json            every concept: question, essay list, keep-terms, counts, audit
-//   src/app/explore/histories/data/<concept>-essays.json  the essays (ideas/*.md minus README), markdown, refs linked
-//   src/app/explore/histories/data/<concept>-claims.json  the claims shown, one page per domain
+//   src/app/explore/histories/content/index.json            every concept: question, essay list, keep-terms, counts, audit
+//   src/app/explore/histories/content/<concept>-essays.json  the essays (ideas/*.md minus README), markdown, refs linked
+//   src/app/explore/histories/content/<concept>-claims.json  the claims shown, one page per domain
 //
 // Rules (#7623, not negotiable):
 //   - Claims: `verified` and `partial` only (partial is marked on the page). Unverified and disputed are dropped.
@@ -42,7 +42,7 @@ const REPORT = argv('--report');
 const DRY = process.argv.includes('--dry-run');
 if (!SRC || !RED_DIR) { console.error('usage: import-concept-histories.mjs --repo <conceptual-histories checkout> --redactions <dir> [--dry-run] [--report f.json]'); process.exit(1); }
 const REPO = path.resolve(new URL('../..', import.meta.url).pathname);
-const OUT = path.join(REPO, 'src/app/explore/histories/data');
+const OUT = path.join(REPO, 'src/app/explore/histories/content'); // not data/: .gitignore drops every data/ dir
 const SKIP = new Set([]); // a concept still being built goes here (consciousness waited for its wave 1, conceptual-histories#4)
 const BASE = '/explore/histories';
 

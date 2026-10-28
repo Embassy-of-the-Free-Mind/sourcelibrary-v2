@@ -3,7 +3,7 @@
 // index.json is small and imported directly; the essays and claims of each
 // concept are separate files loaded with a dynamic import, so one route never
 // bundles the other concepts' megabytes. Never import this from a client component.
-import index from './data/index.json';
+import index from './content/index.json';
 
 export type ClaimSource = { l: string; loc?: string; q?: string; qo?: string; u?: string; np?: 1 };
 export type Claim = { id: string; s: string; d: string; k: string; p?: 1; src: ClaimSource[] };
@@ -22,10 +22,10 @@ export const HISTORIES = index as { generated: string; audit: { all: Audit; judg
 export const conceptBySlug = (slug: string) => HISTORIES.concepts.find((c) => c.slug === slug);
 
 export async function loadEssays(slug: string): Promise<Essay[]> {
-  return (await import(`./data/${slug}-essays.json`)).default as Essay[];
+  return (await import(`./content/${slug}-essays.json`)).default as Essay[];
 }
 export async function loadClaims(slug: string): Promise<Claim[]> {
-  return (await import(`./data/${slug}-claims.json`)).default as Claim[];
+  return (await import(`./content/${slug}-claims.json`)).default as Claim[];
 }
 
 export const fmt = (n: number) => n.toLocaleString('en-US');

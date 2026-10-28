@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { HISTORIES, fmt, day } from './histories';
 
-// Static (#7623): every figure comes from data/index.json, written by
+// Static (#7623): every figure comes from content/index.json, written by
 // scripts/maintenance/import-concept-histories.mjs.
 
 const TITLE = 'Conceptual histories | Source Library';
