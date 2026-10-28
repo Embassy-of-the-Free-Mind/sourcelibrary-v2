@@ -63,6 +63,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import TranslationSearchNotice, { FRESH_SEARCH_METHOD, translationSearchNoticeKind, type FreshSearch } from '@/components/book/TranslationSearchNotice';
 import PreviewBadge from '@/components/book/PreviewBadge';
 import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
 import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
@@ -552,7 +553,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; pageIdByNumber: Record<number, string> } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; freshSearch: FreshSearch | null; pageIdByNumber: Record<number, string> } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -663,7 +664,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100));
 
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesFirstRead, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
+  const [fullBookResult, pagesFirstRead, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard, freshSearchDoc] = await Promise.all([
     fullBookPromise,
     loadPreviewPages(db),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
@@ -695,6 +696,13 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .catch(() => [])
       : Promise.resolve([]),
     cardPromise,
+    // The newest fresh prior-translation search (#7598); its notice outranks the card.
+    db.collection('first_translation_attempts')
+      .findOne(
+        { book_id: bookId, method: FRESH_SEARCH_METHOD },
+        { sort: { date: -1 }, projection: { _id: 0, date: 1, result: 1, queries: 1 }, maxTimeMS: 3000 },
+      )
+      .catch(() => null),
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
@@ -796,7 +804,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     ...(((serializedBook.index?.entries ?? []) as { pages?: number[] }[]).flatMap(e => (e.pages ?? []).length >= 2 ? (e.pages as number[]).slice(0, 8) : [])),
   ]);
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null, freshSearch: freshSearchDoc ? (JSON.parse(JSON.stringify(freshSearchDoc)) as FreshSearch) : null };
 }
 
 // Skeleton for book info while loading
@@ -879,7 +887,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+  const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard, freshSearch } = data;
+  const searchNotice = translationSearchNoticeKind(book, freshSearch);
   // `ocr_head` (1,200 characters of each page's OCR) is for the cover and
   // representative-page choice made on the server below; no client component
   // reads it. Strip it before the page list is serialised to the browser, so
@@ -1685,7 +1694,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
-            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+            {searchNotice ? null : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
               <TranslationCardPanel
                 card={translationCard}
                 book={book as { pages_translated?: number | null }}
@@ -2326,7 +2335,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   card renders → legacy panel does not (no side-by-side
                   contradiction). No card / unclean card → exactly the legacy
                   render this page had before. */}
-              {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+              {searchNotice && freshSearch ? (
+                <TranslationSearchNotice
+                  book={book}
+                  search={freshSearch}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              ) : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
                 <TranslationCardPanel
                   card={translationCard}
                   book={book as { pages_translated?: number | null }}
