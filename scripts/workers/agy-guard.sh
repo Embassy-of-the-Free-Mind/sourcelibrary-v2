@@ -91,11 +91,22 @@ PY
 fi
 n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
 
+# A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
+# Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
+if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
+  only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
+  [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
+  if [ "$model" != "$only" ]; then
+    echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
+    exit 75
+  fi
+fi
+
 # Claude (and GPT, the same agy pool) only once this account's Gemini pool is empty (#7545; Derek 2026-10-27/28): the
 # Gemini WEEKLY bucket must read remaining_fraction 0 and both Claude buckets at least 10%. Read from `/quota` (free),
 # cached 10 min in $QUOTA_DIR/<account>.json, the file agy-cli.mjs agyQuota() reads and writes too, so a reset is seen
-# within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked before
-# the one-model rule below, which holds an account's GEMINI pool to one model and says nothing about this pool.
+# within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked after
+# the one-model rule above: an account held to one model (allowed-model) runs that model only, Claude included.
 if echo "$model" | grep -qiE '^(claude|gpt)'; then
   acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
   qf="$QUOTA_DIR/$acct.json"
@@ -124,17 +135,6 @@ PY
     exit 75
   fi
   exec "$REAL" "$@"
-fi
-
-# A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
-# Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
-if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
-  only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
-  [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
-  if [ "$model" != "$only" ]; then
-    echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
-    exit 75
-  fi
 fi
 
 if [ -z "$model" ]; then

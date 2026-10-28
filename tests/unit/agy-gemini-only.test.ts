@@ -68,10 +68,10 @@ describe('agy runs Gemini models only', () => {
     const fake = path.join(dir, 'agy');
     fs.writeFileSync(fake, '#!/bin/bash\nif [ "$2" = /quota ]; then cat "$FAKE_Q"; exit 0; fi\necho "RAN $*"\n', { mode: 0o755 });
     const guard = path.resolve(__dirname, '../../scripts/workers/agy-guard.sh');
-    const run = (reply: string, model: string) => {
+    const run = (reply: string, model: string, agyHome = '') => {
       fs.rmSync(path.join(dir, 'quota'), { recursive: true, force: true });
       fs.writeFileSync(path.join(dir, 'q.json'), reply);
-      return spawnSync('bash', [guard, '-p', 'hi', '--model', model], { encoding: 'utf8', env: { ...process.env, AGY_HOME: '', FAKE_Q: path.join(dir, 'q.json'), AGY_REAL: fake, AGY_GUARD_DIR: path.join(dir, 'heavy'), AGY_QUOTA_CACHE: path.join(dir, 'quota') } });
+      return spawnSync('bash', [guard, '-p', 'hi', '--model', model], { encoding: 'utf8', env: { ...process.env, AGY_HOME: agyHome, FAKE_Q: path.join(dir, 'q.json'), AGY_REAL: fake, AGY_GUARD_DIR: path.join(dir, 'heavy'), AGY_QUOTA_CACHE: path.join(dir, 'quota') } });
     };
     const refused = run(quotaReply(0.42), 'claude-opus-5-5-low');
     expect(refused.status).toBe(75);
@@ -80,6 +80,14 @@ describe('agy runs Gemini models only', () => {
     expect(run(quotaReply(0, 1, 0.05), 'claude-opus-5-5-low').status).toBe(75);
     expect(run('not json', 'claude-opus-5-5-low').stderr).toMatch(/unreadable/);
     expect(run('not json', 'gemini-3.8-flash-low').stdout).toMatch(/^RAN/);
+    // An account held to one model (allowed-model) runs that model only, even with its Gemini pool empty.
+    const held = path.join(dir, '.agy-held');
+    fs.mkdirSync(path.join(held, '.gemini/antigravity-cli'), { recursive: true });
+    fs.writeFileSync(path.join(held, '.gemini/antigravity-cli/antigravity-oauth-token'), 'x');
+    fs.writeFileSync(path.join(held, 'allowed-model'), 'gemini-3.8-flash-low\n');
+    expect(run(quotaReply(0), 'claude-opus-5-5-low', held).stderr).toMatch(/runs gemini-3\.8-flash-low only/);
+    fs.rmSync(path.join(held, 'allowed-model'));
+    expect(run(quotaReply(0), 'claude-opus-5-5-low', held).stdout).toMatch(/^RAN/);
   });
 
   it('every script that spawns agy goes through the guard', () => {
