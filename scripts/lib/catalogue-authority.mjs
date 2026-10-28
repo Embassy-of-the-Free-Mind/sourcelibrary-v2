@@ -84,6 +84,29 @@ export function parseBsbManifest(manifest) {
 }
 
 /**
+ * SBB IIIF manifest. Its METS (the only other place) takes 7-8 s a record to generate
+ * and carried no GND id in any sample, so the manifest's own slots are read:
+ * `Autor` (author), `Herausgeber` (editor), `Weitere Person` (other), VD numbers.
+ */
+export function parseSbbManifest(manifest) {
+  const names = [];
+  let text = '';
+  const ROLE = { Autor: 'aut', Herausgeber: 'edt', 'Weitere Person': 'oth' };
+  for (const m of manifest?.metadata || []) {
+    const l = label(m.label).trim();
+    for (const raw of values(m.value)) {
+      text += ` ${l} ${raw}`;
+      if (!ROLE[l]) continue;
+      // "Moritz Wilhelm <Sachsen-Merseburg, Herzog>": the qualifier is the identity, not a tag.
+      const n = decode(String(raw).replace(/<(?!\/?a\b)([^<>]+)>/g, '($1)'));
+      if (!n || names.some((x) => x.name === n && x.roles[0] === ROLE[l])) continue;
+      names.push({ name: n, dates: null, gnd: gndOf(raw), type: /<|\b(?:Herzog|König|Kurfürst)\b/.test(n) ? null : 'personal', roles: [ROLE[l]], role_text: [l], primary: l === 'Autor' });
+    }
+  }
+  return { names, ids: vdIdsOf(text) };
+}
+
+/**
  * The FIRST <mods:mods> of a METS document (the record of the item itself; later
  * dmdSecs describe volumes and chapters), parsed for names and VD ids.
  */
@@ -144,10 +167,7 @@ export function recordUrlFor(book) {
     const id = (m.match(/\/i3f\/v\d+\/(\d+)\/manifest/) || [])[1];
     return id ? { url: `https://www.e-rara.ch/oai?verb=GetRecord&metadataPrefix=mets&identifier=${id}`, kind: 'mets' } : null;
   }
-  if (p === 'sbb') {
-    const ppn = (m.match(/\/(PPN[0-9X]+)\//i) || [])[1];
-    return ppn ? { url: `https://content.staatsbibliothek-berlin.de/dc/${ppn}.mets.xml`, kind: 'mets' } : null;
-  }
+  if (p === 'sbb') return /staatsbibliothek-berlin\.de/.test(m) ? { url: m, kind: 'sbb-manifest' } : null;
   if (p === 'goettingen') {
     const ppn = (m.match(/\/(PPN[0-9X_]+)\/manifest/i) || [])[1];
     return ppn ? { url: `https://gdz.sub.uni-goettingen.de/mets/${ppn}.mets.xml`, kind: 'mets' } : null;

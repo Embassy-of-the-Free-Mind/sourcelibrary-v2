@@ -7,6 +7,11 @@
  * (`catalogue_authority_harvest`, written by harvest-catalogue-authority.mjs) into
  * author records KEYED BY GND ID, and then into per-book links.
  *
+ *   --stage=resolve-names   for harvested authors the record names WITHOUT a GND id (SBB never
+ *                      gives one): lobid by exact heading (preferredName, else variantName),
+ *                      DifferentiatedPerson only, the book's year inside the life (born+10 …
+ *                      died+30), and exactly ONE candidate left (Derek, 2026-10-28). Writes
+ *                      `author_gnd_resolved` on the harvest row only; the next stages read it.
  *   --stage=verdicts   one verdict per GND id, for additive-mint-authors-3780.mjs:
  *                      lobid.org/gnd gives the preferred name, the type (Person →
  *                      person, CorporateBody/Conference → institution) and the
@@ -38,7 +43,18 @@ import { norm, authorSlug } from '../lib/author-name-key.mjs';
 const val = (k, d = null) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const STAGE = val('stage');
 const OUT = val('out');
-if (!['verdicts', 'books'].includes(STAGE) || !OUT) { console.error('--stage=verdicts|books --out=<file>'); process.exit(2); }
+if (!['resolve-names', 'verdicts', 'books'].includes(STAGE) || (!OUT && STAGE !== 'resolve-names')) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file>'); process.exit(2); }
+const LOBID_UA = { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; #7660)' };
+async function lobidSearch(q, size = 100) {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const r = await fetch(`https://lobid.org/gnd/search?q=${encodeURIComponent(q)}&format=json&size=${size}`, { signal: AbortSignal.timeout(60_000), headers: LOBID_UA });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.json();
+    } catch (e) { if (attempt === 3) { console.error(`lobid failed: ${e.message} for ${q.slice(0, 80)}`); return null; } await new Promise((res) => setTimeout(res, 3000 * (attempt + 1))); }
+  }
+  return null;
+}
 
 const PLACEHOLDER = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;
 const isPlaceholder = (s) => PLACEHOLDER.test(s ?? '');
@@ -49,8 +65,62 @@ await mc.connect();
 const db = mc.db('bookstore');
 
 const rows = await db.collection('catalogue_authority_harvest').find({ error: null }, { projection: { names: 0, statement: 0 } }).toArray();
+// A GND id the record names wins; one resolved by name (--stage=resolve-names) is used where it names none.
+for (const r of rows) if (r.author && !r.author.gnd && r.author_gnd_resolved?.gnd) r.author = { ...r.author, gnd: r.author_gnd_resolved.gnd, gnd_via: 'lobid-name' };
 const withGnd = rows.filter((r) => r.author?.gnd);
 console.log(`harvested rows ${rows.length}; naming one author ${rows.filter((r) => r.author).length}; with a GND id ${withGnd.length}`);
+
+if (STAGE === 'resolve-names') {
+  const todo = rows.filter((r) => r.author && !r.author.gnd && !r.author_gnd_resolved && r.author.type !== 'corporate' && /,/.test(r.author.name));
+  const years = new Map();
+  const ids = todo.map((r) => r.book_id);
+  for (let i = 0; i < ids.length; i += 5000) {
+    for (const b of await db.collection('books').find({ id: { $in: ids.slice(i, i + 5000) } }, { projection: { id: 1, year: 1, published: 1 } }).toArray()) {
+      years.set(b.id, Number(String(b.year ?? b.published ?? '').match(/\d{4}/)?.[0]) || null);
+    }
+  }
+  const names = [...new Set(todo.map((r) => r.author.name.replace(/"/g, '')))];
+  console.log(`rows naming an author without GND: ${todo.length}; distinct headings ${names.length}`);
+  const hits = new Map();   // heading -> [lobid members]
+  const clean = (s) => s.replace(/"/g, '');
+  for (let i = 0; i < names.length; i += 10) {
+    const chunk = names.slice(i, i + 10);
+    const or = chunk.map((n) => `"${clean(n)}"`).join(' OR ');
+    let d = await lobidSearch(`(preferredName:(${or}) OR variantName:(${or})) AND type:DifferentiatedPerson`, 100);
+    let members = d?.member || [];
+    if (d && d.totalItems > 100) {
+      members = [];
+      for (const n of chunk) { const e = await lobidSearch(`(preferredName:"${clean(n)}" OR variantName:"${clean(n)}") AND type:DifferentiatedPerson`, 100); members.push(...(e?.member || [])); }
+    }
+    for (const n of chunk) {
+      const want = norm(n);
+      const pref = members.filter((m) => norm(m.preferredName || '') === want);
+      hits.set(n, pref.length ? pref : members.filter((m) => (m.variantName || []).some((v) => norm(v) === want)));
+    }
+    if (i % 2000 === 0) console.log(`  lobid names ${i}/${names.length}`);
+    await new Promise((res) => setTimeout(res, 300));
+  }
+  const year = (d) => Number(String(d || '').slice(0, 4)) || null;
+  const tally = {};
+  const count = (k) => { tally[k] = (tally[k] || 0) + 1; };
+  const col = db.collection('catalogue_authority_harvest');
+  for (const r of todo) {
+    const cands = hits.get(r.author.name.replace(/"/g, '')) || [];
+    const y = years.get(r.book_id);
+    if (!cands.length) { count('no exact heading in GND'); continue; }
+    if (!y) { count('book has no year'); continue; }
+    const alive = cands.filter((m) => {
+      const b = year(m.dateOfBirth?.[0]), dd = year(m.dateOfDeath?.[0]);
+      return (b || dd) && (!b || y >= b + 10) && (!dd || y <= dd + 30);
+    });
+    if (alive.length !== 1) { count(alive.length ? 'several candidates fit the year' : 'no candidate fits the year'); continue; }
+    count('resolved');
+    await col.updateOne({ _id: r._id }, { $set: { author_gnd_resolved: { gnd: alive[0].gndIdentifier, via: 'lobid exact heading + year in life + single candidate', heading: alive[0].preferredName, candidates: cands.length, book_year: y, at: new Date() } } });
+  }
+  console.log('name-only resolution:', tally);
+  await mc.close();
+  process.exit(0);
+}
 
 // ── strings: which GND ids does each catalogue string name? ─────────────────
 const stringGnds = new Map();   // string -> Map(gnd -> rows)

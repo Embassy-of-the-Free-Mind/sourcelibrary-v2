@@ -8,7 +8,7 @@
  *
  *   BSB / MDZ   the IIIF manifest: Creator / Contributor with GND id and life dates
  *   e-rara      the METS record (OAI GetRecord): names with GND id and MARC role code
- *   SBB         the METS record: names with role code (GND only sometimes)
+ *   SBB         the IIIF manifest: Autor / Herausgeber (its METS takes 7-8 s a record and had no GND id)
  *   Göttingen   the METS record: names with GND id and role code
  *
  * Writes ONE row per book to `catalogue_authority_harvest` (_id = book id): the
@@ -28,7 +28,7 @@
  *   node --env-file=.env.production.local scripts/maintenance/harvest-catalogue-authority.mjs --commit [--provider=erara] [--limit=N]
  */
 import { MongoClient } from 'mongodb';
-import { parseBsbManifest, parseMetsMods, authorOf, recordUrlFor } from '../lib/catalogue-authority.mjs';
+import { parseBsbManifest, parseSbbManifest, parseMetsMods, authorOf, recordUrlFor } from '../lib/catalogue-authority.mjs';
 
 const args = process.argv.slice(2);
 const flag = (f) => args.includes(f);
@@ -108,7 +108,7 @@ async function one(it) {
   const r = await fetchText(it.url);
   let parsed = { names: [], ids: {} }, error = r.error || (r.text == null ? `HTTP ${r.status}` : null);
   if (!error) {
-    try { parsed = it.kind === 'bsb-manifest' ? parseBsbManifest(JSON.parse(r.text)) : parseMetsMods(r.text); }
+    try { parsed = it.kind === 'bsb-manifest' ? parseBsbManifest(JSON.parse(r.text)) : it.kind === 'sbb-manifest' ? parseSbbManifest(JSON.parse(r.text)) : parseMetsMods(r.text); }
     catch (e) { error = `parse: ${e.message}`; }
   }
   const au = authorOf(parsed.names);
