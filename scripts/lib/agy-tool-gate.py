@@ -31,6 +31,10 @@ REASONS = {
     'ocr': REASON,
     'translate': ('That tool is disabled here, and no tool or file is needed: the text to translate is in the prompt. '
                   'Write the translation directly in your reply, following the instructions exactly.'),
+    # AGY_GATE_TASK=geometry (scripts/maintenance/split-spreads-agy.mjs, #7454): where a spread's fold is, no text.
+    'geometry': ('That tool is disabled here. The only tool available is view_file (or read_file) on the image in this '
+                 'directory. Open it if you have not yet, then answer directly in your reply, following the '
+                 'instructions exactly. Do not transcribe any text.'),
 }
 
 

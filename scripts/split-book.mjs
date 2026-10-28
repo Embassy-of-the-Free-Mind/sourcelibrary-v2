@@ -669,7 +669,9 @@ if (GUTTER_ONLY) {
 
   // Park only when there's no trustworthy consensus: too few confident pages, or
   // genuinely scattered positions (maps/plates, not a spread book).
-  let parkReason = !enoughSignal
+  // Reviewed positions (#6099, #7454) were placed on every page by a person who opened it: the signal and scatter gates
+  // measure the detectors, and here none ran. A book with one spread among single leaves parked as "too little signal".
+  let parkReason = REVIEWED_POSITIONS ? null : !enoughSignal
     ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
     : scattered
       ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
@@ -727,7 +729,8 @@ if (GUTTER_ONLY) {
   }
   if (parkReason && !DRY_RUN) {
     console.error(`\n  PARK: ${parkReason}. Not splitting — flagging needs_attention for review.`);
-    await db.collection('books').updateOne({ id: book.id }, {
+    // A held book keeps its status (#4790): needs_attention over `held` took two books out of their hold (#7454).
+    await db.collection('books').updateOne({ id: book.id, ...NOT_HELD }, {
       $set: {
         'pipeline_auto.status': 'needs_attention',
         'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
