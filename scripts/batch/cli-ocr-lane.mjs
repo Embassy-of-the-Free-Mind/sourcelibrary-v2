@@ -320,7 +320,8 @@ async function correctMain(mode, arg) {
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
   const CONCURRENCY = Number(arg('concurrency') || 1);
-  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 4)) { console.error('--concurrency must be 1 to 4'); process.exit(2); }
+  // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
+  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
   const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const job = `cli-ocr-correct-${new Date().toISOString().slice(0, 10)}`;
   fs.mkdirSync(OUT, { recursive: true });
