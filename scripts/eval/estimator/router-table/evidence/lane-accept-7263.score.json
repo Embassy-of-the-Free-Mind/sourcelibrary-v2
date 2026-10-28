@@ -1,0 +1,133 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/lane-accept-7263.mjs evidence (2026-10-28, #7263, job german-agy-paired-7263)",
+ "provenance": "the gex45 #7558 correction-lane ledger (/root/jobs/cli-ocr-correct/correct-ledger.jsonl, 8101 rows at 2026-10-28T12:54:12.900Z), 2 pages a book from every ledgered outcome, the page's CURRENT ocr.data; the German top-up from this job's agy reads on #7568 wave 1 pages",
+ "judge": "claude-opus-5-5 (claude -p), judge.mjs judgePrompt (the route-judge prompt), one output per call against the page image; two wrong-page controls per language, both passed",
+ "mapping": "accept = the judge accepts; wrong_text = any wrong_text defect. Print pages only (pages.script_type / <script> tag / book majority); manuscript pages are in the experiment file, not here",
+ "cells": {
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "script": "print",
+   "routes": {
+    "lite>agy-flash-low": {
+     "served": "what the library serves after the #7558 correction lane (cli-ocr-lane.mjs correct, agy gemini-3.8-flash-low, template 0601ef30e816f7a7, every apply guard): the written correction, or the Flash-Lite draft where the corrector answered UNCHANGED / CONTAIN or a guard refused the write",
+     "n": 84,
+     "books": 42,
+     "accept": "74/84",
+     "wrong_text_pages": "6/84",
+     "fidelity_mean": 4.24,
+     "wrong_text_classes": {
+      "O4": "2/84",
+      "O5": "2/84",
+      "O6": "2/84",
+      "O12": "1/84",
+      "I1": "1/84",
+      "O7": "1/84"
+     },
+     "classes_k_of_n": {
+      "O8": "48/84",
+      "O6": "28/84",
+      "E2": "15/84",
+      "T6": "10/84",
+      "O11": "8/84",
+      "O12": "8/84",
+      "O16": "6/84",
+      "O5": "6/84",
+      "O7": "5/84",
+      "D1": "2/84",
+      "O10": "2/84",
+      "O4": "2/84",
+      "I3": "2/84",
+      "T5": "1/84",
+      "O14": "1/84",
+      "O3": "1/84",
+      "I1": "1/84",
+      "T10": "1/84"
+     },
+     "outcomes": {
+      "written": 69,
+      "unchanged": 2,
+      "other": 12,
+      "contain": 1
+     }
+    },
+    "lite>agy-flash-low-unguarded": {
+     "served": "the same corrector and template on #7568 wave 1 German pages (cli-ocr.mjs read, never written, no apply guard): the correction, or the draft on UNCHANGED / CONTAIN",
+     "n": 20,
+     "books": 10,
+     "accept": "17/20",
+     "wrong_text_pages": "3/20",
+     "fidelity_mean": 4.35,
+     "wrong_text_classes": {
+      "O7": "1/20",
+      "O17": "1/20",
+      "O1": "1/20",
+      "O4": "1/20"
+     },
+     "classes_k_of_n": {
+      "O8": "13/20",
+      "O6": "6/20",
+      "O11": "3/20",
+      "E2": "3/20",
+      "O16": "2/20",
+      "T6": "2/20",
+      "O7": "2/20",
+      "O12": "2/20",
+      "O5": "2/20",
+      "O1": "2/20",
+      "O13": "1/20",
+      "I3": "1/20",
+      "O17": "1/20",
+      "O4": "1/20"
+     },
+     "outcomes": {
+      "corrected": 19,
+      "unchanged": 1
+     }
+    }
+   }
+  },
+  "fr-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "script": "print",
+   "routes": {
+    "lite>agy-flash-low": {
+     "served": "what the library serves after the #7558 correction lane (cli-ocr-lane.mjs correct, agy gemini-3.8-flash-low, template 0601ef30e816f7a7, every apply guard): the written correction, or the Flash-Lite draft where the corrector answered UNCHANGED / CONTAIN or a guard refused the write",
+     "n": 45,
+     "books": 23,
+     "accept": "37/45",
+     "wrong_text_pages": "4/45",
+     "fidelity_mean": 4.42,
+     "wrong_text_classes": {
+      "O6": "2/45",
+      "O5": "1/45",
+      "O8": "1/45"
+     },
+     "classes_k_of_n": {
+      "O8": "14/45",
+      "E2": "9/45",
+      "O16": "7/45",
+      "O6": "5/45",
+      "O12": "4/45",
+      "O5": "4/45",
+      "O14": "4/45",
+      "O11": "3/45",
+      "O7": "2/45",
+      "T6": "2/45",
+      "O1": "1/45",
+      "O15": "1/45",
+      "O17": "1/45",
+      "D1": "1/45",
+      "O4": "1/45"
+     },
+     "outcomes": {
+      "other": 9,
+      "written": 28,
+      "unchanged": 8
+     }
+    }
+   }
+  }
+ }
+}

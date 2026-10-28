@@ -1,0 +1,236 @@
+{
+ "what": "pages the #7558 lane serves that the Opus judge rejected (2026-10-28, #7263); for a GPU-draft > agy retry (Derek 11:24Z), not Opus correction. outcome = the lane ledger: written = the agy correction is served; other / unchanged / contain = the Flash-Lite draft is served",
+ "pages": [
+  {
+   "lang": "German",
+   "page_id": "699058141729589044135639",
+   "book_id": "6990581417295890441355bd",
+   "page_number": 124,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "Nearly every line matches the page, but 'würden' is missing from the line about the seven full moons fitting across the blind spot, so the hypothetical comparison reads as a plain statement."
+  },
+  {
+   "lang": "German",
+   "page_id": "69f4c165b0546e6c76914205",
+   "book_id": "69b418a12b0edf3eaa2dd755",
+   "page_number": 118,
+   "outcome": "other",
+   "script": "manuscript",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": "The text is mostly right, but the 1–7 count under MDCLXVI is missing its 7, 'schwebt' is misread as 'schreibt', and the symbols in the Tetras box are reduced and guessed."
+  },
+  {
+   "lang": "German",
+   "page_id": "69f4c16bb0546e6c76914207",
+   "book_id": "69b418a12b0edf3eaa2dd755",
+   "page_number": 120,
+   "outcome": "other",
+   "script": "manuscript",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": "The top prose is mostly right, but the emblem block is scrambled (VITAE is missing, 'In glauben' is made up, and the diagram letters are wrong), and the 'JAH' heading over the 1 John verse is left out."
+  },
+  {
+   "lang": "German",
+   "page_id": "69b51e94cf111105c42a0626",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "page_number": 81,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "The text is complete and faithful, except that 'Moses schreibet' comes out as the garbled 'Mosesreibet' and 'darnach' has a stray letter."
+  },
+  {
+   "lang": "German",
+   "page_id": "69b51e98cf111105c42a0f50",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "page_number": 383,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "This is a close, complete transcription of both columns and the marginal notes, but it has a few word misreads: 'deß' where the page has 'deñ' (denn), 'versehen' where it has 'versetzen', and an inserted 'sie'."
+  },
+  {
+   "lang": "German",
+   "page_id": "69b51e98cf111105c42a0f74",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "page_number": 419,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": true,
+   "note": "The text is mostly faithful, but §9 gains a stray 'Und' taken from the margin, §11 reads 'Sem Sems', and one marginal note has lost 'Bild'."
+  },
+  {
+   "lang": "German",
+   "page_id": "69d37a91f510a016bc1c2bc9",
+   "book_id": "69c888a16c6f3cc53c85a348",
+   "page_number": 64,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": "Half a line is missing in the first paragraph ('abgeschnitten … Was be-'), so the sentence about the higher triad makes no sense; the rest is faithful."
+  },
+  {
+   "lang": "German",
+   "page_id": "69ef2b1085daccce30f2d9be",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "page_number": 121,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "The text matches the page wherever the page can be read, but in the second paragraph the transcription quietly supplies about a dozen line-endings that are cut off in the scan, and in one place it gives \"den Ton\" where the page has \"diesen Ton\"."
+  },
+  {
+   "lang": "German",
+   "page_id": "69ef2b2685daccce30f2deea",
+   "book_id": "69ef2b2685daccce30f2de77",
+   "page_number": 115,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 1,
+   "wrong_text": true,
+   "note": "The text beside the image belongs to the previous page (102). The image shows p. 103, 'Vom Vortrage', with §§ 2–4 on good delivery (Stärcke, Schwäche, Druck…), and none of that text is in the transcription."
+  },
+  {
+   "lang": "German",
+   "page_id": "6a2121edf88bd9944a5840ab",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "page_number": 9,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": "This is a two-page spread presented as one page. The Las Casas/Lucayan passage loses 'tausend' and has the margin's 'im Evan-' spliced into it, and the Lipsius margin note is garbled."
+  },
+  {
+   "lang": "German",
+   "page_id": "6aa7cf7efd6dd3b07d31d828",
+   "book_id": "6aa7cf7efd6dd3b07d31d70f",
+   "page_number": 281,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 2,
+   "wrong_text": true,
+   "note": "The two handwritten captions don't match the plate: the upper one has words the scribe didn't write, the lower one drops 'den', and the picture description misstates the action."
+  },
+  {
+   "lang": "German",
+   "page_id": "6aa7cf7efd6dd3b07d31d8f2",
+   "book_id": "6aa7cf7efd6dd3b07d31d70f",
+   "page_number": 483,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 2,
+   "wrong_text": true,
+   "note": "The header, plate number and first caption are roughly right, but the second caption is a garbled reconstruction with invented verbs and a doubled 'einen', so the transcription does not reliably say what the hand-written lines on the plate say."
+  },
+  {
+   "lang": "French",
+   "page_id": "6a26f89437eba173bb6bb830",
+   "book_id": "69592fb8a41e40e9146a4943",
+   "page_number": 39,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": null
+  },
+  {
+   "lang": "French",
+   "page_id": "69f213a4b4dbfecf38f7ec8e",
+   "book_id": "69592fbba41e40e9146a49a7",
+   "page_number": 119,
+   "outcome": "other",
+   "script": "manuscript",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "The text is complete and in order, but the folio is given as 51 where the leaf shows 54, and 'fou' stands in for 'feu' in line 2."
+  },
+  {
+   "lang": "French",
+   "page_id": "69b51e2b9a81ef7feb3d0fa6",
+   "book_id": "69b51e2b9a81ef7feb3d0f68",
+   "page_number": 62,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": true,
+   "note": "Faithful apart from one word: 'piratisme' on the page appears as 'piratage' here, and the page number is given as 52 instead of 51."
+  },
+  {
+   "lang": "French",
+   "page_id": "69ef2b0685daccce30f2d732",
+   "book_id": "69ef2b0685daccce30f2d6ce",
+   "page_number": 100,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": false,
+   "note": "The prose is accurate, but the labels in the music example are scrambled between the major and minor cadences, and the (A) marks the text refers to are missing."
+  },
+  {
+   "lang": "French",
+   "page_id": "6a08dd9fdb33045508580397",
+   "book_id": "6a08dd9fdb33045508580330",
+   "page_number": 103,
+   "outcome": "written",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": false,
+   "note": "The text matches the page closely, but the second speaker label reads 'Agathe' where the page prints 'Angelique' again, so a reader comparing it with the image would see the speaker silently changed."
+  },
+  {
+   "lang": "French",
+   "page_id": "6a8ee22f90f5a0e4155eac30",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "page_number": 296,
+   "outcome": "unchanged",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": false,
+   "note": "The body text matches the page word for word, but the footnote below the rule is joined onto the body's unfinished last sentence 'unanime à penser', so the body appears to go on into the note's text."
+  },
+  {
+   "lang": "French",
+   "page_id": "6a8ee2e090f5a0e4155eb971",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "page_number": 265,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": true,
+   "note": "Twice the superscript ordinal 'm^ième' is printed as 'même', which garbles the mathematical argument. The rest of the text and the equations match the page."
+  },
+  {
+   "lang": "French",
+   "page_id": "6aa7cf64fd6dd3b07d31d46d",
+   "book_id": "6aa7cf64fd6dd3b07d31d3e7",
+   "page_number": 134,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 4,
+   "wrong_text": true,
+   "note": "The text is complete and accurate apart from one misread word, 'fuyant' where the page has 'suyuant', and a few spellings changed to modern forms such as 'tambourin'."
+  },
+  {
+   "lang": "French",
+   "page_id": "6ad548d190dd8591ceb2ef40",
+   "book_id": "6ad548d190dd8591ceb2eef3",
+   "page_number": 77,
+   "outcome": "other",
+   "script": "print",
+   "fidelity": 3,
+   "wrong_text": false,
+   "note": "The page image is cropped on the right, but the transcription quietly fills in the cut-off line endings. It also turns 'ÉCONOMISME' into 'ÉCONOMIE' and 'Art. II' into 'art. 11'."
+  }
+ ]
+}

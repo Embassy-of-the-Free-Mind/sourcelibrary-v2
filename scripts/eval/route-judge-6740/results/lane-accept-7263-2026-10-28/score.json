@@ -1,0 +1,1824 @@
+{
+ "generated_at": "2026-10-28T14:35:22.964Z",
+ "judge": "claude-opus-5-5 (claude -p), judge.mjs judgePrompt, one output per call against the page image",
+ "ledger": "/root/jobs/cli-ocr-correct/correct-ledger.jsonl",
+ "cells": {
+  "German": {
+   "all": {
+    "n": 106,
+    "books": 53,
+    "accept": "91/106",
+    "accept_rate": 0.858,
+    "accept_ci": {
+     "ci95": [
+      0.774,
+      0.934
+     ],
+     "unit": "book",
+     "units": 53
+    },
+    "wrong_text_pages": "11/106",
+    "wrong_text_ci": {
+     "ci95": [
+      0.038,
+      0.179
+     ],
+     "unit": "book",
+     "units": 53
+    },
+    "fidelity_mean": 4.24,
+    "wrong_text_classes": {
+     "O7": "3/106",
+     "O5": "3/106",
+     "O4": "3/106",
+     "O6": "2/106",
+     "O12": "1/106",
+     "I1": "1/106",
+     "O17": "1/106",
+     "O1": "1/106"
+    },
+    "classes_k_of_n": {
+     "O8": "62/106",
+     "O6": "36/106",
+     "E2": "19/106",
+     "T6": "12/106",
+     "O11": "11/106",
+     "O12": "10/106",
+     "O5": "9/106",
+     "O7": "8/106",
+     "O16": "8/106",
+     "O10": "3/106",
+     "O4": "3/106",
+     "I3": "3/106",
+     "D1": "2/106",
+     "O14": "2/106",
+     "O1": "2/106",
+     "T5": "1/106",
+     "O3": "1/106",
+     "I1": "1/106",
+     "T10": "1/106",
+     "O13": "1/106",
+     "O17": "1/106"
+    },
+    "outcomes": {
+     "written": 69,
+     "unchanged": 3,
+     "other": 14,
+     "contain": 1,
+     "corrected": 19
+    }
+   },
+   "by_script": {
+    "print": {
+     "n": 104,
+     "books": 52,
+     "accept": "91/104",
+     "accept_rate": 0.875,
+     "accept_ci": {
+      "ci95": [
+       0.798,
+       0.942
+      ],
+      "unit": "book",
+      "units": 52
+     },
+     "wrong_text_pages": "9/104",
+     "wrong_text_ci": {
+      "ci95": [
+       0.029,
+       0.154
+      ],
+      "unit": "book",
+      "units": 52
+     },
+     "fidelity_mean": 4.26,
+     "wrong_text_classes": {
+      "O4": "3/104",
+      "O5": "2/104",
+      "O7": "2/104",
+      "O6": "2/104",
+      "O12": "1/104",
+      "I1": "1/104",
+      "O17": "1/104",
+      "O1": "1/104"
+     },
+     "classes_k_of_n": {
+      "O8": "61/104",
+      "O6": "34/104",
+      "E2": "18/104",
+      "T6": "12/104",
+      "O11": "11/104",
+      "O12": "10/104",
+      "O16": "8/104",
+      "O5": "8/104",
+      "O7": "7/104",
+      "O4": "3/104",
+      "I3": "3/104",
+      "D1": "2/104",
+      "O10": "2/104",
+      "O1": "2/104",
+      "T5": "1/104",
+      "O14": "1/104",
+      "O3": "1/104",
+      "I1": "1/104",
+      "T10": "1/104",
+      "O13": "1/104",
+      "O17": "1/104"
+     },
+     "outcomes": {
+      "written": 69,
+      "unchanged": 3,
+      "other": 12,
+      "contain": 1,
+      "corrected": 19
+     }
+    },
+    "manuscript": {
+     "n": 2,
+     "books": 1,
+     "accept": "0/2",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 2
+     },
+     "wrong_text_pages": "2/2",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 2
+     },
+     "fidelity_mean": 3,
+     "wrong_text_classes": {
+      "O7": "1/2",
+      "O5": "1/2"
+     },
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "O7": "1/2",
+      "E2": "1/2",
+      "O10": "1/2",
+      "O5": "1/2",
+      "O14": "1/2",
+      "O8": "1/2"
+     },
+     "outcomes": {
+      "other": 2
+     }
+    }
+   },
+   "by_source": {
+    "lane": {
+     "n": 86,
+     "books": 43,
+     "accept": "74/86",
+     "accept_rate": 0.86,
+     "accept_ci": {
+      "ci95": [
+       0.767,
+       0.942
+      ],
+      "unit": "book",
+      "units": 43
+     },
+     "wrong_text_pages": "8/86",
+     "wrong_text_ci": {
+      "ci95": [
+       0.023,
+       0.174
+      ],
+      "unit": "book",
+      "units": 43
+     },
+     "fidelity_mean": 4.21,
+     "wrong_text_classes": {
+      "O5": "3/86",
+      "O7": "2/86",
+      "O4": "2/86",
+      "O6": "2/86",
+      "O12": "1/86",
+      "I1": "1/86"
+     },
+     "classes_k_of_n": {
+      "O8": "49/86",
+      "O6": "30/86",
+      "E2": "16/86",
+      "T6": "10/86",
+      "O11": "8/86",
+      "O12": "8/86",
+      "O5": "7/86",
+      "O7": "6/86",
+      "O16": "6/86",
+      "O10": "3/86",
+      "D1": "2/86",
+      "O14": "2/86",
+      "O4": "2/86",
+      "I3": "2/86",
+      "T5": "1/86",
+      "O3": "1/86",
+      "I1": "1/86",
+      "T10": "1/86"
+     },
+     "outcomes": {
+      "written": 69,
+      "unchanged": 2,
+      "other": 14,
+      "contain": 1
+     }
+    },
+    "topup": {
+     "n": 20,
+     "books": 10,
+     "accept": "17/20",
+     "accept_rate": 0.85,
+     "accept_ci": {
+      "ci95": [
+       0.65,
+       1
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "3/20",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.4
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "fidelity_mean": 4.35,
+     "wrong_text_classes": {
+      "O7": "1/20",
+      "O17": "1/20",
+      "O1": "1/20",
+      "O4": "1/20"
+     },
+     "classes_k_of_n": {
+      "O8": "13/20",
+      "O6": "6/20",
+      "O11": "3/20",
+      "E2": "3/20",
+      "O16": "2/20",
+      "T6": "2/20",
+      "O7": "2/20",
+      "O12": "2/20",
+      "O5": "2/20",
+      "O1": "2/20",
+      "O13": "1/20",
+      "I3": "1/20",
+      "O17": "1/20",
+      "O4": "1/20"
+     },
+     "outcomes": {
+      "corrected": 19,
+      "unchanged": 1
+     }
+    },
+    "lane/print": {
+     "n": 84,
+     "books": 42,
+     "accept": "74/84",
+     "accept_rate": 0.881,
+     "accept_ci": {
+      "ci95": [
+       0.798,
+       0.952
+      ],
+      "unit": "book",
+      "units": 42
+     },
+     "wrong_text_pages": "6/84",
+     "wrong_text_ci": {
+      "ci95": [
+       0.012,
+       0.143
+      ],
+      "unit": "book",
+      "units": 42
+     },
+     "fidelity_mean": 4.24,
+     "wrong_text_classes": {
+      "O4": "2/84",
+      "O5": "2/84",
+      "O6": "2/84",
+      "O12": "1/84",
+      "I1": "1/84",
+      "O7": "1/84"
+     },
+     "classes_k_of_n": {
+      "O8": "48/84",
+      "O6": "28/84",
+      "E2": "15/84",
+      "T6": "10/84",
+      "O11": "8/84",
+      "O12": "8/84",
+      "O16": "6/84",
+      "O5": "6/84",
+      "O7": "5/84",
+      "D1": "2/84",
+      "O10": "2/84",
+      "O4": "2/84",
+      "I3": "2/84",
+      "T5": "1/84",
+      "O14": "1/84",
+      "O3": "1/84",
+      "I1": "1/84",
+      "T10": "1/84"
+     },
+     "outcomes": {
+      "written": 69,
+      "unchanged": 2,
+      "other": 12,
+      "contain": 1
+     }
+    },
+    "lane/manuscript": {
+     "n": 2,
+     "books": 1,
+     "accept": "0/2",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 2
+     },
+     "wrong_text_pages": "2/2",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 2
+     },
+     "fidelity_mean": 3,
+     "wrong_text_classes": {
+      "O7": "1/2",
+      "O5": "1/2"
+     },
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "O7": "1/2",
+      "E2": "1/2",
+      "O10": "1/2",
+      "O5": "1/2",
+      "O14": "1/2",
+      "O8": "1/2"
+     },
+     "outcomes": {
+      "other": 2
+     }
+    },
+    "topup/print": {
+     "n": 20,
+     "books": 10,
+     "accept": "17/20",
+     "accept_rate": 0.85,
+     "accept_ci": {
+      "ci95": [
+       0.65,
+       1
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "3/20",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.4
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "fidelity_mean": 4.35,
+     "wrong_text_classes": {
+      "O7": "1/20",
+      "O17": "1/20",
+      "O1": "1/20",
+      "O4": "1/20"
+     },
+     "classes_k_of_n": {
+      "O8": "13/20",
+      "O6": "6/20",
+      "O11": "3/20",
+      "E2": "3/20",
+      "O16": "2/20",
+      "T6": "2/20",
+      "O7": "2/20",
+      "O12": "2/20",
+      "O5": "2/20",
+      "O1": "2/20",
+      "O13": "1/20",
+      "I3": "1/20",
+      "O17": "1/20",
+      "O4": "1/20"
+     },
+     "outcomes": {
+      "corrected": 19,
+      "unchanged": 1
+     }
+    }
+   },
+   "by_outcome": {
+    "written": {
+     "n": 69,
+     "books": 37,
+     "accept": "64/69",
+     "accept_rate": 0.928,
+     "accept_ci": {
+      "ci95": [
+       0.853,
+       0.986
+      ],
+      "unit": "book",
+      "units": 37
+     },
+     "wrong_text_pages": "1/69",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.044
+      ],
+      "unit": "book",
+      "units": 37
+     },
+     "fidelity_mean": 4.35,
+     "wrong_text_classes": {
+      "O12": "1/69",
+      "O4": "1/69"
+     },
+     "classes_k_of_n": {
+      "O8": "43/69",
+      "O6": "23/69",
+      "E2": "10/69",
+      "T6": "9/69",
+      "O11": "6/69",
+      "O12": "6/69",
+      "O7": "4/69",
+      "O16": "3/69",
+      "O5": "2/69",
+      "D1": "1/69",
+      "O10": "1/69",
+      "T5": "1/69",
+      "O4": "1/69",
+      "O3": "1/69"
+     },
+     "outcomes": {
+      "written": 69
+     }
+    },
+    "unchanged": {
+     "n": 3,
+     "books": 3,
+     "accept": "3/3",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "0/3",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "fidelity_mean": 4.67,
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "1/3",
+      "O16": "1/3",
+      "O11": "1/3"
+     },
+     "outcomes": {
+      "unchanged": 3
+     }
+    },
+    "other": {
+     "n": 14,
+     "books": 8,
+     "accept": "7/14",
+     "accept_rate": 0.5,
+     "accept_ci": {
+      "ci95": [
+       0.214,
+       0.786
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_pages": "7/14",
+     "wrong_text_ci": {
+      "ci95": [
+       0.214,
+       0.786
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "fidelity_mean": 3.5,
+     "wrong_text_classes": {
+      "O5": "3/14",
+      "O7": "2/14",
+      "O6": "2/14",
+      "I1": "1/14",
+      "O4": "1/14"
+     },
+     "classes_k_of_n": {
+      "O6": "7/14",
+      "E2": "6/14",
+      "O5": "5/14",
+      "O8": "5/14",
+      "O7": "2/14",
+      "O14": "2/14",
+      "O11": "2/14",
+      "O16": "2/14",
+      "I3": "2/14",
+      "O12": "2/14",
+      "O10": "1/14",
+      "D1": "1/14",
+      "I1": "1/14",
+      "T10": "1/14",
+      "T6": "1/14",
+      "O4": "1/14"
+     },
+     "outcomes": {
+      "other": 14
+     }
+    },
+    "contain": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "wrong_text_pages": "0/1",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "fidelity_mean": 4,
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O10": "1/1"
+     },
+     "outcomes": {
+      "contain": 1
+     }
+    },
+    "corrected": {
+     "n": 19,
+     "books": 10,
+     "accept": "16/19",
+     "accept_rate": 0.842,
+     "accept_ci": {
+      "ci95": [
+       0.611,
+       1
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "3/19",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.4
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "fidelity_mean": 4.32,
+     "wrong_text_classes": {
+      "O7": "1/19",
+      "O17": "1/19",
+      "O1": "1/19",
+      "O4": "1/19"
+     },
+     "classes_k_of_n": {
+      "O8": "13/19",
+      "O6": "6/19",
+      "E2": "3/19",
+      "O16": "2/19",
+      "O11": "2/19",
+      "T6": "2/19",
+      "O7": "2/19",
+      "O12": "2/19",
+      "O5": "2/19",
+      "O1": "2/19",
+      "O13": "1/19",
+      "I3": "1/19",
+      "O17": "1/19",
+      "O4": "1/19"
+     },
+     "outcomes": {
+      "corrected": 19
+     }
+    }
+   },
+   "controls": {
+    "n": 2,
+    "passed": true
+   },
+   "made_worse": {
+    "corrections_judged": 88,
+    "rejected": 8,
+    "drafts_judged": 8,
+    "worse_than_draft": [
+     {
+      "page_id": "69c80b2b6c6f3cc53c846674",
+      "book_id": "69c80a866c6f3cc53c8464a4",
+      "page_number": 293,
+      "source": "topup",
+      "draft": {
+       "accept": false,
+       "fidelity": 3
+      },
+      "served": {
+       "accept": false,
+       "fidelity": 3
+      },
+      "note": "Almost the whole cropped page is there in order, but the last paragraph repeats 'Este / sie', the bracketed fillers are guesses, 'schicht in zweyen' was made up without brackets, and 'giren' is missing from line 2."
+     }
+    ]
+   },
+   "rejected_pages": [
+    {
+     "page_id": "699058141729589044135639",
+     "book_id": "6990581417295890441355bd",
+     "page_number": 124,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "Nearly every line matches the page, but 'würden' is missing from the line about the seven full moons fitting across the blind spot, so the hypothetical comparison reads as a plain statement.",
+     "defects": [
+      {
+       "class": "O5",
+       "quote": "7 Vollmonde neben einander stehen können",
+       "severity": "misleads",
+       "what": "the page reads 'neben einander würden stehen können'; dropping 'würden' turns the hypothetical into a plain statement"
+      }
+     ]
+    },
+    {
+     "page_id": "69f4c165b0546e6c76914205",
+     "book_id": "69b418a12b0edf3eaa2dd755",
+     "page_number": 118,
+     "source": "lane",
+     "outcome": "other",
+     "script": "manuscript",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "The text is mostly right, but the 1–7 count under MDCLXVI is missing its 7, 'schwebt' is misread as 'schreibt', and the symbols in the Tetras box are reduced and guessed.",
+     "defects": [
+      {
+       "class": "O7",
+       "quote": "1 2 3 4 5 6 (1666)",
+       "severity": "wrong_text",
+       "what": "the page numbers the seven letters of MDCLXVI as 1 2 3 4 5 6 7; the candidate drops the 7, which breaks the diagram against the reversed row 7 6 5 4 3 2 1"
+      },
+      {
+       "class": "O6",
+       "quote": "oben schreibt",
+       "severity": "misleads",
+       "what": "the page reads 'oben schwebt' (floats on top), not 'schreibt' (writes)"
+      },
+      {
+       "class": "O6",
+       "quote": "geistlichen waffs",
+       "severity": "misleads",
+       "what": "the page has 'wasser' (abbreviated); 'waffs' is a garbled reading"
+      },
+      {
+       "class": "O10",
+       "quote": "♄ : 88",
+       "severity": "misleads",
+       "what": "the page shows two symbols (a square glyph and a second sign) before ':88'; only one is given, and it is guessed as Saturn"
+      }
+     ]
+    },
+    {
+     "page_id": "69f4c16bb0546e6c76914207",
+     "book_id": "69b418a12b0edf3eaa2dd755",
+     "page_number": 120,
+     "source": "lane",
+     "outcome": "other",
+     "script": "manuscript",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "The top prose is mostly right, but the emblem block is scrambled (VITAE is missing, 'In glauben' is made up, and the diagram letters are wrong), and the 'JAH' heading over the 1 John verse is left out.",
+     "defects": [
+      {
+       "class": "O5",
+       "quote": "das BLVT IESVH CHRISTI",
+       "severity": "wrong_text",
+       "what": "The heading 'JAH' above this line is left out without any mark"
+      },
+      {
+       "class": "O5",
+       "quote": "In omn esse. Aquilibri",
+       "severity": "wrong_text",
+       "what": "'VITAE' and the 'in' written above it are dropped from the right column ('VITAE in Aequilibrio')"
+      },
+      {
+       "class": "O14",
+       "quote": "->In glauben<-",
+       "severity": "misleads",
+       "what": "The emblem's layout ('Glauben' above In / omn / esse / super / e) is flattened and garbled into a made-up phrase"
+      },
+      {
+       "class": "O14",
+       "quote": "letters S, R, W, and a symbol at the bottom",
+       "severity": "misleads",
+       "what": "Diagram is described, not transcribed, and the description is wrong: the letters are S, N, R, G, and the cross-and-orb symbol on the right is missed"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51e94cf111105c42a0626",
+     "book_id": "69b51e94cf111105c42a05d5",
+     "page_number": 81,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "The text is complete and faithful, except that 'Moses schreibet' comes out as the garbled 'Mosesreibet' and 'darnach' has a stray letter.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "Nun siehe / Mosesreibet /",
+       "severity": "misleads",
+       "what": "page reads 'Moses schreibet'; the verb is mangled into a non-word"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51e98cf111105c42a0f50",
+     "book_id": "69b51e98cf111105c42a0dd1",
+     "page_number": 383,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "This is a close, complete transcription of both columns and the marginal notes, but it has a few word misreads: 'deß' where the page has 'deñ' (denn), 'versehen' where it has 'versetzen', and an inserted 'sie'.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "im Geiste sie ein Bilde des Himmels war",
+       "severity": "misleads",
+       "what": "'sie' is added; the page reads 'im Geiste ein Bilde'"
+      },
+      {
+       "class": "O6",
+       "quote": "deß es war ein anderer Geist",
+       "severity": "misleads",
+       "what": "the page has 'deñ' (denn), not 'deß'"
+      },
+      {
+       "class": "O6",
+       "quote": "deß der Teufel war Fürst",
+       "severity": "misleads",
+       "what": "the page has 'deñ' (denn), not 'deß'"
+      },
+      {
+       "class": "O6",
+       "quote": "statlich wechseln und versehen",
+       "severity": "misleads",
+       "what": "the page reads 'versetzen'"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51e98cf111105c42a0f74",
+     "book_id": "69b51e98cf111105c42a0dd1",
+     "page_number": 419,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": true,
+     "note": "The text is mostly faithful, but §9 gains a stray 'Und' taken from the margin, §11 reads 'Sem Sems', and one marginal note has lost 'Bild'.",
+     "defects": [
+      {
+       "class": "O12",
+       "quote": "Die Scham ist an GOttes frembd.",
+       "severity": "misleads",
+       "what": "the margin reads 'Die Scham ist an GOttes Bild fremd'; 'Bild' is dropped, which changes the gloss"
+      },
+      {
+       "class": "O12",
+       "quote": "entstund der Spott. Und Der Teufel schlof",
+       "severity": "wrong_text",
+       "what": "the 'Und' from the marginal note has been merged into the text of §9"
+      },
+      {
+       "class": "O4",
+       "quote": "der GOtt des Sem Sems",
+       "severity": "wrong_text",
+       "what": "a word is duplicated; the page reads 'der GOtt des Sems'"
+      }
+     ]
+    },
+    {
+     "page_id": "69d37a91f510a016bc1c2bc9",
+     "book_id": "69c888a16c6f3cc53c85a348",
+     "page_number": 64,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "Half a line is missing in the first paragraph ('abgeschnitten … Was be-'), so the sentence about the higher triad makes no sense; the rest is faithful.",
+     "defects": [
+      {
+       "class": "O5",
+       "quote": "die von dem Verständnis ihrer selbst bestimmt dann Tiphareth",
+       "severity": "wrong_text",
+       "what": "Drops 'abgeschnitten, ja, tatsächlich, normaler Weise, ahnungslos von ihrer Existenz ist. Was be-' and merges two sentences into a garbled one."
+      }
+     ]
+    },
+    {
+     "page_id": "69ef2b1085daccce30f2d9be",
+     "book_id": "69ef2b1085daccce30f2d945",
+     "page_number": 121,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "The text matches the page wherever the page can be read, but in the second paragraph the transcription quietly supplies about a dozen line-endings that are cut off in the scan, and in one place it gives \"den Ton\" where the page has \"diesen Ton\".",
+     "defects": [
+      {
+       "class": "O3",
+       "quote": "welche auf irgend einem bestimmten Obertone, z. B. *g'* des Klanges *c*, anspricht",
+       "severity": "misleads",
+       "what": "words lost to the cropped right edge in the lower half (\"welche auf\", \"an-\", \"durch\", \"das g' hört\", \"Ohr an\", \"Ton im\", \"Verstärkung\", \"es hören\", \"jetzt ist die\", \"Klange der\", \"Es soll die\", \"aufmerksam zu\") are filled in from the known text without being marked as conjecture"
+      }
+     ]
+    },
+    {
+     "page_id": "69ef2b2685daccce30f2deea",
+     "book_id": "69ef2b2685daccce30f2de77",
+     "page_number": 115,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 1,
+     "wrong_text": true,
+     "note": "The text beside the image belongs to the previous page (102). The image shows p. 103, 'Vom Vortrage', with §§ 2–4 on good delivery (Stärcke, Schwäche, Druck…), and none of that text is in the transcription.",
+     "defects": [
+      {
+       "class": "I1",
+       "quote": "wohl selten möglich, ein Stück bey dem ersten Anblicke sogleich nach seinem wahren Inhalt und Affect wegzuspielen.",
+       "severity": "wrong_text",
+       "what": "The candidate gives the text of the previous page (p. 102). The image is p. 103, which begins 'hält, da das hypochondrische Wesen' and contains §§ 2–4."
+      },
+      {
+       "class": "O5",
+       "quote": "ihr Feuer kan gedämpfet werden, wenn man sie ausdrücklich zur Langsamkeit anhält,",
+       "severity": "wrong_text",
+       "what": "None of p. 103's text is transcribed. That covers the end of § 1 and all of §§ 2–4, through the catchword 'wor-'."
+      },
+      {
+       "class": "O11",
+       "quote": "<header>Das dritte Hauptstück.</header>",
+       "severity": "misleads",
+       "what": "The page's running head is 'Vom Vortrage.', not this."
+      },
+      {
+       "class": "O16",
+       "quote": "<page-num>102</page-num>",
+       "severity": "misleads",
+       "what": "The page number printed on the leaf is 103."
+      }
+     ]
+    },
+    {
+     "page_id": "6a2121edf88bd9944a5840ab",
+     "book_id": "6a2121edf88bd9944a5840a2",
+     "page_number": 9,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "This is a two-page spread presented as one page. The Las Casas/Lucayan passage loses 'tausend' and has the margin's 'im Evan-' spliced into it, and the Lipsius margin note is garbled.",
+     "defects": [
+      {
+       "class": "I3",
+       "quote": "<columns>2</columns>",
+       "severity": "misleads",
+       "what": "The image is a two-page spread (left and right pages) but is transcribed as one page in two columns; the column break and page number do not match the leaves."
+      },
+      {
+       "class": "O7",
+       "quote": "über fünffzig mahl hundert im Evangelischen Menschen umbbracht",
+       "severity": "wrong_text",
+       "what": "The page says 'hundert tausend Menschen'. 'tausend' is dropped and the margin fragment 'im Evan-' is spliced into the sentence, which changes the number of victims."
+      },
+      {
+       "class": "O12",
+       "quote": "lustig Lipsis Constant. 22.",
+       "severity": "misleads",
+       "what": "The marginal citation is garbled. The margin reads 'Iustus Lipsius lib. 2. de Constant. c. 22.'"
+      },
+      {
+       "class": "O12",
+       "quote": "Da. D. Hoe gelischen Jubelfests Büchlein pag. 99.",
+       "severity": "misleads",
+       "what": "'im Evan-' is missing from the margin note (it was merged into the body text), so the note is incomplete. Both notes are also moved away from the lines they annotate."
+      }
+     ]
+    },
+    {
+     "page_id": "6aa7cf7efd6dd3b07d31d828",
+     "book_id": "6aa7cf7efd6dd3b07d31d70f",
+     "page_number": 281,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 2,
+     "wrong_text": true,
+     "note": "The two handwritten captions don't match the plate: the upper one has words the scribe didn't write, the lower one drops 'den', and the picture description misstates the action.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "Hie wirt das in hinder beiden\nsonderm die hercz blos finden",
+       "severity": "wrong_text",
+       "what": "upper inscription misread; page reads roughly 'hie weist sich ... hinder binden / vnd vmb d.. hercz bloß finden' — 'sonderm' and 'beiden' are not on the page"
+      },
+      {
+       "class": "O6",
+       "quote": "Hie wirt der schilt",
+       "severity": "misleads",
+       "what": "drops 'den' (page: 'hie wirt der den schilt')"
+      },
+      {
+       "class": "E2",
+       "quote": "each standing within a large, oval-shaped wooden shield (pavise) and wielding a long spear or staff",
+       "severity": "misleads",
+       "what": "image description inaccurate: one combatant is falling backward with legs raised, and the figures hold their shields' grips, not spears"
+      }
+     ]
+    },
+    {
+     "page_id": "6aa7cf7efd6dd3b07d31d8f2",
+     "book_id": "6aa7cf7efd6dd3b07d31d70f",
+     "page_number": 483,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 2,
+     "wrong_text": true,
+     "note": "The header, plate number and first caption are roughly right, but the second caption is a garbled reconstruction with invented verbs and a doubled 'einen', so the transcription does not reliably say what the hand-written lines on the plate say.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "Der hat den fürwurtz in den trappen.",
+       "severity": "misleads",
+       "what": "the manuscript reads 'Der hatt den fürwurff in den trappen'; 'fürwurtz' is a misread of the technique name"
+      },
+      {
+       "class": "O6",
+       "quote": "In dem trapen sunt er in an sich",
+       "severity": "wrong_text",
+       "what": "the page reads roughly 'In dem trappen zucket er in an sich'; 'sunt' is not the verb on the page"
+      },
+      {
+       "class": "O6",
+       "quote": "in dem herunter stürzet er man einen einen hals",
+       "severity": "wrong_text",
+       "what": "a garbled rewrite of roughly 'in dem undertan schlecht er im an sinen hals'; the verb and pronouns are invented"
+      },
+      {
+       "class": "O4",
+       "quote": "einen einen",
+       "severity": "wrong_text",
+       "what": "a word is duplicated that is not doubled on the page"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51dfd47b06ecd58188276",
+     "book_id": "69b51dfd47b06ecd581880bc",
+     "page_number": 442,
+     "source": "topup",
+     "outcome": "corrected",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": true,
+     "note": "Mostly faithful, but two personal names are misread (Kosegarten as 'Rosegarten', Kotzebue as 'Rosebue') and one price has lost its '1 rthlr.'",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "Rosegartenschen Uebersetzung",
+       "severity": "misleads",
+       "what": "page reads Kosegartenschen (the translator Kosegarten)"
+      },
+      {
+       "class": "O6",
+       "quote": "Rosebueschen Schauspiele",
+       "severity": "misleads",
+       "what": "page reads Kotzebueschen (Kotzebue's play)"
+      },
+      {
+       "class": "O7",
+       "quote": "deutschem Text rthlr. 18 ggr.",
+       "severity": "wrong_text",
+       "what": "dropped the '1' in the price '1 rthlr. 18 ggr.'"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51dfd47b06ecd5818833e",
+     "book_id": "69b51dfd47b06ecd581880bc",
+     "page_number": 642,
+     "source": "topup",
+     "outcome": "corrected",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "The running text in both columns is accurate. The Leipzig exchange-rate table is not: many values sit one row off from the page, so a reader would get the wrong rate for several coins and places.",
+     "defects": [
+      {
+       "class": "O17",
+       "quote": "| \" Oster \" | - | - | 99⅚ |",
+       "severity": "wrong_text",
+       "what": "Messen Ld'or values moved up a row: on the page 99⅚ is beside Naumburger and 97¾ beside Leipz. Michael"
+      },
+      {
+       "class": "O17",
+       "quote": "| Amsterd. in Bco. à Uso. | - | 137½ | 129 |",
+       "severity": "wrong_text",
+       "what": "rates moved up a row: on the page 137½/129 belong to 'detto in Curr.', 143½/134½ to Hamburg, 98½/92½ to Augspurg and 98/92 to Wiener Curr."
+      },
+      {
+       "class": "O17",
+       "quote": "| Paris à 2 Uso. | - | 98½ | 92½ |",
+       "severity": "wrong_text",
+       "what": "on the page Paris has only dashes; the 98½/92½ belong to Augspurg"
+      },
+      {
+       "class": "O17",
+       "quote": "| <insert>Gewinnen.</insert> Sächſ. Conv. Geld. | - | Pary. | - |",
+       "severity": "misleads",
+       "what": "Ld'or 6½ for Sächs. Conv. Geld is missing, and the Louisd'or values are given wrongly as 6½/6⅚"
+      }
+     ]
+    },
+    {
+     "page_id": "69c80b2b6c6f3cc53c846674",
+     "book_id": "69c80a866c6f3cc53c8464a4",
+     "page_number": 293,
+     "source": "topup",
+     "outcome": "corrected",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "Almost the whole cropped page is there in order, but the last paragraph repeats 'Este / sie', the bracketed fillers are guesses, 'schicht in zweyen' was made up without brackets, and 'giren' is missing from line 2.",
+     "defects": [
+      {
+       "class": "O5",
+       "quote": "zum begiess[en] / Dann Kissige",
+       "severity": "misleads",
+       "what": "drops 'giren' (the end of a word split across lines, with its first part cut off at the margin) at the start of line 2; the page reads 'begiss…' / 'giren/Dann'"
+      },
+      {
+       "class": "O1",
+       "quote": "die reinigung aber der Bewme [ge]schicht in zweyen stücken",
+       "severity": "wrong_text",
+       "what": "the page shows only 'Bewme f…' / 'sen stücken'; 'schicht in zweyen' is invented and left unbracketed"
+      },
+      {
+       "class": "O4",
+       "quote": "den Bewmen [die Este / sie] Este / sie sein klein",
+       "severity": "wrong_text",
+       "what": "the bracketed guess duplicates the 'Este/sie' that begins the next printed line"
+      }
+     ]
+    }
+   ]
+  },
+  "French": {
+   "all": {
+    "n": 51,
+    "books": 26,
+    "accept": "42/51",
+    "accept_rate": 0.824,
+    "accept_ci": {
+     "ci95": [
+      0.731,
+      0.904
+     ],
+     "unit": "book",
+     "units": 26
+    },
+    "wrong_text_pages": "4/51",
+    "wrong_text_ci": {
+     "ci95": [
+      0.019,
+      0.157
+     ],
+     "unit": "book",
+     "units": 26
+    },
+    "fidelity_mean": 4.37,
+    "wrong_text_classes": {
+     "O6": "2/51",
+     "O5": "1/51",
+     "O8": "1/51"
+    },
+    "classes_k_of_n": {
+     "O8": "17/51",
+     "E2": "12/51",
+     "O16": "9/51",
+     "O6": "9/51",
+     "O5": "5/51",
+     "O14": "5/51",
+     "O12": "4/51",
+     "O7": "3/51",
+     "O11": "3/51",
+     "T6": "2/51",
+     "O1": "1/51",
+     "O15": "1/51",
+     "O17": "1/51",
+     "D1": "1/51",
+     "O4": "1/51"
+    },
+    "outcomes": {
+     "other": 14,
+     "written": 29,
+     "unchanged": 8
+    }
+   },
+   "by_script": {
+    "print": {
+     "n": 45,
+     "books": 23,
+     "accept": "37/45",
+     "accept_rate": 0.822,
+     "accept_ci": {
+      "ci95": [
+       0.711,
+       0.913
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "wrong_text_pages": "4/45",
+     "wrong_text_ci": {
+      "ci95": [
+       0.022,
+       0.182
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "fidelity_mean": 4.42,
+     "wrong_text_classes": {
+      "O6": "2/45",
+      "O5": "1/45",
+      "O8": "1/45"
+     },
+     "classes_k_of_n": {
+      "O8": "14/45",
+      "E2": "9/45",
+      "O16": "7/45",
+      "O6": "5/45",
+      "O12": "4/45",
+      "O5": "4/45",
+      "O14": "4/45",
+      "O11": "3/45",
+      "O7": "2/45",
+      "T6": "2/45",
+      "O1": "1/45",
+      "O15": "1/45",
+      "O17": "1/45",
+      "D1": "1/45",
+      "O4": "1/45"
+     },
+     "outcomes": {
+      "other": 9,
+      "written": 28,
+      "unchanged": 8
+     }
+    },
+    "manuscript": {
+     "n": 6,
+     "books": 4,
+     "accept": "5/6",
+     "accept_rate": 0.833,
+     "accept_ci": {
+      "ci95": [
+       0.571,
+       1
+      ],
+      "unit": "book",
+      "units": 4
+     },
+     "wrong_text_pages": "0/6",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 4
+     },
+     "fidelity_mean": 4,
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O6": "4/6",
+      "E2": "3/6",
+      "O8": "3/6",
+      "O16": "2/6",
+      "O7": "1/6",
+      "O5": "1/6",
+      "O14": "1/6"
+     },
+     "outcomes": {
+      "other": 5,
+      "written": 1
+     }
+    }
+   },
+   "by_source": {
+    "lane": {
+     "n": 51,
+     "books": 26,
+     "accept": "42/51",
+     "accept_rate": 0.824,
+     "accept_ci": {
+      "ci95": [
+       0.731,
+       0.918
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "4/51",
+     "wrong_text_ci": {
+      "ci95": [
+       0.019,
+       0.154
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "fidelity_mean": 4.37,
+     "wrong_text_classes": {
+      "O6": "2/51",
+      "O5": "1/51",
+      "O8": "1/51"
+     },
+     "classes_k_of_n": {
+      "O8": "17/51",
+      "E2": "12/51",
+      "O16": "9/51",
+      "O6": "9/51",
+      "O5": "5/51",
+      "O14": "5/51",
+      "O12": "4/51",
+      "O7": "3/51",
+      "O11": "3/51",
+      "T6": "2/51",
+      "O1": "1/51",
+      "O15": "1/51",
+      "O17": "1/51",
+      "D1": "1/51",
+      "O4": "1/51"
+     },
+     "outcomes": {
+      "other": 14,
+      "written": 29,
+      "unchanged": 8
+     }
+    },
+    "lane/print": {
+     "n": 45,
+     "books": 23,
+     "accept": "37/45",
+     "accept_rate": 0.822,
+     "accept_ci": {
+      "ci95": [
+       0.717,
+       0.913
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "wrong_text_pages": "4/45",
+     "wrong_text_ci": {
+      "ci95": [
+       0.022,
+       0.182
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "fidelity_mean": 4.42,
+     "wrong_text_classes": {
+      "O6": "2/45",
+      "O5": "1/45",
+      "O8": "1/45"
+     },
+     "classes_k_of_n": {
+      "O8": "14/45",
+      "E2": "9/45",
+      "O16": "7/45",
+      "O6": "5/45",
+      "O12": "4/45",
+      "O5": "4/45",
+      "O14": "4/45",
+      "O11": "3/45",
+      "O7": "2/45",
+      "T6": "2/45",
+      "O1": "1/45",
+      "O15": "1/45",
+      "O17": "1/45",
+      "D1": "1/45",
+      "O4": "1/45"
+     },
+     "outcomes": {
+      "other": 9,
+      "written": 28,
+      "unchanged": 8
+     }
+    },
+    "lane/manuscript": {
+     "n": 6,
+     "books": 4,
+     "accept": "5/6",
+     "accept_rate": 0.833,
+     "accept_ci": {
+      "ci95": [
+       0.571,
+       1
+      ],
+      "unit": "book",
+      "units": 4
+     },
+     "wrong_text_pages": "0/6",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 4
+     },
+     "fidelity_mean": 4,
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O6": "4/6",
+      "E2": "3/6",
+      "O8": "3/6",
+      "O16": "2/6",
+      "O7": "1/6",
+      "O5": "1/6",
+      "O14": "1/6"
+     },
+     "outcomes": {
+      "other": 5,
+      "written": 1
+     }
+    }
+   },
+   "by_outcome": {
+    "other": {
+     "n": 14,
+     "books": 10,
+     "accept": "8/14",
+     "accept_rate": 0.571,
+     "accept_ci": {
+      "ci95": [
+       0.3,
+       0.8
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "3/14",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.462
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "fidelity_mean": 3.79,
+     "wrong_text_classes": {
+      "O6": "2/14",
+      "O5": "1/14"
+     },
+     "classes_k_of_n": {
+      "E2": "7/14",
+      "O8": "6/14",
+      "O6": "6/14",
+      "O5": "4/14",
+      "O14": "4/14",
+      "O16": "3/14",
+      "O12": "2/14",
+      "O7": "2/14",
+      "O17": "1/14"
+     },
+     "outcomes": {
+      "other": 14
+     }
+    },
+    "written": {
+     "n": 29,
+     "books": 19,
+     "accept": "27/29",
+     "accept_rate": 0.931,
+     "accept_ci": {
+      "ci95": [
+       0.821,
+       1
+      ],
+      "unit": "book",
+      "units": 19
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.115
+      ],
+      "unit": "book",
+      "units": 19
+     },
+     "fidelity_mean": 4.59,
+     "wrong_text_classes": {
+      "O8": "1/29"
+     },
+     "classes_k_of_n": {
+      "O8": "10/29",
+      "E2": "5/29",
+      "O6": "3/29",
+      "O16": "3/29",
+      "T6": "2/29",
+      "O11": "2/29",
+      "O5": "1/29",
+      "O7": "1/29",
+      "O14": "1/29",
+      "O12": "1/29",
+      "D1": "1/29",
+      "O4": "1/29"
+     },
+     "outcomes": {
+      "written": 29
+     }
+    },
+    "unchanged": {
+     "n": 8,
+     "books": 7,
+     "accept": "7/8",
+     "accept_rate": 0.875,
+     "accept_ci": {
+      "ci95": [
+       0.7,
+       1
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "wrong_text_pages": "0/8",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "fidelity_mean": 4.63,
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O16": "3/8",
+      "O11": "1/8",
+      "O1": "1/8",
+      "O15": "1/8",
+      "O8": "1/8",
+      "O12": "1/8"
+     },
+     "outcomes": {
+      "unchanged": 8
+     }
+    }
+   },
+   "controls": {
+    "n": 2,
+    "passed": true
+   },
+   "made_worse": {
+    "corrections_judged": 29,
+    "rejected": 2,
+    "drafts_judged": 2,
+    "worse_than_draft": [
+     {
+      "page_id": "69b51e2b9a81ef7feb3d0fa6",
+      "book_id": "69b51e2b9a81ef7feb3d0f68",
+      "page_number": 62,
+      "source": "lane",
+      "draft": {
+       "accept": true,
+       "fidelity": 4
+      },
+      "served": {
+       "accept": false,
+       "fidelity": 4
+      },
+      "note": "Faithful apart from one word: 'piratisme' on the page appears as 'piratage' here, and the page number is given as 52 instead of 51."
+     },
+     {
+      "page_id": "6a08dd9fdb33045508580397",
+      "book_id": "6a08dd9fdb33045508580330",
+      "page_number": 103,
+      "source": "lane",
+      "draft": {
+       "accept": true,
+       "fidelity": 4
+      },
+      "served": {
+       "accept": false,
+       "fidelity": 4
+      },
+      "note": "The text matches the page closely, but the second speaker label reads 'Agathe' where the page prints 'Angelique' again, so a reader comparing it with the image would see the speaker silently changed."
+     }
+    ]
+   },
+   "rejected_pages": [
+    {
+     "page_id": "6a26f89437eba173bb6bb830",
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 39,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "defects": [
+      {
+       "class": "O5",
+       "quote": "a king seated on a throne receiving a woman, with the word \"ESTHER\" inscribed above the scene",
+       "severity": "wrong_text",
+       "what": "the king's caption label (reads like ASSUERUS R[EX]) is left out; only ESTHER is given"
+      },
+      {
+       "class": "O16",
+       "quote": "type=\"engraving\"",
+       "severity": "misleads",
+       "what": "this is a painted manuscript miniature, not an engraving"
+      },
+      {
+       "class": "O16",
+       "quote": "<script>printed</script>",
+       "severity": "misleads",
+       "what": "the leaf is a painted manuscript, not print"
+      }
+     ]
+    },
+    {
+     "page_id": "69f213a4b4dbfecf38f7ec8e",
+     "book_id": "69592fbba41e40e9146a49a7",
+     "page_number": 119,
+     "source": "lane",
+     "outcome": "other",
+     "script": "manuscript",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "The text is complete and in order, but the folio is given as 51 where the leaf shows 54, and 'fou' stands in for 'feu' in line 2.",
+     "defects": [
+      {
+       "class": "O7",
+       "quote": "<page-num>51</page-num>",
+       "severity": "misleads",
+       "what": "folio number reads 54 on the leaf, not 51"
+      },
+      {
+       "class": "O6",
+       "quote": "bien fixe dans le fou de",
+       "severity": "misleads",
+       "what": "page has 'le feu' (fire/furnace), not 'fou'"
+      }
+     ]
+    },
+    {
+     "page_id": "69b51e2b9a81ef7feb3d0fa6",
+     "book_id": "69b51e2b9a81ef7feb3d0f68",
+     "page_number": 62,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": true,
+     "note": "Faithful apart from one word: 'piratisme' on the page appears as 'piratage' here, and the page number is given as 52 instead of 51.",
+     "defects": [
+      {
+       "class": "O8",
+       "quote": "pira-\ntage dévorant",
+       "severity": "wrong_text",
+       "what": "page prints 'pira-tiſme devorant' (piratisme); candidate substitutes the modern word 'piratage'"
+      },
+      {
+       "class": "O7",
+       "quote": "<page-num>52</page-num>",
+       "severity": "misleads",
+       "what": "printed folio reads 51, not 52"
+      }
+     ]
+    },
+    {
+     "page_id": "69ef2b0685daccce30f2d732",
+     "book_id": "69ef2b0685daccce30f2d6ce",
+     "page_number": 100,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": false,
+     "note": "The prose is accurate, but the labels in the music example are scrambled between the major and minor cadences, and the (A) marks the text refers to are missing.",
+     "defects": [
+      {
+       "class": "O17",
+       "quote": "| Octave. | Sixte maj. |",
+       "severity": "misleads",
+       "what": "labels from the major-mode cadence (Sixte maj., Tierce maj., Octave ×3, Notte tonique) are put in the minor-mode column; the minor-mode labels Diss. min. / Diss. maj. are put in the major-mode column"
+      },
+      {
+       "class": "O17",
+       "quote": "| Diff. min. | Tierce min. |",
+       "severity": "misleads",
+       "what": "Diss. min. and Diss. maj. belong to the right-hand (minor) cadence, not the left"
+      },
+      {
+       "class": "O12",
+       "quote": "<image-desc size=\"large\" type=\"diagram\" significance=\"high\">",
+       "severity": "misleads",
+       "what": "the (A) markers over the upper parts, which the text cites, and the figures 7 / 6 / 6♮ are left out"
+      }
+     ]
+    },
+    {
+     "page_id": "6a08dd9fdb33045508580397",
+     "book_id": "6a08dd9fdb33045508580330",
+     "page_number": 103,
+     "source": "lane",
+     "outcome": "written",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": false,
+     "note": "The text matches the page closely, but the second speaker label reads 'Agathe' where the page prints 'Angelique' again, so a reader comparing it with the image would see the speaker silently changed.",
+     "defects": [
+      {
+       "class": "O8",
+       "quote": "*Agathe.* Madame, voyant que cette derniere contrainte",
+       "severity": "misleads",
+       "what": "The page prints the speaker as 'Angelique.' again, probably a printer's error. The candidate silently changed it to 'Agathe' and did not flag the change."
+      }
+     ]
+    },
+    {
+     "page_id": "6a8ee22f90f5a0e4155eac30",
+     "book_id": "6a8ee22f90f5a0e4155eab07",
+     "page_number": 296,
+     "source": "lane",
+     "outcome": "unchanged",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": false,
+     "note": "The body text matches the page word for word, but the footnote below the rule is joined onto the body's unfinished last sentence 'unanime à penser', so the body appears to go on into the note's text.",
+     "defects": [
+      {
+       "class": "O12",
+       "quote": "unanime à penser déjà dans le texte une demi-douzaine au moins, tel que celui de la chaîne d'or appliquée à l'état actuel du monde social.",
+       "severity": "misleads",
+       "what": "The smaller-type footnote at the foot of the page is run straight on from the body's last words 'unanime à penser'. This makes a false continuous sentence, and the footnote is never marked as a note."
+      },
+      {
+       "class": "O12",
+       "quote": "Il m'est arrivé souvent de m'arrêter six mois à des problèmes",
+       "severity": "misleads",
+       "what": "The second footnote paragraph is printed as a body paragraph, not as apparatus."
+      }
+     ]
+    },
+    {
+     "page_id": "6a8ee2e090f5a0e4155eb971",
+     "book_id": "6a8ee2e090f5a0e4155eb868",
+     "page_number": 265,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": true,
+     "note": "Twice the superscript ordinal 'm^ième' is printed as 'même', which garbles the mathematical argument. The rest of the text and the equations match the page.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "la même équation du système (2)",
+       "severity": "wrong_text",
+       "what": "page reads 'la m^ième équation' (the m-th equation); 'même' loses which equation is meant"
+      },
+      {
+       "class": "O6",
+       "quote": "d'entre ces produits en le même",
+       "severity": "wrong_text",
+       "what": "page reads 'en le m^ième' (the m-th product, the numéraire); 'même' makes the phrase meaningless"
+      }
+     ]
+    },
+    {
+     "page_id": "6aa7cf64fd6dd3b07d31d46d",
+     "book_id": "6aa7cf64fd6dd3b07d31d3e7",
+     "page_number": 134,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 4,
+     "wrong_text": true,
+     "note": "The text is complete and accurate apart from one misread word, 'fuyant' where the page has 'suyuant', and a few spellings changed to modern forms such as 'tambourin'.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "L'aultre double fuyant se faict",
+       "severity": "wrong_text",
+       "what": "The page reads 'suyuant' (following), but the candidate has 'fuyant' (fleeing), which changes the sense."
+      }
+     ]
+    },
+    {
+     "page_id": "6ad548d190dd8591ceb2ef40",
+     "book_id": "6ad548d190dd8591ceb2eef3",
+     "page_number": 77,
+     "source": "lane",
+     "outcome": "other",
+     "script": "print",
+     "fidelity": 3,
+     "wrong_text": false,
+     "note": "The page image is cropped on the right, but the transcription quietly fills in the cut-off line endings. It also turns 'ÉCONOMISME' into 'ÉCONOMIE' and 'Art. II' into 'art. 11'.",
+     "defects": [
+      {
+       "class": "O8",
+       "quote": "On persifle l'ÉCONOMIE",
+       "severity": "misleads",
+       "what": "page prints ÉCONOMISME (the author's coined term, parallel to MORALISME), normalised to ÉCONOMIE"
+      },
+      {
+       "class": "O7",
+       "quote": "art. 11.",
+       "severity": "misleads",
+       "what": "page reads ART. II. (roman numeral two), rendered as Arabic 11"
+      },
+      {
+       "class": "E2",
+       "quote": "avaient des méthodes de direction si vagues, qu'on n'en a pas même transmis le souvenir : tel est leur abandon",
+       "severity": "misleads",
+       "what": "the scan cuts off the right edge of every line; the missing word ends are filled in without any mark, so they are presented as if read from the page"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "judge_calls": 178,
+ "judge_list_usd_equiv": 10.86,
+ "topup_agy_calls": 20
+}
