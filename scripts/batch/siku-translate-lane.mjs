@@ -22,7 +22,8 @@
  *
  * POOL GATE. Every agy pool on the box is read with `agy -p /quota --output-format json` (0 tokens): the default HOME,
  * and each AGY_HOME in POOL_HOMES that exists. A non-default pool that another process is using (AGY_HOME in its
- * environment, e.g. a measurement job) is skipped. The pool with the most Gemini weekly remaining is used, and only if
+ * environment, e.g. a measurement job) is skipped; a lane marked AGY_POOL_SHARED=1 (cli-ocr-lane correct) only shares
+ * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if
  * weekly remaining > 0.35, or > 0.05 when its weekly reset is < 24 h away (quota idle before a reset is free, Derek
  * 2026-10-26). The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
  * that fails twice in a row stops the wave and pings ntfy.
@@ -53,7 +54,6 @@
  * block-drift covers caseless (Han) scripts for that reader in production (#7503).
  */
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -62,6 +62,9 @@ import { UNTRANSLATED } from './cli-translate-lane.mjs';
 import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
+import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName } from '../lib/agy-pools.mjs';
+
+export { POOL_HOMES, parseQuota, poolName };
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -75,27 +78,12 @@ export const SPOT_EVERY = 5000;
 export const SPOT_N = 10;
 export const MODEL = 'gemini-3.8-flash-low';
 export const REASON = 'Siku lane #5600, Derek 2026-10-27';
-/** Other agy logins this box may carry (scripts/workers/agy-guard.sh AGY_HOME, #7517). */
-export const POOL_HOMES = Object.freeze(['/root/.agy-james']);
 /** #7090: reader requests, translated by their own job. */
 export const ISSUE_7090_BOOKS = Object.freeze(['6a3cbe33ec254ff6cadfe195', '6a3cbd2eec254ff6cadf6bf3']);
 /** A chat model's reply inside stored OCR (not leaf text). */
 export const CHAT_REPLY_RE = /作为一个人工智能|人工智能语言模型|我还没学习如何回答|作為一個人工智能|As an AI(?: language)? model|I(?:'m| am) (?:sorry|unable)[^.\n]{0,40}(?:assist|help|transcribe)/i;
 
 // ── pool gate (pure) ──
-
-/** `agy -p /quota --output-format json` stdout → { weekly, weeklyReset, fiveHour, fiveHourReset } (fractions), or null. */
-export function parseQuota(stdout) {
-  let j;
-  try { j = JSON.parse(String(stdout).trim().split('\n').filter((l) => l.startsWith('{')).pop()); } catch { return null; }
-  const groups = j?.command?.data?.groups;
-  if (j?.status !== 'SUCCESS' || !Array.isArray(groups)) return null;
-  const g = groups.find((x) => /gemini/i.test(x.name || ''));
-  const b = (w) => g?.buckets?.find((x) => x.window === w);
-  const wk = b('weekly');
-  if (!wk || typeof wk.remaining_fraction !== 'number') return null;
-  return { weekly: wk.remaining_fraction, weeklyReset: wk.reset_time ?? null, fiveHour: b('5h')?.remaining_fraction ?? null, fiveHourReset: b('5h')?.reset_time ?? null };
-}
 
 /** May a pool spend now? reading = parseQuota(). The 5-hour bucket is not gated: agy's own reply stops the reader. */
 export function poolGate(reading, { now = Date.now() } = {}) {
@@ -109,9 +97,7 @@ export function poolGate(reading, { now = Date.now() } = {}) {
 
 /** The pool to use: the open pool with most weekly remaining. pools = [{ home, reading, busy }]. */
 export function choosePool(pools, opts) {
-  const ok = pools.filter((p) => !p.busy && p.reading).map((p) => ({ ...p, gate: poolGate(p.reading, opts) }));
-  ok.sort((a, b) => b.reading.weekly - a.reading.weekly);
-  return ok[0]?.gate.open ? ok[0] : null;
+  return choosePoolBy(pools, (r) => poolGate(r, opts));
 }
 
 // ── book picker (pure) ──
@@ -160,39 +146,14 @@ function comment(body) {
 
 // ── pools (live) ──
 
-/** Is another process using this AGY_HOME (e.g. a measurement job)? Our own children are excluded by pid ancestry. */
-function homeBusy(home) {
-  for (const pid of fs.readdirSync('/proc').filter((d) => /^\d+$/.test(d))) {
-    if (Number(pid) === process.pid) continue;
-    let env;
-    try { env = fs.readFileSync(`/proc/${pid}/environ`, 'utf8'); } catch { continue; }
-    if (!env.split('\0').includes(`AGY_HOME=${home}`)) continue;
-    if (env.split('\0').includes(`SIKU_LANE_CHILD=1`)) continue;
-    return Number(pid);
-  }
-  return null;
-}
-function readPool(home) {
-  const env = { ...process.env, SIKU_LANE_CHILD: '1' };
-  if (home) env.AGY_HOME = home; else delete env.AGY_HOME;
-  for (let i = 0; i < 2; i++) {
-    const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json', '--model', MODEL], { encoding: 'utf8', env, timeout: 120e3, cwd: os.tmpdir() });
-    const q = parseQuota(r.stdout);
-    if (q) return q;
-  }
-  return null;
-}
+// The reader and the busy check live in scripts/lib/agy-pools.mjs (shared with cli-ocr-lane.mjs correct, #7263).
+const readPool = (home) => readPoolBy(home, { model: MODEL, env: { SIKU_LANE_CHILD: '1' } });
 export function readPools() {
-  const homes = [null, ...POOL_HOMES.filter((h) => fs.existsSync(h))];
-  const pools = homes.map((home) => {
-    const busy = home ? homeBusy(home) : null;
-    return { home, busy, reading: readPool(home) };
-  });
+  const pools = readPoolsBy({ model: MODEL, env: { SIKU_LANE_CHILD: '1' } });
   fs.mkdirSync(STATE_DIR, { recursive: true });
   for (const p of pools) fs.appendFileSync(P.readings, JSON.stringify({ at: new Date().toISOString(), home: p.home ?? 'default', busy_pid: p.busy, ...p.reading }) + '\n');
   return pools;
 }
-const poolName = (p) => p?.home ? path.basename(p.home) : 'default';
 
 // ── the plan (live) ──
 

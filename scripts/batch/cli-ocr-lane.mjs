@@ -53,7 +53,7 @@
  *
  *   ... cli-ocr-lane.mjs correct-count
  *   ... cli-ocr-lane.mjs correct --out=DIR [--max-pages=N] [--concurrency=N] [--book-chunk=40] [--deadline-min=M]
- *        [--floor-5h=0.25] [--apply]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--apply]
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held; a page whose stored OCR is a Flash-Lite draft of 300+ characters,
@@ -68,15 +68,34 @@
  * QUOTA FLOOR. Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini weekly remaining
  * fraction is below the straight line to its reset (remaining time / 7 days), or the 5-hour bucket is below
  * --floor-5h (default 0.25, so the other lanes on the pool keep their window). An unreadable /quota stops it too.
+ * `--weekly-end=F` bends the line to end at F instead of 0 (line = F + (1 - F) × remaining time / 7 days), so a pool
+ * the lane has to itself can be spent down to F by its reset and no further (#7263: the second pool, F = 0.10).
+ *
+ * POOL (#7263). `--agy-home` picks the agy login every call of the run uses, its reads and its /quota floor alike:
+ * `default` (the box's own login; also what no flag means, as before), a DIR (a second login, scripts/workers/
+ * agy-guard.sh AGY_HOME, e.g. /root/.agy-james), or `auto`: the pool with the most Gemini weekly left whose floor is
+ * open, chosen once at the start by the Siku lane's picker (scripts/lib/agy-pools.mjs). The lane's processes are
+ * marked AGY_POOL_SHARED=1, so the Siku lane does not count a pool this lane shares as busy.
+ *
+ * TWO RUNS AT ONCE (#7263). One run a pool, each from its own cron line and flock, sharing one --out folder (so one
+ * ledger). Before a book chunk the run CLAIMS the book: an exclusive-create file <ledger dir>/claims/<book>.json,
+ * removed when the chunk is ledgered. A run skips a book another live run has claimed (a claim whose pid is gone, or
+ * older than 3 h, is stale and taken over), and after claiming re-reads the ledger lines other runs appended, so it
+ * never takes a page another run has tried. A book a correction reader is reading right now (/proc) is skipped too.
+ * Claims, the ledger and /proc are one box's. Runs on DIFFERENT boxes split the books with `--shard=K/N` instead: a run
+ * takes only the books whose id hashes to K mod N (bookShard), so no book is in two boxes' queues (#7263: main's
+ * main-pool line 0/2, gex45's second-pool line 1/2).
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { ocrLaneForBook, CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
+import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -110,10 +129,10 @@ export const byQueueOrder = (a, b) => (b.processing_priority ?? 0) - (a.processi
   || (b.visible ? 1 : 0) - (a.visible ? 1 : 0)
   || String(a.pipeline_auto?.hold?.held_at ?? '').localeCompare(String(b.pipeline_auto?.hold?.held_at ?? ''));
 
-function run(args, tag = '') {
+function run(args, tag = '', env = process.env) {
   console.log(`${tag}$ node ${args.map((a) => path.relative(process.cwd(), a) || a).join(' ')}`);
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, AGY_JOB: process.env.AGY_JOB || 'cli-ocr-lane-7089' } });
+    const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...env, AGY_JOB: env.AGY_JOB || 'cli-ocr-lane-7089' } });
     // Books read in parallel (--concurrency): each line carries its book's tag so the log stays readable.
     const pipe = (src, dst) => { let buf = ''; src.on('data', (d) => { buf += d; const lines = buf.split('\n'); buf = lines.pop(); for (const l of lines) dst.write(`${tag}${l}\n`); }); src.on('end', () => { if (buf) dst.write(`${tag}${buf}\n`); }); };
     pipe(child.stdout, process.stdout); pipe(child.stderr, process.stderr);
@@ -157,19 +176,87 @@ const WEEK_MS = 7 * 24 * 3600 * 1000;
  * { ok, why, weekly, line, five_h }: not ok when the weekly bucket is under the straight line to its reset, the 5-hour
  * bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25 } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0 } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
-  const line = Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
+  const line = weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
   if (weekly.remaining_fraction < line) return { ok: false, why: `weekly ${(100 * weekly.remaining_fraction).toFixed(1)}% is under the pace line ${(100 * line).toFixed(1)}%`, ...r };
   if (typeof five?.remaining_fraction !== 'number') return { ok: false, why: 'no Gemini 5-hour bucket in /quota', ...r };
   if (five.remaining_fraction < floor5h) return { ok: false, why: `5-hour bucket ${(100 * five.remaining_fraction).toFixed(1)}% is under ${100 * floor5h}%`, ...r };
   return { ok: true, why: null, ...r };
 }
-function readQuota() {
-  const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json'], { encoding: 'utf8', timeout: 120_000 });
-  try { return JSON.parse(r.stdout).command.data.groups.filter((g) => /gemini/i.test(g.name)).flatMap((g) => g.buckets); } catch { return null; }
+const readQuota = (home) => quotaBuckets(readQuotaStdout(home));
+
+/** `--agy-home` value → { home } for a fixed pool (null = the default login), or { auto: true }. */
+export function parseAgyHome(v, env = process.env) {
+  if (v === 'auto') return { auto: true };
+  if (v === 'default') return { home: null };
+  if (v) return { home: path.resolve(v) };
+  return { home: env.AGY_HOME || null };
+}
+
+const CLAIM_STALE_MS = 3 * 3600 * 1000;
+const pidAlive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+/** Is this claim still held by a live run? claim = parsed claim file. */
+export function claimLive(claim, { now = Date.now(), alive = pidAlive } = {}) {
+  if (!claim || !Number.isInteger(claim.pid)) return false;
+  if (!(now - Date.parse(claim.at) < CLAIM_STALE_MS)) return false;
+  return alive(claim.pid);
+}
+/** Claim a book for this run (see TWO RUNS AT ONCE). Returns true when this run holds it. */
+export function claimBook(dir, bookId, me) {
+  const f = path.join(dir, `${bookId}.json`);
+  fs.mkdirSync(dir, { recursive: true });
+  for (let i = 0; i < 3; i++) {
+    try { fs.writeFileSync(f, JSON.stringify({ ...me, at: new Date().toISOString() }), { flag: 'wx' }); return true; } catch (e) { if (e.code !== 'EEXIST') throw e; }
+    let held = null;
+    try { held = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* half-written or gone: treat as stale */ }
+    if (claimLive(held)) return false;
+    // Stale: move it aside, then try again. A rename succeeds for one run only, so two runs taking over the same stale
+    // claim cannot both remove it and both write their own (the loser's rename fails, and its next write finds the winner's).
+    try { fs.renameSync(f, `${f}.stale-${process.pid}-${i}`); fs.rmSync(`${f}.stale-${process.pid}-${i}`, { force: true }); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+  }
+  return false;
+}
+/**
+ * Books a correction reader is reading right now on this box, from /proc (cli-ocr.mjs read --lane=<CORRECT_LANE>; the
+ * book is the folder of its --page-ids-file). Covers a run that does not claim (code from before the claims).
+ */
+export function liveReaderBooks(procDir = '/proc') {
+  const out = new Set();
+  for (const pid of fs.readdirSync(procDir).filter((d) => /^\d+$/.test(d))) {
+    let argv;
+    try { argv = fs.readFileSync(path.join(procDir, pid, 'cmdline'), 'utf8').split('\0'); } catch { continue; }
+    if (!argv.some((a) => a.endsWith('cli-ocr.mjs')) || !argv.includes('read') || !argv.includes(`--lane=${CORRECT_LANE}`)) continue;
+    const f = argv.find((a) => a.startsWith('--page-ids-file='));
+    if (f) out.add(path.basename(path.dirname(f.slice('--page-ids-file='.length))));
+  }
+  return out;
+}
+/** The shard (0..n-1) a book belongs to: the first 8 hex digits of sha1(book id), mod n. Stable across boxes and runs. */
+export const bookShard = (bookId, n) => parseInt(createHash('sha1').update(String(bookId)).digest('hex').slice(0, 8), 16) % n;
+/** `--shard=K/N` → { k, n }, or null for no flag; throws on a malformed value. */
+export function parseShard(v) {
+  if (!v) return null;
+  const m = /^(\d+)\/(\d+)$/.exec(v);
+  if (!m || +m[2] < 1 || +m[1] >= +m[2]) throw new Error(`--shard must be K/N with 0 <= K < N, got ${v}`);
+  return { k: +m[1], n: +m[2] };
+}
+export const releaseBookClaim = (dir, bookId) => fs.rmSync(path.join(dir, `${bookId}.json`), { force: true });
+/** Ledger lines appended since the last call (other runs write the same file): adds their page ids to `set`. */
+function ledgerTail(file, set, state) {
+  if (!file || !fs.existsSync(file)) return;
+  const size = fs.statSync(file).size;
+  if (size <= state.offset) return;
+  const fd = fs.openSync(file, 'r');
+  const buf = Buffer.alloc(size - state.offset);
+  fs.readSync(fd, buf, 0, buf.length, state.offset);
+  fs.closeSync(fd);
+  const text = buf.toString('utf8');
+  const cut = text.lastIndexOf('\n') + 1;      // a line still being written waits for the next call
+  state.offset += Buffer.byteLength(text.slice(0, cut));
+  for (const l of text.slice(0, cut).split('\n').filter(Boolean)) { try { set.add(JSON.parse(l).page_id); } catch { /* skip */ } }
 }
 
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
@@ -193,11 +280,14 @@ async function correctMain(mode, arg) {
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const db = client.db('bookstore');
-  const ledger = LEDGER ? readLedger(LEDGER) : new Set();
+  const ledger = new Set(), tailState = { offset: 0 };
+  ledgerTail(LEDGER, ledger, tailState);
+  let SHARD;
+  try { SHARD = parseShard(arg('shard')); } catch (e) { console.error(e.message); process.exit(2); }
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: CORRECT_LANGUAGES }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => !arg('book') || b.id === arg('book'))
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
     .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
   if (mode === 'correct-count') {
     const t = {};
@@ -211,8 +301,27 @@ async function correctMain(mode, arg) {
     await client.close(); return;
   }
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
+  const WEEKLY_END = Number(arg('weekly-end') ?? 0);
+  if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const want = parseAgyHome(arg('agy-home'));
+  let HOME = want.home ?? null;
+  if (want.auto) {
+    const pools = readPools();
+    for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
+    const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }); return { open: q.ok, why: q.why }; });
+    if (!pick) { console.log('correct: no pool has its floor open; nothing read'); await client.close(); return; }
+    HOME = pick.home;
+  } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
+  const POOL = poolName({ home: HOME });
+  const CHILD_ENV = agyEnv(HOME);
+  const CLAIMS_DIR = path.join(path.dirname(LEDGER), 'claims');
+  const ME = { pid: process.pid, pool: POOL };
+  const held = new Set();
+  process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
   const CONCURRENCY = Number(arg('concurrency') || 1);
-  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 4)) { console.error('--concurrency must be 1 to 4'); process.exit(2); }
+  // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
+  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
   const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const job = `cli-ocr-correct-${new Date().toISOString().slice(0, 10)}`;
   fs.mkdirSync(OUT, { recursive: true });
@@ -222,14 +331,19 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct: ${books.length} books in frame, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
   const nextChunk = async () => {
     while (bi < books.length) {
       const b = books[bi++];
+      if (liveReaderBooks().has(b.id)) continue;       // a reader (of any run) is on this book now
+      if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
+      held.add(b.id);
+      ledgerTail(LEDGER, ledger, tailState);
       const open = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
       if (open.length) return { book: b, open };
+      releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
     return null;
   };
@@ -237,13 +351,14 @@ async function correctMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      const q = quotaFloor(readQuota(), { floor5h: FLOOR5H });
+      const q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
       if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
       const c = await nextChunk();
       if (!c) { stop ??= 'queue empty'; break; }
       // Sized after the await, so two workers never both spend the same budget.
-      if (budget <= 0) { stop ??= 'page budget spent'; break; }
       const { book } = c;
+      const release = () => { releaseBookClaim(CLAIMS_DIR, book.id); held.delete(book.id); };
+      if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
       const take = c.open.slice(0, Math.min(CHUNK, budget));
       budget -= take.length;
       const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
@@ -251,14 +366,14 @@ async function correctMain(mode, arg) {
       fs.mkdirSync(dir, { recursive: true });
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; quota weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
-      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${CORRECT_LANE}`, `--job=${job}`, '--stop-on-quota'], tag);
-      if (read === 3) { stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
-      if (read !== 0) { console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${CORRECT_LANE}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
+      if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
+      if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
       const reason = `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
-      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${CORRECT_LANE}`, ...(APPLY ? ['--apply'] : [])], tag);
-      if (!APPLY || applied !== 0) continue;
+      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${CORRECT_LANE}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      if (!APPLY || applied !== 0) { release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
@@ -273,11 +388,12 @@ async function correctMain(mode, arg) {
       // The chunk is written and ledgered: its page images (~420 KB a page, ~1.3 GB a full run) are not needed again
       // (apply checks the recorded image hash; the prompt sent is in each write's provenance). The root disk is #6223.
       for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-  console.log(`\ncorrect run ended: ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  console.log(`\ncorrect run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
   await client.close();
 }
 

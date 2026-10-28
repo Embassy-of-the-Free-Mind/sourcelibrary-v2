@@ -7,10 +7,14 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — plain-JS module
+import { quotaBuckets, parseQuota, agyEnv, choosePool } from '../../scripts/lib/agy-pools.mjs';
+import os from 'os';
 
 describe('spreadReason', () => {
   const cropped = [{ crop: { x: 0 } }, { cropped_photo: 'https://x/1.jpg' }];
@@ -110,5 +114,70 @@ describe('correction pages are drawn where the router test drew (#7558)', () => 
     expect(isInterior(16, 100)).toBe(true);
     expect(isInterior(95, 100)).toBe(true);
     expect(isInterior(96, 100)).toBe(false);
+  });
+});
+
+describe('the correction lane on a second pool (#7263)', () => {
+  const now = Date.parse('2026-10-28T09:00:00Z');
+  const reset = '2026-11-03T22:25:00Z'; // 6.56 days left
+  const b = (weekly: number) => [{ id: 'gemini-weekly', remaining_fraction: weekly, reset_time: reset }, { id: 'gemini-5h', remaining_fraction: 0.9 }];
+  it('--weekly-end bends the pace line to end at that fraction, not 0', () => {
+    const plain = quotaFloor(b(0.9), { now }), bent = quotaFloor(b(0.9), { now, weeklyEnd: 0.1 });
+    expect(bent.line).toBeCloseTo(0.1 + 0.9 * plain.line, 6);
+    expect(quotaFloor(b(0.1), { now: Date.parse(reset) - 1000, weeklyEnd: 0.1 }).ok).toBe(false);
+    expect(quotaFloor(b(0.12), { now: Date.parse(reset) - 1000, weeklyEnd: 0.1 }).ok).toBe(true);
+  });
+  it('--agy-home: no flag keeps the default login (as before), a DIR or auto picks another', () => {
+    expect(parseAgyHome(undefined, {})).toEqual({ home: null });
+    expect(parseAgyHome('default', { AGY_HOME: '/x' })).toEqual({ home: null });
+    expect(parseAgyHome(undefined, { AGY_HOME: '/root/.agy-james' })).toEqual({ home: '/root/.agy-james' });
+    expect(parseAgyHome('/root/.agy-james', {})).toEqual({ home: '/root/.agy-james' });
+    expect(parseAgyHome('auto', {})).toEqual({ auto: true });
+  });
+  it('children run on the chosen login and are marked as sharing it', () => {
+    expect(agyEnv('/root/.agy-james', { PATH: '/bin' })).toMatchObject({ AGY_HOME: '/root/.agy-james', AGY_POOL_SHARED: '1' });
+    expect(agyEnv(null, { AGY_HOME: '/root/.agy-james' }).AGY_HOME).toBeUndefined();
+  });
+  it('the picker reads the same /quota reply both lanes read, and takes the open pool with most weekly left', () => {
+    const out = JSON.stringify({ status: 'SUCCESS', command: { data: { groups: [{ name: 'Gemini Models', buckets: [
+      { id: 'gemini-weekly', window: 'weekly', remaining_fraction: 0.97, reset_time: reset }, { id: 'gemini-5h', window: '5h', remaining_fraction: 0.94 }] }, { name: 'Claude', buckets: [{ id: 'c', window: 'weekly', remaining_fraction: 0.1 }] }] } } });
+    expect(quotaBuckets(out)).toHaveLength(2);
+    expect(parseQuota(out)).toMatchObject({ weekly: 0.97, fiveHour: 0.94 });
+    const pools = [{ home: null, reading: { weekly: 0.42 } }, { home: '/j', reading: { weekly: 0.97 } }, { home: '/k', busy: 9, reading: { weekly: 0.99 } }];
+    expect(choosePool(pools, () => ({ open: true })).home).toBe('/j');
+    expect(choosePool(pools, () => ({ open: false }))).toBeNull();
+  });
+  it('two runs never hold one book: a live claim refuses, a dead or old claim is taken over', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'claims-'));
+    expect(claimBook(dir, 'b1', { pid: process.pid, pool: 'default' })).toBe(true);
+    expect(claimBook(dir, 'b1', { pid: process.pid, pool: '.agy-james' })).toBe(false);
+    releaseBookClaim(dir, 'b1');
+    expect(claimBook(dir, 'b1', { pid: process.pid, pool: '.agy-james' })).toBe(true);
+    fs.writeFileSync(path.join(dir, 'b2.json'), JSON.stringify({ pid: 2 ** 22 + 7, at: new Date().toISOString() }));
+    expect(claimBook(dir, 'b2', { pid: process.pid })).toBe(true);
+    expect(claimLive({ pid: 1, at: new Date(Date.now() - 4 * 3600e3).toISOString() }, { alive: () => true })).toBe(false);
+    expect(claimLive({ pid: 1, at: new Date().toISOString() }, { alive: () => true })).toBe(true);
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
+  it('a book a correction reader is reading now is seen, whichever run started it', () => {
+    const proc = fs.mkdtempSync(path.join(os.tmpdir(), 'proc-'));
+    const put = (pid: string, argv: string[]) => { fs.mkdirSync(path.join(proc, pid)); fs.writeFileSync(path.join(proc, pid, 'cmdline'), argv.join('\0') + '\0'); };
+    put('11', ['node', '/r/scripts/batch/cli-ocr.mjs', 'read', '--page-ids-file=/d/2026-10-28/bookA/page-ids-1.json', '--lane=agy-correct-lite-7558']);
+    put('12', ['node', '/r/scripts/batch/cli-ocr.mjs', 'apply', '--out=/d/2026-10-28/bookB', '--lane=agy-correct-lite-7558']);
+    put('13', ['node', '/r/scripts/batch/cli-ocr.mjs', 'read', '--page-ids-file=/x/bookC/ids.json', '--lane=route-judge-6740-eval']);
+    expect([...liveReaderBooks(proc)]).toEqual(['bookA']);
+    fs.rmSync(proc, { recursive: true, force: true });
+  });
+  it('--shard splits the books between boxes: every book in exactly one shard, stably', () => {
+    const ids = Array.from({ length: 400 }, (_, i) => `6a${i.toString(16).padStart(22, '0')}`);
+    const a = ids.filter((id) => bookShard(id, 2) === 0), b = ids.filter((id) => bookShard(id, 2) === 1);
+    expect(a.length + b.length).toBe(400);
+    expect(a.length).toBeGreaterThan(150);
+    expect(b.length).toBeGreaterThan(150);
+    expect(bookShard(ids[7], 2)).toBe(bookShard(ids[7], 2));
+    expect(parseShard('1/2')).toEqual({ k: 1, n: 2 });
+    expect(parseShard(undefined)).toBeNull();
+    expect(() => parseShard('2/2')).toThrow();
+    expect(() => parseShard('x')).toThrow();
   });
 });
