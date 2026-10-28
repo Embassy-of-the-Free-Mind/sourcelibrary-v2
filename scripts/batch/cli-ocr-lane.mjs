@@ -40,6 +40,8 @@
  * with `needs_splitting` (Phase 2 reads those with its spread prompt and its post-OCR split) and, as Phase 2 does
  * (#523), a book whose unread pages all lack crop data and that Phase 1.25 has not split_checked. Both stay held and
  * `count` names them. On 2026-10-26 a first run wrote plain reads to a needs_splitting book; they were reverted.
+ * Such a book is split first (scripts/maintenance/split-spreads-agy.mjs → split-book.mjs, #7454), and its leaves
+ * (split_from_spread) are read here.
  *
  * RELEASE. When a book has no unread page left it is released to the status it was held at; Phase 2 then finds
  * nothing to read and advances it to ocr_complete. A page the reader failed or the writer refused is written to the
@@ -102,7 +104,8 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 /** Why this lane must not read the book with the plain page prompt (see SPREADS above), or null. */
 export function spreadReason(book, pages) {
   if (book.needs_splitting) return 'needs_splitting: wants the spread prompt and post-OCR split';
-  if (pages.length && !book.pipeline_auto?.split_checked && pages.every((p) => !p.crop && !p.cropped_photo)) return 'no page has crop data and the book is not split_checked: possible unsplit spreads (#523)';
+  // A leaf written by split-book.mjs carries split_from_spread and no crop (#7454): it is a split page, not a suspect.
+  if (pages.length && !book.pipeline_auto?.split_checked && pages.every((p) => !p.crop && !p.cropped_photo && !p.split_from_spread)) return 'no page has crop data and the book is not split_checked: possible unsplit spreads (#523)';
   return null;
 }
 
@@ -416,7 +419,7 @@ async function main() {
   const plan = [];
   for (const book of books) {
     const lane = ocrLaneForBook(book);
-    const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1 } }).sort({ page_number: 1 }).toArray();
+    const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
     plan.push({ book, lane, cliModel: CLI_MODEL_FOR[lane.model] ?? null, spread: spreadReason(book, pages), pages, open: pages.filter((p) => !ledger.has(p.id)) });
   }
   const tally = {};
