@@ -271,6 +271,14 @@
 # Both lines share one lock. Guarded on the lane module so the lines are inert until #6129 is on main.
 */15 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -n /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=0" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
 40 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -w 600 /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=200 --max-usd=10" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
+# agy CLI enrichment (#7628): the same summary + index + chapters on Gemini 3.8 Flash through the subscription, one
+# conversation per book, $0 API. Each book is claimed in enrich_batch_books before its call, so the batch lane above
+# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 600 model requests a day
+# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters, which the pilot measured at
+# ~10 ordinary agy calls of /quota each, so 600 a day is about a quarter of one pool's week, the share Derek allowed),
+# when the chosen pool's weekly bucket is under the straight line to its reset or its 5-hour bucket under 25%, and at
+# the first quota reply. Guarded on the lane module so the line is inert until it is on main.
+35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=600 --deadline-min=110 --concurrency=2" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
 # #5705 work board (/admin/work): push this box's claude-job state + the GitHub side to ops_reports every 10 min. Script lands on main with the #5705 PR; until then this logs 'Cannot find module'.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box hetzner; node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --github' >> /var/log/sourcelibrary/work-board.log 2>&1
 

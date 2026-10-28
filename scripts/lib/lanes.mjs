@@ -250,6 +250,11 @@ export const LANES = [
   { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
     selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
+  { name: 'agy-flash-enrich', serves: 'enrich', files: ['scripts/workers/lib/enrich-agy-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'the batch lane\'s gap (live translated books past the realtime statuses with no summary / index / chapters), reads then translated pages; each book claimed in enrich_batch_books before its call so the API batch lane skips it, and handed back to it on failure (#7628)',
+    trigger: 'cron on main every 2 h: enrich-worker.mjs --agy (#7628), Gemini 3.8 Flash low, one conversation per book; stops at its daily request cap (about a quarter of one agy pool\'s week, Derek 2026-10-28), at the pool\'s quota floor (cli-ocr-lane.mjs quotaFloor) and at the first quota reply',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: 'marker', pause: 'enrich',
+    reason: 'Its model calls are the subscription CLI only. The writes it shares with the API lanes (finishEnrichBook) still upsert the book and page embeddings through the embedding API, as every enrich lane does: that is the embedding step, not a fallback for the enrichment call.' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],
