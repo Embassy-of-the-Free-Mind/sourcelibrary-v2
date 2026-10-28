@@ -57,7 +57,7 @@ export default function HistoriesIndexPage() {
                 <Image src={pick.image.src} alt={pick.image.alt} fill sizes="(max-width: 768px) 100vw, 460px" className="object-contain p-3" />
               </div>
               <div className="flex flex-col flex-1 p-6">
-                <p className="font-serif text-lg mb-1" style={{ color: 'var(--text-muted)' }} lang="grc">
+                <p className="font-serif text-lg mb-1" style={{ color: 'var(--text-muted)' }}>
                   {pick.word} <span className="italic text-base">{pick.translit}</span>
                 </p>
                 <h2 className="font-serif text-3xl mb-4" style={{ color: 'var(--text-primary)' }}>

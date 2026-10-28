@@ -73,9 +73,9 @@ const FIGURES = figures as unknown as {
 export const pickFor = (slug: string) => PICKS.concepts[slug];
 export const cardQuote = (slug: string) => FIGURES.concepts[slug]?.card;
 export const keyQuotes = (slug: string) => FIGURES.concepts[slug]?.key ?? [];
-/** The library quote shown after each ## section of an essay, keyed by section index (0 = before the first ##). */
+/** The library quote shown after each part of an essay split at its ## headings, keyed by the part's index. */
 export const essayFigures = (c: string, essay: string) => FIGURES.essays[`${c}/${essay}`] ?? {};
-export const pageImage = (f: Figure) => getPageImageUrl(f.img, 'display') ?? '';
+export const pageImage = (f: Figure) => getPageImageUrl(f.img, 'display');
 export const readerHref = (book: string, page: number) => `/book/${book}?page=${page}`;
 
 /** "Author, 1901, Title" → its author and year, for a short attribution. */
@@ -84,7 +84,7 @@ export function authorYear(label: string): string {
   return m ? `${m[1].replace(/\s*\((?:tr|trans|ed)\.?\)$/i, '')}, ${m[2]}` : label;
 }
 
-/** Split an essay at its ## headings. Section 0 is the text before the first one (empty when there is none). */
+/** Split an essay at its ## headings; text before the first heading is a part with heading ''. Same split as the figures script. */
 export function sections(md: string): { heading: string; md: string }[] {
   return md.split(/^(?=## )/m).map((p) => {
     const h = p.match(/^## (.*)$/m);
