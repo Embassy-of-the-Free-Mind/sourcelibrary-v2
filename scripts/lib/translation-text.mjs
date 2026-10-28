@@ -28,7 +28,8 @@ import { splitAnnotations } from './annotation-layer.mjs';
 import { contentHash } from './write-provenance.mjs';
 
 /** Bump when annotation-layer.mjs changes what `text` or the annotations are for the same input. */
-export const PARSER_VERSION = 'annotation-layer/1';
+// /2 (2026-10-28): a <gloss> closing a <term> from inside is a definition; a bare leading number is not list numbering.
+export const PARSER_VERSION = 'annotation-layer/2';
 export const ANNOTATIONS_COLLECTION = 'page_annotations';
 
 /** The annotation source of an inline (tags-in-the-translation) page: `inline-v<prompt_version>`. */

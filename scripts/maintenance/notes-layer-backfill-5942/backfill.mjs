@@ -30,6 +30,7 @@
  * USAGE (dry run unless --apply):
  *   node --env-file=.env.production.local scripts/maintenance/notes-layer-backfill-5942/backfill.mjs \
  *     --pilot 1000 [--seed 5942] [--apply] [--out $JOB_SCRATCH/pilot.jsonl]
+ *   --ids-file <file>      these page ids (whitespace-separated), e.g. to re-apply after an undo test
  *   --full                 every translated page (waits for Derek's go on #5942; not run yet)
  *   --batch 50 --throttle-ms 300 --check-every 500
  *   --run-id <id>          default notes-layer-backfill-5942-<UTC timestamp>
@@ -37,7 +38,7 @@
  */
 import { MongoClient, BSON } from 'mongodb';
 import { spawnSync } from 'node:child_process';
-import { createWriteStream } from 'node:fs';
+import { createWriteStream, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { randomBytes } from 'node:crypto';
 import { splitAnnotations, renderInline, renderMarkup } from '../../lib/annotation-layer.mjs';
@@ -55,6 +56,7 @@ const THROTTLE = Number(arg('--throttle-ms', 300));
 const CHECK_EVERY = Number(arg('--check-every', 500));
 const RUN_ID = arg('--run-id', `${SOURCE}-${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}`);
 const OUT = arg('--out', null);
+const IDS_FILE = arg('--ids-file', null);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function mulberry32(a) {
@@ -120,7 +122,12 @@ async function* fullIds(db) {
   if (ids.length) yield ids;
 }
 
-async function processBatch(db, ids, totals, out) {
+export function newTotals() {
+  return { seen: 0, written: 0, conflict: 0, already: 0, no_data: 0, round_trip: 0, store_matches_parser: 0, term_lifted_pages: 0, orphans: 0, malformed_unclosed: 0, malformed_stray: 0, malformed_pages: 0, text_bytes: 0, ann_bytes: 0, ann_docs: 0 };
+}
+
+/** One batch of page ids. `opts.beforeWrite(page)` is a test seam: it runs between the read and the write. */
+export async function processBatch(db, ids, totals, out, { apply = APPLY, runId = RUN_ID, beforeWrite } = {}) {
   const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, book_id: 1, 'translation.data': 1, 'translation.text': 1, 'translation.text_from': 1, 'translation.prompt_version': 1 } }).toArray();
   for (const page of pages) {
     const t = page.translation;
@@ -130,7 +137,7 @@ async function processBatch(db, ids, totals, out) {
     const m = measure(t.data, layers);
     const textBytes = BSON.calculateObjectSize({ text: layers.text, text_from: layers.text_from });
     const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers });
-    const annBytes = doc ? BSON.calculateObjectSize({ ...doc, run_id: RUN_ID }) : 0;
+    const annBytes = doc ? BSON.calculateObjectSize({ ...doc, run_id: runId }) : 0;
     const rec = { page_id: page.id, book_id: page.book_id, data_chars: t.data.length, text_chars: layers.text.length, text_bytes: textBytes, ann_bytes: annBytes, ...m };
     totals.seen++;
     for (const k of ['round_trip', 'store_matches_parser']) if (m[k]) totals[k]++;
@@ -142,16 +149,17 @@ async function processBatch(db, ids, totals, out) {
     totals.text_bytes += textBytes;
     totals.ann_bytes += annBytes;
     totals.ann_docs += doc ? 1 : 0;
-    if (!APPLY) { rec.written = 'dry-run'; out?.write(JSON.stringify(rec) + '\n'); continue; }
+    if (!apply) { rec.written = 'dry-run'; out?.write(JSON.stringify(rec) + '\n'); continue; }
+    if (beforeWrite) await beforeWrite(page);
 
     const revId = randomBytes(6).toString('hex');
     await db.collection('page_revisions').insertOne({
       id: revId, page_id: page.id, book_id: page.book_id, field: 'translation.text', source: SOURCE, reason: 'notes-layer-backfill',
-      run_id: RUN_ID, data: t.text ?? null, prev_text_from: t.text_from ?? null,
+      run_id: runId, data: t.text ?? null, prev_text_from: t.text_from ?? null,
       data_hash: layers.data_hash, parser_version: PARSER_VERSION, annotations_source: layers.source, created_at: new Date(),
     });
     const r = await db.collection('pages').updateOne(
-      { id: page.id, 'translation.data': t.data },
+      { id: page.id, 'translation.data': { $eq: t.data } }, // compare-and-set on the data parsed
       { $set: { 'translation.text': layers.text, 'translation.text_from': layers.text_from } },
     );
     if (!r.matchedCount) {
@@ -159,7 +167,7 @@ async function processBatch(db, ids, totals, out) {
       await db.collection('page_revisions').updateOne({ id: revId }, { $set: { aborted: 'conflict', aborted_at: new Date() } });
       rec.written = 'conflict';
     } else {
-      if (doc) await db.collection(ANNOTATIONS_COLLECTION).replaceOne({ page_id: doc.page_id, source: doc.source }, { ...doc, run_id: RUN_ID }, { upsert: true });
+      if (doc) await db.collection(ANNOTATIONS_COLLECTION).replaceOne({ page_id: doc.page_id, source: doc.source }, { ...doc, run_id: runId }, { upsert: true });
       totals.written++;
       rec.written = true;
     }
@@ -168,7 +176,7 @@ async function processBatch(db, ids, totals, out) {
 }
 
 async function main() {
-  if (!PILOT && !FULL) { console.error('Pass --pilot <n> or --full.'); process.exit(2); }
+  if (!PILOT && !FULL && !IDS_FILE) { console.error('Pass --pilot <n>, --ids-file <file> or --full.'); process.exit(2); }
   if (FULL && !args.includes('--go-5942')) { console.error('--full waits for Derek\'s go on #5942: pass --go-5942 once it is given.'); process.exit(2); }
   const client = new MongoClient(process.env.MONGODB_URI, { appName: SOURCE, maxPoolSize: 4 });
   await client.connect();
@@ -180,10 +188,11 @@ async function main() {
     await db.collection(ANNOTATIONS_COLLECTION).createIndex({ book_id: 1 }, { name: 'page_annotations_book_idx' });
   }
   const out = OUT ? createWriteStream(OUT) : null;
-  const totals = { seen: 0, written: 0, conflict: 0, already: 0, no_data: 0, round_trip: 0, store_matches_parser: 0, term_lifted_pages: 0, orphans: 0, malformed_unclosed: 0, malformed_stray: 0, malformed_pages: 0, text_bytes: 0, ann_bytes: 0, ann_docs: 0 };
+  const totals = newTotals();
   const started = Date.now();
   let done = 0, sinceCheck = 0;
-  const batches = PILOT ? (function* (ids) { for (let i = 0; i < ids.length; i += BATCH) yield ids.slice(i, i + BATCH); })(await drawPilot(db, PILOT)) : fullIds(db);
+  const chunks = function* (ids) { for (let i = 0; i < ids.length; i += BATCH) yield ids.slice(i, i + BATCH); };
+  const batches = IDS_FILE ? chunks(readFileSync(IDS_FILE, 'utf8').split(/\s+/).filter(Boolean)) : PILOT ? chunks(await drawPilot(db, PILOT)) : fullIds(db);
   for await (const ids of batches) {
     if (APPLY && sinceCheck >= CHECK_EVERY) {
       sinceCheck = 0;
@@ -200,4 +209,5 @@ async function main() {
   await client.close();
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (isMain) main().catch((e) => { console.error(e); process.exit(1); });

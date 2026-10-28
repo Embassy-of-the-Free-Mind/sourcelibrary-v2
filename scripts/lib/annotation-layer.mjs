@@ -54,8 +54,11 @@ export const CONTEXT = 32;
 const MAX_ANCHOR_WORDS = 12;
 const MIN_ANCHOR_WORDS = 3;
 
-// The glossary-line shape of src/lib/notes-off.ts `preprocessTerms` (TS, not importable here).
-const GLOSSARY_LINE = /^[\s*\->#\d.]*(?:<term>[^\n]*?<\/term>\s*<note>[^\n]*?<\/note>[\s.,;:]*)+[\s*]*$/i;
+// The glossary-line shape of src/lib/notes-off.ts `preprocessTerms` (TS, not importable here), with one
+// difference: a leading number counts as list numbering only when a `.` or `)` follows it. The reader's
+// `[\s*\->#\d.]*` also swallowed a number that is the book's word — "164 <term>folios</term> <note>…</note>"
+// lost "164 folios" from the text (#5942 storage pilot, 2026-10-28).
+const GLOSSARY_LINE = /^[\s*>#-]*(?:\d+[.)][\s*]*)?(?:<term>[^\n]*?<\/term>\s*<note>[^\n]*?<\/note>[\s.,;:]*)+[\s*]*$/i;
 
 const kindOf = (tag) => (COMMENTARY_TAGS.includes(tag) ? 'commentary' : MARK_TAGS.includes(tag) ? 'mark' : 'page');
 
@@ -127,9 +130,18 @@ export function splitAnnotations(markup, { source = 'inline', termDefinitions = 
       cuts.push({ s: t.start, e: t.end, ann, role: 'whole' });
       continue;
     }
+    // A <gloss> closing a <term> from inside — `<term>Kabbalah<gloss>The Jewish mystical tradition</gloss></term>` —
+    // is the model's definition too: as a mark its words stayed in the text, run into the term's
+    // ("KabbalahThe Jewish…"; #5942 storage pilot, 2026-10-28).
+    let insideTerm = null;
+    if (t.name === 'gloss' && markStack.length && markStack[markStack.length - 1].tok.name === 'term') {
+      const j = matchClose(tokens, i);
+      const after = j >= 0 ? tokens[j + 1] : null;
+      if (after && after.close && after.name === 'term' && /^\s*$/.test(input.slice(tokens[j].end, after.start))) insideTerm = markStack[markStack.length - 1].ann;
+    }
     if (kind === 'mark') {
       // A <gloss> straight after a </term> is the model's definition of the term: commentary.
-      const afterTerm = t.name === 'gloss' && lastClosedTerm && /^\s*$/.test(input.slice(lastClosedTerm.end, t.start));
+      const afterTerm = t.name === 'gloss' && ((lastClosedTerm && /^\s*$/.test(input.slice(lastClosedTerm.end, t.start))) || insideTerm);
       if (!afterTerm) {
         const ann = { type: t.name, kind, body: null, anchor: null, source, _open: t };
         anns.push(ann);
@@ -154,7 +166,7 @@ export function splitAnnotations(markup, { source = 'inline', termDefinitions = 
     if (t.attrs.trim()) ann.attrs = t.attrs.trim();
     if (type === 'note' && /^\s*original\s*:/i.test(ann.body)) ann.type = 'original';
     if (type === 'note' && lastClosedTerm && /^[ \t]*$/.test(input.slice(lastClosedTerm.end, t.start))) { ann.type = 'definition'; ann._term = lastClosedTerm.ann; }
-    if (type === 'definition') ann._term = lastClosedTerm.ann;
+    if (type === 'definition') ann._term = insideTerm ?? lastClosedTerm?.ann;
     anns.push(ann);
     cuts.push({ s: t.start, e: close.end, ann, role: 'whole' });
   }
