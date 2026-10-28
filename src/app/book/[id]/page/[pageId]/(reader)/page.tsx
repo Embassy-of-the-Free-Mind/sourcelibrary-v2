@@ -19,7 +19,7 @@ import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
 import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
-import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
 import { ocrMeasure } from '@/lib/ocr-measure';
@@ -123,10 +123,10 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav).
   // Inclusion list, not `{ detected_images: 0 }` — see reader-page-projection.ts.
-  const currentPage = await db.collection('pages').findOne(
+  const currentPage = withoutTextLayer(await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
-  );
+  )); // #5942: the stored text layer never reaches the payload
 
   if (!currentPage) {
     notFound();
