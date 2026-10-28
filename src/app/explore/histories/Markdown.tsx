@@ -19,7 +19,13 @@ export default function Markdown({ md }: { md: string }) {
           table: ({ children }) => <div className="overflow-x-auto my-6"><table className="w-full text-sm">{children}</table></div>,
           th: ({ children }) => <th className="text-left align-top p-2" style={{ borderBottom: '1px solid var(--border-light)' }}>{children}</th>,
           td: ({ children }) => <td className="align-top p-2" style={{ borderBottom: '1px solid var(--border-light)' }}>{children}</td>,
-          a: ({ href = '', title, children }) => {
+          a: ({ href: raw = '', title, children }) => {
+            // the essays cite pages as bare https://sourcelibrary.org/q/… URLs: link them relative, and show "page"
+            // instead of the address (the tenant rule: never an absolute sourcelibrary.org link)
+            const href = raw.replace(/^https?:\/\/(?:www\.)?sourcelibrary\.org(?=\/)/, '');
+            if (href !== raw && typeof children === 'string' && children === raw) {
+              return <Link href={href} title={title} className="text-sm">(page)</Link>;
+            }
             const claim = /^\/explore\/histories\/[^/]+\/claims\//.test(href);
             if (href.startsWith('/')) {
               return <Link href={href} title={title} className={claim ? 'text-xs align-super no-underline' : undefined}>{children}</Link>;
