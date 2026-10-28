@@ -30,6 +30,8 @@
 // histories-redactions-7623, concept-histories/redactions/): each `find` quotes the private text it removes, so they
 // must never be committed here.
 // Read-only against Mongo. Writes only the data files above.
+// Then run scripts/maintenance/concept-history-figures.mjs: it rebuilds content/figures.json (the quotes and printed
+// pages the pages show) from these files and the by-eye choices in content/picks.json, and fails if a pick went stale.
 import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
