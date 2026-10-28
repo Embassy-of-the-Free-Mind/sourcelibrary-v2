@@ -216,3 +216,32 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
   const { text: answer, problem } = unwrapRead(r.text);
   return { ...r, calls, tool_calls: tools, answer, problem };
 }
+
+/**
+ * One question about one image (a gutter, leaf boxes, a page frame) in a fresh gated workspace: the JPEG is written
+ * there as `image.jpg` and attached with `@./image.jpg`, which `promptFor(name)` places in its prompt. Retries like
+ * gatedTextCall(); the reply is NOT unwrapped (these prompts ask for one line of JSON), so `text` is the raw answer.
+ * Measured for splitting 2026-10-28 (#5771): 3.8 Flash low got 80/80 pecha leaf counts and 33/33 spreads, cuts a
+ * median 3/1000 from the reviewed ones, ~16 s a call.
+ */
+export async function gatedImageCall(promptFor, jpegBuf, { model = 'gemini-3.8-flash-low', attempts = 2, tmp = os.tmpdir(), onCall } = {}) {
+  let r, calls = 0;
+  while (calls < attempts) {
+    const ws = fs.mkdtempSync(path.join(tmp, 'agy-image-'));
+    fs.writeFileSync(path.join(ws, 'image.jpg'), jpegBuf);
+    installToolGate(ws, { task: 'ocr' });
+    r = await agyCall(['-p', promptFor('image.jpg'), '--model', model, ...CLI_SAFE_ARGS], ws); calls++;
+    fs.rmSync(ws, { recursive: true, force: true });
+    if (onCall) onCall(r);
+    if (!r.cls || r.cls === 'quota') break;
+  }
+  return { ...r, calls };
+}
+
+/** The first `{…}` or `[…]` JSON value in a reply, or null. */
+export function firstJson(text, open = '{') {
+  const re = open === '[' ? /\[[\s\S]*\]/ : /\{[^{}]*\}/;
+  const m = String(text || '').match(re);
+  if (!m) return null;
+  try { return JSON.parse(m[0]); } catch { return null; }
+}

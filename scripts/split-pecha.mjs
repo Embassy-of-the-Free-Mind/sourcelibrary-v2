@@ -4,7 +4,8 @@
  * composites into single leaves (geometry B; see .claude/docs/multi-leaf-scan-splitting.md).
  *
  * Pipeline per composite page:
- *   1. flash bounding-box → N leaf regions (gemini-3-flash-preview, robust incl. tape-bridged gaps)
+ *   1. flash bounding-box → N leaf regions (Gemini 3.8 Flash low through the agy CLI, on the subscription:
+ *      the paid API allows flash-lite only since 2026-10-08; tested 80/80 leaf counts, #5771)
  *   2. deterministic gap-snap → cut at the true row-brightness minimum in each inter-leaf zone
  *   3. validate → 1..3 non-overlapping leaves of plausible height covering the content
  *      (N==1 = single leaf, kept as-is; no split)
@@ -23,13 +24,14 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
+import { gatedImageCall, firstJson } from './lib/agy-cli.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const ALL = args.includes('--all');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '1', 10);
 const BOOK_ARG = args.find(a => !a.startsWith('--'));
-const BBOX_MODEL = 'gemini-3-flash-preview';
+const BBOX_MODEL = 'gemini-3.8-flash-low';
 const FAILURE_ABORT_PCT = 0.2;
 const MIN_LEAF_FRAC = 0.12;   // a leaf must be ≥12% of image height (reject slivers)
 
@@ -49,9 +51,6 @@ async function uploadToR2(key, buf, ct = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
-function geminiKeys() { const k = []; for (const [n, v] of Object.entries(process.env)) if (/^GEMINI_API_KEY/.test(n) && v) k.push(v); return k; }
-const KEYS = geminiKeys(); let ki = 0;
-
 async function download(url) {
   for (let t = 0; t < 3; t++) {
     try { const r = await fetch(url, { signal: AbortSignal.timeout(25000) }); if (r.ok) return Buffer.from(await r.arrayBuffer()); } catch {}
@@ -61,16 +60,15 @@ async function download(url) {
 }
 
 // --- 1. flash bounding boxes (one per leaf, normalized 0-1000, top→bottom) ---
-const BBOX_PROMPT = `This image shows one or more loose Tibetan manuscript leaves (pecha folios) — wide horizontal strips — photographed stacked vertically on a board/background. Return ONLY a JSON array of bounding boxes, one per DISTINCT physical leaf (not the background, not the whole plate, not individual lines of text). Each box: {"box_2d":[ymin,xmin,ymax,xmax]} normalized 0-1000, top to bottom order.`;
+const BBOX_PROMPT = (f) => `This image shows one or more loose Tibetan manuscript leaves (pecha folios) — wide horizontal strips — photographed stacked vertically on a board/background: @./${f}
+Return ONLY a JSON array of bounding boxes, one per DISTINCT physical leaf (not the background, not the whole plate, not individual lines of text). Each box: {"box_2d":[ymin,xmin,ymax,xmax]} normalized 0-1000, top to bottom order. Do not use any tool other than viewing the attached image.`;
 async function detectLeaves(buf) {
-  const key = KEYS[ki++ % KEYS.length];
-  const body = { contents: [{ parts: [{ inline_data: { mime_type: 'image/jpeg', data: buf.toString('base64') } }, { text: BBOX_PROMPT }] }], generationConfig: { temperature: 0, maxOutputTokens: 8000, thinkingConfig: { thinkingBudget: -1, includeThoughts: false } } };
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${BBOX_MODEL}:generateContent?key=${key}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  const j = await r.json();
-  if (!r.ok) throw new Error(JSON.stringify(j.error?.message || j).slice(0, 120));
-  const t = (j.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || '').join('');
-  const m = t.match(/\[[\s\S]*\]/);
-  const boxes = (m ? JSON.parse(m[0]) : []).map(b => b.box_2d).filter(b => Array.isArray(b) && b.length === 4);
+  // The CLI reads a ≤2000px copy; boxes are normalized, so they apply to the full-resolution image unchanged.
+  const small = await sharp(buf).resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 88 }).toBuffer();
+  const r = await gatedImageCall(BBOX_PROMPT, small, { model: BBOX_MODEL });
+  if (r.cls === 'quota') { console.error(`agy quota: ${r.err || r.text}`.slice(0, 200)); process.exit(75); }
+  if (r.cls) throw new Error(`agy ${r.cls}`);
+  const boxes = (firstJson(r.text, '[') || []).map(b => b.box_2d).filter(b => Array.isArray(b) && b.length === 4);
   return boxes.sort((a, b) => a[0] - b[0]); // top→bottom by ymin
 }
 
@@ -176,7 +174,7 @@ async function processBook(db, book) {
         ...lf, id: lf.id, page_number: 0, // placeholder; renumbered below
         split_from_pecha: page.id, leaf_index: i, _orig_pn: origPn,
         photo_original: page.archived_photo || page.photo,
-        field_provenance: { photo: { source: 'r2', method: 'split-pecha-flashbbox-snap', date: now } },
+        field_provenance: { photo: { source: 'r2', method: 'split-pecha-flashbbox-snap', engine: `agy:${BBOX_MODEL}`, date: now } },
         created_at: now, updated_at: now,
       });
     }

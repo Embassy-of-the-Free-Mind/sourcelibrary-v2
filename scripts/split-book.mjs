@@ -24,6 +24,7 @@ import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
 import { recountBook } from './lib/page-counts.mjs';
 import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
+import { gatedImageCall } from './lib/agy-cli.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -243,28 +244,25 @@ async function runSpreadOCR(imageBuf) {
 // normal single-page OCR pipeline (batch, 50% off) instead of realtime.
 // NO center hint: measured that "usually 400-600" anchors the model to ~500 and
 // it ignores the real (often offset) gutter. Without the hint, gemini-3-flash-preview
-// localizes the gutter to within ~3/1000 of the pixel detector even on strongly
-// offset RTL manuscripts. flash-lite stays center-biased — must use preview.
-const GUTTER_MODEL = 'gemini-3-flash-preview';
-const GUTTER_PROMPT = `This is a photo of an open book showing a left page and a right page. Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
+// localized the gutter to within ~3/1000 of the pixel detector even on strongly
+// offset RTL manuscripts. flash-lite stays center-biased — must use Flash.
+// Since 2026-10-08 the paid API allows flash-lite only, so this runs 3.8 Flash low
+// through the agy CLI on the subscription (#5771, measured 2026-10-28 on 33
+// reviewed spreads: 33/33 called two pages, median 3/1000 from the reviewed cut,
+// worst 24/1000, never inside text; ~16 s a call).
+const GUTTER_MODEL = 'gemini-3.8-flash-low';
+const GUTTER_PROMPT = (f) => `This is a photo of an open book showing a left page and a right page: @./${f}
+Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
 
-Respond with EXACTLY one tag and nothing else:
+Do not use any tool other than viewing the attached image. Respond with EXACTLY one tag and nothing else:
 - Two-page spread: <split-position>N</split-position> where N (0-1000) is the gutter's horizontal position. 0 = far left edge, 1000 = far right edge.
 - Single page (not a spread): <split-position>null</split-position>`;
 
-async function initGeminiGutter() {
-  const { GoogleGenerativeAI } = await import('@google/generative-ai');
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  geminiModel = genAI.getGenerativeModel({ model: GUTTER_MODEL });
-}
-
 async function runGutterDetect(imageBuf) {
-  const r = await geminiModel.generateContent([
-    GUTTER_PROMPT,
-    { inlineData: { mimeType: 'image/jpeg', data: imageBuf.toString('base64') } }
-  ]);
-  const text = r.response.text();
-  const m = text.match(/<split-position>([^<]*)<\/split-position>/);
+  const small = await sharp(imageBuf).resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 88 }).toBuffer();
+  const r = await gatedImageCall(GUTTER_PROMPT, small, { model: GUTTER_MODEL });
+  if (r.cls) throw new Error(`agy ${r.cls}${r.err ? `: ${r.err}` : ''}`);
+  const m = r.text.match(/<split-position>([^<]*)<\/split-position>/);
   if (!m) return null; // unparseable — caller decides fallback
   const n = parseInt(m[1]);
   return (!isNaN(n) && n > 0 && n < 1000) ? n : 'single';
@@ -499,7 +497,7 @@ if (GUTTER_ONLY) {
   //   both confident but DISAGREE (>8%) → uncertain (don't trust either blindly)
   //   neither confident + wide          → center, uncertain
   //   neither confident + tight         → keep whole, uncertain
-  // Gemini = gemini-3-flash-preview with a no-center-hint prompt (it tracks
+  // Gemini = 3.8 Flash low via the agy CLI, no-center-hint prompt (it tracks
   // offset gutters to ~3/1000; flash-lite + the old hint just guessed center).
   // Pixel is free and runs first; Gemini cross-checks / rescues the tail.
   // Book-level park: too many uncertain pages, OR confident gutter positions
@@ -562,10 +560,9 @@ if (GUTTER_ONLY) {
 
   console.log('\n--- Step 3: Gutter detection — pixel/page (free), Gemini on a sample (no OCR) ---');
   ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
-  let geminiReady = false;
   const stats = { portrait: 0, agree: 0, pixelOnly: 0, geminiOnly: 0, disagree: 0, centerUncertain: 0, keptWholeUncertain: 0 };
   const AGREE_TOL = 80; // 0-1000 → 8% of width
-  // The binding is stable book-wide, so Gemini (the paid call) only needs to run
+  // The binding is stable book-wide, so Gemini (a ~16 s CLI call) only needs to run
   // on a small SAMPLE to validate/establish the book gutter. Pixel runs on every
   // page (free); non-sample pages where pixel is unsure snap to the book median.
   const GEM_SAMPLE = Math.min(8, iiifUrls.length);
@@ -607,7 +604,6 @@ if (GUTTER_ONLY) {
         const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
         let gemPos = null;
         if (gemSampleIdx.has(idx)) {
-          if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
           try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch (e) {
             // Gemini is optional (pixel carries the page) but a silent skip hid
             // a dead model name / geo-blocked key for months (#4796): count it
