@@ -79,7 +79,7 @@ check() {
     ok)       title="$BOX $MOUNT disk recovered: ${used}%"; prio=low; msg="$what back under ${PCT_LIMIT}% (${free} free)." ;;
   esac
   [ "$page" = repeat ] && title="STILL: $title"
-  if curl -fsS -m 15 -H "Title: $title" -H "Priority: $prio" -H "Tags: floppy_disk" -d "$msg" "$TOPIC" >/dev/null; then
+  if NTFY_SRC=disk-alarm.sh "$(dirname "$0")/ntfy-send.sh" "$TOPIC" "$title" "$prio" floppy_disk "$msg"; then
     echo "$level $epoch" > "$st"; echo "$now paged ($page): $title"
   else
     echo "$now ntfy send FAILED; state left at $prev so the next run retries"

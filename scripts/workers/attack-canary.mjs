@@ -1,3 +1,4 @@
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 /**
  * Attack canary: play every scraper trick we have blocked, and every kind of
  * visitor we must let through, and page if any answer changed.
@@ -173,7 +174,7 @@ async function main() {
   if (failed.length && !NO_PUSH) {
     const lines = failed.map((r) => `• ${r.host}: ${r.name} — wanted ${r.expect}, got ${r.got} (${r.rule})`);
     try {
-      await fetch(NTFY_TOPIC, {
+      await ntfyPost(NTFY_TOPIC, {
         method: 'POST',
         headers: { Title: `Attack canary: ${failed.length} defence check(s) changed`, Priority: 'high', Tags: 'shield' },
         body: `${lines.join('\n')}\n\nA "block" row that passed = a rule is off, reordered or edited. A "pass" row refused = a rule is catching readers. See scripts/workers/attack-canary.mjs header, #4476.`,

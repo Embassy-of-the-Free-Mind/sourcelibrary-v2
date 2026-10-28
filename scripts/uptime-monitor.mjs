@@ -19,6 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { ntfyPost } from './lib/ntfy-send.mjs';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -254,7 +255,7 @@ async function checkTwoShot(endpoint) {
 // six times a day without being an outage.
 async function sendAlert(message, title = 'Source Library DOWN', priority = 'high') {
   try {
-    await fetch(NTFY_TOPIC, {
+    await ntfyPost(NTFY_TOPIC, {
       method: 'POST',
       headers: {
         'Title': title,
