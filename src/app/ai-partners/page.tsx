@@ -68,8 +68,8 @@ const TRAFFIC = [
 
 const PROGRESS = [
   { label: 'translated into English', millions: 5.7, className: 'bg-[#9e4a3a]' },
-  { label: 'transcribed, awaiting translation', millions: 3.7, className: 'bg-[#c9a86c]' },
-  { label: 'scanned, waiting to be read', millions: 19.6, className: 'bg-[#e4dccd]' },
+  { label: 'transcribed, awaiting translation', millions: 3.9, className: 'bg-[#c9a86c]' },
+  { label: 'scanned, waiting to be read', millions: 19.3, className: 'bg-[#e4dccd]' },
 ];
 
 const OFFERS = [
@@ -258,12 +258,12 @@ export default function AiPartnersPage() {
       <section className="mb-20">
         <p className={label}>The remaining work</p>
         <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.4] max-w-2xl mb-6">
-          19.6 million pages remain to be read. They are scanned, catalogued and ready.
+          19.3 million pages remain to be read. They are scanned, catalogued and ready.
         </p>
         <div
           className="flex h-4 rounded-sm overflow-hidden max-w-3xl"
           role="img"
-          aria-label="Of 28.9 million scanned pages: 5.7 million translated, 3.7 million transcribed, 19.6 million waiting"
+          aria-label="Of 28.9 million scanned pages: 5.7 million translated, 3.9 million transcribed, 19.3 million waiting"
         >
           {PROGRESS.map((p) => (
             <span key={p.label} className={p.className} style={{ flex: p.millions / totalPages }} />
