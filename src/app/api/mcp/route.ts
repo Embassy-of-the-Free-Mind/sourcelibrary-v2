@@ -1,4 +1,5 @@
 import type { NextRequest } from 'next/server';
+import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
@@ -83,9 +84,15 @@ async function apiPost(path: string, body: unknown) {
 
 // ── Tool implementations (mirrors mcp-server/src/api.ts) ───────────
 
+/** The envelope minus `total`, for tools whose count is already published as `total_matches`. */
+function pageFields(env: ReturnType<typeof pageEnvelope>) {
+  const { total: _total, ...rest } = env;
+  return rest;
+}
+
 async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) {
   const limit = Math.min(Number(args.limit) || 10, 100);
-  const offset = Number(args.offset) || 0;
+  const offset = parseOffset(args.offset);
   const params = new URLSearchParams({ q: String(args.query), limit: String(limit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (args.year_from) params.set('year_from', String(args.year_from));
@@ -113,8 +120,7 @@ async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) 
   return {
     query: result.query,
     total_matches: result.total,
-    returned: results.length,
-    offset,
+    ...pageFields(pageEnvelope({ total: result.total as number, returned: results.length, offset, limit })),
     results,
     ...(result.nearby ? { nearby: result.nearby } : {}),
   };
@@ -147,7 +153,7 @@ function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
 
 async function searchPassages(args: Record<string, unknown>, caller?: McpCaller) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
-  const offset = Number(args.offset) || 0;
+  const offset = parseOffset(args.offset);
   // BUG 1 fix: the backend can return page-rows with empty/whitespace snippets,
   // which the empty-snippet .filter(...) below strips AFTER fetching. Requesting
   // exactly userLimit rows could leave the page empty while total_matches stays
@@ -209,8 +215,9 @@ async function searchPassages(args: Record<string, unknown>, caller?: McpCaller)
   return {
     query: result.query,
     total_matches: result.total,
-    returned: passages.length,
-    offset,
+    // next_offset = offset + returned can repeat a row the empty-snippet or author
+    // filter skipped; it never skips one, which is the failure that matters (#7624).
+    ...pageFields(pageEnvelope({ total: result.total as number, returned: passages.length, offset, limit: userLimit })),
     ...constraintBlock,
     lang: textLang,
     ...(textLang !== 'en' ? {
@@ -281,10 +288,11 @@ async function searchConcept(args: Record<string, unknown>, caller?: McpCaller) 
   return {
     query: result.query,
     ...constraintBlock,
-    // total_matches mirrors the post-slice page size here (semantic endpoint does
-    // not return a separate corpus count), so keep it equal to returned.
-    total_matches: passages.length,
+    // No total_matches: the semantic endpoint ranks nearest neighbours and has no
+    // corpus count, and a total equal to the page size reads as one (#7624).
     returned: passages.length,
+    truncated: null,
+    count_note: 'This is a ranked list of the nearest passages, not a count: it cannot say how many passages or books in the library discuss this. For a count use search_translations (total_matches) or list_books (total).',
     lang: (result.lang as string) ?? conceptLang,
     ...(result.lang_note ? { lang_note: result.lang_note } : {}),
     // How the passages were spread, said out loud so a caller does not read a
@@ -359,8 +367,10 @@ function langArg(args: Record<string, unknown>): string {
 
 async function searchWithinBook(args: Record<string, unknown>, caller?: McpCaller) {
   const lang = langArg(args);
+  const offset = parseOffset(args.offset);
   const params = new URLSearchParams({ q: String(args.query) });
   if (lang !== 'en') params.set('lang', lang);
+  if (offset) params.set('offset', String(offset));
   const result = await mcpApiGet(`/books/${args.book_id}/search`, params, caller) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
@@ -397,7 +407,9 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
   const lexicalHit = (results ?? []).some((r) => r.found_by !== 'semantic');
   const absent = !lexicalHit && topScore < 0.55;
   return {
-    book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
+    book_id: args.book_id, query: result.query,
+    // The book search route returns 50 ranked pages a call (#7624).
+    ...pageEnvelope({ total: result.total as number, returned: Number(result.returned) || 0, offset, limit: 50 }),
     // Which edition of the book's text was searched, and which the snippets are
     // in. Always present so a caller never has to infer it.
     lang: result.lang ?? 'en',
@@ -432,8 +444,11 @@ async function listBooks(args: Record<string, unknown>) {
   const hasEdition = String(args.has_edition || '').trim().toLowerCase();
   if (/^[a-z]{2,3}$/.test(hasEdition) && hasEdition !== 'en') params.set('has_edition', hasEdition);
   if (args.sort) params.set('sort', String(args.sort));
-  if (args.limit) params.set('limit', String(Math.min(Number(args.limit), 200)));
-  if (args.skip) params.set('skip', String(args.skip));
+  const limit = Math.min(Number(args.limit) || 100, 200);
+  // `offset` is the declared name (#7624); `skip` is what the route takes and stays accepted.
+  const offset = parseOffset(args.offset ?? args.skip);
+  params.set('limit', String(limit));
+  if (offset) params.set('skip', String(offset));
 
   const result = await apiGet('/books/library', params) as Record<string, unknown>;
   const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
@@ -463,11 +478,12 @@ async function listBooks(args: Record<string, unknown>) {
     url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
   }));
   return {
-    total: result.total, showing: books?.length || 0,
+    ...pageEnvelope({ total: result.total as number, returned: books?.length || 0, offset, limit, totalIsLowerBound: !!result.total_is_lower_bound }),
+    showing: books?.length || 0,
     // The route's count timed out (#6854): `total` is only what was seen so far.
     ...(result.total_is_lower_bound ? {
       total_is_lower_bound: true,
-      total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with skip to see more, or narrow the search.',
+      total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with offset to see more, or narrow the search.',
     } : {}),
     ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
     // Canonicalized author echo when filtering by author_id (null-safe: the
@@ -1494,6 +1510,7 @@ const TOOLS: Tool[] = [
       properties: {
         book_id: { type: 'string', description: 'The book ID to search within' },
         query: { type: 'string', description: 'Search query' },
+        offset: { type: 'number', description: 'Pagination offset. Each call returns up to 50 pages; when truncated is true, call again with next_offset (default 0).' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
       },
       required: ['book_id', 'query'],
@@ -1517,6 +1534,7 @@ const TOOLS: Tool[] = [
         has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },
         limit: { type: 'number', description: 'Max results (default 100, max 200)' },
+        offset: { type: 'number', description: 'Pagination offset. When truncated is true, call again with next_offset; a full page is not the whole holding (default 0).' },
       },
     },
   },

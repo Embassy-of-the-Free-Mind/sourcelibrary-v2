@@ -513,7 +513,10 @@ export async function GET(
     ];
     const RESULT_CAP = 50;
     const totalMatched = ranked.length;
-    const capped = ranked.slice(0, RESULT_CAP);
+    // `offset` pages through the ranked set (#7624). Without it a book with 382
+    // matching pages showed its first 50 and no way to reach the rest.
+    const offset = Math.max(0, Math.floor(Number(searchParams.get('offset')) || 0));
+    const capped = ranked.slice(offset, offset + RESULT_CAP);
     results.length = 0;
     results.push(...capped);
 
@@ -558,6 +561,7 @@ export async function GET(
       // 50 and assumes that is everything will stop looking too early.
       total: totalMatched,
       returned: results.length,
+      offset,
       ocrPages,
       translationPages,
       front_matter_results: results.filter((r) => r.is_front_matter).length,
