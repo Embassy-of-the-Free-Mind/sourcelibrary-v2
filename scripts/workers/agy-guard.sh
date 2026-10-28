@@ -110,13 +110,16 @@ fi
 if echo "$model" | grep -qiE '^(claude|gpt)'; then
   acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
   qf="$QUOTA_DIR/$acct.json"
-  if [ -z "$(find "$qf" -maxdepth 0 -mmin -10 ! -newermt now 2>/dev/null)" ]; then
-    mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
-      && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
-    rm -f "$qf.tmp$$"
-  fi
-  why=$(python3 - "$qf" "$acct" <<'PY' 2>/dev/null || echo "quota for $acct unreadable"
-import json, sys
+  # Prints nothing when Claude may run, "stale" when the cache is missing, older than 10 min or dated in the future
+  # (a minute of clock skew allowed), else the reason it may not.
+  qcheck() { python3 - "$qf" "$acct" <<'PY' 2>/dev/null || echo "quota for $acct unreadable"
+import json, os, sys, time
+try:
+    age = time.time() - os.path.getmtime(sys.argv[1])
+except OSError:
+    age = None
+if age is None or not -60 <= age < 600:
+    print('stale'); sys.exit()
 try:
     g = {x['name']: {b['window']: b['remaining_fraction'] for b in x['buckets']} for x in json.load(open(sys.argv[1]))['command']['data']['groups']}
 except Exception:
@@ -129,7 +132,14 @@ else:
     low = [w for w in ('weekly', '5h') if not (isinstance(cl.get(w), (int, float)) and cl[w] >= 0.10)]
     print('%s Claude %s under 10%%' % (sys.argv[2], low[0]) if low else '')
 PY
-)
+  }
+  why=$(qcheck)
+  if [ "$why" = stale ]; then
+    mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
+      && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
+    rm -f "$qf.tmp$$"
+    why=$(qcheck); [ "$why" = stale ] && why="quota for $acct unreadable"
+  fi
   if [ -n "$why" ]; then
     echo "agy-guard: quota reached (refused (config)): $model runs on agy only once the Gemini pool is empty ($why); use claude -p (#7545)" >&2
     exit 75
