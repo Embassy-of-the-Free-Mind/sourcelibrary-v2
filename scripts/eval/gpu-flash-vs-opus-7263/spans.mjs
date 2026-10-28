@@ -8,7 +8,7 @@
  * disagree (after folding case, punctuation and ſ) is put to Opus with the image, blind: the two readings are labelled
  * 1 and 2 in an order drawn per span. Opus answers per span which the page prints: 1, 2, both_wrong, cant_tell.
  *
- *   node spans.mjs --a=O --b=e2/c --only=<slug file> [--conc=3] [--max-spans=40]
+ *   node spans.mjs --a=draft:f --b=e2/D-r1 --only=<slug file> [--conc=3] [--max-spans=40]
  * Writes $J/spans-<a>-<b>/<slug>.json {spans:[{n, ctx, a, b, first}], answer:{n: '1'|'2'|...}, tally:{a, b, both_wrong, cant_tell}}.
  */
 import fs from 'node:fs';
@@ -23,7 +23,11 @@ const HERE = path.dirname(new URL(import.meta.url).pathname);
 const A = arg('a', 'O'); const B = arg('b'); const CONC = Number(arg('conc', '3')); const MAXS = Number(arg('max-spans', '40'));
 const OUT = path.join(J, `spans-${A}-${B.replace(/\W/g, '_')}`); fs.mkdirSync(OUT, { recursive: true });
 const LANG = { la: 'Latin', en: 'English', de: 'German', fr: 'French', it: 'Italian' };
-const final = (spec, s) => { try { return JSON.parse(fs.readFileSync(path.join(J, spec, `${s}.json`), 'utf8')).final || ''; } catch { return ''; } };
+const DRAFTS = {};
+const final = (spec, s) => {
+  if (spec.startsWith('draft:')) { const k = spec.slice(6); DRAFTS[k] ??= Object.fromEntries(fs.readFileSync(path.join(J, 'drafts', `${k}.jsonl`), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((r) => [r.page_id, r.text || ''])); return DRAFTS[k][s] || ''; }
+  try { return JSON.parse(fs.readFileSync(path.join(J, spec, `${s}.json`), 'utf8')).final || ''; } catch { return ''; }
+};
 
 const TAGLINE = /^\s*<(scan-quality|language|script|page-type|vocab|meta|warning|columns|page-num|sig|header|image-desc)\b[^>]*>.*<\/\1>\s*$/i;
 const words = (t) => String(t).split('\n').filter((l) => !TAGLINE.test(l)).join('\n').replace(/<\/?[a-z-]+[^>]*>/gi, ' ').split(/\s+/).filter(Boolean);
@@ -48,7 +52,7 @@ const slugs = fs.readFileSync(arg('only'), 'utf8').split('\n').filter(Boolean).f
 console.log(`spans ${A} vs ${B}: ${slugs.length} pages`);
 let stop = null;
 async function one(s) {
-  const ta = final(A === 'O' ? 'O' : A, s); const tb = final(B, s);
+  const ta = final(A, s); const tb = final(B, s);
   if (!ta || !tb) return { slug: s, skipped: 'an arm has no text' };
   let sp = spans(ta, tb);
   const total = sp.length;

@@ -5,7 +5,7 @@ PRIOR ART: scripts/eval/euro-gpu-correct-7567/judge-table.py (usable / misleadin
 verdicts through a label key) and scripts/eval/flash-reread-5924 (Wilson intervals). This adds the no-answer outcome,
 the faults-weighted worse-than-draft of the prereg, the non-inferiority rule against arm O and the A-vs-A noise floor.
 
-  score-judge.py <J> <set> [--arms=O,C,...] [--ref=O] [--draft=X] [--floor=C,C2] [--out=FILE.json]
+  score-judge.py <J> <set> [--arms=O,C,...] [--ref=O] [--draft=X] [--floor=C,C2] [--script=print] [--ref-delivered=1] [--out=FILE.json]
 Pages enter only when the judge returned a verdict and every arm in --arms (default: the key's) ran on the page.
 """
 import json, math, os, random, sys
@@ -41,6 +41,13 @@ for s, k in key['pages'].items():
             r[a] = {'out': 'usable' if x.get('usable') else 'misleading', 'faults': faults, 'serious': sum(len(x.get(c) or []) for c in SERIOUS), 'misreads': len(x.get('misreads') or [])}
     for a in k['not_delivered']: r[a] = {'out': 'no-answer', 'faults': None}
     rows.append(r)
+# --script=print|manuscript|unknown keeps that script type only (script-type.json, prereg amendment 2 §3);
+# --ref-delivered drops pages where the ref arm gave no answer (a sensitivity row, never the rule's own table)
+if 'script' in opt:
+    st = json.load(open(os.path.join(J, 'script-type.json')))
+    rows = [r for r in rows if st.get(r['slug'], {}).get('script_type', 'unknown') == opt['script']]
+if 'ref-delivered' in opt:
+    rows = [r for r in rows if r.get(REF, {}).get('out') != 'no-answer']
 
 
 def cell(rs, arm):
