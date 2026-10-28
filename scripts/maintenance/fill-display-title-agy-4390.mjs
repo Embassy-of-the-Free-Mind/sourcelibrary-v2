@@ -35,6 +35,8 @@
  *   ... --recent-days=14            only books translated in the last N days
  *   ... --from-jsonl=FILE --apply   write answers already kept in FILE, no model calls
  *   ... --concurrency=3 --model=gemini-3.8-flash-low
+ *   ... --normalize [--apply]       volumes of one work → the base title most of them carry (no model calls)
+ *   ... --backfill-sweep-log --apply  sweep_log rows for titles a stopped run wrote without them
  */
 
 import fs from 'node:fs';
@@ -54,6 +56,8 @@ const RECENT_DAYS = Number(arg('recent-days') || 0);
 const FROM_JSONL = arg('from-jsonl');
 const CONCURRENCY = Number(arg('concurrency') || 3);
 const MODEL = arg('model') || 'gemini-3.8-flash-low';
+const NORMALIZE = args.includes('--normalize');
+const BACKFILL_SWEEP_LOG = args.includes('--backfill-sweep-log');
 const PER_CALL = 40;
 
 const SWEEP = 'display-title-agy-4390';
@@ -110,6 +114,21 @@ export function rejectReason(t, book) {
 
 const hash = (s) => createHash('sha256').update(s).digest('hex').slice(0, 16);
 
+// "Fayuan Zhulin, juan 19–21 (vol 7)" → "Fayuan Zhulin"; "Mathematical Collection, Vol. 1" → "Mathematical Collection".
+// null when the title carries no volume part, so a one-volume work is never cut.
+const VOLUME_PART = /^(.+?)(?:,\s*(?:(?:first|middle|last|introductory|supplementary)\s+)?(?:juan|part|vol\.?|volume|book)\b.*|\s+\(vol\.?\s*[\d–-]+\))$/i;
+export function baseOf(t) {
+  const m = String(t || '').match(VOLUME_PART);
+  return m ? m[1].trim() : null;
+}
+/** The base title most volumes of a work already carry, or null when there is no majority to follow. */
+export function majorityBase(titles) {
+  const n = new Map();
+  for (const t of titles) { const b = baseOf(t); if (b) n.set(b, (n.get(b) || 0) + 1); }
+  const [best] = [...n.entries()].sort((a, b) => b[1] - a[1]);
+  return best ? best[0] : null;
+}
+
 function chunkByWork(books) {
   const byWork = new Map();
   for (const b of books) {
@@ -153,7 +172,7 @@ async function main() {
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const keep = (rec) => fs.appendFileSync(OUT, JSON.stringify(rec) + '\n');
-  const tally = { written: 0, skipped: {}, raced: 0, calls: 0, failed_calls: 0 };
+  const tally = { written: 0, skipped: {}, raced: 0, calls: 0, failed_calls: 0, sweep_rows: 0 };
   const sweepRows = [];
 
   async function write(book, value, stamp) {
@@ -167,9 +186,51 @@ async function main() {
     else tally.raced++;
     return res.modifiedCount === 1;
   }
+  // Flushed after every call, not once at the end: a run stopped midway (2026-10-28) had written 6,274 titles and
+  // recorded none of their sweep rows.
+  async function flushSweepRows() {
+    if (!sweepRows.length) return;
+    const rowsNow = sweepRows.splice(0);
+    await recordSweepActions(db, rowsNow);
+    tally.sweep_rows += rowsNow.length;
+  }
   const skip = (reason) => { tally.skipped[reason] = (tally.skipped[reason] || 0) + 1; };
 
-  const toModel = rows;
+  const toModel = (NORMALIZE || BACKFILL_SWEEP_LOG) ? [] : rows;
+
+  // --normalize: every volume of a work this sweep titled gets the base title most of its volumes carry; only the
+  // base is replaced, each volume keeps its own juan/vol part. The replaced value is the stamp's previous_value.
+  if (NORMALIZE) {
+    const mine = await books.find({ 'field_provenance.display_title.sweep': SWEEP, work_id: { $nin: [null, ''] } }, { projection: { _id: 1, id: 1, work_id: 1, display_title: 1 } }).toArray();
+    const byWork = new Map();
+    for (const d of mine) { const w = String(d.work_id); if (!byWork.has(w)) byWork.set(w, []); byWork.get(w).push(d); }
+    for (const [w, vols] of byWork) {
+      if (vols.length < 2) continue;
+      const base = majorityBase(vols.map((d) => d.display_title));
+      if (!base) continue;
+      for (const d of vols) {
+        const own = baseOf(d.display_title);
+        if (!own || own === base) continue;
+        const value = base + d.display_title.slice(own.length);
+        keep({ run: RUN, book_id: d.id, work: w, method: 'work_base_normalized', previous: d.display_title, answer: value, written: APPLY });
+        tally.normalized = (tally.normalized || 0) + 1;
+        if (!APPLY) continue;
+        const prov = provenanceUpdate('display_title', { source: 'ai_generated', method: 'work_base_normalized', script: SCRIPT, run: RUN, sweep: SWEEP, previous_value: d.display_title, note: `base title taken from the majority of ${vols.length} volumes of work ${w}`, review: 'unreviewed', issue: 4390 });
+        const res = await books.updateOne({ _id: d._id, display_title: d.display_title }, { $set: { display_title: value, ...prov.$set }, $push: prov.$push });
+        if (res.modifiedCount === 1) sweepRows.push({ sweep: SWEEP, book_id: d.id, action: 'display-title-normalized', detail: { value, previous: d.display_title, run: RUN } });
+        else tally.raced++;
+      }
+      if (sweepRows.length >= 500) await flushSweepRows();
+    }
+  }
+
+  // --backfill-sweep-log: sweep rows for titles written by a run that stopped before recording them.
+  if (BACKFILL_SWEEP_LOG && APPLY) {
+    const logged = new Set((await db.collection('sweep_log').find({ sweep: SWEEP, action: 'display-title-filled' }, { projection: { book_id: 1 } }).toArray()).map((r) => r.book_id));
+    for (const d of await books.find({ 'field_provenance.display_title.sweep': SWEEP, 'field_provenance.display_title.method': 'agy_title_translation' }, { projection: { id: 1, display_title: 1, 'field_provenance.display_title.run': 1 } }).toArray()) {
+      if (!logged.has(d.id)) sweepRows.push({ sweep: SWEEP, book_id: d.id, action: 'display-title-filled', detail: { value: d.display_title, method: 'agy_title_translation', run: d.field_provenance.display_title.run, backfilled: true } });
+    }
+  }
 
   // The model, or answers already kept.
   let answers = new Map();
@@ -183,15 +244,38 @@ async function main() {
       if (!r) { skip('not_in_jsonl'); continue; }
       if (await write(b, r.answer, r.stamp)) tally.written++;
     }
-  } else {
+  } else if (!NORMALIZE && !BACKFILL_SWEEP_LOG) {
     toModel.forEach((b, i) => { b.k = i + 1; b.workKey = b.work_id ? String(b.work_id) : `book:${b.id}`; b.year = b.year || b.published || undefined; });
     const chunks = chunkByWork(toModel);
+    // Anchors from volumes this sweep already titled, so a resumed run continues the same base title.
     const anchors = {};
-    console.log(`${toModel.length} to translate in ${chunks.length} calls (${MODEL}, ${CONCURRENCY} at a time)`);
+    const workIds = [...new Set(toModel.filter((b) => b.work_id).map((b) => b.work_id))];
+    for (const d of await books.find({ work_id: { $in: workIds }, 'field_provenance.display_title.sweep': SWEEP }, { projection: { work_id: 1, display_title: 1 } }).toArray()) {
+      (anchors[String(d.work_id)] ||= []).push(d.display_title);
+    }
+    for (const w of Object.keys(anchors)) { const b = majorityBase(anchors[w]); if (b) anchors[w] = b; else delete anchors[w]; }
+    // A later chunk of a work waits for that work's first chunk, which settles its base title. Without this the
+    // parallel workers each invented one: 白孔六帖 came back as "Six Topic-Books" and "Six Documents" (2026-10-28).
+    const firstChunk = new Map(), settled = new Map();
+    chunks.forEach((chunk, i) => {
+      for (const w of new Set(chunk.map((b) => b.workKey))) {
+        if (!firstChunk.has(w)) { firstChunk.set(w, i); let done; settled.set(w, Object.assign(new Promise((r) => { done = r; }), { done })); }
+      }
+    });
+    const waitsOn = (chunk, i) => [...new Set(chunk.map((b) => b.workKey))].filter((w) => firstChunk.get(w) !== i && !anchors[w]).map((w) => settled.get(w));
+    const release = (chunk, i) => { for (const w of new Set(chunk.map((b) => b.workKey))) if (firstChunk.get(w) === i) settled.get(w).done(); };
+    console.log(`${toModel.length} to translate in ${chunks.length} calls (${MODEL}, ${CONCURRENCY} at a time); ${Object.keys(anchors).length} works anchored from earlier runs`);
     let next = 0, quota = false;
     async function worker() {
       while (!quota && next < chunks.length) {
-        const chunk = chunks[next++];
+        const i = next++;
+        const chunk = chunks[i];
+        await Promise.all(waitsOn(chunk, i));
+        try { await translateChunk(chunk); } finally { release(chunk, i); }
+      }
+    }
+    async function translateChunk(chunk) {
+      {
         const sent = buildPrompt(chunk, anchors);
         const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', attempts: 2 });
         tally.calls += r.calls;
@@ -201,7 +285,7 @@ async function main() {
         if (!parsed || !Array.isArray(parsed.titles)) {
           tally.failed_calls++;
           for (const b of chunk) { skip('unparsed_reply'); keep({ run: RUN, book_id: b.id, title: b.title, method: 'agy_title_translation', answer: null, reject: 'unparsed_reply', problem: r.problem || r.cls }); }
-          continue;
+          return;
         }
         for (const [w, t] of Object.entries(parsed.works || {})) if (!anchors[w] && typeof t === 'string' && !NON_LATIN_LETTER.test(t)) anchors[w] = t.trim();
         const byK = new Map(parsed.titles.map((x) => [Number(x.k), x.t]));
@@ -218,6 +302,7 @@ async function main() {
           if (reject) { skip(reject); continue; }
           if (await write(b, t, stamp)) tally.written++;
         }
+        await flushSweepRows();
         process.stdout.write(`\r${next}/${chunks.length} calls · ${tally.written} written · ${Object.values(tally.skipped).reduce((a, b) => a + b, 0)} skipped   `);
       }
     }
@@ -225,8 +310,8 @@ async function main() {
     console.log('');
   }
 
-  if (sweepRows.length) await recordSweepActions(db, sweepRows);
-  console.log(JSON.stringify({ apply: APPLY, run: RUN, kept: OUT, ...tally, sweep_rows: sweepRows.length }, null, 1));
+  await flushSweepRows();
+  console.log(JSON.stringify({ apply: APPLY, run: RUN, kept: OUT, ...tally }, null, 1));
   await client.close();
 }
 
