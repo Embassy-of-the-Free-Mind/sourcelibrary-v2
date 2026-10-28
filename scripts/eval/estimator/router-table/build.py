@@ -136,6 +136,9 @@ def is_bar(r, P):
     return P['switch'].get('bar') == 'opus' and r.get('channel') == 'claude'
 
 
+UNSPLIT = set()  # evidence sources with no by-script file (expand_by_script): they enter /unknown only
+
+
 def expand_by_script(P):
     """Each cell becomes one cell per script type (Derek, inbox 2026-10-28 11:54Z: print vs manuscript): `<id>/print`,
     `<id>/manuscript`, `<id>/unknown`. A variant's evidence is the same sources cut to its pages' script type (the
@@ -156,9 +159,13 @@ def expand_by_script(P):
             for r in cell['routes']:
                 ev = ([dict(score=bs(P['inputs']['pilot']), cell=f"{cell['pilot']}|{s}", route=r['pilot'], **({'book_group': cell['pilot_book_group']} if cell.get('pilot_book_group') else {}))] if r.get('pilot') else []) \
                     + [dict(e, score=bs(e['score']), cell=f"{e['cell']}|{s}") for e in r.get('evidence', [])]
-                for e in ev:  # a source with no by-script file was never split: fail, never drop its evidence silently
-                    if not os.path.exists(e['score']): raise SystemExit(f"{e['score']} missing: run scripts/eval/router-next-7263/ (evidence_pages.py, classify-evidence.mjs, split_evidence.py)")
+                # A source never split by script type (no by-script file: e.g. lane-judge-sampler.score.json, added by its
+                # nightly rebuild) enters the UNKNOWN variant whole, never print or manuscript, and is named in the table.
                 ev = [e for e in ev if has(e['score'], e['cell'], e['route'])]
+                for e0 in r.get('evidence', []):
+                    if not os.path.exists(bs(e0['score'])):
+                        UNSPLIT.add(e0['score'])
+                        if s == 'unknown': ev.append(e0)
                 r2 = {k: v for k, v in r.items() if k not in ('pilot', 'evidence') and not (s == 'manuscript' and k == 'v2')}
                 routes.append(dict(r2, evidence=ev))
             pl = X.get('planned', {}).get(f"{cell['id']}/{s}")
@@ -401,6 +408,9 @@ def main():
              + (f", as of {idle['claude']['as_of']}" if idle['claude']['as_of'] else '') + f"), {idle['agy']['units']:,.0f} agy calls ({idle['agy']['meter']})")
     C = P['prior'].get('calibration')
     OP = 'uncalibrated' if C and C['in_force'] else 'calibrated'
+    split_txt = ('' if not UNSPLIT else "**Not split by script type** (no by-script file; their pages enter the `/unknown` cells only until "
+                 "scripts/eval/router-next-7263/ evidence_pages.py, classify-evidence.mjs and split_evidence.py are rerun): " + ', '.join(f'`{u}`' for u in sorted(UNSPLIT)) + '.')
+    if UNSPLIT: print('WARNING: evidence not split by script type, in /unknown only:', ', '.join(sorted(UNSPLIT)))
     cal_txt = (f"**Prior calibration** (#7263 router-next): the {'calibrated' if C['in_force'] else 'uncalibrated'} prior is in force; the {OP} one is a sensitivity "
                f"(calibrated mean = logistic({C['alpha']:+.2f} + {C['beta']:.2f} x logit(v1/v2 mean)), worth {C['pages']:g} pages). {C['why']} "
                f"Cells whose decision differs under the {OP} prior: " + (', '.join(f"{r['id']} ({r['decision_other_prior']})" for r in rows if r['decision_other_prior'] != f"{r['decision']} {r['route']}") or 'none') + '.') if C else ''
@@ -419,7 +429,7 @@ def main():
            f"**Two decisions.** *Steady* prices every page in full. *This week* treats idle quota as free: {meter}. "
            f"The tests take it first; what is left after them ({idle_after_tests['claude']:.1f} points, {idle_after_tests['agy']:,.0f} agy calls) goes to the decided cells "
            "in order of accepted pages gained per point or call; a cell's pages inside it cost 0, the rest pay in full. "
-           f"*Margin {sw['sensitivity_within']}* is a sensitivity only: what the pick would be if the gate allowed {sw['sensitivity_within']} instead of {sw['within']}.", '', size_txt, '', cal_txt, '',
+           f"*Margin {sw['sensitivity_within']}* is a sensitivity only: what the pick would be if the gate allowed {sw['sensitivity_within']} instead of {sw['within']}.", '', size_txt, '', cal_txt, '', split_txt, '',
            '| cell | pages waiting | current | route | lane | acceptance [90%] | wrong text | top defects | cost per accepted page (full / API list) | weeks to clear | decision |', '|' + '---|' * 11]
     for row in rows:
         for j, r in enumerate(row['routes']):
