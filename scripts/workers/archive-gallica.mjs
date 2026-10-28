@@ -213,13 +213,13 @@ async function main() {
 
   // Per-book 404 counters. When a book hits BOOK_404_THRESHOLD consecutive
   // 404s we assume the source has fewer pages than our DB stub claims
-  // (Mutus Liber case: 100 pages in DB, 45 on gallica), bulk-mark the
-  // remaining pages as failed:source-not-found, and skip past them.
+  // (Mutus Liber case: 100 pages in DB, 45 on gallica), note the reason on
+  // the remaining pages (archive_metadata only) and skip them for this run.
   // Without this a single bad book exhausts the global circuit breaker
   // and halts ALL gallica archiving.
   const BOOK_404_THRESHOLD = 5;
   const bookFails = new Map();          // book_id -> consecutive 404 count
-  const skippedBooks = new Set();       // book_id -> already bulk-failed
+  const skippedBooks = new Set();       // book_id -> skipped for this run
 
   async function worker() {
     while (idx < allPages.length) {
@@ -295,12 +295,13 @@ async function main() {
           bookFails.set(page.book_id, n);
           if (n >= BOOK_404_THRESHOLD && !skippedBooks.has(page.book_id)) {
             skippedBooks.add(page.book_id);
-            const skipReason = `failed:source-not-found (${BOOK_404_THRESHOLD}+ consecutive 404s — gallica has fewer pages than DB stub)`;
+            // Skipped for this run only; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
+            const skipReason = `source-not-found (${BOOK_404_THRESHOLD}+ consecutive 404s — gallica has fewer pages than DB stub)`;
             const res = await db.collection('pages').updateMany(
               { book_id: page.book_id, archived_photo: { $exists: false } },
-              { $set: { archived_photo: skipReason, updated_at: new Date() } }
+              { $set: { 'archive_metadata.last_failure_reason': skipReason, 'archive_metadata.last_failure_at': new Date() } }
             );
-            console.log(`  [BOOK-SKIP] ${page.book_id}: marked ${res.modifiedCount} pages source-not-found`);
+            console.log(`  [BOOK-SKIP] ${page.book_id}: ${res.modifiedCount} pages noted source-not-found, skipped for this run`);
           }
         }
       }
