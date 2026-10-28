@@ -130,3 +130,29 @@ export async function setCatalogueFields(db, bookId, fields, stamp) {
   if (r.modifiedCount !== 1) throw new ProvenanceError(`setCatalogueFields: book ${bookId} changed since it was read; nothing written`);
   return { modified: 1, before: built.before, changed: built.changed, book_id: book.id ?? String(book._id) };
 }
+
+/**
+ * Stamp a value that is ALREADY stored, after the fact, without changing it (#7673). For a field written before
+ * stamping existed, where an independent record now shows where the value came from: the source catalogue's record
+ * matches it. Refuses a stamp that does not say it was reconstructed and how, so an after-the-fact stamp can never
+ * pass for one written at the time.
+ *
+ * Writes only when the field is still unstamped AND still holds the value that was compared — if either changed
+ * since it was read, nothing is written. `previous_value` is the value itself: the write replaced nothing.
+ *
+ * @returns {{filter: object, update: object}} the guarded `updateOne` arguments (pure; the caller writes them)
+ */
+export function buildAttestation(book, field, stamp, now = new Date()) {
+  assertCatalogueStamp(stamp);
+  if (!CATALOGUE_FIELDS.includes(field)) throw new ProvenanceError(`attest: '${field}' is not a gated catalogue field`);
+  if (stamp.method !== 'reconstructed_match') throw new ProvenanceError("attest: the stamp's method must be 'reconstructed_match'");
+  if (!nonEmpty(stamp.record_url) || !nonEmpty(stamp.match)) throw new ProvenanceError('attest: the stamp needs record_url and match (the evidence)');
+  const value = book[field];
+  if (value == null || value === '') throw new ProvenanceError(`attest: '${field}' is empty; there is nothing to attest`);
+  if (book.field_provenance?.[field]) throw new ProvenanceError(`attest: '${field}' already carries a stamp`);
+  const prov = provenanceUpdate(field, { ...stamp, reconstructed: true, date: stamp.date ?? now, previous_value: value });
+  return {
+    filter: { _id: book._id, [field]: value, [`field_provenance.${field}`]: { $exists: false } },
+    update: { $set: prov.$set, $push: prov.$push },
+  };
+}

@@ -2,9 +2,11 @@ import { describe, it, expect } from 'vitest';
 import {
   setCatalogueFields,
   buildCatalogueUpdate,
+  buildAttestation,
   ProvenanceError,
 } from '../../scripts/lib/catalogue-fields.mjs';
 import { imprintWritesIn } from '../../scripts/lib/imprint-write-lint.mjs';
+import { grade } from '../../scripts/maintenance/reconstruct-title-provenance-7673.mjs';
 
 // #6327. A featured book read "Venice, Aldus Manutius, 1516" with no field_provenance stamp on the place or the
 // printer; its title page says Lyon, Jean de Tournes, 1549. These pin the two halves of the fix: the helper
@@ -159,5 +161,48 @@ describe('imprintWritesIn — the lint sees writes that go around the helper', (
       'if (row.year == 1500) {}',
       'out.publisher = b.publisher; // imprint-write-ok: CSV row, not a books write',
     ].join('\n'))).toEqual([]);
+  });
+});
+
+// #7673: stamping a value already stored, from a match with the holding library's record.
+describe('buildAttestation — an after-the-fact stamp can never pass for one written at the time', () => {
+  const stamp = { source: 'source_catalogue', script: SCRIPT, method: 'reconstructed_match', match: 'exact', record_url: 'https://archive.org/details/x' };
+
+  it('stamps without changing the value, marked reconstructed, guarded on the value and on no stamp yet', () => {
+    const { filter, update } = buildAttestation({ _id: 'o', title: 'Musurgia universalis' }, 'title', stamp);
+    expect(update.$set.title).toBeUndefined();
+    expect(update.$set['field_provenance.title']).toMatchObject({ source: 'source_catalogue', reconstructed: true, match: 'exact', previous_value: 'Musurgia universalis' });
+    expect(update.$push['field_provenance_history.title']).toEqual(update.$set['field_provenance.title']);
+    expect(filter).toEqual({ _id: 'o', title: 'Musurgia universalis', 'field_provenance.title': { $exists: false } });
+  });
+
+  it.each([
+    ['a stamp that does not say it was reconstructed', { ...stamp, method: 'import' }],
+    ['a stamp with no evidence link', { ...stamp, record_url: '' }],
+  ])('refuses %s', (_l, s) => {
+    expect(() => buildAttestation({ _id: 'o', title: 'X' }, 'title', s)).toThrow(ProvenanceError);
+  });
+
+  it('refuses an empty value, an already-stamped field, and a field outside the gate', () => {
+    expect(() => buildAttestation({ _id: 'o', title: '' }, 'title', stamp)).toThrow(/empty/);
+    expect(() => buildAttestation({ _id: 'o', title: 'X', field_provenance: { title: { source: 'import' } } }, 'title', stamp)).toThrow(/already/);
+    expect(() => buildAttestation({ _id: 'o', summary: 'X' }, 'summary', stamp)).toThrow(/gated/);
+  });
+});
+
+describe('reconstruct-title-provenance grade()', () => {
+  it('exact after folding case, accents and punctuation', () => {
+    expect(grade('Musurgia Universalis.', ['musurgia universalis'], 12).match).toBe('exact');
+  });
+  it('a cut title is the leading part, on a word boundary only', () => {
+    expect(grade('Interpres Phraseologiae Metallurgicae', ['Interpres phraseologiae metallurgicae / auff ertheilte'], 12).match).toBe('leading_part');
+    expect(grade('Hermbstaedt, Sigismund', ['Hermbstaedtius, Sigismund'], 8).match).toBe('differs');
+  });
+  it('a volume label added to the record title is reported, not matched', () => {
+    expect(grade('Ideen zur Philosophie der Geschichte, Vierter Theil', ['Ideen zur Philosophie der Geschichte'], 12).match).toBe('extends');
+  });
+  it('a rewritten title differs; nothing to compare is no_record', () => {
+    expect(grade('Adelphi', ['The Adelphi of Terence, with Engl. notes'], 12).match).toBe('differs');
+    expect(grade('Adelphi', [], 12).match).toBe('no_record');
   });
 });
