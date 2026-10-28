@@ -7,6 +7,9 @@
  *   list   --drafts=D.jsonl --run=cli-ocr-<id> --out=L.jsonl   (needs --env-file; #7263 wave 3)
  *          L for one apply run: every page that run wrote with a change, the draft from D (apply-volume.sh keeps the
  *          drafts as derge-drafts.jsonl before the write) and `next` as stored now. A page rewritten since is left out.
+ *   restore --pages=IDS.json --from-run=cli-ocr-<id> --run=diffqa-6740-<name> --why="..." [--apply]   (needs --env-file)
+ *          Put whole pages back to the text --from-run replaced (its page_revisions row), compare-and-set: only a page
+ *          still holding exactly what that run wrote. For an audited page that introduced a severe error (#6740 rule).
  *   spans  --list=L.jsonl --dict=SYL.json --out=S.jsonl   L rows {page_id, book_id, page_number, draft, next}
  *          One row per changed span (syllable hunk) with class LOW or RISKY and why. Rules, from the note:
  *          LOW   = tsheg/merge only (ཆེནཔོ→ཆེན་པོ); a particle swapped within its own class (ཀྱི/གྱི/གི…); a one-letter fix
@@ -89,6 +92,26 @@ if (CMD === 'list') {
     .map((p) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, draft: drafts.get(p.id), next: p.ocr.data }));
   fs.writeFileSync(arg('out'), rows.map((x) => JSON.stringify(x)).join('\n') + (rows.length ? '\n' : ''));
   console.log(JSON.stringify({ run: RUN, drafts: drafts.size, written_by_run: ps.length, changed: rows.length }));
+} else if (CMD === 'restore') {
+  const { MongoClient } = await import('mongodb');
+  const { writePageText, textHash, priorFieldFromRevision } = await import('../../../lib/page-text-writer.mjs');
+  const APPLY = process.argv.includes('--apply'); const RUN = arg('run'), FROM = arg('from-run'), WHY = arg('why');
+  if (!/^diffqa-6740-/.test(RUN || '') || !/^cli-ocr-/.test(FROM || '') || !WHY) { console.error('--run=diffqa-6740-<name> --from-run=cli-ocr-<id> --why=... are required'); process.exit(2); }
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); const db = c.db('bookstore');
+  const t = { pages: 0, restored: 0, changed_since: 0, no_revision: 0 };
+  for (const id of JSON.parse(fs.readFileSync(arg('pages'), 'utf8'))) {
+    t.pages++;
+    const rev = await db.collection('page_revisions').findOne({ page_id: id, run_id: FROM, field: 'ocr', aborted: { $exists: false } });
+    if (!rev) { t.no_revision++; continue; }
+    const page = await db.collection('pages').findOne({ id }, { projection: { id: 1, ocr: 1 } });
+    if (textHash(page.ocr) !== rev.next_hash) { t.changed_since++; continue; }
+    if (!APPLY) continue;
+    const w = await writePageText(db, id, 'ocr', { ...priorFieldFromRevision(rev), updated_at: new Date(), restored: { from_run: FROM, run: RUN, at: new Date(), why: WHY } },
+      { by: 'diffqa.mjs restore', reason: `#6740 rolling audit: ${WHY}; page put back to the text ${FROM} replaced`, run_id: RUN, expect_prior_hash: textHash(page.ocr), verbatim: true });
+    if (w.status === 'written') t.restored++; else t.changed_since++;
+  }
+  await c.close();
+  console.log(JSON.stringify({ apply: APPLY, run: RUN, ...t }));
 } else if (CMD === 'spans') {
   const dict = JSON.parse(fs.readFileSync(arg('dict'), 'utf8'));
   const out = [];
