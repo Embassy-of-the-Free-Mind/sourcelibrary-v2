@@ -91,7 +91,8 @@
         { "id": "lite", "stage": "none", "pilot": "lite", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite", "book_group": "5924-latin"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json", "cell": "latin-served", "route": "lite"}] },
         { "id": "lite>opus", "stage": "opus-img@10", "pilot": "lite>opus-correct", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite>opus-correct", "book_group": "5924-latin"}] },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin", "route": "lite>agy-flash-low", "book_group": "5924-latin"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite>agy-flash-low", "book_group": "5924-latin"}] },
-        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "agy-flash-low-read", "book_group": "5924-latin"}] } ] },
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "agy-flash-low-read", "book_group": "5924-latin"}] },
+        { "id": "gpu>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "note": "#7263: the draft is stock GLM-OCR read on gex45 (flat-fee GPU box, $0 marginal), not the stored Flash-Lite text, so the agy correction is the only priced stage. The latin cell's 30 router-test pages (book group 5924-latin); 4 corrections cut before <<<END>>> are not in n.", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "latin-gpu", "route": "gpu>agy-flash-low", "book_group": "5924-latin"}] } ] },
     { "id": "latin-flash3", "title": "Latin print, 3 Flash text (most-read books)", "v2": "latin-flash3", "v1": ["latin", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
       "caveat": "3flash: the router tests (30 pages, one a book) and #5924's served-page spot check (2026-10-22, backfill-all: 24 pages in 8 books, 3 consecutive pages a book, Step T on the page as served; every misleading page there is OCR-caused).",
       "routes": [
@@ -150,7 +151,8 @@
       "routes": [
         { "id": "paddle", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle", "use": "name_check"}] },
         { "id": "paddle>opus", "stage": "opus-img@1", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>opus-correct", "use": "name_check"}] },
-        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>agy-flash-high", "use": "name_check"}] } ] },
+        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "zh-dice", "route": "paddle>agy-flash-high", "use": "name_check"}] },
+        { "id": "paddle>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "note": "#7263: judged WITHOUT the Kanripo leaf (the committed alignment carries no text); the name check ran with it.", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "zh-dice", "route": "paddle>agy-flash-low", "use": "name_check"}] } ] },
     { "id": "zh-6561-served", "title": "Chinese Paddle, served Opus correction (#6561)", "pages_waiting": 0, "pages_source": "4,379 pages already served as #6561 corrections; the pilot drew 30 of them, one per book", "pilot": "chinese", "current": "paddle>opus",
       "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
       "routes": [
@@ -159,22 +161,26 @@
     { "id": "chinese-flash3", "title": "Chinese OCR, 3 Flash", "v2": "chinese-flash3", "current": "3flash>opus",
       "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
       "routes": [
-        { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img@1", "v2": "opus-5.5" } ] },
+        { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "chinese-flash3", "route": "3flash"}] },
+        { "id": "3flash>opus", "stage": "opus-img@1", "v2": "opus-5.5" },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "chinese-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "zh-frame-6871", "title": "Chinese tables + mixed, guarded Paddle (#6871)", "v2": "zh-frame-6871", "current": "paddle>opus",
       "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
       "routes": [
         { "id": "paddle", "stage": "none" },
         { "id": "paddle>opus", "stage": "opus-img@1", "v2": "opus-5.5" },
-        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high" } ] },
+        { "id": "paddle>agy-flash-high", "stage": "agy", "v2": "agy-3.8-flash-high" },
+        { "id": "paddle>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "zh-frame-6871", "route": "paddle>agy-flash-low"}] } ] },
     { "id": "hebrew-flash3", "title": "Hebrew OCR, 3 Flash", "v2": "hebrew-flash3", "current": "3flash>opus",
       "routes": [
-        { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" } ] },
+        { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "hebrew-flash3", "route": "3flash"}] },
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "hebrew-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "arabic-flash3", "title": "Arabic OCR, 3 Flash", "v2": "arabic-flash3", "v1": ["arabic-print", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
       "routes": [
-        { "id": "3flash", "stage": "none" },
-        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" } ] },
+        { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "arabic-flash3", "route": "3flash"}] },
+        { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "arabic-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "zh-lite", "title": "Chinese OCR, Flash-Lite (#7568)", "pages_waiting": 18720, "pages_source": "scripts/eval/estimator/chain/results/census-by-draft-2026-10-25.json Chinese|lite", "current": "lite",
       "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 75 pages in 3 books (the terminal frame held 5 lite-read Chinese books): the thinnest cell. Upper bound until names are checked (see zh-6561-served). On a torn scroll the correction restored lost characters from the canonical sutra (tagged unclear). Opus points per page measured at ~0.006 (#7568), above the flat 0.004 used here.",
       "routes": [
