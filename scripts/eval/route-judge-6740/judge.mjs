@@ -136,7 +136,7 @@ const FRESH = (model) => ({ by: 'agy', model, fresh: true });
 // The router tests' cells (header). `draft` is the stored engine; correctors read that stored text and the image.
 const RT = {
   // Every Paddle-lane book carries an OCR-only lane hold (translation waits; not a containment): those are allowed.
-  'zh-dice': { lang: 'Chinese', draft: 'paddle', laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-high': AGY('gemini-3.8-flash-high'), 'paddle>opus-correct': { by: 'opus' } }, kanripo: true },
+  'zh-dice': { lang: 'Chinese', draft: 'paddle', laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-high': AGY('gemini-3.8-flash-high'), 'paddle>opus-correct': { by: 'opus' }, 'paddle>agy-flash-low': AGY('gemini-3.8-flash-low') }, kanripo: true },
   'de-lite': { lang: 'German', draft: 'lite', models: LITE, books: '^German', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'lite>opus-correct': { by: 'opus' }, 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
   'de-flash3': { lang: 'German', draft: '3flash', models: FLASH3, books: '^German', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' } } },
   latin: { lang: 'Latin', draft: 'lite', models: LITE, pilot: true, routes: ['lite', 'lite>opus-correct', 'lite>agy-flash-low'], correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
@@ -144,6 +144,15 @@ const RT = {
   'fr-lite': { lang: 'French', draft: 'lite', models: LITE, books: '^French', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
   // #7517: Latin print, Flash-Lite drafts, one page per book (the pilot's latin cell is 30 pages in 9 books).
   'latin-lite': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
+  // #7263: the cells with no agy Flash-low measurement. zh-frame-6871 is the #6871 guarded Paddle lane's own pages
+  // (ocr.pipeline paddle-zh-guarded-2026-10, Paddle's text, not its Flash fallback); its books carry that lane's hold.
+  'zh-frame-6871': { lang: 'Chinese', draft: 'paddle', guarded: true, laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'hebrew-flash3': { lang: 'Hebrew', draft: '3flash', models: FLASH3, books: '^Hebrew', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'arabic-flash3': { lang: 'Arabic', draft: '3flash', models: FLASH3, books: '^Arabic', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  'chinese-flash3': { lang: 'Chinese', draft: '3flash', models: FLASH3, books: '^Chinese', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // #7263: the latin cell's pages (draw --from the 2026-10-26 router tests), drafted by a GPU engine on gex45 and kept
+  // on disk (DIR/gpu-drafts.json {page_id: text}, not stored), corrected by agy from that file (cli-ocr --draft-file).
+  'latin-gpu': { lang: 'Latin', draft: 'gpu', draftFile: 'gpu-drafts.json', fromCell: 'latin', correctors: { 'gpu>agy-flash-low': AGY('gemini-3.8-flash-low') } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -253,13 +262,13 @@ async function drawRouterTests(names) {
     // --routes=a,b keeps only these of the cell's routes (#7517: the draft and the new fresh read, not the correctors
     // an earlier run already judged on the same pages).
     const routes = (t.routes ?? [t.draft, ...Object.keys(t.correctors)]).filter((r) => !arg('routes') || arg('routes').split(',').includes(r));
-    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo,
+    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo, ...(t.draftFile && { draft_file: t.draftFile }),
       served: Object.fromEntries(routes.map((r) => [r, r === t.draft ? 'served (the stored draft)' : t.correctors[r]?.fresh ? `this run's fresh read of the image, not served (${t.correctors[r].by} ${t.correctors[r].model})` : t.correctors[r] ? `this run's correction of the stored draft, not served (${t.correctors[r].by}${t.correctors[r].model ? ` ${t.correctors[r].model}` : ''})` : 'experiment read, not served (#5924 oc-reads)'])) };
     base.correctors = Object.fromEntries(Object.entries(t.correctors).filter(([r]) => routes.includes(r)));
     // --from=<an earlier sample.json>: the SAME pages that run drew for this cell, so the new route pairs with the
     // verdicts it already has (judge --reuse copies them: same cell, page and text, same id).
     if (arg('from')) {
-      const prior = JSON.parse(fs.readFileSync(arg('from'), 'utf8')).cells[name];
+      const prior = JSON.parse(fs.readFileSync(arg('from'), 'utf8')).cells[t.fromCell ?? name];
       if (prior) { cells[name] = { ...base, pages: prior.pages, frame: { ...prior.frame, pages_from: arg('from') } }; continue; }
     }
     if (t.pilot) {
@@ -272,7 +281,11 @@ async function drawRouterTests(names) {
     }
     if (name === 'tib-kangyur') { cells[name] = { ...base, derge: true, ...(await drawTib(db, name, row, isInterior)) }; continue; }
     let frameBooks, eligible;
-    if (name === 'zh-dice') {
+    if (t.guarded) {
+      const ev = await db.collection('book_events').find({ type: 'paddle_zh_guarded_ocr', 'details.paddle': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
+      frameBooks = [...new Set(ev.map((e) => e.book_id))];
+      eligible = (p) => p.ocr?.pipeline === 'paddle-zh-guarded-2026-10' && /paddle/i.test(`${p.ocr.source} ${p.ocr.model}`) && !p.ocr.unreadable && [...foldHan(bodyText(p.ocr.data))].length >= 40;
+    } else if (name === 'zh-dice') {
       // #6561 set B's frame (books the Paddle lane wrote), its own-leaf rule, and the v2 cell's dice bucket.
       const ev = await db.collection('book_events').find({ type: 'paddle_zh_reocr', 'details.pages_written': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
       frameBooks = [...new Set(ev.map((e) => e.book_id))];
@@ -295,7 +308,7 @@ async function drawRouterTests(names) {
       const p = ps.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
       pages.push(row(p, name === 'zh-dice' ? { qa_dice: p.ocr.qa_screen.dice, qa_pb: p.ocr.qa_screen.pb ?? null } : {}));
     }
-    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars, not handwritten` } };
+    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: t.guarded ? 'paddle_zh_guarded_ocr books, visible (their lane holds allowed, no other hold); ocr.pipeline paddle-zh-guarded-2026-10, Paddle text (not the Flash fallback), interior, >= 40 Han' : name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars, not handwritten` } };
   }
   await c.close();
   fs.mkdirSync(OUT, { recursive: true });
@@ -432,7 +445,7 @@ async function correct() {
         fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(ids));
         console.log(`${cell}/${route}: cli-ocr.mjs ${cor.fresh ? 'fresh read (live OCR prompt, no draft)' : `correct mode, ${cor.prompt ?? 'fc template'}`}, ${cor.model}, ${ids.length} pages (${used} agy calls so far${process.env.AGY_HOME ? `; AGY_HOME=${process.env.AGY_HOME}` : ''})`);
         // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
-        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval'];
+        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : [])];
         await new Promise((resolve) => {
           const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
             ...mode, '--job=route-judge-6740', '--concurrency=3', '--fresh'], { env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
@@ -531,7 +544,11 @@ async function packet() {
   const lite = (p) => (LITE.includes(p?.ocr?.model) ? p.ocr.data : null);
 
   const corrOf = new Map();   // router tests: why a corrector gave no text (CONTAIN counted apart)
-  const draftOf = (cs, sp) => { const p = pages.get(sp.page_id); return p?.ocr?.data && contentHash(p.ocr.data) === sp.draft_sha ? p.ocr.data : null; };
+  const fileDrafts = {};
+  const draftOf = (cs, sp) => {
+    if (cs.draft_file) return (fileDrafts[cs.draft_file] ??= fs.existsSync(path.join(OUT, cs.draft_file)) ? J(cs.draft_file) : {})[sp.page_id] || null;
+    const p = pages.get(sp.page_id); return p?.ocr?.data && contentHash(p.ocr.data) === sp.draft_sha ? p.ocr.data : null;
+  };
   const output = (cell, route, sp) => {
     const p = pages.get(sp.page_id), cs = s.cells[cell];
     if (cs.kind === 'router-test' && (cs.correctors[route] || route === cs.draft_route)) {
