@@ -160,7 +160,7 @@ export async function runEnrichAgyLane(o) {
   const filter = compareDir ? { id: { $in: o.bookIds } } : gapFilter(o.scopeFilter);
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
   const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1 } }).toArray()).map(r => [r._id, r]));
-  const cursor = db.collection('books').find(filter).sort({ read_count: -1, pages_translated: -1 })
+  const cursor = db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 })
     .project({ id: 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 });
 
   let stop = null, claimed = 0;
