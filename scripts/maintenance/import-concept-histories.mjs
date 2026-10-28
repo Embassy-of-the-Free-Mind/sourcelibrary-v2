@@ -61,7 +61,8 @@ const QUESTION = {
   sympathy: 'Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?',
 };
 const TITLE = { aliveness: 'Aliveness', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
-const MAP = { consciousness: '/explore/maps/consciousness', harmony: '/explore/maps/harmony', magic: '/explore/maps/magic' };
+// a concept with a map: the map is the history's sources view (#7646); its slug is the concept's
+const MAP = { consciousness: `${BASE}/consciousness/sources`, harmony: `${BASE}/harmony/sources`, magic: `${BASE}/magic/sources` };
 
 const readJsonl = (f) => fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#') && !l.startsWith('//')).map((l) => JSON.parse(l)) : [];
 const listJsonl = (d) => fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.jsonl')).sort().map((f) => path.join(d, f)) : [];

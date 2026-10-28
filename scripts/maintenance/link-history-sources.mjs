@@ -6,7 +6,7 @@
 //   join: none.
 //
 // Which works on a concept's map its conceptual history cites (#7646). For every concept whose history has a map
-// (index.json `map`), each shown claim's Source Library sources (/q/<code> or /book/<id>) are decoded to a book id and
+// (index.json `map`, its sources view), each shown claim's Source Library sources (/q/<code> or /book/<id>) are decoded to a book id and
 // matched against the map's editions (works[].eds[].id) and anthologies (anth[].id, whose `c` names the works it
 // holds). Writes public/data/maps/<slug>-cited.json, read by the sources view, so nothing is joined at request time:
 //   { concept, generated, claims, linked, works: { "<work>|||<tradition>": [[claimId, domain, statement], ...] } }
@@ -46,7 +46,7 @@ export function linkHistorySources({ dryRun = false } = {}) {
   const out = {};
   for (const c of index.concepts) {
     if (!c.map) continue;
-    const slug = c.map.split('/').pop();
+    const slug = c.slug; // the map's slug is the concept's (src/lib/explore-maps.ts)
     const mapFile = path.join(MAPS, `${slug}.json`);
     if (!fs.existsSync(mapFile)) { console.log(`${c.slug}: map ${slug}.json not found, skipped`); continue; }
     const map = JSON.parse(fs.readFileSync(mapFile, 'utf8'));
