@@ -12,7 +12,7 @@
       [--page-sizes <page-size.mjs output>]   (repo root)
 
 Writes <as_of>.json and .md beside this file (--name: <name>.json/.md). A route's evidence is the pilot cell's route
-(`pilot`) plus every entry of its `evidence` list ({score, cell, route[, use: name_check]}), pooled as k of n; `--before`
+(`pilot`) plus every entry of its `evidence` list ({score, cell, route[, use: name_check]}), pooled as k of n (the posterior and the wrong-text gate scale each source by its books / pages); `--before`
 shows each cell's earlier decision beside the new one. Every parameter is in rules.json.
 
 The pick is ONE unit: expected dollars per ACCEPTED page (Derek, 2026-10-26). A subscription stage costs its Claude
@@ -133,7 +133,7 @@ def gate(M, P, wt_max, within):
     """The quality gate: measured routes with P(acc >= acc_best - within) >= switch.p and wrong text <= the bar."""
     best = max(M, key=lambda r: r['mean'])
     ok = [r for r in M if sum(u >= v - within for u, v in zip(r['_d'], best['_d'])) / len(best['_d']) >= P['switch']['p']
-          and r['wrong'] / r['n'] <= wt_max(best)]
+          and r['wrate'] <= wt_max(best)]
     return best, ok
 
 
@@ -198,11 +198,16 @@ def main():
         cl = {}
         for x in xs:
             for c, v in x['classes_k_of_n'].items(): cl[c] = cl.get(c, 0) + int(v.split('/')[0])
-        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs))
+        # book clustering per source (#7263 backfill): a source with 25 pages a book counts its books, and does not
+        # outweigh a one-page-a-book source pooled with it. Accepted, judged and wrong-text pages are all scaled so; equal
+        # to the pooled scaling (and to wrong / n) when a route has one source.
+        f = lambda x: min(1, x['books'] / int(x['accept'].split('/')[1])) if P['cluster_by_book'] else 1
+        eff = [sum(int(x[fl].split('/')[i]) * f(x) for x in xs) for fl, i in (('accept', 0), ('accept', 1), ('wrong_text_pages', 0))]
+        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff)
 
     # wrong-text bar (#7461): relative = at most the best route's rate + wrong_text_max; the other bar is a sensitivity
     rel = P['switch'].get('wrong_text_bar', 'absolute') == 'relative'
-    bars = {'absolute': lambda best: P['switch']['wrong_text_max'], 'relative': lambda best: best['wrong'] / best['n'] + P['switch']['wrong_text_max']}
+    bars = {'absolute': lambda best: P['switch']['wrong_text_max'], 'relative': lambda best: best['wrate'] + P['switch']['wrong_text_max']}
     wt_abs, wt_rel = bars['relative' if rel else 'absolute'], bars['absolute' if rel else 'relative']  # wt_abs = the bar in force
     steady = lambda r: r['_usd_acc']
     rows, ctx = [], {}
@@ -212,16 +217,16 @@ def main():
             st0 = S[r['stage']]; sp = size_points(st0, sizes[cell['id']], Z, K) if st0.get('size') and cell['id'] in sizes else None
             st = dict(st0, points=sp['central'], draw=sp['central'] / 100) if sp else st0
             a0, b0 = a, b = prior(cell, r); x = evidence(cell, r)
-            k = n = w = None; top = []
+            k = n = w = None; wrate = None; top = []
             if x:
                 (k, n), w = map(int, x['accept'].split('/')), int(x['wrong_text_pages'].split('/')[0])
-                f = min(1, x['books'] / n) if P['cluster_by_book'] else 1
-                a, b = a + k * f, b + (n - k) * f
+                ke, ne, we = x['eff']; wrate = we / ne
+                a, b = a + ke, b + (ne - ke)
                 top = sorted(x['classes_k_of_n'].items(), key=lambda kv: -int(kv[1].split('/')[0]))[:3]
             dr = [rng.betavariate(a, b) for _ in range(N)]; m = sum(dr) / N; u, u0 = usd_per_page(st, rates), usd_per_page(st0, rates)
             rs.append(dict(id=r['id'], stage=r['stage'], lane=st.get('lane'), points=st.get('points'), points_flat=st0.get('points'),
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)],
-                           k=k, n=n, wrong=w, top=top, mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
+                           k=k, n=n, wrong=w, wrate=wrate, top=top, mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
                            p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
@@ -312,12 +317,12 @@ def main():
     meter = (f"{idle['claude']['units']:.1f} Claude points ({idle['claude']['share']:.1%} of the week; {idle['claude']['meter']}"
              + (f", as of {idle['claude']['as_of']}" if idle['claude']['as_of'] else '') + f"), {idle['agy']['units']:,.0f} agy calls ({idle['agy']['meter']})")
     out = [f"# Router table {NAME} (#6740)", '', "Generated by `build.py` from `rules.json`. Acceptance = the Opus judge reading each output against the page image "
-           "(route-judge pilot, #7376); Opus is the judge, not the reference. Posterior Beta(a + k, b + n - k), k and n scaled by books / pages; "
+           "(route-judge pilot, #7376); Opus is the judge, not the reference. Posterior Beta(a + k, b + n - k), each evidence source's k and n scaled by its books / pages; "
            "the v1/v2 prior is worth at most 5 pages. ● = the route the router assigns now (v2's choice; the served route for translation). "
            "Cost is marginal (the draft is already paid): Claude weekly points or agy calls per ACCEPTED page, median [90%]; "
            f"API list = dollars at list price. Opus lanes: {lanes}. "
            f"Weeks to clear = pages waiting x draw per page / the channel's free week ({free['claude']:g} Claude account-weeks, {free['agy']:,.0f} agy calls; v2 capacity), the cell alone on its channel.", '',
-           f"Rules: the quality gate keeps measured routes with P(acc >= acc_best - {sw['within']}) >= {sw['p']} and wrong-text pages <= {"the best route's rate + " if rel else ''}{sw['wrong_text_max']:.0%}; "
+           f"Rules: the quality gate keeps measured routes with P(acc >= acc_best - {sw['within']}) >= {sw['p']} and wrong-text pages (book-weighted, as acceptance) <= {"the best route's rate + " if rel else ''}{sw['wrong_text_max']:.0%}; "
            "among them the pick is the lowest median **expected dollars per accepted page**, one unit for every channel (points or agy calls x the plan's "
            f"price per point or call, a paid API at list, a made draft 0, / acceptance). Fees: {fee_src}; the dollar figures are not committed. "
            f"**switch** when the pick is not the current route, else **keep**; **HOLD** when no measured route has P(acc >= {h['acc']}) >= {h['p']}; "

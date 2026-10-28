@@ -18,4 +18,6 @@ How the pieces connect, and who owns each, is on #7263 (top of the issue).
 
 **Nothing here writes data or routes pages.** A decision reaches production only by a PR to `scripts/lib/ocr-routing-table.json` (owner #6688) or `scripts/lib/translation-routing-table.json` (CLI rows, owner #7075), citing the router-table cell. That PR is on the hold list.
 
+**A judged route test is not done until its evidence entry is in `router-table/rules.json` and the table is rebuilt** (a new dated `.md`/`.json` from `build.py --before <the last table>`). A result kept only in an experiment file or an issue comment does not move a posterior (#7263: the 10-27/28 tests sat outside the table until `router-table/evidence/derive_backfill.py`).
+
 When you add a version, put it beside the old one, give it a `PRIOR ART:` line naming what it replaces, and update this table in the same PR.
