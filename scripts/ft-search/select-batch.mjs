@@ -10,7 +10,8 @@
 //   set -a; source .env.production.local; set +a
 //   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029]
 import { MongoClient } from 'mongodb';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const N = parseInt(arg('--n', '1000'), 10);
@@ -29,11 +30,31 @@ function shuffle(a, seed) {
   return a;
 }
 
-function prompt(b) {
+// The book's own record goes into the prompt, fetched here with the internal full-tier key.
+// A search that curls /api/books anonymously spends the machine's anonymous budget and, once
+// it runs out, reads the crawler notice instead of the record (5 of 174 on 2026-10-28).
+const KEY_FILE = [process.env.SL_INTERNAL_KEY_FILE, `${homedir()}/.sl-internal-key`, '/root/.sl-internal-key'].find((f) => f && existsSync(f));
+const KEY = KEY_FILE ? readFileSync(KEY_FILE, 'utf8').trim() : null;
+if (!KEY) console.error('No ~/.sl-internal-key: prompts will fall back to an anonymous curl of the record');
+
+async function fetchRecord(id) {
+  if (!KEY) return null;
+  for (let i = 0; i < 3; i++) {
+    const r = await fetch(`https://sourcelibrary.org/api/books/${id}`, { headers: { Authorization: `Bearer ${KEY}` } }).catch(() => null);
+    if (r?.ok) return (await r.text()).slice(0, 4000);
+    await new Promise((res) => setTimeout(res, 2000 * (i + 1)));
+  }
+  return null;
+}
+
+function prompt(b, record) {
   const id = b.id || String(b._id);
+  const read = record
+    ? `The book's Source Library record (first 4,000 characters, already fetched; do not fetch sourcelibrary.org yourself):\n<<<\n${record}\n>>>\n`
+    : `First read the book's summary: curl -s https://sourcelibrary.org/api/books/${id} | head -c 4000. `;
   return `Find out whether a published English translation already exists for this book. Source Library has machine-translated it.
 Book: ${b.display_title || b.title || ''} | author: ${b.author || 'Anonymous'} | date: ${b.published || b.year || ''} | edition language: ${b.language || ''} | Source Library id ${id}.
-First read the book's summary: curl -s https://sourcelibrary.org/api/books/${id} | head -c 4000. Identify the WORK. For a volume of a Chinese collection (卷), identify the specific juan or texts it contains.
+${read}Identify the WORK. For a volume of a Chinese collection (卷), identify the specific juan or texts it contains.
 Then use web search to look for any published English translation of the work, complete or substantial, from any year; one embedded in a scholarly edition counts. Search the original-language title, the English title, and the author with "translated". Look in WorldCat, Google Books, HathiTrust, Internet Archive, publisher sites and JSTOR. One legitimate prior translation settles it. Give up after about 8 searches. Excerpts or selected passages are partial_only, not a prior.
 Report only URLs you actually opened. Never guess a URL.
 Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":""} or null,"queries":["..."],"card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
@@ -50,7 +71,15 @@ const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)));
 const batch = shuffle(eligible, SEED).slice(0, N);
 
 mkdirSync(OUT, { recursive: true });
-for (const b of batch) writeFileSync(`${OUT}/${b.id || String(b._id)}.prompt`, prompt(b));
+let missing = 0;
+for (let i = 0; i < batch.length; i += 8) {
+  await Promise.all(batch.slice(i, i + 8).map(async (b) => {
+    const record = await fetchRecord(b.id || String(b._id));
+    if (!record) missing++;
+    writeFileSync(`${OUT}/${b.id || String(b._id)}.prompt`, prompt(b, record));
+  }));
+}
+if (missing) console.error(`${missing} records not fetched; those prompts curl the record themselves`);
 writeFileSync(`${OUT}/ids.txt`, batch.map((b) => b.id || String(b._id)).join('\n') + '\n');
 writeFileSync(`${OUT}/batch.json`, JSON.stringify({ seed: SEED, drawn_at: new Date().toISOString(), eligible: eligible.length, n: batch.length }, null, 1));
 console.log(`eligible ${eligible.length} (of ${pool.length} translated non-English visible); wrote ${batch.length} prompts to ${OUT} (seed ${SEED})`);

@@ -39,8 +39,10 @@ This skill learns only if the session that ran it writes the lesson down. Before
 - 2026-10-28 · A result file can hold two JSON lines when two runs wrote the same id. `parse-results.py` keeps the last line with a verdict; without that, about 5% were dropped.
 - 2026-10-28 · A blank `climits json` reading is a one-off, not a broken login.
 - 2026-10-28 · `revalidate-book` returns 429 above about 1 call a second; the script goes one at a time with backoff.
+- 2026-10-28 · Searches that curled `/api/books/<id>` anonymously spent the laptop's anonymous budget and read the crawler notice instead of the record (5 of 174, batch 2). `select-batch.mjs` now fetches each record with `~/.sl-internal-key` and embeds it in the prompt; a missing key falls back to the curl and says so. Never put the key itself in a prompt.
 - 2026-10-28 · Booksellers, Goodreads and Wikipedia are weak citations. Booksellers are rejected (`BAD_HOSTS` in `ingest.mjs`). Wikipedia is accepted for now (30 of 277 links); swapping in a better link is open.
 
 ## Measured
 - 2026-10-28 · 994 of 1,000 parsed: 47% none found, 40% prior found, 11% partial, 2% unclear. 263 of 277 prior links loaded. Written: 238 credits and 404 new firsts. 22 conflicts held.
+- 2026-10-28 · Batch 1 spot check (20 + 20, Sonnet re-check): credits 16/20 hold. 1 named a different work (composite kabbalistic MS, retracted), 1 was partial counted as complete (scope set to `partial`), 1 true but linked only to Wikipedia, 1 unclear. Firsts: 15/20 hold, 0 refuted, 3 unclear, 1 unparsed. The auditors ran 2–5 searches, not 12, so this is a floor on the error rate.
 - 2026-10-28 · team@ (Max 20x): 764 books moved the 5-hour window 0→12% and the week 3→4%.
