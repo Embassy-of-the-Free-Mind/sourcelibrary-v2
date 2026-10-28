@@ -204,12 +204,14 @@ export function claimLive(claim, { now = Date.now(), alive = pidAlive } = {}) {
 export function claimBook(dir, bookId, me) {
   const f = path.join(dir, `${bookId}.json`);
   fs.mkdirSync(dir, { recursive: true });
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     try { fs.writeFileSync(f, JSON.stringify({ ...me, at: new Date().toISOString() }), { flag: 'wx' }); return true; } catch (e) { if (e.code !== 'EEXIST') throw e; }
     let held = null;
     try { held = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* half-written or gone: treat as stale */ }
     if (claimLive(held)) return false;
-    fs.rmSync(f, { force: true });                 // stale: take it over on the next try
+    // Stale: move it aside, then try again. A rename succeeds for one run only, so two runs taking over the same stale
+    // claim cannot both remove it and both write their own (the loser's rename fails, and its next write finds the winner's).
+    try { fs.renameSync(f, `${f}.stale-${process.pid}-${i}`); fs.rmSync(`${f}.stale-${process.pid}-${i}`, { force: true }); } catch (e) { if (e.code !== 'ENOENT') throw e; }
   }
   return false;
 }
