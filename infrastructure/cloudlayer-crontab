@@ -1,0 +1,21 @@
+# cloudlayer (earthai-live) crontab: a snapshot of root's live crontab, taken 2026-10-28 when the #7611 lane-judge sampler lines
+# were installed by hand (backup: /root/backups/crontab-2026-10-28-lane-judge). This file installs nothing: a change here is
+# copied to the box by hand (crontab -l > /root/backups/crontab-<date>; edit; crontab -). Not yet in scripts/lib/lanes.mjs
+# CRONTAB_SNAPSHOTS (that needs every line below classified for the coverage test; a separate PR).
+# Source Library guest checkout: hourly fast-forward; reinstall deps only when the lockfile moved (inside the capped slice)
+23 * * * * cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-pull.lock bash -c 'old=$(git rev-parse HEAD:package-lock.json); git pull -q --ff-only origin main && [ "$old" != "$(git rev-parse HEAD:package-lock.json)" ] && systemd-run --quiet --wait --collect --slice=sourcelibrary.slice -p WorkingDirectory=/data/scratch/sl/sourcelibrary /usr/bin/npm ci --no-audit --no-fund --loglevel=error' >> /data/scratch/sl/logs/pull.log 2>&1
+# #5705 work board (/admin/work): push this box claude-job state to ops_reports every 10 min
+*/10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /data/scratch/sl/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box cloudlayer' >> /var/log/sourcelibrary/work-board.log 2>&1
+*/10 * * * * /root/bin/claude-job.sh sweep >/dev/null 2>&1  # resume DIED jobs, #5709 (2026-10-04)
+28 * * * * [ -f /data/scratch/sl/sourcelibrary/scripts/workers/install-claude-job.sh ] && bash /data/scratch/sl/sourcelibrary/scripts/workers/install-claude-job.sh >> /data/scratch/sl/logs/pull.log 2>&1  # the job wrapper is a copy of the repo file (#6358)
+# Spare lane (#6395): spend this box Claude account expiring allowance on small issues; inert until the script is on main.
+5,35 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && /usr/bin/python3 $f >> /data/scratch/sl/logs/spare-lane.log 2>&1  # #6395
+*/10 * * * * flock -n /tmp/keyword-search-delta.lock /usr/bin/node --disable-warning=ExperimentalWarning --env-file=/root/sourcelibrary/.env.production.local /data/keyword-search/app/sync-delta.mjs >> /data/keyword-search/logs/delta.log 2>&1
+# Disk alarm on every mount (#6223, 2026-10-26; PR #7404): ntfy sourcelibrary-uptime at 85%/95%.
+*/15 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
+# #7611 lane-judge sampler (scripts/eval/lane-judge-sampler.mjs): nightly 02:50 UTC, judge a random sample of what the agy/GPU lanes WROTE
+# (Opus via claude -p on this box's subscription, hard cap 1% of the account-week, pace guard on the meter), export the store, rebuild the
+# router table with build.py on origin/main, publish ops_reports router-table:lane-judge, comment on #7263 only when a cell's decision flips.
+# Read-only on page text. Inert until the script is on main. Weekly (Mon 04:20): the repo copy as a PR (never main).
+50 2 * * * f=/data/scratch/sl/sourcelibrary/scripts/eval/lane-judge-sampler.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && PATH=/usr/local/bin:/usr/bin:/bin flock -n /tmp/sl-lane-judge.lock timeout 4h node --env-file=/root/sourcelibrary/.env.production.local $f nightly --out=/data/scratch/sl/lane-judge >> /data/scratch/sl/logs/lane-judge-sampler.log 2>&1  # #7611
+20 4 * * 1 f=/data/scratch/sl/sourcelibrary/scripts/eval/lane-judge-sampler.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && PATH=/usr/local/bin:/usr/bin:/bin flock -w 900 /tmp/sl-lane-judge.lock timeout 30m node --env-file=/root/sourcelibrary/.env.production.local $f weekly-pr --out=/data/scratch/sl/lane-judge >> /data/scratch/sl/logs/lane-judge-sampler.log 2>&1  # #7611 weekly repo copy

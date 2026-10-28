@@ -15,7 +15,8 @@
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/lane-judge-sampler.mjs run --out=DIR
  *        [--since=ISO] [--until=ISO] [--seed=N] [--dry-run] [--cap-points=1] [--max-calls=N] [--draft-share=1]
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
- *   ... lane-judge-sampler.mjs rebuild --out=DIR           build.py on origin/main + this export; publish; post flips
+ *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
+ *                                                      build.py on origin/main + this export; publish; post flips
  *   ... lane-judge-sampler.mjs nightly --out=DIR           run, export, rebuild (the cron line)
  *   ... lane-judge-sampler.mjs weekly-pr --out=DIR         the repo copy: a PR with the export + rules.json entries
  *
@@ -512,7 +513,9 @@ async function rebuild() {
   const tar = spawnSync('git', ['-C', REPO(), 'archive', '--format=tar', ref, ...need], { maxBuffer: 1 << 30 });
   if (tar.status !== 0) throw new Error(`git archive: ${tar.stderr}`);
   sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
-  const score = await doExport(path.join(dir, EVIDENCE_PATH));
+  // --export=FILE: a given score.json instead of the store (a replay, or a test of the feed)
+  const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(path.join(dir, EVIDENCE_PATH));
+  if (arg('export')) fs.writeFileSync(path.join(dir, EVIDENCE_PATH), JSON.stringify(score));
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
   let text = rulesText; const added = [];
