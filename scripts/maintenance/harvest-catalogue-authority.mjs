@@ -12,7 +12,8 @@
  *   Göttingen   the METS record: names with GND id and role code
  *
  * Writes ONE row per book to `catalogue_authority_harvest` (_id = book id): the
- * parsed names, VD16/17/18 numbers, the record URL, the book's catalogue author at
+ * parsed names, VD16/17/18 numbers, the RAW descriptive record (`raw`: manifest
+ * metadata, or the METS dmdSec XML), the record URL, the book's catalogue author at
  * fetch time and an error, if any. Never writes to `books` or `authors`; the
  * minting step reads these rows. Nothing reads this collection on a schedule.
  *
@@ -28,7 +29,7 @@
  *   node --env-file=.env.production.local scripts/maintenance/harvest-catalogue-authority.mjs --commit [--provider=erara] [--limit=N]
  */
 import { MongoClient } from 'mongodb';
-import { parseBsbManifest, parseSbbManifest, parseMetsMods, authorOf, recordUrlFor } from '../lib/catalogue-authority.mjs';
+import { parseBsbManifest, parseSbbManifest, parseMetsMods, authorOf, recordUrlFor, rawRecord } from '../lib/catalogue-authority.mjs';
 
 const args = process.argv.slice(2);
 const flag = (f) => args.includes(f);
@@ -51,7 +52,8 @@ const harvest = db.collection('catalogue_authority_harvest');
 if (COMMIT) await harvest.createIndex({ provider: 1 }).catch(() => {});
 
 const done = new Set();
-if (!REFETCH) for await (const r of harvest.find({ error: null }, { projection: { _id: 1 } })) done.add(r._id);
+const noRaw = new Set();   // harvested before rows kept the raw record: fetched again, after the new work
+if (!REFETCH) for await (const r of harvest.find({ error: null }, { projection: { _id: 1, has_raw: { $gt: ['$raw', null] } } })) (r.has_raw ? done : noRaw).add(r._id);
 
 const books = await db.collection('books').find({
   author_id: { $in: [null, undefined] }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false },
@@ -66,6 +68,7 @@ for (const b of books) {
   if (!rec) continue;
   const item = { book_id: b.id ?? String(b._id), provider: b.image_source.provider, author: b.author ?? null, ...rec };
   if (done.has(item.book_id)) continue;
+  if (noRaw.has(item.book_id)) { item.refetch_raw = true; continue; }
   if ((item.provider === 'bsb' || item.provider === 'mdz') && !BSB_ALL) bsb.push(item); else work.push(item);
 }
 if (bsb.length) {
@@ -82,6 +85,12 @@ if (bsb.length) {
   for (const [k, v] of multi) work.push(...v.slice(0, Math.max(0, 2 - (sampled.get(k) || 0))));
   work.push(...(byString.get('\u0000placeholder') || []));
   for (const [k, v] of byString) if (k !== '\u0000placeholder' && v.length + (sampled.get(k) || 0) < 2 && !(sampled.get(k))) work.push(v[0]);
+}
+// Rows harvested before `raw` was kept go last, so new books are keyed first.
+for (const b of books) {
+  if (!noRaw.has(b.id ?? String(b._id))) continue;
+  const rec = recordUrlFor(b);
+  if (rec) work.push({ book_id: b.id ?? String(b._id), provider: b.image_source.provider, author: b.author ?? null, ...rec });
 }
 const list = LIMIT ? work.slice(0, LIMIT) : work;
 const byProv = {};
@@ -106,15 +115,17 @@ let ok = 0, failed = 0, authored = 0;
 const started = Date.now();
 async function one(it) {
   const r = await fetchText(it.url);
-  let parsed = { names: [], ids: {} }, error = r.error || (r.text == null ? `HTTP ${r.status}` : null);
+  let parsed = { names: [], ids: {} }, raw = null, error = r.error || (r.text == null ? `HTTP ${r.status}` : null);
   if (!error) {
-    try { parsed = it.kind === 'bsb-manifest' ? parseBsbManifest(JSON.parse(r.text)) : it.kind === 'sbb-manifest' ? parseSbbManifest(JSON.parse(r.text)) : parseMetsMods(r.text); }
-    catch (e) { error = `parse: ${e.message}`; }
+    try {
+      parsed = it.kind === 'bsb-manifest' ? parseBsbManifest(JSON.parse(r.text)) : it.kind === 'sbb-manifest' ? parseSbbManifest(JSON.parse(r.text)) : parseMetsMods(r.text);
+      raw = rawRecord(it.kind === 'mets' ? 'mets' : 'manifest', r.text);
+    } catch (e) { error = `parse: ${e.message}`; }
   }
   const au = authorOf(parsed.names);
   await harvest.updateOne({ _id: it.book_id }, { $set: {
     book_id: it.book_id, provider: it.provider, url: it.url, kind: it.kind, catalogue_author: it.author,
-    names: parsed.names, ids: parsed.ids, statement: parsed.statement ?? null,
+    names: parsed.names, ids: parsed.ids, statement: parsed.statement ?? null, raw,
     author: au.name, author_reason: au.reason, http_status: r.status, error, fetched_at: new Date(),
   } }, { upsert: true });
   if (error) failed++; else { ok++; if (au.name) authored++; }

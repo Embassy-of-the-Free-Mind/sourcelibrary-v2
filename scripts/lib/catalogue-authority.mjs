@@ -158,6 +158,22 @@ export function authorOf(names) {
   return { name: null, reason: names?.length ? 'no-author-role' : 'no-names' };
 }
 
+/**
+ * The raw descriptive record kept beside the parsed names (Derek, 2026-10-28: raw harvested metadata is kept per
+ * book): a manifest's `metadata` + `seeAlso` + `label`, or the METS record's first dmdSec as XML. Small by design —
+ * never the canvases.
+ */
+export function rawRecord(kind, text) {
+  if (kind === 'mets') {
+    const s = String(text ?? '');
+    const sec = s.search(/<mets:dmdSec[\s>]/);
+    const end = sec < 0 ? -1 : s.indexOf('</mets:dmdSec>', sec);
+    return { format: 'mets-dmdsec-xml', xml: sec < 0 ? s.slice(0, 20000) : s.slice(sec, end < 0 ? sec + 20000 : end + 14) };
+  }
+  const m = typeof text === 'string' ? JSON.parse(text) : text;
+  return { format: 'iiif-manifest-metadata', label: m?.label ?? null, metadata: m?.metadata ?? null, seeAlso: m?.seeAlso ?? null, related: m?.related ?? null };
+}
+
 /** Which record to fetch for a book, by provider. Returns { url, kind } or null. */
 export function recordUrlFor(book) {
   const p = book?.image_source?.provider;

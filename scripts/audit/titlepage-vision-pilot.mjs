@@ -8,11 +8,20 @@
  * page among the first leaves and read who wrote the book, for books whose
  * catalogue names nobody and whose holding library's record names nobody either?
  *
- * Per book: the first 4 canvases of image_source.iiif_manifest at ~1000 px (hot-
- * linked, nothing stored but the read), one call, a JSON answer
+ * Per book: 4 leaves of image_source.iiif_manifest at ~1000 px (hot-linked, nothing
+ * stored but the read), one call, a JSON answer
  *   {title_page_leaf, author, author_as_printed, author_role, title, imprint, year}
  * kept at once via candidate-reads (field 'metadata', page 'title-page'), so a
- * re-run reads nothing twice. WRITES NOTHING to books. The scorer is a person
+ * re-run reads nothing twice. WRITES NOTHING to books.
+ *
+ * WHICH 4 LEAVES. Not blindly the first 4: on the first test draw (20 books) the
+ * first canvases were cover, endpaper, a blank and a blank verso, with the title
+ * page at leaf 5 — the model read all four correctly and found no title. Libraries
+ * mark the title page themselves, so the window starts one leaf before it:
+ *   a range labelled Titelblatt / Titelseite / Title page (SBB, Göttingen), else the
+ *   manifest's startCanvas (e-rara), else the first canvas. Internet Archive items:
+ *   the scandata's first pageType "Title" leaf, images from the BookReader page API
+ *   (iiif.archive.org manifests timed out at 45 s). The scorer is a person
  * looking at the leaves: --keep-images writes them under $JOB_SCRATCH for that.
  *
  *   AGY_HOME=/root/.agy-james node --env-file=.env.production.local scripts/audit/titlepage-vision-pilot.mjs \
@@ -34,7 +43,7 @@ const OUT = val('out');
 const IMAGES = val('images');
 const SEED = Number(val('seed', 7660));
 const MODEL = 'gemini-3.8-flash-low';
-const PROMPT_VERSION = 'titlepage-vision-v1';
+const PROMPT_VERSION = 'titlepage-vision-v2';
 const LEAVES = 4;
 if (!OUT) { console.error('--out=<reads.jsonl>'); process.exit(2); }
 const PLACEHOLDER = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;
@@ -44,7 +53,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let s = SEED;
 const rnd = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
 
-const PROMPT = `These are the first ${LEAVES} leaves of a digitised early printed book (or manuscript), in order: ${Array.from({ length: LEAVES }, (_, i) => `leaf ${i + 1}: ./${pageBlockFile(i)}`).join(', ')}. ${OCR_READ_FILE_INSTRUCTION.replace('Open it', 'Open each')}
+const PROMPT = `These are ${LEAVES} consecutive leaves from the front of a digitised early printed book (or manuscript), in order: ${Array.from({ length: LEAVES }, (_, i) => `leaf ${i + 1}: ./${pageBlockFile(i)}`).join(', ')}. ${OCR_READ_FILE_INSTRUCTION.replace('Open it', 'Open each')}
 Find the TITLE PAGE among them (covers, bindings, blank leaves, library stamps and colour charts are not title pages; a half-title naming no author is not the title page if a fuller one follows).
 Then read who the title page says WROTE the work, by the grammar of the page: a Latin genitive ("Auli Gellii ... libri"), "auctore"/"autore"/"von"/"par"/"by"/"di" + name = author; "a/ab X emendatus/recognitus", "edidit", "herausgegeben" = editor; "interprete", "übersetzt", "traduit par" = translator; "apud", "typis", "excudebat", "gedruckt bey", "chez" = printer; "praeside X ... respondente Y" = X praeses, Y respondent. Never promote a printer, editor or dedicatee to author. If the page names no author, say so.
 Answer with ONE JSON object between two marker lines <<<BEGIN>>> and <<<END>>>, nothing outside them:
@@ -83,11 +92,20 @@ console.log(Object.fromEntries(alloc));
 
 // ── per book ─────────────────────────────────────────────────────────────────
 async function getJson(url) { const r = await fetch(url, { headers: UA, signal: AbortSignal.timeout(45_000) }); if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }
-async function getBuf(url) { const r = await fetch(url, { headers: UA, signal: AbortSignal.timeout(60_000) }); if (!r.ok) throw new Error(`HTTP ${r.status} ${url}`); return Buffer.from(await r.arrayBuffer()); }
-/** First n canvases as ~1000px image URLs (Presentation v2 or v3). */
+async function getBuf(url) { const r = await fetch(url, { headers: UA, signal: AbortSignal.timeout(90_000), redirect: 'follow' }); if (!r.ok) throw new Error(`HTTP ${r.status} ${url}`); return Buffer.from(await r.arrayBuffer()); }
+const TITLE_RANGE = /^\s*(?:titel(?:blatt|seite)?|title[\s-]?page|titre|frontespizio|portada|titelbl)/i;
+/** n canvases around the manifest's own title-page pointer, as ~1000px image URLs (Presentation v2 or v3). */
 function leafUrls(m, n) {
   const canvases = m.sequences?.[0]?.canvases || m.items || [];
-  return canvases.slice(0, n).map((c) => {
+  const idOf = (c) => c?.['@id'] || c?.id;
+  const ranges = m.structures || (m.items || []).filter((x) => x.type === 'Range');
+  const range = (ranges || []).find((r) => TITLE_RANGE.test(String(typeof r.label === 'object' ? JSON.stringify(r.label) : r.label || '').replace(/^\{"\w+":\["?/, '')));
+  const first = range && (range.canvases?.[0] || range.members?.[0]?.['@id'] || range.items?.[0]?.id || range.items?.[0]?.source);
+  const start = first || m.startCanvas || m.sequences?.[0]?.startCanvas || m.start?.id || null;
+  let at = start ? canvases.findIndex((c) => idOf(c) === (typeof start === 'string' ? start : idOf(start))) : 0;
+  if (at < 0) at = 0;
+  const from = Math.max(0, at - 1);
+  return canvases.slice(from, from + n).map((c) => {
     const img = c.images?.[0]?.resource || c.items?.[0]?.items?.[0]?.body;
     const svc = [].concat(img?.service || [])[0];
     const base = svc?.['@id'] || svc?.id;
@@ -95,6 +113,21 @@ function leafUrls(m, n) {
     return img?.['@id'] || img?.id || null;
   }).filter(Boolean);
 }
+/** Internet Archive: the scandata's first Title leaf (else leaf 0), images from the BookReader page API. */
+async function iaLeafUrls(id, n) {
+  let at = 0;
+  try {
+    const r = await fetch(`https://archive.org/download/${id}/${id}_scandata.xml`, { headers: UA, signal: AbortSignal.timeout(60_000) });
+    if (r.ok) {
+      const pages = [...(await r.text()).matchAll(/<page leafNum="\d+">([\s\S]*?)<\/page>/g)].map((x) => x[1]).filter((x) => !/<addToAccessFormats>false/.test(x));
+      const t = pages.findIndex((x) => /<pageType>Title<\/pageType>/i.test(x));
+      if (t > 0) at = t;
+    }
+  } catch { /* leaf 0 */ }
+  const from = Math.max(0, at - 1);
+  return Array.from({ length: n }, (_, i) => `https://archive.org/download/${id}/page/n${from + i}_w1000.jpg`);
+}
+
 /** Does the holding library's own record name an author? (a book harvested since the draw, or never harvested) */
 async function recordNamesAuthor(b) {
   const rec = recordUrlFor(b);
@@ -119,10 +152,11 @@ for (const b of draw) {
   if (!harvested.has(b.id) && await recordNamesAuthor(b)) continue;
   let urls, bufs;
   try {
-    urls = leafUrls(await getJson(b.image_source.iiif_manifest), LEAVES);
+    const ia = (b.image_source.iiif_manifest.match(/iiif\.archive\.org\/iiif\/(?:3\/)?([^/]+)\/manifest/) || [])[1];
+    urls = ia ? await iaLeafUrls(ia, LEAVES) : leafUrls(await getJson(b.image_source.iiif_manifest), LEAVES);
     if (urls.length < 1) throw new Error('no canvases');
     bufs = [];
-    for (const u of urls) { bufs.push(await getBuf(u)); await sleep(p === 'bsb' || p === 'mdz' ? 1000 : 300); }
+    for (const u of urls) { bufs.push(await getBuf(u)); await sleep(p === 'bsb' || p === 'mdz' || p === 'sbb' ? 1000 : 300); }
   } catch (e) { console.log(`  skip ${b.id} (${p}): ${e.message}`); continue; }
   taken.set(p, (taken.get(p) || 0) + 1);
   const shas = bufs.map((x) => crypto.createHash('sha256').update(x).digest('hex'));

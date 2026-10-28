@@ -100,7 +100,7 @@ if (REVERT) {
     const unset = {};
     for (const k of ['author_id', 'translator']) { if (e.before[k] == null) unset[k] = ''; else set[k] = e.before[k]; }
     if (e.before.author == null) { delete set.author; unset.author = ''; }
-    const r = await books.updateOne({ id: e.book_id, author: e.after.author }, { ...(Object.keys(set).length ? { $set: set } : {}), ...(Object.keys(unset).length ? { $unset: unset } : {}) });
+    const r = await books.updateOne({ id: e.book_id, author: e.after.author }, { ...(Object.keys(set).length ? { $set: set } : {}), ...(Object.keys(unset).length ? { $unset: unset } : {}), $pull: { author_link_provenance: { run: RUN } } });
     if (r.modifiedCount) n++;
     await supabaseSet(e.book_id, e.before.author);
   }
@@ -135,7 +135,9 @@ for (const p of ready) {
   // Backup and sweep_log row BEFORE the write, so an interrupted run is still revertible and explained.
   mergeBackup([row]);
   await recordSweepAction(db, { sweep: RUN, book_id: p.book_id, action: `byline-${p.proposed.catalogued_role}-replaced-with-author`, detail: { before, after, page_number: p.evidence.page ?? null } });
-  const r = await books.updateOne({ id: p.book_id, author: b.author ?? null }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
+  // An author_id link carries its own assertion record, like every link the canonical backfill writes (#7660).
+  const link = set.author_id ? { $push: { author_link_provenance: { run: RUN, method: FILE?.link_method || 'byline-proposal', matched: set.author, authors_slug: set.author_id, confidence: p.confidence || 'high', evidence: p.evidence?.record || p.evidence?.quoted_line || null, at: new Date() } } } : {};
+  const r = await books.updateOne({ id: p.book_id, author: b.author ?? null }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}), ...link });
   if (r.modifiedCount !== 1) { console.log(`   !! modifiedCount ${r.modifiedCount}`); continue; }
   wrote++;
   const s = await supabaseSet(p.book_id, set.author);

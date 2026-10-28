@@ -64,6 +64,15 @@
  * and `standalone: true` (a reviewed REJECTED match: mint, never append).
  * Run with `--source=<tag> --backup=<path>` so a batch reverts on its own.
  *
+ * PROVENANCE (#7660, binding per Derek 2026-10-28). A verdict may carry `provenance`
+ * (copied onto a minted doc: where the record came from, e.g. {source: 'lobid.org/gnd',
+ * type: 'authority_control', gnd_id, gnd_uri} or {type: 'ai_derived', model, prompt…})
+ * and `variant_provenance` ([{form, source, type, …}] — one entry per form it adds).
+ * Each entry is stamped with the run (`--source`) and written on mint AND on append, so
+ * every variant a resolver matches on says where it came from; --revert pulls them.
+ * `--provenance-only` stamps docs a batch already wrote (found by exact variant) and
+ * writes nothing else.
+ *
  * NAME-ONLY ADOPTION GUARD (added 2026-10-28, #7660). An append onto an EXISTING doc
  * through the cluster key is a claim that two strings name one person, made on the
  * name alone. Read over 70 sampled appends of the first model-classified batch, it
@@ -96,7 +105,10 @@ const argv = (k) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').spli
 const BACKUP = argv('backup') || 'scripts/output/additive-mint-3780-backup.json';
 const SOURCE = argv('source') || 'additive-mint-3780';
 const PLAN_OUT = argv('plan');
-const CHECK_DATES = process.argv.includes('--check-dates');   // optional: write the full plan (mints, appends, skips, notes) as JSON
+const CHECK_DATES = process.argv.includes('--check-dates');
+const PROVENANCE_ONLY = process.argv.includes('--provenance-only');
+/** A verdict's variant_provenance for the forms actually written, each stamped with this run. */
+const vprov = (v, forms) => (v.variant_provenance || []).filter((p) => forms.includes(p.form)).map((p) => ({ ...p, run: SOURCE, at: new Date() }));   // optional: write the full plan (mints, appends, skips, notes) as JSON
 
 // The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
 import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
@@ -118,6 +130,7 @@ if (REVERT) {
   const del = await authors.deleteMany({ _id: { $in: saved.minted }, source: SOURCE });
   let pulls = 0;
   for (const ap of saved.appended) {
+    await authors.updateOne({ _id: ap.doc }, { $pull: { variant_provenance: { run: SOURCE } } });
     const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}), ...(ap.gnd ? { gnd_ids: ap.gnd } : {}) } });
     pulls += r.modifiedCount;
   }
@@ -129,6 +142,28 @@ if (REVERT) {
 
 if (!INPUT || !existsSync(INPUT)) { console.error('Pass --input <verdicts.jsonl>'); process.exit(1); }
 const verdicts = readFileSync(INPUT, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
+
+// ── provenance-only: stamp what an earlier run of this batch wrote ───────────
+if (PROVENANCE_ONLY) {
+  let docsSet = 0, entries = 0, ambiguous = 0;
+  for (const v of verdicts) {
+    if (!v.provenance && !v.variant_provenance) continue;
+    const hits = await authors.find({ variants: v.string, merged_into: { $exists: false } }, { projection: { variants: 1, source: 1, provenance: 1, variant_provenance: 1 } }).limit(3).toArray();
+    if (hits.length !== 1) { ambiguous++; continue; }
+    const d = hits[0];
+    const forms = [v.string, ...(v.extra_variants || []), v.canonical_name].filter((f) => f && (d.variants || []).includes(f));
+    const have = new Set((d.variant_provenance || []).map((p) => `${p.form}|${p.run}`));
+    const add = vprov(v, forms).filter((p) => !have.has(`${p.form}|${p.run}`));
+    const set = d.source === SOURCE && v.provenance && !d.provenance ? { provenance: { ...v.provenance, run: SOURCE } } : null;
+    if (!APPLY) { if (set) docsSet++; entries += add.length; continue; }
+    if (set || add.length) await authors.updateOne({ _id: d._id }, { ...(set ? { $set: set } : {}), ...(add.length ? { $push: { variant_provenance: { $each: add } } } : {}) });
+    if (set) docsSet++;
+    entries += add.length;
+  }
+  console.log(`${APPLY ? 'stamped' : 'would stamp'}: provenance on ${docsSet} minted docs, ${entries} variant_provenance entries; ${ambiguous} verdicts whose string is on 0 or several docs (left alone)`);
+  await mc.close();
+  process.exit(0);
+}
 const actionable = verdicts.filter(v => (v.verdict === 'person' && v.canonical_name) || v.verdict === 'institution');
 console.log(`${verdicts.length} verdicts; acting on ${actionable.length} (person-with-name + institution). Others (compound/editor/defect/placeholder/uncertain) untouched.`);
 
@@ -354,6 +389,8 @@ const buildDoc = (id, display, s, v) => {
     wikidata_id: v.wikidata_id || null,
     entity_ids: [],
     ...(v.verdict === 'institution' ? { is_person: false } : {}),
+    ...(v.provenance ? { provenance: { ...v.provenance, run: SOURCE } } : {}),
+    ...(v.variant_provenance ? { variant_provenance: vprov(v, variants) } : {}),
     ...(authorityOf(v) ? { [authorityField(v)]: [authorityOf(v)] } : {}),
     source: SOURCE,
     built_at: new Date(),
@@ -364,6 +401,7 @@ const appendOf = (doc, v, extra = {}) => ({
   doc, variant: v.string, variant_slug: authorSlug(v.string) || null,
   ...(authorityOf(v) ? { [authorityKind(v)]: authorityOf(v) } : {}),
   ...(v.extra_variants?.length ? { extra_variants: v.extra_variants.filter(x => x && poisonScore(x) < POISON_MIN_EXTENDERS) } : {}),
+  ...(v.variant_provenance ? { variant_provenance: vprov(v, [v.string, ...(v.extra_variants || [])]) } : {}),
   ...extra,
 });
 
@@ -554,7 +592,8 @@ let appended = 0;
 for (const a of appends) {
   const r = await authors.updateOne(
     { _id: a.doc, merged_into: { $exists: false } },
-    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}), ...(a.gnd ? { gnd_ids: a.gnd } : {}) } },
+    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}), ...(a.gnd ? { gnd_ids: a.gnd } : {}) },
+      ...(a.variant_provenance?.length ? { $push: { variant_provenance: { $each: a.variant_provenance } } } : {}) },
   );
   appended += r.modifiedCount;
 }

@@ -21,11 +21,18 @@
  *                      doc is the cheap error, adopting a namesake the dear one).
  *                      UndifferentiatedPerson records (GND "Tn": a NAME that may
  *                      cover several people) are refused.
- *   --stage=books      after the mint: a proposals file for apply-byline-proposals-3894
- *                      for every harvested book whose author the backfill cannot
- *                      reach by its string — placeholder bylines (author := the
- *                      GND preferred name) and strings that name different GND
- *                      people on different books (author kept, author_id set).
+ *   --stage=books      after the mint: a proposals file for every harvested book whose
+ *                      author the backfill cannot reach by its string — placeholder
+ *                      bylines (author := the heading the LIBRARY'S RECORD gives) and
+ *                      strings that name different GND people on different books
+ *                      (author kept, author_id set).
+ *   --stage=apply-books --in=<proposals.json> [--apply] [--undo]: writes them. books.author
+ *                      through setCatalogueFields (scripts/lib/catalogue-fields.mjs) with
+ *                      field_provenance.author = {source: <record URL>, type: original_catalog,
+ *                      match_method, label, confidence, gnd_id}; author_id with an
+ *                      author_link_provenance entry; a sweep_log row and a backup line
+ *                      BEFORE each book's write; the backup also goes to R2
+ *                      (maintenance-backups/<date>-authors-7660/).
  *
  * A catalogue STRING becomes a variant of a GND person only when every harvested
  * book carrying it names that same GND id, and (BSB, which is sampled) at least two
@@ -39,11 +46,19 @@
 import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'node:fs';
 import { norm, authorSlug } from '../lib/author-name-key.mjs';
+import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { uploadBackup } from '../lib/maintenance-backup.mjs';
+import { appendFileSync, readFileSync, existsSync } from 'node:fs';
 
 const val = (k, d = null) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const STAGE = val('stage');
 const OUT = val('out');
-if (!['resolve-names', 'verdicts', 'books'].includes(STAGE) || (!OUT && STAGE !== 'resolve-names')) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file>'); process.exit(2); }
+if (!['resolve-names', 'verdicts', 'books', 'apply-books'].includes(STAGE) || (!OUT && ['verdicts', 'books'].includes(STAGE))) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file> | --stage=apply-books --in=<file> [--apply] [--undo]'); process.exit(2); }
+const APPLY = process.argv.includes('--apply');
+const UNDO = process.argv.includes('--undo');
+const RUN = 'catalogue-authority-gnd-7660';
+const SCRIPT = 'scripts/maintenance/authors-from-catalogue-authority.mjs';
 const LOBID_UA = { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; #7660)' };
 async function lobidSearch(q, size = 100) {
   for (let attempt = 0; attempt < 4; attempt++) {
@@ -64,7 +79,54 @@ const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
 const db = mc.db('bookstore');
 
-const rows = await db.collection('catalogue_authority_harvest').find({ error: null }, { projection: { names: 0, statement: 0 } }).toArray();
+if (STAGE === 'apply-books') {
+  const IN = val('in');
+  const BACKUP = val('backup', `${process.env.JOB_SCRATCH || '.'}/apply-books-${RUN}.jsonl`);
+  const books = db.collection('books');
+  if (UNDO) {
+    const rowsB = existsSync(BACKUP) ? readFileSync(BACKUP, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
+    let n = 0;
+    for (const e of rowsB) {
+      if (!APPLY) { n++; continue; }
+      await books.updateOne({ id: e.book_id, author_id: e.after.author_id }, { $unset: { author_id: '' }, $pull: { author_link_provenance: { run: RUN } } });
+      if (e.after.author !== e.before.author) {
+        try { await setCatalogueFields(db, e.book_id, { author: e.before.author }, { source: `undo of ${RUN}`, script: SCRIPT, type: 'revert' }); } catch (err) { console.log(`  ${e.book_id}: ${err.message}`); }
+      }
+      n++;
+    }
+    console.log(APPLY ? `undone ${n}` : `would undo ${n} (add --apply)`);
+    await mc.close(); process.exit(0);
+  }
+  const { proposals } = JSON.parse(readFileSync(IN, 'utf8'));
+  let wrote = 0, skipped = 0, bylines = 0;
+  for (const p of proposals.filter((x) => x.status === 'READY')) {
+    const b = await books.findOne({ id: p.book_id }, { projection: { id: 1, author: 1, author_id: 1 } });
+    if (!b || b.author_id || (b.author ?? null) !== (p.current.author ?? null)) { skipped++; continue; }
+    const after = { author: p.proposed.author, author_id: p.proposed.author_id };
+    const row = { book_id: b.id, before: { author: b.author ?? null, author_id: null }, after, record: p.evidence.record, gnd: p.evidence.gnd, at: new Date().toISOString() };
+    if (!APPLY) { wrote++; if (after.author !== row.before.author) bylines++; continue; }
+    appendFileSync(BACKUP, JSON.stringify(row) + '\n');
+    await recordSweepAction(db, { sweep: RUN, book_id: b.id, action: after.author !== row.before.author ? 'author-from-library-record' : 'author-id-from-gnd', detail: { before: row.before, after, record: p.evidence.record, gnd: p.evidence.gnd, via: p.evidence.via } });
+    if (after.author !== row.before.author) {
+      try {
+        await setCatalogueFields(db, b.id, { author: after.author }, {
+          source: p.evidence.record, script: SCRIPT, type: 'original_catalog', match_method: p.evidence.match_method,
+          label: p.evidence.label, confidence: p.confidence, gnd_id: p.evidence.gnd, run: RUN,
+        });
+        bylines++;
+      } catch (err) { console.log(`  ${b.id}: ${err.message}`); continue; }
+    }
+    const r = await books.updateOne({ id: b.id, author_id: { $in: [null, undefined] } }, { $set: { author_id: after.author_id }, $push: { author_link_provenance: {
+      run: RUN, method: p.evidence.via === 'lobid-name' ? 'gnd-by-exact-heading-and-life' : 'gnd-id-in-library-record', gnd: p.evidence.gnd,
+      record: p.evidence.record, matched: after.author, authors_slug: after.author_id, confidence: p.confidence, at: new Date() } } });
+    wrote += r.modifiedCount;
+  }
+  console.log(`${APPLY ? 'linked' : 'would link'} ${wrote} books (${bylines} bylines ${APPLY ? 'written' : 'to write'}); skipped ${skipped} changed since the proposal`);
+  if (APPLY && existsSync(BACKUP)) { const u = await uploadBackup(BACKUP, 'authors-7660'); console.log(`backup -> s3://sl-corpus-snapshots/${u.key}`); }
+  await mc.close(); process.exit(0);
+}
+
+const rows = await db.collection('catalogue_authority_harvest').find({ error: null }, { projection: { names: 0, statement: 0, raw: 0 } }).toArray();
 // A GND id the record names wins; one resolved by name (--stage=resolve-names) is used where it names none.
 for (const r of rows) if (r.author && !r.author.gnd && r.author_gnd_resolved?.gnd) r.author = { ...r.author, gnd: r.author_gnd_resolved.gnd, gnd_via: 'lobid-name' };
 const withGnd = rows.filter((r) => r.author?.gnd);
@@ -243,9 +305,17 @@ if (STAGE === 'verdicts') {
     const forms = [...safe, ...[pref, ...g.headings].filter((x) => x && (g.strings.has(x) ? safe.includes(x) : lifeFits(x, m)))].filter(Boolean);
     const free = [...new Set(forms)].filter((f) => !ownedElsewhere(f, link));
     if (!free.length) { count('every form already belongs to another doc'); continue; }
+    const rec = g.rows[0];
+    const viaName = g.rows.some((r) => r.author.gnd_via === 'lobid-name');
     const v = {
       string: free[0], verdict: corporate ? 'institution' : 'person', canonical_name: pref,
       authority: { gnd }, extra_variants: free.slice(1), books: g.rows.length,
+      provenance: { source: 'lobid.org/gnd', type: 'authority_control', gnd_id: gnd, gnd_uri: `https://d-nb.info/gnd/${gnd}`, lobid_type: types.filter((t) => t !== 'AuthorityResource'),
+        born: m.dateOfBirth?.[0] ?? null, died: m.dateOfDeath?.[0] ?? null, wikidata: qid, viaf: viaf, retrieved_at: new Date().toISOString(),
+        keyed_by: viaName ? 'exact GND heading + book year in life + single candidate (library record named no GND id)' : 'GND id in the holding library record', example_record: rec.url },
+      variant_provenance: free.map((f) => g.strings.has(f) ? { form: f, type: 'original_catalog', source: 'books.author (catalogue string)', gnd_id: gnd }
+        : f === pref ? { form: f, type: 'authority_control', source: 'lobid.org/gnd preferredName', gnd_id: gnd }
+          : { form: f, type: 'original_catalog', source: rec.url, label: 'library record heading', gnd_id: gnd }),
       note: `GND ${gnd} (${types.filter((t) => t !== 'AuthorityResource').join('/')}) ${m.dateOfBirth?.[0] ?? ''}–${m.dateOfDeath?.[0] ?? ''}; harvested from ${[...new Set(g.rows.map((r) => r.provider))].join(',')}`,
     };
     if (link) { v.link_to = link; count('append to existing doc'); }
@@ -293,8 +363,11 @@ if (STAGE === 'books') {
     if (!placeholder && (variantOwner.get(norm(b.author || '')) || new Set()).has(doc) && variantOwner.get(norm(b.author)).size === 1) { count('backfill will link by string'); continue; }
     proposals.push({
       book_id: b.id, status: 'READY', current: { author: b.author ?? null }, title: String(b.title ?? '').slice(0, 160),
-      proposed: { author: placeholder ? docs.get(doc).canonical_name : b.author, author_id: doc, catalogued_role: placeholder ? 'placeholder' : 'catalogue-string' },
-      evidence: { page: null, quoted_line: `${r.author.name}${r.author.dates ? `, ${r.author.dates}` : ''} (GND ${r.author.gnd}, role ${r.author.roles?.join('/') || 'primary'})`, as_printed: r.author.name, wikidata: null, record: r.url },
+      proposed: { author: placeholder ? r.author.name : b.author, author_id: doc, catalogued_role: placeholder ? 'placeholder' : 'catalogue-string' },
+      confidence: r.author.gnd_via === 'lobid-name' ? 'medium' : 'high',
+      evidence: { page: null, quoted_line: `${r.author.name}${r.author.dates ? `, ${r.author.dates}` : ''} (GND ${r.author.gnd}, role ${r.author.roles?.join('/') || 'primary'})`, as_printed: r.author.name, wikidata: null,
+        record: r.url, gnd: r.author.gnd, via: r.author.gnd_via || 'record', label: r.author.role_text?.[0] || r.author.roles?.[0] || 'primary name',
+        match_method: r.kind === 'mets' ? 'mets-mods-name' : 'iiif-manifest-metadata' },
     });
     count(placeholder ? 'placeholder -> GND person' : 'string names several GND people -> author_id only');
   }
