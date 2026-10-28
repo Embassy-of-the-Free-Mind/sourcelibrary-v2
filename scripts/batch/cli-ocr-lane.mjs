@@ -87,6 +87,33 @@
  * Claims, the ledger and /proc are one box's. Runs on DIFFERENT boxes split the books with `--shard=K/N` instead: a run
  * takes only the books whose id hashes to K mod N (bookShard), so no book is in two boxes' queues (#7263: main's
  * main-pool line 0/2, gex45's second-pool line 1/2).
+ *
+ * GPU-DRAFT CORRECT (#7263, route C, Derek 2026-10-28 "defaults"): Latin PRINT pages with no OCR yet get a PERO-OCR
+ * draft on the box (scripts/batch/pero-draft.py, the #7567 c-pick for Latin, its CPU config as in the TEST) and then one
+ * agy gemini-3.8-flash-low correction with the page image, on the #7263 TEST's template byte for byte
+ * (scripts/eval/euro-gpu-correct-7567/prompts/agy-0601ef30e816f7a7.txt, hash checked at start). Latin TEST, 108 print
+ * pages one a book, Opus judging blind against the image: 105 usable (92-99%), 3 misleading
+ * (scripts/eval/experiments/2026-10-28-gpu-flash-vs-opus-7263.md).
+ *
+ *   ... cli-ocr-lane.mjs gpu-count [--book=ID]
+ *   ... cli-ocr-lane.mjs gpu-correct --out=DIR [--max-pages=N] [--max-books=N] [--book-chunk=40] [--concurrency=N]
+ *        [--deadline-min=M] [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--book=ID[,ID]] [--apply]
+ *
+ * Books: visible Latin books HELD for demand with a reason in GPU_LANE_HOLDS (published as scans, OCR waiting for a
+ * decision; Derek's 2026-10-28 decision is that one for Latin print), never pipeline_auto.held, never an unsplit spread
+ * book or a possible one (spreadReason), most-read first (human_read_count, then processing_priority). The book STAYS
+ * HELD: this lane never releases it, so no pipeline phase (Phase 2's paid OCR, Phase 4's paid translation) selects it;
+ * the hold is what keeps its new OCR from queueing paid work. Pages: the Phase 2 filter (UNREAD).
+ * Per chunk: images to DIR/<book>/img, PERO, `cli-ocr.mjs read --gpu-draft` (the read refuses a page with OCR, a draft
+ * under 30 word characters, or a draft made from other image bytes), `cli-ocr.mjs apply` (writes only while the page has
+ * no OCR, stamps ocr.pipeline = GPU_LANE, records the change share on every page and sets the check flag at >= 27%;
+ * a page the corrector tags handwritten or mixed is not written). Every agy read is kept (candidate-reads, cli-ocr.mjs).
+ * The ledger is DIR/../gpu-correct-ledger.jsonl (one row a page tried; never tried again), claims DIR/../claims-gpu/;
+ * a book whose first chunk the corrector tags mostly handwritten goes to DIR/../gpu-correct-books-skipped.jsonl.
+ * The quota floor and pools are the correction lane's (QUOTA FLOOR, POOL above), but `--agy-home=auto` takes the open
+ * pool with the most weekly left; `--wait-quota` (hand-run pilots) waits for a floor instead of stopping.
+ * NOT SCHEDULED: the 2026-10-28 pilot (20 books, the first 15 unread pages each) was accepted 53/60, under the 0.92 bar
+ * fixed before judging (scripts/eval/experiments/2026-10-28-gpu-latin-route-pilot-7263.md). No cron line runs this mode.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -95,7 +122,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { ocrLaneForBook, CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
-import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
+import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD } from '../lib/pipeline-hold.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 
@@ -400,10 +427,207 @@ async function correctMain(mode, arg) {
   await client.close();
 }
 
+// ── gpu-correct (#7263, route C) ──
+export const GPU_LANE = 'pero-agy-flash-low-7263';
+export const GPU_ROUTE = 'pero>agy-flash-low';
+export const GPU_LANE_REASON = '#7263 GPU-draft lane';
+/** The #7263 TEST template (arm C), byte for byte; its sha256 prefix is checked before any call. */
+export const GPU_TEMPLATE = Object.freeze({ file: 'scripts/eval/euro-gpu-correct-7567/prompts/agy-0601ef30e816f7a7.txt', hash: '0601ef30e816f7a7' });
+/** Holds that mean "published as scans, OCR waits for a decision" (reader-request-lane.mjs LANE_HOLDS, demand side). */
+export const GPU_LANE_HOLDS = Object.freeze(['scans-only-publish-7176', 'scans-only-publish-7270', 'acquisition-wave-2026-10-images-only', 'acquisition-wave-2026-10b']);
+export const GPU_LANGUAGES = /^Latin/;
+/** Most-read first, then processing_priority, then id (stable). */
+export const byReaders = (a, b) => (b.human_read_count ?? 0) - (a.human_read_count ?? 0) || (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || String(a.id).localeCompare(String(b.id));
+const GPU_PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, archived_photo: 1, photo: 1, enhanced_photo: 1, photo_original: 1 };
+
+async function gpuMain(mode, arg) {
+  const APPLY = process.argv.includes('--apply');
+  const OUT = arg('out') && path.resolve(arg('out'));
+  if (mode === 'gpu-correct' && !OUT) { console.error('gpu-correct needs --out=DIR'); process.exit(2); }
+  const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'gpu-correct-ledger.jsonl') : null);
+  const BOOKS_SKIPPED = LEDGER ? path.join(path.dirname(LEDGER), 'gpu-correct-books-skipped.jsonl') : null;
+  const CLAIMS = LEDGER ? path.join(path.dirname(LEDGER), 'gpu-contain-claims.jsonl') : null;
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  const ledger = new Set(), tailState = { offset: 0 };
+  ledgerTail(LEDGER, ledger, tailState);
+  const skippedBooks = readLedger(BOOKS_SKIPPED);   // rows carry page_id = the book id
+  const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const books = (await db.collection('books').find(
+    { language: { $regex: GPU_LANGUAGES }, visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': { $in: GPU_LANE_HOLDS }, 'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD },
+    { projection: { id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, human_read_count: 1, processing_priority: 1, needs_splitting: 1, 'pipeline_auto.hold.reason': 1, 'pipeline_auto.split_checked': 1 } },
+  ).toArray()).filter((b) => (!ONLY || ONLY.has(b.id)) && !skippedBooks.has(b.id)).sort(byReaders);
+  const openPages = async (b) => {
+    const pages = await db.collection('pages').find({ book_id: b.id, ...UNREAD }, { projection: GPU_PAGE_PROJECTION }).sort({ page_number: 1 }).toArray();
+    return { pages, spread: spreadReason(b, pages), open: pages.filter((p) => !ledger.has(p.id)) };
+  };
+  if (mode === 'gpu-count') {
+    // Sized from the book counters (pages_count - pages_ocr), so the count is one query; the run reads the pages.
+    const t = { books: books.length, pages_est: 0, by_hold: {}, read_by_humans: 0, split_checked: 0 };
+    for (const b of books) {
+      const u = Math.max(0, (b.pages_count ?? 0) - (b.pages_ocr ?? 0)); t.pages_est += u;
+      const r = b.pipeline_auto?.hold?.reason; (t.by_hold[r] ??= { books: 0, pages_est: 0 }); t.by_hold[r].books++; t.by_hold[r].pages_est += u;
+      if ((b.human_read_count ?? 0) > 0) t.read_by_humans++;
+      if (b.pipeline_auto?.split_checked) t.split_checked++;
+    }
+    console.log(`GPU-draft queue (${GPU_LANE}): ${JSON.stringify(t)}`);
+    // --list=N: the first N books in queue order that the run would take (open pages, no spread wait), as ids.
+    const LIST = Number(arg('list') || 0);
+    const shown = [];
+    for (const b of ONLY || LIST ? books : []) {
+      if (LIST && shown.length >= LIST) break;
+      const o = await openPages(b);
+      if (LIST && (!o.open.length || o.spread)) continue;
+      shown.push(b.id);
+      console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${b.human_read_count ?? 0} readers): ${o.open.length} open pages${o.spread ? `; waits: ${o.spread}` : ''}`);
+    }
+    if (LIST) console.log(`--book=${shown.join(',')}`);
+    await client.close(); return;
+  }
+  const tplText = fs.readFileSync(path.join(HERE, '../..', GPU_TEMPLATE.file), 'utf8');
+  if (createHash('sha256').update(tplText).digest('hex').slice(0, 16) !== GPU_TEMPLATE.hash) { console.error(`${GPU_TEMPLATE.file} is not template ${GPU_TEMPLATE.hash}: nothing read`); await client.close(); process.exit(1); }
+  const MAX = Number(arg('max-pages') || 400), MAX_BOOKS = Number(arg('max-books') || Infinity), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
+  const WEEKLY_END = Number(arg('weekly-end') ?? 0);
+  if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const want = parseAgyHome(arg('agy-home'));
+  let HOME = want.home ?? null;
+  // --wait-quota (a hand-run pilot): when every floor is shut, wait for one to open (re-picking the pool) until the
+  // deadline, instead of stopping. Never reads below a floor either way.
+  const WAIT = process.argv.includes('--wait-quota');
+  if (want.auto) {
+    const pools = readPools();
+    for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
+    const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+    // The open pool with the most weekly left (choosePool looks at the fullest pool only, and stops if its floor is shut).
+    const gate = (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }); return { open: q.ok, why: q.why }; };
+    const pick = pools.filter((p) => p.reading && !p.busy && gate(p.reading).open).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
+    if (!pick && !WAIT) { console.log('gpu-correct: no pool has its floor open; nothing read'); await client.close(); return; }
+    HOME = pick?.home ?? null;
+  } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
+  let POOL = poolName({ home: HOME });
+  let CHILD_ENV = agyEnv(HOME);
+  const repick = () => {
+    if (!want.auto) return quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok;
+    const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+    const p = readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
+    if (!p) return false;
+    HOME = p.home; POOL = poolName({ home: HOME }); CHILD_ENV = agyEnv(HOME); return true;
+  };
+  const CLAIMS_DIR = path.join(path.dirname(LEDGER), 'claims-gpu');
+  const ME = { pid: process.pid, pool: POOL, lane: GPU_LANE };
+  const held = new Set();
+  process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
+  const CONCURRENCY = Number(arg('concurrency') || 1);
+  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
+  const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
+  const job = `cli-ocr-gpu-${new Date().toISOString().slice(0, 10)}`;
+  fs.mkdirSync(OUT, { recursive: true });
+  const TPL = path.join(OUT, `gpu-correct-prompt-${GPU_TEMPLATE.hash}.txt`);
+  fs.writeFileSync(TPL, tplText);
+  const { getPageSource } = await import('../lib/page-image-url.mjs');
+  console.log(`gpu-correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
+  let budget = MAX, stop = null, bi = 0, booksTaken = 0;
+  const tally = { written: 0, check_flagged: 0, unchanged: 0, contain: 0, manuscript: 0, blank: 0, other: 0, agy_calls: 0, pero_secs: 0, books: 0 };
+  const nextChunk = async () => {
+    while (bi < books.length) {
+      const b = books[bi++];
+      if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;
+      held.add(b.id);
+      ledgerTail(LEDGER, ledger, tailState);
+      const o = await openPages(b);
+      if (o.open.length && !o.spread && booksTaken < MAX_BOOKS) { booksTaken++; return { book: b, open: o.open }; }
+      if (o.spread) console.log(`  ${b.id}: waits for a split (${o.spread})`);
+      releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
+      if (booksTaken >= MAX_BOOKS) return null;
+    }
+    return null;
+  };
+  const worker = async () => {
+    while (!stop) {
+      if (budget <= 0) { stop ??= 'page budget spent'; break; }
+      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
+      let q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+      if (!q.ok && WAIT) {
+        console.log(`  pool ${POOL}: ${q.why}; waiting for a floor to open (--wait-quota)`);
+        while (!repick() && Date.now() < DEADLINE) await new Promise((r) => setTimeout(r, 300_000));
+        q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+      }
+      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      const c = await nextChunk();
+      if (!c) { stop ??= 'queue empty'; break; }
+      const { book } = c;
+      const env = CHILD_ENV, pool = POOL;
+      const release = () => { releaseBookClaim(CLAIMS_DIR, book.id); held.delete(book.id); };
+      if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
+      const take = c.open.slice(0, Math.min(CHUNK, budget));
+      budget -= take.length;
+      tally.books++;
+      const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
+      const dir = path.join(OUT, book.id), imgDir = path.join(dir, `img-${Date.now()}`);
+      fs.mkdirSync(imgDir, { recursive: true });
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.human_read_count ?? 0} readers): ${take.length} of ${c.open.length} pages; pool ${pool} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      // 1. The images PERO reads: the same resolver, the same bytes the reader fetches (the read checks the hash).
+      for (const p of take) {
+        const src = getPageSource(p);
+        try { const r = src && await fetch(src); if (r?.ok) fs.writeFileSync(path.join(imgDir, `${p.id}.jpg`), Buffer.from(await r.arrayBuffer())); } catch { /* no draft: the read skips it */ }
+      }
+      // 2. PERO drafts (CPU, as in the TEST).
+      const peroOut = path.join(dir, `pero-${path.basename(imgDir)}.json`);
+      const pr = spawnSync('python3', [path.join(HERE, 'pero-draft.py'), imgDir, peroOut, `--threads=${arg('pero-threads') || 8}`], { encoding: 'utf8', env: process.env, timeout: 3600_000 });
+      console.log(`${tag}  ${(pr.stdout || '').trim() || `pero exited ${pr.status}: ${(pr.stderr || '').slice(-300)}`}`);
+      if (pr.status !== 0 || !fs.existsSync(peroOut)) { release(); fs.rmSync(imgDir, { recursive: true, force: true }); console.log(`${tag}  PERO failed: chunk skipped this run`); continue; }
+      const pero = JSON.parse(fs.readFileSync(peroOut, 'utf8'));
+      tally.pero_secs += pero._engine?.wall_secs ?? 0;
+      // Why a page the reader never sent was not sent (cli-ocr.mjs read applies the same 30-character floor).
+      const unsent = (p) => (!fs.existsSync(path.join(imgDir, `${p.id}.jpg`)) ? 'no image fetched' : !pero[p.id] ? 'PERO wrote no draft' : pero[p.id].text.replace(/\W/g, '').length < 30 ? 'GPU draft under 30 word characters (blank or near-blank page)' : null);
+      const unsentWhy = new Map(take.map((p) => [p.id, unsent(p)]));
+      // 3. The agy correction with the image, 4. the write.
+      const ids = path.join(dir, `page-ids-${Date.now()}.json`);
+      fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${GPU_LANE}`, `--gpu-draft=${peroOut}`, `--image-dir=${imgDir}`, `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
+      if (read !== 0) fs.rmSync(imgDir, { recursive: true, force: true });
+      if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
+      if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+      const reason = `${GPU_LANE_REASON}: PERO-OCR draft (${book.language} print, no OCR before) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash} (route ${GPU_ROUTE}: #7263 Latin TEST 105/108 usable, Derek 2026-10-28)`;
+      const t0 = Date.now();
+      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])], tag, env);
+      for (const p of take) { try { tally.agy_calls += JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')).calls ?? 0; } catch { /* not read */ } }
+      if (!APPLY || applied !== 0) { fs.rmSync(imgDir, { recursive: true, force: true }); release(); continue; }
+      const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
+      const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
+      const written = new Set(sum.written_page_ids || []);
+      for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: GPU_LANE }) + '\n');
+      let hand = 0;
+      for (const p of take) {
+        const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? unsentWhy.get(p.id) ?? 'not_read';
+        const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /print only/.test(why) ? 'manuscript' : /under 30 word/.test(why) ? 'blank' : 'other';
+        if (k === 'manuscript') hand++;
+        tally[k]++;
+        const share = sum.change_shares?.[p.id];
+        if (k === 'written' && share >= 0.27) tally.check_flagged++;
+        fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, outcome: k, why, change_share: share ?? null, run: sum.run ?? null, at: new Date().toISOString() }) + '\n');
+        ledger.add(p.id);
+      }
+      // A book the corrector reads as mostly handwritten is not this route's: its other pages are not drafted again.
+      if (hand * 2 >= take.length && take.length >= 4) { fs.appendFileSync(BOOKS_SKIPPED, JSON.stringify({ page_id: book.id, why: `corrector tagged ${hand}/${take.length} pages handwritten or mixed`, at: new Date().toISOString() }) + '\n'); console.log(`${tag}  book skipped from now on: ${hand}/${take.length} pages handwritten or mixed`); }
+      for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      fs.rmSync(imgDir, { recursive: true, force: true });
+      release();
+      console.log(`${tag}  ${JSON.stringify(tally)}`);
+    }
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  console.log(`\ngpu-correct run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  if (OUT) fs.appendFileSync(path.join(path.dirname(LEDGER), 'gpu-correct-runs.jsonl'), JSON.stringify({ at: new Date().toISOString(), pool: POOL, apply: APPLY, stop: stop ?? 'done', taken: MAX - budget, ...tally }) + '\n');
+  await client.close();
+}
+
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (mode === 'correct' || mode === 'correct-count') return correctMain(mode, arg);
+  if (mode === 'gpu-correct' || mode === 'gpu-count') return gpuMain(mode, arg);
   if (!['count', 'run'].includes(mode)) { console.error('usage: cli-ocr-lane.mjs count | run --out=DIR [--max-pages=120] [--book=ID] [--apply] | correct-count | correct --out=DIR [--apply]'); process.exit(2); }
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));

@@ -47,6 +47,18 @@
  * `--draft-file=FILE` (eval only, #7263): JSON {page_id: text} supplies the draft instead of the stored OCR (e.g. a GPU
  * engine's read kept on disk). The meta records `draft.source: 'file'`, and apply refuses such a read.
  *
+ * GPU DRAFT (#7263, route C: PERO draft -> agy Flash-low with the image, for Latin print with no OCR yet):
+ * `read --correct-prompt=FILE --lane=ID --gpu-draft=FILE` takes the draft from a GPU engine's output on disk
+ * (scripts/batch/pero-draft.py: {_engine, <page_id>: {text, image_sha256}}) for a page that has NO stored OCR. The
+ * read refuses a page that has OCR, a draft under 30 word characters (the TEST's own floor), and a draft made from other
+ * image bytes than the ones the corrector is sent. It keeps the draft as <page_id>.draft.txt; the meta records
+ * `draft.source: 'gpu'` with the engine block. `apply` writes such a read only while the page still has no OCR, with the
+ * plain read's header checks (the draft has no header), not the 25% refuse: instead it records the share of the draft's
+ * words the corrector changed (scripts/lib/draft-change-share.mjs, the TEST's T3) in `engine.input.draft.change_share`
+ * and sets `engine.input.draft.check_flag` at >= 27% (Derek, 2026-10-28), which the lane-judge sampler always judges.
+ * UNCHANGED leaves the page unread (a headerless draft is not what was judged); a page the corrector tags handwritten
+ * or mixed is not written (the route is print only).
+ *
  * RE-READ LANE GATE (#6769, Gemini 4 Argon low over Greek manuscripts and Rashi books): `apply --lane=ID
  * --lane-gate=FILE` replaces the 40% shared-words floor — which compares the read with the bad read it replaces — by a
  * per-BOOK verdict (scripts/batch/reread-gate.mjs: 30 random pages judged blind against the image by Opus through
@@ -108,6 +120,7 @@ import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/can
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
+import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -123,6 +136,13 @@ if (STAGE === 'read' && INSTRUCTION_FILE && CORRECT_PROMPT) { console.error('--i
 if (STAGE === 'apply' && LANE_GATE_FILE && !LANE) { console.error('--lane-gate needs --lane=<id>: the lane the gate was made for and the pages are stamped with'); process.exit(2); }
 const DRAFT_FILE = arg('draft-file');
 if (STAGE === 'read' && DRAFT_FILE && !CORRECT_PROMPT) { console.error('--draft-file is for --correct-prompt'); process.exit(2); }
+const GPU_DRAFT = arg('gpu-draft');
+if (STAGE === 'read' && GPU_DRAFT && (!CORRECT_PROMPT || DRAFT_FILE)) { console.error('--gpu-draft is for --correct-prompt, without --draft-file'); process.exit(2); }
+// --image-dir=DIR (with --gpu-draft): the page images the GPU engine read, DIR/<page_id>.jpg, sent instead of a fresh
+// fetch. The image host can serve the same URL as different JPEG bytes from one request to the next (two variants of
+// archived/<book>/12.jpg, 2026-10-28), so a re-fetch is not the image the draft was made from.
+const IMAGE_DIR = arg('image-dir');
+if (STAGE === 'read' && IMAGE_DIR && !GPU_DRAFT) { console.error('--image-dir is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
@@ -208,6 +228,18 @@ if (STAGE === 'read') {
     const drafts = JSON.parse(fs.readFileSync(DRAFT_FILE, 'utf8'));
     for (const p of pages) p.ocr = drafts[p.id] ? { data: drafts[p.id], model: `file:${path.basename(DRAFT_FILE)}`, pipeline: null, content_hash: contentHash(drafts[p.id]), updated_at: null, source: 'file' } : null;
   }
+  if (GPU_DRAFT) {
+    // Route C (#7263): the draft is a GPU engine's read of a page with no OCR. A page that has OCR is not this route's.
+    const drafts = JSON.parse(fs.readFileSync(GPU_DRAFT, 'utf8'));
+    const eng = drafts._engine;
+    if (!eng?.name || !eng?.model) { console.error(`${GPU_DRAFT} has no _engine block`); process.exit(2); }
+    for (const p of pages) {
+      const d = drafts[p.id];
+      if (p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has OCR: the GPU-draft route is for unread pages; skipped`); p.ocr = null; continue; }
+      if (!d?.text || d.text.replace(/\W/g, '').length < 30) { console.log(`  ${p.page_number} GPU draft under 30 word characters; skipped`); p.ocr = null; continue; }
+      p.ocr = { data: d.text, model: `${eng.name}/${eng.model}`, pipeline: null, content_hash: contentHash(d.text), updated_at: null, source: 'gpu', gpu: { engine: eng, image_sha256: d.image_sha256, regions: d.regions, lines: d.lines } };
+    }
+  }
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   const STOP_ON_QUOTA = process.argv.includes('--stop-on-quota');
@@ -225,9 +257,16 @@ if (STAGE === 'read') {
     if (CORRECT_PROMPT && !p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has no stored OCR to correct; skipped`); return; }
     const src = getPageSource(p);
     if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
-    const res = await fetch(src);
-    if (!res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
-    const buf = Buffer.from(await res.arrayBuffer());
+    const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
+    if (local && !fs.existsSync(local)) { console.log(`  ${p.page_number} not in --image-dir; skipped`); return; }
+    const res = local ? null : await fetch(src);
+    if (res && !res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
+    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    if (p.ocr?.source === 'gpu') {
+      // The corrector must see the image the draft was made from, or its "the image is the authority" is about another scan.
+      if (createHash('sha256').update(buf).digest('hex') !== p.ocr.gpu.image_sha256) { console.log(`  ${p.page_number} the GPU draft was made from other image bytes; skipped`); return; }
+      fs.writeFileSync(path.join(OUT, `${key}.draft.txt`), p.ocr.data);
+    }
     // One directory per page, so the CLI's workspace holds exactly the one image it is asked to read.
     const img = workspaceImage(key);
     fs.mkdirSync(path.dirname(img), { recursive: true });
@@ -284,7 +323,7 @@ if (STAGE === 'read') {
       image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
-      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { ...(p.ocr.source === 'file' && { source: 'file' }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
+      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${key}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
     };
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
     // Kept the moment it is paid for (#7075); best effort, never fails the read.
@@ -486,6 +525,8 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   const correct = m.mode === 'correct';
+  // Route C (#7263): a correction of a GPU engine's draft of a page with no OCR. Its reply carries the full header.
+  const gpu = correct && m.draft?.source === 'gpu';
   if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
   // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
   // written even when the text inside looks like a transcription: it is usually a partial page.
@@ -494,18 +535,18 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
   // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A
   // CONTAIN is a model's claim, not a finding: it goes to contain_claims for a by-eye check, and the page is untouched.
-  if (correct && /^UNCHANGED\.?$/i.test(text)) { skip(m, 'corrector: UNCHANGED (the draft stands)'); continue; }
+  if (correct && /^UNCHANGED\.?$/i.test(text)) { skip(m, gpu ? 'corrector: UNCHANGED (a headerless GPU draft is not written; the page stays unread)' : 'corrector: UNCHANGED (the draft stands)'); continue; }
   const containClaim = correct && text.match(/^CONTAIN\s*:\s*([\s\S]+)$/i);
   if (containClaim && containClaim[1].length < 600 && !/<page-type>/.test(text)) { skip(m, 'corrector: CONTAIN (a claim to check by eye)'); tally.contain_claims.push({ page_id: m.page_id ?? m.key, book_id: m.book_id, page_number: m.page_number, reason: containClaim[1].trim() }); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
-  if (!correct && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
+  if ((!correct || gpu) && !/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
   // The CLI is an agent, not an endpoint: a refusal arrives as exit 0 with prose. Aldine 1516 p.34 came back as two
   // false starts and then "I cannot provide a verbatim transcription ... Summary of the Page Content" (2026-10-08).
   // A correction keeps its draft's header (a Latin draft carries one; a Tibetan one does not): checked against the draft
   // once the page is read, below (#7269: refusing any header refused every correction of a headed draft).
-  if (!correct && ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1)) { failed(m, 'more than one transcription header: restarted or refused read', 'refused'); continue; }
+  if ((!correct || gpu) && ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1)) { failed(m, 'more than one transcription header: restarted or refused read', 'refused'); continue; }
   if (REFUSAL.test(text)) { failed(m, 'refusal or summary in place of a transcription', 'refused'); continue; }
-  const chatter = ocrReadProblem(text, { header: !correct });
+  const chatter = ocrReadProblem(text, { header: !correct || gpu });
   if (chatter) { skip(m, `chatter guard: ${chatter}`); continue; }
   const loop = loopVerdict(text);
   if (loop.refuse) { skip(m, 'repetition loop'); continue; }
@@ -525,8 +566,23 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
-  let yat = null, byEye = null;
-  if (correct) {
+  let yat = null, byEye = null, change = null;
+  if (gpu) {
+    // The page must still be unread, and the draft on disk the one the corrector was sent.
+    if (page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: the GPU-draft route is for unread pages'); continue; }
+    let draft = null;
+    try { draft = fs.readFileSync(path.join(OUT, m.draft.file), 'utf8'); } catch { /* missing */ }
+    if (draft == null || contentHash(draft) !== m.draft.text_hash) { skip(m, 'the GPU draft on disk is not the draft this read corrected'); continue; }
+    if (m.draft.image_sha256 !== m.image_sha256) { skip(m, 'the GPU draft was made from other image bytes than the read'); continue; }
+    // Print only (Derek, 2026-10-28): the corrector's own <script> tag decides; a hand it names is not this route's.
+    const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
+    if (hand !== 'printed') { skip(m, `corrector tags the page <script>${hand || 'none'}</script>: the GPU-draft route is print only`); continue; }
+    // Not the 25% refuse: the change share is recorded on every write and flags the page for a check at >= 27%.
+    const share = changeShare(draft, text);
+    change = { change_share: Number(share.toFixed(4)), change_measure: 'T3 #7263: share of the draft\'s folded words not kept (difflib blocks)', check_flag: share >= CHECK_FLAG_SHARE, check_threshold: CHECK_FLAG_SHARE };
+    if (change.check_flag) tally.check_flagged = (tally.check_flagged || 0) + 1;
+    (tally.change_shares ??= {})[m.page_id ?? m.key] = change.change_share;
+  } else if (correct) {
     if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
@@ -582,7 +638,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
-      ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }),
+      ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
       ...(byEye && { by_eye: byEye }) },
   });
@@ -594,7 +650,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // Through the one page-text writer (#7058): the whole prior `ocr` goes to page_revisions with this run's id, the write
   // is compare-and-set on the text read above, and scripts/maintenance/revert-run.mjs --run-id <run> undoes the run.
   const w = await writePageText(db, page.id, 'ocr', {
-    data: text, language: correct ? (page.ocr?.language ?? 'auto-detect') : 'auto-detect', model: m.model, updated_at: new Date(), source: 'ai', prompt_version: ref.version, prompt_id: ref.id, prompt_name: ref.name, ...ocrProvenance(text, engine),
+    data: text, language: correct && !gpu ? (page.ocr?.language ?? 'auto-detect') : 'auto-detect', model: m.model, updated_at: new Date(), source: 'ai', prompt_version: ref.version, prompt_id: ref.id, prompt_name: ref.name, ...ocrProvenance(text, engine),
     // A correction is stamped with its own lane, so the reader can tell it from the draft's lane and the hourly
     // withhold sweep (WITHHOLD_LANES) does not take the English down; --mark-stale queues it for re-translation.
     ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }),
