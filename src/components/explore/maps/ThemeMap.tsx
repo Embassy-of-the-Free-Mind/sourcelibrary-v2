@@ -46,6 +46,7 @@ export default function ThemeMap({ theme }: { theme: MapTheme }) {
         <p className="eyebrow">{theme.eyebrow}</p>
         <h1>A Map of <em>{theme.word}</em></h1>
         <p className="lede">{theme.lede}</p>
+        {theme.history && <p className="crumbs">The essays and checked claims behind this map: <Link href={theme.history}>the conceptual history of {theme.word.toLowerCase()}</Link></p>}
         {!ready && <div className="loading">{err ? `Could not load the map data (${err}).` : 'Loading the survey…'}</div>}
         <div className="figs" id="figs"></div>
         {theme.layers && <p className="verdict" id="verdict" hidden></p>}

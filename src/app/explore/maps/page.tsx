@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import summary from './summary.json';
+import { HISTORIES } from '../histories/histories';
 
 // Theme maps moved from the atlas (#4922). Static: the figures come from summary.json,
 // written by scripts/maintenance/import-atlas-maps.mjs alongside the copied artifacts.
@@ -88,6 +89,22 @@ export default function MapsIndexPage() {
             </Link>
           ))}
         </div>
+        <section className="pt-4 space-y-3">
+          <h2 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>Conceptual histories</h2>
+          <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            One concept followed through its words, across time and languages, in essays whose every claim links to the
+            page it quotes. The maps of harmony and magic each have one.
+          </p>
+          <ul className="grid gap-x-6 gap-y-1 sm:grid-cols-2">
+            {HISTORIES.concepts.map((c) => (
+              <li key={c.slug}>
+                <Link href={`/explore/histories/${c.slug}`} className="font-serif text-lg hover:underline" style={{ color: 'var(--text-primary)' }}>{c.title}</Link>
+                <span className="text-sm" style={{ color: 'var(--text-muted)' }}> · {c.essays.length} essays · {fmt(c.counts.verified + c.counts.partial)} claims</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-sm"><Link href="/explore/histories" className="underline" style={{ color: 'var(--text-secondary)' }}>All conceptual histories</Link></p>
+        </section>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           Maps of wisdom literature, meditation and dreams are still on the{' '}
           <a href="https://sourcelibrary-atlas.vercel.app" className="underline">Source Library atlas</a>{' '}
