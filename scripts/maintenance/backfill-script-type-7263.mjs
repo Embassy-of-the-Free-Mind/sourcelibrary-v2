@@ -26,7 +26,7 @@
  *   - NOT `updated_at` (as 4195): bumping it makes sync-pages-content re-upsert the whole page to
  *     Supabase for one small field.
  *   - Provenance is a ROW, not a column (field-sprawl.md): one sweep_log row per book per chunk,
- *     action `script-type-filled-from-ocr-tag`, detail `{ issue, page_ids, values }` — the exact
+ *     action `script-type-filled-from-ocr-tag`, detail `{ issue, page_ids, id_types, values, prev }` — the exact
  *     pages and values, so `--revert` can unset exactly those (and only where the value is unchanged).
  *
  * Walks `_id` one BSON type at a time (string, then ObjectId — see 4195 for why) with a checkpoint,
@@ -139,8 +139,10 @@ async function main() {
       const cur = db.collection('sweep_log').find({ sweep: SWEEP, action: ACTION });
       for await (const row of cur) {
         const ops = row.detail.page_ids.map((id, i) => ({ updateOne: {
-          filter: { _id: typeof id === 'string' && /^[0-9a-f]{24}$/.test(id) && row.detail.id_types?.[i] === 'objectId' ? new ObjectId(id) : id, script_type: row.detail.values[i] },
-          update: { $unset: { script_type: '' } } } }));
+          filter: { _id: row.detail.id_types[i] === 'objectId' ? new ObjectId(id) : id, script_type: row.detail.values[i] },
+          // back to exactly what was there: absent, null or "".
+          update: row.detail.prev[i] === 'null' ? { $set: { script_type: null } }
+            : row.detail.prev[i] === 'empty' ? { $set: { script_type: '' } } : { $unset: { script_type: '' } } } }));
         const res = ops.length ? await pages.bulkWrite(ops, { ordered: false }) : { modifiedCount: 0 };
         unset += res.modifiedCount; kept += ops.length - res.modifiedCount;
       }
@@ -220,7 +222,8 @@ async function main() {
           const now = landed.get(String(o.d._id));
           if (now?.script_type !== o.value) continue;
           const b = o.d.book_id ?? '(none)';
-          logged[b] ??= { page_ids: [], id_types: [], values: [] };
+          logged[b] ??= { page_ids: [], id_types: [], values: [], prev: [] };
+          logged[b].prev.push(fieldState(o.d.script_type));
           logged[b].page_ids.push(String(o.d._id)); logged[b].id_types.push(o.d._id instanceof ObjectId ? 'objectId' : 'string'); logged[b].values.push(o.value);
           if (VERIFY) {
             const ok = before.get(String(o.d._id)) === restHash(now);
