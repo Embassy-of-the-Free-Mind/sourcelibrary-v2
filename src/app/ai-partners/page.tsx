@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 // Lab-facing overview of the corpus (Derek, 2026-10-23). Copy drafted with Derek in a review
-// artifact. Figures measured 2026-10-23 and stated as dated on the page: a snapshot, not live stats.
+// artifact. Figures measured 2026-10-23, refreshed 2026-10-28, and stated as dated on the page: a snapshot, not live stats.
 
 export const metadata: Metadata = {
   title: 'AI Partners | Source Library',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const POINTS = [
   { label: 'Collected', fact: '129,000 books from more than 30 libraries' },
-  { label: 'Transcribed', fact: '9.4 million pages in the original language' },
+  { label: 'Transcribed', fact: '9.6 million pages in the original language' },
   { label: 'Translated', fact: '5.7 million pages in English' },
   { label: 'Checked', fact: 'Language by language, with scholars' },
   { label: 'Rights cleared', fact: 'Checked book by book' },
@@ -24,10 +24,11 @@ const POINTS = [
 
 const HOLDINGS = [
   { label: 'Books digitally archived', value: '129,166' },
-  { label: 'Public on the site', value: '58,531' },
-  { label: 'Readable in English', value: '20,203' },
-  { label: 'Translated into English for the first time', value: '4,561' },
+  { label: 'Public on the site', value: '70,874' },
+  { label: 'Readable in English', value: '21,502' },
+  { label: 'Translated into English for the first time', value: '4,557' },
   { label: 'Page images', value: '28.9 million' },
+  { label: 'Images held: page scans, artworks and illustrations', value: '32 TB' },
   { label: 'Books from the Ritman Library, found only here', value: '2,347' },
 ];
 
@@ -48,6 +49,21 @@ const EXAMPLES = [
   { href: '/book/imperial-collection-of-mathematical-essentials-vol-2', title: 'Collected Essentials of Mathematics', by: 'compiled for the Kangxi emperor', note: 'Chinese, 1723' },
   { href: '/book/siddhanta-tattva-viveka-bhatta', title: 'Discernment of the Principles of Astronomy', by: 'Kamalākara', note: 'Sanskrit, 1658' },
   { href: '/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822', title: 'Collected Works', by: 'the eighth Gyalwang Drukpa', note: 'Tibetan, c. 1800' },
+];
+
+// Named with their agreement (Derek, 2026-10-28).
+const SCHOLARS = [
+  { reads: 'Yucatec Maya', name: 'David Stuart' },
+  { reads: 'Latin and Sanskrit', name: 'Peter J. Forshaw' },
+  { reads: 'Latin, and early printed books', name: 'Paul Dijstelberge' },
+];
+
+// Measured 2026-10-28 from the site's logs; the edge figure is the 26–27 October average from Cloudflare.
+const TRAFFIC = [
+  { label: 'Page views by readers, last 7 days', value: '103K' },
+  { label: 'Pages fetched by ChatGPT and Claude for their users, last 30 days', value: '1.8M' },
+  { label: 'Automated requests stopped at our network edge, per day', value: '~800K' },
+  { label: 'Bulk requests rate-limited by the site, last 30 days', value: '1.9M' },
 ];
 
 const PROGRESS = [
@@ -128,13 +144,13 @@ export default function AiPartnersPage() {
             </div>
           ))}
         </div>
-        <p className="text-[#999] text-sm mt-4">30.7 TB of scans. Counted 23 October 2026.</p>
+        <p className="text-[#999] text-sm mt-4">Counted 28 October 2026.</p>
       </section>
 
       <section className="mb-20" id="transcribed">
         <p className={label}>Transcribed</p>
         <p className={prose}>
-          9.4 million pages transcribed in their original language and script, mostly Latin and
+          9.6 million pages transcribed in their original language and script, mostly Latin and
           classical Chinese, with German, French, Italian, Greek, Hebrew, Arabic, Syriac, Sanskrit,
           Tibetan and Yucatec Maya. Each page is indexed by the people, places and ideas it names,
           so an idea can be followed from book to book.
@@ -144,7 +160,7 @@ export default function AiPartnersPage() {
       <section className="mb-20" id="translated">
         <p className={label}>Translated</p>
         <p className={prose}>
-          5.7 million pages in English, each aligned with its original. 4,561 books appear in English
+          5.7 million pages in English, each aligned with its original. 4,557 books appear in English
           for the first time.
         </p>
         <div className="max-w-xl">
@@ -159,14 +175,28 @@ export default function AiPartnersPage() {
         </div>
       </section>
 
-      <section className="mb-20 grid md:grid-cols-[3fr_2fr] gap-10 items-start" id="reviewed">
+      <section className="mb-20 grid md:grid-cols-[3fr_2fr] gap-10 items-start" id="checked">
         <div>
-          <p className={label}>Community-reviewed</p>
+          <p className={label}>Checked</p>
           <p className={prose}>
-            The most demanding material is reviewed by scholars; the Mayanist David Stuart has
-            recently examined our Yucatec Maya readings. 1,535 people have offered to help, and
-            readers report what they find. Translations are tested against published human
-            translations in fourteen languages, and error rates are published.
+            Each language has its own scripts, abbreviations and habits, and models read some far
+            better than others. So each one is worked out separately, and scholars who read it check
+            the hard cases.
+          </p>
+          <div className="max-w-xl mb-6">
+            {SCHOLARS.map((s) => (
+              <div key={s.name} className="flex justify-between items-baseline gap-6 border-b border-[#e8e6e3] py-2 text-[15px]">
+                <span className="text-[#666]">{s.reads}</span>
+                <span className="text-[#1a1a18]">{s.name}</span>
+              </div>
+            ))}
+          </div>
+          <p className={prose}>
+            What they find goes back into how that language is read: which model, which
+            instructions, and when a page needs a second reading. We have logged 427 experiments on
+            reading and translation quality. Translations are tested against published human
+            translations in fourteen languages, errors are sorted into 44 kinds, and the error rates
+            are published. 1,535 people have offered to help, and readers report what they find.
           </p>
         </div>
         <figure>
@@ -209,6 +239,19 @@ export default function AiPartnersPage() {
         </ul>
         <p className="text-[#999] text-sm mt-4">
           More on the data format and access: <Link href="/dataset" className="underline">the dataset</Link>.
+        </p>
+        <div className="max-w-xl mt-10">
+          {TRAFFIC.map((t) => (
+            <div key={t.label} className="flex justify-between items-baseline gap-6 border-b border-[#e8e6e3] py-2">
+              <span className="text-[#1a1a18] text-[15px]">{t.label}</span>
+              <span className="text-[#1a1a18] text-[15px] tabular-nums">{t.value}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-[#999] text-sm mt-4 max-w-xl">
+          Search engines and assistants acting for a user read freely. Training crawlers get the
+          licence terms and a preview of each book. Counted 28 October 2026 from the site’s logs;
+          the edge figure is the average of 26–27 October, from Cloudflare.
         </p>
       </section>
 
