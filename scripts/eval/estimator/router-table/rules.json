@@ -85,12 +85,13 @@
   "cells": [
     { "id": "latin-lite", "title": "Latin print, Flash-Lite text (#5924)", "v2": "latin-lite", "pilot": "latin", "v1": ["latin", "no web transcription", "gemini-3.1-flash-lite"], "current": "lite>opus",
       "routes": [
-        { "id": "lite", "stage": "none", "pilot": "lite" },
+        { "id": "lite", "stage": "none", "pilot": "lite", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json", "cell": "latin-served", "route": "lite"}] },
         { "id": "lite>opus", "stage": "opus-img@10", "pilot": "lite>opus-correct", "v2": "opus-5.5" },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin", "route": "lite>agy-flash-low"}] } ] },
     { "id": "latin-flash3", "title": "Latin print, 3 Flash text (most-read books)", "v2": "latin-flash3", "v1": ["latin", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
+      "caveat": "3flash: the router tests (30 pages, one a book) and #5924's served-page spot check (2026-10-22, backfill-all: 24 pages in 8 books, 3 consecutive pages a book, Step T on the page as served; every misleading page there is OCR-caused).",
       "routes": [
-        { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash"}] },
+        { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json", "cell": "latin-served", "route": "3flash"}] },
         { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
         { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash>agy-flash-low"}] } ] },
     { "id": "german-lite", "title": "German OCR, Flash-Lite", "v2": "german-lite", "current": "lite>opus",
