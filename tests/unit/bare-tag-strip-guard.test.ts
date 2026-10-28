@@ -22,6 +22,7 @@ const ALLOW: Record<string, string> = {
   'scripts/lib/strip-markup-tags.mjs': 'the helper itself (markers removed first)',
   'src/lib/strip-editorial-wrappers.ts': 'mentioned in a comment only',
   'scripts/eval/lib/wikisource-text.mjs': 'Wikisource wikitext/HTML references, never OCR output',
+  'scripts/lib/draft-change-share.mjs': "a MEASURE, never a write: ports triggers.py T3 (#7263) byte for byte, whose 27% threshold was fitted on this exact strip",
 };
 
 function walk(dir: string, out: string[] = []): string[] {
