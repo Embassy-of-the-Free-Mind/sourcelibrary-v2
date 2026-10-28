@@ -14,6 +14,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const MANIFEST = arg('--manifest', 'scripts/eval/results/ft-untranslated-sample-7651-manifest.json');
@@ -55,7 +56,7 @@ for (const id of ids) {
   });
   if (!b) { console.error(`missing book ${id}`); continue; }
   const pages = await db.collection('pages').find({ book_id: id, page_number: { $lte: 14 } }, {
-    projection: { page_number: 1, 'ocr.data': 1, photo: 1, archived_photo: 1, photo_original: 1 },
+    projection: { page_number: 1, 'ocr.data': 1, photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1 },
   }).sort({ page_number: 1 }).toArray();
   const texts = pages.filter((p) => p.ocr?.data && !isBlank(p.ocr.data)).slice(0, MAX_PAGES);
   let scan;
@@ -68,7 +69,7 @@ for (const id of ids) {
     mkdirSync(dir, { recursive: true });
     const got = [];
     for (const p of pages.slice(0, MAX_PAGES)) {
-      const url = p.archived_photo || p.photo || p.photo_original;
+      const url = getPageSource(p);
       if (!url) continue;
       const path = join(dir, `p${p.page_number}.jpg`);
       if ((existsSync(path) && statSync(path).size > 2000) || fetchImage(url, path)) got.push(path);
