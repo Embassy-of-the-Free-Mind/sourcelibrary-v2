@@ -175,10 +175,10 @@ export function agyClaudeGate(agyHome = process.env.AGY_HOME || '', { quota, hel
 }
 export const agyGeminiExhausted = (agyHome = process.env.AGY_HOME || '', opts = {}) => agyClaudeGate(agyHome, opts).ok;
 
-// Gemini, and Claude only once the account's Gemini pool is empty. agy can also reach Claude models; Claude ran only
-// through the Claude subscription (`claude -p`, subagents), never through agy (Derek, 2026-10-14, after #6721 dated
-// 6,452 books with claude-sonnet via agy). Amended 2026-10-27 (#7545): a claude-* model may run on an account whose
-// Gemini weekly bucket reads 0 (agyClaudeGate), re-checked every cache period, so a reset switches back to Gemini.
+// Gemini, and Claude only once the account's Gemini pool is empty. agy can also reach Claude models. Claude runs
+// through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly
+// pool reads 0 (Derek, 2026-10-14 after #6721 dated 6,452 books with claude-sonnet via agy; amended 2026-10-27, #7545).
+// agyClaudeGate is re-read every cache period, so a reset switches the account back to Gemini.
 export function assertGeminiModel(args, { agyHome = process.env.AGY_HOME || '', gate = agyClaudeGate } = {}) {
   const i = args.indexOf('--model');
   const model = i >= 0 ? String(args[i + 1] || '') : '';
