@@ -23,8 +23,8 @@ on 30 Latin router pages; this one tests each language's best draft, two drafts 
 **Question (Derek, 2026-10-28):** does a GPU draft plus an agy Flash 3.8 correction that reads the page (optionally two drafts and
 their diff) read about as well as Opus reading the page, much cheaper? From measured data.
 
-**Prereg** `scripts/eval/gpu-flash-vs-opus-7263/PREREG.md`, committed before any arm ran (3ee8da28f), with two amendments, each
-committed before the data it governs: amendment 1 (10:14Z) and amendment 2 (12:32Z).
+**Prereg** `scripts/eval/gpu-flash-vs-opus-7263/PREREG.md`, committed before any arm ran (1f3b8a32e, 09:46Z; first pushed as 3ee8da28f before a rebase onto main), with two amendments, each
+committed before the data it governs: amendment 1 (be58ac3f5, 10:14Z) and amendment 2 (2ad1ac45e, 12:31Z).
 - **Amendment 1** (Derek 09:43Z, 09:50Z): O is existing Opus work, no new reads, plus escalation triggers.
 - **Amendment 2** (10:31Z–12:06Z): arm E (Flash alone) as a separate judge pass; Opus is the bar, never a candidate route;
   print/manuscript split; router evidence.
