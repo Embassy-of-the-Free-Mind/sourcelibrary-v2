@@ -4,11 +4,11 @@ measure: judged
 languages: [bo]
 scripts: [Tibt]
 canons: [kangyur]
-n_books: 20
-n_pages: 20
-verdict: "PENDING: pre-registered, no audit read yet."
-status: running
-decision: null
+n_books: 50
+n_pages: 40
+verdict: "Reading the leaf removes the OCR-caused failures on the Kangyur two-leaf frames: 0 of 40 audited pages are bad because of the transcription (10-24 text-only: 18 of 28 Tibetan bad pages), and all five 10-24 bad pages drawn are now not bad. Stage 1 passed (1/20 bad, controls 6/6, 0 invented by eye in 10). The metered 300-page batch scored 2/20 bad, above the 5% bar; pooled 3/40 (7.5%, 2.6-19.9%), all translator-side, and 3 of the 40 pages carry a false bracketed claim about what the leaf says."
+status: rejected
+decision: "No write. Leaf-attached Opus is the right input (the correction pass is not needed for the English), but the lane needs a guard on its leaf notes before it can clear 5%; it costs $14.5-17.3 list per 100 pages, about 2x text-only."
 superseded_by: null
 issue: [6948]
 ---
@@ -127,5 +127,75 @@ text-only $9.29; 3,883 output tokens and 37.5 s per page), audit 26 calls $8.53.
 over 12:40–17:10Z, but 6 jobs shared the account (es-meta-cli-7496, flora-zh-7537, prompt-bench-7499,
 siku-kanripo-check-7503, tib-concept-opus-6948, this one), so that is not this job's cost.
 
-### Result, Stage 2 (300 pages, metered)
-_(running)_
+### Result, Stage 2 (300 pages, metered): 2/20 bad, above the bar
+
+30 blocks of 10 from 30 further CANON volumes (seed 69482), read 20:32–22:52Z in one stream (300 pages, 73 calls,
+0 failed; 34 pages re-read alone). 45 of the 300 are frame pages (no English yet); the rest are their Yigdzin
+neighbours. 20 audited frame pages, one per volume; the audit ran 01:40–02:20Z on 10-28.
+
+| | n | bad | 95% CI | usable / with caveat | controls | OCR spans per page (mean, median) |
+|---|---|---|---|---|---|---|
+| Stage 2 | 20 | **2 (10%)** | 2.8–30% | 7 / 11 | **6/6** | 14.0, 11 |
+| Stage 1 | 20 | 1 (5%) | 0.9–24% | 2 / 17 | 6/6 | 15.6, 11 |
+| **pooled** | 40 | **3 (7.5%)** | 2.6–20% | 9 / 28 | 12/12 | |
+
+- **Both bad pages are translator-side; neither is OCR-caused.**
+  - a001 (Thadrak mDo sde Ma p.279): a gloss note ("that is, by every kind of liberation") that the context does not
+    support. The auditor counts it as an invention; mild, but taken as given.
+  - a010 (Neyphug mDo sde Nya p.179): the English drops the opening of the lower leaf, and a bracketed note says the
+    text "continues directly into the next line". **Checked by eye:** lower-leaf line 1 reads
+    རིགས་ཀྱི་བུ་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོའི་ཚུལ་ཁྲིམས་རྣམ་པར་དག་པའི་གོ་ཆ་ཆེན་པོའི་འཁོར་ལོ་ཡོད་དེ, untranslated.
+- **False claims about the leaf, all 40 audited pages: 3** (a013 and a015 in Stage 1, a010 here). Two of them make
+  a page bad. This is the lane's own failure mode: the note looks like evidence, so a reader trusts the error more.
+- Leaf notes: 107 on 68 of the 300 pages (Stage 1: 175 on 83 of 200).
+
+### Metering (this box's account, dereklomas@gmail.com)
+
+| | pages | calls | list-$ | list-$ per 1,000 pages | s per page | weekly meter over the window |
+|---|---|---|---|---|---|---|
+| Stage 1 reads (12:40–17:13Z, 2 then 1 stream) | 200 | 62 | 34.68 | 173 | 37.5 | 10 → 22% |
+| Stage 2 reads (20:30–22:55Z, 1 stream) | 300 | 73 | 43.45 | **145** | 27.9 | **24 → 38%** |
+| audits (2 × 26 calls) | | 52 | 8.53 + ~8.5 | | | |
+
+**Concurrency caveat, which dominates.** During the Stage-2 window, six other jobs ran on the same login:
+es-meta-cli-7496, tib-concept-opus-6948 (Opus reads, until 21:21Z), correct-vs-reread-7568, euro-gpu-correct-7567,
+invention-shelf-7575 and read-or-recall-7570 (`claude-job.sh` list at start and end, and each job's
+`.claude-home`). The meter cannot be split between them, so:
+- **Upper bound** (all 14 points charged to these reads): 46.7 points per 1,000 pages. Stage 1's window gives 60.
+- **Calibrated estimate:** the 10-24 job measured ≤ 0.7–1.0 points per 100 pages at $9.29 list per 100 (l7a, fewer
+  co-tenants), i.e. ≤ 0.075–0.11 points per list-$. At $145 per 1,000 pages that is **11–16 points per 1,000 pages**.
+
+**What the ~85K Tibetan pages would take**, at $145–173 list per 1,000 pages: about $12.3–14.7K list-equivalent.
+- At the calibrated rate: 940–1,360 points, **about 9–14 account-weeks**.
+- At the upper bound: about 40.
+
+This settles the 0.8 vs 3–10 question **against 0.8**. The leaf-attached read is at or above the top of the 3–10
+range, because attaching the strips doubles the cost per page (text-only: $93 per 1,000).
+
+### What writing would take (not done)
+- `node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=<read dir> --reason="..." --apply`,
+  restricted to frame pages. 255 of Stage 2's 300 pages (and most of Stage 1's neighbours) already carry English, so
+  a plain apply over the read dir would overwrite it.
+- Holds that would need releasing:
+  - `tibetan-retranslation-awaits-derek`, on 49 of the 50 books;
+  - `specialist-ocr-lane-4523`, on Neyphug rGyud Ba.
+- Withheld reasons that would need clearing: `stale_after_reocr` and `unverified_script_ocr`, on most audited frame
+  pages. Whether `apply` clears a `translation_withheld` was not checked.
+- The bracketed leaf notes would be served as written.
+
+### What this means
+- **For the English, the leaf replaces the correction pass.**
+  - 0 of 40 audited pages are bad because of the transcription (10-24 text-only: 18 of 28).
+  - All 5 drawn 10-24 bad pages are now not bad.
+  - On every page I opened, the dropped seam lines, restored skipped lines and replaced items checked out against
+    the native scan.
+  - The served *Tibetan* is still the damaged transcription, so the correction pass is still needed for the
+    transcription itself.
+- **It does not clear 5% yet.** Pooled 7.5% (2.6–20%), all three bad pages translator-side, two with a false leaf
+  note.
+- **Next step, before any scale-up:** make the leaf notes checkable, then re-run Stage 1 with a fresh draw.
+  - Each note quotes the leaf's syllables.
+  - A second, blind leaf read confirms each quoted reading.
+  - Any note that fails is dropped, and that page is re-read.
+- **Cost:** about 2× text-only per page, so the 85K pages are a multi-account-week job (about 9–14 weeks on one
+  account at the calibrated rate), not 0.8.
