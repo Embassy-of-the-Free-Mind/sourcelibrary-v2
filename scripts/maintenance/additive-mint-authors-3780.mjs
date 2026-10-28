@@ -64,6 +64,21 @@
  * and `standalone: true` (a reviewed REJECTED match: mint, never append).
  * Run with `--source=<tag> --backup=<path>` so a batch reverts on its own.
  *
+ * NAME-ONLY ADOPTION GUARD (added 2026-10-28, #7660). An append onto an EXISTING doc
+ * through the cluster key is a claim that two strings name one person, made on the
+ * name alone. Read over 70 sampled appends of the first model-classified batch, it
+ * was wrong at least 6 times: "Blake, William, House-keeper." onto the poet, "Ames,
+ * William. Quaker." onto the Puritan divine, "North, Dudley, 3d baron" onto the
+ * economist, "Juana de la Cruz (T.O.R.)" onto John of the Cross, "Hartmann, Johann,
+ * 1568-1631" onto the 19th-century composer, "W Swainson" onto C.A. Swainson. So a
+ * name-only append is refused (the string mints its own doc) when the string carries
+ * a qualifier beyond name and dates (a role, an epithet, "of X", "alias", a
+ * parenthesis), when its given-name initials disagree with the matched form, when it
+ * has no dates and its surname is carried by 15+ distinct people in our corpus, or
+ * (`--check-dates`) when its life dates disagree with the doc's Wikidata dates by more
+ * than 5 years (10 when the string says ca./approximately/?). A duplicate is the cheap
+ * error. After the guard, 1 of 60 sampled appends was wrong.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/additive-mint-authors-3780.mjs --input <verdicts.jsonl>           # dry-run
  *   node --env-file=.env.production.local scripts/maintenance/additive-mint-authors-3780.mjs --input <verdicts.jsonl> --apply
@@ -80,7 +95,8 @@ const INPUT = (process.argv.find(a => a.startsWith('--input=')) || '').split('='
 const argv = (k) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || null;
 const BACKUP = argv('backup') || 'scripts/output/additive-mint-3780-backup.json';
 const SOURCE = argv('source') || 'additive-mint-3780';
-const PLAN_OUT = argv('plan');   // optional: write the full plan (mints, appends, skips, notes) as JSON
+const PLAN_OUT = argv('plan');
+const CHECK_DATES = process.argv.includes('--check-dates');   // optional: write the full plan (mints, appends, skips, notes) as JSON
 
 // The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
 import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
@@ -158,6 +174,7 @@ const candidateForms = new Set(
     .filter(s => s && !/[\s,]/.test(s)),
 );
 const extenders = new Map();    // bare form -> Set of canonicalKey of extending strings
+const surnamePeople = new Map(); // folded surname -> Set of first given-name initials (a person count, roughly)
 const stemOwners = new Map();   // single stem -> Set of full canonicalKeys containing it
 {
   const strings = await db.collection('books').aggregate([
@@ -167,6 +184,13 @@ const stemOwners = new Map();   // single stem -> Set of full canonicalKeys cont
   for (const form of candidateForms) extenders.set(form, new Set());
   // Index by first token so this stays linear in the corpus, not forms × corpus.
   for (const r of strings) {
+    {
+      const sn = surnameOf(r._id);
+      if (sn && sn.length >= 3) {
+        if (!surnamePeople.has(sn)) surnamePeople.set(sn, new Set());
+        surnamePeople.get(sn).add([...givenInitials(r._id)][0] || '');
+      }
+    }
     const n = norm(r._id).trim();
     const key = canonicalKey(r._id);
     for (const stem of key.split(' ')) {
@@ -198,6 +222,54 @@ const stemOwners = new Map();   // single stem -> Set of full canonicalKeys cont
  * corpus carry that stem. This gates MATCHING onto an existing doc, never
  * minting: a new doc for a mononym is safe, adopting someone else's is not.
  */
+// ── name-only adoption guard helpers (see NAME-ONLY ADOPTION GUARD above) ──
+function foldName(x) { return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function surnameOf(x) { const f = foldName(x); return (f.includes(',') ? f.split(',')[0].trim() : f.replace(/[.,]/g, ' ').trim()).split(/\s+/).pop() || ''; }
+function givenInitials(x) {
+  const sn = surnameOf(x);
+  return new Set(foldName(x).replace(/\d+/g, ' ').replace(/[^a-z\s]/g, ' ').split(/\s+/)
+    .filter((t) => t && t !== sn && !/^(von|van|de|der|den|du|da|di|la|le|the|of|and)$/.test(t)).map((t) => t[0]));
+}
+const QUALIFIER = /\b(of|bp\.?|bishop|abp\.?|archbishop|baron|earl|duke|duc|lord|sir|quaker|jesuit|s\.?j\.?|o\.?p\.?|o\.?s\.?a\.?|o\.?f\.?m\.?|d\.?d\.?|m\.?d\.?|elder|younger|junior|senior|jr\.?|sr\.?|house-?keeper|minister|author|printer|bookseller|esq\.?|gent\.?|mrs?\.?|rev\.?|dr\.?|saint|st\.?|santo|santa|king|queen|pope|der jüngere|der ältere|priest|vicar|rector|curate|chaplain|schoolmaster|physician|surgeon|merchant|captain|colonel|gentleman|student|fellow|nonconformist|puritan|presbyterian|anabaptist|baptist|alias|called|pseud)\b|\(/i;
+const lifeOf = (s) => { const m = String(s).match(/(\d{3,4})\??\s*[-–]\s*(?:ca\.\s*|approximately\s*)?(\d{3,4})?/); return m ? { b: +m[1], d: m[2] ? +m[2] : null } : null; };
+const wdLife = new Map();
+async function wikidataLife(qid) {
+  if (!qid) return null;
+  if (wdLife.has(qid)) return wdLife.get(qid);
+  let life = null;
+  for (let a = 0; a < 4 && !life; a++) {
+    const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}&props=claims&format=json`, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) additive-mint' } }).catch(() => null);
+    if (r?.ok) {
+      const e = (await r.json().catch(() => ({})))?.entities?.[qid];
+      const y = (p) => Number(String(e?.claims?.[p]?.[0]?.mainsnak?.datavalue?.value?.time || '').match(/^[+-](\d{1,4})/)?.[1]) || null;
+      life = { b: y('P569'), d: y('P570') };
+    } else await new Promise((x) => setTimeout(x, 3000 * (a + 1)));
+  }
+  await new Promise((x) => setTimeout(x, 500));
+  wdLife.set(qid, life);
+  return life;
+}
+/** Why a NAME-ONLY append of string s onto existing doc `hit` (matched via variant `via`) is refused, or null. */
+const restOf = (x) => String(x || '').replace(/\d{3,4}\??\s*[-–]\s*(\d{3,4})?\??/g, ' ').replace(/^[^,]*,/, ' ').replace(/^[^,]*,/, ' ');
+// Anything left after "Surname, Given," and the dates is a qualifier ("House-keeper", "elder", "praeses").
+const residueOf = (x) => restOf(x).replace(/\b(?:ca|c|approximately|approx|circa|fl|active|d|b|aut)\b\.?/gi, ' ').replace(/[^\p{L}]+/gu, ' ').trim().toLowerCase();
+async function adoptionRefusal(s, hit, via) {
+  const rest = restOf(s);
+  const qualified = (String(s).includes(',') && residueOf(s)) || QUALIFIER.test(rest) || /\(/.test(s);
+  // The same qualifier on both sides ("Burnet, Gilbert, bp." / "Burnet, Gilbert, bp") is one heading written twice.
+  if (qualified && residueOf(s) !== residueOf(via)) return 'a qualifier beyond name and dates';
+  const si = givenInitials(s), vi = givenInitials(via || hit.canonical_name);
+  if (si.size && vi.size && ![...si].every((c) => vi.has(c)) && ![...vi].every((c) => si.has(c))) return `given-name initials ${[...si].join('')} vs ${[...vi].join('')}`;
+  const sd = lifeOf(s);
+  if (!sd && (surnamePeople.get(surnameOf(s))?.size || 0) >= 15) return `common surname (${surnamePeople.get(surnameOf(s)).size} people) and no dates`;
+  if (CHECK_DATES && sd && hit.wikidata_id) {
+    const dl = await wikidataLife(hit.wikidata_id);
+    const tol = /approx|ca\.|\?|circa/i.test(s) ? 10 : 5;
+    if (dl && ((dl.b && Math.abs(dl.b - sd.b) > tol) || (dl.d && sd.d && Math.abs(dl.d - sd.d) > tol))) return `dates ${sd.b}-${sd.d ?? ''} vs ${hit._id} ${dl.b}-${dl.d}`;
+  }
+  return null;
+}
+
 const keyTooThinToMatch = (key) => {
   const stems = key.split(' ').filter(Boolean);
   if (stems.length !== 1) return 0;
@@ -373,6 +445,12 @@ for (const v of actionable) {
   const thin = !standalone && keyHit && !keyHit.minted && !ALLOW_APPEND.has(`${keyHit._id}|${s}`) ? keyTooThinToMatch(matchedKey) : 0;
   if (thin) {
     standalone = `cluster key ${JSON.stringify(matchedKey)} is a single stem shared by ${thin} distinct people — too thin to adopt ${keyHit._id}'s identity`;
+  }
+  if (!standalone && keyHit && v.verdict === 'person' && !ALLOW_APPEND.has(`${keyHit._id}|${s}`)) {
+    // A doc minted earlier THIS run is adopted on the name alone too: test against the string that minted it.
+    const via = keyHit.minted ? mintedBySlug.get(keyHit._id)?.source : keyHit.viaVariant;
+    const why = await adoptionRefusal(s, keyHit.minted ? { _id: keyHit._id, canonical_name: via } : keyHit, via);
+    if (why) standalone = `not adopting ${keyHit._id} on the name alone: ${why}`;
   }
   if (standalone) notes.push(`${JSON.stringify(s)}: ${standalone}; minting separately`);
 
