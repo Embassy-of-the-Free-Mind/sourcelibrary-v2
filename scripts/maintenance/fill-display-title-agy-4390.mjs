@@ -245,7 +245,7 @@ async function main() {
       if (await write(b, r.answer, r.stamp)) tally.written++;
     }
   } else if (!NORMALIZE && !BACKFILL_SWEEP_LOG) {
-    toModel.forEach((b, i) => { b.k = i + 1; b.workKey = b.work_id ? String(b.work_id) : `book:${b.id}`; b.year = b.year || b.published || undefined; });
+    toModel.forEach((b, i) => { b.k = i + 1; b.workKey = b.work_id ? String(b.work_id) : `book:${b.id}`; b.year = b.year || b.published || undefined; }); // imprint-write-ok: in-memory prompt object for the agy batch, not a books write
     const chunks = chunkByWork(toModel);
     // Anchors from volumes this sweep already titled, so a resumed run continues the same base title.
     const anchors = {};
