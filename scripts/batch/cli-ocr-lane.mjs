@@ -110,7 +110,10 @@
  * a page the corrector tags handwritten or mixed is not written). Every agy read is kept (candidate-reads, cli-ocr.mjs).
  * The ledger is DIR/../gpu-correct-ledger.jsonl (one row a page tried; never tried again), claims DIR/../claims-gpu/;
  * a book whose first chunk the corrector tags mostly handwritten goes to DIR/../gpu-correct-books-skipped.jsonl.
- * The quota floor and pools are the correction lane's (QUOTA FLOOR, POOL above).
+ * The quota floor and pools are the correction lane's (QUOTA FLOOR, POOL above), but `--agy-home=auto` takes the open
+ * pool with the most weekly left; `--wait-quota` (hand-run pilots) waits for a floor instead of stopping.
+ * NOT SCHEDULED: the 2026-10-28 pilot (20 books, the first 15 unread pages each) was accepted 53/60, under the 0.92 bar
+ * fixed before judging (scripts/eval/experiments/2026-10-28-gpu-latin-route-pilot-7263.md). No cron line runs this mode.
  */
 import fs from 'node:fs';
 import path from 'node:path';
