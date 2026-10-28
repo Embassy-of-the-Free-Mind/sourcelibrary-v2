@@ -10,9 +10,9 @@ import { withArticleMeta } from '@/lib/article-metadata';
 // from /collections/drebbel/beeckman to /articles on 2026-10-18 (redirected).
 //
 // The edition these passages were read from stays hidden (rights), so nothing
-// here links to it and no page image from it is shown. The one exception is
-// Beeckman's own 1620 drawing of Drebbel's boat, a faithful copy of a
-// public-domain figure, shown without de Waard's surrounding page (Derek, 2026-10-28).
+// here links to it and no page image from it is shown. The exception is
+// Beeckman's own drawings, wherever a passage refers to one: faithful copies of
+// public-domain figures, shown without de Waard's surrounding page (Derek, 2026-10-28).
 
 export const metadata: Metadata = withArticleMeta('beeckman-on-drebbel', {
   title: 'Beeckman on Drebbel: the journal passages, 1619–1634 - Articles - Source Library',
@@ -111,11 +111,15 @@ export default function BeeckmanOnDrebbelPage() {
               </div>
             </div>
 
-            {p.figure && (
-              <div className="max-w-lg mx-auto mt-8">
-                <PageFigure src={p.figure.src} alt={p.figure.alt}>
-                  {p.figure.caption}
-                </PageFigure>
+            {p.figures && (
+              <div className="flex flex-wrap justify-center gap-8 mt-8">
+                {p.figures.map((f) => (
+                  <div key={f.src} className="w-full max-w-sm">
+                    <PageFigure src={f.src} alt={f.alt}>
+                      {f.caption}
+                    </PageFigure>
+                  </div>
+                ))}
               </div>
             )}
 

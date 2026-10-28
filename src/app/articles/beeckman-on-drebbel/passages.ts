@@ -22,8 +22,8 @@ export interface BeeckmanPassage {
   translation: string[];
   /** A plain remark of ours, shown under the passage. */
   note?: string;
-  /** Beeckman's own drawing for the entry, where he made one. */
-  figure?: { src: string; alt: string; caption: string };
+  /** Beeckman's own drawings for the entry, where the text refers to them. */
+  figures?: { src: string; alt: string; caption: string }[];
 }
 
 export const PASSAGES: BeeckmanPassage[] = [
@@ -63,12 +63,12 @@ export const PASSAGES: BeeckmanPassage[] = [
       'And as for the boat, if it had to be made, one would surely contrive a fitting means of getting the water in and out: the means I set down is only for the sake of demonstration.',
     ],
     note: 'Between these paragraphs Beeckman draws the boat and works through why it sinks when water is let into the tank and rises when it is pumped out.',
-    figure: {
+    figures: [{
       src: '/articles/beeckman-on-drebbel/beeckman-1620-boat.png',
       alt: 'Line drawing of a boat in cross-section on the water, lettered A to I, with a closed tank in the bottom of the hull and a pipe with a tap leading out through it.',
       caption:
         'Beeckman’s drawing for this entry: the boat ABCD, the closed tank in its bottom, and the pipe D with its tap. As printed in de Waard’s edition, vol. 2 (1942).',
-    },
+    }],
   },
   {
     id: 'glasses-1622',
@@ -104,6 +104,13 @@ export const PASSAGES: BeeckmanPassage[] = [
       'As for the rising of the water, that was perhaps said by way of likeness, namely: as the water rises and falls, so this too rises and falls; hearing which, people may have thought that the tides could be known by it as by a sign. As for the storm at sea, the same was told me of the earlier one that stands in the town hall at Delft, possibly only to make the thing more wonderful.',
     ],
     note: 'The letters refer to his drawing: a glass ball c above a ring a, b, e, with its foot in a small vessel d.',
+    figures: [
+      {
+        src: '/articles/beeckman-on-drebbel/beeckman-fig-16.png',
+        alt: 'Line drawing of a bulb c on top of a ring of glass tube, partly filled with liquid, standing on a short pipe in a dish d; points a, b and e are lettered on the ring.',
+        caption: 'Fig. 14, Beeckman’s drawing for this entry: the two half-rings meeting at a, the bulb c, the dish d. As printed in de Waard’s edition, vol. 2.',
+      },
+    ],
   },
   {
     id: 'chimney-1626',
@@ -179,6 +186,23 @@ export const PASSAGES: BeeckmanPassage[] = [
       'The form drawn beside this is Drebbel’s diarium brought to better use, since I showed just before that more force of weather is needed to make the water rise when it has come to its highest than when it only begins to rise, and that this brings great unevenness in the inches.',
     ],
     note: 'The last paragraph has its own marginal head, Vitrum quo calor examinatur alterius formæ. His drawing shows a glass ball above a tube bent back and forth, standing in a small vessel. Diarium, a daily register, is his word for the weather-glass.',
+    figures: [
+      {
+        src: '/articles/beeckman-on-drebbel/beeckman-fig-48.png',
+        alt: 'Line drawing of a glass bulb on a tube standing in a dish of water, with a cord over a pulley to a hanging weight.',
+        caption: 'Fig. 44: the Drebbelian instrument “on the preceding page”, with a cord and weight to turn wheels. As printed in de Waard’s edition, vol. 2.',
+      },
+      {
+        src: '/articles/beeckman-on-drebbel/beeckman-fig-49.png',
+        alt: 'Line drawing of a double wheel: two cone-shaped drums on one axle i, with cords and weights hanging from each end, lettered a to n.',
+        caption: 'Fig. 45: the double wheel, which turns when one side, mlb, tilts down. As printed in de Waard’s edition, vol. 2.',
+      },
+      {
+        src: '/articles/beeckman-on-drebbel/beeckman-fig-50.png',
+        alt: 'Line drawing of a long glass tube coiled back and forth like a snake, with a bulb at the top and its foot in a small dish.',
+        caption: 'Fig. 46: the coiled glass for an instrument that moves only once a year. As printed in de Waard’s edition, vol. 2.',
+      },
+    ],
   },
   {
     id: 'tide-1626',
@@ -196,6 +220,13 @@ export const PASSAGES: BeeckmanPassage[] = [
       'But I shall fashion the same after the manner of the second figure, since I have no means of having glass blown to my liking, and it will perhaps be just as neat.',
     ],
     note: 'His first figure is a ring of glass above a flask marked A; the second is two upright tubes joined at top and bottom with a ball above.',
+    figures: [
+      {
+        src: '/articles/beeckman-on-drebbel/beeckman-fig-55.png',
+        alt: 'Two line drawings side by side: on the left a ring of glass tube over a bulb A; on the right a bulb f on a tall closed tube with corners a, b, c, d.',
+        caption: 'Fig. 51: “the first figure”, Drebbel’s tide instrument with the glass A (left), and “the second figure”, Beeckman’s own version (right). As printed in de Waard’s edition, vol. 2.',
+      },
+    ],
   },
   {
     id: 'wind-1627',
