@@ -4,6 +4,9 @@
 // accepting low-risk spans from the text alone and sending only risky spans to the image. This classifies the spans and
 // merges the judge's verdicts back, span by span; the judging itself is leafcheck.mjs audit-req --pages --spans.
 /**
+ *   list   --drafts=D.jsonl --run=cli-ocr-<id> --out=L.jsonl   (needs --env-file; #7263 wave 3)
+ *          L for one apply run: every page that run wrote with a change, the draft from D (apply-volume.sh keeps the
+ *          drafts as derge-drafts.jsonl before the write) and `next` as stored now. A page rewritten since is left out.
  *   spans  --list=L.jsonl --dict=SYL.json --out=S.jsonl   L rows {page_id, book_id, page_number, draft, next}
  *          One row per changed span (syllable hunk) with class LOW or RISKY and why. Rules, from the note:
  *          LOW   = tsheg/merge only (ཆེནཔོ→ཆེན་པོ); a particle swapped within its own class (ཀྱི/གྱི/གི…); a one-letter fix
@@ -74,7 +77,19 @@ export function revertHunks(draft, next, d, idx) {
   return out;
 }
 const CMD = process.argv[2];
-if (CMD === 'spans') {
+if (CMD === 'list') {
+  const { MongoClient } = await import('mongodb');
+  const RUN = arg('run'); if (!/^cli-ocr-/.test(RUN || '')) { console.error('--run=cli-ocr-<id> is required'); process.exit(2); }
+  const drafts = new Map(readJsonl(arg('drafts')).map((r) => [r.key, r.text]));
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const ps = await c.db('bookstore').collection('pages').find({ id: { $in: [...drafts.keys()] }, 'ocr.engine.run.job_id': RUN },
+    { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
+  await c.close();
+  const rows = ps.filter((p) => p.ocr.data !== drafts.get(p.id)).sort((a, b) => a.page_number - b.page_number)
+    .map((p) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, draft: drafts.get(p.id), next: p.ocr.data }));
+  fs.writeFileSync(arg('out'), rows.map((x) => JSON.stringify(x)).join('\n') + (rows.length ? '\n' : ''));
+  console.log(JSON.stringify({ run: RUN, drafts: drafts.size, written_by_run: ps.length, changed: rows.length }));
+} else if (CMD === 'spans') {
   const dict = JSON.parse(fs.readFileSync(arg('dict'), 'utf8'));
   const out = [];
   for (const r of readJsonl(arg('list'))) {

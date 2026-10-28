@@ -56,8 +56,10 @@ if (CMD === 'rows') {
 } else if (CMD === 'only') {
   const S = JSON.parse(fs.readFileSync(arg('scores'), 'utf8')).pages;
   const ids = metasOf(arg('dir')).map((m) => m.page_id);
-  const refused = [], keep = []; const t = { pages: ids.length, no_parallel: 0, parallel: 0, refused: 0 };
+  const refused = [], keep = []; const t = { pages: ids.length, no_parallel: 0, parallel: 0, refused: 0, not_scored: 0 };
   for (const id of ids) {
+    // a read made after `rows` ran (or a draft rewritten since) was never scored: refuse it, never pass it as "no parallel"
+    if (!S[id]) { t.not_scored++; refused.push({ page_id: id, why: 'not scored (read after rows ran, or stale draft)' }); continue; }
     const d = S[id]?.draft?.identity, x = S[id]?.corr?.identity;
     if (d == null || x == null || d < PARALLEL) { t.no_parallel++; keep.push(id); continue; }
     t.parallel++;
