@@ -3606,6 +3606,98 @@ On words, O is slightly closer to the reference (a few tenths of a point). On pa
 Files: `scripts/eval/gpu-flash-vs-opus-7263/` holds the prereg, code, `split.json` and `results/score-*.json`. Scratch, with reads,
 packets and verdicts, is in `/root/jobs/gpu-flash-vs-opus-7263` on gex45.
 
+## 2026-10-28 · How many untranslated books would be FIRST English translations, by language group and period?
+
+**Who this is for.** Anyone choosing what to translate next. It also answers anyone asking "how many first English translations does Source Library hold, or could it hold?"
+
+**Design (pre-registered in commit 7450dd67e, before any search).**
+- **Frame:** live books (`visible && pages_count>0`) with no translated page and a language that is not English. That is 43,608 books in 31,645 works. A book with no `work_id` counts as its own work. 2,940 English-language books are excluded.
+- **Strata:** seven language groups. We drew 50 works per group with seed 7651 and took one random book from each work.
+- **Search:** one unprimed `claude -p` Sonnet per book, run on the subscription. The brief is `results/ft-untranslated-7651-brief.md`, adapted from `r5-oracle-brief.md`. Each searcher first identified the work from OUR scan (OCR text of the first pages, or the page images). It then searched for a published English translation. A 6-search floor was added after a 2-book pilot. A positive-control query was required before any `no_prior_known`. The searcher never saw our cards, attempts or badges.
+- **Verdicts:** `no_prior_known` / `prior_exists` / `partial_only` / `not_a_single_work` / `identity_unresolved` / `already_english` / `could_not_search`. The last one, "could not ask", stays out of the rate denominator. It occurred 0 times.
+- **Controls:** 10 books from reviewed `prior_exists` cards, mixed blind into the run order.
+- **Re-judge:** 20 random sample books, re-run by Opus in fresh processes that never saw the first verdict.
+- **Estimator:** stratum rate × stratum frame. Wilson CIs per stratum. Works use a normal CI with finite-population correction. Books use a ratio estimator (each work weighted by its books in the frame) with a stratified bootstrap (2,000 reps). Period rates are post-stratified on the drawn book's edition year.
+- **Cost:** $43.77 API-equivalent for the first pass (360 calls), $6.21 for the re-judge (20 Opus calls). Subscription only; the box account's week went 79% → 81%.
+
+### Untranslated pool — by language group (measured, n=50 each)
+
+| group | no prior known (works) | works | books (ratio est.) | prior exists | partial | not a single work | identity unresolved |
+|---|---|---|---|---|---|---|---|
+| Latin | **82%** [69–90] | 17,347 of 21,155 | 17,935 of 22,747 | 4% | 4% | 8% | 2% |
+| Chinese | **86%** [74–93] | 740 of 860 | 9,015 of 10,450 | 8% | 6% | 0% | 0% |
+| German | **66%** [52–78] | 3,784 of 5,733 | 4,129 of 6,079 | 6% | 2% | 26% | 0% |
+| French/Italian/Spanish/Dutch | **56%** [42–69] | 1,030 of 1,839 | 1,042 of 1,935 | 28% | 6% | 10% | 0% |
+| Greek | **30%** [19–44] | 106 of 352 | 112 of 414 | 52% | 0% | 12% | 4% |
+| Hebrew/Arabic/Persian/Syriac | **40%** [28–54] | 415 of 1,038 | 415 of 1,078 | 24% | 14% | 12% | 10% |
+| Sanskrit/Tibetan/Japanese/Korean/other | **38%** [26–52] | 283 of 746 | 437 of 905 | 26% | 10% | 16% | 4% |
+| **Corpus** | **75%** | **23,705** [21,312–26,097] of 31,645 | **33,085** [28,821–36,328] of 43,608 | 8% | 4% | 12% | 2% |
+
+Among single, identified works only (no_prior / (no_prior + prior + partial)), the no-prior share is: Latin 91%, Chinese 86%, German 89%, Fr/It/Es/Nl 62%, Greek 37%, Hebrew/Arabic/Persian/Syriac 51%, other 51%.
+
+### Untranslated pool — by period of the edition (post-stratified)
+
+| period | n | no prior known (works) | books |
+|---|---|---|---|
+| <1500 | 19 (thin) | 48% [6–80] | ≈670 of 1,389 |
+| 1500s | 72 | 75% [60–88] | ≈7,750 of 10,324 |
+| 1600s | 46 | 84% [69–96] | ≈8,600 of 11,182 |
+| 1700s | 88 | 74% [54–89] | ≈5,060 of 6,815 |
+| 1800s | 24 (thin) | 9% [1–33] | ≈110 of 662 |
+| 1900+ | 12 (thin) | 6% [0–24] | ≈15 of 246 |
+| unknown year | 89 | 82% [66–90] | ≈11,070 of 12,990 |
+
+The period CIs are wide because a Latin draw carries ~420 works of weight and a Greek draw carries ~7. Read the period rows for direction only. The 1800s and 1900+ untranslated books are mostly editions of classics (Greek, Sanskrit, Persian) whose works are already in English.
+
+### Instrument checks
+
+- **Controls (blind, n=10):** 7 `prior_exists`, 1 `partial_only` (Paracelsus → Waite 1894), 1 `already_english`, 1 `identity_unresolved`. The `already_english` control was a 1920 Herodotus that is a Loeb Greek–English edition, so that control was mis-chosen. The `identity_unresolved` control (*Das Buch der Weisheit Salomonis*) failed because its six scanned images were all binding and flyleaves. **No control came back `no_prior_known`.** Strict recall on the 9 valid controls is 7/9, or 8/9 counting partial.
+- **Re-judge (Opus vs Sonnet, n=20):** 18/20 exact agreement and 19/20 on the first / not-first call (κ 0.83). One disagreement is partial vs complete; the other is identity_unresolved vs no_prior_known.
+- **"Could not ask" vs "asked, none found":** all 199 `no_prior_known` verdicts record a passing control query and `search_worked: true`. The median is 7 queries; 6 verdicts fell below the 6-search floor.
+- **Identity source:** 142 books were identified from title-page text and 111 from page images. 97 were identified from the catalogue alone, mostly because the first six scanned pages were binding, endpapers and bookplates. The no-prior share is 63% where the scan identified the work and 40% where only the catalogue did. That gap reflects composition, not cause: catalogue-only books cluster in the Greek and other strata, where classics dominate.
+- **Prior links:** 38 of 73 cited URLs answered 2xx/3xx from this box. openlibrary.org timed out throughout, and several citations are catalogue search URLs rather than item pages.
+
+### Sensitivity
+
+The controls missed about 1 in 5 priors, and they are famous works, which are easy to find. If the search misses priors at that rate across the sample, the true prior-plus-partial share rises from ~12% to ~15%. That takes ~1,100 works off the corpus total, about 3.5pp. Treat 23,700 works as an upper-leaning point estimate and ~22,600 as a recall-adjusted one. Both sit inside the CI.
+
+### Translated side (no new searches; carried over and re-weighted)
+
+The frame is today's 24,422 translated live books, minus 2,391 English-language books, which leaves 22,031. The rates come from three instruments that are never pooled. They are re-weighted to today's frame by language group × period (`results/ft-translated-side-7651.json`):
+
+| group | books | fresh search #7598 (n) → no prior | est. books | round-5 Tier-1 (n) | reviewed cards (works) |
+|---|---|---|---|---|---|
+| Latin | 9,242 | 65% [62–68] (943) | 6,025 | 43% (141) | 62% (673) |
+| Chinese | 2,519 | 83% [78–87] (273) | 2,031 | 30% (43) | 50% (40) |
+| German | 2,684 | 69% [63–75] (212) | 1,898 | 42% (39) | 48% (165) |
+| Fr/It/Es/Nl | 2,126 | 42% [36–49] (207) | 907 | 30% (46) | 45% (225) |
+| Greek | 1,094 | 15% [9–22] (124) | 168 | 33% (24) | 62% (216) |
+| He/Ar/Fa/Syr | 679 | 54% [42–66] (61) | 359 | 45% (22) | 29% (56) |
+| other | 3,687 | 34% [29–40] (262) | 1,682 | 49% (175) | 71% (422) |
+| **total** | **22,031** | **58%** [56–61] (2,082) | **13,071** | 41% (490) | 62% (1,699) |
+
+| period | books | fresh search → no prior | est. books |
+|---|---|---|---|
+| <1500 | 2,402 | 37% (237) | 900 |
+| 1500s | 4,051 | 51% (396) | 2,090 |
+| 1600s | 5,489 | 65% (535) | 3,677 |
+| 1700s | 3,906 | 66% (239) | 2,604 |
+| 1800s | 2,200 | 36% (232) | 811 |
+| 1900+ | 1,242 | 30% (123) | 442 |
+| unknown | 2,741 | 94% (320) | 2,546 |
+
+**Measured vs carried.** Of the 49 group × period cells, 17 are measured (≥30 fresh searches, 17,774 books). 17 are thin (10–29 searches, 3,345 books). 15 have fewer than 10 searches (912 books) and carry their group's rate.
+
+The fresh search drew books by priority tier (never-searched first), not uniformly, and it has no `not_a_single_work` class, so its rate is not exactly comparable with the untranslated table. Round 5's oracle figure (8,565 of 16,151, 53%) applied to today's 22,031 gives ≈11,700. The fresh-search re-weight gives ≈13,100. Round-5 Tier-1 rows survive for only 490 of 1,165 books.
+
+### Result
+
+If everything in the untranslated pool were translated, ≈33,000 more books (≈23,700 works) would carry no English translation known to us. That is on top of ≈11,700–13,100 translated books that already do. Latin and Chinese hold about 80% of those books (26,950 of 33,085). Greek, the Near-Eastern languages and "other" are mostly works that are already in English. The Latin rate (82%) agrees with the #4617 excluded tail (76.7% ±7.6pp, n=120).
+
+**Replicated?** In part. The Latin rate is consistent with #4617, and the re-judge agrees on the first / not-first call 19 times in 20. The language split itself is new.
+
+**Artifacts:** `scripts/eval/ft-untranslated-sample-7651.mjs` (draw), `ft-untranslated-7651-prompts.mjs`, `ft-untranslated-7651-search.sh`, `ft-untranslated-7651-score.mjs`, `ft-translated-side-7651.mjs`. Results: `results/ft-untranslated-sample-7651-manifest.json`, `ft-untranslated-7651-verdicts.jsonl` (370 rows), `ft-untranslated-7651-scores.json`, `ft-translated-side-7651.json`. Measure-only: no book, card or badge writes.
+
 ## 2026-10-28 · Can a GPU draft corrected by Flash 3.8 (image + draft) replace lite on European print? (#7567, E0–E2)
 <!-- PRIOR ART: 2026-10-23-latin-open-engines-adoption-bar-6871.md (no engine alone beats lite + long-s), 2026-10-24-latin-lite-flash-correct-four-arms-5924.md (lite→Flash-low correction, 11/250 worse), 2026-10-24-lite-corrects-gpu-drafts-7263.md (lite as corrector of GPU drafts, rejected; no-image control), 2026-10-26-ocr-pareto-chained-routes-6740.md (#6740's lite→Opus and lite→agy chains, reused here as arm f and a stored replicate of a), 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane). -->
 
@@ -3737,6 +3829,109 @@ packets and verdicts, is in `/root/jobs/gpu-flash-vs-opus-7263` on gex45.
 - **E5:** 20 books × 25 pages per language, including a lite read for fr/it.
 
 Files: `scripts/eval/euro-gpu-correct-7567/` (code, `panel.json`, `refs.jsonl.gz`, `results/`: E1 reads, E2 outputs and prompts, verdicts, key, tables, decision, write choice, apply summary).
+
+## 2026-10-28 · E3 guards and the E5 scale test: GPU draft → agy Flash correction against lite → Flash on 2,500 library pages (#7567)
+<!-- PRIOR ART: 2026-10-28-euro-print-gpu-draft-flash-correct-7567.md (E0–E2: arm c chosen on 209 reference pages; this is its scale test on our own pages, and E2's tools reused unchanged where possible); 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane arm a stands for). -->
+
+**Arm c is less often misleading than lite→Flash in every language but French. By the rule fixed in advance it passes Latin and Italian only.** The fails are narrow, and they are the number and one-word changes the E3 guard exists to catch.
+
+### Panel (`e5-draw.mjs`, `results-e5/panel.json.gz`)
+- **Frame.** Visible, idle, unheld books dated 1470–1800 (`year`). Each has 25+ interior pages whose stored OCR is a Flash-Lite draft of 300+ characters, not handwritten and not edited (the correction lane's own page frame).
+- **Draw.** Books in a seeded order (7567, E2 panel books excluded). 25 pages per book, spread evenly; 20 books per language.
+- **Colophons were read for every drawn book** (`results-e5/colophon2.txt`). 7 books were rejected:
+  - 2 German books catalogued as Latin (*Chymische Hochzeit*, Paracelsus *Opera*);
+  - 2 Russian books catalogued as English;
+  - a Manly P. Hall manuscript box;
+  - Galileo's *Dialogo* in its 1874 Livorno edition;
+  - Piranesi's *Carceri* (plates, no text).
+- **2 pages served no image** (BSB served a tiny file) and are out of every count.
+- **The lite read fr/it lacked in E2 is the stored Flash-Lite draft:** no paid read was needed.
+
+### Arms (agy Gemini 3.8 Flash low, main pool, one page a call, E2's template `0601ef30`, `e2-correct.mjs --panel`)
+- **a:** stored Flash-Lite draft → Flash. **a2:** the same again, on 2 pages a book (200).
+- **c:** the language's best E2 draft → Flash. The drafts were read on gex45 through the GPU queue, one engine at a time:
+
+  | lang | engine | pages read |
+  |---|---|---|
+  | la | PERO-OCR on the GPU | 499 (6.5 min) |
+  | en, it | LightOnOCR-3-1B | 991 at 3,578 pages/h |
+  | de | CHURRO-3B fp8 | 500 at 1,871 pages/h |
+  | fr | Surya 2 | 495 |
+
+- **Delivered:** a 2,498, c 2,478. c had no draft on 22 pages (an empty or too-short GPU read).
+- **Quota:** 5,176 agy calls. The Gemini weekly bucket went 0.409 → 0.300, other pool traffic included (≈2e-5 a call).
+
+### Agreement (`e5-table.py`; no typed references on library pages, so this is agreement, not accuracy)
+- **Measure.** d(x) is the folded letter distance from x to a. a2 is a's own repeat, on 199 pages.
+- **Result.** c differs from a by more than a differs from itself in every language. The CI of d(c) − d(a2) is above 0 everywhere; all languages: 2.04% vs 1.03%, CI [+0.66, +1.41].
+- Agreement cannot say which text is right. The judge does.
+
+### Judge (blind Opus, `claude -p`, #7522's `judge.mjs`, neighbouring leaves attached; 790 pages, 8 a book)
+**Decision table** (the rule was committed in `e5-table.py` before arm c had results):
+- **pass** = misleading(c) ≤ misleading(a), AND worse-than-stored(c) ≤ worse-than-stored(a).
+- Misleading = not usable. L = the stored lite text; X = the bare GPU draft.
+
+| lang | judged | misleading L / X / a / c | worse than stored a / c | better than stored a / c | c fewer / more faults than a | verdict |
+|---|---|---|---|---|---|---|
+| la | 160 | 68 / 82 / 23 / **4** | 6 / 2 | 132 / 144 | 101 / 13 | **pass** |
+| en | 157 | 17 / 37 / 1 / **0** | 9 / **10** | 76 / 83 | 47 / 18 | fail |
+| de | 160 | 52 / 52 / 11 / **7** | 9 / **11** | 112 / 130 | 83 / 20 | fail |
+| fr | 159 | 14 / 13 / 1 / **2** | 8 / 8 | 63 / 95 | 50 / 14 | fail |
+| it | 154 | 46 / 40 / 8 / **2** | 4 / 4 | 129 / 137 | 88 / 29 | **pass** |
+| all | 790 | 197 / 224 / 44 / **15** | 36 / 35 | 512 / 589 | 369 / 94 | pass |
+
+- **What c's worse-than-stored pages are.** Of the 29 in en/de/fr, 25 are one extra minor misread on a page both arms keep usable.
+- **Four change the sense:**
+  - a quantity read 30 for 10 (de);
+  - an editorial *den* inserted (de);
+  - cropped line ends filled with guessed text (de);
+  - *plus* dropped, so "more or less deeply striate" becomes "less deeply striate" (fr).
+- **One finding applies to every arm:** no engine alone serves readers. The stored lite text is misleading on 197/790 pages and the bare GPU draft on 224/790.
+
+### E3 · guards (`scripts/lib/correction-diff-guard.mjs`, `tests/unit/correction-diff-guard.test.ts`)
+- **Long-s pass.** It repairs f-for-ſ forms that are never words in the language (eft, ift, fhall, quefto). It folds ſ to s when the library's text for the page has none.
+  - On arm c: tells on 60 pages (359 forms); ſ folded on 766 pages, mostly German (430).
+  - The #5924 lexicon pass (`longs-orthography.mjs`) needs a model file that is not on gex45, so it was not used.
+- **Diff guard.** It flags a local change (≤ 3 tokens a side) when the page's count of a negation, or of a number value, changes, or when an abbreviation is expanded into a word that does not contain it.
+  - It does not flag: page numbers moved into `<page-num>`; spacing fixes; nõ→non and nec→neque; a Tironian 7; 3m/q2 glyphs.
+  - The first version flagged 486/499 Latin pages; the rules above came from reading those flags.
+  - On all arm-c output against its own draft: 658/2,475 pages flagged. Against the stored text: 824.
+- **Image check.** On the 600 pages chosen to write, 175 carried flags. Opus checked each flag against the image, shown blind as "reading 1 / 2" (`e5-write.mjs confirm`):
+
+  | change | the pick confirmed | the stored reading was right | undecided |
+  |---|---|---|---|
+  | number | 108 | **78** | 12 |
+  | negation | 136 | **28** | 7 |
+  | expansion | 22 | 1 | 0 |
+
+  - A confirmed change stays. A change given to the stored reading is put back (92 put back).
+  - A page with an undecided change is held (17 pages).
+  - **Numbers are where the corrector is least safe:** French 19 of 23 number changes went back to the stored reading.
+
+### Useful output
+- **557 library pages rewritten** with the best judged read. Run `cli-ocr-20261028140539-1746942`; undo with `revert-run.mjs --run-id`.
+  - **Pick rule (#7522's):** clean (usable, no omission, addition, bleed or order error), fewest misreads, and it must beat the stored OCR inside the same judge call.
+  - **By arm:** c 472, a 75, a2 10.
+  - **By language:** it 135, la 119, de 118, fr 97, en 88.
+- **Refused:**
+  - 17 held by the image check;
+  - 2 with flags that were never checked;
+  - at apply: 20 by the foreign-script guard (Greek in Latin and vernacular books), 3 under the 40% shared-words floor, and 1 rewritten by the correction lane meanwhile.
+- **No `--mark-stale`.**
+- **Contained (by eye).** On two pages the stored Flash-Lite OCR, and the English made from it, invent a whole second column from the sliver of the facing page at the scan's edge:
+  - Saint-Martin, *Le nouvel homme*, p.118 ("loin de nous, et l'impression de l'infinité…");
+  - *La Magie Naturelle*, p.512 / printed 494 ("aduertir, non sans quelque diligence…").
+  - The OCR is now the judged-clean read. Both books are held as `invented-facing-column-7567`, and those pages' English is withheld until re-translated.
+  - The judge flagged the same shape on three more pages of *La Magie Naturelle* (fragments, not invented text). They were not contained.
+
+### What this does not show
+- **Agreement is not accuracy.** E5 has no typed references; E2 measured CER on 209 reference pages.
+- **The judge is one Opus pass.** a's own repeat (a2) is judged on 199 pages only. Differences of 1–2 pages per language are inside what one judge call can flip.
+- **The image check reads only the flagged stretches.** Its 39% of numbers given back to the stored text is measured on picks, not on the whole lane.
+- **Arm c's drafting cost is the GPU queue on gex45:** about 1 h for 2,500 pages. Arm a's draft is already paid for.
+- **SigLIP stays paused.** Derek, inbox 09:39Z: the GPU stays on OCR, so the brief's resume step was skipped.
+
+Files: `scripts/eval/euro-gpu-correct-7567/` (`e5-*.mjs|py`, `results-e5/`).
 
 ## 2026-10-28 · Can enrichment run on agy, one conversation a book? (#7628)
 
