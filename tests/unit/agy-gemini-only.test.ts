@@ -18,7 +18,7 @@ const quotaReply = (gemini: number, claudeWeekly = 1, claude5h = 1) => JSON.stri
   { name: 'Gemini Models', buckets: [{ id: 'gemini-weekly', window: 'weekly', remaining_fraction: gemini }, { id: 'gemini-5h', window: '5h', remaining_fraction: 0.9 }] },
   { name: 'Claude and GPT models', buckets: [{ id: '3p-weekly', window: 'weekly', remaining_fraction: claudeWeekly }, { id: '3p-5h', window: '5h', remaining_fraction: claude5h }] },
 ] } } });
-const gateOn = (raw: string | null) => (home: string) => agyClaudeGate(home, { quota: raw == null ? null : parseAgyQuota(raw) });
+const gateOn = (raw: string | null) => (home: string) => agyClaudeGate(home, { quota: raw == null ? null : parseAgyQuota(raw), held: null });
 
 describe('agy runs Gemini models only', () => {
   it('refuses a Claude model and accepts a Gemini one', () => {
@@ -35,6 +35,14 @@ describe('agy runs Gemini models only', () => {
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0.0001)) })).toThrow(/Gemini weekly/);
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0, 0.09)) })).toThrow(/Claude weekly/);
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0, 1, 0.05)) })).toThrow(/Claude h5/);
+  });
+
+  it('keeps an account held to one model (allowed-model) off Claude', () => {
+    const home = fs.mkdtempSync(path.join(os.tmpdir(), 'agy-held-'));
+    fs.writeFileSync(path.join(home, 'allowed-model'), 'gemini-3.8-flash-low\n');
+    expect(agyClaudeGate(home, { quota: parseAgyQuota(quotaReply(0)) })).toMatchObject({ ok: false, reason: expect.stringMatching(/held to gemini-3\.8-flash-low/) });
+    fs.rmSync(path.join(home, 'allowed-model'));
+    expect(agyClaudeGate(home, { quota: parseAgyQuota(quotaReply(0)) }).ok).toBe(true);
   });
 
   it('fails closed when the quota cannot be read', () => {

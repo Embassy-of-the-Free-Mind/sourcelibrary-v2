@@ -153,6 +153,8 @@ export function agyQuota(agyHome = process.env.AGY_HOME || '', { now = Date.now(
   try { fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(`${file}.tmp${process.pid}`, r.stdout); fs.renameSync(`${file}.tmp${process.pid}`, file); } catch { /* memory only */ }
   return q;
 }
+/** The one model an AGY_HOME account is held to (its allowed-model file, agy-guard.sh), or null. */
+export const agyAllowedModel = (agyHome = process.env.AGY_HOME || '') => { try { return agyHome ? fs.readFileSync(path.join(agyHome, 'allowed-model'), 'utf8').trim() || null : null; } catch { return null; } };
 // The Claude group is left alone below this much of either bucket (#7545): the fallback stops before the pool is dry.
 export const AGY_CLAUDE_FLOOR = 0.10;
 /**
@@ -160,8 +162,11 @@ export const AGY_CLAUDE_FLOOR = 0.10;
  * buckets are at or above AGY_CLAUDE_FLOOR (#7545; Derek 2026-10-27/28). Fails CLOSED: an unreadable quota is "no".
  * Returns { ok, reason, quota }.
  */
-export function agyClaudeGate(agyHome = process.env.AGY_HOME || '', { quota = agyQuota(agyHome) } = {}) {
+export function agyClaudeGate(agyHome = process.env.AGY_HOME || '', { quota, held = agyAllowedModel(agyHome) } = {}) {
   const acct = agyHome ? path.basename(agyHome) : 'main';
+  // An account held to one model (AGY_HOME/allowed-model, agy-guard.sh) runs that model only, Claude included.
+  if (held && !/^claude-/.test(held)) return { ok: false, reason: `${acct} is held to ${held} (allowed-model)`, quota: null };
+  if (quota === undefined) quota = agyQuota(agyHome);
   if (!quota) return { ok: false, reason: `quota for ${acct} unreadable`, quota };
   if (quota.gemini.weekly > 0) return { ok: false, reason: `${acct} Gemini weekly ${(quota.gemini.weekly * 100).toFixed(1)}% left`, quota };
   const low = ['weekly', 'h5'].find((k) => !(quota.claude[k] >= AGY_CLAUDE_FLOOR));
