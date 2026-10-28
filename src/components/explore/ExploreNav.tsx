@@ -77,8 +77,8 @@ const VIZ_CARDS: VizCard[] = [
   },
   {
     href: '/explore/maps',
-    title: 'Theme maps',
-    description: 'What the library holds on a theme (ritual, the body, the mind), what you can read now, and what is missing.',
+    title: 'Source surveys',
+    description: 'Every source the library holds on ritual and on techniques of the body, tradition by tradition: what you can read now, and what is missing.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
         <line x1="3" y1="20" x2="21" y2="20" />

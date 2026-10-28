@@ -36,6 +36,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
+import { linkHistorySources } from './link-history-sources.mjs';
 
 const argv = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const SRC = argv('--repo');
@@ -60,7 +61,8 @@ const QUESTION = {
   sympathy: 'Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?',
 };
 const TITLE = { aliveness: 'Aliveness', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
-const MAP = { consciousness: '/explore/maps/consciousness', harmony: '/explore/maps/harmony', magic: '/explore/maps/magic' };
+// a concept with a map: the map is the history's sources view (#7646); its slug is the concept's
+const MAP = { consciousness: `${BASE}/consciousness/sources`, harmony: `${BASE}/harmony/sources`, magic: `${BASE}/magic/sources` };
 
 const readJsonl = (f) => fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#') && !l.startsWith('//')).map((l) => JSON.parse(l)) : [];
 const listJsonl = (d) => fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.jsonl')).sort().map((f) => path.join(d, f)) : [];
@@ -320,3 +322,5 @@ report.redactions = redLog;
 console.table(Object.fromEntries(Object.entries(report.concepts).map(([c, s]) => [c, { shown: s.verified + s.partial, partial: s.partial, dropped: s.dropped.unverified + s.dropped.disputed + s.dropped.other, essays: s.essays, quotesKept: s.quotesKept, quotesCopyright: s.quotesDroppedCopyright, quotesNotPublic: s.quotesDroppedNotPublic, refsLinked: s.refsLinked, refsPlain: s.refsPlain }])));
 console.log('skipped', report.skipped, '\nredactions', redLog.length, DRY ? '(dry run, nothing written)' : `\nwrote ${OUT} ${(total / 1e6).toFixed(2)} MB`);
 if (REPORT) fs.writeFileSync(REPORT, JSON.stringify(report, null, 1));
+// new claims move which works each history cites on its map, the sources view (#7646)
+if (!DRY) linkHistorySources();

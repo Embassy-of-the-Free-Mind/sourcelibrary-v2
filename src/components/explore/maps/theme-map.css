@@ -216,3 +216,18 @@
 .atlas-map .views .story .how{font-size:15.5px;color:var(--ink-2)}
 .atlas-map .views .story .chain{font-family:var(--ui);font-size:13.5px;columns:2 260px;margin:8px 0;padding-left:20px;list-style:decimal}
 .atlas-map .views .story .chain .yr{color:var(--muted);display:inline-block;min-width:68px}
+/* The works a concept's history cites (#7646): a gold ring under the mark, a chip that keeps only them, and in the
+   work panel and catalogue the claims that quote them. Gold is the site's --accent-gold. */
+.atlas-map svg.map .citring{fill:none;stroke:var(--gold);stroke-width:2;pointer-events:none}
+.atlas-map .sw.c{border:2px solid var(--gold);background:var(--panel)}
+.atlas-map .purpose-note{font-family:var(--ui);font-size:14px;color:var(--ink-2);max-width:70ch;margin:-14px 0 24px;line-height:1.5}
+.atlas-map .purpose-note .sw{width:12px;height:12px;border-radius:50%;display:inline-block;vertical-align:-1px;margin-right:4px}
+.atlas-map .detail .cited{margin:6px 0 14px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:4px;font-family:var(--ui);font-size:13px}
+.atlas-map .detail .cited>b{font-family:var(--display);font-size:17px;font-weight:600;margin-right:10px}
+.atlas-map .detail .cited>.sub{color:var(--muted);font-size:12px}
+.atlas-map .detail .cited ul{margin:8px 0 0;padding-left:18px;display:grid;gap:6px;font-family:var(--body);font-size:15px;line-height:1.4}
+.atlas-map .detail .cited a{color:var(--ink)}
+.atlas-map .detail .cited details summary{margin-top:6px;cursor:pointer;color:var(--teal);font-size:12px}
+.atlas-map .work .citedlink{display:block;margin:5px 0 2px;text-align:left;font-family:var(--ui);font-size:12px;color:var(--ink-2);text-decoration-color:var(--gold)}
+.atlas-map .chip#citedonly[aria-pressed="false"]{opacity:1}
+.atlas-map .chip#citedonly[aria-pressed="true"]{border-color:var(--gold);color:var(--ink)}
