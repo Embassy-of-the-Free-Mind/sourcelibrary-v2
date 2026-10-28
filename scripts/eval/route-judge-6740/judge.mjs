@@ -62,6 +62,10 @@
  *                `draw --from=<sample.json> --routes=a,b` re-uses an earlier draw's pages for a cell and keeps only
  *                the named routes, so `judge --reuse` pairs the new route with the verdicts already made.
  *   german       German translation, a second draw (salt german-r2, the pilot's books left out), as the pilot's cell.
+ *   latin-lite-7545  Opus through agy against Opus through claude -p (#7545): lite; lite>opus-correct; lite>agy-opus
+ *                (cli-ocr.mjs correct mode on claude-opus-5-5-low, which agyClaudeGate allows only on an empty Gemini pool).
+ *   german-7545  The same for German translation, PAIRED (salt agy-opus-7545): opus-cli; agy-opus-tr (cli-translate.mjs
+ *                on claude-opus-5-5-low). `translate [--by=opus|agy]` makes both reads.
  *   tib-kangyur  Tibetan Kangyur, 30 NEW folios in the pilot's frame (drawTib): yigdzin; yigdzin>agy-flash-low;
  *                yigdzin>opus-correct, both on the #6560 CORR prompt (Opus through opusPromptCorrect, run-claude-arm's
  *                request). Derge through tib-derge.py on an OpenPecha P000001 checkout (TIB_P1): placement at draw,
@@ -155,6 +159,9 @@ const RT = {
   // #7263: the latin cell's pages (draw --from the 2026-10-26 router tests), drafted by a GPU engine on gex45 and kept
   // on disk (DIR/gpu-drafts.json {page_id: text}, not stored), corrected by agy from that file (cli-ocr --draft-file).
   'latin-gpu': { lang: 'Latin', draft: 'gpu', draftFile: 'gpu-drafts.json', fromCell: 'latin', correctors: { 'gpu>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // #7545: Opus through agy (on an account whose Gemini pool is empty) against Opus through claude -p, the cell's route.
+  // The agy corrector is the correction lane's own call (cli-ocr.mjs correct mode, the fc template) on claude-opus-5-5-low.
+  'latin-lite-7545': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>opus-correct': { by: 'opus' }, 'lite>agy-opus': AGY('claude-opus-5-5-low') } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -260,6 +267,18 @@ async function drawRouterTests(names) {
   for (const name of names) {
     const t = RT[name];
     if (name === 'german') { cells.german = await drawGerman(db, 'german-r2', new Set(pilot.cells.german.pages.map((p) => p.book_id))); continue; }
+    if (name === 'german-7545') {
+      // #7545: German pages whose served English is 3 Flash or Flash-Lite (the german-tr cells), one per book, PAIRED:
+      // every page translated by both Opus routes. Alternating from the two served routes' seeded draws.
+      const g = await drawGerman(db, 'agy-opus-7545', new Set(pilot.cells.german.pages.map((p) => p.book_id)));
+      const f3 = g.pages.filter((p) => p.route === 'flash3'), fl = g.pages.filter((p) => p.route === 'flash-lite');
+      const pages = [], seen = new Set();
+      for (let i = 0; pages.length < N && (i < f3.length || i < fl.length); i++) for (const p of [f3[i], fl[i]]) if (p && pages.length < N && !seen.has(p.book_id)) { seen.add(p.book_id); pages.push({ ...p, served_route: p.route, route: undefined }); }
+      cells[name] = { task: 'translation', lang: 'German', paired: true, routes: ['opus-cli', 'agy-opus-tr'], pages,
+        served: { 'opus-cli': "this run's reads, not served (claude-translate.mjs read --model=opus, one page a call)", 'agy-opus-tr': "this run's reads, not served (cli-translate.mjs read --model=claude-opus-5-5-low, one page a call)" },
+        frame: { ...g.frame, note: `${g.frame.note}; one page per book, alternating 3 Flash / Flash-Lite served English` } };
+      continue;
+    }
     if (!t) throw new Error(`unknown cell ${name}; cells: ${Object.keys(RT).join(', ')}, german`);
     // --routes=a,b keeps only these of the cell's routes (#7517: the draft and the new fresh read, not the correctors
     // an earlier run already judged on the same pages).
@@ -392,6 +411,7 @@ async function refs() {
 /** German Opus CLI reads: production's claude-translate.mjs, one page a call, nothing kept in R2, nothing written. */
 async function translate() {
   const s = J('sample.json');
+  if (s.cells['german-7545']) return translate7545(s.cells['german-7545']);
   const ids = s.cells.german.pages.filter((p) => p.route === 'opus-cli').map((p) => p.page_id);
   fs.writeFileSync(path.join(OUT, 'opus-de-ids.json'), JSON.stringify(ids));
   const limits = await import('../../lib/model-limits.mjs');
@@ -401,6 +421,31 @@ async function translate() {
     '--model=opus', '--per-call=1', '--job=route-judge-6740', '--ocr-checked=eval reads for #6740, never applied; the judge reads every page against its image'],
   { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' } });
   process.exit(r.status ?? 1);
+}
+
+/**
+ * #7545: both Opus routes on the same German pages. claude -p through claude-translate.mjs (as the pilot's opus-cli),
+ * agy through cli-translate.mjs on claude-opus-5-5-low; both one page a call, CANDIDATE_READS=off and --fresh.
+ * --by=opus|agy runs one of them.
+ */
+const TR_DIRS = { 'opus-cli': 'opus-de-7545', 'agy-opus-tr': 'agy-opus-de-7545' };
+async function translate7545(cs) {
+  const ids = cs.pages.map((p) => p.page_id);
+  fs.writeFileSync(path.join(OUT, 'de-7545-ids.json'), JSON.stringify(ids));
+  const limits = await import('../../lib/model-limits.mjs');
+  const env = { ...process.env, CANDIDATE_READS: 'off' };
+  if (!arg('by') || arg('by') === 'opus') {
+    const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+    if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'de-7545-ids.json')}`, `--out=${path.join(OUT, TR_DIRS['opus-cli'])}`,
+      '--model=opus', '--per-call=1', '--job=agy-opus-7545', '--fresh', '--ocr-checked=eval reads for #7545, never applied; the judge reads every page against its image'], { stdio: 'inherit', env });
+    if (r.status) process.exit(r.status);
+  }
+  if (!arg('by') || arg('by') === 'agy') {
+    const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${path.join(OUT, 'de-7545-ids.json')}`, `--out=${path.join(OUT, TR_DIRS['agy-opus-tr'])}`,
+      '--model=claude-opus-5-5-low', '--job=agy-opus-7545', '--fresh', '--ocr-checked=eval reads for #7545, never applied; the judge reads every page against its image'], { stdio: 'inherit', env });
+    if (r.status) process.exit(r.status);
+  }
 }
 
 /**
@@ -566,6 +611,7 @@ async function packet() {
     if (cell === 'latin') { const r = oc.get(sp.page_id); return route === 'lite' ? lite(p) : r?.outcome === 'unchanged' ? lite(p) : r?.text || null; }
     if (cell === 'chinese') return route === 'paddle' ? zhDraft.get(sp.page_id) ?? null : OPUS.includes(p?.ocr?.model) ? p.ocr.data : null;
     if (cell === 'tibetan') return route === 'yigdzin' ? tibM.get(sp.uid)?.served_text ?? null : tibOut[route].get(sp.uid) ?? null;
+    if (TR_DIRS[route] && cell === 'german-7545') { try { const m = JSON.parse(fs.readFileSync(path.join(OUT, TR_DIRS[route], `${sp.page_id}.meta.json`), 'utf8')); return m.exit === 0 && !m.error_class && !m.wrapper ? fs.readFileSync(path.join(OUT, TR_DIRS[route], `${sp.page_id}.txt`), 'utf8') : null; } catch { return null; } }
     return route === 'opus-cli' ? deOpus(sp.page_id) : p?.translation?.data ?? null;
   };
   // image-pick-ok: Tibetan pages are the frozen #6560 manifest's images (the ones Derge was scored against); none of the 30 is split_from_spread or cropped (checked 2026-10-26)
