@@ -38,7 +38,7 @@
   }
  },
  "idle_after_tests": {
-  "claude": 32.216668090639345,
+  "claude": 33.03468588559149,
   "agy": 0.0
  },
  "rows": [
@@ -48,11 +48,21 @@
    "pages_waiting": 861506,
    "current": "lite>opus",
    "decision": "HOLD",
-   "route": "lite>opus",
-   "decision_flat_price": "HOLD lite>opus",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.8499324732615842,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.8298575315452726,
+    "gap": -0.020074941716311523,
+    "p_within": 0.6937,
+    "alt_wrate": 0.10400000000000001,
+    "bar_wrate": 0.11666666666666665
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 18.6421819225446,
+   "weeks_to_clear": 23.821662143478928,
    "v2_weeks": 78,
    "test_score": 0.2585566560342212,
    "caveat": "Book group 5924-latin (backfill-all): the pilot's 30 pages, the router tests' lite>agy-flash-low reads and #5924's 250 pages (10 books x 25, Step C packets, every reading counted once) are the same 10 books, scaled together so they count as 10 books, not 29. One of the 10 books is another leaf's text on all 25 pages (the correctors CONTAIN it: lite served). Plus #5924's served-page spot check (4 other books).",
@@ -60,6 +70,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -111,6 +122,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.0043278124406666,
      "points_flat": 0.004,
@@ -171,6 +183,7 @@
     {
      "id": "lite>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -226,6 +239,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -281,7 +295,7 @@
    ],
    "test_next": 1,
    "decision_week": "HOLD",
-   "route_week": "lite>opus",
+   "route_week": "agy-flash-low-read",
    "before": "keep"
   },
   {
@@ -291,6 +305,7 @@
    "current": "3flash>opus",
    "decision": "HOLD",
    "route": "3flash>agy-flash-low",
+   "vs_bar": null,
    "decision_flat_price": "HOLD 3flash>agy-flash-low",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -302,6 +317,7 @@
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -353,6 +369,7 @@
     {
      "id": "3flash>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.0038380642716376954,
      "points_flat": 0.004,
@@ -396,6 +413,7 @@
     {
      "id": "3flash>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -461,6 +479,16 @@
    "current": "lite>opus",
    "decision": "keep",
    "route": "lite>opus",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.9354320360862448,
+    "alt": "lite>agy-flash-low",
+    "alt_mean": 0.9232081388268832,
+    "gap": -0.012223897259361571,
+    "p_within": 0.890775,
+    "alt_wrate": 0.06666666666666667,
+    "bar_wrate": 0.031
+   },
    "decision_flat_price": "keep lite>opus",
    "other_wrong_text_bar": null,
    "margin_010": "switch lite>agy-flash-low: acceptance -0.01 against the best, 1.8x cheaper per accepted page",
@@ -472,6 +500,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -524,6 +553,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.003625527956200217,
      "points_flat": 0.004,
@@ -580,11 +610,12 @@
       0.004176148820514984
      ],
      "api": 0.08787383458013334,
-     "idle_fit": 0.021227899754799086
+     "idle_fit": 0.021766900240511367
     },
     {
      "id": "lite>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -641,6 +672,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -706,6 +738,16 @@
    "current": "3flash>opus",
    "decision": "keep",
    "route": "3flash>opus",
+   "vs_bar": {
+    "bar": "3flash>opus",
+    "bar_mean": 0.975919239618247,
+    "alt": "3flash>agy-flash-low",
+    "alt_mean": 0.8644439464957372,
+    "gap": -0.11147529312250981,
+    "p_within": 0.31645,
+    "alt_wrate": 0.03333333333333333,
+    "bar_wrate": 0.0
+   },
    "decision_flat_price": "keep 3flash>opus",
    "other_wrong_text_bar": null,
    "margin_010": "no change",
@@ -717,6 +759,7 @@
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -769,6 +812,7 @@
     {
      "id": "3flash>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.003436233365799032,
      "points_flat": 0.004,
@@ -830,6 +874,7 @@
     {
      "id": "3flash>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -894,18 +939,20 @@
    "pages_waiting": 306784,
    "current": "flash3",
    "decision": "HOLD",
-   "route": "opus-cli",
-   "decision_flat_price": "HOLD opus-cli",
+   "route": "flash3",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD flash3",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 1.4629391245612695,
+   "weeks_to_clear": 0.0,
    "v2_weeks": null,
-   "test_score": 0.003624545673061963,
+   "test_score": 0,
    "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
    "routes": [
     {
      "id": "flash3",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -957,6 +1004,7 @@
     {
      "id": "opus-cli",
      "stage": "opus-text",
+     "channel": "claude",
      "lane": "claude-translate.mjs (--per-call=10)",
      "points": 0.0009537258296138453,
      "points_flat": 0.000923,
@@ -1016,7 +1064,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "opus-cli",
+   "route_week": "flash3",
    "before": "HOLD → opus-cli"
   },
   {
@@ -1025,18 +1073,20 @@
    "pages_waiting": 151361,
    "current": "flash-lite",
    "decision": "HOLD",
-   "route": "opus-cli",
-   "decision_flat_price": "HOLD opus-cli",
+   "route": "flash-lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD flash-lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 0.5817188110802768,
+   "weeks_to_clear": 0.0,
    "v2_weeks": null,
-   "test_score": 0.0014412536818796807,
+   "test_score": 0,
    "caveat": "Each German route was judged on its own 30 pages, not paired.",
    "routes": [
     {
      "id": "flash-lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1088,6 +1138,7 @@
     {
      "id": "opus-cli",
      "stage": "opus-text",
+     "channel": "claude",
      "lane": "claude-translate.mjs (--per-call=10)",
      "points": 0.0007686508560068668,
      "points_flat": 0.000923,
@@ -1147,7 +1198,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "opus-cli",
+   "route_week": "flash-lite",
    "before": "HOLD → opus-cli"
   },
   {
@@ -1157,17 +1208,19 @@
    "current": "lite>opus",
    "decision": "switch",
    "route": "lite>agy-flash-low",
+   "vs_bar": null,
    "decision_flat_price": "switch lite>agy-flash-low",
    "other_wrong_text_bar": "keep lite>opus",
    "margin_010": "no change",
    "weeks_to_clear": 3.954935224537867,
    "v2_weeks": 104,
-   "test_score": 0.03351485394475783,
+   "test_score": 0.02379305950590963,
    "caveat": null,
    "routes": [
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1220,6 +1273,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.00345819150512764,
      "points_flat": 0.004,
@@ -1259,11 +1313,12 @@
       0.005285773786835214
      ],
      "api": 0.0929240663560646,
-     "idle_fit": 0.0
+     "idle_fit": 0.06307713189441055
     },
     {
      "id": "lite>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -1320,6 +1375,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -1385,6 +1441,7 @@
    "current": "3flash",
    "decision": "held",
    "route": "3flash",
+   "vs_bar": null,
    "decision_flat_price": "held 3flash",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -1396,6 +1453,7 @@
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1438,8 +1496,18 @@
    "pages_waiting": 0,
    "current": "opus-cli",
    "decision": "HOLD",
-   "route": "opus-cli",
-   "decision_flat_price": "HOLD opus-cli",
+   "route": "agy-flash-low@4",
+   "vs_bar": {
+    "bar": "opus-cli",
+    "bar_mean": 0.8751222047597492,
+    "alt": "agy-flash-low@4",
+    "alt_mean": 0.7182599923360725,
+    "gap": -0.1568622124236767,
+    "p_within": 0.20855,
+    "alt_wrate": 0.13333333333333333,
+    "bar_wrate": 0.03333333333333333
+   },
+   "decision_flat_price": "HOLD agy-flash-low@4",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 0.0,
@@ -1450,6 +1518,7 @@
     {
      "id": "opus-cli",
      "stage": "opus-text",
+     "channel": "claude",
      "lane": "claude-translate.mjs (--per-call=10)",
      "points": 0.000923,
      "points_flat": 0.000923,
@@ -1505,6 +1574,7 @@
     {
      "id": "agy-flash-low@4",
      "stage": "agy-text@4",
+     "channel": "agy",
      "lane": "claude-translate.mjs --cli=agy --per-call=4 (#7503)",
      "points": null,
      "points_flat": null,
@@ -1559,7 +1629,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "opus-cli",
+   "route_week": "agy-flash-low@4",
    "before": "HOLD → opus-cli"
   },
   {
@@ -1569,6 +1639,7 @@
    "current": "agy-flash-low@1",
    "decision": "HOLD",
    "route": "agy-flash-low@1",
+   "vs_bar": null,
    "decision_flat_price": "HOLD agy-flash-low@1",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -1580,6 +1651,7 @@
     {
      "id": "agy-flash-low@1",
      "stage": "agy-text@1",
+     "channel": "agy",
      "lane": "agy -p, Standard Translation v13 + the CLI suffix, one page a call (stale-retranslate-6567.mjs; tengyur-cli-6361)",
      "points": null,
      "points_flat": null,
@@ -1631,6 +1703,7 @@
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1687,6 +1760,7 @@
    "current": "stored",
    "decision": "HOLD",
    "route": "agy-flash-low@1",
+   "vs_bar": null,
    "decision_flat_price": "HOLD agy-flash-low@1",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -1698,6 +1772,7 @@
     {
      "id": "stored",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1745,6 +1820,7 @@
     {
      "id": "agy-flash-low@1",
      "stage": "agy-text@1",
+     "channel": "agy",
      "lane": "agy -p, Standard Translation v13 + the CLI suffix, one page a call (stale-retranslate-6567.mjs; tengyur-cli-6361)",
      "points": null,
      "points_flat": null,
@@ -1805,17 +1881,28 @@
    "current": "yigdzin>opus",
    "decision": "switch",
    "route": "yigdzin>agy-flash-low",
+   "vs_bar": {
+    "bar": "yigdzin>opus",
+    "bar_mean": 0.8520215473391584,
+    "alt": "yigdzin>agy-flash-low",
+    "alt_mean": 0.8724457227669834,
+    "gap": 0.020424175427825042,
+    "p_within": 0.9557,
+    "alt_wrate": 0.08333333333333333,
+    "bar_wrate": 0.08333333333333333
+   },
    "decision_flat_price": "switch yigdzin>agy-flash-low",
    "other_wrong_text_bar": "keep yigdzin>opus",
    "margin_010": "no change",
    "weeks_to_clear": 7.32847201597624,
    "v2_weeks": 104,
-   "test_score": 0.04483662377898403,
+   "test_score": 0.011963266367499687,
    "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
    "routes": [
     {
      "id": "yigdzin",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -1868,6 +1955,7 @@
     {
      "id": "yigdzin>agy-flash-low",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -1924,6 +2012,7 @@
     {
      "id": "yigdzin>opus",
      "stage": "opus-img@1",
+     "channel": "claude",
      "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
      "points": 0.01720801871594077,
      "points_flat": 0.0124,
@@ -1980,7 +2069,7 @@
       0.022173737169559823
      ],
      "api": 0.09647643332109206,
-     "idle_fit": 0.0
+     "idle_fit": 0.006840944211796449
     }
    ],
    "decision_week": "switch",
@@ -1993,18 +2082,29 @@
    "pages_waiting": 453715,
    "current": "paddle>opus",
    "decision": "HOLD",
-   "route": "paddle>opus",
-   "decision_flat_price": "HOLD paddle>opus",
+   "route": "paddle>agy-flash-high",
+   "vs_bar": {
+    "bar": "paddle>opus",
+    "bar_mean": 0.8229080676334459,
+    "alt": "paddle>agy-flash-high",
+    "alt_mean": 0.580046560102346,
+    "gap": -0.24286150753109992,
+    "p_within": 0.05485,
+    "alt_wrate": 0.26666666666666666,
+    "bar_wrate": 0.03333333333333333
+   },
+   "decision_flat_price": "HOLD paddle>agy-flash-high",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 23.663630626339604,
+   "weeks_to_clear": 11.84877105842593,
    "v2_weeks": 130,
-   "test_score": 0.09072524172825783,
+   "test_score": 0.07596245047831059,
    "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
    "routes": [
     {
      "id": "paddle",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2056,6 +2156,7 @@
     {
      "id": "paddle>opus",
      "stage": "opus-img@1",
+     "channel": "claude",
      "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
      "points": 0.010431055013098357,
      "points_flat": 0.0124,
@@ -2116,6 +2217,7 @@
     {
      "id": "paddle>agy-flash-high",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -2169,8 +2271,9 @@
      "api": null
     }
    ],
+   "test_next": 3,
    "decision_week": "HOLD",
-   "route_week": "paddle>opus",
+   "route_week": "paddle>agy-flash-high",
    "before": "HOLD → paddle>opus"
   },
   {
@@ -2179,18 +2282,20 @@
    "pages_waiting": 0,
    "current": "paddle>opus",
    "decision": "HOLD",
-   "route": "paddle>opus",
-   "decision_flat_price": "HOLD paddle>opus",
+   "route": "paddle",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD paddle",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 0.0,
    "v2_weeks": null,
-   "test_score": 0.0,
+   "test_score": 0,
    "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
    "routes": [
     {
      "id": "paddle",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2242,6 +2347,7 @@
     {
      "id": "paddle>opus",
      "stage": "opus-img@1",
+     "channel": "claude",
      "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
      "points": 0.010431615370606448,
      "points_flat": 0.0124,
@@ -2301,7 +2407,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "paddle>opus",
+   "route_week": "paddle",
    "before": "HOLD → paddle>opus"
   },
   {
@@ -2311,17 +2417,19 @@
    "current": "3flash>opus",
    "decision": "keep (UNTESTED)",
    "route": "3flash>opus",
+   "vs_bar": null,
    "decision_flat_price": "keep (UNTESTED) 3flash>opus",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 5.728453881960691,
    "v2_weeks": 104,
-   "test_score": 0.1319949895945923,
+   "test_score": 0,
    "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
    "routes": [
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2356,6 +2464,7 @@
     {
      "id": "3flash>opus",
      "stage": "opus-img@1",
+     "channel": "claude",
      "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
      "points": 0.011029195560100678,
      "points_flat": 0.0124,
@@ -2397,7 +2506,6 @@
      "api": 0.10858494689925118
     }
    ],
-   "test_next": 3,
    "decision_week": "keep (UNTESTED)",
    "route_week": "3flash>opus",
    "before": "keep (UNTESTED)"
@@ -2409,17 +2517,19 @@
    "current": "paddle>opus",
    "decision": "keep (UNTESTED)",
    "route": "paddle>opus",
+   "vs_bar": null,
    "decision_flat_price": "keep (UNTESTED) paddle>opus",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 1.1354198058361236,
    "v2_weeks": 104,
-   "test_score": 0.019734219287050284,
+   "test_score": 0.014361324905969971,
    "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
    "routes": [
     {
      "id": "paddle",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2454,6 +2564,7 @@
     {
      "id": "paddle>opus",
      "stage": "opus-img@1",
+     "channel": "claude",
      "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
      "points": 0.010219800232548367,
      "points_flat": 0.0124,
@@ -2497,6 +2608,7 @@
     {
      "id": "paddle>agy-flash-high",
      "stage": "agy",
+     "channel": "agy",
      "lane": "agy, one page a call",
      "points": null,
      "points_flat": null,
@@ -2544,17 +2656,19 @@
    "current": "3flash>opus",
    "decision": "keep (UNTESTED)",
    "route": "3flash>opus",
+   "vs_bar": null,
    "decision_flat_price": "keep (UNTESTED) 3flash>opus",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 1.2523582354603726,
    "v2_weeks": 104,
-   "test_score": 0.01940208129911816,
+   "test_score": 0,
    "caveat": null,
    "routes": [
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2589,6 +2703,7 @@
     {
      "id": "3flash>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.004876784405998336,
      "points_flat": 0.004,
@@ -2641,17 +2756,19 @@
    "current": "3flash>opus",
    "decision": "keep (UNTESTED)",
    "route": "3flash>opus",
+   "vs_bar": null,
    "decision_flat_price": "keep (UNTESTED) 3flash>opus",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 0.6031993562092924,
    "v2_weeks": 104,
-   "test_score": 0.007586919955015806,
+   "test_score": 0,
    "caveat": null,
    "routes": [
     {
      "id": "3flash",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2686,6 +2803,7 @@
     {
      "id": "3flash>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.003988886101106285,
      "points_flat": 0.004,
@@ -2737,11 +2855,21 @@
    "pages_waiting": 18720,
    "current": "lite",
    "decision": "HOLD",
-   "route": "lite>opus",
-   "decision_flat_price": "HOLD lite>opus",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.7602822335876784,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.5051318708657954,
+    "gap": -0.2551503627218831,
+    "p_within": 0.25585,
+    "alt_wrate": 0.49333333333333335,
+    "bar_wrate": 0.06666666666666667
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 0.3744,
+   "weeks_to_clear": 0.517630190998003,
    "v2_weeks": null,
    "test_score": 0.021566544277740796,
    "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 75 pages in 3 books (the terminal frame held 5 lite-read Chinese books): the thinnest cell. Upper bound until names are checked (see zh-6561-served). On a torn scroll the correction restored lost characters from the canonical sutra (tagged unclear). Opus points per page measured at ~0.006 (#7568), above the flat 0.004 used here.",
@@ -2749,6 +2877,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2800,6 +2929,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.004,
      "points_flat": 0.004,
@@ -2855,6 +2985,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -2909,7 +3040,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "lite>opus",
+   "route_week": "agy-flash-low-read",
    "before": "HOLD → lite>opus"
   },
   {
@@ -2919,17 +3050,28 @@
    "current": "lite",
    "decision": "held",
    "route": "lite",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.6281486362772682,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.17983346525794455,
+    "gap": -0.4483151710193237,
+    "p_within": 0.0227,
+    "alt_wrate": 0.884,
+    "bar_wrate": 0.348
+   },
    "decision_flat_price": "held lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
    "weeks_to_clear": 0.0,
    "v2_weeks": null,
-   "test_score": 0.015446825572649574,
+   "test_score": 0.013473362549581095,
    "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages in 10 manuscripts (all 14 candidates were manuscripts). On 2 manuscripts every page of the lite text is invented or a loop: the corrector answered CONTAIN on 65 pages, which serve the lite text here. Opus points ~0.008 a page (#7568).",
    "routes": [
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -2981,6 +3123,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.004,
      "points_flat": 0.004,
@@ -3036,6 +3179,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3099,11 +3243,21 @@
    "pages_waiting": 39499,
    "current": "lite",
    "decision": "HOLD",
-   "route": "lite>opus",
-   "decision_flat_price": "HOLD lite>opus",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.8296732274749531,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.4996599655239135,
+    "gap": -0.3300132619510396,
+    "p_within": 0.080125,
+    "alt_wrate": 0.5,
+    "bar_wrate": 0.10400000000000001
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
-   "weeks_to_clear": 0.78998,
+   "weeks_to_clear": 1.092194172768703,
    "v2_weeks": null,
    "test_score": 0.021003734091705827,
    "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages in 10 Devanagari printed books. Opus points ~0.005 a page (#7568).",
@@ -3111,6 +3265,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3162,6 +3317,7 @@
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.004,
      "points_flat": 0.004,
@@ -3217,6 +3373,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3271,7 +3428,7 @@
     }
    ],
    "decision_week": "HOLD",
-   "route_week": "lite>opus",
+   "route_week": "agy-flash-low-read",
    "before": "HOLD → lite>opus"
   },
   {
@@ -3279,19 +3436,30 @@
    "title": "Arabic OCR, Flash-Lite (#7568)",
    "pages_waiting": 27659,
    "current": "lite",
-   "decision": "switch",
-   "route": "opus-read",
-   "decision_flat_price": "switch opus-read",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.7708680149500072,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.4368610025394879,
+    "gap": -0.33400701241051933,
+    "p_within": 0.0853,
+    "alt_wrate": 0.576,
+    "bar_wrate": 0.176
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
-   "margin_010": "no change",
-   "weeks_to_clear": 1.714858,
+   "margin_010": null,
+   "weeks_to_clear": 0.7648041374366327,
    "v2_weeks": null,
    "test_score": 0.01447179384505095,
-   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages: 6 printed books, 4 manuscripts. 4 corrections of a modern book declined to reproduce the page and returned only tags (judged misleading); correct.mjs needs a body-letters guard before any write. Opus points ~0.005 a page (#7568). Plus #7341 (2026-10-25/26, backfill-all): 13 held Jabir manuscripts x 2 pages and the Kraus 1935 print (29 pages, one book, its own source), three fresh reads a page judged by Opus with judge.py (MISLEADING = wrong text; FAILED = not accepted). Its lite read is fresh (weight 0.5); its agy and Opus reads use the #6544 diplomatic READ prompt (their own routes). Opus judges its own read there.",
+   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages: 6 printed books, 4 manuscripts. 4 corrections of a modern book declined to reproduce the page and returned only tags (judged misleading); correct.mjs needs a body-letters guard before any write. Opus points ~0.005 a page (#7568). Plus #7341 (2026-10-25/26, backfill-all): 13 held Jabir manuscripts x 2 pages and the Kraus 1935 print (29 pages, one book, its own source), three fresh reads a page judged by Opus with judge.py (MISLEADING = wrong text; FAILED = not accepted). Its lite read is fresh (weight 0.5); its agy read uses the #6544 diplomatic READ prompt (its own route). Its Opus read (26/26 MSS, 29/29 Kraus) stays in the score files as a record, not as a route (switch.bar: no Opus read arm).",
    "routes": [
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3338,12 +3506,12 @@
      "share": 0.0,
      "units": 0.0,
      "cost": null,
-     "api": 0.0,
-     "idle_fit": 1.0
+     "api": 0.0
     },
     {
      "id": "lite>opus",
      "stage": "opus-img@10",
+     "channel": "claude",
      "lane": "correct.mjs (--per-call, default 10)",
      "points": 0.004,
      "points_flat": 0.004,
@@ -3394,12 +3562,12 @@
       0.005086013888322428,
       0.007193549258318634
      ],
-     "api": 0.10663304016489888,
-     "idle_fit": 0.0
+     "api": 0.10663304016489888
     },
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3450,12 +3618,12 @@
       2.4937405322936117,
       5.010218794374729
      ],
-     "api": null,
-     "idle_fit": 0.0
+     "api": null
     },
     {
      "id": "agy-flash-low-read-diplomatic",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3498,55 +3666,11 @@
       2.9608622230884953,
       5.763438083187554
      ],
-     "api": null,
-     "idle_fit": 0.0
-    },
-    {
-     "id": "opus-read",
-     "stage": "opus-read@1",
-     "lane": "claude -p --restricted, the #6544 diplomatic READ prompt (#7341)",
-     "points": 0.0124,
-     "points_flat": 0.0124,
-     "size": null,
-     "tested": true,
-     "prior": [
-      1,
-      1
-     ],
-     "prior_model": {
-      "mean": null,
-      "basis": "flat"
-     },
-     "eff": [
-      14.0,
-      14.0,
-      0.0
-     ],
-     "k": 55,
-     "n": 55,
-     "wrong": 0,
-     "wrate": 0.0,
-     "top": [],
-     "mean": 0.9371307517694356,
-     "ci90": [
-      0.8182105926949447,
-      0.9966180940821525
-     ],
-     "var": 0.003446691176470588,
-     "p80": 0.9646,
-     "share": 6.2e-05,
-     "units": 0.0124,
-     "cost": [
-      0.012442077937005478,
-      0.012990401967994399,
-      0.015155022570849459
-     ],
-     "api": 0.08771454767095707,
-     "idle_fit": 0.0
+     "api": null
     }
    ],
-   "decision_week": "switch",
-   "route_week": "opus-read",
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
    "before": "HOLD → lite>opus"
   },
   {
@@ -3556,6 +3680,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -3567,6 +3692,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3590,13 +3716,13 @@
      "wrong": 9,
      "wrate": 0.3,
      "top": [],
-     "mean": 0.6755553186802071,
+     "mean": 0.6762661159197473,
      "ci90": [
-      0.48107145446069943,
-      0.8441631070950086
+      0.4810182977385941,
+      0.8457887222503399
      ],
      "var": 0.012158785082660516,
-     "p80": 0.129075,
+     "p80": 0.132075,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -3614,6 +3740,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -3625,6 +3752,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3653,13 +3781,13 @@
        "1/27"
       ]
      ],
-     "mean": 0.8063494989243445,
+     "mean": 0.8065596093944988,
      "ci90": [
-      0.6260332421059777,
-      0.9412383876786475
+      0.6270044496169658,
+      0.9414649618741788
      ],
      "var": 0.009459842966606754,
-     "p80": 0.5773,
+     "p80": 0.575925,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -3677,6 +3805,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "agy-flash-low-read",
+   "vs_bar": null,
    "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -3688,6 +3817,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3716,10 +3846,10 @@
        "1/28"
       ]
      ],
-     "mean": 0.18819474596067873,
+     "mean": 0.18777479003500272,
      "ci90": [
-      0.057275237388507635,
-      0.3642300456911748
+      0.05673723904276098,
+      0.3639654408800437
      ],
      "var": 0.008961397058823529,
      "p80": 0.0,
@@ -3731,6 +3861,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3759,19 +3890,19 @@
        "1/28"
       ]
      ],
-     "mean": 0.5668424625175915,
+     "mean": 0.566772151490972,
      "ci90": [
-      0.4175743878017654,
-      0.7121963211636382
+      0.4175643214243833,
+      0.710864897627518
      ],
      "var": 0.007921146953405019,
-     "p80": 0.00255,
+     "p80": 0.002525,
      "share": 2.7651185416559988e-05,
      "units": 1.08,
      "cost": [
-      1.5164358027508729,
-      1.8996338439251204,
-      2.586365523243507
+      1.5192760306556914,
+      1.9011749957364754,
+      2.5864278737128097
      ],
      "api": null
     }
@@ -3787,6 +3918,7 @@
    "current": "lite",
    "decision": "switch",
    "route": "agy-flash-low-read",
+   "vs_bar": null,
    "decision_flat_price": "switch agy-flash-low-read",
    "other_wrong_text_bar": "keep lite",
    "margin_010": "no change",
@@ -3798,6 +3930,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3821,13 +3954,13 @@
      "wrong": 5,
      "wrate": 0.17857142857142858,
      "top": [],
-     "mean": 0.7812415000720478,
+     "mean": 0.7810570043909363,
      "ci90": [
-      0.5957253415829771,
-      0.9243092272212579
+      0.5959268778899918,
+      0.9245767729426461
      ],
      "var": 0.010052849264705883,
-     "p80": 0.4712,
+     "p80": 0.472925,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -3837,6 +3970,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -3865,19 +3999,19 @@
        "1/28"
       ]
      ],
-     "mean": 0.8998261163930256,
+     "mean": 0.8999625403294919,
      "ci90": [
-      0.7972678476106123,
-      0.9715683365053742
+      0.7970812517795918,
+      0.9708567415057688
      ],
      "var": 0.002903225806451613,
-     "p80": 0.94615,
+     "p80": 0.9464,
      "share": 2.7651185416559988e-05,
      "units": 1.08,
      "cost": [
-      1.1116047728404188,
-      1.1888165090386378,
-      1.3546263068763245
+      1.1124195299143242,
+      1.1885519563021725,
+      1.3549434233821884
      ],
      "api": null,
      "idle_fit": 0.0
@@ -3894,6 +4028,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -3905,6 +4040,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3933,13 +4069,13 @@
        "1/18"
       ]
      ],
-     "mean": 0.6367081348235444,
+     "mean": 0.6383555992622468,
      "ci90": [
-      0.39148347849588633,
-      0.8502051388861861
+      0.3939035355661975,
+      0.8517658947646497
      ],
      "var": 0.01928374655647383,
-     "p80": 0.12215,
+     "p80": 0.125175,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -3957,6 +4093,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -3968,6 +4105,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -3991,13 +4129,13 @@
      "wrong": 1,
      "wrate": 0.1,
      "top": [],
-     "mean": 0.7851004496027304,
+     "mean": 0.7855866921260429,
      "ci90": [
-      0.5045395351419846,
-      0.9689357409299943
+      0.5024668329176093,
+      0.9697786190455423
      ],
      "var": 0.021045918367346938,
-     "p80": 0.53475,
+     "p80": 0.535375,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4015,6 +4153,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4026,6 +4165,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4049,13 +4189,13 @@
      "wrong": 0,
      "wrate": 0.0,
      "top": [],
-     "mean": 0.8576112805672723,
+     "mean": 0.8578930493357886,
      "ci90": [
-      0.6068557705254447,
-      0.9914796824601048
+      0.6095416197924336,
+      0.9915788474248249
      ],
      "var": 0.015306122448979591,
-     "p80": 0.739025,
+     "p80": 0.73875,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4064,6 +4204,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -4087,19 +4228,19 @@
      "wrong": 2,
      "wrate": 0.2,
      "top": [],
-     "mean": 0.7504444001119895,
+     "mean": 0.7496190530854367,
      "ci90": [
-      0.5309385608490341,
-      0.9212001787371191
+      0.5299712810385938,
+      0.9201934445479961
      ],
      "var": 0.014423076923076924,
-     "p80": 0.382525,
+     "p80": 0.37835,
      "share": 2.7651185416559988e-05,
      "units": 1.08,
      "cost": [
-      1.1723836196825113,
-      1.4132268881589736,
-      2.034133663738703
+      1.1736662615875315,
+      1.4145434565060506,
+      2.037846273261271
      ],
      "api": null
     }
@@ -4115,6 +4256,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4126,6 +4268,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4154,13 +4297,13 @@
        "1/8"
       ]
      ],
-     "mean": 0.49976205400326235,
+     "mean": 0.5004264807138139,
      "ci90": [
-      0.19112852148919085,
-      0.8110830471449039
+      0.1894524624253872,
+      0.8084614441492037
      ],
      "var": 0.03571428571428571,
-     "p80": 0.058175,
+     "p80": 0.0561,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4178,6 +4321,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4189,6 +4333,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4212,13 +4357,13 @@
      "wrong": 9,
      "wrate": 0.9,
      "top": [],
-     "mean": 0.21382872036558728,
+     "mean": 0.21398166497703533,
      "ci90": [
-      0.029851859579878997,
-      0.4939379568937665
+      0.02962155571392498,
+      0.49706250793680107
      ],
      "var": 0.021045918367346938,
-     "p80": 0.000475,
+     "p80": 0.000425,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4236,6 +4381,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4247,6 +4393,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4270,13 +4417,13 @@
      "wrong": 3,
      "wrate": 0.3333333333333333,
      "top": [],
-     "mean": 0.6162542577862082,
+     "mean": 0.6164862731734244,
      "ci90": [
-      0.3021255267784556,
-      0.8845832976333562
+      0.30458620109467127,
+      0.8855327153342504
      ],
      "var": 0.03155818540433925,
-     "p80": 0.164575,
+     "p80": 0.163625,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4294,6 +4441,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "agy-flash-low-read",
+   "vs_bar": null,
    "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4305,6 +4453,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4328,13 +4477,13 @@
      "wrong": 7,
      "wrate": 0.7,
      "top": [],
-     "mean": 0.3560260428411922,
+     "mean": 0.3559493195855319,
      "ci90": [
-      0.10535767966662309,
-      0.6574887973933029
+      0.10394975700711645,
+      0.6577485266561963
      ],
      "var": 0.028698979591836735,
-     "p80": 0.005375,
+     "p80": 0.004725,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4343,6 +4492,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -4366,19 +4516,19 @@
      "wrong": 2,
      "wrate": 0.2,
      "top": [],
-     "mean": 0.7490781025668757,
+     "mean": 0.7504997229470292,
      "ci90": [
-      0.5303968743257235,
-      0.9196968199463295
+      0.5310943825846297,
+      0.9206151846036645
      ],
      "var": 0.014423076923076924,
-     "p80": 0.376975,
+     "p80": 0.3819,
      "share": 2.7651185416559988e-05,
      "units": 1.08,
      "cost": [
-      1.174300026462009,
-      1.41431138808357,
-      2.036211094518552
+      1.173128597118407,
+      1.4130024858697035,
+      2.0335368541163255
      ],
      "api": null
     }
@@ -4394,6 +4544,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "agy-flash-low-read",
+   "vs_bar": null,
    "decision_flat_price": "HOLD agy-flash-low-read",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4405,6 +4556,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4428,13 +4580,13 @@
      "wrong": 4,
      "wrate": 0.4,
      "top": [],
-     "mean": 0.5708024455877374,
+     "mean": 0.5699663462989567,
      "ci90": [
-      0.27140870525897687,
-      0.8468366714525414
+      0.2682997318913835,
+      0.8449888841810637
      ],
      "var": 0.030612244897959183,
-     "p80": 0.099,
+     "p80": 0.095925,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4443,6 +4595,7 @@
     {
      "id": "agy-flash-low-read",
      "stage": "agy-read",
+     "channel": "agy",
      "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
      "points": null,
      "points_flat": null,
@@ -4466,19 +4619,19 @@
      "wrong": 1,
      "wrate": 0.1,
      "top": [],
-     "mean": 0.8332264332262904,
+     "mean": 0.8335671821382968,
      "ci90": [
-      0.6369619929622546,
-      0.9670036379018709
+      0.6358295260269092,
+      0.9665059704390528
      ],
      "var": 0.010683760683760684,
-     "p80": 0.6764,
+     "p80": 0.6785,
      "share": 2.7651185416559988e-05,
      "units": 1.08,
      "cost": [
-      1.1168520548105692,
-      1.2678260787897702,
-      1.695548575790768
+      1.1174271375782505,
+      1.2667688267864623,
+      1.6985684932698342
      ],
      "api": null
     }
@@ -4494,6 +4647,7 @@
    "current": "lite",
    "decision": "HOLD",
    "route": "lite",
+   "vs_bar": null,
    "decision_flat_price": "HOLD lite",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -4505,6 +4659,7 @@
     {
      "id": "lite",
      "stage": "none",
+     "channel": null,
      "lane": null,
      "points": null,
      "points_flat": null,
@@ -4528,13 +4683,13 @@
      "wrong": 5,
      "wrate": 0.5555555555555556,
      "top": [],
-     "mean": 0.4609334501852273,
+     "mean": 0.4625329135979251,
      "ci90": [
-      0.16865609279554403,
-      0.7674455124013417
+      0.17048961413294123,
+      0.769573584303555
      ],
      "var": 0.033136094674556214,
-     "p80": 0.030675,
+     "p80": 0.032525,
      "share": 0.0,
      "units": 0.0,
      "cost": null,
@@ -4555,34 +4710,33 @@
    ],
    "pages": 30,
    "claude_points": 0.372,
-   "agy_calls": 0,
+   "agy_calls": 32.400000000000006,
    "account_week_share": 0.0018599999999999999,
-   "agy_week_share": 0.0
+   "agy_week_share": 0.0008295355624967997
   },
   {
    "rank": 2,
    "cell": "latin-flash3",
    "routes": [
-    "3flash>opus"
+    "3flash>agy-flash-low"
    ],
    "pages": 30,
-   "claude_points": 0.4871419281491308,
-   "agy_calls": 0,
-   "account_week_share": 0.002435709640745654,
-   "agy_week_share": 0.0
+   "claude_points": 0.372,
+   "agy_calls": 30.6,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0007834502534691997
   },
   {
    "rank": 3,
-   "cell": "chinese-flash3",
+   "cell": "zh-paddle-dice-lt090",
    "routes": [
-    "3flash",
-    "3flash>opus"
+    "paddle>agy-flash-high"
    ],
    "pages": 30,
-   "claude_points": 1.0748758668030203,
-   "agy_calls": 0,
-   "account_week_share": 0.0053743793340151015,
-   "agy_week_share": 0.0
+   "claude_points": 0.372,
+   "agy_calls": 30.6,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0007834502534691997
   }
  ],
  "prior_vs_pilot": [
@@ -5008,15 +5162,6 @@
     1
    ],
    "35/55"
-  ],
-  [
-   "arabic-lite",
-   "opus-read",
-   [
-    1,
-    1
-   ],
-   "55/55"
   ],
   [
    "italian-lite",

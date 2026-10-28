@@ -6,9 +6,9 @@ scripts: [Latn, Tibt, Hani, Arab, Kore, Cyrl, Deva, Taml]
 canons: []
 n_books: 280
 n_pages: 599
-verdict: "Bookkeeping plus one fit, no model calls. Of 214 judged OCR and translation write-ups: 32 are (a) per-page accept and wrong-text calls against the image; 69 are (b) CER or 1-5 scores, 20 of which already feed v1 or v2; 61 are (c) other judged kinds; 52 are (d) not route tests. Of the 32 (a) files, 7 were already in the router table. Nine more go in now, six sources oldest first. Sixteen cannot go in, each for a stated reason. Two decisions change. Latin Flash-Lite goes from keep lite>opus to HOLD → lite>opus; one wrong-leaf book drives this, and without it the Opus correction is 0.98. Arabic Flash-Lite goes from HOLD → lite>opus to switch → opus-read; Opus judges its own read there, on other books. There are 15 new cells. The prior's weight, learned by empirical Bayes over the 15 routes that have both a v1/v2 prior and judged pages, is 7.0 pages, 90% [3.5, 14.5] (was 4 measured / 2 pooled by hand). Calibration slope 0.40 [0.20, 0.60]: the prior predicts the order of the routes but is too extreme. The weight alone changes no decision."
+verdict: "Bookkeeping plus one fit, no model calls. Of 214 judged OCR and translation write-ups: 32 are (a) per-page accept and wrong-text calls against the image; 69 are (b) CER or 1-5 scores, 20 of which already feed v1 or v2; 61 are (c) other judged kinds; 52 are (d) not route tests. Of the 32 (a) files, 7 were already in the router table. Nine more go in now, six sources oldest first. Sixteen cannot go in, each for a stated reason. Under Derek's 11:24Z rule, Opus is the bar to match and never a candidate route. Ranked against that bar, only Tibetan Yigdzin has an agy route that clears it (agy correction 0.87 against Opus 0.85). German Flash-Lite's agy correction misses by a hair (P = 0.89 against a 0.90 bar). Latin Flash-Lite goes from keep to HOLD: one wrong-leaf book pulls every route down. There are 15 new cells; Russian is the only one where an agy route clears the bar. The prior's weight, learned by empirical Bayes over the 15 routes that have both a v1/v2 prior and judged pages, is 7.0 pages, 90% [3.5, 14.5] (was 4 measured / 2 pooled by hand). Calibration slope 0.40 [0.20, 0.60]: the prior predicts the order of the routes but is too extreme. The weight alone changes no decision."
 status: undecided
-decision: "Router table rebuilt as scripts/eval/estimator/router-table/2026-10-28-backfill-all.md/.json (before: 2026-10-28-backfill). rules.json prior.pages_measured = pages_pooled = 7 (fit_prior.py). It is a proposal: ocr-routing-table.json and translation-routing-table.json are untouched (hold list). Next: the Latin wrong-leaf book is a containment case, not a corrector failure; the Arabic opus-read switch needs the two Opus routes on the same books before anyone routes on it."
+decision: "Router table rebuilt as scripts/eval/estimator/router-table/2026-10-28-backfill-all.md/.json (before: 2026-10-28-backfill). rules.json prior.pages_measured = pages_pooled = 7 (fit_prior.py). It is a proposal: ocr-routing-table.json and translation-routing-table.json are untouched (hold list). switch.bar = opus (Derek, 2026-10-28 11:24Z, job inbox): Opus routes are the gate's reference and never picked, and test-next proposes only agy / GPU arms. The #7341 Opus read was ingested and then removed as a route. Next: the Latin wrong-leaf book is a containment case, not a corrector failure."
 superseded_by: null
 issue: [7263, 6740, 5924, 6553, 7341, 6567, 6361]
 router_evidence: [latin-lite, latin-flash3, arabic-lite, tengyur-tr, zh-siku-tr, italian-lite, spanish-lite, korean-lite, russian-lite, portuguese-lite, danish-lite, hindi-lite, middle-english-lite, mhg-lite, old-french-lite, ottoman-lite, tamil-lite, turkish-lite]
@@ -55,20 +55,46 @@ Before the rules.json changes, `build.py` with the two new options reproduces 20
 | #5924 served Latin pages (10-22) | latin-lite lite, latin-flash3 3flash | 9/12 (4 books), 22/24 (8 books) |
 | #5924 Latin 250, Step C / C2-C5 (10-23/24) | latin-lite, all 4 routes incl. a new agy-flash-low-read; book group 5924-latin with the pilot and router-test reads (the same 10 books) | readings: lite 421/690, Opus correction 659/750, agy correction 405/500, agy read 448/500 |
 | #6553 untested cells (10-25) | 13 new language cells (lite at weight 0.5; agy read where measured) | see below |
-| #7341 Jabir MSS + Kraus (10-25/26) | arabic-lite: lite (weight 0.5), new agy-flash-low-read-diplomatic and opus-read (#6544 READ prompt) | MSS (13 books): lite 17/26, agy 8/26 (16 reads never came), Opus 26/26; Kraus (1 book): 28, 27, 29 of 29 |
+| #7341 Jabir MSS + Kraus (10-25/26) | arabic-lite: lite (weight 0.5), new agy-flash-low-read-diplomatic (#6544 READ prompt) | MSS (13 books): lite 17/26, agy 8/26 (16 reads never came); Kraus (1 book): 28 and 27 of 29. Opus's read (26/26, 29/29) stays in the score files, not as a route |
 
-**Decisions that change** (against 2026-10-28-backfill):
+**Opus is the bar, not a candidate** (Derek, 2026-10-28 11:24Z, job inbox: "the route search is agy Gemini CLI and GPU routes ONLY. Opus is the judge and the bar to match, never a candidate route ... recommend only agy/GPU routes (or keep the served route if none clears the bar)"). It is now `rules.json switch.bar = opus`:
+- The gate's reference is the best measured Opus route in the cell.
+- Only agy / GPU routes and the served draft can be picked. A cell with none that passes keeps its current route.
+- HOLD names the best candidate, not Opus.
+- Test-next proposes no Opus arm.
+- The #7341 Opus read, briefly a route here (where it had flipped Arabic to "switch → opus-read"), is removed as a route.
 
-1. **Latin Flash-Lite: keep lite>opus ⇒ HOLD → lite>opus.** The Opus correction falls to 0.85 [0.69, 0.96]. One of the 10 books is another leaf's text on all 25 pages. The correctors CONTAIN it, so lite is served, and every reading of those pages is misleading. Without that book the Opus correction is 659/675 (0.98). This is a containment case (`containment-on-finding.md`), not a corrector failure. The agy correction is 0.80 and the agy read 0.83.
-2. **Arabic Flash-Lite: HOLD → lite>opus ⇒ switch → opus-read.** opus-read is 55/55 (14 books), 0.94 [0.82, 1.00], against the correction's 0.77. Opus judges its own read there, and the two Opus routes were measured on different books (held Jabir manuscripts against #7568's terminal books). Measure both on the same pages before routing on it.
+The best agy / GPU route in each cell against the Opus bar, ranked by the gap. P = P(acc_route ≥ acc_Opus − 0.08), the gate's test, which needs ≥ 0.9:
+
+| cell | pages waiting | Opus bar | best agy / GPU route | gap | P | wrong text (route / bar) | decision |
+|---|---|---|---|---|---|---|---|
+| Tibetan, Yigdzin (#6560) | 280,623 | yigdzin>opus 0.85 | yigdzin>agy-flash-low 0.87 | +0.02 | 0.96 | 8.3% / 8.3% | switch → yigdzin>agy-flash-low |
+| German OCR, Flash-Lite | 418,603 | lite>opus 0.94 | lite>agy-flash-low 0.92 | -0.01 | 0.89 | 6.7% / 3.1% | keep |
+| Latin print, Flash-Lite text (#5924) | 861,506 | lite>opus 0.85 | agy-flash-low-read 0.83 | -0.02 | 0.69 | 10.4% / 11.7% | HOLD → agy-flash-low-read |
+| German OCR, 3 Flash | 353,186 | 3flash>opus 0.98 | 3flash>agy-flash-low 0.86 | -0.11 | 0.32 | 3.3% / 0.0% | keep |
+| Tibetan translation, corrected Kangyur text (#6948) | 0 | opus-cli 0.88 | agy-flash-low@4 0.72 | -0.16 | 0.21 | 13.3% / 3.3% | HOLD → agy-flash-low@4 |
+| Chinese Paddle, Kanripo dice < 0.90 | 453,715 | paddle>opus 0.82 | paddle>agy-flash-high 0.58 | -0.24 | 0.05 | 26.7% / 3.3% | HOLD → paddle>agy-flash-high |
+| Chinese OCR, Flash-Lite (#7568) | 18,720 | lite>opus 0.76 | agy-flash-low-read 0.51 | -0.26 | 0.26 | 49.3% / 6.7% | HOLD → agy-flash-low-read |
+| Sanskrit OCR, Flash-Lite (#7568) | 39,499 | lite>opus 0.83 | agy-flash-low-read 0.50 | -0.33 | 0.08 | 50.0% / 10.4% | HOLD → agy-flash-low-read |
+| Arabic OCR, Flash-Lite (#7568) | 27,659 | lite>opus 0.77 | agy-flash-low-read 0.44 | -0.33 | 0.09 | 57.6% / 17.6% | HOLD → agy-flash-low-read |
+| Greek OCR, Flash-Lite (#7568; manuscripts) | 42,916 | lite>opus 0.63 | agy-flash-low-read 0.18 | -0.45 | 0.02 | 88.4% / 34.8% | held |
+
+Only Tibetan Yigdzin clears the bar (agy correction 0.87 against Opus 0.85; it already switched before this PR). German Flash-Lite's agy correction misses by a hair (P 0.89). No agy route is within reach on Chinese, Sanskrit, Arabic or Greek. There a fresh agy read is 0.33 to 0.45 below the Opus correction, so those cells keep their served lite text, under HOLD.
+
+**Decisions that change** (against 2026-10-28-backfill; every Opus target is renamed to the best candidate):
+1. **Latin Flash-Lite: keep lite>opus ⇒ HOLD → agy-flash-low-read.**
+   - Every route drops. One of the 10 #5924 books is another leaf's text on all 25 pages. The correctors CONTAIN it, so lite is served, and every reading of those pages is misleading.
+   - Without that book, the Opus correction is 659/675 (0.98) and the agy read 407/450 (0.90). This is a containment case (`containment-on-finding.md`), not a corrector failure.
+   - Bar 0.85; agy read 0.83 (P 0.69); agy correction 0.80.
+2. **HOLD targets move off Opus** (no change in what is served): zh-lite, sanskrit-lite, arabic-lite → agy-flash-low-read; zh-paddle-dice → paddle>agy-flash-high; zh-6561-served → paddle; tibetan-tr → agy-flash-low@4; german-tr-flash3 / german-tr-lite → their served flash3 / flash-lite.
 
 **New cells.** All 13 language cells come from #6553 (one page a book; the lite reads at weight 0.5). The other two are tengyur-tr and zh-siku-tr.
 
 | cell | pages waiting | routes (judged) | decision |
 |---|---|---|---|
-| tengyur-tr | 0 | agy@1 16/21, 3flash 11/21 | HOLD → agy@1 |
-| zh-siku-tr | 50,676 | agy@1 26/30, stored 12/30 | HOLD → agy@1 |
-| russian-lite | 18,952 | lite 23/28, agy read 26/28 | **switch → agy-flash-low-read** |
+| tengyur-tr | 0 | agy@1 16/21, 3flash 11/21 (no Opus bar measured) | HOLD → agy@1 |
+| zh-siku-tr | 50,676 | agy@1 26/30, stored 12/30 (no Opus bar measured) | HOLD → agy@1 |
+| russian-lite | 18,952 | lite 23/28, agy read 26/28 (no Opus bar: the gate falls back to the best route) | **switch → agy-flash-low-read** |
 | korean-lite | 16,580 | lite 4/28, agy read 16/28 | HOLD → agy read |
 | ottoman-lite / tamil-lite | 131 / 225 | lite 3/10, 6/10; agy read 8/10, 9/10 | HOLD → agy read |
 | italian, spanish, portuguese, danish, hindi, middle-english, mhg, old-french, turkish | 50 – 46,950 | lite only (lowest: MHG 1/10, Turkish 4/9; highest: Hindi 10/10, Danish 9/10) | HOLD → lite |
@@ -110,11 +136,11 @@ Posterior mean [90%], old weight (4 / 2) → new (7 / 7), same evidence. This sh
 | zh-paddle-dice / paddle>opus | 0.64 | 26/30 | 0.85 [0.74, 0.94] | 0.82 [0.71, 0.91] |
 | untested: chinese-flash3 / 3flash>opus | 0.76 | — | 0.76 [0.23, 1.00] | 0.76 [0.47, 0.96] |
 
-**Flips from the weight alone: none.** The weight narrows the untested routes most (they carry only the prior), which moves the test-next scores. The proposed tests are now latin-lite agy-flash-low-read (every route there is now tested, so the table names the one with the largest share × variance), latin-flash3 3flash>opus, and chinese-flash3.
+**Flips from the weight alone: none.** The weight narrows the untested routes most, because they carry only the prior. Test-next now names only agy arms: latin-lite agy-flash-low-read, latin-flash3 3flash>agy-flash-low, and zh-paddle-dice paddle>agy-flash-high. Each is 30 pages, about 32 agy calls and 0.37 Claude points of judging.
 
 **Files.**
 - `scripts/eval/estimator/router-table/evidence/`: `derive_backfill_all.py` and the eight new score.json files.
-- `rules.json`: evidence_rules, two stages (agy-text@1, opus-read@1), 15 cells, evidence on latin-lite, latin-flash3 and arabic-lite, and the prior's `_learned` note.
-- `build.py`: book_group, weight, and prior_model / eff in the JSON.
+- `rules.json`: evidence_rules, switch.bar, a new stage agy-text@1, 15 cells, evidence on latin-lite, latin-flash3 and arabic-lite, and the prior's `_learned` note.
+- `build.py`: book_group, weight, switch.bar = opus (is_bar), the ranked agy-against-Opus section, and prior_model / eff / vs_bar in the JSON. Test-next also counts agy calls for agy-read stages.
 - `fit_prior.py`.
 - `2026-10-28-backfill-all.{md,json}`.

@@ -129,10 +129,17 @@ def idle_claude(paths):
     return 0.0, None, None
 
 
+def is_bar(r, P):
+    """switch.bar = opus (Derek, 2026-10-28 11:24Z): a Claude route is the bar to match, never a candidate."""
+    return P['switch'].get('bar') == 'opus' and r.get('channel') == 'claude'
+
+
 def gate(M, P, wt_max, within):
-    """The quality gate: measured routes with P(acc >= acc_best - within) >= switch.p and wrong text <= the bar."""
-    best = max(M, key=lambda r: r['mean'])
-    ok = [r for r in M if sum(u >= v - within for u, v in zip(r['_d'], best['_d'])) / len(best['_d']) >= P['switch']['p']
+    """The quality gate: measured routes with P(acc >= acc_best - within) >= switch.p and wrong text <= the bar.
+    With switch.bar = opus, acc_best is the best measured Opus route's (the best measured route's when no Opus route is
+    measured) and only the other routes are candidates."""
+    best = max([r for r in M if is_bar(r, P)] or M, key=lambda r: r['mean'])
+    ok = [r for r in M if not is_bar(r, P) and sum(u >= v - within for u, v in zip(r['_d'], best['_d'])) / len(best['_d']) >= P['switch']['p']
           and r['wrate'] <= wt_max(best)]
     return best, ok
 
@@ -145,8 +152,8 @@ def pick(ok, cur, cost):
 def decide(cell, M, cur, P, cost, wt_max, within=None):
     if cell.get('held'): return 'held', cur
     if not M: return 'keep (UNTESTED)', cur
-    best = max(M, key=lambda r: r['mean'])
-    if not any(r['p80'] >= P['hold']['p'] for r in M): return 'HOLD', best
+    cand = [r for r in M if not is_bar(r, P)]
+    if not any(r['p80'] >= P['hold']['p'] for r in M): return 'HOLD', max(cand, key=lambda r: r['mean']) if cand else cur
     p = pick(gate(M, P, wt_max, P['switch']['within'] if within is None else within)[1], cur, cost)
     return ('keep' if p is cur else 'switch'), p
 
@@ -233,7 +240,7 @@ def main():
                 a, b = a + ke, b + (ne - ke)
                 top = sorted(x['classes_k_of_n'].items(), key=lambda kv: -int(kv[1].split('/')[0]))[:3]
             dr = [rng.betavariate(a, b) for _ in range(N)]; m = sum(dr) / N; u, u0 = usd_per_page(st, rates), usd_per_page(st0, rates)
-            rs.append(dict(id=r['id'], stage=r['stage'], lane=st.get('lane'), points=st.get('points'), points_flat=st0.get('points'),
+            rs.append(dict(id=r['id'], stage=r['stage'], channel=st['channel'], lane=st.get('lane'), points=st.get('points'), points_flat=st0.get('points'),
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)], prior_model=dict(zip(('mean', 'basis'), pb[cell['id'], r['id']])), eff=x and [round(v, 4) for v in x['eff']],
                            k=k, n=n, wrong=w, wrate=wrate, top=top, mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
                            p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
@@ -248,7 +255,7 @@ def main():
         sens = None
         if dec in ('keep', 'switch'):
             d10, p10 = decide(cell, M, cur, P, steady, wt_abs, within=P['switch']['sensitivity_within'])
-            best = max(M, key=lambda r: r['mean'])
+            best = gate(M, P, wt_abs, P['switch']['within'])[0]
             if p10 is pk: sens = 'no change'
             else:
                 ratio = steady(pk) / steady(p10) if steady(p10) else float('inf')
@@ -258,19 +265,27 @@ def main():
                            and ratio >= P['switch']['sensitivity_cheaper'] else ''))
         pages = cell.get('pages_waiting', v2.get(cell.get('v2'), {}).get('pages_waiting', 0))
         ctx[cell['id']] = (cell, M, cur, pages)
-        rows.append(dict(id=cell['id'], title=cell['title'], pages_waiting=pages, current=cur['id'], decision=dec, route=pk['id'],
+        # the best agy / GPU route (a route that draws capacity and is not the bar) against the best measured Opus route
+        bars, alts = [r for r in M if r['channel'] == 'claude'], [r for r in M if r['channel'] and r['channel'] != 'claude']
+        vs_bar = None
+        if bars and alts:
+            bb, aa = max(bars, key=lambda r: r['mean']), max(alts, key=lambda r: r['mean']); w = P['switch']['within']
+            vs_bar = dict(bar=bb['id'], bar_mean=bb['mean'], alt=aa['id'], alt_mean=aa['mean'], gap=aa['mean'] - bb['mean'],
+                          p_within=sum(u >= v - w for u, v in zip(aa['_d'], bb['_d'])) / N, alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
+        rows.append(dict(id=cell['id'], title=cell['title'], pages_waiting=pages, current=cur['id'], decision=dec, route=pk['id'], vs_bar=vs_bar,
                          decision_flat_price=f"{dflat} {pflat['id']}",
                          other_wrong_text_bar=None if alt[0] == dec and alt[1] is pk else f"{alt[0]} {alt[1]['id']}",
                          margin_010=sens, weeks_to_clear=pages * pk['share'], v2_weeks=v2.get(cell.get('v2'), {}).get('weeks_to_drain'),
-                         test_score=max([pages * r['share'] * r['var'] for r in rs if r['share']] or [0]),
+                         test_score=max([pages * r['share'] * r['var'] for r in rs if r['share'] and not is_bar(r, P)] or [0]),  # no new Opus arm (switch.bar)
                          caveat=cell.get('caveat') or cell.get('held'), routes=rs))
     for i, r in enumerate(sorted([r for r in rows if r['test_score'] and r['decision'] != 'held'], key=lambda r: -r['test_score'])[:P['test_next']['n']]):
         r['test_next'] = i + 1
     T = P['test_next']; tests = []
     for row in sorted([r for r in rows if r.get('test_next')], key=lambda r: r['test_next']):
-        rs = [r for r in row['routes'] if not r['tested']] or [max(row['routes'], key=lambda r: r['share'] * r['var'])]
+        cand = [r for r in row['routes'] if not is_bar(r, P)]
+        rs = [r for r in cand if not r['tested']] or [max(cand, key=lambda r: r['share'] * r['var'])]
         pts = T['pages_per_test'] * (len(rs) * T['judge_points_per_output'] + sum(r['points'] or 0 for r in rs))
-        agy = T['pages_per_test'] * sum(S[r['stage']]['draw'] for r in rs if r['stage'] == 'agy')
+        agy = T['pages_per_test'] * sum(S[r['stage']]['draw'] for r in rs if S[r['stage']]['channel'] == 'agy')
         tests.append(dict(rank=row['test_next'], cell=row['id'], routes=[r['id'] for r in rs], pages=T['pages_per_test'], claude_points=pts, agy_calls=agy,
                           account_week_share=pts / 100 / free['claude'], agy_week_share=agy / free['agy']))
 
@@ -332,7 +347,7 @@ def main():
            "Cost is marginal (the draft is already paid): Claude weekly points or agy calls per ACCEPTED page, median [90%]; "
            f"API list = dollars at list price. Opus lanes: {lanes}. "
            f"Weeks to clear = pages waiting x draw per page / the channel's free week ({free['claude']:g} Claude account-weeks, {free['agy']:,.0f} agy calls; v2 capacity), the cell alone on its channel.", '',
-           f"Rules: the quality gate keeps measured routes with P(acc >= acc_best - {sw['within']}) >= {sw['p']} and wrong-text pages (book-weighted, as acceptance) <= {"the best route's rate + " if rel else ''}{sw['wrong_text_max']:.0%}; "
+           (f"**Opus is the bar, not a candidate** (switch.bar = opus, Derek 2026-10-28): acc_best is the best measured Opus route's, only agy / GPU routes and the served draft can be picked, and a cell with none that passes keeps its current route. " if sw.get('bar') == 'opus' else '') + f"Rules: the quality gate keeps measured routes with P(acc >= acc_best - {sw['within']}) >= {sw['p']} and wrong-text pages (book-weighted, as acceptance) <= {"the best route's rate + " if rel else ''}{sw['wrong_text_max']:.0%}; "
            "among them the pick is the lowest median **expected dollars per accepted page**, one unit for every channel (points or agy calls x the plan's "
            f"price per point or call, a paid API at list, a made draft 0, / acceptance). Fees: {fee_src}; the dollar figures are not committed. "
            f"**switch** when the pick is not the current route, else **keep**; **HOLD** when no measured route has P(acc >= {h['acc']}) >= {h['p']}; "
@@ -357,6 +372,11 @@ def main():
                        f"{f'{r['wrong']}/{r['n']}' if r['tested'] else '—'} | {', '.join(f'{c} {v}' for c, v in r['top']) or '—'} | {cost(r)} | "
                        f"{f'{row['pages_waiting'] * r['share']:.1f}' if r['share'] else '—'} | {dec} |")
         if row['caveat']: out.append(f"| | | | | | *{row['caveat']}* | | | | | |")
+    vb = sorted([r for r in rows if r['vs_bar']], key=lambda r: -r['vs_bar']['gap'])
+    out += ['', f"**The best agy / GPU route against the Opus bar** (cells with both measured; ranked by the gap; P = P(acc_route >= acc_Opus - {sw['within']}), the gate's test, which needs >= {sw['p']}):", '',
+            '| cell | pages waiting | Opus bar | best agy / GPU route | gap | P | wrong text (route / bar) | decision |', '|' + '---|' * 8]
+    out += [f"| {r['title']} | {r['pages_waiting']:,} | {r['vs_bar']['bar']} {r['vs_bar']['bar_mean']:.2f} | {r['vs_bar']['alt']} {r['vs_bar']['alt_mean']:.2f} | {r['vs_bar']['gap']:+.2f} | "
+            f"{r['vs_bar']['p_within']:.2f} | {r['vs_bar']['alt_wrate']:.1%} / {r['vs_bar']['bar_wrate']:.1%} | {fmt(r['decision'], r['route'])} |" for r in vb]
     out += ['', '**Test next** (proposals; score = pages waiting x share of the channel\'s free week per page x Var(acceptance)):', '']
     out += [f"{t['rank']}. {t['cell']}: {', '.join(t['routes'])}, {t['pages']} pages each, judged by Opus against the image: {t['claude_points']:.2f} Claude points ({t['account_week_share']:.2%} of the free Claude week)" + (f" + {t['agy_calls']:.0f} agy calls ({t['agy_week_share']:.2%} of agy's)" if t['agy_calls'] else '') for t in tests]
     out += ['', '**Prior against the pilot** (prior mean, worth a + b pages → what the judge accepted):', '']
