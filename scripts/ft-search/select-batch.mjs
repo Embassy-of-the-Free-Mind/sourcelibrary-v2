@@ -63,12 +63,21 @@ Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":
 const c = await MongoClient.connect(process.env.MONGODB_URI);
 const db = c.db('bookstore');
 const searched = new Set(await db.collection('first_translation_attempts').distinct('book_id', { method: METHOD }));
+// Books the old card system searched. Its "found" verdicts were mostly wrong (68 of 71 adjudicated
+// conflicts went to the fresh search, 2026-10-28), so a book with an old search still needs one, but
+// a book with no search at all comes first (Derek, 2026-10-28).
+const oldSearched = new Set(await db.collection('first_translation_attempts').distinct('book_id', { method: { $ne: METHOD } }));
 const pool = await db.collection('books').find(
   { visible: true, pages_translated: { $gt: 0 }, language: { $nin: ['English', 'english', 'en', 'eng'] } },
-  { projection: { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1 } },
+  { projection: { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1, is_first_translation: 1, prior_translation: 1 } },
 ).toArray();
 const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)));
-const batch = shuffle(eligible, SEED).slice(0, N);
+// Priority tiers, each shuffled: 0 never searched; 1 searched by the old system, no badge or credit;
+// 2 already badged or credited (a fresh search there only adds evidence).
+const tier = (b) => (!oldSearched.has(b.id || String(b._id)) ? 0 : b.is_first_translation || b.prior_translation ? 2 : 1);
+const tiers = [0, 1, 2].map((t) => shuffle(eligible.filter((b) => tier(b) === t), SEED + t));
+const batch = tiers.flat().slice(0, N);
+console.log(`tiers: never searched ${tiers[0].length}, old search unmarked ${tiers[1].length}, badged/credited ${tiers[2].length}`);
 
 mkdirSync(OUT, { recursive: true });
 let missing = 0;
