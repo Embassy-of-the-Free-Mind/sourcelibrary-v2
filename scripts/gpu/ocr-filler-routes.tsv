@@ -1,0 +1,21 @@
+# ocr-filler-routes.tsv — the GPU OCR routes scripts/gpu/ocr-filler.sh may queue on gex45 (#6871). Tab-separated.
+# A route is listed here only when (1) its reader passed a gate (a row in scripts/lib/ocr-routing-table.json or the
+# lane decision tree), (2) a writer applies its reads with guards + provenance, and (3) its pages are planned in a lane dir.
+# Order = rank: the filler queues the first enabled route with pages left. Disable a route with `-` in the first column.
+#
+# Columns: on  route  kind  issue  lane_dir  hold  deadline_h  downstream
+#   kind paddle-zh: the Siku Quanshu Paddle lane (#5600). Task = scripts/gpu/paddle-zh-queue-task.sh (read, then
+#   `paddle-zh-lane.mjs apply --apply`: revisions, human-edit guard, loop guards, Kanripo WYG screen, hold kept).
+#   Pages left = planned pages with no out/<bid>/<pn>.txt|.err.
+#
+# Routes considered and NOT listed (2026-10-28, job gpu-ocr-filler-6871):
+#   chinese-print (Paddle split-leaf, #6101)   frame read and applied (73,330 pp); census 2026-10-26 found 0 books left.
+#                                              Next frame = the Berlin import (422 bk, no page records, license unknown).
+#   tibetan (Yigdzin, #4523)                   sets A/B00/B01 (50,794 pp) read by job tib-gemini-ocr-6871, done 10-28 06:47Z;
+#                                              the apply (#4523 write rule) is pending on main, not GPU work.
+#   european print arm c (#7567)               adopted 10-28, but E3 (guards) + E5 run now (job euro-gpu-e3e5-7567) and no
+#                                              production draft→agy runner exists yet. Add it here when one does.
+#   gpu-backlog-5660 Siku residue              22K pp scattered ~6 per book, no stored read: the textless pages the lane
+#                                              does not store. Re-reading them would mostly re-find blanks.
+#   Siku duplicates (no hold, 1,044 bk)        skipped on purpose by job paddle-skqs-rest-6388 (a read copy is live).
+on	zh-histories-7546	paddle-zh	7546	/root/jobs/zh-histories-7546	zh-histories-7546	3	paddle-zh-lane.mjs apply --apply (revisions, guards, WYG screen); books stay held zh-histories-7546 until translation is released (#7546 priority juan first)
