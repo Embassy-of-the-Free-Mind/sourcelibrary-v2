@@ -1,0 +1,105 @@
+{
+ "cells": {
+  "tib-kangyur|manuscript": {
+   "routes": {
+    "yigdzin": {
+     "n": 29,
+     "books": 29,
+     "accept": "16/29",
+     "wrong_text_pages": "11/29",
+     "classes_k_of_n": {
+      "O6": "25/29",
+      "E2": "23/29",
+      "O10": "1/29",
+      "O4": "9/29",
+      "O5": "11/29",
+      "O12": "3/29"
+     },
+     "script_basis": {
+      "book": 29
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 29,
+     "books": 29,
+     "accept": "27/29",
+     "wrong_text_pages": "2/29",
+     "classes_k_of_n": {
+      "O12": "8/29",
+      "O6": "7/29",
+      "E2": "7/29",
+      "O5": "5/29",
+      "O8": "5/29",
+      "O4": "1/29"
+     },
+     "script_basis": {
+      "book": 29
+     }
+    },
+    "yigdzin>opus-correct": {
+     "n": 29,
+     "books": 29,
+     "accept": "26/29",
+     "wrong_text_pages": "2/29",
+     "classes_k_of_n": {
+      "O6": "13/29",
+      "E2": "16/29",
+      "O4": "3/29",
+      "O5": "2/29",
+      "O12": "6/29"
+     },
+     "script_basis": {
+      "book": 29
+     }
+    }
+   }
+  },
+  "tib-kangyur|unknown": {
+   "routes": {
+    "yigdzin": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O6": "1/1",
+      "O10": "1/1"
+     },
+     "script_basis": {
+      "none": 1
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O6": "1/1",
+      "O5": "1/1",
+      "O12": "1/1"
+     },
+     "script_basis": {
+      "none": 1
+     }
+    },
+    "yigdzin>opus-correct": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O6": "1/1",
+      "O12": "1/1",
+      "E2": "1/1"
+     },
+     "script_basis": {
+      "none": 1
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/route-judge-6740/results/tibetan-30-2026-10-27/score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

@@ -1,0 +1,46 @@
+{
+ "at": "2026-10-28T12:27:25.925Z",
+ "apply": true,
+ "run": "cli-ocr-20261028122723-644561",
+ "reason": "#7263 router-next: agy read judged ACCEPTED by the blind Opus route judge against the image (waiting page, one per book)",
+ "written": 16,
+ "skipped": {
+  "letters outside the book's scripts": 4,
+  "only 37% of its words are in the stored read: check by eye": 1,
+  "only 31% of its words are in the stored read: check by eye": 1
+ },
+ "held_yatags": 0,
+ "yatags_hits": 0,
+ "yatags_kept": 0,
+ "yatags_reverted": 0,
+ "written_page_ids": [
+  "6a267c8b6c1f37c9c4f3639d",
+  "6a267f6988f11913ee9c90e5",
+  "6a26be080e247ebad6de6b66",
+  "69d38aeda63cc0f3ba265688",
+  "69b51ed9ff09e4fe943b610f",
+  "69b51d7ef23ccdcced3082ff",
+  "69f68f1e72ffd456014ca376",
+  "69ef3dbc72c1376fdf2b0c91",
+  "69dbc92a1040d1d5e20a11cb",
+  "6a4b2a9c7c38d5e8eb9bec99",
+  "69b51db7cf111105c428eac7",
+  "69b4cc42d2bf9b45ea479aab",
+  "69dbcba41040d1d5e20b9d02",
+  "69b51e61ff09e4fe943ae02b",
+  "695435261479a63c1108b546",
+  "69bd9e066120d54bd037ac48"
+ ],
+ "write_guard_repaired": 0,
+ "write_guard_refused": [],
+ "skipped_pages": {
+  "69b51de4efd8df28f2dac9cc": "letters outside the book's scripts",
+  "69de98cb1b234a773e4395fa": "only 37% of its words are in the stored read: check by eye",
+  "69f4c1642f21e173d2fe1987": "only 31% of its words are in the stored read: check by eye",
+  "69b51ebc9a81ef7feb3da665": "letters outside the book's scripts",
+  "699356d28e28d8f4c5d3bd80": "letters outside the book's scripts",
+  "69b51e41ff09e4fe943aab70": "letters outside the book's scripts"
+ },
+ "contain_claims": [],
+ "failed_reads": 0
+}

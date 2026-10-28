@@ -1,0 +1,32 @@
+{
+ "cells": {
+  "ar-kraus|print": {
+   "routes": {
+    "agy-flash-low-read-diplomatic": {
+     "n": 29,
+     "books": 1,
+     "accept": "27/29",
+     "wrong_text_pages": "0/29",
+     "classes_k_of_n": {
+      "FAILED": "2/29"
+     },
+     "script_basis": {
+      "page": 29
+     }
+    },
+    "lite": {
+     "n": 29,
+     "books": 1,
+     "accept": "28/29",
+     "wrong_text_pages": "1/29",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 29
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/arabic-kraus-7341.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

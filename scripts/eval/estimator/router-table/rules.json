@@ -17,7 +17,21 @@
     "_learned": "2026-10-28 (#7263, job router-backfill-all-7263; fit_prior.py, was 4 / 2 by hand). Empirical Bayes over the 15 tested routes whose prior comes from v1 / v2: route acceptance ~ Beta(m W, (1 - m) W), the book-scaled judged k of n beta-binomial around it. Maximum marginal likelihood W = 7.0 pages, profile 90% [3.5, 14.5], route bootstrap [3.4, 25.8]. Measured and pooled priors fitted apart give 4.3 [1.4, 12.5] and 10.5 [4.1, 29.2]; the split gains 0.52 log-likelihood for one more parameter, so one weight for both (the data do not say pooled priors are worse). Calibration: logit(acceptance) = 1.2 + 0.40 [0.20, 0.60] x logit(prior mean): the prior predicts the order of routes but its means are too extreme and too low. One route carries most of the misfit: Latin Flash-Lite, v1 0.035 (P(passes the absolute CER floors)) against 0.65 judged; without it W = 14.9. Refit after each backfill: python3 scripts/eval/estimator/router-table/fit_prior.py <table>.json.",
     "flat": [1, 1],
     "_v1_charts_left_out": "German and French OCR have no v1 chart: latin-script-other is web-transcribed text and gives Flash-Lite 0.998, against 17/30 the judge accepted on Latin. Chinese print: v1 says its floors measure the reference panel's variant forms.",
-    "clip": [0.02, 0.98]
+    "clip": [0.02, 0.98],
+    "calibration": {"alpha": 1.12, "beta": 0.38, "pages": 16.9, "in_force": false,
+      "why": "Fitted 2026-10-28 (fit_prior.py, 15 tested routes, book-scaled): logit(acceptance) = 1.12 + 0.38 x logit(v1/v2 mean), W 16.9 pages. It fails its held-out check: leaving one CELL out, the held-out log likelihood is -205.3 calibrated against -202.1 uncalibrated, and |prior mean - observed| 0.139 against 0.119; without Latin Flash-Lite's draft (v1 0.035 against 0.65 judged, the route that makes the slope) -191.6 against -184.3. An intercept-only shift (+0.36 logit, W 10) is a wash held out (-202.7 against -202.1; MAE 0.109 against 0.119). So the uncalibrated prior stays in force and the calibration is shown as a sensitivity; refit after each backfill."}
+  },
+  "script_split": {
+    "_about": "Derek, 2026-10-28 11:54Z (job inbox, router-next-7263): 'do we distinguish between manuscript and print? ... because we must ... might need to recalculate.' Every cell is split by the SCRIPT TYPE of its pages (build.py expand_by_script): <id>/print, <id>/manuscript, <id>/unknown. A judged page's type: the <script> tag of its current OCR where pages.script_type is missing, the tag on a conflict, else the field, else its book's majority, else unknown (reported apart, never pooled); mixed counts as print (scripts/eval/router-next-7263/script-type.mjs). Evidence: the same sources cut per page (split_evidence.py, every source reconciled page by page first). Pages waiting: the cell's count x the share waiting-split.mjs measured on its books. A manuscript cell takes no v1/v2 prior (fitted on print), and with fewer than min_manuscript_pages judged pages on every route it says UNTESTED / HOLD rather than inheriting print numbers; so does an unknown-script cell (its prior is print's). --no-script-split builds the table unsplit.",
+    "on": true,
+    "scripts": ["print", "manuscript", "unknown"],
+    "evidence_dir": "scripts/eval/estimator/router-table/evidence/by-script/",
+    "waiting": "scripts/eval/router-next-7263/results/waiting-split-2026-10-28.json",
+    "min_manuscript_pages": 10,
+    "planned": {
+      "greek-lite/manuscript": {"route": "lite>opus", "stage": "opus-img@10", "why": "Derek 2026-10-28 12:06Z: 'we need opus for manuscripts ... at least for greek'"},
+      "greek-flash3/manuscript": {"route": "3flash>opus", "stage": "opus-img@10", "why": "Derek 2026-10-28 12:06Z: 'we need opus for manuscripts ... at least for greek'"}
+    }
   },
   "cluster_by_book": true,
   "_cluster_note": "The judge's pages are not independent within a book. When a route's n pages come from fewer books (Latin: 30 pages in 9 books), k and n are scaled by books / n before they enter the posterior. Wrong-text pages are read as the page count k of n.",
@@ -36,6 +50,8 @@
     "wrong_text_bar": "relative",
     "_wrong_text_bar": "relative (Derek, 2026-10-26: cost is part of the measure): a route passes when its wrong-text rate is at most the best route's rate + wrong_text_max, so the cheaper of two equally good routes wins. absolute: at most wrong_text_max outright, which keeps the current route whenever every route misses 2% (Tibetan: 3/30 on both correctors). The other bar is reported as a sensitivity.",
     "_pick": "2026-10-26b (Derek: 'and this takes cost into account?' -> 'yes'): among the routes that pass the gate, the pick is the lowest median expected dollars per ACCEPTED page, one unit for every channel (was: the lowest share of the channel's free week per RAW page). The margin is unchanged; sensitivity_within reports what a 0.10 margin would pick, flagged when that route is 0.05-0.10 below the best and >= sensitivity_cheaper times cheaper.",
+    "bar_scope": "print",
+    "_bar_scope": "Derek, 2026-10-28 12:06Z (job inbox, router-next-7263): 'I am assuming we need opus for manuscripts -- that is the plan ... at least for greek, maybe others measure ok.' So switch.bar = opus applies to PRINT (and unknown) cells only: in a MANUSCRIPT cell an Opus route is a candidate like any other, the gate's reference is the best measured route, and when no agy / GPU route clears it the router picks Opus. Greek manuscripts: Opus is the planned route (script_split.planned), no agy / GPU test needed to justify it.",
     "sensitivity_within": 0.10,
     "sensitivity_cheaper": 5
   },
@@ -91,14 +107,18 @@
         { "id": "lite", "stage": "none", "pilot": "lite", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite", "book_group": "5924-latin"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json", "cell": "latin-served", "route": "lite"}] },
         { "id": "lite>opus", "stage": "opus-img@10", "pilot": "lite>opus-correct", "v2": "opus-5.5", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite>opus-correct", "book_group": "5924-latin"}] },
         { "id": "lite>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin", "route": "lite>agy-flash-low", "book_group": "5924-latin"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "lite>agy-flash-low", "book_group": "5924-latin"}] },
-        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "agy-flash-low-read", "book_group": "5924-latin"}] },
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json", "cell": "la-lite-250", "route": "agy-flash-low-read", "book_group": "5924-latin"},
+          {"score": "scripts/eval/estimator/router-table/evidence/router-next-7263.score.json", "cell": "latin-lite", "route": "agy-flash-low", "_note": "#7263 router-next 2026-10-28: 34 WAITING print pages, one per book, read-weighted; 8 replies cut (not delivered, not accepted, as fresh-7517)"}
+        ] },
         { "id": "gpu>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "note": "#7263: the draft is stock GLM-OCR read on gex45 (flat-fee GPU box, $0 marginal), not the stored Flash-Lite text, so the agy correction is the only priced stage. The latin cell's 30 router-test pages (book group 5924-latin); 4 corrections cut before <<<END>>> are not in n.", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json", "cell": "latin-gpu", "route": "gpu>agy-flash-low", "book_group": "5924-latin"}] } ] },
     { "id": "latin-flash3", "title": "Latin print, 3 Flash text (most-read books)", "v2": "latin-flash3", "v1": ["latin", "no web transcription", "gemini-3-flash-preview"], "current": "3flash>opus",
       "caveat": "3flash: the router tests (30 pages, one a book) and #5924's served-page spot check (2026-10-22, backfill-all: 24 pages in 8 books, 3 consecutive pages a book, Step T on the page as served; every misleading page there is OCR-caused).",
       "routes": [
         { "id": "3flash", "stage": "none", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash"}, {"score": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json", "cell": "latin-served", "route": "3flash"}] },
         { "id": "3flash>opus", "stage": "opus-img@10", "v2": "opus-5.5" },
-        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash>agy-flash-low"}] } ] },
+        { "id": "3flash>agy-flash-low", "stage": "agy", "v2": "agy-3.8-flash-low", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "latin-flash3", "route": "3flash>agy-flash-low"},
+          {"score": "scripts/eval/estimator/router-table/evidence/router-next-7263.score.json", "cell": "latin-flash3", "route": "3flash>agy-flash-low", "_note": "#7263 router-next 2026-10-28: 34 WAITING print pages, one per book, read-weighted"}
+        ] } ] },
     { "id": "german-lite", "title": "German OCR, Flash-Lite", "v2": "german-lite", "current": "lite>opus",
       "caveat": "Two sources, each scaled by its books: the router tests (30 pages, one a book, the route-judge prompt) and #7568 wave 1 (250 pages in 10 books, one Step T reader per book, misleading = wrong text; no lite>agy-flash-low arm there). The fresh read: #7517 on the router tests' 30 pages (12 filter-cut, not accepted) and #7568's re-read arm.",
       "routes": [
