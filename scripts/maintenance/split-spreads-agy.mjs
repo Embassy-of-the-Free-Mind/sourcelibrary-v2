@@ -178,8 +178,141 @@ async function renderReview(buf, w, h, frame, pageOrder, file) {
   await sharp({ create: { width: W, height: y, channels: 3, background: '#fff' } }).composite(comp).jpeg({ quality: 78 }).toFile(file);
 }
 
+/**
+ * SHEETS MODE (`propose --sheets`, #7605): for long bound books, where one agy call and one review image per frame
+ * repeats the same fold a few hundred times (74 BPH books hold 10,303 frames).
+ *  - Shape first: a frame narrower than SHAPE_SINGLE_AR is one leaf, with no call. On the 2,344 frames of the #7605
+ *    census, 126 of the 127 frames under 0.9 were single and 2,136 of the 2,205 between 0.9 and 2.2 were spreads.
+ *  - The book's fold: agy on SAMPLE evenly spaced spread-shaped frames, the median of their folds.
+ *  - Every other spread-shaped frame takes the pixel cut when the pixel detector is confident and within AGREE_TOL of
+ *    the book fold. Otherwise, and on every frame wider than SHAPE_WIDE_AR (a fold-out, a palm leaf), agy is asked and
+ *    decideCut() rules as in the per-frame mode. So a book whose first leaves are single and whose later frames are
+ *    spreads is cut frame by frame, not by one book-wide rule.
+ *  - Review: contact sheets of SHEET_N frames in page order (sheet-NN.jpg), each with the cut and the overlap band
+ *    drawn. A verdict row may name a sheet instead of a page: {book_id, sheet, verdict, checked_by, bad_pages?} covers
+ *    every frame on it, and a page row for a frame on that sheet overrides it (expandSheetVerdicts()).
+ */
+export const SHAPE_SINGLE_AR = 0.9, SHAPE_WIDE_AR = 2.2, SAMPLE = 8, SHEET_N = 20;
+
+/** Which frames sheets mode asks agy about, from their aspect ratios: SAMPLE spread-shaped frames, evenly spaced. */
+export function sampleIndexes(ars, n = SAMPLE) {
+  const spreadIdx = ars.map((ar, i) => (ar >= SHAPE_SINGLE_AR && ar <= SHAPE_WIDE_AR ? i : -1)).filter((i) => i >= 0);
+  if (spreadIdx.length <= n) return new Set(spreadIdx);
+  return new Set(Array.from({ length: n }, (_, k) => spreadIdx[Math.floor(((k + 0.5) / n) * spreadIdx.length)]));
+}
+
+/** Sheets-mode cut for a frame agy was not asked about. Returns decideCut()'s shape, or null = ask agy. */
+export function shapeOrPixelCut(ar, pix, bookFold) {
+  if (ar < SHAPE_SINGLE_AR) return { fold: null, method: `shape-single(ar${ar})`, flags: [] };
+  if (ar > SHAPE_WIDE_AR || bookFold == null) return null;
+  const pixPos = pix?.conf === 'high' && pix.pos != null ? pix.pos : null;
+  if (pixPos != null && Math.abs(pixPos - bookFold) <= AGREE_TOL) return withRange({ fold: pixPos, method: `pixel~book(px${pixPos}/book${bookFold})`, flags: [] });
+  return null;
+}
+
+/** Sheet-level verdict rows expanded to one per frame (a page row wins over its sheet's row). */
+export function expandSheetVerdicts(proposal, verdicts) {
+  const out = new Map(verdicts);
+  for (const f of proposal.frames) {
+    const key = `${proposal.book_id}:${f.page_number}`;
+    if (f.sheet == null || verdicts.has(key)) continue;
+    const s = verdicts.get(`${proposal.book_id}:sheet${f.sheet}`);
+    if (!s) continue;
+    const bad = (s.bad_pages || []).includes(f.page_number);
+    out.set(key, { ...s, page_number: f.page_number, verdict: bad ? 'bad' : s.verdict });
+  }
+  return out;
+}
+
+/** One contact sheet: SHEET_N thumbnails in a 5-wide grid, each with its cut, overlap band and a label. */
+async function renderSheet(thumbs, file) {
+  const COLS = 5, TW = 300, LBL = 30;
+  const rows = [];
+  for (let i = 0; i < thumbs.length; i += COLS) rows.push(thumbs.slice(i, i + COLS));
+  const rowH = rows.map((r) => Math.max(...r.map((t) => t.th)) + LBL + 8);
+  const comp = [];
+  let y = 0;
+  for (const [ri, r] of rows.entries()) {
+    for (const [ci, t] of r.entries()) {
+      const left = ci * (TW + 8);
+      const ov = [];
+      if (typeof t.fold === 'number') {
+        const x = Math.round((t.fold / 1000) * TW), band = Math.round(OVERLAP * TW);
+        ov.push({ input: Buffer.from(`<svg width="${TW}" height="${t.th}"><rect x="${x - band}" y="0" width="${2 * band}" height="${t.th}" fill="red" fill-opacity="0.15"/><line x1="${x}" y1="0" x2="${x}" y2="${t.th}" stroke="red" stroke-width="2"/></svg>`), top: 0, left: 0 });
+      }
+      const img = await sharp(t.buf).composite(ov).jpeg({ quality: 80 }).toBuffer();
+      const color = t.asked ? '#06c' : '#000';
+      const text = `p.${t.page_number} ${t.fold === null ? 'WHOLE' : t.fold === undefined ? 'UNRESOLVED' : t.fold} ${t.short}`;
+      comp.push({ input: Buffer.from(`<svg width="${TW}" height="${LBL}"><rect width="100%" height="100%" fill="#fff"/><text x="4" y="21" font-size="17" font-family="sans-serif" fill="${color}">${esc(text)}</text></svg>`), top: y, left });
+      comp.push({ input: img, top: y + LBL, left });
+    }
+    y += rowH[ri];
+  }
+  await sharp({ create: { width: COLS * (TW + 8), height: y, channels: 3, background: '#888' } }).composite(comp).jpeg({ quality: 78 }).toFile(file);
+}
+
+async function proposeSheets(db, book, pages, dir, wsRoot, conc) {
+  const pageOrder = RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr';
+  const frames = pages.map((p) => ({ page_id: p.id, page_number: p.page_number, url: frameUrl(p, book.id) }));
+  const bufs = new Array(frames.length);
+  let quota = false, next = 0;
+  // Pass 1, free: every frame's size, pixel cut and thumbnail.
+  await Promise.all(Array.from({ length: 6 }, async () => {
+    while (next < frames.length) {
+      const i = next++, f = frames[i];
+      if (!f.url) { Object.assign(f, { fold: undefined, method: 'no-book-scoped-url', flags: ['no image URL carrying the book id'] }); continue; }
+      try {
+        const buf = await fetchBuf(f.url);
+        const meta = await sharp(buf).metadata();
+        Object.assign(f, { w: meta.width, h: meta.height, ar: +(meta.width / meta.height).toFixed(3) });
+        const px = await detectGutterPixel(buf);
+        f.pixel = { pos: px.column != null ? Math.round((px.column / meta.width) * 1000) : null, conf: px.confidence, reason: px.reason };
+        bufs[i] = await sharp(buf).resize(300).jpeg({ quality: 80 }).toBuffer();
+      } catch (e) { Object.assign(f, { fold: undefined, method: 'error', flags: [e.message?.slice(0, 120)] }); }
+    }
+  }));
+  const ok = frames.map((f, i) => (f.ar != null ? i : -1)).filter((i) => i >= 0);
+  const asked = new Set();
+  const ask = async (i) => {
+    const f = frames[i];
+    asked.add(i);
+    f.agy = await askAgy(await fetchBuf(f.url), wsRoot);
+    if (f.agy.cls === 'quota') { quota = true; return; }
+    Object.assign(f, decideCut(f.pixel, f.agy.parsed, { pageOrder }));
+  };
+  const runAll = async (idx) => { let k = 0; await Promise.all(Array.from({ length: conc }, async () => { while (k < idx.length && !quota) await ask(idx[k++]); })); };
+  // Pass 2: the sample sets the book's fold.
+  const sample = [...sampleIndexes(ok.map((i) => frames[i].ar))].map((j) => ok[j]);
+  await runAll(sample);
+  if (quota) return { quota: true };
+  const folds = sample.map((i) => frames[i]).filter((f) => typeof f.fold === 'number').map((f) => f.fold).sort((a, b) => a - b);
+  const bookFold = folds.length ? folds[Math.floor(folds.length / 2)] : null;
+  // Pass 3: shape or pixel where they settle it; agy for the rest.
+  const rest = [];
+  for (const i of ok) {
+    if (asked.has(i)) continue;
+    const c = shapeOrPixelCut(frames[i].ar, frames[i].pixel, bookFold);
+    if (c) Object.assign(frames[i], c); else rest.push(i);
+  }
+  await runAll(rest);
+  if (quota) return { quota: true };
+  // Review sheets, in page order.
+  frames.forEach((f, i) => { f.sheet = Math.floor(i / SHEET_N) + 1; });
+  for (let s = 0; s * SHEET_N < frames.length; s++) {
+    const thumbs = [];
+    for (let i = s * SHEET_N; i < Math.min(frames.length, (s + 1) * SHEET_N); i++) {
+      const f = frames[i];
+      const buf = bufs[i] || (await sharp({ create: { width: 300, height: 200, channels: 3, background: '#400' } }).jpeg().toBuffer());
+      thumbs.push({ buf, th: (await sharp(buf).metadata()).height, fold: f.fold, page_number: f.page_number, asked: asked.has(i), short: String(f.method || '').replace(/\(.*$/, '') });
+    }
+    await renderSheet(thumbs, path.join(dir, `sheet-${String(s + 1).padStart(2, '0')}.jpg`));
+  }
+  return { frames, pageOrder, bookFold, calls: asked.size };
+}
+
 async function propose(db) {
   const OUT = path.resolve(arg('out'));
+  const SHEETS = process.argv.includes('--sheets');
   const hold = arg('hold') || 'ocr-flash-cli-7075';
   // --books-file=FILE (one id per line, #7605): a census-picked list, not a hold; the hold filter is then dropped.
   const booksFile = arg('books-file');
@@ -205,6 +338,17 @@ async function propose(db) {
     const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, archived_photo: 1, photo: 1, split_from_spread: 1, crop: 1, cropped_photo: 1 } }).sort({ page_number: 1 }).toArray();
     if (pages.some((p) => p.split_from_spread || p.crop || p.cropped_photo)) { console.log(`${book.id} already carries split data: skipped`); continue; }
     fs.mkdirSync(dir, { recursive: true });
+    if (SHEETS) {
+      const r = await proposeSheets(db, book, pages, dir, wsRoot, conc);
+      if (r.quota) { quota = true; console.log(`QUOTA: stopping before ${book.id} is complete; re-run resumes`); fs.rmSync(dir, { recursive: true, force: true }); break; }
+      const unresolved = r.frames.filter((f) => f.fold === undefined);
+      const proposal = { book_id: book.id, title: book.title, language: book.language, page_order: r.pageOrder, model: MODEL, mode: 'sheets', book_fold: r.bookFold, agy_calls: r.calls, sheets: Math.ceil(r.frames.length / SHEET_N), at: new Date().toISOString(), frames: r.frames, unresolved: unresolved.length, leaves_expected: r.frames.reduce((s, f) => s + (typeof f.fold === 'number' ? 2 : 1), 0) };
+      fs.writeFileSync(path.join(dir, 'proposal.json'), JSON.stringify(proposal, null, 1));
+      if (!unresolved.length) fs.writeFileSync(path.join(dir, 'positions.json'), JSON.stringify(Object.fromEntries(r.frames.map((f) => [String(f.page_number), f.fold == null ? null : Math.round(f.fold) / 10]))));
+      const t = {}; for (const f of r.frames) { const k = String(f.method || '').replace(/\(.*$/, ''); t[k] = (t[k] || 0) + 1; }
+      console.log(`${book.id} ${String(book.title).slice(0, 40)}: ${r.frames.length} frames, ${r.calls} agy calls, book fold ${r.bookFold}, ${proposal.sheets} sheets, ${unresolved.length} unresolved ${JSON.stringify(t)}`);
+      continue;
+    }
     const frames = new Array(pages.length);
     let next = 0;
     const work = async () => {
@@ -269,7 +413,7 @@ export function readVerdicts(file) {
   const v = new Map();
   for (const l of fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)) {
     const r = JSON.parse(l);
-    v.set(`${r.book_id}:${r.page_number}`, r); // the last row for a frame wins: a re-check replaces the first
+    v.set(r.sheet != null && r.page_number == null ? `${r.book_id}:sheet${r.sheet}` : `${r.book_id}:${r.page_number}`, r); // the last row for a frame (or sheet) wins: a re-check replaces the first
   }
   return v;
 }
@@ -301,9 +445,10 @@ async function apply(db) {
     const book = await db.collection('books').findOne({ id }, { projection: { id: 1, title: 1, needs_splitting: 1, split_completed: 1 } });
     if (!book?.needs_splitting || book.split_completed === true) { report.push({ id, result: 'skipped', why: 'no longer needs_splitting / already split' }); continue; }
     const pages = await db.collection('pages').find({ book_id: id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, archived_photo: 1, photo: 1 } }).sort({ page_number: 1 }).toArray();
-    const why = applyRefusal(proposal, verdicts, pages, id);
+    const bookVerdicts = expandSheetVerdicts(proposal, verdicts);
+    const why = applyRefusal(proposal, bookVerdicts, pages, id);
     if (why) { report.push({ id, result: 'refused', why }); console.log(`${id}: REFUSED — ${why}`); continue; }
-    const by = [...new Set(proposal.frames.map((f) => verdicts.get(`${id}:${f.page_number}`).checked_by))].join('+');
+    const by = [...new Set(proposal.frames.map((f) => bookVerdicts.get(`${id}:${f.page_number}`).checked_by))].join('+');
     const argv = [path.join(HERE, '..', 'split-book.mjs'), id, '--gutter-only', `--positions-file=${path.join(OUT, id, 'positions.json')}`, `--page-order=${proposal.page_order}`, `--by=${by}`, ...(APPLY ? [] : ['--dry-run'])];
     const r = spawnSync(process.execPath, argv, { encoding: 'utf8', env: process.env, timeout: 600_000 });
     fs.writeFileSync(path.join(OUT, id, APPLY ? 'split-apply.log' : 'split-dry.log'), `${r.stdout}\n${r.stderr}`);
@@ -321,7 +466,7 @@ async function apply(db) {
     if (problems.length) { report.push({ id, result: 'CHECK FAILED', why: problems.join('; ') }); console.log(`${id}: CHECK FAILED — ${problems.join('; ')}`); continue; }
     // split_checked: the CLI OCR lane's spreadReason() treats a book with no crop data and no split_checked as possibly unsplit.
     await db.collection('books').updateOne({ id }, { $set: { 'pipeline_auto.split_checked': true } });
-    await db.collection('book_events').insertOne({ book_id: id, type: 'spread_split', at: new Date(), source: 'split-spreads-agy', details: { issue: 7454, frames: proposal.frames.length, leaves: live.length, checked_by: by, model: MODEL, methods: proposal.frames.map((f) => f.method) } });
+    await db.collection('book_events').insertOne({ book_id: id, type: 'spread_split', at: new Date(), source: 'split-spreads-agy', details: { issue: proposal.mode === 'sheets' ? 7605 : 7454, mode: proposal.mode || 'frames', frames: proposal.frames.length, leaves: live.length, checked_by: by, model: MODEL, methods: proposal.frames.map((f) => f.method) } });
     report.push({ id, result: 'split', leaves: live.length, frames: proposal.frames.length });
     console.log(`${id}: split ${proposal.frames.length} frames → ${live.length} pages, checked`);
   }
@@ -333,7 +478,7 @@ async function apply(db) {
 async function main() {
   const stage = process.argv[2];
   if (!['propose', 'apply', 'refold'].includes(stage) || !arg('out') || (stage === 'apply' && !arg('verdicts'))) {
-    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--hold=H] [--book=ID,..] [--limit=N] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--apply]');
+    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--sheets] [--hold=H] [--book=ID,.. | --books-file=FILE] [--limit=N] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--apply]');
     process.exit(2);
   }
   if (stage === 'refold') return refold(null);
