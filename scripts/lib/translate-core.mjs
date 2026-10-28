@@ -663,6 +663,7 @@ export function validateTranslationTags(text) {
 // The content hash now lives with the rest of the provenance vocabulary (#4613);
 // re-exported so the many importers of translate-core keep working.
 import { contentHash, geminiEngine, translationInput, translationProvenance, isNotRecorded, codeVersion, host } from './write-provenance.mjs';
+import { translationLayers, writePageAnnotations } from './translation-text.mjs'; // #5942: text + annotations beside data
 export { contentHash };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -1377,7 +1378,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -1420,12 +1421,16 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // page-revisions.mjs): marker-text skip, reason field, never throws.
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', { jobId, reason: note });
 
+  // #5942: the book's words and the notes, stored beside `data` (which is never rewritten for them).
+  const layers = translationLayers(clean, { promptVersion: promptRef?.version });
   await db.collection('pages').updateOne(
     { id: page.id },
     {
       $set: {
         translation: {
           data: clean,
+          text: layers.text,
+          text_from: layers.text_from,
           language: 'English',
           model: resolvedModel,
           updated_at: new Date(),
@@ -1444,6 +1449,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, layers }]);
   // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
   // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
   // depend on it otherwise.

@@ -178,7 +178,7 @@ for (const [bid, flagged] of perBook.entries()) {
   if (!loopIds.length) continue;
   const res = await pages.updateMany(
     { _id: { $in: loopIds } },
-    { $unset: { 'translation.data': '', translation_summary: '', translation_keywords: '' },
+    { $unset: { 'translation.data': '', 'translation.text': '', 'translation.text_from': '', translation_summary: '', translation_keywords: '' }, // text: #5942, the loop's words must go with it
       $set: { 'translation.loop_quarantined_at': new Date(), 'translation.loop_quarantine_reason': 'recitation-loop (legacy flash-lite-preview)' } },
   );
   cleared += res.modifiedCount;
