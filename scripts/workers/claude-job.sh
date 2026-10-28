@@ -74,12 +74,13 @@ else
   VOL=/mnt/HC_Volume_105839809; WT=$VOL/worktrees; DATA=$VOL/jobs
 fi
 WT_OLD=$SL/.claude/worktrees  # worktrees made before #6223 stay where they are
-MIN_ROOT_FREE_GB=${MIN_ROOT_FREE_GB:-10}
+MIN_ROOT_FREE_PCT=${MIN_ROOT_FREE_PCT:-15}  # job-where.sh skips a box under the same line
 # ---- end HOST block ----
 MAX_RESUMES=${MAX_RESUMES:-8}
 mkdir -p "$LOGD" "$JD" "$WT" "$DATA"
 wt_dir() { if [ -d "$WT_OLD/job-$1" ]; then echo "$WT_OLD/job-$1"; else echo "$WT/job-$1"; fi; }
 root_free_gb() { df -BG --output=avail / | tail -1 | tr -dc '0-9'; }
+root_free_pct() { echo $(( 100 - $(df --output=pcent / | tail -1 | tr -dc '0-9') )); }
 
 rules() { cat <<R
 HEADLESS RULES (prepended by claude-job.sh; they override anything below):
@@ -94,6 +95,7 @@ $HOST_RULES
 - DISK: write every large or bulky output (reports, jsonl, images, model files, downloads) under
   \$JOB_SCRATCH ($DATA/$1), never in /root or the repo checkout. \$TMPDIR points there too. Gzip big reports.
   The root disk is small and shared; when it fills, every job on the box dies without a word (#6223).
+  \$JOB_SCRATCH is archived to R2 and removed once nothing has touched it for 7 days: what must last goes to Mongo, a PR or R2.
 - Vercel previews are opt-in (#5976, #6000): only main and preview/** branches deploy. If a human must look at
   a page, push ONCE at the end: git push origin HEAD:preview/<job-name>, and post that preview URL. Otherwise check
   locally (route harness, next dev --webpack). Never push preview/ on every commit; it holds the one build slot.
@@ -560,11 +562,16 @@ case "${1:-status}" in
     [ -n "${JOB_CLAUDE_HOME:-}" ] && export CLAUDE_CONFIG_DIR="$JOB_CLAUDE_HOME"
     # An empty brief launched harmony-authors-a and -b on 2026-10-21: each ran with only the HEADLESS RULES.
     grep -q '[^[:space:]]' "$brief" || { echo "REFUSED: brief file $brief is empty"; exit 2; }
-    # Preflight (#6223): a job started on a full root disk dies silently with an empty log.
-    free=$(root_free_gb)
-    if [ "${free:-0}" -lt "$MIN_ROOT_FREE_GB" ] && [ -z "${JOB_IGNORE_DISK:-}" ]; then
-      echo "REFUSED: root disk has ${free}G free (< ${MIN_ROOT_FREE_GB}G). Free space first (disk-steward.sh), or JOB_IGNORE_DISK=1."
-      ntfy_job high warning "Job refused, root disk ${free}G free: $name ($HOST)" "Run disk-steward.sh or move /root folders to the volume (#6223)."
+    # Preflight (#6223): a job started on a full root disk dies silently with an empty log. 15% free, not a GB
+    # count: the steward keeps every disk at or under 75% (2026-10-29), so under 15% free means it could not,
+    # and a new job's output would only push the box toward the 95% where jobs die. Place it elsewhere.
+    fpct=$(root_free_pct)
+    if [ "${fpct:-0}" -lt "$MIN_ROOT_FREE_PCT" ] && [ -z "${JOB_IGNORE_DISK:-}" ]; then
+      echo "REFUSED: root disk has ${fpct}% free ($(root_free_gb)G; the floor is ${MIN_ROOT_FREE_PCT}%). Place the job on another box, or JOB_IGNORE_DISK=1."
+      echo "  /root/bin/disk-steward.sh (dry run) says what it is keeping on this box and why."
+      jw="$SL/scripts/workers/job-where.sh"
+      [ -x "$jw" ] && { echo "  job-where.sh:"; timeout 120 "$jw" 2>/dev/null | sed -n '/^use:/,$p; /^no box/p' | sed 's/^/    /'; }
+      ntfy_job high warning "Job refused, root disk ${fpct}% free: $name ($HOST)" "The disk steward could not keep this box under 85%; see its log (#6223)."
       exit 5
     fi
     wk=$(weekly_pct)
@@ -679,5 +686,5 @@ case "${1:-status}" in
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
     # account= lets job-where.sh look up this box's 5-hour and weekly headroom (#6751); logins change.
     acct=$(python3 -c 'import json;print(json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"])' 2>/dev/null)
-    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready" ;;
+    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) root_free_pct=$(root_free_pct) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready" ;;
 esac

@@ -19,9 +19,10 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 10,40 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && [ -s /root/.claude/.credentials.json ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
 # Work board (/admin/work, #5705): this box's jobs. Only main pushes --github.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box gex45' >> /var/log/sourcelibrary/work-board.log 2>&1
-# Disk: alarm at 85% (#5534) and the nightly steward (no volume here, so it only reaps merged worktrees + agy WAL) (#6223).
+# Disk (#6223): the alarm pages at 85% only when the steward could not get under it; the steward runs hourly:
+# HF cache trimmed to 50 GB, idle folders archived to R2 (cold/gex45/) while / is above 75%, merged worktrees reaped.
 */15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
-40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
+25 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
 # agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
 17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1
 # Load log, same format as main's, so a move off main can be measured on both sides.

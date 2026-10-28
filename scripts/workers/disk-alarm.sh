@@ -14,6 +14,13 @@
 # names the mount's largest folders, since the steward's runbook only covers /root.
 # DISK_ALARM_MOUNT=/ restricts it to one mount (the old behaviour).
 #
+# After the steward (2026-10-29, #6223): disk-steward.sh runs hourly and archives idle folders to R2 until a disk
+# is back at 75%. So the 85% page means "the steward tried and could not", never "a disk is filling": a mount the
+# steward manages pages at `high` only when its last run (within STEWARD_FRESH_MIN) ended at or above the limit,
+# and the page names what it could not archive and why; or when the steward has not completed a run for that
+# long (it is broken, which is worth a page by itself). `critical` (95%) still pages at once: jobs die there.
+# Mounts the steward does not manage page as before.
+#
 # Channel: ntfy topic sourcelibrary-uptime, the same one scripts/uptime-monitor.mjs pages on.
 # Install (Hetzner crontab, beside the uptime monitor):
 #   */15 * * * * /root/sourcelibrary/scripts/workers/disk-alarm.sh >> /var/log/sourcelibrary/disk-alarm.log 2>&1
@@ -23,6 +30,8 @@ PCT_LIMIT=${DISK_ALARM_PCT:-85}
 PCT_CRIT=${DISK_ALARM_CRIT_PCT:-95}
 REPEAT_SEC=${DISK_ALARM_REPEAT_SEC:-7200}
 STATE=${DISK_ALARM_STATE:-/var/lib/sourcelibrary/disk-alarm.state}
+STEWARD_STATE=${DISK_STEWARD_STATE:-/var/lib/sourcelibrary/disk-steward.state}
+STEWARD_FRESH_MIN=${STEWARD_FRESH_MIN:-180}
 TOPIC=${DISK_ALARM_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}
 MOUNTS=${DISK_ALARM_MOUNT:-$(df -P -x tmpfs -x devtmpfs -x overlay -x squashfs -x efivarfs 2>/dev/null | awk 'NR>1 && $6 !~ "^/(boot|sys|run|snap)" {print $6}')}
 mkdir -p "$(dirname "$STATE")"
@@ -54,13 +63,34 @@ check() {
   [ "$level" = critical ] && [ "$prev" = critical ] && [ $((epoch - last_paged)) -ge "$REPEAT_SEC" ] && page=repeat
   [ -z "$page" ] && return 0
 
+  # What the steward made of this mount on its last run: "<end percent>|<what it could not archive>", or nothing.
+  local sw="" sw_ts=0 sw_pct="" sw_stuck="" sw_age=""
+  if [ -f "$STEWARD_STATE" ]; then
+    sw_ts=$(awk '$1 == "ts" {print $2}' "$STEWARD_STATE")
+    sw_pct=$(awk -v m="$MOUNT" '$1 == "mount" && $2 == m {print $3}' "$STEWARD_STATE")
+    sw_stuck=$(awk -v m="$MOUNT" '$1 == "stuck" && $2 == m {$1 = ""; $2 = ""; sub(/^  /, ""); print}' "$STEWARD_STATE")
+    sw_age=$(( (epoch - ${sw_ts:-0}) / 60 ))
+  fi
+  if [ -n "$sw_pct" ]; then
+    if [ "$sw_age" -gt "$STEWARD_FRESH_MIN" ]; then
+      sw=" disk-steward has not completed a run for ${sw_age} min: check /var/log/sourcelibrary/disk-steward.log."
+    elif [ "$level" = high ] && [ "$sw_pct" -lt "$PCT_LIMIT" ]; then
+      echo "$now $MOUNT held: the steward's run ${sw_age} min ago ended at ${sw_pct}%; it acts again within the hour"
+      return 0
+    else
+      sw=" The steward's run ${sw_age} min ago ended at ${sw_pct}% and could not archive: ${sw_stuck:-nothing listed}."
+    fi
+  fi
+
   if [ "$MOUNT" = / ]; then
     what="Root disk"
-    runbook="Runbook #6223: scripts/workers/disk-steward.sh --apply moves idle /root folders to the volume /mnt/HC_Volume_105839809 and reaps merged worktrees."
+    runbook="Runbook #6223: /root/bin/disk-steward.sh (hourly) archives idle folders to R2 above 75% and trims the HF cache; what it keeps, and why, is in its log."
   else
     what="Disk $MOUNT"
-    runbook="Largest: $(timeout 120 du -xsh "$MOUNT"/* 2>/dev/null | sort -rh | head -3 | awk '{printf "%s %s; ", $2, $1}')No steward runs here: free space by hand (#6223)."
+    runbook="Largest: $(timeout 120 du -xsh "$MOUNT"/* 2>/dev/null | sort -rh | head -3 | awk '{printf "%s %s; ", $2, $1}')"
+    [ -z "$sw_pct" ] && runbook="${runbook}No steward manages this mount: free space by hand (#6223)."
   fi
+  runbook="${sw# }${sw:+ }$runbook"
   # What grew. On 2026-10-27 the root pages said "run disk-steward", which could not help: the 27 GB were agy's
   # orphaned .tmp files, not idle folders. Name the three directories (three levels deep) with the most bytes in
   # files over 20 MB written in the last 6 h, so the page points at the cause. Bounded; only at high or critical.

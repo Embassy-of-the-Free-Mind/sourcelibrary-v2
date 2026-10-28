@@ -63,3 +63,6 @@
 7 * * * * f=/data/scratch/sl/sourcelibrary/scripts/audit/archive-coverage.mjs; [ -f $f ] && grep -q -- "--progress" $f && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-archive-progress.lock timeout 15m systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local $f --progress --record --alert >> /data/scratch/sl/logs/archive-progress.log 2>&1  # #5448
 # Disk alarm on every mount (#6223, 2026-10-26): pages ntfy sourcelibrary-uptime at 85%/95%. Same line on cloudlayer (no crontab file in git).
 */15 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
+# Disk steward, hourly (#6223): HF cache to 50 GB; idle /data/scratch/sl/jobs/* and /data/scratch/moved-from-*/* archived to R2
+# while their disk is above 75%. It never scans /root here (the box is a guest of a live service).
+25 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /data/scratch/sl/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
