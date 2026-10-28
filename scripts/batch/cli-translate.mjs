@@ -67,6 +67,7 @@ import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { buildTextRevision } from '../lib/page-text-writer.mjs';
+import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -84,7 +85,7 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-tran
 // `prompt_variant`; apply checks it with the chatter guard alone, as before.
 const PROMPT_VARIANT = 'sentinels-6523';
 const CLI_SUFFIX = TRANSLATE_SUFFIX;
-const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
+const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, split_from_spread: 1, split_from_pecha: 1, cropped_photo: 1, crop: 1 };
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
@@ -126,6 +127,8 @@ if (STAGE === 'read') {
     if (!tr.ok) { console.log(`  ${p.page_number} not translatable (${tr.reason}); skipped`); continue; }
     if (!books.has(p.book_id)) books.set(p.book_id, await db.collection('books').findOne({ id: p.book_id }));
     const book = books.get(p.book_id);
+    const unsplit = unsplitReadRefusal(book, p);
+    if (unsplit) { console.log(`  ${p.page_number} skipped: ${unsplit}`); continue; }
     const same = sameLanguageReason({ book, page: p });
     if (same) { console.log(`  ${p.page_number} skipped: ${same}`); continue; }
     // Context exactly as the worker seeds it: the page before. Its English is the read just made if there is one
@@ -207,6 +210,7 @@ for (const m of metas) {
   if (!page) { skip(m, 'page not found'); continue; }
   if (contentHash(page.ocr?.data || '') !== m.ocr_hash) { skip(m, 'OCR changed since the read'); continue; }
   const book = await db.collection('books').findOne({ id: page.book_id });
+  if (unsplitReadRefusal(book, page)) { skip(m, 'unsplit spread book (#7605)'); continue; }
   // #7075: on a bilingual page whose facing side is printed English (a Loeb), a read can hand that English back instead
   // of translating (Plutarch Loeb 99 p.94: 77% of the read was one verbatim run of the page). The door's echo tier
   // exempts English already in the source, so it is asked here, for the CLI readers only.
