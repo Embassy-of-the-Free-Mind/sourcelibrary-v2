@@ -7,9 +7,9 @@ canons: []
 n_books: 30
 n_pages: 750
 verdict: "Preregistration only: per language (Chinese, German, Greek), 10 lite-read books × 25 spread pages, three arms (stored lite L, Opus correction of L C, agy Flash re-read R), one blind Opus reader per book judging all three against the image, and a 30-page agy second-family check on C vs R. No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md"
 issue: [7568]
 ---
 PRIOR ART: `2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md` (the Latin result this repeats in three more languages: misleading L 111 / Opus correction 31 / Flash re-read 20–32 of 250), `2026-10-24-latin-lite-flash-correct-four-arms-5924.md` (the second-family agy judge, `fc-judge.mjs`), and the harness in `scripts/eval/flash-reread-5924/` (draw rule, `correct.mjs` run unchanged, `cli-ocr.mjs read` unchanged, `C-TASK.md` verdict words, `crop.mjs`, the scorers' measures), reused.
