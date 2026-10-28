@@ -105,10 +105,10 @@ Invented or wrong-leaf text found by eye is contained (hold + withhold, label `c
 ## Not decided here
 No lane or routing table is changed by this job; the recommended route per cell goes to #7263 with its default.
 
-## Amendment 1 — 2026-10-28T10:25Z, before any TEST judge call or score (Derek, inbox 09:43Z and 09:50Z)
+## Amendment 1 — 2026-10-28T10:14Z, before any TEST judge call or score (Derek, inbox 09:43Z and 09:50Z)
 
 **State when written:** C′ done on all 326 pages; D round 1 done on the 50 DEV pages (not judged); arm O had made
-61 fresh Opus reads (2 smoke + 59 in panel order) when it was stopped at ~10:00Z on the 09:50Z note. No judge call
+61 fresh Opus reads (2 smoke + 59 in panel order) when it was stopped at ~10:05Z on the 09:50Z note. No judge call
 had run.
 
 **1. Arm O becomes EXISTING Opus work; no new Opus reads.** ("minimise NEW Opus reads … Opus as JUDGE is fine.")
