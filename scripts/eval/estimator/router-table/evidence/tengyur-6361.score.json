@@ -1,0 +1,45 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#6361 (2026-10-10), scripts/maintenance/tengyur-cli-6361/results/byeye/unblinded.json: one blind Opus reviewer per volume, staged vs stored English side by side with the page image (whole + 2x crops) and the OCR; serious meaning errors per side. 5 seeded volumes + 2 chosen for extreme length ratio, 3 consecutive pages each. The staged pages are the gate-passing ones (23% of staged replies were plan-mode chatter and never written).",
+ "judge": "claude-opus-5-5 (claude -p), blind A/B reviewer, image + OCR",
+ "mapping": "wrong_text = >= 1 serious meaning error; accept = none; classes: T8 reversed, T9 omitted, E2 other",
+ "cells": {
+  "tengyur-tr": {
+   "task": "translation",
+   "lang": "Tibetan",
+   "pages": 21,
+   "routes": {
+    "agy-flash-low@1": {
+     "served": "agy gemini-3.8-flash-low CLI (plan mode), Standard Translation v13, one page a call; applied to 17,135 pages after the gate",
+     "n": 21,
+     "books": 7,
+     "accept": "16/21",
+     "wrong_text_pages": "5/21",
+     "classes_k_of_n": {
+      "E2": "5/21",
+      "T8": "1/21"
+     },
+     "wrong_text_classes": {
+      "E2": "5/21",
+      "T8": "1/21"
+     }
+    },
+    "3flash": {
+     "served": "stored gemini-3-flash-preview English, v13",
+     "n": 21,
+     "books": 7,
+     "accept": "11/21",
+     "wrong_text_pages": "10/21",
+     "classes_k_of_n": {
+      "E2": "9/21",
+      "T8": "5/21"
+     },
+     "wrong_text_classes": {
+      "E2": "9/21",
+      "T8": "5/21"
+     }
+    }
+   }
+  }
+ }
+}
