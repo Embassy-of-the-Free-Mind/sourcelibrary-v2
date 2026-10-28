@@ -1,0 +1,200 @@
+la 69dbca0e1040d1d5e20a8ef4 y1490 | Liber de homine. Add: Georgius Merula: In Galeottu | lang {"Latin":22,"Latin, Greek":3} script {"printed":25}
+   p6: enerali quadam diuisio ne declarat persius mihi festa luce coquatur urtica & fissa fumosum sinciput aure. Posterior uero occiput & occipitium dicuntur. Persius. Occipiti caeco postice occurrite fanne. Plau
+la 69b65efeb3f4fc04415259a8 y1584 | Isagoge in canonicas septem epistolas : qua (ut in | lang {"Latin":21,"Latin, Greek":4} script {"printed":25}
+   p1: ur.<- ->Eodem Benedicto Aretio<- ->Auctore.<- ->M O R G I I S,<- ->Excudebat Ioannes le Preux Illustrisf.D.<- ->Bernenfium Typographus.<- ->1584.<- <note>The text "A: 2081637" at the bottom is a handwritt
+la 69b6597618b87551bfcfb4d3 y1578 | Observatio & demonstratio cometae aetherei, qui an | lang {"Latin":25} script {"printed":25}
+   p5:  ->Obferuatio & demonstratio<- # COMETAE AE- # THEREI, QVI ANNO # 1577. ET 1578. CONSTITVTVS IN # SPHAERA VENERIS, APPARVIT, CVM ADMIS # ra
+la 69bd9cba6120d54bd0370923 y1542 | Aetii medici Graeci contractae ex veteribus medici | lang {"Latin":25} script {"printed":25}
+   p5: mma quatuor sermonum<- ->quaterniones, id est sermones XVI. per Ia=<- ->num Cornarium Medicum Physi<- ->cum Latine conscripti.<- ->BASILEAE M D XLII.<- 
+la 69b51e0cefd8df28f2daf7cd y1568 | Theophrasti[i] Paracelsi[i] Philosophiae Et Medici | lang {"Latin":25} script {"printed":24,"mixed":1}
+   p2:  <insert> <unclear>69</unclear> Ausg. 35. </insert> ## Bibl. Sud. 1509 ### VIII, 8 
+la 69b51e48768235dc6598f1dd y1612 | Index universalis alphabeticus materias omni facul | lang {"Latin":25} script {"printed":25}
+   p5: TORII ## PRESBYTERI. ### SVPERIORVM PERMISSV ET PRIVILEGIO. <margin>R</margin> ## ROMAE ->Ex Typographia Reuerendæ Cameræ Apostolicæ.<- ### M D C XII. 
+la 69b6562c18b87551bfcdd073 y1572 | Heronis mechanici liber de machinis bellicis, necn | lang {"Latin":25} script {"printed":25}
+   p2:  <insert>Rar 1860 Cat E</insert> ->624<- 
+la 6a243f8d0f0e4f405e6355d6 y1738 | Dissertatio Inavgvralis Ivridica De Crimine Svspec | lang {"Latin":10,"Latin, German":9,"German, Latin":1,"German":1,"Latin, French":2,"French, Latin":2} script {"printed":25}
+   p1: ARIO<- ->ET HOC TEMPORE DECANO<- ### PRO LICENTIA ->SVMMOS IN VTROQVE IVRE CAPESSENDI HONORES<- ->ET<- ->PRIVILEGIA DOCTORALIA<- ->DIE MAII MDCCXXX.<- ->HORIS LOCOQVE CONSVETIS.<- ->ERVDITORVM DISQVISITIONI S
+la 69c8006e6c6f3cc53c843f4c y1517 | Ars magna, generalis et ultima | lang {"Latin":25} script {"printed":25}
+   p-136:  Farfouille '87 KFKT coll. compl. 29-6-87 JB Adams L 1697 Duveen Suppl 236 Rogent & Durán 65 UBN 21099 
+la 69b51e2447b06ecd5818aa85 y1714 | Joannis Henrici Cohausen ... Tentaminum physico-me | lang {"Latin":25} script {"printed":25}
+   p3: S LONGÆVITATIS CANDIDATIS CONSECRATA.*<- ### EDITIO SECUNDA. --- ->OSNABRUGI,<- <insert>L. Silowsky.</insert> ->Apud M. A. FUHRMANNUM, ANNO 1714.<- 
+la 69dbc8a61040d1d5e209b127 y1487 | De consolatione philosophiae (with commentary ascr | lang {"Latin":25} script {"mixed":3,"printed":22}
+   p2:  BOECE (A. T. S.) 2 Inc.c.a. 1883 f bsb-lubc B-602.050 ->BESCHAFFT AUS MITTELN DER<- ->Carl F
+la 69b18a95c4be2cdd0edc835c y1657 | Lux in Tenebris | lang {"Latin":25} script {"printed":24,"mixed":1}
+   p4:  ->Charles John Elliott<- ->Cath: Hall Camb:<- ->1840.<- --- 
+la 69afd447f4c860f1b891db85 y1647 | Recentiorum Disceptationes de Motu Cordis | lang {"Latin":25} script {"printed":25}
+   p4: omanus, Philofophus, ac Medicus Venetus. **I V.** Difputatio medica Rogerii Drake, D. M., pro circulatione &c. **V.** Thefes Henrici Regii, M. D. & Profefforis in Ultrajectina Academia; refutatæ per Iacobum
+la 69b51e4eff09e4fe943ab866 y1665 | Index Librorum Prohibitorum : Alexandri VII. Ponti | lang {"Latin, Italian":6,"Latin, French, Italian":1,"Latin":14,"Latin, Italian, French":2,"Latin, French":2} script {"printed":25}
+   p7: NDEX ## LIBRORVM ### PROHIBITORVM ### ALEXANDRI VII. ->PONTIFICIS MAXIMI<- ->Iuſſu editus.<- ->R O M Æ,<- ->Ex Typographia Reu. Cam. Apoſt. 1665.<- --- ->Cum Priuilegio.<- 
+la 69dbc7c81040d1d5e2093cea y1478 | Sermones de eucharistiae sacramento | lang {"Latin":25} script {"printed":25}
+   p9: ate q non solu legis sacrificia sed totus mundus cum ommi creatura non suffecit p satisfactione <margin>Heb. x.</margin> rps mgrediens mundum dicit hostia z oblacio= nem corpus aut q pommb9 sacrificis est. 
+la 69c72de46a0f3d112faf7013 y1625 | Abdita divinae cabalae mysteria, contra sophistaru | lang {"la":24,"fr":1} script {"printed":23,"mixed":2}
+   p5: - ->PARISIIS,<- ->Ex Typographia, HIERONYMI BLAGEART,<- ->viâ Carmelitana, propè D. Hilarium, è<- ->regione Collegij Longobardorum.<- --- ->M. DC. XXV.<- ->*Cum Priuilegio Regis, & Approbat. Doct.*<- 
+la 69dbca8d1040d1d5e20acbc0 y1521 | De animabus exutis a corporibus, sive De apparitio | lang {"Latin":24,"Latin, German":1} script {"printed":14,"mixed":11}
+   p2:  P. Cat. 639 2° 4° Basel : Th. Wolf 1521 
+la 69b660bdb3f4fc04415346b7 y1586 | Historia Indiae Occidentalis : tomis duobus compre | lang {"Latin":25} script {"printed":25}
+   p1: , acerbum illorum in eas gentes dominatum, insigneque in Gallos ad Floridam insulam ... **Benzoni, Girolamo** **Léry, Jean de** **[Genève], 1586** **Bibliothèque de Genève** Shelf Mark: Gi 562 Persistent 
+la 69dbcc580f8c5edf20f4a266 y1486 | Summa theologiae: Pars tertia, cum additionibus | lang {"Latin":25} script {"printed":25}
+   p2:  2° Inc. c. a 1839 Thomas Aquinas Hain *1470 
+la 69b51e2e47b06ecd5818b5a1 y1794 | Catalogus codicum saeculo XV. impressorum, qui in  | lang {"Latin, Italian":5,"Latin":19,"Latin, Greek":1} script {"printed":25}
+   p3: MVS SECVNDVS. --- ->FLORENTIAE<- ->EXCVDEBAT <unclear>CAJETANVS CAMBIAGIVS</unclear><- -><unclear>REGIVS TYPOGRAPHVS</unclear><- -><unclear>MDCCXCIV</unclear><- 
+en 6ac3ade2864e04424c043050 y1612 | A Dialogue Philosophicall, wherein Natures Secret  | lang {"English":22,"English, Latin":3} script {"printed":25}
+   
+en 6a08fd5425e3a402b23b3d86 y1620 | The Tragicall History of the Life and Death of Doc | lang {"English":24,"English, Latin":1} script {"printed":25}
+   p1: # Written by Ch. Mar. ->LONDON,<- ->Printed for Iohn Wright, and are to be sold at his shop without<- ->Newgate, at the signe of the Bible. 1620.<- 
+en 69aec4473b6ebce5e0ee5929 y1788 | The Federalist: A Collection of Essays (1788 First | lang {"English":25} script {"printed":23,"mixed":2}
+   p2: insert> --- **SHELF** G-356 **No** 16. ->THE TRUSTEES OF THE<- ->PVBLIC LIBRARY<- ->LVX<- ->OMNIVM CIVIVM<- ->OF THE CITY OF<- ->BOSTON<- ->1852 1878<- 
+en 69d4ee4738745d9ebe4a0eba y1638 | The Discovery of a World in the Moone | lang {"English":19,"English, Greek":1,"English, Latin":5} script {"printed":24,"mixed":1}
+   p13: ciam* > *omnia angusta esse.* SENECA. > Præf. ad 1. Lib. N. 2. --- ->LONDON,<- ->Printed by E.G. for Michael Sparke<- ->and Edward Forreft. 1638.<- 
+en 6a08fd5b25e3a402b23b3dca y1631 | The Tragicall Historie of the Life and Death of Do | lang {"English":21,"English, Latin":4} script {"printed":25}
+   p7: s. ->With new Additions.<- ->Written by CH. MAR.<- ->Printed at London for Iohn Wright, and are to be sold at his<- ->shop without Newgate. 1631.<- 
+en 69e41ec8d0364cb0bcf7957e y1749 | Les Bijoux indiscrets | lang {"English":25} script {"printed":25}
+   p3:  <margin>Bideret</margin> ->in 2 vol. complet X<- ->Vet. Fr. II A. 1844.<- ->VD3. P. E1749<- ->Zah. III A. 192<- ->[compl. 3]<- 
+en 699066722ec9f7db5717a60f y1702 | Magnalia Christi Americana | lang {"English":19,"English, Latin":4,"Latin, English":1,"English, Latin, Greek, Hebrew":1} script {"printed":25}
+   p5: <lang>English</lang> <insert> <unclear>James Shepard</unclear> <unclear>Cotton Tufts's</unclear> 1706. </insert> # Magnalia Christi Americana: ### OR, THE # Eccl
+en 6909b22fcf28baa1b4caf185 y1671 | Philosophia pia | lang {"English":24,"English, Greek":1} script {"printed":25}
+   p-80: <- ->ticisms of all sorts.<- --- --- ->*LONDON*,<- ->Printed by *J. M.* for *James Collins* at the *Kings-<- ->head* in *Westminster-Hall*. 1670.<- 
+en 6955831157e3b773024f7195 y1660 | Select Discourses | lang {"English, Latin, Greek":1,"English, Greek":7,"English, Greek, Latin":1,"English, Hebrew":2,"English, Latin":2,"English, Hebrew, Greek":1,"English":9,"English, Greek, Hebrew":1,"English, Hebrew, Latin":1} script {"printed":25}
+   p2: <lang>English</lang> ->Smith (Cambridge Platonist)<- ->Lowell | 135.06<- ->Wing S 4117<- <insert> ->OMNIVM LVX CIVIVM<- ->MDCCCLI<- ->MDCCCLXXVIII<- # BOSTON PUBLIC LIBRARY ->GIFT: P.E. RICHTER<- </insert> 
+en 695595e17bd6d2cd1d61f4fb y1705 | The Posthumous Works of Robert Hooke | lang {"English":24,"Latin":1} script {"printed":25}
+   p2: 96 then 2nd sequence I-VII (II & III on same plate) between pp 283 & 287 (6 plates) At end of vol VIII-XI, XIII plate XII at p 536 <insert> 1664 Monochord. 1681 Duty. Rotation teeth 1680. Grave. Pour in w
+en 69c82ecd6c6f3cc53c84d6f7 y1768 | An appeal to all that doubt or disbelieve the trut | lang {"English":25} script {"printed":25}
+   p-165: t, Filii vero, qui ex mente gignitur, Sermo Interior, atque auditor Vox Prolationis, Spiritum repræsentat, &c. *Coteler. S. S. Patr. p. 595—1719.* 
+en 69b51dfaefd8df28f2daeae6 y1782 | A catalogue of the manuscripts preserved in the Br | lang {"Latin, English":2,"English":11,"English, Latin":4,"English, French":2,"English, Latin, French":2,"English, French, Latin, Greek, Dutch":1,"English, French, Latin":1,"English, Latin, Greek, French":1,"Latin, French, English":1} script {"printed":25}
+   p7: # By **SAMUEL AYSCOUGH**, Clerk. # L O N D O N: ### PRINTED FOR THE COMPILER, ### BY JOHN RIVINGTON, JUN. ST. JOHN'S SQUARE, CLERKENWELL. ->M DCC LXXXII.<- <insert>1782</insert> <insert>48 F</insert> <insert> Aysc
+en 69dea2344d19ec2e9ba75e9c y1789 | Sacontalá, or The Fatal Ring (1789 Jones Translati | lang {"English":25} script {"printed":25}
+   p1: PRÁCRIT.<- <insert>Thos. Font</insert> --- ->CALCUTTA:<- ->PRINTED AND SOLD BY JOSEPH COOPER,<- ->FOR THE BENEFIT OF INSOLVENT DEBTORS.<- ->MDCCLXXXIX.<- 
+en 69c7a4ca92b884e4f8173a7a y1669 | An exposition of the seven epistles to the seven c | lang {"English":19,"English, Greek":2,"English, Latin":4} script {"printed":25}
+   p-174: iar Society, entitled the *Fraternity of the Mary-Psalter*, confirmed afterward by *Sixtus* the fourth, many Indulgences being added *Anno* 1470. And *Innocent* the eighth added to these Indulgences 
+en 69d14b4a1c2a66dc094b4cc8 y1790 | A Dissertation on the Eleusinian and Bacchic Myste | lang {"English, Greek":4,"English":17,"Greek, English":1,"English, Latin":2,"Latin, English":1} script {"printed":25}
+   
+en 69ef3d5872c1376fdf2b0374 y1770 | A Philosophical Enquiry into the Origin of our Ide | lang {"English":24,"English, Latin":1} script {"printed":25}
+   p7: >With an introductory DISCOURSE concerning TASTE, and several other Additions.<- ### LONDON: ->Printed for J. DODSLEY in Pall-mall,<- --- ->M.DCC.LXX.<- 
+en 69c7fbc26c6f3cc53c842e50 y1769 | Theological and practical divinity | lang {"English":25} script {"printed":25}
+   p-205: .* <column-break/> ->A<- ->L E T T E R<- ->F R O M A<- **Clergyman of the Church of England,** **to the Publifher.** **DEAR SIR,** Oct. 20, 1769. **T**HE inftance in your laft kind and pious Letter, of th
+en 69e41212937ee36cf27c7501 y1605 | Tamburlaine the Great (1605 ed.) | lang {"English":25} script {"printed":25}
+   p7:  ->G 3973<- ->47<- -><unclear>The</unclear> <unclear>Ambassadour</unclear> &c.<- ->149.632<- ->May, 1873<- -><unclear>Wonderful</unclear> <unclear>Conquests</unclea
+en 6a0b252e620b66ad8f233555 y1682 | The Anatomy of Plants (Vol. 2) | lang {"English":21,"English, Greek":1,"Latin":3} script {"printed":25}
+   p2:  --- ->ANATOMY<- ->OF<- ->PLANTS<- --- ->GREW<- --- --- --- ->1682<- 
+en 6ac382f2966464312757cbf8 y1663 | Some Considerations Touching the Usefulnesse of Ex | lang {"English, Latin, Greek":1,"English":20,"English, Greek":1,"English, Latin":3} script {"printed":25}
+   p7:  <insert>J. Henry Allden 1808</insert> ->OF THE<- ->VSEFVLNESSE<- ->OF<- ->Experimental P
+de 69c859ca6c6f3cc53c8546e8 y1731 | Christianus Democritus autocatacritus, das ist: de | lang {"German":23,"German, Latin":1,"German, Greek":1} script {"printed":25}
+   p-602: leichtsinnig gemachet werden, aus treuer Liebe zur gesamten Evangelischen Kirche dem Druck übergeben von Christophilo Wohlgemuth. 8. Berlin 1731. à 8. gr. Reinbecks Joh. Gustav Betrachtungen über die in d
+de 69c8278b6c6f3cc53c84c09a y1776 | Samlungen [!] von Briefen und Aufsätzen über die G | lang {"German":23,"German, Latin":1,"German, French":1} script {"printed":25}
+   p-353: nz authentische Beschreibung bestätiget es, daß freilich von Zeit zu Zeit unter den Zuschauern Personen gewesen, die in der Physik keine Fremdlinge gewesen, und Schröpfern ihr abfälliges Urtheil zu erkenn
+de 69b51dcb768235dc65987de8 y1656 | Des Teutschlandts Wohlfart. 1, Darinnen von des We | lang {"German":24,"German, Latin":1} script {"printed":25}
+   p6: zu erfahren.<- ->Beschrieben und an tag geben<- ->Durch<- ### Johann Rudolf Glauber. --- ->Zu Amsterdam<- ->Gedruckt bey Johan Jansson.<- ->1651.<- 
+de 69b51de2cf111105c4292c21 y1708 | Theatrum machinarum. 5 | lang {"German":22,"Latin":3} script {"printed":25}
+   p1:  liebhabern dieser Kunst zuge-<- ->fallen in Druck geordenet und vorlegt Durch<- ->Friederich Lanckischens Erben.<- --- ### Leipzig #### A. 1708. 
+de 69b51e1d261c58d63664fbd7 y1610 | Nova novorum Jesuitica: Das ist: Historische vnd a | lang {"German":14,"Latin":11} script {"printed":24,"mixed":1}
+   p3: vnd mit schönen<- ->*Figuren gezieret.*<- ->Durch<- ->*M. Johan Pfeiffern von Altzen.*<- ->Gedruckt durch *Martinum Spiessen*. Im Jahr.<- ->M. DC. X.<- 
+de 69ac8e57e54b190acc1d3ad7 y1618 | Sendtschreiben an einen guten Freundt in Welschlan | lang {"German":25} script {"printed":25}
+   p5:  ->Jn Religions Sachen.<- Isaix 9. verf. 4. Als im Tag Madian. ->Getruckt in der Churfl. Hauptstatt Mayntz durch<- ->Johann Albin.<- ->ANNO M. DC. XIIX.<- 
+de 69c80e106c6f3cc53c846ec1 y1618 | Chirurgische Bücher und Schrifften | lang {"German":20,"German, Latin":4,"Latin":1} script {"printed":25}
+   p10: en kein Gebresten mag gefunden werden: So mag der Kranck dasselbige alles verderben/ vnd die Natur zu ruck werffen / al- <margin>daß sich zum dickerenmal begibt/das durch deß Krancken Vnordnung ein lahme W
+de 69b51df1768235dc6598a276 y1751 | Elvcidarivs Major. oder Erleuchtung über die Refor | lang {"German":11,"Latin, German":7,"Latin":2,"German, Latin":5} script {"printed":25}
+   p5: das Creutz ich acht, > Das unter der Rosen blüht mit Macht. > ADEST. --- ->Wienn, bey Joh. Paul Krauß, nächst der<- ->Kaiserl. Königl. Burg 1751.<- 
+de 69c82d436c6f3cc53c84d1bc y1793 | Ueber Wahrheit und sittliche Vollkommenheit | lang {"German":25} script {"printed":25}
+   p-146: e lezten Gründe unsrer Erkenntniß 259</header> <column-break/> mung derselben noch allzeit bestättigt und realisirt. Daß der Comet vom Jahr 1759 nach 75 Jahren wieder zum Vorschein kommen, daß im laufende
+de 69c831db6c6f3cc53c84ddef y1604 | Triumph Wagen antimonii | lang {"German":18,"German, Latin":6,"Latin, German":1} script {"printed":25}
+   p-350:  ->Leipzig/<- ->Typis Bervvaldin:<- ->Druckts Jacob Popporeich.<- ->Im M. DC. IIII. Jahr.<- 
+de 69dbc9ce1040d1d5e20a6f7c y1476 | Die Neue Ehe und das Passional von Jesu. Add: Joha | lang {"German":25} script {"printed":25}
+   
+de 69c865e06c6f3cc53c8562d1 y1787 | Abschiedsrede eines Bruders wahrer und ächter Maur | lang {"de":25} script {"printed":25}
+   
+de 69b51df9cf111105c4294556 y1783 | De Igne Magorvm Philosophorvmque secreto externo e | lang {"German":22,"German, Latin":3} script {"printed":25}
+   p8: erheit dem Sendschreiben von der Mensch- werdung Christi, kann erwiesen werden, auch in dem sehr raren chymischen Lustgärtlein, Ludwigsburg 1747, Pag. 87. anzutreffen. Das in den alten Ausgaben mit angedr
+de 69c7e8a2fb10016c3f389ce9 y1664 | Himmlische Offenbarungen | lang {"German":25} script {"printed":25}
+   p-573: uß handtgreifflicher gefahr deß Fewrs vnd brunst vermittels der fürbitt der H. Birgitte errettet/ dan als zwischen dem 15. vnd 16. Octobris 1663. deß nachts vmb 1. vhr in vnserer behausung im hinderhaus e
+de 69c8831d6c6f3cc53c8596e0 y1800 | Parentale Brief-Extracten | lang {"German":25} script {"printed":25}
+   p-4:  uns helffen | ->Die Angst meines Herzens ist groß! O Jesu, nimm Du mich auf, verlaß mich nicht.<- <column-break/> <insert>C. Cunliffe Owen 1825-</insert> # Parentale ## Brief-Extracten ->des<- ### Hochse
+de 69c6f4d8da9771c716314f6f y1616 | D.O.M.A. Wolmeinendes Bedencken, von der Fama, und | lang {"German, Latin":11,"German":14} script {"printed":25}
+   p-136: tatlichen Weg gemacht zu vnser Fraternität zu <margin>Pag 74. 75.</margin> <margin>Adlers Federn den Brüdern zuwider.</margin> <margin>Ann. 1622 nach der fahren den Schuler Meynung.</margin> 
+de 69dbc9d01040d1d5e20a70c0 y1482 | Die Neue Ehe und das Passional von Jesu. Add: Joha | lang {"German":25} script {"printed":24,"mixed":1}
+   
+de 6a243d450f0e4f405e62fd22 y1742 | Europäischer Staats-Wahrsager. Das ist: Wundersame | lang {"Latin":1,"German":16,"German, Latin":5,"German, French":1,"Latin, German":2} script {"printed":21,"mixed":4}
+   p1: ussen und andere Staaten betreffend, ->Mit verschiedenen Anmerkungen.<- ->Andere Auflage vermehret.<- --- ->Bremen, bei Nathanael Saurmann. 1742.<- 
+de 69dbcb571040d1d5e20b5fd2 y1493 | Cosmographia (Abstract, in German) | lang {"German, Latin":2,"German":23} script {"printed":20,"mixed":5}
+   p4:  [Nürnberg: G. Stuchs, um 1492] 
+de 690c2476e0787282ad5930dd y1795 | Lebensbeschreibungen berühmter Männer aus den Zeit | lang {"German, Latin":18,"German":7} script {"printed":25}
+   p-206:  --- ->---<- Druckorts weicht von der Edition von 1600. allein darin ab, daß er im ersten Bande bloß die magischen
+fr 69c85f546c6f3cc53c8554e1 y1788 | L'Idee parfaicte de la philosophie hermetique | lang {"fr":25} script {"printed":25}
+   p2:  <insert> 693 </insert> <insert> 1788 935 </insert> A ->Duveen 141<- ->Ferguson 171<- ->Caillet 2
+fr 69c4ec33a3a4a7c546ee6103 y1774 | Les plus secrets mystères des hauts grades de la m | lang {"French":25} script {"printed":25}
+   p-98:  <insert> 28000 GAT </insert> <insert> Rv </insert> <insert> cf W II, 29989 Kloss 1848 </insert> <insert> coll. compl 4-8-00 JB </insert> <insert>
+fr 69b51eb1cf111105c42a2f45 y1776 | La Rencontre Imprévue : Opera Bouffon En Trois Act | lang {"French":24,"French, Italian":1} script {"printed":25}
+   p1: >Le prix est de 24 sols, avec la Musique.<- --- ### A PARIS, Chez la Veuve **DUCHESNE**, Libraire, rue S. Jacques, au Temple du Goût. --- ->M. DCC. LXXVI.<- 
+fr 69c703c6da9771c716315966 y1766 | L'antiquité dévoilée par ses usages | lang {"French":23,"French, Latin":2} script {"printed":25}
+   p-214:  <insert> 15999 KRUT </insert> <insert> C I, 1530 coll. compl. 1-12-99 78 UBN 16412/1 </insert> <note>This pa
+fr 69c74c046a0f3d112faf8321 y1715 | Le Comte de Gabalis, ou entretiens sur les science | lang {"French":25} script {"printed":25}
+   p-82: ## *TOUCHANT* ### La Nouvelle Philoſophie. #### *Ouvrage poſthume.* -> A AMSTERDAM, <- -> Chez **Pierre de Coup**, Marchand Libraire. <- -> M. D. CCXV. <- 
+fr 69c822506c6f3cc53c84ac97 y1751 | Description de l'hôtel de ville d'Amsterdam | lang {"French":21,"French, Dutch":3,"Dutch, French":1} script {"printed":25}
+   p2: ## BÂTIMENT. ->A AMSTERDAM,<- ->Pour JAN DE RYKE,<- ->Imprimez chez DIRK VAN MAARTEN,<- ->Marchand Libraire derriere la Maison<- ->de Ville 1751.<- ->*Avec Privilege.*<- 
+fr 69c866086c6f3cc53c856325 y1629 | De l'admirable pouvoir et puissance de l'art et de | lang {"fr":23,"la":2} script {"printed":24,"mixed":1}
+   p5: nçois par IACQVES GIRARD<- ->de TOVRNVS.<- ->A PARIS,<- ->Chez PIERRE BILLAINE, ruë S. Iacques, à la<- ->Bonne Foy, deuant S. Yues.<- --- ->M. DC. XXVIII.<- <insert>1629 -</insert> ->*Auec priuilege du Roy.*<- 
+fr 69d8ca29a09828f83ddc9e05 y1793 | Traité des Champignons | lang {"French":25} script {"printed":25}
+   p3: <- ->P281<- ->PRO SCIENTIA SALUTE POPULIQUE<- ->LIBRARY OF<- ->THE NEW YORK BOTANICAL GARDEN<- ->*Special Book Fund,*<- ->1905<- ->Septemb' 1899 R W Gibson-Invt<- 
+fr 69c7b6c525ec2ba5ccd7f74d y1795 | Sur l' univers | lang {"French":24,"French, Latin":1} script {"printed":25}
+   p-9: on de Nogarella, est celle qu'a donnée Thomas Gale, Anglais, dans les opuscules mythologiques, physiques et morales, imprimées à Amsterdam, 1688. Aux soins que se donna Thomas Gale pour cette édition, Mei
+fr 69c857326c6f3cc53c853fc7 y1692 | Recueil de divers traitez de theologie mystique, q | lang {"French":17,"French, Latin":8} script {"printed":25}
+   p-279:  # EXTRAIT DU PRIVILEGE ->du Roy.<- Par Lettres Patentes de sa Majesté, données à S. Germain en Laye le 27. Novembre 1682. <unclear>scellées</unclear> <unclear>du</unclear> <unclear
+fr 695937043b43cb6630c91c0c y1631 | La Magie Naturelle (Secrets et Miracles de Nature) | lang {"French":25} script {"printed":24,"mixed":1}
+   p5:  <insert>Le faugueulx.</insert> <insert> BIBL. SEM. SULP.</insert> ->A ROVEN.<- ->Chez IEAN BERTHELIN, dans<- ->la court du Palais.<- --- ->M. DC. XXXI.<- <insert>8° S. 1557</insert> 
+fr 69c74e3d6a0f3d112faf83a2 y1729 | Lettres philosophiques sur la formation des sels e | lang {"French":16,"Latin":6,"Latin, German":3} script {"printed":25}
+   p-210: alcaldense fistit, in peculiari tractatu, et quidem vernaculo sermone, systematice pertractaturum esse. De Francobergensibus mineralibus idem dicendum, quorum pertractationem systematicam lingua propositur
+fr 69c7f3eb6c6f3cc53c841671 y1694 | Les souffleurs, comédie | lang {"French":20,"French, Italian":4,"French, Latin":1} script {"printed":21,"mixed":4}
+   p-90:  premiere chambre. Les curieux de Livres nouveaux pourront s'y adresser.* --- PAR Lettres Patentes du Roy, données à Versailles le 31. Dec. 1693. figné Guigou & fcelée. Il eft permis à Michel Chilliats de
+fr 69c864916c6f3cc53c856012 y1796 | Le nouvel homme | lang {"French":25} script {"printed":25}
+   
+fr 69c805396c6f3cc53c8450d1 y1706 | La vie de B. de Spinoza | lang {"French":21,"French, Latin":3,"Latin, French":1} script {"printed":25}
+   p-97:  *JEAN COLERUS*, Ministre de l'Eglise Luthérienne de la Haye. ### A LA HAYE, #### Chez T. JOHNSON, Marchand Libraire, dans le Pooten. --- ->M. DCC. VI.<- 
+fr 69d8ca1ca09828f83ddc9a51 y1791 | Histoire des Champignons de la France, Vol 1 | lang {"French":7,"French, Latin":18} script {"printed":25}
+   p11: Libraire, quai des Augustins. BELIN, Libraire, rue Saint-Jacques. CROULLEBOIS, Libraire, rue des Mathurins. BAZAN, rue et hôtel Serpente. ->M. DCC. XCI.<- 
+fr 69c871b86c6f3cc53c857667 y1769 | Discours sur les miracles de Jesus-Christ | lang {"French":17,"French, Latin":8} script {"printed":25}
+   p-235: jamais vu de réponfe raifonnable. Le Rabin Orobio --- <note>The following note is in Latin</note> (7) *Si Jefus volebat reverà declarare fuam divinam potentiam, debuerat fuis infultatoribus ipfique præfidi 
+fr 69aea40c9d2eb853bde35834 y1762 | Du contrat social, ou Principes du droit politique | lang {"French":25} script {"printed":25}
+   p9: e on a ajouté une Lettre de l'Auteur au seul Ami qui lui reste dans le monde.*<- ->**A AMSTERDAM,**<- ->**Chez MARC-MICHEL REY.**<- --- ->**M. DCC. LXII.**<-
+fr 69c7fae66c6f3cc53c842bf2 y1777 | Le Nazaréen, ou le Christianisme des Juifs, des ge | lang {"French":13,"French, Latin":12} script {"printed":25}
+   p-159: r ici. <column-break/> T A B L E D E S CHAPITRES ET DES MATIERES. PRÉFACE. Page 1 1°. Annonce d'un nouvel Evangile découvert à Amſterdam en 1709. ibid. 2°. Nazaréens regardés comme les premiers Chrétiens.
+fr 69c843386c6f3cc53c850f0f y1779 | Dictionnaire de chymie | lang {"French":25} script {"printed":25}
+   p-277: ous y avons faites, & tout ce qui concerne le superbe verre ardent de quatre pieds de diametre, qui, au tems que j'écris ceci, 25 septembre 1774, vient d'être achevé, & dont les sciences feront éternellem
+it 69de0e21006cdd4b9e56c4fd y1584 | La prima parte de Ragionamenti | lang {"Italian":24,"Italian, Latin":1} script {"printed":25}
+   p3: I-<- ->VISA IN TRE GIORNATE,<- ->LA CONTENENZA DELLE<- ->QVALI SI PORRA NE<- ->LA FACCIATA SE-<- ->QVENTE.<- --- > Veritas odium parit. --- M D LXXXIII 
+it 6a08587149638a50931c6249 y1590 | Aminta fauola boschereccia del sig. Torquato Tasso | lang {"Italian":25} script {"printed":25}
+   p2:  TASSO AMINTA 1590 
+it 69e6c33ccebd408ffa389072 y1578 | Le tredici piacevoli notti | lang {"Italian":24,"Venetian":1} script {"printed":25}
+   p4: </margin> <note>There is a faint, circular library stamp on the left side of the page.</note> ->In Vinegia, appresso Giovanni di Farri.<- ->M. D. LXXXIII.<- 
+it 69b51e13261c58d63664f271 y1549 | Il Pimandro | lang {"Italian":24,"Italian, Greek":1} script {"printed":25}
+   p5: la traduſſe per ſatis- fare, & ubbidire inſieme, al ſuo Marsilio. Seruite il Sig. noſtro felicemente. In Firen- ze a Di xxviij. di Gennaio. MD. xlvij. De V. S. R. ->Ser.<- ->Carolo Lenzoni<- 
+it 69aebfc2e997cc01b0caae8b y1792 | Vita di Benvenuto Cellini orefice e scultore fiore | lang {"Italian":25} script {"printed":25}
+   p3:  <insert> Rare Book Room NB 623 C3 A33 1792 </insert> <unclear> <margin> [Faint, illegible handwritten 
+it 69b00f88e485bbb15c6b2c96 y1568 | Discorsi di Pietro Andrea Mattioli nei Sei Libri d | lang {"Italian":25} script {"printed":25}
+   p4: ro Andrea Matthioli... nelli sei libri di Pedacio Dioscoride Anazarbeo della materia Medicinale," printed in Venice by Vincenzo Valgrisi in 1568. Because the text is mirrored and bleed-through, it is not 
+it 69dbcbcd1040d1d5e20bae60 y1494 | Epistolae ad Lucilium [Italian] Pistole del morali | lang {"Italian":25} script {"printed":25}
+   
+it 6a08546a15c643eb1af52b34 y1539 | Libri tre delle cose de Turchi. Nel primo si descr | lang {"Italian":25} script {"printed":25}
+   p4: tto male, perche mi amano troppo; ne cerco laude, perche sono essi tali, che non aspettano ammonitione di lodarmi doue sia bisogno. <margin>1533</margin> NOI adunque col nome de Iddio partiti di Vineggia 
+it 69e78253d93c1f600750405e y1562 | On the Nature and Virtues of Foods | lang {"Italian":25} script {"printed":25}
+   p5: uno per conseruarsi in sanità*<- ->*utilissima e necessaria.*<- ->**Con gratia & priuilegio.**<- ### IN VENETIA Per Giouanni Bariletto. ### M D L X I I.
+it 699050547d19f3f2aac1e087 y1593 | Iconologia | lang {"Italian":19,"Italian, Latin":4,"Latin, Italian":2} script {"printed":25}
+   p5:  <lang>Italian</lang> <insert>Pois frēs Joseph</insert> <insert>Marie soniti lettori 1633</insert> # ICONOLOGIA ->OVERO<- ->DESCRITTIONE DI DIVERSE I
+it 69b1ddd5a205bd982d827bb6 y1590 | Lezzioni dell'Accademia Fiorentina | lang {"Italian, Latin":4,"Italian":21} script {"printed":24,"mixed":1}
+   p7:  ->CON LA VITA DELL'AVTORE,<- ->ALL'ILLVSTRISS. ET ECCELLENT. SIG.<- ->DON GIOVANNI DE' MEDICI.<- ## IN FIORENZA, ## PER FILIPPO GIVNTI, ## M D X C. ->*Con Licenza de' Superiori, & Priuilegio.*<- <insert> Bib:
+it 69b51e38ff09e4fe943aa10f y1543 | Libro de Magistrati de gli Atheniesi | lang {"Italian":25} script {"printed":25}
+   p5: /insert> <insert>Postellus, G.</insert> ->da M. Giouanni Tatti.<- ->CON GRATIA ET PRIVILEGIO<- ->IN VENETIA PER BALDASAR DI COSTANTINI.<- ->M. D. XLVII.<- <insert>vert 167/394</insert> <insert>A v. c.</insert> 
+it 69dbca691040d1d5e20abf8d y1480 | Chronicon [Italian] La cronica | lang {"Italian":25} script {"printed":25}
+   
+it 69de9c1844c3c5480625bb31 y1607 | Regola delli cinque ordini d'architettura | lang {"Italian":13,"Latin":8,"none":1,"Latin, Italian":3} script {"mixed":3,"printed":21,"none":1}
+   p6: E<- ->ORDINI D' ARCHITETTVRA<- ->DI M· IACOMO BAROZZIO<- ->DA VIGNOLA·<- ->LIBRO PRIMO, ET ORIGINALE<- --- ->Andreas Vaccarius formis Romæ. 1607.<- 
+it 69b21d6cb7c52df2b4f29c3e y1568 | Le vite de' piu eccellenti pittori, scultori e arc | lang {"Italian":23,"Italian, Latin":2} script {"printed":25}
+   p2: --- <margin>14 A 1.5</margin> ->BOUGHT WITH THE INCOME<- ->FROM THE BEQUEST OF<- ->**CHARLES SUMNER, LL. D.,**<- ->OF BOSTON,<- ->(Class of 1830,)<- ->FOR<- ->"BOOKS RELATING TO<- ->POLITICS AND FINE ARTS
+it 69dbcb421040d1d5e20b4fbd y1489 | Historia naturalis [Italian] (Tr: Christophorus La | lang {"Italian":25} script {"printed":25}
+   p2:  2 Inc.c.a. 2310 σ BSB-Ink P-612.050 ->Fol.<- ->1402<- Goff P803 Villa brina 14 43909 
+it 69b51e8bcf111105c429f75e y1753 | Storia Letteraria D'Italia : divisa in tre libri.  | lang {"Italian":20,"Italian, Latin":2,"Latin":2,"Latin, Italian":1} script {"printed":25}
+   p7:  <unclear>STORIA</unclear> <unclear>LETTERARIA</unclear> <unclear>D'ITALIA</unclear> <unclear>VOLUME IX.</unclear> <unclear>MDCCLVII</unclear> # STORIA # LETTERARIA ## D'ITALIA. <unclear>IN VE
+it 69b51e18cf111105c4296fba y1584 | La cena de le Ceneri : Descritta in cinque dialogi | lang {"Italian":21,"Italian, Latin":4} script {"printed":25}
+   p7:  S. Desiderio. et Ambasciator alla sere- niss. Regina d' In- ghilterra. --- ->L' vniuersale intentione e' dechia-<- ->rata nel proemio.<- ->1584.<- 
+it 69dbcbaf1040d1d5e20ba281 y1496 | De veritate prophetica [Italian] Dialogo della ver | lang {"Italian":25} script {"printed":25}
+   p4:  22 Kristeller 39/ Con 1 silografia Savonarola 13 Cerdin, 16.- 8 cenn. Coupl. [?] (132) 4° Inc. s. a. 1617 * *Dialogo della verita prophetica*. (Firenze, Antonio Tubi
+it 69dc55becb6f7429748b92f5 y1494 | Fasciculus medicinae [Italian] Fascicolo di medici | lang {"Italian":24,"Latin":1} script {"mixed":14,"printed":11}
+   p8:  <margin>52 num. Bll. das 1. Blatt simuliert.</margin> Ketham, Joh. de Fasciculo di medicina Venedig, J. & G. de Gregoriis, 1493 italice <note>The following lines appear to be bibliographi
