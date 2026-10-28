@@ -351,6 +351,12 @@
 # Spends only spare quota: before each 40-page chunk it reads agy /quota and stops when the Gemini week is under the straight line
 # to its reset or the 5 h bucket is under 25%. 3 books at a time, no new chunk after 95 min. Queue at install: 335,862 pages.
 50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=4 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558 #7517: second account (jamesdereklomas@) pool since 2026-10-28
+# Reader-request lane (#7599, Derek 2026-10-28 "finish which ever books they request"): every 2 h at :05 on odd hours,
+# takes the open "request translation" feedback rows that pass translation-request-eligibility.mjs, OCRs the requested
+# book's missing pages (agy 3.8 Flash low), translates the rest on the book's CLI row (else agy 3.8 Flash), requested
+# pages first, up to 200 pages a run (one reader call at a time, ~20 s each, inside the 110 min timeout); then emails each reader whose page now has English (canonical reply email,
+# reply_sent_at). Held books stay held; only waiting-for-a-lane holds (LANE_HOLDS) are worked. Second agy pool.
+5 1-23/2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/reader-request-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/reader-request-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/reader-request-lane/$(date +\%F-\%H) --max-pages=200 --apply >> /var/log/sourcelibrary/reader-request-lane.log 2>&1  # #7599
 # Siku Quanshu translation lane (#5600, Derek 2026-10-27 "yes" + "lower the bar, keep them as drafts"): every 2 h at :25,
 # one wave of up to ~1,500 pages of the held Siku cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660) on agy 3.8 Flash
 # low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
