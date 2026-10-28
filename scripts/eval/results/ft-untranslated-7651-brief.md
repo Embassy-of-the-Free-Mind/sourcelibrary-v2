@@ -6,7 +6,8 @@ defeater policy — with two changes: identity comes from OUR scan first, and th
 classes are the five #7651 asks for plus two that keep "could not ask" apart from "asked,
 none found". The searcher is never shown our registry (cards, attempts, badges,
 `prior_translation`). Pre-registered 2026-10-28 before any search; the prompt text below is
-what `scripts/eval/ft-untranslated-7651-prompts.mjs` writes into every prompt.*
+what `scripts/eval/ft-untranslated-7651-prompts.mjs` writes into every prompt. Amended once
+after a 2-book pilot (searchers stopped at 3–5 queries): the 6-search floor below.*
 
 ---
 
@@ -36,7 +37,11 @@ scholarly presses, JSTOR, Brill, university presses, and tradition catalogues (C
 Chinese, 84000/BDRC for Tibetan, Sefaria for Hebrew, ESTC/EEBO for early English printings).
 DISTRUST booksellers, Scribd, dokumen.pub, pdfcoffee, blogs, reddit, goodreads, AI mirrors:
 never conclude a prior exists from those alone. Disambiguate this work from other works by
-the same author, commentaries on it, and works with similar titles. About 12 searches at most.
+the same author, commentaries on it, and works with similar titles. **Floor: before
+`no_prior_known`, run at least 6 distinct searches** — the original-language title, the
+English title, the author with "translated", one catalogue API (Open Library or archive.org),
+one tradition-appropriate catalogue or scholarly bibliography, and one search for a
+translation inside a modern edition, study or anthology. About 14 searches at most.
 
 **A prior counts only if it is formally published** (ISBN, DOI, or a press/journal imprint,
 including early printed books). A web-only or AI translation: report it, but decide as if it
