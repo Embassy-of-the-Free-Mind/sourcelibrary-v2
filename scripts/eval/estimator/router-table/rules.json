@@ -1,6 +1,6 @@
 {
   "_about": "Every parameter of the router table (#6740), read by build.py. Data, not code: change a number here and re-run. A route's outcome is acceptance judged against the page image (route-judge pilot, #7376), not agreement with Opus. Opus is the judge, not the reference reader. The hierarchical models (v1, v2) give only the weak prior.",
-  "as_of": "2026-10-26b",
+  "as_of": "2026-10-28",
   "inputs": {
     "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
     "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
@@ -22,9 +22,10 @@
   "_cluster_note": "The judge's pages are not independent within a book. When a route's n pages come from fewer books (Latin: 30 pages in 9 books), k and n are scaled by books / n before they enter the posterior. Wrong-text pages are read as the page count k of n.",
   "switch": {
     "_about": "Reference = the measured route with the highest posterior mean acceptance. Pick the cheapest measured route with P(acc_route >= acc_reference - within) >= p AND wrong-text pages / n <= wrong_text_max. The pick is the current route: keep. Another route: switch. None qualifies: keep.",
-    "within": 0.05,
+    "within": 0.08,
+    "_within": "2026-10-28 (Derek: 'prioritize cost a bit more'): 0.05 -> 0.08, and wrong_text_max 0.02 -> 0.04. At 0.05/0.02 German Flash-Lite correction stayed on Opus although agy Flash-low tied it (28/30 each; wrong text 2/30 vs 1/30, one page). The new margins move that cell only; Latin lite (30/30 vs 24/30), German 3 Flash (29/29 vs 26/30), Chinese Paddle and Tibetan translation keep Opus because their gaps exceed them.",
     "p": 0.9,
-    "wrong_text_max": 0.02,
+    "wrong_text_max": 0.04,
     "wrong_text_bar": "relative",
     "_wrong_text_bar": "relative (Derek, 2026-10-26: cost is part of the measure): a route passes when its wrong-text rate is at most the best route's rate + wrong_text_max, so the cheaper of two equally good routes wins. absolute: at most wrong_text_max outright, which keeps the current route whenever every route misses 2% (Tibetan: 3/30 on both correctors). The other bar is reported as a sensitivity.",
     "_pick": "2026-10-26b (Derek: 'and this takes cost into account?' -> 'yes'): among the routes that pass the gate, the pick is the lowest median expected dollars per ACCEPTED page, one unit for every channel (was: the lowest share of the channel's free week per RAW page). The margin is unchanged; sensitivity_within reports what a 0.10 margin would pick, flagged when that route is 0.05-0.10 below the best and >= sensitivity_cheaper times cheaper.",
