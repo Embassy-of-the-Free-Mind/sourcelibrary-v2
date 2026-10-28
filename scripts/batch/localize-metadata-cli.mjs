@@ -12,7 +12,7 @@
  * labelled as English.
  *
  *   count [--lang=es|zh]
- *   run   --field=summary|chapters [--lang=es|zh] [--limit=N] [--apply] [--concurrency=4] [--out=DIR] [--book-ids=a,b]
+ *   run   --field=summary|chapters [--lang=es|zh] [--pack-chars=N] [--limit=N] [--apply] [--concurrency=4] [--out=DIR] [--book-ids=a,b]
  *         Dry run unless --apply: the calls are made either way, and every result (English beside the translation, verdict) is
  *         appended to DIR/<lang>-<field>-results.jsonl so a dry run can be read and then written without calling again.
  *   apply --field=summary|chapters --from=DIR/<lang>-<field>-results.jsonl
@@ -77,6 +77,8 @@ const MAX_CALLS_TOTAL = Number(arg('max-calls-total', 4500));
 const CONCURRENCY = Number(arg('concurrency', 4));
 // 24K-character chapter packs came back cut before <<<END>>> on 36 of 302 calls (2026-10-27): 16K is the size the gate passed.
 const PACK_CHARS = { summary: 12000, chapters: 16000 };
+// Even at 16K, 93 of 689 es chapter calls came back cut (2026-10-28); a retry pass over what is left uses --pack-chars=8000.
+if (arg('pack-chars')) PACK_CHARS[FIELD] = Number(arg('pack-chars'));
 const PACK_BOOKS = 30;
 const CHAPTER_PART = 250; // a book with more entries is sent in parts of this many, and written only when every part passes
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
