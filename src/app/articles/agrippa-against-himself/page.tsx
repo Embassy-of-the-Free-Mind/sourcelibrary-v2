@@ -165,7 +165,7 @@ export default function AgrippaAgainstHimselfPage() {
           source={<>Agrippa, <em>On the Nobility and Excellence of the Female Sex</em> (1529)</>}
         >
           But by the excessive tyranny of men, prevailing against divine right and the laws of nature, the liberty
-          once given to women is now (as you might say) interdicted by laws, abolished by custom and usage, and
+          once given to women is now—as you might say—interdicted by laws, abolished by custom and usage, and
           extinguished by education.
         </SourceQuote>
 
@@ -218,7 +218,7 @@ export default function AgrippaAgainstHimselfPage() {
         >
           Once, while I was serving as the Advocate and legal counsel for the Republic of Metz, I had a very serious
           battle with an Inquisitor. This man, acting wickedly, had dragged a poor peasant woman to his place of
-          execution (and to a venue where he had no jurisdiction) based on certain futile and most unjust slanders;
+          execution—and to a venue where he had no jurisdiction—based on certain futile and most unjust slanders;
           he intended not so much to investigate her as to torture her. When I had undertaken her defense and
           demonstrated from the records themselves that nothing had been alleged that would justify interrogation,
           he resisted me to my face. “There is one thing,” he said, “that is more than sufficient: for this woman’s
@@ -404,7 +404,7 @@ export default function AgrippaAgainstHimselfPage() {
         </p>
 
         <p className="text-sm text-muted leading-relaxed mt-12 font-body">
-          Quotations are Source Library’s translations as they stand on the linked pages (with dashes set as parentheses), from the 1533 Cologne{' '}
+          Quotations are Source Library’s translations as they stand on the linked pages, from the 1533 Cologne{' '}
           <em>De occulta philosophia</em> (the C. G. Jung copy, digitised by e-rara), the 1531 Paris <em>De
           vanitate</em> (Bibliothèque nationale de France) and the 1529 <em>De nobilitate</em>. Biographical dates
           follow the standard accounts (Nauert, Perrone Compagni).
