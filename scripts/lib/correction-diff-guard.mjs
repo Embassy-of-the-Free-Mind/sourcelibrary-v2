@@ -98,35 +98,72 @@ export function diffHunks(A, B) {
 }
 
 const ROMAN = /^(?=[MDCLXVI])M{0,4}(CM|CD|D?C{0,4})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})$/;
-/** A number token's value key: digits as written (separators out), a Roman numeral upper-cased; null if not a number. */
+const RV = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+const romanValue = (r) => { let v = 0; for (let i = 0; i < r.length; i++) { const a = RV[r[i]], b = RV[r[i + 1]] || 0; v += a < b ? -a : a; } return v; };
+/**
+ * A number token's VALUE, as a string (11 and XI are one number): digits as written (separators out), a Roman numeral
+ * of 2+ letters in capitals, or a lower-case one ending in j (xij, iiij); null if not a number.
+ */
 export function numberKey(t) {
-  if (/\p{N}/u.test(t)) return t.replace(/[^\p{N}]/gu, '');
-  if (t.length >= 2 && t === t.toUpperCase() && ROMAN.test(t)) return t;
-  if (/^[ivxlcdm]*[ij]$/.test(t) && t.length >= 2 && /j$/.test(t)) return t.toUpperCase().replace(/J$/, 'I');   // xij, iiij
+  // letters and digits in one token (3m, q2, 2m) is an abbreviation glyph read as a digit (ꝫ, ꝛ), not a number
+  if (/\p{N}/u.test(t)) { if (/\p{L}/u.test(t)) return null; const d = t.replace(/[^0-9]/g, ''); return d ? String(Number(d)) : t.replace(/[^\p{N}]/gu, ''); }
+  if (t.length >= 2 && t === t.toUpperCase() && ROMAN.test(t)) return String(romanValue(t));
+  if (/^[ivxlcdm]*[ij]$/.test(t) && t.length >= 2 && /j$/.test(t)) { const r = t.toUpperCase().replace(/J$/, 'I'); return ROMAN.test(r) ? String(romanValue(r)) : null; }
   return null;
 }
 
 const ABBR = /[̃̄̅̆̑ͣ-ͯꝑꝓꝗꝙꝯꝰ⁹ᵈᵉ;~]/u;
-const ABBR_BASE = (t) => t.normalize('NFD').replace(/[ꝑꝓ]/g, 'p').replace(/[ꝗꝙ]/g, 'q').replace(/[ꝯꝰ⁹;~]/g, '').replace(/[ᵈ]/g, 'd').replace(/[ᵉ]/g, 'e').replace(/\p{M}/gu, '').toLowerCase().replace(/ſ/g, 's').replace(/v/g, 'u').replace(/j/g, 'i');
+const ABBR_BASE = (t) => t.normalize('NFD').replace(/f/g, 's').replace(/[ꝑꝓ]/g, 'p').replace(/[ꝗꝙ]/g, 'q').replace(/[ꝯꝰ⁹;~]/g, '').replace(/[ᵈ]/g, 'd').replace(/[ᵉ]/g, 'e').replace(/\p{M}/gu, '').toLowerCase().replace(/ſ/g, 's').replace(/v/g, 'u').replace(/j/g, 'i');
 const isSubseq = (x, y) => { let k = 0; for (const ch of y) if (ch === x[k]) k++; return k === x.length; };
 
 const ctx = (T, i, j) => T.slice(Math.max(0, i), Math.min(T.length, j)).map((x) => x.t).join(' ');
 
 /**
- * The flip-risk changes from `draft` to `next`. `lang`: la | en | de | fr | it (Latin negations are checked on every
+ * The flip-risk changes from `draft` to `next`: only hunks of ≤ MAX_HUNK tokens a side are looked at, and a hunk of the token diff is flagged for a negation only when the
+ * PAGE's count of that negation word changes, and for a number only when the page's count of that number does. `lang`: la | en | de | fr | it (Latin negations are checked on every
  * page: Latin quotations stand in vernacular books). Returns { flags: [{kind, i, draft, next, context_draft,
  * context_next, a:[start,end], b:[start,end]}], hunks } — kind is 'negation' | 'number' | 'expansion'; `a`/`b` are the
  * hunk's character spans in draft / next, so a change can be put back exactly.
  */
+/** Abbreviated negations of early print, by their letters with the marks taken off: nõ / nō / n̄ = non, nl / nich̄ = nihil. */
+const ABBR_NEG = Object.freeze({ n: 'non', no: 'non', nl: 'nihil', nich: 'nihil', nichl: 'nihil', nil: 'nihil', nq: 'neque', nec: 'nec', nu: 'nunquam' });
+
+export const MAX_HUNK = 3;
+
 export function correctionDiffs(draft, next, { lang } = {}) {
   const A = tokens(draft), B = tokens(next);
-  const NEG = new Set([...(NEGATIONS[lang] || []), ...NEGATIONS.la].map(fold));
+  const NEG0 = new Set([...(NEGATIONS[lang] || []), ...NEGATIONS.la].map(fold));
+  // a token is the negation it spells, or — written with an abbreviation mark — the negation its letters abbreviate,
+  // so expanding nõ to non is not a negation added
+  // Counted as ONE class: nec → neque or nullū → nullam changes the word, not the sense. A truncated or abbreviated
+  // form (nunq, nullū, nequaquã) is the negation it begins.
+  const NEGW = [...NEG0].filter((w) => w.length >= 4);
+  const negOf = (x) => {
+    if (NEG0.has(x.f)) return 'NEG';
+    const base = ABBR_BASE(x.t).replace(/[^\p{L}]/gu, '');
+    if (ABBR.test(x.t.normalize('NFD')) && ABBR_NEG[base]) return 'NEG';
+    return base.length >= 4 && NEGW.some((w) => w.startsWith(base) || base.startsWith(w)) ? 'NEG' : null;
+  };
   const hunks = diffHunks(A, B);
   const flags = [];
   const span = (T, i, j, other) => (i < j ? [T[i].a, T[j - 1].b] : other);
   const bag = (T, i, j, f) => { const m = new Map(); for (let k = i; k < j; k++) { const v = f(T[k]); if (v != null) m.set(v, (m.get(v) || 0) + 1); } return m; };
   const sameBag = (x, y) => x.size === y.size && [...x].every(([k, v]) => y.get(k) === v);
+  const diffKeys = (x, y) => [...new Set([...x.keys(), ...y.keys()])].filter((k) => (x.get(k) || 0) !== (y.get(k) || 0));
+  // Page-level counts decide whether a change is a change at all: a page number the draft has in the body and the
+  // correction moves into <page-num>, or a "non" the alignment shifted to the next hunk, leaves the page's count as it was.
+  // Numbers are counted over the WHOLE text (tags included); negations over the printed text.
+  const allNums = (t) => { const m = new Map(); for (const x of String(t || '').matchAll(/[\p{L}\p{N}]+/gu)) { const k = numberKey(x[0]); if (k != null) m.set(k, (m.get(k) || 0) + 1); } return m; };
+  const numChanged = new Set(diffKeys(allNums(draft), allNums(next)));
+  // a lone 7 in Latin or German print is usually the Tironian et (⁊) read as a digit: not a number change
+  if (lang === 'la' || lang === 'de') numChanged.delete('7');
+  const negChanged = new Set(diffKeys(bag(A, 0, A.length, negOf), bag(B, 0, B.length, negOf)));
   for (const h of hunks) {
+    // a flip is LOCAL: a word or three changed inside text that otherwise agrees. A longer hunk is a re-read of a passage
+    // (a garbled draft read again), which the image judge checks as omission / addition, not this guard.
+    if (h.aj - h.ai > MAX_HUNK || h.bj - h.bi > MAX_HUNK) continue;
+    // a spacing fix (Bacchinon → Bacchi non, ne quidem → nequidem) changes no letters: never a flag
+    if (A.slice(h.ai, h.aj).map((x) => x.f).join('') === B.slice(h.bi, h.bj).map((x) => x.f).join('')) continue;
     // spans to swap back: a hunk with one side empty takes the separator before it on both sides (from the end of the
     // previous token), so putting a dropped word back also puts back its space
     let a = span(A, h.ai, h.aj, null), b = span(B, h.bi, h.bj, null);
@@ -135,21 +172,23 @@ export function correctionDiffs(draft, next, { lang } = {}) {
       else { const ae = h.aj < A.length ? A[h.aj].a : String(draft).length, be = h.bj < B.length ? B[h.bj].a : String(next).length; a = [a ? a[0] : ae, ae]; b = [b ? b[0] : be, be]; }
     }
     const base = { draft: ctx(A, h.ai, h.aj), next: ctx(B, h.bi, h.bj), context_draft: ctx(A, h.ai - 4, h.aj + 4), context_next: ctx(B, h.bi - 4, h.bj + 4), a, b };
-    const negA = bag(A, h.ai, h.aj, (x) => (NEG.has(x.f) ? x.f : null)), negB = bag(B, h.bi, h.bj, (x) => (NEG.has(x.f) ? x.f : null));
+    const negA = bag(A, h.ai, h.aj, negOf), negB = bag(B, h.bi, h.bj, negOf);
     // a negation prefix added or dropped on one word (in-/un-/non-), the #6142 shape for Latin script
     const prefixFlip = h.aj - h.ai === 1 && h.bj - h.bi === 1 && (() => {
       const x = A[h.ai].f, y = B[h.bi].f; const [s, l] = x.length < y.length ? [x, y] : [y, x];
       return l.length >= 6 && ['in', 'im', 'un', 'non', 'ir', 'il'].some((pf) => l === pf + s);
     })();
-    if (!sameBag(negA, negB) || prefixFlip) flags.push({ kind: 'negation', ...base });
+    if ((!sameBag(negA, negB) && diffKeys(negA, negB).some((k) => negChanged.has(k))) || prefixFlip) flags.push({ kind: 'negation', ...base });
     const numA = bag(A, h.ai, h.aj, (x) => numberKey(x.t)), numB = bag(B, h.bi, h.bj, (x) => numberKey(x.t));
-    if (!sameBag(numA, numB)) flags.push({ kind: 'number', ...base });
+    if (!sameBag(numA, numB) && diffKeys(numA, numB).some((k) => numChanged.has(k))) flags.push({ kind: 'number', ...base });
     // an abbreviation in the draft written out as a word whose letters do not contain the abbreviation's
     for (let k = h.ai; k < h.aj; k++) {
       if (!ABBR.test(A[k].t.normalize('NFD'))) continue;
       const baseA = ABBR_BASE(A[k].t).replace(/[^\p{L}]/gu, '');
-      const nextWords = B.slice(h.bi, h.bj).map((x) => x.f);
-      if (nextWords.length && !nextWords.some((w) => isSubseq(baseA, w))) { flags.push({ kind: 'expansion', ...base }); break; }
+      const nextWords = B.slice(h.bi, h.bj).map((x) => x.f.replace(/f/g, 's'));
+      // a misread draft letter inside the abbreviation is common (GPU drafts of incunabula); a different FIRST letter as
+      // well is a different word
+      if (nextWords.length && !nextWords.some((w) => isSubseq(baseA, w) || w[0] === baseA[0])) { flags.push({ kind: 'expansion', ...base }); break; }
     }
   }
   flags.forEach((f, i) => { f.i = i; });

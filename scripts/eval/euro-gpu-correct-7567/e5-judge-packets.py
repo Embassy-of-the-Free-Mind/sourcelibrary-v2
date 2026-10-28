@@ -8,7 +8,7 @@ packet also carries the neighbouring leaves (prev.jpg / next.jpg) for the judge'
 One packet per page: L (the stored Flash-Lite draft = what readers get now), X (arm c's GPU draft), a (L→Flash),
 a2 (the same again, on the pages it ran), c (X→Flash). An arm with no text (CONTAIN, no answer) is not shown and is
 recorded as not delivered.
-  e5-judge-packets.py <J>      (J = the job's e5 dir) writes <J>/judge-run/judge/packets/*.json and <J>/judge-key.json
+  [FINAL=1] e5-judge-packets.py <J>      (J = the job's e5 dir) writes <J>/judge-run/judge/packets/*.json and <J>/judge-key.json
 """
 import hashlib, json, os, random, re, sys
 
@@ -35,6 +35,8 @@ def jsonl(p):
 
 pages = {p['slug']: p for p in json.load(open(os.path.join(J, 'panel.json')))['pages']}
 sample = [s for s in open(os.path.join(J, 'judge-sample.txt')).read().split() if s]
+A2_SAMPLE = set(open(os.path.join(J, 'a2-sample.txt')).read().split()) if os.path.exists(os.path.join(J, 'a2-sample.txt')) else set()
+FINAL = os.environ.get('FINAL') == '1'   # the last pass: judge a page without a2 when a2 stopped short
 src = {k: jsonl(os.path.join(J, 'drafts', f'{k}.jsonl')) for k in ['L', 'X']}
 agy = {a: {f[:-5]: json.load(open(os.path.join(J, 'arms', a, f))) for f in os.listdir(os.path.join(J, 'arms', a))} if os.path.isdir(os.path.join(J, 'arms', a)) else {} for a in AGY}
 out = os.path.join(J, 'judge-run', 'judge', 'packets'); os.makedirs(out, exist_ok=True)
@@ -45,6 +47,7 @@ for s in sample:
     p = pages[s]
     if s in key: continue                                   # a packet once made is never rebuilt (its verdict stands)
     if not all(s in agy[a] for a in ('a', 'c')): continue   # judged only once both arms have answered
+    if s in A2_SAMPLE and s not in agy['a2'] and not FINAL: continue   # and a2, on its pages (the judge's own repeat)
     texts, nd = {}, []
     for a in ARMS:
         if a in AGY:

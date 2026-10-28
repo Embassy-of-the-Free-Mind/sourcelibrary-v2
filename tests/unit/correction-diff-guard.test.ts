@@ -16,6 +16,12 @@ describe('correction diff guard (#7567 E3)', () => {
     expect(kinds('It is not so.', 'It is so.', 'en')).toEqual(['negation']);
     expect(kinds('Questo non è vero.', 'Questo è vero.', 'it')).toEqual(['negation']);
   });
+  it('does not flag an abbreviated negation written out, or a spacing fix', () => {
+    expect(kinds('bonū nõ est licitū', 'bonum non est licitum', 'la')).toEqual([]);
+    expect(kinds('Bacchinon est', 'Bacchi non est', 'la')).toEqual([]);
+    expect(kinds('nec dixit', 'neque dixit', 'la')).toEqual([]);
+    expect(kinds('nullū hominem', 'nullum hominem', 'la')).toEqual([]);
+  });
   it('flags a negation prefix flip on one word', () => {
     expect(kinds('res possibilis est', 'res impossibilis est', 'la')).toEqual(['negation']);
   });
@@ -24,13 +30,16 @@ describe('correction diff guard (#7567 E3)', () => {
     expect(kinds('Cap. XII. de rebus', 'Cap. XVII. de rebus', 'la')).toEqual(['number']);
     expect(kinds('folio xij. verso', 'folio xiij. verso', 'la')).toEqual(['number']);
     expect(kinds('pag. 12 et', 'pag. 12 et', 'la')).toEqual([]);
+    expect(kinds('Cap. 11 de rebus', 'Cap. XI de rebus', 'la')).toEqual([]);
+    expect(kinds('fides 7 via', 'fides et via', 'la')).toEqual([]);
   });
   it('treats a Roman numeral, digits and a lower-case xij as numbers, a capital word as not', () => {
-    expect(numberKey('MDLXXXIV')).toBe('MDLXXXIV');
+    expect(numberKey('MDLXXXIV')).toBe('1584');
     expect(numberKey('1,584')).toBe('1584');
-    expect(numberKey('xij')).toBe('XII');
+    expect(numberKey('xij')).toBe('12');
     expect(numberKey('DEO')).toBeNull();
     expect(numberKey('di')).toBeNull();
+    expect(numberKey('3m')).toBeNull();
   });
   it('flags an abbreviation expanded into a word that does not contain it', () => {
     expect(kinds('dñs dixit', 'dominus dixit', 'la')).toEqual([]);
