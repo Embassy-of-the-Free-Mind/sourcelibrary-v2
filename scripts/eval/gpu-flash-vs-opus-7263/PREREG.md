@@ -104,3 +104,49 @@ Invented or wrong-leaf text found by eye is contained (hold + withhold, label `c
 
 ## Not decided here
 No lane or routing table is changed by this job; the recommended route per cell goes to #7263 with its default.
+
+## Amendment 1 — 2026-10-28T10:25Z, before any TEST judge call or score (Derek, inbox 09:43Z and 09:50Z)
+
+**State when written:** C′ done on all 326 pages; D round 1 done on the 50 DEV pages (not judged); arm O had made
+61 fresh Opus reads (2 smoke + 59 in panel order) when it was stopped at ~10:00Z on the 09:50Z note. No judge call
+had run.
+
+**1. Arm O becomes EXISTING Opus work; no new Opus reads.** ("minimise NEW Opus reads … Opus as JUDGE is fine.")
+- **O := `f`**, #6740's stored Opus 5.5 correction of the lite read, made with the page image
+  (`/root/jobs/euro-gpu-correct-7567/drafts/f.jsonl`, `correct.mjs` instruction; #7567 judged it as arm f). It
+  exists on the panel's 211 lite pages (la 126, en 55, de 30). **It is Opus reading the page with a draft, not a
+  draft-free direct read**; every table says "O (Opus, correcting lite)". Its CONTAIN answers (8) count as no-answer.
+- **The 61 fresh direct reads** (`O-direct`) are kept and reported only as a side note (O-direct vs O on the pages
+  both have); they do not enter the rule.
+- **TEST frame:** the lite pages with `f` that are not in DEV: **la 116, en 45, de 24; pooled 185.** The DEV split
+  is unchanged (it tunes D only).
+- **fr and it** have no stored Opus read: C, C′, D are compared against the **published text** there (the
+  Wikisource typed reference, folded CER) and judged without O. No verdict "replaces O" is possible in those cells,
+  and none is claimed.
+- A search for pages whose stored OCR is Opus (`pages.ocr.model`) timed out (no index on that field, 500 s) and
+  the lane registry (`lane_job_books`) only lists 3 recent claude-opus-ocr jobs, so no other cell was drawn from
+  Mongo. #7568's Opus corrections (zh 75 pages / 3 books; de, grc, sa, ar 250 each) are the next frame; the
+  Chinese one (Paddle draft) is run only if this frame finishes with time and meter to spare, and is reported as
+  its own cell if it is.
+- **Power, restated:** en (45) and de (24) are far under the n ≈ 90–130 the rule needs; la (116) and pooled (185)
+  are the cells that can pass.
+
+**2. Exceptions to Opus: an escalation rule, measured.** ("can always have exceptions that require opus.") The
+target is the cheap route by default plus a rule that sends to Opus the pages it would get wrong.
+- **Candidate triggers, all known before any Opus read** (from the drafts and the cheap arm's own answer):
+  - T1 draft disagreement: share of draft-1 words in X↔Y diff spans (d-diff.mjs alignment), thresholds at the
+    TEST pages' 80th and 90th percentiles;
+  - T2 the Flash arm answered CONTAIN / no-answer / UNCHANGED-on-a-bad-draft is not knowable, so T2 = CONTAIN or
+    no-answer only;
+  - T3 change size: share of draft-1 words the Flash correction changed (large rewrites), 80th/90th percentile;
+  - T4 page kind from the cheap arm's own tags: `<page-type>` not `text`, `<columns>`, `<margin>` present, a
+    markdown table, or `<warning>`;
+  - T5 cell (language);
+  - draft confidence is not available (the E1 engines report none), so it is not a trigger.
+- **For each trigger and the union T1∪T2∪T4** on TEST: recall = share of the cheap arm's not-usable pages it flags;
+  escalation rate = share of all pages it flags.
+- **Blended route per cell:** pages not flagged keep the cheap arm's read; flagged pages take O's read. Report the
+  blended usable rate vs O-everywhere (Wilson), and blended cost per usable page. The blended route is tested
+  against O by the same decision rule as any arm.
+- Thresholds are fixed here (percentiles of TEST's own distribution, which needs no labels); no trigger is tuned
+  on TEST verdicts.
