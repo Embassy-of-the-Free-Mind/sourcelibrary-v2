@@ -84,7 +84,7 @@ case "${1:-run}" in
       fi
       # 3 failed chunks in a row (skips excluded) stop the route
       fails=0
-      for t in $(ls -1t "$Q"/done "$Q"/failed 2>/dev/null | grep "^zy-ocr-$route-c[0-9]*\.sh$"); do
+      for t in $(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep "^zy-ocr-$route-c[0-9]*\.sh$" | sort -r); do   # newest chunk first
         [ -e "$Q/done/$t" ] && break
         grep -q OCR-FILLER-SKIP "$OUT/${t%.sh}/task.log" 2>/dev/null && continue
         fails=$((fails + 1))
