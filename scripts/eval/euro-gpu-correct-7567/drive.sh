@@ -47,7 +47,7 @@ vlm() {  # vlm <mode> <max tokens> <model> <vllm args...>
   unsample; log "$(tr -d '\n ' < "$J/out/$ARM.jsonl.run.json" 2>/dev/null) peak $(peak $ARM) MiB"; stop_server
 }
 surya() {
-  local args=(--dtype bfloat16 --max-num-seqs 16 --enable-prefix-caching --mm-processor-kwargs '{"min_pixels": 3136, "max_pixels": 6291456}')
+  local args=(--dtype bfloat16 --max-num-seqs "${S_SEQS:-16}" --enable-prefix-caching --mm-processor-kwargs "{\"min_pixels\": 3136, \"max_pixels\": ${S_MAXPX:-6291456}}")
   MAXLEN=18000 serve datalab-to/surya-ocr-2 datalab-to/surya-ocr-2 "${args[@]}" --speculative-config '{"method":"mtp","num_speculative_tokens":2}' \
     || { log "retry without MTP"; MAXLEN=18000 serve datalab-to/surya-ocr-2 datalab-to/surya-ocr-2 "${args[@]}" || return 0; }
   sample "$J/vram-S.csv"; local t0; t0=$(date +%s); rm -rf "$J/surya-out"

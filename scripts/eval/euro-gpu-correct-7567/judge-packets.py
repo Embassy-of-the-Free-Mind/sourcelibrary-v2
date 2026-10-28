@@ -13,15 +13,19 @@ Identical texts (an UNCHANGED answer is its draft) are shown once and the label 
 with no text (CONTAIN, no answer, empty read) is not shown: it is recorded as not delivered. Labels are letters
 shuffled per packet (seed 7567 + packet name); the arm key goes to <J>/judge-key.json, never into a packet.
 
-  judge-packets.py <J>      writes <J>/judge-run/judge/packets/*.json and <J>/judge-key.json
+  judge-packets.py <J> [lite,gpu]      writes <J>/judge-run/judge/packets/*.json and <J>/judge-key.json
 """
 import hashlib, json, os, random, re, sys
 
 J = sys.argv[1]
+ONLY_GROUPS = (sys.argv[2] if len(sys.argv) > 2 else 'lite,gpu').split(',')
 HERE = os.path.dirname(os.path.abspath(__file__))
 LANG = {'la': 'Latin', 'en': 'English', 'de': 'German', 'fr': 'French', 'it': 'Italian'}
-GROUPS = {'lite': ['S', 'L', 'a', 'a2', 'f', 'e'], 'gpu': ['S', 'G', 'X', 'b', 'c', 'd', 'e']}
-AGY_ARMS = {'a', 'a2', 'b', 'c', 'd', 'e'}
+GROUPS = {'lite': ['S', 'L', 'a', 'a2', 'f', 'e'], 'gpu': ['S', 'G', 'X', 'b', 'c', 'd', 'e'],
+          # Derek's no-image control, judged on a seeded sample of 12 pages per language (CER alone cannot tell reading
+          # from recitation where a reference leaves out what the page prints)
+          'noimg': ['L', 'a', 'a-noimg', 'G', 'b', 'b-noimg']}
+AGY_ARMS = {'a', 'a2', 'b', 'c', 'd', 'e', 'a-noimg', 'b-noimg'}
 
 
 def draft_text(t):
@@ -40,15 +44,21 @@ def jsonl(p):
 
 
 pages = json.load(open(os.path.join(HERE, 'panel.json')))['pages']
+_r = random.Random(7567); NOIMG_SAMPLE = set()
+for lang in ['la', 'en', 'de', 'fr', 'it']:
+    pool = sorted(p['slug'] for p in pages if p['lang'] == lang and 'lindnerin' not in p['slug']); NOIMG_SAMPLE |= set(_r.sample(pool, 12))
 src = {k: jsonl(os.path.join(J, 'drafts', f'{k}.jsonl')) for k in ['S', 'L', 'f', 'G', 'X']}
 agy = {a: {f[:-5]: json.load(open(os.path.join(J, 'e2', a, f))) for f in os.listdir(os.path.join(J, 'e2', a))} if os.path.isdir(os.path.join(J, 'e2', a)) else {} for a in AGY_ARMS}
 
 out = os.path.join(J, 'judge-run', 'judge', 'packets'); os.makedirs(out, exist_ok=True)
-key = {}
+kp = os.path.join(J, 'judge-key.json')
+key = json.load(open(kp)) if os.path.exists(kp) else {}
 for p in pages:
     s = p['slug']
     for g, arms in GROUPS.items():
+        if g not in ONLY_GROUPS: continue
         if g == 'lite' and not p['lite']: continue
+        if g == 'noimg' and s not in NOIMG_SAMPLE: continue
         texts, nd = {}, []
         for a in arms:
             if a in AGY_ARMS:

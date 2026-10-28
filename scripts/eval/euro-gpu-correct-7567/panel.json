@@ -3166,7 +3166,7 @@
    "lite": false,
    "source_url": "https://www.deutschestextarchiv.de/book/view/walter_beschreibung_1609?p=118",
    "image": "img/dta-walter_beschreibung_1609-p118.jpg",
-   "ref_sha256": "2ade2ec71efa723a4fd407b7cda78e517476c922cc666343dd74ee1b022504c6"
+   "ref_sha256": "7938106b60f7629b7ed5d96ae31922d5902ac039bc99cc8b03c2c2008ec92e05"
   },
   {
    "slug": "dta-walter_beschreibung_1609-p68",
@@ -3183,7 +3183,7 @@
    "lite": false,
    "source_url": "https://www.deutschestextarchiv.de/book/view/walter_beschreibung_1609?p=68",
    "image": "img/dta-walter_beschreibung_1609-p68.jpg",
-   "ref_sha256": "60b723e5cb2f2980fb5a0e46e60a6408c320c18de65ba004415d547146a1fa13"
+   "ref_sha256": "d6fd68821f7f67cdda14272e3e5ff46fbcc132533ce52e8518d371d443b6e499"
   },
   {
    "slug": "dta-weise_jugend_1701-p27",
@@ -5861,6 +5861,78 @@
   {
    "slug": "ws-la-gallia-christiana-1715-t1-djvu-p29",
    "why": "empty reference text (ground-truth-wikisource record has no text)"
+  }
+ ],
+ "excluded_from_scoring": [
+  {
+   "slug": "ed-69b63e841c1c21a3738655d6-p40",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b649aa18b87551bfc5e743-p59",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b64c0318b87551bfc70acd-p13",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b64da218b87551bfc7fe19-p70",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b64f1818b87551bfc907fb-p125",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b660aeb3f4fc0441533e16-p29",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-69b6f32ab1a3146c05278d5a-p72",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "ed-6a0b351d688e6a8e15f6759f-p18",
+   "why": "the page image (the leaf this page serves today, image-check corr >= 0.99) is not the leaf the reference and the 2026-10-03 lite read were made from: every image reader (GLM, PERO, fresh Flash) reads another leaf at CER ~0.70. Kept in the judge and the write-back, out of every CER table."
+  },
+  {
+   "slug": "dta-logau_sinngetichte_1654-p433",
+   "why": "DTA page marker [printed/scan] was not split by the E0 parser; parsed correctly the page is a section title under the draw floor of 700 letters"
+  },
+  {
+   "slug": "dta-logau_sinngetichte_1654-p587",
+   "why": "DTA page marker [printed/scan] was not split by the E0 parser; parsed correctly the page is a section title under the draw floor of 700 letters"
+  },
+  {
+   "slug": "dta-lindnerin_kochbuch_1780-p34",
+   "why": "a manuscript (Koch Buch, handwritten), not print: out of the panel's scope"
+  },
+  {
+   "slug": "dta-lindnerin_kochbuch_1780-p48",
+   "why": "a manuscript (Koch Buch, handwritten), not print: out of the panel's scope"
+  },
+  {
+   "slug": "ws-it-dello-squadro-1625-pdf-p16",
+   "why": "the Commons page image is not the leaf the Wikisource page transcribes (image: DELLA FORMA DELL'INSTRVMENTO, Capitolo Primo)"
+  },
+  {
+   "slug": "ws-it-francesco-valentini-descrittione-del-sontuoso-to-p5",
+   "why": "the Commons page image is not the leaf the Wikisource page transcribes (image: the end of the dedication)"
+  },
+  {
+   "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+   "why": "the reference is wiki table markup, not text"
+  }
+ ],
+ "amended": [
+  {
+   "at": "2026-10-27T22:50Z",
+   "what": "dta-walter_beschreibung_1609 p68/p118 references cut at the next [printed/scan] page marker (the E0 parser split only on [NNNN]); excluded_from_scoring added after E1/E2 reads exposed image-reference mismatches, before any judge or decision table"
   }
  ]
 }

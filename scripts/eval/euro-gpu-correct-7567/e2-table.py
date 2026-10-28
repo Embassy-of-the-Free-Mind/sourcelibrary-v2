@@ -22,7 +22,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from score import score_page, flag_lengths  # noqa: E402
 
-pages = json.load(open(os.path.join(HERE, 'panel.json')))['pages']
+PANEL = json.load(open(os.path.join(HERE, 'panel.json'))); pages = PANEL['pages']
+EXCL = {e['slug'] for e in PANEL.get('excluded_from_scoring', [])}   # image ≠ reference leaf, parser misses: no CER
 refs = {json.loads(l)['slug']: json.loads(l)['ref_text'] for l in gzip.open(os.path.join(HERE, 'refs.jsonl.gz'), 'rt')}
 
 
@@ -87,7 +88,7 @@ def tokens(arm, slugs):
 
 res = {'by_lang': {}}
 for lang in ['la', 'en', 'de', 'fr', 'it', 'all']:
-    sl = [s for s in per if lang in ('all', lang_of[s])]
+    sl = [s for s in per if lang in ('all', lang_of[s]) and s not in EXCL]
     sll = [s for s in sl if s in lite]
     L = {'n_pages': len(sl), 'n_lite_pages': len(sll), 'arms': {}, 'vs_a': {}, 'vs_b': {}, 'vs_e': {}, 'image_vs_noimage': {}}
     for a in ARMS:

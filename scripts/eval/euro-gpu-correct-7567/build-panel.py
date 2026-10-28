@@ -114,7 +114,9 @@ for name, label, yr in works:
     if taken >= 16: break
     try: txt = get(f'https://www.deutschestextarchiv.de/book/download_txt/{name}')
     except Exception as e: print('skip', name, e); continue  # noqa: BLE001
-    parts = re.split(r'^\[(\d{4})\]\s*$', txt, flags=re.M)
+    # DTA marks a page as [0040] or, where the leaf carries a printed number, [36/0040]: split on both (the frozen
+    # panel's Walter p68/p118 references were cut by hand, panel.json `amended`)
+    parts = re.split(r'^\[(?:\d+/)?(\d{4})\]\s*$', txt, flags=re.M)
     pages = {int(parts[i]): parts[i + 1].strip() for i in range(1, len(parts) - 1, 2)}
     if len(pages) < 40: continue
     keys = sorted(pages); lo, hi = keys[int(len(keys) * .30)], keys[int(len(keys) * .80)]

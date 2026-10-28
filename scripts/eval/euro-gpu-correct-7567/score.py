@@ -20,7 +20,9 @@ the page's median arm; TRUNCATED if it has < 0.5× that median. The median arm, 
 reference on a newspaper or dictionary page often covers one article of several (a full read is 2-4× it at CER 0.3%).
 Both are counted, and their CER still enters the median as scored.
 
-  score.py <panel.json> <refs.jsonl.gz> <out.json> ARM=path.jsonl [ARM=path.jsonl ...] [--base=ARM]
+  score.py <panel.json> <refs.jsonl.gz> <out.json> ARM=path.jsonl [ARM=path.jsonl ...] [--shared] [--exclude=FILE]
+  --shared   summaries over the pages EVERY arm answered (engines compared only on shared pages)
+  --exclude  a file of slugs left out of every summary, besides panel.json `excluded_from_scoring` (always left out)
 """
 import gzip, html, json, re, statistics, sys, unicodedata
 import edlib
@@ -96,7 +98,8 @@ def flag_lengths(arms_scored):
 def main():
     panel, refsp, outp = sys.argv[1:4]
     arms = dict(a.split('=', 1) for a in sys.argv[4:] if '=' in a and not a.startswith('--'))
-    pages = json.load(open(panel))['pages']
+    P = json.load(open(panel)); pages = P['pages']
+    panel_excl = {e['slug'] for e in P.get('excluded_from_scoring', [])}
     refs = {json.loads(l)['slug']: json.loads(l)['ref_text'] for l in gzip.open(refsp, 'rt')}
     data = {a: load_arm(p) for a, p in arms.items()}
     per = {}
@@ -105,12 +108,15 @@ def main():
         for a in arms: per[s]['arms'][a] = score_page(refs[s], data[a].get(s))
         flag_lengths(per[s]['arms'])
     summ = {}
+    excl = set(open(next(a.split('=', 1)[1] for a in sys.argv if a.startswith('--exclude='))).read().split()) if any(a.startswith('--exclude=') for a in sys.argv) else set()
+    shared = '--shared' in sys.argv
     for lang in sorted({p['lang'] for p in pages}) + ['all']:
-        sl = [s for s, v in per.items() if lang in ('all', v['lang'])]
+        sl = [s for s, v in per.items() if lang in ('all', v['lang']) and s not in excl and s not in panel_excl]
+        if shared: sl = [s for s in sl if all(not per[s]['arms'][a].get('missing') for a in arms)]
         for a in arms:
             got = [per[s]['arms'][a] for s in sl if not per[s]['arms'][a].get('missing')]
             if not got: continue
-            summ.setdefault(lang, {})[a] = {
+            summ.setdefault(lang, {})[a] = {'shared_only': shared,
                 'n': len(got), 'median_raw': round(statistics.median(g['raw'] for g in got), 4),
                 'median_folded': round(statistics.median(g['folded'] for g in got), 4),
                 'mean_folded': round(statistics.mean(g['folded'] for g in got), 4),
