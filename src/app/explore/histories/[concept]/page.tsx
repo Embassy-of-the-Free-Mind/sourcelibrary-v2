@@ -116,12 +116,18 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
             {c.domains.map((d) => <li key={d}><Link href={claimsHref(c.slug, d)}>{domainLabel(d)}</Link></li>)}
           </ul>
-          {c.map && (
-            <p className="leading-relaxed mt-4" style={{ color: 'var(--text-secondary)' }}>
-              What the library holds on this theme, tradition by tradition, is on the <Link href={c.map}>map of {c.title.toLowerCase()}</Link>.
-            </p>
-          )}
         </section>
+
+        {c.map && (
+          <section>
+            <H2>The sources</H2>
+            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              Every work on {c.title.toLowerCase()} the library knows of, by tradition and date: what you can read now, what
+              is held but not yet readable, and what is missing, with the works this history quotes marked.{' '}
+              <Link href={c.map}>The sources on {c.title.toLowerCase()}</Link>.
+            </p>
+          </section>
+        )}
 
         {c.keepTerms.length > 0 && (
           <section>

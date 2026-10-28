@@ -516,7 +516,7 @@
    "slug": "consciousness",
    "title": "Consciousness",
    "question": "Where did each tradition put experience: in the soul, the body, their union, a lower vehicle, a faculty, an act of attention, the One? From aisthēsis, synaisthēsis and cit to Cudworth’s and Locke’s “consciousness”, Bewusstsein and the hard problem.",
-   "map": "/explore/maps/consciousness",
+   "map": "/explore/histories/consciousness/sources",
    "essays": [
     {
      "slug": "01-the-arc",
@@ -875,7 +875,7 @@
    "slug": "harmony",
    "title": "Harmony",
    "question": "What did people take harmony and resonance to be, from Philolaus and the Chinese classics to Kepler, Helmholtz and the free-energy principle? Ratio and consonance, unlike things joined in one whole, and strings that answer each other.",
-   "map": "/explore/maps/harmony",
+   "map": "/explore/histories/harmony/sources",
    "essays": [
     {
      "slug": "01-diversity-in-wholeness",
@@ -1326,7 +1326,7 @@
    "slug": "magic",
    "title": "Magic",
    "question": "What counted as magic, how was it said to work, and who drew the line? Hidden virtues and sympathy, stars and images, spirits, words and names, divination, the witch and her trial, and the power of mind.",
-   "map": "/explore/maps/magic",
+   "map": "/explore/histories/magic/sources",
    "essays": [
     {
      "slug": "01-what-counts-as-magic",
