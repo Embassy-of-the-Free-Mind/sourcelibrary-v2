@@ -53,7 +53,7 @@
  *
  *   ... cli-ocr-lane.mjs correct-count
  *   ... cli-ocr-lane.mjs correct --out=DIR [--max-pages=N] [--concurrency=N] [--book-chunk=40] [--deadline-min=M]
- *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--apply]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--apply]
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held; a page whose stored OCR is a Flash-Lite draft of 300+ characters,
@@ -82,9 +82,13 @@
  * removed when the chunk is ledgered. A run skips a book another live run has claimed (a claim whose pid is gone, or
  * older than 3 h, is stale and taken over), and after claiming re-reads the ledger lines other runs appended, so it
  * never takes a page another run has tried. A book a correction reader is reading right now (/proc) is skipped too.
+ * Claims, the ledger and /proc are one box's. Runs on DIFFERENT boxes split the books with `--shard=K/N` instead: a run
+ * takes only the books whose id hashes to K mod N (bookShard), so no book is in two boxes' queues (#7263: main's
+ * main-pool line 0/2, gex45's second-pool line 1/2).
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
@@ -230,6 +234,15 @@ export function liveReaderBooks(procDir = '/proc') {
   }
   return out;
 }
+/** The shard (0..n-1) a book belongs to: the first 8 hex digits of sha1(book id), mod n. Stable across boxes and runs. */
+export const bookShard = (bookId, n) => parseInt(createHash('sha1').update(String(bookId)).digest('hex').slice(0, 8), 16) % n;
+/** `--shard=K/N` → { k, n }, or null for no flag; throws on a malformed value. */
+export function parseShard(v) {
+  if (!v) return null;
+  const m = /^(\d+)\/(\d+)$/.exec(v);
+  if (!m || +m[2] < 1 || +m[1] >= +m[2]) throw new Error(`--shard must be K/N with 0 <= K < N, got ${v}`);
+  return { k: +m[1], n: +m[2] };
+}
 export const releaseBookClaim = (dir, bookId) => fs.rmSync(path.join(dir, `${bookId}.json`), { force: true });
 /** Ledger lines appended since the last call (other runs write the same file): adds their page ids to `set`. */
 function ledgerTail(file, set, state) {
@@ -269,10 +282,12 @@ async function correctMain(mode, arg) {
   const db = client.db('bookstore');
   const ledger = new Set(), tailState = { offset: 0 };
   ledgerTail(LEDGER, ledger, tailState);
+  let SHARD;
+  try { SHARD = parseShard(arg('shard')); } catch (e) { console.error(e.message); process.exit(2); }
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: CORRECT_LANGUAGES }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => !arg('book') || b.id === arg('book'))
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
     .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
   if (mode === 'correct-count') {
     const t = {};
@@ -315,7 +330,7 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
   const nextChunk = async () => {

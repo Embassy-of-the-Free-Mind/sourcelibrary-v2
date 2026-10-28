@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -167,5 +167,17 @@ describe('the correction lane on a second pool (#7263)', () => {
     put('13', ['node', '/r/scripts/batch/cli-ocr.mjs', 'read', '--page-ids-file=/x/bookC/ids.json', '--lane=route-judge-6740-eval']);
     expect([...liveReaderBooks(proc)]).toEqual(['bookA']);
     fs.rmSync(proc, { recursive: true, force: true });
+  });
+  it('--shard splits the books between boxes: every book in exactly one shard, stably', () => {
+    const ids = Array.from({ length: 400 }, (_, i) => `6a${i.toString(16).padStart(22, '0')}`);
+    const a = ids.filter((id) => bookShard(id, 2) === 0), b = ids.filter((id) => bookShard(id, 2) === 1);
+    expect(a.length + b.length).toBe(400);
+    expect(a.length).toBeGreaterThan(150);
+    expect(b.length).toBeGreaterThan(150);
+    expect(bookShard(ids[7], 2)).toBe(bookShard(ids[7], 2));
+    expect(parseShard('1/2')).toEqual({ k: 1, n: 2 });
+    expect(parseShard(undefined)).toBeNull();
+    expect(() => parseShard('2/2')).toThrow();
+    expect(() => parseShard('x')).toThrow();
   });
 });
