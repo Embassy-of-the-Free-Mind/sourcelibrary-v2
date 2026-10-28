@@ -157,3 +157,26 @@ target is the cheap route by default plus a rule that sends to Opus the pages it
   page), misreads per page 0.46 (C 0.90; O 0.69 on the 26 DEV pages O has). Folded CER δ D−C −0.26 pt [−0.63, +0.01].
   No failure class is left for a revision to target, so **round 1 is frozen for TEST** (2026-10-28, before any TEST
   D call). Rounds 2–3 not used.
+
+## Amendment 2 — 2026-10-28T12:32Z (Derek, inbox 10:31Z, 10:32Z, 10:52Z, 11:24Z, 11:55Z, 12:06Z)
+
+**State when written:** the TEST judge pass (O, C, C′, D, X, S, O-direct) ran 11:00–11:15Z; 86 of 275 packets have a
+verdict, 189 returned the account's 5-hour session limit and are re-judged unchanged (same packets, same prompt).
+Arm E had not been judged. Nothing has been scored on TEST beyond an interim look at 46 pages (logged in the record).
+
+1. **Arm E = Flash alone, no draft** (#7567 arm e: agy Flash-low with the image, the template's own OCR prompt; stored
+   reads, no new calls). TEST judging had already started, so **E is judged as a separate pass** on the same pages:
+   packets E + O + C under fresh shuffled letters (O and C as in-call anchors; C's verdict in this pass is compared
+   with its main-pass verdict as a drift check). E enters every table beside C, D and O by its own pass's verdict.
+2. **Opus is the bar, never a candidate route** (11:24Z). The rule is unchanged (an arm "clears the O bar" where it
+   said "replaces O"). Recommended routes are agy / GPU only; a cell where none clears the bar keeps the route it is
+   served by today, and the gap is named.
+3. **Print vs manuscript** (11:55Z, 12:06Z): each page's script type is recorded with every verdict — the `<script>`
+   tag of the page's O read (else C's), as the 12:06Z rule says for pages with no field; the panel's external pages
+   (DTA, Wikisource) carry no `pages.script_type`. Every k/n is reported split print / manuscript / unknown.
+4. **Router evidence** (10:32Z, 10:52Z): TEST verdicts are also written as a route-judge-format `score.json`, as
+   evidence entries in `scripts/eval/estimator/router-table/rules.json` per cell, with #7567 E2's judged arms on the
+   same panel, and the router table is rebuilt (`build.py`). The experiment file carries `router_evidence:`.
+5. **Budget order** (dereklomas@ weekly 72%, stop 85%): re-judge the 127 missing lite-frame packets, then the E pass
+   on the 185 lite-frame pages, then the 62 missing fr/it/other packets. A stop leaves the tables on what was judged.
+   fr/it E is scored by CER against the published text regardless.

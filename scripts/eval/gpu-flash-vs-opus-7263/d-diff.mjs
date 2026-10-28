@@ -135,6 +135,14 @@ function sentFor(p) {
   return { sent: `${PASS2.split('{draft}').join(own).split('{diff}').join(diff)} @./page.jpg`, d1: own };
 }
 
+// --dump-sent=DIR: write the exact prompt each listed page was (or would be) sent as DIR/<slug>.txt and stop, with no
+// call. write-back.mjs uses it to hash-check a read's provenance against its record (`sent_hash`).
+if (arg('dump-sent')) {
+  fs.mkdirSync(arg('dump-sent'), { recursive: true });
+  for (const p of panel.filter((q) => (!only || only.has(q.slug)) && ok(X[q.slug]) && ok(Y[q.slug]) && (ARM === 'D' || ok(prior(q.slug)?.final)))) fs.writeFileSync(path.join(arg('dump-sent'), `${p.slug}.txt`), sentFor(p).sent);
+  process.exit(0);
+}
+
 let stop = null; let n = 0; let sinceQuota = 1e9; const qlog = path.join(J, 'e2', 'quota.jsonl');
 async function one(p) {
   const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', `d-${ARM}-`));
