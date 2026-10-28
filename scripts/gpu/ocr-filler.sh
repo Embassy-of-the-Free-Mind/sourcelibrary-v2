@@ -17,7 +17,7 @@
 # It adds nothing when: $ST/PAUSE exists; anything is pending or running; /root/gpu.lock is held (a job outside the
 # queue that does take the lock, so a chunk queued now would cut in between its arms); the card already holds > 1 GB with nothing
 # running (an out-of-queue job, which takes no /root/gpu.lock: the 10-27 Four Histories run died of exactly that);
-# the root disk has < 20 G. A route is skipped when $ST/<route>.DISABLED exists, which the filler writes (and pages)
+# the root disk has < 10 G (OCR text is small: 24,602 Paddle pages ≈ 100 MB; page images are deleted as read). A route is skipped when $ST/<route>.DISABLED exists, which the filler writes (and pages)
 # after 3 chunks in a row fail. A chunk that finds the card busy waits up to an hour, then exits 75 with
 # OCR-FILLER-SKIP in its log: a recorded skip, not a failure. Every chunk appends a row to $ST/runs.jsonl.
 # Chunks are named zy-ocr-<route>-cNNN: after every digit-prefixed (hand-queued) task, before the zz-siglip2 chunks.
@@ -72,7 +72,7 @@ case "${1:-run}" in
       echo "$(now) card holds ${vram} MiB with nothing running in the queue (an out-of-queue job): queueing nothing"; exit 0
     fi
     free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
-    [ "${free_g:-0}" -lt 20 ] && { echo "$(now) root disk ${free_g}G free < 20G: queueing nothing"; exit 0; }
+    [ "${free_g:-0}" -lt 10 ] && { echo "$(now) root disk ${free_g}G free < 10G: queueing nothing"; exit 0; }
     while IFS=$'\t' read -r on route kind issue lane hold dl down; do
       [ -e "$ST/$route.DISABLED" ] && continue
       [ -d "$lane/plan" ] || { echo "$(now) $route: no plan dir at $lane/plan, skipped"; continue; }
