@@ -136,7 +136,7 @@ async function main() {
   try {
     if (REVERT) {
       let unset = 0; let kept = 0;
-      const cur = db.collection('sweep_log').find({ sweep: SWEEP, action: ACTION });
+      const cur = db.collection('sweep_log').find({ sweep: SWEEP, action: ACTION }).batchSize(200);
       for await (const row of cur) {
         const ops = row.detail.page_ids.map((id, i) => ({ updateOne: {
           filter: { _id: row.detail.id_types[i] === 'objectId' ? new ObjectId(id) : id, script_type: row.detail.values[i] },
