@@ -6,7 +6,7 @@ scripts: []
 canons: []
 n_books: 1000
 n_pages: 1000
-verdict: "The notes-layer storage holds on a 1,000-page pilot, one page per book. The accessor served the stored text on 1,000 of 1,000 pages. Per the character ledger, 0 characters of book text were lost and 0 note characters leaked, on 996 comparable pages. 9,479 anchors all slice back to their phrase, including 2,628 repeated phrases. 0 lanes picked the pages up. Two parser defects (1 page each) were found and fixed (annotation-layer/2). Cost: ~5.2 KB logical, ~2.5 KB on disk per page."
+verdict: "The notes-layer storage holds on a 1,000-page pilot, one page per book. The accessor served the stored text on 1,000 of 1,000 pages. Per the character ledger, 0 characters of book text were lost and 0 note characters leaked, on 996 comparable pages. 9,479 anchors all slice back to their phrase, including 2,628 repeated phrases. no lane picked the pages up (31-min check). Two parser defects (1 page each) were found and fixed (annotation-layer/2). Cost: ~5.2 KB logical, ~2.5 KB on disk per page."
 status: undecided
 decision: "Full backfill awaits Derek's go on #5942; first strip translation.text from the reader payload (PR #7652 notes)"
 superseded_by: null
@@ -65,7 +65,11 @@ issue: 5942
 
 **Lane check:**
 - 7 min after the write: 0 pages, 0 books, 0 revisions and 0 Supabase rows changed.
-- 30+ min after (LANECHECK30): see the line added at the end of this entry.
+- 31 min after (20:48 UTC, against the snapshot taken at 20:17):
+  - **0 of 1,000 pages changed** on any lane key, and no new `page_revisions` row.
+  - **261 of 1,000 books changed `updated_at` only.** Counters, `pipeline_auto.status` and `translation_state.rung` did not change. That is background: 24.2% of the 25,905 translated books *outside* the pilot changed `updated_at` in the same window, against 26.1% inside it.
+  - **1 Supabase `page_translations` row changed.** Its `mongo_updated_at` is 18:48:37, before the pilot started, so it carries an earlier Mongo write and not this one.
+  - **No lane picked up the pilot pages.**
 
 ### Read by eye (10 pages of the sheet)
 Entries #1, #12, #15, #21, #22, #23, #27, #29, #32 and #37, plus the two pilot-1 defects above.
