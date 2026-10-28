@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import PageFigure from '@/components/articles/PageFigure';
 import { PASSAGES } from './passages';
 import { withArticleMeta } from '@/lib/article-metadata';
 
@@ -9,7 +10,9 @@ import { withArticleMeta } from '@/lib/article-metadata';
 // from /collections/drebbel/beeckman to /articles on 2026-10-18 (redirected).
 //
 // The edition these passages were read from stays hidden (rights), so nothing
-// here links to it and no page image from it is shown.
+// here links to it and no page image from it is shown. The one exception is
+// Beeckman's own 1620 drawing of Drebbel's boat, a faithful copy of a
+// public-domain figure, shown without de Waard's surrounding page (Derek, 2026-10-28).
 
 export const metadata: Metadata = withArticleMeta('beeckman-on-drebbel', {
   title: 'Beeckman on Drebbel: the journal passages, 1619–1634 - Articles - Source Library',
@@ -32,8 +35,8 @@ export default function BeeckmanOnDrebbelPage() {
         <ContentHeader feature headerVariant="dark"
           title="Beeckman on Drebbel"
           subtitle="What Isaac Beeckman wrote in his journal about Cornelis Drebbel&rsquo;s machines, 1619 to 1634, in his own words with an English translation"
-          image="https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg"
-          imageAlt="Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing."
+          image="/articles/beeckman-on-drebbel/drebbel-submarine.jpg"
+          imageAlt="Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving."
         >
           <p>6 October 2026</p>
         </ContentHeader>
@@ -56,6 +59,12 @@ export default function BeeckmanOnDrebbelPage() {
           beside it, the date, and the leaf of the manuscript. Long entries are cut down to the
           part about Drebbel, and a cut is marked [&hellip;]. The line in italics above a passage
           is Beeckman&rsquo;s own heading, written in his margin.
+        </p>
+
+        <p className="text-sm text-muted leading-relaxed mb-8 font-body">
+          The picture at the top is a later artist&rsquo;s idea of the boat, not a drawing from
+          Drebbel&rsquo;s time; no picture of it made in his lifetime survives. Public domain, via{' '}
+          <a href="https://commons.wikimedia.org/wiki/File:Drebbel_submarine.jpg" className="underline">Wikimedia Commons</a>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -101,6 +110,14 @@ export default function BeeckmanOnDrebbelPage() {
                 </div>
               </div>
             </div>
+
+            {p.figure && (
+              <div className="max-w-lg mx-auto mt-8">
+                <PageFigure src={p.figure.src} alt={p.figure.alt}>
+                  {p.figure.caption}
+                </PageFigure>
+              </div>
+            )}
 
             {p.note && <p className="text-sm text-muted leading-relaxed mt-4">{p.note}</p>}
           </section>
