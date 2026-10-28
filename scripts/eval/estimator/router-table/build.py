@@ -184,10 +184,10 @@ def main():
     _scores = {}
     def evidence(cell, r):
         """The route's judged pages pooled over the pilot and every `evidence` entry: accept / wrong text / books / classes."""
-        xs = [pilot[cell['pilot']]['routes'][r['pilot']]] if r.get('pilot') else []
+        xs = [dict(pilot[cell['pilot']]['routes'][r['pilot']], _group=cell.get('pilot_book_group'))] if r.get('pilot') else []
         for e in r.get('evidence', []):
             sc = _scores.setdefault(e['score'], json.load(open(e['score'])))
-            y = dict(sc['cells'][e['cell']]['routes'][e['route']])
+            y = dict(sc['cells'][e['cell']]['routes'][e['route']], _group=e.get('book_group'), _w=e.get('weight', 1))
             if e.get('use') == 'name_check':  # a page whose accepted text drops a name the image prints is wrong text too
                 nc = y['name_check']; y['accept'] = nc['accept_after_name_check']
                 w0, n0 = map(int, y['wrong_text_pages'].split('/')); y['wrong_text_pages'] = f"{w0 + nc['with_name_error']}/{n0}"
@@ -201,9 +201,16 @@ def main():
         # book clustering per source (#7263 backfill): a source with 25 pages a book counts its books, and does not
         # outweigh a one-page-a-book source pooled with it. Accepted, judged and wrong-text pages are all scaled so; equal
         # to the pooled scaling (and to wrong / n) when a route has one source.
-        f = lambda x: min(1, x['books'] / int(x['accept'].split('/')[1])) if P['cluster_by_book'] else 1
+        # book group (#7263 backfill-all): sources drawn from the SAME books (the pilot's 30 Latin pages are 30 of #5924's
+        # 250) are scaled together, by the group's books / its pages, so no book is counted twice. weight: an entry measured
+        # under another prompt or model than the route's pages (rules.json evidence_rules) counts at that share of its books.
+        nn = lambda x: int(x['accept'].split('/')[1])
+        grp = {}
+        for x in xs:
+            if x.get('_group'): g = grp.setdefault(x['_group'], [0, 0]); g[0] = max(g[0], x['books']); g[1] += nn(x)
+        f = lambda x: (min(1, grp[x['_group']][0] / grp[x['_group']][1]) if x.get('_group') else min(1, x['books'] / nn(x))) * x.get('_w', 1) if P['cluster_by_book'] else x.get('_w', 1)
         eff = [sum(int(x[fl].split('/')[i]) * f(x) for x in xs) for fl, i in (('accept', 0), ('accept', 1), ('wrong_text_pages', 0))]
-        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff)
+        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs if not x.get('_group')) + sum(g[0] for g in grp.values()), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff)
 
     # wrong-text bar (#7461): relative = at most the best route's rate + wrong_text_max; the other bar is a sensitivity
     rel = P['switch'].get('wrong_text_bar', 'absolute') == 'relative'
