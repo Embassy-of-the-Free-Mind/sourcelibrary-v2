@@ -105,6 +105,7 @@ import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateP
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
+import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -195,7 +196,10 @@ if (STAGE === 'read') {
   // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
-  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
+  const found = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
+  // Split before read (#7605): a page of an unsplit spread book is never sent; the lane's book list is not the only caller.
+  const spreadBooks = new Map((await db.collection('books').find({ id: { $in: [...new Set(found.map((p) => p.book_id))] } }, { projection: { id: 1, needs_splitting: 1, split_completed: 1 } }).toArray()).map((b) => [b.id, b]));
+  const pages = found.filter((p) => { const why = unsplitReadRefusal(spreadBooks.get(p.book_id), p); if (why) console.log(`  ${p.book_id} p.${p.page_number} not read: ${why}`); return !why; });
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   const STOP_ON_QUOTA = process.argv.includes('--stop-on-quota');
@@ -460,7 +464,7 @@ if (arg('by-eye')) for (const l of fs.readFileSync(arg('by-eye'), 'utf8').split(
 const EXTRA_PATH = path.join(OUT, 'prompt-extra.txt');
 const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : '';
 const bookCache = new Map();
-const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1 } })); return bookCache.get(id); };
+const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1, needs_splitting: 1, split_completed: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
 const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [], skipped_pages: {}, contain_claims: [] };
 // skipped_pages: page id -> the reason, so a lane can ledger each page's outcome (cli-ocr-lane.mjs correct, #7558).
@@ -502,8 +506,10 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const guard = checkWrittenText(text, { kind: 'ocr' });
   if (guard.verdict === 'truncated') { skip(m, writeGuardReason(guard)); tally.write_guard_refused.push({ page_id: m.page_id ?? m.key, page_number: m.page_number, reasons: guard.reasons }); continue; }
   if (guard.verdict === 'repaired_mid') { text = guard.repaired; tally.write_guard_repaired++; }
-  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
+  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
   if (!page) { skip(m, 'page not found'); continue; }
+  const unsplit = unsplitReadRefusal(await bookOf(page.book_id), page);
+  if (unsplit) { skip(m, 'unsplit spread book (#7605)'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
   const fitted = fittedTextReason(page.ocr);
   if (fitted) { skip(m, fitted); continue; }
