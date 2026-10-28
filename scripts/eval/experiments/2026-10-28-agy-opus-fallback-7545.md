@@ -1,5 +1,5 @@
 ---
-stage: [ocr, translation]
+stage: ocr
 measure: [judged]
 languages: [la, de]
 scripts: [Latn]
