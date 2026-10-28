@@ -5,8 +5,8 @@ PRIOR ART: scripts/eval/euro-gpu-correct-7567/judge-table.py (usable / misleadin
 verdicts through a label key) and scripts/eval/flash-reread-5924 (Wilson intervals). This adds the no-answer outcome,
 the faults-weighted worse-than-draft of the prereg, the non-inferiority rule against arm O and the A-vs-A noise floor.
 
-  score-judge.py <J> <set> [--ref=O] [--draft=X] [--floor=C,C2] [--out=FILE.json]
-Pages enter only when the judge returned a verdict and every arm in the key ran on the page (shared pages).
+  score-judge.py <J> <set> [--arms=O,C,...] [--ref=O] [--draft=X] [--floor=C,C2] [--out=FILE.json]
+Pages enter only when the judge returned a verdict and every arm in --arms (default: the key's) ran on the page.
 """
 import json, math, os, random, sys
 
@@ -17,7 +17,7 @@ FLOOR = opt.get('floor', 'C,C2').split(',')
 MARGIN = 0.05
 base = os.path.join(J, f'judge-{SET}')
 key = json.load(open(os.path.join(base, 'key.json')))
-ARMS = list(key['arms'])
+ARMS = opt['arms'].split(',') if 'arms' in opt else list(key['arms'])
 SERIOUS = ['omissions', 'additions', 'cross_page_bleed', 'order_errors']
 
 
@@ -29,7 +29,7 @@ def wilson(k, n, z=1.96):
 
 rows = []  # per page: {arm: outcome dict}
 for s, k in key['pages'].items():
-    if not k['labels'] or k['missing']: continue
+    if not k['labels'] or any(a in k['missing'] for a in ARMS): continue
     f = os.path.join(base, 'judge', 'out', f'{s}.json')
     if not os.path.exists(f): continue
     v = (json.load(open(f)).get('verdict') or {}).get('versions')

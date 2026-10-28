@@ -150,3 +150,10 @@ target is the cheap route by default plus a rule that sends to Opus the pages it
   against O by the same decision rule as any arm.
 - Thresholds are fixed here (percentiles of TEST's own distribution, which needs no labels); no trigger is tuned
   on TEST verdicts.
+
+## Dev rounds log (arm D)
+- **Round 1** (template `59a8ae3602607983`: the #7567 two-draft template + a numbered X↔Y word-diff list, d-diff.mjs
+  DIFF_INTRO[1]). DEV 50 pages, blind Opus judge (O, C, D, X): D usable 49/50, misleading 1 (fr; C has the same
+  page), misreads per page 0.46 (C 0.90; O 0.69 on the 26 DEV pages O has). Folded CER δ D−C −0.26 pt [−0.63, +0.01].
+  No failure class is left for a revision to target, so **round 1 is frozen for TEST** (2026-10-28, before any TEST
+  D call). Rounds 2–3 not used.
