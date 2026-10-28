@@ -96,7 +96,8 @@ if (PANEL) {
 }
 const only = arg('only') ? new Set(fs.readFileSync(arg('only'), 'utf8').split('\n').filter(Boolean)) : null;
 const todo = panel.filter((p) => (!only || only.has(p.slug)) && !fs.existsSync(path.join(OUT, `${p.slug}.json`))
-  && D.every((d) => d[p.slug] && d[p.slug].replace(/\W/g, '').length >= 30));
+  && D.every((d) => d[p.slug] && d[p.slug].replace(/\W/g, '').length >= 30)
+  && fs.existsSync(path.join(J, 'img', `${p.slug}.jpg`)));   // E5: two BSB pages served a tiny image and were never fetched
 console.log(`${ARM}: ${todo.length} pages (drafts ${DRAFTS.join('+') || 'none'}), template ${hash(TEMPLATE)}`);
 
 let stop = null; let n = 0; let sinceQuota = 1e9; const qlog = path.join(J, 'e2', 'quota.jsonl');

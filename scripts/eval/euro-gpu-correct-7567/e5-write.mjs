@@ -112,7 +112,7 @@ Reply with ONE JSON object and nothing else: {"answers":{${items.map((_, n) => `
       let r, ans = null;
       for (let at = 0; at < 2 && !ans; at++) {
         r = await call(prompt, cwd);
-        if (/usage limit|limit reached|hit your limit|out of extra usage/i.test(r.text + r.err)) { stop = r.text || r.err; break; }
+        if (/usage limit|limit reached|hit your limit|hit your session limit|out of extra usage/i.test(r.text + r.err)) { stop = r.text || r.err; break; }
         try { const s = r.text; ans = JSON.parse(s.slice(s.indexOf('{'), s.lastIndexOf('}') + 1)).answers; } catch { ans = null; }
       }
       fs.rmSync(cwd, { recursive: true, force: true });
