@@ -19,6 +19,10 @@ describe('latin diff-QA: fold and tokens (#7591)', () => {
     expect(fold('Jeſu')).toBe('iesu');
     expect(fold('<header>ASHMOLEANI.</header>')).toBe('ashmoleani');
   });
+  it('leaves the model\'s judgement tags out of the words, with or without attributes', () => {
+    const t = '<language>Latin</language>\n<image-desc size="small" type="diagram">A triangle ADC</image-desc>\nHac igitur <vocab>Euclid</vocab>';
+    expect(wordTokens(t).map((x: { key: string }) => x.key)).toEqual(['hac', 'igitur']);
+  });
   it('drops tokens that are only punctuation', () => {
     expect(wordTokens('— Staffordſhire, &c. Ibid.').map((t: { key: string }) => t.key)).toEqual(['staffordshire', 'c', 'ibid']);
   });

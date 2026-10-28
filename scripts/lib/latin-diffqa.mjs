@@ -32,7 +32,8 @@ const foldKeepS = (tok) => String(tok).normalize('NFC').replace(/<[^>]*>/g, '').
 // The transcription's judgement fields (what language, what kind of page, how many columns, a catchword note, the
 // indexing terms, a picture's description, a warning): a model's description of the page, not words printed on it. Their words are not aligned (a change to them is LOW);
 // <header>, <page-num> and <sig> are printed and stay words.
-export const META_TAG = /<(language|script|scan-quality|page-type|columns|meta|vocab|image-desc|warning)>[\s\S]*?<\/\1>/g;
+// With or without attributes (<image-desc size="small" …>): router eval round 1 put a picture description back as words.
+export const META_TAG = /<(language|script|scan-quality|page-type|columns|meta|vocab|image-desc|warning)\b[^>]*>[\s\S]*?<\/\1>/g;
 export function wordTokens(text) {
   const t = String(text).normalize('NFC');
   const meta = [...t.matchAll(META_TAG)].map((m) => [m.index, m.index + m[0].length]);

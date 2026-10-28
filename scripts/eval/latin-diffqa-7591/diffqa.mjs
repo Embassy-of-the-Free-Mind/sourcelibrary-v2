@@ -22,8 +22,8 @@
  *   judge     --req=R.jsonl --out=O.jsonl [--model=gemini-3.8-flash-high] [--concurrency=3]
  *             One agy call per request, the page image in a gated workspace (agy-cli.mjs). Resumes from O.
  *   merge     --list=L.jsonl --spans=S.jsonl [--key=K.json --replies=O.jsonl] --out=M.jsonl
- *             Per page: LOW and voted-correction spans stay; voted-draft spans go back; judged spans stay only where the
- *             judge saw the correction (draft, other, unclear go back). A page with a span to judge and no reply is
+ *             Per page: LOW and voted-correction spans stay; voted-draft spans go back; a judged span goes back only
+ *             where the judge saw the draft's reading (other, unclear and no answer keep the correction). A page with a span to judge and no reply is
  *             HELD (M.jsonl.held.json), never written: a quota stop must not revert or keep unjudged spans.
  *   write     --merge=M.jsonl --run=diffqa-7591-<name> [--apply]                             (needs --env-file)
  *             Through writePageText, compare-and-set on the draft (a page changed since is skipped), the whole prior ocr
@@ -221,7 +221,11 @@ if (CMD === 'list') {
       if (s.vote === 'draft') { t.reverted_by_vote++; back.add(s.k); reverted.push(`${s.arm || '∅'}→${s.base || '∅'} (fresh read: draft, line ${s.line})`); continue; }
       t.judged++; const side = judged.get(s.k) ?? 'none';
       t.judge_sides[side] = (t.judge_sides[side] || 0) + 1;
-      if (side === 'arm') { t.kept_by_judge++; continue; }
+      // Put back only on positive evidence that the page prints the draft's reading. 'other', 'unclear' and no answer
+      // keep the correction: the router eval's round 1 reverted on them too and lost to the bare correction (14/21 vs
+      // 17/21 accepted on the same pages; the draft, not the correction, carried most wrong text, e.g. invented rows
+      // put back on 'other'). Judged sides there were 107 correction / 23 draft / 8 other.
+      if (side !== 'base') { t.kept_by_judge++; continue; }
       t.reverted_by_judge++; back.add(s.k); reverted.push(`${s.arm || '∅'}→${s.base || '∅'} (judge: ${side}, line ${s.line})`);
     }
     const d = diffWords(r.draft, r.next);
