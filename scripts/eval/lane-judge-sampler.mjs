@@ -17,7 +17,8 @@
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
  *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
  *                                                      build.py on origin/main + this export; publish; post flips
- *   ... lane-judge-sampler.mjs nightly --out=DIR           run, export, rebuild (the cron line)
+ *   ... lane-judge-sampler.mjs annotate                    give older store records their script type (print / manuscript)
+ *   ... lane-judge-sampler.mjs nightly --out=DIR           run, annotate, export, rebuild (the cron line)
  *   ... lane-judge-sampler.mjs weekly-pr --out=DIR         the repo copy: a PR with the export + rules.json entries
  *
  * FIND. Pages a lane wrote in the window, from the lane's OWN stamps on the page (LANES below: `ocr.pipeline`, the
@@ -47,12 +48,13 @@
  *
  * STORE. Mongo `lane_judge_verdicts`, one document per judge call (append-only, _id = the item's hash, so a page is
  * never judged twice): page, book, cell, route, lane, the lane's write (revision id, run id, time, text hash), judge
- * model, prompt template hash and prompt hash, seed, run id, date, verdict. `lane_judge_runs`: one per run (window,
+ * model, prompt template hash and prompt hash, seed, run id, date, verdict, and the page's script type (scriptClass). `lane_judge_runs`: one per run (window,
  * seed, draw log, meter, calls, retry queue). Not `pages` or `books` (field-sprawl.md): nothing on a page changes.
  *
  * FEED. `export` writes every counted verdict as one score.json in the route-judge format, cells and routes named as
  * rules.json names them (german-lite / lite>agy-flash-low), so build.py pools it as one more source, scaled by its
- * books (#7606). A route whose wrong-page control failed is listed under routes_not_counted. The DRAFT verdicts are a
+ * books (#7606). Every k/n is also split by script type (by_script); a print cell's evidence counts its print pages
+ * only (Derek, 2026-10-28: print and manuscript are separate). A route whose wrong-page control failed is listed under routes_not_counted. The DRAFT verdicts are a
  * conditioned frame (the lane writes only the pages its corrector changed) and go to drafts_conditioned and
  * made_worse, never into evidence. `rebuild` runs build.py on a copy of origin/main with and without the export,
  * publishes the table (ops_reports `router-table:lane-judge`, and DIR/published/), and comments on #7263 only when a
@@ -71,6 +73,8 @@ import { fileURLToPath } from 'node:url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-6740/judge.mjs';
 import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
+import { extractScriptType } from '../lib/ocr-result-parse.mjs';
+import { bookHand } from '../lib/ocr-trust-gate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -94,7 +98,7 @@ const WRONG_TEXT_CONTAIN = /^(O1|O2|O3|I1)$/;   // text not on this leaf: contai
  */
 export const LANES = [
   { lane: CORRECT_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': CORRECT_LANE }, reason: /^#7558 correction lane/,
-    route: 'lite>agy-flash-low', draft_route: 'lite', draft_models: LITE_MODELS,
+    route: 'lite>agy-flash-low', draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
     cell: (lang) => (/^German/.test(lang) ? 'german-lite' : /^French/.test(lang) ? 'french-lite' : null),
     lang: (lang) => (/^German/.test(lang) ? 'German' : /^French/.test(lang) ? 'French' : null), languages: CORRECT_LANGUAGES },
   { lane: 'tib-correct-6560', enabled: false, why: 'Tibetan: the judge alone does not decide the cell (planted-syllable catch below 0.80 hands it to Derge, judge.mjs tib-kangyur); needs the Derge stage' },
@@ -104,6 +108,30 @@ export const LANES = [
 
 /** The draw weight of a book: 1 + ln(1 + human_read_count). */
 export const bookWeight = (b) => 1 + Math.log1p(Math.max(0, Number(b?.human_read_count) || 0));
+
+/**
+ * Print or manuscript (Derek, 2026-10-28: they are separate, and every k/n is split by it). The page's own <script> tag in
+ * its current text first (it wins a conflict with the field: ~28% of OCR'd pages have no field, 7% carry the tag
+ * without it), then `pages.script_type`, then the book's majority (ocr-trust-gate.mjs bookHand), else unknown.
+ * Returns { script_type: 'print' | 'manuscript' | 'mixed' | 'unknown', script_source }.
+ */
+export function scriptClass(ocrText, field, bookHandValue) {
+  const of = (v) => ({ printed: 'print', handwritten: 'manuscript', mixed: 'mixed' }[v]);
+  const tag = of(extractScriptType(ocrText));
+  if (tag) return { script_type: tag, script_source: 'ocr tag' };
+  if (of(field)) return { script_type: of(field), script_source: 'pages.script_type' };
+  if (bookHandValue === 'print' || bookHandValue === 'manuscript') return { script_type: bookHandValue, script_source: 'book majority' };
+  return { script_type: 'unknown', script_source: 'none' };
+}
+
+/** A book's script profile (bookHand's input): counts of pages.script_type. */
+async function bookProfiles(db, bookIds) {
+  const rows = await db.collection('pages').aggregate([{ $match: { book_id: { $in: bookIds }, script_type: { $in: ['printed', 'handwritten', 'mixed'] } } },
+    { $group: { _id: { b: '$book_id', t: '$script_type' }, n: { $sum: 1 } } }]).toArray();
+  const out = new Map(bookIds.map((b) => [b, { printed: 0, handwritten: 0, mixed: 0 }]));
+  for (const r of rows) out.get(r._id.b)[r._id.t] = r.n;
+  return out;
+}
 
 /**
  * The draw. cands: [{ page_id, book_id, cell, route, weight }]. hist: { pagesJudged: Set<page_id>, bookPages:
@@ -184,6 +212,18 @@ function routeBlock(got) {
     fidelity_mean: got.length ? +mean(got.map((r) => Number(r.verdict.fidelity))).toFixed(2) : null };
 }
 
+const scriptOf = (r) => r.script_type ?? 'unknown';
+const handOf = (r) => r.cell_hand ?? LANES.find((l) => l.lane === r.lane)?.hand ?? null;
+const inEvidence = (r) => handOf(r) !== 'print' || scriptOf(r) === 'print';
+function byScript(rs) {
+  const out = {};
+  for (const t of [...new Set(rs.map(scriptOf))].sort()) {
+    const g = rs.filter((r) => scriptOf(r) === t);
+    out[t] = { accept: `${g.filter((r) => r.verdict.accept).length}/${g.length}`, wrong_text_pages: `${g.filter((r) => wrongText(r.verdict)).length}/${g.length}`, books: new Set(g.map((r) => r.book_id)).size };
+  }
+  return out;
+}
+
 /** The store as one route-judge score.json. records: every document of lane_judge_verdicts. */
 export function exportScore(records, { generatedAt = new Date().toISOString() } = {}) {
   const ok = records.filter(validRecord), bad = records.length - ok.length;
@@ -202,20 +242,23 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
       const wp = rs.filter((r) => r.kind === 'wrong_page' && r.route === route);
       const passed = wp.length > 0 && wp.every((r) => !r.verdict.accept && Number(r.verdict.fidelity) <= 2);
       C.controls[route] = { n: wp.length, passed, verdicts: wp.map((r) => ({ accept: r.verdict.accept, fidelity: r.verdict.fidelity, week: r.week })) };
-      const got = rs.filter((r) => r.kind === 'item' && r.route === route);
-      const block = { ...routeBlock(got), lane: [...new Set(got.map((r) => r.lane))], counts: passed, served: 'the live lane\'s applied output (served)' };
+      const all = rs.filter((r) => r.kind === 'item' && r.route === route);
+      // A print cell's evidence is its print pages; manuscript, mixed and unknown pages are reported apart (by_script).
+      const got = all.filter(inEvidence);
+      const block = { ...routeBlock(got), lane: [...new Set(all.map((r) => r.lane))], counts: passed, served: 'the live lane\'s applied output (served)',
+        evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all) };
       (passed ? C.routes : C.routes_not_counted)[route] = block;
-      for (const r of got) {
+      for (const r of all) {
         const wtd = (r.verdict.defects || []).filter((d) => d.severity === 'wrong_text');
         if (wtd.some((d) => WRONG_TEXT_CONTAIN.test(cls(d))))
           report.contain_candidates.push({ cell, route, page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, defects: wtd, note: r.verdict.reader_note });
       }
     }
     for (const route of [...new Set(rs.filter((r) => r.kind === 'draft').map((r) => r.route))].sort())
-      C.drafts_conditioned[route] = routeBlock(rs.filter((r) => r.kind === 'draft' && r.route === route));
+      { const ds = rs.filter((r) => r.kind === 'draft' && r.route === route); C.drafts_conditioned[route] = { ...routeBlock(ds.filter(inEvidence)), by_script: byScript(ds) }; }
     // Worse than the draft: the lane's output beside the draft it replaced, on the same page.
     for (const route of Object.keys({ ...C.routes, ...C.routes_not_counted })) {
-      const items = rs.filter((r) => r.kind === 'item' && r.route === route);
+      const items = rs.filter((r) => r.kind === 'item' && r.route === route && inEvidence(r));
       const pairs = items.map((a) => [rs.find((d) => d.kind === 'draft' && d.page_id === a.page_id && d.write?.revision_id === a.write?.revision_id), a]).filter(([d]) => d);
       if (!pairs.length) continue;
       const diff = pairs.map(([d, a]) => Number(a.verdict.fidelity) - Number(d.verdict.fidelity));
@@ -322,8 +365,10 @@ async function findWrites(db, since, until) {
   for (const L of LANES.filter((l) => l.enabled)) {
     const F = frame[L.lane] = { pages_stamped: 0, no_cell: 0, rewritten_since: 0, no_revision: 0, draft_not_route_engine: 0, held_or_hidden: 0, eligible: 0 };
     const pages = await db.collection('pages').find({ ...L.stamp, [`${L.field}.updated_at`]: { $gte: since, $lt: until } },
-      { projection: { id: 1, book_id: 1, page_number: 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1 } }).toArray();
+      { projection: { id: 1, book_id: 1, page_number: 1, script_type: 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1 } }).toArray();
     F.pages_stamped = pages.length;
+    const prof = await bookProfiles(db, [...new Set(pages.map((p) => p.book_id))]);
+    F.script = {};
     const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } },
       { projection: { id: 1, language: 1, human_read_count: 1, visible: 1, 'pipeline_auto.held': 1 } }).toArray()).map((b) => [b.id, b]));
     // The newest revision row this lane's writer left on each page: its next_hash must still be the page's text.
@@ -343,8 +388,10 @@ async function findWrites(db, since, until) {
       if (r.next_hash !== textHash(p[L.field])) { F.rewritten_since++; continue; }
       if (!L.draft_models.includes(r.model)) { F.draft_not_route_engine++; continue; }
       F.eligible++;
+      const sc = scriptClass(p[L.field].data, p.script_type, bookHand(prof.get(p.book_id)));
+      F.script[sc.script_type] = (F.script[sc.script_type] ?? 0) + 1;
       out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: L.route, draft_route: L.draft_route, lane: L.lane, lang: L.lang(b.language),
-        weight: bookWeight(b), human_read_count: b.human_read_count ?? 0,
+        weight: bookWeight(b), human_read_count: b.human_read_count ?? 0, ...sc, cell_hand: L.hand,
         write: { revision_id: r.id, run_id: r.run_id ?? null, written_at: r.created_at, text_hash: r.next_hash, model: p[L.field].model },
         draft_model: r.model });
     }
@@ -456,7 +503,7 @@ async function run() {
         if (res.cls === 'quota') { limits.noteLimitHit('claude', { reason: res.text.slice(0, 200) }); stop = 'quota reply from claude -p'; break; }
         const v = parseVerdict(res.text);
         const doc = { _id, kind: q.kind, page_id: q.d.page_id, book_id: q.d.book_id, page_number: q.d.page_number, cell: q.d.cell, route: q.route, lane: q.d.lane, lang: q.d.lang,
-          other_page_id: q.other?.page_id, write: q.d.write, draft_model: q.d.draft_model, image_url: imageUrl, text_hash: h(text.trim()).slice(0, 16),
+          other_page_id: q.other?.page_id, script_type: q.d.script_type, script_source: q.d.script_source, cell_hand: q.d.cell_hand, write: q.d.write, draft_model: q.d.draft_model, image_url: imageUrl, text_hash: h(text.trim()).slice(0, 16),
           judge: { by: 'claude -p --model opus', model_reported: res.model, prompt_template_sha: PROMPT_TEMPLATE_SHA, prompt_sha: h(prompt).slice(0, 16), instrument: 'route-judge-6740 judgePrompt' },
           verdict: v, raw: v ? undefined : String(res.text).slice(0, 500), cls: res.cls, usage: res.usage, list_usd: res.cost, secs: Math.round((Date.now() - t0) / 1000),
           seed, run_id: runId, week, draw: { key: q.d.key, rate: q.d.rate, u: q.d.u, human_read_count: q.d.human_read_count }, called: true, judged_at: new Date().toISOString() };
@@ -474,6 +521,23 @@ async function run() {
     await db.collection(RUNS).insertOne(runDoc);
     console.log(`judged ${calls} calls; ${stop ? `STOPPED: ${stop}` : 'queue done'}; ${retry.length} rejected -> retry queue`);
     return { runId, calls, stop, retry };
+  } finally { await c.close(); }
+}
+
+/** Fill script_type / cell_hand on store records that lack them (records from before the rule; idempotent). */
+async function annotate() {
+  const { c, db } = await mongo();
+  try {
+    const todo = await db.collection(VERDICTS).find({ script_type: { $exists: false } }, { projection: { _id: 1, page_id: 1, book_id: 1, lane: 1 } }).toArray();
+    if (!todo.length) { console.log('annotate: nothing to do'); return 0; }
+    const pages = new Map((await db.collection('pages').find({ id: { $in: [...new Set(todo.map((r) => r.page_id))] } }, { projection: { id: 1, script_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+    const prof = await bookProfiles(db, [...new Set(todo.map((r) => r.book_id))]);
+    for (const r of todo) {
+      const p = pages.get(r.page_id), sc = scriptClass(p?.ocr?.data, p?.script_type, bookHand(prof.get(r.book_id)));
+      await db.collection(VERDICTS).updateOne({ _id: r._id, script_type: { $exists: false } }, { $set: { ...sc, cell_hand: LANES.find((l) => l.lane === r.lane)?.hand ?? null, script_annotated_at: new Date().toISOString() } });
+    }
+    console.log(`annotate: ${todo.length} records given a script type`);
+    return todo.length;
   } finally { await c.close(); }
 }
 
@@ -594,8 +658,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const STAGE = process.argv[2];
   const stages = {
     run, export: () => doExport(arg('file') || path.join(process.env.JOB_SCRATCH || os.tmpdir(), 'lane-judge-sampler', 'lane-judge.score.json')),
-    rebuild, 'weekly-pr': weeklyPr,
-    nightly: async () => { const r = await run(); await rebuild(); return r; },
+    rebuild, annotate, 'weekly-pr': weeklyPr,
+    nightly: async () => { const r = await run(); await annotate(); await rebuild(); return r; },
   };
   if (!stages[STAGE]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
   await stages[STAGE]();

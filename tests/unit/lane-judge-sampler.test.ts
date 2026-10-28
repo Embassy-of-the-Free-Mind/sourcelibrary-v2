@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -73,6 +73,16 @@ describe('drawPages', () => {
   });
 });
 
+describe('scriptClass', () => {
+  it('takes the page\'s own tag first, then the field, then the book majority, else unknown', () => {
+    expect(scriptClass('<script>handwritten</script> text', 'printed', 'print')).toEqual({ script_type: 'manuscript', script_source: 'ocr tag' });
+    expect(scriptClass('no tag', 'printed', 'manuscript')).toEqual({ script_type: 'print', script_source: 'pages.script_type' });
+    expect(scriptClass('no tag', undefined, 'manuscript')).toEqual({ script_type: 'manuscript', script_source: 'book majority' });
+    expect(scriptClass(undefined, undefined, 'unknown')).toEqual({ script_type: 'unknown', script_source: 'none' });
+    expect(scriptClass('<script>mixed</script>', undefined, 'print').script_type).toBe('mixed');
+  });
+});
+
 describe('weeklyBudget', () => {
   it('caps judge calls at 1% of an account-week priced as the router table prices a call', () => {
     expect(weeklyBudget({ callsLast7d: 0, pointsPerCall: 0.0124, capPoints: 1 })).toMatchObject({ maxCalls: 80, left: 80 });
@@ -93,7 +103,7 @@ describe('exportScore', () => {
   let n = 0;
   const rec = (kind: string, book: number, page: number, accept: boolean, fidelity: number, wrong = false, route = 'lite>agy-flash-low', extra = {}) => ({
     _id: `r${n++}`, kind, page_id: `p${book}-${page}`, book_id: `b${book}`, page_number: page, cell: 'german-lite', route: kind === 'draft' ? 'lite' : route, lane: 'agy-correct-lite-7558', lang: 'German',
-    write: { revision_id: `rev${book}-${page}` }, judge: { model_reported: 'claude-opus-5-5', prompt_template_sha: 'abc' }, run_id: 'run1', judged_at: '2026-10-28T00:00:00Z', week: '2026-W44',
+    script_type: 'print', write: { revision_id: `rev${book}-${page}` }, judge: { model_reported: 'claude-opus-5-5', prompt_template_sha: 'abc' }, run_id: 'run1', judged_at: '2026-10-28T00:00:00Z', week: '2026-W44',
     verdict: { accept, fidelity, defects: wrong ? [{ class: 'O6', severity: 'wrong_text', quote: 'x' }] : [{ class: 'O8', severity: 'cosmetic', quote: 'y' }], reader_note: '' }, ...extra });
   const fixture = () => {
     n = 0;
@@ -139,6 +149,15 @@ describe('exportScore', () => {
     expect(m.accept_gained).toBe('4/10');
     const rules = { cells: [{ id: 'german-lite', routes: [{ id: 'lite>agy-flash-low' }, { id: 'agy-flash-low-read' }] }] };
     expect(evidenceEntries(s, rules)).toEqual([{ cell: 'german-lite', route: 'lite>agy-flash-low', entry: { score: EVIDENCE_PATH, cell: 'german-lite', route: 'lite>agy-flash-low' } }]);
+  });
+
+  it('splits every k/n by script type, and a print cell counts only its print pages as evidence', () => {
+    const r = fixture();
+    r.push(rec('item', 40, 1, false, 2, true, 'lite>agy-flash-low', { script_type: 'manuscript' }), rec('item', 41, 1, true, 5, false, 'lite>agy-flash-low', { script_type: 'unknown' }));
+    const x = exportScore(r).cells['german-lite'].routes['lite>agy-flash-low'];
+    expect(x.accept).toBe('8/10');
+    expect(x.evidence_rule).toBe('print cell: print pages only');
+    expect(x.by_script).toEqual({ manuscript: { accept: '0/1', wrong_text_pages: '1/1', books: 1 }, print: { accept: '8/10', wrong_text_pages: '1/10', books: 8 }, unknown: { accept: '1/1', wrong_text_pages: '0/1', books: 1 } });
   });
 
   it('checks the shape of what it reads', () => {
