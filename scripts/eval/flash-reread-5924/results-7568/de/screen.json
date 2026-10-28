@@ -1,0 +1,86 @@
+{
+ "69b51dbdff09e4fe943a84b9": {
+  "pass": true,
+  "format": "mixed",
+  "language": "German",
+  "why": "German alchemical prose in Fraktur with Latin terms in Antiqua; both pages printed text"
+ },
+ "69b51cda48ba71898415bb2d": {
+  "pass": true,
+  "format": "mixed",
+  "language": "German",
+  "why": "Paracelsian German prose in Schwabacher/Fraktur, Latin running heads and terms in Antiqua"
+ },
+ "6a20a168a16b41b8475fa9a3": {
+  "pass": true,
+  "format": "mixed",
+  "language": "German",
+  "why": "German Fraktur prose with Latin quotations, a little Greek and Latin marginal refs; both pages printed text"
+ },
+ "69c84fab6c6f3cc53c852b5e": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "Small-format German devotional text in Fraktur; both images are two-page openings"
+ },
+ "69b51dfe768235dc6598b0a8": {
+  "pass": false,
+  "format": "mixed",
+  "language": "Latin + German",
+  "why": "Bibliography: page p104 is mostly a Latin title entry in Antiqua and p215 is about half Latin titles, so the pages are not mainly German"
+ },
+ "69b51dfd47b06ecd581880bc": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "1795 Reichs-Anzeiger newspaper; German Fraktur in two columns (p242 is a two-page opening)"
+ },
+ "69e759f8095c302d3fdde85d": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "Lessing's Nathan der Weise, German verse drama in Fraktur"
+ },
+ "69b51e7647b06ecd58190a05": {
+  "pass": false,
+  "format": "mixed",
+  "language": "French + German",
+  "why": "French grammar: verb tables mostly in French Antiqua and a French-German word list; not mainly German"
+ },
+ "69b418fd2b0edf3eaa2de77f": {
+  "pass": false,
+  "format": "manuscript",
+  "language": "German (some Latin)",
+  "why": "Handwritten manuscript in German Kurrent, not printed"
+ },
+ "69c80a866c6f3cc53c8464a4": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "German Fraktur prose on gardening; note: right edge of the text is cut off in both images"
+ },
+ "69dbc8c31040d1d5e209c5c1": {
+  "pass": false,
+  "format": "other",
+  "language": "German + Latin",
+  "why": "Incunable in gothic bastarda type; p65 is German but p141 is wholly Latin, so the pages are not mainly German"
+ },
+ "69c818716c6f3cc53c849091": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "German commentary on Revelation in Fraktur; note: right edge of the text is cut off on p91"
+ },
+ "69a683f3256d25f466059b5c": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "German Fraktur: a labelled key (Erklaerung) and prose describing machines; both are text pages"
+ },
+ "69c8059e6c6f3cc53c845291": {
+  "pass": true,
+  "format": "fraktur",
+  "language": "German",
+  "why": "German theological prose in Fraktur with occasional Latin words in Antiqua"
+ }
+}
