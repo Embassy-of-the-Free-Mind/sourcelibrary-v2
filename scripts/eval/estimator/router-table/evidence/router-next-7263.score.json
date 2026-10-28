@@ -1,0 +1,57 @@
+{
+ "generated_by": "scripts/eval/router-next-7263/derive_score.py",
+ "source": "scripts/eval/route-judge-6740/results/router-next-2026-10-28/ (judge.mjs, Opus, blind, image)",
+ "frame": "waiting pages of the cell (census bucket), one page per book, books drawn with probability ~ read_count + 1, print only (scripts/eval/router-next-7263/draw.mjs)",
+ "cells": {
+  "latin-lite": {
+   "routes": {
+    "agy-flash-low": {
+     "n": 34,
+     "books": 34,
+     "accept": "22/34",
+     "wrong_text_pages": "2/34",
+     "classes_k_of_n": {
+      "O8": "14/34",
+      "E2": "13/34",
+      "O6": "10/34",
+      "filter_cut": "8/34",
+      "O16": "4/34",
+      "O5": "2/34",
+      "O7": "2/34",
+      "O10": "1/34",
+      "O1": "1/34",
+      "T4": "1/34",
+      "T6": "1/34",
+      "O11": "1/34"
+     },
+     "not_delivered": 8
+    }
+   }
+  },
+  "latin-flash3": {
+   "routes": {
+    "3flash>agy-flash-low": {
+     "n": 34,
+     "books": 34,
+     "accept": "28/34",
+     "wrong_text_pages": "4/34",
+     "classes_k_of_n": {
+      "O8": "18/34",
+      "O6": "13/34",
+      "E2": "9/34",
+      "O16": "8/34",
+      "O12": "4/34",
+      "T6": "4/34",
+      "O5": "3/34",
+      "O7": "2/34",
+      "O10": "2/34",
+      "O11": "1/34",
+      "O3": "1/34",
+      "O1": "1/34"
+     },
+     "not_delivered": 0
+    }
+   }
+  }
+ }
+}

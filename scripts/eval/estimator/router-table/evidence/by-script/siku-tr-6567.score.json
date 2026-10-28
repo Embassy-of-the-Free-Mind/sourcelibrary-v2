@@ -1,0 +1,40 @@
+{
+ "cells": {
+  "zh-siku-tr|manuscript": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "4/30",
+     "classes_k_of_n": {
+      "omission": "1/30",
+      "mistranslation": "3/30"
+     },
+     "script_basis": {
+      "tag": 19,
+      "tag-conflict": 10,
+      "page": 1
+     }
+    },
+    "stored": {
+     "n": 30,
+     "books": 30,
+     "accept": "12/30",
+     "wrong_text_pages": "18/30",
+     "classes_k_of_n": {
+      "mistranslation": "18/30",
+      "omission": "2/30"
+     },
+     "script_basis": {
+      "tag": 19,
+      "tag-conflict": 10,
+      "page": 1
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/siku-tr-6567.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

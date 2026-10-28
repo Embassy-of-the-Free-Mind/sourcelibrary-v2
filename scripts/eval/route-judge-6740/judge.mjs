@@ -30,6 +30,8 @@
  * (german), packet, derge (tib-kangyur), judge [--reuse=<a verdicts file>], names (zh-dice), score.
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/judge.mjs correct --out=DIR [--cell=X] [--by=opus|agy] [--agy-max=N]
  *   node scripts/eval/route-judge-6740/judge.mjs names --out=DIR
+ * correct --keep-reads [--job=NAME] (#7263 router-next): reuse a kept read and keep every new one (no --fresh, reads
+ * not off), for tests drawn from WAITING pages whose reads may be written; sample.json may come from another draw.
  *
  * CELLS (each an open routing decision). "experiment read" = never served; it comes from the eval named.
  *   latin    Latin print OCR (#5924). lite as served; lite > Opus correction (experiment read, #5924 oc-reads).
@@ -446,9 +448,12 @@ async function correct() {
         console.log(`${cell}/${route}: cli-ocr.mjs ${cor.fresh ? 'fresh read (live OCR prompt, no draft)' : `correct mode, ${cor.prompt ?? 'fc template'}`}, ${cor.model}, ${ids.length} pages (${used} agy calls so far${process.env.AGY_HOME ? `; AGY_HOME=${process.env.AGY_HOME}` : ''})`);
         // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
         const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : [])];
+        // --keep-reads (#7263 router-next: tests on WAITING pages are useful work): a kept read of the same page, prompt
+        // and model is reused (candidate-reads findRead) and every new read is kept, so a later lane need not pay again.
+        const keep = process.argv.includes('--keep-reads');
         await new Promise((resolve) => {
           const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
-            ...mode, '--job=route-judge-6740', '--concurrency=3', '--fresh'], { env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+            ...mode, `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
           child.stdout.on('data', (d) => {
             process.stdout.write(d);
             if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }

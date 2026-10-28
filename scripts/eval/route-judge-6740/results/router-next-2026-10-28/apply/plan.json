@@ -1,0 +1,1140 @@
+[
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51d7ef23ccdcced3082ff",
+  "book_id": "69b51d7ef23ccdcced308295",
+  "page_number": 106,
+  "book_reads": 5,
+  "defects": [
+   "O6 misleads: page reads '\u017fpiritualium creaturarum' (spiritual creatures), not '\u017fpirituum' (of spirits)"
+  ],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6a267c8b6c1f37c9c4f3639d",
+  "book_id": "6a267c8b6c1f37c9c4f36391",
+  "page_number": 12,
+  "book_reads": 0,
+  "defects": [],
+  "status": "written",
+  "queues": "status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b4c14b779e2e78e20e7681",
+  "book_id": "69b4c14b779e2e78e20e7605",
+  "page_number": 124,
+  "book_reads": 8,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69dbcba41040d1d5e20b9d02",
+  "book_id": "69dbcba41040d1d5e20b9c16",
+  "page_number": 236,
+  "book_reads": 12,
+  "defects": [
+   "O8 misleads: the line before reads 'non solum in his:' but the page has 'ned\u016b' (nedum); the word was replaced"
+  ],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69de98cb1b234a773e4395fa",
+  "book_id": "69de98cb1b234a773e4395a3",
+  "page_number": 87,
+  "book_reads": 9,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "699356d28e28d8f4c5d3bd80",
+  "book_id": "699356d28e28d8f4c5d3ba61",
+  "page_number": 799,
+  "book_reads": 28,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51de4efd8df28f2dac9cc",
+  "book_id": "69b51de4efd8df28f2dac9a2",
+  "page_number": 42,
+  "book_reads": 26,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69dbca001040d1d5e20a8666",
+  "book_id": "69dbca001040d1d5e20a85ea",
+  "page_number": 124,
+  "book_reads": 2,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69d38aeda63cc0f3ba265688",
+  "book_id": "69c884f06c6f3cc53c859a94",
+  "page_number": 89,
+  "book_reads": 35,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6a3eb5243b700246315d7deb",
+  "book_id": "6a3eb5243b700246315d7dbb",
+  "page_number": 48,
+  "book_reads": 4,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6a26be080e247ebad6de6b66",
+  "book_id": "6a26be080e247ebad6de6b43",
+  "page_number": 35,
+  "book_reads": 2,
+  "defects": [
+   "O6 misleads: On the page the two abbreviated forms in this entry differ (roughly S\u03c9\u0303 vs S\u1ebd). The candidate prints the same form twice, so the correction says nothing."
+  ],
+  "status": "written",
+  "queues": "status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "695435261479a63c1108b546",
+  "book_id": "695435261479a63c1108b306",
+  "page_number": 576,
+  "book_reads": 3,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51db7cf111105c428eac7",
+  "book_id": "69b51db7cf111105c428ea03",
+  "page_number": 196,
+  "book_reads": 9,
+  "defects": [
+   "O7 misleads: page reads 152, not 252"
+  ],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69dbc92a1040d1d5e20a11cb",
+  "book_id": "69dbc92a1040d1d5e20a112c",
+  "page_number": 159,
+  "book_reads": 1,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6a4b2a9c7c38d5e8eb9bec99",
+  "book_id": "6a4b2a9c7c38d5e8eb9bebf1",
+  "page_number": 166,
+  "book_reads": 19,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6a267f6988f11913ee9c90e5",
+  "book_id": "6a267f6988f11913ee9c90c7",
+  "page_number": 30,
+  "book_reads": 1,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69f6a72ad003c47d22ea0f94",
+  "book_id": "69c880496c6f3cc53c859041",
+  "page_number": 317,
+  "book_reads": 380,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69bd9fa5f6d63c919748131e",
+  "book_id": "69bd9fa5f6d63c9197480fc6",
+  "page_number": 856,
+  "book_reads": 4,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69f4c1642f21e173d2fe1987",
+  "book_id": "69b418e02b0edf3eaa2de17c",
+  "page_number": 114,
+  "book_reads": 16,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51ebc9a81ef7feb3da665",
+  "book_id": "69b51ebc9a81ef7feb3da5e4",
+  "page_number": 129,
+  "book_reads": 3,
+  "defects": [],
+  "status": "accepted, refused by an apply guard",
+  "queues": "status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51e67cf111105c429c3ba",
+  "book_id": "69b51e67cf111105c429c037",
+  "page_number": 899,
+  "book_reads": 3,
+  "defects": [
+   "O7 misleads: In the Hebrews entry for 9:8 (third column), the page number on the page reads 341, not 345."
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b65df6b3f4fc044151e167",
+  "book_id": "69b65df6b3f4fc044151e15d",
+  "page_number": 10,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b4cc42d2bf9b45ea479aab",
+  "book_id": "69b4cc42d2bf9b45ea4799d3",
+  "page_number": 216,
+  "book_reads": 3,
+  "defects": [],
+  "status": "written",
+  "queues": "status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51e61ff09e4fe943ae02b",
+  "book_id": "69b51e61ff09e4fe943adea6",
+  "page_number": 389,
+  "book_reads": 0,
+  "defects": [],
+  "status": "written",
+  "queues": "status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b30004e5d6d64d8e198365",
+  "book_id": "69b30004e5d6d64d8e198319",
+  "page_number": 76,
+  "book_reads": 2,
+  "defects": [
+   "T4 misleads: The bottom-right block is placed before the narrow right column, so 'ad quos' runs into 'trantur' and the commentary is out of order.",
+   "O6 misleads: The page reads 'umbrasq; transeunte ... dixerit'.",
+   "O6 misleads: Long s misread: the page has 'sine', not 'fine'.",
+   "O16 misleads: There is no signature on this verso. It was invented."
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51dbbff09e4fe943a844e",
+  "book_id": "69b51dbbff09e4fe943a8366",
+  "page_number": 232,
+  "book_reads": 45,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69ef3dbc72c1376fdf2b0c91",
+  "book_id": "69ef3dbc72c1376fdf2b0c0c",
+  "page_number": 133,
+  "book_reads": 10,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6990660aef12272ffdc9518e",
+  "book_id": "6990660aef12272ffdc94ef0",
+  "page_number": 670,
+  "book_reads": 24,
+  "defects": [
+   "O6 wrong_text: page has 'in rerum natura unitas' (rer\u0169 n\u00e3); the candidate misread both abbreviations",
+   "O6 misleads: page reads 'verum hoc est, ne in infinitum eatur' (h' \u0113 ne)",
+   "O6 misleads: page reads 'nixu', not 'nexu'",
+   "O6 misleads: page has 'id\u0113' (idem), not 'ideo'",
+   "O6 misleads: the sense requires 'sine cognitione' (things moved by nature without cognition); the minims are ambiguous, but 'sive' changes the sense"
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69bd9e066120d54bd037ac48",
+  "book_id": "69bd9e066120d54bd037a8ad",
+  "page_number": 923,
+  "book_reads": 10,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51ed9ff09e4fe943b610f",
+  "book_id": "69b51ed9ff09e4fe943b60a8",
+  "page_number": 103,
+  "book_reads": 3,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "6957ef6bcbe1dcad7b76c173",
+  "book_id": "6957ef6bcbe1dcad7b76beff",
+  "page_number": 628,
+  "book_reads": 60,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69dbc9451040d1d5e20a1a34",
+  "book_id": "69dbc9451040d1d5e20a19f2",
+  "page_number": 66,
+  "book_reads": 1,
+  "defects": [
+   "O6 wrong_text: page has 'Vt .n.' (Ut enim), not 'Vtrimque'",
+   "O6 wrong_text: page reads 'c\u00f5t\u1ebdt\u00f5e m\u1ebdte' (contentione mente); the candidate invents 'coirent: de'",
+   "O6 wrong_text: page reads 'qd\u1ebd: n\u00f5 eas: uenat\u00f5es qd\u1ebd' (quidem: non eas: ...); the candidate garbles it into 'quem demerent'",
+   "O6 misleads: page 'c\u00f5t\u1ebdnet' = contemnet (despises), not 'continet' (contains)",
+   "O6 wrong_text: page 'q\u0363 ura ... s\u00f5nior\u0169' = quae vestra ... somniorum; the candidate has 'quamvis' and 'bonorum'",
+   "O6 misleads: page 'Quin\u00e3' = Quinam",
+   "O6 misleads: page has '\ua751 aris' (pro aris), fused into 'paris'"
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69f68f1e72ffd456014ca376",
+  "book_id": "6909aba7cf28baa1b4caef69",
+  "page_number": 130,
+  "book_reads": 53,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-lite",
+  "route": "agy-flash-low",
+  "page_id": "69b51e41ff09e4fe943aab70",
+  "book_id": "69b51e41ff09e4fe943aa79c",
+  "page_number": 980,
+  "book_reads": 2,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "697dd97522ed4219cf3b6e7b",
+  "book_id": "697d9ca2e930671f09614566",
+  "page_number": 229,
+  "book_reads": 21,
+  "defects": [
+   "O5 misleads: the word 'etiam' is dropped; the page reads 'qua passione etiam absumitur'",
+   "O11 misleads: there is no signature mark on this page; this one is invented"
+  ],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6990616fef12272ffdc8dc32",
+  "book_id": "6990616fef12272ffdc8db47",
+  "page_number": 235,
+  "book_reads": 67,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4b5e10162167e7c1e5cd60",
+  "book_id": "6a4b5e10162167e7c1e5cd3f",
+  "page_number": 10,
+  "book_reads": 0,
+  "defects": [
+   "O7 misleads: footnote (k) on the page reads 'cap. 9.'; the chapter number in the citation is wrong",
+   "O6 misleads: the first word fragment on the page reads 'ros' (the end of a word carried over from the previous page), not 'tos'",
+   "O6 misleads: the page has subjunctive 'accipiant'; the candidate turns it into indicative 'accipiunt'",
+   "O6 misleads: the page reads 'sit', not 'fit'"
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69845a561cc2b3e7e7dd038c",
+  "book_id": "698420e3a907eafa9ae63f83",
+  "page_number": 234,
+  "book_reads": 73,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4e496ba41b23704d03abf3",
+  "book_id": "6a4e496ba41b23704d03abdd",
+  "page_number": 22,
+  "book_reads": 0,
+  "defects": [],
+  "status": "written",
+  "queues": "0% translated: gap-fill would re-queue it"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a367fa0b308d2c3ca0c42ac",
+  "book_id": "6a367fa0b308d2c3ca0c412b",
+  "page_number": 385,
+  "book_reads": 27,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a49d889126c60145c45381f",
+  "book_id": "6a49d888126c60145c453812",
+  "page_number": 13,
+  "book_reads": 0,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6954354a1479a63c1108bed5",
+  "book_id": "695435491479a63c1108bdab",
+  "page_number": 298,
+  "book_reads": 6,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "695203a6ab34727b1f041d73",
+  "book_id": "695203a5ab34727b1f041c53",
+  "page_number": 288,
+  "book_reads": 487,
+  "defects": [
+   "O8 misleads: the page prints 'Luna \u017fpiritus'; the candidate changed it to the genitive 'Lun\u00e6', which changes the grammar"
+  ],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69b4d669853c26e0d1561bdf",
+  "book_id": "69b4d669853c26e0d1561b9d",
+  "page_number": 66,
+  "book_reads": 8,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a085a4149638a50931c8f1e",
+  "book_id": "6a085a4149638a50931c8e2a",
+  "page_number": 244,
+  "book_reads": 1,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6990585a17295890441359db",
+  "book_id": "6990585917295890441359aa",
+  "page_number": 49,
+  "book_reads": 14,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "695937333b43cb6630c91f66",
+  "book_id": "695937333b43cb6630c91e6d",
+  "page_number": 249,
+  "book_reads": 23,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4de2019d37691b80d5ffb0",
+  "book_id": "6a4de2019d37691b80d5ffa3",
+  "page_number": 13,
+  "book_reads": 0,
+  "defects": [],
+  "status": "accepted, refused by an apply guard",
+  "queues": "0% translated: gap-fill would re-queue it"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a42d03fe76baa13aa8551d0",
+  "book_id": "6a42d03fe76baa13aa8551b7",
+  "page_number": 25,
+  "book_reads": 1,
+  "defects": [
+   "O10 wrong_text: The running head is the Greek word '\u03a0\u03b1\u03bd\u03b7\u03b3\u03c5\u03c1\u03b9\u03ba\u03ac' (Panegyrica). The candidate drops it and puts 'VViccamus.' in its place, which is not on the page.",
+   "O6 misleads: The page reads 'sortitus' (with a long s), not 'fortitus'."
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4b8492c0fa233644e30be8",
+  "book_id": "6a4b8492c0fa233644e30bcf",
+  "page_number": 25,
+  "book_reads": 0,
+  "defects": [],
+  "status": "written",
+  "queues": "0% translated: gap-fill would re-queue it"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69b51e5147b06ecd5818df11",
+  "book_id": "69b51e5147b06ecd5818de97",
+  "page_number": 122,
+  "book_reads": 1,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6985de8a8a3732ecbc480db5",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "page_number": 86,
+  "book_reads": 99,
+  "defects": [
+   "O3 wrong_text: page prints \u05d0\u05e9\u05d4; candidate substitutes the expected Emeth",
+   "O8 wrong_text: page has \u05e9 (Shin) as the fire letter; changed to Mem to fit \u05d0\u05de\u05ea",
+   "O8 wrong_text: page has \u05d4; changed to Tav to fit \u05d0\u05de\u05ea",
+   "O6 wrong_text: page reads 'primo \u05d4' (the first He receives Jod), not Yod",
+   "O6 wrong_text: page has \u05d4",
+   "O6 wrong_text: page reads 'ejus Jah, vel \u05d4 superius'",
+   "O6 wrong_text: page has \u05d4 superius",
+   "O6 wrong_text: page reads 'sicuti \u05d4 supremum'",
+   "O6 misleads: page reads 'Jod in \u05d4'",
+   "O10 misleads: drops the \u05d4 printed in 'in aliud \u05d4 ductum'",
+   "O10 misleads: drops the \u05d4 in 'illud \u05d4 infimum'",
+   "O6 misleads: page reads 'Sabbathi requietis'",
+   "O16 misleads: vocab lists Emeth, which does not appear on the page"
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4a4a40547be098cf67e0a2",
+  "book_id": "6a4a4a40547be098cf67e08d",
+  "page_number": 5,
+  "book_reads": 0,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69b51dc6ff09e4fe943a8ac3",
+  "book_id": "69b51dc6ff09e4fe943a8aac",
+  "page_number": 23,
+  "book_reads": 13,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69aea8741cbf28a363a4fcaf",
+  "book_id": "69aea8741cbf28a363a4fad7",
+  "page_number": 472,
+  "book_reads": 8,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "695207e5ab34727b1f043dfa",
+  "book_id": "695207e4ab34727b1f043cf6",
+  "page_number": 260,
+  "book_reads": 24,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69904fc47d19f3f2aac1d855",
+  "book_id": "69904fc47d19f3f2aac1d7f3",
+  "page_number": 98,
+  "book_reads": 39,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69920bf777b798aa12121bf5",
+  "book_id": "69920bf777b798aa12121afc",
+  "page_number": 249,
+  "book_reads": 8,
+  "defects": [
+   "O7 misleads: The marginal reference to Grabe's edition reads 'G. 24' on the page; the candidate has 'G. u', so the page number is lost.",
+   "O6 misleads: The Tertullian quotation reads 'materi\u00e6' on the page; the candidate has 'materia'."
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a4f0057b18250223e2f371b",
+  "book_id": "6a4f0057b18250223e2f35d9",
+  "page_number": 22,
+  "book_reads": 0,
+  "defects": [
+   "O6 misleads: the page reads 'Bouin\u00e6'; the final \u00e6 is dropped",
+   "O6 misleads: the page reads 'concuss\u00e6'; the ending is misread as -a",
+   "O6 misleads: the page reads 'Massyl\u00e6que'; dropping the \u00e6 changes the grammatical form"
+  ],
+  "status": "written",
+  "queues": "0% translated: gap-fill would re-queue it"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69af44770cc30e5b61e6b69f",
+  "book_id": "69af44770cc30e5b61e6b535",
+  "page_number": 362,
+  "book_reads": 7,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69593410b282844d7b277a3d",
+  "book_id": "69593410b282844d7b277966",
+  "page_number": 215,
+  "book_reads": 118,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69b689282368e1fad3210d83",
+  "book_id": "69b689282368e1fad3210d7e",
+  "page_number": 5,
+  "book_reads": 3,
+  "defects": [],
+  "status": "written"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69aec7e572b3e2eb759964ef",
+  "book_id": "69aec7e572b3e2eb759964d8",
+  "page_number": 23,
+  "book_reads": 2,
+  "defects": [
+   "O6 misleads: page reads 'Hec posteriora' (these latter), not 'Nec'",
+   "O6 misleads: page reads 'benificentia'",
+   "O6 misleads: page reads 'more', garbled into 'mo te'"
+  ],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a438f1457a09c2c0fccf101",
+  "book_id": "6a438f1457a09c2c0fccf0f2",
+  "page_number": 14,
+  "book_reads": 0,
+  "defects": [
+   "O6 wrong_text: page reads 'Se[pi]us ad si me lycida formose reuisas'; candidate turns 'Sepius' into 'Si uis' and drops 'si', changing the verse",
+   "O6 misleads: page glosses 'si [re]uisas me', not 'si uis ad me'",
+   "O8 misleads: page prints 'quos et mirata'; candidate normalises to the standard 'est'",
+   "O6 misleads: page reads 'recenset thirsim'"
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69500509f426a210d109c7ac",
+  "book_id": "a5d0c381-d4ea-42cd-8864-44457e7fda33",
+  "page_number": 500,
+  "book_reads": 183,
+  "defects": [
+   "O6 misleads: page reads 'in qu\u00e6 visus in muro inciderit'; 'visus' is lost and the clause loses its sense"
+  ],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "695910caecb01322b30680fc",
+  "book_id": "695910caecb01322b3068085",
+  "page_number": 119,
+  "book_reads": 8,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69527377ab34727b1f0495b9",
+  "book_id": "69527376ab34727b1f04948a",
+  "page_number": 303,
+  "book_reads": 151,
+  "defects": [],
+  "status": "accepted, refused by an apply guard"
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a508e1411d0aadb171ff73c",
+  "book_id": "6a508e1411d0aadb171ff726",
+  "page_number": 22,
+  "book_reads": 1,
+  "defects": [
+   "O5 misleads: The page reads \"& It Clamor caelo\". The word \"It\" was dropped, which breaks the Virgil quotation.",
+   "O6 wrong_text: The page reads \"Ad Aegas Acheae\". The place name was misread.",
+   "O1 misleads: There is no woodcut initial on the page. \"Dux\" is set in plain type.",
+   "O6 misleads: The page has the abbreviation \"quomq;\" (quomque), not \"quomodo\"."
+  ],
+  "status": "rejected",
+  "why": "not accepted"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c7b7701fe4f593c21ed51",
+  "book_id": "6a3c7b7701fe4f593c21ece0",
+  "page_number": 113,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c7aa401fe4f593c218fa0",
+  "book_id": "6a3c7aa401fe4f593c218e52",
+  "page_number": 141,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cb87b3d799518cd71bbb9",
+  "book_id": "6a3cb87b3d799518cd71bb45",
+  "page_number": 116,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c65f539b4508b04e3065e",
+  "book_id": "6a3c65f539b4508b04e30635",
+  "page_number": 41,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbe7aec254ff6cae00bae",
+  "book_id": "6a3cbe7aec254ff6cae00b20",
+  "page_number": 142,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c684eaf3c49b59c5d7c2f",
+  "book_id": "6a3c684eaf3c49b59c5d7c08",
+  "page_number": 39,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c616040c88a541d8f0309",
+  "book_id": "6a3c616040c88a541d8f02d5",
+  "page_number": 52,
+  "book_reads": 1,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c769a01fe4f593c1fc39a",
+  "book_id": "6a3c769a01fe4f593c1fc20e",
+  "page_number": 224,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6f5001fe4f593c1cb339",
+  "book_id": "6a3c6f5001fe4f593c1cb2a6",
+  "page_number": 147,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c773b01fe4f593c200913",
+  "book_id": "6a3c773b01fe4f593c2008c0",
+  "page_number": 81,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbfe1f9474f825c16c008",
+  "book_id": "6a3cbfe1f9474f825c16bf9a",
+  "page_number": 110,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c792401fe4f593c20d637",
+  "book_id": "6a3c792401fe4f593c20d5d0",
+  "page_number": 103,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6849af3c49b59c5d7b53",
+  "book_id": "6a3c6849af3c49b59c5d7ac5",
+  "page_number": 142,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c725001fe4f593c1de570",
+  "book_id": "6a3c725001fe4f593c1de4f3",
+  "page_number": 125,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cb9ae3dce6cfad7495d19",
+  "book_id": "6a3cb9ae3dce6cfad7495cc1",
+  "page_number": 87,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c727101fe4f593c1df6d8",
+  "book_id": "6a3c727101fe4f593c1df6ad",
+  "page_number": 43,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c71b101fe4f593c1d9f10",
+  "book_id": "6a3c71b101fe4f593c1d9ef3",
+  "page_number": 29,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbd34ec254ff6cadf6fbe",
+  "book_id": "6a3cbd34ec254ff6cadf6f87",
+  "page_number": 54,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cc053ec254ff6cae05824",
+  "book_id": "6a3cc053ec254ff6cae057c6",
+  "page_number": 94,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c663339b4508b04e32d15",
+  "book_id": "6a3c663339b4508b04e32cad",
+  "page_number": 103,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c612e40c88a541d8ee86b",
+  "book_id": "6a3c612e40c88a541d8ee7b1",
+  "page_number": 51,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6ce901fe4f593c1b61a7",
+  "book_id": "6a3c6ce901fe4f593c1b616a",
+  "page_number": 61,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c64ae39b4508b04e29144",
+  "book_id": "6a3c64ae39b4508b04e29101",
+  "page_number": 67,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cc0fcec254ff6cae083a6",
+  "book_id": "6a3cc0fcec254ff6cae0836e",
+  "page_number": 56,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c647839b4508b04e27555",
+  "book_id": "6a3c647839b4508b04e27520",
+  "page_number": 53,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c743a01fe4f593c1ef5a4",
+  "book_id": "6a3c743a01fe4f593c1ef548",
+  "page_number": 92,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6761af3c49b59c5d2d6d",
+  "book_id": "6a3c6761af3c49b59c5d2ce7",
+  "page_number": 134,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cedab4701a906f10e2678",
+  "book_id": "6a3cedab4701a906f10e2548",
+  "page_number": 54,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbc92f9474f825c1616c7",
+  "book_id": "6a3cbc92f9474f825c1616ab",
+  "page_number": 28,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6727af3c49b59c5d0be7",
+  "book_id": "6a3c6727af3c49b59c5d0b8a",
+  "page_number": 93,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbcf9ec254ff6cadf4f30",
+  "book_id": "6a3cbcf9ec254ff6cadf4ec5",
+  "page_number": 107,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c732e01fe4f593c1e6497",
+  "book_id": "6a3c732e01fe4f593c1e6468",
+  "page_number": 47,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c6b6b39b4508b04e43ee6",
+  "book_id": "6a3c6b6b39b4508b04e43e65",
+  "page_number": 129,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cbfccf9474f825c16b353",
+  "book_id": "6a3cbfccf9474f825c16b2cc",
+  "page_number": 135,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3cebaf8642f0445b156628",
+  "book_id": "6a3cebaf8642f0445b1565de",
+  "page_number": 74,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ },
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-high",
+  "page_id": "6a3c741f01fe4f593c1ee721",
+  "book_id": "6a3c741f01fe4f593c1ee667",
+  "page_number": 186,
+  "book_reads": 0,
+  "status": "not judged",
+  "why": "no read (cut, quota, or not read)"
+ }
+]
