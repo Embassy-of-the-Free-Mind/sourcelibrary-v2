@@ -13,7 +13,7 @@
  * of a spread puts both leaves on one page (#6948, #7454). Split first, then the lane reads the leaves.
  *
  *   propose  node --env-file=.env.production.local scripts/maintenance/split-spreads-agy.mjs propose --out=DIR
- *              [--hold=ocr-flash-cli-7075] [--book=ID,ID] [--limit=N] [--concurrency=3]
+ *              [--hold=ocr-flash-cli-7075] [--book=ID,ID | --books-file=FILE] [--limit=N] [--concurrency=3]
  *            Per frame: the pixel detector (gutter-detect.mjs) and one `agy -p` call (gemini-3.8-flash-low, plan mode,
  *            the read_file tool gate, never auto-approve) asked how many leaves, where the fold is (0–1000) and which
  *            leaf is read first. Writes DIR/<book>/proposal.json, positions.json (split-book.mjs --positions-file
@@ -181,18 +181,20 @@ async function renderReview(buf, w, h, frame, pageOrder, file) {
 async function propose(db) {
   const OUT = path.resolve(arg('out'));
   const hold = arg('hold') || 'ocr-flash-cli-7075';
-  const only = arg('book')?.split(',');
+  // --books-file=FILE (one id per line, #7605): a census-picked list, not a hold; the hold filter is then dropped.
+  const booksFile = arg('books-file');
+  const only = booksFile ? fs.readFileSync(booksFile, 'utf8').split(/\s+/).filter(Boolean) : arg('book')?.split(',');
   const limit = Number(arg('limit') || 0);
   const conc = Math.max(1, Math.min(4, Number(arg('concurrency') || 3)));
   fs.mkdirSync(OUT, { recursive: true });
   const wsRoot = path.join(OUT, '.ws');
   fs.mkdirSync(wsRoot, { recursive: true });
   let books = await db.collection('books').find(
-    { needs_splitting: true, 'pipeline_auto.hold.reason': hold, ...(only && { id: { $in: only } }) },
+    { needs_splitting: true, ...(!booksFile && { 'pipeline_auto.hold.reason': hold }), ...(only && { id: { $in: only } }) },
     { projection: { id: 1, title: 1, language: 1, split_completed: 1, split_page_order: 1 } },
   ).sort({ id: 1 }).toArray();
   if (limit) books = books.slice(0, limit);
-  console.log(`${books.length} needs_splitting books in hold ${hold}`);
+  console.log(`${books.length} needs_splitting books ${booksFile ? `from ${booksFile}` : `in hold ${hold}`}`);
   let quota = false;
   for (const book of books) {
     if (quota) break;
