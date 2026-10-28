@@ -64,7 +64,8 @@ export function writeFilter(page) {
 
 /** Revert op for one logged page: back to `printed`, only where the value is still the one written. */
 export function revertOp(row, i) {
-  const id = row.detail.id_types[i] === 'objectId' ? new ObjectId(row.detail.page_ids[i]) : row.detail.page_ids[i];
+  const { page_ids: logged, id_types: types } = row.detail;
+  const id = types[i] === 'objectId' ? new ObjectId(logged[i]) : logged[i];
   return { updateOne: { filter: { _id: id, script_type: row.detail.values[i] }, update: { $set: { script_type: row.detail.prev[i] } } } };
 }
 
