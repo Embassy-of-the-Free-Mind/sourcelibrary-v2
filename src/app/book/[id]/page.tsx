@@ -1694,7 +1694,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
-            {searchNotice ? null : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+            {searchNotice && freshSearch ? (
+              <TranslationSearchNotice
+                book={book}
+                search={freshSearch}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              />
+            ) : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
               <TranslationCardPanel
                 card={translationCard}
                 book={book as { pages_translated?: number | null }}
