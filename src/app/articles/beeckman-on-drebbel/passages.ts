@@ -22,6 +22,8 @@ export interface BeeckmanPassage {
   translation: string[];
   /** A plain remark of ours, shown under the passage. */
   note?: string;
+  /** Beeckman's own drawing for the entry, where he made one. */
+  figure?: { src: string; alt: string; caption: string };
 }
 
 export const PASSAGES: BeeckmanPassage[] = [
@@ -61,6 +63,12 @@ export const PASSAGES: BeeckmanPassage[] = [
       'And as for the boat, if it had to be made, one would surely contrive a fitting means of getting the water in and out: the means I set down is only for the sake of demonstration.',
     ],
     note: 'Between these paragraphs Beeckman draws the boat and works through why it sinks when water is let into the tank and rises when it is pumped out.',
+    figure: {
+      src: '/articles/beeckman-on-drebbel/beeckman-1620-boat.png',
+      alt: 'Line drawing of a boat in cross-section on the water, lettered A to I, with a closed tank in the bottom of the hull and a pipe with a tap leading out through it.',
+      caption:
+        'Beeckman’s drawing for this entry: the boat ABCD, the closed tank in its bottom, and the pipe D with its tap. As printed in de Waard’s edition, vol. 2 (1942).',
+    },
   },
   {
     id: 'glasses-1622',

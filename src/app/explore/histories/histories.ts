@@ -4,6 +4,9 @@
 // concept are separate files loaded with a dynamic import, so one route never
 // bundles the other concepts' megabytes. Never import this from a client component.
 import index from './content/index.json';
+import picks from './content/picks.json';
+import figures from './content/figures.json';
+import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 
 export type ClaimSource = { l: string; loc?: string; q?: string; qo?: string; u?: string; np?: 1 };
 export type Claim = { id: string; s: string; d: string; k: string; p?: 1; src: ClaimSource[] };
@@ -47,3 +50,54 @@ export function qualityStatement(c: Concept): string {
     : 'The rejected claims were corrected or withdrawn before publication.';
   return `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked a random sample of ${a.n} verified claims against the pages they cite: ${a.n - a.rejected} held and ${a.rejected} were rejected as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). ${fixed} A sample of ${a.n} gives a wide interval. ${allLine} ${notChecked}`;
 }
+
+// ---- pictures and quotes (#7623) -------------------------------------------------------------------------------
+// content/picks.json is chosen by eye (the card picture, the word, the card quote, the opening excerpt);
+// content/figures.json is written from it by scripts/maintenance/concept-history-figures.mjs: every quote the pages
+// show, with the printed page it comes from.
+export type Pick = {
+  word: string; translit: string;
+  image: { src: string; book: string; page: number; alt: string; caption: string };
+  quote: string;
+  opening: { essay: string; section: string };
+};
+export type Figure = {
+  claim: string; concept: string; q: string; qo?: string; l: string; loc?: string; u: string;
+  book: string; page: number; img: PageImageFields;
+};
+export const PICKS = picks as unknown as { hero: string; concepts: Record<string, Pick> };
+const FIGURES = figures as unknown as {
+  concepts: Record<string, { card: Figure; key: Figure[] }>;
+  essays: Record<string, Record<string, Figure>>;
+};
+export const pickFor = (slug: string) => PICKS.concepts[slug];
+export const cardQuote = (slug: string) => FIGURES.concepts[slug]?.card;
+export const keyQuotes = (slug: string) => FIGURES.concepts[slug]?.key ?? [];
+/** The library quote shown after each part of an essay split at its ## headings, keyed by the part's index. */
+export const essayFigures = (c: string, essay: string) => FIGURES.essays[`${c}/${essay}`] ?? {};
+export const pageImage = (f: Figure) => getPageImageUrl(f.img, 'display');
+export const readerHref = (book: string, page: number) => `/book/${book}?page=${page}`;
+
+/** "Author, 1901, Title" → its author and year, for a short attribution. */
+export function authorYear(label: string): string {
+  const m = label.match(/^(.*?),\s*((?:c\.\s*)?\d{3,4}(?:[–-]\d{2,4})?)\b/);
+  return m ? `${m[1].replace(/\s*\((?:tr|trans|ed)\.?\)$/i, '')}, ${m[2]}` : label;
+}
+
+/** Split an essay at its ## headings; text before the first heading is a part with heading ''. Same split as the figures script. */
+export function sections(md: string): { heading: string; md: string }[] {
+  return md.split(/^(?=## )/m).map((p) => {
+    const h = p.match(/^## (.*)$/m);
+    return p.startsWith('## ') && h ? { heading: h[1].trim(), md: p.slice(h[0].length).replace(/^\s+/, '') } : { heading: '', md: p };
+  });
+}
+
+/** One line about an essay: the first sentence after its opening bold lead ("**Question.** …"). */
+export function essayLine(md: string): string {
+  const first = md.trim().split(/\n\s*\n/)[0] ?? '';
+  const lead = first.match(/^\*\*[^*]+\*\*\s*([\s\S]*)$/);
+  const text = (lead ? lead[1] : first).replace(/\[\[(\d+)\]\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim();
+  const s = text.match(/^.+?[.?!](?=\s|$)/);
+  return (s ? s[0] : text).replace(/^./, (x) => x.toUpperCase());
+}
+export const isStub = (md: string) => /\*\*Status\.\*\*\s*Not yet written/i.test(md);

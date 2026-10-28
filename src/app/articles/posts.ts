@@ -161,8 +161,8 @@ export const posts: BlogPost[] = [
     date: '6 October 2026',
     readTime: '',
     kind: 'tours',
-    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
-    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
+    image: '/articles/beeckman-on-drebbel/drebbel-submarine.jpg',
+    imageAlt: 'Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving.',
   },
   {
     slug: 'search-by-meaning',

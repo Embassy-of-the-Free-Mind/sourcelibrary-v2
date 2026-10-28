@@ -92,6 +92,22 @@ const VIZ_CARDS: VizCard[] = [
     available: true,
   },
   {
+    href: '/explore/histories',
+    title: 'Conceptual histories',
+    description: 'Soul, harmony, magic, sympathy and more, followed through the words that carried them, with every claim linked to the page it quotes.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+        <path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5v-13z" />
+        <path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5v-13z" />
+        <line x1="6.5" y1="8" x2="9" y2="8" />
+        <line x1="6.5" y1="11" x2="9" y2="11" />
+        <line x1="15" y1="8" x2="17.5" y2="8" />
+      </svg>
+    ),
+    color: 'var(--accent-sage)',
+    available: true,
+  },
+  {
     href: '/ngrams',
     title: 'Ngrams',
     description: 'How often words and phrases appear across five centuries of sources. Click any trend to read the pages behind it.',
@@ -139,7 +155,7 @@ function CardContent({ card, count }: { card: VizCard; count: number | null }) {
 
 export default function ExploreNav({ totals }: ExploreNavProps) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {/* Unbuilt views stay in VIZ_CARDS with available: false but are not
           shown: a "Coming soon" card on a main menu page reads as unfinished. */}
       {VIZ_CARDS.filter((card) => card.available).map((card) => {
