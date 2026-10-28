@@ -102,11 +102,15 @@ function draftModel(ocr: { engine?: unknown } | null | undefined): string | null
 
 export function transcriptionReliability(
   book: { language?: string | null; title?: string | null } | null | undefined,
-  page?: { ocr?: { model?: string | null; engine?: unknown } | null } | null,
+  page?: { ocr?: { model?: string | null; engine?: unknown; prompt_id?: string | null } | null } | null,
 ): TranscriptionReliability | null {
   const lang = (book?.language ?? '').trim().toLowerCase();
   if (!UNREADABLE_LANGUAGES.has(lang)) return null;
-  const corrected = page?.ocr?.model !== YIGDZIN_MODEL && draftModel(page?.ocr) === YIGDZIN_MODEL;
+  // Fallback when a surface hands over `ocr` without `engine`: on Tibetan the
+  // correction lane's prompt id (`correct:…`, cli-ocr.mjs) marks the same pages.
+  const correctionPrompt = (page?.ocr?.prompt_id ?? '').startsWith('correct:');
+  const corrected =
+    page?.ocr?.model !== YIGDZIN_MODEL && (draftModel(page?.ocr) === YIGDZIN_MODEL || correctionPrompt);
   if (page?.ocr?.model === YIGDZIN_MODEL || corrected) {
     // Measured 2026-09-30 and replicated 2026-10-01 (n = 100, no shared pages):
     // median syllable identity 0.947 against the Derge Kangyur e-text, chance

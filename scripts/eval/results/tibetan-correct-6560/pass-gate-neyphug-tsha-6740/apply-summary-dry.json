@@ -1,0 +1,16 @@
+{
+ "at": "2026-10-26T22:36:50.895Z",
+ "apply": false,
+ "run": null,
+ "reason": "dry run for the #6740 gate",
+ "written": 960,
+ "skipped": {},
+ "held_yatags": 0,
+ "yatags_hits": 0,
+ "yatags_kept": 0,
+ "yatags_reverted": 0,
+ "written_page_ids": [],
+ "write_guard_repaired": 0,
+ "write_guard_refused": [],
+ "failed_reads": 0
+}

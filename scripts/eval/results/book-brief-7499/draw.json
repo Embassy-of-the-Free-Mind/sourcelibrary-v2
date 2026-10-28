@@ -1,0 +1,669 @@
+{
+ "seed": 7499,
+ "at": "2026-10-27T11:12:03.547Z",
+ "books": [
+  {
+   "stratum": "latin",
+   "track": "T1",
+   "lang": "Latin",
+   "book": {
+    "id": "69b4cce5d5b6c3815e1a2931",
+    "title": "Enchiridion militis christiani",
+    "display_title": "Desiderius Erasmus: Enchiridion militis christiani (1515)",
+    "author": "Desiderius Erasmus",
+    "year": 1515,
+    "language": "Latin"
+   },
+   "ref_page": 94,
+   "run": [
+    64,
+    124
+   ],
+   "window": [
+    89,
+    100
+   ],
+   "page_ids": [
+    "69b4cce5d5b6c3815e1a298a",
+    "69b4cce5d5b6c3815e1a298b",
+    "69b4cce5d5b6c3815e1a298c",
+    "69b4cce5d5b6c3815e1a298d",
+    "69b4cce5d5b6c3815e1a298e",
+    "69b4cce5d5b6c3815e1a298f",
+    "69b4cce5d5b6c3815e1a2990",
+    "69b4cce5d5b6c3815e1a2991",
+    "69b4cce5d5b6c3815e1a2992",
+    "69b4cce5d5b6c3815e1a2993",
+    "69b4cce5d5b6c3815e1a2994",
+    "69b4cce5d5b6c3815e1a2995"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "A Book called in Latin Enchiridion militis christiani and in English The Manual of the Christian Knight",
+    "translator": "anonymous (attrib. William Tyndale), Methuen 1905 modernised-spelling reprint",
+    "year": 1533,
+    "licence": "Public domain (pre-1929; archive.org scan of 1905 reprint)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Chapter XV (the sixth rule), 1905 ed. pp. 213-215",
+    "url": "https://archive.org/download/bookcalledinlati00erasuoft/bookcalledinlati00erasuoft_djvu.txt",
+    "source_edition_used_by_translator": "a post-1518 Latin edition (with the Volz preface); text of this passage matches our 1515 edition",
+    "coverage_note": "~97%: all running text rendered; translator glosses ('that is to say, thou shalt make him to love fervently') and doubles words ('malice and froward audacity'). The 1905 reprint modernises spelling. Marginal notes (Inimici diligendi; Luce 6; Paulus legum consultus; Ro. 12; Deutro. 32; Iniuriarum pati quam facere...; Christianismi decretum) not included - the 1905 margins are partly illegible in the OCR."
+   }
+  },
+  {
+   "stratum": "latin",
+   "track": "T1",
+   "lang": "Latin",
+   "book": {
+    "id": "6953e50577f38f6761bef758",
+    "title": "Novum Organum Scientiarum (1762)",
+    "display_title": "The New Organon (Novum Organum)",
+    "author": "Francis Bacon",
+    "year": 1762,
+    "language": "Latin"
+   },
+   "ref_page": 274,
+   "run": [
+    244,
+    304
+   ],
+   "window": [
+    271,
+    282
+   ],
+   "page_ids": [
+    "6953e50577f38f6761bef867",
+    "6953e50577f38f6761bef868",
+    "6953e50577f38f6761bef869",
+    "6953e50577f38f6761bef86a",
+    "6953e50577f38f6761bef86b",
+    "6953e50577f38f6761bef86c",
+    "6953e50577f38f6761bef86d",
+    "6953e50577f38f6761bef86e",
+    "6953e50577f38f6761bef86f",
+    "6953e50577f38f6761bef870",
+    "6953e50577f38f6761bef871",
+    "6953e50577f38f6761bef872"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "Novum Organum (Translation of the Novum Organum), in The Works of Francis Bacon",
+    "translator": "James Spedding, Robert Leslie Ellis and Douglas Denon Heath",
+    "year": 1858,
+    "licence": "Public domain (Boston reprint 1860-64 of the London 1858 edition; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Novum Organum Book II, Aphorism 36 (Instances of the Fingerpost), on gunpowder and the transitory nature of flame (Boston ed. vol. VIII pp. 266-267)",
+    "url": "https://archive.org/download/worksoffrancisba08bacouoft/worksoffrancisba08bacouoft_djvu.txt",
+    "source_edition_used_by_translator": "London 1620 first edition; our book is a 1762 reprint - text identical in this passage",
+    "coverage_note": "~98%. Page opens mid-word ('flam-mam fugiunt'): the subject 'those bodies which' is on the previous page. Page ends mid-word at 'sed a con-[trariis]': English cut after 'remain with us,' because Spedding restructures 'sed a contrariis ... violentiam patiatur' as 'suffers violence and is destroyed by the contrary natures' (given as [context]); the words 'but by con-' on this page therefore fall in the context line."
+   }
+  },
+  {
+   "stratum": "latin",
+   "track": "T1",
+   "lang": "Latin",
+   "book": {
+    "id": "69dbc9491040d1d5e20a1afd",
+    "title": "De officiis. Add: Paradoxa Stoicorum. Hexasticha XII Sapientum de titulo Ciceronis. Horatius Flaccus: Ad T. Manlium Torquatum (Carm. IV 7)",
+    "author": "Cicero, Marcus Tullius",
+    "year": 1465,
+    "language": "Latin"
+   },
+   "ref_page": 87,
+   "run": [
+    57,
+    117
+   ],
+   "window": [
+    81,
+    92
+   ],
+   "page_ids": [
+    "69dbc9491040d1d5e20a1b4e",
+    "69dbc9491040d1d5e20a1b4f",
+    "69dbc9491040d1d5e20a1b50",
+    "69dbc9491040d1d5e20a1b51",
+    "69dbc9491040d1d5e20a1b52",
+    "69dbc9491040d1d5e20a1b53",
+    "69dbc9491040d1d5e20a1b54",
+    "69dbc9491040d1d5e20a1b55",
+    "69dbc9491040d1d5e20a1b56",
+    "69dbc9491040d1d5e20a1b57",
+    "69dbc9491040d1d5e20a1b58",
+    "69dbc9491040d1d5e20a1b59"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "Cicero, De Officiis (Loeb Classical Library)",
+    "translator": "Walter Miller",
+    "year": 1913,
+    "licence": "Public domain (LacusCurtius transcription of the 1913 Loeb)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, §§27 (end)–30 (start): from 'actually embraced whole provinces' to 'But we do not all feel this need to the same extent'",
+    "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Cicero/de_Officiis/2A*.html",
+    "source_edition_used_by_translator": "Miller's Loeb Latin text (1913)",
+    "coverage_note": "~95% covered. The rubric 'De caritate adipiscenda' (added in the 1465 print) has no counterpart in Miller. The page ends with 'Sed ea non pariter' (sentence completed on the next page: 'omnes egemus'); the cut ends at Miller's rendering of that clause. Miller's section numbers and page markers removed."
+   }
+  },
+  {
+   "stratum": "vernacular",
+   "track": "T3",
+   "lang": "Spanish",
+   "book": {
+    "id": "69ea0f5913a685002bb8deaf",
+    "title": "Naufragios",
+    "display_title": null,
+    "author": "Álvar Núñez Cabeza de Vaca",
+    "year": 1542,
+    "language": "Spanish"
+   },
+   "ref_page": 30,
+   "run": [
+    1,
+    38
+   ],
+   "window": [
+    22,
+    33
+   ],
+   "page_ids": [
+    "69ea0f5913a685002bb8dec5",
+    "69ea0f5913a685002bb8dec6",
+    "69ea0f5913a685002bb8dec7",
+    "69ea0f5913a685002bb8dec8",
+    "69ea0f5913a685002bb8dec9",
+    "69ea0f5913a685002bb8deca",
+    "69ea0f5913a685002bb8decb",
+    "69ea0f5913a685002bb8decc",
+    "69ea0f5913a685002bb8decd",
+    "69ea0f5913a685002bb8dece",
+    "69ea0f5913a685002bb8decf",
+    "69ea0f5913a685002bb8ded0"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "The Narrative of Alvar Nuñez Cabeça de Vaca (in Spanish Explorers in the Southern United States, 1528-1543, ed. F. W. Hodge, 1907)",
+    "translator": "Buckingham Smith",
+    "year": 1871,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "La relacion y comentarios (Valladolid 1555) — the text family of this scan ('frisoles y calabazas', not 1542 'melones')",
+    "located": "Chapter 30, from 'The sick having recovered...' to 'Thus they boil their food.' + Chapter 31 heading (Gutenberg #42841)",
+    "url": "https://www.gutenberg.org/cache/epub/42841/pg42841.txt",
+    "ref_file": "refs/cabeza-de-vaca-smith-1871-spanish-explorers-1907.txt",
+    "coverage_note": "Page = second half of ch. 30 from its paragraph start, plus the ch. 31 heading; reference covers the same span in order. Hodge's footnotes and markers stripped. Smith adds 'after talking with the Indians, Castillo returned at the end of three days' where the scan's OCR line is garbled ('Aquí llegaron Castillo y Estebanico adonde nos había dejado'); Smith's 'otherwise in a journey of seventeen days' differs in logic from the Spanish ('en diez y siete jornadas no hallaríamos...'); 'mayor viveza y habilidad' -> 'greatest activity and strength'."
+   }
+  },
+  {
+   "stratum": "vernacular",
+   "track": "T3",
+   "lang": "German",
+   "book": {
+    "id": "69c814536c6f3cc53c848191",
+    "title": "[Theologia deutsch] Ein Deutsch Teologia",
+    "display_title": "[Theologia deutsch] Ein Deutsch Teologia",
+    "author": "anonymous",
+    "year": 1523,
+    "language": "German"
+   },
+   "ref_page": 54,
+   "run": [
+    24,
+    84
+   ],
+   "window": [
+    54,
+    65
+   ],
+   "page_ids": [
+    "69d387230e754b1aa44f3583",
+    "69d387230e754b1aa44f3584",
+    "69d387230e754b1aa44f3585",
+    "69d387230e754b1aa44f3586",
+    "69d387230e754b1aa44f3587",
+    "69d387230e754b1aa44f3588",
+    "69d387230e754b1aa44f3589",
+    "69d387230e754b1aa44f358a",
+    "69d387230e754b1aa44f358b",
+    "69d387230e754b1aa44f358c",
+    "69d387230e754b1aa44f358d",
+    "69d387230e754b1aa44f358e"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "Theologia Germanica (Golden Treasury reprint of the 1854 translation)",
+    "translator": "Susanna Winkworth",
+    "year": 1854,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Franz Pfeiffer's edition (1851) of the Würzburg 1497 manuscript text; our book is the Luther-line Basel 1523 print, whose chapter XXXI = Winkworth's ch. XXXIII",
+    "located": "End of ch. XXXII and start of ch. XXXIII, pp. 116-119 of the 1893 reprint, from 'So it is good and just and right to deem' to 'for I am and have nothing else'",
+    "url": "https://archive.org/download/theologiagermani00winkuoft/theologiagermani00winkuoft_djvu.txt",
+    "ref_file": "refs/winkworth-theologia-germanica-1893.txt",
+    "coverage_note": "Page starts mid-sentence ('[were icht] bessers dann gott, das müst geliebt werden vor gott'), so the whole English sentence is included. The page ends mid-sentence at 'gleich als gott auß der menscheit [sprech]'; the whole English sentence, i.e. God's quoted speech (on the next page in the German), is included to its end. The source's stray 'Vñ Got liebt sich' at the end of the first line (likely a printed running gloss/catchphrase) has no separate English. Winkworth adds a chapter title ('How when a Man is made truly Godlike...') that the 1523 print gives only as a margin summary ('Natur und eygenschafft der rechten liebe, die sich erstrecket allein und fürnemlich zu unsern feynden'); the two margin glosses are not otherwise rendered. Winkworth's 'and rejoice in their welfare', 'Thou desirest and rejoicest in My affliction' are small expansions of the German."
+   }
+  },
+  {
+   "stratum": "greek",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book": {
+    "id": "699376d2b0a84a5763961a97",
+    "title": "Platonis Opera (Republic, Timaeus, Critias)",
+    "display_title": "Works of Plato (Republic, Timaeus, Critias)",
+    "author": "Plato",
+    "year": 1902,
+    "language": "Greek"
+   },
+   "ref_page": 367,
+   "run": [
+    337,
+    397
+   ],
+   "window": [
+    364,
+    375
+   ],
+   "page_ids": [
+    "699376d2b0a84a5763961c03",
+    "699376d2b0a84a5763961c04",
+    "699376d2b0a84a5763961c05",
+    "699376d2b0a84a5763961c06",
+    "699376d2b0a84a5763961c07",
+    "699376d2b0a84a5763961c08",
+    "699376d2b0a84a5763961c09",
+    "699376d2b0a84a5763961c0a",
+    "699376d2b0a84a5763961c0b",
+    "699376d2b0a84a5763961c0c",
+    "699376d2b0a84a5763961c0d",
+    "699376d2b0a84a5763961c0e"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "The Republic",
+    "translator": "Benjamin Jowett",
+    "year": 1892,
+    "licence": "public domain (US & worldwide; translator d. 1893)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Republic IX 571c9–572b5 (Burnet)"
+   }
+  },
+  {
+   "stratum": "greek",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book": {
+    "id": "6952e4b477f38f6761bc7d4c",
+    "title": "Septuaginta (Greek Old Testament)",
+    "display_title": "Vetus Testamentum Graecum: Septuagint with Latin Translation",
+    "author": "Septuagint",
+    "year": 1855,
+    "language": "Greek"
+   },
+   "ref_page": 296,
+   "run": [
+    266,
+    326
+   ],
+   "window": [
+    285,
+    296
+   ],
+   "page_ids": [
+    "695906ee95a91542b28c020b",
+    "695906ee95a91542b28c020c",
+    "695906ee95a91542b28c020d",
+    "695906ee95a91542b28c020e",
+    "695906ee95a91542b28c020f",
+    "695906ee95a91542b28c0210",
+    "695906ee95a91542b28c0211",
+    "695906ee95a91542b28c0212",
+    "695906ee95a91542b28c0213",
+    "695906ee95a91542b28c0214",
+    "695906ee95a91542b28c0215",
+    "695906ee95a91542b28c0216"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "The Septuagint Version of the Old Testament (Deuteronomy)",
+    "translator": "L.C.L. Brenton",
+    "year": 1844,
+    "licence": "public domain (US & worldwide; translator d. 1862)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Deuteronomy 25:6-26:3 (LXX)"
+   }
+  },
+  {
+   "stratum": "semitic",
+   "track": "T4",
+   "lang": "Arabic",
+   "book": {
+    "id": "6a06cdd7c749b698e5b2c9a4",
+    "title": "الروض العاطر في نزهة الخاطر al-Rawḍ al-ʿāṭir fī nuzhat al-khāṭir: The Perfumed Garden (Arabic MS, Gafsa)",
+    "display_title": null,
+    "author": "Muhammad al-Nafzawi (محمد النفزاوي)",
+    "year": 1883,
+    "language": "Arabic"
+   },
+   "ref_page": 104,
+   "run": [
+    74,
+    134
+   ],
+   "window": [
+    103,
+    114
+   ],
+   "page_ids": [
+    "6a06cdd7c749b698e5b2ca0b",
+    "6a06cdd7c749b698e5b2ca0c",
+    "6a06cdd7c749b698e5b2ca0d",
+    "6a06cdd7c749b698e5b2ca0e",
+    "6a06cdd7c749b698e5b2ca0f",
+    "6a06cdd7c749b698e5b2ca10",
+    "6a06cdd7c749b698e5b2ca11",
+    "6a06cdd7c749b698e5b2ca12",
+    "6a06cdd7c749b698e5b2ca13",
+    "6a06cdd7c749b698e5b2ca14",
+    "6a06cdd7c749b698e5b2ca15",
+    "6a06cdd7c749b698e5b2ca16"
+   ],
+   "commentary": null,
+   "reference_meta": {
+    "title": "The Perfumed Garden of the Cheikh Nefzaoui: A Manual of Arabian Erotology (XVI. Century). Revised and corrected translation",
+    "translator": "Sir Richard F. Burton (attrib.; Kama Shastra Society), from the French version of 'Baron R***' (1876)",
+    "year": 1886,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (privately printed, Cosmopoli/Benares 1886; Burton d. 1890)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Ch. 9 'Names given to the sexual organs of women', story of Abu Nuwas' friend and Fadehat el Djemal, pp. 154–156 of the 1886 ed.",
+    "url": "https://archive.org/details/perfumedgardenof00nafz",
+    "coverage_note": "INDIRECT translation: Burton's English renders the French version, made from a different Arabic recension, not this Gafsa manuscript. Content and order diverge: the reference puts the vulva description before the kiss (the MS has the face shining like lightning 'when the stallion drew near' and the white/red 'pistachio' description at the page end); oaths differ ('son of a debauched woman' vs 'son of a whore', 'religion of my father' vs 'by the right of your mother'); the reference adds phrases absent from the page (crystal tinged with carmine, superiors and masters). The page's 'like a well' and lightning simile are not rendered. Roughly 70% of the page's content is covered.",
+    "source_edition": "French translation by 'Baron R***' (Algiers/Paris 1876, Liseux reprint), from an Arabic MS other than this one"
+   }
+  },
+  {
+   "stratum": "commentary",
+   "track": "T5",
+   "lang": "Chinese",
+   "book": {
+    "id": "69e72c75a409200ea79f4976",
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+    "display_title": null,
+    "author": "莊周 (Zhuangzi)",
+    "year": 1699,
+    "language": "Chinese"
+   },
+   "ref_page": 100,
+   "run": [
+    70,
+    127
+   ],
+   "window": [
+    95,
+    106
+   ],
+   "page_ids": [
+    "69e72c75a409200ea79f49d5",
+    "69e72c75a409200ea79f49d6",
+    "69e72c75a409200ea79f49d7",
+    "69e72c75a409200ea79f49d8",
+    "69e72c75a409200ea79f49d9",
+    "69e72c75a409200ea79f49da",
+    "69e72c75a409200ea79f49db",
+    "69e72c75a409200ea79f49dc",
+    "69e72c75a409200ea79f49dd",
+    "69e72c75a409200ea79f49de",
+    "69e72c75a409200ea79f49df",
+    "69e72c75a409200ea79f49e0"
+   ],
+   "commentary": {
+    "title": true,
+    "ocr_marked_pages": 0
+   },
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XXXII (列御寇) par. 10, from 「（醉之以）酒而觀其則」 (the drunkenness test) to the end of par. 10 (九徵至不肖人得矣); par. 11 正考父… through 「凶德有五中德（為首）」 ('This evil quality has five forms, and the chief of them is that which is the central')",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "Reference covers the whole root text on the page. Context added: the beginning of par. 10 (Confucius on the nine tests; on the previous page) and the next sentence after the page break ('What do we mean by the central quality?...'). The page ends at 中德 mid-sentence. Marginal glosses (旁注) have no reference. Legge's translator's footnotes and markers dropped; diacritics in 'Hsü (Yû)' and 'Yâo' restored from garbled OCR ('Hsli (Yii)').",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   }
+  },
+  {
+   "stratum": "commentary",
+   "track": "T5",
+   "lang": "Chinese",
+   "book": {
+    "id": "6a3c6191879008ba7e15f0b2",
+    "title": "大乘起信論義記(二) (vol 2)",
+    "display_title": null,
+    "author": "馬鳴菩薩",
+    "year": "Unknown",
+    "language": "Chinese"
+   },
+   "ref_page": 70,
+   "run": [
+    40,
+    100
+   ],
+   "window": [
+    65,
+    76
+   ],
+   "page_ids": [
+    "6a3c6191879008ba7e15f0f3",
+    "6a3c6191879008ba7e15f0f4",
+    "6a3c6191879008ba7e15f0f5",
+    "6a3c6191879008ba7e15f0f6",
+    "6a3c6191879008ba7e15f0f7",
+    "6a3c6191879008ba7e15f0f8",
+    "6a3c6191879008ba7e15f0f9",
+    "6a3c6191879008ba7e15f0fa",
+    "6a3c6191879008ba7e15f0fb",
+    "6a3c6191879008ba7e15f0fc",
+    "6a3c6191879008ba7e15f0fd",
+    "6a3c6191879008ba7e15f0fe"
+   ],
+   "commentary": {
+    "title": true,
+    "ocr_marked_pages": 0
+   },
+   "reference_meta": {
+    "title": "大乘起信論義記(二) (vol 2)",
+    "translator": "Timothy Richard (with Yang Wen Hwui)",
+    "year": 1907,
+    "licence": "public domain (published 1907)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Awakening of Faith, the six coarse aspects (六麤): aspect 2 相續相 (whole) and the beginning of aspect 3 執取相",
+    "url": "https://archive.org/download/cu31924022892198/cu31924022892198_djvu.txt",
+    "coverage_note": "Wording 依於智故生其苦樂覺心起念相應不斷故 matches Paramartha's T1666, which Richard translated. Richard's rendering is free: aspect 1 'Consciousness' (context, not on page), aspect 2 'Emotion' (= 相續相, on page), aspect 3 'Attention' (= 執取相, beginning on page). Two OCR misreadings in the archive.org text were corrected: '(6.)' -> '(b.)' and the comma before 'These' -> full stop. Fazang's commentary (most of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   }
+  }
+ ],
+ "audit": [
+  {
+   "stratum": "latin",
+   "book_id": "69b4cce5d5b6c3815e1a2931",
+   "page": 94,
+   "lang": "Latin",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "latin",
+   "book_id": "6953e50577f38f6761bef758",
+   "page": 274,
+   "lang": "Latin",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "latin",
+   "book_id": "694bf8d2343422769f237558",
+   "page": 277,
+   "lang": "Latin",
+   "why": "run-11"
+  },
+  {
+   "stratum": "latin",
+   "book_id": "69dbc9491040d1d5e20a1afd",
+   "page": 87,
+   "lang": "Latin",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "vernacular",
+   "book_id": "698fb77b6b95eeda7d2d1eaf",
+   "page": 187,
+   "lang": "German",
+   "why": "run-10"
+  },
+  {
+   "stratum": "vernacular",
+   "book_id": "69ade6cc2fcf4ffa86cec233",
+   "page": 93,
+   "lang": "German",
+   "why": "run-4"
+  },
+  {
+   "stratum": "vernacular",
+   "book_id": "69ea0f5913a685002bb8deaf",
+   "page": 30,
+   "lang": "Spanish",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "vernacular",
+   "book_id": "69c814536c6f3cc53c848191",
+   "page": 54,
+   "lang": "German",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "greek",
+   "book_id": "699376d2b0a84a5763961a97",
+   "page": 367,
+   "lang": "Ancient Greek",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "greek",
+   "book_id": "6952e4b477f38f6761bc7d4c",
+   "page": 296,
+   "lang": "Ancient Greek",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "semitic",
+   "book_id": "6a06cdd7c749b698e5b2c9a4",
+   "page": 104,
+   "lang": "Arabic",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e8b2962ff2a8dc09e780a7",
+   "page": 722,
+   "lang": "Sanskrit",
+   "why": "not-live"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e72c8ca409200ea79f4dd6",
+   "page": 556,
+   "lang": "Sanskrit",
+   "why": "no-commentary (ocr-marked 0/12)"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "6a3c61b3879008ba7e15fc71",
+   "page": 112,
+   "lang": "Chinese",
+   "why": "run-3"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69d91e423a50087f7bd9afc5",
+   "page": 214,
+   "lang": "Sanskrit",
+   "why": "not-live"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "6a3c5f3b879008ba7e153836",
+   "page": 13,
+   "lang": "Chinese",
+   "why": "run-13"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e7494885f786e884a4e57a",
+   "page": 24,
+   "lang": "Chinese",
+   "why": "no-commentary (ocr-marked 0/12)"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e8b27f2ff2a8dc09e77ed7",
+   "page": 48,
+   "lang": "Sanskrit",
+   "why": "no-commentary (ocr-marked 0/12)"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e7491f85f786e884a4dc2f",
+   "page": 182,
+   "lang": "Sanskrit",
+   "why": "not-live"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "69e72c75a409200ea79f4976",
+   "page": 100,
+   "lang": "Chinese",
+   "why": "PICKED"
+  },
+  {
+   "stratum": "commentary",
+   "book_id": "6a3c6191879008ba7e15f0b2",
+   "page": 70,
+   "lang": "Chinese",
+   "why": "PICKED"
+  }
+ ]
+}

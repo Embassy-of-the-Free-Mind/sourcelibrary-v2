@@ -161,3 +161,14 @@ export function checkWrittenText(text, { kind, source, lang, type, finishReason,
 
 /** The skip reason a writer records for a refused text: `write-guard:truncated:<first reason>`. */
 export const writeGuardReason = (v) => `write-guard:${v.verdict}${v.reasons?.[0] ? `:${v.reasons[0].replace(/[:(].*$/, '')}` : ''}`;
+
+// A restarted or doubled correction carries a header tag twice. Counted per tag (#7558): a headed draft (one with
+// <page-type>) may gain the <scan-quality> line the template asks for, up to one of each tag; an unheaded draft (a
+// Tibetan one) may gain none, as before (#7269). Before #7558 the two tags were summed, which refused every correction
+// of a Flash-Lite draft written without <scan-quality> (24/24 in the first lane pilot).
+// Used by scripts/batch/cli-ocr.mjs apply, correct mode.
+export function correctionHeaderProblem(draft, text) {
+  const n = (t, tag) => (String(t).match(new RegExp(`<${tag}>`, 'g')) || []).length;
+  const headed = n(draft, 'page-type') > 0;
+  return ['page-type', 'scan-quality'].some((tag) => n(text, tag) > (headed ? Math.max(1, n(draft, tag)) : n(draft, tag)));
+}

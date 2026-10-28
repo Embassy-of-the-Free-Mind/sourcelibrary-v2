@@ -1,0 +1,609 @@
+{
+ "issue": 7546,
+ "built": "2026-10-27",
+ "method": "chapter starts read from the Internet Archive OCR (hocr_searchtext + pageindex) of each reference scan; leaves are IA leaf numbers = our page_number (1-based); juan-level only — page-level alignment (xlref ALIGN-PROMPT, #5695 T2) waits on the Paddle OCR of the Chinese side",
+ "not_held": [
+  {
+   "reference": "Chavannes, Mémoires historiques t. VI (1969, posthumous, ch. 48-52)",
+   "why": "1969 edition (IA SimaQianChavannesMemoiresHistoriquesV6, from Gallica): not US-PD; skipped"
+  },
+  {
+   "reference": "de Harlez, Koue-yü part 1 (Journal asiatique 1893) and the 1895 Louvain offprint",
+   "why": "not found on IA; Gallica holds Journal asiatique, next wave"
+  },
+  {
+   "reference": "Pfizmaier, other Shiji/Hanshu/Hou Hanshu chapters in SB Wien (1858-1887)",
+   "why": "offprints not on IA under his name; the Sitzungsberichte volumes are on IA (SitzungsberichteOsterreichischeAkademiePHC*) — need a bibliography to locate the articles; next wave"
+  },
+  {
+   "reference": "Dubs, History of the Former Han Dynasty (1938, 1944, 1955)",
+   "why": "IA copies are lending-library scans; renewal not verified; not clearly PD → skipped"
+  },
+  {
+   "reference": "Watson (1961/1993), Nienhauser (1994-), de Crespigny",
+   "why": "in copyright — references we cannot hold"
+  }
+ ],
+ "rows": [
+  {
+   "work": "史記 Shiji",
+   "juan": 1,
+   "reference_book_id": "6ae0bc293e1c527ae27dd21e",
+   "ia": "lesmmoireshisto05chgoog",
+   "leaves": [
+    289,
+    360
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. I (1895)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 2,
+   "reference_book_id": "6ae0bc293e1c527ae27dd21e",
+   "ia": "lesmmoireshisto05chgoog",
+   "leaves": [
+    361,
+    436
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. I (1895)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 3,
+   "reference_book_id": "6ae0bc293e1c527ae27dd21e",
+   "ia": "lesmmoireshisto05chgoog",
+   "leaves": [
+    437,
+    472
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. I (1895)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 4,
+   "reference_book_id": "6ae0bc293e1c527ae27dd21e",
+   "ia": "lesmmoireshisto05chgoog",
+   "leaves": [
+    473,
+    586
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. I (1895)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 5,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    17,
+    115
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 6,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    116,
+    262
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 7,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    263,
+    339
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 8,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    340,
+    421
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 9,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    422,
+    458
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 10,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    459,
+    511
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 11,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    512,
+    526
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 12,
+   "reference_book_id": "6ae0bc313e1c527ae27dd499",
+   "ia": "lesmmoireshisto01chgoog",
+   "leaves": [
+    527,
+    576
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. II (1897)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 13,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 14,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 15,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 16,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 17,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 18,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 19,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 20,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 21,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 22,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 23,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 24,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 25,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 26,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 27,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 28,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 29,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 30,
+   "reference_book_id": "6a09f78bec7a5a72f8daad08",
+   "ia": "lesmmoireshisto00chgoog",
+   "leaves": null,
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. III (1898-99), already held visible",
+   "note": "chapter leaf ranges not yet mapped"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 31,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    13,
+    45
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 32,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    46,
+    99
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 33,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    100,
+    144
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 34,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    145,
+    163
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 35,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    164,
+    180
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 36,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    181,
+    200
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 37,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    201,
+    225
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 38,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    226,
+    260
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 39,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    261,
+    348
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 40,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    349,
+    429
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 41,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    430,
+    460
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 42,
+   "reference_book_id": "6ae0bc373e1c527ae27dd71e",
+   "ia": "lesmmoireshisto02chgoog",
+   "leaves": [
+    461,
+    496
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. IV (1901)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 43,
+   "reference_book_id": "6ae0bc3c3e1c527ae27dd963",
+   "ia": "lesmmoireshisto06chgoog",
+   "leaves": [
+    19,
+    143
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. V (1905)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 44,
+   "reference_book_id": "6ae0bc3c3e1c527ae27dd963",
+   "ia": "lesmmoireshisto06chgoog",
+   "leaves": [
+    144,
+    208
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. V (1905)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 45,
+   "reference_book_id": "6ae0bc3c3e1c527ae27dd963",
+   "ia": "lesmmoireshisto06chgoog",
+   "leaves": [
+    209,
+    235
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. V (1905)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 46,
+   "reference_book_id": "6ae0bc3c3e1c527ae27dd963",
+   "ia": "lesmmoireshisto06chgoog",
+   "leaves": [
+    236,
+    294
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. V (1905)"
+  },
+  {
+   "work": "史記 Shiji",
+   "juan": 47,
+   "reference_book_id": "6ae0bc3c3e1c527ae27dd963",
+   "ia": "lesmmoireshisto06chgoog",
+   "leaves": [
+    295,
+    501
+   ],
+   "language": "French",
+   "reference": "Chavannes, Les Mémoires historiques de Se-ma Ts'ien, t. V (1905)",
+   "note": "ch. 47 end leaf approximate (appendices follow before the index at 502)"
+  },
+  {
+   "work": "後漢書 Hou Hanshu",
+   "juan": 88,
+   "reference_book_id": "6ae0bc443e1c527ae27ddb96",
+   "ia": "tungpao00unkngoog",
+   "leaves": [
+    162,
+    246
+   ],
+   "language": "French",
+   "reference": "Chavannes, \"Les pays d'Occident d'après le Heou Han chou\", T'oung pao 2e sér. 8 (1907), pp. 149-234"
+  },
+  {
+   "work": "後漢書 Hou Hanshu",
+   "juan": 11,
+   "reference_book_id": "6ae0bc918f9318d08df932e2",
+   "ia": "bub_gb_wAlXAAAAcAAJ",
+   "leaves": [
+    1,
+    70
+   ],
+   "language": "German",
+   "reference": "Pfizmaier, Zur Geschichte des Zwischenreiches von Han, SB Wien phil.-hist. Cl. 61 (1869)",
+   "note": "biographies of Liu Xuan, Liu Penzi, Wang Chang, Liu Yong, Li Xian, Zhang Bu, Peng Chong, Lu Fang; partial"
+  },
+  {
+   "work": "後漢書 Hou Hanshu",
+   "juan": 12,
+   "reference_book_id": "6ae0bc918f9318d08df932e2",
+   "ia": "bub_gb_wAlXAAAAcAAJ",
+   "leaves": [
+    1,
+    70
+   ],
+   "language": "German",
+   "reference": "Pfizmaier, Zur Geschichte des Zwischenreiches von Han, SB Wien phil.-hist. Cl. 61 (1869)",
+   "note": "biographies of Liu Xuan, Liu Penzi, Wang Chang, Liu Yong, Li Xian, Zhang Bu, Peng Chong, Lu Fang; partial"
+  },
+  {
+   "work": "國語 Guoyu",
+   "juan": "周語 (continued; de Harlez part 2)",
+   "reference_book_id": "6ae0bc8d8f9318d08df93082",
+   "ia": "journalasiatiqu65fragoog",
+   "leaves": [
+    12,
+    96
+   ],
+   "language": "French",
+   "reference": "de Harlez, \"Koue-yü (Discours des royaumes)\" (suite), Journal asiatique 9e sér. 3 (Jan-Feb 1894)",
+   "note": "Guoyu itself is not imported in this wave"
+  }
+ ]
+}

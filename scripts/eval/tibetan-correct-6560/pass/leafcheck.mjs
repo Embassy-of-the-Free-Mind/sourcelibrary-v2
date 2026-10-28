@@ -14,7 +14,8 @@
  *   yatags-verdicts --key=K.json --replies=O.jsonl --out=V.jsonl [--append]
  *       V rows {page_id, hits, keep, checked_by, answers}: a change is KEPT only where the judge saw the correction's
  *       syllable. V is cli-ocr.mjs apply --yatags-verdicts input.
- *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json [--changed=IDS.json]
+ *   audit-req      --dir=READ_DIR --verdicts=V.jsonl --n=40 --seed=6560 --req=R.jsonl --key=K.json [--changed=IDS.json] [--drafts=D.jsonl]
+ *                  [--pages=IDS.json --spans=S.jsonl]   (#6740 diff-QA: these pages, only their RISKY spans)
  *       Samples n pages that apply would write with a change, rebuilds the text apply would write (guard reverts
  *       applied), and asks a FRESH judge, per changed span, which of draft / written the leaf shows (A/B random).
  *   page-req       --key=K.json --dir=READ_DIR --req=R.jsonl
@@ -147,9 +148,15 @@ if (CMD === 'yatags-req') {
   const DIR = arg('dir'), N = Number(arg('n') || 40), seed = arg('seed') || '6560';
   const verdicts = new Map(readJsonl(arg('verdicts')).map((v) => [v.page_id, v]));
   const metas = fs.readdirSync(DIR).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'))).filter((m) => m.mode === 'correct' && m.exit === 0 && !m.wrapper);
-  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
-  const pages = new Map((await c.db('bookstore').collection('pages').find({ id: { $in: metas.map((m) => m.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
-  await c.close();
+  // --drafts=F (JSONL {key, text}): the drafts as they were before a write, for an audit run after the apply
+  // (#6740 rolling audit: the stored OCR is then the correction itself).
+  let pages;
+  if (arg('drafts')) pages = new Map(readJsonl(arg('drafts')).map((r) => [r.key, { id: r.key, ocr: { data: r.text } }]));
+  else {
+    const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+    pages = new Map((await c.db('bookstore').collection('pages').find({ id: { $in: metas.map((m) => m.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+    await c.close();
+  }
   const cands = [];
   for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     const draft = m.draft && pages.get(m.page_id)?.ocr?.data;
@@ -163,19 +170,22 @@ if (CMD === 'yatags-req') {
   }
   // --changed=F: every page apply would write with a change (the volume's re-translation list when --mark-stale is off)
   if (arg('changed')) fs.writeFileSync(arg('changed'), JSON.stringify(cands.map((x) => x.m.page_id)));
+  // --pages=F (JSON ids): judge exactly these pages, no draw. --spans=F (diffqa.mjs spans JSONL): only their RISKY hunks.
+  const onlyPages = arg('pages') ? new Set(JSON.parse(fs.readFileSync(arg('pages'), 'utf8'))) : null;
+  const risky = arg('spans') ? readJsonl(arg('spans')).filter((x) => x.cls === 'RISKY').reduce((m, x) => m.set(x.page_id, (m.get(x.page_id) || new Set()).add(x.k)), new Map()) : null;
   const rng0 = rngFor(`6560|audit|${seed}`);
-  const pick = shuffle([...cands], rng0).slice(0, N);
+  const pick = onlyPages ? cands.filter((c) => onlyPages.has(c.m.page_id) && (!risky || risky.has(c.m.page_id))) : shuffle([...cands], rng0).slice(0, N);
   const reqs = [], key = {};
   for (const { m, d, hits, kept } of pick) {
     const rng = rngFor(`6560|audit|${seed}|${m.page_id}`);
-    const items = d.hunks.map((h) => {
+    const items = d.hunks.map((h, hunk) => ({ h, hunk })).filter(({ hunk }) => !risky || risky.get(m.page_id)?.has(hunk)).map(({ h, hunk }) => {
       const j0 = h.b.length ? h.b[0] : (d.pairs.find(([i, j]) => i !== null && i > h.a[h.a.length - 1] && j !== null)?.[1] ?? d.B.length);
       const off = d.B[h.b[0]]?.start ?? d.B[j0]?.start ?? d.nextText.length;
       const prevJ = h.b.length ? h.b[0] - 1 : j0 - 1;
       const nextJ = h.b.length ? h.b[h.b.length - 1] + 1 : j0;
       // a kept ya-btags change, so the audit judge's answer can be set beside the guard judge's
       const hit = h.a.length === 1 && h.b.length === 1 ? hits.find((x) => x.j === h.b[0] && kept.includes(x.k)) : null;
-      return { kind: 'span', base: h.a.map((i) => d.A[i].syl).join('་'), arm: h.b.map((j) => d.B[j].syl).join('་'), line: lineOf(d.nextText, off),
+      return { kind: 'span', hunk, base: h.a.map((i) => d.A[i].syl).join('་'), arm: h.b.map((j) => d.B[j].syl).join('་'), line: lineOf(d.nextText, off),
         before: d.B.slice(Math.max(0, prevJ - 3), prevJ + 1).map((x) => x.syl).join('་'), after: d.B.slice(nextJ, nextJ + 4).map((x) => x.syl).join('་'),
         ...(hit && { yatags_k: hit.k }) };
     });

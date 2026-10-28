@@ -25,6 +25,8 @@
  *          read that fails the health check. Writes through writePageTranslation (translate-core: snapshot to
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
  *          sweep_log row per page and one book_events row per book, and recounts the book.
+ *          Each written page also gets a page-text-writer revision row with the run id (#7503), so the run is undone by
+ *          `scripts/maintenance/revert-run.mjs --run-id <run> [--apply]` (it restores, or removes, only English still as written).
  *          It also writes the reads of scripts/batch/claude-translate.mjs (Opus through the Claude CLI, #6559): their meta
  *          says `cli: 'claude'`, so the engine block is recorded as 'anthropic', and the exact prompt each call sent is
  *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused. A meta's
@@ -48,6 +50,7 @@
  * other jobs' quota. `apply` skips what it refuses and says why. Nothing is retried silently.
  */
 import fs from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
@@ -63,6 +66,7 @@ import { copiesPrintedEnglish } from '../lib/page-integrity.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
+import { buildTextRevision } from '../lib/page-text-writer.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -227,6 +231,11 @@ for (const m of metas) {
   if (res.protected) { skip(m, 'human-edited translation'); continue; }
   if (res.truncated) { skip(m, res.reason); continue; }
   if (res.unhealthy) { skip(m, `refused by the door: ${res.reason}`); continue; }
+  // #7503: the door snapshots only a page that HAD English, with no run id, so revert-run.mjs found nothing to undo. A
+  // page-text-writer row (the prior field, whole or absent, and the hash of what landed) makes `revert-run.mjs --run-id`
+  // work on this run; it is read back after the write, so next_hash is the stored text, not the read.
+  const landed = await db.collection('pages').findOne({ id: page.id }, { projection: { translation: 1 } });
+  await db.collection('page_revisions').insertOne(buildTextRevision({ page, field: 'translation', next: landed?.translation ?? null, opts: { by: CALL_SITE, reason: REASON, run_id: runId }, now: new Date(), id: randomBytes(6).toString('hex') }));
   await recordSweepAction(db, { sweep: 'cli-translate', book_id: page.book_id, action: 'translated-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.translation?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
   books[page.book_id].models.add(m.model);

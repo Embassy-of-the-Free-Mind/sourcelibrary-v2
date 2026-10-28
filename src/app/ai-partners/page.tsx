@@ -17,7 +17,7 @@ const POINTS = [
   { label: 'Collected', fact: '129,000 books from more than 30 libraries' },
   { label: 'Transcribed', fact: '9.4 million pages in the original language' },
   { label: 'Translated', fact: '5.7 million pages in English' },
-  { label: 'Community-reviewed', fact: 'Scholars and 1,465 volunteers' },
+  { label: 'Checked', fact: 'Language by language, with scholars' },
   { label: 'Rights cleared', fact: 'Checked book by book' },
   { label: 'Immediately available', fact: 'Through our API and MCP server' },
 ];
@@ -164,7 +164,7 @@ export default function AiPartnersPage() {
           <p className={label}>Community-reviewed</p>
           <p className={prose}>
             The most demanding material is reviewed by scholars; the Mayanist David Stuart has
-            recently examined our Yucatec Maya readings. A further 1,465 volunteers correct pages, and
+            recently examined our Yucatec Maya readings. 1,535 people have offered to help, and
             readers report what they find. Translations are tested against published human
             translations in fourteen languages, and error rates are published.
           </p>

@@ -15,7 +15,7 @@ import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
-import { readsOriginal } from '@/lib/locale-path';
+import { hasBookPageForEveryBook } from '@/lib/locale-path';
 import { languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
@@ -96,43 +96,45 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
   editedBy: 'edited by',
 };
 
+// Off English every translation label names the language: these count the ENGLISH
+// translation, and a reader of /es or /zh otherwise takes the book to be in theirs (#7496).
 export const CARD_LABELS_ES: CollectionBookCardLabels = {
-  firstTranslation: 'Primera traducción',
+  firstTranslation: 'Primera trad. al inglés',
   pages: 'páginas',
   ocr: 'OCR',
-  translated: 'Traducido',
-  complete: 'Completo',
+  translated: 'Trad. al inglés',
+  complete: 'Inglés completo',
   inEnglish: 'En inglés',
   editedBy: 'editado por',
 };
 
 // Latin (#6254). "Conversus" is the ENGLISH translation; nothing is translated into Latin.
 export const CARD_LABELS_LA: CollectionBookCardLabels = {
-  firstTranslation: 'Prima conversio',
+  firstTranslation: 'Prima conversio Anglica',
   pages: 'paginae',
   ocr: 'OCR',
-  translated: 'Conversus',
-  complete: 'Absolutus',
+  translated: 'Anglice conversus',
+  complete: 'Anglice absolutus',
   inEnglish: 'Anglice',
   editedBy: 'edidit',
 };
 
 export const CARD_LABELS_NL: CollectionBookCardLabels = {
-  firstTranslation: 'Eerste vertaling',
+  firstTranslation: 'Eerste Engelse vertaling',
   pages: 'pagina’s',
   ocr: 'OCR',
-  translated: 'Vertaald',
-  complete: 'Volledig',
+  translated: 'Engels vertaald',
+  complete: 'Engels volledig',
   inEnglish: 'Engelstalig',
   editedBy: 'bezorgd door',
 };
 
 export const CARD_LABELS_ZH: CollectionBookCardLabels = {
-  firstTranslation: '首次译出',
+  firstTranslation: '首次英译',
   pages: '页',
   ocr: 'OCR',
-  translated: '已译',
-  complete: '全译',
+  translated: '已英译',
+  complete: '英译完整',
   inEnglish: '英文原著',
   editedBy: '编者',
 };
@@ -225,11 +227,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   // with whatever the URL says, so testing the prop would let a card that was
   // rendered without `lang` on an /es page prefix every book — including ones
   // with no Spanish page at all. Both sides of the guard read the same locale.
-  // Since #7496 a locale we translate INTO (/es) has a book page for EVERY book —
-  // Spanish chrome and metadata over text labelled as English — so its cards always
-  // keep the prefix. The edition test still governs the original-text sites
-  // (/la, /nl, /zh), whose book page exists only for books written in the language.
-  const hasLocalizedTwin = !readsOriginal(urlLocale) || hasLocalizedEdition(book as unknown as Record<string, unknown>, urlLocale) === true;
+  // Since #7496 /es and /zh have a book page for EVERY book (hasBookPageForEveryBook),
+  // so their cards always keep the prefix. The edition test still governs /la and /nl,
+  // whose book page exists only for books written in the language.
+  const hasLocalizedTwin = hasBookPageForEveryBook(urlLocale) || hasLocalizedEdition(book as unknown as Record<string, unknown>, urlLocale) === true;
   const localized = (href: string) => (hasLocalizedTwin ? localePath(href) : href);
   const bookHref = localized(embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`));
   const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);

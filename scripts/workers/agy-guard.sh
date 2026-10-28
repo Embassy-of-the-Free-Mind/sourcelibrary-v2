@@ -11,7 +11,9 @@
 #     AGY_HEAVY_BOX_CAP (default 40) such calls per UTC day on this box, counted in $AGY_GUARD_DIR/<date>.log.
 #   - no --model: gemini-3.8-flash-low is added, so a bare `agy -p` can never land on a heavy default.
 # A refusal prints "quota reached" on stderr and exits 75, so agy-cli.mjs and the scripts that copy its QUOTA regex
-# stop as they would on a real lockout instead of retrying.
+# stop as they would on a real lockout instead of retrying. A refusal that is a setup mistake rather than spent quota
+# (an AGY_HOME with no login, a model that account may not run) says "refused (config)": it still stops the run
+# once, and agy-cli.mjs does not record it as the account's pool running out (#7514 review).
 #
 # Install (per box as root, or on the Mac): scripts/workers/agy-guard.sh --install. Undo: --uninstall.
 # The real CLI updates itself in place (Linux ~/.local/bin/agy, Mac /opt/homebrew/bin/agy), so the guard is a
@@ -42,6 +44,16 @@ if [ "$1" = "--uninstall" ]; then
   for rc in $RCS; do sed -i.bak "\|$MARK|d" "$rc" && rm -f "$rc.bak"; done
   [ -L /usr/local/bin/agy ] && ln -sfn "$REAL" /usr/local/bin/agy
   rm -f "$SELF_DIR/agy"; echo "agy-guard removed"; exit 0
+fi
+
+# A second Google account: AGY_HOME=<dir> runs the CLI with that HOME, so it reads the login in
+# <dir>/.gemini/antigravity-cli/antigravity-oauth-token instead of root's. Quota is per account, so the heavy-call cap
+# is counted per account too. Linux only: the Mac keeps its login in the Keychain, which HOME does not change.
+# Log an account in once with `HOME=<dir> agy` and finish the browser sign-in.
+if [ -n "$AGY_HOME" ]; then
+  [ -f "$AGY_HOME/.gemini/antigravity-cli/antigravity-oauth-token" ] || {
+    echo "agy-guard: quota reached (refused (config)): AGY_HOME=$AGY_HOME has no login (run: HOME=$AGY_HOME agy)" >&2; exit 75; }
+  export HOME="$AGY_HOME"; GUARD_DIR="$GUARD_DIR/$(basename "$AGY_HOME")"
 fi
 
 print=0; model=''; prev=''
@@ -77,6 +89,17 @@ PY
   rmdir "$DRAIN"
 fi
 n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
+
+# A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
+# Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
+if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
+  only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
+  [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
+  if [ "$model" != "$only" ]; then
+    echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
+    exit 75
+  fi
+fi
 
 if [ -z "$model" ]; then
   echo "agy-guard: no --model given; using gemini-3.8-flash-low" >&2

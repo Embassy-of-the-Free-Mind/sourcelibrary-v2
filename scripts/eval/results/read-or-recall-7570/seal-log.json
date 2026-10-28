@@ -1,0 +1,1700 @@
+[
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "6a06d7eb9a48d51399967923:281",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69b51df547b06ecd58187a4b:230",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "6aa94ea698dd95a3208039ab:255",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69b630f21c1c21a373804dee:6",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69b51e8847b06ecd5819217a:633",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69b2210656715b0e3247421f:115",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "6a085b0349638a50931caa99:682",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69dbc9871040d1d5e20a3e59:175",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69f3373f876dd827cbc51a48:483",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "69b631541c1c21a37380686e:361",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "6a0853ea49638a50931be2c3:172",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "famous",
+  "page_key": "6a26c61baad44c98627dc66c:17",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "695d0e6c3193c630d70495ca:60",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b656eb18b87551bfce4b84:85",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69dbcccb0f8c5edf20f4d8a3:307",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a4ee4175180d313013546ac:19",
+  "out": "page plate-or-illustration"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a26d58df5273a8d907b03f9:12",
+  "out": "key 568 chars < 600"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6958e897d3a89283348144a2:369",
+  "out": "page plate-or-illustration"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b419382b0edf3eaa2df003:98",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b2214d08069e96e842f4d3:549",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a50d39492297dceec77a3e5:24",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a43009c4e06bc233ecf6a69:13",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b51cfc261c58d636648230:277",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69dbcab91040d1d5e20ae521:10",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a2679e86c1f37c9c4f2c958:17",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b51e8d47b06ecd58193167:232",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b51e5f47b06ecd5818ea00:20",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a26ba5861b3857ed05af2bd:10",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69dbc8691040d1d5e2099268:205",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a905316ee2696c62356810e:7",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a9436c97e41ac276318765b:10",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a93ff7cc41cd5a5a061e37d:19",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69aea8341cbf28a363a4ebc5:164",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69dbca3a1040d1d5e20aa385:202",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a4443dfaa50a8e8f5052727:16",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69a02790da8b726682c09aae:229",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69b51e369a81ef7feb3d1aae:145",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a90ac089e7756c729a9080f:25",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a9412a3e57f7f0dad73ff03:25",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "6a26794609475e4f22458be8:6",
+  "out": "not screened"
+ },
+ {
+  "script": "latin",
+  "side": "obscure",
+  "page_key": "69dbcae31040d1d5e20afa1d:21",
+  "out": "not screened"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a50816878825bd7fde499cb:281",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69e8b22b2ff2a8dc09e76a61:671",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a50864778825bd7fde6d5b3:472",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a50846678825bd7fde68709:375",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69e3ff6bb142e5dd9d6b0167:198",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a50827a78825bd7fde5597a:204",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69b301360b3667b49b94c2f3:130",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b52bd6d6bd9f58edb24d5e:334",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69938921ce15387065946912:54",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69938e35d5a98fd66f430c9c:68",
+  "out": "share 55"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "695aa9adbe4023bd34bd6d24:22",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b2f4aaf9f1ad2b3b1550e2:202",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a3eb5625598be95b4ffda9b:228",
+  "out": "page plate-or-illustration"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "699437c36879ff0184cb7381:503",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a76d4c66ba8d6d1d3f8e65a:21",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b3015078de5de2306d4b63:95",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69e792d280b52390feb16927:303",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a08530d15c643eb1af4eab2:201",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a2199264b61907ea5ffb37b:719",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69938d895d28b693146d0231:132",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "699389190f04c37dcfa60717:123",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69ae923286f8cb4a256ee4d6:106",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69aeabd867e6731bc1366de5:63",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b2f41e0e2f024dfbfbb48f:171",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6993891974305116d72d0e41:219",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "695aa981be4023bd34bd6974:361",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69938de6d5a98fd66f42f8aa:155",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69ef2cb085daccce30f2ee22:62",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a3f02bb97e91e1768f68204:100",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69c7f259f08a1a5ab805c04e:41",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a0859db49638a50931c872c:155",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69938d9dd5a98fd66f42dc60:246",
+  "out": "share 55"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69a956dc65ddd05bbcd3d160:468",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6993891e0f04c37dcfa6084a:183",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b630611c1c21a37380114a:804",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b1df11a0e06b2a269512f9:235",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "6a0efcb391042301b33812ae:318",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b269da2a2dfd041c5e770c:390",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69de13308a46d0c97eedcb79:383",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69aead2e66bcc9447837cbe5:256",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69e7515d10ee9075bcdcd67f:275",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69c10d9a42741c656896364d:782",
+  "out": "script Latin"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "699253dc0feca3d31bc5773d:300",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b3f734a107e55a0ee1bf15:295",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "699246b7bc722ec0ee811bce:152",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b304445facc83a9a3dbf99:104",
+  "out": "share 50"
+ },
+ {
+  "script": "greek",
+  "side": "obscure",
+  "page_key": "69b4c09486a5921d5bc4495d:109",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a506a9b78825bd7fddf3afe:116",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69bd9cdd6120d54bd0371648:99",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a5064df78825bd7fdddeaed:48",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69b2679ffe529639c2e8aa88:341",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a5065ac78825bd7fdde120e:139",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69b690f3080b19f98fce197e:70",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a0856b215c643eb1af59986:157",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69b63d741c1c21a37385c00e:285",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "69e8b2192ff2a8dc09e765f5:220",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a0853f515c643eb1af5190c:137",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "side": "famous",
+  "page_key": "6a508af178825bd7fdea4cec:10",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "greek",
+  "out": "SHORT: 16 pairs"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992cbe7018b80967354c4ae:83",
+  "out": "key 120 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3ce81c0a0011cb4bc0c30a:30",
+  "out": "key 143 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a1d81725afc14a085e6c5d5:580",
+  "out": "script "
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992cffcf5b4f75c1a4c9dfb:36",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c796101fe4f593c20f2c7:71",
+  "out": "key 93 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c751539b4508b04e5addb:100",
+  "out": "key 135 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "699998884310a6713945261c:166",
+  "out": "key 142 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c61a5879008ba7e15f73d:10",
+  "out": "key call failed: exit_1_success"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c756a01fe4f593c1f5904:88",
+  "out": "key 127 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c718901fe4f593c1d8a47:56",
+  "out": "key 129 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3cc1cff9474f825c17296e:92",
+  "out": "key 145 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992c907453c7175dc1bccbb:76",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c71fa01fe4f593c1daf5d:62",
+  "out": "key 145 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c782e01fe4f593c2075ff:73",
+  "out": "script "
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3ceccb4701a906f10db3cb:118",
+  "out": "key 140 chars < 150"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "699356cb8ed86e583b7b86cc:24",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd6343713c66ea636262:71",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6a3c6c22c4e8626320db58f9:37",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ce2e3ea667fbac8286b2:14",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ca84d4d545ae73fee3cc:70",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6a3c6c43c4e8626320db6af0:56",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69e72692a409200ea79ef816:120",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd7443713c66ea636943:33",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cfd4f5b4f75c1a4c99a2:33",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6abef3343eeeaaa3202690a0:63",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cbff018b80967354ca60:60",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ca94d4d545ae73fee548:80",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd5243713c66ea635ca7:70",
+  "out": "page plate-or-illustration"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ceaf673ee1e40e3215cf:21",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69f1340cc8d07a681065316c:17",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6a3c71fa01fe4f593c1daf5e:161",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69e7289aa409200ea79f02b4:80",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69bd0aaab01b17638a097e63:424",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6a1d684e013dfd9d9e18ed06:122",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "699df0863430a1d77dc7922c:271",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cfbaf5b4f75c1a4c976b:47",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6abedf357ca0bb7fcd9e6cdd:15",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd0cff51f968cf078633:26",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6abedf20e54ec11ac8bae241:20",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cda743713c66ea637c9a:79",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd7c43713c66ea636be2:57",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6abec5219a6d02ff1a559564:56",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69af0e45be5fc7f363546782:95",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ce8a673ee1e40e320f60:23",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69f133f81764d779d0c72185:9",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69e014d947b76785d4ec82fb:465",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992f3e9c8c6ac61574e7225:93",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cf2ef5b4f75c1a4c8304:79",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cdc723b3ade43ec14fdd:28",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69af0f2566bf67abe07b3f44:22",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "69de98711b234a773e4387ef:71",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992f3e6c8c6ac61574e71e1:37",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cb50d4d545ae73feee35:73",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6a09ea8c3ca4edcd1ef0207b:109",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cf93f5b4f75c1a4c9383:20",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ca98d4d545ae73fee720:36",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cd4243713c66ea635a00:52",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cabad4d545ae73fee83d:59",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ce7d673ee1e40e320b98:57",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6abee93080b99e80d7d932a3:22",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992ce9a673ee1e40e321259:33",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "obscure",
+  "page_key": "6992cbf3018b80967354c65f:13",
+  "out": "not screened"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992caf6d4d545ae73feeb7c:122",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992cc0f018b80967354cb4c:123",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c6c32c4e8626320db5e4a:15",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992cdfb81c9d7efb84d129c:66",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6992cdf781c9d7efb84d10d9:170",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "side": "famous",
+  "page_key": "6a3c61cc879008ba7e160972:14",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "chinese",
+  "out": "SHORT: 13 pairs"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bc3e8522835be84620a8:163",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bab58522835be8459d2e:105",
+  "out": "script "
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69d5aca44dc55b8478dddf51:427",
+  "out": "key 135 chars < 300"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bad18522835be845aabc:175",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bc048522835be8461149:98",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bb5a8522835be845f27d:35",
+  "out": "script "
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "699243fabc722ec0ee80b251:21",
+  "out": "key 175 chars < 300"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bc098522835be846135b:24",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69b632cf66ab51b501d94024:522",
+  "out": "script Mandaic"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "695591d17bd6d2cd1d619a70:144",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bc6d8522835be8463468:69",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69b3e5b5304c1c6b395099fd:256",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1bb0c8522835be845c840:343",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69b3e675304c1c6b3950b1fa:343",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69520c0fab34727b1f043e63:540",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69b4cd3ad5b6c3815e1a4f1b:74",
+  "out": "key call failed: exit_1_success"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69c1baba8522835be8459dc6:490",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bc118522835be84615e9:42",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b4cd46d5b6c3815e1a53f2:15",
+  "out": "script Latin"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bac58522835be845a39c:98",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69a5e3f5006a409842216b6c:227",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb008522835be845c132:168",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bafe8522835be845c110:17",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69d5ac824dc55b8478dddb9a:147",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b418ae2b0edf3eaa2dd9aa:145",
+  "out": "script other (an unidentified cipher-like or invented script that resembles a Brahmic cursive)"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b3e612304c1c6b3950b1a3:66",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bc7d8522835be84637c4:33",
+  "out": "script Latin"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6aa3323f0583d2ccd3f1422b:19",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb218522835be845d0eb:132",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bbc48522835be846073a:26",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c79f1492b884e4f817372f:27",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b525d06be6046083032b72:59",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b525962379d2fed6c29517:87",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6988a59fa4de5da34fd130e0:40",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b30091e5d6d64d8e199898:178",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6aa4746e4ad7f6ccf09bc597:62",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb1c8522835be845cf19:133",
+  "out": "key 277 chars < 300"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b3e5b8304c1c6b39509cc0:201",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6a19b91920d27c2cd050764e:70",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bafc8522835be845bffa:200",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb058522835be845c4d0:121",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6984e84e45b45b78e8d48ab4:126",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1b7d48522835be844a136:53",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1ba878522835be84592db:23",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b525b56be6046083030af0:316",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b2f4a2f9f1ad2b3b1548b3:870",
+  "out": "script Latin"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bc268522835be84618c7:267",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b3e5c1304c1c6b3950a0a3:138",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb758522835be845ff41:30",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69b3e679304c1c6b3950b712:51",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1ba828522835be845925d:13",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb4c8522835be845e9f3:347",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bc148522835be846161f:148",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb278522835be845d3ad:19",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6988a5a0a23e0a8ef27fec91:104",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb8e8522835be84603f3:35",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bb788522835be845ff8b:12",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "699ef9f2c2bcb75dbdbaad92:62",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c736b46a0f3d112faf76b0:124",
+  "out": "key 88 chars < 300"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "695285cdab34727b1f04c25a:43",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1bc858522835be8463804:79",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "6aa35ca2b8b2420aa5934561:82",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "hebrew",
+  "side": "obscure",
+  "page_key": "69c1ba928522835be845954d:311",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69920bb1e0a548a13d884da7:305",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "6a3f030697e91e1768f68ff7:475",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69d5ac5f4dc55b8478ddd6b5:126",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "69d5ad004dc55b8478dde8b5:2625",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "hebrew",
+  "side": "famous",
+  "page_key": "6aa1d51a77169abff1622408:139",
+  "out": "no obscure partner"
+ },
+ {
+  "script": "hebrew",
+  "out": "SHORT: 12 pairs"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69de98fc1b234a773e439adb:71",
+  "out": "share 40"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "6990666f2ec9f7db5717a544:148",
+  "out": "page index-or-table"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69e7928680b52390feb1624e:121",
+  "out": "script Bengali"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69e7267ca409200ea79ef51d:391",
+  "out": "script Bengali"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69e13a3f0dae29249d20b867:362",
+  "out": "script Latin"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69dea23c4d19ec2e9ba75f5e:276",
+  "out": "share 55"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "6992d67146b85e738a0c4e59:785",
+  "out": "script Bengali"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "6a94339c7680120fac24b1d5:5",
+  "out": "script Sharada"
+ },
+ {
+  "script": "sanskrit",
+  "side": "famous",
+  "page_key": "69e3ff61b142e5dd9d6b0095:92",
+  "out": "key 156 chars < 300"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907cfca3654a711c0b6e8f:99",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c595f855ec553e74a1b:14",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a0eb379283b678bc95b9611:43",
+  "out": "script Latin"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a21992e4b61907ea5ffb6c6:108",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69e13b180dae29249d20bf24:260",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907e14b91bcb2db3f6e04e:56",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69ea3e6b300d991d0f1d337d:84",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c685f855ec553e75062:23",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a91e14e051d1f3e8eaa3df2:16",
+  "out": "etext hit for an obscure page"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69906825249ce014347d5b25:29",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907e02b91bcb2db3f6d9c8:20",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907cf15f855ec553e784b6:5",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907d8baee9f4aa58591e3e:266",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907ce15f855ec553e77c54:6",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6953e30277f38f6761beb46f:239",
+  "out": "script Latin"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907d89aee9f4aa58591e0e:12",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907e12b91bcb2db3f6e00c:21",
+  "out": "kind manuscript"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907e1bb91bcb2db3f6e47d:9",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c755f855ec553e75918:16",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907cde5f855ec553e77c38:4",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907cfe5f855ec553e78562:294",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69de99141b234a773e439d6b:162",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69d7e15ee9e5e67989c375fe:218",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69d007417d7491182a232894:270",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69906d4964d44bd0a0ef5314:17",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a0eb388283b678bc95b97a9:59",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907d91aee9f4aa585927e1:269",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69af0bfdf2e68add0cf222e4:356",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69e167d53615607a59942348:18",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c565f855ec553e7475e:14",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a94d7d1b24b5a49c27d73a3:18",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907d97aee9f4aa5859304e:20",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6a91e233bb7a47bd0f19eb84:23",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "699066532ec9f7db5717a012:38",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c455f855ec553e72c96:705",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "69907c3e5f855ec553e72637:347",
+  "out": "not screened"
+ },
+ {
+  "script": "sanskrit",
+  "side": "obscure",
+  "page_key": "6990693f2f82e0fda4805a70:31",
+  "out": "not screened"
+ }
+]

@@ -1,0 +1,26 @@
+{
+ "note": "Chinese raw rows written before the final seal (2026-10-27 ~22:05 UTC) carry a slug from a premature seal (34 of 37 Chinese lookups done). This maps those slugs to the page they were called on. Rows with a page_key field, and all non-Chinese rows, need no map.",
+ "written_before": "2026-10-27T22:20:00Z",
+ "map": {
+  "chinese-01-f": "6992cdbe43713c66ea6384a8:75",
+  "chinese-01-o": "6992cd5c43713c66ea63600f:55",
+  "chinese-02-f": "6a3c6c55c4e8626320db76e7:11",
+  "chinese-02-o": "6992cfc3f5b4f75c1a4c9830:42",
+  "chinese-03-f": "6a3c5f05879008ba7e15291d:29",
+  "chinese-03-o": "6992cdfe00f13b15f3ca3b1f:40",
+  "chinese-04-f": "6a3c783301fe4f593c2077da:41",
+  "chinese-04-o": "69af123e0092756351e44874:162",
+  "chinese-05-f": "6a3c6cd1c4e8626320dbbedb:66",
+  "chinese-05-o": "6992c9bc54b3f8b16b4afddd:65",
+  "chinese-06-f": "6a3c6cf5c4e8626320dbda81:11",
+  "chinese-06-o": "6abef33e4c777f224e1de632:40",
+  "chinese-07-f": "6a3cb88f3dce6cfad748e6c5:77",
+  "chinese-07-o": "6992cf09284cdd19fef46e29:57",
+  "chinese-08-f": "6a3c6d5801fe4f593c1ba275:97",
+  "chinese-08-o": "6a29d62cc0df82e562e4c766:405",
+  "chinese-09-f": "6a3c6c2ac4e8626320db5ac3:566",
+  "chinese-09-o": "6a1d81ba5afc14a085e6dbe2:60",
+  "chinese-10-f": "6a3c5f3b879008ba7e153836:35",
+  "chinese-10-o": "6992cd5943713c66ea635ed9:24"
+ }
+}

@@ -35,6 +35,22 @@ export function readsOriginal(lang: Locale): boolean {
 }
 
 /**
+ * Locales whose site has a book page for EVERY book (#7496): title, summary,
+ * contents and buttons in the language where we have them, the rest labelled as
+ * English, the text itself linked to the English reader. Elsewhere a book page
+ * exists only for a book with an edition in the language. Independent of
+ * readsOriginal: Chinese is both (its own books open on the original, every other
+ * book gets a Chinese page); Latin and Dutch are original-text only. A page without
+ * an edition is noindex with an English canonical, so the index still holds only
+ * real editions. Adding a language here is the whole switch, given its title
+ * glosses (scripts/batch/localize-titles-batch.mjs --lang=<iso>).
+ */
+export const EVERY_BOOK_PAGE_LOCALE_LIST: Locale[] = ['es', 'zh'];
+export function hasBookPageForEveryBook(lang: Locale): boolean {
+  return EVERY_BOOK_PAGE_LOCALE_LIST.includes(lang);
+}
+
+/**
  * The locales that own a URL prefix. English is the ROOT — `/book/x`, not
  * `/en/book/x` — because every DOI, shortlink and citation ever minted points
  * there. A new language is added here and gets its prefix for free; nothing

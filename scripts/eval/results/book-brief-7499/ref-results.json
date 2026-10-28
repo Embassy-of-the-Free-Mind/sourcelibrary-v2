@@ -1,0 +1,2413 @@
+{
+ "generated": "2026-10-27T11:44:15.124Z",
+ "packet": "/root/jobs/book-brief-7499/work/refpacket",
+ "seed_bootstrap": 5695,
+ "seed_packet": 7499,
+ "input_sha": "0b5e4f598d80c89c",
+ "n_items": 10,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "gate": {
+  "pass": false,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69c814536c6f3cc53c848191_00054",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69ea0f5913a685002bb8deaf_00030",
+      "fidelity": 5,
+      "span": "same",
+      "pass": false
+     },
+     {
+      "id": "6953e50577f38f6761bef758_00274",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e72c75a409200ea79f4976_00100",
+      "op": "add-negation",
+      "from": "was ",
+      "to": "was not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": false,
+      "located": true,
+      "pass": false
+     },
+     {
+      "id": "69b4cce5d5b6c3815e1a2931_00094",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "6a06cdd7c749b698e5b2c9a4_00104",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69dbc9491040d1d5e20a1afd_00087",
+      "arm": "B",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c6191879008ba7e15f0b2_00070",
+      "arm": "A",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "699376d2b0a84a5763961a97_00367",
+      "arm": "A",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "2/3 scored ≤ 2",
+     "planted": "2/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": false
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69c814536c6f3cc53c848191_00054",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69ea0f5913a685002bb8deaf_00030",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "6953e50577f38f6761bef758_00274",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e72c75a409200ea79f4976_00100",
+      "op": "add-negation",
+      "from": "was ",
+      "to": "was not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": false,
+      "located": true,
+      "pass": false
+     },
+     {
+      "id": "69b4cce5d5b6c3815e1a2931_00094",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "6a06cdd7c749b698e5b2c9a4_00104",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69dbc9491040d1d5e20a1afd_00087",
+      "arm": "B",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c6191879008ba7e15f0b2_00070",
+      "arm": "A",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "699376d2b0a84a5763961a97_00367",
+      "arm": "A",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "2/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": false
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": true
+ },
+ "measure": "judged against a human reference (fidelity of meaning; the reference guides meaning, not wording)",
+ "arms": {
+  "A": {
+   "pages": 10,
+   "fidelity": {
+    "mean": 4.55,
+    "ci": [
+     4.1,
+     4.9
+    ],
+    "median": 5,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.5,
+     "j2": 4.6
+    }
+   },
+   "omission": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 10
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 10
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.45,
+    "ci": [
+     0.2,
+     0.7
+    ],
+    "n": 10
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.1,
+     "ci": [
+      0,
+      0.3
+     ],
+     "n": 10
+    },
+    "unreadable_fill": {
+     "rate": 0.05,
+     "ci": [
+      0,
+      0.15
+     ],
+     "n": 10
+    },
+    "added_fact": {
+     "rate": 0.4,
+     "ci": [
+      0.1,
+      0.7
+     ],
+     "n": 10
+    },
+    "gloss": {
+     "rate": 0.4,
+     "ci": [
+      0.15,
+      0.7
+     ],
+     "n": 10
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 10
+    }
+   },
+   "span": {
+    "same": 18,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 2,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "T5": 2,
+    "mistranslation": 9,
+    "T7": 1,
+    "terminology": 1
+   },
+   "reversals": []
+  },
+  "B": {
+   "pages": 10,
+   "fidelity": {
+    "mean": 4.45,
+    "ci": [
+     4.05,
+     4.8
+    ],
+    "median": 4.5,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.4,
+     "j2": 4.5
+    }
+   },
+   "omission": {
+    "rate": 0.05,
+    "ci": [
+     0,
+     0.15
+    ],
+    "n": 10
+   },
+   "reversal": {
+    "rate": 0.1,
+    "ci": [
+     0,
+     0.3
+    ],
+    "n": 10
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.3,
+    "ci": [
+     0.1,
+     0.5
+    ],
+    "n": 10
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.1,
+     "ci": [
+      0,
+      0.25
+     ],
+     "n": 10
+    },
+    "unreadable_fill": {
+     "rate": 0.05,
+     "ci": [
+      0,
+      0.15
+     ],
+     "n": 10
+    },
+    "added_fact": {
+     "rate": 0.3,
+     "ci": [
+      0,
+      0.6
+     ],
+     "n": 10
+    },
+    "gloss": {
+     "rate": 0.15,
+     "ci": [
+      0,
+      0.35
+     ],
+     "n": 10
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 10
+    }
+   },
+   "span": {
+    "same": 18,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 2,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "T9": 1,
+    "T5": 1,
+    "mistranslation": 7,
+    "T7": 1,
+    "terminology": 2,
+    "T8": 2,
+    "T2": 1
+   },
+   "reversals": [
+    {
+     "id": "699376d2b0a84a5763961a97_00367",
+     "judge": "j1",
+     "candidate": "It shrinks neither from any murder nor from abstaining from any food",
+     "source_or_reference": "βρώματός τε ἀπέχεσθαι μηδενός"
+    },
+    {
+     "id": "699376d2b0a84a5763961a97_00367",
+     "judge": "j2",
+     "candidate": "It shrinks neither from any murder nor from abstaining from any food",
+     "source_or_reference": "βρώματός τε ἀπέχεσθαι μηδενός"
+    }
+   ]
+  },
+  "A2": {
+   "pages": 3,
+   "fidelity": {
+    "mean": 4.333,
+    "ci": [
+     4,
+     5
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.333,
+     "j2": 4.333
+    }
+   },
+   "omission": {
+    "rate": 0.167,
+    "ci": [
+     0,
+     0.5
+    ],
+    "n": 3
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 3
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.5,
+    "ci": [
+     0,
+     1
+    ],
+    "n": 3
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.167,
+     "ci": [
+      0,
+      0.5
+     ],
+     "n": 3
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 3
+    },
+    "added_fact": {
+     "rate": 0.667,
+     "ci": [
+      0,
+      1
+     ],
+     "n": 3
+    },
+    "gloss": {
+     "rate": 0.333,
+     "ci": [
+      0,
+      0.5
+     ],
+     "n": 3
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 3
+    }
+   },
+   "span": {
+    "same": 6,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "name": 2,
+    "T6": 1,
+    "mistranslation": 4
+   },
+   "reversals": []
+  }
+ },
+ "strata": {
+  "canonical:non-canonical": {
+   "A": {
+    "pages": 4,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.25,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.375
+   },
+   "B": {
+    "pages": 4,
+    "fidelity_mean": 4.625,
+    "fidelity_ci": [
+     4.25,
+     5
+    ],
+    "omission": 0.125,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.25
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "style:literal": {
+   "A": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     3.75,
+     4.917
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 6,
+    "fidelity_mean": 4.667,
+    "fidelity_ci": [
+     4.333,
+     4.917
+    ],
+    "omission": 0.083,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.417
+   },
+   "A2": {
+    "pages": 3,
+    "fidelity_mean": 4.333,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0.167,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  },
+  "lang:German": {
+   "A": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 1,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": null,
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "track:T3": {
+   "A": {
+    "pages": 2,
+    "fidelity_mean": 5,
+    "fidelity_ci": [
+     5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.25
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "fit:usable": {
+   "A": {
+    "pages": 10,
+    "fidelity_mean": 4.55,
+    "fidelity_ci": [
+     4.1,
+     4.9
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.45
+   },
+   "B": {
+    "pages": 10,
+    "fidelity_mean": 4.45,
+    "fidelity_ci": [
+     4.05,
+     4.8
+    ],
+    "omission": 0.05,
+    "reversal": 0.1,
+    "invention_any_but_added_fact": 0.3
+   },
+   "A2": {
+    "pages": 3,
+    "fidelity_mean": 4.333,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0.167,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  },
+  "lang:Spanish": {
+   "A": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "canonical:canonical": {
+   "A": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     3.75,
+     4.917
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 6,
+    "fidelity_mean": 4.333,
+    "fidelity_ci": [
+     3.75,
+     4.833
+    ],
+    "omission": 0,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.333
+   },
+   "A2": {
+    "pages": 2,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     4,
+     4
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.25
+   }
+  },
+  "lang:Latin": {
+   "A": {
+    "pages": 3,
+    "fidelity_mean": 4.667,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.333
+   },
+   "B": {
+    "pages": 3,
+    "fidelity_mean": 5,
+    "fidelity_ci": [
+     5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "track:T1": {
+   "A": {
+    "pages": 3,
+    "fidelity_mean": 4.667,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.333
+   },
+   "B": {
+    "pages": 3,
+    "fidelity_mean": 5,
+    "fidelity_ci": [
+     5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "lang:Chinese": {
+   "A": {
+    "pages": 2,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 2,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     4,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.25
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   }
+  },
+  "track:T5": {
+   "A": {
+    "pages": 2,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 2,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     4,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.25
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   }
+  },
+  "style:early-modern": {
+   "A": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "B": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "style:free": {
+   "A": {
+    "pages": 3,
+    "fidelity_mean": 4.667,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 3,
+    "fidelity_mean": 3.833,
+    "fidelity_ci": [
+     3,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.167
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "lang:Arabic": {
+   "A": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "track:T4": {
+   "A": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "A2": {
+    "pages": 0,
+    "fidelity_mean": null,
+    "fidelity_ci": null,
+    "omission": null,
+    "reversal": null,
+    "invention_any_but_added_fact": null
+   }
+  },
+  "lang:Ancient Greek": {
+   "A": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 2,
+    "fidelity_mean": 3.75,
+    "fidelity_ci": [
+     3,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 0
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  },
+  "track:T2": {
+   "A": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "B": {
+    "pages": 2,
+    "fidelity_mean": 3.75,
+    "fidelity_ci": [
+     3,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 0
+   },
+   "A2": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  }
+ },
+ "pairs": {
+  "A:B": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 2,
+     "ties": 5,
+     "b_wins": 3,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 2,
+     "ties": 6,
+     "b_wins": 2,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 3,
+    "ties": 4,
+    "b_wins": 3,
+    "cant_tell": 0
+   },
+   "sign_test_p": 1,
+   "fidelity_delta": {
+    "mean": 0.1,
+    "ci": [
+     -0.35,
+     0.65
+    ],
+    "n": 10,
+    "note": "A minus B"
+   }
+  },
+  "A:A2": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 0,
+     "ties": 2,
+     "b_wins": 1,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 1,
+     "ties": 1,
+     "b_wins": 1,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 1,
+    "ties": 1,
+    "b_wins": 1,
+    "cant_tell": 0
+   },
+   "sign_test_p": 1,
+   "fidelity_delta": {
+    "mean": -0.167,
+    "ci": [
+     -1,
+     0.5
+    ],
+    "n": 3,
+    "note": "A minus A2"
+   }
+  },
+  "B:A2": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 2,
+     "ties": 1,
+     "b_wins": 0,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 1,
+     "ties": 1,
+     "b_wins": 1,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 2,
+    "ties": 0,
+    "b_wins": 1,
+    "cant_tell": 0
+   },
+   "sign_test_p": 1,
+   "fidelity_delta": {
+    "mean": 0,
+    "ci": [
+     -0.5,
+     0.5
+    ],
+    "n": 3,
+    "note": "B minus A2"
+   }
+  }
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 23,
+  "fidelity_exact": 0.826,
+  "within_1": 1,
+  "weighted_kappa": 0.796
+ },
+ "reference_fit": {
+  "wider": 9,
+  "exact": 7,
+  "offset": 3,
+  "narrower": 1
+ },
+ "per_page": [
+  {
+   "id": "69c814536c6f3cc53c848191_00054",
+   "book_id": "69c814536c6f3cc53c848191",
+   "page_number": 54,
+   "lang": "German",
+   "track": "T3",
+   "canonical": false,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "That is, the distinction of the three Persons of the Trinity."
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Matthew 26:50."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>That is, the distinction of the three Persons of the Trinity.</note>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "<note>Matthew 26:50.</note>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>original: icheit; the state of being an \"I\"</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "that is, for the being of the divine Persons"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Matthew 26:50"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>that is, for the being of the divine Persons</note>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "<note>Matthew 26:50</note>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>original: vergottet; made one with God</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "opens 'than God, that would have to be loved' — page's first word 'bessers' (better) dropped"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "A2": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "and if there were anything better"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "that is, for the distinct Persons of the Trinity"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Matthew 26:50"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>that is, for the distinct Persons of the Trinity</note>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "<note>Matthew 26:50</note>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>original: icheit</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[A2], [B], [A] render the page fully and correctly ('Also gar ist icheit/vnd selbheyt von gott gescheidẽ', the hundred-times-killed passage, Judas 'Freündt warumb bistu kommẽ') and stop at 'gleich als gott auß der menscheit'; [A] folds the stray 'Vñ Got liebt sich' into the text rather than a margin, harmless; [control:wrong_page] is a translation of a Spanish page (Cabeza de Vaca), not this one.",
+    "j2": "[A2] and [A] render the page fully (vergottet, Judas 'Freündt warumb bistu kommẽ'); [B] the same but drops the opening 'bessers'; [control:wrong_page] is a Cabeza de Vaca passage. Reference runs into the previous and next pages."
+   }
+  },
+  {
+   "id": "69ea0f5913a685002bb8deaf_00030",
+   "book_id": "69ea0f5913a685002bb8deaf",
+   "page_number": 30,
+   "lang": "Spanish",
+   "track": "T3",
+   "canonical": false,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "the bison herds"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "an enslaved African from Azemmour in Morocco, one of the four survivors"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "a wild fruit, perhaps mesquite"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "an enslaved African from Azemmour in Morocco, one of the four survivors"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "<note>the bison herds</note>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>a wild fruit, perhaps mesquite</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "the bison herds"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "only Castillo returned, while Estebanico stayed with the villagers"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>the bison herds</note>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "only Castillo returned, while Estebanico stayed with the villagers"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[B] = [control:wrong_page] (identical text). All three follow the source throughout: women return, Castillo's report of 'frisoles y calabazas' and maize, the 'gente de las Vacas', moles destroying the maize, seventeen days' journey with only 'chacan', stone-boiling in a gourd, ch. XXXI heading; [A] resolves the garbled 'Aquí llegaron Castillo y Estebanico' as Castillo alone returning (consistent with the sense), [B]/[control:wrong_page] render literally with a note; nothing wrong found.",
+    "j2": "[A] and [B] both carry the whole of ch. 30's second half and the ch. 31 heading (chacan, moles, stone-boiling in gourds); [control:wrong_page] is another book entirely."
+   }
+  },
+  {
+   "id": "6953e50577f38f6761bef758_00274",
+   "book_id": "6953e50577f38f6761bef758",
+   "page_number": 274,
+   "lang": "Latin",
+   "track": "T1",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "but suffers violence and is destroyed by the contrary"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>crossroad, the fork between two possible explanations</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T5",
+         "severity": "minor",
+         "detail": "'suffers violence and is destroyed' supplies violentiam patiatur from the next page; page ends 'sed a con-'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "but suffers violence and is destroyed by the contrary"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>crossroad, the fork between two possible explanations</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T5",
+         "severity": "minor",
+         "detail": "'suffers violence and is destroyed' belongs to the next page; source ends 'sed a con-'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "B": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>fork in the road</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>fork in the road</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[B] renders salts, quicksilver and the transitory flame Bivium faithfully and stops at 'sed a con-' ('at the hands of contrary'); [A] is equally faithful but completes the sentence from the next page; [control:wrong_page] is a different book (Erasmus, Enchiridion).",
+    "j2": "[B] matches the Latin through 'sed a con-'; [A] likewise but completes the sentence with next-page 'suffers violence and is destroyed'; [control:wrong_page] is a different text (patristic passage on loving enemies)."
+   }
+  },
+  {
+   "id": "69e72c75a409200ea79f4976_00100",
+   "book_id": "69e72c75a409200ea79f4976",
+   "page_number": 100,
+   "lang": "Chinese",
+   "track": "T5",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "an ancestor of Confucius and minister of the state of Song"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'How great was the yielding virtue of Xie, Tang, and Xu You!' for 孰協唐許 (who would accord with Tang and Xu?): contrast lost, 協 made a name"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'among which internal contrivance is central' completes the page-final 中德 with an interpretation"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "an ancestor of Confucius and minister of the state of Song"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'How great was the yielding virtue of Xie, Tang, and Xu You!' for 孰協唐許 — the source contrasts the upstarts with Tang/Xu; 協 read as a name"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'crowded social confusion to observe their poise' for 雜之以處而觀其色 (色 = lust/chastity)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "B": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T5",
+         "severity": "minor",
+         "detail": "'the inner virtue is the greatest' completes 中德 with 為首 from the next page"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'When it has eyelashes, it looks inward' reads 及其捷也 as 睫"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "margin 九夫 as 'Great master <note>nine ranks/high dignitary</note>'"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "and the inner virtue is the greatest"
+        }
+       ],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'bowed his whole body to the ground' overstates 俯 (bent down)"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'the yielding virtue of Xu You of ancient times' drops 唐 (Tang/Yao) of 孰協唐許"
+        },
+        {
+         "class": "T6",
+         "severity": "minor",
+         "detail": "dangling '<unclear>協</unclear> <note>original: \"唐許\"</note>' left after the margins at the page end"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'when the mind fixes upon external appearances' for 心有睫 (the mind has eyelashes)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'the yielding virtue of Xu You of ancient times' drops 唐 (Tang/Yao) of 孰協唐許; stray '<unclear>協</unclear>' left at the end"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'there is inward calculation' for 內視 (looking inward) is interpretive"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "孰協唐許 contrasts the upstart with Yao and Xu You (reference: how very different from Hsü in the time of Thang); [B] and [A2] keep the contrast, [control:planted]/[A] turn it into praise of 'Xie, Tang, and Xu You'; [A2] drops Tang and leaves a dangling unclear tag; [control:planted] and [A] differ only by a stray 'not'.",
+    "j2": "[A2] and [B] render 孰協唐許 as a contrast ('How far this falls short of Tang and Xu'), as Legge does; [A] turns it into praise of 'Xie, Tang, and Xu You', [control:planted] the same with a garbled 'was not'; [B] completes 中德 with 為首 from the next page."
+   }
+  },
+  {
+   "id": "69b4cce5d5b6c3815e1a2931_00094",
+   "book_id": "69b4cce5d5b6c3815e1a2931",
+   "page_number": 94,
+   "lang": "Latin",
+   "track": "T1",
+   "canonical": false,
+   "style": "early-modern",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[A] and [B] follow the Latin throughout (Matt 5, Luke 6, Rom 12, the Christianum decretum) to the break at 'quod quisque ti-'; [control:planted] is [A] verbatim except it drops non in 'Si filius dei non cupis esse', reversing the condition.",
+    "j2": "[A] and [B] render the whole page faithfully (Matthew 5, Luke 6, Romans 12, and the Christian decree, through to 'quod quisque ti-'); [control:planted] is the same as [A] except that 'non cupis esse' becomes 'If you do wish'."
+   }
+  },
+  {
+   "id": "6a06cdd7c749b698e5b2c9a4_00104",
+   "book_id": "6a06cdd7c749b698e5b2c9a4",
+   "page_number": 104,
+   "lang": "Arabic",
+   "track": "T4",
+   "canonical": false,
+   "style": "free",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "unreadable_fill",
+         "quote": "while its blackness reveals the deep well?"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T7",
+         "severity": "minor",
+         "detail": "'while its blackness reveals the deep well' for garbled والسياه كم يجلو البير"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'she took the young man's hand' for unclear فاخذ يد الغلام ... صار كالعمود"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'while its blackness reveals the deep well?' for the garbled والسياه كم يجلو البير — a guess where the source is corrupt"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'<insert>when it was according to her view</insert>' for لما كان على رايتها (when she saw it)"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "unreadable_fill",
+         "quote": "like the black one that scours the well"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T7",
+         "severity": "minor",
+         "detail": "'like the black one that scours the well' for garbled والسياه كم يجلو البير"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the lad took his hand at that moment' for unclear فاخذ يد الغلام"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'Nothing has struck this plump vulva... like the black one that scours the well' for garbled ما ضرب به ... والسياه كم يجلو البير; the reference reads it as a wish"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[A] and [B] follow the MS closely (refusals 'only in the house', lightning simile, 'by the right of your mother', pistachio) and both fill the garbled والسياه كم يجلو البير; [control:planted] = [A] except 'If you do strike' for ان لم تضرب, reversing her threat. Reference is an indirect recension; handwritten Arabic read with moderate confidence.",
+    "j2": "The source is handwritten and partly garbled, and the reference renders a different recension through French; [A] and [B] follow the page closely, with different guesses at the corrupt 'well' line; [control:planted] turns ان لم تضرب ('if you do not strike') into 'If you do strike'."
+   }
+  },
+  {
+   "id": "69dbc9491040d1d5e20a1afd_00087",
+   "book_id": "69dbc9491040d1d5e20a1afd",
+   "page_number": 87,
+   "lang": "Latin",
+   "track": "T1",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "sided with Pompey and was captured by Caesar in 49 BC."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Massilia (Marseille), a loyal ally of Rome, sided with Pompey"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "...confiscated not only the goods of individual citizens"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "which Caesar besieged in 49 BC."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Marseille, a long-time ally of Rome, which Caesar besieged in 49 BC."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[B#dup] = [B] (identical text). All render the garbled OCR correctly: Massilia carried in triumph 'ad exemplum amissi imperii', inheritance 'ad paucos'/'ad multos improbos', Sulla's spear 'sexto trigesimo anno post', the scriba-turned-quaestor, 'metui quam cari esse', the rubric 'De caritate adipiscenda', ending at 'Sed ea non pariter'; the previous-page quote in [B#dup]/[B]'s meta tag is boundary only; nothing wrong found.",
+    "j2": "All three render the garbled print correctly from 'universas provincias' to 'Sed ea non pariter' (Massilia, P. Sulla's hasta, 'De caritate adipiscenda'); [B] = [B#dup]; nothing to separate them."
+   }
+  },
+  {
+   "id": "6a3c6191879008ba7e15f0b2_00070",
+   "book_id": "6a3c6191879008ba7e15f0b2",
+   "page_number": 70,
+   "lang": "Chinese",
+   "track": "T5",
+   "canonical": true,
+   "style": "free",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "offset",
+    "j2": "offset"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'based on wisdom' for 依於智 (the discriminating 智相, not wisdom)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[A] = [A#dup] verbatim; all three render 相續相 and the start of 執取相 with Fazang's commentary to 深起取; [B] renders 智 as 'wisdom' where the treatise means discriminating cognition. Reference is Richard's free AoF rendering with aspect (a) off-page and no commentary.",
+    "j2": "All render 相續相 root text, Fazang's gloss (起惑潤業, 住持苦樂) and the opening of 執取相 correctly; [A] = [A#dup]; [B]'s 'wisdom' for 智 is a defensible literal choice. Reference is Richard's free root text only, adding aspect (a.) off the page."
+   }
+  },
+  {
+   "id": "699376d2b0a84a5763961a97_00367",
+   "book_id": "699376d2b0a84a5763961a97",
+   "page_number": 367,
+   "lang": "Ancient Greek",
+   "track": "T2",
+   "canonical": true,
+   "style": "free",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "offset"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>rational part of the soul</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>appetitive part of the soul</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>spirited part of the soul</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>rational part of the soul</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>appetitive part of the soul</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [],
+       "reversal": {
+        "candidate": "It shrinks neither from any murder nor from abstaining from any food",
+        "source_or_reference": "βρώματός τε ἀπέχεσθαι μηδενός"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nor from abstaining from any food' says it is ready to abstain; ἀπέχεσθαι μηδενός = abstains from no food"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'having reached unity with himself' for εἰς σύννοιαν ... ἀφικόμενος (collected in reflection)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [],
+       "reversal": {
+        "candidate": "It shrinks neither from any murder nor from abstaining from any food",
+        "source_or_reference": "βρώματός τε ἀπέχεσθαι μηδενός"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nor from abstaining from any food' makes the beast willing to abstain; source 'ἀπέχεσθαι μηδενός' = abstains from no food"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'having reached unity with himself' for 'εἰς σύννοιαν αὐτὸς αὑτῷ ἀφικόμενος' (collected reflection)"
+        },
+        {
+         "class": "T2",
+         "severity": "minor",
+         "detail": "apparatus left in Greek: 'ἐπιχειρεῖν] ἐπιθυμεῖν Stobaeus'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "A2": {
+     "fidelity": null,
+     "by_judge": {
+      "j1": null,
+      "j2": null
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[A] = [A#dup] verbatim and render the page faithfully incl. apparatus; [B] is equally close except 'nor from abstaining from any food', which inverts βρώματός τε ἀπέχεσθαι μηδενός (eats any food). Reference stops at 'lawless wild-beast nature', before ἄθρει / τὸν δημοτικόν.",
+    "j2": "[A#dup] = [A] (identical) faithful throughout incl. apparatus; [B] reverses 'βρώματός τε ἀπέχεσθαι μηδενός' into 'not shrinking from abstaining from any food'. Reference starts earlier and stops at 'lawless wild-beast nature', before the page's last lines."
+   }
+  },
+  {
+   "id": "6952e4b477f38f6761bc7d4c_00296",
+   "book_id": "6952e4b477f38f6761bc7d4c",
+   "page_number": 296,
+   "lang": "Ancient Greek",
+   "track": "T2",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "A": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Latin: \"senatum\", translating the Greek gerousia or elders"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Latin v13 'a heavy one or a light one' for 'magnum aut parvum' (large or small)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Latin v10 'The house of the unshod sandal' for 'domus discalceati calceamentum' (of him unshod of his shoe)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "Latin XXVI.1 'the Lord your God gives you' where Latin has only 'Dominus tuus'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Latin: \"senatum\", translating the Greek gerousia or elders"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "B": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Latin v10 'The house of the unshod sandal' for 'domus discalceati calceamentum' (of him unshod of his shoe)"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "A2": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "referring to the ceremony of halizah"
+        },
+        {
+         "kind": "gloss",
+         "quote": "literally: \"a weight and a weight\""
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Greek v6 'the firstborn child whom she bears' adds 'firstborn'; source has only 'τὸ παιδίον ὃ ἐὰν τέκῃ'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "referring to the ceremony of halizah"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "a pointed or woven vessel"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Greek v.6 'the firstborn child whom she bears' where source has 'τὸ παιδίον ὃ ἐὰν τέκῃ' (whatever child she bears); 'firstborn' is not in the LXX"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "All three render both Greek and Latin columns completely; [A2] adds 'firstborn' in Greek v6 (source 'τὸ παιδίον'); [A] has 'heavy/light' for 'magnum aut parvum' and 'unshod sandal' for 'discalceati calceamentum'; [B] only shares the 'unshod sandal' slip; otherwise all match the reference's sense throughout.",
+    "j2": "All three render both the Greek and Latin columns of Deut 25:6-26:3 completely and in agreement with the source and Brenton; [A2] adds 'firstborn' in Greek v.6 (not in 'τὸ παιδίον ὃ ἐὰν τέκῃ'); [A] and [B] have no substantive slips ([A]'s 'heavy or light' for 'magnum aut parvum' is harmless)."
+   }
+  }
+ ]
+}

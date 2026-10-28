@@ -1,0 +1,271 @@
+{
+ "book_id": "69ea0f5913a685002bb8deaf",
+ "model": "claude-opus-5-5",
+ "words": 347,
+ "brief": "**1. The work**\nA first-person *relación* (narrative report) addressed to the Crown by Álvar Núñez Cabeza de Vaca, in sixteenth-century Castilian prose. This is the Spanish original, in an edition with modern accents but archaic forms kept (*paresció*, *ansí*, *matallas*, *trujeron*). The register is plain, documentary and sober, with formulaic devotional phrases. Translate into clear, slightly formal English and keep the first person.\n\n**2. Glossary**\ngobernador — governor\narmada — fleet\nnavío — ship\nbarca — boat\nbergantín — brigantine\ncanoa — canoe\nbalsa — raft\nbastimento — provisions\nmantenimiento — sustenance\nlegua — league\nancón — inlet\ntesorero — treasurer\nalguacil mayor — chief constable\ncontador — comptroller\nveedor — inspector\ncomisario — commissary\nescribano — notary\nmaestre — shipmaster\nde caballo — horseman\ncacique — cacique\nseñor — lord\nindio — Indian\ncristiano — Christian\nfísico — physician\ntuna — prickly pear\nvaca — cow\nvenado — deer\nrescate — trade goods\nareito — areito\ntrabajo — hardship\ntestimonio — sworn testimony\nVuestra Majestad — Your Majesty\n\n**3. Layout**\nThe text is continuous prose divided into numbered chapters. Render a heading such as \"CAPITULO IV\" as \"Chapter IV\", and translate the italic summary under it as an italic subtitle. Some pages carry a running head; translate it but do not repeat it inside the body. Omit catchwords and words split by line-end hyphens across the page edge, and silently join words the OCR has run together. There are no marginalia or footnotes.\n\n**4. Names**\nPánfilo de Narváez — Pánfilo de Narváez\nCabeza de Vaca — Cabeza de Vaca\nAndrés Dorantes / Dorante — Andrés Dorantes\nAlonso del Castillo — Alonso del Castillo\nEstebanico / el negro — Estebanico / the Black man\nLope de Oviedo — Lope de Oviedo\nSant Lúcar de Barrameda — Sanlúcar de Barrameda\nApalache — Apalache\nAute — Aute\nMal Hado — Mal Hado (Isle of Misfortune at first mention)\nPánuco — Pánuco\nrío de las Palmas — Río de las Palmas\nTierra Firme — the mainland\nFlorida — Florida\nmareames / mariames, quevenes, avatares, iguaces — Mariames, Quevenes, Avavares, Iguaces",
+ "key": [
+  {
+   "source": "gobernador",
+   "forms": [
+    "gobernador",
+    "gobernadorse"
+   ],
+   "english": "governor"
+  },
+  {
+   "source": "armada",
+   "forms": [
+    "armada"
+   ],
+   "english": "fleet"
+  },
+  {
+   "source": "navío",
+   "forms": [
+    "navío",
+    "navíos"
+   ],
+   "english": "ship"
+  },
+  {
+   "source": "barca",
+   "forms": [
+    "barca",
+    "barcas"
+   ],
+   "english": "boat"
+  },
+  {
+   "source": "bergantín",
+   "forms": [
+    "bergantín"
+   ],
+   "english": "brigantine"
+  },
+  {
+   "source": "canoa",
+   "forms": [
+    "canoa",
+    "canoas"
+   ],
+   "english": "canoe"
+  },
+  {
+   "source": "balsa",
+   "forms": [
+    "balsas"
+   ],
+   "english": "raft"
+  },
+  {
+   "source": "bastimento",
+   "forms": [
+    "bastimentos",
+    "bastimento"
+   ],
+   "english": "provisions"
+  },
+  {
+   "source": "mantenimiento",
+   "forms": [
+    "mantenimientos",
+    "mantenimiento"
+   ],
+   "english": "sustenance"
+  },
+  {
+   "source": "legua",
+   "forms": [
+    "legua",
+    "leguas"
+   ],
+   "english": "league"
+  },
+  {
+   "source": "ancón",
+   "forms": [
+    "ancón",
+    "ancones",
+    "ancónes"
+   ],
+   "english": "inlet"
+  },
+  {
+   "source": "tesorero",
+   "forms": [
+    "tesorero"
+   ],
+   "english": "treasurer"
+  },
+  {
+   "source": "alguacil mayor",
+   "forms": [
+    "alguacil mayor"
+   ],
+   "english": "chief constable"
+  },
+  {
+   "source": "contador",
+   "forms": [
+    "contador"
+   ],
+   "english": "comptroller"
+  },
+  {
+   "source": "veedor",
+   "forms": [
+    "veedor"
+   ],
+   "english": "inspector"
+  },
+  {
+   "source": "comisario",
+   "forms": [
+    "comisario"
+   ],
+   "english": "commissary"
+  },
+  {
+   "source": "escribano",
+   "forms": [
+    "escribano"
+   ],
+   "english": "notary"
+  },
+  {
+   "source": "maestre",
+   "forms": [
+    "maestre"
+   ],
+   "english": "shipmaster"
+  },
+  {
+   "source": "de caballo",
+   "forms": [
+    "de caballo"
+   ],
+   "english": "horseman"
+  },
+  {
+   "source": "cacique",
+   "forms": [
+    "cacique"
+   ],
+   "english": "cacique"
+  },
+  {
+   "source": "señor",
+   "forms": [
+    "señor",
+    "señores",
+    "Señor"
+   ],
+   "english": "lord"
+  },
+  {
+   "source": "indio",
+   "forms": [
+    "indio",
+    "indios"
+   ],
+   "english": "Indian"
+  },
+  {
+   "source": "cristiano",
+   "forms": [
+    "cristiano",
+    "cristianos",
+    "cristiános"
+   ],
+   "english": "Christian"
+  },
+  {
+   "source": "físico",
+   "forms": [
+    "físico",
+    "físicos"
+   ],
+   "english": "physician"
+  },
+  {
+   "source": "tuna",
+   "forms": [
+    "tunas"
+   ],
+   "english": "prickly pear"
+  },
+  {
+   "source": "vaca",
+   "forms": [
+    "vacas"
+   ],
+   "english": "cow"
+  },
+  {
+   "source": "venado",
+   "forms": [
+    "venado",
+    "venados"
+   ],
+   "english": "deer"
+  },
+  {
+   "source": "rescate",
+   "forms": [
+    "rescates"
+   ],
+   "english": "trade goods"
+  },
+  {
+   "source": "areito",
+   "forms": [
+    "areitos"
+   ],
+   "english": "areito"
+  },
+  {
+   "source": "trabajo",
+   "forms": [
+    "trabajo",
+    "trabajos"
+   ],
+   "english": "hardship"
+  },
+  {
+   "source": "testimonio",
+   "forms": [
+    "testimonio"
+   ],
+   "english": "sworn testimony"
+  },
+  {
+   "source": "Vuestra Majestad",
+   "forms": [
+    "Vuestra Majestad"
+   ],
+   "english": "Your Majesty"
+  }
+ ],
+ "input_pages": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+ ]
+}
