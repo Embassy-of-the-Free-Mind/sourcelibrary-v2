@@ -1,12 +1,12 @@
 ---
 stage: image
-measure: reference
+measure: accuracy
 languages: [bo, zh, ar, la, de]
 scripts: [Tibt, Hani, Arab, Latn]
 canons: []
 n_books: 32
 n_pages: 123
-verdict: "Gemini 3.8 Flash low through agy places split cuts as well as the reviewed ones: 33/33 spreads called two pages, gutter a median 3/1000 from the reviewed cut (max 24, none inside text by eye); 80/80 pecha frames given the right leaf count, cuts a median 3/1000 from the stored ones (5 frames 20–53/1000 off, all in the inter-leaf gap by eye); 9/10 single pages called single (the tenth has a facing-page sliver)."
+verdict: "Gemini 3.8 Flash low through agy places split cuts as well as the reviewed ones: 33/33 spreads called two pages, gutter a median 3/1000 from the reviewed cut (max 24, none inside text by eye); 80/80 pecha frames given the right leaf count, cuts a median 3/1000 from the stored ones (5 frames 20–53/1000 off: by eye 4 in the inter-leaf gap, 1 through a blank cover leaf, no text lost); 9/10 single pages called single (the tenth has a facing-page sliver)."
 status: informational
 decision: "split-pecha.mjs leaf boxes and split-book.mjs gutter sample move from gemini-3-flash-preview on the paid API (not allowed since 2026-10-08) to agy gemini-3.8-flash-low"
 superseded_by: null
