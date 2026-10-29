@@ -250,12 +250,16 @@ export function signP(better, worse) {
 }
 export function catchwordCheck(x, s) {
   if (!s || s.failed) return 'failed';
-  const inN = catchwordsIn(s.N), inN1 = catchwordsIn(s.N1);
-  if (!inN.length) return inN1.length ? 'misplaced' : 'dropped';
-  if (inN.length > 1 || inN1.length) return 'doubled';
-  const want = (x.catchword || '').split(/\s+/).map(foldWord).filter(Boolean).join(' ');
-  const got = inN[0].split(/\s+/).map(foldWord).filter(Boolean).join(' ');
-  return want && got && (got === want || got.startsWith(want) || want.startsWith(got)) ? 'kept' : 'mismatch';
+  const fold = (w) => String(w || '').split(/\s+/).map(foldWord).filter(Boolean).join(' ');
+  const want = fold(x.catchword);
+  const same = (got) => want && got && (got === want || got.startsWith(want) || want.startsWith(got));
+  const inN = catchwordsIn(s.N);
+  // N+1 may label its OWN foot catchword (for N+2): only a label of THIS catchword in N+1's first half is a doubling.
+  const half = String(s.N1).slice(0, Math.floor(String(s.N1).length / 2));
+  const echoed = catchwordsIn(half).some((w) => same(fold(w)));
+  if (!inN.length) return echoed ? 'misplaced' : 'dropped';
+  if (inN.length > 1 || echoed) return 'doubled';
+  return same(fold(inN[0])) ? 'kept' : 'mismatch';
 }
 
 function score(out) {
@@ -302,7 +306,7 @@ function score(out) {
   rep.catchwordLabel = {};
   for (const a of ['A', 'C', 'MC']) {
     const tally = (set) => set.reduce((t, id) => { const k = catchwordCheck(ctx.find(x => x.id === id), v[id][a]); t[k] = (t[k] || 0) + 1; return t; }, {});
-    const spurious = noCwIds.filter(id => { const s = v[id][a]; return s && !s.failed && (catchwordsIn(s.N).length || catchwordsIn(s.N1).length); }).length;
+    const spurious = noCwIds.filter(id => { const s = v[id][a]; return s && !s.failed && catchwordsIn(s.N).length; }).length;
     rep.catchwordLabel[a] = { stratum: tally(cwIds), keptRate: pct(cwIds.filter(id => catchwordCheck(ctx.find(x => x.id === id), v[id][a]) === 'kept').length, cwIds.length), spurious, spuriousRate: pct(spurious, noCwIds.length) };
   }
   // the registered rule

@@ -82,3 +82,10 @@ merged 2, split+catchword 1; all 40 also carry a catchword in the OCR's `<meta>`
 catchword in the OCR's `<meta>` that the device did not match to the next page. A label on such a page is not
 spurious, so **spurious** is counted over the 53 plain breaks whose OCR records no catchword at all. Everything else
 stands.
+
+## Amendment 2 (2026-10-29 22:40 UTC, during the translation run, before any judging or scoring)
+
+The catchword check counted a label on N+1 as "doubled", but page N+1 has its own foot, and a correct C/MC labels
+N+1's catchword (for N+2) there (seen on the first break: `tus` at N's foot, `Con` at N+1's foot). Corrected:
+**doubled** = more than one label in N's English, or a label of THIS catchword in the first half of N+1's English;
+**misplaced** = no label in N, this catchword labelled at N+1's head. **Spurious** counts labels in N's English only.
