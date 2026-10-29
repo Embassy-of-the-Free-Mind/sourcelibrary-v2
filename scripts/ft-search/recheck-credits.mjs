@@ -65,10 +65,12 @@ if (mode === 'prepare') {
   fs.mkdirSync(dir, { recursive: true });
   for (const b of list) fs.writeFileSync(path.join(dir, `${b.id || b._id}.prompt`), prompt(b));
   fs.writeFileSync(path.join(dir, 'ids.txt'), list.map((b) => b.id || String(b._id)).join('\n') + '\n');
+  // run-batch.sh must not parse, ingest or recheck these answers as a search batch.
+  fs.writeFileSync(path.join(dir, 'NO_POSTRUN'), 'recheck dir: run-batch.sh stops after the searches\n');
   console.log(`prepared ${list.length} credits (verified_at >= ${since}) in ${dir}`);
 } else {
   const ids = fs.readFileSync(path.join(dir, 'ids.txt'), 'utf8').split(/\s+/).filter(Boolean);
-  const counts = {}; const log = [];
+  const counts = {}; const log = []; const held = [];
   const inc = (k) => { counts[k] = (counts[k] || 0) + 1; };
   const sb = APPLY ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY) : null;
   for (const id of ids) {
@@ -94,6 +96,7 @@ if (mode === 'prepare') {
       await sb.from('translation_catalogs').update({ completeness: 'partial' }).eq('source', 'sl_prior_credit_linked').eq('source_url', b.prior_translation.url);
     } else if ((v === 'not_a_translation' || v === 'wrong_work') && !RETRACT) {
       inc('retraction_held');
+      held.push({ book_id: id, url: `https://sourcelibrary.org/book/${id}`, verdict: v, credit_url: b.prior_translation.url, better_url: o.better_url || '', note: o.note || '' });
     } else if (v === 'not_a_translation' || v === 'wrong_work') {
       await books.updateOne({ _id: b._id }, { $unset: { prior_translation: '' } });
       await bookEvents.insertOne({ book_id: id, type: 'prior_translation_retracted', at: new Date(), by: BY, detail: { ...detail, retracted: b.prior_translation } });
@@ -102,6 +105,8 @@ if (mode === 'prepare') {
     }
   }
   fs.writeFileSync(path.join(dir, APPLY ? 'recheck-log.json' : 'recheck-log-dryrun.json'), JSON.stringify(log, null, 1));
+  // Retractions stay manual: with --no-retract the credits to review are listed here, for Derek.
+  if (APPLY && !RETRACT) fs.writeFileSync(path.join(dir, 'retractions-held.json'), JSON.stringify(held, null, 1));
   console.log(APPLY ? 'APPLIED' : 'DRY RUN', counts);
 }
 await client.close();

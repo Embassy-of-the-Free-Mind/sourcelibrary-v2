@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "note": "One search per work (#7598). select-batch.mjs groups sibling volumes only when enabled is true. Set it from gate-report.mjs: agreement >= 95%.",
+  "agreement": "31/32 = 96.9% (unclear excluded); strict 31/33 = 93.9%",
+  "works": 26,
+  "pairs": 33,
+  "date": "2026-10-29"
+}
