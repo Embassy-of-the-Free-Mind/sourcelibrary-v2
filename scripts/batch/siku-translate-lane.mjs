@@ -323,7 +323,7 @@ async function runWave(db) {
       // #7503: the 4/call reader stays OFF until block-drift covers caseless scripts in production.
       // #5600: the two leaf lines go to the 1/call reader only (tested there); the block reader was not tested with them.
       const instr = path.join(dir, 'instructions.json');
-      if (PER_CALL === 1) fs.writeFileSync(instr, JSON.stringify(leafInstructions(pages.map((p) => p.id))));
+      if (!(PER_CALL > 1)) fs.writeFileSync(instr, JSON.stringify(leafInstructions(pages.map((p) => p.id))));
       const readArgs = PER_CALL > 1
         ? [path.join(HERE, 'claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, '--cli=agy', `--model=${MODEL}`, `--per-call=${PER_CALL}`, `--job=${JOB}`]
         : [path.join(HERE, 'cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${MODEL}`, `--instructions-file=${instr}`];
