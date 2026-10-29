@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1f58c4-p7",
+  "substratum": "inflight",
+  "title": "欽定執中成憲·卷八 (vol 4)",
+  "probe_chars": 141,
+  "source": "Kanripo",
+  "work": "KR3a0109",
+  "work_title": "欽定執中成憲-清-雍正",
+  "juan": "8",
+  "url": "https://github.com/kanripo/KR3a0109",
+  "etext_chars": 7896,
+  "window_chars": 157,
+  "overlap": 0.971,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

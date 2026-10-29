@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1e38be-p142",
+  "substratum": "census",
+  "title": "春秋辯義·卷五~卷六 (vol 8)",
+  "probe_chars": 102,
+  "source": "Kanripo",
+  "work": "KR1e0089",
+  "work_title": "春秋辯義-明-卓爾康",
+  "juan": "5,6",
+  "url": "https://github.com/kanripo/KR1e0089",
+  "etext_chars": 21315,
+  "window_chars": 104,
+  "overlap": 0.657,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

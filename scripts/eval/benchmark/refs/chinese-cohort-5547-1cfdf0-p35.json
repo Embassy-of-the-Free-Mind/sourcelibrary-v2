@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1cfdf0-p35",
+  "substratum": "census",
+  "title": "儀禮集說·卷十一上 (vol 43)",
+  "probe_chars": 128,
+  "source": "Kanripo",
+  "work": "KR1d0035",
+  "work_title": "儀禮集說-元-敖繼公",
+  "juan": "11",
+  "url": "https://github.com/kanripo/KR1d0035",
+  "etext_chars": 31466,
+  "window_chars": 167,
+  "overlap": 0.672,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

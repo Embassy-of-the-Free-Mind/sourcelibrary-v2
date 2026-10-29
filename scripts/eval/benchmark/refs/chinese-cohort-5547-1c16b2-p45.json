@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1c16b2-p45",
+  "substratum": "inflight",
+  "title": "太平經國書·卷九~卷十一 (vol 3)",
+  "probe_chars": 167,
+  "source": "Kanripo",
+  "work": "KR1d0008",
+  "work_title": "太平經國書-宋-鄭伯謙",
+  "juan": "9,10,11",
+  "url": "https://github.com/kanripo/KR1d0008",
+  "etext_chars": 12686,
+  "window_chars": 184,
+  "overlap": 0.883,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

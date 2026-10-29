@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-c4eee0-p8",
+  "substratum": "inflight",
+  "title": "尚書要義·卷十九~卷二十 (vol 6)",
+  "probe_chars": 162,
+  "source": "Kanripo",
+  "work": "KR1b0022",
+  "work_title": "尚書要義-宋-魏了翁",
+  "juan": "19,20",
+  "url": "https://github.com/kanripo/KR1b0022",
+  "etext_chars": 10642,
+  "window_chars": 206,
+  "overlap": 0.747,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e61617-p126",
+  "substratum": "census",
+  "title": "西山讀書記·卷十五 (vol 14)",
+  "probe_chars": 156,
+  "source": "Kanripo",
+  "work": "KR3a0059",
+  "work_title": "西山讀書記-宋-眞德秀",
+  "juan": "15",
+  "url": "https://github.com/kanripo/KR3a0059",
+  "etext_chars": 22056,
+  "window_chars": 169,
+  "overlap": 0.697,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

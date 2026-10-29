@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-15c07e-p82",
+  "substratum": "census",
+  "title": "御定駢字類編·卷九十四 — Imperial Parallel Characters (vol 133)",
+  "probe_chars": 205,
+  "source": "Kanripo",
+  "work": "KR3k0056",
+  "work_title": "御定駢字類編-清-吳士玉",
+  "juan": "94",
+  "url": "https://github.com/kanripo/KR3k0056",
+  "etext_chars": 32140,
+  "window_chars": 298,
+  "overlap": 0.431,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

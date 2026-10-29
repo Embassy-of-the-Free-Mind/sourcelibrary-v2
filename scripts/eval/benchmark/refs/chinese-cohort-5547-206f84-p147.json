@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-206f84-p147",
+  "substratum": "census",
+  "title": "釋氏稽古略·卷三 (vol 3)",
+  "probe_chars": 253,
+  "source": "Kanripo",
+  "work": "KR6r0014",
+  "work_title": "釋氏稽古略-元-覺岸",
+  "juan": "3",
+  "url": "https://github.com/kanripo/KR6r0014",
+  "etext_chars": 63741,
+  "window_chars": 317,
+  "overlap": 0.633,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

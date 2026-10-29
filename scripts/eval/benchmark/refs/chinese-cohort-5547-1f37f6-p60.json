@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1f37f6-p60",
+  "substratum": "census",
+  "title": "韻補·卷三~卷五 (vol 2)",
+  "probe_chars": 298,
+  "source": "Kanripo",
+  "work": "KR1j0059",
+  "work_title": "韻補-宋-吳棫",
+  "juan": "3,4,5",
+  "url": "https://github.com/kanripo/KR1j0059",
+  "etext_chars": 47185,
+  "window_chars": 344,
+  "overlap": 0.481,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

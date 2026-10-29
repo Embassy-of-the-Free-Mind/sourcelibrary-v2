@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1feade-p20",
+  "substratum": "inflight",
+  "title": "屈宋古音義·卷三 (vol 2)",
+  "probe_chars": 182,
+  "source": "Kanripo",
+  "work": "KR1j0073",
+  "work_title": "屈宋古音義-明-陳第",
+  "juan": "3",
+  "url": "https://github.com/kanripo/KR1j0073",
+  "etext_chars": 13774,
+  "window_chars": 202,
+  "overlap": 0.763,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

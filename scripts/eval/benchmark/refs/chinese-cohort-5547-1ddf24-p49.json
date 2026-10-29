@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1ddf24-p49",
+  "substratum": "census",
+  "title": "周官集注·卷十一 (vol 10)",
+  "probe_chars": 135,
+  "source": "Kanripo",
+  "work": "KR1d0021",
+  "work_title": "周官集注-清-方苞",
+  "juan": "11",
+  "url": "https://github.com/kanripo/KR1d0021",
+  "etext_chars": 13999,
+  "window_chars": 204,
+  "overlap": 0.772,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

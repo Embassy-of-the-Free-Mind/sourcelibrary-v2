@@ -1,0 +1,19 @@
+{
+  "slug": "chinese-cohort-5547-157c93-p33",
+  "substratum": "inflight",
+  "title": "圖書編·卷一百二十六 (vol 96)",
+  "probe_chars": 14215,
+  "source": "Kanripo",
+  "work": "KR3k0050",
+  "work_title": "圖書編-明-章潢",
+  "juan": "126",
+  "url": "https://github.com/kanripo/KR3k0050",
+  "etext_chars": 19809,
+  "window_chars": 12676,
+  "overlap": 0.15,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.15 < 0.35: page is not (cleanly) in this e-text"
+}
