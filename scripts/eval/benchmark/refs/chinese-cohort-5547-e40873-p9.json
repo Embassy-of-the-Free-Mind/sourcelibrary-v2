@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-e40873-p9",
+  "substratum": "inflight",
+  "title": "此木軒四書說·卷九 (vol 5)",
+  "probe_chars": 167,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1h0065",
+  "work_title": "此木軒四書說-清-焦袁熹",
+  "juan": 11,
+  "url": "https://github.com/kanripo/KR1h0065/blob/WYG/KR1h0065_011.txt",
+  "etext_chars": 8149,
+  "window_chars": 192,
+  "overlap": 0.889,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e48248-p33",
+  "substratum": "inflight",
+  "title": "日知錄·卷三十二 (vol 18)",
+  "probe_chars": 145,
+  "source": "Kanripo",
+  "work": "KR3j0070",
+  "work_title": "日知錄-清-顧炎武",
+  "juan": "32",
+  "url": "https://github.com/kanripo/KR3j0070",
+  "etext_chars": 11458,
+  "window_chars": 153,
+  "overlap": 0.803,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-c0b3fa-p60",
+  "substratum": "census",
+  "title": "詩經集傳·卷六 (vol 12)",
+  "probe_chars": 226,
+  "source": "Kanripo",
+  "work": "KR1c0015",
+  "work_title": "詩經集傳-宋-朱熹",
+  "juan": "6",
+  "url": "https://github.com/kanripo/KR1c0015",
+  "etext_chars": 18985,
+  "window_chars": 269,
+  "overlap": 0.587,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

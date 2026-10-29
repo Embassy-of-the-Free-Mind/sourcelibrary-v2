@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-4953e2-p31",
+  "substratum": "inflight",
+  "title": "爾雅翼·卷三十~卷三十二 (vol 8)",
+  "probe_chars": 250,
+  "source": "Kanripo",
+  "work": "KR1j0012",
+  "work_title": "爾雅翼-宋-羅願",
+  "juan": "30,31,32",
+  "url": "https://github.com/kanripo/KR1j0012",
+  "etext_chars": 13028,
+  "window_chars": 297,
+  "overlap": 0.443,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

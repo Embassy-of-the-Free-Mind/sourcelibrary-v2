@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5e3c79-p35",
+  "substratum": "census",
+  "title": "普濟方·卷三百八十五~卷三百八十六 (vol 275)",
+  "probe_chars": 141,
+  "source": "Kanripo",
+  "work": "KR3e0067",
+  "work_title": "普濟方-明-朱橚",
+  "juan": "385,386",
+  "url": "https://github.com/kanripo/KR3e0067",
+  "etext_chars": 28139,
+  "window_chars": 170,
+  "overlap": 0.645,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

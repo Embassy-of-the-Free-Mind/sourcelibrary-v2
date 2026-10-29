@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1c0ee9-p44",
+  "substratum": "inflight",
+  "title": "毛詩類釋·卷十九~卷二十一 (vol 6)",
+  "probe_chars": 119,
+  "source": "Kanripo",
+  "work": "KR1c0060",
+  "work_title": "毛詩類釋-清-顧棟高",
+  "juan": "19,20,21",
+  "url": "https://github.com/kanripo/KR1c0060",
+  "etext_chars": 9416,
+  "window_chars": 131,
+  "overlap": 0.784,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

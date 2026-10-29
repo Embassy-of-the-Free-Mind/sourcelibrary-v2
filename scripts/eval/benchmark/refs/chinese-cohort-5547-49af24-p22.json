@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-49af24-p22",
+  "substratum": "inflight",
+  "title": "帝學·卷六~卷八 (vol 2)",
+  "probe_chars": 132,
+  "source": "Kanripo",
+  "work": "KR3a0021",
+  "work_title": "帝學-宋-范祖禹",
+  "juan": "6,7,8",
+  "url": "https://github.com/kanripo/KR3a0021",
+  "etext_chars": 10806,
+  "window_chars": 147,
+  "overlap": 0.643,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

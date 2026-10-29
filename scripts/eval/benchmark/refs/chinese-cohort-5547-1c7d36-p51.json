@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1c7d36-p51",
+  "substratum": "inflight",
+  "title": "程氏經說·卷六~卷七 (vol 3)",
+  "probe_chars": 141,
+  "source": "Kanripo",
+  "work": "KR1g0005",
+  "work_title": "程氏經說-宋-程頤",
+  "juan": "6,7",
+  "url": "https://github.com/kanripo/KR1g0005",
+  "etext_chars": 10180,
+  "window_chars": 151,
+  "overlap": 0.891,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

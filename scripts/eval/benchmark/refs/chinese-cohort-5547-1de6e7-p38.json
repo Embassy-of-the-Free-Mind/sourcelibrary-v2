@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1de6e7-p38",
+  "substratum": "census",
+  "title": "儀禮圖·卷十~卷十一 (vol 5)",
+  "probe_chars": 200,
+  "source": "Kanripo",
+  "work": "KR1d0032",
+  "work_title": "儀禮圖-宋-楊復",
+  "juan": "10,11",
+  "url": "https://github.com/kanripo/KR1d0032",
+  "etext_chars": 28351,
+  "window_chars": 255,
+  "overlap": 0.801,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

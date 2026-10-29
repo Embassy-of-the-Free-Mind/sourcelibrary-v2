@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-1ff309-p166",
+  "substratum": "census",
+  "title": "周易啟蒙翼傳·下篇 (vol 3)",
+  "probe_chars": 194,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1a0070",
+  "work_title": "周易啟蒙翼傳-元-胡一桂",
+  "juan": 3,
+  "url": "https://github.com/kanripo/KR1a0070/blob/WYG/KR1a0070_003.txt",
+  "etext_chars": 41393,
+  "window_chars": 263,
+  "overlap": 0.6,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

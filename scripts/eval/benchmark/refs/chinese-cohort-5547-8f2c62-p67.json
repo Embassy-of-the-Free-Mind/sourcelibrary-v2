@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-8f2c62-p67",
+  "substratum": "inflight",
+  "title": "西清古鑑·卷三十 (vol 22)",
+  "probe_chars": 55,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3h0089",
+  "work_title": "西清古鑑-清-梁詩正",
+  "juan": 33,
+  "url": "https://github.com/kanripo/KR3h0089/blob/WYG/KR3h0089_033.txt",
+  "etext_chars": 1961,
+  "window_chars": 91,
+  "overlap": 0.769,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

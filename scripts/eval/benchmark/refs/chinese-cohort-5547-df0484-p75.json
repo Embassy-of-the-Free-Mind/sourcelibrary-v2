@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-df0484-p75",
+  "substratum": "census",
+  "title": "周禮訂義·卷六十八 (vol 66)",
+  "probe_chars": 181,
+  "source": "Kanripo",
+  "work": "KR1d0010",
+  "work_title": "周禮訂義-宋-王與之",
+  "juan": "68",
+  "url": "https://github.com/kanripo/KR1d0010",
+  "etext_chars": 17886,
+  "window_chars": 202,
+  "overlap": 0.676,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}
