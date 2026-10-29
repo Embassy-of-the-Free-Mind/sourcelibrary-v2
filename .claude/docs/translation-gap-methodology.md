@@ -35,7 +35,7 @@ honest version is *thousands of years — millennia*. The previously circulated
 | dataset | what it is | size |
 |---|---|---|
 | **USTC** (Universal Short Title Catalogue) | scholarly census of every book printed in Europe to 1700; one row per *edition* | 1,628,578 editions; **503,360 Latin**; 499,604 Latin printed 1400–1700 |
-| `work_cluster_id` | USTC's own grouping of editions of the *same work* (e.g. all 14 printings of Ficino's *Platonic Theology* → one cluster) | **366,205 distinct Latin work-clusters** (1400–1700) |
+| `work_cluster_id` | **our** key, not USTC's: `scripts/catalog-coverage/build.mjs` mints it as author surname + first six title words, so variant title pages split one work (Imitatio Christi: 255 editions in 69 clusters). See the correction below. | **366,205 distinct Latin work-clusters** (1400–1700) |
 | **`translation_catalogs`** | our assembled catalog of known English translations, drawn from UNESCO Index Translationum, Library of Congress, OpenLibrary, HathiTrust, and named scholarly series | 26,789 rows |
 | **Curated series lists** | hand-built, verified enumerations of the major scholarly translation series, *with the original Latin titles* (needed for matching) | I Tatti Renaissance Library 98 · Brill 24 · Dumbarton Oaks Medieval Library 79 |
 
@@ -50,7 +50,19 @@ work-clusters. The **numerator** (what's been translated) is built from
 ### 1. The denominator: 366,205 Latin work-clusters
 
 We pulled every USTC edition in Latin printed 1400–1700 (499,604 of them) and
-collapsed them to USTC's `work_cluster_id` → **366,205 distinct works**.
+collapsed them to `work_cluster_id` → **366,205 clusters**.
+
+> **Correction (2026-10-29, #7751):** a cluster is not a work. The key is a
+> title-prefix string we built, and the most-printed works fragment most
+> (Aeneid 322 editions in 144 clusters), so cluster counts overstate the
+> translated side above all. `scripts/translation-layer/11-work-graph.mjs`
+> rebuilds a real work unit over USTC editions and our books (leader
+> clustering within an author): **~306,000 works**, of which **~4,200 (1.4%)**
+> carry a catalogued external English translation, against 9,830 clusters
+> (2.7%). Still a floor on the external side — the n=1000 validation below
+> shows the catalogs miss many translations — and the work graph both
+> under-merges (Moriae encomium stays split) and over-merges (~1 in 6 sampled
+> multi-edition works holds a wrong member). Figures and samples on #7751.
 
 > **Caveat we state up front:** USTC's year is the *printing* year, not when the
 > work was *written*. So this set includes early-modern *reprints* of ancient and
