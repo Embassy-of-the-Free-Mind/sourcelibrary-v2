@@ -13,6 +13,10 @@ letters of a non-Latin script is cut there (vLLM frees the request when the conn
 `abort_other_script`. The lane's guard (scripts/lib/gpu-print-lane.mjs pageVerdict) rejects any page with more than 3
 such letters, so the cut page gets the verdict the full read would have got; the margin (40 vs 3) covers the few letters
 convertRead can drop (image alt text). Measured before the change: those pages were 12.8% of the lane's output tokens.
+A read whose last LOOP_WINDOW (1,500) characters are one unit of at most 300 characters repeated exactly is cut too
+(finish `abort_loop`): the engine is looping and would run to the 6,000-token cap, which the guard refuses as
+loop_guard:token_cap. Parity on the 16,464 pages the lane had written by 2026-10-29: none trips it; the 163 that do were
+all refused by the guard. It saved 5.1% of output tokens.
 """
 import argparse, base64, hashlib, io, json, os, re, threading, time, urllib.request
 from PIL import Image
@@ -50,6 +54,17 @@ OTHER = re.compile('[\u0370-\u03ff\u1f00-\u1fff\u0400-\u052f\u0530-\u058f\u0590-
                    '\u0700-\u074f\u0900-\u0d7f\u0e00-\u0e7f\u0f00-\u0fff\u10a0-\u10ff\u1200-\u139f\u1100-\u11ff\uac00-\ud7af'
                    '\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]')
 ABORT_OTHER_SCRIPT = int(os.environ.get('ABORT_OTHER_SCRIPT', '40'))  # 0 = never cut
+LOOP_WINDOW = int(os.environ.get('LOOP_WINDOW', '1500'))  # 0 = never cut a loop
+
+
+def looping(text, w=LOOP_WINDOW, max_period=300, min_reps=5):
+    """The last w characters are one unit of <= max_period characters repeated exactly (at least min_reps times)."""
+    if not w or len(text) < w: return False
+    tail = text[-w:]
+    for p in range(1, max_period + 1):
+        if w // p < min_reps: break
+        if tail[p:] == tail[:-p]: return True
+    return False
 
 
 def read(buf):
@@ -59,7 +74,7 @@ def read(buf):
     body = {'model': 'm', 'temperature': 0.2, 'top_p': 0.9, 'max_tokens': 6000, 'stream': True, 'stream_options': {'include_usage': True},
             'messages': [{'role': 'user', 'content': [{'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + base64.b64encode(b.getvalue()).decode()}}]}]}
     req = urllib.request.Request(a.url + '/chat/completions', data=json.dumps(body).encode(), headers={'Content-Type': 'application/json'})
-    parts, fin, tok, other = [], None, None, 0
+    parts, fin, tok, other, size, checked = [], None, None, 0, 0, 0
     with urllib.request.urlopen(req, timeout=900) as r:
         for line in r:
             line = line.decode('utf-8', 'replace').strip()
@@ -71,10 +86,13 @@ def read(buf):
             for c in ev.get('choices') or []:
                 d = (c.get('delta') or {}).get('content') or ''
                 if d:
-                    parts.append(d); other += len(OTHER.findall(d))
+                    parts.append(d); other += len(OTHER.findall(d)); size += len(d)
                 if c.get('finish_reason'): fin = c['finish_reason']
             if ABORT_OTHER_SCRIPT and other > ABORT_OTHER_SCRIPT:
                 fin = 'abort_other_script'; break  # leaving the with-block closes the stream; vLLM aborts the request
+            if LOOP_WINDOW and size - checked >= 250:  # every 250 new characters, as the parity test stepped
+                checked = size; text = ''.join(parts); parts = [text]
+                if looping(text): fin = 'abort_loop'; break
     return ''.join(parts), fin, tok
 
 
