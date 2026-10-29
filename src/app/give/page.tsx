@@ -24,8 +24,9 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
  * records of the October import wave (#7343). The vision letter's budget still
  * rests on its 6 October counts (93,000 / 73,000); re-cost it before changing
  * the letter.
- * No per-book cost figure on purpose: model cost alone (under a dollar a book)
- * tells a donor the work is nearly free, which is not the story.
+ * The per-book figure is the BUDGET rate, $5 a book (the vision letter's `ways`
+ * intro), never the model cost of one pass (under a dollar a book, priced at the
+ * subscription), which would tell a donor the work is nearly free. Derek, 2026-10-29.
  *
  * NO DATA FETCHING, deliberately. Every other surface can degrade; the page that
  * takes money cannot.
@@ -200,8 +201,7 @@ export default async function GivePage() {
             </section>
 
             {/* Where the money goes: three things a gift pays for, each with a cost
-                someone measured. Not a cost per translated book on purpose (see the
-                file comment).
+                someone measured, plus the $5-a-book budget rate (see the file comment).
                 - Running cost: billed amounts, not meter estimates (ops
                   costs/infrastructure-costs.md): hosting, database, CDN and storage
                   ran $3,600–5,200 a month June–September 2026, before any OCR or
@@ -260,6 +260,14 @@ export default async function GivePage() {
             <section>
               <h2 className="text-xl font-display text-stone-900 mb-4">Where the rest goes</h2>
               <ul className="space-y-5">
+                <li>
+                  <p className="font-semibold text-stone-900">Translating a book: about $5</p>
+                  <p className="text-stone-600 leading-relaxed">
+                    A single machine pass now costs under a dollar a book. We budget $5 so
+                    that every book is re-read as better models arrive, the hard scripts get
+                    special handling, and scholars can check the results.
+                  </p>
+                </li>
                 <li>
                   <p className="font-semibold text-stone-900">Scanning the Embassy’s last books</p>
                   <p className="text-stone-600 leading-relaxed">
