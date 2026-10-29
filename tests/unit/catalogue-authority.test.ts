@@ -65,6 +65,9 @@ describe('catalogue authority parsers', () => {
     expect(gndOf('(DE-588)16247579-2')).toBe('16247579-2');
     expect(vdIdsOf('VD 16 H 5722, Vischer L 1')).toEqual({ vd16: 'H 5722' });
     expect(vdIdsOf('VD17 1:636088U')).toEqual({ vd17: '1:636088U' });
+    // The project label beside the category label is not a number.
+    expect(vdIdsOf('Projekt VD18 digital Kategorie VD18 VD18 digital')).toEqual({});
+    expect(vdIdsOf('Projekt VD18 digital VD18-Nummer 10471634')).toEqual({ vd18: '10471634' });
   });
 
   it('builds the record URL per provider', () => {

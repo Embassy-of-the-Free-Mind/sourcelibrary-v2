@@ -41,7 +41,8 @@ export function gndOf(s) {
 export function vdIdsOf(text) {
   const out = {};
   const t = decode(text);
-  for (const m of t.matchAll(/\bVD\s?(16|17|18)(?:-Nummer)?[\s:]+((?:[A-Z]{1,3}\s?\d+)|(?:\d+:\d+[A-Z]?)|(?:\d{8}))/g)) {
+  // (?!VD): "Projekt = VD18 digital" next to "Kategorie VD18" read the label itself as the number.
+  for (const m of t.matchAll(/\bVD\s?(16|17|18)(?:-Nummer)?[\s:]+(?!VD)((?:[A-Z]{1,3}\s?\d+)|(?:\d+:\d+[A-Z]?)|(?:\d{8}))/g)) {
     const k = `vd${m[1]}`;
     if (!out[k]) out[k] = m[2].replace(/\s+/g, ' ').trim();
   }

@@ -31,6 +31,14 @@
  *                      strings with no harvested book, or whose harvested record names ONE
  *                      author without a GND id even after resolve-names. Strings keyed to a
  *                      GND id, or naming several GND people, are left out.
+ *   --stage=edition-ids [--apply] [--undo]: the VD16/VD17/VD18 numbers the holding library's
+ *                      record gives for THIS copy, into books.edition_external_ids.vd16|vd17|vd18
+ *                      (Derek: exact edition keys for dedup). A library's own number for its own
+ *                      copy is authority, unlike our matched USTC ids (edition-identity.md), so it
+ *                      goes in as is: format-checked, never over an existing value, with
+ *                      edition_external_ids.vd_provenance = {source: record URL, type:
+ *                      original_catalog, run}. sweep_log rows and a backup before the writes.
+ *                      Nothing reads these yet; no edition_key or merge is touched.
  *   --stage=apply-books --in=<proposals.json> [--apply] [--undo]: writes them. books.author
  *                      through setCatalogueFields (scripts/lib/catalogue-fields.mjs) with
  *                      field_provenance.author = {source: <record URL>, type: original_catalog,
@@ -52,14 +60,14 @@ import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'node:fs';
 import { norm, authorSlug } from '../lib/author-name-key.mjs';
 import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
-import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { recordSweepAction, recordSweepActions } from '../lib/sweep-log.mjs';
 import { uploadBackup } from '../lib/maintenance-backup.mjs';
 import { appendFileSync, readFileSync, existsSync } from 'node:fs';
 
 const val = (k, d = null) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const STAGE = val('stage');
 const OUT = val('out');
-if (!['resolve-names', 'verdicts', 'books', 'apply-books', 'unkeyed-strings'].includes(STAGE) || (!OUT && ['verdicts', 'books', 'unkeyed-strings'].includes(STAGE))) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file> | --stage=apply-books --in=<file> [--apply] [--undo]'); process.exit(2); }
+if (!['resolve-names', 'verdicts', 'books', 'apply-books', 'unkeyed-strings', 'edition-ids'].includes(STAGE) || (!OUT && ['verdicts', 'books', 'unkeyed-strings'].includes(STAGE))) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file> | --stage=apply-books --in=<file> [--apply] [--undo]'); process.exit(2); }
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
 const RUN = 'catalogue-authority-gnd-7660';
@@ -83,6 +91,61 @@ const SAMPLED = new Set(['bsb', 'mdz']);
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
 const db = mc.db('bookstore');
+
+if (STAGE === 'edition-ids') {
+  const RUN_VD = 'catalogue-vd-ids-7660';
+  const BACKUP = val('backup', `${process.env.JOB_SCRATCH || '.'}/edition-ids-${RUN_VD}.jsonl`);
+  const books = db.collection('books');
+  const FORMAT = { vd16: /^[A-Z]{1,3} \d{1,5}$/, vd17: /^\d{1,4}:\d{3,7}[A-Z]$/, vd18: /^\d{8}$/ };
+  if (UNDO) {
+    const rowsB = existsSync(BACKUP) ? readFileSync(BACKUP, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
+    let n = 0;
+    for (const e of rowsB) {
+      if (!APPLY) { n++; continue; }
+      const unset = Object.fromEntries([...Object.keys(e.set), 'edition_external_ids.vd_provenance'].map((k) => [k, '']));
+      n += (await books.updateOne({ id: e.book_id, 'edition_external_ids.vd_provenance.run': RUN_VD }, { $unset: unset })).modifiedCount;
+    }
+    console.log(APPLY ? `undone ${n}` : `would undo ${n} (add --apply)`);
+    await mc.close(); process.exit(0);
+  }
+  const plan = [];
+  const bad = {};
+  for await (const h of db.collection('catalogue_authority_harvest').find({ error: null, ids: { $nin: [null, {}] } }, { projection: { book_id: 1, ids: 1, url: 1 } })) {
+    const ids = Object.fromEntries(Object.entries(h.ids || {}).filter(([k, v]) => {
+      const ok = FORMAT[k]?.test(String(v).trim());
+      if (!ok) bad[k] = (bad[k] || 0) + 1;
+      return ok;
+    }).map(([k, v]) => [k, String(v).trim()]));
+    if (Object.keys(ids).length) plan.push({ book_id: h.book_id, ids, url: h.url });
+  }
+  let wrote = 0, kept = 0;
+  const now = new Date();
+  for (let i = 0; i < plan.length; i += 500) {
+    const chunk = plan.slice(i, i + 500);
+    const current = new Map((await books.find({ id: { $in: chunk.map((p) => p.book_id) } }, { projection: { id: 1, edition_external_ids: 1 } }).toArray()).map((b) => [b.id, b.edition_external_ids || {}]));
+    const ops = [], logs = [], backup = [];
+    for (const p of chunk) {
+      if (!current.has(p.book_id)) continue;
+      const have = current.get(p.book_id);
+      const set = {};
+      for (const [k, v] of Object.entries(p.ids)) { if (have[k]) kept++; else set[`edition_external_ids.${k}`] = v; }
+      if (!Object.keys(set).length) continue;
+      set['edition_external_ids.vd_provenance'] = { source: p.url, type: 'original_catalog', match_method: 'holding-library-record', run: RUN_VD, date: now };
+      const filter = { id: p.book_id, ...Object.fromEntries(Object.keys(set).filter((k) => !k.endsWith('vd_provenance')).map((k) => [k, { $exists: false }])) };
+      ops.push({ updateOne: { filter, update: { $set: set } } });
+      logs.push({ sweep: RUN_VD, book_id: p.book_id, action: 'edition-vd-id-from-library-record', detail: { ids: p.ids, record: p.url } });
+      backup.push(JSON.stringify({ book_id: p.book_id, set, before: { vd16: have.vd16 ?? null, vd17: have.vd17 ?? null, vd18: have.vd18 ?? null } }));
+    }
+    if (!ops.length) continue;
+    if (!APPLY) { wrote += ops.length; continue; }
+    appendFileSync(BACKUP, backup.join('\n') + '\n');
+    await recordSweepActions(db, logs);
+    wrote += (await books.bulkWrite(ops, { ordered: false })).modifiedCount;
+  }
+  console.log(`${APPLY ? 'wrote' : 'would write'} VD numbers on ${wrote} books; ${kept} already carried one (kept); refused by format:`, bad);
+  if (APPLY && existsSync(BACKUP)) { const u = await uploadBackup(BACKUP, 'authors-7660'); console.log(`backup -> s3://sl-corpus-snapshots/${u.key}`); }
+  await mc.close(); process.exit(0);
+}
 
 if (STAGE === 'apply-books') {
   const IN = val('in');
