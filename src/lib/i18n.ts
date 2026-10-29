@@ -85,7 +85,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     askLibrarian: 'Ask the librarian',
     search: 'Search',
     menu: 'Navigation menu',
-    support: 'Support',
+    support: 'Donate',
   },
   es: {
     library: 'Biblioteca',
@@ -111,7 +111,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     askLibrarian: 'Bibliothecarius',
     search: 'Quaere',
     menu: 'Index navigationis',
-    support: 'Sustenta',
+    support: 'Dona',
   },
   // Dutch (#6382). Draft copy, to be read by a native speaker before launch.
   nl: {
@@ -124,7 +124,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     askLibrarian: 'Bibliothecaris',
     search: 'Zoeken',
     menu: 'Navigatiemenu',
-    support: 'Steun ons',
+    support: 'Doneer',
   },
   zh: {
     library: '书库',
@@ -136,7 +136,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     askLibrarian: '图书馆员',
     search: '搜索',
     menu: '导航菜单',
-    support: '支持',
+    support: '捐赠',
   },
 };
 
